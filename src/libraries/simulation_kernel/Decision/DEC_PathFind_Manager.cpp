@@ -129,7 +129,7 @@ void DEC_PathFind_Manager::CancelJob( DEC_Path_ABC* pPath )
 unsigned int DEC_PathFind_Manager::GetNbrShortRequests() const
 {
     boost::mutex::scoped_lock locker( mutex_ );
-    return shortRequests_.size();
+    return static_cast< unsigned int >( shortRequests_.size() );
 }
 
 // -----------------------------------------------------------------------------
@@ -139,7 +139,7 @@ unsigned int DEC_PathFind_Manager::GetNbrShortRequests() const
 unsigned int DEC_PathFind_Manager::GetNbrLongRequests() const
 {
     boost::mutex::scoped_lock locker( mutex_ );
-    return longRequests_.size();
+    return static_cast< unsigned int >( longRequests_.size() );
 }
 
 // -----------------------------------------------------------------------------
@@ -158,7 +158,7 @@ unsigned int DEC_PathFind_Manager::GetNbrTreatedRequests() const
 unsigned int DEC_PathFind_Manager::GetNbrRequests() const
 {
     boost::mutex::scoped_lock locker( mutex_ );
-    return longRequests_.size() + shortRequests_.size();
+    return static_cast< unsigned int >( longRequests_.size() + shortRequests_.size() );
 }
 
 // -----------------------------------------------------------------------------

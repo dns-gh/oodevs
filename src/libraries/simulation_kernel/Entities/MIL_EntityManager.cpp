@@ -21,11 +21,6 @@
 #include "MissionController.h"
 #include "PopulationFactory.h"
 #include "InhabitantFactory.h"
-#include "PHY_InfrastructureType.h"
-#include "PHY_MaterialCompositionType.h"
-#include "PHY_AccomodationType.h"
-#include "PHY_ResourceNetworkType.h"
-#include "PHY_RoofShapeType.h"
 #include "Agents/MIL_AgentTypePion.h"
 #include "Agents/MIL_AgentPion.h"
 #include "Actions/PHY_FireResults_Default.h"
@@ -103,6 +98,11 @@
 #include "protocol/Protocol.h"
 #include "resource_network/ResourceNetworkModel.h"
 #include "tools/Loader_ABC.h"
+#include "Urban/PHY_InfrastructureType.h"
+#include "Urban/PHY_MaterialCompositionType.h"
+#include "Urban/PHY_AccomodationType.h"
+#include "Urban/PHY_ResourceNetworkType.h"
+#include "Urban/PHY_RoofShapeType.h"
 #include <urban/Model.h>
 #include <urban/GeometryAttribute.h>
 #include <urban/ObjectVisitor_ABC.h>

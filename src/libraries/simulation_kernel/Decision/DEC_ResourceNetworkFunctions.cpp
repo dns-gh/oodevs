@@ -11,7 +11,6 @@
 #include "DEC_ResourceNetworkFunctions.h"
 #include "DEC_ResourceNetwork.h"
 #include "MIL_AgentServer.h"
-#include "PHY_ResourceNetworkType.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_EntityManager.h"
@@ -24,6 +23,7 @@
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
+#include "Urban/PHY_ResourceNetworkType.h"
 
 namespace
 {

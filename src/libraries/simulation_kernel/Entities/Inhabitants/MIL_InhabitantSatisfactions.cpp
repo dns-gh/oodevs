@@ -10,9 +10,9 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_InhabitantSatisfactions.h"
 #include "MIL_AgentServer.h"
-#include "PHY_ResourceNetworkType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "protocol/ClientSenders.h"
+#include "Urban/PHY_ResourceNetworkType.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_InhabitantSatisfactions )
 

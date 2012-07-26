@@ -14,9 +14,7 @@
 #include "AlgorithmsFactories.h"
 #include "DetectionComputerFactory_ABC.h"
 #include "MIL_AgentServer.h"
-#include "MIL_UrbanCache.h"
 #include "PerceptionDistanceComputer_ABC.h"
-#include "PHY_MaterialCompositionType.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
@@ -37,6 +35,8 @@
 #include "Meteo/RawVisionData/PHY_RawVisionDataIterator.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/Resolver.h"
+#include "Urban/MIL_UrbanCache.h"
+#include "Urban/PHY_MaterialCompositionType.h"
 #include <xeumeuleu/xml.hpp>
 
 namespace

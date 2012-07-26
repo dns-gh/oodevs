@@ -17,11 +17,6 @@
 #include "MIL_Army.h"
 #include "MIL_Formation.h"
 #include "MIL_Singletons.h"
-#include "PHY_AccomodationType.h"
-#include "PHY_InfrastructureType.h"
-#include "PHY_MaterialCompositionType.h"
-#include "PHY_ResourceNetworkType.h"
-#include "PHY_RoofShapeType.h"
 #include "PopulationFactory.h"
 #include "Agents/MIL_AgentTypePion.h"
 #include "Agents/MIL_AgentPion.h"
@@ -87,6 +82,11 @@
 #include "Tools/MIL_ProfilerMgr.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/Loader_ABC.h"
+#include "Urban/PHY_AccomodationType.h"
+#include "Urban/PHY_InfrastructureType.h"
+#include "Urban/PHY_MaterialCompositionType.h"
+#include "Urban/PHY_ResourceNetworkType.h"
+#include "Urban/PHY_RoofShapeType.h"
 #include <xeumeuleu/xml.hpp>
 
 namespace

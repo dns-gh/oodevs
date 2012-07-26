@@ -2409,21 +2409,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\decision\DEC_Model_ABC.cpp">
       <Filter>Source Files\Decision\Model</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\PHY_AccomodationType.cpp">
-      <Filter>Source Files\Urban\Types</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\PHY_InfrastructureType.cpp">
-      <Filter>Source Files\Urban\Types</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\PHY_MaterialCompositionType.cpp">
-      <Filter>Source Files\Urban\Types</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\PHY_ResourceNetworkType.cpp">
-      <Filter>Source Files\Urban\Types</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\PHY_RoofShapeType.cpp">
-      <Filter>Source Files\Urban\Types</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_ActionLoadCrowd.cpp">
       <Filter>Source Files\Entities\Agents\Actions\CrowdTransport</Filter>
     </ClCompile>
@@ -2532,9 +2517,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Deployment\PHY_RolePion_Deployment.cpp">
       <Filter>Source Files\Entities\Agents\Roles\Deployment</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\MIL_UrbanCache.cpp">
-      <Filter>Source Files\Urban</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path.cpp">
       <Filter>Source Files\Decision\Path</Filter>
     </ClCompile>
@@ -2636,6 +2618,24 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\ReportEventListener.cpp">
       <Filter>Source Files\Adapters\EventListeners</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\MIL_UrbanCache.cpp">
+      <Filter>Source Files\Urban</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\PHY_AccomodationType.cpp">
+      <Filter>Source Files\Urban\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\PHY_InfrastructureType.cpp">
+      <Filter>Source Files\Urban\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\PHY_MaterialCompositionType.cpp">
+      <Filter>Source Files\Urban\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\PHY_ResourceNetworkType.cpp">
+      <Filter>Source Files\Urban\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\PHY_RoofShapeType.cpp">
+      <Filter>Source Files\Urban\Types</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -4889,21 +4889,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\decision\DEC_Model_ABC.h">
       <Filter>Source Files\Decision\Model</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\PHY_AccomodationType.h">
-      <Filter>Source Files\Urban\Types</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\PHY_InfrastructureType.h">
-      <Filter>Source Files\Urban\Types</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\PHY_MaterialCompositionType.h">
-      <Filter>Source Files\Urban\Types</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\PHY_ResourceNetworkType.h">
-      <Filter>Source Files\Urban\Types</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\PHY_RoofShapeType.h">
-      <Filter>Source Files\Urban\Types</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_ActionLoadCrowd.h">
       <Filter>Source Files\Entities\Agents\Actions\CrowdTransport</Filter>
     </ClInclude>
@@ -5062,9 +5047,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Deployment\PHY_RolePion_Deployment.h">
       <Filter>Source Files\Entities\Agents\Roles\Deployment</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL_UrbanCache.h">
-      <Filter>Source Files\Urban</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path.h">
       <Filter>Source Files\Decision\Path</Filter>
@@ -5371,6 +5353,24 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\Hook.h">
       <Filter>Source Files\Adapters\Hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\MIL_UrbanCache.h">
+      <Filter>Source Files\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\PHY_AccomodationType.h">
+      <Filter>Source Files\Urban\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\PHY_InfrastructureType.h">
+      <Filter>Source Files\Urban\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\PHY_MaterialCompositionType.h">
+      <Filter>Source Files\Urban\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\PHY_ResourceNetworkType.h">
+      <Filter>Source Files\Urban\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\PHY_RoofShapeType.h">
+      <Filter>Source Files\Urban\Types</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

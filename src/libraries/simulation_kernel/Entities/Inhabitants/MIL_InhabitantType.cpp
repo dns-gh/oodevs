@@ -10,10 +10,10 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_InhabitantType.h"
 #include "MIL_Inhabitant.h"
-#include "PHY_ResourceNetworkType.h"
 #include "Entities/Populations/MIL_PopulationType.h"
 #include "MT_Tools/MT_Logger.h"
 #include "MIL_Schedule_ABC.h"
+#include "Urban/PHY_ResourceNetworkType.h"
 #include <xeumeuleu/xml.hpp>
 
 MIL_InhabitantType::T_InhabitantMap MIL_InhabitantType::inhabitants_;

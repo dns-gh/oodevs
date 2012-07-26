@@ -11,7 +11,6 @@
 #include "PHY_ZURBPerceptionComputer.h"
 #include "AlgorithmsFactories.h"
 #include "MIL_AgentServer.h"
-#include "MIL_UrbanCache.h"
 #include "OnComponentComputer_ABC.h"
 #include "OnComponentFunctorComputerFactory_ABC.h"
 #include "OnComponentFunctor_ABC.h"
@@ -29,6 +28,7 @@
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Tools/MIL_Geometry.h"
+#include "Urban/MIL_UrbanCache.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ZURBPerceptionComputer constructor

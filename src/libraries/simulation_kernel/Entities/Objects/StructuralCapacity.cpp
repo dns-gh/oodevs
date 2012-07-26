@@ -12,7 +12,6 @@
 #include "MIL_Object_ABC.h"
 #include "MaterialAttribute.h"
 #include "MIL_AgentServer.h"
-#include "PHY_MaterialCompositionType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Weapons/PHY_UrbanAttritionData.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
@@ -24,6 +23,7 @@
 #include "Entities/MIL_EntityManager.h"
 #include "Tools/MIL_Geometry.h"
 #include "protocol/ClientSenders.h"
+#include "Urban/PHY_MaterialCompositionType.h"
 #include <geometry/Types.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/assign/list_of.hpp>

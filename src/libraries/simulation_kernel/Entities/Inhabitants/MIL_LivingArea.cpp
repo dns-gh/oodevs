@@ -12,7 +12,6 @@
 #include "MIL_LivingAreaBlock.h"
 #include "MIL_AgentServer.h"
 #include "Tools/MIL_Geometry.h"
-#include "PHY_AccomodationType.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Inhabitants/MIL_Inhabitant.h"
 #include "Entities/Objects/MedicalCapacity.h"
@@ -20,6 +19,7 @@
 #include "Entities/Objects/StructuralCapacity.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "protocol/ClientSenders.h"
+#include "Urban/PHY_AccomodationType.h"
 #include <boost/foreach.hpp>
 #include <xeumeuleu/xml.hpp>
 

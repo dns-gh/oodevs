@@ -17,9 +17,9 @@
 #include "PHY_AmmoDotationClass.h"
 #include "PHY_DotationLogisticType.h"
 #include "PHY_DotationNature.h"
-#include "PHY_MaterialCompositionType.h"
 #include "Entities/Agents/Units/Weapons/PHY_UrbanAttritionData.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
+#include "Urban/PHY_MaterialCompositionType.h"
 #include <xeumeuleu/xml.hpp>
 
 //-----------------------------------------------------------------------------

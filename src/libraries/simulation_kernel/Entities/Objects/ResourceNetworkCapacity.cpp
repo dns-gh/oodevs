@@ -19,7 +19,7 @@
 #include "protocol/Protocol.h"
 #include "resource_network/NodeProperties.h"
 #include "resource_network/ResourceNetworkModel.h"
-#include "PHY_ResourceNetworkType.h"
+#include "Urban/PHY_ResourceNetworkType.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace resource;

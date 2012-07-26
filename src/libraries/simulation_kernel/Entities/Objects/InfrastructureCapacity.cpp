@@ -9,11 +9,11 @@
 
 #include "simulation_kernel_pch.h"
 #include "InfrastructureCapacity.h"
-#include "PHY_InfrastructureType.h"
 #include "StructuralCapacity.h"
 #include "ResourceNetworkCapacity.h"
 #include "MIL_Object_ABC.h"
 #include "protocol/ClientSenders.h"
+#include "Urban/PHY_InfrastructureType.h"
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( InfrastructureCapacity )

@@ -178,7 +178,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Populations\MIL_DecontaminationEffect.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Specialisations\LOG\MIL_AutomateTypeBaseLOG.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\MIL.cpp" />
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\MIL_UrbanCache.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\simulation_kernel_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
@@ -342,6 +341,12 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\firing\directfiring\PHY_ActionControlZone.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\firing\directfiring\PHY_DirectFireData.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\firing\directfiring\PHY_RoleAction_DirectFiring.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\MIL_UrbanCache.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\PHY_AccomodationType.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\PHY_InfrastructureType.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\PHY_MaterialCompositionType.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\PHY_ResourceNetworkType.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\PHY_RoofShapeType.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\WeaponAvailabilityComputerFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\WeaponReloadingComputerFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Firing\DirectFiring\PHY_ActionDirectFirePion.cpp" />
@@ -856,11 +861,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_FrontAndBackLinesComputer.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Model.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\decision\DEC_Model_ABC.cpp" />
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\PHY_AccomodationType.cpp" />
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\PHY_InfrastructureType.cpp" />
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\PHY_MaterialCompositionType.cpp" />
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\PHY_ResourceNetworkType.cpp" />
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\PHY_RoofShapeType.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\AlatMonitoringEventListener.h" />
@@ -961,7 +961,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Specialisations\LOG\MIL_LogisticVisitors.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\KnowledgesVisitor_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL_UrbanCache.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\simulation_kernel_pch.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Tools\MIL_HumanRepartition.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Tristate.h" />
@@ -1118,6 +1117,12 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\firing\directfiring\PHY_ActionControlZone.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\firing\directfiring\PHY_DirectFireData.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\firing\directfiring\PHY_RoleAction_DirectFiring.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\MIL_UrbanCache.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\PHY_AccomodationType.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\PHY_InfrastructureType.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\PHY_MaterialCompositionType.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\PHY_ResourceNetworkType.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\PHY_RoofShapeType.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\WeaponAvailabilityComputer_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\WeaponAvailabilityComputerFactory.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\WeaponAvailabilityComputerFactory_ABC.h" />
@@ -1718,11 +1723,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_FrontAndBackLinesComputer.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Model.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\decision\DEC_Model_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\PHY_AccomodationType.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\PHY_InfrastructureType.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\PHY_MaterialCompositionType.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\PHY_ResourceNetworkType.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\PHY_RoofShapeType.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path.inl" />

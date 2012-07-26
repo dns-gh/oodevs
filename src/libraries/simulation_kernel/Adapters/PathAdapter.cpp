@@ -11,7 +11,6 @@
 #include "PathAdapter.h"
 #include "Hook.h"
 #include "MIL_AgentServer.h"
-#include "MIL_UrbanCache.h"
 #include "RoleAction_Moving.h"
 #include "Decision/DEC_Path_KnowledgeAgent.h"
 #include "Decision/DEC_Path_KnowledgeObject.h"
@@ -36,6 +35,7 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "Meteo/PHY_MeteoDataManager.h"
+#include "Urban/MIL_UrbanCache.h"
 #include <core/Facade.h>
 #include <core/Convert.h>
 

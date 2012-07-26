@@ -43,7 +43,7 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Decision/DEC_PathFind_Manager.h"
 #include "Tools/MIL_Tools.h"
-#include "simulation_kernel/MIL_UrbanCache.h"
+#include "Urban/MIL_UrbanCache.h"
 #include "simulation_terrain/TER_AgentManager.h"
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_PopulationManager.h"

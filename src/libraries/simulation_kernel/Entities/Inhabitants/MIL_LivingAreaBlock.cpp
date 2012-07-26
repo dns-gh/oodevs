@@ -10,8 +10,6 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_LivingAreaBlock.h"
 #include "MIL_AgentServer.h"
-#include "PHY_AccomodationType.h"
-#include "PHY_ResourceNetworkType.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Inhabitants/MIL_InhabitantType.h"
 #include "Entities/Objects/ResourceNetworkCapacity.h"
@@ -21,6 +19,8 @@
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationType.h"
 #include "protocol/ClientSenders.h"
+#include "Urban/PHY_AccomodationType.h"
+#include "Urban/PHY_ResourceNetworkType.h"
 #include <urban/MotivationsVisitor_ABC.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_LivingAreaBlock )

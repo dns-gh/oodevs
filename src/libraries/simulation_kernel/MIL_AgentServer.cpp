@@ -4,7 +4,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentServer.h"
-#include "MIL_UrbanCache.h"
 #include "CheckPoints/MIL_CheckPointManager.h"
 #include "Decision/DEC_PathFind_Manager.h"
 #include "Decision/DEC_Workspace.h"
@@ -28,6 +27,7 @@
 #include "KnowledgesVisitor_ABC.h"
 #include "tools/ExerciseSettings.h"
 #include "tools/Loader_ABC.h"
+#include "Urban/MIL_UrbanCache.h"
 #include <boost/filesystem/path.hpp>
 #include <tools/thread/Thread.h>
 #include <tools/win32/ProcessMonitor.h>

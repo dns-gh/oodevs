@@ -9,16 +9,16 @@
 
 #include "simulation_kernel_pch.h"
 #include "InsideUrbanBlockPosition.h"
-#include "Entities/Agents/MIL_Agent_ABC.h"
-#include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
-#include "Entities/Objects/MaterialAttribute.h"
 #include "AlgorithmsFactories.h"
 #include "UrbanLocationComputer_ABC.h"
 #include "UrbanLocationComputerFactory_ABC.h"
-#include "PHY_MaterialCompositionType.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
+#include "Entities/Objects/MaterialAttribute.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Tools/MIL_Geometry.h"
 #include "MT_Tools/MT_Ellipse.h"
+#include "Urban/PHY_MaterialCompositionType.h"
 #pragma warning( push, 0 )
 #pragma warning( disable: 4702 )
 #include <boost/geometry/geometry.hpp>

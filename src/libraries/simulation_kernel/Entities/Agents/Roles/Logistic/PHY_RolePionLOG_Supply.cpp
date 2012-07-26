@@ -19,7 +19,6 @@
 #include "OnComponentLendedFunctorComputer_ABC.h"
 #include "OnComponentLendedFunctorComputerFactory.h"
 #include "NetworkNotificationHandler_ABC.h"
-#include "PHY_ResourceNetworkType.h"
 #include "Decision/DEC_ResourceNetwork.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationStockContainer.h"
@@ -34,6 +33,7 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "tools/ExerciseSettings.h"
+#include "Urban/PHY_ResourceNetworkType.h"
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePionLOG_Supply )

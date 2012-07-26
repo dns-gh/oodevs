@@ -10,13 +10,13 @@
 #ifndef __TestPK_h_
 #define __TestPK_h_
 
-#include "PHY_MaterialCompositionType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationNature.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationLogisticType.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
+#include "Urban/PHY_MaterialCompositionType.h"
 #include "MockMIL_Time_ABC.h"
 #include <xeumeuleu/xml.hpp>
 

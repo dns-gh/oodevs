@@ -16,13 +16,13 @@
 #include "MedicalCapacity.h"
 #include "InfrastructureCapacity.h"
 #include "StructuralCapacity.h"
-#include "PHY_InfrastructureType.h"
-#include "PHY_MaterialCompositionType.h"
 #include "Entities/Objects/MIL_ObjectBuilder_ABC.h"
 #include "Entities/Inhabitants/MIL_LivingArea.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
+#include "Urban/PHY_InfrastructureType.h"
+#include "Urban/PHY_MaterialCompositionType.h"
 #include <urban/PhysicalAttribute.h>
 #include <urban/ColorAttribute.h>
 #include <urban/GeometryAttribute.h>

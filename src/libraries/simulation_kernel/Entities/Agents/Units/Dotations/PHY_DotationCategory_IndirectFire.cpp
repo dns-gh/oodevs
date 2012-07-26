@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_DotationCategory_IndirectFire.h"
-#include "MIL_UrbanCache.h"
 #include "PHY_DotationCategory.h"
 #include "Entities/Actions/PHY_FireResults_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
@@ -39,6 +38,7 @@
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_AgentManager.h"
+#include "Urban/MIL_UrbanCache.h"
 #include <boost/tuple/tuple.hpp>
 #include <xeumeuleu/xml.hpp>
 
