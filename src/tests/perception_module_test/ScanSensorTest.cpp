@@ -14,6 +14,8 @@ using namespace sword::perception;
 
 BOOST_FIXTURE_TEST_CASE( agents_in_list_are_recognized_with_scan_sensor, PerceptionCommandFixture )
 {
+    entity[ "perceptions/sensor/activated" ] = false;
+    entity[ "perceptions/scan/activated" ] = true;
     const SWORD_Model* other = core::Convert( &model[ "entities/other" ] );
     model[ "entities/other/pion" ].SetUserData< MIL_Agent_ABC* >( reinterpret_cast< MIL_Agent_ABC* >( 43 ) );
     model[ "entities/other/movement/position/x" ] = 5;
@@ -28,8 +30,6 @@ BOOST_FIXTURE_TEST_CASE( agents_in_list_are_recognized_with_scan_sensor, Percept
     MOCK_EXPECT( BelongsToKnowledgeGroup ).with( perceiver, other ).returns( false );
     MOCK_EXPECT( IsAgentIdentified ).once().with( perceiver, other ).returns( false );
     MOCK_EXPECT( CanBeSeen ).once().with( perceiver, other ).returns( true );
-    entity[ "perceptions/sensor/activated" ] = false;
-    entity[ "perceptions/scan/activated" ] = true;
     entity[ "perceptions/drill-blow/width" ] = scanWidth;
     entity[ "perceptions/drill-blow/length" ] = scanLength;
     ExpectNotifications( "agents", sword::test::MakeModel()
