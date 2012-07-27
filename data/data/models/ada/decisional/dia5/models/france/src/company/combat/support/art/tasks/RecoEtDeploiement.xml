@@ -14,6 +14,14 @@
 				<class name="properties.Reachable"/>
 			</type>
 		</parameter>
+        <parameter name="changeAutomatically" nullable="true">
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>false</boolean>
+            </default>
+        </parameter>
 	</parameters>
 	<stages>
 		<stage label="Reconnaissance">

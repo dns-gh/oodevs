@@ -16,4 +16,8 @@ return
     getMeetingPoint = function ( self, params )
         return params.retreatPosition
     end,
+
+    getChangeAutomatically = function ( self, params )
+        return params.changeAutomatically
+    end,
 }

@@ -106,4 +106,8 @@ return
         end
         return NIL
     end,
+
+    getChangeAutomatically = function ( self, params )
+        return params.changeAutomatically
+    end,
 }

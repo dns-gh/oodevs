@@ -25,9 +25,11 @@ rootnode
            additionnalParams.state == "no Launcher" or
            additionnalParams.state == "target not illuminated" then
               self.order = nil
-              self.nextTargetIndex = self.nextTargetIndex + 1
-              if self.nextTargetIndex > #self.params.firePositions then
-                 self.nextTargetIndex = 1
+              if self.params.changeAutomatically then
+                  self.nextTargetIndex = self.nextTargetIndex + 1
+                  if self.nextTargetIndex > #self.params.firePositions then
+                     self.nextTargetIndex = 1
+                  end
               end
         end
     end,

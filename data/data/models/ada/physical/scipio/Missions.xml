@@ -1187,6 +1187,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="changeAutomatically" name="Sauvegarde automatique" optional="true" type="Boolean"/>
       <parameter dia-name="firePositions" max-occurs="unbounded" min-occurs="1" name="Positions ou zones de tir" optional="true" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
@@ -2799,7 +2800,6 @@
           <parameter type="ObjectKnowledge"/>
         </choice>
       </parameter>
-      <parameter dia-name="retreatPosition" name="Position de sauvegarde" optional="true" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="company.tasks.SeRecompleter" dia-type="company.tasks.SeRecompleter" id="1021" mrt-dia-behavior="company.tasks.SeRecompleter" name="AUTOMATE COMMUNES Se Recompleter" package="none">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -4202,6 +4202,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Zones deploiement" optional="false" type="Polygon"/>
       <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
+      <parameter dia-name="changeAutomatically" name="Sauvegarde automatique" optional="true" type="Boolean"/>
     </mission>
     <mission cdt-dia-behavior="company.combat.support.art.tasks.ReconaitreZoneDeploiement" dia-type="company.combat.support.art.tasks.ReconaitreZoneDeploiement" id="28769" mrt-dia-behavior="company.combat.support.art.tasks.ReconaitreZoneDeploiement" name="AUTOMATE ASS Reconnaitre Zones Deploiement">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -4668,4 +4669,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_MiseAFeuIED" id="28799" name="Pion Mise A Feu IED"/>
   </fragorders>
 </missions>
-<!-- signature="0800836880" -->
+<!-- signature="0479934951" -->

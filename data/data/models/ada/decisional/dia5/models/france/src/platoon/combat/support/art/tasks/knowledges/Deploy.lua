@@ -1,7 +1,7 @@
 local result = 
 {
     fillParameters = function( self, companyTask, params )
-        return { firePositions = companyTask:getFirePositions( params ) }
+        return { firePositions = companyTask:getFirePositions( params ), changeAutomatically = companyTask:getChangeAutomatically( params ) }
     end
 }
 
