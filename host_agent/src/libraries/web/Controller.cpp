@@ -367,7 +367,7 @@ std::string Controller::ListNodes( const Request_ABC& request )
 {
     Authenticate( request, USER_TYPE_ADMINISTRATOR );
     const int offset = GetParameter( "offset", request, 0 );
-    const int limit  = GetParameter( "limit",  request, 10 );
+    const int limit  = GetParameter( "limit",  request, 100 );
     return WriteHttpReply( agent_.ListNodes( offset, limit ) );
 }
 
@@ -543,7 +543,7 @@ std::string Controller::ListSessions( const Request_ABC& request )
 {
     const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
     const int offset = GetParameter( "offset", request, 0 );
-    const int limit  = GetParameter( "limit",  request, 10 );
+    const int limit  = GetParameter( "limit",  request, 100 );
     return WriteHttpReply( agent_.ListSessions( node, offset, limit ) );
 }
 
@@ -634,7 +634,7 @@ std::string Controller::ListExercises( const Request_ABC& request )
     if( node.is_nil() )
         throw HttpException( web::BAD_REQUEST );
     const int offset = GetParameter( "offset", request, 0 );
-    const int limit  = GetParameter( "limit",  request, 10 );
+    const int limit  = GetParameter( "limit",  request, 100 );
     return WriteHttpReply( agent_.ListExercises( node, offset, limit ) );
 }
 
@@ -745,7 +745,7 @@ std::string Controller::ListUsers( const Request_ABC& request )
 {
     const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "node" );
     const int offset = GetParameter( "offset", request, 0 );
-    const int limit = GetParameter( "limit", request, 10 );
+    const int limit = GetParameter( "limit", request, 100 );
     return WriteHttpReply( users_.ListUsers( node, offset, limit ) );
 }
 
