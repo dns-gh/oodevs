@@ -467,3 +467,25 @@ integration.getFirePositions = function( modeDeploiement, zone, angle )
     end
     return returnPositions
 end
+
+-- -------------------------------------------------------------------------------- 
+-- Param allied units to support
+-- Return list of dangerous units for fiends
+-- @author GGE
+-- @release 2011-08-29
+-- --------------------------------------------------------------------------------
+integration.query.getEnemiesToIndirectFireWhenSupport = function( friends )
+    local enemies = {}
+    for i = 1, #friends do
+        local simEnemies = integration.getMortarUnitsToNeutralize( friends[i] )
+        for j = 1, #simEnemies do
+            local eny = CreateKnowledge( sword.military.world.Platoon, simEnemies[j] )
+            if not eny:isTransported() then
+                if not exists( enemies, eny ) then
+                    enemies[ #enemies + 1 ] = eny
+                end
+            end
+        end
+    end
+    return enemies
+end

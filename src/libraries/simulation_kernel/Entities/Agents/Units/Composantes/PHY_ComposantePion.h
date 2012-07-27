@@ -172,6 +172,7 @@ public:
     double GetMinRangeToFireOnWithPosture( const DEC_Knowledge_AgentComposante& compTarget, const MIL_Agent_ABC& target, double rWantedPH ) const;
     double GetMaxRangeToIndirectFire( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability, bool theoric ) const;
     double GetMinRangeToIndirectFire( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability, bool theoric ) const;
+    double GetMaxRangeToIndirectFire( ) const;
     double GetMaxRangeToFire( const MIL_Agent_ABC& pion, double rWantedPH ) const;
     PHY_InjuredHuman* GetInjury() const;
     double GetProtectionHumanDeadRatio( const PHY_ComposanteState& state ) const;

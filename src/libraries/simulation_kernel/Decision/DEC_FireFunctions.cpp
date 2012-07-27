@@ -139,6 +139,19 @@ float DEC_FireFunctions::GetMaxRangeToIndirectFire( const MIL_AgentPion& callerA
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_FireFunctions::GetMaxRangeToIndirectFire
+// Created: GGE 2012-07-25
+// -----------------------------------------------------------------------------
+float DEC_FireFunctions::GetMaxRangeToIndirectFire( const MIL_AgentPion& callerAgent )
+{
+    float rRange ( -1.f );
+    rRange = ( float ) callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMaxRangeToIndirectFire();
+    if( rRange >= 0 )
+        rRange = MIL_Tools::ConvertSimToMeter( rRange );
+    return rRange;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_FireFunctions::GetMinRangeToIndirectFire
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------

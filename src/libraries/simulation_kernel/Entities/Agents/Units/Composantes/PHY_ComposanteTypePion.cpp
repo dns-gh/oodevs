@@ -1186,6 +1186,19 @@ double PHY_ComposanteTypePion::GetMaxRangeToIndirectFire( const MIL_Agent_ABC& f
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetMaxRangeToIndirectFire
+// Created: GGE 2012-07-25
+// -----------------------------------------------------------------------------
+double PHY_ComposanteTypePion::GetMaxRangeToIndirectFire( const MIL_Agent_ABC& firer ) const
+{
+    double rRange = -1.;
+    for( CIT_WeaponTypeMap it = weaponTypes_.begin(); it != weaponTypes_.end(); ++it )
+        if( it->first->GetDotationCategory().CanBeUsedForIndirectFire() )
+            rRange = std::max( rRange, it->first->GetMaxRangeToIndirectFire( firer, false ) );
+    return rRange;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::GetMinRangeToIndirectFire
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------

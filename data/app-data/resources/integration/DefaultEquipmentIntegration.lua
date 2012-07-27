@@ -663,7 +663,3 @@ integration.isLogisticConvoy = function( platoon )
         return false
     end
 end
-
-integration.munitionPourTirIndirect = function( position )
-    return DEC_Tir_MunitionPourTirIndirect( eObus_Explosif, position ) 
-end

@@ -23,6 +23,7 @@
 #include "Decision/DEC_MiscFunctions.h"
 #include "Decision/DEC_OrdersFunctions.h"
 #include "Decision/DEC_ActionFunctions.h"
+#include "Decision/DEC_FireFunctions.h"
 #include "Decision/DEC_LogisticFunctions.h"
 #include "Decision/DEC_ObjectFunctions.h"
 #include "Decision/DEC_MedicalTreatmentFunctions.h"
@@ -660,6 +661,10 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< void( const directia::tools::binders::ScriptRef& ) >( boost::bind( &DEC_TerrainFunctions::GetCrossroads, boost::ref( brain ), boost::ref( GetPion() ), initQueryFunction, _1 ) ) ;
     brain[ "DEC_FindSafetyPositions" ] =
         boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( float, float ) >( boost::bind( &DEC_TerrainFunctions::FindSafetyPositionsWithinCircle, boost::ref( GetPion() ), _1, _2 ) ) ;
+
+    // Fire
+    brain[ "DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition" ] =
+        boost::bind( &DEC_FireFunctions::GetMaxRangeToIndirectFire, boost::ref( GetPion() ) );
 
     // Hospitals
     brain[ "DEC_DeterminerHopital" ] =

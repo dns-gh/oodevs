@@ -36,6 +36,7 @@ public:
     static float GetMaxRangeToFire( const MIL_Agent_ABC& callerAgent, float rWantedPH );
     static float GetMaxRangeToFireDecision( const DEC_Decision_ABC& callerAgent, float rWantedPH );
     static float GetMaxRangeToIndirectFire( const MIL_AgentPion& callerAgent, const PHY_DotationCategory* pDotationCategory );
+    static float GetMaxRangeToIndirectFire( const MIL_AgentPion& callerAgent );
     static float GetMinRangeToIndirectFire( const MIL_AgentPion& callerAgent, const PHY_DotationCategory* pDotationCategory );
     static float GetTheoricMaxRangeToIndirectFire( const MIL_AgentPion& callerAgent, const PHY_DotationCategory* pDotationCategory );
     static float GetTheoricMinRangeToIndirectFire( const MIL_AgentPion& callerAgent, const PHY_DotationCategory* pDotationCategory );

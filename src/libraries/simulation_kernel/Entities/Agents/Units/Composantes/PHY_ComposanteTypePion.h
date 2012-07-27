@@ -140,6 +140,7 @@ public:
     virtual double GetMinRangeToFireOnWithPosture( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const;
             double GetMaxRangeToIndirectFire     ( const MIL_Agent_ABC& firer, const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
             double GetMinRangeToIndirectFire     ( const MIL_Agent_ABC& firer, const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
+            double GetMaxRangeToIndirectFire     ( const MIL_Agent_ABC& firer ) const;
     virtual double GetAttritionIndexComposante   ( const PHY_MaterialCompositionType& material ) const;
     virtual double GetMaxRangeToFire             ( const MIL_Agent_ABC&  pion, double rWantedPH ) const;
     //@}
