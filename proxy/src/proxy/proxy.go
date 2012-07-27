@@ -66,11 +66,17 @@ type Server struct {
 	http.Handler
 	access  sync.RWMutex
 	targets map[string]*ProxyContext
+	local   []net.Addr
 }
 
 func NewProxyServer() *Server {
 	it := &Server{}
 	it.targets = make(map[string]*ProxyContext)
+	addr, err := net.InterfaceAddrs()
+	if err != nil {
+		log.Fatal(err)
+	}
+	it.local = addr
 	return it
 }
 
@@ -118,13 +124,25 @@ func (it *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	prev := r.URL.Path
+	ip := it.SetRemoteAddress(r)
+	// prev := r.URL.Path
 	r.URL.Path = r.URL.Path[len(ctx.prefix):]
-	log.Println(prev, "-> http://"+ctx.host+":"+ctx.port+"/"+r.URL.Path)
-	if ip, _, err := net.SplitHostPort(r.RemoteAddr); err == nil {
-		r.Header.Set("Remote-Address", ip)
-	}
+	// log.Println(prev, "-> http://"+ctx.host+":"+ctx.port+"/"+r.URL.Path, "from", ip)
+	r.Header.Set("Remote-Address", ip)
 	ctx.proxy.ServeHTTP(w, r)
+}
+
+func (it *Server) SetRemoteAddress(r *http.Request) string {
+	ip, _, err := net.SplitHostPort(r.RemoteAddr)
+	if err != nil {
+		ip = r.RemoteAddr
+	}
+	for _, v := range it.local {
+		if ip == v.String() {
+			return it.local[0].String()
+		}
+	}
+	return ip
 }
 
 func (it *Server) GetPrefix(q url.Values) string {
