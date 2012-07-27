@@ -103,7 +103,9 @@ class SessionItemView extends Backbone.View
             return
         data = $.extend {}, @model.attributes
         if data.start?.length
-            data.start = new Date(data.start).toUTCString()
+            data.start_ms = Date.parse data.start
+            data.start = new Date(data.start_ms).toUTCString()
+            data.duration = get_ms_duration_from data.start_ms
         $(@el).html session_template data
         set_spinner $(@el).find ".session_top_right .spin_btn"
         for it in $(@el).find ".link"
@@ -173,6 +175,7 @@ class SessionListView extends Backbone.View
         @model.bind "change", @model.sort
         @model.fetch error: -> print_error "Unable to fetch sessions"
         setTimeout @delta, 5000
+        setInterval @durations, 1000
 
     reset: (list, options) =>
         $(@el).empty()
@@ -206,6 +209,12 @@ class SessionListView extends Backbone.View
             error: =>
                 print_error "Unable to fetch sessions"
                 setTimeout @delta, 5000
+
+    durations: =>
+        for it in $(@el).find ".start_duration"
+            duration = get_ms_duration_from parseInt $(it).text()
+            $(it).parent().find(".duration_value").text duration
+        return
 
     set_filter: =>
         list = get_filters()

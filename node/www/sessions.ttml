@@ -65,9 +65,14 @@
             <div>
                 {{#if start}}
                 <div><span class="item_label">Start</span> {{start}}</div>
-                {{/if}}
-                <div><span class="item_label">Duration</span> 0</div>
+                <span class="hide start_duration">{{start_ms}}</span>
+                <div><span class="item_label">Duration</span>
+                    <span class="duration_value">{{duration}}</span>
+                </div>
+                [[/*
                 <div><span class="item_label">Clients</span> 0 connected</div>
+                */]]
+                {{/if}}
             </div>
             <div class="btn-group session_top_right">
                 {{#is_option status playing="" paused="" replaying=""}}

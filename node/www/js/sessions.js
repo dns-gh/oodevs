@@ -486,7 +486,9 @@
       }
       data = $.extend({}, this.model.attributes);
       if ((_ref1 = data.start) != null ? _ref1.length : void 0) {
-        data.start = new Date(data.start).toUTCString();
+        data.start_ms = Date.parse(data.start);
+        data.start = new Date(data.start_ms).toUTCString();
+        data.duration = get_ms_duration_from(data.start_ms);
       }
       $(this.el).html(session_template(data));
       set_spinner($(this.el).find(".session_top_right .spin_btn"));
@@ -592,6 +594,8 @@
 
       this.set_filter = __bind(this.set_filter, this);
 
+      this.durations = __bind(this.durations, this);
+
       this.delta = __bind(this.delta, this);
 
       this.create = __bind(this.create, this);
@@ -617,7 +621,8 @@
           return print_error("Unable to fetch sessions");
         }
       });
-      return setTimeout(this.delta, 5000);
+      setTimeout(this.delta, 5000);
+      return setInterval(this.durations, 1000);
     };
 
     SessionListView.prototype.reset = function(list, options) {
@@ -677,6 +682,16 @@
           return setTimeout(_this.delta, 5000);
         }
       });
+    };
+
+    SessionListView.prototype.durations = function() {
+      var duration, it, _i, _len, _ref;
+      _ref = $(this.el).find(".start_duration");
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        it = _ref[_i];
+        duration = get_ms_duration_from(parseInt($(it).text()));
+        $(it).parent().find(".duration_value").text(duration);
+      }
     };
 
     SessionListView.prototype.set_filter = function() {
