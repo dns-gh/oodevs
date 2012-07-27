@@ -177,3 +177,24 @@ bytes_to_size = (n, precision) ->
     if n < tb
         return ( n / gb ).toFixed( precision ) + ' GB'
     return ( n / tb ).toFixed( precision ) + ' TB'
+
+duration_reduce = (ms, step, txt, suffix) ->
+    return [ ms, txt ] if ms < step
+    n = Math.floor( ms / step )
+    txt += n + suffix + ' '
+    ms -= n * step
+    return [ ms, txt ]
+
+ms_to_duration = (ms) ->
+    [ ms, rpy ] = duration_reduce ms, 1000*60*60*24, "", 'd'
+    [ ms, rpy ] = duration_reduce ms, 1000*60*60, rpy, 'h'
+    [ ms, rpy ] = duration_reduce ms, 1000*60, rpy, 'm'
+    [ ms, rpy ] = duration_reduce ms, 1000, rpy, 's'
+    return rpy
+
+get_ms_duration_from = (start_ms) ->
+    start = new Date start_ms
+    now = new Date()
+    now = now.getTime() - now.getTimezoneOffset()*60*1000
+    diff = now - start.getTime()
+    return ms_to_duration diff
