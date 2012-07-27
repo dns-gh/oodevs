@@ -624,9 +624,13 @@
   };
 
   $("#node_ident").keypress(function(e) {
-    var reg;
-    reg = /[a-z0-9-_]+/;
-    return reg.test(String.fromCharCode(e.which));
+    if (e.which === 13) {
+      return;
+    }
+    if (!(e.which && e.charCode)) {
+      return;
+    }
+    return /[a-z0-9-_]+/.test(String.fromCharCode(e.which));
   });
 
   $("#node_create").click(function() {
