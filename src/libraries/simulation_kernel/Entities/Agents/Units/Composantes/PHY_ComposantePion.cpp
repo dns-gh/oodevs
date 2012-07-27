@@ -537,6 +537,16 @@ double PHY_ComposantePion::GetMaxRangeToIndirectFire( const PHY_DotationCategory
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::GetMaxRangeToIndirectFire
+// Created: GGE 2012-07-25
+// -----------------------------------------------------------------------------
+double PHY_ComposantePion::GetMaxRangeToIndirectFire( ) const
+{
+    assert( pType_ );
+    return pType_->GetMaxRangeToIndirectFire( pRole_->GetPion() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::GetMinRangeToIndirectFire
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------

@@ -49,8 +49,8 @@ integration.isTask = function( self )
          orderType == "Rep_OrderConduite_MettreTenueNBC" or
          orderType == "Rep_OrderConduite_EnleverTenueNBC" or
          orderType == "Rep_OrderConduite_ChangerAmbiance" or
-         orderType == "Rep_OrderConduite_Pion_InterdireMunition" or
-         orderType == "Rep_OrderConduite_Pion_AutoriserMunition" or
+         orderType == "Rep_OrderConduite_InterdireMunition" or
+         orderType == "Rep_OrderConduite_AutoriserMunition" or
          orderType == "Rep_OrderConduite_Pion_AutoriserToutesMunitions" or
          orderType == "Rep_OrderConduite_Population_ChangerAttitude" or
          orderType == "Rep_OrderConduite_Attendre" or
@@ -92,8 +92,8 @@ integration.mustBePropagate = function( self )
          orderType == "Rep_OrderConduite_MettreTenueNBC" or
          orderType == "Rep_OrderConduite_EnleverTenueNBC" or
          orderType == "Rep_OrderConduite_ChangerAmbiance" or
-         orderType == "Rep_OrderConduite_Pion_InterdireMunition" or
-         orderType == "Rep_OrderConduite_Pion_AutoriserMunition" or
+         orderType == "Rep_OrderConduite_InterdireMunition" or
+         orderType == "Rep_OrderConduite_AutoriserMunition" or
          orderType == "Rep_OrderConduite_Pion_AutoriserToutesMunitions" or
          orderType == "Rep_OrderConduite_ChangerReglesEngagement" or
          orderType == "Rep_OrderConduite_ChangerReglesEngagementPopulation" or
@@ -248,11 +248,11 @@ integration.startFragOrderTask = function( self )
         orderType = "france.military.platoon.tasks.ChangerAmbianceVitesse"
         stopTask( "france.military.platoon.tasks.ChangerAmbianceSurete" )
     end
-  elseif orderType =="Rep_OrderConduite_Pion_InterdireMunition" then
+  elseif orderType =="Rep_OrderConduite_InterdireMunition" then
     DEC_Pion_InterdireMunition(self.source:Getmunitions_())
     integration.cleanFragOrder( self )
     return
-  elseif orderType =="Rep_OrderConduite_Pion_AutoriserMunition" then
+  elseif orderType =="Rep_OrderConduite_AutoriserMunition" then
     DEC_Pion_AutoriserMunition(self.source:Getmunitions_())
     integration.cleanFragOrder( self )
     return

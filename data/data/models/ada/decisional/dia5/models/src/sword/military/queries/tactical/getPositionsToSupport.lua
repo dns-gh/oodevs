@@ -26,14 +26,23 @@ queryImplementation "getPositionsToSupport"
         local newResult = {}
         local knowledges = {}
         local newPositions = {}
+        local DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition = DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition
+        local DEC_Tir_PorteeMaxPourTirer = DEC_Tir_PorteeMaxPourTirer
+        local DEC_Connaissances_BlocUrbainDansCercle = DEC_Connaissances_BlocUrbainDansCercle
+        local DEC_Geometrie_CalculerLocalisationsBU = DEC_Geometrie_CalculerLocalisationsBU
         if ( knowledgeManager.bCanCallStaticQuery or params.dynamic ) then
-
+           local rangeDistanceMax = DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition() / 2 -- indirect fire case
+           local rangeDistanceMin = DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition() / 3
+           if rangeDistanceMax <= 0 then -- direct fire case
+               rangeDistanceMax = DEC_Tir_PorteeMaxPourTirer( 0.7 ) / 2
+               rangeDistanceMin = DEC_Tir_PorteeMaxPourTirer( 0.8 ) / 2
+           end
             -- Pour toutes les connaissances, garder celles qui sont bonnes pour soutenir
             for _, objective in pairs ( params.elementsToSupport ) do
                 local foundAPositionForThisObjective = false
                 if not objective:isNearby() then 
                     knowledges[ #knowledges + 1 ] = CreateProxyKnowledge( 
-                       sword.military.world.SupportingArea, objective,{distanceMin = DEC_Tir_PorteeMaxPourTirer( 0.8 )/2 , distanceMax = DEC_Tir_PorteeMaxPourTirer( 0.7 )/2 } )
+                       sword.military.world.SupportingArea, objective,{distanceMin = rangeDistanceMin , distanceMax = rangeDistanceMax } )
                 else
                     -- Les blocs urbains
                     local urbanknowledges = DEC_Connaissances_BlocUrbainDansCercle( objective:getPosition(), 100 )
@@ -53,10 +62,10 @@ queryImplementation "getPositionsToSupport"
                     end
                 end
                 
-                 -- si pas de position on vient à hauteur de l'agent soutenu
+                 -- si pas de position
                 if not foundAPositionForThisObjective then
                     newResult[ #newResult + 1 ] = CreateProxyKnowledge( 
-                       sword.military.world.SupportingArea, objective, {distanceMin = DEC_Tir_PorteeMaxPourTirer( 0.8 )/2 , distanceMax = DEC_Tir_PorteeMaxPourTirer( 0.7 )/2 } )
+                       sword.military.world.SupportingArea, objective, {distanceMin = rangeDistanceMin , distanceMax = rangeDistanceMax } )
                 end
             end
             

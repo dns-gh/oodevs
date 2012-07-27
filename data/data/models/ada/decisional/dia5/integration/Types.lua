@@ -271,3 +271,4 @@ eObus_ACED = 2
 eObus_Fumigenes = 3
 eObus_Eclairant = 4
 eObus_Mine = 5
+eObus_effect = 6

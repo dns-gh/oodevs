@@ -599,7 +599,6 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< T_ConstKnowledgeAgentVector( const TER_Localisation* ) >( boost::bind( &DEC_KnowledgeFunctions::GetDetectedAgentsInZone, boost::cref( GetPion() ), _1 ) );
     brain[ "DEC_Connaissances_UnitesPrenantAPartie" ] = boost::bind( &DEC_KnowledgeFunctions::GetAgentsAttacking, boost::ref( GetPion() ) );
     brain[ "DEC_Connaissances_UnitesEnnemiesDangereuses" ] = boost::bind( &DEC_KnowledgeFunctions::GetDangerousEnemies, boost::ref( GetPion() ) );
-
     brain[ "DEC_Connaissances_UnitesEnnemiesVivantesPercues" ] = boost::bind( &DEC_KnowledgeFunctions::GetLivingEnemiesPerceived, boost::ref( GetPion() ) );
     brain[ "DEC_Connaissances_Observable" ] =
         boost::function< void( const directia::tools::binders::ScriptRef& ) >( boost::bind( &DEC_KnowledgeFunctions::GetObservableKnowledge, boost::ref( brain ), boost::ref( GetPion() ), initQueryFunction, _1 ) );
@@ -768,6 +767,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< float( float ) >( boost::bind( &DEC_FireFunctions::GetMaxRangeToFire, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_Tir_PorteeMaxTirIndirect" ] =
         boost::function< float( const PHY_DotationCategory* ) >( boost::bind( &DEC_FireFunctions::GetMaxRangeToIndirectFire, boost::ref( GetPion() ), _1 ) );
+    brain[ "DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition" ] =
+        boost::bind( &DEC_FireFunctions::GetMaxRangeToIndirectFire, boost::ref( GetPion() ) );
     brain[ "DEC_Tir_PorteeMinTirIndirect" ] =
         boost::function< float( const PHY_DotationCategory* ) >( boost::bind( &DEC_FireFunctions::GetMinRangeToIndirectFire, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_Tir_PorteeMaxTirIndirect_SansTesterEtatMunitions" ] =

@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.skills.actions.ApplyMortarFires" source-version="1.0.0">
     <description>Permet d'appliquer les feux lors de la réception de l'ordre de conduite Appliquer les feux pour les mortiers </description>
-    <parameters/>
+    <parameters>
+        <parameter name="alliedUnits">
+            <description>Unités alliées à supporter</description>
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Supportable"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
     <modifiers/>
     <links>
         <link name="indirectFire" skill="sword.military.platoon.skills.ApplyIndirectFire"/>

@@ -76,16 +76,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Deposer Unite Capturee"/>
       </fragorders>
@@ -124,16 +122,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -195,16 +191,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Deposer Unite Capturee"/>
       </fragorders>
@@ -244,16 +238,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Deposer Unite Capturee"/>
       </fragorders>
@@ -282,16 +274,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -322,16 +312,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
@@ -363,16 +351,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -404,16 +390,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -448,16 +432,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -528,16 +510,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -567,16 +547,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -628,16 +606,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -670,16 +646,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -710,16 +684,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -753,16 +725,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -800,16 +770,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -846,16 +814,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -896,16 +862,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -939,16 +903,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -982,16 +944,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -1036,16 +996,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -1083,8 +1041,6 @@
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -1112,16 +1068,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -1160,16 +1114,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
@@ -1196,16 +1148,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -1233,8 +1183,6 @@
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Arreter Silence Radar"/>
       </fragorders>
@@ -1276,16 +1224,14 @@
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -1308,18 +1254,15 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
     <unit dia-type="AntitankHelicopterPatrol" file="Appui\Alat\Pions\Pat Hah\model.bms" masalife="false" name="Patrouille HAH">
@@ -1354,18 +1297,15 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
     <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hac\model.bms" masalife="false" name="Patrouille HAC">
@@ -1400,18 +1340,15 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
     <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Ham\model.bms" masalife="false" name="Patrouille HAM">
@@ -1444,18 +1381,15 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
     <unit dia-type="TransportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\model.bms" masalife="false" name="Patrouille HM">
@@ -1484,18 +1418,15 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
     <unit dia-type="GeneralPurposeHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\model.bms" masalife="false" name="Patrouille HM Log">
@@ -1523,18 +1454,15 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
     <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Tigre\model.bms" masalife="false" name="Patrouille Tigre">
@@ -1570,18 +1498,15 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
     <unit dia-type="Stations_Horizon" file="Appui\Rens\Pions\Radint\Stations Horizon\Model.bms" masalife="false" name="Stations Horizon">
@@ -1604,15 +1529,13 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -1634,15 +1557,13 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -1673,18 +1594,15 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
     <unit dia-type="TransportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\Model.bms" masalife="false" name="GLAISE ALFT Patrouille UH">
@@ -1713,18 +1631,15 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
     <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Tigre\Model.bms" masalife="false" name="GLAISE ALFT Patrouille A">
@@ -1758,18 +1673,15 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
     <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Ham\Model.bms" masalife="false" name="GLAISE ALFT Patrouille R">
@@ -1798,18 +1710,15 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
     <unit dia-type="AACCP" file="Appui\Alat\Pions\PC\Model.bms" masalife="false" name="GLAISE ALFT PC">
@@ -1830,18 +1739,15 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.Genie.Traitement des eaux">
@@ -1872,16 +1778,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -1922,16 +1826,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -1977,16 +1879,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -2030,16 +1930,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -2094,16 +1992,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Deposer Unite Capturee"/>
       </fragorders>
@@ -2159,16 +2055,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Deposer Unite Capturee"/>
       </fragorders>
@@ -2221,16 +2115,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Deposer Unite Capturee"/>
       </fragorders>
@@ -2296,16 +2188,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Deposer Unite Capturee"/>
       </fragorders>
@@ -2369,16 +2259,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Deposer Unite Capturee"/>
       </fragorders>
@@ -2416,16 +2304,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Deposer Unite Capturee"/>
       </fragorders>
@@ -2470,16 +2356,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Deposer Unite Capturee"/>
       </fragorders>
@@ -2530,16 +2414,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Deposer Unite Capturee"/>
         <fragorder name="Embarquer"/>
@@ -2576,16 +2458,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -2614,16 +2494,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -2653,16 +2531,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -2694,16 +2570,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -2720,8 +2594,6 @@
         <fragorder name="S'arreter"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Interrompre"/>
       </fragorders>
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.LOG.Convoi">
@@ -2745,17 +2617,15 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Poursuivre convoi"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -2787,17 +2657,15 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Poursuivre convoi"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
@@ -2840,17 +2708,15 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Poursuivre convoi"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -2879,17 +2745,15 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Poursuivre convoi"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -2920,17 +2784,15 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Poursuivre convoi"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -2955,17 +2817,15 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Poursuivre convoi"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -3004,17 +2864,15 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Poursuivre convoi"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -3047,17 +2905,15 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Poursuivre convoi"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -3086,17 +2942,15 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Poursuivre convoi"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -3125,17 +2979,15 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Poursuivre convoi"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -3164,17 +3016,15 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Poursuivre convoi"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -3203,17 +3053,15 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Poursuivre convoi"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -3244,17 +3092,15 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Poursuivre convoi"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -3286,16 +3132,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -3343,16 +3187,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -3385,16 +3227,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -3422,16 +3262,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -3455,15 +3293,13 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -3485,15 +3321,13 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -3516,15 +3350,13 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -3546,15 +3378,13 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -3581,15 +3411,13 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -3613,15 +3441,13 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -3647,16 +3473,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -3685,16 +3509,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
@@ -3726,16 +3548,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -3765,16 +3585,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
@@ -3813,16 +3631,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
@@ -3857,16 +3673,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -3891,15 +3705,13 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -3920,12 +3732,10 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -3947,13 +3757,12 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -3983,12 +3792,10 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Embarquer"/>
@@ -4016,12 +3823,10 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -4046,15 +3851,13 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -4087,15 +3890,13 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Embarquer"/>
@@ -4123,15 +3924,13 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -4158,15 +3957,13 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -4192,15 +3989,13 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -4231,15 +4026,13 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Embarquer"/>
@@ -4270,15 +4063,13 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Embarquer"/>
@@ -4311,15 +4102,13 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Embarquer"/>
@@ -4349,15 +4138,13 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Embarquer"/>
@@ -4382,15 +4169,13 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -4414,15 +4199,13 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -4448,15 +4231,13 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -4487,16 +4268,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
@@ -4528,16 +4307,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -4571,16 +4348,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -4614,16 +4389,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -4653,16 +4426,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -4689,8 +4460,6 @@
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -4714,8 +4483,6 @@
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Arreter Silence Radar"/>
       </fragorders>
@@ -4746,16 +4513,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -4791,16 +4556,14 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -4889,14 +4652,14 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Deposer Unite Capturee"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
       </fragorders>
     </automat>
     <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.INF.Cie Proterre">
@@ -4944,10 +4707,8 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -5021,13 +4782,13 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
       </fragorders>
     </automat>
     <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.INF.PC">
@@ -5059,10 +4820,8 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -5113,10 +4872,8 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -5165,10 +4922,8 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -5220,10 +4975,8 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -5278,10 +5031,8 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -5344,10 +5095,8 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -5379,13 +5128,13 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
       </fragorders>
     </automat>
     <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.ABC.AMX-ERC">
@@ -5462,10 +5211,8 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -5524,10 +5271,8 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -5604,10 +5349,8 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -5657,10 +5400,8 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -5695,10 +5436,8 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -5730,10 +5469,8 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -5792,10 +5529,8 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -5848,10 +5583,8 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -5903,10 +5636,8 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -5967,10 +5698,8 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -6006,10 +5735,8 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -6053,8 +5780,6 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -6085,8 +5810,6 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -6121,8 +5844,6 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -6156,10 +5877,8 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </automat>
@@ -6180,10 +5899,8 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </automat>
@@ -6217,11 +5934,9 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Poursuivre convoi"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -6253,10 +5968,8 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </automat>
@@ -6296,10 +6009,8 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </automat>
@@ -6327,10 +6038,8 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </automat>
@@ -6359,10 +6068,8 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </automat>
@@ -6392,10 +6099,8 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -6440,12 +6145,9 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </automat>
     <automat dia-type="AttackHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Tigre\model.bms" masalife="false" name="Sgpt Tigre">
@@ -6484,12 +6186,9 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </automat>
     <automat dia-type="TransportHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hm\model.bms" masalife="false" name="Sgpt Hm">
@@ -6518,12 +6217,9 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </automat>
     <automat dia-type="Escadrille_Horizon" file="Appui\Rens\Automates\Radint\Esc Horizon\Model.bms" masalife="false" name="Escadrille Horizon">
@@ -6549,9 +6245,7 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -6581,12 +6275,9 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </automat>
     <automat dia-type="AttackHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hap Mixte\Model.bms" masalife="false" name="GLAISE ALFT Esc A et Reco">
@@ -6624,12 +6315,9 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </automat>
     <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.Milice">
@@ -6668,13 +6356,13 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
       </fragorders>
     </automat>
     <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.SGTIA.ABC">
@@ -6756,11 +6444,9 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Deposer Unite Capturee"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -6785,10 +6471,8 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </automat>
@@ -6810,9 +6494,7 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -6834,9 +6516,7 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -6860,9 +6540,7 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -6885,9 +6563,7 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -6911,10 +6587,8 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </automat>
@@ -6932,10 +6606,8 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </automat>
@@ -6960,10 +6632,8 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </automat>
@@ -6995,10 +6665,8 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </automat>
@@ -7031,10 +6699,8 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </automat>
@@ -7064,10 +6730,8 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
@@ -7098,10 +6762,8 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
@@ -7129,9 +6791,7 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -7157,9 +6817,7 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -7185,9 +6843,7 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -7213,9 +6869,7 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -7239,9 +6893,7 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -7269,9 +6921,7 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -7295,9 +6945,7 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -7324,9 +6972,7 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -7357,10 +7003,8 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </automat>
@@ -7392,10 +7036,8 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </automat>
@@ -7425,9 +7067,7 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -7458,13 +7098,13 @@
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
       </fragorders>
     </automat>
   </automats>
@@ -7496,10 +7136,8 @@
       <fragorders>
         <fragorder name="Population Changer Attitude"/>
         <fragorder name="Attendre"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Poursuivre"/>
       </fragorders>
     </crowd>
   </crowd>
 </models>
-<!-- signature="1312241338" -->
+<!-- signature="2525922929" -->

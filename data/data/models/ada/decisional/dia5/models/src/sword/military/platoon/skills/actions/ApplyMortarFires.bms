@@ -20,24 +20,48 @@ rootnode
             self.order = nil
         end
     end,
+    
+    create = function( self )
+        self.dangerousEnemies = {}
+        self.alliedUnits = copyTable( self.params.alliedUnits )
+    end,
 
     -- --------------------------------------------------------------------------------
     -- For each objective of the skill, try to observe it.
     -- --------------------------------------------------------------------------------
     activate = function( self )
         
-        if not self.order then -- sert pour appliquer les feux
+        if not self.order then -- received frago : apply fire
             self.order = integration.query.getFirstFireOrder()
         end
-        if self.order then
+        
+        -- Apply fire when supporting allies who need help and not self commanding
+        if not meKnowledge:isSelfCommanding() then
+            self.dangerousEnemies = integration.query.getEnemiesToIndirectFireWhenSupport( self.alliedUnits )
+            self.automaticTarget = integration.findEnemyToMortarIndirectFire( self.dangerousEnemies ) -- unit should be unload to have result
+        end
+        if self.order or ( self.dangerousEnemies and #self.dangerousEnemies > 0 ) then --Need to dismount before firing
             if not meKnowledge:isDismounted() and meKnowledge:canDismount() then
                 Activate( skill.links.dismount, 1 )
             end
-            
+        end
+        
+        if self.order then  --Apply fire when received frago
             if meKnowledge:isDismounted() then
                 integration.sendfireAvailable(true)
                 Activate( skill.nodes.CR_ReceiveFireOrder, 1 )
                 Activate( skill.links.indirectFire, 1, self.order )
+            end
+        end
+        
+        if self.automaticTarget and self.automaticTarget:isValid() then --Apply fire to support allies automatically
+            if meKnowledge:isDismounted() then
+                self.dotation = integration.munitionPourTirIndirect( self.automaticTarget:getPosition() )
+                if integration.hasDotation( self.dotation ) then
+                    integration.sendfireAvailable(true)
+                    Activate( skill.nodes.CR_ReceiveFireOrder, 1 )
+                    Activate( skill.links.indirectFire, 1, { entities = { self.automaticTarget }, interventionType = 1, munition = self.dotation } )
+                end
             end
         end
     end,

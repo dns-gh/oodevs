@@ -1261,6 +1261,18 @@ double PHY_RolePion_Composantes::GetMaxRangeToIndirectFire( const PHY_DotationCa
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::GetMaxRangeToIndirectFire
+// Created: GGE 2012-07-25
+// -----------------------------------------------------------------------------
+double PHY_RolePion_Composantes::GetMaxRangeToIndirectFire( ) const
+{
+    double rRange = -1.;
+    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+        rRange = std::max( rRange, ( *it )->GetMaxRangeToIndirectFire() );
+    return rRange;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::GetMinRangeToIndirectFire
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------

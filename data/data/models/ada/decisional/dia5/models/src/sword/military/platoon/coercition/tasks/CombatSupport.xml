@@ -58,7 +58,7 @@
                         </value>
                     </parameter>
                 </skill>
-                <skill name="sword.military.platoon.coercition.skills.Engage" priority="0.8">
+                <skill name="sword.military.platoon.coercition.skills.Engage" priority="0.3">
                     <parameter name="entities">
                         <value>
                             <parameter>enemiesInRange</parameter>
@@ -76,7 +76,13 @@
                         </value>
                     </parameter>
                 </skill>
-                <skill name="sword.military.platoon.skills.actions.ApplyMortarFires" priority="0.1"/>
+                <skill name="sword.military.platoon.skills.actions.ApplyMortarFires" priority="0.6">
+                    <parameter name="alliedUnits">
+                        <value>
+                            <parameter>objectives</parameter>
+                        </value>
+                    </parameter>
+                </skill>
             </skills>
         </stage>
     </stages>
