@@ -272,11 +272,21 @@ void NodeController::Stop( Node_ABC& node, bool skip, bool weak ) const
         Save( node );
 }
 
+// -----------------------------------------------------------------------------
+// Name: NodeController::Update
+// Created: BAX 2012-07-27
+// -----------------------------------------------------------------------------
 NodeController::T_Node NodeController::Update( const Uuid& id, const boost::optional< std::string >& name, size_t num_sessions, size_t parallel_sessions )
 {
     T_Node node = nodes_.Get( id );
-    if( node )
-        node->Update( name, num_sessions, parallel_sessions );
+    if( !node )
+        return node;
+    bool restart = node->Update( name, num_sessions, parallel_sessions );
+    if( restart )
+    {
+        node->SoftKill();
+        Start( *node, false, true );
+    }
     return node;
 }
 

@@ -80,7 +80,8 @@ struct Node_ABC : public boost::noncopyable
                         const Path& web, const std::string& type, int host, bool weak ) = 0;
     virtual bool Stop( bool weak ) = 0;
     virtual void Remove( const runtime::FileSystem_ABC& system, runtime::Async& async ) = 0;
-    virtual void Update( const boost::optional< std::string >& name, size_t num_sessions, size_t parallel_sessions ) = 0;
+    virtual bool Update( const boost::optional< std::string >& name, size_t num_sessions, size_t parallel_sessions ) = 0;
+    virtual void SoftKill() = 0;
     //@}
 
     //! @name Install methods

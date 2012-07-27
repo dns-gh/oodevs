@@ -101,7 +101,8 @@ public:
                         const Path& web, const std::string& type, int host, bool weak );
     virtual bool Stop( bool weak );
     virtual void Remove( const runtime::FileSystem_ABC& system, runtime::Async& async );
-    virtual void Update( const boost::optional< std::string >& name, size_t num_sessions, size_t parallel_sessions );
+    virtual bool Update( const boost::optional< std::string >& name, size_t num_sessions, size_t parallel_sessions );
+    virtual void SoftKill();
     //@}
 
     //! @name Node_ABC methods

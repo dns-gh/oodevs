@@ -10,13 +10,9 @@
 node_settings = Handlebars.compile $("#node_settings_template").html()
 node_template = Handlebars.compile $("#node_template").html()
 node_error_template = Handlebars.compile $("#node_error_template").html()
-node_warning_template = Handlebars.compile $("#node_warning_template").html()
 
 print_error = (text) ->
     display_error "node_error", node_error_template, text
-
-print_warning = (text) ->
-    display_error "node_error", node_warning_template, text
 
 pop_settings = (ui, data) ->
     ui.html node_settings data
@@ -127,9 +123,6 @@ class NodeItemView extends Backbone.View
             mod.modal "hide"
             @model.save data,
                 wait: true
-                success: =>
-                    if data.name != previous
-                        print_warning "Please restart node " + @model.get("ident") + " to apply changes"
                 error: =>
                     print_error "Unable to update node " + @model.get "ident"
 

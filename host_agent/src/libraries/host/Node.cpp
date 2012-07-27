@@ -307,6 +307,15 @@ bool Node::Stop( bool weak )
     return StopProcess( weak ).second;
 }
 
+// -----------------------------------------------------------------------------
+// Name: Node::SoftKill
+// Created: BAX 2012-07-27
+// -----------------------------------------------------------------------------
+void Node::SoftKill()
+{
+    StopProcess( true ).first->Join( 10*1000 );
+}
+
 namespace
 {
 void Cleanup( Node::T_Process process, const FileSystem_ABC& system, const Path& path )
@@ -331,14 +340,17 @@ void Node::Remove( const FileSystem_ABC& system, Async& async )
 // Name: Node::Update
 // Created: BAX 2012-06-25
 // -----------------------------------------------------------------------------
-void Node::Update( const boost::optional< std::string >& name, size_t num_sessions, size_t parallel_sessions )
+bool Node::Update( const boost::optional< std::string >& name, size_t num_sessions, size_t parallel_sessions )
 {
     boost::lock_guard< boost::shared_mutex > lock( access_ );
-    if( name != boost::none )
-        name_ = *name;
     num_sessions_ = num_sessions;
     num_counter_ = 0;
     parallel_sessions_ = parallel_sessions;
+    if( name == boost::none )
+        return false;
+    std::string next = *name;
+    std::swap( next, name_ );
+    return next != name_;
 }
 
 namespace

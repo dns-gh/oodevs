@@ -32,6 +32,7 @@ namespace mocks
         MOCK_METHOD( Save, 0 );
         MOCK_METHOD( Start, 6 );
         MOCK_METHOD( Stop, 1 );
+        MOCK_METHOD( SoftKill, 0 );
         MOCK_METHOD( Remove, 2 );
         MOCK_METHOD( Update, 3 );
         MOCK_METHOD( GetInstall, 0 );
