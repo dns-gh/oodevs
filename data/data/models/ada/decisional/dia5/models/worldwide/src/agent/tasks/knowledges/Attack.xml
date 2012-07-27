@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.tasks.knowledges.EscortRefugeesToCamp" source-version="1.0.0" extends="agent.tasks.knowledges.PlatoonTask">
-    <description>The knowledge of the 'EscortRefugeesToCamp' mission. This knowledge is used by the company commander to perform its own tasks. </description>
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.tasks.knowledges.Attack" source-version="1.0.0" extends="agent.tasks.knowledges.PlatoonTask">
+    <description>The knowledge of the 'Attack' mission. This knowledge is used by the company commander to perform its own tasks. </description>
     <methods>
         <method name="getPionEfficiency">
-            <description>Returns the efficiency of the agent to perform the 'EscortRefugeesToCamp' mission. The returned value is defined between '0' and '1'. A value of '0' means that the agent is not efficient at all. A value of '1' means that the agent is perfectly adapted to perform the mission.</description>
+            <description>Returns the efficiency of the agent to perform the 'Attack' mission. The returned value is defined between '0' and '1'. A value of '0' means that the agent is not efficient at all. A value of '1' means that the agent is perfectly adapted to perform the mission.</description>
             <return>
                 <type>
                     <simple name="numeric"/>

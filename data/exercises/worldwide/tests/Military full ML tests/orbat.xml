@@ -47,21 +47,28 @@
             <unit command-post="true" id="322" name="MILITARY.Infantry platoon" position="29TNF3535258463" type="MILITARY.Infantry platoon"/>
             <unit command-post="false" id="323" name="MILITARY.Infantry platoon" position="29TNF3535158562" type="MILITARY.Infantry platoon"/>
             <unit command-post="false" id="324" name="MILITARY.Infantry platoon" position="29TNF3535258363" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="520" name="MILITARY.Engineer platoon" position="29TNF3558458512" type="MILITARY.Engineer platoon"/>
+            <unit command-post="false" id="521" name="MILITARY.Engineer platoon" position="29TNF3561158463" type="MILITARY.Engineer platoon"/>
           </automat>
           <automat engaged="true" id="325" knowledge-group="321" name="MILITARY.Infantry company" symbol="symbols/sfgpucim" type="MILITARY.Infantry company">
             <unit command-post="true" id="326" name="MILITARY.Infantry platoon" position="29TNF3454358913" type="MILITARY.Infantry platoon"/>
             <unit command-post="false" id="327" name="MILITARY.Infantry platoon" position="29TNF3454259013" type="MILITARY.Infantry platoon"/>
             <unit command-post="false" id="328" name="MILITARY.Infantry platoon" position="29TNF3454358813" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="499" name="MILITARY.Engineer platoon" position="29TNF3470458809" type="MILITARY.Engineer platoon"/>
+            <unit command-post="false" id="500" name="MILITARY.Engineer platoon" position="29TNF3418358933" type="MILITARY.Engineer platoon"/>
           </automat>
           <automat engaged="true" id="329" knowledge-group="321" name="MILITARY.Infantry company" symbol="symbols/sfgpucim" type="MILITARY.Infantry company">
             <unit command-post="true" id="330" name="MILITARY.Infantry platoon" position="29TNF3547059813" type="MILITARY.Infantry platoon"/>
             <unit command-post="false" id="331" name="MILITARY.Infantry platoon" position="29TNF3546959913" type="MILITARY.Infantry platoon"/>
             <unit command-post="false" id="332" name="MILITARY.Infantry platoon" position="29TNF3547059714" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="497" name="MILITARY.Engineer platoon" position="29TNF3569059802" type="MILITARY.Engineer platoon"/>
+            <unit command-post="false" id="498" name="MILITARY.Engineer platoon" position="29TNF3566859855" type="MILITARY.Engineer platoon"/>
           </automat>
           <automat engaged="true" id="336" knowledge-group="321" name="MILITARY.Infantry company" symbol="symbols/sfgpucim" type="MILITARY.Infantry company">
             <unit command-post="true" id="337" name="MILITARY.Infantry platoon" position="29TNF3327157593" type="MILITARY.Infantry platoon"/>
             <unit command-post="false" id="338" name="MILITARY.Infantry platoon" position="29TNF3327157692" type="MILITARY.Infantry platoon"/>
             <unit command-post="false" id="339" name="MILITARY.Infantry platoon" position="29TNF3327257493" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="501" name="MILITARY.Engineer platoon" position="29TNF3315057397" type="MILITARY.Engineer platoon"/>
           </automat>
           <automat engaged="true" id="340" knowledge-group="321" name="MILITARY.Infantry company" symbol="symbols/sfgpucim" type="MILITARY.Infantry company">
             <unit command-post="true" id="341" name="MILITARY.Infantry platoon" position="29TNF3430556979" type="MILITARY.Infantry platoon"/>
@@ -320,4 +327,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="2942133757" -->
+<!-- signature="3168559101" -->

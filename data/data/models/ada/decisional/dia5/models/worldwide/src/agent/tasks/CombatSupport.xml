@@ -21,7 +21,7 @@
         </parameter>
     </parameters>
     <goal>
-        <description>Rester en mesure d'appuyer (tir/observation) les objectifs.</description>
+        <description>Provide fires to the friend units.</description>
     </goal>
     <stages>
         <stage label="supporting units" permanent="true">

@@ -1,25 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="platoon.combat.tasks.ContreAttaquer" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.Attack">
-  <description>Contre attaquer</description>
-  <parameters>
-    <parameter name="objective">
-      <description>L'objectif : destinations de la contre attaque.</description>
-      <type>
-        <class name="properties.Destroying"/>
-      </type>
-    </parameter>
-  </parameters>
-  <goal>
-    <description>Mouvement rapide, attaque des unités se trouvant proche des objectifs.</description>
-  </goal>
-  <stages/>
-  <next-task name="agent.tasks.Attack">
-    <parameter name="objectives">
-      <value>
-        <list>
-          <parameter>objective</parameter>
-        </list>
-      </value>
-    </parameter>
-  </next-task>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="platoon.combat.tasks.ContreAttaquer" source-version="1.0.0" knowledge-class="platoon.combat.tasks.knowledges.Attack">
+    <description>Contre attaquer</description>
+    <parameters>
+        <parameter name="objective">
+            <description>L'objectif : destinations de la contre attaque.</description>
+            <type>
+                <class name="properties.Reachable"/>
+            </type>
+        </parameter>
+    </parameters>
+    <goal>
+        <description>Mouvement rapide, attaque des unités se trouvant proche des objectifs.</description>
+    </goal>
+    <stages/>
+    <next-task name="platoon.combat.tasks.Attaquer">
+        <parameter name="objective">
+            <value>
+                <parameter>objective</parameter>
+            </value>
+        </parameter>
+    </next-task>
 </task>

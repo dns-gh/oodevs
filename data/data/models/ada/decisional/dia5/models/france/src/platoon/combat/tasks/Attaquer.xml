@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="platoon.combat.tasks.Attaquer" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.Attack">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="platoon.combat.tasks.Attaquer" source-version="1.0.0" knowledge-class="platoon.combat.tasks.knowledges.Attack">
     <description>Contre attaquer</description>
     <parameters>
         <parameter name="objective">
@@ -12,14 +12,52 @@
     <goal>
         <description>Mouvement rapide, attaque des unités se trouvant proche des objectifs.</description>
     </goal>
-    <stages/>
-    <next-task name="agent.tasks.Attack">
-        <parameter name="objectives">
-            <value>
-                <list>
-                    <parameter>objective</parameter>
-                </list>
-            </value>
-        </parameter>
-    </next-task>
+    <let name="destroyableEntities">
+        <value>
+            <call method="queries.getEnemiesInRange">
+                <parameter name="probabilityToHit">
+                    <value>
+                        <number>0.5</number>
+                    </value>
+                </parameter>
+            </call>
+        </value>
+    </let>
+    <stages>
+        <stage label="Attaque" permanent="true">
+            <description>Mouvement tactique et destruction des ennemis proches des objectifs.</description>
+            <goal>
+                <description>Occuper les objectifs, engager les ennemis.</description>
+            </goal>
+            <skills>
+                <skill name="agent.skills.Engage" priority="0.1">
+                    <parameter name="entities">
+                        <value>
+                            <parameter>destroyableEntities</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="positions">
+                        <value>
+                            <call method="queries.getPositionsToDestroy">
+                                <parameter name="elementsToDestroy">
+                                    <value>
+                                        <parameter>destroyableEntities</parameter>
+                                    </value>
+                                </parameter>
+                            </call>
+                        </value>
+                    </parameter>
+                </skill>
+                <skill name="agent.skills.MoveToward" priority="0.9">
+                    <parameter name="entities">
+                        <value>
+                            <list>
+                                <parameter>objective</parameter>
+                            </list>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
 </task>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="platoon.terrorism.tasks.CommettreAttentat" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.Attack">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="platoon.terrorism.tasks.CommettreAttentat" source-version="1.0.0" knowledge-class="platoon.combat.tasks.knowledges.Attack">
     <parameters>
         <parameter name="objective">
             <description>Cible contre laquelle l'attentat est commis.</description>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="company.combat.tasks.Attaquer" source-version="1.0.0" knowledge-class="commander.tasks.knowledges.AttackEffect">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="company.combat.tasks.Attaquer" source-version="1.0.0" knowledge-class="company.combat.tasks.knowledges.AttackEffect">
     <parameters>
         <parameter name="objective" nullable="true">
             <type>
@@ -10,37 +10,37 @@
             </default>
         </parameter>
     </parameters>
-    <stages/>
-    <next-task name="commander.tasks.Attack">
-        <parameter name="companyTask">
-            <value>
-                <string>company.combat.tasks.Attaquer</string>
-            </value>
-        </parameter>
-        <parameter name="mainTasks">
-            <value>
-                <string>platoon.combat.tasks.Attaquer</string>
-            </value>
-        </parameter>
-        <parameter name="supportTasks">
-            <value>
-                <string>platoon.tasks.Appuyer;.platoon.combat.support.engineer.tasks.AppuiMobilite</string>
-            </value>
-        </parameter>
-        <parameter name="objective">
-            <value>
-                <parameter>objective</parameter>
-            </value>
-        </parameter>
-        <parameter name="defaultTask">
-            <value>
-                <string>platoon.tasks.Suivre</string>
-            </value>
-        </parameter>
-        <parameter name="taskForSupporting">
-            <value>
-                <string>platoon.tasks.Appuyer</string>
-            </value>
-        </parameter>
-    </next-task>
+    <stages>
+        <stage label="attaque">
+            <skills>
+                <skill name="commander.skills.Lead" main="true">
+                    <parameter name="companyTask">
+                        <value>
+                            <string>company.combat.tasks.Attaquer</string>
+                        </value>
+                    </parameter>
+                    <parameter name="mainTasks">
+                        <value>
+                            <string>platoon.combat.tasks.Attaquer</string>
+                        </value>
+                    </parameter>
+                    <parameter name="supportTasks">
+                        <value>
+                            <string>platoon.tasks.Appuyer;platoon.combat.support.engineer.tasks.AppuiMobilite</string>
+                        </value>
+                    </parameter>
+                    <parameter name="defaultTask">
+                        <value>
+                            <string>platoon.tasks.Suivre</string>
+                        </value>
+                    </parameter>
+                    <parameter name="taskForSupporting">
+                        <value>
+                            <string>platoon.tasks.Appuyer</string>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
 </task>

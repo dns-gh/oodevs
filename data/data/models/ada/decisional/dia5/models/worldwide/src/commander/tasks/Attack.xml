@@ -1,36 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.tasks.CombatSupport" source-version="1.0.0" knowledge-class="commander.tasks.knowledges.CombatSupportEffect">
-    <description>For the commander agent, to order subordinates to support a friend company. Forward echelon units receive the main task (they support the forward echelon of the supported company), other units (rear echelon) support the forward echelon of the company. </description>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.tasks.Attack" source-version="1.0.0" knowledge-class="commander.tasks.knowledges.Attack">
+    <description>For the commander agent, to order subordinates units to attack the issued objective. Forward echelon units will receive the main task (the 'attack' mission), other units (rear echelon) support the forward echelon units.</description>
     <parameters>
-        <parameter name="objective">
-            <description>The friend company to support.</description>
+        <parameter name="objective" nullable="true">
             <type>
-                <class name="world.Company"/>
+                <class name="properties.Positionable"/>
             </type>
+            <default>
+                <nil/>
+            </default>
         </parameter>
     </parameters>
     <stages>
-        <stage label="moving to support the company">
+        <stage label="advancing toward the objective" disable-when-done="true">
             <skills>
                 <skill name="commander.skills.Lead" main="true">
                     <parameter name="companyTask">
                         <value>
-                            <string>commander.tasks.CombatSupport</string>
+                            <string>commander.tasks.Attack</string>
                         </value>
                     </parameter>
                     <parameter name="mainTasks">
                         <value>
-                            <string>agent.tasks.CombatSupport</string>
+                            <string>agent.tasks.Attack</string>
                         </value>
                     </parameter>
                     <parameter name="supportTasks">
                         <value>
-                            <string>agent.tasks.CombatSupport;agent.tasks.MobilitySupport</string>
+                            <string>agent.tasks.CombatSupport;</string>
                         </value>
                     </parameter>
                     <parameter name="taskForSupporting">
                         <value>
-                            <string>agent.tasks.CombatSupport</string>
+                            <string>agent.tasks.CombatSupport;agent.tasks.MobilitySupport</string>
                         </value>
                     </parameter>
                     <parameter name="defaultTask">
