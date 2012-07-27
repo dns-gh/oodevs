@@ -63,9 +63,11 @@
                 </div>
             </div>
             <div>
-                <div>Started 2012-01-01 at 00:00:00</div>
-                <div>Time running 00:00:00</div>
-                <div>0 clients connected</div>
+                {{#if start}}
+                <div><span class="item_label">Start</span> {{start}}</div>
+                {{/if}}
+                <div><span class="item_label">Duration</span> 0</div>
+                <div><span class="item_label">Clients</span> 0 connected</div>
             </div>
             <div class="btn-group session_top_right">
                 {{#is_option status playing="" paused="" replaying=""}}
@@ -94,15 +96,17 @@
                 <a title="Download" class="btn download disabled"><i class="icon-download-alt"></i></a>
                 {{/is_option}}
                 {{#is_option status stopped=""}}
-                <a title="Archive" class="btn archive disabled"><i class="icon-lock"></i></a>
+                <a title="Archive" class="btn archive disabled"><i class="icon-hdd"></i></a>
                 {{/is_option}}
                 {{#is_option status stopped=""}}
                 <a title="Delete" class="btn delete"><i class="icon-trash"></i></a>
                 {{/is_option}}
             </div>
+            [[/*
             <div class="session_bottom_right">
                 <a class="btn disabled"><i class="icon-th-list"></i> More <span class="caret"></span></a>
             </div>
+            */]]
         </div>
     </div>
 </script>

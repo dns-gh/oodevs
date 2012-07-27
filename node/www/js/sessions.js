@@ -443,7 +443,7 @@
     };
 
     SessionItemView.prototype.render = function() {
-      var filter, it, _i, _j, _len, _len1, _ref, _ref1;
+      var data, filter, it, _i, _j, _len, _len1, _ref, _ref1, _ref2;
       $(this.el).empty();
       _ref = this.filters;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -455,11 +455,15 @@
       if (this.search && !this.is_search()) {
         return;
       }
-      $(this.el).html(session_template(this.model.attributes));
+      data = $.extend({}, this.model.attributes);
+      if ((_ref1 = data.start) != null ? _ref1.length : void 0) {
+        data.start = new Date(data.start).toUTCString();
+      }
+      $(this.el).html(session_template(data));
       set_spinner($(this.el).find(".session_top_right .spin_btn"));
-      _ref1 = $(this.el).find(".link");
-      for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-        it = _ref1[_j];
+      _ref2 = $(this.el).find(".link");
+      for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
+        it = _ref2[_j];
         $(it).attr("href", "sword://" + window.location.hostname + ":" + this.model.get("port") + "/");
       }
     };

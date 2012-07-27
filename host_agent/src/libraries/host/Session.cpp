@@ -264,8 +264,7 @@ Tree Session::GetProperties( bool save ) const
     tree.put( "name", name_ );
     tree.put( "port", port_->Get() );
     tree.put( "status", ConvertStatus( status_ ) );
-    if( !start_.empty() )
-        tree.put( "start", start_ );
+    tree.put( "start", start_ );
     if( save )
         tree.put_child( "links", links_ );
     else
@@ -476,7 +475,7 @@ bool Session::Start( const Runtime_ABC& runtime, const Path& apps )
     process_ = ptr;
     running_ = token;
     status_  = STATUS_PLAYING;
-    start_   = boost::posix_time::to_iso_string( now );
+    start_   = boost::posix_time::to_iso_extended_string( now );
     return true;
 }
 
