@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.support.art.tasks.DefendreUnites" source-version="1.0.0" knowledge-class="france.military.company.combat.support.art.tasks.knowledges.DefendreUnites">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="company.combat.support.art.tasks.DefendreUnites" source-version="1.0.0" knowledge-class="company.combat.support.art.tasks.knowledges.DefendreUnites">
 	<parameters>
 		<parameter name="entities" nullable="true">
 			<type>
 				<list>
-					<class name="sword.military.knowledge.decisional.Reachable"/>
+					<class name="properties.Reachable"/>
 				</list>
 			</type>
 			<default>
@@ -13,7 +13,7 @@
 		</parameter>
 		<parameter name="meetingPoint" nullable="true">
             <type>
-                <class name="sword.military.knowledge.decisional.Reachable"/>
+                <class name="properties.Reachable"/>
             </type>
             <default>
                 <nil/>
@@ -23,35 +23,35 @@
 	<stages>
 		<stage label="Défendre">
 			<skills>
-				<skill name="sword.military.company.skills.Lead" main="true">
+				<skill name="commander.skills.Lead" main="true">
 					<parameter name="companyTask">
 						<value>
-							<string>france.military.company.combat.support.art.tasks.DefendreUnites</string>
+							<string>company.combat.support.art.tasks.DefendreUnites</string>
 						</value>
 					</parameter>
 					<parameter name="mainTasks">
 						<value>
-							<string>france.military.platoon.combat.support.art.tasks.DefendreUnites</string>
+							<string>platoon.combat.support.art.tasks.DefendreUnites</string>
 						</value>
 					</parameter>
 					<parameter name="supportTasks">
 						<value>
-							<string>france.military.platoon.tasks.Suivre</string>
+							<string>platoon.tasks.Suivre</string>
 						</value>
 					</parameter>
 					<parameter name="taskForSupporting">
 						<value>
-							<string>france.military.platoon.tasks.Suivre</string>
+							<string>platoon.tasks.Suivre</string>
 						</value>
 					</parameter>
 					<parameter name="defaultTask">
 						<value>
-							<string>france.military.platoon.tasks.Suivre</string>
+							<string>platoon.tasks.Suivre</string>
 						</value>
 					</parameter>
 					<parameter name="pcTasks">
                         <value>
-                            <string>france.military.platoon.tasks.Stationner</string>
+                            <string>platoon.tasks.Stationner</string>
                         </value>
                     </parameter>
                     <parameter name="pcObjective">

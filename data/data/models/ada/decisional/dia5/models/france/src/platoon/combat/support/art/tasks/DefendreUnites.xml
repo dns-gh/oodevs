@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.art.tasks.DefendreUnites" source-version="1.0.0" knowledge-class="france.military.platoon.combat.support.art.tasks.knowledges.DefendreUnites">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="platoon.combat.support.art.tasks.DefendreUnites" source-version="1.0.0" knowledge-class="platoon.combat.support.art.tasks.knowledges.DefendreUnites">
 	<parameters>
 		<parameter name="entities" nullable="true">
 			<type>
 				<list>
-					<class name="sword.military.knowledge.decisional.Reachable"/>
+					<class name="properties.Reachable"/>
 				</list>
 			</type>
 			<default>
@@ -15,7 +15,7 @@
 	<stages>
 		<stage label="Défendre">
 			<skills>
-				<skill name="france.military.platoon.combat.support.art.skills.Defendre" main="true">
+				<skill name="platoon.combat.support.art.skills.Defendre" main="true">
 					<parameter name="entities">
 						<value>
 							<parameter>entities</parameter>

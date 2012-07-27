@@ -6,6 +6,6 @@ local result =
 }
 
 local t = initTaskKnowledge( result )
-taskKnowledge["france.military.platoon.combat.support.art.tasks.knowledges.DefendreUnites"] = t
+taskKnowledge["platoon.combat.support.art.tasks.knowledges.DefendreUnites"] = t
 
 return result
