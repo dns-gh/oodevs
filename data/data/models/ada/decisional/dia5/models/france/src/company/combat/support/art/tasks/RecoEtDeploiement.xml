@@ -24,7 +24,7 @@
         </parameter>
 	</parameters>
 	<stages>
-		<stage label="Reconnaissance">
+		<stage label="Reconnaissance et deploiement">
 			<skills>
 				<skill name="commander.skills.LeadWithOrder" main="true">
 					<parameter name="companyTask">
