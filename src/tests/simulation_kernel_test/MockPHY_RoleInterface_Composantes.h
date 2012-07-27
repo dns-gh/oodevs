@@ -61,7 +61,8 @@ MOCK_BASE_CLASS( MockPHY_RoleInterface_Composantes, PHY_RoleInterface_Composante
     MOCK_METHOD( GetMinRangeToFireOn, 2 );
     MOCK_METHOD( GetMaxRangeToFireOnActualPosture, 2 );
     MOCK_METHOD( GetMinRangeToFireOnActualPosture, 2 );
-    MOCK_METHOD( GetMaxRangeToIndirectFire, 3 );
+    MOCK_METHOD_EXT( GetMaxRangeToIndirectFire, 3, double( const PHY_DotationCategory&, bool, bool), GetMaxRangeToIndirectFire1 );
+    MOCK_METHOD_EXT( GetMaxRangeToIndirectFire, 0, double(), GetMaxRangeToIndirectFire2 );
     MOCK_METHOD( GetMinRangeToIndirectFire, 3 );
     MOCK_METHOD( GetMaxRangeToFire, 2 );
     MOCK_METHOD( ApplyInjury, 1 );
