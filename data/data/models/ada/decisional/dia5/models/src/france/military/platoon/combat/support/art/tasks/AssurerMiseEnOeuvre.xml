@@ -11,11 +11,24 @@
 				<nil/>
 			</default>
 		</parameter>
+		<parameter name="changeAutomatically" nullable="true">
+			<type>
+				<simple name="boolean"/>
+			</type>
+			<default>
+				<boolean>false</boolean>
+			</default>
+		</parameter>
 	</parameters>
 	<stages>
 		<stage label="Deploiement sur les positions">
 			<skills>
 				<skill name="france.military.platoon.skills.EnsureIndirectFire" main="true">
+					<parameter name="changeAutomatically">
+						<value>
+							<parameter>changeAutomatically</parameter>
+						</value>
+					</parameter>
 					<parameter name="firePositions">
 						<value>
 							<parameter>firePositions</parameter>

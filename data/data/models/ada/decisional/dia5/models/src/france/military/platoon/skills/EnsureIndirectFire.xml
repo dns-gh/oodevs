@@ -21,6 +21,14 @@
 				<boolean>false</boolean>
 			</default>
 		</parameter>
+		<parameter name="changeAutomatically" nullable="true">
+			<type>
+				<simple name="boolean"/>
+			</type>
+			<default>
+				<boolean>false</boolean>
+			</default>
+		</parameter>
 	</parameters>
 	<goal>
 		<description>Effectuer un tir de batterie</description>

@@ -20,6 +20,14 @@
                 <nil/>
             </default>
         </parameter>
+        <parameter name="changeAutomatically" nullable="true">
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>false</boolean>
+            </default>
+        </parameter>
     </parameters>
     <stages>
         <stage label="Déploiement" disable-when-done="true">
