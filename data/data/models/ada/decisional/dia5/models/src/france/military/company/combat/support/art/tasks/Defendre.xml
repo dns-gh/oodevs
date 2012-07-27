@@ -77,7 +77,7 @@
 					</parameter>
 					<parameter name="pcObjective">
 						<value>
-							<parameter>objective</parameter>
+							<parameter>meetingPoint</parameter>
 						</value>
 					</parameter>
 				</skill>
