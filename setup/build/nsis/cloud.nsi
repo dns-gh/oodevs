@@ -53,6 +53,9 @@ Section $(^Name)
     SectionIn RO
     SetShellVarContext all
 
+    ; stop current service
+    nsExec::Exec 'net stop "Sword Cloud"'
+
     ; set permissions
     CreateDirectory "$INSTDIR"
     nsExec::Exec 'icacls "$INSTDIR" /t /C /grant Everyone:(OI)(CI)F'
