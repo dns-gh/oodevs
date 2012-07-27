@@ -85,21 +85,33 @@
     <ClCompile />
     <Link />
     <PostBuildEvent />
+    <Link>
+      <AdditionalDependencies>libboost_chrono-vc100-mt-gd-1_50.lib;$(libGeocoord);%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
     <ClCompile />
     <Link />
     <PostBuildEvent />
+    <Link>
+      <AdditionalDependencies>libboost_chrono-vc100-mt-gd-1_50.lib;$(libGeocoord);%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
     <ClCompile />
     <Link />
     <PostBuildEvent />
+    <Link>
+      <AdditionalDependencies>libboost_chrono-vc100-mt-1_50.lib;$(libGeocoord);%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
     <ClCompile />
     <Link />
     <PostBuildEvent />
+    <Link>
+      <AdditionalDependencies>libboost_chrono-vc100-mt-1_50.lib;$(libGeocoord);%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\tests\3a_test\3a_test_pch.cpp">
