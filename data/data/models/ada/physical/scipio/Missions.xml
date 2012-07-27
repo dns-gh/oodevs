@@ -2177,6 +2177,18 @@
       <parameter dia-name="zone" name="Zone à observer" optional="false" type="Polygon"/>
       <parameter dia-name="position" name="Position d'installation" optional="false" type="Point"/>
     </mission>
+    <mission dia-behavior="france.military.platoon.combat.support.art.tasks.DefendreUnites" dia-type="france.military.platoon.combat.support.art.tasks.DefendreUnites" id="28800" name="PION ASA Defendre Unites" package="defence">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="UnitÃ©s Ã  dÃ©fendre" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+        </choice>
+      </parameter>
+    </mission>
   </units>
   <automats>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_AllerSeRecompleter" dia-type="T_Mission_Automate_ALAT_AllerSeRecompleter" id="177" mrt-dia-behavior="MIS_Automate_MRT_ALAT_AllerSeRecompleter" name="AUTOMATE ALAT Aller Se Recompleter" package="none">
@@ -4397,6 +4409,27 @@
         </choice>
       </parameter>
     </mission>
+    <mission cdt-dia-behavior="france.military.company.combat.support.engineer.tasks.BrecherObstacles" dia-type="france.military.company.combat.support.engineer.tasks.BrecherObstacles" id="28799" mrt-dia-behavior="france.military.company.combat.support.engineer.tasks.BrecherObstacles" name="AUTOMATE GENIE Brecher Obstacles">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
+    </mission>
+    <mission cdt-dia-behavior="france.military.company.combat.support.art.tasks.DefendreUnites" dia-type="france.military.company.combat.support.art.tasks.DefendreUnites" id="28801" mrt-dia-behavior="france.military.company.combat.support.art.tasks.DefendreUnites" name="AUTOMATE ASA Defendre Unites">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="meetingPoint" name="Point de regroupement" optional="true" type="Point"/>
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Unités à défendre" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+        </choice>
+      </parameter>
+    </mission>
   </automats>
   <populations>
     <mission dia-behavior="crowd.tasks.Deteriorer" dia-type="crowd.tasks.Deteriorer" id="3008" name="FOULES Deteriorer" package="attack">
@@ -4636,4 +4669,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_MiseAFeuIED" id="28799" name="Pion Mise A Feu IED"/>
   </fragorders>
 </missions>
-<!-- signature="2687817114" -->
+<!-- signature="0281803073" -->

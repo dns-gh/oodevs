@@ -307,6 +307,7 @@
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION ASA Defendre"/>
+        <mission name="PION ASA Defendre Unites"/>
         <mission name="PION ASA Surveiller"/>
       </missions>
       <fragorders>
@@ -348,6 +349,7 @@
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION ASA Surveiller"/>
         <mission name="PION ASA Defendre"/>
+        <mission name="PION ASA Defendre Unites"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -6348,6 +6350,7 @@
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
         <mission name="AUTOMATE ASA Defendre"/>
+        <mission name="AUTOMATE ASA Defendre Unites"/>
         <mission name="AUTOMATE ASA Surveiller"/>
       </missions>
       <fragorders>
@@ -7434,4 +7437,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1572336089" -->
+<!-- signature="2443923103" -->

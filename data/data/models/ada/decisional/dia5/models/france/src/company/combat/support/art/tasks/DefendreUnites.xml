@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.support.art.tasks.DefendreUnites" source-version="1.0.0" knowledge-class="france.military.company.combat.support.art.tasks.knowledges.DefendreUnites">
+	<parameters>
+		<parameter name="entities" nullable="true">
+			<type>
+				<list>
+					<class name="sword.military.knowledge.decisional.Reachable"/>
+				</list>
+			</type>
+			<default>
+				<nil/>
+			</default>
+		</parameter>
+		<parameter name="meetingPoint" nullable="true">
+            <type>
+                <class name="sword.military.knowledge.decisional.Reachable"/>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
+	</parameters>
+	<stages>
+		<stage label="Défendre">
+			<skills>
+				<skill name="sword.military.company.skills.Lead" main="true">
+					<parameter name="companyTask">
+						<value>
+							<string>france.military.company.combat.support.art.tasks.DefendreUnites</string>
+						</value>
+					</parameter>
+					<parameter name="mainTasks">
+						<value>
+							<string>france.military.platoon.combat.support.art.tasks.DefendreUnites</string>
+						</value>
+					</parameter>
+					<parameter name="supportTasks">
+						<value>
+							<string>france.military.platoon.tasks.Suivre</string>
+						</value>
+					</parameter>
+					<parameter name="taskForSupporting">
+						<value>
+							<string>france.military.platoon.tasks.Suivre</string>
+						</value>
+					</parameter>
+					<parameter name="defaultTask">
+						<value>
+							<string>france.military.platoon.tasks.Suivre</string>
+						</value>
+					</parameter>
+					<parameter name="pcTasks">
+                        <value>
+                            <string>france.military.platoon.tasks.Stationner</string>
+                        </value>
+                    </parameter>
+                    <parameter name="pcObjective">
+                        <value>
+                            <parameter>meetingPoint</parameter>
+                        </value>
+                    </parameter>
+				</skill>
+			</skills>
+		</stage>
+	</stages>
+</task>

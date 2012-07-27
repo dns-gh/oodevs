@@ -7,9 +7,15 @@ rootnode {
     end,
 
     create = function (self )
-        self.position = self.params.position
-        if self.position == NIL then
-            self.position = self.params.zone
+        self.positions = {self.params.position}
+        if self.params.position ~= NIL then
+            self.positions = {self.params.position}
+        elseif self.params.zone ~= NIL then
+            self.positions = {self.params.zone}
+        elseif self.params.entities ~= NIL then
+            self.positions = self.params.entities
+        else
+            self.positions = {meKnowledge:getMyPosition()}
         end
         self.direction = queriesgetMissionDirection[ "execute" ]()
         self.arrived = false
@@ -20,7 +26,7 @@ rootnode {
         if self.arrived then
             self.ennemies = platoon.combat.support.art.queries.getFlyingEnemies[ "execute" ]()
             for i=1, #self.ennemies do
-                distance = integration.distance( meKnowledge, self.ennemies[i] )            
+                distance = integration.distance( meKnowledge, self.ennemies[i] )
                 if self.params.typeDeploiement == eEtatDeploiement_directionnel then
                     if integration.connaissanceAgentEstAPorteDeCapteurDansCone( self.ennemies[i], self.direction[1], MISTRAL_ANGLE_OUVERTURE_DIRECTIONEL ) then
                        Activate( skill.links.intercepterMissile, 1, { enemy = self.ennemies[i], percentageEquipement = 1, ph = self.params.ph, projectileSpeed = M_MODELE_VITESSE_MISSILE_MISTRAL } )
@@ -36,7 +42,7 @@ rootnode {
                 end
             end
         end
-        Activate( skill.links.moveTo, 1, { entities = {self.position} } )
+        Activate( skill.links.moveTo, 1, { entities = self.positions } )
         self.arrived = false
     end,
 
