@@ -64,13 +64,13 @@
         <div class="node_settings"></div>
         <div class="node_header accordion-heading">
             <div class="btn-group node_buttons">
-                <a title="Loading..." class="btn hide disabled spin_btn"></a>
                 {{#is_option status running=""}}
                 <a target="{{{ident}}}" href="/{{{ident}}}/" title="Go..." class="btn"><i class="icon-share"></i></a>
                 {{/is_option}}
                 {{#is_option status stopped=""}}
                 <a title="Play" class="btn play"><i class="icon-play"></i></a>
                 {{/is_option}}
+                <a title="Loading..." class="btn hide disabled spin_btn"></a>
                 <a title="Settings..." class="btn edit"><i class="icon-cog"></i></a>
                 {{#is_option status running=""}}
                 <a title="Stop" class="btn stop"><i class="icon-stop"></i></a>

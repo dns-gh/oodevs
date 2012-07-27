@@ -83,6 +83,7 @@
                 {{#is_option status playing="" paused="" stopped=""}}
                 <a title="Replay" class="btn replay disabled"><i class="icon-repeat"></i></a>
                 {{/is_option}}
+                <a title="Loading..." class="btn hide disabled spin_btn"></a>
                 {{#is_option status stopped=""}}
                 <a title="Settings" class="btn config disabled"><i class="icon-cog"></i> </a>
                 {{/is_option}}
@@ -95,7 +96,6 @@
                 {{#is_option status stopped=""}}
                 <a title="Archive" class="btn archive disabled"><i class="icon-lock"></i></a>
                 {{/is_option}}
-                <a title="Loading..." class="btn hide disabled spin_btn"></a>
                 {{#is_option status stopped=""}}
                 <a title="Delete" class="btn delete"><i class="icon-trash"></i></a>
                 {{/is_option}}
