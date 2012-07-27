@@ -153,6 +153,7 @@ Session::Session( const FileSystem_ABC& system,
     , counter_( 0 )
     , sizing_ ( false )
     , size_   ( 0 )
+    , start_  ()
 {
     // NOTHING
 }
@@ -183,6 +184,7 @@ Session::Session( const FileSystem_ABC& system,
     , counter_( 0 )
     , sizing_ ( false )
     , size_   ( Get< size_t >( tree, "size" ) )
+    , start_  ( Get< std::string >( tree, "start" ) )
 {
     node_->UpdateSessionSize( id_, size_ );
 }
@@ -262,6 +264,8 @@ Tree Session::GetProperties( bool save ) const
     tree.put( "name", name_ );
     tree.put( "port", port_->Get() );
     tree.put( "status", ConvertStatus( status_ ) );
+    if( !start_.empty() )
+        tree.put( "start", start_ );
     if( save )
         tree.put_child( "links", links_ );
     else
@@ -279,6 +283,7 @@ Tree Session::GetProperties( bool save ) const
 // -----------------------------------------------------------------------------
 Tree Session::GetProperties() const
 {
+    boost::shared_lock< boost::shared_mutex > lock( access_ );
     return GetProperties( false );
 }
 
@@ -288,9 +293,8 @@ Tree Session::GetProperties() const
 // -----------------------------------------------------------------------------
 Tree Session::Save() const
 {
-    Tree tree = GetProperties( true );
-
     boost::shared_lock< boost::shared_mutex > lock( access_ );
+    Tree tree = GetProperties( true );
     tree.put( "size", size_ );
     if( !process_ )
         return tree;
@@ -359,6 +363,7 @@ bool Session::StopProcess( boost::upgrade_lock< boost::shared_mutex >& lock )
         status_ = STATUS_STOPPED;
         copy.swap( process_ );
         token.swap( running_ );
+        start_.clear();
     }
     if( !copy || !copy->IsAlive() )
         return true;
@@ -446,7 +451,8 @@ bool Session::Start( const Runtime_ABC& runtime, const Path& apps )
     if( process_ )
         return ModifyStatus( lock, STATUS_PLAYING );
 
-    Node_ABC::T_Token token = node_->StartSession( boost::posix_time::second_clock::local_time() );
+    const boost::posix_time::ptime now = boost::posix_time::second_clock::local_time();
+    Node_ABC::T_Token token = node_->StartSession( now );
     if( !token )
         return false;
 
@@ -470,6 +476,7 @@ bool Session::Start( const Runtime_ABC& runtime, const Path& apps )
     process_ = ptr;
     running_ = token;
     status_  = STATUS_PLAYING;
+    start_   = boost::posix_time::to_iso_string( now );
     return true;
 }
 

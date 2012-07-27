@@ -21,6 +21,10 @@
 namespace boost
 {
     class shared_mutex;
+namespace posix_time
+{
+    class ptime;
+}
 }
 
 namespace runtime
@@ -149,6 +153,7 @@ private:
     size_t counter_;
     bool sizing_;
     size_t size_;
+    std::string start_;
     //@}
 };
 }

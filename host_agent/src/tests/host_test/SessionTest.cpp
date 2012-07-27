@@ -17,6 +17,7 @@
 #include <boost/make_shared.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid//uuid_io.hpp>
+#include <boost/xpressive/xpressive.hpp>
 
 #include "MockClient.h"
 #include "MockFileSystem.h"
@@ -155,6 +156,15 @@ BOOST_FIXTURE_TEST_CASE( session_starts_and_stops, Fixture )
     BOOST_CHECK( !session->Stop() );
 }
 
+namespace
+{
+std::string RemoveValue( const std::string& txt, const std::string value )
+{
+    const boost::xpressive::sregex regex = boost::xpressive::sregex::compile( "\"" + value + "\"\\s*:\\s*\"[^\"]+\",?" );
+    return boost::xpressive::regex_replace( txt, regex, "" );
+}
+}
+
 BOOST_FIXTURE_TEST_CASE( session_converts, Fixture )
 {
     SessionPtr session = MakeSession();
@@ -173,11 +183,13 @@ BOOST_FIXTURE_TEST_CASE( session_converts, Fixture )
         "\"size\":\"0\""
         "}" );
     ProcessPtr process = StartSession( *session, processPid, processName );
-    BOOST_CHECK_EQUAL( ToJson( session->GetProperties() ), base +
+    std::string item = ToJson( session->GetProperties() );
+    BOOST_CHECK_EQUAL( RemoveValue( item, "start" ), base +
         "\"status\":\"playing\","
         + items +
         "}" );
-    BOOST_CHECK_EQUAL( ToJson( session->Save() ), base +
+    item = ToJson( session->Save() );
+    BOOST_CHECK_EQUAL( RemoveValue( item, "start" ), base +
         "\"status\":\"playing\","
         "\"links\":" + links + ","
         "\"size\":\"0\","
