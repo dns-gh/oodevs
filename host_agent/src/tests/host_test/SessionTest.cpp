@@ -160,7 +160,7 @@ namespace
 {
 std::string RemoveValue( const std::string& txt, const std::string value )
 {
-    const boost::xpressive::sregex regex = boost::xpressive::sregex::compile( "\"" + value + "\"\\s*:\\s*\"[^\"]+\",?" );
+    const boost::xpressive::sregex regex = boost::xpressive::sregex::compile( "\"" + value + "\"\\s*:\\s*\"[^\"]*\",?" );
     return boost::xpressive::regex_replace( txt, regex, "" );
 }
 }
@@ -173,17 +173,19 @@ BOOST_FIXTURE_TEST_CASE( session_converts, Fixture )
         "\"node\":\"10123456-cdef-9876-90ab-543212345678\","
         "\"name\":\"myName\","
         "\"port\":\"1337\",";
-    BOOST_CHECK_EQUAL( ToJson( session->GetProperties() ), base +
+    std::string item = ToJson( session->GetProperties() );
+    BOOST_CHECK_EQUAL( RemoveValue( item, "start" ), base +
         "\"status\":\"stopped\","
         + items +
         "}" );
-    BOOST_CHECK_EQUAL( ToJson( session->Save() ), base +
+    item = ToJson( session->Save() );
+    BOOST_CHECK_EQUAL( RemoveValue( item, "start" ), base +
         "\"status\":\"stopped\","
         "\"links\":" + links + ","
         "\"size\":\"0\""
         "}" );
     ProcessPtr process = StartSession( *session, processPid, processName );
-    std::string item = ToJson( session->GetProperties() );
+    item = ToJson( session->GetProperties() );
     BOOST_CHECK_EQUAL( RemoveValue( item, "start" ), base +
         "\"status\":\"playing\","
         + items +
@@ -198,11 +200,13 @@ BOOST_FIXTURE_TEST_CASE( session_converts, Fixture )
             "\"name\":\"myProcessName\""
         "}}" );
     StopSession( *session, process );
-    BOOST_CHECK_EQUAL( ToJson( session->GetProperties() ), base +
+    item = ToJson( session->GetProperties() );
+    BOOST_CHECK_EQUAL( RemoveValue( item, "start" ), base +
         "\"status\":\"stopped\","
         + items +
         "}" );
-    BOOST_CHECK_EQUAL( ToJson( session->Save() ), base +
+    item = ToJson( session->Save() );
+    BOOST_CHECK_EQUAL( RemoveValue( item, "start" ), base +
         "\"status\":\"stopped\","
         "\"links\":" + links + ","
         "\"size\":\"0\""
