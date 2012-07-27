@@ -67,7 +67,7 @@ type Handler struct {
 
 func loadTemplates(pattern string) (*template.Template, error) {
 	helpers := GetHelpers()
-	t := template.New("index").Delims("[", "]").Funcs(helpers)
+	t := template.New("index").Delims("[[", "]]").Funcs(helpers)
 	t, err := t.ParseGlob(pattern + "/*.ttml")
 	return t, err
 }

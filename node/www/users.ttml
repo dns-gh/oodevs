@@ -17,9 +17,9 @@
             <thead>
                 <th>Email</th>
                 <th>Name</th>
-                [ if ne .type "cluster" ]
+                [[ if ne .type "cluster" ]]
                 <th>Type</th>
-                [ end ]
+                [[ end ]]
                 <th></th>
             </thead>
             <tbody id="users">
@@ -48,7 +48,7 @@
                         <input type="text" id="name"{{#if name}} value="{{name}}"{{/if}}/>
                     </div>
                 </div>
-                [ if ne .type "cluster" ]
+                [[ if ne .type "cluster" ]]
                 {{#if add}}
                 <div class="control-group">
                     <label class="control-label" for="type">Type</label>
@@ -60,7 +60,7 @@
                     </div>
                 </div>
                 {{/if}}
-                [ end ]
+                [[ end ]]
                 <div class="control-group">
                     <label class="control-label" for="lang">Language</label>
                     <div class="controls">
@@ -111,12 +111,12 @@
 <script type="text/template" id="user_template">
     <td>{{username}}</td>
     <td>{{name}}</td>
-    [ if ne .type "cluster" ]
+    [[ if ne .type "cluster" ]]
     <td class="ufirst">{{type}}</td>
-    [ end ]
+    [[ end ]]
     <td class="action">
         <a class="btn edit"><i class="icon-edit"></i> Edit </a>
-        {{#equal id "[ .user.id ]" }}
+        {{#equal id "[[ .user.id ]]" }}
         {{else}}
         <a class="btn delete"><i class="icon-trash"></i> </a>
         {{/equal}}

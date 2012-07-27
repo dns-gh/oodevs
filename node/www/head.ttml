@@ -1,19 +1,19 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    [ if eq .type "cluster" ]
+    [[ if eq .type "cluster" ]]
     <title>Sword Cluster</title>
-    [ else ]
-    <title>Sword Node [ .name ]</title>
-    [ end ]
+    [[ else ]]
+    <title>Sword Node [[ .name ]]</title>
+    [[ end ]]
     <meta name="description" content="" />
     <script>
-        [ if ne .type "cluster" ]
-        var uuid = "[ .uuid ]";
-        [ end ]
+        [[ if ne .type "cluster" ]]
+        var uuid = "[[ .uuid ]]";
+        [[ end ]]
         var user = {};
-        [ range $k, $v := .user ]
-        user.[ $k ] = "[ $v ]";
-        [ end ]
+        [[ range $k, $v := .user ]]
+        user.[[ $k ]] = "[[ $v ]]";
+        [[ end ]]
     </script>
     <link rel="stylesheet" href="css/bootstrap-2.0.4.min.css" />
     <link rel="stylesheet" type="text/css" href="css/style.css" />

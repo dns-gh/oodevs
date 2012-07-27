@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-    [ template "head.ttml" . ]
+    [[ template "head.ttml" . ]]
     <body>
-        [ $_ := reset . "user" ]
-        [ template "top_bar.ttml" . ]
+        [[ $_ := reset . "user" ]]
+        [[ template "top_bar.ttml" . ]]
         <div class="container">
             <div class="row">
                 <div class="hero-unit masa_header">
@@ -29,6 +29,6 @@
             </div>
         </div>
     </body>
-    [ template "imports.ttml" . ]
+    [[ template "imports.ttml" . ]]
     <script src="js/login.js"></script>
 </html>

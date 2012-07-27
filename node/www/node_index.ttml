@@ -1,65 +1,65 @@
 <!DOCTYPE html>
-[ $pg := set_default .url "pg" "sessions" ]
+[[ $pg := set_default .url "pg" "sessions" ]]
 <html lang="en">
-    [ template "head.ttml" . ]
+    [[ template "head.ttml" . ]]
     <body>
-        [ template "top_bar.ttml" . ]
+        [[ template "top_bar.ttml" . ]]
         <div class="container">
             <div class="row">
                 <div class="span3">
                     <div class="well sidebar-nav">
                         <ul class="nav nav-list">
-                            [ define "node_sidebar_item" ]
-                            <li[ if eq .item .pg ] class="active"[ end ]>
-                            <a href="?pg=[ .item ]"><img alt="" width="32" height="32" src="img/tango/32x32/[ .img ].png" /> [ .name ] </a>
+                            [[ define "node_sidebar_item" ]]
+                            <li[[ if eq .item .pg ]] class="active"[[ end ]]>
+                            <a href="?pg=[[ .item ]]"><img alt="" width="32" height="32" src="img/tango/32x32/[[ .img ]].png" /> [[ .name ]] </a>
                             </li>
-                            [ end ]
-                            [ template "node_sidebar_item" sub "name" "Sessions" "item" "sessions" "pg" .url.pg "img" "actions/document-new" ]
-                            [ template "node_sidebar_item" sub "name" "Packages" "item" "packages" "pg" .url.pg "img" "devices/drive-harddisk" ]
-                            [ if ne .user.type "user" ]
-                            [ template "node_sidebar_item" sub "name" "Uploads"  "item" "uploads"  "pg" .url.pg "img" "status/software-update-available" ]
-                            [ template "node_sidebar_item" sub "name" "Users"    "item" "users"    "pg" .url.pg "img" "apps/system-users" ]
-                            [ end ]
+                            [[ end ]]
+                            [[ template "node_sidebar_item" sub "name" "Sessions" "item" "sessions" "pg" .url.pg "img" "actions/document-new" ]]
+                            [[ template "node_sidebar_item" sub "name" "Packages" "item" "packages" "pg" .url.pg "img" "devices/drive-harddisk" ]]
+                            [[ if ne .user.type "user" ]]
+                            [[ template "node_sidebar_item" sub "name" "Uploads"  "item" "uploads"  "pg" .url.pg "img" "status/software-update-available" ]]
+                            [[ template "node_sidebar_item" sub "name" "Users"    "item" "users"    "pg" .url.pg "img" "apps/system-users" ]]
+                            [[ end ]]
                         </ul>
                     </div>
-                    [ if eq .url.pg "sessions" ]
-                    [ template "sessions_side_bar.ttml" . ]
-                    [ end ]
+                    [[ if eq .url.pg "sessions" ]]
+                    [[ template "sessions_side_bar.ttml" . ]]
+                    [[ end ]]
                     <hr />
                     <p class="footer">&copy; MASA Group 2012</p>
                 </div>
                 <div class="span9">
-                    [ if eq .url.pg "sessions" ]
-                    [ template "sessions.ttml" . ]
-                    [ end ]
-                    [ if eq .url.pg "packages" ]
-                    [ template "packages.ttml" . ]
-                    [ end ]
-                    [ if ne .user.type "user" ]
-                    [ if eq .url.pg "uploads" ]
-                    [ template "uploads.ttml" . ]
-                    [ end ]
-                    [ if eq .url.pg "users" ]
-                    [ template "users.ttml" . ]
-                    [ end ]
-                    [ end ]
+                    [[ if eq .url.pg "sessions" ]]
+                    [[ template "sessions.ttml" . ]]
+                    [[ end ]]
+                    [[ if eq .url.pg "packages" ]]
+                    [[ template "packages.ttml" . ]]
+                    [[ end ]]
+                    [[ if ne .user.type "user" ]]
+                    [[ if eq .url.pg "uploads" ]]
+                    [[ template "uploads.ttml" . ]]
+                    [[ end ]]
+                    [[ if eq .url.pg "users" ]]
+                    [[ template "users.ttml" . ]]
+                    [[ end ]]
+                    [[ end ]]
                 </div>
             </div>
         </div>
-        [ template "imports.ttml" . ]
-        [ if eq .url.pg "sessions" ]
+        [[ template "imports.ttml" . ]]
+        [[ if eq .url.pg "sessions" ]]
         <script src="js/sessions.js"></script>
-        [ end ]
-        [ if eq .url.pg "packages" ]
+        [[ end ]]
+        [[ if eq .url.pg "packages" ]]
         <script src="js/packages.js"></script>
-        [ end ]
-        [ if ne .user.type "user" ]
-        [ if eq .url.pg "uploads" ]
+        [[ end ]]
+        [[ if ne .user.type "user" ]]
+        [[ if eq .url.pg "uploads" ]]
         <script src="js/uploads.js"></script>
-        [ end ]
-        [ if eq .url.pg "users" ]
+        [[ end ]]
+        [[ if eq .url.pg "users" ]]
         <script src="js/users.js"></script>
-        [ end ]
-        [ end ]
+        [[ end ]]
+        [[ end ]]
     </body>
 </html>
