@@ -10,7 +10,7 @@
         </parameter>
     </parameters>
     <stages>
-        <stage label="Parcours de l'itinéraire avec dégagement ou brechage des obstacles" disable-when-done="true">
+        <stage label="Parcours de l'itinéraire avec contournement ou brechage des obstacles" disable-when-done="true">
             <skills>
                 <skill name="commander.skills.Lead" main="true">
                     <parameter name="companyTask">
