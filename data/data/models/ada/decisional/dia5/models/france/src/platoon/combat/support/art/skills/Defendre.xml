@@ -17,7 +17,7 @@
                 <nil/>
             </default>
         </parameter>
-        <parameter name="typeDeploiement nullable="true">
+        <parameter name="typeDeploiement" nullable="true">
             <type>
                 <simple name="numeric"/>
             </type>
