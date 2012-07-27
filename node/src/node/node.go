@@ -8,6 +8,7 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
+	"net"
 	"net/http"
 	"net/url"
 	"os"
@@ -222,6 +223,11 @@ func (it *Handler) IsAuthenticated(r *http.Request, params url.Values) User {
 	remote := r.Header.Get("Remote-Address")
 	if len(remote) > 0 {
 		req.Header.Add("Remote-Address", remote)
+	} else if len(r.RemoteAddr) > 0 {
+		ip, _, err := net.SplitHostPort(r.RemoteAddr)
+		if err != nil {
+			req.Header.Add("Remote-Address", ip)
+		}
 	}
 	rpy, err := it.client.Do(req)
 	if err != nil || rpy.StatusCode != http.StatusOK {
