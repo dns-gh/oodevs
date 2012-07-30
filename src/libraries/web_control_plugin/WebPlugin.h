@@ -46,7 +46,7 @@ class WebPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit WebPlugin( dispatcher::SimulationPublisher_ABC& publisher, xml::xistream& xis );
+             WebPlugin( dispatcher::SimulationPublisher_ABC& publisher, xml::xistream& xis );
     virtual ~WebPlugin();
     //@}
 
