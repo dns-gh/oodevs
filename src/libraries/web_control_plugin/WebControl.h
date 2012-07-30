@@ -83,7 +83,6 @@ private:
     std::vector< boost::shared_ptr< StateObserver > > observers_;
     //@}
 };
-
 }
 }
 

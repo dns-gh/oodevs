@@ -44,46 +44,46 @@ struct plugins::web_control::StateObserver
 
 namespace
 {
-    // -----------------------------------------------------------------------------
-    // Name: ControlInformationUpdate structure
-    // Created: BAX 2012-02-28
-    // -----------------------------------------------------------------------------
-    struct ControlInformationUpdate : public StateObserver, private tools::MessageObserver< sword::ControlInformation >
+// -----------------------------------------------------------------------------
+// Name: ControlInformationUpdate structure
+// Created: BAX 2012-02-28
+// -----------------------------------------------------------------------------
+struct ControlInformationUpdate : public StateObserver, private tools::MessageObserver< sword::ControlInformation >
+{
+    ControlInformationUpdate( tools::MessageController< sword::SimToClient_Content >& controller, const Update& update ) : StateObserver( update )
     {
-        ControlInformationUpdate( tools::MessageController< sword::SimToClient_Content >& controller, const Update& update ) : StateObserver( update )
-        {
-            CONNECT( controller, *this, control_information );
-        }
-        void Notify( const sword::ControlInformation& message, int /*context*/ )
-        {
-            if( message.has_status() )
-                update_( message.status() );
-        }
-    };
-
-    // -----------------------------------------------------------------------------
-    // Name: ControlAckUpdate structure
-    // Created: BAX 2012-02-28
-    // -----------------------------------------------------------------------------
-    template< typename T, sword::EnumSimulationState Next >
-    struct ControlAckUpdate : public StateObserver, public tools::MessageObserver< T >
+        CONNECT( controller, *this, control_information );
+    }
+    void Notify( const sword::ControlInformation& message, int /*context*/ )
     {
-        ControlAckUpdate( const Update& update ) : StateObserver( update )
-        {
-            // NOTHING
-        }
-        void Notify( const T& message, int /*context*/ )
-        {
-            if( message.has_error_code() )
-                if( message.error_code() == sword::ControlAck_ErrorCode_no_error )
-                    update_( Next );
-        }
-    };
-
-    typedef ControlAckUpdate< sword::ControlPauseAck, sword::paused > ControlPause;
-    typedef ControlAckUpdate< sword::ControlResumeAck, sword::running > ControlResume;
-    typedef ControlAckUpdate< sword::ControlStopAck, sword::stopped > ControlStop;
+        if( message.has_status() )
+            update_( message.status() );
+    }
 };
+
+// -----------------------------------------------------------------------------
+// Name: ControlAckUpdate structure
+// Created: BAX 2012-02-28
+// -----------------------------------------------------------------------------
+template< typename T, sword::EnumSimulationState Next >
+struct ControlAckUpdate : public StateObserver, public tools::MessageObserver< T >
+{
+    ControlAckUpdate( const Update& update ) : StateObserver( update )
+    {
+        // NOTHING
+    }
+    void Notify( const T& message, int /*context*/ )
+    {
+        if( message.has_error_code() )
+            if( message.error_code() == sword::ControlAck_ErrorCode_no_error )
+                update_( Next );
+    }
+};
+}
+
+typedef ControlAckUpdate< sword::ControlPauseAck,  sword::paused  > ControlPause;
+typedef ControlAckUpdate< sword::ControlResumeAck, sword::running > ControlResume;
+typedef ControlAckUpdate< sword::ControlStopAck,   sword::stopped > ControlStop;
 
 // -----------------------------------------------------------------------------
 // Name: WebControl::WebControl
@@ -142,87 +142,87 @@ void WebControl::Receive( const sword::SimToClient& client )
 
 namespace
 {
-    // -----------------------------------------------------------------------------
-    // Name: HttpCode structure
-    // Created: BAX 2012-02-28
-    // -----------------------------------------------------------------------------
-    struct HttpCode
-    {
-        int code;
-        const char* text;
-    };
-    static const HttpCode httpCodes[] =
-    {
-        { 200, "OK" },
-        { 400, "Bad Request" },
-        { 401, "Unauthorized" },
-        { 403, "Forbidden" },
-        { 404, "Not Found" },
-    };
+// -----------------------------------------------------------------------------
+// Name: HttpCode structure
+// Created: BAX 2012-02-28
+// -----------------------------------------------------------------------------
+struct HttpCode
+{
+    int code;
+    const char* text;
+};
+static const HttpCode httpCodes[] =
+{
+    { 200, "OK" },
+    { 400, "Bad Request" },
+    { 401, "Unauthorized" },
+    { 403, "Forbidden" },
+    { 404, "Not Found" },
+};
 
-    // -----------------------------------------------------------------------------
-    // Name: HttpStatusCode enumeration
-    // Created: BAX 2012-02-28
-    // -----------------------------------------------------------------------------
-    typedef enum HttpStatusCode
-    {
-        Ok,
-        BadRequest,
-        Unauthorized,
-        Forbidden,
-        NotFound,
-        HttpStatusCode_Count,
-    };
+// -----------------------------------------------------------------------------
+// Name: HttpStatusCode enumeration
+// Created: BAX 2012-02-28
+// -----------------------------------------------------------------------------
+typedef enum HttpStatusCode
+{
+    Ok,
+    BadRequest,
+    Unauthorized,
+    Forbidden,
+    NotFound,
+    HttpStatusCode_Count,
+};
 
-    BOOST_STATIC_ASSERT( ( sizeof httpCodes / sizeof *httpCodes ) == HttpStatusCode_Count );
+BOOST_STATIC_ASSERT( ( sizeof httpCodes / sizeof *httpCodes ) == HttpStatusCode_Count );
 
-    // -----------------------------------------------------------------------------
-    // Name: WriteHttpReply
-    // Created: BAX 2012-02-28
-    // -----------------------------------------------------------------------------
-    std::string WriteHttpReply( const HttpCode& status, const std::string& content = std::string() )
+// -----------------------------------------------------------------------------
+// Name: WriteHttpReply
+// Created: BAX 2012-02-28
+// -----------------------------------------------------------------------------
+std::string WriteHttpReply( const HttpCode& status, const std::string& content = std::string() )
+{
+    return ( boost::format(
+        "HTTP/1.1 %1% %2%\r\n"
+        "Content-Type: text/plain\r\n"
+        "Content-Length: %3%\r\n"
+        "Connection: close\r\n"
+        "\r\n"
+        "%4%" )
+        % status.code
+        % status.text
+        % content.size()
+        % content
+    ).str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: SendMessage
+// Created: BAX 2012-02-28
+// -----------------------------------------------------------------------------
+template< typename T >
+std::string SendMessage( dispatcher::SimulationPublisher_ABC& publisher )
+{
+    T message;
+    message.Send( publisher, 0 );
+    return WriteHttpReply( httpCodes[ Ok ] );
+}
+
+// -----------------------------------------------------------------------------
+// Name: convert
+// Created: BAX 2012-02-28
+// -----------------------------------------------------------------------------
+const char* convert( sword::EnumSimulationState state )
+{
+    switch( state )
     {
-        return ( boost::format(
-            "HTTP/1.1 %1% %2%\r\n"
-            "Content-Type: text/plain\r\n"
-            "Content-Length: %3%\r\n"
-            "Connection: close\r\n"
-            "\r\n"
-            "%4%" )
-            % status.code
-            % status.text
-            % content.size()
-            % content
-        ).str();
+    case sword::running:   return "running";
+    case sword::paused:    return "paused";
+    case sword::stopped:   return "stopped";
+    case sword::loading:   return "loading";
+    default:               return "unknown";
     }
-
-    // -----------------------------------------------------------------------------
-    // Name: SendMessage
-    // Created: BAX 2012-02-28
-    // -----------------------------------------------------------------------------
-    template< typename T >
-    std::string SendMessage( dispatcher::SimulationPublisher_ABC& publisher )
-    {
-        T message;
-        message.Send( publisher, 0 );
-        return WriteHttpReply( httpCodes[ Ok ] );
-    }
-
-    // -----------------------------------------------------------------------------
-    // Name: convert
-    // Created: BAX 2012-02-28
-    // -----------------------------------------------------------------------------
-    const char* convert( sword::EnumSimulationState state )
-    {
-        switch( state )
-        {
-        case sword::running:   return "running";
-        case sword::paused:    return "paused";
-        case sword::stopped:   return "stopped";
-        case sword::loading:   return "loading";
-        default:               return "unknown";
-        }
-    }
+}
 }
 
 // -----------------------------------------------------------------------------
@@ -271,22 +271,23 @@ std::string WebControl::Get()
 
 namespace
 {
-    // -----------------------------------------------------------------------------
-    // Name: UriHandler structure
-    // Created: BAX 2012-02-28
-    // -----------------------------------------------------------------------------
-    struct UriHandler
+// -----------------------------------------------------------------------------
+// Name: UriHandler structure
+// Created: BAX 2012-02-28
+// -----------------------------------------------------------------------------
+struct UriHandler
+{
+    typedef std::string (WebControl::*Handler)();
+    const char* uri;
+    Handler handler;
+    bool operator==( const std::string& rhs ) const
     {
-        typedef std::string (WebControl::*Handler)();
-        const char* uri;
-        Handler handler;
-        bool operator==( const std::string& rhs ) const
-        {
-            return rhs == uri;
-        }
-    };
-    #define COUNT_OF( array ) ( sizeof (array) / sizeof *(array) )
+        return rhs == uri;
+    }
 };
+}
+
+#define COUNT_OF( array ) ( sizeof (array) / sizeof *(array) )
 
 // -----------------------------------------------------------------------------
 // Name: WebControl::Notify

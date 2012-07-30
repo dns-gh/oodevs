@@ -62,7 +62,6 @@ private:
     std::auto_ptr< MongooseServer > server_;
     //@}
 };
-
 }
 }
 

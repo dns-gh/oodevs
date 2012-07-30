@@ -49,7 +49,6 @@ private:
     boost::shared_ptr< mg_context > context_;
     //@}
 };
-
 }
 }
 

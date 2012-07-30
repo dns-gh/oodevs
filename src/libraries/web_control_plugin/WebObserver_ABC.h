@@ -36,7 +36,6 @@ public:
     virtual std::string Notify( const std::string& method, const std::string& uri ) = 0;
     //@}
 };
-
 }
 }
 
