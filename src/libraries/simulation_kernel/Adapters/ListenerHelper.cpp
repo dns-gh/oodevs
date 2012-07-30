@@ -76,6 +76,5 @@ void ListenerHelper::NotifyRemoved( const core::Model& model )
 {
     if( removed_ )
         removed_( model );
-    model.Unregister( *this );
     model_ = 0;
 }
