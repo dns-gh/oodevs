@@ -400,9 +400,9 @@ namespace
     // -----------------------------------------------------------------------------
     void UpdatePeriphericalVisionState( const wrapper::View& model, const wrapper::View& entity )
     {
-        const unsigned int nCurrentTime = model[ "step" ];
+        const unsigned int nCurrentTime = model[ "tick" ];
         const wrapper::View& periphericalVision = entity[ "perceptions/peripherical-vision" ];
-        unsigned int nNextPeriphericalVisionStep = periphericalVision[ "next-step" ];
+        unsigned int nNextPeriphericalVisionStep = periphericalVision[ "next-tick" ];
         const bool activation = nNextPeriphericalVisionStep <= nCurrentTime;
         wrapper::Effect effect( periphericalVision );
         effect[ "activated" ] = activation;
@@ -413,7 +413,7 @@ namespace
         }
         while( nNextPeriphericalVisionStep <= nCurrentTime )
             nNextPeriphericalVisionStep += nNbrStepsBetweenPeriphericalVision;
-        effect[ "next-step" ] = nNextPeriphericalVisionStep;
+        effect[ "next-tick" ] = nNextPeriphericalVisionStep;
         effect.Post();
     }
 

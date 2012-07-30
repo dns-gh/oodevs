@@ -62,7 +62,7 @@ void ToggleAlatMonitoringCommand::Execute( const wrapper::View& model ) const
     if( isActivated_ )
     {
         effect[ perceptionId_ ][ "localization" ].SetUserData( localization_ );
-        const unsigned int currentTimeStep = model[ "step" ];
+        const unsigned int currentTimeStep = model[ "tick" ];
         unsigned int nForestSurface = 0;
         unsigned int nEmptySurface  = 0;
         unsigned int nUrbanSurface  = 0;

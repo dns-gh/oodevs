@@ -30,7 +30,7 @@ namespace perception
             , agent                ( reinterpret_cast< MIL_Agent_ABC* >( 1337 ) )
             , entity               ( model[ "entities" ][ identifier ] )
         {
-            model[ "step" ] = 0;
+            model[ "tick" ] = 0;
             entity[ "identifier" ] = identifier;
             entity[ "is-dead" ] = false;
             entity[ "is-underground" ] = false;
@@ -39,7 +39,7 @@ namespace perception
             entity[ "pion" ].SetUserData( agent );
             entity[ "perceptions/max-agent-perception-distance" ] = maxPerceptionDistance;
             entity[ "perceptions/max-theoretical-agent-perception-distance" ] = theoreticalDistance;
-            entity[ "perceptions/peripherical-vision/next-step" ] = 1;
+            entity[ "perceptions/peripherical-vision/next-tick" ] = 1;
             entity[ "perceptions/peripherical-vision/activated" ] = false;
             entity[ "perceptions/vision/mode" ] = "normal";
             entity[ "perceptions/notifications/agents" ];

@@ -62,8 +62,8 @@ BOOST_FIXTURE_TEST_CASE( perception_command_updates_next_peripherical_vision_ste
     commands.Post( "perception", core::MakeModel( "identifier", identifier ) );
     commands.Execute();
     mock::verify();
-    model[ "step" ] = 1;
-    ExpectEffect( entity[ "perceptions/peripherical-vision" ], sword::test::MakeModel( "next-step", 13 )
+    model[ "tick" ] = 1;
+    ExpectEffect( entity[ "perceptions/peripherical-vision" ], sword::test::MakeModel( "next-tick", 13 )
                                                                                      ( "activated", true ) );
     ExpectEffect( entity[ "perceptions/max-agent-perception-distance" ] );
     ExpectEffect( entity[ "perceptions/max-theoretical-agent-perception-distance" ] );
@@ -79,7 +79,7 @@ BOOST_FIXTURE_TEST_CASE( perception_command_with_direction_vision_uses_movement_
     commands.Post( "perception", core::MakeModel( "identifier", identifier ) );
     commands.Execute();
     mock::verify();
-    model[ "step" ] = 1;
+    model[ "tick" ] = 1;
     entity[ "perceptions/vision/mode" ] = "direction";
     entity[ "perceptions/vision/location/x" ] = 42.;
     entity[ "perceptions/vision/location/y" ] = 43.;
@@ -99,7 +99,7 @@ BOOST_FIXTURE_TEST_CASE( perception_command_with_location_vision_mode_computes_l
     commands.Post( "perception", core::MakeModel( "identifier", identifier ) );
     commands.Execute();
     mock::verify();
-    model[ "step" ] = 1;
+    model[ "tick" ] = 1;
     entity[ "perceptions/vision/mode" ] = "location";
     entity[ "perceptions/vision/location/x" ] = 0;
     entity[ "perceptions/vision/location/y" ] = 0;

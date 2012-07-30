@@ -273,7 +273,7 @@ BOOST_FIXTURE_TEST_CASE( deactivating_recognition_point, sword::perception::Modu
 
 BOOST_FIXTURE_TEST_CASE( activating_alat_monitoring_localization_computes_vision_objects_steps, sword::perception::ModuleFixture )
 {
-    model[ "step" ] = 0;
+    model[ "tick" ] = 0;
     const size_t identifier = 42;
     const size_t perceptionId = 1337;
     const int localization = 0;

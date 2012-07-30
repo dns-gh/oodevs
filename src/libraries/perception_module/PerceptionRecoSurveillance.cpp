@@ -88,7 +88,7 @@ void PerceptionRecoSurveillanceReco::GetAgentsInside( const wrapper::View& model
 PerceptionRecoSurveillance::PerceptionRecoSurveillance( const wrapper::View& model, const wrapper::View& entity, PerceptionObserver_ABC& observer )
     : observer_( observer )
 {
-    entity[ "perceptions/alat/monitoring" ].VisitChildren( boost::bind( &PerceptionRecoSurveillance::AddLocalisation, this, _1, _2, model[ "step" ] ) );
+    entity[ "perceptions/alat/monitoring" ].VisitChildren( boost::bind( &PerceptionRecoSurveillance::AddLocalisation, this, _1, _2, model[ "tick" ] ) );
 }
 
 // -----------------------------------------------------------------------------
