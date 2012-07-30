@@ -14,6 +14,7 @@
 #include "protocol/SimulationSenders.h"
 
 #include <boost/shared_ptr.hpp>
+#include <boost/unordered_set.hpp>
 #include <vector>
 
 namespace boost
@@ -60,9 +61,15 @@ public:
     virtual ~WebControl();
     //@}
 
-    //! @name Operations
+    //! @name Public methods
     //@{
-            void        Receive( const sword::SimToClient& client );
+    void Receive( const sword::SimToClient& client );
+    void NotifyClientAuthenticated( const std::string& link );
+    void NotifyClientLeft( const std::string& link );
+    //@}
+
+    //! @name WebObserver_ABC methods
+    //@{
     virtual std::string Notify( const std::string& method, const std::string& uri );
     //@}
 
@@ -77,6 +84,11 @@ private:
     void        OnControlInformation( const sword::ControlInformation& control );
     //@}
 
+    //! @name Private helpers
+    //@{
+    typedef boost::unordered_set< std::string > T_Clients;
+    //@}
+
 private:
     //! @name Member data
     //@{
@@ -84,6 +96,7 @@ private:
     boost::shared_ptr< boost::shared_mutex > access_;
     boost::shared_ptr< tools::MessageController< sword::SimToClient_Content > > controller_;
     std::vector< boost::shared_ptr< Observer > > observers_;
+    T_Clients clients_;
     sword::EnumSimulationState state_;
     std::string start_time_;
     std::string current_time_;

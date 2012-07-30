@@ -27,6 +27,7 @@
 #include <boost/thread/shared_mutex.hpp>
 
 using namespace plugins::web_control;
+namespace bpt = boost::property_tree;
 
 namespace
 {
@@ -149,6 +150,26 @@ void WebControl::Receive( const sword::SimToClient& client )
     controller_->Dispatch( client.message(), client.has_context() ? client.context() : -1 );
 }
 
+// -----------------------------------------------------------------------------
+// Name: WebControl::NotifyClientAuthenticated
+// Created: BAX 2012-07-30
+// -----------------------------------------------------------------------------
+void WebControl::NotifyClientAuthenticated( const std::string& link )
+{
+    boost::lock_guard< boost::shared_mutex > lock( *access_ );
+    clients_.insert( link );
+}
+
+// -----------------------------------------------------------------------------
+// Name: WebControl::NotifyClientLeft
+// Created: BAX 2012-07-30
+// -----------------------------------------------------------------------------
+void WebControl::NotifyClientLeft( const std::string& link )
+{
+    boost::lock_guard< boost::shared_mutex > lock( *access_ );
+    clients_.erase( link );
+}
+
 namespace
 {
 // -----------------------------------------------------------------------------
@@ -263,12 +284,12 @@ std::string WebControl::Stop()
 
 namespace
 {
-std::string ToJson( const boost::property_tree::ptree& tree )
+std::string ToJson( const bpt::ptree& tree )
 {
     std::ostringstream out;
     try
     {
-        boost::property_tree::write_json( out, tree, false );
+        bpt::write_json( out, tree, false );
     }
     catch( ... )
     {
@@ -290,10 +311,13 @@ std::string WebControl::Get()
     const std::string current = current_time_;
     lock.unlock();
 
-    boost::property_tree::ptree rpy;
+    bpt::ptree rpy;
     rpy.put( "state", convert( state ) );
     rpy.put( "start_time", start );
     rpy.put( "current_time", current );
+    bpt::ptree& clients = rpy.put_child( "clients", bpt::ptree() );
+    BOOST_FOREACH( const T_Clients::value_type& client, clients_ )
+        clients.push_back( std::make_pair( "", client ) );
 
     return WriteHttpReply( httpCodes[ Ok ], ToJson( rpy ) );
 }

@@ -43,3 +43,21 @@ void WebPlugin::Receive( const sword::SimToClient& client )
 {
     control_->Receive( client );
 }
+
+// -----------------------------------------------------------------------------
+// Name: WebPlugin::NotifyClientAuthenticated
+// Created: BAX 2012-07-30
+// -----------------------------------------------------------------------------
+void WebPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& /*client*/, const std::string& link, dispatcher::Profile_ABC& /*profile*/ )
+{
+    control_->NotifyClientAuthenticated( link );
+}
+
+// -----------------------------------------------------------------------------
+// Name: WebPlugin::NotifyClientLeft
+// Created: BAX 2012-07-30
+// -----------------------------------------------------------------------------
+void WebPlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& /*client*/, const std::string& link )
+{
+    control_->NotifyClientLeft( link );
+}

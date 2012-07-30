@@ -48,16 +48,29 @@ namespace
     typedef std::pair< std::string, std::string > T_Pair;;
     typedef std::vector< T_Pair > T_Pairs;
 
-    bool CheckJson( const std::string& json, const T_Pairs& expected )
+    void CheckJson( const std::string& data, const T_Pairs& expected )
     {
-        Tree tree = FromJson( json );
+        const Tree tree = FromJson( data );
         BOOST_FOREACH( const T_Pairs::value_type& value, expected )
         {
             const boost::optional< std::string > opt = tree.get_optional< std::string >( value.first );
             const std::string next = opt == boost::none ? std::string() : *opt;
             BOOST_CHECK_EQUAL( value.second, next );
         }
-        return true;
+    }
+
+    void CheckJsonList( const std::string& data, const std::string& name, const std::vector< std::string >& list )
+    {
+        const Tree root = FromJson( data );
+        BOOST_CHECK_EQUAL( root.count( name ), size_t( 1 ) );
+        if( list.empty() )
+            return;
+        Tree::const_assoc_iterator sub = root.find( name );
+        BOOST_REQUIRE( sub != root.not_found() );
+        size_t count = 0;
+        for( Tree::const_iterator it = sub->second.begin(); it != sub->second.end(); ++it, ++count )
+            BOOST_CHECK( std::find( list.begin(), list.end(), it->second.data() ) != list.end() );
+        BOOST_CHECK_EQUAL( list.size(), count );
     }
 
     struct Fixture
@@ -108,6 +121,13 @@ namespace
         const std::string reply = control.Notify( method, url );
         BOOST_CHECK( CheckHttpCode( code, reply ) );
         BOOST_CHECK_EQUAL( expected, EraseHttpHeader( reply ) );
+    }
+
+    void CheckNotifyJsonList( plugins::web_control::WebControl& control, const std::string& method, const std::string& url, int code, const std::string& name, const std::vector< std::string >& list )
+    {
+        const std::string reply = control.Notify( method, url );
+        BOOST_CHECK( CheckHttpCode( code, reply ) );
+        CheckJsonList( EraseHttpHeader( reply ), name, list );
     }
 }
 
@@ -187,4 +207,20 @@ BOOST_FIXTURE_TEST_CASE( plugin_receive_date_time_updates, Fixture )
     CheckNotifyJson( control_, "GET", "/get", 200, boost::assign::list_of< T_Pair >
         ( std::make_pair( "start_time", "uno" ) )
         ( std::make_pair( "current_time", "duo" ) ) );
+}
+
+BOOST_FIXTURE_TEST_CASE( plugin_list_clients, Fixture )
+{
+    CheckNotifyJsonList( control_, "GET", "/get", 200, "clients", std::vector< std::string >() );
+    control_.NotifyClientAuthenticated( "127.0.0.1" );
+    CheckNotifyJsonList( control_, "GET", "/get", 200, "clients", boost::assign::list_of< std::string >
+        ( "127.0.0.1" ) );
+    control_.NotifyClientAuthenticated( "192.168.1.13" );
+    CheckNotifyJsonList( control_, "GET", "/get", 200, "clients", boost::assign::list_of< std::string >
+        ( "127.0.0.1" )( "192.168.1.13" ) );
+    control_.NotifyClientLeft( "127.0.0.1" );
+    CheckNotifyJsonList( control_, "GET", "/get", 200, "clients", boost::assign::list_of< std::string >
+        ( "192.168.1.13" ) );
+    control_.NotifyClientLeft( "192.168.1.13" );
+    CheckNotifyJsonList( control_, "GET", "/get", 200, "clients", std::vector< std::string >() );
 }
