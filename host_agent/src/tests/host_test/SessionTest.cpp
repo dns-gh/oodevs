@@ -158,7 +158,7 @@ BOOST_FIXTURE_TEST_CASE( session_starts_and_stops, Fixture )
 
 namespace
 {
-std::string RemoveValue( const std::string& txt, const std::string value )
+std::string RemoveValue( const std::string& txt, const std::string& value )
 {
     const boost::xpressive::sregex regex = boost::xpressive::sregex::compile( "\"" + value + "\"\\s*:\\s*\"[^\"]*\",?" );
     return boost::xpressive::regex_replace( txt, regex, "" );
