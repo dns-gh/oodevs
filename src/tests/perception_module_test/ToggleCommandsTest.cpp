@@ -270,3 +270,38 @@ BOOST_FIXTURE_TEST_CASE( deactivating_recognition_point, sword::perception::Modu
                        ( "perception-id", perceptionId ) );
     commands.Execute();
 }
+
+BOOST_FIXTURE_TEST_CASE( activating_alat_monitoring_localization_computes_vision_objects_steps, sword::perception::ModuleFixture )
+{
+    model[ "step" ] = 0;
+    const size_t identifier = 42;
+    const size_t perceptionId = 1337;
+    const int localization = 0;
+    core::Model& perception = model[ "entities" ][ identifier ][ "perceptions/alat/monitoring" ];
+    ExpectEffect( perception, sword::test::MakeModel( perceptionId,
+                                sword::test::MakeModel( "localization", sword::test::MakeUserData( &localization ) )
+                                                      ( "forest-detection-time-step", mock::any )
+                                                      ( "empty-detection-time-step", mock::any )
+                                                      ( "urban-detection-time-step", mock::any ) ) );
+    MOCK_EXPECT( GetVisionObjectsInSurface ).once();
+    commands.Start( "toggle alat monitoring",
+        core::MakeModel( "identifier", identifier )
+                       ( "activated", true )
+                       ( "perception-id", perceptionId )
+                       ( "localization", sword::test::MakeUserData( &localization ) ) );
+    commands.Execute();
+}
+
+BOOST_FIXTURE_TEST_CASE( deactivating_alat_monitoring_perception_removes_perception_node, sword::perception::ModuleFixture )
+{
+    const size_t identifier = 42;
+    const size_t perceptionId = 1337;
+    core::Model& perception = model[ "entities" ][ identifier ][ "perceptions/alat/monitoring" ];
+    perception[ perceptionId ];
+    ExpectEffect( perception, sword::test::MakeModel( perceptionId, sword::test::MarkForRemove() ) );
+    commands.Start( "toggle alat monitoring",
+        core::MakeModel( "identifier", identifier )
+                       ( "activated", false )
+                       ( "perception-id", perceptionId ) );
+    commands.Execute();
+}

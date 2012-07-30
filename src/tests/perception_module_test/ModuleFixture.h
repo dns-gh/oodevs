@@ -143,6 +143,7 @@ namespace perception
                                                                       ( "toggle reco" )
                                                                       ( "toggle object detection" )
                                                                       ( "toggle recognition point" )
+                                                                      ( "toggle alat monitoring" )
                                                                       ( "vision" )
                                                                       ( "identify all agents in zone" ) 
                                                                       ( "external perception" ) )

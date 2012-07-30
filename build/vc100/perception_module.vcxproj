@@ -51,6 +51,7 @@
     <ClInclude Include="..\..\src\libraries\perception_module\SurfacesObjectVisitor_ABC.h" />
     <ClInclude Include="..\..\src\libraries\perception_module\SurfacesObject_ABC.h" />
     <ClInclude Include="..\..\src\libraries\perception_module\TargetPerceptionVisitor_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\perception_module\ToggleAlatMonitoringCommand.h" />
     <ClInclude Include="..\..\src\libraries\perception_module\ToggleLocalizedPerceptionCommand.h" />
     <ClInclude Include="..\..\src\libraries\perception_module\ToggleLocalizedRadarCommand.h" />
     <ClInclude Include="..\..\src\libraries\perception_module\ToggleObjectDetectionCommand.h" />
@@ -86,6 +87,7 @@
     <ClCompile Include="..\..\src\libraries\perception_module\SensorTypeAgent.cpp" />
     <ClCompile Include="..\..\src\libraries\perception_module\SensorTypeObject.cpp" />
     <ClCompile Include="..\..\src\libraries\perception_module\SensorTypeObjectData.cpp" />
+    <ClCompile Include="..\..\src\libraries\perception_module\ToggleAlatMonitoringCommand.cpp" />
     <ClCompile Include="..\..\src\libraries\perception_module\ToggleLocalizedPerceptionCommand.cpp" />
     <ClCompile Include="..\..\src\libraries\perception_module\ToggleLocalizedRadarCommand.cpp" />
     <ClCompile Include="..\..\src\libraries\perception_module\ToggleObjectDetectionCommand.cpp" />

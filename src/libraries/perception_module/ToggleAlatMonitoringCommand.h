@@ -7,11 +7,15 @@
 //
 // *****************************************************************************
 
-#ifndef SWORD_PERCEPTION_TOGGLE_LOCALIZED_PERCEPTION_COMMAND_H
-#define SWORD_PERCEPTION_TOGGLE_LOCALIZED_PERCEPTION_COMMAND_H
+#ifndef SWORD_PERCEPTION_TOGGLE_ALAT_MONITORING_COMMAND_H
+#define SWORD_PERCEPTION_TOGGLE_ALAT_MONITORING_COMMAND_H
 
 #include <boost/noncopyable.hpp>
-#include <string>
+
+namespace xml
+{
+    class xistream;
+}
 
 namespace sword
 {
@@ -24,18 +28,23 @@ namespace perception
     class ModuleFacade;
 
 // =============================================================================
-/** @class  ToggleLocalizedPerceptionCommand
-    @brief  Toggle localized perception command
+/** @class  ToggleAlatMonitoringCommand
+    @brief  Toggle Alat monitoring command
 */
-// Created: SLI 2012-03-30
+// Created: SLI 2012-07-26
 // =============================================================================
-class ToggleLocalizedPerceptionCommand : private boost::noncopyable
+class ToggleAlatMonitoringCommand : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ToggleLocalizedPerceptionCommand( ModuleFacade& module, const wrapper::View& parameters, const wrapper::View& model, size_t identifier );
-    virtual ~ToggleLocalizedPerceptionCommand();
+             ToggleAlatMonitoringCommand( ModuleFacade& module, const wrapper::View& parameters, const wrapper::View& model, size_t identifier );
+    virtual ~ToggleAlatMonitoringCommand();
+    //@}
+
+    //! @name Initialization
+    //@{
+    static void Initialize( xml::xistream& xis );
     //@}
 
     //! @name Operations
@@ -45,11 +54,17 @@ public:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    struct LoadingWrapper;
+    static void ReadAlatTime( xml::xistream& xis );
+    //@}
+
+private:
     //! @name Member data
     //@{
     const size_t identifier_;
     const bool isActivated_;
-    const std::string perception_;
     const int perceptionId_;
     void* localization_;
     //@}
@@ -57,4 +72,5 @@ private:
 
 }
 }
-#endif // SWORD_PERCEPTION_TOGGLE_LOCALIZED_PERCEPTION_COMMAND_H
+
+#endif // SWORD_PERCEPTION_TOGGLE_ALAT_MONITORING_COMMAND_H

@@ -16,6 +16,7 @@
 #include "ToggleRecoCommand.h"
 #include "ToggleObjectDetectionCommand.h"
 #include "ToggleRecognitionPointCommand.h"
+#include "ToggleAlatMonitoringCommand.h"
 #include "VisionCommand.h"
 #include "IdentifyAgentCommand.h"
 #include "ExternalPerceptionCommand.h"
@@ -23,7 +24,6 @@
 #include "PerceptionLevel.h"
 #include "RadarClass.h"
 #include "RadarType.h"
-#include "PerceptionRecoSurveillance.h"
 #include "wrapper/Command.h"
 #include <boost/lambda/lambda.hpp>
 #include <xeumeuleu/xml.hpp>
@@ -44,7 +44,7 @@ namespace
         xis >> xml::start( "sensors" );
         try
         {
-            PerceptionRecoSurveillance::Initialize( xis ); // $$$$ MCO : TODO : maybe we need to store configuration data in a model somehow ?
+            ToggleAlatMonitoringCommand::Initialize( xis ); // $$$$ MCO : TODO : maybe we need to store configuration data in a model somehow ?
             SensorType::Initialize( xis ); // $$$$ MCO : TODO : maybe we need to store configuration data in a model somehow ?
             RadarType::Initialize( xis ); // $$$$ MCO : TODO : maybe we need to store configuration data in a model somehow ?
         }
@@ -95,6 +95,7 @@ ModuleFacade::ModuleFacade()
     wrapper::RegisterCommand< ToggleRecoCommand >               ( "toggle reco", *this );
     wrapper::RegisterCommand< ToggleObjectDetectionCommand >    ( "toggle object detection", *this );
     wrapper::RegisterCommand< ToggleRecognitionPointCommand >   ( "toggle recognition point", *this );
+    wrapper::RegisterCommand< ToggleAlatMonitoringCommand >     ( "toggle alat monitoring", *this );
     wrapper::RegisterCommand< VisionCommand >                   ( "vision", *this );
     wrapper::RegisterCommand< IdentifyAgentCommand >            ( "identify all agents in zone", *this );
     wrapper::RegisterCommand< ExternalPerceptionCommand >       ( "external perception", *this );

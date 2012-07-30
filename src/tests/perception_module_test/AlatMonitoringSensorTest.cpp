@@ -18,12 +18,14 @@ BOOST_FIXTURE_TEST_CASE( alat_monitoring_sensor_recognized_all_agents_in_locatio
     const TER_Localisation* localization = reinterpret_cast< const TER_Localisation* >( 1337 );
     entity[ "perceptions/sensor/activated" ] = false;
     entity[ "perceptions/alat/monitoring/0/localization" ].SetUserData( localization );
+    entity[ "perceptions/alat/monitoring/0/empty-detection-time-step" ] = 0;
+    entity[ "perceptions/alat/monitoring/0/forest-detection-time-step" ] = 1;
+    entity[ "perceptions/alat/monitoring/0/urban-detection-time-step" ] = 2;
     const SWORD_Model* other = core::Convert( &model[ "entities/other" ] );
     model[ "entities/other/pion" ].SetUserData< MIL_Agent_ABC* >( reinterpret_cast< MIL_Agent_ABC* >( 43 ) );
     model[ "entities/other/movement/position/x" ] = 5;
     model[ "entities/other/movement/position/y" ] = 5;
     const SWORD_Model* perceiver = core::Convert( &entity );
-    MOCK_EXPECT( GetVisionObjectsInSurface ).once();
     MOCK_EXPECT( GetAgentListWithinLocalisation ).once().with( mock::any, localization, mock::any, mock::any ).calls( boost::bind( boost::apply< void >(), _3, other, _4 ) );
     MOCK_EXPECT( IsPointInsideLocalisation ).once().with( localization, mock::any ).returns( true );
     MOCK_EXPECT( CanBeSeen ).once().with( perceiver, other ).returns( true );

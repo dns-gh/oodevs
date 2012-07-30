@@ -149,6 +149,9 @@
     <ClInclude Include="..\..\src\libraries\perception_module\VisionObject.h">
       <Filter>Source Files\Perceptions</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\perception_module\ToggleAlatMonitoringCommand.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\perception_module\PerceptionCommand.cpp">
@@ -246,6 +249,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\perception_module\PerceptionLocalisation.cpp">
       <Filter>Source Files\Perceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\perception_module\ToggleAlatMonitoringCommand.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -14,29 +14,18 @@
 #include "VisionObject.h"
 #include "wrapper/View.h"
 #include "wrapper/Hook.h"
-#include "tools/Codec.h"
 #include "MT_Tools/MT_Vector2D.h"
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
-#include <xeumeuleu/xml.hpp>
 
 using namespace sword;
 using namespace sword::perception;
 
 DECLARE_HOOK( CanBeSeen, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) )
-DECLARE_HOOK( ConvertSecondsToSim, double, ( double seconds ) )
-DECLARE_HOOK( GetVisionObjectsInSurface, void, ( const TER_Localisation* localisation, unsigned int& emptySurface, unsigned int& forestSurface, unsigned int& urbanSurface ) )
 DECLARE_HOOK( GetVisionObject, unsigned char, ( const MT_Vector2D* point ) )
 DECLARE_HOOK( IsPointInsideLocalisation, bool, ( const TER_Localisation* localisation, const MT_Vector2D* point ) )
 DECLARE_HOOK( GetAgentListWithinLocalisation, void, ( const SWORD_Model* root, const TER_Localisation* localization,
                                                       void (*callback)( const SWORD_Model* agent, void* userData ), void* userData ) )
-
-namespace
-{
-    double rForestSurveillanceTime_ = std::numeric_limits< double >::max();
-    double rUrbanSurveillanceTime_  = std::numeric_limits< double >::max();
-    double rEmptySurveillanceTime_  = std::numeric_limits< double >::max();
-}
 
 // -----------------------------------------------------------------------------
 // Name: PerceptionRecoSurveillanceReco constructor
@@ -45,17 +34,11 @@ namespace
 PerceptionRecoSurveillanceReco::PerceptionRecoSurveillanceReco( const wrapper::View& perception, unsigned int currentTimeStep )
     : localisation_             ( static_cast< const TER_Localisation* >( perception[ "localization" ].GetUserData() ) )
     , currentTimeStep_          ( currentTimeStep )
-    , nForestDetectionTimeStep_ ( currentTimeStep )
-    , nUrbanDetectionTimeStep_  ( currentTimeStep )
-    , nEmptyDetectionTimeStep_  ( currentTimeStep )
+    , nForestDetectionTimeStep_ ( perception[ "forest-detection-time-step" ] )
+    , nUrbanDetectionTimeStep_  ( perception[ "urban-detection-time-step" ] )
+    , nEmptyDetectionTimeStep_  ( perception[ "empty-detection-time-step" ] )
 {
-    unsigned int nForestSurface = 0;
-    unsigned int nEmptySurface  = 0;
-    unsigned int nUrbanSurface  = 0;
-    GET_HOOK( GetVisionObjectsInSurface )( localisation_, nEmptySurface, nForestSurface, nUrbanSurface );
-    const_cast< unsigned int& >( nForestDetectionTimeStep_ ) += static_cast< unsigned int >( nForestSurface * rForestSurveillanceTime_ );
-    const_cast< unsigned int& >( nEmptyDetectionTimeStep_  ) += static_cast< unsigned int >( nEmptySurface  * rEmptySurveillanceTime_  );
-    const_cast< unsigned int& >( nUrbanDetectionTimeStep_  ) += static_cast< unsigned int >( nUrbanSurface  * rUrbanSurveillanceTime_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -115,52 +98,6 @@ PerceptionRecoSurveillance::PerceptionRecoSurveillance( const wrapper::View& mod
 PerceptionRecoSurveillance::~PerceptionRecoSurveillance()
 {
     // NOTHING
-}
-
-struct PerceptionRecoSurveillance::LoadingWrapper
-{
-    void ReadAlatTime( xml::xistream& xis )
-    {
-        PerceptionRecoSurveillance::ReadAlatTime( xis );
-    }
-};
-
-// -----------------------------------------------------------------------------
-// Name: PerceptionRecoSurveillance::Initialize
-// Created: NLD 2004-11-17
-// -----------------------------------------------------------------------------
-void PerceptionRecoSurveillance::Initialize( xml::xistream& xis )
-{
-    LoadingWrapper loader;
-    xis >> xml::start( "alat-monitoring-times" )
-            >> xml::list( "alat-monitoring-time", loader, &LoadingWrapper::ReadAlatTime )
-        >> xml::end;
-}
-
-namespace
-{
-    void UpdateTime( xml::xistream& xis, double& time )
-    {
-        tools::ReadTimeAttribute( xis, "time", time );
-        time = GET_HOOK( ConvertSecondsToSim )( time ); // second.hectare-1 => dT.hectare-1
-        time /= 10000.;                                 // dT.hectare-1     => dT.m-2
-        time = 1. / ( 1. / time );                      // dT.m-2           => dT.px-2
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PerceptionRecoSurveillance::ReadAlatTime
-// Created: ABL 2007-07-24
-// -----------------------------------------------------------------------------
-void PerceptionRecoSurveillance::ReadAlatTime( xml::xistream& xis )
-{
-    const std::string terrain = xis.attribute< std::string >( "terrain" );
-    if( terrain == "Vide" )
-        UpdateTime( xis, rEmptySurveillanceTime_ );
-    else if( terrain == "Foret" )
-        UpdateTime( xis, rForestSurveillanceTime_ );
-    else if( terrain == "Urbain" )
-        UpdateTime( xis, rUrbanSurveillanceTime_ );
 }
 
 // -----------------------------------------------------------------------------

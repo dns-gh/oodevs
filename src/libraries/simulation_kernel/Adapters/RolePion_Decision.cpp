@@ -618,7 +618,7 @@ namespace
     int EnableLocalizedDetectionId( core::Facade& facade, MIL_AgentPion& pion, const std::string& perception, T localisation, int perceptionId )
     {
         if( !localisation )
-            throw std::runtime_error( __FUNCTION__ ": invalid localization parameter while enabling flying shell detection." );
+            throw std::runtime_error( __FUNCTION__ ": invalid localization parameter while enabling localized detection." );
         core::Model parameters;
         parameters[ "identifier" ] = pion.GetID();
         parameters[ "activated" ] = true;
@@ -626,6 +626,19 @@ namespace
         parameters[ "perception-id" ] = perceptionId;
         parameters[ "localization" ].SetUserData( localisation );
         facade.PostCommand( "toggle localized perception", parameters );
+        return perceptionId;
+    }
+    int EnableAlatMonitoring( core::Facade& facade, MIL_AgentPion& pion, const TER_Localisation* localisation )
+    {
+        if( !localisation )
+            throw std::runtime_error( __FUNCTION__ ": invalid localization parameter while enabling ALAT monitoring detection." );
+        const unsigned int perceptionId = GET_HOOK( GetPerceptionId )();
+        core::Model parameters;
+        parameters[ "identifier" ] = pion.GetID();
+        parameters[ "activated" ] = true;
+        parameters[ "perception-id" ] = perceptionId;
+        parameters[ "localization" ].SetUserData( localisation );
+        facade.PostCommand( "toggle alat monitoring", parameters );
         return perceptionId;
     }
     void DisableLocalizedDetection( core::Facade& facade, MIL_AgentPion& pion, const std::string& perception, int perceptionId )
@@ -776,7 +789,7 @@ void RolePion_Decision::RegisterPerception()
     // ALAT
     RegisterCommand< int( const TER_Localisation* ) >              ( "DEC_ALAT_ActiverReconnaissance", &EnableLocalizedDetectionId< const TER_Localisation* >, "alat/reco", _1, 0u ); // $$$$ _RC_ SLI 2012-07-12: no perception id
     RegisterCommand< void() >                                      ( "DEC_ALAT_DesactiverReconnaissance", &DisableLocalizedDetection, "alat/reco", 0u ); // $$$$ _RC_ SLI 2012-07-12: no perception id
-    RegisterCommand< int( const TER_Localisation* ) >              ( "DEC_Perception_ActiverSurveillance", &EnableLocalizedDetection< const TER_Localisation* >, "alat/monitoring", _1 );
+    RegisterCommand< int( const TER_Localisation* ) >              ( "DEC_Perception_ActiverSurveillance", &EnableAlatMonitoring, _1 );
     RegisterCommand< void( int ) >                                 ( "DEC_Perception_DesactiverSurveillance", &DisableLocalizedDetection, "alat/monitoring", _1 );
     RegisterFunction( "DEC_ALAT_ReconnaissanceNonVuTerminee", boost::bind( &HasNoDelayedPerceptions, boost::cref( GetPion() ) ) );
 }

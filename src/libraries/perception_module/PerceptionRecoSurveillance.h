@@ -15,11 +15,6 @@
 
 class TER_Localisation;
 
-namespace xml
-{
-    class xistream;
-}
-
 namespace sword
 {
 namespace perception
@@ -53,12 +48,10 @@ private:
 class PerceptionRecoSurveillance : public PerceptionWithLocation< PerceptionRecoSurveillanceReco >
 {
 public:
+    //! @name Constructors/Destructor
+    //@{
              PerceptionRecoSurveillance( const wrapper::View& model, const wrapper::View& entity, PerceptionObserver_ABC& observer );
     virtual ~PerceptionRecoSurveillance();
-
-    //! @name Initialization
-    //@{
-    static void Initialize( xml::xistream& xis );
     //@}
 
     //! @name Execution
@@ -72,8 +65,6 @@ public:
 private:
     //! @name Helpers
     //@{
-    struct LoadingWrapper;
-    static void ReadAlatTime( xml::xistream& xis );
     void AddLocalisation( const std::string& /*key*/, const wrapper::View& perception, unsigned int currentTimeStep );
     //@}
 
