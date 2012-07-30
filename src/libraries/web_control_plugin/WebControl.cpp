@@ -9,7 +9,6 @@
 
 #include "WebControl.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
-#include "protocol/SimulationSenders.h"
 #include "tools/MessageController.h"
 #include "tools/MessageObserver.h"
 
@@ -27,38 +26,26 @@
 
 using namespace plugins::web_control;
 
-// -----------------------------------------------------------------------------
-// Name: StateObserver structure
-// Created: BAX 2012-02-28
-// -----------------------------------------------------------------------------
-struct plugins::web_control::StateObserver
-{
-    typedef boost::function< void( sword::EnumSimulationState ) > Update;
-    StateObserver( const Update& update ) : update_( update )
-    {
-        // NOTHING
-    }
-    protected:
-    Update update_;
-};
-
 namespace
 {
 // -----------------------------------------------------------------------------
 // Name: ControlInformationUpdate structure
 // Created: BAX 2012-02-28
 // -----------------------------------------------------------------------------
-struct ControlInformationUpdate : public StateObserver, private tools::MessageObserver< sword::ControlInformation >
+struct ControlInformationUpdate : public Observer, private tools::MessageObserver< sword::ControlInformation >
 {
-    ControlInformationUpdate( tools::MessageController< sword::SimToClient_Content >& controller, const Update& update ) : StateObserver( update )
+    typedef boost::function< void( const sword::ControlInformation& ) > Update;
+    ControlInformationUpdate( tools::MessageController< sword::SimToClient_Content >& controller, const Update& update )
+        : update_( update )
     {
         CONNECT( controller, *this, control_information );
     }
     void Notify( const sword::ControlInformation& message, int /*context*/ )
     {
-        if( message.has_status() )
-            update_( message.status() );
+        update_( message );
     }
+private:
+    const Update update_;
 };
 
 // -----------------------------------------------------------------------------
@@ -66,9 +53,11 @@ struct ControlInformationUpdate : public StateObserver, private tools::MessageOb
 // Created: BAX 2012-02-28
 // -----------------------------------------------------------------------------
 template< typename T, sword::EnumSimulationState Next >
-struct ControlAckUpdate : public StateObserver, public tools::MessageObserver< T >
+struct ControlAckUpdate : public Observer, public tools::MessageObserver< T >
 {
-    ControlAckUpdate( const Update& update ) : StateObserver( update )
+    typedef boost::function< void( sword::EnumSimulationState ) > Update;
+    ControlAckUpdate( const Update& update )
+        : update_( update )
     {
         // NOTHING
     }
@@ -78,6 +67,8 @@ struct ControlAckUpdate : public StateObserver, public tools::MessageObserver< T
             if( message.error_code() == sword::ControlAck_ErrorCode_no_error )
                 update_( Next );
     }
+private:
+    const Update update_;
 };
 }
 
@@ -95,19 +86,20 @@ WebControl::WebControl( dispatcher::SimulationPublisher_ABC& publisher )
     , access_    ( boost::make_shared< boost::shared_mutex >() )
     , controller_( boost::make_shared< tools::MessageController< sword::SimToClient_Content > >() )
 {
-    StateObserver::Update callback = boost::bind( &WebControl::UpdateState, this, _1 );
-    boost::shared_ptr< ControlInformationUpdate > update = boost::make_shared< ControlInformationUpdate >( boost::ref( *controller_ ), callback );
+    boost::function< void( const sword::ControlInformation& ) > onControl = boost::bind( &WebControl::OnControlInformation, this, _1 );
+    boost::shared_ptr< ControlInformationUpdate > update = boost::make_shared< ControlInformationUpdate >( boost::ref( *controller_ ), onControl );
     observers_.push_back( update );
 
-    boost::shared_ptr< ControlPause > pause = boost::make_shared< ControlPause >( callback );
+    boost::function< void( sword::EnumSimulationState ) > onState = boost::bind( &WebControl::OnSimulationState, this, _1 );
+    boost::shared_ptr< ControlPause > pause = boost::make_shared< ControlPause >( onState );
     CONNECT( *controller_, *pause, control_pause_ack );
     observers_.push_back( pause );
 
-    boost::shared_ptr< ControlResume > resume = boost::make_shared< ControlResume >( callback );
+    boost::shared_ptr< ControlResume > resume = boost::make_shared< ControlResume >( onState );
     CONNECT( *controller_, *resume, control_resume_ack );
     observers_.push_back( resume );
 
-    boost::shared_ptr< ControlStop > stop = boost::make_shared< ControlStop >( callback );
+    boost::shared_ptr< ControlStop > stop = boost::make_shared< ControlStop >( onState );
     CONNECT( *controller_, *stop, control_stop_ack );
     observers_.push_back( stop );
 }
@@ -122,13 +114,24 @@ WebControl::~WebControl()
 }
 
 // -----------------------------------------------------------------------------
-// Name: WebControl::UpdateState
+// Name: WebControl::OnSimulationState
 // Created: BAX 2012-02-28
 // -----------------------------------------------------------------------------
-void WebControl::UpdateState( sword::EnumSimulationState state )
+void WebControl::OnSimulationState( sword::EnumSimulationState state )
 {
     boost::lock_guard< boost::shared_mutex > lock( *access_ );
     state_ = state;
+}
+
+// -----------------------------------------------------------------------------
+// Name: WebControl::OnControlInformation
+// Created: BAX 2012-07-30
+// -----------------------------------------------------------------------------
+void WebControl::OnControlInformation( const sword::ControlInformation& control )
+{
+    boost::lock_guard< boost::shared_mutex > lock( *access_ );
+    if( control.has_status() )
+        state_ = control.status();
 }
 
 // -----------------------------------------------------------------------------

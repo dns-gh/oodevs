@@ -11,6 +11,8 @@
 #define WEB_CONTROL_PLUGIN_H
 
 #include "WebObserver_ABC.h"
+#include "protocol/SimulationSenders.h"
+
 #include <boost/shared_ptr.hpp>
 #include <vector>
 
@@ -24,13 +26,6 @@ namespace dispatcher
     class SimulationPublisher_ABC;
 }
 
-namespace sword
-{
-    class SimToClient;
-    class SimToClient_Content;
-    enum  EnumSimulationState;
-}
-
 namespace tools
 {
     template< typename category > class MessageController;
@@ -40,7 +35,15 @@ namespace plugins
 {
 namespace web_control
 {
-    struct StateObserver;
+// -----------------------------------------------------------------------------
+// Name: Observer structure
+// Created: BAX 2012-30-07
+// -----------------------------------------------------------------------------
+struct Observer
+{
+             Observer() {}
+    virtual ~Observer() {}
+};
 
 // =============================================================================
 /** @class  WebControl
@@ -70,7 +73,8 @@ private:
     std::string Play();
     std::string Pause();
     std::string Stop();
-    void        UpdateState( sword::EnumSimulationState state );
+    void        OnSimulationState( sword::EnumSimulationState state );
+    void        OnControlInformation( const sword::ControlInformation& control );
     //@}
 
 private:
@@ -80,7 +84,7 @@ private:
     sword::EnumSimulationState state_;
     boost::shared_ptr< boost::shared_mutex > access_;
     boost::shared_ptr< tools::MessageController< sword::SimToClient_Content > > controller_;
-    std::vector< boost::shared_ptr< StateObserver > > observers_;
+    std::vector< boost::shared_ptr< Observer > > observers_;
     //@}
 };
 }
