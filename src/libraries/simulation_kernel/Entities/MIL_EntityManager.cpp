@@ -98,12 +98,12 @@
 #include "protocol/Protocol.h"
 #include "resource_network/ResourceNetworkModel.h"
 #include "tools/Loader_ABC.h"
+#include "Urban/MIL_UrbanModel.h"
 #include "Urban/PHY_InfrastructureType.h"
 #include "Urban/PHY_MaterialCompositionType.h"
 #include "Urban/PHY_AccomodationType.h"
 #include "Urban/PHY_ResourceNetworkType.h"
 #include "Urban/PHY_RoofShapeType.h"
-#include <urban/Model.h>
 #include <urban/GeometryAttribute.h>
 #include <urban/ObjectVisitor_ABC.h>
 #include <urban/PhysicalAttribute.h>
@@ -384,7 +384,7 @@ namespace
 // Name: MIL_EntityManager::CreateUrbanObjects
 // Created: SLG 2010-06-23
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::CreateUrbanObjects( urban::Model& urbanModel, const MIL_Config& config )
+void MIL_EntityManager::CreateUrbanObjects( MIL_UrbanModel& urbanModel, const MIL_Config& config )
 {
     UrbanWrapperVisitor visitor( *this );
     urbanModel.Accept( visitor );

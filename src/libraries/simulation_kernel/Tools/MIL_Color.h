@@ -12,7 +12,6 @@
 
 #include "MIL.h"
 #include "protocol/Protocol.h"
-#include <boost/noncopyable.hpp>
 
 namespace xml
 {

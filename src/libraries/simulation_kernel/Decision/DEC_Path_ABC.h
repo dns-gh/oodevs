@@ -13,7 +13,6 @@
 #define __DEC_Path_ABC_h_
 
 #include "simulation_terrain/TER_PathFindRequest_ABC.h"
-#include <boost/noncopyable.hpp>
 
 class TerrainData;
 class MT_Vector2D;

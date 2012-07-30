@@ -10,8 +10,6 @@
 #ifndef PHY_SensorTypeAgent_ABC_h
 #define PHY_SensorTypeAgent_ABC_h
 
-#include <boost/noncopyable.hpp>
-
 class PHY_Volume;
 
 // =============================================================================

@@ -12,7 +12,6 @@
 
 #include "Tools/MIL_Config.h"
 #include <xeumeuleu/xml.hpp>
-#include <boost/noncopyable.hpp>
 
 class MIL_Time_ABC;
 

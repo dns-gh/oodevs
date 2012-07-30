@@ -10,8 +10,6 @@
 #ifndef __MIL_DecontaminationEffect_h_
 #define __MIL_DecontaminationEffect_h_
 
-#include <boost/noncopyable.hpp>
-
 class MIL_PopulationHumans;
 
 // =============================================================================

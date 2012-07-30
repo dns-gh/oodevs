@@ -14,7 +14,6 @@
 
 #include "MIL.h"
 #include "Entities/Agents/Roles/Logistic/SupplyRecipient_ABC.h"
-#include <boost/noncopyable.hpp>
 #include <boost/serialization/export.hpp>
 
 class MIL_Automate;

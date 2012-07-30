@@ -11,7 +11,6 @@
 #define SWORD_PATH_POINT_ADAPTER_H
 
 #include <boost/shared_ptr.hpp>
-#include <boost/noncopyable.hpp>
 #include <string>
 
 class MT_Vector2D;

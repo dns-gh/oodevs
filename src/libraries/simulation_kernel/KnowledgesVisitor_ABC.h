@@ -10,8 +10,6 @@
 #ifndef __KnowledgesVisitor_ABC_h_
 #define __KnowledgesVisitor_ABC_h_
 
-#include <boost/noncopyable.hpp>
-
 // =============================================================================
 /** @class  KnowledgesVisitor_ABC
     @brief  Knowledges visitor declaration

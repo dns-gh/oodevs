@@ -12,7 +12,6 @@
 
 #include "tools/Extendable.h"
 #include "simulation_kernel/Entities/Objects/ObjectCapacity_ABC.h"
-#include <boost/noncopyable.hpp>
 
 // =============================================================================
 /** @class  MIL_ObjectType_ABC

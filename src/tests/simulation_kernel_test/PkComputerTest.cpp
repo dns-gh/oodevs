@@ -17,7 +17,6 @@
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectLoader.h"
 #include "StubTER_World.h"
-#include <urban/Model.h>
 #include <urban/UrbanObject.h>
 #include <urban/CoordinateConverter_ABC.h>
 #include <urban/CoordinateConverter.h>

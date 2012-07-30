@@ -10,7 +10,6 @@
 #ifndef SWORD_FLOOD_MODEL_FACTORY_ABC_H
 #define SWORD_FLOOD_MODEL_FACTORY_ABC_H
 
-#include <boost/noncopyable.hpp>
 #include <memory>
 
 namespace flood

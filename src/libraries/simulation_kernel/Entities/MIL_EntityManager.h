@@ -41,7 +41,6 @@ namespace sword
 
 namespace urban
 {
-    class Model;
     class TerrainObject_ABC;
 }
 
@@ -76,6 +75,7 @@ class MIL_Population;
 class MIL_Inhabitant;
 class MIL_ProfilerMgr;
 class MIL_Time_ABC;
+class MIL_UrbanModel;
 class MissionController_ABC;
 class InhabitantFactory_ABC;
 class PopulationFactory_ABC;
@@ -155,7 +155,7 @@ public:
     //! @name Operations
     //@{
     void ReadODB( const MIL_Config& config );
-    void CreateUrbanObjects( urban::Model& urbanModel, const MIL_Config& config );
+    void CreateUrbanObjects( MIL_UrbanModel& urbanModel, const MIL_Config& config );
     void SendStateToNewClient() const;
     void Update();
     void Clean();

@@ -10,8 +10,6 @@
 #ifndef __ConsumptionOperator_ABC_h_
 #define __ConsumptionOperator_ABC_h_
 
-#include <boost/noncopyable.hpp>
-
 class PHY_ComposantePion;
 
 // =============================================================================

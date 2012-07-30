@@ -2637,6 +2637,9 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\PHY_RoofShapeType.cpp">
       <Filter>Source Files\Urban\Types</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\MIL_UrbanModel.cpp">
+      <Filter>Source Files\Urban</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractWithSideCapacity.cpp">
@@ -5354,9 +5357,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\Hook.h">
       <Filter>Source Files\Adapters\Hooks</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\MIL_UrbanCache.h">
-      <Filter>Source Files\Urban</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\PHY_AccomodationType.h">
       <Filter>Source Files\Urban\Types</Filter>
     </ClInclude>
@@ -5371,6 +5371,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\PHY_RoofShapeType.h">
       <Filter>Source Files\Urban\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\MIL_UrbanModel.h">
+      <Filter>Source Files\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\MIL_UrbanCache.h">
+      <Filter>Source Files\Urban</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

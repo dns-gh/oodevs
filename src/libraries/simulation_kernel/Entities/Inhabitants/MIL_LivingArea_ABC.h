@@ -11,7 +11,6 @@
 #define __MIL_LivingArea_ABC_h
 
 #include "MT_Tools/Mt_Vector2DTypes.h"
-#include <boost/noncopyable.hpp>
 #include <boost/serialization/export.hpp>
 
 // =============================================================================

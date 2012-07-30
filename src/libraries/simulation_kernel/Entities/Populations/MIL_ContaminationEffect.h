@@ -10,8 +10,6 @@
 #ifndef __MIL_ContaminationEffect_h_
 #define __MIL_ContaminationEffect_h_
 
-#include <boost/noncopyable.hpp>
-
 class MIL_PopulationHumans;
 class MIL_CheckPointInArchive;
 class MIL_CheckPointOutArchive;

@@ -10,8 +10,6 @@
 #ifndef __PHY_PerceptionComputer_ABC_h_
 #define __PHY_PerceptionComputer_ABC_h_
 
-#include <boost/noncopyable.hpp>
-
 class MIL_Agent_ABC;
 class PHY_PerceptionLevel;
 

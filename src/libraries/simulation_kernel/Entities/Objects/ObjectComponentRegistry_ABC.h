@@ -11,7 +11,6 @@
 #define __ObjectComponentRegistry_ABC_h_
 
 #include <boost/function.hpp>
-#include <boost/noncopyable.hpp>
 
 namespace xml
 {

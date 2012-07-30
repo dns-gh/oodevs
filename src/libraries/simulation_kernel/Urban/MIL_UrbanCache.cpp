@@ -7,18 +7,25 @@
 #include "MIL_AgentServer.h"
 #include "Entities/MIL_EntityManager.h"
 #include "MT_Tools/MT_Logger.h"
-#include <urban/model.h>
-
-#define VECTOR_TO_POINT( point ) geometry::Point2f( static_cast< float >( ( point ).rX_ ), static_cast< float >( ( point ).rY_ ) )
+#include "Urban/MIL_UrbanModel.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_UrbanCache constructor
 // Created: LDC 2011-12-28
 // -----------------------------------------------------------------------------
-MIL_UrbanCache::MIL_UrbanCache( urban::Model& urbanModel )
+MIL_UrbanCache::MIL_UrbanCache( MIL_UrbanModel& urbanModel )
     : urbanModel_( urbanModel )
 {
-        // NOTHING
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_UrbanCache destructor
+// Created: JSR 2012-07-26
+// -----------------------------------------------------------------------------
+MIL_UrbanCache::~MIL_UrbanCache()
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -50,9 +57,7 @@ void MIL_UrbanCache::GetUrbanBlocksWithinSegment( const MT_Vector2D& vSourcePoin
         }
     }
     std::vector< const urban::TerrainObject_ABC* > tmpList;
-    geometry::Point2f vSource( VECTOR_TO_POINT( vSourcePoint ) );
-    geometry::Point2f vTarget( VECTOR_TO_POINT( vTargetPoint ) );
-    urbanModel_.GetListWithinSegment( vSource, vTarget, tmpList );
+    urbanModel_.GetListWithinSegment( vSourcePoint, vTargetPoint, tmpList );
     list.reserve( tmpList.size() );
     for( std::size_t i = 0; i < tmpList.size(); ++i )
         list.push_back( &MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *tmpList[ i ] ) );
@@ -75,8 +80,7 @@ void MIL_UrbanCache::Clear()
 void MIL_UrbanCache::GetListWithinCircle( const MT_Vector2D& center, float radius, std::vector< UrbanObjectWrapper* >& result ) const
 {
     std::vector< const urban::TerrainObject_ABC* > tmpList;
-    geometry::Point2f geomCenter( VECTOR_TO_POINT( center ) );
-    urbanModel_.GetListWithinCircle( geomCenter, radius, tmpList );
+    urbanModel_.GetListWithinCircle( center, radius, tmpList );
     result.reserve( tmpList.size() );
     for( std::size_t i = 0; i < tmpList.size(); ++i )
         result.push_back( &MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *tmpList[ i ] ) );
@@ -88,8 +92,7 @@ void MIL_UrbanCache::GetListWithinCircle( const MT_Vector2D& center, float radiu
 // -----------------------------------------------------------------------------
 const UrbanObjectWrapper* MIL_UrbanCache::FindBlock( const MT_Vector2D& point ) const
 {
-    geometry::Point2f geomPoint( VECTOR_TO_POINT( point ) );
-    const urban::TerrainObject_ABC* ret = urbanModel_.FindBlock( geomPoint );
+    const urban::TerrainObject_ABC* ret = urbanModel_.FindBlock( point );
     return ret ? &MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *ret ) : 0;
 }
 
@@ -112,7 +115,5 @@ std::vector< const UrbanObjectWrapper* > MIL_UrbanCache::GetCities() const
 // -----------------------------------------------------------------------------
 double MIL_UrbanCache::GetUrbanBlockCost( float weight, const MT_Vector2D& from, const MT_Vector2D& to ) const
 {
-    geometry::Point2f geomFrom( VECTOR_TO_POINT( from ) );
-    geometry::Point2f geomTo( VECTOR_TO_POINT( to ) );
-    return urbanModel_.GetUrbanBlockCost( weight, geomFrom, geomTo );
+    return urbanModel_.GetUrbanBlockCost( weight, from, to );
 }

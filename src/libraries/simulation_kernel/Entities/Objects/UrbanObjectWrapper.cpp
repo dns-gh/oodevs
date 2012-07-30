@@ -21,12 +21,12 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
+#include "Urban/MIL_UrbanModel.h"
 #include "Urban/PHY_InfrastructureType.h"
 #include "Urban/PHY_MaterialCompositionType.h"
 #include <urban/PhysicalAttribute.h>
 #include <urban/ColorAttribute.h>
 #include <urban/GeometryAttribute.h>
-#include <urban/Model.h>
 #include <urban/InfrastructureAttribute.h>
 #include <urban/ResourceNetworkAttribute.h>
 #include <urban/TerrainObject_ABC.h>

@@ -11,7 +11,6 @@
 #define __DEC_ResourceNetwork_h_
 
 #include "MIL.h"
-#include <boost/noncopyable.hpp>
 
 namespace sword
 {

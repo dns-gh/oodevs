@@ -35,7 +35,6 @@
 #include <boost/assign/list_of.hpp>
 #include <xeumeuleu/xml.hpp>
 #include <urban/CoordinateConverter.h>
-#include <urban/Model.h>
 #include <urban/UrbanObject.h>
 
 namespace

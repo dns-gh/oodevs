@@ -10,7 +10,6 @@
 #ifndef __MIL_InhabitantSatisfactions_h_
 #define __MIL_InhabitantSatisfactions_h_
 
-#include <boost/noncopyable.hpp>
 #include "MIL.h"
 
 namespace client

@@ -10,8 +10,6 @@
 #ifndef __DEC_Path_KnowledgeObject_ABC_h_
 #define __DEC_Path_KnowledgeObject_ABC_h_
 
-#include <boost/noncopyable.hpp>
-
 class MT_Vector2D;
 class TerrainData;
 

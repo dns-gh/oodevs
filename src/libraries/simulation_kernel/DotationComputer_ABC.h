@@ -10,8 +10,6 @@
 #ifndef __DotationComputer_ABC_h_
 #define __DotationComputer_ABC_h_
 
-#include <boost/noncopyable.hpp>
-
 class PHY_DotationGroupContainer;
 class PHY_DotationCategory;
 

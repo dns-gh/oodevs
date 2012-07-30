@@ -16,7 +16,7 @@
 */
 // Created: SBO 2009-05-26
 // =============================================================================
-class MIL_IDManager
+class MIL_IDManager : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -32,14 +32,6 @@ public:
 
     template< typename Archive >
     void serialize( Archive& archive, unsigned int version );
-    //@}
-
-private:
-
-    //! @name Copy/Assignment
-    //@{
-    MIL_IDManager( const MIL_IDManager& );            //!< Copy constructor
-    MIL_IDManager& operator=( const MIL_IDManager& ); //!< Assignment operator
     //@}
 
 private:

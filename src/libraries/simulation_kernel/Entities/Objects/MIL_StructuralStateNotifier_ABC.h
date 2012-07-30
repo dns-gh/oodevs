@@ -10,8 +10,6 @@
 #ifndef __MIL_StructuralStateNotifier_ABC_h_
 #define __MIL_StructuralStateNotifier_ABC_h_
 
-#include <boost/noncopyable.hpp>
-
 class MIL_Object_ABC;
 
 // =============================================================================

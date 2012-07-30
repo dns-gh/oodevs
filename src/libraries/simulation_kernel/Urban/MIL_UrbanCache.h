@@ -12,34 +12,50 @@
 
 #include <geometry/types.h>
 #include <map>
-#include <boost/noncopyable.hpp>
 
 class UrbanObjectWrapper;
 class MT_Vector2D;
+class MIL_UrbanModel;
 
-namespace urban
-{
-    class Model;
-}
-
+// =============================================================================
+/** @class  MIL_UrbanCache
+    @brief  MIL_UrbanCache
+*/
+// Created: LDC 2011-12-229
+// =============================================================================
 class MIL_UrbanCache : private boost::noncopyable
 {
 public:
-    MIL_UrbanCache( urban::Model& urbanModel );
+    //! @name Constructors/Destructor
+    //@{
+    explicit MIL_UrbanCache( MIL_UrbanModel& urbanModel );
+    virtual ~MIL_UrbanCache();
+    //@}
+
+public:
+    //! @name Operations
+    //@{
     void GetUrbanBlocksWithinSegment( const MT_Vector2D& vSourcePoint, const MT_Vector2D& vTargetPoint, std::vector< const UrbanObjectWrapper* >& list );
     void GetListWithinCircle( const MT_Vector2D& center, float radius, std::vector< UrbanObjectWrapper* >& result ) const;
     const UrbanObjectWrapper* FindBlock( const MT_Vector2D& point ) const;
     std::vector< const UrbanObjectWrapper* > GetCities() const;
     double GetUrbanBlockCost( float weight, const MT_Vector2D& from, const MT_Vector2D& to ) const;
     void Clear();
+    //@}
 
 private:
+    //! @name Types
+    //@{
     typedef std::map< MT_Vector2D, std::vector< const UrbanObjectWrapper* > > T_InnerCache;
     typedef std::map< MT_Vector2D, T_InnerCache > T_Cache;
+    //@}
 
 private:
-    urban::Model& urbanModel_;
+    //! @name Member data
+    //@{
+    MIL_UrbanModel& urbanModel_;
     T_Cache cache_;
+    //@}
 };
 
 #endif

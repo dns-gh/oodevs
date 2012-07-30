@@ -10,7 +10,6 @@
 #ifndef __MIL_IntoxicationEffect_h_
 #define __MIL_IntoxicationEffect_h_
 
-#include <boost/noncopyable.hpp>
 #include <boost/serialization/split_member.hpp>
 #include <vector>
 

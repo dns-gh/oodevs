@@ -10,8 +10,6 @@
 #ifndef __MIL_FloodEffectManipulator_h_
 #define __MIL_FloodEffectManipulator_h_
 
-#include <boost/noncopyable.hpp>
-
 class PHY_HumanWound;
 
 // =============================================================================

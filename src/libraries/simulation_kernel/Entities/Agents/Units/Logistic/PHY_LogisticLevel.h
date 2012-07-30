@@ -13,7 +13,6 @@
 #define __PHY_LogisticLevel_h_
 
 #include "MT_Tools/MT_String.h"
-#include <boost/noncopyable.hpp>
 #include <map>
 
 // =============================================================================

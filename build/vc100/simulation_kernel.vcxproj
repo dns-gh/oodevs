@@ -342,6 +342,7 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\firing\directfiring\PHY_DirectFireData.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\firing\directfiring\PHY_RoleAction_DirectFiring.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\MIL_UrbanCache.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\MIL_UrbanModel.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\PHY_AccomodationType.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\PHY_InfrastructureType.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\PHY_MaterialCompositionType.cpp" />
@@ -1118,6 +1119,7 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\firing\directfiring\PHY_DirectFireData.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\firing\directfiring\PHY_RoleAction_DirectFiring.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\MIL_UrbanCache.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\MIL_UrbanModel.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\PHY_AccomodationType.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\PHY_InfrastructureType.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\PHY_MaterialCompositionType.h" />

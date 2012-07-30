@@ -10,8 +10,6 @@
 #ifndef __MIL_Schedule_ABC_h
 #define __MIL_Schedule_ABC_h
 
-#include <boost/noncopyable.hpp>
-
 namespace client
 {
     class PopulationUpdate;

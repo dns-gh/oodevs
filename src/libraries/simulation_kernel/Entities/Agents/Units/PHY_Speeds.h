@@ -10,8 +10,6 @@
 #ifndef __PHY_Speeds_h_
 #define __PHY_Speeds_h_
 
-#include <boost/noncopyable.hpp>
-
 namespace xml
 {
     class xistream;

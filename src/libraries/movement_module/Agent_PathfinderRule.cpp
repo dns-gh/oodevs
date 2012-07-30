@@ -11,7 +11,6 @@
 #include "Agent_Path.h"
 #include "Agent_PathClass.h"
 #include "PathPoint.h"
-#include <urban/Model.h>
 #include "wrapper/Hook.h"
 
 using namespace sword::movement;

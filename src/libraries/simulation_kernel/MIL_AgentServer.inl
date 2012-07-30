@@ -180,7 +180,7 @@ MIL_EntityManager& MIL_AgentServer::GetEntityManager() const
 // Created: SLG 2009-10-11
 // -----------------------------------------------------------------------------
 inline
-urban::Model& MIL_AgentServer::GetUrbanModel() const
+MIL_UrbanModel& MIL_AgentServer::GetUrbanModel() const
 {
     assert( pUrbanModel_ );
     return *pUrbanModel_;

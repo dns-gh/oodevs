@@ -10,7 +10,6 @@
 #ifndef __DEC_KnowledgeResolver_ABC_h_
 #define __DEC_KnowledgeResolver_ABC_h_
 
-#include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 
 namespace sword

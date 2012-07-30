@@ -12,7 +12,6 @@
 
 #include "MIL_ParameterType_ABC.h"
 #include <boost/shared_ptr.hpp>
-#include <boost/noncopyable.hpp>
 #include <vector>
 
 namespace google

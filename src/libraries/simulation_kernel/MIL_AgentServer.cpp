@@ -28,11 +28,10 @@
 #include "tools/ExerciseSettings.h"
 #include "tools/Loader_ABC.h"
 #include "Urban/MIL_UrbanCache.h"
+#include "Urban/MIL_UrbanModel.h"
 #include <boost/filesystem/path.hpp>
 #include <tools/thread/Thread.h>
 #include <tools/win32/ProcessMonitor.h>
-#include <urban/model.h>
-#include <urban/WorldParameters.h>
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push, 1 )
 #include <boost/date_time/posix_time/posix_time.hpp>
@@ -68,7 +67,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     , pProfilerMgr_         ( new MIL_ProfilerMgr( config.IsProfilingEnabled() ) )
     , pCheckPointManager_   ( 0 )
     , pAgentServer_         ( 0 )
-    , pUrbanModel_          ( new urban::Model() )
+    , pUrbanModel_          ( new MIL_UrbanModel() )
     , pUrbanCache_          ( new MIL_UrbanCache( *pUrbanModel_ ) )
     , pResourceTools_       ( new ResourceTools() )
     , pBurningCells_        ( new MIL_BurningCells() )
@@ -166,9 +165,8 @@ void MIL_AgentServer::ReadUrbanModel()
     try
     {
          MT_LOG_INFO_MSG( MT_FormatString( "Loading Urban Model from path '%s'", directoryPath.c_str() ) )
-         urban::WorldParameters world( directoryPath );
          MIL_Tools::CheckXmlCrc32Signature( config_.GetUrbanTerrainFile() );
-         pUrbanModel_->Load( directoryPath, world );
+         pUrbanModel_->Load( directoryPath );
     }
     catch( std::exception& e )
     {

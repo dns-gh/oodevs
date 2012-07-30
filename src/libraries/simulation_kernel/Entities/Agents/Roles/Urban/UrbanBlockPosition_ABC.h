@@ -11,7 +11,6 @@
 #define __UrbanBlockPosition_ABC_h_
 
 #include "UrbanLocationComputer_ABC.h"
-#include <boost/noncopyable.hpp>
 
 class MIL_Agent_ABC;
 class PHY_DotationCategory;

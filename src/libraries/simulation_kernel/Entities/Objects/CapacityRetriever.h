@@ -10,8 +10,6 @@
 #ifndef __CapacityRetriever_h_
 #define __CapacityRetriever_h_
 
-#include <boost/noncopyable.hpp>
-
 class MIL_ObjectType_ABC;
 class ObjectCapacity_ABC;
 

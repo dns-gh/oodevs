@@ -10,7 +10,6 @@
 #ifndef __MissionController_ABC_h_
 #define __MissionController_ABC_h_
 
-#include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 
 class MIL_Mission_ABC;
