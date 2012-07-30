@@ -185,7 +185,7 @@ void MIL_PopulationElement_ABC::ApplyIndirectFire( const MT_Circle& attritionCir
     assert( pPopulation_ );
     double rDead = std::min( static_cast< double >( humans_.GetTotalLivingHumans() ), rDensity_ * GetLocation().GetIntersectionAreaWithCircle( attritionCircle ) );
     // $$$$ SBO 2006-04-07: 2% kill, at least one kill
-    unsigned int nDead = static_cast< unsigned int >( ceil( 0.02f * rDead ) );
+    unsigned int nDead = static_cast< unsigned int >( ceil( 0.5f * rDead ) );
     ApplyLethalDamage( nDead, fireResult );
 }
 
