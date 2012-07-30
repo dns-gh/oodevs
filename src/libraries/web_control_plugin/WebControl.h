@@ -81,10 +81,12 @@ private:
     //! @name Member data
     //@{
     dispatcher::SimulationPublisher_ABC& publisher_;
-    sword::EnumSimulationState state_;
     boost::shared_ptr< boost::shared_mutex > access_;
     boost::shared_ptr< tools::MessageController< sword::SimToClient_Content > > controller_;
     std::vector< boost::shared_ptr< Observer > > observers_;
+    sword::EnumSimulationState state_;
+    std::string start_time_;
+    std::string current_time_;
     //@}
 };
 }

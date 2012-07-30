@@ -21,6 +21,8 @@
 #include <boost/format.hpp>
 #include <boost/function.hpp>
 #include <boost/make_shared.hpp>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
 #include <boost/thread/locks.hpp>
 #include <boost/thread/shared_mutex.hpp>
 
@@ -132,6 +134,10 @@ void WebControl::OnControlInformation( const sword::ControlInformation& control 
     boost::lock_guard< boost::shared_mutex > lock( *access_ );
     if( control.has_status() )
         state_ = control.status();
+    if( control.has_initial_date_time() && control.initial_date_time().has_data() )
+        start_time_ = control.initial_date_time().data();
+    if( control.has_date_time() && control.date_time().has_data() )
+        current_time_ = control.date_time().data();
 }
 
 // -----------------------------------------------------------------------------
@@ -255,6 +261,23 @@ std::string WebControl::Stop()
     return SendMessage< simulation::ControlStop >( publisher_ );
 }
 
+namespace
+{
+std::string ToJson( const boost::property_tree::ptree& tree )
+{
+    std::ostringstream out;
+    try
+    {
+        boost::property_tree::write_json( out, tree, false );
+    }
+    catch( ... )
+    {
+        // NOTHING
+    }
+    return out.str();
+}
+}
+
 // -----------------------------------------------------------------------------
 // Name: WebControl::Get
 // Created: BAX 2012-02-28
@@ -263,13 +286,16 @@ std::string WebControl::Get()
 {
     boost::shared_lock< boost::shared_mutex > lock( *access_ );
     const sword::EnumSimulationState state = state_;
+    const std::string start = start_time_;
+    const std::string current = current_time_;
     lock.unlock();
 
-    std::string reply = ( boost::format(
-        "{\"state\":\"%1%\"}" )
-        % convert( state )
-    ).str();
-    return WriteHttpReply( httpCodes[ Ok ], reply );
+    boost::property_tree::ptree rpy;
+    rpy.put( "state", convert( state ) );
+    rpy.put( "start_time", start );
+    rpy.put( "current_time", current );
+
+    return WriteHttpReply( httpCodes[ Ok ], ToJson( rpy ) );
 }
 
 namespace

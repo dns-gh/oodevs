@@ -13,6 +13,13 @@
 #include "protocol/ClientSenders.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
 
+#include <boost/assign/list_of.hpp>
+#include <boost/foreach.hpp>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
+
+typedef boost::property_tree::ptree Tree;
+
 namespace
 {
     MOCK_BASE_CLASS( MockPublisher, dispatcher::SimulationPublisher_ABC )
@@ -20,6 +27,38 @@ namespace
         MOCK_METHOD_EXT( Send, 1, void( const sword::DispatcherToSim& ), DispatchToSim );
         MOCK_METHOD_EXT( Send, 1, void( const sword::ClientToSim& ),     ClientToSim );
     };
+
+    const Tree FromJson( const std::string& data )
+    {
+        if( data.empty() )
+            return Tree();
+        Tree rpy;
+        try
+        {
+            std::istringstream input( data );
+            boost::property_tree::read_json( input, rpy );
+        }
+        catch( ... )
+        {
+            // NOTHING
+        }
+        return rpy;
+    }
+
+    typedef std::pair< std::string, std::string > T_Pair;;
+    typedef std::vector< T_Pair > T_Pairs;
+
+    bool CheckJson( const std::string& json, const T_Pairs& expected )
+    {
+        Tree tree = FromJson( json );
+        BOOST_FOREACH( const T_Pairs::value_type& value, expected )
+        {
+            const boost::optional< std::string > opt = tree.get_optional< std::string >( value.first );
+            const std::string next = opt == boost::none ? std::string() : *opt;
+            BOOST_CHECK_EQUAL( value.second, next );
+        }
+        return true;
+    }
 
     struct Fixture
     {
@@ -57,17 +96,24 @@ namespace
         return boost::xpressive::regex_replace( data, httpHeaderRegex, "" );
     }
 
+    void CheckNotifyJson( plugins::web_control::WebControl& control, const std::string& method, const std::string& url, int code, const T_Pairs& pairs )
+    {
+        const std::string reply = control.Notify( method, url );
+        BOOST_CHECK( CheckHttpCode( code, reply ) );
+        CheckJson( EraseHttpHeader( reply ), pairs );
+    }
+
     void CheckNotify( plugins::web_control::WebControl& control, const std::string& method, const std::string& url, int code, const std::string& expected )
     {
         const std::string reply = control.Notify( method, url );
         BOOST_CHECK( CheckHttpCode( code, reply ) );
-        BOOST_CHECK_EQUAL( expected, EraseHttpHeader( reply ));
+        BOOST_CHECK_EQUAL( expected, EraseHttpHeader( reply ) );
     }
 }
 
 BOOST_FIXTURE_TEST_CASE( plugin_notify_get_returns_json_state, Fixture )
 {
-    CheckNotify( control_, "GET", "/get", 200, "{\"state\":\"stopped\"}" );
+    CheckNotifyJson( control_, "GET", "/get", 200, boost::assign::list_of< T_Pair >( std::make_pair( "state", "stopped" ) ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( plugin_notify_pause_send_control_pause, Fixture )
@@ -109,14 +155,14 @@ BOOST_FIXTURE_TEST_CASE( plugin_invalid_urls_returns_not_found, Fixture )
 
 namespace
 {
-    template< typename T >
-    void CheckControlAck( plugins::web_control::WebControl& control, const T& getPointer, const std::string& state )
-    {
-        sword::SimToClient msg;
-        (msg.mutable_message()->*getPointer)()->set_error_code( sword::ControlAck_ErrorCode_no_error );
-        control.Receive( msg );
-        CheckNotify( control, "GET", "/get", 200, "{\"state\":\"" + state + "\"}" );
-    }
+template< typename T >
+void CheckControlAck( plugins::web_control::WebControl& control, const T& getPointer, const std::string& state )
+{
+    sword::SimToClient msg;
+    (msg.mutable_message()->*getPointer)()->set_error_code( sword::ControlAck_ErrorCode_no_error );
+    control.Receive( msg );
+    CheckNotifyJson( control, "GET", "/get", 200, boost::assign::list_of< T_Pair >( std::make_pair( "state", state ) ) );
+}
 }
 
 BOOST_FIXTURE_TEST_CASE( plugin_receive_message_update_state, Fixture )
@@ -125,9 +171,20 @@ BOOST_FIXTURE_TEST_CASE( plugin_receive_message_update_state, Fixture )
     msg.mutable_message()->mutable_control_information()->set_status( sword::running );
     control_.Receive( msg );
 
-    CheckNotify( control_, "GET", "/get", 200, "{\"state\":\"running\"}" );
+    CheckNotifyJson( control_, "GET", "/get", 200, boost::assign::list_of< T_Pair >( std::make_pair( "state", "running" ) ) );
 
     CheckControlAck( control_, &sword::SimToClient_Content::mutable_control_pause_ack,  "paused" );
     CheckControlAck( control_, &sword::SimToClient_Content::mutable_control_resume_ack, "running" );
     CheckControlAck( control_, &sword::SimToClient_Content::mutable_control_stop_ack,   "stopped" );
+}
+
+BOOST_FIXTURE_TEST_CASE( plugin_receive_date_time_updates, Fixture )
+{
+    sword::SimToClient msg;
+    msg.mutable_message()->mutable_control_information()->mutable_initial_date_time()->set_data( "uno" );
+    msg.mutable_message()->mutable_control_information()->mutable_date_time()->set_data( "duo" );
+    control_.Receive( msg );
+    CheckNotifyJson( control_, "GET", "/get", 200, boost::assign::list_of< T_Pair >
+        ( std::make_pair( "start_time", "uno" ) )
+        ( std::make_pair( "current_time", "duo" ) ) );
 }
