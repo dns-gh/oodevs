@@ -16234,7 +16234,9 @@
       <weapon-system launcher="Fusil Assaut AK 47" munition="CART 5.56 BAL ORD F1"/>
     </weapon-systems>
     <human-protections/>
-    <objects/>
+    <objects>
+      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="180s" devalorization-time="45s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="mines" valorization-time="45s"/>
+    </objects>
     <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="245215" codeEMAT8="24521501" codeLFRIL="" codeNNO="2320142353520" comment="" id="153" max-slope="0.6" name="GBC 8 KT" protection="VehiculeNonProtege" size="Moyen" weight="10">
@@ -19965,7 +19967,9 @@
       <weapon-system launcher="Lance Roquette" munition="RO 80 EXPL AC"/>
     </weapon-systems>
     <human-protections/>
-    <objects/>
+    <objects>
+      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="180s" devalorization-time="45s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="mines" valorization-time="45s"/>
+    </objects>
     <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="A426H1" codeEMAT8="00010261" codeLFRIL="" codeNNO="1111110020261" comment="Artillerie Animation Haute" id="195" max-slope="0.6" name="Char AUF1 Animation" protection="CharLourd" size="Gros" weight="44">
@@ -35736,4 +35740,4 @@
     <equipment-category>VTT</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="2850662724" -->
+<!-- signature="0831670857" -->
