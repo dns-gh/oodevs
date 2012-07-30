@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.tasks.Attack" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.Attack">
-    <description>For the agent, to move and seize a given objective with agressivity. All enemies encountered will be engaged  (depending on the firing distance between the agent and enemies).  The main goal of the mission is not to edstroy enemies but to reach the objective.&#xD;
+    <description>For the agent, to move and seize a given objective with agressivity. All enemies encountered will be engaged  (depending on the firing distance between the agent and enemies).  The main goal of the mission is not to destroy enemies but to reach the objective.&#xD;
 The objectives of the attack can be a set if terrain locations or  a set of enemies. In the last case, the agent will follow the enemies trying to destroy them.</description>
     <parameters>
         <parameter name="objective">

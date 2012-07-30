@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.tasks.MobilitySupport" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.MobilitySupport">
-    <description>For the agent, to know how to support friend units to get rid of blocking obstacles . The agent follows the given entities. If one of them ask for support, the agent moves to the encountered obstacle and removes it.</description>
+    <description>For the agent, to know how to support friend units to get rid of blocking obstacles. The agent follows the given entities. If one of them ask for support, the agent moves to the encountered obstacle and removes it.</description>
     <parameters>
         <parameter name="entities">
             <description>The friend units to support.</description>
