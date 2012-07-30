@@ -16,6 +16,11 @@
 		<stage label="Défendre">
 			<skills>
 				<skill name="platoon.combat.support.art.skills.Defendre" main="true">
+                    <parameter name="typeDeploiement">
+						<value>
+							<number>0.0</number>
+						</value>
+					</parameter>
 					<parameter name="entities">
 						<value>
 							<parameter>entities</parameter>
