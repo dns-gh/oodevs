@@ -1806,6 +1806,17 @@
             </zipfileset>
         </pack>
     </target>
+    <target name="package.otpack.decisionalww_fullML" description="decisional package Worldwide Full ML">
+        <pack name="decisionalww" description="decisional package Worldwide (full ML)">
+            <zipfileset dir="${data.dir}">
+                <include name="data/models/ada/physical/worldwide ML/**"/>
+                <include name="data/models/ada/decisional/dia5/**"/>
+                <exclude name="data/models/ada/decisional/dia5/models/france/**"/>
+                <exclude name="data/models/ada/decisional/dia5/models/security_test/**"/>
+                <include name="data/models/ada/decisional/decisional.xml"/>
+            </zipfileset>
+        </pack>
+    </target>
 
     <!--
     ============================================================================
