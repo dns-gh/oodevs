@@ -1197,6 +1197,10 @@
         <source>Breaching:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Life time:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Profile</name>

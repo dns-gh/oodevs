@@ -106,12 +106,12 @@
 <context>
     <name>gui::ActivityTimePrototype_ABC</name>
     <message>
-        <source>Activity time</source>
-        <translation>Duración de actividad</translation>
+        <source>Life time</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Activity time:</source>
-        <translation>duración de actividad:</translation>
+        <source>Life time:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

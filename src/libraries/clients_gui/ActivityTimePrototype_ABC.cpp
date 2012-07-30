@@ -21,10 +21,10 @@ using namespace gui;
 // Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
 ActivityTimePrototype_ABC::ActivityTimePrototype_ABC( QWidget* parent )
-    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::ActivityTimePrototype_ABC", "Activity time" ) )
+    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::ActivityTimePrototype_ABC", "Life time" ) )
 {
     QGridLayout* layout = new QGridLayout( this, 0, 2 );
-    layout->addWidget( new QLabel( tools::translate( "gui::ActivityTimePrototype_ABC", "Activity time:" ) ) );
+    layout->addWidget( new QLabel( tools::translate( "gui::ActivityTimePrototype_ABC", "Life time:" ) ) );
     activityTime_ = new LoadableTimeEdit( 0 );
     layout->addWidget( activityTime_ );
 }

@@ -61,6 +61,7 @@ ObstaclePrototype_ABC::ObstaclePrototype_ABC( QWidget* parent )
         connect( this, SIGNAL( ToggleActivable( bool ) ), activationTime_, SLOT( setShown( bool ) ) );
         connect( this, SIGNAL( ToggleActivable( bool ) ), activityLabel, SLOT( setShown( bool ) ) );
         connect( this, SIGNAL( ToggleActivable( bool ) ), activityTime_, SLOT( setShown( bool ) ) );
+
     }
     connect( types_, SIGNAL( activated( int ) ), this, SLOT( OnObstacleTypeChanged() ) );
 }
@@ -100,6 +101,10 @@ bool ObstaclePrototype_ABC::CheckValidity( const kernel::Team_ABC& ) const
 // -----------------------------------------------------------------------------
 void ObstaclePrototype_ABC::OnObstacleTypeChanged()
 {
+    if( activationTime_ && activationTime_->GetDefaultValueWidget() )
+        activationTime_->GetDefaultValueWidget()->setTime( QTime() );
+    if( activityTime_ && activityTime_->GetDefaultValueWidget() )
+        activityTime_->GetDefaultValueWidget()->setTime( QTime() );
     emit ToggleActivable( types_->GetValue() != eDemolitionTargetType_Reserved );
 }
 

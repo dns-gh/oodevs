@@ -23,16 +23,35 @@ BOOST_CLASS_EXPORT_IMPLEMENT( ObstacleAttribute )
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyPassThrough< ObstacleAttribute > )
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPassThrough< ObstacleAttribute > )
 
+namespace
+{
+    const int defaultActivityTime = 21600; // $$$$ _RC_ LGY 2011-08-31: default 6h
+
+    sword::ObstacleType_DemolitionTargetType GetDemolitionTargetType( bool reserved )
+    {
+        return reserved ? sword::ObstacleType_DemolitionTargetType_reserved : sword::ObstacleType_DemolitionTargetType_preliminary;
+    }
+
+    sword::ObstacleType_DemolitionTargetType ExtractObstacle( const std::string& obstacle )
+    {
+        return obstacle == "reserved" ? sword::ObstacleType_DemolitionTargetType_reserved : sword::ObstacleType_DemolitionTargetType_preliminary;
+    }
+
+    std::string ExtractObstacle( sword::ObstacleType_DemolitionTargetType obstacle )
+    {
+        return obstacle == sword::ObstacleType_DemolitionTargetType_reserved ? "reserved" : "preliminary";
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ObstacleAttribute constructor
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
 ObstacleAttribute::ObstacleAttribute()
     : obstacle_      ( sword::ObstacleType_DemolitionTargetType_preliminary )
-    , bActivated_    ( true )
+    , bActivated_    ( false )
     , activationTime_( 0 )
     , activityTime_  ( 0 )
-    , endActivity_   ( 0 )
     , creationTime_  ( MIL_Singletons::GetTime().GetRealTime() )
 {
     // NOTHING
@@ -43,35 +62,13 @@ ObstacleAttribute::ObstacleAttribute()
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
 ObstacleAttribute::ObstacleAttribute( bool reserved )
-    : obstacle_      ( reserved ? sword::ObstacleType_DemolitionTargetType_reserved : sword::ObstacleType_DemolitionTargetType_preliminary )
-    , bActivated_    ( !reserved )
+    : obstacle_      ( GetDemolitionTargetType( reserved ) )
+    , bActivated_    ( false )
     , activationTime_( 0 )
     , activityTime_  ( 0 )
-    , endActivity_   ( 0 )
     , creationTime_  ( MIL_Singletons::GetTime().GetRealTime() )
 {
     // NOTHING
-}
-
-namespace
-{
-    sword::ObstacleType_DemolitionTargetType ExtractObstacle( const std::string& obstacle )
-    {
-        if( obstacle == "reserved" )
-            return sword::ObstacleType_DemolitionTargetType_reserved;
-        return sword::ObstacleType_DemolitionTargetType_preliminary;
-    }
-
-    std::string ExtractObstacle( sword::ObstacleType_DemolitionTargetType obstacle )
-    {
-        switch ( obstacle )
-        {
-        case sword::ObstacleType_DemolitionTargetType_reserved:
-            return "reserved";
-        default:
-            return "preliminary";
-        }
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -93,11 +90,9 @@ ObstacleAttribute::ObstacleAttribute( xml::xistream& xis )
         >> xml::start( "activity-time" )
             >> xml::attribute( "value", activityTime_ )
         >> xml::end;
-    if( activationTime_ != 0 && activityTime_ == 0 )  // $$$$ _RC_ LGY 2011-08-31: default 6h
-        activityTime_ = 21600;
-    endActivity_ = activationTime_ + activityTime_;
+    CheckTimeValidity();
 }
-
+  
 // -----------------------------------------------------------------------------
 // Name: ObstacleAttribute::ObstacleAttribute
 // Created: JCR 2008-07-21
@@ -107,12 +102,9 @@ ObstacleAttribute::ObstacleAttribute( const sword::MissionParameter_Value& attri
     , bActivated_    ( attributes.list( 2 ).booleanvalue() )
     , activationTime_( attributes.list( 3 ).quantity() )
     , activityTime_  ( 0 )
-    , endActivity_   ( 0 )
     , creationTime_  ( MIL_Singletons::GetTime().GetRealTime() )
 {
-    if( activationTime_ != 0 && activityTime_ == 0 )  // $$$$ _RC_ LGY 2011-08-31: default 6h
-        activityTime_ = 21600;
-    endActivity_ = activationTime_ + activityTime_;
+    CheckTimeValidity();
 }
 
 // -----------------------------------------------------------------------------
@@ -135,7 +127,6 @@ template < typename Archive > void ObstacleAttribute::serialize( Archive& file, 
          & bActivated_
          & activationTime_
          & activityTime_
-         & endActivity_
          & creationTime_;
 }
 
@@ -143,11 +134,9 @@ template < typename Archive > void ObstacleAttribute::serialize( Archive& file, 
 // Name: ObstacleAttribute::SetType
 // Created: LDC 2009-03-23
 // -----------------------------------------------------------------------------
-void ObstacleAttribute::SetType( sword::ObstacleType_DemolitionTargetType obstacleType )
+void ObstacleAttribute::SetType( bool reserved )
 {
-    obstacle_ = obstacleType;
-    if( sword::ObstacleType_DemolitionTargetType_preliminary == obstacleType )
-        bActivated_ = true;
+    obstacle_ = GetDemolitionTargetType( reserved );
 }
 
 // -----------------------------------------------------------------------------
@@ -156,10 +145,8 @@ void ObstacleAttribute::SetType( sword::ObstacleType_DemolitionTargetType obstac
 // -----------------------------------------------------------------------------
 void ObstacleAttribute::SetActivityTime( unsigned int activityTime )
 {
-    activityTime_  = activityTime;
-    if( activationTime_ != 0 && activityTime_ == 0 )  // $$$$ _RC_ LGY 2011-08-31: default 6h
-        activityTime_ = 21600;
-    endActivity_ = activationTime_ + activityTime_;
+    activityTime_ = activityTime;
+    CheckTimeValidity();
 }
 
 // -----------------------------------------------------------------------------
@@ -169,7 +156,7 @@ void ObstacleAttribute::SetActivityTime( unsigned int activityTime )
 void ObstacleAttribute::SetActivationTime( unsigned int activationTime )
 {
     activationTime_ = activationTime;
-    endActivity_ = activationTime_ + activityTime_;
+    CheckTimeValidity();
 }
 
 // -----------------------------------------------------------------------------
@@ -182,12 +169,30 @@ int ObstacleAttribute::GetActivationTime() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ObstacleAttribute::GetActivityTime
+// Created: MMC 2012-07-25
+// -----------------------------------------------------------------------------
+int ObstacleAttribute::GetActivityTime() const
+{
+    return activityTime_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ObstacleAttribute::GetEndActivity
 // Created: LGY 2011-08-31
 // -----------------------------------------------------------------------------
 int ObstacleAttribute::GetEndActivity() const
 {
-    return endActivity_;
+    return activationTime_ + activityTime_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObstacleAttribute::IsTimesUndefined
+// Created: MMC 2012-07-25
+// -----------------------------------------------------------------------------
+bool ObstacleAttribute::IsTimesUndefined() const
+{
+    return activationTime_<= 0 && activityTime_ <= 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -197,15 +202,6 @@ int ObstacleAttribute::GetEndActivity() const
 bool ObstacleAttribute::IsActivable() const
 {
     return obstacle_ == sword::ObstacleType_DemolitionTargetType_reserved;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObstacleAttribute::IsDeactivable
-// Created: LGY 2011-09-01
-// -----------------------------------------------------------------------------
-bool ObstacleAttribute::IsDeactivable() const
-{
-    return bActivated_ && activityTime_ != 0 && IsActivable();
 }
 
 // -----------------------------------------------------------------------------
@@ -223,11 +219,9 @@ bool ObstacleAttribute::IsActivated() const
 // -----------------------------------------------------------------------------
 void ObstacleAttribute::Activate()
 {
-    if( ! bActivated_ && IsActivable() )
+    if( !bActivated_ )
     {
         bActivated_ = true;
-        activityTime_ += activationTime_;
-        activationTime_ = 0;
         NotifyAttributeUpdated( eOnUpdate );
     }
 }
@@ -238,11 +232,11 @@ void ObstacleAttribute::Activate()
 // -----------------------------------------------------------------------------
 void ObstacleAttribute::Deactivate()
 {
-    bActivated_ = false;
-    activationTime_ = 0;
-    activityTime_ = 0;
-    endActivity_ = 0;
-    NotifyAttributeUpdated( eOnUpdate );
+    if( bActivated_)
+    {
+        bActivated_ = false;
+        NotifyAttributeUpdated( eOnUpdate );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -329,7 +323,6 @@ ObstacleAttribute& ObstacleAttribute::operator=( const ObstacleAttribute& rhs )
     bActivated_ = rhs.bActivated_;
     activationTime_ = rhs.activationTime_;
     activityTime_ = rhs.activityTime_;
-    endActivity_ = rhs.endActivity_;
     creationTime_ = rhs.creationTime_;
     return *this;
 }
@@ -380,3 +373,14 @@ bool ObstacleAttribute::Update( const ObstacleAttribute& rhs )
     }
     return NeedUpdate( eOnUpdate );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ObstacleAttribute::CheckTimeValidity
+// Created: MMC 2012-07-25
+// -----------------------------------------------------------------------------
+void ObstacleAttribute::CheckTimeValidity()
+{
+    if( activationTime_ > 0 && activityTime_ == 0 )
+        activityTime_ = defaultActivityTime;
+}
+

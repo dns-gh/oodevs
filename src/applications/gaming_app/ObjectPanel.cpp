@@ -94,7 +94,8 @@ ObjectPanel::ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::C
 
     GetBuilder().AddGroup( tools::findTranslation( "Object", "Mine parameters" ) )
                 .AddLabel( tools::findTranslation( "Object", "Density:" ) )
-                .AddLabel( tools::findTranslation( "Object", "Activity time:" ) );
+                .AddLabel( tools::findTranslation( "Object", "Activity time:" ) )
+                .AddLabel( tools::findTranslation( "Object", "Life time:" ) );
 
     GetBuilder().AddGroup( tools::findTranslation( "Object", "Fire" ) )
                 .AddLabel( tools::findTranslation( "Object", "Fire class:" ) )

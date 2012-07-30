@@ -108,11 +108,11 @@
 <context>
     <name>gui::ActivityTimePrototype_ABC</name>
     <message>
-        <source>Activity time</source>
+        <source>Life time</source>
         <translation>Durée d&apos;existence</translation>
     </message>
     <message>
-        <source>Activity time:</source>
+        <source>Life time:</source>
         <translation>Durée d&apos;existence:</translation>
     </message>
 </context>

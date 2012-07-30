@@ -180,6 +180,7 @@ void AttributeFactory::Initialize( Object& object ) const
 // -----------------------------------------------------------------------------
 void AttributeFactory::Create( Object& object, const sword::MissionParameter& parameter ) const
 {
+    bool firstActivityTime = true;
     Initialize( object );
     for( int i = 0; i < parameter.value_size(); ++i )
     {
@@ -199,16 +200,15 @@ void AttributeFactory::Create( Object& object, const sword::MissionParameter& pa
             case ObjectMagicAction::activity_time:
                 {
                     ObstacleAttribute* obstacle = object.RetrieveAttribute< ObstacleAttribute >();
-                    if( obstacle && attributes.list_size() > 1 && attributes.list( 1 ).has_quantity() )
+                    if( attributes.list_size() > 1 && attributes.list( 1 ).has_quantity() )
                     {
                         unsigned int duration = attributes.list( 1 ).quantity();
-                        if( obstacle->IsActivable() )
+                        if( firstActivityTime && obstacle && !obstacle->IsActivable() )
                             obstacle->SetActivityTime( duration );
                         else if( duration > 0 )
-                            object.GetAttribute< TimeLimitedAttribute >() = TimeLimitedAttribute( duration );
+                            object.GetAttribute< TimeLimitedAttribute >() = TimeLimitedAttribute( attributes );
                     }
-                    else
-                        object.GetAttribute< TimeLimitedAttribute >() = TimeLimitedAttribute( attributes );
+                    firstActivityTime = false;
                 }
                 break;
             case ObjectMagicAction::bypass:

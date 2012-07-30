@@ -628,6 +628,10 @@
         <source>Breaching:</source>
         <translation>Brechage:</translation>
     </message>
+    <message>
+        <source>Life time:</source>
+        <translation>Durée d&apos;existence:</translation>
+    </message>
 </context>
 <context>
     <name>Population</name>

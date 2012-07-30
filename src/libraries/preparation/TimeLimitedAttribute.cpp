@@ -54,7 +54,7 @@ TimeLimitedAttribute::~TimeLimitedAttribute()
 void TimeLimitedAttribute::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "Object", "Mine parameters" ) )
-           .Display( tools::translate( "Object", "Activity time:" ), activityTime_ );
+           .Display( tools::translate( "Object", "Life time:" ), activityTime_ );
 }
 
 // -----------------------------------------------------------------------------
