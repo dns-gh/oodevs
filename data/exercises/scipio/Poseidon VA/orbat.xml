@@ -21,6 +21,38 @@
             <construction completion="1"/>
           </attributes>
         </object>
+        <object id="430" name="camp refugies [430]" type="refugees camp">
+          <shape type="polygone">
+            <points>
+              <point>29TNF3666759553</point>
+              <point>29TNF3656259433</point>
+              <point>29TNF3668959255</point>
+              <point>29TNF3682159215</point>
+              <point>29TNF3698159517</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+            <lodging capacity="4000"/>
+            <logistic-base id="158"/>
+          </attributes>
+        </object>
+        <object id="431" name="camp prisonniers [431]" type="prisoners camp">
+          <shape type="polygone">
+            <points>
+              <point>29TNF3688658906</point>
+              <point>29TNF3655658854</point>
+              <point>29TNF3656358551</point>
+              <point>29TNF3677358538</point>
+              <point>29TNF3702158622</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+            <lodging capacity="4000"/>
+            <logistic-base id="158"/>
+          </attributes>
+        </object>
       </objects>
       <tactical>
         <formation id="10" level="ii" name="INF [10]" symbol="symbols/sfgpucim">
@@ -94,6 +126,19 @@
           <automat engaged="true" id="416" knowledge-group="95" name="NRBC . PC Section Reco [416]" symbol="symbols/sfgpuuac" type="NRBC . Section Reco">
             <unit command-post="true" id="417" name="NRBC . PC deconta [417]" position="29TNF2950863072" type="NRBC . PC Section Reco"/>
             <unit command-post="false" id="418" name="NRBC . Patrouille Reco [418]" position="29TNF2960863072" type="NRBC . Patrouille Reco"/>
+          </automat>
+        </formation>
+        <formation id="432" level="i" name="Formation [432]" symbol="symbols/sfgpumi">
+          <automat engaged="true" id="433" knowledge-group="7" name="CIV . Civil" symbol="symbols/sfgpumi" type="CIV . Civil">
+            <unit command-post="true" id="434" name="Civil" position="29TNF3085964118" type="Civil"/>
+            <unit command-post="false" id="437" name="Civil" position="29TNF3128964022" type="Civil"/>
+            <unit command-post="false" id="438" name="Civil" position="29TNF3105164035" type="Civil"/>
+          </automat>
+          <automat engaged="true" id="435" knowledge-group="7" name="CIV . Civil" symbol="symbols/sfgpumi" type="CIV . Civil">
+            <unit command-post="true" id="436" name="Civil" position="29TNF3125764165" type="Civil"/>
+            <unit command-post="false" id="439" name="Civil" position="29TNF3072064020" type="Civil"/>
+            <unit command-post="false" id="440" name="Civil" position="29TNF3082463976" type="Civil"/>
+            <unit command-post="false" id="441" name="Civil" position="29TNF3081563846" type="Civil"/>
           </automat>
         </formation>
       </tactical>
@@ -1188,6 +1233,11 @@
             <unit command-post="false" id="88" name="Peloton . d appui direct" position="29TNF3695952843" type="ABC . Peloton d appui direct"/>
             <unit command-post="false" id="89" name="Groupe GEN . EBG" position="29TNF3716953383" type="GEN . Groupe EBG"/>
           </automat>
+          <automat engaged="true" id="444" knowledge-group="8" name="CIV . Civil" symbol="symbols/shgpumi" type="CIV . Civil">
+            <unit command-post="true" id="445" name="Civil" position="29TNF3473958672" type="Civil"/>
+            <unit command-post="false" id="450" name="Civil" position="29TNF3487558587" type="Civil"/>
+            <unit command-post="false" id="451" name="Civil" position="29TNF3472058606" type="Civil"/>
+          </automat>
           <limit name="Limite 90">
             <point>29TNF3041953732</point>
             <point>29TNF2936256703</point>
@@ -1993,4 +2043,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="0368576600" -->
+<!-- signature="0765807485" -->

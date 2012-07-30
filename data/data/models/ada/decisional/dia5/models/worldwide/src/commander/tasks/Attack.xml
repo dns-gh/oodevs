@@ -27,12 +27,12 @@
                     </parameter>
                     <parameter name="supportTasks">
                         <value>
-                            <string>agent.tasks.CombatSupport;</string>
+                            <string>agent.tasks.CombatSupport;agent.tasks.MobilitySupport</string>
                         </value>
                     </parameter>
                     <parameter name="taskForSupporting">
                         <value>
-                            <string>agent.tasks.CombatSupport;agent.tasks.MobilitySupport</string>
+                            <string>agent.tasks.CombatSupport</string>
                         </value>
                     </parameter>
                     <parameter name="defaultTask">

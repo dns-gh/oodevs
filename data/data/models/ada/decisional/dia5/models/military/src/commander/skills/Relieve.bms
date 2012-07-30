@@ -17,7 +17,7 @@ connections = {},
             for _, elem in pairs (self.params.commandingEntities) do
                   itPionPE = itPionPE % #pionsPE + 1
                   myself.pionParams[elem] = pionsPE[itPionPE]
-                  meKnowledge:sendTaskToPion( elem, self.params.followTask, {objective = pionsPE[itPionPE] ,
+                  meKnowledge:sendTaskToPion( elem, self.params.followTask, { objectives = { pionsPE[ itPionPE ] },
                                    dangerDirection_ = self.params.automateParameters.dangerDirection_}, eEtatEchelon_First )
             end
         else
