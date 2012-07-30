@@ -22,9 +22,17 @@
 #include <boost/function.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/json_parser.hpp>
 #include <boost/thread/locks.hpp>
 #include <boost/thread/shared_mutex.hpp>
+
+#ifdef _MSC_VER
+#   pragma warning( push )
+#   pragma warning( disable : 4100 4512 )
+#endif
+#include <boost/property_tree/json_parser.hpp>
+#ifdef _MSC_VER
+#pragma warning( pop )
+#endif
 
 using namespace plugins::web_control;
 namespace bpt = boost::property_tree;

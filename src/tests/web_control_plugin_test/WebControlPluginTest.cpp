@@ -16,7 +16,15 @@
 #include <boost/assign/list_of.hpp>
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
+
+#ifdef _MSC_VER
+#   pragma warning( push )
+#   pragma warning( disable : 4100 4512 )
+#endif
 #include <boost/property_tree/json_parser.hpp>
+#ifdef _MSC_VER
+#pragma warning( pop )
+#endif
 
 typedef boost::property_tree::ptree Tree;
 
