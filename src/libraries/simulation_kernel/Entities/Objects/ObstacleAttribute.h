@@ -54,7 +54,7 @@ public:
 
     //! @name Operations
     //@{
-    void SetType( sword::ObstacleType_DemolitionTargetType obstacleType );
+    void SetType( bool reserved );
     virtual void Instanciate( DEC_Knowledge_Object& object ) const;
     virtual void Register( MIL_Object_ABC& object ) const;
     virtual void SendFullState( sword::ObjectAttributes& asn ) const;
@@ -62,14 +62,15 @@ public:
     virtual void WriteODB( xml::xostream& xos ) const;
     //@}
 
-    //! @name
+    //! @name Accessors
     //@{
     void SetActivityTime( unsigned int activityTime );
     void SetActivationTime( unsigned int activationTime );
     int GetActivationTime() const;
+    int GetActivityTime() const;
     int GetEndActivity() const;
+    bool IsTimesUndefined() const;
     bool IsActivable() const;
-    bool IsDeactivable() const;
     bool IsActivated() const;
     void Activate();
     void Deactivate();
@@ -83,13 +84,17 @@ public:
     //@}
 
 private:
+    //! @name Operations
+    //@{
+    void CheckTimeValidity();
+    //@}
+
     //! @name Member data
     //@{
     sword::ObstacleType_DemolitionTargetType obstacle_;
     bool bActivated_;
     int activationTime_;
     int activityTime_;
-    int endActivity_;
     unsigned int creationTime_;
     //@}
 };

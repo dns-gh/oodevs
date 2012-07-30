@@ -110,12 +110,8 @@
 <context>
     <name>gui::ActivityTimePrototype_ABC</name>
     <message>
-        <source>Activity time</source>
-        <translation>Durée d&apos;activité</translation>
-    </message>
-    <message>
-        <source>Activity time:</source>
-        <translation>Durée d&apos;activité:</translation>
+        <source>Life time:</source>
+        <translation>Durée d&apos;existence:</translation>
     </message>
 </context>
 <context>
@@ -1183,10 +1179,6 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>Obstacle type:</source>
         <translation>Type d&apos;obstacle:</translation>
-    </message>
-    <message>
-        <source>Reserved obstacle activated:</source>
-        <translation>Obstacle de manoeuvre activé:</translation>
     </message>
     <message>
         <source>Activation time:</source>

@@ -61,8 +61,8 @@ private slots:
     void DestroyObject();
     void MineObject();
     void SweepMineObject();
-    void ActivateReservedObstacle();
-    void DeactivateReservedObstacle();
+    void ActivateObstacle();
+    void DeactivateObstacle();
     void ChangeStructuralState();
     void ChangeThreshold();
     void DisableInfrastructure();
@@ -86,7 +86,7 @@ private:
     void AddDoubleValuedMagic( kernel::ContextMenu* parent, kernel::ContextMenu& menu, const QString& label, const char* slot, double value );
     void DoMineObject( int quantity );
     void PublishActivation( const std::string& name, unsigned int id, bool activate );
-    void DoActivateReservedObstacle( bool activate );
+    void DoActivateObstacle( bool activate );
     //@}
 
 private:

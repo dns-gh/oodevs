@@ -43,7 +43,7 @@ namespace kernel
     {
     public:
         virtual bool IsReservedObstacle() const = 0;
-        virtual bool IsReservedObstacleActivated() const = 0;
+        virtual bool IsObstacleActivated() const = 0;
     };
     class LodgingAttribute_ABC : public ObjectExtension {};
     class LogisticAttribute_ABC : public ObjectExtension {};

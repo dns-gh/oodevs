@@ -47,7 +47,7 @@ void ActivityTimePrototype::Commit( const kernel::Team_ABC& )
     int time = 3600 * activityTime_->time().hour() +
                60 * activityTime_->time().minute() +
                activityTime_->time().second();
-    actions::parameters::ParameterList& list = attributesList_->AddList( "ActivityTime" );
-    list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_activity_time );
+    actions::parameters::ParameterList& list = attributesList_->AddList( "TimeLimit" );
+    list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_time_limit );
     list.AddQuantity( "Time", time );
 }

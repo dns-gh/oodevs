@@ -46,11 +46,6 @@ ObstaclePrototype_ABC::ObstaclePrototype_ABC( QWidget* parent )
         types_ = new ValuedComboBox< E_DemolitionTargetType >( hBox );
     }
     {
-        activation_ = new LoadableCheckBox( tools::translate( "gui::ObstaclePrototype_ABC", "Reserved obstacle activated:" ), vbox );
-        activation_->hide();
-        connect( this, SIGNAL( ToggleActivable( bool ) ), activation_, SLOT( setShown( bool ) ) );
-    }
-    {
         Q3HBox* activationBox = new Q3HBox( vbox );
         QLabel* activationLabel = new QLabel( tools::translate( "gui::ObstaclePrototype_ABC", "Activation time:" ), activationBox );
         activationTime_ = new LoadableTimeEdit( activationBox );
@@ -66,11 +61,6 @@ ObstaclePrototype_ABC::ObstaclePrototype_ABC( QWidget* parent )
         connect( this, SIGNAL( ToggleActivable( bool ) ), activationTime_, SLOT( setShown( bool ) ) );
         connect( this, SIGNAL( ToggleActivable( bool ) ), activityLabel, SLOT( setShown( bool ) ) );
         connect( this, SIGNAL( ToggleActivable( bool ) ), activityTime_, SLOT( setShown( bool ) ) );
-
-        connect( activation_->GetDefaultValueWidget(), SIGNAL( toggled( bool ) ), activationLabel, SLOT( setDisabled( bool ) ) );
-        connect( activation_->GetDefaultValueWidget(), SIGNAL( toggled( bool ) ), activationTime_, SLOT( setDisabled( bool ) ) );
-        connect( activation_->GetDefaultValueWidget(), SIGNAL( toggled( bool ) ), activityLabel, SLOT( setDisabled( bool ) ) );
-        connect( activation_->GetDefaultValueWidget(), SIGNAL( toggled( bool ) ), activityTime_, SLOT( setDisabled( bool ) ) );
     }
     connect( types_, SIGNAL( activated( int ) ), this, SLOT( OnObstacleTypeChanged() ) );
 }
@@ -110,20 +100,11 @@ bool ObstaclePrototype_ABC::CheckValidity( const kernel::Team_ABC& ) const
 // -----------------------------------------------------------------------------
 void ObstaclePrototype_ABC::OnObstacleTypeChanged()
 {
-    emit ToggleActivable( types_->GetValue() == eDemolitionTargetType_Reserved );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObstaclePrototype_ABC::OnObstacleTypeChanged
-// Created: SBO 2007-05-24
-// -----------------------------------------------------------------------------
-bool ObstaclePrototype_ABC::IsActivated() const
-{
-    if( types_->GetValue() == eDemolitionTargetType_Reserved )
-        return activation_->isChecked();
-    else if( types_->GetValue() == eDemolitionTargetType_Preliminary )
-        return true;
-    return false;
+    if( activationTime_ && activationTime_->GetDefaultValueWidget() )
+        activationTime_->GetDefaultValueWidget()->setTime( QTime() );
+    if( activityTime_ && activityTime_->GetDefaultValueWidget() )
+        activityTime_->GetDefaultValueWidget()->setTime( QTime() );
+    emit ToggleActivable( types_->GetValue() != eDemolitionTargetType_Reserved );
 }
 
 // -----------------------------------------------------------------------------
@@ -132,8 +113,6 @@ bool ObstaclePrototype_ABC::IsActivated() const
 // -----------------------------------------------------------------------------
 int ObstaclePrototype_ABC::GetActivationTime() const
 {
-    if( IsActivated() )
-        return 0;
     QTime time = activationTime_->time();
     return 3600 * time.hour() + 60 * time.minute() + time.second();
 }
@@ -154,7 +133,6 @@ int ObstaclePrototype_ABC::GetActivityTime() const
 // -----------------------------------------------------------------------------
 void ObstaclePrototype_ABC::SetLoader( ObjectPrototypeLoader_ABC* loader )
 {
-    activation_->SetLoader( loader );
     activationTime_->SetLoader( loader );
     activityTime_->SetLoader( loader );
 }

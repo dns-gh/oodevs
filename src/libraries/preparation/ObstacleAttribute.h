@@ -58,7 +58,7 @@ public:
     void SetActivationTime( int time );
     void SetActivityTime( int time );
     virtual bool IsReservedObstacle() const;
-    virtual bool IsReservedObstacleActivated() const;
+    virtual bool IsObstacleActivated() const;
     //@}
 
 private:

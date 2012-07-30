@@ -57,7 +57,7 @@ ObjectPanel::ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::C
                 .AddLabel( tools::findTranslation( "Object", "Development resource:" ) )
                 .AddSpinBox( tools::findTranslation( "Object", "Bypass:" ), 0, 100, 1 )
                 .AddLabel( tools::findTranslation( "Object", "Obstacle type:" ) )
-                .AddCheckBox( tools::findTranslation( "Object", "Reserved obstacle activated:" ) )
+                .AddCheckBox( tools::findTranslation( "Object", "Obstacle activated:" ) )
                 .AddLabel( tools::findTranslation( "Object", "Activation time:" ) )
                 .AddLabel( tools::findTranslation( "Object", "Activity time:" ) )
                 .AddLabel( tools::findTranslation( "Object", "Delay time:" ) );
@@ -94,7 +94,8 @@ ObjectPanel::ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::C
 
     GetBuilder().AddGroup( tools::findTranslation( "Object", "Mine parameters" ) )
                 .AddLabel( tools::findTranslation( "Object", "Density:" ) )
-                .AddLabel( tools::findTranslation( "Object", "Activity time:" ) );
+                .AddLabel( tools::findTranslation( "Object", "Activity time:" ) )
+                .AddLabel( tools::findTranslation( "Object", "Life time:" ) );
 
     GetBuilder().AddGroup( tools::findTranslation( "Object", "Fire" ) )
                 .AddLabel( tools::findTranslation( "Object", "Fire class:" ) )
@@ -145,7 +146,7 @@ void ObjectPanel::OnApply()
 
         // add attributes
         Displayer_ABC& infos = GetBuilder().Group( tools::findTranslation( "Object", "Information" ) );
-        gui::CheckBoxDisplayer* pCheckBox = dynamic_cast< gui::CheckBoxDisplayer* > ( & infos.Item( tools::findTranslation( "Object", "Reserved obstacle activated:" ) ) );
+        gui::CheckBoxDisplayer* pCheckBox = dynamic_cast< gui::CheckBoxDisplayer* > ( & infos.Item( tools::findTranslation( "Object", "Obstacle activated:" ) ) );
         if( pCheckBox && pCheckBox->IsChecked() )
         {
             ParameterList& obstacleList = attributesList->AddList( "Obstacle" );

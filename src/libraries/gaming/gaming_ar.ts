@@ -1167,10 +1167,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Reserved obstacle activated:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Activation time:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1216,6 +1212,14 @@
     </message>
     <message>
         <source>Activated:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Life time:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Obstacle activated:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

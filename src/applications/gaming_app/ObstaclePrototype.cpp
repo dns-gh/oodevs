@@ -43,7 +43,7 @@ void ObstaclePrototype::Commit( const kernel::Team_ABC& )
         actions::parameters::ParameterList& list = attributesList_->AddList( "Obstacle" );
         list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_obstacle );
         list.AddIdentifier( "TargetType", types_->GetValue() );
-        list.AddBool( "Activation", IsActivated() );
+        list.AddBool( "Activation", false );
         list.AddQuantity( "ActivationTime", GetActivationTime() );
         list.AddQuantity( "ActivityTime", GetActivityTime() );
     }

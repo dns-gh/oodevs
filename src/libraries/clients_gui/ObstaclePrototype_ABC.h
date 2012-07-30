@@ -64,7 +64,7 @@ private:
 protected:
     //! @name Helpers
     //@{
-    bool IsActivated() const;
+    // bool IsActivated() const;
     int GetActivationTime() const;
     int GetActivityTime() const;
     //@}
@@ -73,7 +73,6 @@ protected:
     //! @name Member data
     //@{
     ValuedComboBox< E_DemolitionTargetType >* types_;
-    LoadableCheckBox*                         activation_;
     LoadableTimeEdit*                         activationTime_;
     LoadableTimeEdit*                         activityTime_;
     //@}

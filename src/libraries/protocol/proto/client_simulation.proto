@@ -183,7 +183,7 @@ message ObjectMagicAction {
         construction       = 0;
         obstacle           = 1;
         mine               = 2;
-        activity_time      = 3;
+        time_limit         = 3;
         bypass             = 4;
         logistic           = 5;
         nbc                = 6;

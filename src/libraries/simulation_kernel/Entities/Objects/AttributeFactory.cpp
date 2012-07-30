@@ -192,7 +192,7 @@ void AttributeFactory::Create( Object& object, const sword::MissionParameter& pa
             case ObjectMagicAction::mine:
                 object.GetAttribute< MineAttribute >() = MineAttribute( attributes );
                 break;
-            case ObjectMagicAction::activity_time:
+            case ObjectMagicAction::time_limit:
                 object.GetAttribute< TimeLimitedAttribute >() = TimeLimitedAttribute( attributes );
                 break;
             case ObjectMagicAction::bypass:

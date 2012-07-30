@@ -525,10 +525,6 @@
         <translation>Type d&apos;obstacle :</translation>
     </message>
     <message>
-        <source>Reserved obstacle activated:</source>
-        <translation>Obstacle de manoeuvre activé :</translation>
-    </message>
-    <message>
         <source>Info/Demolition target parameters/Obstacle type</source>
         <translation>Info/Attributs de destruction/Type d&apos;obstacle</translation>
     </message>
@@ -627,6 +623,14 @@
     <message>
         <source>Improvable:</source>
         <translation>Valorisation:</translation>
+    </message>
+    <message>
+        <source>Obstacle activated:</source>
+        <translation>Obstacle activé:</translation>
+    </message>
+    <message>
+        <source>Life time:</source>
+        <translation>Durée d&apos;existence:</translation>
     </message>
 </context>
 <context>

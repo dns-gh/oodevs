@@ -1107,10 +1107,6 @@
         <translation>Tipo de obstáculo:</translation>
     </message>
     <message>
-        <source>Reserved obstacle activated:</source>
-        <translation>Obstáculo reservado activado:</translation>
-    </message>
-    <message>
         <source>Fire</source>
         <translation>Fuego</translation>
     </message>
@@ -1216,6 +1212,14 @@
     </message>
     <message>
         <source>Description:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Life time:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Obstacle activated:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

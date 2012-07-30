@@ -108,11 +108,7 @@
 <context>
     <name>gui::ActivityTimePrototype_ABC</name>
     <message>
-        <source>Activity time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Activity time:</source>
+        <source>Life time:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1179,10 +1175,6 @@ Do you want to remove it?</source>
     </message>
     <message>
         <source>Obstacle type:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reserved obstacle activated:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

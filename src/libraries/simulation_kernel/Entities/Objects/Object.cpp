@@ -37,7 +37,7 @@ Object::Object( xml::xistream& xis, const MIL_ObjectBuilder_ABC& builder, MIL_Ar
         Initialize( *pLocation );
     builder.Build( *this );
     if( ObstacleAttribute* pObstacle = RetrieveAttribute< ObstacleAttribute >() )
-        pObstacle->SetType( reserved ? sword::ObstacleType_DemolitionTargetType_reserved : sword::ObstacleType_DemolitionTargetType_preliminary );
+        pObstacle->SetType( reserved );
 }
 
 namespace
@@ -67,7 +67,7 @@ Object::Object( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC* army, const 
         Initialize( *pLocation );
     builder.Build( *this );
     if( ObstacleAttribute* pObstacle = RetrieveAttribute< ObstacleAttribute >() )
-        pObstacle->SetType( reserved? sword::ObstacleType_DemolitionTargetType_reserved : sword::ObstacleType_DemolitionTargetType_preliminary );
+        pObstacle->SetType( reserved );
 }
 
 // -----------------------------------------------------------------------------

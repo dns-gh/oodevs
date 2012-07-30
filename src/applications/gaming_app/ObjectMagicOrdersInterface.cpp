@@ -125,10 +125,10 @@ void ObjectMagicOrdersInterface::NotifyContextMenu( const Object_ABC& entity, Co
         const kernel::ObstacleAttribute_ABC* obstacle = entity.Retrieve< kernel::ObstacleAttribute_ABC >();
         if( obstacle && obstacle->IsReservedObstacle() )
         {
-            if( obstacle->IsReservedObstacleActivated() )
-                AddMagic( tr( "Deactivate reserved obstacle" ), SLOT( DeactivateReservedObstacle() ), magicMenu );
+            if( obstacle->IsObstacleActivated() )
+                AddMagic( tr( "Deactivate reserved obstacle" ), SLOT( DeactivateObstacle() ), magicMenu );
             else
-                AddMagic( tr( "Activate reserved obstacle" ), SLOT( ActivateReservedObstacle() ), magicMenu );
+                AddMagic( tr( "Activate reserved obstacle" ), SLOT( ActivateObstacle() ), magicMenu );
         }
         if( const kernel::UndergroundAttribute_ABC* underground = entity.Retrieve< kernel::UndergroundAttribute_ABC >() )
         {
@@ -274,36 +274,35 @@ void ObjectMagicOrdersInterface::SweepMineObject()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectMagicOrdersInterface::DoActivateReservedObstacle
+// Name: ObjectMagicOrdersInterface::DoActivateObstacle
 // Created: JSR 2011-07-13
 // -----------------------------------------------------------------------------
-void ObjectMagicOrdersInterface::DoActivateReservedObstacle( bool activate )
+void ObjectMagicOrdersInterface::DoActivateObstacle( bool activate )
 {
     if( !selectedEntity_ )
         return;
     ParameterList& list = *new ParameterList( OrderParameter( "Obstacle", "list", false ) );
     list.AddIdentifier( "AttributeId", sword::ObjectMagicAction::obstacle );
-    list.AddIdentifier( "TargetType", sword::ObstacleType::reserved );
     list.AddBool( "Activation", activate );
     actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectMagicOrdersInterface::ActivateReservedObstacle
+// Name: ObjectMagicOrdersInterface::ActivateObstacle
 // Created: NLD 2007-05-23
 // -----------------------------------------------------------------------------
-void ObjectMagicOrdersInterface::ActivateReservedObstacle()
+void ObjectMagicOrdersInterface::ActivateObstacle()
 {
-    DoActivateReservedObstacle( true );
+    DoActivateObstacle( true );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectMagicOrdersInterface::DeactivateReservedObstacle
+// Name: ObjectMagicOrdersInterface::DeactivateObstacle
 // Created: NLD 2007-05-23
 // -----------------------------------------------------------------------------
-void ObjectMagicOrdersInterface::DeactivateReservedObstacle()
+void ObjectMagicOrdersInterface::DeactivateObstacle()
 {
-    DoActivateReservedObstacle( false );
+    DoActivateObstacle( false );
 }
 
 // -----------------------------------------------------------------------------

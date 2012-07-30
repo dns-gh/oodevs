@@ -1107,10 +1107,6 @@
         <translation>Type d&apos;obstacle:</translation>
     </message>
     <message>
-        <source>Reserved obstacle activated:</source>
-        <translation>Obstacle de manoeuvre activé:</translation>
-    </message>
-    <message>
         <source>Fire</source>
         <translation>Feu</translation>
     </message>
@@ -1217,6 +1213,14 @@
     <message>
         <source>Description:</source>
         <translation>Description:</translation>
+    </message>
+    <message>
+        <source>Life time:</source>
+        <translation>Durée d&apos;existence:</translation>
+    </message>
+    <message>
+        <source>Obstacle activated:</source>
+        <translation>Obstacle activé:</translation>
     </message>
 </context>
 <context>
