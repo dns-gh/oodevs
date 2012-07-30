@@ -29,7 +29,7 @@ namespace
             Q3ListViewItemIterator it( this );
             while( *it )
             {
-                if(  gui::ValuedListItem* item = dynamic_cast< gui::ValuedListItem* >( *it ) )
+                if( gui::ValuedListItem* item = dynamic_cast< gui::ValuedListItem* >( *it ) )
                     item->setSelectable( item->IsA< const kernel::AutomatType >() );
                 ++it;
             }

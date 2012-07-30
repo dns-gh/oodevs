@@ -997,7 +997,7 @@ ADN_Urban_Data::UsageTemplateInfos::UsageTemplateInfos()
 // -----------------------------------------------------------------------------
 ADN_Urban_Data::UsageTemplateInfos::UsageTemplateInfos( xml::xistream& input )
     : accommodation_( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetAccommodationsInfos(), 0 )
-    , proportion_   ( static_cast< unsigned int >( input.attribute< double >( "proportion" ) * 100 ) ) 
+    , proportion_   ( static_cast< unsigned int >( input.attribute< double >( "proportion" ) * 100 ) )
 {
     std::string type = input.attribute< std::string >( "type" );
     ADN_Urban_Data::AccommodationInfos* accomodation = ADN_Workspace::GetWorkspace().GetUrban().GetData().FindAccommodation( type );
@@ -1012,7 +1012,7 @@ ADN_Urban_Data::UsageTemplateInfos::UsageTemplateInfos( xml::xistream& input )
 // -----------------------------------------------------------------------------
 ADN_Urban_Data::UsageTemplateInfos::UsageTemplateInfos( ADN_Urban_Data::AccommodationInfos& accomodation, ADN_Type_Int proportion )
     : accommodation_( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetAccommodationsInfos(), &accomodation )
-    , proportion_   ( proportion.GetData() ) 
+    , proportion_   ( proportion.GetData() )
 {
     // NOTHING
 }

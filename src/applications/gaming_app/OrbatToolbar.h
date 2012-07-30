@@ -61,7 +61,7 @@ public:
     //@{
     const gui::AggregateToolbar* GetToolbar() const;
     //@}
-    
+
 private slots:
     //! @name Slots
     //@{

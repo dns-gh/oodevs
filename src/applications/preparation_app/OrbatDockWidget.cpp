@@ -90,7 +90,6 @@ void OrbatDockWidget::Expand( bool value )
     QTimer::singleShot( 1, this, SLOT( RestoreWidth() ) );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: OrbatDockWidget::RestoreWidth
 // Created: LGY 2012-06-27

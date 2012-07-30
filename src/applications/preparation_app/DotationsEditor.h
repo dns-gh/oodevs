@@ -107,7 +107,7 @@ private:
             return 0;
         }
 
-        virtual void keyPressEvent( QKeyEvent* event ) 
+        virtual void keyPressEvent( QKeyEvent* event )
         {
             KeyPressSpinBox* pSpinBox = ManageLineEdit( event );
             if( pSpinBox )

@@ -938,7 +938,7 @@ QStringList ADN_Equipement_Data::GetEquipmentsThatUse( ADN_Objects_Data_ObjectIn
 QStringList ADN_Equipement_Data::GetEquipmentsThatUse( helpers::ResourceNatureInfos& object )
 {
     QStringList result;
-    for ( IT_ResourceInfos_Vector it = resources_.begin(); it != resources_.end(); ++it )
+    for( IT_ResourceInfos_Vector it = resources_.begin(); it != resources_.end(); ++it )
     {
         ResourceInfos* pComp = *it;
         for( CIT_CategoryInfos_Vector itCategory = pComp->categories_.begin(); itCategory != pComp->categories_.end(); ++itCategory )
@@ -955,7 +955,7 @@ QStringList ADN_Equipement_Data::GetEquipmentsThatUse( helpers::ResourceNatureIn
 QStringList ADN_Equipement_Data::GetEquipmentsThatUse( helpers::LogisticSupplyClass& object )
 {
     QStringList result;
-    for ( IT_ResourceInfos_Vector it = resources_.begin(); it != resources_.end(); ++it )
+    for( IT_ResourceInfos_Vector it = resources_.begin(); it != resources_.end(); ++it )
     {
         ResourceInfos* pComp = *it;
         for( CIT_CategoryInfos_Vector itCategory = pComp->categories_.begin(); itCategory != pComp->categories_.end(); ++itCategory )
