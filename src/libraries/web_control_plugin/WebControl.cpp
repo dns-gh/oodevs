@@ -13,7 +13,7 @@
 #include "tools/MessageObserver.h"
 
 #ifdef _MSC_VER
-#pragma warning( disable : 4244 )
+#pragma warning( disable : 4127 4244 )
 #endif
 
 #include <boost/bind.hpp>
@@ -39,19 +39,20 @@ namespace bpt = boost::property_tree;
 
 namespace
 {
-// -----------------------------------------------------------------------------
-// Name: ControlInformationUpdate structure
-// Created: BAX 2012-02-28
-// -----------------------------------------------------------------------------
-struct ControlInformationUpdate : public Observer, private tools::MessageObserver< sword::ControlInformation >
+template< typename T >
+struct MessageObserver : public Observer, public tools::MessageObserver< T >
 {
-    typedef boost::function< void( const sword::ControlInformation& ) > Update;
-    ControlInformationUpdate( tools::MessageController< sword::SimToClient_Content >& controller, const Update& update )
+    typedef typename boost::function< void( const T& ) > Update;
+    MessageObserver( const Update& update )
         : update_( update )
     {
-        CONNECT( controller, *this, control_information );
+        // NOTHING
     }
-    void Notify( const sword::ControlInformation& message, int /*context*/ )
+    virtual ~MessageObserver()
+    {
+        // NOTHING
+    }
+    void Notify( const T& message, int /* context */ )
     {
         update_( message );
     }
@@ -81,26 +82,6 @@ struct ControlAckUpdate : public Observer, public tools::MessageObserver< T >
 private:
     const Update update_;
 };
-
-// -----------------------------------------------------------------------------
-// Name: ControlInformationUpdate structure
-// Created: BAX 2012-02-28
-// -----------------------------------------------------------------------------
-struct ControlBeginTickUpdate : public Observer, private tools::MessageObserver< sword::ControlBeginTick >
-{
-    typedef boost::function< void( const sword::ControlBeginTick& ) > Update;
-    ControlBeginTickUpdate( tools::MessageController< sword::SimToClient_Content >& controller, const Update& update )
-        : update_( update )
-    {
-        CONNECT( controller, *this, control_begin_tick );
-    }
-    void Notify( const sword::ControlBeginTick& message, int /*context*/ )
-    {
-        update_( message );
-    }
-private:
-    const Update update_;
-};
 }
 
 typedef ControlAckUpdate< sword::ControlPauseAck,  sword::paused  > ControlPause;
@@ -117,26 +98,18 @@ WebControl::WebControl( dispatcher::SimulationPublisher_ABC& publisher )
     , access_    ( boost::make_shared< boost::shared_mutex >() )
     , controller_( boost::make_shared< tools::MessageController< sword::SimToClient_Content > >() )
 {
-    boost::function< void( const sword::ControlInformation& ) > onControl = boost::bind( &WebControl::OnControlInformation, this, _1 );
-    boost::shared_ptr< ControlInformationUpdate > update = boost::make_shared< ControlInformationUpdate >( boost::ref( *controller_ ), onControl );
-    observers_.push_back( update );
-
-    boost::function< void( sword::EnumSimulationState ) > onState = boost::bind( &WebControl::OnSimulationState, this, _1 );
-    boost::shared_ptr< ControlPause > pause = boost::make_shared< ControlPause >( onState );
-    CONNECT( *controller_, *pause, control_pause_ack );
-    observers_.push_back( pause );
-
-    boost::shared_ptr< ControlResume > resume = boost::make_shared< ControlResume >( onState );
-    CONNECT( *controller_, *resume, control_resume_ack );
-    observers_.push_back( resume );
-
-    boost::shared_ptr< ControlStop > stop = boost::make_shared< ControlStop >( onState );
-    CONNECT( *controller_, *stop, control_stop_ack );
-    observers_.push_back( stop );
-
-    boost::function< void( const sword::ControlBeginTick& ) > onBegin = boost::bind( &WebControl::OnControlBeginTick, this, _1 );
-    boost::shared_ptr< ControlBeginTickUpdate > begin = boost::make_shared< ControlBeginTickUpdate >( boost::ref( *controller_ ), onBegin );
-    observers_.push_back( begin );
+#define REGISTER_OBSERVER( TYPE, NAME, FUNCTOR ) do {\
+    const TYPE ##::Update update = boost::bind( &WebControl::## FUNCTOR, this, _1 );\
+    boost::shared_ptr< TYPE > ptr = boost::make_shared< TYPE >( update );\
+    CONNECT( *controller_, *ptr, NAME );\
+    observers_.push_back( ptr );\
+} while( 0 )
+    REGISTER_OBSERVER( MessageObserver< sword::ControlInformation >, control_information, OnControlInformation );
+    REGISTER_OBSERVER( MessageObserver< sword::ControlBeginTick >,   control_begin_tick,  OnControlBeginTick );
+    REGISTER_OBSERVER( ControlPause,                                 control_pause_ack,   OnSimulationState );
+    REGISTER_OBSERVER( ControlResume,                                control_resume_ack,  OnSimulationState );
+    REGISTER_OBSERVER( ControlStop,                                  control_stop_ack,    OnSimulationState );
+#undef REGISTER_OBSERVER
 }
 
 // -----------------------------------------------------------------------------
