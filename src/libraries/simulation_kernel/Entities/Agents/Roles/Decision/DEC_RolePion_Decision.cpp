@@ -117,22 +117,6 @@ void DEC_RolePion_Decision::load( MIL_CheckPointInArchive& file, const unsigned 
 
     unsigned int nPionTypeID;
     file >> nPionTypeID;
-
-    const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( nPionTypeID );
-    assert( pType );
-
-    const DEC_Model_ABC& model = pType->GetModel();
-    try
-    {
-        SetModel( model );
-    }
-    catch( std::runtime_error& e )
-    {
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, e.what() );
-    }
-
-    // Parameters list for calling default behavior
-    StartDefaultBehavior();
 }
 
 // -----------------------------------------------------------------------------
