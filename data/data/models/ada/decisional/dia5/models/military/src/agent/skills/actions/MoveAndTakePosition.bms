@@ -16,7 +16,7 @@ rootnode
         Feedback( self.feedbacks.done, additionalParams )
     end,
 
-    failed = function( self, params, additionalParams )
+    blocked = function( self, params, additionalParams )
         Feedback( self.feedbacks.elementFailed, additionalParams )
     end,
 
@@ -32,7 +32,7 @@ rootnode
             Activate( skill.nodes.MoveTo, 1, { 
                 position = self.params.entity, pathType = self.params.pathType } )
         end
-    end
+    end,
 }
 
 -- ****************************************************************************
@@ -42,6 +42,7 @@ rootnode
 node "TakePosition"
 {
     acquire = { [ skill.resources.move ] = 1 },
+    feedbacks = { "blocked" }, -- blocked by an obstacle or terrain constraints
 
     select = function( self )
         if not myself.blocked and not myself.blockForcesContinue then
@@ -55,11 +56,12 @@ node "TakePosition"
         else
             myself.blockForcesContinue = nil
             if myself.blocked then
-                Feedback( self.feedbacks.failed, { reason = "blocked",
-                                             element = self.params.position } )
+                Feedback( self.feedbacks.blocked, { reason = "blocked",
+                                                    element = self.params.position } )
+                myself.blocked = false -- $$$ MIA TEMP: wait for refactor 
             end
         end
-    end
+    end,
 }
 
 -- ****************************************************************************

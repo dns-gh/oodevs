@@ -1428,22 +1428,30 @@ que pourrait subir l'agent dans son efficacité à résoudre la tâche de groupe
         <method name="isUnderIndirectFire">
             <description>Retourne vrai si le pion est prit à partie par un tir indirect.</description>
         </method>
-		<method name="isJammed">
-			<description>Renvoie vrai si le pion est brouillé.</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="isPCJammed">
-			<description>Renvoie vrai si le PC est brouillé.</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
+        <method name="isJammed">
+            <description>Renvoie vrai si le pion est brouillé.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="isPCJammed">
+            <description>Renvoie vrai si le PC est brouillé.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="sendMessage">
+            <description>Displays a simple trace message into sword gaming interface.</description>
+            <argument name="message">
+                <type>
+                    <simple name="string"/>
+                </type>
+            </argument>
+        </method>
     </methods>
     <predicates>
         <predicate name="isCommandingFor">

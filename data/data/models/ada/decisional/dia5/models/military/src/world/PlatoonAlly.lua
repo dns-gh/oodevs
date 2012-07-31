@@ -959,4 +959,10 @@ return
     isUnderIndirectFire = function( self )
         return integration.isUnderIndirectFire()
     end,
+    sendMessage = masalife.brain.integration.startStopAction( 
+    { 
+        start = function( self, message )
+            integration.displayTrace( message )
+        end
+    } )
 }

@@ -16,9 +16,10 @@ rootnode
     end,
 
     notReached = function( self, params, additionalParams )
-        Feedback( self.feedbacks.done, { reason = additionalParams.reason, element = additionalParams.element } )
+        meKnowledge:sendMessage( "The element cannot be reached" )
+        Feedback( self.feedbacks.done, additionalParams )
     end,
-    
+
     create = function( self )
        if meKnowledge:isAgentNBC() then
          self.pathType = eTypeItiNBC
@@ -56,7 +57,7 @@ node "MoveTowardElement"
     end,
 
     elementFailed = function( self, params, additionalParams )
-        Feedback( self.feedbacks.notReached, { reason = additionalParams.reason, element = additionalParams.element } )
+        Feedback( self.feedbacks.notReached, additionalParams )
     end,
 
     -- --------------------------------------------------------------------------------

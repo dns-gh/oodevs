@@ -37,7 +37,6 @@ return
         return self:getProximity( meKnowledge )
     end,
     accessibilityLevel = function( self )
-        DEC_Trace( "element: accssibility level = "..tostring( meKnowledge:computeMovementCapability( self ) * 100 ) )
         return meKnowledge:computeMovementCapability( self ) * 100
     end,
 }

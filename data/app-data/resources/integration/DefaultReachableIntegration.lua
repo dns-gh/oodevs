@@ -227,13 +227,13 @@ end
 integration.moveToItGeneric = masalife.brain.integration.startStopAction( 
 { 
     start   = function( entity, pathType )
-                integration.startMoveToIt( entity, pathType ) 
+               return integration.startMoveToIt( entity, pathType ) 
               end,
     started = function( entity, pathType )
-                  integration.updateMoveToIt( entity, pathType )
+               return integration.updateMoveToIt( entity, pathType )
               end, 
     stop    = function( entity, pathType )
-               integration.deselectMoveToIt( entity )
+               return integration.deselectMoveToIt( entity )
               end,
 } )
 
@@ -321,7 +321,7 @@ integration.updateMoveToIt = function( objective, pathType )
             return true -- arrived on nearest objective
         end
         if objective.initialeDestination ~= objective.destination -- moving toward a non-traficable urban block for instance
-           and not myself.dismountedDone then
+           and not myself.dismountedDone and integration.canDismount() then
             -- Entering in a non-traficable element: dismount then re-compute path
             myself.enteringNonTrafficableElement = true
             
