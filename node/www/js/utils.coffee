@@ -163,6 +163,11 @@ toggle_input_error = (el, txt, def = '') ->
 is_disabled = (evt) ->
     return $(evt.currentTarget).hasClass "disabled"
 
+pad = (txt, max, prefix) ->
+    while txt.length < max
+        txt = prefix + txt
+    return txt
+
 bytes_to_size = (n, precision) ->
     kb = 1000
     mb = kb * 1000
@@ -181,15 +186,19 @@ bytes_to_size = (n, precision) ->
 duration_reduce = (ms, step, txt, suffix) ->
     return [ ms, txt ] if ms < step
     n = Math.floor( ms / step )
-    txt += n + suffix + ' '
+    if txt.length
+        txt += ', '
+    txt +=  n + suffix
+    if n > 1
+        txt += 's'
     ms -= n * step
     return [ ms, txt ]
 
 ms_to_duration = (ms) ->
-    [ ms, rpy ] = duration_reduce ms, 1000*60*60*24, "", 'd'
-    [ ms, rpy ] = duration_reduce ms, 1000*60*60, rpy, 'h'
-    [ ms, rpy ] = duration_reduce ms, 1000*60, rpy, 'm'
-    [ ms, rpy ] = duration_reduce ms, 1000, rpy, 's'
+    [ ms, rpy ] = duration_reduce ms, 1000*60*60*24, '', ' day'
+    [ ms, rpy ] = duration_reduce ms, 1000*60*60, rpy, ' hour'
+    [ ms, rpy ] = duration_reduce ms, 1000*60, rpy, ' minute'
+    [ ms, rpy ] = duration_reduce ms, 1000, rpy, ' second'
     return rpy
 
 get_ms_duration_from = (start_ms) ->
