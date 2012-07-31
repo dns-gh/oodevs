@@ -81,6 +81,26 @@ struct ControlAckUpdate : public Observer, public tools::MessageObserver< T >
 private:
     const Update update_;
 };
+
+// -----------------------------------------------------------------------------
+// Name: ControlInformationUpdate structure
+// Created: BAX 2012-02-28
+// -----------------------------------------------------------------------------
+struct ControlBeginTickUpdate : public Observer, private tools::MessageObserver< sword::ControlBeginTick >
+{
+    typedef boost::function< void( const sword::ControlBeginTick& ) > Update;
+    ControlBeginTickUpdate( tools::MessageController< sword::SimToClient_Content >& controller, const Update& update )
+        : update_( update )
+    {
+        CONNECT( controller, *this, control_begin_tick );
+    }
+    void Notify( const sword::ControlBeginTick& message, int /*context*/ )
+    {
+        update_( message );
+    }
+private:
+    const Update update_;
+};
 }
 
 typedef ControlAckUpdate< sword::ControlPauseAck,  sword::paused  > ControlPause;
@@ -113,6 +133,10 @@ WebControl::WebControl( dispatcher::SimulationPublisher_ABC& publisher )
     boost::shared_ptr< ControlStop > stop = boost::make_shared< ControlStop >( onState );
     CONNECT( *controller_, *stop, control_stop_ack );
     observers_.push_back( stop );
+
+    boost::function< void( const sword::ControlBeginTick& ) > onBegin = boost::bind( &WebControl::OnControlBeginTick, this, _1 );
+    boost::shared_ptr< ControlBeginTickUpdate > begin = boost::make_shared< ControlBeginTickUpdate >( boost::ref( *controller_ ), onBegin );
+    observers_.push_back( begin );
 }
 
 // -----------------------------------------------------------------------------
@@ -144,6 +168,16 @@ void WebControl::OnControlInformation( const sword::ControlInformation& control 
     state_ = control.status();
     start_time_ = control.initial_date_time().data();
     current_time_ = control.date_time().data();
+}
+
+// -----------------------------------------------------------------------------
+// Name: WebControl::OnControlBeginTick
+// Created: BAX 2012-07-31
+// -----------------------------------------------------------------------------
+void WebControl::OnControlBeginTick( const sword::ControlBeginTick& msg )
+{
+    boost::lock_guard< boost::shared_mutex > lock( *access_ );
+    current_time_ = msg.date_time().data();
 }
 
 // -----------------------------------------------------------------------------

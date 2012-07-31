@@ -82,6 +82,7 @@ private:
     std::string Stop();
     void        OnSimulationState( sword::EnumSimulationState state );
     void        OnControlInformation( const sword::ControlInformation& control );
+    void        OnControlBeginTick( const sword::ControlBeginTick& msg );
     //@}
 
     //! @name Private helpers
