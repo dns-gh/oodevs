@@ -280,6 +280,7 @@ $("#session_create").click ->
     unless validate_input_session exercise, exercise.val()?, "Missing exercise"
         return
     session_view.create name: name.val(), exercise: exercise.val()
+    name.val ''
 
 $(".session_create_form").keypress (e) ->
     if e.which == 13

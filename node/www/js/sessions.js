@@ -836,10 +836,11 @@
     if (!validate_input_session(exercise, exercise.val() != null, "Missing exercise")) {
       return;
     }
-    return session_view.create({
+    session_view.create({
       name: name.val(),
       exercise: exercise.val()
     });
+    return name.val('');
   });
 
   $(".session_create_form").keypress(function(e) {
