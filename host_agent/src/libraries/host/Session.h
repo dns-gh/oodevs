@@ -112,6 +112,7 @@ public:
     //! @name Typedef helpers
     //@{
     typedef boost::shared_ptr< runtime::Process_ABC > T_Process;
+    typedef std::vector< std::string > T_Clients;
     //@}
 
     //! @name Status enumeration
@@ -153,7 +154,9 @@ private:
     size_t counter_;
     bool sizing_;
     size_t size_;
-    std::string start_;
+    T_Clients clients_;
+    std::string start_time_;
+    std::string current_time_;
     //@}
 };
 }

@@ -485,7 +485,7 @@
     };
 
     SessionItemView.prototype.render = function() {
-      var data, filter, it, _i, _j, _len, _len1, _ref, _ref1, _ref2;
+      var current, data, duration, filter, it, start, _i, _j, _len, _len1, _ref, _ref1, _ref2;
       $(this.el).empty();
       _ref = this.filters;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -498,10 +498,12 @@
         return;
       }
       data = $.extend({}, this.model.attributes);
-      if ((_ref1 = data.start) != null ? _ref1.length : void 0) {
-        data.start_ms = Date.parse(data.start);
-        data.start = new Date(data.start_ms).toUTCString();
-        data.duration = get_ms_duration_from(data.start_ms);
+      if ((_ref1 = data.start_time) != null ? _ref1.length : void 0) {
+        start = new Date(data.start_time);
+        current = new Date(data.current_time);
+        duration = current.getTime() - start.getTime();
+        data.start_time = start.toUTCString();
+        data.duration = ms_to_duration(duration);
       }
       $(this.el).html(session_template(data));
       set_spinner($(this.el).find(".session_top_right .spin_btn"));
@@ -607,8 +609,6 @@
 
       this.set_filter = __bind(this.set_filter, this);
 
-      this.durations = __bind(this.durations, this);
-
       this.delta = __bind(this.delta, this);
 
       this.create = __bind(this.create, this);
@@ -623,6 +623,8 @@
 
     SessionListView.prototype.el = $("#sessions");
 
+    SessionListView.prototype.delta_period = 5000;
+
     SessionListView.prototype.initialize = function() {
       this.model = new SessionList;
       this.model.bind("add", this.add);
@@ -634,8 +636,7 @@
           return print_error("Unable to fetch sessions");
         }
       });
-      setTimeout(this.delta, 5000);
-      return setInterval(this.durations, 1000);
+      return setTimeout(this.delta, this.delta_period);
     };
 
     SessionListView.prototype.reset = function(list, options) {
@@ -688,23 +689,13 @@
       return next.fetch({
         success: function() {
           update_model(_this.model, next);
-          return setTimeout(_this.delta, 5000);
+          return setTimeout(_this.delta, _this.delta_period);
         },
         error: function() {
           print_error("Unable to fetch sessions");
-          return setTimeout(_this.delta, 5000);
+          return setTimeout(_this.delta, _this.delta_period);
         }
       });
-    };
-
-    SessionListView.prototype.durations = function() {
-      var duration, it, _i, _len, _ref;
-      _ref = $(this.el).find(".start_duration");
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        it = _ref[_i];
-        duration = get_ms_duration_from(parseInt($(it).text()));
-        $(it).parent().find(".duration_value").text(duration);
-      }
     };
 
     SessionListView.prototype.set_filter = function() {

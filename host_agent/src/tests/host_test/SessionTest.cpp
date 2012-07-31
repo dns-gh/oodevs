@@ -156,15 +156,6 @@ BOOST_FIXTURE_TEST_CASE( session_starts_and_stops, Fixture )
     BOOST_CHECK( !session->Stop() );
 }
 
-namespace
-{
-std::string RemoveValue( const std::string& txt, const std::string& value )
-{
-    const boost::xpressive::sregex regex = boost::xpressive::sregex::compile( "\"" + value + "\"\\s*:\\s*\"[^\"]*\",?" );
-    return boost::xpressive::regex_replace( txt, regex, "" );
-}
-}
-
 BOOST_FIXTURE_TEST_CASE( session_converts, Fixture )
 {
     SessionPtr session = MakeSession();
@@ -173,25 +164,22 @@ BOOST_FIXTURE_TEST_CASE( session_converts, Fixture )
         "\"node\":\"10123456-cdef-9876-90ab-543212345678\","
         "\"name\":\"myName\","
         "\"port\":\"1337\",";
-    std::string item = ToJson( session->GetProperties() );
-    BOOST_CHECK_EQUAL( RemoveValue( item, "start" ), base +
+    const std::string stats = ",\"start_time\":\"\",\"current_time\":\"\",\"clients\":\"\"";
+    BOOST_CHECK_EQUAL( ToJson( session->GetProperties() ), base +
         "\"status\":\"stopped\","
-        + items +
+        + items + stats +
         "}" );
-    item = ToJson( session->Save() );
-    BOOST_CHECK_EQUAL( RemoveValue( item, "start" ), base +
+    BOOST_CHECK_EQUAL( ToJson( session->Save() ), base +
         "\"status\":\"stopped\","
         "\"links\":" + links + ","
         "\"size\":\"0\""
         "}" );
     ProcessPtr process = StartSession( *session, processPid, processName );
-    item = ToJson( session->GetProperties() );
-    BOOST_CHECK_EQUAL( RemoveValue( item, "start" ), base +
+    BOOST_CHECK_EQUAL( ToJson( session->GetProperties() ), base +
         "\"status\":\"playing\","
-        + items +
+        + items + stats +
         "}" );
-    item = ToJson( session->Save() );
-    BOOST_CHECK_EQUAL( RemoveValue( item, "start" ), base +
+    BOOST_CHECK_EQUAL( ToJson( session->Save() ), base +
         "\"status\":\"playing\","
         "\"links\":" + links + ","
         "\"size\":\"0\","
@@ -200,13 +188,11 @@ BOOST_FIXTURE_TEST_CASE( session_converts, Fixture )
             "\"name\":\"myProcessName\""
         "}}" );
     StopSession( *session, process );
-    item = ToJson( session->GetProperties() );
-    BOOST_CHECK_EQUAL( RemoveValue( item, "start" ), base +
+    BOOST_CHECK_EQUAL( ToJson( session->GetProperties() ), base +
         "\"status\":\"stopped\","
-        + items +
+        + items + stats +
         "}" );
-    item = ToJson( session->Save() );
-    BOOST_CHECK_EQUAL( RemoveValue( item, "start" ), base +
+    BOOST_CHECK_EQUAL( ToJson( session->Save() ), base +
         "\"status\":\"stopped\","
         "\"links\":" + links + ","
         "\"size\":\"0\""

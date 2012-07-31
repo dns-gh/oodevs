@@ -63,15 +63,10 @@
                 </div>
             </div>
             <div>
-                {{#if start}}
-                <div><span class="item_label">Start</span> {{start}}</div>
-                <span class="hide start_duration">{{start_ms}}</span>
-                <div><span class="item_label">Duration</span>
-                    <span class="duration_value">{{duration}}</span>
-                </div>
-                [[/*
-                <div><span class="item_label">Clients</span> 0 connected</div>
-                */]]
+                {{#if start_time}}
+                <div><span class="item_label">Start</span> {{start_time}}</div>
+                <div><span class="item_label">Duration</span> {{duration}}</div>
+                <div><span class="item_label">Clients</span> {{clients.length}} connected</div>
                 {{/if}}
             </div>
             <div class="btn-group session_top_right">

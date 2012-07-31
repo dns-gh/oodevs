@@ -102,10 +102,12 @@ class SessionItemView extends Backbone.View
         if @search and !@is_search()
             return
         data = $.extend {}, @model.attributes
-        if data.start?.length
-            data.start_ms = Date.parse data.start
-            data.start = new Date(data.start_ms).toUTCString()
-            data.duration = get_ms_duration_from data.start_ms
+        if data.start_time?.length
+            start = new Date data.start_time
+            current = new Date data.current_time
+            duration = current.getTime() - start.getTime()
+            data.start_time = start.toUTCString()
+            data.duration = ms_to_duration duration
         $(@el).html session_template data
         set_spinner $(@el).find ".session_top_right .spin_btn"
         for it in $(@el).find ".link"
@@ -166,6 +168,7 @@ get_search = ->
 
 class SessionListView extends Backbone.View
     el: $( "#sessions" )
+    delta_period: 5000
 
     initialize: ->
         @model = new SessionList
@@ -174,8 +177,7 @@ class SessionListView extends Backbone.View
         @model.bind "reset",  @reset
         @model.bind "change", @model.sort
         @model.fetch error: -> print_error "Unable to fetch sessions"
-        setTimeout @delta, 5000
-        setInterval @durations, 1000
+        setTimeout @delta, @delta_period
 
     reset: (list, options) =>
         $(@el).empty()
@@ -205,16 +207,10 @@ class SessionListView extends Backbone.View
         next.fetch
             success: =>
                 update_model @model, next
-                setTimeout @delta, 5000
+                setTimeout @delta, @delta_period
             error: =>
                 print_error "Unable to fetch sessions"
-                setTimeout @delta, 5000
-
-    durations: =>
-        for it in $(@el).find ".start_duration"
-            duration = get_ms_duration_from parseInt $(it).text()
-            $(it).parent().find(".duration_value").text duration
-        return
+                setTimeout @delta, @delta_period
 
     set_filter: =>
         list = get_filters()

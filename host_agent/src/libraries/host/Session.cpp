@@ -24,6 +24,7 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/foreach.hpp>
 #include <boost/make_shared.hpp>
+#include <boost/xpressive/xpressive.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
 using namespace host;
@@ -138,22 +139,24 @@ Session::Session( const FileSystem_ABC& system,
                   const std::string& name,
                   const std::string& exercise,
                   const Port& port )
-    : system_ ( system )
-    , client_ ( client )
-    , node_   ( node )
-    , id_     ( id )
-    , root_   ( root )
-    , name_   ( name )
-    , links_  ( node->LinkExercise( exercise ) )
-    , port_   ( port )
-    , running_()
-    , process_()
-    , status_ ( STATUS_STOPPED )
-    , polling_( false )
-    , counter_( 0 )
-    , sizing_ ( false )
-    , size_   ( 0 )
-    , start_  ()
+    : system_      ( system )
+    , client_      ( client )
+    , node_        ( node )
+    , id_          ( id )
+    , root_        ( root )
+    , name_        ( name )
+    , links_       ( node->LinkExercise( exercise ) )
+    , port_        ( port )
+    , running_     ()
+    , process_     ()
+    , status_      ( STATUS_STOPPED )
+    , polling_     ( false )
+    , counter_     ( 0 )
+    , sizing_      ( false )
+    , size_        ( 0 )
+    , clients_     ()
+    , start_time_  ()
+    , current_time_()
 {
     // NOTHING
 }
@@ -169,22 +172,24 @@ Session::Session( const FileSystem_ABC& system,
                   const Tree& tree,
                   const runtime::Runtime_ABC& runtime,
                   PortFactory_ABC& ports )
-    : system_ ( system )
-    , client_ ( client )
-    , node_   ( node )
-    , id_     ( Get< Uuid >( tree, "id" ) )
-    , root_   ( root )
-    , name_   ( Get< std::string >( tree, "name" ) )
-    , links_  ( node->LinkExercise( tree.get_child( "links" ) ) )
-    , port_   ( AcquirePort( Get< int >( tree, "port" ), ports ) )
-    , process_( AcquireProcess( tree, runtime, port_->Get() ) )
-    , running_( process_ ? node->StartSession( boost::posix_time::not_a_date_time ) : Node_ABC::T_Token() )
-    , status_ ( process_ ? ConvertStatus( Get< std::string >( tree, "status" ) ) : Session::STATUS_STOPPED )
-    , polling_( false )
-    , counter_( 0 )
-    , sizing_ ( false )
-    , size_   ( Get< size_t >( tree, "size" ) )
-    , start_  ( Get< std::string >( tree, "start" ) )
+    : system_      ( system )
+    , client_      ( client )
+    , node_        ( node )
+    , id_          ( Get< Uuid >( tree, "id" ) )
+    , root_        ( root )
+    , name_        ( Get< std::string >( tree, "name" ) )
+    , links_       ( node->LinkExercise( tree.get_child( "links" ) ) )
+    , port_        ( AcquirePort( Get< int >( tree, "port" ), ports ) )
+    , process_     ( AcquireProcess( tree, runtime, port_->Get() ) )
+    , running_     ( process_ ? node->StartSession( boost::posix_time::not_a_date_time ) : Node_ABC::T_Token() )
+    , status_      ( process_ ? ConvertStatus( Get< std::string >( tree, "status" ) ) : Session::STATUS_STOPPED )
+    , polling_     ( false )
+    , counter_     ( 0 )
+    , sizing_      ( false )
+    , size_        ( Get< size_t >( tree, "size" ) )
+    , clients_     ()
+    , start_time_  ()
+    , current_time_()
 {
     node_->UpdateSessionSize( id_, size_ );
 }
@@ -264,7 +269,6 @@ Tree Session::GetProperties( bool save ) const
     tree.put( "name", name_ );
     tree.put( "port", port_->Get() );
     tree.put( "status", ConvertStatus( status_ ) );
-    tree.put( "start", start_ );
     if( save )
         tree.put_child( "links", links_ );
     else
@@ -283,7 +287,13 @@ Tree Session::GetProperties( bool save ) const
 Tree Session::GetProperties() const
 {
     boost::shared_lock< boost::shared_mutex > lock( access_ );
-    return GetProperties( false );
+    Tree tree = GetProperties( false );
+    tree.put( "start_time", start_time_ );
+    tree.put( "current_time", current_time_ );
+    Tree& sub = tree.put_child( "clients", Tree() );
+    BOOST_FOREACH( const T_Clients::value_type& value, clients_ )
+        sub.push_back( std::make_pair( "", value ) );
+    return tree;
 }
 
 // -----------------------------------------------------------------------------
@@ -362,7 +372,9 @@ bool Session::StopProcess( boost::upgrade_lock< boost::shared_mutex >& lock )
         status_ = STATUS_STOPPED;
         copy.swap( process_ );
         token.swap( running_ );
-        start_.clear();
+        clients_.clear();
+        start_time_.clear();
+        current_time_.clear();
     }
     if( !copy || !copy->IsAlive() )
         return true;
@@ -475,7 +487,6 @@ bool Session::Start( const Runtime_ABC& runtime, const Path& apps )
     process_ = ptr;
     running_ = token;
     status_  = STATUS_PLAYING;
-    start_   = boost::posix_time::to_iso_extended_string( now );
     return true;
 }
 
@@ -548,6 +559,16 @@ bool Session::UpdateSize()
     return modified;
 }
 
+namespace
+{
+std::string RoundTripIsoTime( const std::string& time )
+{
+    const boost::posix_time::ptime next = boost::posix_time::from_iso_string( time );
+    return boost::posix_time::to_iso_extended_string( next );
+}
+const boost::xpressive::sregex portRegex = boost::xpressive::sregex::compile( ":\\d+$" );
+}
+
 // -----------------------------------------------------------------------------
 // Name: Session::Poll
 // Created: BAX 2012-06-19
@@ -569,14 +590,25 @@ bool Session::Poll()
         return false;
 
     const Tree data = FromJson( response->GetBody() );
-    Session::Status next = ConvertRemoteStatus( Get< std::string >( data, "state" ) );
-    if( next == STATUS_COUNT )
+    Session::Status state = ConvertRemoteStatus( Get< std::string >( data, "state" ) );
+    if( state == STATUS_COUNT )
         return false;
+
+    const std::string start = RoundTripIsoTime( Get< std::string >( data, "start_time" ) );
+    const std::string current = RoundTripIsoTime( Get< std::string >( data, "current_time" ) );
+    std::vector< std::string > clients;
+    Tree::const_assoc_iterator cai = data.find( "clients" );
+    if( cai != data.not_found() )
+        for( Tree::const_iterator it = cai->second.begin(); it != cai->second.end(); ++it )
+            clients.push_back( boost::xpressive::regex_replace( it->second.data(), portRegex, "" ) );
 
     lock.lock();
     if( counter + 1 != counter_ || GetPid( process_ ) != pid )
         return false;
-    return ModifyStatus( lock, next );
+    start_time_ = start;
+    current_time_ = current;
+    std::swap( clients_, clients );
+    return ModifyStatus( lock, state );
 }
 
 // -----------------------------------------------------------------------------
