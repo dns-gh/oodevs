@@ -389,7 +389,7 @@ void MIL_UrbanModel::ReadCity( xml::xistream& xis )
 void MIL_UrbanModel::ReadItem( xml::xistream& xis, urban::TerrainObject_ABC& parent )
 {
     urban::TerrainObject_ABC& urbanObject = *new urban::UrbanObject( xis, &parent, *converter_ );
-    parent.tools::Resolver< urban::TerrainObject_ABC >::Register( urbanObject.GetId(), urbanObject );
+    static_cast< tools::Resolver< urban::TerrainObject_ABC >& >( parent ).Register( urbanObject.GetId(), urbanObject );
     parent.ComputeConvexHull();
     xis >> xml::optional >> xml::start( "urban-objects" )
             >> xml::list( "urban-object", *this, &MIL_UrbanModel::ReadItem, urbanObject )
