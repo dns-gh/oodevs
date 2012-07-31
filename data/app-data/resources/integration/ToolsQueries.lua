@@ -489,3 +489,20 @@ integration.query.getEnemiesToIndirectFireWhenSupport = function( friends )
     end
     return enemies
 end
+
+-- -------------------------------------------------------------------------------- 
+-- Param ally unit to support
+-- Param retrograde way
+-- Return positions to support unit
+-- @author GGE
+-- @release 2012-07-31
+-- --------------------------------------------------------------------------------
+integration.query.getPositionsToSupport = function( retrogradeWay, friendToSupport )
+    local positions = {}
+    if retrogradeWay then
+        positions = { integration.getPositionToSupportFriend( friendToSupport ) } 
+    else
+        positions = sword.military.queries.tactical.getPositionsToSupport[ "execute" ]({elementsToSupport = { friendToSupport }, dynamic = true})
+    end
+    return positions
+end

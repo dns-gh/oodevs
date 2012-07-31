@@ -10,6 +10,14 @@
 				</list>
 			</type>
 		</parameter>
+        <parameter name="retrogradeContext" nullable="true">
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>false</boolean>
+            </default>
+        </parameter>
 	</parameters>
 	<goal>
 		<description>Soutenir les entités par le feu et le mouvement.</description>
