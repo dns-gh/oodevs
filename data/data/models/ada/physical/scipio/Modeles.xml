@@ -3571,6 +3571,9 @@
           <fragorder name="Modifier altitude"/>
         </mission>
         <mission name="PION COMMUNES Se Faire Transporter"/>
+        <mission name="PION JOINT Reconnaitre">
+          <fragorder name="Modifier altitude"/>
+        </mission>
       </missions>
       <fragorders>
         <fragorder name="Passer En NBC4"/>
@@ -7514,4 +7517,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3635512452" -->
+<!-- signature="2303726993" -->
