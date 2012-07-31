@@ -141,12 +141,9 @@ void WebControl::OnSimulationState( sword::EnumSimulationState state )
 void WebControl::OnControlInformation( const sword::ControlInformation& control )
 {
     boost::lock_guard< boost::shared_mutex > lock( *access_ );
-    if( control.has_status() )
-        state_ = control.status();
-    if( control.has_initial_date_time() && control.initial_date_time().has_data() )
-        start_time_ = control.initial_date_time().data();
-    if( control.has_date_time() && control.date_time().has_data() )
-        current_time_ = control.date_time().data();
+    state_ = control.status();
+    start_time_ = control.initial_date_time().data();
+    current_time_ = control.date_time().data();
 }
 
 // -----------------------------------------------------------------------------
