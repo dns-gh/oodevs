@@ -147,6 +147,14 @@ void MIL_Report::Initialize( xml::xistream& xis )
 
     diaEvents_[ eReport_NotActivatedUndergroundNetwork ] = eRC_NotActivatedUndergroundNetwork;
     diaEvents_[ eReport_FireObserver ] = eRC_FireObserver;
+
+    diaEvents_[ eReport_DetectedUnit ] = eRc_DetectedUnit;
+    diaEvents_[ eReport_FriendUnitRecognized ] = eRc_FriendUnitRecognized;
+    diaEvents_[ eReport_FriendUnitIdentified ] = eRc_FriendUnitIdentified;
+    diaEvents_[ eReport_EnemyUnitRecognized ] = eRc_EnemyUnitRecognized;
+    diaEvents_[ eReport_EnemyUnitIdentified ] = eRc_EnemyUnitIdentified;
+    diaEvents_[ eReport_NeutralUnitRecognized ] = eRc_NeutralUnitRecognized;
+    diaEvents_[ eReport_NeutralUnitIdentified ] = eRc_NeutralUnitIdentified;
 }
 
 // -----------------------------------------------------------------------------

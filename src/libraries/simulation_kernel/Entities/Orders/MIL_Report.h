@@ -151,6 +151,13 @@ public:
         eReport_FragOrderReceived,
         eReport_NotActivatedUndergroundNetwork,
         eReport_FireObserver,
+        eReport_DetectedUnit, // 100
+        eReport_FriendUnitRecognized,
+        eReport_FriendUnitIdentified,
+        eReport_EnemyUnitRecognized,
+        eReport_EnemyUnitIdentified,
+        eReport_NeutralUnitRecognized,
+        eReport_NeutralUnitIdentified,
         eNbrReport
     };
 
@@ -592,6 +599,13 @@ public:
         eRC_FollowingUnitIsDead,
         eRC_CombatSupportUnitIsDead,
         eRC_NoUnitsInParameter,
+        eRc_DetectedUnit,
+        eRc_FriendUnitRecognized,
+        eRc_FriendUnitIdentified,
+        eRc_EnemyUnitRecognized,
+        eRc_EnemyUnitIdentified,
+        eRc_NeutralUnitRecognized,
+        eRc_NeutralUnitIdentified,
         eLast
     };
     //@}

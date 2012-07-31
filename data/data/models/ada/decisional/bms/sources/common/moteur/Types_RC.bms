@@ -451,7 +451,14 @@ eRC_IEDReadyForFiring = 432
 eRC_FollowingUnitIsDead = 433
 eRC_CombatSupportUnitIsDead = 434
 eRC_NoUnitsInParameter = 435
-eNbr = 436
+eRc_DetectedUnit = 436
+eRc_FriendUnitRecognized = 437
+eRc_FriendUnitIdentified = 438
+eRc_EnemyUnitRecognized = 439
+eRc_EnemyUnitIdentified = 440
+eRc_NeutralUnitRecognized = 441
+eRc_NeutralUnitIdentified = 442
+eNbr = 443
 --[[// Parametre : T_ConnaissanceObjet
 ]]--[[// Parametre : delai (float),
 ]]--[[// Parametre : T_Pion

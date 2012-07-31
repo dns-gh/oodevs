@@ -644,5 +644,12 @@
     <parameter type="String"/>
   </report>
   <report category="operational" id="435" message="All parameters units are destroyed"/>
+  <report category="operational" id="436" message="Unit detected"/>
+  <report category="operational" id="437" message="Friend unit recognized"/>
+  <report category="operational" id="438" message="Friend unit identified"/>
+  <report category="operational" id="439" message="Enemy unit recognized"/>
+  <report category="operational" id="440" message="Enemy unit identified"/>
+  <report category="operational" id="441" message="Neutral unit recognized"/>
+  <report category="operational" id="442" message="Neutral unit identified"/>
 </reports>
-<!-- signature="3667326369" -->
+<!-- signature="3750526049" -->

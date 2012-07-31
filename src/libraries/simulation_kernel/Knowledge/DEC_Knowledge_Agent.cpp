@@ -29,6 +29,7 @@
 #include "Entities/Objects/MaterialAttribute.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "Entities/MIL_Army.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
@@ -322,6 +323,35 @@ void DEC_Knowledge_Agent::Update( const DEC_Knowledge_AgentPerception& perceptio
     dataRecognition_.Update( perception.GetRecognitionData() );
     dataIdentification_.Update( perception.GetIdentificationData() );
     UpdatePerceptionSources( perception );
+    if( bMaxPerceptionLevelUpdated_ && !IsDead() )
+    {
+        if( perception.GetMaxPerceptionLevel() == PHY_PerceptionLevel::detected_ )
+            MIL_Report::PostEvent( perception.GetAgentPerceiving(), MIL_Report::eReport_DetectedUnit );
+        else if( const MIL_Army_ABC* army = GetArmy() )
+        {
+            if( pKnowledgeGroup_->GetArmy().IsAFriend( *army ) == eTristate_True )
+            {
+                if( perception.GetMaxPerceptionLevel() == PHY_PerceptionLevel::recognized_ )
+                    MIL_Report::PostEvent( perception.GetAgentPerceiving(), MIL_Report::eReport_FriendUnitRecognized );
+                else if( perception.GetMaxPerceptionLevel() == PHY_PerceptionLevel::identified_ )
+                    MIL_Report::PostEvent( perception.GetAgentPerceiving(), MIL_Report::eReport_FriendUnitIdentified );
+            }
+            else if( pKnowledgeGroup_->GetArmy().IsAnEnemy( *army ) == eTristate_True )
+            {
+                if( perception.GetMaxPerceptionLevel() == PHY_PerceptionLevel::recognized_ )
+                    MIL_Report::PostEvent( perception.GetAgentPerceiving(), MIL_Report::eReport_EnemyUnitRecognized );
+                else if( perception.GetMaxPerceptionLevel() == PHY_PerceptionLevel::identified_ )
+                    MIL_Report::PostEvent( perception.GetAgentPerceiving(), MIL_Report::eReport_EnemyUnitIdentified );
+            }
+            else if( pKnowledgeGroup_->GetArmy().IsNeutral( *army ) == eTristate_True )
+            {
+                if( perception.GetMaxPerceptionLevel() == PHY_PerceptionLevel::recognized_ )
+                    MIL_Report::PostEvent( perception.GetAgentPerceiving(), MIL_Report::eReport_NeutralUnitRecognized );
+                else if( perception.GetMaxPerceptionLevel() == PHY_PerceptionLevel::identified_ )
+                    MIL_Report::PostEvent( perception.GetAgentPerceiving(), MIL_Report::eReport_NeutralUnitIdentified );
+            }
+        }
+    }
     nTimeExtrapolationEnd_ = static_cast< int >( pKnowledgeGroup_->GetType().GetKnowledgeAgentExtrapolationTime() );
 }
 
