@@ -506,7 +506,7 @@ void RolePion_Perceiver::ExecutePerceptions( const wrapper::View& model, const w
         Perception_ABC::T_ObjectVector perceivableObjects;
         Perception_ABC::T_ConstPopulationConcentrationVector perceivableConcentrations;
         Perception_ABC::T_ConstPopulationFlowVector perceivableFlows;
-        
+
         AddedKnowledgesVisitor knowledgesVisitor( perceivableAgents, perceivableObjects, perceivableConcentrations, perceivableFlows );
         GET_HOOK( AppendAddedKnowledge )( model, entity,
                                           &AddedKnowledgesVisitor::AddAgent, &AddedKnowledgesVisitor::AddObject,

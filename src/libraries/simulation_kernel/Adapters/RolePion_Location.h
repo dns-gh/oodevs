@@ -131,7 +131,7 @@ private:
     //! @name Member data
     //@{
     MIL_AgentPion&                   owner_;
-    core::Model&                 entity_;
+    core::Model&                     entity_;
     MT_Vector2D                      vDirection_;
     boost::shared_ptr< MT_Vector2D > pvPosition_;
     bool                             bHasMoved_;
