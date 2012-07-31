@@ -44,8 +44,12 @@ return
         return integration.normalizedInversedDistance( objective, self ) / 100
     end,
     supportEfficiency = function( self, objective ) -- here objective is the element that is supported
-         return ( self:proximityLevel() / 100
-            + meKnowledge:computeSupportCapability( objective, self ) ) / 100
+        local position = integration.getPositionToSupportFriend( objective ) 
+        if position then
+            return integration.normalizedInversedDistance( position, self ) / 100
+        else
+            return 0
+        end
     end,
     reconnaissanceEfficiency = function( self, objective )
         return ( self:proximityLevel() / 100 + meKnowledge:
