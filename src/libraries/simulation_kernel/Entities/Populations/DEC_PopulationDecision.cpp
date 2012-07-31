@@ -70,8 +70,6 @@ void DEC_PopulationDecision::load( MIL_CheckPointInArchive& file, const unsigned
     file >> pEntity_
          >> rDominationState_
          >> rLastDominationState_;
-    SetModel( pEntity_->GetType().GetModel() );
-    StartDefaultBehavior();
 }
 
 // -----------------------------------------------------------------------------

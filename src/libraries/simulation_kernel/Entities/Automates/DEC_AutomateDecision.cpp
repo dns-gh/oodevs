@@ -95,18 +95,6 @@ void DEC_AutomateDecision::load( MIL_CheckPointInArchive& file, const unsigned i
 
     unsigned int nID;
     file >> nID;
-    const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( nID );
-    assert( pType );
-    const DEC_Model_ABC& model = pType->GetModel();
-    try
-    {
-        SetModel( model );
-    }
-    catch( std::runtime_error& e )
-    {
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, e.what() );
-    }
-    StartDefaultBehavior();
 }
 
 // -----------------------------------------------------------------------------
