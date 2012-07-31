@@ -28,7 +28,7 @@ using namespace dispatcher;
 SimulationNetworker::SimulationNetworker( Model& model, ClientsNetworker& clients,
                                           MessageHandler_ABC& handler, const Config& config,
                                           RotatingLog& log )
-    : ClientNetworker( config.GetNetworkSimulationParameters(), true, config.GetNetworkTimeout() )
+    : ClientNetworker( config.GetNetworkSimulationParameters(), true, config.GetNetworkTimeout(), config.GetQueueMaxSize() )
     , model_  ( model )
     , clients_( clients )
     , handler_( handler )

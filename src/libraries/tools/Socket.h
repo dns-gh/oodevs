@@ -33,7 +33,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Socket( boost::shared_ptr< boost::asio::ip::tcp::socket > socket,
-                     boost::shared_ptr< SocketEventCallback_ABC > callback, const std::string& endpoint );
+                     boost::shared_ptr< SocketEventCallback_ABC > callback, const std::string& endpoint, int queueMaxSize = 200000 );
     virtual ~Socket();
     //@}
 
@@ -71,6 +71,7 @@ private:
     boost::system::error_code previous_;
     std::deque< std::pair< unsigned long, Message > > queue_;
     boost::mutex mutex_;
+    int queueMaxSize_;
     bool needCleanup_;
     bool answered_;
     //@}

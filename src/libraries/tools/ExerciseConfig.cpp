@@ -31,8 +31,10 @@ using namespace tools;
 // Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
 ExerciseConfig::ExerciseConfig( RealFileLoaderObserver_ABC& observer )
-    : fileLoader_      ( new Loader( *this, observer ) )
-    , pWorldParameters_( 0 )
+    : fileLoader_           ( new Loader( *this, observer ) )
+    , pWorldParameters_     ( 0 )
+    , maxTicksNotResponding_( 60 )
+    , queueMaxSize_         ( 200000 )
 {
     po::options_description desc( "Exercise options" );
     desc.add_options()
@@ -74,6 +76,10 @@ void ExerciseConfig::Parse( int argc, char** argv )
                 dispatcherLogSettings_.SetLogSettings( "dispatcherlog", xis );
                 simLogSettings_.SetLogSettings( "sim", xis );
                 simLoggerPluginSettings_.SetLogSettings( "messages", xis );
+                xis >> xml::optional >> xml::start( "network" )
+                        >> xml::attribute( "max-ticks-not-responding", maxTicksNotResponding_ )
+                        >> xml::attribute( "max-queue-size", queueMaxSize_ )
+                    >> xml::end;
             }
         }
     }
@@ -848,4 +854,22 @@ const std::vector< unsigned char >& ExerciseConfig::GetUtmZones() const
 std::string ExerciseConfig::GetUrbanTerrainFile() const
 {
     return pWorldParameters_->urban_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetMaxTicksNonResponding
+// Created: JSR 2012-07-31
+// -----------------------------------------------------------------------------
+int ExerciseConfig::GetMaxTicksNonResponding() const
+{
+    return maxTicksNotResponding_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetQueueMaxSize
+// Created: JSR 2012-07-31
+// -----------------------------------------------------------------------------
+int ExerciseConfig::GetQueueMaxSize() const
+{
+    return queueMaxSize_;
 }

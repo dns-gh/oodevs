@@ -118,6 +118,7 @@ private:
     T_Clients internals_;
     T_Broadcasters broadcasters_;
     std::map< std::string, int > unrespondingClients_;
+    int maxTicksNotResponding_;
     //@}
 };
 

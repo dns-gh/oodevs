@@ -24,10 +24,11 @@ using namespace dispatcher;
 // Created: NLD 2006-09-20
 // -----------------------------------------------------------------------------
 ClientsNetworker::ClientsNetworker( const Config& config, Plugin_ABC& plugin, const Services& services, const Model_ABC& model )
-    : ServerNetworker( config.GetNetworkClientsParameters(), config.GetNetworkTimeout() )
-    , plugin_  ( plugin )
-    , services_( services )
-    , model_   ( model )
+    : ServerNetworker( config.GetNetworkClientsParameters(), config.GetNetworkTimeout(), config.GetQueueMaxSize() )
+    , plugin_               ( plugin )
+    , services_             ( services )
+    , model_                ( model )
+    , maxTicksNotResponding_( config.GetMaxTicksNonResponding() )
 {
     MT_LOG_INFO_MSG( "Starting dispatcher server on port " << config.GetNetworkClientsParameters() );
 }
@@ -384,10 +385,9 @@ void ClientsNetworker::OnNewTick()
     {
         ConnectionError( *it, "Message queue too big." );
     }
-    int maxTicksNotResponding = 60; // $$$$ LDC 10 minutes for simulation in x1. Arbitrary. Ideally should read from debug.xml
     for( std::map< std::string, int >::iterator itclients = unrespondingClients_.begin(); itclients != unrespondingClients_.end(); ++itclients )
     {
-        if( itclients->second > maxTicksNotResponding )
+        if( itclients->second > maxTicksNotResponding_ )
             ConnectionError( itclients->first, "Client has not answered for too many ticks" );
     }
 }

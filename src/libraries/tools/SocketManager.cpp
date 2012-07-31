@@ -19,10 +19,11 @@ using namespace tools;
 // Name: SocketManager constructor
 // Created: AGE 2007-09-05
 // -----------------------------------------------------------------------------
-SocketManager::SocketManager( boost::shared_ptr< SocketEventCallback_ABC > callback, DWORD timeOut )
+SocketManager::SocketManager( boost::shared_ptr< SocketEventCallback_ABC > callback, DWORD timeOut, int queueMaxSize /*= 200000*/ )
     : callback_      ( callback)
     , nbMessagesSent_( 0 )
     , timeOut_       ( timeOut )
+    , queueMaxSize_  ( queueMaxSize )
 {
     // NOTHING
 }
@@ -77,7 +78,7 @@ void SocketManager::Disconnect( const std::string& endpoint )
 void SocketManager::Add( const boost::shared_ptr< boost::asio::ip::tcp::socket >& socket )
 {
     const std::string address = ToString( socket->remote_endpoint() );
-    boost::shared_ptr< Socket > pSocket( new Socket( socket, callback_, address ) );
+    boost::shared_ptr< Socket > pSocket( new Socket( socket, callback_, address, queueMaxSize_ ) );
     SOCKET nativeSock = socket->native();
     if( nativeSock !=0 )
     {

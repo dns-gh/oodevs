@@ -23,10 +23,10 @@ using namespace tools;
 // Name: ServerNetworker constructor
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-ServerNetworker::ServerNetworker( unsigned short port, unsigned long timeOut /*=10000*/ )
+ServerNetworker::ServerNetworker( unsigned short port, unsigned long timeOut /*=10000*/, int queueMaxSize /*= 200000*/ )
     : service_         ( new boost::asio::io_service() )
     , eventsBuffer_    ( new BufferedSocketEventCallback() )
-    , sockets_         ( new SocketManager( eventsBuffer_, timeOut ) )
+    , sockets_         ( new SocketManager( eventsBuffer_, timeOut, queueMaxSize ) )
     , messageService_  ( new ObjectMessageService() )
     , acceptor_        ( new Acceptor( *sockets_, *service_, port ) )
     , stopped_         ( false )

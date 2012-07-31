@@ -130,6 +130,9 @@ public:
     virtual bool IsDispatcherLogInBytes() const;
     virtual bool IsDispatcherProtobufLogInBytes() const;
     virtual bool IsLoggerPluginLogInBytes() const;
+
+    int GetMaxTicksNonResponding() const;
+    int GetQueueMaxSize() const;
     //@}
 
 private:
@@ -222,6 +225,9 @@ private:
     LogSettings dispatcherLogSettings_;
     LogSettings simLogSettings_;
     LogSettings simLoggerPluginSettings_;
+
+    int maxTicksNotResponding_;
+    int queueMaxSize_;
     //@}
 };
 

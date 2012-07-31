@@ -24,10 +24,10 @@ using namespace tools;
 // Name: ClientNetworker constructor
 // Created: NLD 2006-09-20
 // -----------------------------------------------------------------------------
-ClientNetworker::ClientNetworker( const std::string& host /* = "" */, bool retry /* = false*/, unsigned long timeOut /*=10000*/ )
+ClientNetworker::ClientNetworker( const std::string& host /* = "" */, bool retry /* = false*/, unsigned long timeOut /*=10000*/, int queueMaxSize /*= 200000*/ )
     : service_         ( new boost::asio::io_service() )
     , eventsBuffer_    ( new BufferedSocketEventCallback() )
-    , sockets_         ( new SocketManager( eventsBuffer_, timeOut ) )
+    , sockets_         ( new SocketManager( eventsBuffer_, timeOut, queueMaxSize ) )
     , messageService_  ( new ObjectMessageService() )
     , connector_       ( new Connector( *service_, *sockets_, *eventsBuffer_ ) )
     , retry_           ( retry )

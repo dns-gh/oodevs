@@ -31,7 +31,7 @@ class SocketManager : public MessageSender_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             SocketManager( boost::shared_ptr< SocketEventCallback_ABC > callback, DWORD timeOut );
+             SocketManager( boost::shared_ptr< SocketEventCallback_ABC > callback, DWORD timeOut, int queueMaxSize = 200000 );
     virtual ~SocketManager();
     //@}
 
@@ -72,6 +72,7 @@ private:
     const DWORD timeOut_;
     T_Sockets sockets_;
     unsigned long nbMessagesSent_;
+    int queueMaxSize_;
     //@}
 };
 

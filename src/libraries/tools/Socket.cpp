@@ -22,10 +22,11 @@ using namespace tools;
 // -----------------------------------------------------------------------------
 Socket::Socket( boost::shared_ptr< boost::asio::ip::tcp::socket > socket,
                 boost::shared_ptr< SocketEventCallback_ABC > callback,
-                const std::string& endpoint )
+                const std::string& endpoint, int queueMaxSize /*= 200000*/ )
     : socket_  ( socket )
     , callback_( callback )
     , endpoint_( endpoint )
+    , queueMaxSize_( queueMaxSize )
     , needCleanup_( false )
     , answered_( false )
 {
@@ -55,7 +56,6 @@ namespace
 {
     const int bigSize = 1000;
     const int reclaimSize = 100;  
-    const int maxSize = 200000; // $$$$ RETEX Scipio CEPC performance tests : 500000 . RETEX EXE debut juillet: 200000...
 }
 
 // -----------------------------------------------------------------------------
@@ -202,5 +202,7 @@ bool Socket::HasAnsweredSinceLastTick()
 // -----------------------------------------------------------------------------
 bool Socket::IsQueueFlooded()
 {
-    return ( queue_.size() > maxSize );
+    // $$$$ RETEX Scipio CEPC performance tests : 500000 . RETEX EXE debut juillet: 200000...
+    // configuré dans debug.xml dorénavant
+    return ( queue_.size() > queueMaxSize_ );
 }
