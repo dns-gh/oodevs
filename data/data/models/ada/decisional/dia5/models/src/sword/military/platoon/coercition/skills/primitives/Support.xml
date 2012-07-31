@@ -10,7 +10,7 @@
                 </list>
             </type>
         </parameter>
-        <parameter name="retrogradeWay" nullable="true">
+        <parameter name="retrogradeContext" nullable="true">
             <type>
                 <simple name="boolean"/>
             </type>
