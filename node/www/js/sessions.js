@@ -842,6 +842,12 @@
     });
   });
 
+  $(".session_create_form").keypress(function(e) {
+    if (e.which === 13) {
+      return $("#session_create").click();
+    }
+  });
+
   $("#session_sort_name").click(function() {
     return session_view.model.set_order("name");
   });
