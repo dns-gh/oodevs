@@ -188,25 +188,24 @@ integration.startFragOrderTask = function( self )
     orderType = "platoon.combat.support.art.tasks.AssurerMiseEnOeuvre"
     mission.firePositions = {CreateKnowledge( integration.ontology.types.point, self.source:GetpointCible_() )}
   elseif orderType == "Rep_OrderConduite_MiseEnBatterieInopinee" then
-    orderType = "agent.tasks_frago.RapidDeploiement"
+    orderType = "agent.frago.RapidDeploiement"
     mission.entity = CreateKnowledge( integraTion.ontology.types.point, self.source:GetpointCible_() )
     mission.interventionType = self.source:GetnbIT_()
     mission.munition = self.source:Getmunitions_()
     mission.firePositions = {CreateKnowledge( integration.ontology.types.point, DEC_Geometrie_CopiePoint( meKnowledge:getPosition() ) )}
   elseif orderType == "Rep_OrderConduite_AttendreSePoster" then
-    local point = CreateKnowledge( integration.ontology.types.point, DEC_Geometrie_CopiePoint( meKnowledge:getPosition() ) )
-    mission.objectives = { point }
-    orderType = "agent.tasks_frago.WaitOn"
+    orderType = "agent.frago.Settle"
   elseif orderType == "Rep_OrderConduite_SArreter" then
     local point = CreateKnowledge( integration.ontology.types.point, DEC_Geometrie_CopiePoint( meKnowledge:getPosition() ) )
     mission.objectives = { point }
-    orderType = "agent.tasks_frago.WaitOn"
+    orderType = "agent.frago.WaitOn"
   elseif orderType == "Rep_OrderConduite_Attendre" then
     local point = CreateKnowledge( integration.ontology.types.point, DEC_Geometrie_CopiePoint( meKnowledge:getPosition() ) )
     mission.objective = point
     orderType = "sword.military.crowd.tasks.frago.WaitOn"
   elseif orderType == "Rep_OrderConduite_Poursuivre" then
-    stopTask( "agent.tasks_frago.WaitOn" )
+    stopTask( "agent.frago.Settle" )
+    stopTask( "agent.frago.WaitOn" )
     stopTask( "sword.military.crowd.tasks.frago.WaitOn" )
     myself.blocked = nil
     myself.canBeBlocked = nil
@@ -218,23 +217,23 @@ integration.startFragOrderTask = function( self )
     integration.cleanFragOrder( self )
     return
   elseif orderType == "Rep_OrderConduite_PasserEnSilenceRadar" then
-    stopTask( "agent.tasks_frago.ActivateRadar" )
-    orderType = "agent.tasks_frago.ObserveRadarSilence"
+    stopTask( "agent.frago.ActivateRadar" )
+    orderType = "agent.frago.ObserveRadarSilence"
   elseif orderType == "Rep_OrderConduite_ArreterSilenceRadar" then
-    stopTask( "agent.tasks_frago.ObserveRadarSilence" )
-    orderType = "agent.tasks_frago.ActivateRadar"
+    stopTask( "agent.frago.ObserveRadarSilence" )
+    orderType = "agent.frago.ActivateRadar"
   elseif orderType == "Rep_OrderConduite_PasserEnSilenceRadio" then
-    stopTask( "agent.tasks_frago.ObservePartialRadioSilence" )
-    stopTask( "agent.tasks_frago.ActivateRadio" )
-    orderType = "agent.tasks_frago.ObserveRadioSilence"
+    stopTask( "agent.frago.ObservePartialRadioSilence" )
+    stopTask( "agent.frago.ActivateRadio" )
+    orderType = "agent.frago.ObserveRadioSilence"
   elseif orderType == "Rep_OrderConduite_PasserEnSilenceRadioPartiel" then
-    stopTask( "agent.tasks_frago.ActivateRadio" )
-    stopTask( "agent.tasks_frago.ObserveRadioSilence" )
-    orderType = "agent.tasks_frago.ObservePartialRadioSilence"
+    stopTask( "agent.frago.ActivateRadio" )
+    stopTask( "agent.frago.ObserveRadioSilence" )
+    orderType = "agent.frago.ObservePartialRadioSilence"
   elseif orderType == "Rep_OrderConduite_ArreterSilenceRadio" then
-    stopTask( "agent.tasks_frago.ObservePartialRadioSilence" )
-    stopTask( "agent.tasks_frago.ObserveRadioSilence" )
-    orderType = "agent.tasks_frago.ActivateRadio"
+    stopTask( "agent.frago.ObservePartialRadioSilence" )
+    stopTask( "agent.frago.ObserveRadioSilence" )
+    orderType = "agent.frago.ActivateRadio"
   elseif orderType == "Rep_OrderConduite_MettreTenueNBC" then
     stopTask( "agent.tasks.UnequipNBCOutfit" )
     orderType = "agent.tasks.EquipNBCOutfit"

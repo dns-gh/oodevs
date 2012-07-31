@@ -655,6 +655,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_Geometrie_GetLeavingAreaPosition" ] =
         boost::function< boost::shared_ptr< MT_Vector2D >( TER_Localisation* ) >( boost::bind( &DEC_GeometryFunctions::GetLeavingAreaPosition< MIL_AgentPion>, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_Agent_EstDansLeFuseau" ] = boost::bind( &DEC_AgentFunctions::AgentHasFuseau , boost::cref( GetPion() ) );
+    brain[ "DEC_Geometrie_CalculerDistanceLigneAvant" ] = &DEC_GeometryFunctions::ComputeDistanceFromFrontLine;
+    brain[ "DEC_Geometrie_StopCalculLignesAvantEtArriere" ] = &DEC_GeometryFunctions::StopComputingFrontAndBackLines;
 
     //Keypoint
     brain[ "DEC_Crossroads" ] =

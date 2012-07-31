@@ -582,3 +582,16 @@ getBetterReachingEfficiencyInList = function( elements, entity )
     end	
     return bestReturnPosition
 end
+
+startSettleCalcul = function()
+    local listePions = DEC_Pion_PionsAvecPC()
+    return DEC_Geometrie_StartCalculLignesAvantEtArrierePourPion( DEC_GetAutomate( meKnowledge.source ), listePions )
+end
+
+settleDistance = function( line )
+    return DEC_Geometrie_CalculerDistanceLigneAvant( line, meKnowledge.source )
+end
+
+stopSettleCalcul = function( line )
+    DEC_Geometrie_StopCalculLignesAvantEtArriere( line )
+end

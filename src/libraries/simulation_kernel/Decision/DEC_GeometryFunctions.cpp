@@ -807,6 +807,24 @@ DEC_FrontAndBackLinesComputer* DEC_GeometryFunctions::StartComputingFrontAndBack
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::StartComputingFrontAndBackLinesForPlatoon
+// Created: LMT 2012-07-31
+// -----------------------------------------------------------------------------
+DEC_FrontAndBackLinesComputer* DEC_GeometryFunctions::StartComputingFrontAndBackLinesForPlatoon( const DEC_Decision_ABC* pAutomate, const std::vector< DEC_Decision_ABC* >& pionDecisionList )
+{
+    std::vector< MIL_AgentPion*> pions;
+    pions.reserve( pionDecisionList.size() );
+    for( std::vector< DEC_Decision_ABC* >::const_iterator it = pionDecisionList.begin(); it != pionDecisionList.end(); ++it )
+    {
+        if( !(*it) )
+            throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        pions.push_back( &static_cast< DEC_Decision_ABC& >( **it ).GetPion() );
+    }
+    DEC_FrontAndBackLinesComputer* pComputer = new DEC_FrontAndBackLinesComputer( pAutomate->GetAutomate(), pions );
+    return pComputer;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::StartComputingAutomatFrontAndBackLines
 // Created: LDC 2009-07-06
 // -----------------------------------------------------------------------------
