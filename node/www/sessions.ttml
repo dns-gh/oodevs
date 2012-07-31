@@ -1,43 +1,22 @@
-<!-- Session Create Dialog -->
-<div id="session_create" class="modal fade hide">
-    <div class="modal-header">
-        <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
-        <h3>Create New Session</h3>
-    </div>
-    <div class="modal-body">
-        <form class="form-horizontal">
-            <div class="control-group">
-                <label class="control-label" for="session_name">Name</label>
-                <div class="controls">
-                    <input type="text" class="input-large" id="session_name"/>
-                    <span class="hide help-inline">Missing name</span>
-                </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label" for="session_exercise">Exercise</label>
-                <div class="controls">
-                    <select id="session_exercise">
-                    </select>
-                    <span class="hide help-inline">Invalid exercise</span>
-                </div>
-            </div>
-        </form>
-    </div>
-    <div class="modal-footer">
-        <span class="alert hide alert-error"></span>
-        <a class="btn btn-inverse btn_click"> Create</a>
-        <a class="btn btn-inverse" data-dismiss="modal"> Cancel</a>
-    </div>
-</div>
 <!-- Session Toolbar -->
 <div class="row">
     <div class="span9">
         <div id="session_error"></div>
-        <span class="session_actions">
-            <a data-toggle="modal" href="#session_create" class="btn"><i class="icon-plus"></i> Add...</a>
+        <span class="form-inline session_create_form">
+            <span class="control-group">
+                <span class="controls">
+                    <input id="session_name" class="input-medium" type="text" placeholder="Name..."/>
+                </span>
+            </span>
+            <span class="control-group">
+                <span class="controls">
+                    <select id="exercises"></select>
+                    <a id="session_create" class="btn"><i class="icon-plus"></i> Add</a>
+                </span>
+            </span>
         </span>
         <span class="form-search session_search">
-            <input type="text" class="input-large search-query" placeholder="Search..."/>
+            <input type="text" class="input-medium search-query" placeholder="Search..."/>
             <i class="icon-search"></i>
         </span>
     </div>

@@ -167,7 +167,7 @@ get_search = ->
     $(".session_search .search-query").val()
 
 class SessionListView extends Backbone.View
-    el: $( "#sessions" )
+    el: $ "#sessions"
     delta_period: 5000
 
     initialize: ->
@@ -223,53 +223,75 @@ class SessionListView extends Backbone.View
         for it in @model.models
             it.view.set_search value
 
+class ExerciseListItem extends Backbone.Model
+    view: ExerciseListItemView
+
+    sync: (method, model, options) =>
+        if method == "read"
+            return ajax "/api/list_exercises", id: uuid,
+                (resp, status, xhr) ->
+                    options.success exercises: resp, status, xhr,
+                options.error
+        return Backbone.sync method, model, options
+
+class ExerciseListItemView extends Backbone.View
+    el: $ "#exercises"
+    delta_period: 5000
+
+    initialize: ->
+        @model = new ExerciseListItem
+        @model.bind "change", @render
+        @model.fetch error: -> print_error "Unable to fetch exercises"
+        setTimeout @delta, @delta_period
+
+    render: =>
+        $(@el).children().remove().end()
+        for it in @model.get "exercises"
+            $(@el).append "<option>" + it + "</option>"
+        return
+
+    delta: =>
+        next = new ExerciseListItem
+        next.fetch
+            success: =>
+                @model.set next.attributes
+                setTimeout @delta, @delta_period
+            error: =>
+                print_error "Unable to fetch exercises"
+                setTimeout @delta, @delta_period
+
+exercise_view = new ExerciseListItemView
 session_view = new SessionListView
 
-reset_input_session = (control) ->
-    control.parent().parent().removeClass "error"
-    control.parent().find(".help-inline").hide()
-
-validate_input_session = (control, result) ->
-    if !result
-        control.parent().parent().addClass "error"
-        control.parent().find(".help-inline").show()
+validate_input_session = (control, result, error) ->
+    unless result
+        group = control.parent().parent()
+        group.addClass "error"
+        setTimeout (->group.removeClass "error"), 3000
+        print_error error
         return false
-    reset_input_session control
     return true
 
-on_session_click = ->
-    name = $("#session_name")
-    if !validate_input_session name, name.val().length
+$("#session_create").click ->
+    name = $ "#session_name"
+    unless validate_input_session name, name.val()?.length, "Missing name"
         return
-    exercise = $("#session_exercise")
-    if !validate_input_session exercise, exercise.val()?
+    exercise = $ "#exercises"
+    unless validate_input_session exercise, exercise.val()?, "Missing exercise"
         return
-    $("#session_create").modal "hide"
     session_view.create name: name.val(), exercise: exercise.val()
 
-on_session_hide = ->
-    reset_input_session $("#session_name")
-    reset_input_session $("#session_exercise")
-    $("#session_create .modal-footer .alert").hide()
+$("#session_sort_name").click ->
+    session_view.model.set_order "name"
 
-on_session_load = ->
-    select = $("#session_exercise")
-    select.children().remove().end()
-    ajax "/api/list_exercises", id: uuid, limit: 40,
-        (data) ->
-            for item in data
-                select.append "<option>" + item + "</option>"
-        ->
-            box = $("#session_create .modal-footer .alert")
-            box.html "Unable to fetch exercises"
-            box.show()
+$("#session_sort_status").click ->
+    session_view.model.set_order "status"
 
-$("#session_create .modal-footer .btn_click").click on_session_click
-$("#session_create").on "hidden", on_session_hide
-$("#session_create").on "show", on_session_load
-$("#session_sort_name").click -> session_view.model.set_order "name"
-$("#session_sort_status").click -> session_view.model.set_order "status"
 for item in $("#session_filters input")
     $(item).click -> session_view.set_filter()
-$(".session_search input").keyup -> session_view.set_search get_search()
-$(".session_search input").bind "input propertychange", -> session_view.set_search get_search()
+
+$(".session_search input").keyup ->
+    session_view.set_search get_search()
+
+$(".session_search input").bind "input propertychange", ->
+    session_view.set_search get_search()

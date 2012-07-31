@@ -13,7 +13,6 @@ body{padding-top:60px;padding-bottom:40px;}
 .session_search{float:right;margin-bottom:20px;position:relative;}
 .session_search i{position:absolute;top:8px;left:8px;}
 .session_search input{padding-left:24px;}
-.session_actions a{min-width:72px;}
 .spin_btn{width:14px;height:18px;}
 .spin_btn .spinner{position:relative;top:9px;left:8px;}
 .node_row{position:relative;}
