@@ -37,12 +37,7 @@ macro( protobuf_make srcs hdrs output_dir )
 endmacro()
 
 macro( add_target_definition target define )
-    get_property( has_definitions TARGET ${target} PROPERTY COMPILE_DEFINITIONS SET )
-    if( ${has_definitions} )
-        set_property( TARGET ${target} APPEND_STRING PROPERTY COMPILE_DEFINITIONS " -D${define}" )
-    else()
-        set_property( TARGET ${target} APPEND PROPERTY COMPILE_DEFINITIONS "-D${define}" )
-    endif()
+    set_property( TARGET ${target} APPEND PROPERTY COMPILE_DEFINITIONS "${define}" )
 endmacro()
 
 macro( add_target_include target dir )
