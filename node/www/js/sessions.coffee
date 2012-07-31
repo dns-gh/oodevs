@@ -281,6 +281,10 @@ $("#session_create").click ->
         return
     session_view.create name: name.val(), exercise: exercise.val()
 
+$(".session_create_form").keypress (e) ->
+    if e.which == 13
+        $("#session_create").click()
+
 $("#session_sort_name").click ->
     session_view.model.set_order "name"
 
