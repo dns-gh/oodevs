@@ -316,12 +316,10 @@ integration.updateMoveToIt = function( objective, pathType )
             myself.canBeBlocked = nil
             return false
         end
-        -- if agent is not able to dismount, it has reached the nearest postion. Movement is over.
-        if objective.initialeDestination ~= objective.destination and not DEC_Agent_EstEmbarquable() then
-            return true -- arrived on nearest objective
-        end
         if objective.initialeDestination ~= objective.destination -- moving toward a non-traficable urban block for instance
-           and not myself.dismountedDone and integration.canDismount() then
+           and not myself.dismountedDone
+           and integration.canDismount() then
+
             -- Entering in a non-traficable element: dismount then re-compute path
             myself.enteringNonTrafficableElement = true
             
