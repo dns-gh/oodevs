@@ -238,6 +238,8 @@ void RegisterGeometryFunctions( directia::brain::Brain& brain)
     brain[ "DEC_Geometrie_EstPointDansFuseau_AvecParamFuseau" ] = &DEC_GeometryFunctions::IsPointInFuseau_ParamFuseau;
     brain[ "DEC_Geometrie_LocalisationsEgales" ] = &DEC_GeometryFunctions::CompareLocalisations;
     brain[ "DEC_Geometrie_CalculerPointSurFuseau" ] = &DEC_GeometryFunctions::GetPointAlongFuseau;
+    brain[ "DEC_Geometrie_StartCalculLignesAvantEtArrierePourPion" ] = &DEC_GeometryFunctions::StartComputingFrontAndBackLinesForPlatoon;
+    
 }
 
 // -----------------------------------------------------------------------------

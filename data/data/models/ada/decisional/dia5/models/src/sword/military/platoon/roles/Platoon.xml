@@ -92,6 +92,7 @@
 		<skill name="sword.military.platoon.skills.actions.ApplyMortarFires"/>
 		<skill name="france.military.platoon.combat.support.art.skills.OrienterCapteurTirIndirect"/>
 		<skill name="france.military.platoon.combat.support.rens.skills.primitives.ActivateRadarTirIndirect"/>
+		<skill name="sword.military.platoon.skills.Settle"/>
 	</skills>
 	<resources>
 		<resource name="sword.military.platoon.resources.EngageCapacity"/>

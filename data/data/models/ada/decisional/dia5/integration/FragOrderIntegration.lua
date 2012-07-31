@@ -194,9 +194,7 @@ integration.startFragOrderTask = function( self )
     mission.munition = self.source:Getmunitions_()
     mission.firePositions = {CreateKnowledge( integration.ontology.types.point, DEC_Geometrie_CopiePoint( meKnowledge:getPosition() ) )}
   elseif orderType == "Rep_OrderConduite_AttendreSePoster" then
-    local point = CreateKnowledge( integration.ontology.types.point, DEC_Geometrie_CopiePoint( meKnowledge:getPosition() ) )
-    mission.objectives = { point }
-    orderType = "sword.military.platoon.tasks.frago.WaitOn"
+    orderType = "sword.military.platoon.tasks.frago.Settle"
   elseif orderType == "Rep_OrderConduite_SArreter" then
     local point = CreateKnowledge( integration.ontology.types.point, DEC_Geometrie_CopiePoint( meKnowledge:getPosition() ) )
     mission.objectives = { point }
@@ -206,6 +204,7 @@ integration.startFragOrderTask = function( self )
     mission.objective = point
     orderType = "sword.military.crowd.tasks.frago.WaitOn"
   elseif orderType == "Rep_OrderConduite_Poursuivre" then
+    stopTask( "sword.military.platoon.tasks.frago.Settle" )
     stopTask( "sword.military.platoon.tasks.frago.WaitOn" )
     stopTask( "sword.military.crowd.tasks.frago.WaitOn" )
     myself.blocked = nil
