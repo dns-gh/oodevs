@@ -29,17 +29,11 @@
     <Filter Include="Source Files\Workspace\Nbc\Nbc GUI">
       <UniqueIdentifier>{b414429b-6324-4de3-b946-59f0085137e9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Workspace\Nbc\Nbc GUI\NBC Wizard">
-      <UniqueIdentifier>{e0ccd40d-2699-47ce-8b3e-62ee122fa522}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Workspace\Launchers">
       <UniqueIdentifier>{132db70a-ed85-4cfe-b968-560c922b51e6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Workspace\Launchers\Launchers GUI">
       <UniqueIdentifier>{41ce9ff1-e4fb-40be-8274-7293f71358f6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Workspace\Launchers\Launchers GUI\Launcher Wizard">
-      <UniqueIdentifier>{249600fa-f5db-4b2b-8ae1-03b7d6ace936}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Workspace\Launchers\Launchers Data">
       <UniqueIdentifier>{3b83057a-280a-4107-a21f-a347f06f89b6}</UniqueIdentifier>
@@ -77,9 +71,6 @@
     <Filter Include="Source Files\Workspace\Object\Objects GUI">
       <UniqueIdentifier>{4d31bbbc-6966-4787-b671-d3351969604b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Workspace\Object\Objects GUI\Objects Wizard">
-      <UniqueIdentifier>{6bd2b37f-f5a0-4a4c-a530-f6802975e886}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Workspace\Weapons">
       <UniqueIdentifier>{57b090a2-ae5a-47bc-9b6e-1457fd3c5805}</UniqueIdentifier>
     </Filter>
@@ -98,9 +89,6 @@
     <Filter Include="Source Files\Workspace\Sensors\Sensors GUI">
       <UniqueIdentifier>{d96f6b32-ae06-4104-9dda-1440e8c43895}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Workspace\Sensors\Sensors GUI\Wizard">
-      <UniqueIdentifier>{67698e61-0a2b-4a0e-bd34-9f8320255d13}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Workspace\Sensors\Sensors Data">
       <UniqueIdentifier>{1be6622d-2b47-4d39-b55b-ef4953fa913e}</UniqueIdentifier>
     </Filter>
@@ -113,9 +101,6 @@
     <Filter Include="Source Files\Workspace\Composantes\Composantes GUI">
       <UniqueIdentifier>{a85c5bd6-f85c-493f-91bb-ae567beb2be3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Workspace\Composantes\Composantes GUI\Composantes Wizard">
-      <UniqueIdentifier>{861e9588-13b3-466a-8ea4-ceae7e7a7354}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Workspace\Units">
       <UniqueIdentifier>{25592e7e-2e9a-4e7b-afea-027e80fcbb04}</UniqueIdentifier>
     </Filter>
@@ -125,17 +110,11 @@
     <Filter Include="Source Files\Workspace\Units\Units GUI">
       <UniqueIdentifier>{6a74c536-cf53-474e-83bc-0afdd4c3f956}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Workspace\Units\Units GUI\Unit Wizard">
-      <UniqueIdentifier>{377cb947-e65f-46e1-a091-cbe67045d381}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Workspace\Models">
       <UniqueIdentifier>{9c5b4d4a-bff0-437c-a9fe-b05e3e72c426}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Workspace\Models\Models GUI">
       <UniqueIdentifier>{4f214dbd-99bf-4e1a-bec1-a91605290062}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Workspace\Models\Models GUI\Model Wizard">
-      <UniqueIdentifier>{abef1f03-b60c-4f73-94d0-76e60fc9a096}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Workspace\Models\Models Data">
       <UniqueIdentifier>{5f08bcf2-e370-4389-a260-9ac7969fd1d6}</UniqueIdentifier>
@@ -157,9 +136,6 @@
     </Filter>
     <Filter Include="Source Files\Workspace\Automata\Automata GUI">
       <UniqueIdentifier>{d35b832b-8934-4871-810c-8ee9699de9f2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Workspace\Automata\Automata GUI\Automata Wizard">
-      <UniqueIdentifier>{65edd81c-d2f2-4227-964f-54dc355ba257}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Workspace\Communications">
       <UniqueIdentifier>{bfd37a4d-a479-4fbb-93e1-ff82da8512cd}</UniqueIdentifier>
@@ -188,9 +164,6 @@
     <Filter Include="Source Files\Workspace\Missions\Missions GUI">
       <UniqueIdentifier>{842e7022-1fa0-419e-9de1-aa9e6b836cac}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Workspace\Missions\Missions GUI\Mission Wizard">
-      <UniqueIdentifier>{103dc883-8415-441b-b01f-703188043f5c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Workspace\Breakdowns">
       <UniqueIdentifier>{fb3adc48-e4cd-46c4-aa27-419c25c433e3}</UniqueIdentifier>
     </Filter>
@@ -199,9 +172,6 @@
     </Filter>
     <Filter Include="Source Files\Workspace\Breakdowns\Breakdowns GUI">
       <UniqueIdentifier>{d73e6c3c-f5b9-4b23-94b6-b36f94af3c84}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Workspace\Breakdowns\Breakdowns GUI\Breakdown wizard">
-      <UniqueIdentifier>{3afd622b-f664-4f49-9144-06fdc7a4a082}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Workspace\Knowledge groups">
       <UniqueIdentifier>{6a117d16-9421-4f67-958b-292e4e52ab0f}</UniqueIdentifier>
@@ -212,9 +182,6 @@
     <Filter Include="Source Files\Workspace\Knowledge groups\Knowledge groups GUI">
       <UniqueIdentifier>{44d8c512-6d32-4d57-a64a-22ceabd2f580}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Workspace\Knowledge groups\Knowledge groups GUI\Knowledge groups wizard">
-      <UniqueIdentifier>{ac00cb73-172f-4637-97fc-1de9484d01e6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Workspace\Radars">
       <UniqueIdentifier>{aed412a7-2a5e-46fc-890a-532f9b7136a2}</UniqueIdentifier>
     </Filter>
@@ -224,9 +191,6 @@
     <Filter Include="Source Files\Workspace\Radars\Radars GUI">
       <UniqueIdentifier>{4a60cae5-36a5-49bc-bf89-4ce1c454cbf9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Workspace\Radars\Radars GUI\Radar wizard">
-      <UniqueIdentifier>{a228efce-a9b9-4cf5-a748-504eb60874de}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Workspace\Population">
       <UniqueIdentifier>{ae340b71-36c4-4151-b625-fd4976f56f0d}</UniqueIdentifier>
     </Filter>
@@ -235,9 +199,6 @@
     </Filter>
     <Filter Include="Source Files\Workspace\Population\Population GUI">
       <UniqueIdentifier>{88e6d076-fac5-43db-b440-a6364d21b212}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Workspace\Population\Population GUI\Population Wizard">
-      <UniqueIdentifier>{81fb1696-d018-4f08-b5cc-2df5bba1df54}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Workspace\Reports">
       <UniqueIdentifier>{0c323936-f49a-4b6d-a871-0becf5316d36}</UniqueIdentifier>
@@ -256,9 +217,6 @@
     </Filter>
     <Filter Include="Source Files\Workspace\ActiveProtections\ActiveProtections GUI">
       <UniqueIdentifier>{ac85fda1-f660-4f94-baa0-1417a81c4a0f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Workspace\ActiveProtections\ActiveProtections GUI\ActiveProtections wizard">
-      <UniqueIdentifier>{6921490e-315b-4f5f-9231-064e71c59c3f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Workspace\Zurb">
       <UniqueIdentifier>{2361c9eb-4537-4b5b-9bab-727a76467555}</UniqueIdentifier>
@@ -281,9 +239,6 @@
     <Filter Include="Source Files\Workspace\Resource networks\Resource networks GUI">
       <UniqueIdentifier>{1f0d8138-79a5-4622-b2bf-26de2d678a00}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Workspace\Resource networks\Resource networks GUI\Resource networks Wizard">
-      <UniqueIdentifier>{0cac5288-c409-4907-bcc6-554e4cf3cd50}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Workspace\People">
       <UniqueIdentifier>{b2b2704c-c4f2-4c2a-8587-77ae233b4a23}</UniqueIdentifier>
     </Filter>
@@ -293,9 +248,6 @@
     <Filter Include="Source Files\Workspace\People\People GUI">
       <UniqueIdentifier>{dedd201e-5dae-4914-b93f-896914b54c9e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Workspace\People\People GUI\People Wizard">
-      <UniqueIdentifier>{e424e7e0-5f9b-42ae-9bd5-51870fed4bd3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Workspace\Fires">
       <UniqueIdentifier>{2dac1d26-7beb-4e8b-85f3-94a809cc3a98}</UniqueIdentifier>
     </Filter>
@@ -304,9 +256,6 @@
     </Filter>
     <Filter Include="Source Files\Workspace\Fires\Fires GUI">
       <UniqueIdentifier>{9cf1fb92-b5c6-4f91-99f1-d5685292359e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Workspace\Fires\Fires GUI\Wizards">
-      <UniqueIdentifier>{a68f2e8f-d11a-4f34-beae-d83f94df2e73}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Workspace\Symbols">
       <UniqueIdentifier>{b1c44f93-5d38-4d67-b128-805c42ce0616}</UniqueIdentifier>
@@ -517,15 +466,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\IdentifierFactory.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ImageViewer.cpp">
-      <Filter>Source Files\Tools\Wizard Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Wizard_LastPage.cpp">
-      <Filter>Source Files\Tools\Wizard Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_WizardPage_ABC.cpp">
-      <Filter>Source Files\Tools\Wizard Tools</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_DataException.cpp">
       <Filter>Source Files\Tools\Exceptions</Filter>
     </ClCompile>
@@ -565,9 +505,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_NBC_NbcAgentListView.cpp">
       <Filter>Source Files\Workspace\Nbc\Nbc GUI</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_NBC_Wizard.cpp">
-      <Filter>Source Files\Workspace\Nbc\Nbc GUI\NBC Wizard</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Launchers_GUI.cpp">
       <Filter>Source Files\Workspace\Launchers\Launchers GUI</Filter>
     </ClCompile>
@@ -576,9 +513,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Launchers.cpp">
       <Filter>Source Files\Workspace\Launchers\Launchers GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Launcher_Wizard.cpp">
-      <Filter>Source Files\Workspace\Launchers\Launchers GUI\Launcher Wizard</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Launchers_Data.cpp">
       <Filter>Source Files\Workspace\Launchers\Launchers Data</Filter>
@@ -628,12 +562,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipement_Postures_GUI.cpp">
       <Filter>Source Files\Workspace\Equipement\Equipement GUI</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipement_Wizard.cpp">
-      <Filter>Source Files\Workspace\Equipement\Equipement GUI\Equipement Wizard</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipement_Wizard_Page0.cpp">
-      <Filter>Source Files\Workspace\Equipement\Equipement GUI\Equipement Wizard</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Objects_Data.cpp">
       <Filter>Source Files\Workspace\Object\Objects Data</Filter>
     </ClCompile>
@@ -648,9 +576,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Table_Objects_LocationScore.cpp">
       <Filter>Source Files\Workspace\Object\Objects GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Objects_Wizard.cpp">
-      <Filter>Source Files\Workspace\Object\Objects GUI\Objects Wizard</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_WeaponFilter.cpp">
       <Filter>Source Files\Workspace\Weapons\Weapons Data</Filter>
@@ -669,12 +594,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Weapons_PhTable.cpp">
       <Filter>Source Files\Workspace\Weapons\Weapons GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Weapon_Wizard.cpp">
-      <Filter>Source Files\Workspace\Weapons\Weapons GUI\Weapon Wizard</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Weapon_Wizard_Page0.cpp">
-      <Filter>Source Files\Workspace\Weapons\Weapons GUI\Weapon Wizard</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Sensors.cpp">
       <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
@@ -711,9 +630,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Sensors_UrbanBlockMaterial_GUI.cpp">
       <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Sensor_Wizard.cpp">
-      <Filter>Source Files\Workspace\Sensors\Sensors GUI\Wizard</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Sensors_Data.cpp">
       <Filter>Source Files\Workspace\Sensors\Sensors Data</Filter>
@@ -757,9 +673,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Composantes_Objects.cpp">
       <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Composante_Wizard.cpp">
-      <Filter>Source Files\Workspace\Composantes\Composantes GUI\Composantes Wizard</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Units_Data.cpp">
       <Filter>Source Files\Workspace\Units\Units Data</Filter>
     </ClCompile>
@@ -796,9 +709,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_UnitSymbolsComboBox.cpp">
       <Filter>Source Files\Workspace\Units\Units GUI</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Unit_Wizard.cpp">
-      <Filter>Source Files\Workspace\Units\Units GUI\Unit Wizard</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Missions.cpp">
       <Filter>Source Files\Workspace\Models\Models GUI</Filter>
     </ClCompile>
@@ -816,12 +726,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Models_GUI.cpp">
       <Filter>Source Files\Workspace\Models\Models GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Model_Wizard.cpp">
-      <Filter>Source Files\Workspace\Models\Models GUI\Model Wizard</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Model_Wizard_FirstPage.cpp">
-      <Filter>Source Files\Workspace\Models\Models GUI\Model Wizard</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Models_Data.cpp">
       <Filter>Source Files\Workspace\Models\Models Data</Filter>
@@ -849,9 +753,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_AutomatLogCategory_ListView.cpp">
       <Filter>Source Files\Workspace\Automata\Automata GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Automata_Wizard.cpp">
-      <Filter>Source Files\Workspace\Automata\Automata GUI\Automata Wizard</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Communications_Data.cpp">
       <Filter>Source Files\Workspace\Communications\Communications data</Filter>
@@ -901,15 +802,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MissionTypes_Table.cpp">
       <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_FragOrder_Wizard.cpp">
-      <Filter>Source Files\Workspace\Missions\Missions GUI\Mission Wizard</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_FragOrder_WizardSecondPage.cpp">
-      <Filter>Source Files\Workspace\Missions\Missions GUI\Mission Wizard</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Mission_Wizard.cpp">
-      <Filter>Source Files\Workspace\Missions\Missions GUI\Mission Wizard</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Breakdowns_Data.cpp">
       <Filter>Source Files\Workspace\Breakdowns\Breakdowns data</Filter>
     </ClCompile>
@@ -922,9 +814,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Breakdowns_PartsTable.cpp">
       <Filter>Source Files\Workspace\Breakdowns\Breakdowns GUI</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Breakdown_Wizard.cpp">
-      <Filter>Source Files\Workspace\Breakdowns\Breakdowns GUI\Breakdown wizard</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_KnowledgeGroups_Data.cpp">
       <Filter>Source Files\Workspace\Knowledge groups\Knowledge groups data</Filter>
     </ClCompile>
@@ -933,9 +822,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_KnowledgeGroups_ListView.cpp">
       <Filter>Source Files\Workspace\Knowledge groups\Knowledge groups GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_KnowledgeGroups_Wizard.cpp">
-      <Filter>Source Files\Workspace\Knowledge groups\Knowledge groups GUI\Knowledge groups wizard</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Health_Data.cpp">
       <Filter>Source Files\Workspace\Logistic\Health\Health data</Filter>
@@ -964,9 +850,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Radars_ListView.cpp">
       <Filter>Source Files\Workspace\Radars\Radars GUI</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Radars_Wizard.cpp">
-      <Filter>Source Files\Workspace\Radars\Radars GUI\Radar wizard</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Population_Data.cpp">
       <Filter>Source Files\Workspace\Population\Population data</Filter>
     </ClCompile>
@@ -994,9 +877,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Population_UrbanEffect_Attitude_ListView.cpp">
       <Filter>Source Files\Workspace\Population\Population GUI</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Population_Wizard.cpp">
-      <Filter>Source Files\Workspace\Population\Population GUI\Population Wizard</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Reports_Data.cpp">
       <Filter>Source Files\Workspace\Reports\Reports Data</Filter>
     </ClCompile>
@@ -1017,9 +897,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ComboBox_ActiveProtection_Dotations.cpp">
       <Filter>Source Files\Workspace\ActiveProtections\ActiveProtections GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ActiveProtections_Wizard.cpp">
-      <Filter>Source Files\Workspace\ActiveProtections\ActiveProtections GUI\ActiveProtections wizard</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Urban_Data.cpp">
       <Filter>Source Files\Workspace\Zurb\Zurb Data</Filter>
@@ -1072,9 +949,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ResourceNetworks_GUI.cpp">
       <Filter>Source Files\Workspace\Resource networks\Resource networks GUI</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ResourceNetworks_Wizard.cpp">
-      <Filter>Source Files\Workspace\Resource networks\Resource networks GUI\Resource networks Wizard</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_People_Data.cpp">
       <Filter>Source Files\Workspace\People\People Data</Filter>
     </ClCompile>
@@ -1089,9 +963,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Schedule_Table.cpp">
       <Filter>Source Files\Workspace\People\People GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_People_Wizard.cpp">
-      <Filter>Source Files\Workspace\People\People GUI\People Wizard</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ExtinguisherAgentInfos.cpp">
       <Filter>Source Files\Workspace\Fires\Fires Data</Filter>
@@ -1116,9 +987,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_WeatherFireEffects_Table.cpp">
       <Filter>Source Files\Workspace\Fires\Fires GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_FireClass_Wizard.cpp">
-      <Filter>Source Files\Workspace\Fires\Fires GUI\Wizards</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Symbols_Data.cpp">
       <Filter>Source Files\Workspace\Symbols\Data</Filter>
@@ -1369,6 +1237,9 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MultiRefWarningDialog.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Weapons_WizardPage.cpp">
+      <Filter>Source Files\Workspace\Weapons\Weapons GUI\Weapon Wizard</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\adaptation_app\adaptation_app_pch.h">
@@ -1437,28 +1308,7 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\IdentifierFactory.h">
       <Filter>Source Files\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ImageViewer.h">
-      <Filter>Source Files\Tools\Wizard Tools</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ObjectCreator_ABC.h">
-      <Filter>Source Files\Tools\Wizard Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Wizard_ABC.h">
-      <Filter>Source Files\Tools\Wizard Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Wizard_FirstPage_ABC.h">
-      <Filter>Source Files\Tools\Wizard Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Wizard_FirstPage_Default.h">
-      <Filter>Source Files\Tools\Wizard Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Wizard_Image.h">
-      <Filter>Source Files\Tools\Wizard Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Wizard_LastPage.h">
-      <Filter>Source Files\Tools\Wizard Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_WizardPage_ABC.h">
       <Filter>Source Files\Tools\Wizard Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_DataException.h">
@@ -1488,14 +1338,8 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_NBC_NbcAgentListView.h">
       <Filter>Source Files\Workspace\Nbc\Nbc GUI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_NBC_Wizard.h">
-      <Filter>Source Files\Workspace\Nbc\Nbc GUI\NBC Wizard</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Launchers_ModifPhs_GUI.h">
       <Filter>Source Files\Workspace\Launchers\Launchers GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Launcher_Wizard.h">
-      <Filter>Source Files\Workspace\Launchers\Launchers GUI\Launcher Wizard</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Launchers_Data.h">
       <Filter>Source Files\Workspace\Launchers\Launchers Data</Filter>
@@ -1536,9 +1380,6 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipement_Wizard.h">
       <Filter>Source Files\Workspace\Equipement\Equipement GUI\Equipement Wizard</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipement_Wizard_Page0.h">
-      <Filter>Source Files\Workspace\Equipement\Equipement GUI\Equipement Wizard</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Objects_Data.h">
       <Filter>Source Files\Workspace\Object\Objects Data</Filter>
     </ClInclude>
@@ -1551,9 +1392,6 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Table_Objects_LocationScore.h">
       <Filter>Source Files\Workspace\Object\Objects GUI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Objects_Wizard.h">
-      <Filter>Source Files\Workspace\Object\Objects GUI\Objects Wizard</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Weapons_Data.h">
       <Filter>Source Files\Workspace\Weapons\Weapons Data</Filter>
     </ClInclude>
@@ -1565,12 +1403,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Weapons_PhTable.h">
       <Filter>Source Files\Workspace\Weapons\Weapons GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Weapon_Wizard.h">
-      <Filter>Source Files\Workspace\Weapons\Weapons GUI\Weapon Wizard</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Weapon_Wizard_Page0.h">
-      <Filter>Source Files\Workspace\Weapons\Weapons GUI\Weapon Wizard</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Sensors_LimitedToSensorsListView.h">
       <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
@@ -1632,12 +1464,6 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Models_GUI.h">
       <Filter>Source Files\Workspace\Models\Models GUI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Model_Wizard.h">
-      <Filter>Source Files\Workspace\Models\Models GUI\Model Wizard</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Model_Wizard_FirstPage.h">
-      <Filter>Source Files\Workspace\Models\Models GUI\Model Wizard</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Models_Data.h">
       <Filter>Source Files\Workspace\Models\Models Data</Filter>
     </ClInclude>
@@ -1655,9 +1481,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_AutomatLog_ListView.h">
       <Filter>Source Files\Workspace\Automata\Automata GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Automata_Wizard.h">
-      <Filter>Source Files\Workspace\Automata\Automata GUI\Automata Wizard</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Communications_Data.h">
       <Filter>Source Files\Workspace\Communications\Communications data</Filter>
@@ -1698,15 +1521,6 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_MissionTypes_Table.h">
       <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_FragOrder_Wizard.h">
-      <Filter>Source Files\Workspace\Missions\Missions GUI\Mission Wizard</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_FragOrder_WizardSecondPage.h">
-      <Filter>Source Files\Workspace\Missions\Missions GUI\Mission Wizard</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Mission_Wizard.h">
-      <Filter>Source Files\Workspace\Missions\Missions GUI\Mission Wizard</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Breakdowns_Data.h">
       <Filter>Source Files\Workspace\Breakdowns\Breakdowns data</Filter>
     </ClInclude>
@@ -1719,9 +1533,6 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Breakdowns_PartsTable.h">
       <Filter>Source Files\Workspace\Breakdowns\Breakdowns GUI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Breakdown_Wizard.h">
-      <Filter>Source Files\Workspace\Breakdowns\Breakdowns GUI\Breakdown wizard</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_KnowledgeGroups_Data.h">
       <Filter>Source Files\Workspace\Knowledge groups\Knowledge groups data</Filter>
     </ClInclude>
@@ -1730,9 +1541,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_KnowledgeGroups_ListView.h">
       <Filter>Source Files\Workspace\Knowledge groups\Knowledge groups GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_KnowledgeGroups_Wizard.h">
-      <Filter>Source Files\Workspace\Knowledge groups\Knowledge groups GUI\Knowledge groups wizard</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Health_Data.h">
       <Filter>Source Files\Workspace\Logistic\Health\Health data</Filter>
@@ -1761,9 +1569,6 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Radars_ListView.h">
       <Filter>Source Files\Workspace\Radars\Radars GUI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Radars_Wizard.h">
-      <Filter>Source Files\Workspace\Radars\Radars GUI\Radar wizard</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Population_Data.h">
       <Filter>Source Files\Workspace\Population\Population data</Filter>
     </ClInclude>
@@ -1788,9 +1593,6 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Population_UrbanEffect_Attitude_ListView.h">
       <Filter>Source Files\Workspace\Population\Population GUI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Population_Wizard.h">
-      <Filter>Source Files\Workspace\Population\Population GUI\Population Wizard</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Reports_Data.h">
       <Filter>Source Files\Workspace\Reports\Reports Data</Filter>
     </ClInclude>
@@ -1802,9 +1604,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ComboBox_ActiveProtection_Dotations.h">
       <Filter>Source Files\Workspace\ActiveProtections\ActiveProtections GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ActiveProtections_Wizard.h">
-      <Filter>Source Files\Workspace\ActiveProtections\ActiveProtections GUI\ActiveProtections wizard</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Urban_Data.h">
       <Filter>Source Files\Workspace\Zurb\Zurb Data</Filter>
@@ -1851,9 +1650,6 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_ResourceNetworks.h">
       <Filter>Source Files\Workspace\Resource networks\Resource networks GUI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ResourceNetworks_Wizard.h">
-      <Filter>Source Files\Workspace\Resource networks\Resource networks GUI\Resource networks Wizard</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_People_Data.h">
       <Filter>Source Files\Workspace\People\People Data</Filter>
     </ClInclude>
@@ -1862,9 +1658,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_People_ListView.h">
       <Filter>Source Files\Workspace\People\People GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_People_Wizard.h">
-      <Filter>Source Files\Workspace\People\People GUI\People Wizard</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ExtinguisherAgentInfos.h">
       <Filter>Source Files\Workspace\Fires\Fires Data</Filter>
@@ -1886,9 +1679,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_WeatherFireEffects_Table.h">
       <Filter>Source Files\Workspace\Fires\Fires GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_FireClass_Wizard.h">
-      <Filter>Source Files\Workspace\Fires\Fires GUI\Wizards</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Symbols_Data.h">
       <Filter>Source Files\Workspace\Symbols\Data</Filter>
@@ -2091,8 +1881,17 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ConsistencyChecker.h">
       <Filter>Source Files\Tools\Consistency</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Wizard_Default.h">
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_WizardPage.h">
       <Filter>Source Files\Tools\Wizard Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Wizard.h">
+      <Filter>Source Files\Tools\Wizard Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Weapons_WizardPage.h">
+      <Filter>Source Files\Workspace\Weapons\Weapons GUI\Weapon Wizard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipement_WizardPage.h">
+      <Filter>Source Files\Workspace\Equipement\Equipement GUI\Equipement Wizard</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2119,15 +1918,6 @@
     </None>
     <None Include="..\..\src\applications\adaptation_app\ADN_TypePtr_InVector_ABC.inl">
       <Filter>Source Files\Common types</Filter>
-    </None>
-    <None Include="..\..\src\applications\adaptation_app\ADN_Wizard_ABC.inl">
-      <Filter>Source Files\Tools\Wizard Tools</Filter>
-    </None>
-    <None Include="..\..\src\applications\adaptation_app\ADN_Wizard_FirstPage_ABC.inl">
-      <Filter>Source Files\Tools\Wizard Tools</Filter>
-    </None>
-    <None Include="..\..\src\applications\adaptation_app\ADN_Wizard_FirstPage_Default.inl">
-      <Filter>Source Files\Tools\Wizard Tools</Filter>
     </None>
     <None Include="..\..\src\applications\adaptation_app\ADN_ComboBox_Drawings.inl">
       <Filter>Source Files\Workspace\Drawings\GUI</Filter>
@@ -2192,6 +1982,12 @@
     <None Include="..\..\src\applications\adaptation_app\style_scipio.css" />
     <None Include="..\..\src\applications\adaptation_app\ADN_Sensors_ModificatorTable.inl">
       <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
+    </None>
+    <None Include="..\..\src\applications\adaptation_app\ADN_WizardPage.inl">
+      <Filter>Source Files\Tools\Wizard Tools</Filter>
+    </None>
+    <None Include="..\..\src\applications\adaptation_app\ADN_Wizard.inl">
+      <Filter>Source Files\Tools\Wizard Tools</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -2270,9 +2066,6 @@
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Sensors_GUI.h">
       <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Sensor_Wizard.h">
-      <Filter>Source Files\Workspace\Sensors\Sensors GUI\Wizard</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Composantes_ActiveProtectionsListView.h">
       <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
     </CustomBuild>
@@ -2300,9 +2093,6 @@
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ListView_Composantes_Objects.h">
       <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Composante_Wizard.h">
-      <Filter>Source Files\Workspace\Composantes\Composantes GUI\Composantes Wizard</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Nature_GUI.h">
       <Filter>Source Files\Workspace\Units\Units GUI</Filter>
     </CustomBuild>
@@ -2317,9 +2107,6 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_UnitSymbolsComboBox.h">
       <Filter>Source Files\Workspace\Units\Units GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Unit_Wizard.h">
-      <Filter>Source Files\Workspace\Units\Units GUI\Unit Wizard</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Automata_GUI.h">
       <Filter>Source Files\Workspace\Automata\Automata GUI</Filter>

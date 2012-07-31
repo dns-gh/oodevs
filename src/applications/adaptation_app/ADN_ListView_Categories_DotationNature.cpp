@@ -15,7 +15,7 @@
 #include "ADN_Equipement_Data.h"
 #include "ADN_ResourceNatureInfos.h"
 #include "ADN_Tr.h"
-#include "ADN_Wizard_Default.h"
+#include "ADN_Wizard.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_Categories_DotationNature::ADN_ListView_Categories_DotationNature
@@ -61,9 +61,7 @@ void ADN_ListView_Categories_DotationNature::ConnectItem( bool bConnect )
 void ADN_ListView_Categories_DotationNature::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
-    ADN_Wizard_Default< helpers::ResourceNatureInfos > wizard( tools::translate( "ADN_ListView_Categories_DotationNature", "Nature" ),
-                                                               tools::translate( "ADN_ListView_Categories_DotationNature", "Natures" ),
-                                                               ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), this );
+    ADN_Wizard< helpers::ResourceNatureInfos > wizard( tools::translate( "ADN_ListView_Categories_DotationNature", "Natures" ), ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );
 }

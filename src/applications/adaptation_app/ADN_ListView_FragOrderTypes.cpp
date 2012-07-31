@@ -16,7 +16,8 @@
 #include "ADN_Tools.h"
 #include "ADN_Missions_GUI.h"
 #include "ADN_Models_Data.h"
-#include "ADN_FragOrder_Wizard.h"
+#include "ADN_Wizard.h"
+#include "ADN_WizardPage.h"
 
 typedef ADN_Missions_Data::FragOrder FragOrder;
 
@@ -28,9 +29,8 @@ ADN_ListView_FragOrderTypes::ADN_ListView_FragOrderTypes( ADN_Missions_Data::T_F
     : ADN_ListView( parent, szName )
     , orders_( orders )
 {
-    addColumn( tr( "Fragmentary order" ) );
+    addColumn( tr( "Fragmentary orders" ) );
     setResizeMode( Q3ListView::AllColumns );
-
     pConnector_ = new ADN_Connector_ListView< FragOrder >( *this );
     SetDeletionEnabled( true );
 }
@@ -61,6 +61,64 @@ void ADN_ListView_FragOrderTypes::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Missions_GUI::eDiaType]                         ->Connect( &pInfos->diaType_, bConnect );
 }
 
+namespace
+{
+    class ADN_FragOrder_WizardPage : public ADN_WizardPage< FragOrder >
+    {
+    public:
+        ADN_FragOrder_WizardPage( const T_ItemVector& existingItems, const QString& pageTitle, QWidget* pParent = 0 )
+            : ADN_WizardPage< FragOrder >( existingItems, pageTitle, pParent )
+        {
+            // NOTHING
+        }
+
+    protected:
+        virtual QWidget* CreateOptionalField()
+        {
+            QGroupBox* result = new QGroupBox();
+            QVBoxLayout* layout = new QVBoxLayout( result );
+            addForAllUnits_ = new QCheckBox( qApp->translate( "ADN_FragOrder_WizardSecondPage", "Add for all Units" ) );
+            addForAllAutomata_ = new QCheckBox( qApp->translate( "ADN_FragOrder_WizardSecondPage", "Add for all Automata" ) );
+            addForAllPops_ = new QCheckBox( qApp->translate( "ADN_FragOrder_WizardSecondPage", "Add for all Crowds" ) );
+            layout->addWidget( addForAllUnits_ );
+            layout->addWidget( addForAllAutomata_ );
+            layout->addWidget( addForAllPops_ );
+            return result;
+        }
+
+        virtual void ApplyOptions()
+        {
+            if( !element_ )
+                return;
+            std::string name = GetName();
+            if( addForAllUnits_->isChecked() )
+            {
+                ADN_Models_Data::T_ModelInfos_Vector& units = ADN_Workspace::GetWorkspace().GetModels().GetData().GetUnitModelsInfos();
+                for( ADN_Models_Data::IT_ModelInfos_Vector it1 = units.begin(); it1 != units.end(); ++it1 )
+                    (*it1)->AddFragOrder( element_, name );
+            }
+            if( addForAllAutomata_->isChecked() )
+            {
+                ADN_Models_Data::T_ModelInfos_Vector& automata = ADN_Workspace::GetWorkspace().GetModels().GetData().GetAutomataModelsInfos();
+                for( ADN_Models_Data::IT_ModelInfos_Vector it1 = automata.begin(); it1 != automata.end(); ++it1 )
+                    (*it1)->AddFragOrder( element_, name );
+            }
+            if( addForAllPops_->isChecked() )
+            {
+                ADN_Models_Data::T_ModelInfos_Vector& pops = ADN_Workspace::GetWorkspace().GetModels().GetData().GetPopulationModelsInfos();
+                for( ADN_Models_Data::IT_ModelInfos_Vector it1 = pops.begin(); it1 != pops.end(); ++it1 )
+                    (*it1)->AddFragOrder( element_, name );
+            }
+             element_->isAvailableWithoutMission_ = true;
+        }
+
+    private:
+        QCheckBox* addForAllUnits_;
+        QCheckBox* addForAllAutomata_;
+        QCheckBox* addForAllPops_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_FragOrderTypes::OnContextMenu
 // Created: SBO 2006-12-06
@@ -70,7 +128,7 @@ void ADN_ListView_FragOrderTypes::OnContextMenu( const QPoint& pt )
     if( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin )
     {
         Q3PopupMenu popupMenu( this );
-        ADN_FragOrder_Wizard wizard( orders_, this );
+        ADN_Wizard< FragOrder, ADN_FragOrder_WizardPage > wizard( tr( "Fragmentary orders" ), ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrders(), this );
         FillContextMenuWithDefault( popupMenu, wizard );
         popupMenu.exec( pt );
     }

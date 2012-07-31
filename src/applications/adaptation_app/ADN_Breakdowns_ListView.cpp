@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-03-18 $
-// $Archive: /MVW_v10/Build/SDK/ADN2/src/ADN_Breakdowns_ListView.cpp $
-// $Author: Nld $
-// $Modtime: 27/04/05 10:05 $
-// $Revision: 2 $
-// $Workfile: ADN_Breakdowns_ListView.cpp $
-//
-// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_Breakdowns_ListView.h"
@@ -22,8 +13,8 @@
 #include "ADN_Breakdowns_GUI.h"
 #include "ADN_Composantes_Data.h"
 #include "ADN_Connector_ListView.h"
-#include "ADN_Breakdown_Wizard.h"
 #include "ADN_Tr.h"
+#include "ADN_Wizard.h"
 
 typedef ADN_Breakdowns_Data::BreakdownInfo BreakdownInfo;
 
@@ -35,9 +26,8 @@ ADN_Breakdowns_ListView::ADN_Breakdowns_ListView( QWidget* pParent, const char* 
 : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
-    addColumn( tools::translate( "ADN_Breakdowns_ListView", "Breakdowns" ) );
+    addColumn( ADN_Tr::ConvertFromWorkspaceElement( eBreakdowns ).c_str() );
     setResizeMode( Q3ListView::AllColumns );
-
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<BreakdownInfo>(*this);
     SetDeletionEnabled( true );
@@ -79,7 +69,7 @@ void ADN_Breakdowns_ListView::ConnectItem( bool bConnect )
 void ADN_Breakdowns_ListView::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
-    ADN_Breakdown_Wizard wizard( this );
+    ADN_Wizard< BreakdownInfo > wizard( ADN_Tr::ConvertFromWorkspaceElement( eBreakdowns ).c_str(), ADN_Workspace::GetWorkspace().GetBreakdowns().GetData().GetBreakdowns(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     if( pCurData_ != 0 )
     {

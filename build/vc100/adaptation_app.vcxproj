@@ -284,40 +284,8 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Tr.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Tr_Gen.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Weapons_WizardPage.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\IdentifierFactory.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ImageViewer.cpp">
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Disabled</Optimization>
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Disabled</Optimization>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='debug|win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='debug|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='debug|win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='debug|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='debug|win32'">EnableFastChecks</BasicRuntimeChecks>
-      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='debug|x64'">EnableFastChecks</BasicRuntimeChecks>
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='release|win32'">MaxSpeed</Optimization>
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='release|x64'">MaxSpeed</Optimization>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Wizard_LastPage.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_WizardPage_ABC.cpp">
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Disabled</Optimization>
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Disabled</Optimization>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='debug|win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='debug|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='debug|win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='debug|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='debug|win32'">EnableFastChecks</BasicRuntimeChecks>
-      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='debug|x64'">EnableFastChecks</BasicRuntimeChecks>
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='release|win32'">MaxSpeed</Optimization>
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='release|x64'">MaxSpeed</Optimization>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_DataException.cpp">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Disabled</Optimization>
       <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Disabled</Optimization>
@@ -406,7 +374,6 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_NBC_Wizard.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Launchers_GUI.cpp">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Disabled</Optimization>
       <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Disabled</Optimization>
@@ -440,22 +407,6 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Launchers.cpp">
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Disabled</Optimization>
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Disabled</Optimization>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='debug|win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='debug|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='debug|win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='debug|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='debug|win32'">EnableFastChecks</BasicRuntimeChecks>
-      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='debug|x64'">EnableFastChecks</BasicRuntimeChecks>
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='release|win32'">MaxSpeed</Optimization>
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='release|x64'">MaxSpeed</Optimization>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Launcher_Wizard.cpp">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Disabled</Optimization>
       <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Disabled</Optimization>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='debug|win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -577,8 +528,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipement_GenericListView.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipement_GUI.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipement_Postures_GUI.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipement_Wizard.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipement_Wizard_Page0.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Objects_Data.cpp">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Disabled</Optimization>
       <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Disabled</Optimization>
@@ -644,15 +593,12 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Objects_Wizard.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_WeaponFilter.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Weapons_Data.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Weapons_GUI.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Weapons_ListView.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Weapons_PhSizeListView.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Weapons_PhTable.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Weapon_Wizard.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Weapon_Wizard_Page0.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Sensors.cpp">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Disabled</Optimization>
       <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Disabled</Optimization>
@@ -785,22 +731,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Sensors_TargetsListView.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Sensors_UrbanBlockMaterial_GUI.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Sensor_Wizard.cpp">
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Disabled</Optimization>
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Disabled</Optimization>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='debug|win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='debug|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='debug|win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='debug|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='debug|win32'">EnableFastChecks</BasicRuntimeChecks>
-      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='debug|x64'">EnableFastChecks</BasicRuntimeChecks>
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='release|win32'">MaxSpeed</Optimization>
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='release|x64'">MaxSpeed</Optimization>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Sensors_Data.cpp">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Disabled</Optimization>
       <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Disabled</Optimization>
@@ -950,22 +880,6 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Composante_Wizard.cpp">
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Disabled</Optimization>
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Disabled</Optimization>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='debug|win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='debug|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='debug|win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='debug|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='debug|win32'">EnableFastChecks</BasicRuntimeChecks>
-      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='debug|x64'">EnableFastChecks</BasicRuntimeChecks>
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='release|win32'">MaxSpeed</Optimization>
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='release|x64'">MaxSpeed</Optimization>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Units_Data.cpp">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Disabled</Optimization>
       <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Disabled</Optimization>
@@ -1068,22 +982,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_UnitSymbols_GUI.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_UnitSymbolsComboBox.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Unit_Wizard.cpp">
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Disabled</Optimization>
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Disabled</Optimization>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='debug|win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='debug|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='debug|win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='debug|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='debug|win32'">EnableFastChecks</BasicRuntimeChecks>
-      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='debug|x64'">EnableFastChecks</BasicRuntimeChecks>
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='release|win32'">MaxSpeed</Optimization>
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='release|x64'">MaxSpeed</Optimization>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Missions.cpp">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Disabled</Optimization>
       <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Disabled</Optimization>
@@ -1180,23 +1078,6 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Model_Wizard.cpp">
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Disabled</Optimization>
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Disabled</Optimization>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='debug|win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='debug|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='debug|win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='debug|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='debug|win32'">EnableFastChecks</BasicRuntimeChecks>
-      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='debug|x64'">EnableFastChecks</BasicRuntimeChecks>
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='release|win32'">MaxSpeed</Optimization>
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='release|x64'">MaxSpeed</Optimization>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Model_Wizard_FirstPage.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Models_Data.cpp">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Disabled</Optimization>
       <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Disabled</Optimization>
@@ -1251,7 +1132,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Automata_SubUnitsTable.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_AutomatLog_ListView.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_AutomatLogCategory_ListView.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Automata_Wizard.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Communications_Data.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Communications_GUI.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_HumanFactors_Data.cpp" />
@@ -1268,18 +1148,13 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MissionParameterValues_Table.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Missions_GUI.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MissionTypes_Table.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_FragOrder_Wizard.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_FragOrder_WizardSecondPage.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Mission_Wizard.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Breakdowns_Data.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Breakdowns_GUI.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Breakdowns_ListView.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Breakdowns_PartsTable.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Breakdown_Wizard.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_KnowledgeGroups_Data.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_KnowledgeGroups_GUI.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_KnowledgeGroups_ListView.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_KnowledgeGroups_Wizard.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Health_Data.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Health_GUI.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Supply_Data.cpp" />
@@ -1289,7 +1164,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Radars_Data.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Radars_GUI.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Radars_ListView.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Radars_Wizard.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Population_Data.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Population_FireEffect_Attitude_ListView.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Population_FireEffect_Protection_ListView.cpp" />
@@ -1299,7 +1173,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Population_SpeedEffect_Attitude_ListView.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Population_SpeedEffect_Volume_ListView.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Population_UrbanEffect_Attitude_ListView.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Population_Wizard.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Reports_Data.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Reports_GUI.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ActiveProtections_Data.cpp" />
@@ -1307,7 +1180,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ActiveProtections_WeaponsTable.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ActiveProtectionsListView.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ComboBox_ActiveProtection_Dotations.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ActiveProtections_Wizard.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Urban_Data.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Urban_Type.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_UrbanAccommodation_Type.cpp" />
@@ -1325,13 +1197,11 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ResourceNetworks_Data.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_ResourceNetworks.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ResourceNetworks_GUI.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ResourceNetworks_Wizard.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_People_Data.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Consumptions_Table.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_People_GUI.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_People_ListView.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Schedule_Table.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_People_Wizard.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ExtinguisherAgentInfos.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_FireClass_Data.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_WeatherFireEffects.cpp" />
@@ -1340,7 +1210,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_FireClass_ListView.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_SurfaceFireInfos_Table.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_WeatherFireEffects_Table.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_FireClass_Wizard.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Symbols_Data.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Symbols_GUI.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Drawings_Data.cpp" />
@@ -2037,6 +1906,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipement_WizardPage.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_FuneralPackagingResource.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_FuneralPackagingResources_GUI.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Funeral_Data.h" />
@@ -2201,16 +2071,11 @@
     </CustomBuild>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Tools.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Tr.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Wizard_Default.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Weapons_WizardPage.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Wizard.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_WizardPage.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\IdentifierFactory.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ImageViewer.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ObjectCreator_ABC.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Wizard_ABC.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Wizard_FirstPage_ABC.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Wizard_FirstPage_Default.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Wizard_Image.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Wizard_LastPage.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_WizardPage_ABC.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_DataException.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Exception_ABC.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_OpenFile_Exception.h" />
@@ -2306,7 +2171,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_NBC_NbcAgentListView.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_NBC_Wizard.h" />
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Launchers_GUI.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
@@ -2334,7 +2198,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Launcher_Wizard.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Launchers_Data.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Project_Data.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Categories_Data.h" />
@@ -2416,7 +2279,6 @@
     </CustomBuild>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipement_Postures_GUI.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipement_Wizard.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipement_Wizard_Page0.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Objects_Data.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Objects.h" />
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Objects_GUI.h">
@@ -2439,7 +2301,6 @@
     </CustomBuild>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Table_Objects_FirePropagationModifier.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Table_Objects_LocationScore.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Objects_Wizard.h" />
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_WeaponFilter.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
@@ -2480,8 +2341,6 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Weapons_ListView.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Weapons_PhSizeListView.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Weapons_PhTable.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Weapon_Wizard.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Weapon_Wizard_Page0.h" />
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ListView_Sensors.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
@@ -2645,24 +2504,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </ClInclude>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Sensor_Wizard.h">
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
-      </Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
-      </Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">%(Outputs)</Outputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing %(Filename).h</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(Filename).h</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">
-      </Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">
-      </Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(Outputs)</Outputs>
-    </CustomBuild>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Sensors_Data.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Composantes_Data.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ComboBox_Composantes_Sizes.h" />
@@ -2843,24 +2684,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Composante_Wizard.h">
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
-      </Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
-      </Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">%(Outputs)</Outputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing %(Filename).h</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(Filename).h</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">
-      </Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">
-      </Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(Outputs)</Outputs>
-    </CustomBuild>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Units_Data.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_UnitSymbols_Data.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Units.h" />
@@ -2956,32 +2779,12 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Unit_Wizard.h">
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing %(Filename).h</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(Filename).h</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-    </CustomBuild>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Missions.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Models.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Orders.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Mission_CheckItem.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Mission_ConfigurationDlg.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Models_GUI.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Model_Wizard.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Model_Wizard_FirstPage.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Models_Data.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_AiEngine_Data.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_AiEngine_GUI.h" />
@@ -3024,7 +2827,6 @@
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
     </CustomBuild>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Automata_Wizard.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Communications_Data.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Communications_GUI.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_HumanFactors_Data.h" />
@@ -3086,18 +2888,13 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_MissionTypes_Table.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_FragOrder_Wizard.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_FragOrder_WizardSecondPage.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Mission_Wizard.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Breakdowns_Data.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Breakdowns_GUI.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Breakdowns_ListView.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Breakdowns_PartsTable.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Breakdown_Wizard.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_KnowledgeGroups_Data.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_KnowledgeGroups_GUI.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_KnowledgeGroups_ListView.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_KnowledgeGroups_Wizard.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Health_Data.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Health_GUI.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Supply_Data.h" />
@@ -3107,7 +2904,6 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Radars_Data.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Radars_GUI.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Radars_ListView.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Radars_Wizard.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Population_Data.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Population_FireEffect_Attitude_ListView.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Population_FireEffect_Protection_ListView.h" />
@@ -3138,7 +2934,6 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Population_SpeedEffect_Attitude_ListView.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Population_SpeedEffect_Volume_ListView.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Population_UrbanEffect_Attitude_ListView.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Population_Wizard.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Reports_Data.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Reports_GUI.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ActiveProtections_Data.h" />
@@ -3205,7 +3000,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ComboBox_ActiveProtection_Dotations.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ActiveProtections_Wizard.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Urban_Data.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Urban_Type.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_UrbanAccommodation_Type.h" />
@@ -3259,7 +3053,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ResourceNetworks_Wizard.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_People_Data.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Consumptions_Table.h" />
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_People_GUI.h">
@@ -3307,7 +3100,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_People_Wizard.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ExtinguisherAgentInfos.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_FireClass_Data.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_WeatherFireEffects.h" />
@@ -3329,7 +3121,6 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_FireClass_ListView.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_SurfaceFireInfos_Table.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_WeatherFireEffects_Table.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_FireClass_Wizard.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Symbols_Data.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Symbols_GUI.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Drawings_Data.h" />
@@ -3887,9 +3678,8 @@
     <None Include="..\..\src\applications\adaptation_app\ADN_Type_Vector_ABC.inl" />
     <None Include="..\..\src\applications\adaptation_app\ADN_Type_VectorFixed_ABC.inl" />
     <None Include="..\..\src\applications\adaptation_app\ADN_TypePtr_InVector_ABC.inl" />
-    <None Include="..\..\src\applications\adaptation_app\ADN_Wizard_ABC.inl" />
-    <None Include="..\..\src\applications\adaptation_app\ADN_Wizard_FirstPage_ABC.inl" />
-    <None Include="..\..\src\applications\adaptation_app\ADN_Wizard_FirstPage_Default.inl" />
+    <None Include="..\..\src\applications\adaptation_app\ADN_Wizard.inl" />
+    <None Include="..\..\src\applications\adaptation_app\ADN_WizardPage.inl" />
     <None Include="..\..\src\applications\adaptation_app\ADN_ComboBox_Drawings.inl" />
     <None Include="..\..\src\applications\adaptation_app\ADN_ChangeValueCommand_Enum.inl" />
     <None Include="..\..\src\applications\adaptation_app\ADN_ChangeValueCommand_Pointer.inl" />

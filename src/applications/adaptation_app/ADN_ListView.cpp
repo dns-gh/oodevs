@@ -19,7 +19,7 @@
 #include "ADN_MainWindow.h"
 #include "ADN_Tools.h"
 #include "ADN_GuiTools.h"
-#include "ADN_Wizard_ABC.h"
+#include "ADN_ObjectCreator_ABC.h"
 #include "ADN_MainWindow.h"
 #include "ADN_ListViewToolTip.h"
 #include <boost/bind.hpp>
@@ -202,7 +202,6 @@ ADN_ListViewItem* ADN_ListView::FindItem( Q3ListViewItem* qItem, const QString& 
     return result;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView::OnContextMenu
 // Created: JDY 03-07-28
@@ -221,7 +220,10 @@ void ADN_ListView::FillContextMenuWithDefault( Q3PopupMenu& popupMenu, ADN_Objec
     pObjectCreator_ = &objectCreator;
     popupMenu.insertItem( tr( "Create new" ), this, SLOT( ContextMenuNew() ) );
     if( pCurData_ != 0 )
+    {
+        popupMenu.insertItem( tr( "Create as copy of" ), this, SLOT( ContextMenuNewCopy() ) );
         popupMenu.insertItem( tr( "Delete" ), this, SLOT( ContextMenuDelete() ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -286,26 +288,37 @@ void ADN_ListView::ContextMenuSearchElements()
 // -----------------------------------------------------------------------------
 void ADN_ListView::ContextMenuNew()
 {
-    // Make sure we were given an object creator.
     assert( pObjectCreator_ != 0 );
+    FinishCreation( pObjectCreator_->CreateObject() );
+}
 
-    ADN_Ref_ABC* pNewObject = pObjectCreator_->CreateObject();
-    if( pNewObject == 0 )
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::ContextMenuNewCopy
+// Created: ABR 2012-07-27
+// -----------------------------------------------------------------------------
+void ADN_ListView::ContextMenuNewCopy()
+{
+    assert( pObjectCreator_ != 0 && pCurData_ != 0 );
+    FinishCreation( pObjectCreator_->CreateObjectAsCopyOf( pCurData_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::FinishCreation
+// Created: ABR 2012-07-27
+// -----------------------------------------------------------------------------
+void ADN_ListView::FinishCreation( ADN_Ref_ABC* ref )
+{
+    if( ref == 0 )
     {
-        // We've used the object creator (even if it did not manage to create an object),
-        // we'll need to be given another one for next time.
         pObjectCreator_ = 0;
         return;
     }
 
     ADN_Connector_Vector_ABC* pCList = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-    pCList->AddItem( pNewObject );
+    pCList->AddItem( ref );
 
-    // Set the new item as current item.
-    setCurrentItem( FindItem( pNewObject ) );
+    setCurrentItem( FindItem( ref ) );
 
-    // We've used the object creator, we'll need to be given another one for next time.
-    pObjectCreator_->Polish();
     pObjectCreator_ = 0;
     static_cast< ADN_MainWindow* >( topLevelWidget() )->ChangeSaveState( false );
 }

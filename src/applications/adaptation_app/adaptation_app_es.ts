@@ -21,13 +21,6 @@
     </message>
 </context>
 <context>
-    <name>ADN_ActiveProtectionsListView</name>
-    <message>
-        <source>active Protection</source>
-        <translation>Protecciones activas</translation>
-    </message>
-</context>
-<context>
     <name>ADN_ActiveProtections_GUI</name>
     <message>
         <source>Properties</source>
@@ -71,25 +64,6 @@
     <message>
         <source>Delete</source>
         <translation>Eliminar</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_ActiveProtections_Wizard</name>
-    <message>
-        <source>New active protection creation</source>
-        <translation>Creación de nueva protección activa</translation>
-    </message>
-    <message>
-        <source>Active protection</source>
-        <translation>Protecciones activas</translation>
-    </message>
-    <message>
-        <source>Creation finished</source>
-        <translation>Creación terminada</translation>
-    </message>
-    <message>
-        <source>Click &quot;Done&quot; to create the new active protection.</source>
-        <translation>Hacer click en “Hecho” para crear una nueva protección activa.</translation>
     </message>
 </context>
 <context>
@@ -364,13 +338,6 @@ estacionado con motor encendido</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Automata_ListView</name>
-    <message>
-        <source>Automata</source>
-        <translation>Autómata</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Automata_SubUnitsTable</name>
     <message>
         <source>Name</source>
@@ -394,25 +361,6 @@ estacionado con motor encendido</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Automata_Wizard</name>
-    <message>
-        <source>New automaton creation</source>
-        <translation>Creación de nuevo autómata</translation>
-    </message>
-    <message>
-        <source>Automata</source>
-        <translation>Autómata</translation>
-    </message>
-    <message>
-        <source>Creation finished</source>
-        <translation>Creación terminada</translation>
-    </message>
-    <message>
-        <source>Click &quot;Done&quot; to create the new automaton.</source>
-        <translation>Haga click en “Hecho” para crear un nuevo autómata.</translation>
-    </message>
-</context>
-<context>
     <name>ADN_AvailabilityWarningTable</name>
     <message>
         <source>Percentage</source>
@@ -425,25 +373,6 @@ estacionado con motor encendido</translation>
     <message>
         <source>Delete warning</source>
         <translation>Borrar alerta</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Breakdown_Wizard</name>
-    <message>
-        <source>New breakdown creation</source>
-        <translation>Creación de nueva falla</translation>
-    </message>
-    <message>
-        <source>Creation finished</source>
-        <translation>Creación terminada</translation>
-    </message>
-    <message>
-        <source>Click &quot;Done&quot; to create the new breakdown.</source>
-        <translation>Hacer click en “Hecho” para crear nueva falla.</translation>
-    </message>
-    <message>
-        <source>Breakdowns</source>
-        <translation>Fallas</translation>
     </message>
 </context>
 <context>
@@ -479,13 +408,6 @@ estacionado con motor encendido</translation>
     <message>
         <source>General parameters</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Breakdowns_ListView</name>
-    <message>
-        <source>Breakdowns</source>
-        <translation>Fallas</translation>
     </message>
 </context>
 <context>
@@ -635,25 +557,6 @@ estacionado con motor encendido</translation>
     <message>
         <source>Effect on movement speed</source>
         <translation>Efecto en la velocidad de movimiento</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Composante_Wizard</name>
-    <message>
-        <source>New equipment creation</source>
-        <translation>Creación de nuevo equipo</translation>
-    </message>
-    <message>
-        <source>Equipments</source>
-        <translation>Equipos</translation>
-    </message>
-    <message>
-        <source>Creation completed</source>
-        <translation>Creación completada</translation>
-    </message>
-    <message>
-        <source>Click &quot;Done&quot; to create the new equipment.</source>
-        <translation>Click en &quot;Hecho&quot; para crear un nuevo equipo.</translation>
     </message>
 </context>
 <context>
@@ -1370,10 +1273,6 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</comment>
 <context>
     <name>ADN_Equipement_AmmoListView</name>
     <message>
-        <source>Ammunition</source>
-        <translation>Munición</translation>
-    </message>
-    <message>
         <source>Weapon systems</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1656,25 +1555,6 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</comment>
     </message>
 </context>
 <context>
-    <name>ADN_Equipement_Wizard</name>
-    <message>
-        <source>New resource creation</source>
-        <translation>Creación de nuevo recurso</translation>
-    </message>
-    <message>
-        <source>Resources</source>
-        <translation>Recurso</translation>
-    </message>
-    <message>
-        <source>Creation completed</source>
-        <translation>Creación completada</translation>
-    </message>
-    <message>
-        <source>Click &quot;Done&quot; to create the new resource category.</source>
-        <translation>Hacer click en &quot;Hecho&quot; para crear una nueva categoría de recurso.</translation>
-    </message>
-</context>
-<context>
     <name>ADN_ExtinguisherAgentInfos_Table</name>
     <message>
         <source>Agent</source>
@@ -1800,55 +1680,6 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</comment>
     <message>
         <source>Surface</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ADN_FireClass_ListView</name>
-    <message>
-        <source>Fires</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ADN_FireClass_Wizard</name>
-    <message>
-        <source>New fire creation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fire</source>
-        <translation>Fuego</translation>
-    </message>
-    <message>
-        <source>Creation finished</source>
-        <translation>Creación terminada</translation>
-    </message>
-    <message>
-        <source>Click &quot;Done&quot; to create the new fire.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ADN_FragOrder_Wizard</name>
-    <message>
-        <source>New fragmentary order creation</source>
-        <translation>Creación de nueva orden parcial</translation>
-    </message>
-    <message>
-        <source>Fragmentary orders</source>
-        <translation>Orden parcial</translation>
-    </message>
-    <message>
-        <source>Creation completed</source>
-        <translation>Creación completada</translation>
-    </message>
-    <message>
-        <source>Click &quot;Done&quot; to create the new fragmentary order.</source>
-        <translation>Hacer click en &quot;Hecho&quot; para crear una nueva orden parcial.</translation>
-    </message>
-    <message>
-        <source>Default assignation</source>
-        <translation>Asignación por defecto</translation>
     </message>
 </context>
 <context>
@@ -2110,51 +1941,6 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</comment>
     </message>
 </context>
 <context>
-    <name>ADN_KnowledgeGroups_ListView</name>
-    <message>
-        <source>Knowledge groups</source>
-        <translation>Grupos de conocimiento</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_KnowledgeGroups_Wizard</name>
-    <message>
-        <source>New knowledge group creation</source>
-        <translation>Creación de nuevo grupo de conocimiento</translation>
-    </message>
-    <message>
-        <source>Knowledge group</source>
-        <translation>Grupo de conocimiento</translation>
-    </message>
-    <message>
-        <source>Creation finished</source>
-        <translation>Creación terminada</translation>
-    </message>
-    <message>
-        <source>Click &quot;Done&quot; to create the new knowledge group.</source>
-        <translation>Hacer click en &quot;Hecho&quot; para crear un nuevo grupo de conocimiento.</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Launcher_Wizard</name>
-    <message>
-        <source>New launcher creation</source>
-        <translation>Creación de nuevo lanzador</translation>
-    </message>
-    <message>
-        <source>Launchers</source>
-        <translation>Lanzadores</translation>
-    </message>
-    <message>
-        <source>Creation finished</source>
-        <translation>Creación terminada</translation>
-    </message>
-    <message>
-        <source>Click &quot;Done&quot; to create the new launcher.</source>
-        <translation>Hacer click en &quot;Hecho&quot; para crear un nuevo lanzador.</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Launchers_GUI</name>
     <message>
         <source>Name</source>
@@ -2217,6 +2003,10 @@ tirador</translation>
         <source>&lt;nobr&gt;&lt;b&gt;Used by the following &apos;%1&apos;:&lt;/b&gt;&lt;/nobr&gt;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Create as copy of</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_ListViewDialog</name>
@@ -2243,20 +2033,12 @@ tirador</translation>
         <source>Armor-Plating</source>
         <translation>Blindaje</translation>
     </message>
-    <message>
-        <source>Armor plating</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ADN_ListView_Categories_DotationNature</name>
     <message>
         <source>Resource Natures</source>
         <translation>Naturaleza de recurso</translation>
-    </message>
-    <message>
-        <source>Nature</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Natures</source>
@@ -2268,17 +2050,6 @@ tirador</translation>
     <message>
         <source>Sizes</source>
         <translation>Volumenes</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation type="unfinished">Volúmen</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_ListView_Composantes</name>
-    <message>
-        <source>Equipments</source>
-        <translation>Equipos</translation>
     </message>
 </context>
 <context>
@@ -2299,22 +2070,8 @@ tirador</translation>
 <context>
     <name>ADN_ListView_FragOrderTypes</name>
     <message>
-        <source>Fragmentary order</source>
-        <translation>Orden parcial</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_ListView_Launchers</name>
-    <message>
-        <source>Launchers</source>
-        <translation>Lanzadores</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_ListView_MissionTypes</name>
-    <message>
-        <source>Missions</source>
-        <translation>Misiones</translation>
+        <source>Fragmentary orders</source>
+        <translation type="unfinished">Ordenes parciales</translation>
     </message>
 </context>
 <context>
@@ -2341,18 +2098,7 @@ tirador</translation>
     </message>
 </context>
 <context>
-    <name>ADN_ListView_Models</name>
-    <message>
-        <source>Models</source>
-        <translation>Modelos</translation>
-    </message>
-</context>
-<context>
     <name>ADN_ListView_Objects</name>
-    <message>
-        <source>Objects</source>
-        <translation>Objetos</translation>
-    </message>
     <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
@@ -2374,13 +2120,6 @@ tirador</translation>
     </message>
 </context>
 <context>
-    <name>ADN_ListView_ResourceNetworks</name>
-    <message>
-        <source>Resource networks</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ADN_ListView_RoofShapes</name>
     <message>
         <source>RoofShape</source>
@@ -2396,17 +2135,6 @@ tirador</translation>
     </message>
 </context>
 <context>
-    <name>ADN_ListView_Sensors</name>
-    <message>
-        <source>Sensors</source>
-        <translation>Sensores</translation>
-    </message>
-    <message>
-        <source>Equipments</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ADN_ListView_Templates</name>
     <message>
         <source>Template</source>
@@ -2415,13 +2143,6 @@ tirador</translation>
     <message>
         <source>Templates</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ADN_ListView_Units</name>
-    <message>
-        <source>Units</source>
-        <translation>Unidades</translation>
     </message>
 </context>
 <context>
@@ -2731,29 +2452,6 @@ tirador</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Mission_Wizard</name>
-    <message>
-        <source>New mission creation</source>
-        <translation>Creación de nueva misión</translation>
-    </message>
-    <message>
-        <source>Missions</source>
-        <translation>Misiones</translation>
-    </message>
-    <message>
-        <source>Creation completed</source>
-        <translation>Creación terminada</translation>
-    </message>
-    <message>
-        <source>Click &quot;Done&quot; to create the new mission.</source>
-        <translation>Hacer click en &quot;Hecho&quot; para crear una nueva misión.</translation>
-    </message>
-    <message>
-        <source>Click &quot;Done&quot; to create the new model.</source>
-        <translation>Hacer click en &quot;Hecho&quot; para crear un nuevo modelo.</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Missions_GUI</name>
     <message>
         <source>Unit missions</source>
@@ -2834,21 +2532,6 @@ tirador</translation>
     <message>
         <source>Maximum</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Model_Wizard</name>
-    <message>
-        <source>New model creation</source>
-        <translation>Creación de nuevo modelo</translation>
-    </message>
-    <message>
-        <source>Models</source>
-        <translation>Modelos</translation>
-    </message>
-    <message>
-        <source>Creation completed</source>
-        <translation>Creación terminada</translation>
     </message>
 </context>
 <context>
@@ -3020,32 +2703,6 @@ tirador</translation>
     <message>
         <source>Contamination</source>
         <translation>Contaminación</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_NBC_NbcAgentListView</name>
-    <message>
-        <source>NBC Agents</source>
-        <translation>Agentes NBC</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_NBC_Wizard</name>
-    <message>
-        <source>New NBC creation</source>
-        <translation>Creación de nuevo NBC</translation>
-    </message>
-    <message>
-        <source>NBCs</source>
-        <translation>NBCs</translation>
-    </message>
-    <message>
-        <source>Creation finished</source>
-        <translation>Creación terminada</translation>
-    </message>
-    <message>
-        <source>Click &quot;Done&quot; to create the new NBC.</source>
-        <translation>Hacer click en &quot;Hecho&quot; para crear nuevo NBC.</translation>
     </message>
 </context>
 <context>
@@ -3482,25 +3139,6 @@ tirador</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Objects_Wizard</name>
-    <message>
-        <source>New object creation</source>
-        <translation>Creación de nuevo objeto</translation>
-    </message>
-    <message>
-        <source>Object</source>
-        <translation>Objeto</translation>
-    </message>
-    <message>
-        <source>Creation finished</source>
-        <translation>Creación termianda</translation>
-    </message>
-    <message>
-        <source>Click &quot;Done&quot; to create the new object.</source>
-        <translation>Hacer click en &quot;Hecho&quot; para crear un nuevo objeto.</translation>
-    </message>
-</context>
-<context>
     <name>ADN_OpenFile_Exception</name>
     <message>
         <source>File error</source>
@@ -3601,32 +3239,6 @@ Asegúrese que el archivo existe.</translation>
     <message>
         <source>Distribution</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ADN_People_ListView</name>
-    <message>
-        <source>Population</source>
-        <translation>Población</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_People_Wizard</name>
-    <message>
-        <source>New population creation</source>
-        <translation>Creación de nueva población</translation>
-    </message>
-    <message>
-        <source>Population</source>
-        <translation>Población</translation>
-    </message>
-    <message>
-        <source>Creation finished</source>
-        <translation>Creación terminada</translation>
-    </message>
-    <message>
-        <source>Click &quot;Done&quot; to create the new population.</source>
-        <translation>Hacer click en &quot;Hecho&quot; para crear nueva población.</translation>
     </message>
 </context>
 <context>
@@ -3817,13 +3429,6 @@ Asegúrese que el archivo existe.</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Population_ListView</name>
-    <message>
-        <source>Crowds</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ADN_Population_SpeedEffect_Attitude_ListView</name>
     <message>
         <source>Attitudes</source>
@@ -3842,25 +3447,6 @@ Asegúrese que el archivo existe.</translation>
     <message>
         <source>Attitudes</source>
         <translation>Actitudes</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Population_Wizard</name>
-    <message>
-        <source>Creation finished</source>
-        <translation>Creación terminada</translation>
-    </message>
-    <message>
-        <source>New crowd creation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Crowd</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Click &quot;Done&quot; to create the new crowd.</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3930,25 +3516,6 @@ Asegúrese que el archivo existe.</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Radars_Wizard</name>
-    <message>
-        <source>New special sensor creation</source>
-        <translation>Creación de nuevo sensor especial</translation>
-    </message>
-    <message>
-        <source>Special sensor</source>
-        <translation>Sensor especial</translation>
-    </message>
-    <message>
-        <source>Creation finished</source>
-        <translation>Creación terminada</translation>
-    </message>
-    <message>
-        <source>Click &quot;Done&quot; to create the new special sensor.</source>
-        <translation>Hacer click en &quot;Hecho&quot; para crear nuevos sensores especiales.</translation>
-    </message>
-</context>
-<context>
     <name>ADN_RemoveElementCommand</name>
     <message>
         <source>Remove </source>
@@ -3975,25 +3542,6 @@ Asegúrese que el archivo existe.</translation>
     </message>
     <message>
         <source>Color</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ADN_ResourceNetworks_Wizard</name>
-    <message>
-        <source>New resource network creation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resource networks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Creation finished</source>
-        <translation>Creación terminada</translation>
-    </message>
-    <message>
-        <source>Click &quot;Done&quot; to create the new resource network.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4063,25 +3611,6 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
     <message>
         <source>Remove</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Sensor_Wizard</name>
-    <message>
-        <source>New sensor creation</source>
-        <translation>Creación de nuevo sensor.</translation>
-    </message>
-    <message>
-        <source>Sensors</source>
-        <translation>Sensores</translation>
-    </message>
-    <message>
-        <source>Creation completed</source>
-        <translation>Creación terminada</translation>
-    </message>
-    <message>
-        <source>Click &quot;Done&quot; to create the new sensor.</source>
-        <translation>Hacer click en &quot;Hecho&quot; para crear nuevo sensor.</translation>
     </message>
 </context>
 <context>
@@ -5486,7 +5015,7 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     </message>
     <message>
         <source>Resources</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Recursos</translation>
     </message>
     <message>
         <source>Fires</source>
@@ -5538,7 +5067,7 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     </message>
     <message>
         <source>Units</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Unidades</translation>
     </message>
     <message>
         <source>Automata</source>
@@ -5578,25 +5107,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     <message>
         <source>Invalid repartition on tab &apos;%1&apos; - Males/Females/Children repartition must be 100%. Current value for &apos;%2&apos;: %3%.</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Unit_Wizard</name>
-    <message>
-        <source>New unit creation</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Units</source>
-        <translation>Pions</translation>
-    </message>
-    <message>
-        <source>Creation completed</source>
-        <translation>Création terminée</translation>
-    </message>
-    <message>
-        <source>Click &quot;Done&quot; to create the new unit.</source>
-        <translation></translation>
     </message>
 </context>
 <context>
@@ -5814,7 +5324,7 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     </message>
     <message>
         <source>Units</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Unidades</translation>
     </message>
     <message>
         <source>Sensors</source>
@@ -6063,52 +5573,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     </message>
 </context>
 <context>
-    <name>ADN_Weapon_Wizard</name>
-    <message>
-        <source>New weapon creation</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Creation completed</source>
-        <translation>Création terminée</translation>
-    </message>
-    <message>
-        <source>Click &quot;Done&quot; to create the new weapon.</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Weapon_Wizard_Page0</name>
-    <message>
-        <source>Warning</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>A weapon using the same launcher and ammunition already exists. Please modify your choices.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>The weapon and ammunition are not compatible (direct/indirect). Please modify your choices.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Create new</source>
-        <translation type="unfinished">Crear nuevo</translation>
-    </message>
-    <message>
-        <source>Create a copy of:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Weapon systems</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>New weapon creation</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ADN_Weapons_GUI</name>
     <message>
         <source>Weapon system</source>
@@ -6244,13 +5708,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     </message>
 </context>
 <context>
-    <name>ADN_Weapons_ListView</name>
-    <message>
-        <source>Weapon system</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
     <name>ADN_Weapons_PhSizeListView</name>
     <message>
         <source>Target size</source>
@@ -6274,6 +5731,17 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     <message>
         <source>Delete Ph</source>
         <translation></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Weapons_WizardPage</name>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The weapon and ammunition are not compatible (direct/indirect). Please modify your choices.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6302,45 +5770,22 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The provided name is either empty or already in use, please pick another one.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Unable to create</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>ADN_Wizard_ABC</name>
     <message>
-        <source>Next</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Previous</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
-    </message>
-    <message>
-        <source>Done</source>
+        <source>The provided name is either empty or already in use, please pick another one.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ADN_Wizard_Default</name>
     <message>
-        <source>Creation finished</source>
+        <source>Creation helper</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Click &quot;Done&quot; to create the new %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>New &apos;%1&apos; creation</source>
+        <source>%1: Creation of a new element</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6832,7 +6277,7 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     </message>
     <message>
         <source>Units</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Unidades</translation>
     </message>
     <message>
         <source>Unit types - Invalid stance &apos;%1&apos;</source>

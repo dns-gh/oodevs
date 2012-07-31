@@ -16,7 +16,7 @@
 #include "ADN_Urban_GUI.h"
 #include "ADN_GuiTools.h"
 #include "ADN_Tr.h"
-#include "ADN_Wizard_Default.h"
+#include "ADN_Wizard.h"
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_UrbanInfrastructure_Type constructor
@@ -73,9 +73,7 @@ void ADN_ListView_UrbanInfrastructure_Type::ConnectItem( bool bConnect )
 void  ADN_ListView_UrbanInfrastructure_Type::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
-    ADN_Wizard_Default< ADN_Urban_Data::InfrastructureInfos > wizard( tools::translate( "ADN_ListView_UrbanInfrastructure_Type", "Infrastructure" ),
-                                                                      tools::translate( "ADN_ListView_UrbanInfrastructure_Type", "Infrastructures" ),
-                                                                      ADN_Workspace::GetWorkspace().GetUrban().GetData().GetInfrastructuresInfos(), this );
+    ADN_Wizard< ADN_Urban_Data::InfrastructureInfos > wizard( tools::translate( "ADN_ListView_UrbanInfrastructure_Type", "Infrastructures" ), ADN_Workspace::GetWorkspace().GetUrban().GetData().GetInfrastructuresInfos(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );
 }

@@ -12,7 +12,7 @@
 #include "ADN_Connector_ListView.h"
 #include "ADN_ResourceNetworks_Data.h"
 #include "ADN_ResourceNetworks_GUI.h"
-#include "ADN_ResourceNetworks_Wizard.h"
+#include "ADN_Wizard.h"
 #include "ADN_Tr.h"
 
 typedef ADN_ResourceNetworks_Data::ResourceNetworkInfos ResourceNetworkInfos;
@@ -25,7 +25,7 @@ ADN_ListView_ResourceNetworks::ADN_ListView_ResourceNetworks( QWidget* pParent, 
     : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
-    addColumn( tools::translate( "ADN_ListView_ResourceNetworks", "Resource networks" ) );
+    addColumn( ADN_Tr::ConvertFromWorkspaceElement( eResourceNetworks ).c_str() );
     setResizeMode( Q3ListView::AllColumns );
     // Connector creation
     pConnector_ = new ADN_Connector_ListView< ResourceNetworkInfos >(*this);
@@ -64,7 +64,7 @@ void ADN_ListView_ResourceNetworks::ConnectItem( bool bConnect )
 void ADN_ListView_ResourceNetworks::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
-    ADN_ResourceNetworks_Wizard wizard( this );
+    ADN_Wizard< ResourceNetworkInfos > wizard( ADN_Tr::ConvertFromWorkspaceElement( eResourceNetworks ).c_str(), ADN_Workspace::GetWorkspace().GetResourceNetworks().GetData().GetResourceNetworksInfos(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );
 }

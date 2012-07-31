@@ -13,7 +13,7 @@
 #include "ADN_Urban_Data.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Urban_GUI.h"
-#include "ADN_Wizard_Default.h"
+#include "ADN_Wizard.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_RoofShapes constructor
@@ -59,9 +59,7 @@ void ADN_ListView_RoofShapes::ConnectItem( bool bConnect )
 void ADN_ListView_RoofShapes::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
-    ADN_Wizard_Default< ADN_Urban_Data::RoofShapeInfos > wizard( tools::translate( "ADN_ListView_RoofShapes", "RoofShape" ),
-                                                                 tools::translate( "ADN_ListView_RoofShapes", "RoofShapes" ),
-                                                                 ADN_Workspace::GetWorkspace().GetUrban().GetData().GetRoofShapesInfos(), this );
+    ADN_Wizard< ADN_Urban_Data::RoofShapeInfos > wizard( tools::translate( "ADN_ListView_RoofShapes", "RoofShapes" ), ADN_Workspace::GetWorkspace().GetUrban().GetData().GetRoofShapesInfos(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );
 }

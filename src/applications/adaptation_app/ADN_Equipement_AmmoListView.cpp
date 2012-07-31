@@ -24,6 +24,7 @@
 #include "ADN_Equipement_GUI.h"
 #include "ADN_WeaponFilter.h"
 #include "ADN_Tr.h"
+#include "ENT/ENT_Tr.h"
 #include <boost/bind.hpp>
 
 typedef ADN_Equipement_Data::AmmoCategoryInfo AmmoCategoryInfo;
@@ -38,12 +39,10 @@ ADN_Equipement_AmmoListView::ADN_Equipement_AmmoListView( QWidget* pParent, cons
 : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
-    addColumn( tools::translate( "ADN_Equipement_AmmoListView", "Ammunition" ) );
+    addColumn( ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Munition, ENT_Tr::eToTr ).c_str() );
     setResizeMode( Q3ListView::AllColumns );
-
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<AmmoCategoryInfo>( *this );
-
     this->SetDeletionEnabled( true );
 }
 
@@ -140,7 +139,7 @@ void ADN_Equipement_AmmoListView::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
     ResourceInfos& dotation = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Munition );
-    ADN_Equipement_Wizard wizard( dotation, this );
+    ADN_Equipement_Wizard wizard( dotation, ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Munition, ENT_Tr::eToTr ).c_str(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     if( pCurData_ != 0 )
     {

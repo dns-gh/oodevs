@@ -29,29 +29,7 @@ public:
     //! @name Operations
     //@{
     virtual ADN_Ref_ABC* CreateObject() = 0;
-    virtual void Polish() {}
-    //@}
-};
-
-
-// =============================================================================
-/** @class  ADN_DefaultObjectCreator
-*/
-// Created: AGN 2003-11-18
-// =============================================================================
-template< typename T >
-class ADN_DefaultObjectCreator : public ADN_ObjectCreator_ABC
-{
-public:
-    //! @name Constructors/Destructor
-    //@{
-             ADN_DefaultObjectCreator() {}
-    virtual ~ADN_DefaultObjectCreator() {}
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual ADN_Ref_ABC* CreateObject() { return new T(); }
+    virtual ADN_Ref_ABC* CreateObjectAsCopyOf( void* ) = 0;
     //@}
 };
 

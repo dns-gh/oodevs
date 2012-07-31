@@ -90,9 +90,11 @@ private:
     void RecursiveFillSheetFromItem( Q3ListViewItem* qItem, YExcel::BasicExcelWorksheet& sheet, ExcelFormat::XLSFormatManager& fmt_mgr, int depth, int maxDepth, int& row, std::vector< int >& columnMaxContentSize ) const;
     void FillSheetFromItem( Q3ListViewItem* qItem, YExcel::BasicExcelWorksheet& sheet, ExcelFormat::XLSFormatManager& fmt_mgr, int depth, int maxDepth, int& row, std::vector< int >& columnMaxContentSize ) const;
     ADN_ListViewItem* FindItem( Q3ListViewItem* qItem, const QString& itemName );
+    void FinishCreation( ADN_Ref_ABC* ref );
 
 private slots:
     virtual void ContextMenuNew();
+    virtual void ContextMenuNewCopy();
     virtual void ContextMenuDelete();
     virtual void ContextMenuSearchElements();
 

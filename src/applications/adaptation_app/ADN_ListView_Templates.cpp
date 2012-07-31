@@ -13,7 +13,7 @@
 #include "ADN_Urban_Data.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Urban_GUI.h"
-#include "ADN_Wizard_Default.h"
+#include "ADN_Wizard.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_Templates constructor
@@ -70,9 +70,7 @@ void ADN_ListView_Templates::ConnectItem( bool bConnect )
 void ADN_ListView_Templates::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
-    ADN_Wizard_Default< ADN_Urban_Data::UrbanTemplateInfos > wizard( tools::translate( "ADN_ListView_Templates", "Template" ),
-                                                                     tools::translate( "ADN_ListView_Templates", "Templates" ),
-                                                                     ADN_Workspace::GetWorkspace().GetUrban().GetData().GetTemplatesInfos(), this );
+    ADN_Wizard< ADN_Urban_Data::UrbanTemplateInfos > wizard( tools::translate( "ADN_ListView_Templates", "Templates" ), ADN_Workspace::GetWorkspace().GetUrban().GetData().GetTemplatesInfos(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );
 }

@@ -12,8 +12,8 @@
 #include "ADN_Connector_ListView.h"
 #include "ADN_FireClass_Data.h"
 #include "ADN_FireClass_GUI.h"
-#include "ADN_FireClass_Wizard.h"
 #include "ADN_Tr.h"
+#include "ADN_Wizard.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_FireClass_ListView constructor
@@ -23,7 +23,7 @@ ADN_FireClass_ListView::ADN_FireClass_ListView( QWidget* pParent /* = 0*/, const
     : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
-    addColumn( tools::translate( "ADN_FireClass_ListView", "Fires" ) );
+    addColumn( ADN_Tr::ConvertFromWorkspaceElement( eFireClasses ).c_str() );
     setResizeMode( Q3ListView::AllColumns );
     // Connector creation
     pConnector_ = new ADN_Connector_ListView< ADN_FireClass_Data::FireClassInfos >( *this );
@@ -73,7 +73,7 @@ void ADN_FireClass_ListView::ConnectItem( bool bConnect )
 void ADN_FireClass_ListView::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
-    ADN_FireClass_Wizard wizard( this );
+    ADN_Wizard< ADN_FireClass_Data::FireClassInfos > wizard( ADN_Tr::ConvertFromWorkspaceElement( eFireClasses ).c_str(), ADN_Workspace::GetWorkspace().GetFireClasses().GetData().GetFireClassesInfos(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );
 }

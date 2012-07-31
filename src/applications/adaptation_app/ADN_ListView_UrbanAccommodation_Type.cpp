@@ -14,7 +14,7 @@
 #include "ADN_Urban_Data.h"
 #include "ADN_Urban_GUI.h"
 #include "ADN_Tr.h"
-#include "ADN_Wizard_Default.h"
+#include "ADN_Wizard.h"
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_UrbanAccommodation_Type constructor
@@ -61,9 +61,7 @@ void ADN_ListView_UrbanAccommodation_Type::ConnectItem( bool bConnect )
 void  ADN_ListView_UrbanAccommodation_Type::OnContextMenu( const QPoint& pt)
 {
     Q3PopupMenu popupMenu( this );
-    ADN_Wizard_Default< ADN_Urban_Data::AccommodationInfos > wizard( tools::translate( "ADN_ListView_UrbanAccommodation_Type", "Activity" ),
-                                                                     tools::translate( "ADN_ListView_UrbanAccommodation_Type", "Activities" ),
-                                                                     ADN_Workspace::GetWorkspace().GetUrban().GetData().GetAccommodationsInfos(), this );
+    ADN_Wizard< ADN_Urban_Data::AccommodationInfos > wizard( tools::translate( "ADN_ListView_UrbanAccommodation_Type", "Activities" ), ADN_Workspace::GetWorkspace().GetUrban().GetData().GetAccommodationsInfos(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );
 }
