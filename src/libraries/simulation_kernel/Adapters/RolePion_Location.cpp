@@ -135,9 +135,9 @@ namespace
         void Changed()
         {
             modified_ = true;
-            agent_.UpdatePatch();
             pPosition_->rX_ = position_[ "x" ];
             pPosition_->rY_ = position_[ "y" ];
+            agent_.UpdatePatch();
             owner_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
             owner_.Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
             owner_.Apply( &location::MovementHandler_ABC::NotifyHasMove, *pPosition_ );
