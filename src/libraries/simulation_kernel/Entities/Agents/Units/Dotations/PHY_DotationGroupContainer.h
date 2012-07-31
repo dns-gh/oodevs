@@ -86,6 +86,7 @@ public:
     void   ChangeDotation( const PHY_DotationCategory& category, unsigned int number, float thresholdPercentage );
     float  GetIlluminatingRange() const;
     const PHY_DotationCategory* GetIlluminationDotations( float range, bool permanent ) const;
+    double GetFuelDotationNumber() const;
     //@}
 
     //! @name

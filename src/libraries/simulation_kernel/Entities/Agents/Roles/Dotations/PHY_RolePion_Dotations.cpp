@@ -131,7 +131,7 @@ PHY_RolePion_Dotations::~PHY_RolePion_Dotations()
 void PHY_RolePion_Dotations::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> ::boost::serialization::base_object< PHY_RoleInterface_Dotations >( *this )
-		 >> pion_ 
+         >> pion_ 
          >> pDotations_;
 
     unsigned int nID;
@@ -153,7 +153,7 @@ void PHY_RolePion_Dotations::save( MIL_CheckPointOutArchive& file, const unsigne
     unsigned current  = ( pCurrentConsumptionMode_  ? pCurrentConsumptionMode_->GetID()  : (unsigned int)-1 ) ,
              previous = ( pPreviousConsumptionMode_ ? pPreviousConsumptionMode_->GetID() : (unsigned int)-1 );
     file << ::boost::serialization::base_object< PHY_RoleInterface_Dotations >( *this )
-		 << pion_
+         << pion_
          << pDotations_
          << current
          << previous
@@ -526,6 +526,16 @@ double PHY_RolePion_Dotations::AddFireReservation( const PHY_DotationCategory& c
 double PHY_RolePion_Dotations::GetDotationNumber( const PHY_DotationCategory& category ) const
 {
     return pDotations_->GetValue( category );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Dotations::GetFuelDotationNumber
+// Created: JSR 2012-07-31
+// -----------------------------------------------------------------------------
+double PHY_RolePion_Dotations::GetFuelDotationNumber() const
+{
+    assert( pDotations_ );
+    return pDotations_->GetFuelDotationNumber();
 }
 
 // -----------------------------------------------------------------------------
