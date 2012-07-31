@@ -82,11 +82,10 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_Agent_ABC& tar
     if( !bIsEnabled_ )
         return PHY_PerceptionLevel::notSeen_;
 
-    if( !perceiver_.GetPion().GetRole< PHY_RoleInterface_UrbanLocation >().IsInCity() )
-    {
-        PHY_ZOPerceptionComputer computer( perceiver_.GetPion() );
-        return computer.ComputePerception( target );
-    }
+    PHY_ZOPerceptionComputer computer( perceiver_.GetPion() );
+    const PHY_PerceptionLevel& result = computer.ComputePerception( target );
+    if( result == PHY_PerceptionLevel::notSeen_ || !perceiver_.GetPion().GetRole< PHY_RoleInterface_UrbanLocation >().IsInCity() )
+        return result;
     else
     {
         CIT_PerceptionTickMap it = perceptionsUnderway_.find( &target );
@@ -101,7 +100,8 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_Agent_ABC& tar
             roll = static_cast< double >( MIL_Random::rand_ii( MIL_Random::ePerception ) );
         perceptionsBuffer_[ &target ] = std::pair< unsigned int, double >( tick + 1, roll );
         PHY_ZURBPerceptionComputer computer( perceiver_.GetPion(), roll, tick );
-        return computer.ComputePerception( target );
+        const PHY_PerceptionLevel& urbanResult = computer.ComputePerception( target );
+        return result < urbanResult ? result : urbanResult;
     }
 }
 
