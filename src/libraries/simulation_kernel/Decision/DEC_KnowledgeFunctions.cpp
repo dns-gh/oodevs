@@ -465,6 +465,17 @@ T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsWithCapacityInZon
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::IsPositionInsideObjectOfType
+// Created: JSR 2012-08-01
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgeFunctions::IsPositionInsideObjectOfType( const DEC_Decision_ABC* callerAgent, const std::string& capacity, const MT_Vector2D* pCenter )
+{
+    if( !callerAgent || !pCenter )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+    return callerAgent->GetPion().GetArmy().GetKnowledge().IsPositionInsideObjectOfType( capacity, *pCenter );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetPopulationsColliding
 // Created: NLD 2005-10-21
 // -----------------------------------------------------------------------------

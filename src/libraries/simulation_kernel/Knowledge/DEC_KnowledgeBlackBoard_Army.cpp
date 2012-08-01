@@ -272,6 +272,52 @@ void DEC_KnowledgeBlackBoard_Army::GetObjectsWithCapacityInZone( T_KnowledgeObje
 
 namespace
 {
+    class sObjectKnowledgesCapacityPositionInside
+    {
+    public:
+        sObjectKnowledgesCapacityPositionInside( const std::string& capacity, const MT_Vector2D& loc )
+            : capacity_( capacity )
+            , loc_     ( loc )
+            , result_  ( false )
+        {
+            // NOTHING
+        }
+
+        void operator()( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
+        {
+            if( result_ )
+                return;
+            result_ = knowledge && knowledge->IsValid() && CapacityRetriever::RetrieveCapacity( knowledge->GetType(), capacity_ ) != 0
+                && knowledge->GetLocalisation().IsInside( loc_);
+        }
+
+        bool Result() const
+        {
+            return result_;
+        }
+
+    private:
+        const std::string& capacity_;
+        const MT_Vector2D& loc_;
+        bool result_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Army::IsPositionInsideObjectOfType
+// Created: JSR 2012-08-01
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgeBlackBoard_Army::IsPositionInsideObjectOfType( const std::string& capacity, const MT_Vector2D& loc )
+{
+    sObjectKnowledgesCapacityPositionInside functor( capacity, loc );
+
+    assert( pKnowledgeObjectContainer_ );
+    pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );
+    return functor.Result();
+}
+
+namespace
+{
     // -----------------------------------------------------------------------------
     // Name: DEC_KnowledgeBlackBoard_Army::sObjectKnowledgesFilteredHeightInserter
     // Created: NLD 2005-05-09
