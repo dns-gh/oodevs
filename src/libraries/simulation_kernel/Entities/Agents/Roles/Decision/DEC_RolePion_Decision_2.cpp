@@ -448,8 +448,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_CanUseDotation" ] =
         boost::function< bool ( const PHY_DotationCategory* ) >( boost::bind( &DEC_AgentFunctions::CanUseDotation, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_Agent_IlluminateRange" ] = boost::bind( &DEC_AgentFunctions::GetIlluminatingRange, boost::cref( GetPion() ) );
-    brain[ "DEC_Agent_GetFuelDotationNumber" ] = &DEC_AgentFunctions::GetFuelDotationNumber;
-
+    brain[ "DEC_Agent_GetFuelDotationNumber" ] =  boost::function< double ( const DEC_Decision_ABC* ) >( boost::bind( &DEC_AgentFunctions::GetFuelDotationNumber, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_Agent_AutonomieEnDeplacement" ] = boost::bind( &DEC_AgentFunctions::TimeLeftForMoving, boost::cref( GetPion() ) );
     brain[ "DEC_Agent_TempsPourParcourirDistanceEnLigneDroite" ] =
         boost::function< float ( float ) >( boost::bind( &DEC_AgentFunctions::TimeToMoveDistance, boost::cref( GetPion() ), _1 ) );

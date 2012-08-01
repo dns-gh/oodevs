@@ -16,6 +16,7 @@ class DEC_Decision_ABC;
 class DEC_Knowledge_Agent;
 class DEC_Knowledge_Object;
 class MIL_Agent_ABC;
+class MIL_AgentPion;
 class MIL_Mission_ABC;
 class PHY_DotationCategory;
 class TER_Localisation;
@@ -171,7 +172,7 @@ public:
     static bool HasDotation( const MIL_Agent_ABC& callerAgent, const PHY_DotationCategory* category );
     static bool HasDotationForFiring( DEC_Decision_ABC* agent, const PHY_DotationCategory* category, int iterations );
     static bool CanUseDotation( MIL_Agent_ABC& callerAgent, const PHY_DotationCategory* category );
-    static double GetFuelDotationNumber( const DEC_Decision_ABC* agent );
+    static double GetFuelDotationNumber( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pPion );
     static bool AgentHasRadar( const DEC_Decision_ABC* agent, int typeRadar );
 
     // Old deployment

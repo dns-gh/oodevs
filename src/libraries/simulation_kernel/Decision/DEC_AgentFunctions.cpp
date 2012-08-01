@@ -1096,11 +1096,11 @@ bool DEC_AgentFunctions::CanUseDotation( MIL_Agent_ABC& callerAgent, const PHY_D
 // Name: DEC_AgentFunctions::GetFuelDotationNumber
 // Created: JSR 2012-07-31
 // -----------------------------------------------------------------------------
-double DEC_AgentFunctions::GetFuelDotationNumber( const DEC_Decision_ABC* agent )
+double DEC_AgentFunctions::GetFuelDotationNumber(  MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pPion  )
 {
-    if( !agent )
+    if( !pPion )
         throw std::runtime_error( "Invalid pion in GetFuelDotationNumber" );
-    return agent->GetPion().GetRole< dotation::PHY_RoleInterface_Dotations >().GetFuelDotationNumber();
+    return pPion->GetPion().GetRole< dotation::PHY_RoleInterface_Dotations >().GetFuelDotationNumber();
 }
 
 // -----------------------------------------------------------------------------
