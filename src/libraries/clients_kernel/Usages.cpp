@@ -53,7 +53,6 @@ void Usages::UpdateDefault()
     for( CIT_Usages it = usages_.begin(); it != usages_.end(); ++it )
         if( it->first != defaultStr_ )
             total += it->second;
-    assert( total <= 100 );
     usages_[ defaultStr_ ] = 100 - total;
 
     static const QString defaultString = tools::translate( "Block", "PhysicalFeatures/Motivations/" ) + tools::translate( "Block", "Default" );

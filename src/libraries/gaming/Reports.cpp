@@ -53,8 +53,11 @@ void Reports::DoUpdate( const sword::Report& message )
     if( !Find( message.report().id() ) )
     {
         Report* report = reportFactory_.CreateReport( agent_, message );
-        Register( message.report().id(), *report );
-        controller_.Create( *report );
+        if( report )
+        {
+            Register( message.report().id(), *report );
+            controller_.Create( *report );
+        }
     }
 }
 
