@@ -529,6 +529,16 @@ double PHY_RolePion_Dotations::GetDotationNumber( const PHY_DotationCategory& ca
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Dotations::GetFuelDotationNumber
+// Created: JSR 2012-07-31
+// -----------------------------------------------------------------------------
+double PHY_RolePion_Dotations::GetFuelDotationNumber() const
+{
+    assert( pDotations_ );
+    return pDotations_->GetFuelDotationNumber();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Dotations::GetIlluminationDotations
 // Created: MGD 2010-02-15
 // -----------------------------------------------------------------------------
