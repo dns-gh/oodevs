@@ -208,7 +208,7 @@ void ExerciseProperties::ModelChanged()
 bool ExerciseProperties::Commit( const frontend::Exercise_ABC& exercise )
 {
     // Be sure to commit if mismatched terrain or data, even if no changes has occured 
-    if( terrainList_ && terrainList_->currentItem() > 0 && terrainList_->currentText().ascii() != currentTerrain_ )
+    if( terrainList_ && terrainList_->currentItem() > 0 && terrainList_->currentText().toUtf8().constData() != currentTerrain_ )
     {
         MessageDialog message( parent_, tools::translate( "ExerciseProperties", "Warning" ), tools::translate( "ExerciseProperties", "The selected terrain is not the one referenced by the selected exercise.\nDo really you want to replace it ?" ), QMessageBox::Yes, QMessageBox::No );
         if( message.exec() == QMessageBox::Yes )
@@ -219,7 +219,7 @@ bool ExerciseProperties::Commit( const frontend::Exercise_ABC& exercise )
     if( modelList_ && modelList_->currentItem() > 0 )
     {
         const QStringList model = QStringList::split( "/", modelList_->currentText() );
-        if( model.front().ascii() != currentData_ || model.back().ascii() != currentPhysical_ )
+        if( model.front().toUtf8().constData() != currentData_ || model.back().toUtf8().constData() != currentPhysical_ )
         {
             MessageDialog message( parent_, tools::translate( "ExerciseProperties", "Warning" ), tools::translate( "ExerciseProperties", "The selected model is not the one referenced by the selected exercise.\nDo really you want to replace it ?" ), QMessageBox::Yes, QMessageBox::No );
             if( message.exec() == QMessageBox::Yes )

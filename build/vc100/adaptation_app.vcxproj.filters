@@ -1839,9 +1839,6 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_FuneralPackagingResources_GUI.h">
       <Filter>Source Files\Workspace\Logistic\Funeral\Funeral GUI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Objects_Data_ObjectInfos.h">
-      <Filter>Source Files\Workspace\Object\Objects Data</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Sensors_Sizes_GUI.h">
       <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
     </ClInclude>
@@ -1875,9 +1872,6 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Tab_Container.h">
       <Filter>Source Files\Workspace\Container\Container GUI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_NavigationInfos.h">
-      <Filter>Source Files\Common types</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_MissionParameterValues_Table.h">
       <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
     </ClInclude>
@@ -1901,6 +1895,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipement_WizardPage.h">
       <Filter>Source Files\Workspace\Equipement\Equipement GUI\Equipement Wizard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Objects_Data_ObjectInfos.h">
+      <Filter>Source Files\Workspace\Object\Objects Data</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

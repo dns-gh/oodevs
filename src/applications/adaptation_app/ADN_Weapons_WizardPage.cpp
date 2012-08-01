@@ -64,7 +64,7 @@ QWidget* ADN_Weapons_WizardPage::CreateNameField()
 // -----------------------------------------------------------------------------
 std::string ADN_Weapons_WizardPage::GetName()
 {
-    return QString( "%1 & %2").arg( pComboLauncher_->currentText() ).arg( pComboAmmo_->currentText() ).ascii();
+    return QString( "%1 & %2").arg( pComboLauncher_->currentText() ).arg( pComboAmmo_->currentText() ).toUtf8().constData();
 }
 
 // -----------------------------------------------------------------------------
@@ -73,8 +73,8 @@ std::string ADN_Weapons_WizardPage::GetName()
 // -----------------------------------------------------------------------------
 bool ADN_Weapons_WizardPage::validatePage()
 {
-    std::string strLauncher = pComboLauncher_->currentText().ascii();
-    std::string strAmmo = pComboAmmo_->currentText().ascii();
+    std::string strLauncher = pComboLauncher_->currentText().toUtf8().constData();
+    std::string strAmmo = pComboAmmo_->currentText().toUtf8().constData();
 
     ADN_Launchers_Data::LauncherInfos* pLauncher = ADN_Workspace::GetWorkspace().GetLaunchers().GetData().FindLauncher( strLauncher );
     assert( pLauncher != 0 );
