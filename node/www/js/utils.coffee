@@ -207,3 +207,9 @@ get_ms_duration_from = (start_ms) ->
     now = now.getTime() - now.getTimezoneOffset()*60*1000
     diff = now - start.getTime()
     return ms_to_duration diff
+
+force_input_regexp = (regexp, control) ->
+    control.keypress (e) ->
+        return if e.which == 13
+        return unless e.which && e.charCode
+        return regexp.test String.fromCharCode e.which
