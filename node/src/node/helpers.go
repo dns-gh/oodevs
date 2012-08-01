@@ -62,8 +62,16 @@ func reset(h map[string]interface{}, key string) interface{} {
 	return h
 }
 
+func concat(args ...string) (rpy string) {
+	for _, x := range args {
+		rpy += x
+	}
+	return rpy
+}
+
 func GetHelpers() template.FuncMap {
 	return template.FuncMap{
+		"concat":      concat,
 		"eq":          eq,
 		"ne":          ne,
 		"reset":       reset,
