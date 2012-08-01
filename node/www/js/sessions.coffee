@@ -9,9 +9,16 @@
 
 session_template = Handlebars.compile $("#session_template").html()
 session_error_template = Handlebars.compile $("#session_error_template").html()
+session_settings_template = Handlebars.compile $("#session_settings_template").html()
 
 print_error = (text) ->
     display_error "session_error", session_error_template, text
+
+pop_settings = (ui, data) ->
+    ui.html session_settings_template data
+    mod = ui.find ".modal"
+    mod.modal "show"
+    return [ui, mod]
 
 class SessionItem extends Backbone.Model
     view: SessionItemView
@@ -86,6 +93,7 @@ class SessionItemView extends Backbone.View
         "click .stop" : "stop"
         "click .play" : "play"
         "click .pause" : "pause"
+        "click .edit" : "edit"
 
     is_search: =>
         if contains @model.get("name"), @search
@@ -159,6 +167,10 @@ class SessionItemView extends Backbone.View
     set_search: (item) =>
         @search = item
         @render()
+
+    edit: (evt) =>
+        return if is_disabled evt
+        [ui, mod] = pop_settings $("#settings"), @model.attributes
 
 get_filters = ->
     _.pluck $("#session_filters input:not(:checked)"), "name"

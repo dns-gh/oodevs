@@ -54,3 +54,6 @@ body{padding-top:60px;padding-bottom:40px;}
 .sign_in_action a{width:250px;}
 .update_login_header{text-align:center;margin-bottom:24px;font-weight:bold;}
 .update_login_action .cancel{width:95px;}
+.checkbox_addon label.add-on{margin-left:0;margin-bottom:0;width:22px;}
+.checkbox_addon input[type=checkbox]{position:relative;top:-3px;}
+.checkbox_addon .field{width:177px;}
