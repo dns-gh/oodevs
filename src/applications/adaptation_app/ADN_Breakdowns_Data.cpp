@@ -257,6 +257,15 @@ ADN_Breakdowns_Data::BreakdownInfo* ADN_Breakdowns_Data::FindBreakdown( const st
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Breakdowns_Data::GetBreakdowns
+// Created: ABR 2012-07-30
+// -----------------------------------------------------------------------------
+ADN_Breakdowns_Data::T_BreakdownInfoVector& ADN_Breakdowns_Data::GetBreakdowns()
+{
+    return vBreakdowns_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Breakdowns_Data::ReadArchive
 // Created: APE 2005-03-17
 // -----------------------------------------------------------------------------

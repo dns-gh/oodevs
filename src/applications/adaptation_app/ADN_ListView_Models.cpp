@@ -13,11 +13,11 @@
 #include "ADN_App.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Workspace.h"
-#include "ADN_Model_Wizard.h"
 #include "ADN_Models_GUI.h"
 #include "ADN_Units_Data.h"
 #include "ADN_Automata_Data.h"
 #include "ADN_Population_Data.h"
+#include "ADN_Wizard.h"
 
 typedef ADN_Models_Data::ModelInfos ModelInfos;
 
@@ -30,12 +30,10 @@ ADN_ListView_Models::ADN_ListView_Models( ModelInfos::E_ModelEntityType eEntityT
     , eEntityType_( eEntityType )
 {
     // Add one column.
-    addColumn( tools::translate( "ADN_ListView_Models", "Models" ) );
+    addColumn( ADN_Tr::ConvertFromWorkspaceElement( eModels ).c_str() );
     setResizeMode( Q3ListView::AllColumns );
-
     // Connector creation.
     pConnector_ = new ADN_Connector_ListView<ModelInfos>( *this );
-
     this->SetDeletionEnabled( true );
 }
 
@@ -75,11 +73,17 @@ void ADN_ListView_Models::ConnectItem( bool bConnect )
 void ADN_ListView_Models::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
-    ADN_Model_Wizard wizard( eEntityType_, this );
+    ADN_Models_Data::T_ModelInfos_Vector* pUnitsList;
+    if( eEntityType_ == ADN_Models_Data::ModelInfos::eAutomat )
+        pUnitsList = &ADN_Workspace::GetWorkspace().GetModels().GetData().GetAutomataModelsInfos();
+    else if( eEntityType_ == ADN_Models_Data::ModelInfos::ePawn )
+        pUnitsList = &ADN_Workspace::GetWorkspace().GetModels().GetData().GetUnitModelsInfos();
+    else
+        pUnitsList = &ADN_Workspace::GetWorkspace().GetModels().GetData().GetPopulationModelsInfos();
+
+    ADN_Wizard< ModelInfos > wizard( ADN_Tr::ConvertFromWorkspaceElement( eModels ).c_str(), *pUnitsList, this );
     if( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin )
-    {
         FillContextMenuWithDefault( popupMenu, wizard );
-    }
     if( pCurData_ != 0 )
     {
         ModelInfos* pCastData = static_cast< ModelInfos* >( pCurData_ );

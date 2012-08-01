@@ -10,15 +10,13 @@
 //*****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_ListView_Composantes.h"
-
 #include "ADN_App.h"
 #include "ADN_Connector_ListView_ABC.h"
 #include "ADN_Workspace.h"
 #include "ADN_Units_Data.h"
-#include "ADN_Composante_Wizard.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Composantes_GUI.h"
-
+#include "ADN_Wizard.h"
 #include <Qt3Support/q3popupmenu.h>
 
 typedef ADN_Composantes_Data::ComposanteInfos ComposanteInfos;
@@ -31,12 +29,10 @@ ADN_ListView_Composantes::ADN_ListView_Composantes( QWidget* pParent, const char
 : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
-    addColumn( tools::translate( "ADN_ListView_Composantes", "Equipments" ) );
+    addColumn( ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str() );
     setResizeMode(Q3ListView::AllColumns);
-
     // Connector creation.
     pConnector_ = new ADN_Connector_ListView<ComposanteInfos>( *this );
-
     this->SetDeletionEnabled( true );
 }
 
@@ -173,7 +169,7 @@ void ADN_ListView_Composantes::ConnectItem( bool bConnect )
 void ADN_ListView_Composantes::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
-    ADN_Composante_Wizard wizard( this );
+    ADN_Wizard< ComposanteInfos > wizard( ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str(), ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantes(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     if( pCurData_ != 0 )
     {

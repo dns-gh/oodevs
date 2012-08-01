@@ -12,9 +12,9 @@
 #include "adaptation_app_pch.h"
 #include "ADN_ListView_Units.h"
 #include "ADN_Connector_ListView.h"
-#include "ADN_Unit_Wizard.h"
 #include "ADN_Units_GUI.h"
 #include "ADN_Automata_Data.h"
+#include "ADN_Wizard.h"
 
 typedef ADN_Units_Data::UnitInfos UnitInfos;
 
@@ -26,8 +26,7 @@ ADN_ListView_Units::ADN_ListView_Units( QWidget* pParent, const char* szName, Qt
     : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
-    addColumn( tools::translate( "ADN_ListView_Units", "Units" ) );
-
+    addColumn( ADN_Tr::ConvertFromWorkspaceElement( eUnits ).c_str() );
     // Connector creation.
     pConnector_ = new ADN_Connector_ListView<UnitInfos>( *this );
     SetDeletionEnabled( true );
@@ -103,7 +102,7 @@ void ADN_ListView_Units::ConnectItem( bool bConnect )
 void ADN_ListView_Units::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
-    ADN_Unit_Wizard wizard( this );
+    ADN_Wizard< UnitInfos > wizard( ADN_Tr::ConvertFromWorkspaceElement( eUnits ).c_str(), ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     if( pCurData_ != 0 )
     {

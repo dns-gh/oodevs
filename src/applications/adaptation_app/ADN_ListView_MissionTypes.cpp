@@ -13,8 +13,8 @@
 #include "ADN_Connector_ListView.h"
 #include "ADN_Tools.h"
 #include "ADN_Missions_GUI.h"
-#include "ADN_Mission_Wizard.h"
 #include "ADN_Tr.h"
+#include "ADN_Wizard.h"
 
 typedef ADN_Missions_Data::Mission Mission;
 
@@ -27,7 +27,7 @@ ADN_ListView_MissionTypes::ADN_ListView_MissionTypes( ADN_Models_Data::ModelInfo
     , missions_   ( missions )
     , eEntityType_( eEntityType )
 {
-    addColumn( tools::translate( "ADN_ListView_MissionTypes", "Missions" ) );
+    addColumn( ADN_Tr::ConvertFromWorkspaceElement( eMissions ).c_str() );
     setResizeMode( Q3ListView::AllColumns );
 
     pConnector_ = new ADN_Connector_ListView< Mission >( *this );
@@ -75,7 +75,15 @@ void ADN_ListView_MissionTypes::ConnectItem( bool bConnect )
 void ADN_ListView_MissionTypes::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
-    ADN_Mission_Wizard wizard( missions_, this );
+    ADN_Missions_Data::T_Mission_Vector* pMissionList;
+    if( eEntityType_ == ADN_Models_Data::ModelInfos::eAutomat )
+        pMissionList = &ADN_Workspace::GetWorkspace().GetMissions().GetData().GetAutomatMissions();
+    else if( eEntityType_ == ADN_Models_Data::ModelInfos::ePawn )
+        pMissionList = &ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissions();
+    else
+        pMissionList = &ADN_Workspace::GetWorkspace().GetMissions().GetData().GetPopulationMissions();
+
+    ADN_Wizard< Mission > wizard( ADN_Tr::ConvertFromWorkspaceElement( eMissions ).c_str(), *pMissionList, this );
     if( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin )
         FillContextMenuWithDefault( popupMenu, wizard );
     if( pCurData_ != 0 )

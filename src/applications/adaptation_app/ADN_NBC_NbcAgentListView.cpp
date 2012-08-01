@@ -12,10 +12,11 @@
 #include "ADN_App.h"
 #include "ADN_Workspace.h"
 #include "ADN_Connector_ListView.h"
-#include "ADN_NBC_Wizard.h"
 #include "ADN_Tools.h"
+#include "ADN_NBC_Datas.h"
 #include "ADN_NBC_GUI.h"
 #include "ADN_Tr.h"
+#include "ADN_Wizard.h"
 
 typedef ADN_NBC_Datas::NbcAgentInfos NbcAgentInfos;
 
@@ -27,7 +28,7 @@ ADN_NBC_NbcAgentListView::ADN_NBC_NbcAgentListView( QWidget* pParent, const char
 : ADN_ListView( pParent, szName, f )
 {
     // add one column
-    addColumn( tools::translate( "ADN_NBC_NbcAgentListView", "NBC Agents") );
+    addColumn( ADN_Tr::ConvertFromWorkspaceElement( eNBC ).c_str() );
     setResizeMode(Q3ListView::AllColumns);
 
     // connector creation
@@ -73,10 +74,7 @@ void ADN_NBC_NbcAgentListView::ConnectItem( bool bConnect )
 void ADN_NBC_NbcAgentListView::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
-    ADN_NBC_Wizard wizard( this );
+    ADN_Wizard< NbcAgentInfos > wizard( ADN_Tr::ConvertFromWorkspaceElement( eNBC ).c_str(), ADN_Workspace::GetWorkspace().GetNbc().GetData().GetNbcAgentVector(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );
-
-    ADN_NBC_Datas::T_NbcAgentInfos_Vector& vNbcAgents = ADN_Workspace::GetWorkspace().GetNbc().GetData().GetNbcAgentVector();
-    std::sort( vNbcAgents.begin(), vNbcAgents.end(), ADN_Tools::NameSort<NbcAgentInfos>() );
 }

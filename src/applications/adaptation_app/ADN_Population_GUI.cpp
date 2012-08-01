@@ -126,8 +126,8 @@ void ADN_Population_GUI::Build()
     pVolumeList->setObjectName( strClassName_ + "_VolumeList" );
     vInfosConnectors[ eSpeedEffectVolume ] = &pVolumeList->GetConnector();
     Q3GroupBox* pSpeedEffectVolumeGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Effect" ), pSpeedEffectGroup );
-    builder.AddField< ADN_EditLine_Double >( pSpeedEffectVolumeGroup, tr( "Density" ), vInfosConnectors[ eSpeedEffectDensity ], tr( "people/m²" ), eGreaterEqualZero );
-    builder.AddField< ADN_EditLine_Double >( pSpeedEffectVolumeGroup, tr( "Max speed" ), vInfosConnectors[ eSpeedEffectMaxSpeed ], tr( "km/h" ), eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Double >( pSpeedEffectVolumeGroup, tr( "Density" ), vInfosConnectors[eSpeedEffectDensity], tr( "people/m²" ), eGreaterZero );
+    builder.AddField< ADN_EditLine_Double >( pSpeedEffectVolumeGroup, tr( "Max speed" ), vInfosConnectors[eSpeedEffectMaxSpeed], tr( "km/h" ), eGreaterEqualZero );
 
     // Fire effects
     Q3GroupBox* pFireEffectGlobalGroup = new Q3GroupBox( 0, Qt::Horizontal, tr( "Attritions" ) );

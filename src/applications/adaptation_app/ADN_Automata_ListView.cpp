@@ -6,22 +6,13 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-02-10 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Automata_ListView.cpp $
-// $Author: Ape $
-// $Modtime: 8/04/05 15:14 $
-// $Revision: 5 $
-// $Workfile: ADN_Automata_ListView.cpp $
-//
-// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_Automata_ListView.h"
 #include "ADN_Automata_Data.h"
 #include "ADN_Automata_GUI.h"
 #include "ADN_Connector_ListView.h"
-#include "ADN_Automata_Wizard.h"
+#include "ADN_Wizard.h"
 
 typedef ADN_Automata_Data::AutomatonInfos AutomatonInfos;
 
@@ -33,12 +24,10 @@ ADN_Automata_ListView::ADN_Automata_ListView( QWidget* pParent, const char* szNa
 : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
-    addColumn( tools::translate( "ADN_Automata_ListView", "Automata" ) );
+    addColumn( ADN_Tr::ConvertFromWorkspaceElement( eAutomata ).c_str() );
     setResizeMode( Q3ListView::AllColumns );
-
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<AutomatonInfos>(*this);
-
     this->SetDeletionEnabled( true );
 }
 
@@ -79,7 +68,7 @@ void ADN_Automata_ListView::ConnectItem( bool bConnect )
 void ADN_Automata_ListView::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
-    ADN_Automata_Wizard wizard( this );
+    ADN_Wizard< AutomatonInfos > wizard( ADN_Tr::ConvertFromWorkspaceElement( eAutomata ).c_str(), ADN_Workspace::GetWorkspace().GetAutomata().GetData().GetAutomata(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );
 }

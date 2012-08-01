@@ -1,15 +1,13 @@
 HEADERS = ADN_GUI_ABC.h \
 ADN_Rich_ListViewItem.h \
 ADN_Table.h \
-ADN_Wizard_ABC.h \
-ADN_Wizard_Default.h \
-ADN_Wizard_FirstPage_Default.h \
+ADN_Wizard.h \
+ADN_WizardPage.h \
 
 SOURCES = ADN_ActiveProtectionsListView.cpp \
 ADN_ActiveProtections_Data.cpp \
 ADN_ActiveProtections_GUI.cpp \
 ADN_ActiveProtections_WeaponsTable.cpp \
-ADN_ActiveProtections_Wizard.cpp \
 ADN_AddElementCommand.cpp \
 ADN_AddElementCommand.inl \
 ADN_AiEngine_Data.cpp \
@@ -23,9 +21,7 @@ ADN_Automata_Data.cpp \
 ADN_Automata_GUI.cpp \
 ADN_Automata_ListView.cpp \
 ADN_Automata_SubUnitsTable.cpp \
-ADN_Automata_Wizard.cpp \
 ADN_AvailabilityWarningTable.cpp \
-ADN_Breakdown_Wizard.cpp \
 ADN_Breakdowns_Data.cpp \
 ADN_Breakdowns_GUI.cpp \
 ADN_Breakdowns_ListView.cpp \
@@ -43,7 +39,6 @@ ADN_ChangeValueCommand_String.cpp \
 ADN_ColorSelector.cpp \
 ADN_ColorNameSelector.cpp \
 ADN_Communications_GUI.cpp \
-ADN_Composante_Wizard.cpp \
 ADN_Composantes_ActiveProtectionsListView.cpp \
 ADN_Composantes_BreakdownsTable.cpp \
 ADN_Composantes_ConsumptionsTable.cpp \
@@ -66,14 +61,10 @@ ADN_Equipement_AttritionTable.cpp \
 ADN_Equipement_Data.cpp \
 ADN_Equipement_GUI.cpp \
 ADN_Equipement_Postures_GUI.cpp \
-ADN_Equipement_Wizard.cpp \
 ADN_ExtinguisherAgentInfos_Table.cpp \
 ADN_FireClass_Data.cpp \
 ADN_FireClass_GUI.cpp \
 ADN_FireClass_ListView.cpp \
-ADN_FireClass_Wizard.cpp \
-ADN_FragOrder_Wizard.cpp \
-ADN_FragOrder_WizardSecondPage.cpp \
 ADN_GUI_ABC.cpp \
 ADN_GuiTools.cpp \
 ADN_Health_Data.cpp \
@@ -81,8 +72,6 @@ ADN_Health_GUI.cpp \
 ADN_HumanFactors_GUI.cpp \
 ADN_KnowledgeGroups_GUI.cpp \
 ADN_KnowledgeGroups_ListView.cpp \
-ADN_KnowledgeGroups_Wizard.cpp \
-ADN_Launcher_Wizard.cpp \
 ADN_Launchers_GUI.cpp \
 ADN_ListView.cpp \
 ADN_ListViewDialog.cpp \
@@ -116,10 +105,8 @@ ADN_MissionParameterValues_Table.cpp \
 ADN_MissionParameters_Table.cpp \
 ADN_MissionTypes_Table.cpp \
 ADN_Mission_ConfigurationDlg.cpp \
-ADN_Mission_Wizard.cpp \
 ADN_Missions_Data.cpp \
 ADN_Missions_GUI.cpp \
-ADN_Model_Wizard.cpp \
 ADN_Models_Data.cpp \
 ADN_Models_GUI.cpp \
 ADN_MultiPercentage.cpp \
@@ -128,16 +115,13 @@ ADN_NBC_Datas.cpp \
 ADN_NBC_GUI.cpp \
 ADN_NBC_Intox_GUI.cpp \
 ADN_NBC_NbcAgentListView.cpp \
-ADN_NBC_Wizard.cpp \
 ADN_Objects_Data.cpp \
 ADN_Objects_GUI.cpp \
-ADN_Objects_Wizard.cpp \
 ADN_OpenFile_Exception.cpp \
 ADN_OpenMode_Dialog.cpp \
 ADN_People_Data.cpp \
 ADN_People_GUI.cpp \
 ADN_People_ListView.cpp \
-ADN_People_Wizard.cpp \
 ADN_Point_GUI.cpp \
 ADN_Population_Data.cpp \
 ADN_Population_FireEffectRoe_GUI.cpp \
@@ -148,18 +132,14 @@ ADN_Population_ListView.cpp \
 ADN_Population_SpeedEffect_Attitude_ListView.cpp \
 ADN_Population_SpeedEffect_Volume_ListView.cpp \
 ADN_Population_UrbanEffect_Attitude_ListView.cpp \
-ADN_Population_Wizard.cpp \
 ADN_Radars_Data.cpp \
 ADN_Radars_GUI.cpp \
 ADN_Radars_ListView.cpp \
-ADN_Radars_Wizard.cpp \
 ADN_RemoveElementCommand.cpp \
 ADN_RemoveElementCommand.inl \
 ADN_ResourceNetworks_GUI.cpp \
-ADN_ResourceNetworks_Wizard.cpp \
 ADN_SaveFile_Exception.cpp \
 ADN_Schedule_Table.cpp \
-ADN_Sensor_Wizard.cpp \
 ADN_Sensors_Data.cpp \
 ADN_Sensors_DetectionAlgorithmPrevision.cpp \
 ADN_Sensors_Environments_GUI.cpp \
@@ -184,7 +164,6 @@ ADN_Table_Objects_LocationScore.cpp \
 ADN_Template_Usages.cpp \
 ADN_Tr.cpp \
 ADN_Type_Repartition.cpp \
-ADN_Unit_Wizard.cpp \
 ADN_Units_Composantes_GUI.cpp \
 ADN_Units_Data.cpp \
 ADN_Units_GUI.cpp \
@@ -194,14 +173,13 @@ ADN_UrbanModifiersTable.cpp \
 ADN_Urban_AttritionTable.cpp \
 ADN_Urban_Data.cpp \
 ADN_Urban_GUI.cpp \
-ADN_Weapon_Wizard.cpp \
-ADN_Weapon_Wizard_Page0.cpp \
 ADN_Weapons_Data.cpp \
 ADN_WeaponFilter.cpp \
 ADN_Weapons_GUI.cpp \
 ADN_Weapons_ListView.cpp \
 ADN_Weapons_PhSizeListView.cpp \
 ADN_Weapons_PhTable.cpp \
+ADN_Weapons_WizardPage.cpp \
 ADN_WeatherFireEffects_Table.cpp \
 ADN_Workspace.cpp \
 qtundo.cpp \

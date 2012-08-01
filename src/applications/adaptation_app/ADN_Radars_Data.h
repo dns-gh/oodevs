@@ -92,6 +92,7 @@ public:
     void FilesNeeded( T_StringList& files ) const;
     void Reset();
 
+    T_RadarInfos_Vector& GetRadars();
     RadarInfos* FindRadar( const std::string& strName );
 
 public:

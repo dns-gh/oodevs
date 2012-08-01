@@ -13,12 +13,13 @@
 #include "ADN_Objects_Data.h"
 #include "ADN_Objects_GUI.h"
 #include "ADN_Connector_ListView.h"
-#include "ADN_Objects_Wizard.h"
 #include "ADN_ComboBox.h"
 #include "ADN_Composantes_Data.h"
 #include "ADN_Sensors_Data.h"
 #include "ADN_Objects_Data_ObjectInfos.h"
+#include "ADN_Project_Data.h"
 #include "ADN_Tr.h"
+#include "ADN_Wizard.h"
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Objects constructor
@@ -28,12 +29,10 @@ ADN_ListView_Objects::ADN_ListView_Objects( QWidget* pParent )
     : ADN_ListView( pParent )
 {
     // Add one column.
-    addColumn( tools::translate( "ADN_ListView_Objects", "Objects" ) );
+    addColumn( ADN_Tr::ConvertFromWorkspaceElement( eObjects ).c_str() );
     setResizeMode( Q3ListView::AllColumns );
-
     // Connector creation
     pConnector_ = new ADN_Connector_ListView< ADN_Objects_Data_ObjectInfos >( *this );
-
     SetDeletionEnabled( true );
 }
 
@@ -299,6 +298,35 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Objects_GUI::eNbrGuiElements );
 }
 
+namespace
+{
+    class ADN_Object_WizardPage : public ADN_WizardPage< ADN_Objects_Data_ObjectInfos >
+    {
+    public:
+        ADN_Object_WizardPage( const T_ItemVector& existingItems, const QString& pageTitle, QWidget* pParent = 0 )
+            : ADN_WizardPage( existingItems, pageTitle, pParent )
+        {
+            // NOTHING
+        }
+        virtual ~ADN_Object_WizardPage()
+        {
+            // NOTHING
+        }
+
+        ADN_Objects_Data_ObjectInfos* CreateObject()
+        {
+            ADN_Objects_Data_ObjectInfos* object = ADN_WizardPage::CreateObject();
+            if( object )
+            {
+                if( !object->strType_.GetData().empty() )
+                    ADN_Workspace::GetWorkspace().GetProject().addedObjects_[ object->strName_.GetData() ] = object->strType_.GetData();
+                object->strType_ = object->strName_.GetData();
+            }
+            return object;
+        }
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Automata_ListView::OnContextMenu
 // Created: APE 2005-01-10
@@ -308,7 +336,8 @@ void ADN_ListView_Objects::OnContextMenu( const QPoint& pt )
     if( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin )
     {
         Q3PopupMenu popupMenu( this );
-        ADN_Objects_Wizard wizard;
+        ADN_Wizard< ADN_Objects_Data_ObjectInfos, ADN_Object_WizardPage > wizard( ADN_Tr::ConvertFromWorkspaceElement( eObjects ).c_str(),
+                                                                                  ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos(), this );
         FillContextMenuWithDefault( popupMenu, wizard );
         if( pCurData_ != 0 )
         {

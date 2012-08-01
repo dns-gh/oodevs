@@ -17,7 +17,7 @@
 #include "ADN_LogisticSupplyClass.h"
 #include "ADN_Tr.h"
 #include "ADN_Units_Data.h"
-#include "ADN_Wizard_Default.h"
+#include "ADN_Wizard.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_Categories_LogisticSupplyClass::ADN_ListView_Categories_LogisticSupplyClass
@@ -64,9 +64,8 @@ void ADN_ListView_Categories_LogisticSupplyClass::ConnectItem( bool bConnect )
 void ADN_ListView_Categories_LogisticSupplyClass::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
-    ADN_Wizard_Default< helpers::LogisticSupplyClass > wizard( tools::translate( "ADN_ListView_Categories_LogisticSupplyClass", "Logistic category" ),
-                                                               tools::translate( "ADN_ListView_Categories_LogisticSupplyClass", "Logistic categories" ),
-                                                               ADN_Workspace::GetWorkspace().GetCategories().GetData().GetLogisticSupplyClasses(), this );
+    ADN_Wizard< helpers::LogisticSupplyClass > wizard( tools::translate( "ADN_ListView_Categories_LogisticSupplyClass", "Logistic categories" ),
+                                                       ADN_Workspace::GetWorkspace().GetCategories().GetData().GetLogisticSupplyClasses(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     if( pCurData_ != 0 )
     {

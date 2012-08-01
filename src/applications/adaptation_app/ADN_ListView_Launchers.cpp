@@ -13,11 +13,11 @@
 #include "moc_ADN_ListView_Launchers.cpp"
 #include "ADN_Weapons_Data.h"
 #include "ADN_Connector_ListView.h"
-#include "ADN_Launcher_Wizard.h"
 #include "ADN_Tools.h"
 #include "ADN_Launchers_GUI.h"
-#include "ADN_WeaponFilter.h"
 #include "ADN_Tr.h"
+#include "ADN_WeaponFilter.h"
+#include "ADN_Wizard.h"
 #include <boost/bind.hpp>
 
 typedef ADN_Launchers_Data::LauncherInfos LauncherInfos;
@@ -30,7 +30,7 @@ ADN_ListView_Launchers::ADN_ListView_Launchers( QWidget* pParent, const char* sz
 : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
-    addColumn( tr( "Launchers" ) );
+    addColumn( ADN_Tr::ConvertFromWorkspaceElement( eLaunchers ).c_str() );
     setResizeMode( Q3ListView::AllColumns );
 
     // Connector creation.
@@ -92,7 +92,7 @@ void ADN_ListView_Launchers::ConnectItem( bool bConnect )
 void ADN_ListView_Launchers::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
-    ADN_Launcher_Wizard wizard( this );
+    ADN_Wizard< LauncherInfos > wizard( ADN_Tr::ConvertFromWorkspaceElement( eLaunchers ).c_str(), ADN_Workspace::GetWorkspace().GetLaunchers().GetData().GetLaunchersInfos(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     if( pCurData_ != 0 )
     {

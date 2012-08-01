@@ -22,7 +22,8 @@
 #include "ADN_Weapons_Data.h"
 #include "ADN_Weapons_GUI.h"
 #include "ADN_Connector_ListView.h"
-#include "ADN_Weapon_Wizard.h"
+#include "ADN_Wizard.h"
+#include "ADN_Weapons_WizardPage.h"
 
 typedef ADN_Weapons_Data::WeaponInfos WeaponInfos;
 
@@ -34,12 +35,10 @@ ADN_Weapons_ListView::ADN_Weapons_ListView( QWidget* pParent, const char* szName
 : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
-    addColumn( tools::translate( "ADN_Weapons_ListView", "Weapon system" ) );
+    addColumn( ADN_Tr::ConvertFromWorkspaceElement( eWeapons ).c_str() );
     setResizeMode( Q3ListView::AllColumns );
-
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<WeaponInfos>(*this);
-
     this->SetDeletionEnabled( true );
 }
 
@@ -97,7 +96,7 @@ void ADN_Weapons_ListView::ConnectItem( bool bConnect )
 void ADN_Weapons_ListView::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
-    ADN_Weapon_Wizard wizard( this );
+    ADN_Wizard< WeaponInfos, ADN_Weapons_WizardPage > wizard( ADN_Tr::ConvertFromWorkspaceElement( eWeapons ).c_str(), ADN_Workspace::GetWorkspace().GetWeapons().GetData().GetWeaponInfos(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     if( pCurData_ != 0 )
     {

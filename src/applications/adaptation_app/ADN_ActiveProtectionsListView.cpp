@@ -14,8 +14,8 @@
 #include "ADN_Connector_ListView.h"
 #include "ADN_Tools.h"
 #include "ADN_ObjectCreator_ABC.h"
-#include "ADN_ActiveProtections_Wizard.h"
 #include "ADN_Tr.h"
+#include "ADN_Wizard.h"
 
 typedef ADN_ActiveProtections_Data::ActiveProtectionsInfos ActiveProtectionsInfos;
 
@@ -27,9 +27,8 @@ ADN_ActiveProtectionsListView::ADN_ActiveProtectionsListView( QWidget* pParent, 
     : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
-    addColumn( tools::translate( "ADN_ActiveProtectionsListView", "active Protection" ) );
+    addColumn( ADN_Tr::ConvertFromWorkspaceElement( eActiveProtections ).c_str() );
     setResizeMode( Q3ListView::AllColumns );
-
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<ActiveProtectionsInfos>( *this );
     this->SetDeletionEnabled( true );
@@ -70,7 +69,7 @@ void ADN_ActiveProtectionsListView::ConnectItem( bool bConnect )
 void ADN_ActiveProtectionsListView::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
-    ADN_ActiveProtections_Wizard wizard( this );
+    ADN_Wizard< ActiveProtectionsInfos > wizard( ADN_Tr::ConvertFromWorkspaceElement( eActiveProtections ).c_str(), ADN_Workspace::GetWorkspace().GetActiveProtections().GetData().GetActiveProtectionsInfos(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );
 }

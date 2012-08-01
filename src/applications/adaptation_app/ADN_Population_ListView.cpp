@@ -12,8 +12,8 @@
 #include "ADN_Population_Data.h"
 #include "ADN_Population_GUI.h"
 #include "ADN_Connector_ListView.h"
-#include "ADN_Population_Wizard.h"
 #include "ADN_Tr.h"
+#include "ADN_Wizard.h"
 
 typedef ADN_Population_Data::PopulationInfos PopulationInfos;
 
@@ -25,7 +25,7 @@ ADN_Population_ListView::ADN_Population_ListView( QWidget* pParent, const char* 
     : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
-    addColumn( tools::translate( "ADN_Population_ListView", "Crowds" ) );
+    addColumn( ADN_Tr::ConvertFromWorkspaceElement( ePopulation ).c_str() );
     setResizeMode( Q3ListView::AllColumns );
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<PopulationInfos>(*this);
@@ -74,7 +74,7 @@ void ADN_Population_ListView::ConnectItem( bool bConnect )
 void ADN_Population_ListView::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
-    ADN_Population_Wizard wizard( this );
+    ADN_Wizard< PopulationInfos > wizard( ADN_Tr::ConvertFromWorkspaceElement( ePopulation ).c_str(), ADN_Workspace::GetWorkspace().GetPopulation().GetData().GetPopulation(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );
 }

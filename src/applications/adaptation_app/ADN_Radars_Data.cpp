@@ -356,3 +356,12 @@ void ADN_Radars_Data::WriteArchive( xml::xostream& output )
         (*it)->WriteArchive( output );
     output << xml::end;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Radars_Data::GetRadars
+// Created: ABR 2012-07-30
+// -----------------------------------------------------------------------------
+ADN_Radars_Data::T_RadarInfos_Vector& ADN_Radars_Data::GetRadars()
+{
+    return vRadars_;
+}

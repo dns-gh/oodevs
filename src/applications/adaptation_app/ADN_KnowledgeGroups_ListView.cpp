@@ -13,8 +13,8 @@
 #include "ADN_KnowledgeGroups_Data.h"
 #include "ADN_KnowledgeGroups_GUI.h"
 #include "ADN_Connector_ListView.h"
-#include "ADN_KnowledgeGroups_Wizard.h"
 #include "ADN_Tr.h"
+#include "ADN_Wizard.h"
 
 typedef ADN_KnowledgeGroups_Data::GroupInfo GroupInfo;
 
@@ -26,7 +26,7 @@ ADN_KnowledgeGroups_ListView::ADN_KnowledgeGroups_ListView( QWidget* pParent, co
     : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
-    addColumn( tools::translate( "ADN_KnowledgeGroups_ListView", "Knowledge groups" ) );
+    addColumn( ADN_Tr::ConvertFromWorkspaceElement( eKnowledgeGroups ).c_str() );
     setResizeMode( Q3ListView::AllColumns );
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<GroupInfo>(*this);
@@ -68,7 +68,7 @@ void ADN_KnowledgeGroups_ListView::ConnectItem( bool bConnect )
 void ADN_KnowledgeGroups_ListView::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
-    ADN_KnowledgeGroups_Wizard wizard;
+    ADN_Wizard< GroupInfo > wizard( ADN_Tr::ConvertFromWorkspaceElement( eKnowledgeGroups ).c_str(), ADN_Workspace::GetWorkspace().GetKnowledgeGroups().GetData().GetGroupInfos(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );
 }

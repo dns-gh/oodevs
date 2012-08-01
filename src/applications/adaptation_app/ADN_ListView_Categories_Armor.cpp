@@ -11,7 +11,6 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_ListView_Categories_Armor.h"
-#include "ADN_Wizard_Default.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Categories_Data.h"
 #include "ADN_Categories_GUI.h"
@@ -19,6 +18,7 @@
 #include "ADN_GuiTools.h"
 #include "ADN_Composantes_Data.h"
 #include "ADN_Tr.h"
+#include "ADN_Wizard.h"
 
 typedef helpers::ArmorInfos ArmorInfos;
 
@@ -72,9 +72,7 @@ void ADN_ListView_Categories_Armor::ConnectItem( bool bConnect )
 void ADN_ListView_Categories_Armor::OnContextMenu( const QPoint& pt)
 {
     Q3PopupMenu popupMenu( this );
-    ADN_Wizard_Default< ArmorInfos > wizard( tools::translate( "ADN_ListView_Categories_Armor", "Armor plating" ),
-                                             tools::translate( "ADN_ListView_Categories_Armor", "Armor plating" ),
-                                             ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos(), this );
+    ADN_Wizard< ArmorInfos > wizard( tools::translate( "ADN_ListView_Categories_Armor", "Armor-Plating" ), ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     if( pCurData_ != 0 )
     {

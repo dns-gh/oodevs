@@ -13,9 +13,9 @@
 #include "ADN_Connector_ListView.h"
 #include "ADN_Radars_Data.h"
 #include "ADN_Radars_GUI.h"
-#include "ADN_Radars_Wizard.h"
 #include "ADN_Tr.h"
 #include "ADN_Tools.h"
+#include "ADN_Wizard.h"
 
 typedef ADN_Radars_Data::RadarInfos RadarInfos;
 
@@ -90,13 +90,13 @@ void ADN_Radars_ListView::ConnectItem( bool bConnect )
 void ADN_Radars_ListView::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
-    ADN_Radars_Wizard wizard( this );
+    ADN_Wizard< RadarInfos > wizard( tools::translate( "ADN_Radars_ListView", "Special sensors" ), ADN_Workspace::GetWorkspace().GetSensors().GetData().radarData_.GetRadars(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     if( pCurData_ != 0 )
     {
         RadarInfos* pCastData = static_cast< RadarInfos* >( pCurData_ );
         assert( pCastData != 0 );
-        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tools::translate( "ADN_ListView_Sensors", "Equipments" ), ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ), eComposantes );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str(), ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ), eComposantes );
     }
     popupMenu.exec( pt );
 }

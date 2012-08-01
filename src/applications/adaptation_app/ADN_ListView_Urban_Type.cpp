@@ -14,7 +14,7 @@
 #include "ADN_Urban_Data.h"
 #include "ADN_Urban_GUI.h"
 #include "ADN_Tr.h"
-#include "ADN_Wizard_Default.h"
+#include "ADN_Wizard.h"
 
 typedef ADN_Urban_Data::UrbanInfos UrbanInfos;
 
@@ -62,9 +62,7 @@ void ADN_ListView_Urban_Type::ConnectItem( bool bConnect )
 void  ADN_ListView_Urban_Type::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
-    ADN_Wizard_Default< UrbanInfos > wizard( tools::translate( "ADN_ListView_Urban_Type", "Facade" ),
-                                             tools::translate( "ADN_ListView_Urban_Type", "Facades" ),
-                                             ADN_Workspace::GetWorkspace().GetUrban().GetData().GetFacadesInfos(), this );
+    ADN_Wizard< UrbanInfos > wizard( tools::translate( "ADN_ListView_Urban_Type", "Facades" ), ADN_Workspace::GetWorkspace().GetUrban().GetData().GetFacadesInfos(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );
 }

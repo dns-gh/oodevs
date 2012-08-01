@@ -13,10 +13,10 @@
 #include "ADN_Connector_ListView.h"
 #include "ADN_Sensors_Data.h"
 #include "ADN_Sensors_GUI.h"
-#include "ADN_Sensor_Wizard.h"
 #include "ADN_Tools.h"
 #include "ADN_Composantes_Data.h"
 #include "ADN_Sensors_DetectionAlgorithmPrevision.h"
+#include "ADN_Wizard.h"
 
 typedef ADN_Sensors_Data::SensorInfos SensorInfos;
 
@@ -28,7 +28,7 @@ ADN_ListView_Sensors::ADN_ListView_Sensors( QWidget* pParent, const char* szName
 : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
-    addColumn( tools::translate( "ADN_ListView_Sensors", "Sensors" ) );
+    addColumn( ADN_Tr::ConvertFromWorkspaceElement( eSensors ).c_str() );
     setResizeMode( Q3ListView::AllColumns );
 
     // Connector creation
@@ -90,7 +90,6 @@ void ADN_ListView_Sensors::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Sensors_GUI::ePreviewModifUrbanBlockMaterial]->Connect( &pInfos->vModifUrbanBlocks_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::ePreviewModifStances]->Connect( &pInfos->vModifStance_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::ePreviewModifTargetStances]->Connect( &pInfos->vModifTargetStance_, bConnect );
-
 }
 
 //-----------------------------------------------------------------------------
@@ -100,7 +99,7 @@ void ADN_ListView_Sensors::ConnectItem( bool bConnect )
 void ADN_ListView_Sensors::OnContextMenu( const QPoint& pt)
 {
     Q3PopupMenu popupMenu( this );
-    ADN_Sensor_Wizard wizard( this );
+    ADN_Wizard< SensorInfos > wizard( ADN_Tr::ConvertFromWorkspaceElement( eSensors ).c_str(), ADN_Workspace::GetWorkspace().GetSensors().GetData().GetSensorsInfos(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     if( pCurData_ != 0 )
     {

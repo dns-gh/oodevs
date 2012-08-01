@@ -97,6 +97,7 @@ public:
     void FilesNeeded( T_StringList& vFiles ) const;
     void Reset();
 
+    T_BreakdownInfoVector& GetBreakdowns();
     ADN_Breakdowns_Data::BreakdownInfo* FindBreakdown( const std::string& strName );
 
     int GetNextId();

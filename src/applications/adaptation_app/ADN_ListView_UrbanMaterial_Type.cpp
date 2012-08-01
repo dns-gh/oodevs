@@ -14,7 +14,7 @@
 #include "ADN_Urban_Data.h"
 #include "ADN_Urban_GUI.h"
 #include "ADN_Tr.h"
-#include "ADN_Wizard_Default.h"
+#include "ADN_Wizard.h"
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_UrbanMaterial_Type constructor
@@ -61,9 +61,7 @@ void ADN_ListView_UrbanMaterial_Type::ConnectItem( bool bConnect )
 void  ADN_ListView_UrbanMaterial_Type::OnContextMenu( const QPoint& pt)
 {
     Q3PopupMenu popupMenu( this );
-    ADN_Wizard_Default< ADN_Urban_Data::UrbanMaterialInfos > wizard( tools::translate( "ADN_ListView_UrbanMaterial_Type", "Material" ),
-                                                                     tools::translate( "ADN_ListView_UrbanMaterial_Type", "Materials" ),
-                                                                     ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos(), this );
+    ADN_Wizard< ADN_Urban_Data::UrbanMaterialInfos > wizard( tools::translate( "ADN_ListView_UrbanMaterial_Type", "Materials" ), ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );
 }

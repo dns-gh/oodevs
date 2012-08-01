@@ -16,7 +16,7 @@
 #include "ADN_Composantes_Data.h"
 #include "ADN_GuiTools.h"
 #include "ADN_Tr.h"
-#include "ADN_Wizard_Default.h"
+#include "ADN_Wizard.h"
 
 typedef ADN_Categories_Data::SizeInfos SizeInfos;
 
@@ -64,9 +64,7 @@ void ADN_ListView_Categories_Size::ConnectItem( bool bConnect )
 void  ADN_ListView_Categories_Size::OnContextMenu( const QPoint& pt)
 {
     Q3PopupMenu popupMenu( this );
-    ADN_Wizard_Default< SizeInfos > wizard( tools::translate( "ADN_ListView_Categories_Size", "Size" ),
-                                            tools::translate( "ADN_ListView_Categories_Size", "Sizes" ),
-                                            ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos(), this );
+    ADN_Wizard< SizeInfos > wizard( tools::translate( "ADN_ListView_Categories_Size", "Sizes" ), ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     if( pCurData_ != 0 )
     {

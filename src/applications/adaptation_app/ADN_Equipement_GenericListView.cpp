@@ -33,17 +33,14 @@ typedef ADN_Equipement_Data::CategoryInfo CategoryInfo;
 // Created: APE 2004-12-29
 // -----------------------------------------------------------------------------
 ADN_Equipement_GenericListView::ADN_Equipement_GenericListView( E_DotationFamily nType, QWidget* pParent, const char* szName, Qt::WFlags f )
-: ADN_ListView( pParent, szName, f )
-, nType_      ( nType )
+    : ADN_ListView( pParent, szName, f )
+    , nType_      ( nType )
 {
     // Add one column
-    std::string strName = ENT_Tr::ConvertFromDotationFamily( nType, ENT_Tr::eToTr );
-    addColumn( strName.c_str() );
+    addColumn( ENT_Tr::ConvertFromDotationFamily( nType_, ENT_Tr::eToTr ).c_str() );
     setResizeMode( Q3ListView::AllColumns );
-
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<CategoryInfo>( *this );
-
     this->SetDeletionEnabled( true );
 }
 
@@ -89,7 +86,7 @@ void ADN_Equipement_GenericListView::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
     ResourceInfos& dotation = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( nType_ );
-    ADN_Equipement_Wizard wizard( dotation, this );
+    ADN_Equipement_Wizard wizard( dotation, ENT_Tr::ConvertFromDotationFamily( nType_, ENT_Tr::eToTr ).c_str(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );
 }
