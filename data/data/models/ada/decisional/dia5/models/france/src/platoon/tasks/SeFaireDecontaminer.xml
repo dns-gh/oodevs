@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="platoon.tasks.SeFaireDecontaminer" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.GetDecon">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="platoon.tasks.SeFaireDecontaminer" source-version="1.0.0" knowledge-class="platoon.tasks.knowledges.SeFaireDecontaminer">
     <parameters>
         <parameter name="objective">
             <type>
@@ -12,16 +12,22 @@
             </type>
         </parameter>
     </parameters>
-    <next-task name="agent.tasks.GetDecon">
-        <parameter name="objective">
-            <value>
-                <parameter>objective</parameter>
-            </value>
-        </parameter>
-        <parameter name="meetingPoint">
-            <value>
-                <parameter>destination</parameter>
-            </value>
-        </parameter>
-    </next-task>
+    <stages>
+        <stage label="déplacement vers le plot de decontamination" disable-when-done="true">
+            <skills>
+                <skill name="agent.skills.GoGetDecontaminated" main="true" priority="1.0">
+                    <parameter name="decontaminationPlot">
+                        <value>
+                            <parameter>objective</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="meetingPoint">
+                        <value>
+                            <parameter>destination</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
 </task>

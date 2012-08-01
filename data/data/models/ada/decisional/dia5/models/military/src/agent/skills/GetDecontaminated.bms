@@ -18,36 +18,26 @@ rootnode
     -- --------------------------------------------------------------------------------
     create = function( self )
         self.arrived = false
-        self.plots = {}
-        for _, plot in pairs( self.params.objectives ) do
-            self.plots[ plot ] = true
-        end
     end,
+
     -- -------------------------------------------------------------------------------- 
     -- Select nearest plot and move toward it, asking for decontamination
     -- --------------------------------------------------------------------------------
     activate = function( self )
         local Activate = Activate
 
-        -- Find nearest decontamination plot
-        local nearestPlot = next( self.plots )
-        for plot in pairs( self.plots ) do  -- select the nearest element
-            nearestPlot = plot:proximityLevel() > nearestPlot:proximityLevel() and plot or nearestPlot
-        end
-        
-        -- main effect is done: beeing decontaminated.
-        if not meKnowledge:isContaminated() then
-            Feedback( self.feedbacks.isDecontaminated, { reason = "decontaminated", element = nearestPlot } )
-            return
-        end
-
         -- Movetoward nearest plot, and ask for decontamination if arrived.
         if self.arrived then
-            Activate( skill.nodes.RequestDecontamination, 1, { entity = nearestPlot } )
+            -- main effect is done: beeing decontaminated.
+            if not meKnowledge:isContaminated() then
+                meKnowledge:sendMessage( "The unit is decontaminated" )
+                Feedback( self.feedbacks.isDecontaminated )
+                return
+            end
+            Activate( skill.nodes.RequestDecontamination, 1, { entity = self.params.decontaminationPlot } )
+        else
+            Activate( skill.links.moveToward, 1, { entities = { self.params.decontaminationPlot } } )
         end
-        Activate( skill.links.moveToward, 1, { entities = { nearestPlot } } )
-        
-        self.arrived = false
     end
 }
 

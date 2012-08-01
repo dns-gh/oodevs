@@ -1,22 +1,21 @@
 -- **************************************************************************** 
--- Decontaminate
--- Usue motoward and GetDecon
+-- To get decontaminated by a decontamination plot
 -- ****************************************************************************
 rootnode
 {
-    connections = { skill.links.moveToward, skill.links.getDecon },
+    connections = { skill.links.moveToward, skill.links.getDecontaminated },
 
     -- -------------------------------------------------------------------------------- 
     -- feedback from moveToward
     -- --------------------------------------------------------------------------------
     done = function( self, params, additionnalParams )
-        self.arrived = true
+       Feedback( self.feedbacks.done ) -- meeting point has been reached
     end,
-    
+
     -- -------------------------------------------------------------------------------- 
     -- feedback from GetDecon
     -- --------------------------------------------------------------------------------
-    isDecontaminated = function( self, params, additionalParams )
+    isDecontaminated = function( self, params )
         self.decontaminated = true
     end,
 
@@ -24,25 +23,24 @@ rootnode
     -- Init 
     -- --------------------------------------------------------------------------------
     create = function( self )
-        self.arrived = false
         self.decontaminated = false
-        meKnowledge:forcerImmunisationNbc( true ) -- On immunise l'agent pour toute la durée de la mission
+        meKnowledge:forcerImmunisationNbc( true ) -- Magic immunization for NBC contamination
     end,
+
     -- -------------------------------------------------------------------------------- 
     -- Select nearest plot and move toward it, asking for decontamination
     -- --------------------------------------------------------------------------------
     activate = function( self )
         local Activate = Activate
-        
-        if self.decontaminated == false then
-            Activate( skill.links.getDecon, 0.9, { objectives = self.params.objectives } )
+
+        if not self.decontaminated then
+            Activate( skill.links.getDecontaminated, 1, { decontaminationPlot = self.params.decontaminationPlot } )
+        else
+            Activate( skill.links.moveToward, 1, { entities = { self.params.meetingPoint } } )
         end
-        Activate( skill.links.moveToward, 0.1, { entities = self.params.meetingPoint } )
-        
-        self.arrived = false
     end,
-    
+
     destroy = function( self )
-         meKnowledge:forcerImmunisationNbc( false ) -- on arrête l'immunisation à la contamination NRBC à la fin de la mission
+         meKnowledge:forcerImmunisationNbc( false )  -- End of magic immunization for NBC contamination
     end
 }

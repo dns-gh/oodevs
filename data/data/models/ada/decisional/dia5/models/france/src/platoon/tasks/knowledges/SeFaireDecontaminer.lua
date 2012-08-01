@@ -8,6 +8,6 @@ local result =
 }
 
 local t = initTaskKnowledge( result )
-taskKnowledge["agent.tasks.knowledges.GetDecon"] = t
+taskKnowledge[ "platoon.tasks.knowledges.SeFaireDecontaminer" ] = t
 
 return result
