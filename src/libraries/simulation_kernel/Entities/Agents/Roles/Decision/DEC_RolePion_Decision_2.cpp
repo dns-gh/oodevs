@@ -550,6 +550,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_ObjectKnowledgesInZone" ] =
         boost::function< std::vector< boost::shared_ptr< DEC_Knowledge_Object > >( const TER_Localisation*, const std::vector< std::string >& ) >( boost::bind( &DEC_KnowledgeFunctions::GetObjectsInZone< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2 ) );
     brain[ "DEC_ObjectKnowledge_GetObjectsInZone" ] = &DEC_KnowledgeFunctions::GetObjectsWithCapacityInZone;
+    brain[ "DEC_ObjectKnowledge_IsPositionInside" ] = &DEC_KnowledgeFunctions::IsPositionInsideObjectOfType;
     brain[ "DEC_Connaissances_ObjetsDansFuseau" ] =
         boost::function< std::vector< boost::shared_ptr< DEC_Knowledge_Object > >( const std::string& ) >( boost::bind( &DEC_KnowledgeFunctions::GetObjectsInFuseau< MIL_AgentPion >, boost::cref( GetPion() ), _1 ) );
     brain[ "DEC_Connaissances_CollisionsObjets" ] = boost::bind( &DEC_KnowledgeFunctions::GetObjectsColliding, boost::ref( GetPion() ) );
