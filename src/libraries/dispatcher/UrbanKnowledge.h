@@ -94,7 +94,7 @@ private:
     unsigned int rProgress_;
     unsigned int rMaxProgress_;
     bool bPerceived_;
-    std::vector< const kernel::Automat_ABC* > automatPerceptions_;
+    std::vector< unsigned int > automatPerceptions_;
     T_Optionals optionals_;
     //@}
 };
