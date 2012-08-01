@@ -362,8 +362,9 @@ integration.setAvailableDrones = function ( self )
     local listePions = DEC_Pion_PionsSansPC()
     for _,pion in pairs( listePions or emptyTable ) do
         local operationalLevel = pion:DEC_Agent_EtatOpsMajeur() * 100
-        -- if DEC_GetSzName( pion ) == "Masalife.RENS.Drone SDTI" and operationalLevel ~= 0 then
-        if operationalLevel ~= 0 then 
+        local fuelDotationNumber = DEC_Agent_GetFuelDotationNumber( pion )	
+        -- if DEC_GetSzName( pion ) == "Masalife.RENS.Drone SDTI" and operationalLevel ~= 0 and fuelDotationNumber > 0 then
+        if operationalLevel ~= 0 and fuelDotationNumber > 3 then -- Le drone doit être opérationnel et avoir un minimum de carburant
             if DEC_Geometrie_DistanceBetweenPoints( DEC_Agent_Position(), DEC_Agent_PositionPtr(pion) ) < 80 and  not pion:GetbMiseEnOeuvre_() and not pion:GetbEnExploitation_() then
                 pion:SetbMiseEnOeuvre_( true ) -- mandatory to permit the flight
                 DEC_Transport_DebarquerPionSansDelais( pion )
