@@ -178,7 +178,16 @@ func (it *Handler) ServeTemplate(w http.ResponseWriter, r *http.Request) {
 	}
 
 	model := it.MakeModel(params, user)
-	err = ctx.Execute(w, model)
+
+	if AcceptEncoding(r, "gzip") {
+		w.Header().Set("Content-Encoding", "gzip")
+		w.Header().Set("Content-Type", "text/html")
+		encoder := gzip.NewWriter(w)
+		defer encoder.Close()
+		err = ctx.Execute(encoder, model)
+	} else {
+		err = ctx.Execute(w, model)
+	}
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
