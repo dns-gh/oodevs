@@ -16,6 +16,8 @@ print_error = (text) ->
 
 pop_settings = (ui, data) ->
     ui.html node_settings data
+    force_input_regexp /\d+/, ui.find ".num_sessions"
+    force_input_regexp /\d+/, ui.find ".parallel_sessions"
     mod = ui.find ".modal"
     mod.modal "show"
     return [ui, mod]
@@ -187,10 +189,7 @@ validate_input_node = (control, result) ->
         return false
     return true
 
-$("#node_ident").keypress (e) ->
-    return if e.which == 13
-    return unless e.which && e.charCode
-    return /[a-z0-9-_]+/.test String.fromCharCode e.which
+force_input_regexp /[a-z0-9-_]+/, $ "#node_ident"
 
 $("#node_create").click ->
     ident = $ "#node_ident"
