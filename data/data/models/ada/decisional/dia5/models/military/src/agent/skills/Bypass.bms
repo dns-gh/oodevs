@@ -77,7 +77,7 @@ rootnode
 
         if self.elementToRemove == self.obstacles[ self.nextTargetIndex ] then
             Activate( skill.links.remove, 1, { entities  = { self.obstacles[ self.nextTargetIndex ] }, 
-                                          positions = self.positions } )
+                                          positions = self.positions, avoidObstacles = self.params.avoidObstacles } )
         else
             Activate( skill.links.bypass, 1, { entities  = { self.obstacles[ self.nextTargetIndex ] }, 
                                           positions = self.positions, avoidObstacles = self.params.avoidObstacles } )
