@@ -84,7 +84,7 @@ void UrbanKnowledge::DoUpdate( const sword::UrbanKnowledgeUpdate& message )
         optionals_.automat_perceptionPresent = 1;
         automatPerceptions_.clear();
         for( int i = 0; i < message.automat_perceptions().elem_size(); ++i )
-            automatPerceptions_.push_back( &model_.Automats().Get( message.automat_perceptions().elem( i ).id() ) );
+            automatPerceptions_.push_back( message.automat_perceptions().elem( i ).id() );
     }
 }
 
@@ -118,8 +118,8 @@ void UrbanKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     if( optionals_.maxProgressPresent )
         message().set_max_progress( rMaxProgress_ );
     if( optionals_.automat_perceptionPresent )
-        for( std::vector< const kernel::Automat_ABC* >::const_iterator it = automatPerceptions_.begin(); it != automatPerceptions_.end(); ++it )
-            message().mutable_automat_perceptions()->add_elem()->set_id( ( *it )->GetId() );
+        for( std::vector< unsigned int >::const_iterator it = automatPerceptions_.begin(); it != automatPerceptions_.end(); ++it )
+            message().mutable_automat_perceptions()->add_elem()->set_id( *it );
     message.Send( publisher );
 }
 
