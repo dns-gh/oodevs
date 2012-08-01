@@ -9,7 +9,7 @@ return
         myself.leadData.sealOffPositions = myself.leadData.sealOffPositions or DEC_Geometrie_ListePointsLocalisation(params.objective.source)
         local number = math.floor( (#myself.leadData.sealOffPositions / meKnowledge.nbPionsMain ) +1 )
 
-        myself.leadData.sealOffIndex = ( myself.leadData.sealOffIndex + number ) % #myself.leadData.sealOffPositions
+        myself.leadData.sealOffIndex = ( myself.leadData.sealOffIndex + number ) % #myself.leadData.sealOffPositions + 1
         return CreateKnowledge( world.Point, myself.leadData.sealOffPositions[myself.leadData.sealOffIndex] )
     end,
 
