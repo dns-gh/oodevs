@@ -3,7 +3,7 @@
     [[ if eq .type "cluster" ]]
     <title>Sword Cluster</title>
     [[ else ]]
-    <title>Sword Node [[ .name ]]</title>
+    <title>[[ .name ]] Sword Node </title>
     [[ end ]]
     <meta name="description" content="" />
     <script>
