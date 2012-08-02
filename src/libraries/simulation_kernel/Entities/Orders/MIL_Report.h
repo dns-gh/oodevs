@@ -606,6 +606,7 @@ public:
         eRc_EnemyUnitIdentified,
         eRc_NeutralUnitRecognized,
         eRc_NeutralUnitIdentified,
+        eRC_CaptureEnd,
         eLast
     };
     //@}
