@@ -12,11 +12,11 @@
 #include "simulation_kernel/Knowledge/DEC_Knowledge_UrbanPerception.h"
 #include "simulation_kernel/Entities/Objects/MIL_ObjectLoader.h"
 #include "simulation_kernel/Entities/Objects/UrbanObjectWrapper.h"
+#include "simulation_kernel/Urban/MIL_UrbanObject.h"
 #include "Fixture.h"
 #include "MockMIL_Time_ABC.h"
 #include "StubTER_World.h"
 #include <urban/CoordinateConverter.h>
-#include <urban/UrbanObject.h>
 #include <memory>
 
 namespace
@@ -53,7 +53,7 @@ BOOST_AUTO_TEST_CASE( Knowledge_UrbanPerceptionTest_Update )
     FixturePion pion( effectManager );
     urban::CoordinateConverter_ABC* converter = new urban::CoordinateConverter();
     flux >> xml::start( "urban-object" );
-    const urban::TerrainObject_ABC* object = new urban::UrbanObject( flux, 0, *converter );
+    const MIL_UrbanObject_ABC* object = new MIL_UrbanObject( flux, *converter );
     UrbanObjectWrapper* pObject = static_cast< UrbanObjectWrapper* >( loader.CreateUrbanObject( *object ) );
     flux >> xml::end;
 

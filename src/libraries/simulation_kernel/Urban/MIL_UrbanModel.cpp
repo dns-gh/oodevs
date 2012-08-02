@@ -10,14 +10,13 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_UrbanModel.h"
 #include "MT_Tools/MT_Vector2D.h"
+#include "Urban/MIL_UrbanObject.h"
+#include "UrbanGeometryAttribute.h"
+#include "UrbanPhysicalAttribute.h"
 
 #include <urban/WorldParameters.h> // à remplacer par config
 #include <urban/CoordinateConverter_ABC.h>
-#include <urban/GeometryAttribute.h>
-#include <urban/PhysicalAttribute.h>
-#include <urban/TerrainObject_ABC.h>
 #include <urban/CoordinateConverter.h>
-#include <urban/UrbanObject.h>
 
 #pragma warning( push, 0 )
 #include <boost/filesystem/path.hpp>
@@ -25,6 +24,8 @@
 #pragma warning( pop )
 
 namespace bfs = boost::filesystem;
+
+// TODO tout passer en double
 
 #define VECTOR_TO_POINT( point ) geometry::Point2f( static_cast< float >( ( point ).rX_ ), static_cast< float >( ( point ).rY_ ) )
 
@@ -38,17 +39,17 @@ namespace
 
 struct MIL_UrbanModel::QuadTreeTraits
 {
-    int CompareOnX( float value, const urban::TerrainObject_ABC* key ) const
+    int CompareOnX( float value, const MIL_UrbanObject_ABC* key ) const
     {
-        if( const urban::GeometryAttribute* geom = key->Retrieve< urban::GeometryAttribute >() )
-            return Intersector( geom->Geometry().BoundingBox() ).CompareOnX( value );
+        if( const UrbanGeometryAttribute* geom = key->Retrieve< UrbanGeometryAttribute >() )
+            return Intersector( geom->BoundingBox() ).CompareOnX( value );
         return 0;
     }
 
-    int CompareOnY( float value, const urban::TerrainObject_ABC* key ) const
+    int CompareOnY( float value, const MIL_UrbanObject_ABC* key ) const
     {
-        if( const urban::GeometryAttribute* geom = key->Retrieve< urban::GeometryAttribute >() )
-            return Intersector( geom->Geometry().BoundingBox() ).CompareOnY( value );
+        if( const UrbanGeometryAttribute* geom = key->Retrieve< UrbanGeometryAttribute >() )
+            return Intersector( geom->BoundingBox() ).CompareOnY( value );
         return 0;
     }
 };
@@ -96,9 +97,9 @@ namespace
             // NOTHING
         }
 
-        bool operator()( const urban::TerrainObject_ABC* key )
+        bool operator()( const MIL_UrbanObject_ABC* key )
         {
-            if( key && key->Retrieve< urban::GeometryAttribute >() && wrapper_.Check( key->Get< urban::GeometryAttribute >().Geometry() ) )
+            if( key && key->Retrieve< UrbanGeometryAttribute >() && wrapper_.Check( key->Get< UrbanGeometryAttribute >().Vertices() ) )
             {
                 data_.push_back( key );
                 return wrapper_.DoContinue();
@@ -106,7 +107,7 @@ namespace
             return true;
         }
 
-        std::vector< const urban::TerrainObject_ABC* > data_;
+        std::vector< const MIL_UrbanObject_ABC* > data_;
         const CollisionChecker wrapper_;
     };
 
@@ -118,9 +119,10 @@ namespace
         {
             // NOTHING
         }
-        bool Check( const geometry::Polygon2f& geometry ) const
+        bool Check( const std::vector< geometry::Point2f >& geometry ) const
         {
-            return geometry.IsInside( pick_ );
+            geometry::Polygon2f p( geometry );
+            return p.IsInside( pick_ );
         }
         bool DoContinue() const
         {
@@ -141,9 +143,10 @@ namespace
         {
             // NOTHING
         }
-        bool Check( const geometry::Polygon2f& geometry ) const
+        bool Check( const std::vector< geometry::Point2f >& geometry ) const
         {
-            return geometry.Intersect( center_, radius_ );
+            geometry::Polygon2f p( geometry );
+            return p.Intersect( center_, radius_ );
         }
         bool DoContinue() const
         {
@@ -164,9 +167,10 @@ namespace
         {
             // NOTHING
         }
-        bool Check( const geometry::Polygon2f& geometry ) const
+        bool Check( const std::vector< geometry::Point2f >& geometry ) const
         {
-            return !geometry.Intersect( segment_ ).empty();
+            geometry::Polygon2f p( geometry );
+            return !p.Intersect( segment_ ).empty();
         }
         bool DoContinue() const
         {
@@ -189,14 +193,14 @@ namespace
             // NOTHING
         }
 
-        bool operator()( const urban::TerrainObject_ABC* key )
+        bool operator()( const MIL_UrbanObject_ABC* key )
         {
-            if( key && key->Retrieve< urban::GeometryAttribute >() && wrapper_.Check( key->Get< urban::GeometryAttribute >().Geometry() ) )
+            if( key && key->Retrieve< UrbanGeometryAttribute >() && wrapper_.Check( key->Get< UrbanGeometryAttribute >().Vertices() ) )
             {
                 double tempCost = 0.;
-                const urban::PhysicalAttribute* pPhysical = key->Retrieve< urban::PhysicalAttribute >();
-                if( pPhysical && pPhysical->GetArchitecture() )
-                    tempCost = pPhysical->GetArchitecture()->GetPathfindCost( weight_ );
+                const UrbanPhysicalAttribute* pPhysical = key->Retrieve< UrbanPhysicalAttribute >();
+                if( pPhysical )
+                    tempCost = pPhysical->GetPathfindCost( weight_ );
                 if( tempCost == -1. )
                 {
                     cost_ = tempCost;
@@ -219,7 +223,7 @@ namespace
 // Name: MIL_UrbanModel::GetListWithinCircle
 // Created: JSR 2012-07-26
 // -----------------------------------------------------------------------------
-void MIL_UrbanModel::GetListWithinCircle( const MT_Vector2D& center, float radius, std::vector< const urban::TerrainObject_ABC* >& result ) const
+void MIL_UrbanModel::GetListWithinCircle( const MT_Vector2D& center, float radius, std::vector< const MIL_UrbanObject_ABC* >& result ) const
 {
     geometry::Point2f geomCenter( VECTOR_TO_POINT( center ) );
     if( quadTree_.get() )
@@ -241,7 +245,7 @@ void MIL_UrbanModel::GetListWithinCircle( const MT_Vector2D& center, float radiu
 // Name: MIL_UrbanModel::GetListWithinSegment
 // Created: JSR 2012-07-26
 // -----------------------------------------------------------------------------
-void MIL_UrbanModel::GetListWithinSegment( const MT_Vector2D& start, const MT_Vector2D& end, std::vector< const urban::TerrainObject_ABC* >& result ) const
+void MIL_UrbanModel::GetListWithinSegment( const MT_Vector2D& start, const MT_Vector2D& end, std::vector< const MIL_UrbanObject_ABC* >& result ) const
 {
     geometry::Point2f geomStart( VECTOR_TO_POINT( start ) );
     geometry::Point2f geomEnd( VECTOR_TO_POINT( end ) );
@@ -261,7 +265,7 @@ void MIL_UrbanModel::GetListWithinSegment( const MT_Vector2D& start, const MT_Ve
 // Name: MIL_UrbanModel::FindBlock
 // Created: JSR 2012-07-26
 // -----------------------------------------------------------------------------
-const urban::TerrainObject_ABC* MIL_UrbanModel::FindBlock( const MT_Vector2D& point ) const
+const MIL_UrbanObject_ABC* MIL_UrbanModel::FindBlock( const MT_Vector2D& point ) const
 {
     geometry::Point2f geomPoint( VECTOR_TO_POINT( point ) );
     if( quadTree_.get() )
@@ -281,11 +285,11 @@ const urban::TerrainObject_ABC* MIL_UrbanModel::FindBlock( const MT_Vector2D& po
 // Name: MIL_UrbanModel::GetCities
 // Created: JSR 2012-07-26
 // -----------------------------------------------------------------------------
-std::vector< const urban::TerrainObject_ABC* > MIL_UrbanModel::GetCities() const
+std::vector< const MIL_UrbanObject_ABC* > MIL_UrbanModel::GetCities() const
 {
     // $$$$ _RC_ JSR 2010-09-17: Non utilisé et pas propre (copie de vector). A virer si inutile
-    std::vector< const urban::TerrainObject_ABC* > cities;
-    tools::Iterator< const urban::TerrainObject_ABC& > it = CreateIterator();
+    std::vector< const MIL_UrbanObject_ABC* > cities;
+    tools::Iterator< const MIL_UrbanObject_ABC& > it = CreateIterator();
     while( it.HasMoreElements() )
         cities.push_back( &it.NextElement() );
     return cities;
@@ -314,13 +318,13 @@ float MIL_UrbanModel::GetUrbanBlockCost( float weight, const MT_Vector2D& from, 
 
 namespace
 {
-    const urban::TerrainObject_ABC* GetTerrainObject( const tools::Resolver< urban::TerrainObject_ABC >& resolver, unsigned int id )
+    const MIL_UrbanObject_ABC* GetTerrainObject( const tools::Resolver< MIL_UrbanObject_ABC >& resolver, unsigned int id )
     {
-        tools::Iterator< const urban::TerrainObject_ABC& > it = resolver.CreateIterator();
+        tools::Iterator< const MIL_UrbanObject_ABC& > it = resolver.CreateIterator();
         while( it.HasMoreElements() )
         {
-            const urban::TerrainObject_ABC* object = &it.NextElement();
-            if( object->GetId() == id )
+            const MIL_UrbanObject_ABC* object = &it.NextElement();
+            if( object->GetUrbanId() == id )
                 return object;
             object = GetTerrainObject( *object, id );
             if( object )
@@ -334,7 +338,7 @@ namespace
 // Name: MIL_UrbanModel::GetTerrainObject
 // Created: JSR 2012-07-26
 // -----------------------------------------------------------------------------
-const urban::TerrainObject_ABC* MIL_UrbanModel::GetTerrainObject( unsigned int id ) const
+const MIL_UrbanObject_ABC* MIL_UrbanModel::GetTerrainObject( unsigned int id ) const
 {
     return ::GetTerrainObject( *this, id );
 }
@@ -343,9 +347,9 @@ const urban::TerrainObject_ABC* MIL_UrbanModel::GetTerrainObject( unsigned int i
 // Name: MIL_UrbanModel::Accept
 // Created: JSR 2012-07-27
 // -----------------------------------------------------------------------------
-void MIL_UrbanModel::Accept( urban::ObjectVisitor_ABC& visitor )
+void MIL_UrbanModel::Accept( MIL_UrbanObjectVisitor_ABC& visitor ) const
 {
-    tools::Iterator< const urban::TerrainObject_ABC& > it = CreateIterator();
+    tools::Iterator< const MIL_UrbanObject_ABC& > it = CreateIterator();
     while( it.HasMoreElements() )
         it.NextElement().Accept( visitor );
 }
@@ -375,8 +379,8 @@ void MIL_UrbanModel::Load( const std::string& directoryPath )
 // -----------------------------------------------------------------------------
 void MIL_UrbanModel::ReadCity( xml::xistream& xis )
 {
-    urban::TerrainObject_ABC& urbanObject = *new urban::UrbanObject( xis, 0, *converter_ );
-    tools::Resolver< urban::TerrainObject_ABC >::Register( urbanObject.GetId(), urbanObject );
+    MIL_UrbanObject_ABC& urbanObject = *new MIL_UrbanObject( xis, *converter_ );
+    tools::Resolver< MIL_UrbanObject_ABC >::Register( urbanObject.GetUrbanId(), urbanObject );
     xis >> xml::optional >> xml::start( "urban-objects" )
             >> xml::list( "urban-object", *this, &MIL_UrbanModel::ReadItem, urbanObject )
         >> xml::end;
@@ -386,11 +390,10 @@ void MIL_UrbanModel::ReadCity( xml::xistream& xis )
 // Name: MIL_UrbanModel::ReadItem
 // Created: JSR 2012-07-27
 // -----------------------------------------------------------------------------
-void MIL_UrbanModel::ReadItem( xml::xistream& xis, urban::TerrainObject_ABC& parent )
+void MIL_UrbanModel::ReadItem( xml::xistream& xis, MIL_UrbanObject_ABC& parent )
 {
-    urban::TerrainObject_ABC& urbanObject = *new urban::UrbanObject( xis, &parent, *converter_ );
-    static_cast< tools::Resolver< urban::TerrainObject_ABC >& >( parent ).Register( urbanObject.GetId(), urbanObject );
-    parent.ComputeConvexHull();
+    MIL_UrbanObject_ABC& urbanObject = *new MIL_UrbanObject( xis, *converter_, &parent );
+    static_cast< tools::Resolver< MIL_UrbanObject_ABC >& >( parent ).Register( urbanObject.GetUrbanId(), urbanObject );
     xis >> xml::optional >> xml::start( "urban-objects" )
             >> xml::list( "urban-object", *this, &MIL_UrbanModel::ReadItem, urbanObject )
         >> xml::end;
@@ -408,6 +411,18 @@ void MIL_UrbanModel::Load( xml::xistream& xis )
                 >> xml::list( "urban-object", *this, &MIL_UrbanModel::ReadCity )
             >> xml::end
         >> xml::end;
+    tools::Iterator< const MIL_UrbanObject_ABC& > cities = CreateIterator();
+    while( cities.HasMoreElements() )
+    {
+        MIL_UrbanObject_ABC& city = const_cast< MIL_UrbanObject_ABC& >( cities.NextElement() );
+        tools::Iterator< const MIL_UrbanObject_ABC& > districts = city.CreateIterator();
+        while( districts.HasMoreElements() )
+        {
+            MIL_UrbanObject_ABC& district = const_cast< MIL_UrbanObject_ABC& >( districts.NextElement() );
+            district.ComputeConvexHull();
+        }
+        city.ComputeConvexHull();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -418,21 +433,21 @@ void MIL_UrbanModel::CreateQuadTree( const geometry::Rectangle2f& rect )
 {
     quadTree_.reset( new T_QuadTree( rect ) );
     quadTree_->SetRefinementPolicy( 30 );
-    std::vector< const urban::TerrainObject_ABC* > objects;
-    tools::Iterator< const urban::TerrainObject_ABC& > it = CreateIterator();
+    std::vector< const MIL_UrbanObject_ABC* > objects;
+    tools::Iterator< const MIL_UrbanObject_ABC& > it = CreateIterator();
     // $$$$ _RC_ JSR 2010-09-17: TODO Optimiser le quadtree en utilisant aussi les villes et quartiers pour accélérer la recherche
 
     precision_ = sqrt( ( rect.Right() - rect.Left() ) * ( rect.Top() - rect.Bottom() ) * 1e-16f );
     maxElementSize_ = 0;
     while( it.HasMoreElements() )
         it.NextElement().GetUrbanObjectLeaves( objects );
-    for( std::vector< const urban::TerrainObject_ABC* >::const_iterator it = objects.begin(); it != objects.end(); ++it )
+    for( std::vector< const MIL_UrbanObject_ABC* >::const_iterator it = objects.begin(); it != objects.end(); ++it )
     {
-        const urban::GeometryAttribute* pAttribute = ( *it )->Retrieve< urban::GeometryAttribute >();
+        const UrbanGeometryAttribute* pAttribute = ( *it )->Retrieve< UrbanGeometryAttribute >();
         if( pAttribute )
         {
             quadTree_->Insert( *it );
-            geometry::Rectangle2f boundingBox = pAttribute->Geometry().BoundingBox();
+            geometry::Rectangle2f boundingBox = pAttribute->BoundingBox();
             float size = 1.1f * std::max( boundingBox.Width(), boundingBox.Height() );
             if( maxElementSize_ < size )
                 maxElementSize_ = size;

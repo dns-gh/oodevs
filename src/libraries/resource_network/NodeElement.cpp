@@ -103,7 +103,7 @@ NodeElement::NodeElement( xml::xistream& xis, unsigned long resourceId, const st
 // Name: NodeElement constructor
 // Created: JSR 2010-09-17
 // -----------------------------------------------------------------------------
-NodeElement::NodeElement( const urban::ResourceNetworkAttribute::ResourceNode& node, unsigned long resourceId )
+NodeElement::NodeElement( const UrbanResourceNetworkAttribute::ResourceNode& node, unsigned long resourceId )
     : resourceId_         ( resourceId )
     , resourceName_       ( node.resource_ )
     , productionCapacity_ ( node.production_ )
@@ -124,7 +124,7 @@ NodeElement::NodeElement( const urban::ResourceNetworkAttribute::ResourceNode& n
     , needUpdate_         ( true )
     , magicChanged_       ( false )
 {
-    for( std::vector< urban::ResourceNetworkAttribute::ResourceLink >::const_iterator it = node.links_.begin(); it != node.links_.end(); ++it )
+    for( std::vector< UrbanResourceNetworkAttribute::ResourceLink >::const_iterator it = node.links_.begin(); it != node.links_.end(); ++it )
         links_.push_back( new ResourceLink( it->id_, ResourceLink::eTargetKindUrban, it->capacity_ ) );
 }
 

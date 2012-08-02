@@ -56,7 +56,7 @@ void MIL_UrbanCache::GetUrbanBlocksWithinSegment( const MT_Vector2D& vSourcePoin
             return;
         }
     }
-    std::vector< const urban::TerrainObject_ABC* > tmpList;
+    std::vector< const MIL_UrbanObject_ABC* > tmpList;
     urbanModel_.GetListWithinSegment( vSourcePoint, vTargetPoint, tmpList );
     list.reserve( tmpList.size() );
     for( std::size_t i = 0; i < tmpList.size(); ++i )
@@ -79,7 +79,7 @@ void MIL_UrbanCache::Clear()
 // -----------------------------------------------------------------------------
 void MIL_UrbanCache::GetListWithinCircle( const MT_Vector2D& center, float radius, std::vector< UrbanObjectWrapper* >& result ) const
 {
-    std::vector< const urban::TerrainObject_ABC* > tmpList;
+    std::vector< const MIL_UrbanObject_ABC* > tmpList;
     urbanModel_.GetListWithinCircle( center, radius, tmpList );
     result.reserve( tmpList.size() );
     for( std::size_t i = 0; i < tmpList.size(); ++i )
@@ -92,7 +92,7 @@ void MIL_UrbanCache::GetListWithinCircle( const MT_Vector2D& center, float radiu
 // -----------------------------------------------------------------------------
 const UrbanObjectWrapper* MIL_UrbanCache::FindBlock( const MT_Vector2D& point ) const
 {
-    const urban::TerrainObject_ABC* ret = urbanModel_.FindBlock( point );
+    const MIL_UrbanObject_ABC* ret = urbanModel_.FindBlock( point );
     return ret ? &MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *ret ) : 0;
 }
 
@@ -103,7 +103,7 @@ const UrbanObjectWrapper* MIL_UrbanCache::FindBlock( const MT_Vector2D& point ) 
 std::vector< const UrbanObjectWrapper* > MIL_UrbanCache::GetCities() const
 {
     std::vector< const UrbanObjectWrapper* > result;
-    std::vector< const urban::TerrainObject_ABC* > tmpList = urbanModel_.GetCities();
+    std::vector< const MIL_UrbanObject_ABC* > tmpList = urbanModel_.GetCities();
     for( std::size_t i = 0; i < tmpList.size(); ++i )
         result.push_back( &MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *tmpList[ i ] ) );
     return result;

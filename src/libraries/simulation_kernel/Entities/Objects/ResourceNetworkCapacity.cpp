@@ -78,7 +78,7 @@ void ResourceNetworkCapacity::Update( xml::xistream& xis, const MIL_Object_ABC& 
 // Name: ResourceNetworkCapacity::Update
 // Created: JSR 2011-02-23
 // -----------------------------------------------------------------------------
-void ResourceNetworkCapacity::Initialize( const urban::ResourceNetworkAttribute& urbanAttribute )
+void ResourceNetworkCapacity::Initialize( const UrbanResourceNetworkAttribute& urbanAttribute )
 {
     nodeProperties_->Initialize( urbanAttribute );
 }

@@ -16,11 +16,10 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationNature.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectLoader.h"
+#include "Urban/MIL_UrbanObject.h"
 #include "StubTER_World.h"
-#include <urban/UrbanObject.h>
 #include <urban/CoordinateConverter_ABC.h>
 #include <urban/CoordinateConverter.h>
-#include <urban/Drawer_ABC.h>
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
@@ -49,8 +48,8 @@ BOOST_FIXTURE_TEST_CASE( PkComputerUrbanProtectionTest, TestPK )
     MockAgent firer;
     urban::CoordinateConverter coord;
     xisModel >> xml::start( "urban-object" );
-    std::auto_ptr< urban::UrbanObject > urbanBlock;
-    urbanBlock.reset( new urban::UrbanObject ( xisModel, 0, coord ) );
+    std::auto_ptr< MIL_UrbanObject > urbanBlock;
+    urbanBlock.reset( new MIL_UrbanObject( xisModel, coord ) );
     xisModel >> xml::end;
     MIL_ObjectLoader loader;
     {

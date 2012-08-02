@@ -21,11 +21,6 @@ namespace sword
     class FloodModelFactory_ABC;
 }
 
-namespace urban
-{
-    class TerrainObject_ABC;
-}
-
 namespace xml
 {
     class xistream;
@@ -40,6 +35,7 @@ class MIL_Object_ABC;
 class MIL_Army_ABC;
 class MIL_ObjectBuilder_ABC;
 class MIL_ObjectFilter;
+class MIL_UrbanObject_ABC;
 
 // =============================================================================
 /** @class  MIL_ObjectLoader
@@ -64,7 +60,7 @@ public:
     MIL_Object_ABC* CreateObject( const std::string& name, const std::string& type, MIL_Army_ABC* army, const TER_Localisation& location,
                                   bool reserved, unsigned int externalIdentifier, unsigned int forcedId, double density ) const;
     MIL_Object_ABC* CreateObject( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC* army ) const;
-    MIL_Object_ABC* CreateUrbanObject( const urban::TerrainObject_ABC& object ) const;
+    MIL_Object_ABC* CreateUrbanObject( const MIL_UrbanObject_ABC& object ) const;
     //@}
 
     //! @name Accessors

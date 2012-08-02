@@ -39,11 +39,6 @@ namespace sword
     class FloodModelFactory_ABC;
 }
 
-namespace urban
-{
-    class TerrainObject_ABC;
-}
-
 namespace xml
 {
     class xostream;
@@ -71,6 +66,7 @@ class MIL_KnowledgeGroup;
 class MIL_Object_ABC;
 class MIL_ObjectType_ABC;
 class MIL_ObjectBuilder_ABC;
+class MIL_UrbanObject_ABC;
 class MIL_Population;
 class MIL_Inhabitant;
 class MIL_ProfilerMgr;
@@ -103,7 +99,7 @@ public:
     MIL_AgentPion& CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, unsigned int nCtx );
     MIL_AgentPion& CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name, unsigned int nCtx );
     void CreateObject( xml::xistream& xis, MIL_Army_ABC* army );
-    void CreateUrbanObject( const urban::TerrainObject_ABC& object );
+    void CreateUrbanObject( const MIL_UrbanObject_ABC& object );
     MIL_Object_ABC* CreateObject( MIL_Army_ABC* army, const std::string& type, const TER_Localisation* pLocalisation, sword::ObstacleType_DemolitionTargetType obstacleType, unsigned int externalIdentifier = 0u, const std::string& name = std::string(), double density = 0. );
     MIL_Object_ABC* CreateObject( const std::string& type, MIL_Army_ABC* army, const TER_Localisation& localisation );
     MIL_Object_ABC* CreateObject( const std::string& type, MIL_Army_ABC* army, const TER_Localisation& localisation, unsigned int id );
@@ -131,7 +127,7 @@ public:
 
     MIL_Population* FindPopulation( UrbanObjectWrapper* urbanObject ) const;
     const tools::Resolver< MIL_Army_ABC >& MIL_EntityManager::GetArmies() const;
-    UrbanObjectWrapper& GetUrbanObjectWrapper( const urban::TerrainObject_ABC& object );
+    UrbanObjectWrapper& GetUrbanObjectWrapper( const MIL_UrbanObject_ABC& object );
     unsigned int ConvertUrbanIdToSimId( unsigned int urbanId );
     void Accept( KnowledgesVisitor_ABC& visitor ) const;
     //@}

@@ -11,8 +11,8 @@
 #include "ResourceNetworkModel.h"
 #include "ResourceTools_ABC.h"
 #include "protocol/Protocol.h"
+#include "simulation_kernel/Urban/UrbanResourceNetworkAttribute.h"
 #include <boost/bind.hpp>
-#include <urban/ResourceNetworkAttribute.h>
 #include <xeumeuleu/xml.hpp>
 
 using namespace resource;
@@ -83,10 +83,10 @@ NodeProperties::~NodeProperties()
 // Name: NodeProperties::Initialize
 // Created: JSR 2011-02-23
 // -----------------------------------------------------------------------------
-void NodeProperties::Initialize( const urban::ResourceNetworkAttribute& urbanAttribute )
+void NodeProperties::Initialize( const UrbanResourceNetworkAttribute& urbanAttribute )
 {
-    const urban::ResourceNetworkAttribute::T_ResourceNodes& nodes = urbanAttribute.GetResourceNodes();
-    for( urban::ResourceNetworkAttribute::CIT_ResourceNodes it = nodes.begin(); it != nodes.end(); ++it )
+    const UrbanResourceNetworkAttribute::T_ResourceNodes& nodes = urbanAttribute.GetResourceNodes();
+    for( UrbanResourceNetworkAttribute::CIT_ResourceNodes it = nodes.begin(); it != nodes.end(); ++it )
     {
         unsigned long resourceId = tools_->GetResourceId( it->second.resource_ );
         Register( resourceId, *new NodeElement( it->second, resourceId ) );

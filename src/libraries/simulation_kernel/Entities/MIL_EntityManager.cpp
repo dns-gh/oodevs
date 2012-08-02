@@ -99,15 +99,15 @@
 #include "resource_network/ResourceNetworkModel.h"
 #include "tools/Loader_ABC.h"
 #include "Urban/MIL_UrbanModel.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
+#include "Urban/MIL_UrbanObjectVisitor_ABC.h"
 #include "Urban/PHY_InfrastructureType.h"
 #include "Urban/PHY_MaterialCompositionType.h"
 #include "Urban/PHY_AccomodationType.h"
 #include "Urban/PHY_ResourceNetworkType.h"
 #include "Urban/PHY_RoofShapeType.h"
-#include <urban/GeometryAttribute.h>
-#include <urban/ObjectVisitor_ABC.h>
-#include <urban/PhysicalAttribute.h>
-#include <urban/TerrainObject_ABC.h>
+#include "Urban/UrbanGeometryAttribute.h"
+#include "Urban/UrbanPhysicalAttribute.h"
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push, 0 )
 #include <boost/filesystem/path.hpp>
@@ -341,7 +341,7 @@ void MIL_EntityManager::ReadOrbat( xml::xistream& xis )
 
 namespace
 {
-    class UrbanWrapperVisitor : public urban::ObjectVisitor_ABC
+    class UrbanWrapperVisitor : public MIL_UrbanObjectVisitor_ABC
     {
     public:
         UrbanWrapperVisitor( MIL_EntityManager& manager )
@@ -354,17 +354,17 @@ namespace
         {
             // NOTHING
         }
-        virtual void Visit( const urban::TerrainObject_ABC& object )
+        virtual void Visit( const MIL_UrbanObject_ABC& object )
         {
-            const urban::PhysicalAttribute* pPhysical = object.Retrieve< urban::PhysicalAttribute >();
-            if( pPhysical && pPhysical->GetArchitecture() && ( !PHY_MaterialCompositionType::Find( pPhysical->GetArchitecture()->GetMaterial() ) || !PHY_RoofShapeType::Find( pPhysical->GetArchitecture()->GetRoofShape() ) ) )
+            const UrbanPhysicalAttribute* pPhysical = object.Retrieve< UrbanPhysicalAttribute >();
+            if( pPhysical && ( !PHY_MaterialCompositionType::Find( pPhysical->GetArchitecture().material_ ) || !PHY_RoofShapeType::Find( pPhysical->GetArchitecture().roofShape_ ) ) )
             {
-                MT_LOG_INFO_MSG( MT_FormatString( "The architecture of the urban bloc '%d' ('%s') is not consistent with the architecture described in the urban file", object.GetId(), object.GetName().c_str() ) );
+                MT_LOG_INFO_MSG( MT_FormatString( "The architecture of the urban bloc '%d' ('%s') is not consistent with the architecture described in the urban file", object.GetUrbanId(), object.GetName().c_str() ) );
             }
-            const urban::GeometryAttribute* geometry = object.Retrieve< urban::GeometryAttribute >();
-            if( !geometry || geometry->Geometry().Vertices().empty() )
+            const UrbanGeometryAttribute* geometry = object.Retrieve< UrbanGeometryAttribute >();
+            if( !geometry || geometry->Vertices().empty() )
             {
-                MT_LOG_ERROR_MSG( MT_FormatString( "Urban block %d ignored for lack of geometry", object.GetId() ) );
+                MT_LOG_ERROR_MSG( MT_FormatString( "Urban block %d ignored for lack of geometry", object.GetUrbanId() ) );
                 return;
             }
             manager_.CreateUrbanObject( object );
@@ -403,7 +403,7 @@ void MIL_EntityManager::CreateUrbanObjects( MIL_UrbanModel& urbanModel, const MI
 // Name: MIL_EntityManager::CreateUrbanObject
 // Created: SLG 2010-06-23
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::CreateUrbanObject( const urban::TerrainObject_ABC& object )
+void MIL_EntityManager::CreateUrbanObject( const MIL_UrbanObject_ABC& object )
 {
     pObjectManager_->CreateUrbanObject( object );
 }
@@ -2166,7 +2166,7 @@ const tools::Resolver< MIL_Army_ABC >& MIL_EntityManager::GetArmies() const
 // Name: MIL_EntityManager::GetUrbanObjectWrapper
 // Created: JSR 2011-01-18
 // -----------------------------------------------------------------------------
-UrbanObjectWrapper& MIL_EntityManager::GetUrbanObjectWrapper( const urban::TerrainObject_ABC& object )
+UrbanObjectWrapper& MIL_EntityManager::GetUrbanObjectWrapper( const MIL_UrbanObject_ABC& object )
 {
     return pObjectManager_->GetUrbanObjectWrapper( object );
 }

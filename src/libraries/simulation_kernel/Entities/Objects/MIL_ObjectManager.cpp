@@ -28,7 +28,7 @@
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include "protocol/ClientSenders.h"
-#include <urban/TerrainObject_ABC.h>
+#include "Urban/MIL_UrbanObject_ABC.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/serialization/export.hpp>
@@ -206,7 +206,7 @@ const MIL_ObjectType_ABC& MIL_ObjectManager::FindType( const std::string& type )
 // Name: MIL_ObjectManager::GetUrbanObjectWrapper
 // Created: JSR 2011-01-18
 // -----------------------------------------------------------------------------
-UrbanObjectWrapper& MIL_ObjectManager::GetUrbanObjectWrapper( const urban::TerrainObject_ABC& object )
+UrbanObjectWrapper& MIL_ObjectManager::GetUrbanObjectWrapper( const MIL_UrbanObject_ABC& object )
 {
     CIT_UrbanObjectMap it = urbanObjects_.find( &object );
     if( it == urbanObjects_.end() )
@@ -221,7 +221,7 @@ UrbanObjectWrapper& MIL_ObjectManager::GetUrbanObjectWrapper( const urban::Terra
 unsigned int MIL_ObjectManager::ConvertUrbanIdToSimId( unsigned int urbanId )
 {
     for( CIT_UrbanObjectMap it = urbanObjects_.begin(); it != urbanObjects_.end(); ++it )
-        if( it->first->GetId() == urbanId )
+        if( it->first->GetUrbanId() == urbanId )
             return it->second->GetID();
     return 0;
 }
@@ -326,7 +326,7 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC* army, const MIL_O
 // Name: MIL_ObjectManager::CreateUrbanObject
 // Created: SLG 2010-06-23
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectManager::CreateUrbanObject( const urban::TerrainObject_ABC& object )
+MIL_Object_ABC* MIL_ObjectManager::CreateUrbanObject( const MIL_UrbanObject_ABC& object )
 {
     MIL_Object_ABC* pObject = builder_->BuildUrbanObject( object );
     RegisterObject( pObject );

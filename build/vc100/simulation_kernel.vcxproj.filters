@@ -2640,6 +2640,21 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\MIL_UrbanModel.cpp">
       <Filter>Source Files\Urban</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\MIL_UrbanObject.cpp">
+      <Filter>Source Files\Urban</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\UrbanColorAttribute.cpp">
+      <Filter>Source Files\Urban</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\UrbanGeometryAttribute.cpp">
+      <Filter>Source Files\Urban</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\UrbanPhysicalAttribute.cpp">
+      <Filter>Source Files\Urban</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\UrbanResourceNetworkAttribute.cpp">
+      <Filter>Source Files\Urban</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractWithSideCapacity.cpp">
@@ -5376,6 +5391,30 @@
       <Filter>Source Files\Urban</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\MIL_UrbanCache.h">
+      <Filter>Source Files\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\MIL_UrbanObject.h">
+      <Filter>Source Files\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\MIL_UrbanObject_ABC.h">
+      <Filter>Source Files\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\MIL_UrbanObjectVisitor_ABC.h">
+      <Filter>Source Files\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\MIL_UrbanMotivationsVisitor_ABC.h">
+      <Filter>Source Files\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\UrbanColorAttribute.h">
+      <Filter>Source Files\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\UrbanGeometryAttribute.h">
+      <Filter>Source Files\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\UrbanPhysicalAttribute.h">
+      <Filter>Source Files\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\UrbanResourceNetworkAttribute.h">
       <Filter>Source Files\Urban</Filter>
     </ClInclude>
   </ItemGroup>

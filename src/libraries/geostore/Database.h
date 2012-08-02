@@ -13,11 +13,6 @@
 class PointProjector_ABC;
 class TerrainFileReader;
 
-namespace urban
-{
-    class Model_ABC;
-    class TerrainObject_ABC;
-}
 namespace geostore
 {
     class GeoTable;

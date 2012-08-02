@@ -23,17 +23,13 @@ namespace sword
     class FloodModelFactory_ABC;
 }
 
-namespace urban
-{
-    class TerrainObject_ABC;
-}
-
 class MIL_Army_ABC;
 class MIL_Object_ABC;
 class MIL_ObjectBuilder_ABC;
 class MIL_ObjectLoader;
 class MIL_ObjectType_ABC;
 class MIL_ObjectFilter;
+class MIL_UrbanObject_ABC;
 class TER_Localisation;
 
 // =============================================================================
@@ -63,7 +59,7 @@ public:
     MIL_Object_ABC* BuildObject( const std::string& name, const std::string& type, MIL_Army_ABC* army, const TER_Localisation& localisation,
                                  sword::ObstacleType_DemolitionTargetType obstacleType, unsigned int externalIdentifier, unsigned int forcedId = 0u, double density = 0 );
     MIL_Object_ABC* BuildObject( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC* army );
-    MIL_Object_ABC* BuildUrbanObject( const urban::TerrainObject_ABC& object );
+    MIL_Object_ABC* BuildUrbanObject( const MIL_UrbanObject_ABC& object );
 
     void Update( const std::string& capacity, xml::xistream& xis, MIL_Object_ABC& object ) const;
     //@}

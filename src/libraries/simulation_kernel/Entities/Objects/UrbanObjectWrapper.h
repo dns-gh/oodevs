@@ -21,13 +21,9 @@ namespace sword
     class UrbanAttributes;
 }
 
-namespace urban
-{
-    class TerrainObject_ABC;
-    class MotivationsVisitor_ABC;
-}
-
 class MIL_LivingArea;
+class MIL_UrbanObject_ABC;
+class MIL_UrbanMotivationsVisitor_ABC;
 
 // =============================================================================
 /** @class  UrbanObjectWrapper
@@ -40,7 +36,7 @@ class UrbanObjectWrapper : public MIL_Object
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanObjectWrapper( const MIL_ObjectBuilder_ABC& builder, const urban::TerrainObject_ABC& object );
+             UrbanObjectWrapper( const MIL_ObjectBuilder_ABC& builder, const MIL_UrbanObject_ABC& object );
              UrbanObjectWrapper();
     virtual ~UrbanObjectWrapper();
     //@}
@@ -80,7 +76,7 @@ public:
 
     //! @name Accessors
     //@{
-    bool Is( const urban::TerrainObject_ABC& object ) const;
+    bool Is( const MIL_UrbanObject_ABC& object ) const;
     const std::string& GetName() const;
     bool HasChild() const;
     bool IsBlock() const;
@@ -90,8 +86,8 @@ public:
     float GetStructuralState() const;
     double GetOccupation() const;
     double GetTrafficability() const;
-    const urban::TerrainObject_ABC& GetObject() const;  // $$$$ _RC_ LGY 2011-02-18: à supprimer
-    void Accept( urban::MotivationsVisitor_ABC& visitor ) const;
+    const MIL_UrbanObject_ABC& GetObject() const;  // $$$$ _RC_ LGY 2011-02-18: à supprimer
+    void Accept( MIL_UrbanMotivationsVisitor_ABC& visitor ) const;
     float GetLivingSpace() const;
     const std::vector< boost::shared_ptr< MT_Vector2D > >& ComputeLocalisationsInsideBlock() const;
 
@@ -138,7 +134,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const urban::TerrainObject_ABC* object_;
+    const MIL_UrbanObject_ABC* object_;
     T_Inhabitants inhabitants_;
     T_LivingAreas livingAreas_;
     mutable std::vector< boost::shared_ptr< MT_Vector2D > > strechedArea_;

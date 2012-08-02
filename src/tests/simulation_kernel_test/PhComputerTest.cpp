@@ -21,6 +21,8 @@
 #include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
 #include "Entities/Objects/MIL_ObjectLoader.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
+#include "Urban/MIL_UrbanObject.h"
+#include "Urban/UrbanGeometryAttribute.h"
 #include "Fixture.h"
 #include "MockMIL_Time_ABC.h"
 #include "MockAgent.h"
@@ -35,7 +37,6 @@
 #include <boost/assign/list_of.hpp>
 #include <xeumeuleu/xml.hpp>
 #include <urban/CoordinateConverter.h>
-#include <urban/UrbanObject.h>
 
 namespace
 {
@@ -59,12 +60,19 @@ namespace
             , vertices     ( boost::assign::list_of( geometry::Point2f( 0, 0 ) )( geometry::Point2f( 0, 2 ) )
                                                    ( geometry::Point2f( 2, 2 ) )( geometry::Point2f( 2, 0 ) ) )
             , poly         ( vertices )
-            , urbanBlockParent( 1, "parent", coord )
-            , urbanBlock   ( 0, "test", poly, urbanBlockParent, coord )
             , xis          ( "<objects>"
                              "    <object type='urban block'/>"
                              "</objects>" )
         {
+            xml::xistringstream xis1( "<urban-object name='parent' id='1'/>" );
+            xml::xistringstream xis2( "<urban-object name='test' id='0'/>" );
+            xis1 >> xml::start( "urban-object" );
+            urbanBlockParent.reset( new MIL_UrbanObject( xis1, coord ) );
+            xis1 >> xml::end;
+            xis2 >> xml::start( "urban-object" );
+            urbanBlock.reset( new MIL_UrbanObject( xis2, coord, urbanBlockParent.get() ) );
+            xis2 >> xml::end;
+            urbanBlock->Get< UrbanGeometryAttribute >().SetGeometry( vertices );
             loader.Initialize( xis );
         }
         MIL_EffectManager effectManager;
@@ -73,8 +81,8 @@ namespace
         std::vector< geometry::Point2f > vertices;
         geometry::Polygon2f poly;
         urban::CoordinateConverter coord;
-        urban::UrbanObject urbanBlockParent;
-        urban::UrbanObject urbanBlock;
+        std::auto_ptr< MIL_UrbanObject > urbanBlockParent;
+        std::auto_ptr< MIL_UrbanObject > urbanBlock;
         xml::xistringstream xis;
         MIL_ObjectLoader loader;
     };
@@ -86,7 +94,7 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( PhComputerFirerPositionTest, Fixture )
 {
-    std::auto_ptr< MIL_Object_ABC > pObject( loader.CreateUrbanObject( urbanBlock ) );
+    std::auto_ptr< MIL_Object_ABC > pObject( loader.CreateUrbanObject( *urbanBlock ) );
     PHY_RolePion_UrbanLocation* urbanRole = new PHY_RolePion_UrbanLocation( *firerFixture.pPion_ );
     firerFixture.pPion_->RegisterRole< PHY_RolePion_UrbanLocation >( *urbanRole );
     PHY_RolePion_Location* firerlocationRole = new PHY_RolePion_Location( *firerFixture.pPion_ );
@@ -102,7 +110,7 @@ BOOST_FIXTURE_TEST_CASE( PhComputerFirerPositionTest, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( PhComputerTargetPositionTest, Fixture )
 {
-    std::auto_ptr< MIL_Object_ABC > pObject( loader.CreateUrbanObject( urbanBlock ) );
+    std::auto_ptr< MIL_Object_ABC > pObject( loader.CreateUrbanObject( *urbanBlock ) );
     PHY_RolePion_UrbanLocation* urbanRole = new PHY_RolePion_UrbanLocation( *firerFixture.pPion_ );
     firerFixture.pPion_->RegisterRole< PHY_RolePion_UrbanLocation >( *urbanRole );
     PHY_RolePion_Location* targetLocationRole = new PHY_RolePion_Location( *targetFixture.pPion_ );
@@ -122,7 +130,7 @@ BOOST_FIXTURE_TEST_CASE( PhComputerTargetPositionTest, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( PhComputerIndirectPhModifier, Fixture )
 {
-    std::auto_ptr< MIL_Object_ABC > pObject( loader.CreateUrbanObject( urbanBlock ) );
+    std::auto_ptr< MIL_Object_ABC > pObject( loader.CreateUrbanObject( *urbanBlock ) );
     PHY_RolePion_UrbanLocation* urbanRole = new PHY_RolePion_UrbanLocation( *firerFixture.pPion_ );
     firerFixture.pPion_->RegisterRole< PHY_RolePion_UrbanLocation >( *urbanRole );
     PHY_RolePion_Location* locationRole = new PHY_RolePion_Location( *firerFixture.pPion_ );

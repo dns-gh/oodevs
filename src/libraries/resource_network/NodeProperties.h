@@ -28,11 +28,6 @@ namespace sword
     class UrbanAttributes_Infrastructures;
 }
 
-namespace urban
-{
-    class ResourceNetworkAttribute;
-}
-
 namespace xml
 {
     class xistream;
@@ -64,7 +59,7 @@ public:
     //! @name Operations
     //@{
     void SetTools( const ResourceTools_ABC& tools );
-    void Initialize( const urban::ResourceNetworkAttribute& urbanAttribute );
+    void Initialize( const UrbanResourceNetworkAttribute& urbanAttribute );
     void GetAvailableResources( std::vector< std::string >& resources ) const;
     void Update( xml::xistream& xis );
     void UpdateState( const ResourceNetworkModel& model );

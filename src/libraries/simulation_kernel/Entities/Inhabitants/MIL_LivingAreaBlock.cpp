@@ -21,7 +21,7 @@
 #include "protocol/ClientSenders.h"
 #include "Urban/PHY_AccomodationType.h"
 #include "Urban/PHY_ResourceNetworkType.h"
-#include <urban/MotivationsVisitor_ABC.h>
+#include "Urban/MIL_UrbanMotivationsVisitor_ABC.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_LivingAreaBlock )
 
@@ -318,7 +318,7 @@ float MIL_LivingAreaBlock::ComputeOccupationFactor() const
 
 namespace
 {
-    class MotivationsVisitor : public urban::MotivationsVisitor_ABC
+    class MotivationsVisitor : public MIL_UrbanMotivationsVisitor_ABC
     {
     public:
         explicit MotivationsVisitor( std::map< std::string, float >& motivations )

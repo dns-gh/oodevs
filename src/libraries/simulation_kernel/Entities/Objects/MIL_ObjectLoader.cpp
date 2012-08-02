@@ -221,7 +221,7 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const MIL_ObjectBuilder_ABC& bui
 // Name: MIL_ObjectLoader::CreateUrbanObject
 // Created: SLG 2010-06-23
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectLoader::CreateUrbanObject( const urban::TerrainObject_ABC& object ) const
+MIL_Object_ABC* MIL_ObjectLoader::CreateUrbanObject( const MIL_UrbanObject_ABC& object ) const
 {
     CIT_Prototypes it = prototypes_.find( "urban block" );
     if( it == prototypes_.end() )

@@ -24,13 +24,12 @@
 #include "Urban/MIL_UrbanModel.h"
 #include "Urban/PHY_InfrastructureType.h"
 #include "Urban/PHY_MaterialCompositionType.h"
-#include <urban/PhysicalAttribute.h>
-#include <urban/ColorAttribute.h>
-#include <urban/GeometryAttribute.h>
-#include <urban/InfrastructureAttribute.h>
-#include <urban/ResourceNetworkAttribute.h>
-#include <urban/TerrainObject_ABC.h>
-#include <urban/MotivationsVisitor_ABC.h>
+#include "Urban/MIL_UrbanObject_ABC.h"
+#include "Urban/MIL_UrbanMotivationsVisitor_ABC.h"
+#include "Urban/UrbanColorAttribute.h"
+#include "Urban/UrbanGeometryAttribute.h"
+#include "Urban/UrbanPhysicalAttribute.h"
+#include "Urban/UrbanResourceNetworkAttribute.h"
 #include <boost/serialization/vector.hpp>
 #include <boost/foreach.hpp>
 
@@ -42,7 +41,7 @@ const float UrbanObjectWrapper::stretchOffset_ = 10.f; // $$$$ _RC_ LGY 2010-10-
 // Name: UrbanObjectWrapper constructor
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
-UrbanObjectWrapper::UrbanObjectWrapper( const MIL_ObjectBuilder_ABC& builder, const urban::TerrainObject_ABC& object )
+UrbanObjectWrapper::UrbanObjectWrapper( const MIL_ObjectBuilder_ABC& builder, const MIL_UrbanObject_ABC& object )
     : MIL_Object( 0, builder.GetType(), 0 )
     , object_( &object )
 {
@@ -87,36 +86,34 @@ void UrbanObjectWrapper::InitializeAttributes()
 {
     // Position
     std::vector< MT_Vector2D > vector;
-    const urban::GeometryAttribute* geometry = object_->Retrieve< urban::GeometryAttribute >();
+    const UrbanGeometryAttribute* geometry = object_->Retrieve< UrbanGeometryAttribute >();
     if( geometry )
     {
-        geometry::Polygon2f::T_Vertices vertices = geometry->Geometry().Vertices();
+        geometry::Polygon2f::T_Vertices vertices = geometry->Vertices();
         for( geometry::Polygon2f::CIT_Vertices it = vertices.begin(); it != vertices.end(); ++it )
             vector.push_back( MT_Vector2D( it->X(), it->Y() ) );
     }
     Initialize( TER_Localisation( TER_Localisation::ePolygon , vector ) );
     // resource network
-    if( const urban::ResourceNetworkAttribute* resource = object_->Retrieve< urban::ResourceNetworkAttribute >() )
+    if( const UrbanResourceNetworkAttribute* resource = object_->Retrieve< UrbanResourceNetworkAttribute >() )
     {
         ResourceNetworkCapacity* capacity = Retrieve< ResourceNetworkCapacity >();
         if( capacity )
             capacity->Initialize( *resource );
     }
-    if( const urban::InfrastructureAttribute* infra = object_->Retrieve< urban::InfrastructureAttribute >() )
-        if( const PHY_InfrastructureType* infraType = PHY_InfrastructureType::Find( infra->GetType() ) )
+    if( const PHY_InfrastructureType* infraType = PHY_InfrastructureType::Find( object_->GetInfrastructure() ) )
+    {
+        InfrastructureCapacity* capacity = new InfrastructureCapacity( *infraType );
+        capacity->Register( *this );
+        if( const PHY_InfrastructureType::MedicalProperties* medical = infraType->GetMedicalProperties() )
         {
-            InfrastructureCapacity* capacity = new InfrastructureCapacity( *infraType );
+            MedicalCapacity* capacity = new MedicalCapacity( medical->emergencyBedsRate_, medical->emergencyDoctorsRate_, medical->nightDoctorsRate_ );
             capacity->Register( *this );
-            if( const PHY_InfrastructureType::MedicalProperties* medical = infraType->GetMedicalProperties() )
-            {
-                MedicalCapacity* capacity = new MedicalCapacity( medical->emergencyBedsRate_, medical->emergencyDoctorsRate_, medical->nightDoctorsRate_ );
-                capacity->Register( *this );
-            }
         }
-    if( const urban::PhysicalAttribute* pPhysical = object_->Retrieve< urban::PhysicalAttribute >() )
-        if( const urban::Architecture* architecture = pPhysical->GetArchitecture() )
-            if( const PHY_MaterialCompositionType* material = PHY_MaterialCompositionType::Find( architecture->GetMaterial() ) )
-                GetAttribute< MaterialAttribute >() = MaterialAttribute( *material );
+    }
+    if( const UrbanPhysicalAttribute* pPhysical = object_->Retrieve< UrbanPhysicalAttribute >() )
+        if( const PHY_MaterialCompositionType* material = PHY_MaterialCompositionType::Find(  pPhysical->GetArchitecture().material_ ) )
+            GetAttribute< MaterialAttribute >() = MaterialAttribute( *material );
 }
 
 // -----------------------------------------------------------------------------
@@ -139,7 +136,7 @@ void UrbanObjectWrapper::load( MIL_CheckPointInArchive& file, const unsigned int
 // -----------------------------------------------------------------------------
 void UrbanObjectWrapper::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    unsigned long urbanId = object_->GetId();
+    unsigned long urbanId = object_->GetUrbanId();
     file << boost::serialization::base_object< MIL_Object >( *this );
     file << urbanId
          << inhabitants_
@@ -161,7 +158,7 @@ void UrbanObjectWrapper::WriteODB( xml::xostream& /*xos*/ ) const
 // -----------------------------------------------------------------------------
 void UrbanObjectWrapper::WriteUrbanIdAttribute( xml::xostream& xos ) const
 {
-    xos << xml::attribute( "id", object_->GetId() );
+    xos << xml::attribute( "id", object_->GetUrbanId() );
 }
 
 // -----------------------------------------------------------------------------
@@ -208,7 +205,8 @@ void UrbanObjectWrapper::SendFullStateCapacity( sword::UrbanAttributes& msg ) co
 
 namespace
 {
-    class MotivationsVisitor : public urban::MotivationsVisitor_ABC
+    class MotivationsVisitor : public MIL_UrbanMotivationsVisitor_ABC
+
     {
     public:
         explicit MotivationsVisitor( std::map< std::string, float >& motivations )
@@ -236,7 +234,7 @@ void UrbanObjectWrapper::SendCreation() const
     message().mutable_object()->set_id( GetID() );
     message().set_name( object_->GetName() );
     NET_ASN_Tools::WriteLocation( GetLocalisation(), *message().mutable_location() );
-    if( const urban::ColorAttribute* color = object_->Retrieve< urban::ColorAttribute >() )
+    if( const UrbanColorAttribute* color = object_->Retrieve< UrbanColorAttribute >() )
     {
         sword::RgbaColor* msg = message().mutable_attributes()->mutable_color();
         msg->set_red( color->Red() );
@@ -244,30 +242,27 @@ void UrbanObjectWrapper::SendCreation() const
         msg->set_blue( color->Blue() );
         msg->set_alpha( color->Alpha() );
     }
-    if( const urban::PhysicalAttribute* pPhysical = object_->Retrieve< urban::PhysicalAttribute >() )
+    if( const UrbanPhysicalAttribute* pPhysical = object_->Retrieve< UrbanPhysicalAttribute >() )
     {
-        if( const urban::Architecture* architecture = pPhysical->GetArchitecture() )
+        // architecture
+        const UrbanPhysicalAttribute::Architecture& architecture = pPhysical->GetArchitecture();
+        sword::UrbanAttributes_Architecture* msg = message().mutable_attributes()->mutable_architecture();
+        msg->set_height( static_cast< float >( architecture.height_ ) );
+        msg->set_floor_number( architecture.floorNumber_ );
+        msg->set_roof_shape( architecture.roofShape_.c_str() );
+        msg->set_material( architecture.material_.c_str() );
+        msg->set_occupation( static_cast< float >( architecture.occupation_ ) );
+        msg->set_trafficability( static_cast< float >( architecture.trafficability_ ) );
+        msg->set_parking_floors( architecture.parkingFloors_ );
+        //motivations
+        std::map< std::string, float > motivations;
+        MotivationsVisitor visitor( motivations );
+        pPhysical->Accept( visitor );
+        for( std::map< std::string, float >::const_iterator it = motivations.begin(); it != motivations.end(); ++it )
         {
-            sword::UrbanAttributes_Architecture* msg = message().mutable_attributes()->mutable_architecture();
-            msg->set_height( static_cast< float >( architecture->GetHeight() ) );
-            msg->set_floor_number( architecture->GetFloorNumber() );
-            msg->set_roof_shape( architecture->GetRoofShape().c_str() );
-            msg->set_material( architecture->GetMaterial().c_str() );
-            msg->set_occupation( static_cast< float >( architecture->GetOccupation() ) );
-            msg->set_trafficability( static_cast< float >( architecture->GetTrafficability() ) );
-            msg->set_parking_floors( architecture->GetParkingFloors() );
-        }
-        if( pPhysical->GetMotivations() )
-        {
-            std::map< std::string, float > motivations;
-            MotivationsVisitor visitor( motivations );
-            pPhysical->GetMotivations()->Accept( visitor );
-            for( std::map< std::string, float >::const_iterator it = motivations.begin(); it != motivations.end(); ++it )
-            {
-                sword::UrbanUsage& usage = *message().mutable_attributes()->add_usages();
-                usage.set_role( it->first );
-                usage.set_percentage( static_cast< unsigned int >( it->second * 100 + 0.5f ) );
-            }
+            sword::UrbanUsage& usage = *message().mutable_attributes()->add_usages();
+            usage.set_role( it->first );
+            usage.set_percentage( static_cast< unsigned int >( it->second * 100 + 0.5f ) );
         }
     }
     message.Send( NET_Publisher_ABC::Publisher() );
@@ -325,7 +320,7 @@ void UrbanObjectWrapper::UpdateState()
 // Name: UrbanObjectWrapper::Accept
 // Created: JSR 2011-01-28
 // -----------------------------------------------------------------------------
-void UrbanObjectWrapper::Accept( urban::MotivationsVisitor_ABC& visitor ) const
+void UrbanObjectWrapper::Accept( MIL_UrbanMotivationsVisitor_ABC& visitor ) const
 {
     object_->Accept( visitor );
 }
@@ -359,7 +354,7 @@ const std::vector< boost::shared_ptr< MT_Vector2D > >& UrbanObjectWrapper::Compu
 // Name: UrbanObjectWrapper::Is
 // Created: JSR 2011-05-30
 // -----------------------------------------------------------------------------
-bool UrbanObjectWrapper::Is( const urban::TerrainObject_ABC& object ) const
+bool UrbanObjectWrapper::Is( const MIL_UrbanObject_ABC& object ) const
 {
     return object_ == &object;
 }
@@ -406,9 +401,8 @@ float UrbanObjectWrapper::ComputeComplexity() const
 // -----------------------------------------------------------------------------
 float UrbanObjectWrapper::GetHeight() const
 {
-    if( const urban::PhysicalAttribute* pPhysical = object_->Retrieve< urban::PhysicalAttribute >() )
-        if( const urban::Architecture* architecture = pPhysical->GetArchitecture() )
-            return static_cast< float >( architecture->GetHeight() );
+    if( const UrbanPhysicalAttribute* pPhysical = object_->Retrieve< UrbanPhysicalAttribute >() )
+        return static_cast< float >( pPhysical->GetArchitecture().height_ );
     return 0;
 }
 
@@ -418,14 +412,9 @@ float UrbanObjectWrapper::GetHeight() const
 // -----------------------------------------------------------------------------
 float UrbanObjectWrapper::GetStructuralHeight() const
 {
-    if( const urban::PhysicalAttribute* pPhysical = object_->Retrieve< urban::PhysicalAttribute >() )
-        if( const urban::Architecture* architecture = pPhysical->GetArchitecture() )
-        {
-            if( const StructuralCapacity* structuralCapacity = Retrieve< StructuralCapacity >() )
-                return float( architecture->GetHeight() ) * structuralCapacity->GetStructuralState();
-            else
-                return float( architecture->GetHeight() );
-        }
+    if( const UrbanPhysicalAttribute* pPhysical = object_->Retrieve< UrbanPhysicalAttribute >() )
+        if( const StructuralCapacity* structuralCapacity = Retrieve< StructuralCapacity >() )
+            return pPhysical->GetArchitecture().height_ * structuralCapacity->GetStructuralState();
     return 0.0f;
 }
 
@@ -435,10 +424,9 @@ float UrbanObjectWrapper::GetStructuralHeight() const
 // -----------------------------------------------------------------------------
 float UrbanObjectWrapper::GetStructuralState() const
 {
-    if( const urban::PhysicalAttribute* pPhysical = object_->Retrieve< urban::PhysicalAttribute >() )
-        if( const urban::Architecture* architecture = pPhysical->GetArchitecture() )
-            if( const StructuralCapacity* structuralCapacity = Retrieve< StructuralCapacity >() )
-                return structuralCapacity->GetStructuralState();
+    if( const UrbanPhysicalAttribute* pPhysical = object_->Retrieve< UrbanPhysicalAttribute >() )
+        if( const StructuralCapacity* structuralCapacity = Retrieve< StructuralCapacity >() )
+            return structuralCapacity->GetStructuralState();
     return 0.0f;
 }
 
@@ -448,9 +436,8 @@ float UrbanObjectWrapper::GetStructuralState() const
 // -----------------------------------------------------------------------------
 double UrbanObjectWrapper::GetOccupation() const
 {
-    if( const urban::PhysicalAttribute* pPhysical = object_->Retrieve< urban::PhysicalAttribute >() )
-        if( const urban::Architecture* architecture = pPhysical->GetArchitecture() )
-            return architecture->GetOccupation();
+    if( const UrbanPhysicalAttribute* pPhysical = object_->Retrieve< UrbanPhysicalAttribute >() )
+        return pPhysical->GetArchitecture().occupation_;
     return 0;
 }
 
@@ -460,9 +447,8 @@ double UrbanObjectWrapper::GetOccupation() const
 // -----------------------------------------------------------------------------
 double UrbanObjectWrapper::GetTrafficability() const
 {
-    if( const urban::PhysicalAttribute* pPhysical = object_->Retrieve< urban::PhysicalAttribute >() )
-        if( const urban::Architecture* architecture = pPhysical->GetArchitecture() )
-            return architecture->GetTrafficability();
+    if( const UrbanPhysicalAttribute* pPhysical = object_->Retrieve< UrbanPhysicalAttribute >() )
+        return pPhysical->GetArchitecture().trafficability_;
     return std::numeric_limits< double >::max();
 }
 
@@ -470,7 +456,7 @@ double UrbanObjectWrapper::GetTrafficability() const
 // Name: UrbanObjectWrapper::GetObject
 // Created: SLG 2010-06-24
 // -----------------------------------------------------------------------------
-const urban::TerrainObject_ABC& UrbanObjectWrapper::GetObject() const
+const MIL_UrbanObject_ABC& UrbanObjectWrapper::GetObject() const
 {
     return *object_;
 }
@@ -607,8 +593,7 @@ void UrbanObjectWrapper::AddLivingArea( MIL_LivingArea& livingArea )
 // -----------------------------------------------------------------------------
 bool UrbanObjectWrapper::HasArchitecture() const
 {
-    const urban::PhysicalAttribute* pPhysical = object_->Retrieve< urban::PhysicalAttribute >();
-    return pPhysical !=0 && pPhysical->GetArchitecture() != 0;
+    return object_->Retrieve< UrbanPhysicalAttribute >() != 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -618,9 +603,8 @@ bool UrbanObjectWrapper::HasArchitecture() const
 const std::string& UrbanObjectWrapper::GetMaterial() const
 {
     static const std::string empty;
-    if( const urban::PhysicalAttribute* pPhysical = object_->Retrieve< urban::PhysicalAttribute >() )
-        if( const urban::Architecture* architecture = pPhysical->GetArchitecture() )
-            return architecture->GetMaterial();
+    if( const UrbanPhysicalAttribute* pPhysical = object_->Retrieve< UrbanPhysicalAttribute >() )
+        return pPhysical->GetArchitecture().material_;
     return empty;
 }
 

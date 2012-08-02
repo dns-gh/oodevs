@@ -25,11 +25,6 @@ namespace sword
     class FloodModelFactory_ABC;
 }
 
-namespace urban
-{
-    class TerrainObject_ABC;
-}
-
 namespace xml
 {
     class xistream;
@@ -41,6 +36,7 @@ class MIL_Object_ABC;
 class MIL_ObjectType_ABC;
 class MIL_ObjectBuilder_ABC;
 class MIL_ObjectFactory;
+class MIL_UrbanObject_ABC;
 class UrbanObjectWrapper;
 
 // =============================================================================
@@ -74,13 +70,13 @@ public:
     MIL_Object_ABC* CreateObject( MIL_Army_ABC* army, const std::string& type, const TER_Localisation* pLocalisation,
                                   sword::ObstacleType_DemolitionTargetType obstacleType, unsigned int externalIdentifier, const std::string& name, double density );
     MIL_Object_ABC* CreateObject( MIL_Army_ABC* army, const MIL_ObjectBuilder_ABC& builder );
-    MIL_Object_ABC* CreateUrbanObject( const urban::TerrainObject_ABC& object );
+    MIL_Object_ABC* CreateUrbanObject( const MIL_UrbanObject_ABC& object );
 
     void WriteODB( xml::xostream& xos ) const;
     void ReadUrbanState( xml::xistream& xis );
     MIL_Object_ABC* Find( unsigned int nID ) const;
     const MIL_ObjectType_ABC& FindType( const std::string& type ) const;
-    UrbanObjectWrapper& GetUrbanObjectWrapper( const urban::TerrainObject_ABC& object );
+    UrbanObjectWrapper& GetUrbanObjectWrapper( const MIL_UrbanObject_ABC& object );
     unsigned int ConvertUrbanIdToSimId( unsigned int urbanId );
     const std::set< MIL_Object_ABC* >& GetUniversalObjects() const;
     const std::vector< UrbanObjectWrapper* >& GetUrbanBlocks() const;
@@ -104,9 +100,9 @@ private:
 
     typedef std::set< MIL_Object_ABC* > T_ObjectSet;
 
-    typedef std::map< const urban::TerrainObject_ABC*, UrbanObjectWrapper* > T_UrbanObjectMap;
-    typedef T_UrbanObjectMap::iterator                                      IT_UrbanObjectMap;
-    typedef T_UrbanObjectMap::const_iterator                               CIT_UrbanObjectMap;
+    typedef std::map< const MIL_UrbanObject_ABC*, UrbanObjectWrapper* > T_UrbanObjectMap;
+    typedef T_UrbanObjectMap::iterator                                 IT_UrbanObjectMap;
+    typedef T_UrbanObjectMap::const_iterator                          CIT_UrbanObjectMap;
 
     typedef std::vector< UrbanObjectWrapper* >    T_UrbanBlocksVector;
     typedef T_UrbanBlocksVector::iterator        IT_UrbanBlocksVector;
