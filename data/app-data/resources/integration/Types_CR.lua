@@ -492,4 +492,5 @@ eRC_IEDReadyForFiring = 476
 eRC_FollowingUnitIsDead = 477
 eRC_CombatSupportUnitIsDead = 478
 eRC_NoUnitsInParameter = 479
-eNbr = 480
+eRC_CaptureEnd = 480
+eNbr = 481

@@ -639,6 +639,7 @@ public:
         eRC_FollowingUnitIsDead,
         eRC_CombatSupportUnitIsDead,
         eRC_NoUnitsInParameter,
+        eRC_CaptureEnd,
         eLast
     };
     //@}
