@@ -323,7 +323,7 @@ void PHY_Dotation::Resupply( double rFactor /* = 1. */ )
 // -----------------------------------------------------------------------------
 void PHY_Dotation::ChangeDotation( unsigned int number, float thresholdPercentage )
 {
-    assert( number < rCapacity_ );
+    assert( number <= rCapacity_ );
     SetValue( number );
     rConsumptionReservation_ = 0.;
     rFireReservation_        = 0.;
