@@ -152,7 +152,7 @@ end
 -- en cas de prise à partie.
 -- --------------------------------------------------------------------------------
 integration.switchOnSafetyMode = function( self )
-    myself.speedModulation.switchOnCoverMode = 0.2 -- modulationMax / 10
+    myself.speedModulation.switchOnSafetyMode = 0.2 -- modulationMax / 10
     DEC_Perception_ActiverCoupsDeSonde()
     if DEC_Agent_EstEnVol() and myself.altitude then
         DEC_Agent_HauteurDeVol( myself.altitude * 0.2 )
@@ -179,6 +179,7 @@ end
 -- @release 2010-09-09
 -- --------------------------------------------------------------------------------
 integration.switchOffSafetyMode = function( self )
+    myself.speedModulation.switchOnSafetyMode = 1
     DEC_Perception_DesactiverCoupsDeSonde()
     if DEC_Agent_EstEnVol() and myself.altitude then
         DEC_Agent_HauteurDeVol( myself.altitude )
