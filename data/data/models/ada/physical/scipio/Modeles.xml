@@ -4136,7 +4136,10 @@
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION RENS ROEM Appuyer"/>
-        <mission name="PION RENS ROEM Renseigner Sur"/>
+        <mission name="PION RENS ROEM Renseigner Sur">
+          <fragorder name="ROEM Passer En Silence Radar"/>
+          <fragorder name="ROEM Arreter Silence Radar"/>
+        </mission>
         <mission name="PION MELEE Animer Poste De Controle"/>
         <mission name="PION MELEE Renseigner sur foule"/>
       </missions>
@@ -4144,8 +4147,6 @@
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -7090,7 +7091,10 @@
     <automat dia-type="company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.RENS.ELGE">
       <missions>
         <mission name="AUTOMATE RENS ROEM Appuyer"/>
-        <mission name="AUTOMATE RENS ROEM Renseigner Sur"/>
+        <mission name="AUTOMATE RENS ROEM Renseigner Sur">
+          <fragorder name="ROEM Passer En Silence Radar"/>
+          <fragorder name="ROEM Arreter Silence Radar"/>
+        </mission>
         <mission name="AUTOMATE COMMUNES Decrocher"/>
         <mission name="AUTOMATE COMMUNES Faire Mouvement"/>
         <mission name="AUTOMATE COMMUNES Franchir"/>
@@ -7103,8 +7107,6 @@
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -7447,4 +7449,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0779224381" -->
+<!-- signature="0882219971" -->

@@ -4667,6 +4667,8 @@
       <parameter dia-name="pointCible_" name="Cible" optional="false" type="Point"/>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_MiseAFeuIED" id="28799" name="Pion Mise A Feu IED"/>
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ROEM_PasserEnSilenceRadar" id="28800" name="ROEM Passer En Silence Radar"/>
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ROEM_ArreterSilenceRadar" id="28801" name="ROEM Arreter Silence Radar"/>
   </fragorders>
 </missions>
-<!-- signature="3085694041" -->
+<!-- signature="1373090072" -->
