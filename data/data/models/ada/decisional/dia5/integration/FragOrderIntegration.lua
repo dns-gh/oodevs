@@ -68,7 +68,9 @@ integration.isTask = function( self )
          orderType == "Rep_OrderConduite_Pion_RenforcerEnRemorqueurs" or
          orderType == "Rep_OrderConduite_Pion_TransfererRemorqueurs" or
          orderType == "Rep_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs" or
-         orderType == "Rep_OrderConduite_MiseAFeuIED"
+         orderType == "Rep_OrderConduite_MiseAFeuIED" or
+         orderType == "Rep_OrderConduite_ROEM_ArreterSilenceRadar" or
+         orderType == "Rep_OrderConduite_ROEM_PasserEnSilenceRadar"
 end
 
 integration.mustBePropagate = function( self )
@@ -105,7 +107,9 @@ integration.mustBePropagate = function( self )
          orderType == "Rep_OrderConduite_ModifierPrioritesTactiquesReparations" or
          orderType == "Rep_OrderConduite_ModifierPrioritesReparations" or
          orderType == "Rep_OrderConduite_ModifierPrioritesBlesses" or
-         orderType == "Rep_OrderConduite_RejoindrePointLancement"
+         orderType == "Rep_OrderConduite_RejoindrePointLancement" or
+         orderType == "Rep_OrderConduite_ROEM_ArreterSilenceRadar" or
+         orderType == "Rep_OrderConduite_ROEM_PasserEnSilenceRadar"		 
 end
 
 integration.setAutomatFragOrder = function( self )
@@ -385,6 +389,26 @@ integration.startFragOrderTask = function( self )
     end
   elseif orderType == "Rep_OrderConduite_RecupererTransporteurs" then
     DEC_RecupererTransporteursSansDelai()
+    integration.cleanFragOrder( self )
+    return
+  elseif orderType == "Rep_OrderConduite_ROEM_ArreterSilenceRadar" then
+    if not myself.radarActivated and myself.zoneAEcouter then
+        myself.ecoute = DEC_Perception_ActiverRadarSurLocalisation( eRadarType_Ecoute, myself.zoneAEcouter )
+        myself.radar = DEC_Perception_ActiverRadarSurLocalisation( eRadarType_Radar, myself.zoneAEcouter )
+        myself.ecouteRadar = DEC_Perception_ActiverRadarSurLocalisation( eRadarType_EcouteRadar, myself.zoneAEcouter )
+        myself.radarActivated = true
+        meKnowledge:RC( eRC_FinSilenceRadar )	
+    end
+    integration.cleanFragOrder( self )
+    return
+  elseif orderType == "Rep_OrderConduite_ROEM_PasserEnSilenceRadar" then
+    if myself.radarActivated then
+        DEC_Perception_DesactiverRadarSurLocalisation( eRadarType_Ecoute, myself.ecoute )
+        DEC_Perception_DesactiverRadarSurLocalisation( eRadarType_Radar, myself.radar )
+        DEC_Perception_DesactiverRadarSurLocalisation( eRadarType_EcouteRadar, myself.ecouteRadar )
+        myself.radarActivated = false
+        meKnowledge:RC( eRC_DebutSilenceRadar )	
+    end
     integration.cleanFragOrder( self )
     return
   elseif orderType == "france.military.platoon.combat.support.art.tasks.AppliquerFeux" then

@@ -495,27 +495,38 @@ end
 -- @release 2012-07-12
 -- -------------------------------------------------------------------------------- 
 integration.activateRadar = function ( area )
-    myself.ecoute = DEC_Perception_ActiverRadarSurLocalisation( eRadarType_Ecoute, area.source )
-    myself.radar = DEC_Perception_ActiverRadarSurLocalisation( eRadarType_Radar, area.source )
-    myself.ecouteRadar = DEC_Perception_ActiverRadarSurLocalisation( eRadarType_EcouteRadar, area.source )
-	
-	meKnowledge:RC( eRC_DebutSurveillance )
-	return true
+    if not myself.radarActivated then
+        myself.ecoute = DEC_Perception_ActiverRadarSurLocalisation( eRadarType_Ecoute, area.source )
+        myself.radar = DEC_Perception_ActiverRadarSurLocalisation( eRadarType_Radar, area.source )
+        myself.ecouteRadar = DEC_Perception_ActiverRadarSurLocalisation( eRadarType_EcouteRadar, area.source )
+        myself.zoneAEcouter = area.source
+        myself.radarActivated = true
+
+        meKnowledge:RC( eRC_DebutSurveillance )
+        return true
+    else
+        return false
+    end
 end
 
 -- -------------------------------------------------------------------------------- 
--- Dectivate radar on area
+-- Deactivate radar on area
 -- @param area
 -- @author PSN
 -- @release 2012-07-12
 -- -------------------------------------------------------------------------------- 
 integration.deactivateRadar = function ( area )
-    DEC_Perception_DesactiverRadarSurLocalisation( eRadarType_Ecoute, myself.ecoute )
-    DEC_Perception_DesactiverRadarSurLocalisation( eRadarType_Radar, myself.radar )
-    DEC_Perception_DesactiverRadarSurLocalisation( eRadarType_EcouteRadar, myself.ecouteRadar )
-	
-	meKnowledge:RC( eRC_FinSurveillance )	
-	return true
+    if myself.radarActivated then
+        DEC_Perception_DesactiverRadarSurLocalisation( eRadarType_Ecoute, myself.ecoute )
+        DEC_Perception_DesactiverRadarSurLocalisation( eRadarType_Radar, myself.radar )
+        DEC_Perception_DesactiverRadarSurLocalisation( eRadarType_EcouteRadar, myself.ecouteRadar )
+        myself.radarActivated = false
+
+        meKnowledge:RC( eRC_FinSurveillance )	
+        return true
+    else
+        return false
+    end
 end
 
 -- -------------------------------------------------------------------------------- 
