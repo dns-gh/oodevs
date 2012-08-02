@@ -652,5 +652,7 @@
   <report category="operational" id="441" message="Unité neutre reconnue"/>
   <report category="operational" id="442" message="Unité neutre identifiée"/>
   <report category="operational" id="443" message="Libéré"/>
+  <report category="operational" id="444" message="Pris sous tir éclairant"/>
+  <report category="operational" id="445" message="Pris sous tir fumigène"/>
 </reports>
-<!-- signature="4079148031" -->
+<!-- signature="1421627273" -->

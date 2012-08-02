@@ -455,4 +455,6 @@ eRc_EnemyUnitIdentified = 440
 eRc_NeutralUnitRecognized = 441
 eRc_NeutralUnitIdentified = 442
 eRC_CaptureEnd = 443
-eNbr = 444
+eRC_PrisSousTirEclairant = 444
+eRC_PrisSousTirFumigene = 445
+eNbr = 446

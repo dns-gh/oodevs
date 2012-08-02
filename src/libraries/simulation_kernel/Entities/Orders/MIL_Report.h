@@ -158,6 +158,8 @@ public:
         eReport_EnemyUnitIdentified,
         eReport_NeutralUnitRecognized,
         eReport_NeutralUnitIdentified,
+        eReport_UnderLightingFire,
+        eReport_UnderSmokeFire,
         eNbrReport
     };
 
@@ -593,7 +595,7 @@ public:
         eRC_FireObserver,
         eRC_ImpossibleActivateIED,
         eRC_Jammed,
-        eRC_PCJammed, // 430
+        eRC_PCJammed,
         eRC_IEDNotReady,
         eRC_IEDReadyForFiring,
         eRC_FollowingUnitIsDead,
@@ -603,10 +605,12 @@ public:
         eRc_FriendUnitRecognized,
         eRc_FriendUnitIdentified,
         eRc_EnemyUnitRecognized,
-        eRc_EnemyUnitIdentified,
+        eRc_EnemyUnitIdentified, // 440
         eRc_NeutralUnitRecognized,
         eRc_NeutralUnitIdentified,
         eRC_CaptureEnd,
+        eRC_PrisSousTirEclairant,
+        eRC_PrisSousTirFumigene,
         eLast
     };
     //@}
