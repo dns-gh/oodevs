@@ -323,7 +323,7 @@ void DEC_Knowledge_Agent::Update( const DEC_Knowledge_AgentPerception& perceptio
     dataRecognition_.Update( perception.GetRecognitionData() );
     dataIdentification_.Update( perception.GetIdentificationData() );
     UpdatePerceptionSources( perception );
-    if( bMaxPerceptionLevelUpdated_ && !IsDead() )
+    if( bMaxPerceptionLevelUpdated_ && !IsDead() && &perception.GetAgentPerceiving() != &perception.GetAgentPerceived() )
     {
         if( perception.GetMaxPerceptionLevel() == PHY_PerceptionLevel::detected_ )
             MIL_Report::PostEvent( perception.GetAgentPerceiving(), MIL_Report::eReport_DetectedUnit );
