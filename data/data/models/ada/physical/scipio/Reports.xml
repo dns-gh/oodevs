@@ -651,5 +651,6 @@
   <report category="operational" id="440" message="Unité ennemie identifiée"/>
   <report category="operational" id="441" message="Unité neutre reconnue"/>
   <report category="operational" id="442" message="Unité neutre identifiée"/>
+  <report category="operational" id="443" message="Libéré"/>
 </reports>
-<!-- signature="0760479730" -->
+<!-- signature="4079148031" -->

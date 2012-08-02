@@ -651,5 +651,6 @@
   <report category="operational" id="440" message="Enemy unit identified"/>
   <report category="operational" id="441" message="Neutral unit recognized"/>
   <report category="operational" id="442" message="Neutral unit identified"/>
+  <report category="operational" id="443" message="Released"/>
 </reports>
-<!-- signature="3750526049" -->
+<!-- signature="1644931049" -->
