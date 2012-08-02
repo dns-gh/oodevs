@@ -35,7 +35,7 @@
                                 </parameter>
                                 <parameter name="distanceMin">
                                     <value>
-                                        <number>2000.0</number>
+                                        <number>100.0</number>
                                     </value>
                                 </parameter>
                             </call>

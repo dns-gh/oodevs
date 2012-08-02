@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="platoon.tasks.Interroger" source-version="1.0.0" knowledge-class="platoon.tasks.knowledges.Interrogate">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.tasks.CollectInformation" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.CollectInformation">
+    <description>To get a specific message information from a unit. In sword, those information are messages writen by trainers, in order to provide information to trainees about the past and future situation.</description>
     <parameters>
         <parameter name="entity">
-            <description>L'entité que l'on souhaite interroger.</description>
+            <description>The entity from which to collect informations.</description>
             <type>
                 <class name="properties.Reachable"/>
                 <class name="properties.Askable"/>
             </type>
         </parameter>
     </parameters>
+    <goal>
+        <description>To get information from a unit.</description>
+    </goal>
     <stages>
-        <stage label="deplacement vers l'unité" disable-when-done="true">
+        <stage label="moving to entity" disable-when-done="true">
             <skills>
                 <skill name="agent.skills.Interrogate" main="true">
                     <parameter name="entity">
