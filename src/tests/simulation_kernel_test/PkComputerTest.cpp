@@ -18,8 +18,6 @@
 #include "Entities/Objects/MIL_ObjectLoader.h"
 #include "Urban/MIL_UrbanObject.h"
 #include "StubTER_World.h"
-#include <urban/CoordinateConverter_ABC.h>
-#include <urban/CoordinateConverter.h>
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
@@ -46,10 +44,9 @@ BOOST_FIXTURE_TEST_CASE( PkComputerUrbanProtectionTest, TestPK )
         "</urban-object>" );
 
     MockAgent firer;
-    urban::CoordinateConverter coord;
     xisModel >> xml::start( "urban-object" );
     std::auto_ptr< MIL_UrbanObject > urbanBlock;
-    urbanBlock.reset( new MIL_UrbanObject( xisModel, coord ) );
+    urbanBlock.reset( new MIL_UrbanObject( xisModel ) );
     xisModel >> xml::end;
     MIL_ObjectLoader loader;
     {

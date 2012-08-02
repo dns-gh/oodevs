@@ -12,14 +12,8 @@
 
 // TEMPORAIRE ?
 
-#include <urban/Extension_ABC.h>
+#include "UrbanExtension_ABC.h"
 #include <geometry/Types.h>
-
-namespace urban
-{
-    class CoordinateConverter_ABC;
-}
-
 
 // =============================================================================
 /** @class  UrbanGeometryAttribute
@@ -27,14 +21,14 @@ namespace urban
 */
 // Created: JSR 2012-08-01
 // =============================================================================
-class UrbanGeometryAttribute : public urban::Extension_ABC
+class UrbanGeometryAttribute : public UrbanExtension_ABC
                              , private boost::noncopyable
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanGeometryAttribute( xml::xistream& xis, urban::CoordinateConverter_ABC& converter );
+             UrbanGeometryAttribute( xml::xistream& xis );
     virtual ~UrbanGeometryAttribute();
     //@}
 
@@ -57,7 +51,6 @@ private:
 private:
     //! @name Member data
     //@{
-    urban::CoordinateConverter_ABC& converter_;
     std::vector< geometry::Point2f > vertices_;
     //@}
 };

@@ -47,7 +47,6 @@
     <Import Project="Property sheets\link_geocoord.props" />
     <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_qt.props" />
-    <Import Project="Property sheets\link_urban.props" />
     <Import Project="Property sheets\link_tools.props" />
     <Import Project="Property sheets\link_xalan.props" />
     <Import Project="Property sheets\link_xerces.props" />
@@ -64,7 +63,6 @@
     <Import Project="Property sheets\link_geocoord.props" />
     <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_qt.props" />
-    <Import Project="Property sheets\link_urban.props" />
     <Import Project="Property sheets\link_tools.props" />
     <Import Project="Property sheets\link_xalan.props" />
     <Import Project="Property sheets\link_xerces.props" />
@@ -81,7 +79,6 @@
     <Import Project="Property sheets\link_geocoord.props" />
     <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_qt.props" />
-    <Import Project="Property sheets\link_urban.props" />
     <Import Project="Property sheets\link_tools.props" />
     <Import Project="Property sheets\link_xalan.props" />
     <Import Project="Property sheets\link_xerces.props" />
@@ -98,7 +95,6 @@
     <Import Project="Property sheets\link_geocoord.props" />
     <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_qt.props" />
-    <Import Project="Property sheets\link_urban.props" />
     <Import Project="Property sheets\link_tools.props" />
     <Import Project="Property sheets\link_xalan.props" />
     <Import Project="Property sheets\link_xerces.props" />

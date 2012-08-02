@@ -8,7 +8,6 @@
     <libGeocoord>geocoord.lib</libGeocoord>
     <libOpengl>opengl32.lib;QtOpenGL4.lib</libOpengl>
     <libQT>QtCore4.lib;QtGui4.lib;Qt3Support4.lib</libQT>
-    <libUrban>urban.lib</libUrban>
     <libTools>tools.lib</libTools>
     <libZip>zipstream.lib;zlib1.lib</libZip>
     <libDirectIA>directia-$(CurrentPlatform)-mt-4_6.lib</libDirectIA>
@@ -80,9 +79,6 @@
     </BuildMacro>
     <BuildMacro Include="libQT">
       <Value>$(libQT)</Value>
-    </BuildMacro>
-    <BuildMacro Include="libUrban">
-      <Value>$(libUrban)</Value>
     </BuildMacro>
     <BuildMacro Include="libTools">
       <Value>$(libTools)</Value>

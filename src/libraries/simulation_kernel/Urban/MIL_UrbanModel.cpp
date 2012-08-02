@@ -13,11 +13,7 @@
 #include "Urban/MIL_UrbanObject.h"
 #include "UrbanGeometryAttribute.h"
 #include "UrbanPhysicalAttribute.h"
-
-#include <urban/WorldParameters.h> // à remplacer par config
-#include <urban/CoordinateConverter_ABC.h>
-#include <urban/CoordinateConverter.h>
-
+#include "Tools/ExerciseConfig.h"
 #pragma warning( push, 0 )
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/convenience.hpp>
@@ -59,8 +55,7 @@ struct MIL_UrbanModel::QuadTreeTraits
 // Created: JSR 2012-07-26
 // -----------------------------------------------------------------------------
 MIL_UrbanModel::MIL_UrbanModel()
-    : converter_     ( new urban::CoordinateConverter() )
-    , precision_     ( 0 )
+    : precision_     ( 0 )
     , maxElementSize_( 0 )
 {
     // NOTHING
@@ -358,10 +353,8 @@ void MIL_UrbanModel::Accept( MIL_UrbanObjectVisitor_ABC& visitor ) const
 // Name: MIL_UrbanModel::Load
 // Created: JSR 2012-07-27
 // -----------------------------------------------------------------------------
-void MIL_UrbanModel::Load( const std::string& directoryPath )
+void MIL_UrbanModel::Load( const std::string& directoryPath, tools::ExerciseConfig& config )
 {
-    urban::WorldParameters world( directoryPath );
-    converter_->Load( world );
     // TODO Supprimer le chemin en hard
     const bfs::path fullPath = bfs::path( directoryPath ) / "urban" / "urban.xml"; 
     Purge();
@@ -369,7 +362,7 @@ void MIL_UrbanModel::Load( const std::string& directoryPath )
     {
         xml::xifstream input( fullPath.string() );
         Load( input );
-        CreateQuadTree( geometry::Rectangle2f( geometry::Point2f( 0, 0 ), geometry::Point2f( world.GetWidth(), world.GetHeight() ) ) );
+        CreateQuadTree( geometry::Rectangle2f( geometry::Point2f( 0, 0 ), geometry::Point2f( config.GetTerrainWidth(), config.GetTerrainHeight() ) ) );
     }
 }
 
@@ -379,7 +372,7 @@ void MIL_UrbanModel::Load( const std::string& directoryPath )
 // -----------------------------------------------------------------------------
 void MIL_UrbanModel::ReadCity( xml::xistream& xis )
 {
-    MIL_UrbanObject_ABC& urbanObject = *new MIL_UrbanObject( xis, *converter_ );
+    MIL_UrbanObject_ABC& urbanObject = *new MIL_UrbanObject( xis );
     tools::Resolver< MIL_UrbanObject_ABC >::Register( urbanObject.GetUrbanId(), urbanObject );
     xis >> xml::optional >> xml::start( "urban-objects" )
             >> xml::list( "urban-object", *this, &MIL_UrbanModel::ReadItem, urbanObject )
@@ -392,7 +385,7 @@ void MIL_UrbanModel::ReadCity( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_UrbanModel::ReadItem( xml::xistream& xis, MIL_UrbanObject_ABC& parent )
 {
-    MIL_UrbanObject_ABC& urbanObject = *new MIL_UrbanObject( xis, *converter_, &parent );
+    MIL_UrbanObject_ABC& urbanObject = *new MIL_UrbanObject( xis, &parent );
     static_cast< tools::Resolver< MIL_UrbanObject_ABC >& >( parent ).Register( urbanObject.GetUrbanId(), urbanObject );
     xis >> xml::optional >> xml::start( "urban-objects" )
             >> xml::list( "urban-object", *this, &MIL_UrbanModel::ReadItem, urbanObject )

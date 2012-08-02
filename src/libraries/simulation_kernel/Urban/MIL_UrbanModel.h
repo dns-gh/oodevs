@@ -12,10 +12,13 @@
 
 #include "Urban/MIL_UrbanObject_ABC.h"
 #include "Urban/MIL_UrbanObjectVisitor_ABC.h"
-
 #include <tools/Resolver.h>
-#include <urban/CoordinateConverter_ABC.h>
 #include <spatialcontainer/SpatialContainer.h>
+
+namespace tools
+{
+    class ExerciseConfig;
+}
 
 class MT_Vector2D;
 
@@ -44,7 +47,7 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const std::string& directoryPath );
+    void Load( const std::string& directoryPath, tools::ExerciseConfig& config );
 
     void GetListWithinCircle( const MT_Vector2D& center, float radius, std::vector< const MIL_UrbanObject_ABC* >& result ) const;
     void GetListWithinSegment( const MT_Vector2D& start, const MT_Vector2D& end, std::vector< const MIL_UrbanObject_ABC* >& result ) const;
@@ -71,7 +74,6 @@ private:
     //! @name Member data
     //@{
     std::string modelVersion_; // utile???
-    std::auto_ptr< urban::CoordinateConverter_ABC > converter_;
     std::auto_ptr< T_QuadTree > quadTree_;
     float precision_;
     float maxElementSize_;

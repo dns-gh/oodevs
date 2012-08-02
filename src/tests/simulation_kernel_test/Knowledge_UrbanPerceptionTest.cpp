@@ -16,7 +16,6 @@
 #include "Fixture.h"
 #include "MockMIL_Time_ABC.h"
 #include "StubTER_World.h"
-#include <urban/CoordinateConverter.h>
 #include <memory>
 
 namespace
@@ -51,9 +50,8 @@ BOOST_AUTO_TEST_CASE( Knowledge_UrbanPerceptionTest_Update )
     }
     MIL_EffectManager effectManager;
     FixturePion pion( effectManager );
-    urban::CoordinateConverter_ABC* converter = new urban::CoordinateConverter();
     flux >> xml::start( "urban-object" );
-    const MIL_UrbanObject_ABC* object = new MIL_UrbanObject( flux, *converter );
+    const MIL_UrbanObject_ABC* object = new MIL_UrbanObject( flux );
     UrbanObjectWrapper* pObject = static_cast< UrbanObjectWrapper* >( loader.CreateUrbanObject( *object ) );
     flux >> xml::end;
 
@@ -64,6 +62,5 @@ BOOST_AUTO_TEST_CASE( Knowledge_UrbanPerceptionTest_Update )
     }
     delete object;
     delete pObject;
-    delete converter;
     TER_World::DestroyWorld();
 }

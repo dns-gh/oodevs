@@ -10,7 +10,7 @@
 #ifndef __UrbanColorAttribute_h_
 #define __UrbanColorAttribute_h_
 
-#include <urban/Extension_ABC.h>
+#include "UrbanExtension_ABC.h"
 
 // =============================================================================
 /** @class  UrbanColorAttribute
@@ -18,7 +18,7 @@
 */
 // Created: JSR 2012-08-01
 // =============================================================================
-class UrbanColorAttribute : public urban::Extension_ABC
+class UrbanColorAttribute : public UrbanExtension_ABC
                           , private boost::noncopyable
 {
 public:

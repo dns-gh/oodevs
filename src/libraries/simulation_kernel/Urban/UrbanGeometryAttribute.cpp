@@ -9,14 +9,14 @@
 
 #include "simulation_kernel_pch.h"
 #include "UrbanGeometryAttribute.h"
-#include <urban/CoordinateConverter_ABC.h>
+#include "MT_Tools/MT_Vector2D.h"
+#include "simulation_terrain/TER_World.h"
 
 // -----------------------------------------------------------------------------
 // Name: UrbanGeometryAttribute constructor
 // Created: JSR 2012-08-01
 // -----------------------------------------------------------------------------
-UrbanGeometryAttribute::UrbanGeometryAttribute( xml::xistream& xis, urban::CoordinateConverter_ABC& converter )
-    : converter_( converter )
+UrbanGeometryAttribute::UrbanGeometryAttribute( xml::xistream& xis )
 {
     xis >> xml::optional >> xml::start( "footprint" )
             >> xml::list( "point", *this, &UrbanGeometryAttribute::ReadPoint )
@@ -41,7 +41,10 @@ UrbanGeometryAttribute::~UrbanGeometryAttribute()
 // -----------------------------------------------------------------------------
 void UrbanGeometryAttribute::ReadPoint( xml::xistream& xis )
 {
-    vertices_.push_back( converter_.ConvertToXY( xis.attribute< std::string >( "location" ) ) );
+    // TODO à simplifier quand on sera passé en double
+    MT_Vector2D coord;
+    TER_World::GetWorld().MosToSimMgrsCoord( xis.attribute< std::string >( "location" ), coord );
+    vertices_.push_back( geometry::Point2f( static_cast< float >( coord.rX_ ), static_cast< float >( coord.rY_ ) ) );
 }
 
 // -----------------------------------------------------------------------------

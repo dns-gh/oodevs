@@ -48,7 +48,6 @@
     <Import Project="Property sheets\link_tools.props" />
     <Import Project="Property sheets\link_directIA.props" />
     <Import Project="Property sheets\link_geocoord.props" />
-    <Import Project="Property sheets\link_urban.props" />
     <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_qt.props" />
     <Import Project="Property sheets\link_opengl.props" />
@@ -64,7 +63,6 @@
     <Import Project="Property sheets\link_tools.props" />
     <Import Project="Property sheets\link_directIA.props" />
     <Import Project="Property sheets\link_geocoord.props" />
-    <Import Project="Property sheets\link_urban.props" />
     <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_qt.props" />
     <Import Project="Property sheets\link_opengl.props" />
@@ -80,7 +78,6 @@
     <Import Project="Property sheets\link_tools.props" />
     <Import Project="Property sheets\link_directIA.props" />
     <Import Project="Property sheets\link_geocoord.props" />
-    <Import Project="Property sheets\link_urban.props" />
     <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_qt.props" />
     <Import Project="Property sheets\link_opengl.props" />
@@ -96,7 +93,6 @@
     <Import Project="Property sheets\link_tools.props" />
     <Import Project="Property sheets\link_directIA.props" />
     <Import Project="Property sheets\link_geocoord.props" />
-    <Import Project="Property sheets\link_urban.props" />
     <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_qt.props" />
     <Import Project="Property sheets\link_opengl.props" />

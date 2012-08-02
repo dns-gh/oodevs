@@ -16,16 +16,13 @@
 #include "MIL_UrbanObjectVisitor_ABC.h"
 #include <boost/lexical_cast.hpp>
 
-using namespace urban;
-
 // -----------------------------------------------------------------------------
 // Name: MIL_UrbanObject constructor
 // Created: JSR 2012-08-01
 // -----------------------------------------------------------------------------
-MIL_UrbanObject::MIL_UrbanObject( xml::xistream& xis, urban::CoordinateConverter_ABC& converter, MIL_UrbanObject_ABC* parent /*= 0*/ )
+MIL_UrbanObject::MIL_UrbanObject( xml::xistream& xis, MIL_UrbanObject_ABC* parent /*= 0*/ )
     : nUrbanId_ ( xis.attribute< unsigned long >( "id" ) )
     , name_     ( xis.attribute< std::string >( "name" ) )
-    , converter_( converter )
     , parent_   ( parent )
 {
     if( name_.empty() )
@@ -34,7 +31,7 @@ MIL_UrbanObject::MIL_UrbanObject( xml::xistream& xis, urban::CoordinateConverter
     // TEMP
     // TODO refaire au propre quand on n'aura plus les attributs dans urban et qu'on aura viré le wrapper
     // Passer par l'attribute factory? 
-    Attach( *new UrbanGeometryAttribute( xis, converter_ ) );
+    Attach( *new UrbanGeometryAttribute( xis ) );
     Attach( *new UrbanColorAttribute( xis ) );
     if( xis.has_child( "physical" ) || ( parent && parent->GetParent() ) )
         Attach( *new UrbanPhysicalAttribute( xis ) );

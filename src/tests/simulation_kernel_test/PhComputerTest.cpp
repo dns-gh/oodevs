@@ -36,7 +36,6 @@
 #include "StubTER_World.h"
 #include <boost/assign/list_of.hpp>
 #include <xeumeuleu/xml.hpp>
-#include <urban/CoordinateConverter.h>
 
 namespace
 {
@@ -67,10 +66,10 @@ namespace
             xml::xistringstream xis1( "<urban-object name='parent' id='1'/>" );
             xml::xistringstream xis2( "<urban-object name='test' id='0'/>" );
             xis1 >> xml::start( "urban-object" );
-            urbanBlockParent.reset( new MIL_UrbanObject( xis1, coord ) );
+            urbanBlockParent.reset( new MIL_UrbanObject( xis1 ) );
             xis1 >> xml::end;
             xis2 >> xml::start( "urban-object" );
-            urbanBlock.reset( new MIL_UrbanObject( xis2, coord, urbanBlockParent.get() ) );
+            urbanBlock.reset( new MIL_UrbanObject( xis2, urbanBlockParent.get() ) );
             xis2 >> xml::end;
             urbanBlock->Get< UrbanGeometryAttribute >().SetGeometry( vertices );
             loader.Initialize( xis );
@@ -80,7 +79,6 @@ namespace
         FixturePion targetFixture;
         std::vector< geometry::Point2f > vertices;
         geometry::Polygon2f poly;
-        urban::CoordinateConverter coord;
         std::auto_ptr< MIL_UrbanObject > urbanBlockParent;
         std::auto_ptr< MIL_UrbanObject > urbanBlock;
         xml::xistringstream xis;

@@ -10,7 +10,7 @@
 #ifndef __UrbanPhysicalAttribute_h_
 #define __UrbanPhysicalAttribute_h_
 
-#include <urban/Extension_ABC.h>
+#include "UrbanExtension_ABC.h"
 
 class MIL_UrbanMotivationsVisitor_ABC;
 
@@ -20,7 +20,7 @@ class MIL_UrbanMotivationsVisitor_ABC;
 */
 // Created: JSR 2012-08-01
 // =============================================================================
-class UrbanPhysicalAttribute : public urban::Extension_ABC
+class UrbanPhysicalAttribute : public UrbanExtension_ABC
                              , private boost::noncopyable
 {
 public:

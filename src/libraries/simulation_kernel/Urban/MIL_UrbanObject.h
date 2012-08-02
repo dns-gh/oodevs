@@ -12,11 +12,6 @@
 
 #include "MIL_UrbanObject_ABC.h"
 
-namespace urban
-{
-    class CoordinateConverter_ABC;
-}
-
 // =============================================================================
 /** @class  MIL_UrbanObject
     @brief  MIL_UrbanObject
@@ -28,7 +23,7 @@ class MIL_UrbanObject : public MIL_UrbanObject_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_UrbanObject( xml::xistream& xis, urban::CoordinateConverter_ABC& converter, MIL_UrbanObject_ABC* parent = 0 );
+             MIL_UrbanObject( xml::xistream& xis, MIL_UrbanObject_ABC* parent = 0 );
     virtual ~MIL_UrbanObject();
     //@}
 
@@ -57,7 +52,6 @@ private:
     //@{
     unsigned long nUrbanId_;
     std::string name_;
-    urban::CoordinateConverter_ABC& converter_;
     MIL_UrbanObject_ABC* parent_;
     std::string infrastructure_;
     //@}

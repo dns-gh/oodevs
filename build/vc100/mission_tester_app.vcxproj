@@ -43,7 +43,6 @@
     <Import Project="Property sheets\base_win32.props" />
     <Import Project="Property sheets\application_release.props" />
     <Import Project="Property sheets\link_geocoord.props" />
-    <Import Project="Property sheets\link_urban.props" />
     <Import Project="Property sheets\link_opengl.props" />
     <Import Project="Property sheets\link_xerces.props" />
     <Import Project="Property sheets\link_xalan.props" />
@@ -58,7 +57,6 @@
     <Import Project="Property sheets\base_x64.props" />
     <Import Project="Property sheets\application_release.props" />
     <Import Project="Property sheets\link_geocoord.props" />
-    <Import Project="Property sheets\link_urban.props" />
     <Import Project="Property sheets\link_opengl.props" />
     <Import Project="Property sheets\link_xerces.props" />
     <Import Project="Property sheets\link_xalan.props" />
@@ -73,7 +71,6 @@
     <Import Project="Property sheets\base_win32.props" />
     <Import Project="Property sheets\application_debug.props" />
     <Import Project="Property sheets\link_geocoord.props" />
-    <Import Project="Property sheets\link_urban.props" />
     <Import Project="Property sheets\link_opengl.props" />
     <Import Project="Property sheets\link_xerces.props" />
     <Import Project="Property sheets\link_xalan.props" />
@@ -88,7 +85,6 @@
     <Import Project="Property sheets\base_x64.props" />
     <Import Project="Property sheets\application_debug.props" />
     <Import Project="Property sheets\link_geocoord.props" />
-    <Import Project="Property sheets\link_urban.props" />
     <Import Project="Property sheets\link_opengl.props" />
     <Import Project="Property sheets\link_xerces.props" />
     <Import Project="Property sheets\link_xalan.props" />

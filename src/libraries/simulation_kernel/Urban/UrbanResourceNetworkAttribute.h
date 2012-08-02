@@ -10,7 +10,7 @@
 #ifndef __UrbanResourceNetworkAttribute_h_
 #define __UrbanResourceNetworkAttribute_h_
 
-#include <urban/Extension_ABC.h>
+#include "UrbanExtension_ABC.h"
 #include <boost/noncopyable.hpp>
 #include <map>
 
@@ -20,7 +20,7 @@
 */
 // Created: JSR 2012-08-02
 // =============================================================================
-class UrbanResourceNetworkAttribute : public urban::Extension_ABC
+class UrbanResourceNetworkAttribute : public UrbanExtension_ABC
                                     , private boost::noncopyable
 {
 public:

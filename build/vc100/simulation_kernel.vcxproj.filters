@@ -5417,5 +5417,8 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\UrbanResourceNetworkAttribute.h">
       <Filter>Source Files\Urban</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\UrbanExtension_ABC.h">
+      <Filter>Source Files\Urban</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

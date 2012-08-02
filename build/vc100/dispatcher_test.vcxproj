@@ -53,7 +53,6 @@
     <Import Project="Property sheets\link_xalan.props" />
     <Import Project="Property sheets\link_tools.props" />
     <Import Project="Property sheets\link_protobuf.props" />
-    <Import Project="Property sheets\link_urban.props" />
     <Import Project="Property sheets\link_geocoord.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
@@ -67,7 +66,6 @@
     <Import Project="Property sheets\link_xalan.props" />
     <Import Project="Property sheets\link_tools.props" />
     <Import Project="Property sheets\link_protobuf.props" />
-    <Import Project="Property sheets\link_urban.props" />
     <Import Project="Property sheets\link_geocoord.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="PropertySheets">
@@ -81,7 +79,6 @@
     <Import Project="Property sheets\link_xalan.props" />
     <Import Project="Property sheets\link_tools.props" />
     <Import Project="Property sheets\link_protobuf.props" />
-    <Import Project="Property sheets\link_urban.props" />
     <Import Project="Property sheets\link_geocoord.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
@@ -95,7 +92,6 @@
     <Import Project="Property sheets\link_xalan.props" />
     <Import Project="Property sheets\link_tools.props" />
     <Import Project="Property sheets\link_protobuf.props" />
-    <Import Project="Property sheets\link_urban.props" />
     <Import Project="Property sheets\link_geocoord.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />

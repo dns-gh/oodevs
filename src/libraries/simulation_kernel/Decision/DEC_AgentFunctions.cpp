@@ -1183,7 +1183,7 @@ bool DEC_AgentFunctions::CanUseDotation( MIL_Agent_ABC& callerAgent, const PHY_D
 // Name: DEC_AgentFunctions::GetFuelDotationNumber
 // Created: JSR 2012-07-31
 // -----------------------------------------------------------------------------
-double DEC_AgentFunctions::GetFuelDotationNumber(  MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pPion  )
+double DEC_AgentFunctions::GetFuelDotationNumber(  MIL_AgentPion& /*callerAgent*/, const DEC_Decision_ABC* pPion  )
 {
     if( !pPion )
         throw std::runtime_error( "Invalid pion in GetFuelDotationNumber" );

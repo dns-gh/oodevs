@@ -166,7 +166,7 @@ void MIL_AgentServer::ReadUrbanModel()
     {
          MT_LOG_INFO_MSG( MT_FormatString( "Loading Urban Model from path '%s'", directoryPath.c_str() ) )
          MIL_Tools::CheckXmlCrc32Signature( config_.GetUrbanTerrainFile() );
-         pUrbanModel_->Load( directoryPath );
+         pUrbanModel_->Load( directoryPath, config_ );
     }
     catch( std::exception& e )
     {

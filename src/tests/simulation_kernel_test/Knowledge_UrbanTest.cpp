@@ -21,7 +21,6 @@
 #include "Fixture.h"
 #include "MockMIL_Time_ABC.h"
 #include "MockNET_Publisher_ABC.h"
-#include <urban/CoordinateConverter.h>
 #include <memory>
 
 namespace
@@ -58,9 +57,8 @@ BOOST_AUTO_TEST_CASE( Knowledge_UrbanTest_Update )
     MIL_EffectManager effectManager;
     MockNET_Publisher_ABC publisher;
     FixturePion pion( effectManager );
-    urban::CoordinateConverter_ABC* converter = new urban::CoordinateConverter();
     flux >> xml::start( "urban-object" );
-    const MIL_UrbanObject_ABC* pBlock = new MIL_UrbanObject( flux, *converter );
+    const MIL_UrbanObject_ABC* pBlock = new MIL_UrbanObject( flux );
     flux >> xml::end;
     UrbanObjectWrapper* pObject = static_cast< UrbanObjectWrapper* >( loader.CreateUrbanObject( *pBlock ) );
     PHY_RolePion_UrbanLocation* urbanRole = new PHY_RolePion_UrbanLocation( *pion.pPion_ );
@@ -80,6 +78,5 @@ BOOST_AUTO_TEST_CASE( Knowledge_UrbanTest_Update )
     }
     delete pBlock;
     delete pObject;
-    delete converter;
     TER_World::DestroyWorld();
 }

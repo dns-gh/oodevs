@@ -10,10 +10,9 @@
 #ifndef __MIL_UrbanObject_ABC_h_
 #define __MIL_UrbanObject_ABC_h_
 
-#include <urban/Extension_ABC.h>
+#include "UrbanExtension_ABC.h"
 #include <tools/Extendable.h>
 #include <tools/Resolver.h>
-//#include <tools/SortedInterfaceContainer.h>
 
 class MIL_UrbanObjectVisitor_ABC;
 class MIL_UrbanMotivationsVisitor_ABC;
@@ -26,8 +25,7 @@ class MIL_UrbanMotivationsVisitor_ABC;
 */
 // Created: JSR 2012-07-31
 // =============================================================================
-class MIL_UrbanObject_ABC : public tools::Extendable< urban::Extension_ABC >
-                          //, public tools::SortedInterfaceContainer< urban::Extension_ABC >
+class MIL_UrbanObject_ABC : public tools::Extendable< UrbanExtension_ABC >
                           , public tools::Resolver< MIL_UrbanObject_ABC >
                           , private boost::noncopyable
 {

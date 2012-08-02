@@ -1135,6 +1135,7 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\PHY_ResourceNetworkType.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\PHY_RoofShapeType.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\UrbanColorAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\UrbanExtension_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\UrbanGeometryAttribute.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\UrbanPhysicalAttribute.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\UrbanResourceNetworkAttribute.h" />
