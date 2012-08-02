@@ -493,4 +493,6 @@ eRC_FollowingUnitIsDead = 477
 eRC_CombatSupportUnitIsDead = 478
 eRC_NoUnitsInParameter = 479
 eRC_CaptureEnd = 480
-eNbr = 481
+eRC_PrisSousTirEclairant = 481
+eRC_PrisSousTirFumigene = 482
+eNbr = 483

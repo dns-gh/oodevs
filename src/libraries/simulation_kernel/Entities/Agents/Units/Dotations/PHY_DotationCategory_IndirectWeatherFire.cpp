@@ -11,8 +11,13 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_DotationCategory_IndirectWeatherFire.h"
+#include "PHY_IndirectFireDotationClass.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Effects/MIL_Effect_Weather.h"
 #include "Entities/Effects/MIL_EffectManager.h"
+#include "Entities/Orders/MIL_Report.h"
+#include "simulation_terrain/TER_AgentManager.h"
+#include "simulation_terrain/TER_World.h"
 #include <xeumeuleu/xml.hpp>
 #include "Tools/MIL_Tools.h"
 #include "tools/Codec.h"
@@ -72,4 +77,17 @@ void PHY_DotationCategory_IndirectWeatherFire::ApplyEffect( const MIL_Agent_ABC*
     const MT_Ellipse effectSurface( vTargetPosition, vTargetPosition + vFireDirection, vTargetPosition + vRotatedFireDirection );
     MIL_Effect_Weather* pEffect = new MIL_Effect_Weather( effectSurface, category_, MIL_Tools::ConvertSecondsToSim( rLifeDuration_ ), MIL_Tools::ConvertSecondsToSim( rDeploymentDuration_ ) );
     MIL_EffectManager::GetEffectManager().Register( *pEffect );
+
+    TER_Agent_ABC::T_AgentPtrVector targets;
+    TER_World::GetWorld().GetAgentManager().GetListWithinEllipse( effectSurface, targets );
+    for( TER_Agent_ABC::CIT_AgentPtrVector itTarget = targets.begin(); itTarget != targets.end(); ++itTarget )
+    {
+        MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **itTarget ).GetAgent();
+        if( target.GetRole< PHY_RoleInterface_Location >().GetHeight() > 0 )
+            continue;
+        if( category_ == PHY_IndirectFireDotationClass::eclairant_ )
+            MIL_Report::PostEvent( target, MIL_Report::eReport_UnderLightingFire );
+        else if( category_ == PHY_IndirectFireDotationClass::fumigene_  )
+            MIL_Report::PostEvent( target, MIL_Report::eReport_UnderSmokeFire );
+    }
 }

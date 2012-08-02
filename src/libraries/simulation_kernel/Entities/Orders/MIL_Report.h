@@ -154,6 +154,8 @@ public:
         eReport_FragOrderReceived,
         eReport_NotActivatedUndergroundNetwork,
         eReport_FireObserver,
+        eReport_UnderLightingFire,
+        eReport_UnderSmokeFire,
         eNbrReport
     };
 
@@ -633,13 +635,15 @@ public:
         eRC_FireObserver,
         eRC_ImpossibleActivateIED,
         eRC_Jammed,
-        eRC_PCJammed,
+        eRC_PCJammed, // 430
         eRC_IEDNotReady,
         eRC_IEDReadyForFiring,
         eRC_FollowingUnitIsDead,
         eRC_CombatSupportUnitIsDead,
         eRC_NoUnitsInParameter,
         eRC_CaptureEnd,
+        eRC_PrisSousTirEclairant,
+        eRC_PrisSousTirFumigene,
         eLast
     };
     //@}
