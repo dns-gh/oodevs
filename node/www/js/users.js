@@ -148,6 +148,13 @@
     return buffer;
   });
 
+  Handlebars.registerHelper("is_positive", function(value, options) {
+    if (value > 0) {
+      return options.fn(this);
+    }
+    return options.inverse(this);
+  });
+
   display_error = function(id, template, text) {
     var ctl;
     ctl = $("#" + id);

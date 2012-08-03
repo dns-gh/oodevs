@@ -102,6 +102,11 @@ Handlebars.registerHelper "for_all_items", (items, type, options) ->
             buffer += options.fn it
     return buffer
 
+Handlebars.registerHelper "is_positive", (value, options) ->
+    if value > 0
+        return options.fn this
+    return options.inverse this
+
 display_error = (id, template, text) ->
     ctl = $ "#" + id
     ctl.html template content: text
