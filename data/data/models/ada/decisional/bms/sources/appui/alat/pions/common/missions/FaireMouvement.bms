@@ -37,7 +37,6 @@ local emptyTable = emptyTable
                 DEC_SetMission( myself, self._namedParams.mission )
                 self.pointFinItineraire = DEC_ListePoints_GetAt( self._namedParams.mission.itineraire_, DEC_ListePoints_Size( self._namedParams.mission.itineraire_ ) - 1 )
                 local position = DEC_Geometrie_PositionAleatoireDansCercle( self.pointFinItineraire, 300 )
-                DEC_Copie_Point( position, myself.pointRegroupement_ )
                 DEC_ListePoints_PushBack( self._namedParams.mission.itineraire_, position )
                 if( not DEC_Agent_AutomateEstEmbraye() ) then
                     Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, emptyTable )

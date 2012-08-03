@@ -56,7 +56,6 @@ include "bit.lua"
             do
                 DEC_SetMission( myself, self._namedParams.mission )
                 myself.plotsRavitaillement_ = self._namedParams.mission.plotsRavitaillement_ or {}
-                DEC_Copie_Point( self._namedParams.mission.positionRegroupement_, myself.pointRegroupement_ )
             end
         end
 

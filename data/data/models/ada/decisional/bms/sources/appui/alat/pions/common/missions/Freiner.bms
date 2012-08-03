@@ -59,7 +59,6 @@ include "bit.lua"
 ]]self.listeLocalisationsMissionFreiner = DEC_Geometrie_DecoupeFuseauEnTroncons( 5000 )
                 self.pointFinFuseau = DEC_Geometrie_CalculerPointArrivee()
                 self.pointDebutFuseau = DEC_Geometrie_CalculerPointDepart()
-                DEC_Copie_Point( self._namedParams.mission.pointRegroupement_, myself.pointRegroupement_ )
             end
         end
 

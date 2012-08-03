@@ -40,7 +40,6 @@ include "bit.lua"
             do
                 DEC_SetMission( myself, self._namedParams.mission )
                 myself.plotsRavitaillement_ = self._namedParams.mission.plotsRavitaillement_ or {}
-                DEC_Copie_Point( self._namedParams.mission.pointRegroupement_, myself.pointRegroupement_ )
                 DEC_Copie_Point( self._namedParams.mission.pointDebarquement_, self.pointDeDebarquement )
             end
 --[[//si l'automate du pion n'est pas embrayé
