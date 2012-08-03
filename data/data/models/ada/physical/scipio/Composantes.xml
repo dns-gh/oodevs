@@ -19655,7 +19655,7 @@
     <logistic-functions>
       <maintenance-functions>
         <repairing category="NTI1" type="EA, M"/>
-        <repairing category="NTI2" max-reparation-time="16h" type="EA, M"/>
+        <repairing category="NTI2" max-reparation-time="8h" type="EA, M"/>
       </maintenance-functions>
     </logistic-functions>
     <equipment-category>Autres</equipment-category>
@@ -35740,4 +35740,4 @@
     <equipment-category>VTT</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="0831670857" -->
+<!-- signature="1554419935" -->
