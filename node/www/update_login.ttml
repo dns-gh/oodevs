@@ -12,24 +12,9 @@
                     <p>Please change your password</p>
                 </div>
                 <form action="login" method="post" class="form-horizontal update_login">
-                    <div class="control-group">
-                        <label class="control-label" for="current">Current</label>
-                        <div class="controls">
-                            <input type="password" class="input-xlarge" name="current" id="current"/>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label" for="password">New Password</label>
-                        <div class="controls">
-                            <input type="password" class="input-xlarge" name="password" id="password"/>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label" for="password_bis">Confirm</label>
-                        <div class="controls">
-                            <input type="password" class="input-xlarge" name="password_bis" id="password_bis"/>
-                        </div>
-                    </div>
+                    [[ template "input_text" sub "id" "current"      "label" "Current"      "class" "input-xlarge" ]]
+                    [[ template "input_text" sub "id" "password"     "label" "New Password" "class" "input-xlarge" "type" "password" ]]
+                    [[ template "input_text" sub "id" "password_bis" "label" "Confirm"      "class" "input-xlarge" "type" "password" ]]
                     <div class="update_login_action">
                         <a class="btn btn-large btn-inverse update_login">Change Password</a>
                         <a class="btn btn-large btn-inverse cancel">Cancel</a>
