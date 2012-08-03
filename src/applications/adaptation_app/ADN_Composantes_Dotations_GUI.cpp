@@ -93,6 +93,8 @@ ADN_Composantes_Dotations_GUI::ADN_Composantes_Dotations_GUI( bool bIncludeNorma
     const int cols = 4 - ( ( bIncludeNormalizedConsumption_ ) ? 0 : 1 ) - ( ( bIncludeThreshold ) ? 0 : 1 );
     setNumCols( cols );
     setNumRows( 0 );
+    for( int i = 0; i < cols; ++i )
+        setColumnStretchable( i, true );
 
     horizontalHeader()->setLabel( 0, tr( "Category" ) );
     horizontalHeader()->setLabel( 1, tr( "Qty" ) );

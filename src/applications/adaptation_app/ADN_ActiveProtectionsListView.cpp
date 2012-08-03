@@ -11,6 +11,7 @@
 #include "ADN_ActiveProtectionsListView.h"
 #include "ADN_ActiveProtections_Data.h"
 #include "ADN_ActiveProtections_Gui.h"
+#include "ADN_Composantes_Data.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Tools.h"
 #include "ADN_ObjectCreator_ABC.h"
@@ -71,5 +72,25 @@ void ADN_ActiveProtectionsListView::OnContextMenu( const QPoint& pt )
     Q3PopupMenu popupMenu( this );
     ADN_Wizard< ActiveProtectionsInfos > wizard( ADN_Tr::ConvertFromWorkspaceElement( eActiveProtections ).c_str(), ADN_Workspace::GetWorkspace().GetActiveProtections().GetData().GetActiveProtectionsInfos(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
+    if( pCurData_ != 0 )
+    {
+        ActiveProtectionsInfos* pCastData = static_cast< ActiveProtectionsInfos* >( pCurData_ );
+        assert( pCastData != 0 );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str(),
+                                      ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ), eComposantes );
+    }
     popupMenu.exec( pt );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ActiveProtectionsListView::GetToolTipFor
+// Created: ABR 2012-08-02
+// -----------------------------------------------------------------------------
+std::string ADN_ActiveProtectionsListView::GetToolTipFor( Q3ListViewItem& item )
+{
+    void* pData = static_cast< ADN_ListViewItem& >( item ).GetData();
+    ActiveProtectionsInfos* pCastData = static_cast< ActiveProtectionsInfos* >( pData );
+    assert( pCastData != 0 );
+    return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str(),
+                            ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ) );
 }

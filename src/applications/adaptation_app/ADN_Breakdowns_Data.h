@@ -99,6 +99,7 @@ public:
 
     T_BreakdownInfoVector& GetBreakdowns();
     ADN_Breakdowns_Data::BreakdownInfo* FindBreakdown( const std::string& strName );
+    QStringList GetBreakdownsThatUse( ADN_Equipement_Data::CategoryInfo& part );
 
     int GetNextId();
     //@}

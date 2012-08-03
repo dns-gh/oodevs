@@ -1323,8 +1323,8 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
 <context>
     <name>ADN_Equipement_AmmoListView</name>
     <message>
-        <source>Weapon systems</source>
-        <translation>Systèmes d&apos;armes</translation>
+        <source>&lt;b&gt;Unused&lt;/b&gt;</source>
+        <translation>&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -2148,6 +2148,22 @@ du tireur</translation>
         <source>Fragmentary orders</source>
         <translation>Ordres de conduite</translation>
     </message>
+    <message>
+        <source>Unit models</source>
+        <translation>Modèles de pions</translation>
+    </message>
+    <message>
+        <source>Automata models</source>
+        <translation>Modèles d&apos;automates</translation>
+    </message>
+    <message>
+        <source>Crowds models</source>
+        <translation>Modèles de foules</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Unused&lt;/b&gt;</source>
+        <translation>&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
+    </message>
 </context>
 <context>
     <name>ADN_ListView_Missions</name>
@@ -2177,6 +2193,22 @@ du tireur</translation>
     <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
         <translation>&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
+    </message>
+    <message>
+        <source>Unit missions</source>
+        <translation>Missions pions</translation>
+    </message>
+    <message>
+        <source>Automat missions</source>
+        <translation>Missions automates</translation>
+    </message>
+    <message>
+        <source>Crowd missions</source>
+        <translation>Missions foules</translation>
+    </message>
+    <message>
+        <source>Fragmentary orders</source>
+        <translation>Ordres de conduite</translation>
     </message>
 </context>
 <context>
@@ -2644,6 +2676,25 @@ du tireur</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Missions_data</name>
+    <message>
+        <source>Unit missions</source>
+        <translation>Missions pions</translation>
+    </message>
+    <message>
+        <source>Automat missions</source>
+        <translation>Missions automates</translation>
+    </message>
+    <message>
+        <source>Crowd missions</source>
+        <translation>Missions foules</translation>
+    </message>
+    <message>
+        <source>Fragmentary orders</source>
+        <translation>Ordres de conduite</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Models_GUI</name>
     <message>
         <source>Unit models</source>
@@ -2704,16 +2755,28 @@ du tireur</translation>
         <translation>Références multiples</translation>
     </message>
     <message>
-        <source>Click &quot;Ok&quot; to destroy it and all its references.</source>
-        <translation>Cliquer sur &quot;Ok&quot; pour le supprimer ainsi que tous les éléments qui le référencent.</translation>
-    </message>
-    <message>
-        <source>This item is referenced by all the following item:</source>
-        <translation>Cet élément est référencé par les éléments suivants :</translation>
-    </message>
-    <message>
         <source>Tab</source>
         <translation>Onglet</translation>
+    </message>
+    <message>
+        <source>Click &quot;Ok&quot; to continue.</source>
+        <translation>Clique &quot;Ok&quot; to continue.</translation>
+    </message>
+    <message>
+        <source>All &apos;%1&apos;</source>
+        <translation>Tous les éléments &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>All &apos;urban material&apos;</source>
+        <translation>Tous les &apos;materiaux urbains&apos;</translation>
+    </message>
+    <message>
+        <source>The following items will be &lt;b&gt;deleted&lt;/b&gt;:</source>
+        <translation>Les éléments suivants seront &lt;b&gt;supprimés&lt;/b&gt; :</translation>
+    </message>
+    <message>
+        <source>The following items will be &lt;b&gt;modified&lt;/b&gt;:</source>
+        <translation>Les éléments suivants seront &lt;b&gt;modifiés&lt;/b&gt; :</translation>
     </message>
 </context>
 <context>
@@ -2812,6 +2875,25 @@ du tireur</translation>
     <message>
         <source>Wounded extreme seriousness</source>
         <translation>Blessure extrêmement grave</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Objects_Data</name>
+    <message>
+        <source>Empty object referenced by object &apos;%1&apos;.
+The spawn capacity will be disabled.</source>
+        <translation>Objet vide référencé par l&apos;object &apos;%1&apos;.
+La capacité d&apos;engendrer un autre objet vas être désactivée.</translation>
+    </message>
+    <message>
+        <source>Unknown object &apos;%2&apos; referenced by object &apos;%1&apos;.
+The spawn capacity will be disabled.</source>
+        <translation>Objet inconnu &apos;%2&apos; référencé par l&apos;objet &apos;%1&apos;.
+La capacité d&apos;engendrer un autre objet vas être désactivée.</translation>
+    </message>
+    <message>
+        <source>Reference error</source>
+        <translation>Erreur de référence</translation>
     </message>
 </context>
 <context>

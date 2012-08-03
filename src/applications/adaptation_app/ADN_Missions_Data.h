@@ -201,6 +201,13 @@ public:
     FragOrder*          FindFragOrder( const std::string& strName );
     Mission*            FindMission( T_Mission_Vector& missions, const std::string& strName );
     virtual void Load( const tools::Loader_ABC& fileLoader );
+
+    QStringList         GetAllMissionsThatUse( ADN_Objects_Data_ObjectInfos& object ); // $$$$ ABR 2012-08-03: Warning, return not only the name, but concatenation of tab name and mission name
+
+    QStringList         GetUnitMissionsThatUse( ADN_Objects_Data_ObjectInfos& object );
+    QStringList         GetAutomatMissionsThatUse( ADN_Objects_Data_ObjectInfos& object );
+    QStringList         GetPopulationMissionsThatUse( ADN_Objects_Data_ObjectInfos& object );
+    QStringList         GetFragOrdersThatUse( ADN_Objects_Data_ObjectInfos& object );
     //@}
 
 private:

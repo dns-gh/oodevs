@@ -15,6 +15,7 @@
 #include "ADN_Connector_ListView.h"
 #include "ADN_ComboBox.h"
 #include "ADN_Composantes_Data.h"
+#include "ADN_Missions_Data.h"
 #include "ADN_Sensors_Data.h"
 #include "ADN_Objects_Data_ObjectInfos.h"
 #include "ADN_Project_Data.h"
@@ -250,7 +251,6 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
     CONNECT_HELPER( Detection, RecoTime, recoTime_ );
 
     BUILDER_HELPER( Spawn );
-    Spawn.GetConnector().Load();
     CONNECT_HELPER( Spawn, ActionRange, rActionRange_ );
     CONNECT_HELPER( Spawn, ObjectType, object_ );
     CONNECT_HELPER( Spawn, NBC, nbc_ );
@@ -352,6 +352,17 @@ void ADN_ListView_Objects::OnContextMenu( const QPoint& pt )
             FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
                                           ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str(),
                                           ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ), eComposantes );
+            FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
+                                          ADN_Tr::ConvertFromWorkspaceElement( eObjects ).c_str(),
+                                          ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectsThatUse( *pCastData ), eObjects );
+            FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tools::translate( "ADN_ListView_Objects", "Unit missions" ),
+                                          ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissionsThatUse( *pCastData ), eMissions, 0 );
+            FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tools::translate( "ADN_ListView_Objects", "Automat missions" ),
+                                          ADN_Workspace::GetWorkspace().GetMissions().GetData().GetAutomatMissionsThatUse( *pCastData ), eMissions, 1 );
+            FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tools::translate( "ADN_ListView_Objects", "Crowd missions" ),
+                                          ADN_Workspace::GetWorkspace().GetMissions().GetData().GetPopulationMissionsThatUse( *pCastData ), eMissions, 2 );
+            FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tools::translate( "ADN_ListView_Objects", "Fragmentary orders" ),
+                                          ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrdersThatUse( *pCastData ), eMissions, 3 );
         }
         popupMenu.exec( pt );
     }
@@ -374,6 +385,12 @@ std::string ADN_ListView_Objects::GetToolTipFor( Q3ListViewItem& item )
                         ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetEquipmentsThatUse( *pCastData ), result );
     FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str(),
                         ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ), result );
+    FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eObjects ).c_str(),
+                        ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectsThatUse( *pCastData ), result );
+    FillMultiUsersList( tools::translate( "ADN_ListView_Objects", "Unit missions" ),      ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissionsThatUse( *pCastData ),         result );
+    FillMultiUsersList( tools::translate( "ADN_ListView_Objects", "Automat missions" ),   ADN_Workspace::GetWorkspace().GetMissions().GetData().GetAutomatMissionsThatUse( *pCastData ),      result );
+    FillMultiUsersList( tools::translate( "ADN_ListView_Objects", "Crowd missions" ),     ADN_Workspace::GetWorkspace().GetMissions().GetData().GetPopulationMissionsThatUse( *pCastData ),   result );
+    FillMultiUsersList( tools::translate( "ADN_ListView_Objects", "Fragmentary orders" ), ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrdersThatUse( *pCastData ),           result );
 
     if( result.empty() )
         result = tr( "<b>Unused</b>" ).toUtf8().constData();

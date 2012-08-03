@@ -130,8 +130,39 @@ void ADN_ListView_FragOrderTypes::OnContextMenu( const QPoint& pt )
         Q3PopupMenu popupMenu( this );
         ADN_Wizard< FragOrder, ADN_FragOrder_WizardPage > wizard( tr( "Fragmentary orders" ), ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrders(), this );
         FillContextMenuWithDefault( popupMenu, wizard );
+        if( pCurData_ != 0 )
+        {
+            FragOrder* pCastData = static_cast< FragOrder* >( pCurData_ );
+            assert( pCastData != 0 );
+            FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tr( "Unit models" ),
+                                          ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( ADN_Models_Data::ModelInfos::ePawn, *pCastData ), eModels, static_cast< int >( ADN_Models_Data::ModelInfos::ePawn ) );
+            FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tr( "Automata models" ),
+                                          ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( ADN_Models_Data::ModelInfos::eAutomat, *pCastData ), eModels, static_cast< int >( ADN_Models_Data::ModelInfos::eAutomat ) );
+            FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tr( "Crowds models" ),
+                                          ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( ADN_Models_Data::ModelInfos::ePopulation, *pCastData ), eModels, static_cast< int >( ADN_Models_Data::ModelInfos::ePopulation ) );
+        }
         popupMenu.exec( pt );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView_FragOrderTypes::GetToolTipFor
+// Created: ABR 2011-09-29
+// -----------------------------------------------------------------------------
+std::string ADN_ListView_FragOrderTypes::GetToolTipFor( Q3ListViewItem& item )
+{
+    void* pData = static_cast< ADN_ListViewItem& >( item ).GetData();
+    FragOrder* pCastData = static_cast< FragOrder* >( pData );
+    assert( pCastData != 0 );
+
+    std::string result;
+    FillMultiUsersList( tr( "Unit models" ), ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( ADN_Models_Data::ModelInfos::ePawn, *pCastData ), result );
+    FillMultiUsersList( tr( "Automata models" ), ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( ADN_Models_Data::ModelInfos::eAutomat, *pCastData ), result );
+    FillMultiUsersList( tr( "Crowds models" ), ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( ADN_Models_Data::ModelInfos::ePopulation, *pCastData ), result );
+
+    if( result.empty() )
+        result = tr( "<b>Unused</b>" ).toUtf8().constData();
+    return result;
 }
 
 // -----------------------------------------------------------------------------

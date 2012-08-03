@@ -292,9 +292,8 @@ void ADN_Objects_GUI::Build()
         pFirePropagationModifierTable->setObjectName( strClassName_ + "_FirePropagationTable" );
         vInfosConnectors[ eFirePropagationModifierCapacity_Modifiers ] = &pFirePropagationModifierTable->GetConnector();
 
-        grid->addWidget( constructor, 0, 0 );
-        grid->addWidget( improvable, 0, 1 );
-        grid->addWidget( heuristic, 1, 0, 3, 1 );
+        grid->addWidget( constructor, 0, 0, 4, 1 );
+        grid->addWidget( heuristic, 0, 1 );
         grid->addWidget( avoidable, 1, 1 );
         grid->addWidget( bypassable, 2, 1 );
         grid->addWidget( trafficability, 3, 1 );
@@ -341,8 +340,7 @@ void ADN_Objects_GUI::Build()
     pCapacitiesLayout->addLayout( grid );
 
     // List view
-    ADN_SearchListView< ADN_ListView_Objects >* pSearchListView = new ADN_SearchListView< ADN_ListView_Objects >( data_.GetObjectInfos(), vInfosConnectors );
-    connect( pSearchListView->GetListView(), SIGNAL( UsersListRequested( const ADN_NavigationInfos::UsedBy& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_NavigationInfos::UsedBy& ) ) );
+    ADN_SearchListView< ADN_ListView_Objects >* pSearchListView = new ADN_SearchListView< ADN_ListView_Objects >( this, data_.GetObjectInfos(), vInfosConnectors );
     pListView_ = pSearchListView->GetListView();
     pListView_->setObjectName( strClassName_ + "_List" );
 

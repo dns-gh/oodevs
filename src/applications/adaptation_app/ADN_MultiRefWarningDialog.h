@@ -26,7 +26,7 @@ class ADN_MultiRefWarningDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_MultiRefWarningDialog( QWidget* parent, ADN_Workspace::T_UsingElements& usingElements );
+             ADN_MultiRefWarningDialog( QWidget* parent, ADN_Workspace::T_UsingElements& elementsToDelete, ADN_Workspace::T_UsingElements& usingElements );
     virtual ~ADN_MultiRefWarningDialog();
     //@}
 
@@ -40,6 +40,9 @@ private slots:
 private:
     //! @name Helpers
     //@{
+    QStandardItem* CreateItem( const QString& text );
+    void CreateTable( QVBoxLayout& layout, const QString& title, const ADN_Workspace::T_UsingElements& elements );
+    void FillModel( QStandardItemModel& model, const ADN_Workspace::T_UsingElements& elements );
     //@}
 
 private:

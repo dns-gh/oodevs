@@ -113,7 +113,7 @@ void ADN_FireClass_GUI::Build()
     pFireClassLayout->addWidget( surfaceGroup );
 
     // List view
-    ADN_SearchListView< ADN_FireClass_ListView >* pSearchListView = new ADN_SearchListView< ADN_FireClass_ListView >( data_.GetFireClassesInfos(), vInfosConnectors );
+    ADN_SearchListView< ADN_FireClass_ListView >* pSearchListView = new ADN_SearchListView< ADN_FireClass_ListView >( this, data_.GetFireClassesInfos(), vInfosConnectors );
     pSearchListView->GetListView()->setObjectName( strClassName_ + "_List" );
     pListView_ = pSearchListView->GetListView();
     pListView_->setObjectName( strClassName_ + "_List" );

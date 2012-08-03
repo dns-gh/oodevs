@@ -502,3 +502,17 @@ ADN_FireClass_Data::T_FireClassInfosVector& ADN_FireClass_Data::GetFireClassesIn
 {
     return fireClasses_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_FireClass_Data::GetFireThatUse
+// Created: ABR 2012-08-02
+// -----------------------------------------------------------------------------
+QStringList ADN_FireClass_Data::GetFireThatUse( ADN_Equipement_Data::CategoryInfo& infos )
+{
+    QStringList result;
+    for( IT_FireClassInfosVector it = fireClasses_.begin(); it != fireClasses_.end(); ++it )
+        for( IT_ExtinguisherAgentInfos_Vector itAgent = ( *it )->agents_.begin(); itAgent != ( *it )->agents_.end(); ++itAgent )
+            if( ( *itAgent )->ptrAgent_.GetData()->strName_.GetData() == infos.strName_.GetData() )
+                result << ( *it )->strName_.GetData().c_str();
+    return result;
+}

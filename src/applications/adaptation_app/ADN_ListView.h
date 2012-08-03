@@ -96,7 +96,7 @@ private slots:
     virtual void ContextMenuNew();
     virtual void ContextMenuNewCopy();
     virtual void ContextMenuDelete();
-    virtual void ContextMenuSearchElements();
+    virtual void ContextMenuSearchElements( int id );
 
     void GoToOnDoubleClicked( Q3ListViewItem* pItem );
     bool SetCurrentItem( Q3ListViewItem* pItem );
@@ -116,10 +116,11 @@ protected:
     bool                        bDeletionWarning_;
     bool                        bPrinting_;
     QRect                       toolTipRect_;
-    ADN_NavigationInfos::UsedBy usedByInfo_;
-    ADN_NavigationInfos::GoTo   goToInfo_;
-    QString                     filterLine_;
-    QStringList                 filterList_;
+    QSignalMapper                               usedByMapper_;
+    std::vector< ADN_NavigationInfos::UsedBy >  usedByInfos_;
+    ADN_NavigationInfos::GoTo                   goToInfo_;
+    QString                                     filterLine_;
+    QStringList                                 filterList_;
 };
 
 //-----------------------------------------------------------------------------

@@ -142,6 +142,7 @@ public:
     ADN_WorkspaceElement< ADN_UnitSymbols_Data, ADN_UnitSymbols_GUI >& GetUnitSymbols() const;
     ADN_WorkspaceElement< ADN_Logistic_Data, ADN_Logistic_GUI >& GetLogistic();
 
+    T_UsingElements GetElementThatWillBeDeleted( ADN_Ref_ABC* data );
     T_UsingElements GetElementThatUse( ADN_Ref_ABC* data );
 
     void SetProgressIndicator( ADN_ProgressIndicator_ABC* pProgressIndicator );

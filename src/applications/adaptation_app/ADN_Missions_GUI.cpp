@@ -154,9 +154,8 @@ QWidget* ADN_Missions_GUI::BuildMissions( QWidget*& pContent, ADN_Missions_Data:
     pContentLayout->addWidget( pParametersGroup );
 
     // List view
-    ADN_SearchListView< ADN_ListView_MissionTypes >* pSearchListView = new ADN_SearchListView< ADN_ListView_MissionTypes >( eEntityType, missions, missions, vInfosConnectors );
+    ADN_SearchListView< ADN_ListView_MissionTypes >* pSearchListView = new ADN_SearchListView< ADN_ListView_MissionTypes >( this, eEntityType, missions, missions, vInfosConnectors, eEntityType );
     pSearchListView->GetListView()->setObjectName( builderName + "_List" );
-    connect( pSearchListView->GetListView(), SIGNAL( UsersListRequested( const ADN_NavigationInfos::UsedBy& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_NavigationInfos::UsedBy& ) ) );
     vListViews_.push_back( pSearchListView->GetListView() );
 
     // Main page
@@ -262,7 +261,7 @@ QWidget* ADN_Missions_GUI::BuildFragOrders()
     pContentLayout->addWidget( pParametersGroup );
 
     // List view
-    ADN_SearchListView< ADN_ListView_FragOrderTypes >* pSearchListView = new ADN_SearchListView< ADN_ListView_FragOrderTypes >( data_.fragOrders_, data_.fragOrders_, vInfosConnectors );
+    ADN_SearchListView< ADN_ListView_FragOrderTypes >* pSearchListView = new ADN_SearchListView< ADN_ListView_FragOrderTypes >( this, data_.fragOrders_, data_.fragOrders_, vInfosConnectors, 3 );
     pSearchListView->GetListView()->setObjectName( strClassName_ + "_FragOrders_List" );
     connect( available, SIGNAL( toggled ( bool ) ), pSearchListView->GetListView(), SLOT( OnToogled( bool ) ) );
     vListViews_.push_back( pSearchListView->GetListView() );

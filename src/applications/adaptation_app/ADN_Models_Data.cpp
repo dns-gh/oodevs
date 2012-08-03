@@ -501,3 +501,72 @@ void ADN_Models_Data::WriteArchive( xml::xostream& output )
     output << xml::end
           << xml::end;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Models_Data::GetModelsThatUse
+// Created: ABR 2011-09-29
+// -----------------------------------------------------------------------------
+QStringList ADN_Models_Data::GetModelsThatUse( ModelInfos::E_ModelEntityType type, ADN_Missions_Data::Mission& mission )
+{
+    QStringList result;
+    T_ModelInfos_Vector* currentVector = 0;
+    if( type == ModelInfos::ePawn )
+        currentVector = &vUnitModels_;
+    else if( type == ModelInfos::eAutomat )
+        currentVector = &vAutomataModels_;
+    else
+        currentVector = &vPopulationModels_;
+    for( IT_ModelInfos_Vector it = currentVector->begin(); it != currentVector->end(); ++it )
+    {
+        ModelInfos* pModel = *it;
+        if( !pModel )
+            continue;
+        for( IT_MissionInfos_Vector missionIt = pModel->vMissions_.begin(); missionIt != pModel->vMissions_.end(); ++missionIt )
+            if( ( *missionIt )->mission_ == &mission )
+            {
+                result << pModel->strName_.GetData().c_str();
+                break;
+            }
+    }
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Models_Data::GetModelsThatUse
+// Created: ABR 2012-08-02
+// -----------------------------------------------------------------------------
+QStringList ADN_Models_Data::GetModelsThatUse( ModelInfos::E_ModelEntityType type, ADN_Missions_Data::FragOrder& fragOrder )
+{
+    QStringList result;
+    T_ModelInfos_Vector* currentVector = 0;
+    if( type == ModelInfos::ePawn )
+        currentVector = &vUnitModels_;
+    else if( type == ModelInfos::eAutomat )
+        currentVector = &vAutomataModels_;
+    else
+        currentVector = &vPopulationModels_;
+    for( ADN_Models_Data::IT_ModelInfos_Vector it = currentVector->begin(); it != currentVector->end(); ++it )
+    {
+        bool added = false;
+        for( ADN_Models_Data::T_OrderInfos_Vector::iterator itOrder = ( *it )->vFragOrders_.begin(); !added && itOrder != ( *it )->vFragOrders_.end(); ++itOrder )
+        {
+            if( ( *itOrder )->strName_.GetData() == fragOrder.strName_.GetData() )
+            {
+                added = true;
+                result << ( *it )->strName_.GetData().c_str();
+            }
+        }
+        for( ADN_Models_Data::IT_MissionInfos_Vector itMission = ( *it )->vMissions_.begin(); !added && itMission != ( *it )->vMissions_.end(); ++itMission )
+        {
+            for( ADN_Models_Data::T_OrderInfos_Vector::iterator itOrder = ( *itMission )->vOrders_.begin(); !added && itOrder != ( *itMission )->vOrders_.end(); ++itOrder )
+            {
+                if( ( *itOrder )->strName_.GetData() == fragOrder.strName_.GetData() )
+                {
+                    added = true;
+                    result << ( *it )->strName_.GetData().c_str();
+                }
+            }
+        }
+    }
+    return result;
+}

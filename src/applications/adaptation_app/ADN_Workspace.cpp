@@ -581,38 +581,20 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Workspace::GetElementThatUse
-// Created: ABR 2012-07-23
+// Name: ADN_Workspace::GetElementThatWillBeDeleted
+// Created: ABR 2012-08-01
 // -----------------------------------------------------------------------------
-ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatUse( ADN_Ref_ABC* data )
+ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatWillBeDeleted( ADN_Ref_ABC* data )
 {
     T_UsingElements result;
 
-    // Misc
-    if( ADN_Radars_Data::RadarInfos* infos = dynamic_cast< ADN_Radars_Data::RadarInfos* >( data ) )
-        return FillUsingElements( eComposantes, *infos, GetComposantes().GetData(), &ADN_Composantes_Data::GetComposantesThatUse, result );
-    if( ADN_Sensors_Data::SensorInfos* infos = dynamic_cast< ADN_Sensors_Data::SensorInfos* >( data ) )
-        return FillUsingElements( eComposantes, *infos, GetComposantes().GetData(), &ADN_Composantes_Data::GetComposantesThatUse, result );
-    if( ADN_Weapons_Data::WeaponInfos* infos = dynamic_cast< ADN_Weapons_Data::WeaponInfos* >( data ) )
-        return FillUsingElements( eComposantes, *infos, GetComposantes().GetData(), &ADN_Composantes_Data::GetComposantesThatUse, result );
-    if( ADN_Breakdowns_Data::BreakdownInfo* infos = dynamic_cast< ADN_Breakdowns_Data::BreakdownInfo* >( data ) )
-        return FillUsingElements( eComposantes, *infos, GetComposantes().GetData(), &ADN_Composantes_Data::GetComposantesThatUse, result );
+    // Composantes to delete when armor or size deleted
     if( helpers::ArmorInfos* infos = dynamic_cast< helpers::ArmorInfos* >( data ) )
         return FillUsingElements( eComposantes, *infos, GetComposantes().GetData(), &ADN_Composantes_Data::GetComposantesThatUse, result );
     if( ADN_Categories_Data::SizeInfos* infos = dynamic_cast< ADN_Categories_Data::SizeInfos* >( data ) )
         return FillUsingElements( eComposantes, *infos, GetComposantes().GetData(), &ADN_Composantes_Data::GetComposantesThatUse, result );
 
-    if( ADN_Launchers_Data::LauncherInfos* infos = dynamic_cast< ADN_Launchers_Data::LauncherInfos* >( data ) )
-        return FillUsingElements( eWeapons, *infos, GetWeapons().GetData(), &ADN_Weapons_Data::GetWeaponThatUse, result );
-    if( ADN_Equipement_Data::AmmoCategoryInfo* infos = dynamic_cast< ADN_Equipement_Data::AmmoCategoryInfo* >( data ) )
-        return FillUsingElements( eWeapons, *infos, GetWeapons().GetData(), &ADN_Weapons_Data::GetWeaponThatUse, result );
-    if( ADN_Composantes_Data::ComposanteInfos* infos = dynamic_cast< ADN_Composantes_Data::ComposanteInfos* >( data ) )
-        return FillUsingElements( eUnits, *infos, GetUnits().GetData(), &ADN_Units_Data::GetUnitsThatUse, result );
-    if( ADN_Units_Data::UnitInfos* infos = dynamic_cast< ADN_Units_Data::UnitInfos* >( data ) )
-        return FillUsingElements( eAutomata, *infos, GetAutomata().GetData(), &ADN_Automata_Data::GetAutomataThatUse, result );
-    if( helpers::ResourceNatureInfos* infos = dynamic_cast< helpers::ResourceNatureInfos* >( data ) )
-        return FillUsingElements( eEquipement, *infos, GetEquipements().GetData(), &ADN_Equipement_Data::GetEquipmentsThatUse, result );
-
+    // Urban templates to delete when material, roofshape or accomodation deleted
     if( ADN_Urban_Data::UrbanMaterialInfos* infos = dynamic_cast< ADN_Urban_Data::UrbanMaterialInfos* >( data ) )
         return FillUsingElements( eUrban, *infos, GetUrban().GetData(), &ADN_Urban_Data::GetUrbanTemplateThatUse, result );
     if( ADN_Urban_Data::RoofShapeInfos* infos = dynamic_cast< ADN_Urban_Data::RoofShapeInfos* >( data ) )
@@ -620,16 +602,19 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatUse( ADN_Ref_ABC* da
     if( ADN_Urban_Data::AccommodationInfos* infos = dynamic_cast< ADN_Urban_Data::AccommodationInfos* >( data ) )
         return FillUsingElements( eUrban, *infos, GetUrban().GetData(), &ADN_Urban_Data::GetUrbanTemplateThatUse, result );
 
-    // Missions
-    if( ADN_Missions_Data::Mission* infos = dynamic_cast< ADN_Missions_Data::Mission* >( data ) )
-    {
-        QStringList& list = result[ eModels ];
-        for( int i = 0; i < ADN_Models_Data::ModelInfos::eNbrModelEntityTypes; ++i )
-             list << GetModels().GetData().GetModelsThatUse( static_cast< ADN_Models_Data::ModelInfos::E_ModelEntityType >( i ), *infos );
-        return result;
-    }
+    // Equipments to delete when object or nature deleted
+    if( ADN_Objects_Data_ObjectInfos* infos = dynamic_cast< ADN_Objects_Data_ObjectInfos* >( data ) )
+        return FillUsingElements( eEquipement, *infos, GetEquipements().GetData(), &ADN_Equipement_Data::GetEquipmentsThatUse, result );
+    if( helpers::ResourceNatureInfos* infos = dynamic_cast< helpers::ResourceNatureInfos* >( data ) )
+        return FillUsingElements( eEquipement, *infos, GetEquipements().GetData(), &ADN_Equipement_Data::GetEquipmentsThatUse, result );
 
-    // Models
+    // Weapons to delete when launcher or ammo deleted
+    if( ADN_Launchers_Data::LauncherInfos* infos = dynamic_cast< ADN_Launchers_Data::LauncherInfos* >( data ) )
+        return FillUsingElements( eWeapons, *infos, GetWeapons().GetData(), &ADN_Weapons_Data::GetWeaponThatUse, result );
+    if( ADN_Equipement_Data::AmmoCategoryInfo* infos = dynamic_cast< ADN_Equipement_Data::AmmoCategoryInfo* >( data ) )
+        return FillUsingElements( eWeapons, *infos, GetWeapons().GetData(), &ADN_Weapons_Data::GetWeaponThatUse, result );
+
+    // Automat, population or units to delete when model deleted
     if( ADN_Models_Data::ModelInfos* infos = dynamic_cast< ADN_Models_Data::ModelInfos* >( data ) )
     {
         FillUsingElements( eAutomata, *infos, GetAutomata().GetData(), &ADN_Automata_Data::GetAutomataThatUse, result );
@@ -638,20 +623,135 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatUse( ADN_Ref_ABC* da
         return result;
     }
 
-    // Object
+    // Automat to delete when his pc is deleted
+    if( ADN_Units_Data::UnitInfos* infos = dynamic_cast< ADN_Units_Data::UnitInfos* >( data ) )
+        return FillUsingElements( eAutomata, *infos, GetAutomata().GetData(), &ADN_Automata_Data::GetAutomataThatUseForPC, result );
+
+    // Inhabitant to delete when crowd deleted
+    if( ADN_Population_Data::PopulationInfos* infos = dynamic_cast< ADN_Population_Data::PopulationInfos* >( data ) )
+        return FillUsingElements( ePeople, *infos, GetPeople().GetData(), &ADN_People_Data::GetPeopleThatUse, result );
+
+    // Actives protections to delete when ammo deleted
+    if( ADN_Equipement_Data::AmmoCategoryInfo* infos = dynamic_cast< ADN_Equipement_Data::AmmoCategoryInfo* >( data ) )
+        return FillUsingElements( eActiveProtections, *infos, GetActiveProtections().GetData(), &ADN_ActiveProtections_Data::GetActiveProtectionsThatUse, result );
+
+    // RN to delete when ammunition deleted
+    if( ADN_Equipement_Data::CategoryInfo* infos = dynamic_cast< ADN_Equipement_Data::CategoryInfo* >( data ) )
+    {
+        return FillUsingElements( eResourceNetworks, *infos, GetResourceNetworks().GetData(), &ADN_ResourceNetworks_Data::GetResourceNetworksThatUse, result );
+    }
+
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Workspace::GetElementThatUse
+// Created: ABR 2012-07-23
+// -----------------------------------------------------------------------------
+ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatUse( ADN_Ref_ABC* data )
+{
+    T_UsingElements result;
+
+    // Composantes that use radar, sensor, weapon, breakdown or active protection
+    if( ADN_Radars_Data::RadarInfos* infos = dynamic_cast< ADN_Radars_Data::RadarInfos* >( data ) )
+        // TODO: sensors that use radar, but no bind existence to cause no ptr in vector
+        return FillUsingElements( eComposantes, *infos, GetComposantes().GetData(), &ADN_Composantes_Data::GetComposantesThatUse, result );
+    if( ADN_Sensors_Data::SensorInfos* infos = dynamic_cast< ADN_Sensors_Data::SensorInfos* >( data ) )
+        // TODO: Sensors that use sensors, but no bind existence to cause no ptr in vector
+        return FillUsingElements( eComposantes, *infos, GetComposantes().GetData(), &ADN_Composantes_Data::GetComposantesThatUse, result );
+    if( ADN_Weapons_Data::WeaponInfos* infos = dynamic_cast< ADN_Weapons_Data::WeaponInfos* >( data ) )
+        return FillUsingElements( eComposantes, *infos, GetComposantes().GetData(), &ADN_Composantes_Data::GetComposantesThatUse, result );
+    if( ADN_Breakdowns_Data::BreakdownInfo* infos = dynamic_cast< ADN_Breakdowns_Data::BreakdownInfo* >( data ) )
+        return FillUsingElements( eComposantes, *infos, GetComposantes().GetData(), &ADN_Composantes_Data::GetComposantesThatUse, result );
+    if( ADN_ActiveProtections_Data::ActiveProtectionsInfos* infos = dynamic_cast< ADN_ActiveProtections_Data::ActiveProtectionsInfos* >( data ) )
+        return FillUsingElements( eComposantes, *infos, GetComposantes().GetData(), &ADN_Composantes_Data::GetComposantesThatUse, result );
+
+    // Composantes, sensors and objects that use object
     if( ADN_Objects_Data_ObjectInfos* infos = dynamic_cast< ADN_Objects_Data_ObjectInfos* >( data ) )
     {
         FillUsingElements( eComposantes, *infos, GetComposantes().GetData(), &ADN_Composantes_Data::GetComposantesThatUse, result );
-        FillUsingElements( eEquipement, *infos, GetEquipements().GetData(), &ADN_Equipement_Data::GetEquipmentsThatUse, result );
         FillUsingElements( eSensors, *infos, GetSensors().GetData(), &ADN_Sensors_Data::GetSensorsThatUse, result );
+        FillUsingElements( eObjects, *infos, GetObjects().GetData(), &ADN_Objects_Data::GetObjectsThatUse, result );
+        FillUsingElements( eMissions, *infos, GetMissions().GetData(), &ADN_Missions_Data::GetAllMissionsThatUse, result );
         return result;
     }
 
-    // Logistic supply stock
+    // Models that use mission
+    if( ADN_Missions_Data::Mission* infos = dynamic_cast< ADN_Missions_Data::Mission* >( data ) )
+    {
+        QStringList& list = result[ eModels ];
+        for( int i = 0; i < ADN_Models_Data::ModelInfos::eNbrModelEntityTypes; ++i )
+            list << GetModels().GetData().GetModelsThatUse( static_cast< ADN_Models_Data::ModelInfos::E_ModelEntityType >( i ), *infos );
+        return result;
+    }
+    // Models that use frag order
+    if( ADN_Missions_Data::FragOrder* infos = dynamic_cast< ADN_Missions_Data::FragOrder* >( data ) )
+    {
+        QStringList& list = result[ eModels ];
+        for( int i = 0; i < ADN_Models_Data::ModelInfos::eNbrModelEntityTypes; ++i )
+            list << GetModels().GetData().GetModelsThatUse( static_cast< ADN_Models_Data::ModelInfos::E_ModelEntityType >( i ), *infos );
+        return result;
+    }
+
+    // Automat that use unit not as pc
+    if( ADN_Units_Data::UnitInfos* infos = dynamic_cast< ADN_Units_Data::UnitInfos* >( data ) )
+        return FillUsingElements( eAutomata, *infos, GetAutomata().GetData(), &ADN_Automata_Data::GetAutomataThatUseForElement, result );
+
+    // Peoples that use resource network
+    if( ADN_ResourceNetworks_Data::ResourceNetworkInfos* infos = dynamic_cast< ADN_ResourceNetworks_Data::ResourceNetworkInfos* >( data ) )
+        return FillUsingElements( ePeople, *infos, GetPeople().GetData(), &ADN_People_Data::GetPeopleThatUse, result );
+
+    // Active protections, breakdowns, or fire that use category ammo
+    if( ADN_Equipement_Data::CategoryInfo* infos = dynamic_cast< ADN_Equipement_Data::CategoryInfo* >( data ) )
+    {
+        FillUsingElements( eActiveProtections, *infos, GetActiveProtections().GetData(), &ADN_ActiveProtections_Data::GetActiveProtectionsThatUse, result );
+        FillUsingElements( eBreakdowns, *infos, GetBreakdowns().GetData(), &ADN_Breakdowns_Data::GetBreakdownsThatUse, result );
+        FillUsingElements( eFireClasses, *infos, GetFireClasses().GetData(), &ADN_FireClass_Data::GetFireThatUse, result );
+        FillUsingElements( eObjects, *infos, GetObjects().GetData(), &ADN_Objects_Data::GetObjectsThatUse, result );
+        FillUsingElements( eComposantes, *infos, GetComposantes().GetData(), &ADN_Composantes_Data::GetComposantesThatUse, result );
+    }
+
+    // Units that use composante
+    if( ADN_Composantes_Data::ComposanteInfos* infos = dynamic_cast< ADN_Composantes_Data::ComposanteInfos* >( data ) )
+        return FillUsingElements( eUnits, *infos, GetUnits().GetData(), &ADN_Units_Data::GetUnitsThatUse, result );
+
+    // Units and resources that use logistic supply stock
     if( helpers::LogisticSupplyClass* infos = dynamic_cast< helpers::LogisticSupplyClass* >( data ) )
     {
         FillUsingElements( eUnits, *infos, GetUnits().GetData(), &ADN_Units_Data::GetUnitsThatUse, result );
         FillUsingElements( eEquipement, *infos, GetEquipements().GetData(), &ADN_Equipement_Data::GetEquipmentsThatUse, result );
+        return result;
+    }
+
+    // All objects, fires, and sensors use urban material. Urban template and equipment that use urban material
+    if( ADN_Urban_Data::UrbanMaterialInfos* infos = dynamic_cast< ADN_Urban_Data::UrbanMaterialInfos* >( data ) )
+    {
+        result[ eFireClasses ];// All
+        result[ eSensors ];
+        result[ eObjects ] = GetObjects().GetData().GetObjectsWithCapacity( ADN_Objects_Data::ADN_CapacityInfos_UrbanDestruction::TAG );
+        result[ eEquipement ] = GetEquipements().GetData().GetEquipmentsWithDirectFire();
+        FillUsingElements( eUrban, *infos, GetUrban().GetData(), &ADN_Urban_Data::GetUrbanTemplateThatUse, result );
+        return result;
+    }
+    // All urban materials, ammunitions and crowds use armor. Equipment that use armor
+    if( helpers::ArmorInfos* infos = dynamic_cast< helpers::ArmorInfos* >( data ) )
+    {
+        result[ eUrban ];
+        result[ ePopulation ];
+        result[ eEquipement ] = GetEquipements().GetData().GetEquipmentsWithDirectFire();
+        return result;
+    }
+    // All crowds and sensors use volume
+    if( ADN_Categories_Data::SizeInfos* infos = dynamic_cast< ADN_Categories_Data::SizeInfos* >( data ) )
+    {
+        result[ eSensors ];
+        result[ ePopulation ];
+        return result;
+    }
+    // All objects use fire
+    if( ADN_FireClass_Data::FireClassInfos* infos = dynamic_cast< ADN_FireClass_Data::FireClassInfos* >( data ) )
+    {
+        result[ eObjects ] = GetObjects().GetData().GetObjectsWithCapacity( ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::TAG );
         return result;
     }
 

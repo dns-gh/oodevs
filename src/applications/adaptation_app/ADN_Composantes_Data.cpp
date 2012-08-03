@@ -2483,3 +2483,37 @@ QStringList ADN_Composantes_Data::GetComposantesThatUse( ADN_Categories_Data::Si
     }
     return result;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Data::GetComposantesThatUse
+// Created: ABR 2012-08-01
+// -----------------------------------------------------------------------------
+QStringList ADN_Composantes_Data::GetComposantesThatUse( ADN_ActiveProtections_Data::ActiveProtectionsInfos& activeProtection )
+{
+    QStringList result;
+    for( IT_ComposanteInfos_Vector it = vComposantes_.begin(); it != vComposantes_.end(); ++it )
+    {
+        ComposanteInfos* pComp = *it;
+        for( CIT_ActiveProtectionsInfos_Vector itActive = pComp->vActiveProtections_.begin(); itActive != pComp->vActiveProtections_.end(); ++itActive )
+            if( ( *itActive )->ptrActiveProtections_.GetData()->strName_.GetData() == activeProtection.strName_.GetData() )
+                result << pComp->strName_.GetData().c_str();
+    }
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Data::GetComposantesThatUse
+// Created: ABR 2012-08-02
+// -----------------------------------------------------------------------------
+QStringList ADN_Composantes_Data::GetComposantesThatUse( ADN_Equipement_Data::CategoryInfo& category )
+{
+    QStringList result;
+    for( IT_ComposanteInfos_Vector it = vComposantes_.begin(); it != vComposantes_.end(); ++it )
+    {
+        ComposanteInfos* pComp = *it;
+        for( CIT_CategoryInfos_Vector itResource = pComp->resources_.categories_.begin(); itResource != pComp->resources_.categories_.end(); ++itResource )
+            if( ( *itResource )->ptrCategory_.GetData()->strName_.GetData() == category.strName_.GetData() )
+                result << pComp->strName_.GetData().c_str();
+    }
+    return result;
+}

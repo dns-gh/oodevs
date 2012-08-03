@@ -925,7 +925,7 @@ QStringList ADN_Equipement_Data::GetEquipmentsThatUse( ADN_Objects_Data_ObjectIn
         ResourceInfos* pComp = *it;
         for( CIT_CategoryInfos_Vector itCategory = pComp->categories_.begin(); itCategory != pComp->categories_.end(); ++itCategory )
             if( AmmoCategoryInfo* ammoCategory = dynamic_cast< AmmoCategoryInfo* >( *itCategory ) )
-                if( ammoCategory->indirectAmmoInfos_.objectType_.GetData()->strType_.GetData() == object.strType_.GetData() )
+                if( ammoCategory->bIndirect_.GetData() && ammoCategory->indirectAmmoInfos_.objectType_.GetData()->strType_.GetData() == object.strType_.GetData() )
                     result << ( *itCategory )->strName_.GetData().c_str();
     }
     return result;
@@ -961,6 +961,24 @@ QStringList ADN_Equipement_Data::GetEquipmentsThatUse( helpers::LogisticSupplyCl
         for( CIT_CategoryInfos_Vector itCategory = pComp->categories_.begin(); itCategory != pComp->categories_.end(); ++itCategory )
             if( ( *itCategory )->ptrLogisticSupplyClass_.GetData()->strName_.GetData() == object.strName_.GetData() )
                 result << ( *itCategory )->strName_.GetData().c_str();
+    }
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Equipement_Data::GetEquipmentsWithDirectFire
+// Created: ABR 2012-08-02
+// -----------------------------------------------------------------------------
+QStringList ADN_Equipement_Data::GetEquipmentsWithDirectFire()
+{
+    QStringList result;
+    for( IT_ResourceInfos_Vector it = resources_.begin(); it != resources_.end(); ++it )
+    {
+        ResourceInfos* pComp = *it;
+        for( CIT_CategoryInfos_Vector itCategory = pComp->categories_.begin(); itCategory != pComp->categories_.end(); ++itCategory )
+            if( AmmoCategoryInfo* ammoCategory = dynamic_cast< AmmoCategoryInfo* >( *itCategory ) )
+                if( ammoCategory->bDirect_.GetData() )
+                    result << ( *itCategory )->strName_.GetData().c_str();
     }
     return result;
 }

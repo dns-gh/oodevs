@@ -260,3 +260,30 @@ void ADN_ActiveProtections_Data::ActiveProtectionsInfos::WriteArchive( xml::xost
         (*it)->WriteArchive(xos);
     xos << xml::end;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ActiveProtections_Data::GetActiveProtectionsThatUse
+// Created: ABR 2012-08-01
+// -----------------------------------------------------------------------------
+QStringList ADN_ActiveProtections_Data::GetActiveProtectionsThatUse( ADN_Equipement_Data::AmmoCategoryInfo& ammo )
+{
+    QStringList result;
+    for( IT_ActiveProtectionsInfosVector it = activeProtections_.begin(); it != activeProtections_.end(); ++it )
+        if( ( *it )->ptrAmmunition_.GetData()->strName_.GetData() == ammo.strName_.GetData() )
+            result << ( *it )->strName_.GetData().c_str();
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ActiveProtections_Data::GetActiveProtectionsThatUse
+// Created: ABR 2012-08-01
+// -----------------------------------------------------------------------------
+QStringList ADN_ActiveProtections_Data::GetActiveProtectionsThatUse( ADN_Equipement_Data::CategoryInfo& category )
+{
+    QStringList result;
+    for( IT_ActiveProtectionsInfosVector it = activeProtections_.begin(); it != activeProtections_.end(); ++it )
+        for( IT_ActiveProtectionsInfosWeaponsVector itWeapon = ( *it )->weapons_.begin(); itWeapon != ( *it )->weapons_.end(); ++itWeapon )
+            if( ( *itWeapon )->ptrWeapon_.GetData()->strName_.GetData() == category.strName_.GetData() )
+                result << ( *it )->strName_.GetData().c_str();
+    return result;
+}

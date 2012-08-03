@@ -132,6 +132,7 @@ public:
     void            FilesNeeded(T_StringList& l) const;
     void            Reset();
     QStringList     GetModelsThatUse( ModelInfos::E_ModelEntityType type, ADN_Missions_Data::Mission& model );
+    QStringList     GetModelsThatUse( ModelInfos::E_ModelEntityType type, ADN_Missions_Data::FragOrder& fragOrder );
 
     T_ModelInfos_Vector&    GetUnitModelsInfos();
     ModelInfos*             FindUnitModel( const std::string& strName );
@@ -155,36 +156,6 @@ private:
     T_ModelInfos_Vector     vAutomataModels_;
     T_ModelInfos_Vector     vPopulationModels_;
 };
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Models_Data::GetModelsThatUse
-// Created: ABR 2011-09-29
-// -----------------------------------------------------------------------------
-inline
-QStringList ADN_Models_Data::GetModelsThatUse( ModelInfos::E_ModelEntityType type, ADN_Missions_Data::Mission& mission )
-{
-    QStringList result;
-    T_ModelInfos_Vector* currentVector = 0;
-    if( type == ModelInfos::ePawn )
-        currentVector = &vUnitModels_;
-    else if( type == ModelInfos::eAutomat )
-        currentVector = &vAutomataModels_;
-    else
-        currentVector = &vPopulationModels_;
-    for( IT_ModelInfos_Vector it = currentVector->begin(); it != currentVector->end(); ++it )
-    {
-        ModelInfos* pModel = *it;
-        if( !pModel )
-            continue;
-        for( IT_MissionInfos_Vector missionIt = pModel->vMissions_.begin(); missionIt != pModel->vMissions_.end(); ++missionIt )
-            if( ( *missionIt )->mission_ == &mission )
-            {
-                result << pModel->strName_.GetData().c_str();
-                break;
-            }
-    }
-    return result;
-}
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Models_Data::GetUnitModelsInfos

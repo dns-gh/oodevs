@@ -18,11 +18,14 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Equipement_AmmoListView.h"
-#include "ADN_Weapons_Data.h"
+#include "ADN_ActiveProtections_Data.h"
+#include "ADN_Composantes_Data.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Equipement_Wizard.h"
 #include "ADN_Equipement_GUI.h"
+#include "ADN_Objects_Data.h"
 #include "ADN_WeaponFilter.h"
+#include "ADN_Weapons_Data.h"
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
 #include <boost/bind.hpp>
@@ -154,7 +157,14 @@ void ADN_Equipement_AmmoListView::OnContextMenu( const QPoint& pt )
     {
         AmmoCategoryInfo* pCastData = static_cast< AmmoCategoryInfo* >( pCurData_ );
         assert( pCastData != 0 );
-        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tools::translate( "ADN_Equipement_AmmoListView", "Weapon systems" ), ADN_Workspace::GetWorkspace().GetWeapons().GetData().GetWeaponThatUse( *pCastData ), eWeapons );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Tr::ConvertFromWorkspaceElement( eActiveProtections ).c_str(),
+                                      ADN_Workspace::GetWorkspace().GetActiveProtections().GetData().GetActiveProtectionsThatUse( *pCastData ), eActiveProtections );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Tr::ConvertFromWorkspaceElement( eWeapons ).c_str(),
+                                      ADN_Workspace::GetWorkspace().GetWeapons().GetData().GetWeaponThatUse( *pCastData ), eWeapons );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Tr::ConvertFromWorkspaceElement( eObjects ).c_str(),
+                                      ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectsThatUse( *pCastData ), eObjects );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str(),
+                                      ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ), eComposantes );
     }
     popupMenu.exec( pt );
 }
@@ -168,6 +178,14 @@ std::string ADN_Equipement_AmmoListView::GetToolTipFor( Q3ListViewItem& item )
     void* pData = static_cast< ADN_ListViewItem& >( item ).GetData();
     AmmoCategoryInfo* pCastData = static_cast< AmmoCategoryInfo* >( pData );
     assert( pCastData != 0 );
-    return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( eWeapons ).c_str(),
-                            ADN_Workspace::GetWorkspace().GetWeapons().GetData().GetWeaponThatUse( *pCastData ) );
+
+    std::string result;
+    FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eActiveProtections ).c_str(), ADN_Workspace::GetWorkspace().GetActiveProtections().GetData().GetActiveProtectionsThatUse( *pCastData ), result );
+    FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eWeapons ).c_str(), ADN_Workspace::GetWorkspace().GetWeapons().GetData().GetWeaponThatUse( *pCastData ), result );
+    FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eObjects ).c_str(), ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectsThatUse( *pCastData ), result );
+    FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str(), ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ), result );
+
+    if( result.empty() )
+        result = tr( "<b>Unused</b>" ).toUtf8().constData();
+    return result;
 }

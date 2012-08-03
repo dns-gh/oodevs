@@ -945,3 +945,75 @@ void ADN_Missions_Data::MissionType::WriteArchive( xml::xostream& output )
                << xml::end;
     }
 }
+
+namespace
+{
+    template< typename T >
+    void FillUsingMission( const std::string& objectName, const ADN_Type_Vector_ABC< T >& vector, QStringList& result, const QString& prefix = "" )
+    {
+        for( ADN_Type_Vector_ABC< T >::const_iterator itMission = vector.begin(); itMission != vector.end(); ++itMission )
+            for( ADN_Missions_Data::T_MissionParameter_Vector::const_iterator itParam = ( *itMission )->parameters_.begin(); itParam != ( *itMission )->parameters_.end(); ++itParam )
+                if( ( *itParam )->type_.GetData() == eMissionParameterTypeGenObject )
+                    for( helpers::CIT_MissionGenObjectTypes_Infos_Vector itObject = ( *itParam )->genObjects_.begin(); itObject != ( *itParam )->genObjects_.end(); ++itObject )
+                        if( ( *itObject )->isAllowed_.GetData() && ( *itObject )->ptrObject_.GetData()->strName_.GetData() == objectName )
+                            result << ( ( prefix.isEmpty() ) ? ( *itMission )->strName_.GetData().c_str() : QString( "%1 - %2" ).arg( prefix ).arg( ( *itMission )->strName_.GetData().c_str() ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::GetUnitMissionsThatUse
+// Created: ABR 2012-08-03
+// -----------------------------------------------------------------------------
+QStringList ADN_Missions_Data::GetUnitMissionsThatUse( ADN_Objects_Data_ObjectInfos& object )
+{
+    QStringList result;
+    FillUsingMission( object.strName_.GetData(), unitMissions_, result );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::GetAutomatMissionsThatUse
+// Created: ABR 2012-08-03
+// -----------------------------------------------------------------------------
+QStringList ADN_Missions_Data::GetAutomatMissionsThatUse( ADN_Objects_Data_ObjectInfos& object )
+{
+    QStringList result;
+    FillUsingMission( object.strName_.GetData(), automatMissions_, result );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::GetPopulationMissionsThatUse
+// Created: ABR 2012-08-03
+// -----------------------------------------------------------------------------
+QStringList ADN_Missions_Data::GetPopulationMissionsThatUse( ADN_Objects_Data_ObjectInfos& object )
+{
+    QStringList result;
+    FillUsingMission( object.strName_.GetData(), populationMissions_, result );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::GetFragOrdersThatUse
+// Created: ABR 2012-08-03
+// -----------------------------------------------------------------------------
+QStringList ADN_Missions_Data::GetFragOrdersThatUse( ADN_Objects_Data_ObjectInfos& object )
+{
+    QStringList result;
+    FillUsingMission( object.strName_.GetData(), fragOrders_, result );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::GetAllMissionsThatUse
+// Created: ABR 2012-08-03
+// -----------------------------------------------------------------------------
+QStringList ADN_Missions_Data::GetAllMissionsThatUse( ADN_Objects_Data_ObjectInfos& object )
+{
+    QStringList result;
+    FillUsingMission( object.strName_.GetData(), unitMissions_, result, tools::translate( "ADN_Missions_data", "Unit missions" ) );
+    FillUsingMission( object.strName_.GetData(), automatMissions_, result, tools::translate( "ADN_Missions_data", "Automat missions" ) );
+    FillUsingMission( object.strName_.GetData(), populationMissions_, result, tools::translate( "ADN_Missions_data", "Crowd missions" ) );
+    FillUsingMission( object.strName_.GetData(), fragOrders_, result, tools::translate( "ADN_Missions_data", "Fragmentary orders" ) );
+    return result;
+}

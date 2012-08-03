@@ -201,7 +201,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Improvable::WriteArchive( xml::xostream
     xos << xml::start( "resources" );
     for( CIT_Categories it = categories_.begin(); it != categories_.end(); ++it )
     {
-        ADN_Composantes_Data::CategoryInfos* infos = reinterpret_cast< ADN_Composantes_Data::CategoryInfos* >( *it );
+        ADN_Composantes_Data::CategoryInfos* infos = *it;
         xos << xml::start( "resource" )
                 << xml::attribute( "name", infos->ptrCategory_.GetData()->strName_ ) << xml::attribute( "count", infos->rNbr_ )
             << xml::end;
@@ -955,7 +955,6 @@ ADN_Objects_Data::ADN_CapacityInfos_Spawn::ADN_CapacityInfos_Spawn()
     : object_      ( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos(), 0 )
     , rActionRange_( 0 )
     , objectName_  ( "" )
-    , load_        ( false )
     , nbc_         ( false )
 {
     object_.SetParentNode( *this );
@@ -978,11 +977,28 @@ void ADN_Objects_Data::ADN_CapacityInfos_Spawn::ReadArchive( xml::xistream& inpu
 // Name: ADN_Objects_Data::Load
 // Created: LGY 2011-05-24
 // -----------------------------------------------------------------------------
-void ADN_Objects_Data::ADN_CapacityInfos_Spawn::Load()
+void ADN_Objects_Data::ADN_CapacityInfos_Spawn::Load( const std::string& parentName )
 {
-    load_ = true;
-    if( !objectName_.empty() )
-        object_ = ADN_Workspace::GetWorkspace().GetObjects().GetData().FindObject( objectName_ );
+    if( !bPresent_.GetData() )
+        return;
+
+    if( objectName_.empty() )
+    {
+        QMessageBox::warning( 0, qApp->translate( "ADN_Objects_Data", "Reference error" ),
+                              qApp->translate( "ADN_Objects_Data", "Empty object referenced by object '%1'.\nThe spawn capacity will be disabled." ).arg( parentName.c_str() ).arg( objectName_.c_str() ),
+                              QMessageBox::Ok | QMessageBox::Default );
+        bPresent_ = false;
+        return;
+    }
+
+    object_ = ADN_Workspace::GetWorkspace().GetObjects().GetData().FindObject( objectName_ );
+    if( object_.GetData() == 0 )
+    {
+        QMessageBox::warning( 0, qApp->translate( "ADN_Objects_Data", "Reference error" ),
+                              qApp->translate( "ADN_Objects_Data", "Unknown object '%2' referenced by object '%1'.\nThe spawn capacity will be disabled." ).arg( parentName.c_str() ).arg( objectName_.c_str() ),
+                              QMessageBox::Ok | QMessageBox::Default );
+        bPresent_ = false;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -991,7 +1007,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Spawn::Load()
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ADN_CapacityInfos_Spawn::WriteArchive( xml::xostream& output )
 {
-    std::string type = ( load_ && object_.GetData() ) ? object_.GetData()->strType_.GetData() : objectName_;
+    std::string type = ( object_.GetData() ) ? object_.GetData()->strType_.GetData() : objectName_;
     output << xml::attribute( "object", type )
            << xml::attribute( "action-range", rActionRange_ )
            << xml::attribute( "nbc", nbc_ );
@@ -1382,6 +1398,12 @@ void ADN_Objects_Data::ReadArchive( xml::xistream& xis )
     xis >> xml::start( "objects" )
             >> xml::list( "object", *this, &ADN_Objects_Data::ReadObject )
         >> xml::end;
+
+    for( IT_ObjectsInfos_Vector it = vObjectInfos_.begin(); it != vObjectInfos_.end(); ++it )
+    {
+        ADN_Objects_Data::ADN_CapacityInfos_Spawn* spawn = static_cast< ADN_Objects_Data::ADN_CapacityInfos_Spawn* >( ( *it )->capacities_[ ADN_Objects_Data::ADN_CapacityInfos_Spawn::TAG ].get() );
+        spawn->Load( ( *it )->strName_.GetData() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -1395,4 +1417,80 @@ void ADN_Objects_Data::WriteArchive( xml::xostream& xos )
     for( IT_ObjectsInfos_Vector it = vObjectInfos_.begin(); it != vObjectInfos_.end(); ++it )
         ( *it )->WriteArchive( xos );
     xos << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::GetObjectsThatUse
+// Created: ABR 2012-08-02
+// -----------------------------------------------------------------------------
+QStringList ADN_Objects_Data::GetObjectsThatUse( ADN_Objects_Data_ObjectInfos& object )
+{
+    QStringList result;
+    for( IT_ObjectsInfos_Vector it = vObjectInfos_.begin(); it != vObjectInfos_.end(); ++it )
+    {
+        ADN_CapacityInfos_Spawn* spawn = static_cast< ADN_CapacityInfos_Spawn* >( ( *it )->capacities_[ ADN_CapacityInfos_Spawn::TAG ].get() );
+         if( spawn->bPresent_.GetData() && spawn->object_.GetData()->strName_.GetData() == object.strName_.GetData() )
+            result << ( *it )->strName_.GetData().c_str();
+    }
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::GetObjectsThatUse
+// Created: ABR 2012-08-02
+// -----------------------------------------------------------------------------
+QStringList ADN_Objects_Data::GetObjectsThatUse( ADN_Equipement_Data::CategoryInfo& object )
+{
+    QStringList result;
+    for( IT_ObjectsInfos_Vector itObject = vObjectInfos_.begin(); itObject != vObjectInfos_.end(); ++itObject )
+    {
+        bool added = false;
+        ADN_CapacityInfos_Constructor* constructor = static_cast< ADN_CapacityInfos_Constructor* >( ( *itObject )->capacities_[ ADN_CapacityInfos_Constructor::TAG ].get() );
+        if( constructor && constructor->bPresent_.GetData() )
+        {
+            // Buildable
+            if( constructor->ptrBuildable_.get() && constructor->ptrBuildable_->bPresent_.GetData() )
+                for( ADN_CapacityInfos_Buildable::CIT_Categories it = constructor->ptrBuildable_->categories_.begin(); !added && it != constructor->ptrBuildable_->categories_.end(); ++it )
+                    if( ( *it )->ptrCategory_.GetData()->strName_.GetData() == object.strName_.GetData() )
+                    {
+                        added = true;
+                        result << ( *itObject )->strName_.GetData().c_str();
+                    }
+            // Improvable
+            if( !added && constructor->ptrImprovable_.get() && constructor->ptrImprovable_->bPresent_.GetData() )
+                for( ADN_CapacityInfos_Buildable::CIT_Categories it = constructor->ptrImprovable_->categories_.begin(); !added && it != constructor->ptrImprovable_->categories_.end(); ++it )
+                    if( ( *it )->ptrCategory_.GetData()->strName_.GetData() == object.strName_.GetData() )
+                    {
+                        added = true;
+                        result << ( *itObject )->strName_.GetData().c_str();
+                    }
+        }
+
+        // Attrition
+        ADN_CapacityInfos_Attrition* attrition = static_cast< ADN_CapacityInfos_Attrition* >( ( *itObject )->capacities_[ ADN_CapacityInfos_Attrition::TAG ].get() );
+        if( !added && attrition && attrition->bPresent_.GetData() &&
+            ( ( attrition->useAmmo_.GetData() && attrition->ammoCategory_.GetData()->strName_ == object.strName_.GetData() ) ||
+              ( !attrition->useAmmo_.GetData() && attrition->category_.GetData()->strName_ == object.strName_.GetData() ) ) )
+            {
+                added = true;
+                result << ( *itObject )->strName_.GetData().c_str();
+            }
+    }
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::GetObjectsWithCapacity
+// Created: ABR 2012-08-02
+// -----------------------------------------------------------------------------
+QStringList ADN_Objects_Data::GetObjectsWithCapacity( const std::string& tag )
+{
+    QStringList result;
+    for( IT_ObjectsInfos_Vector it = vObjectInfos_.begin(); it != vObjectInfos_.end(); ++it )
+    {
+        helpers::ADN_TypeCapacity_Infos* capacity = ( *it )->capacities_[ tag ].get();
+        if( capacity->bPresent_.GetData() )
+            result << ( *it )->strName_.GetData().c_str();
+    }
+    return result;
 }

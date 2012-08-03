@@ -72,6 +72,7 @@ public:
     void Reset();
     T_ResourceNetworkInfosVector& GetResourceNetworksInfos();
     ResourceNetworkInfos* FindResourceNetwork( const std::string& strName );
+    QStringList GetResourceNetworksThatUse( ADN_Equipement_Data::CategoryInfo& category );
     //@}
 
 private:

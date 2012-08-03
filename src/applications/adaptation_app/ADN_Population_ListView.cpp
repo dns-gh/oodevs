@@ -12,6 +12,7 @@
 #include "ADN_Population_Data.h"
 #include "ADN_Population_GUI.h"
 #include "ADN_Connector_ListView.h"
+#include "ADN_People_Data.h"
 #include "ADN_Tr.h"
 #include "ADN_Wizard.h"
 
@@ -76,5 +77,25 @@ void ADN_Population_ListView::OnContextMenu( const QPoint& pt )
     Q3PopupMenu popupMenu( this );
     ADN_Wizard< PopulationInfos > wizard( ADN_Tr::ConvertFromWorkspaceElement( ePopulation ).c_str(), ADN_Workspace::GetWorkspace().GetPopulation().GetData().GetPopulation(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
+    if( pCurData_ != 0 )
+    {
+        PopulationInfos* pCastData = static_cast< PopulationInfos* >( pCurData_ );
+        assert( pCastData != 0 );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Tr::ConvertFromWorkspaceElement( ePeople ).c_str(),
+                                      ADN_Workspace::GetWorkspace().GetPeople().GetData().GetPeopleThatUse( *pCastData ), ePeople );
+    }
     popupMenu.exec( pt );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_ListView::GetToolTipFor
+// Created: ABR 2012-08-02
+// -----------------------------------------------------------------------------
+std::string ADN_Population_ListView::GetToolTipFor( Q3ListViewItem& item )
+{
+    void* pData = static_cast< ADN_ListViewItem& >( item ).GetData();
+    PopulationInfos* pCastData = static_cast< PopulationInfos* >( pData );
+    assert( pCastData != 0 );
+    return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( ePeople ).c_str(),
+                            ADN_Workspace::GetWorkspace().GetPeople().GetData().GetPeopleThatUse( *pCastData ) );
 }

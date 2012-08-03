@@ -312,9 +312,7 @@ void ADN_Weapons_GUI::Build()
     pContentLayout->addWidget( pIndirectGroup);
 
     // List view
-    ADN_SearchListView< ADN_Weapons_ListView >* pSearchListView = new ADN_SearchListView< ADN_Weapons_ListView >( data_.GetWeaponInfos(), vInfosConnectors );
-    connect( pSearchListView->GetListView(), SIGNAL( UsersListRequested( const ADN_NavigationInfos::UsedBy& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_NavigationInfos::UsedBy& ) ) );
-    connect( this, SIGNAL( ApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ), pSearchListView, SLOT( OnApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ) );
+    ADN_SearchListView< ADN_Weapons_ListView >* pSearchListView = new ADN_SearchListView< ADN_Weapons_ListView >( this, data_.GetWeaponInfos(), vInfosConnectors );
     pListView_ = pSearchListView->GetListView();
     pListView_->setObjectName( strClassName_ + "_List" );
 

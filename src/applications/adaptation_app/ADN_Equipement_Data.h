@@ -242,6 +242,7 @@ public:
     QStringList GetEquipmentsThatUse( ADN_Objects_Data_ObjectInfos& object );
     QStringList GetEquipmentsThatUse( helpers::ResourceNatureInfos& object );
     QStringList GetEquipmentsThatUse( helpers::LogisticSupplyClass& object );
+    QStringList GetEquipmentsWithDirectFire();
 
 private:
     void ReadArchive( xml::xistream& );
