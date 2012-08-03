@@ -30,6 +30,10 @@ namespace web
     typedef boost::filesystem::path Path;
     typedef boost::property_tree::ptree Tree;
     typedef boost::uuids::uuid Uuid;
+namespace session
+{
+    struct Config;
+}
 }
 
 namespace web
@@ -86,7 +90,7 @@ struct Agent_ABC : public boost::noncopyable
     virtual std::vector< Tree > ListSessions ( const Uuid& node, int offset, int limit ) const = 0;
     virtual size_t              CountSessions( const Uuid& node ) const = 0;
     virtual Tree                GetSession   ( const Uuid& node, const Uuid& id ) const = 0;
-    virtual Tree                CreateSession( const Uuid& node, const std::string& name, const std::string& exercise ) = 0;
+    virtual Tree                CreateSession( const Uuid& node, const session::Config& cfg, const std::string& exercise ) = 0;
     virtual Tree                DeleteSession( const Uuid& node, const Uuid& id ) = 0;
     virtual Tree                StartSession ( const Uuid& node, const Uuid& id ) const = 0;
     virtual Tree                StopSession  ( const Uuid& node, const Uuid& id ) const = 0;

@@ -29,6 +29,7 @@
 
 using namespace host;
 using namespace property_tree;
+using namespace web::session;
 using runtime::Async;
 using runtime::FileSystem_ABC;
 using runtime::Runtime_ABC;
@@ -125,6 +126,65 @@ int GetPid( T& process )
 {
     return process ? process->GetPid() : -1;
 }
+
+RngConfig ReadRngConfig( const Tree& src, const std::string& prefix )
+{
+    RngConfig cfg;
+    std::string dist;
+    bool found = TryRead( dist, src, prefix + ".distribution" );
+    if( found )
+        cfg.distribution = ConvertRngDistribution( dist );
+    TryRead( cfg.deviation, src, prefix + ".deviation" );
+    TryRead( cfg.mean, src, prefix + ".mean" );
+    return cfg;
+}
+
+void WriteRngConfig( Tree& dst, const std::string& prefix, const RngConfig& cfg )
+{
+    dst.put( prefix + ".distribution", ConvertRngDistribution( cfg.distribution ) );
+    dst.put( prefix + ".deviation", cfg.deviation );
+    dst.put( prefix + ".mean", cfg.mean );
+}
+
+Config ReadConfig( const Tree& src )
+{
+    Config cfg;
+    TryRead( cfg.name, src, "name" );
+    TryRead( cfg.checkpoints.enabled, src, "checkpoints.enabled" );
+    TryRead( cfg.checkpoints.frequency, src, "checkpoints.frequency" );
+    TryRead( cfg.checkpoints.keep, src, "checkpoints.keep" );
+    TryRead( cfg.time.end_tick, src, "time.end_tick" );
+    TryRead( cfg.time.factor, src, "time.factor" );
+    TryRead( cfg.time.paused, src, "time.paused" );
+    TryRead( cfg.time.step, src, "time.step" );
+    TryRead( cfg.rng.seed, src, "rng.seed" );
+    cfg.rng.breakdown = ReadRngConfig( src, "rng.breakdown" );
+    cfg.rng.fire = ReadRngConfig( src, "rng.fire" );
+    cfg.rng.perception = ReadRngConfig( src, "rng.perception" );
+    cfg.rng.wound = ReadRngConfig( src, "rng.wound" );
+    TryRead( cfg.pathfind.threads, src, "pathfind.threads" );
+    TryRead( cfg.recorder.frequency, src, "recorder.frequency" );
+    return cfg;
+}
+
+void WriteConfig( Tree& dst, const Config& cfg )
+{
+    dst.put( "name", cfg.name );
+    dst.put( "checkpoints.enabled", cfg.checkpoints.enabled );
+    dst.put( "checkpoints.frequency", cfg.checkpoints.frequency );
+    dst.put( "checkpoints.keep", cfg.checkpoints.keep );
+    dst.put( "time.end_tick", cfg.time.end_tick );
+    dst.put( "time.factor", cfg.time.factor );
+    dst.put( "time.paused", cfg.time.paused );
+    dst.put( "time.step", cfg.time.step );
+    dst.put( "rng.seed", cfg.rng.seed );
+    WriteRngConfig( dst, "rng.breakdown", cfg.rng.breakdown );
+    WriteRngConfig( dst, "rng.fire", cfg.rng.fire );
+    WriteRngConfig( dst, "rng.perception", cfg.rng.perception );
+    WriteRngConfig( dst, "rng.wound", cfg.rng.wound );
+    dst.put( "pathfind.threads", cfg.pathfind.threads );
+    dst.put( "recorder.frequency", cfg.recorder.frequency );
+}
 }
 
 // -----------------------------------------------------------------------------
@@ -136,7 +196,7 @@ Session::Session( const FileSystem_ABC& system,
                   const boost::shared_ptr< Node_ABC > node,
                   const Path& root,
                   const Uuid& id,
-                  const std::string& name,
+                  const Config& cfg,
                   const std::string& exercise,
                   const Port& port )
     : system_      ( system )
@@ -144,7 +204,7 @@ Session::Session( const FileSystem_ABC& system,
     , node_        ( node )
     , id_          ( id )
     , root_        ( root )
-    , name_        ( name )
+    , cfg_         ( cfg )
     , links_       ( node->LinkExercise( exercise ) )
     , port_        ( port )
     , running_     ()
@@ -177,7 +237,7 @@ Session::Session( const FileSystem_ABC& system,
     , node_        ( node )
     , id_          ( Get< Uuid >( tree, "id" ) )
     , root_        ( root )
-    , name_        ( Get< std::string >( tree, "name" ) )
+    , cfg_         ( ReadConfig( tree ) )
     , links_       ( node->LinkExercise( tree.get_child( "links" ) ) )
     , port_        ( AcquirePort( Get< int >( tree, "port" ), ports ) )
     , process_     ( AcquireProcess( tree, runtime, port_->Get() ) )
@@ -245,7 +305,7 @@ Path Session::GetExercise() const
 // -----------------------------------------------------------------------------
 std::string Session::GetName() const
 {
-    return name_;
+    return cfg_.name;
 }
 
 // -----------------------------------------------------------------------------
@@ -266,8 +326,8 @@ Tree Session::GetProperties( bool save ) const
     Tree tree;
     tree.put( "id", id_ );
     tree.put( "node", node_->GetId() );
-    tree.put( "name", name_ );
     tree.put( "port", port_->Get() );
+    WriteConfig( tree, cfg_ );
     tree.put( "status", ConvertStatus( status_ ) );
     if( save )
         tree.put_child( "links", links_ );
@@ -314,23 +374,39 @@ Tree Session::Save() const
 
 namespace
 {
-void GetDispatcherConfiguration( Tree& tree, int base )
+void WriteDispatcherConfiguration( Tree& tree, int base, const Config& cfg )
 {
     const std::string prefix = "session.config.dispatcher.";
     tree.put( prefix + "network.<xmlattr>.client", "localhost:" + boost::lexical_cast< std::string >( base + SIMULATION_PORT ) );
     tree.put( prefix + "network.<xmlattr>.server", base + DISPATCHER_PORT );
     tree.put( prefix + "plugins.web_control.<xmlattr>.server", base + WEB_CONTROL_PORT );
     tree.put( prefix + "plugins.web_control.<xmlattr>.library", "web_control_plugin" );
+    tree.put( prefix + "plugins.recorder.<xmlattr>.fragmentfreq", cfg.recorder.frequency );
 }
 
-void GetSimulationConfiguration( Tree& tree, int base )
+void WriteRngConfiguration( Tree& tree, const std::string& prefix, const RngConfig& cfg )
+{
+    switch( cfg.distribution )
+    {
+        case RNG_DISTRIBUTION_GAUSSIAN:
+            tree.put( prefix + "<xmlattr>.distribution", true );
+            tree.put( prefix + "<xmlattr>.deviation", cfg.deviation );
+            tree.put( prefix + "<xmlattr>.mean", cfg.mean );
+            break;
+    }
+}
+
+void WriteSimulationConfiguration( Tree& tree, int base, const Config& cfg )
 {
     const std::string prefix = "session.config.simulation.";
     tree.put( prefix + "GarbageCollector.<xmlattr>.setpause", 100 );
     tree.put( prefix + "GarbageCollector.<xmlattr>.setstepmul", 100 );
-    tree.put( prefix + "checkpoint.<xmlattr>.frequency", "100000h" );
-    tree.put( prefix + "checkpoint.<xmlattr>.keep", 1 );
-    tree.put( prefix + "checkpoint.<xmlattr>.usecrc", true );
+    if( cfg.checkpoints.enabled )
+    {
+        tree.put( prefix + "checkpoint.<xmlattr>.frequency", cfg.checkpoints.frequency );
+        tree.put( prefix + "checkpoint.<xmlattr>.keep", cfg.checkpoints.keep );
+        tree.put( prefix + "checkpoint.<xmlattr>.usecrc", true );
+    }
     tree.put( prefix + "debug.<xmlattr>.decisional", false );
     tree.put( prefix + "debug.<xmlattr>.diadebugger", false );
     tree.put( prefix + "debug.<xmlattr>.diadebuggerport", base + DIA_DEBUGGER_PORT );
@@ -341,20 +417,28 @@ void GetSimulationConfiguration( Tree& tree, int base )
     tree.put( prefix + "dispatcher.<xmlattr>.embedded", true );
     tree.put( prefix + "network.<xmlattr>.port", base + SIMULATION_PORT );
     tree.put( prefix + "orbat.<xmlattr>.checkcomposition", false );
-    tree.put( prefix + "pathfinder.<xmlattr>.threads", 1 );
+    tree.put( prefix + "pathfinder.<xmlattr>.threads", cfg.pathfind.threads );
     tree.put( prefix + "profiling.<xmlattr>.enabled", false );
-    tree.put( prefix + "time.<xmlattr>.factor", 10 );
-    tree.put( prefix + "time.<xmlattr>.step", 10 );
+    tree.put( prefix + "time.<xmlattr>.factor", cfg.time.factor );
+    tree.put( prefix + "time.<xmlattr>.step", cfg.time.step );
+    if( cfg.time.end_tick )
+        tree.put( prefix + "time.<xmlattr>.end-tick", cfg.time.end_tick );
+    tree.put( prefix + "time.<xmlattr>.paused", cfg.time.paused );
+    tree.put( prefix + "random.<xmlattr>.seed", cfg.rng.seed );
+    WriteRngConfiguration( tree, prefix + "random0.", cfg.rng.fire );
+    WriteRngConfiguration( tree, prefix + "random1.", cfg.rng.wound );
+    WriteRngConfiguration( tree, prefix + "random2.", cfg.rng.perception );
+    WriteRngConfiguration( tree, prefix + "random3.", cfg.rng.breakdown );
 }
 
-std::string GetConfiguration( const std::string& name, int base )
+std::string GetConfiguration( const Config& cfg, int base )
 {
     Tree tree;
     tree.put( "session.meta.comment", "Auto-generated by Cloud Host Agent" );
     tree.put( "session.meta.date", boost::posix_time::to_iso_string( boost::posix_time::second_clock::local_time() ) );
-    tree.put( "session.meta.name", name );
-    GetDispatcherConfiguration( tree, base );
-    GetSimulationConfiguration( tree, base );
+    tree.put( "session.meta.name", cfg.name );
+    WriteDispatcherConfiguration( tree, base, cfg );
+    WriteSimulationConfiguration( tree, base, cfg );
     return ToXml( tree );
 }
 }
@@ -470,7 +554,7 @@ bool Session::Start( const Runtime_ABC& runtime, const Path& apps )
     boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );
     const Path output = GetOutput();
     system_.MakePaths( output );
-    system_.WriteFile( output / "session.xml", GetConfiguration( name_, port_->Get() ) );
+    system_.WriteFile( output / "session.xml", GetConfiguration( cfg_, port_->Get() ) );
     T_Process ptr = runtime.Start( Utf8Convert( apps / "simulation_app.exe" ), boost::assign::list_of
         ( MakeOption( "debug-dir", Utf8Convert( GetRoot() / "debug" ) ) )
         ( MakeOption( "exercises-dir", Utf8Convert( GetPath( "exercise" ) ) ) )

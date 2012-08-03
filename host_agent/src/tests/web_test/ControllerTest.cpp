@@ -312,8 +312,9 @@ BOOST_FIXTURE_TEST_CASE( controller_create_session, Fixture )
         ( "exercise", exercise )
         ( "name", name )
     );
+    MOCK_EXPECT( request.GetParameter ).with( mock::any ).returns( boost::none );
     const std::string expected = "{\"dummy\":\"ymmud\"}";
-    MOCK_EXPECT( agent.CreateSession ).once().with( defaultId, name, exercise ).returns( FromJson( expected ) );
+    MOCK_EXPECT( agent.CreateSession ).once().with( defaultId, mock::any, exercise ).returns( FromJson( expected ) );
     CheckReply( 200, expected, controller.DoGet( request ) );
 }
 

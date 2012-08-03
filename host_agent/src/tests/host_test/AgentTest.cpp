@@ -13,6 +13,7 @@
 #include "runtime/PropertyTree.h"
 #include "runtime/Utf8.h"
 #include "web/HttpException.h"
+#include "web/SessionConfig.h"
 
 #include <boost/assign/list_of.hpp>
 #include <boost/filesystem/path.hpp>
@@ -146,18 +147,20 @@ namespace
             , agent       ( log, hasCluster ? &cluster.controller : 0, nodes, sessions )
             , node        ( AddNode( defaultNodeString, "nodeName" ) )
             , mockSessions( boost::assign::list_of
-                ( AddSession( defaultNode, "myExercise", "myName", 0 ) )
-                ( AddSession( anotherNode, "anExercise", "aName", 1 ) ) )
+                ( AddSession( defaultNode, "myName", "myExercise", 0 ) )
+                ( AddSession( anotherNode, "aName", "anExercise", 1 ) ) )
         {
             // NOTHING
         }
 
-        boost::shared_ptr< MockSession > AddSession( const Uuid& node, const std::string& exercise, const std::string& name, int idx )
+        boost::shared_ptr< MockSession > AddSession( const Uuid& node, const std::string& name, const std::string& exercise, int idx )
         {
             const std::string uuid = CreatePrefixedUuid( idx );
             boost::shared_ptr< MockSession > session = CreateMockSession( node, uuid, exercise, name );
-            MOCK_EXPECT( sessions.Create ).once().with( node, exercise, name ).returns( session );
-            CheckTree( boost::bind( &Agent_ABC::CreateSession, &agent, node, exercise, name ), ToJson( session->GetProperties() ) );
+            MOCK_EXPECT( sessions.Create ).once().with( node, mock::any, exercise ).returns( session );
+            web::session::Config cfg;
+            cfg.name = name;
+            CheckTree( boost::bind( &Agent_ABC::CreateSession, &agent, node, cfg, exercise ), ToJson( session->GetProperties() ) );
             return session;
         }
 
@@ -293,12 +296,14 @@ BOOST_FIXTURE_TEST_CASE( agent_get_session, Fixture<> )
 BOOST_FIXTURE_TEST_CASE( agent_cannot_create_orphan_session, Fixture<> )
 {
     MOCK_EXPECT( sessions.Create ).once().returns( boost::shared_ptr< MockSession >() );
-    CheckTree( boost::bind( &Agent_ABC::CreateSession, &agent, defaultNode, "exercise", "name" ), "", false );
+    web::session::Config cfg;
+    cfg.name = "name";
+    CheckTree( boost::bind( &Agent_ABC::CreateSession, &agent, defaultNode, cfg, "exercise" ), "", false );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_create_session, Fixture<> )
 {
-    boost::shared_ptr< MockSession > session = AddSession( defaultNode, "exerciseName", "sessionName", 10000 );
+    boost::shared_ptr< MockSession > session = AddSession( defaultNode, "sessionName", "exerciseName", 10000 );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_delete_session, Fixture<> )

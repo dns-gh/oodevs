@@ -89,7 +89,7 @@ public:
     virtual std::vector< Tree > ListSessions ( const Uuid& node, int offset, int limit ) const;
     virtual size_t              CountSessions( const Uuid& node ) const;
     virtual Tree                GetSession   ( const Uuid& node, const Uuid& id ) const;
-    virtual Tree                CreateSession( const Uuid& node, const std::string& name, const std::string& exercise );
+    virtual Tree                CreateSession( const Uuid& node, const web::session::Config& cfg, const std::string& exercise );
     virtual Tree                DeleteSession( const Uuid& node, const Uuid& id );
     virtual Tree                StartSession ( const Uuid& node, const Uuid& id ) const;
     virtual Tree                StopSession  ( const Uuid& node, const Uuid& id ) const;

@@ -31,12 +31,23 @@ namespace runtime
     struct Runtime_ABC;
 }
 
+namespace web
+{
+namespace session
+{
+    struct Config;
+}
+}
+
 namespace host
 {
     typedef boost::filesystem::path Path;
     typedef boost::property_tree::ptree Tree;
     typedef boost::uuids::uuid Uuid;
+}
 
+namespace host
+{
 // =============================================================================
 /** @class  Session_ABC
     @brief  Session_ABC interface
@@ -96,7 +107,7 @@ struct SessionFactory_ABC : public boost::noncopyable
 
     //! @name Methods
     //@{
-    virtual Ptr Make( const Path& root, const Uuid& node, const std::string& name, const std::string& exercise ) const = 0;
+    virtual Ptr Make( const Path& root, const Uuid& node, const web::session::Config& cfg, const std::string& exercise ) const = 0;
     virtual Ptr Make( const Path& tag ) const = 0;
     //@}
 };

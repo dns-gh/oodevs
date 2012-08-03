@@ -15,6 +15,7 @@
 #include "Agent_ABC.h"
 #include "HttpException.h"
 #include "Request_ABC.h"
+#include "SessionConfig.h"
 #include "UserController_ABC.h"
 
 #include <boost/algorithm/string.hpp>
@@ -567,6 +568,64 @@ std::string Controller::GetSession( const Request_ABC& request )
     return WriteHttpReply( agent_.GetSession( node, GetId( request ) ) );
 }
 
+namespace
+{
+// -----------------------------------------------------------------------------
+// Name: TryRead
+// Created: BAX 2012-08-02
+// -----------------------------------------------------------------------------
+template< typename T >
+bool TryRead( T& dst, const Request_ABC& request, const std::string& key )
+{
+    const boost::optional< std::string > opt = request.GetParameter( key );
+    if( opt == boost::none )
+        return false;
+    dst = boost::lexical_cast< T >( opt );
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReadRngConfiguration
+// Created: BAX 2012-08-02
+// -----------------------------------------------------------------------------
+session::RngConfig ReadRngConfiguration( const Request_ABC& request, const std::string& prefix )
+{
+    session::RngConfig cfg;
+    std::string dist;
+    bool valid = TryRead( dist, request, prefix + "distribution" );
+    if( valid )
+        cfg.distribution = session::ConvertRngDistribution( dist );
+    TryRead( cfg.deviation, request, prefix + "deviation" );
+    TryRead( cfg.mean, request, prefix + "mean" );
+    return cfg;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReadConfiguration
+// Created: BAX 2012-08-02
+// -----------------------------------------------------------------------------
+session::Config ReadConfiguration( const Request_ABC& request )
+{
+    session::Config cfg;
+    TryRead( cfg.name, request, "name" );
+    TryRead( cfg.checkpoints.enabled, request, "checkpoints_enabled" );
+    TryRead( cfg.checkpoints.frequency, request, "checkpoints_frequency" );
+    TryRead( cfg.checkpoints.keep, request, "checkpoints_keep" );
+    TryRead( cfg.pathfind.threads, request, "pathfind_threads" );
+    TryRead( cfg.recorder.frequency, request, "recorder_frequency" );
+    TryRead( cfg.rng.seed, request, "rng_seed" );
+    cfg.rng.breakdown = ReadRngConfiguration( request, "rng_breakdown_" );
+    cfg.rng.fire = ReadRngConfiguration( request, "rng_fire_" );
+    cfg.rng.perception = ReadRngConfiguration( request, "rng_perception_" );
+    cfg.rng.wound = ReadRngConfiguration( request, "rng_wound_" );
+    TryRead( cfg.time.end_tick, request, "time_end_tick" );
+    TryRead( cfg.time.factor, request, "time_factory" );
+    TryRead( cfg.time.paused, request, "time_paused" );
+    TryRead( cfg.time.step, request, "time_step" );
+    return cfg;
+}
+}
+
 // -----------------------------------------------------------------------------
 // Name: Controller::CreateSession
 // Created: BAX 2012-03-16
@@ -577,9 +636,9 @@ std::string Controller::CreateSession( const Request_ABC& request )
     if( node.is_nil() )
         throw HttpException( web::BAD_REQUEST );
     const std::string exercise = RequireParameter< std::string >( "exercise", request );
-    const std::string name = RequireParameter< std::string >( "name", request );
-    LOG_INFO( log_ ) << "[web] /create_session node: " << node << " name: " << name << " exercise: " << exercise;
-    return WriteHttpReply( agent_.CreateSession( node, name, exercise ) );
+    session::Config cfg = ReadConfiguration( request );
+    LOG_INFO( log_ ) << "[web] /create_session node: " << node << " name: " << cfg.name << " exercise: " << exercise;
+    return WriteHttpReply( agent_.CreateSession( node, cfg, exercise ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -209,10 +209,10 @@ void SessionController::Create( Session_ABC& session )
 // Name: SessionController::Create
 // Created: BAX 2012-04-20
 // -----------------------------------------------------------------------------
-SessionController::T_Session SessionController::Create( const Uuid& node, const std::string& name, const std::string& exercise )
+SessionController::T_Session SessionController::Create( const Uuid& node, const web::session::Config& cfg, const std::string& exercise )
 {
     const Path output = system_.MakeAnyPath( root_ );
-    boost::shared_ptr< Session_ABC > session = factory_.Make( output, node, name, exercise );
+    boost::shared_ptr< Session_ABC > session = factory_.Make( output, node, cfg, exercise );
     sessions_.Attach( session );
     Create( *session );
     return session;

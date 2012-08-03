@@ -12,6 +12,7 @@
 #include "host/SessionController.h"
 #include "runtime/PropertyTree.h"
 #include "runtime/Utf8.h"
+#include "web/SessionConfig.h"
 
 #include <boost/assign/list_of.hpp>
 #include <boost/filesystem/path.hpp>
@@ -124,7 +125,7 @@ namespace
             const Tree tree = FromJson( text );
             boost::shared_ptr< MockSession > session = boost::make_shared< MockSession >( id, node, tree );
             if( path.empty() )
-                MOCK_EXPECT( sub.factory.Make4 ).once().with( mock::any, node, session->GetName(), session->GetExercise() ).returns( session );
+                MOCK_EXPECT( sub.factory.Make4 ).once().with( mock::any, node, mock::any, session->GetExercise() ).returns( session );
             else
                 MOCK_EXPECT( sub.factory.Make1 ).once().returns( session );
             MOCK_EXPECT( sub.system.WriteFile ).returns( true );
@@ -157,7 +158,9 @@ BOOST_FIXTURE_TEST_CASE( session_controller_reloads, Fixture )
 BOOST_FIXTURE_TEST_CASE( session_controller_creates, Fixture )
 {
     AddSession( idIdle, idNode, sessionIdle );
-    SessionController::T_Session session = control.Create( idNode, "myName2", "myExercise2" );
+    web::session::Config cfg;
+    cfg.name = "myName2";
+    SessionController::T_Session session = control.Create( idNode, cfg, "myExercise2" );
     BOOST_CHECK_EQUAL( session->GetId(), idIdle );
     BOOST_CHECK_EQUAL( control.Count(), size_t( 1 ) );
     BOOST_CHECK_EQUAL( control.Get( idNode, idIdle ), session );

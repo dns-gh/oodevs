@@ -318,10 +318,10 @@ Tree Agent::GetSession( const Uuid& node, const Uuid& id ) const
 // Name: Agent::CreateSession
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
-Tree Agent::CreateSession( const Uuid& node, const std::string& name, const std::string& exercise )
+Tree Agent::CreateSession( const Uuid& node, const web::session::Config& cfg, const std::string& exercise )
 {
     boost::lock_guard< boost::mutex > lock( access_ );
-    return Create( sessions_.Create( node, name, exercise ) );
+    return Create( sessions_.Create( node, cfg, exercise ) );
 }
 
 // -----------------------------------------------------------------------------

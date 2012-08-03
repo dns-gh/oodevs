@@ -11,6 +11,7 @@
 #define SESSION_H
 
 #include "Session_ABC.h"
+#include "web/SessionConfig.h"
 
 #include <boost/filesystem/path.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -69,7 +70,7 @@ public:
                       boost::shared_ptr< Node_ABC > node,
                       const Path& root,
                       const Uuid& id,
-                      const std::string& name,
+                      const web::session::Config& cfg,
                       const std::string& exercise,
                       const Port& port
                       );
@@ -143,7 +144,6 @@ private:
     const boost::shared_ptr< Node_ABC > node_;
     const Uuid id_;
     const Path root_;
-    const std::string name_;
     const Tree links_;
     const Port port_;
     mutable boost::shared_mutex access_;
@@ -157,6 +157,7 @@ private:
     T_Clients clients_;
     std::string start_time_;
     std::string current_time_;
+    web::session::Config cfg_;
     //@}
 };
 }

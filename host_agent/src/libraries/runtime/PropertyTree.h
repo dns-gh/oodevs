@@ -27,6 +27,16 @@ namespace property_tree
         const boost::optional< T > data = tree.get_optional< T >( key );
         return data == boost::none ? def : *data;
     }
+
+    template< typename T >
+    bool TryRead( T& dst, const T_Tree& tree, const std::string& key )
+    {
+        const boost::optional< T > data = tree.get_optional< T >( key );
+        if( data == boost::none )
+            return false;
+        dst = *data;
+        return true;
+    }
 }
 
 #endif // PROPERTY_TREE_H

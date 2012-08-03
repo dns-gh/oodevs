@@ -255,12 +255,12 @@ struct SessionFactory : public SessionFactory_ABC
         // NOTHING
     }
 
-    Ptr Make( const Path& root, const Uuid& id, const std::string& name, const std::string& exercise ) const
+    Ptr Make( const Path& root, const Uuid& id, const web::session::Config& cfg, const std::string& exercise ) const
     {
         NodeController_ABC::T_Node node = nodes.Get( id );
         if( !node )
             return Ptr();
-        return boost::make_shared< Session >( boost::cref( system ), boost::ref( client ), node, root, uuids.Create(), name, exercise, ports.Create() );
+        return boost::make_shared< Session >( boost::cref( system ), boost::ref( client ), node, root, uuids.Create(), boost::cref( cfg ), exercise, ports.Create() );
     }
 
     Ptr Make( const Path& tag ) const

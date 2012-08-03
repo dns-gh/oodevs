@@ -65,7 +65,7 @@ public:
     virtual T_Sessions  List  ( T_Predicate predicate = T_Predicate(), int offset = 0, int limit = INT_MAX ) const;
     virtual size_t      Count ( T_Predicate predicate = T_Predicate() ) const;
     virtual T_Session   Get   ( const Uuid& node, const Uuid& id ) const;
-    virtual T_Session   Create( const Uuid& node, const std::string& name, const std::string& exercise );
+    virtual T_Session   Create( const Uuid& node, const web::session::Config& cfg, const std::string& exercise );
     virtual T_Session   Delete( const Uuid& node, const Uuid& id );
     virtual T_Session   Start ( const Uuid& node, const Uuid& id ) const;
     virtual T_Session   Stop  ( const Uuid& node, const Uuid& id ) const;

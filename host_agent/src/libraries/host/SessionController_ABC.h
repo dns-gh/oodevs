@@ -24,11 +24,22 @@ namespace boost
     }
 }
 
+namespace web
+{
+namespace session
+{
+    struct Config;
+}
+}
+
 namespace host
 {
     struct Session_ABC;
     typedef boost::uuids::uuid Uuid;
+}
 
+namespace host
+{
 // =============================================================================
 /** @class  SessionController_ABC
     @brief  SessionController_ABC interface
@@ -58,7 +69,7 @@ struct SessionController_ABC : public boost::noncopyable
     virtual T_Sessions  List  ( T_Predicate predicate, int offset, int limit ) const = 0;
     virtual size_t      Count ( T_Predicate predicate ) const = 0;
     virtual T_Session   Get   ( const Uuid& node, const Uuid& id ) const = 0;
-    virtual T_Session   Create( const Uuid& node, const std::string& name, const std::string& exercise ) = 0;
+    virtual T_Session   Create( const Uuid& node, const web::session::Config& cfg, const std::string& exercise ) = 0;
     virtual T_Session   Delete( const Uuid& node, const Uuid& id ) = 0;
     virtual T_Session   Start ( const Uuid& node, const Uuid& id ) const = 0;
     virtual T_Session   Stop  ( const Uuid& node, const Uuid& id ) const = 0;

@@ -13,6 +13,7 @@
 #include "runtime/Event.h"
 #include "runtime/Pool.h"
 #include "runtime/PropertyTree.h"
+#include "web/SessionConfig.h"
 
 #include <boost/make_shared.hpp>
 #include <boost/uuid/uuid_generators.hpp>
@@ -92,7 +93,9 @@ namespace
         SessionPtr MakeSession()
         {
             MOCK_EXPECT( node->LinkExerciseName ).once().with( defaultExercise ).returns( FromJson( links ) );
-            return boost::make_shared< Session >( system, client, node, "", defaultId, defaultName, defaultExercise, Port( new MockPort( defaultPort ) ) );
+            web::session::Config cfg;
+            cfg.name = defaultName;
+            return boost::make_shared< Session >( system, client, node, "", defaultId, cfg, defaultExercise, Port( new MockPort( defaultPort ) ) );
         }
 
         SessionPtr ReloadSession( const Tree& tree, ProcessPtr process = ProcessPtr() )
@@ -156,30 +159,43 @@ BOOST_FIXTURE_TEST_CASE( session_starts_and_stops, Fixture )
     BOOST_CHECK( !session->Stop() );
 }
 
+namespace
+{
+std::string Filter( Tree& tree )
+{
+    tree.erase( "checkpoints" );
+    tree.erase( "time" );
+    tree.erase( "pathfind" );
+    tree.erase( "recorder" );
+    tree.erase( "rng" );
+    return ToJson( tree );
+}
+}
+
 BOOST_FIXTURE_TEST_CASE( session_converts, Fixture )
 {
     SessionPtr session = MakeSession();
     const std::string base = "{"
         "\"id\":\"12345678-90ab-cdef-9876-543210123456\","
         "\"node\":\"10123456-cdef-9876-90ab-543212345678\","
-        "\"name\":\"myName\","
-        "\"port\":\"1337\",";
+        "\"port\":\"1337\","
+        "\"name\":\"myName\",";
     const std::string stats = ",\"start_time\":\"\",\"current_time\":\"\",\"clients\":\"\"";
-    BOOST_CHECK_EQUAL( ToJson( session->GetProperties() ), base +
+    BOOST_CHECK_EQUAL( Filter( session->GetProperties() ), base +
         "\"status\":\"stopped\","
         + items + stats +
         "}" );
-    BOOST_CHECK_EQUAL( ToJson( session->Save() ), base +
+    BOOST_CHECK_EQUAL( Filter( session->Save() ), base +
         "\"status\":\"stopped\","
         "\"links\":" + links + ","
         "\"size\":\"0\""
         "}" );
     ProcessPtr process = StartSession( *session, processPid, processName );
-    BOOST_CHECK_EQUAL( ToJson( session->GetProperties() ), base +
+    BOOST_CHECK_EQUAL( Filter( session->GetProperties() ), base +
         "\"status\":\"playing\","
         + items + stats +
         "}" );
-    BOOST_CHECK_EQUAL( ToJson( session->Save() ), base +
+    BOOST_CHECK_EQUAL( Filter( session->Save() ), base +
         "\"status\":\"playing\","
         "\"links\":" + links + ","
         "\"size\":\"0\","
@@ -188,11 +204,11 @@ BOOST_FIXTURE_TEST_CASE( session_converts, Fixture )
             "\"name\":\"myProcessName\""
         "}}" );
     StopSession( *session, process );
-    BOOST_CHECK_EQUAL( ToJson( session->GetProperties() ), base +
+    BOOST_CHECK_EQUAL( Filter( session->GetProperties() ), base +
         "\"status\":\"stopped\","
         + items + stats +
         "}" );
-    BOOST_CHECK_EQUAL( ToJson( session->Save() ), base +
+    BOOST_CHECK_EQUAL( Filter( session->Save() ), base +
         "\"status\":\"stopped\","
         "\"links\":" + links + ","
         "\"size\":\"0\""
