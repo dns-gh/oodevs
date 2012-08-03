@@ -165,6 +165,11 @@ toggle_input_error = (el, txt, def = '') ->
     el.focus -> reset_error()
     setTimeout reset_error, 3000
 
+is_clipped = (num, min, max) ->
+    return false if num < min
+    return false if num > max
+    return true
+
 is_disabled = (evt) ->
     return $(evt.currentTarget).hasClass "disabled"
 
@@ -218,3 +223,38 @@ force_input_regexp = (regexp, control) ->
         return if e.which == 13
         return unless e.which && e.charCode
         return regexp.test String.fromCharCode e.which
+
+set_checkbox = (w, enabled) ->
+    if enabled
+        w.attr "checked", true
+    else
+        w.removeAttr "checked"
+
+parse_scalar = (ui, f, def) ->
+    return def unless ui?.val()?
+    val = f ui.val()
+    return def if _.isNaN val
+    return val
+
+get_number = (ui) ->
+    return parse_scalar ui, parseInt, 0
+
+get_double = (ui) ->
+    return parse_scalar ui, parseFloat, null
+
+link_checkbox_to_input = (ui, e) ->
+    set_checkbox ui, get_number($ e.target) > 0
+
+on_input_event = (widget, operand) ->
+    widget.bind "input keyup", operand
+    widget.live "paste", operand
+
+attach_checkbox_and_input = (input, cbox) ->
+    wrapper = _.wrap link_checkbox_to_input, (f, e) -> f cbox, e
+    on_input_event input, wrapper
+    cbox.click ->
+        val = get_number input
+        if cbox.is ":checked"
+            input.val 1 if !val
+        else
+            input.val 0
