@@ -289,3 +289,36 @@ bool DEC_ResourceNetworkFunctions::Supply( const DEC_Decision_ABC* callerAgent, 
     stock->Supply( -capacity->AddToStock( dotation, stock->GetValue() ) );
     return true;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ResourceNetworkFunctions::CreateResourceNetworkLinkFromResourceNetwork
+// Created: DGE 2012-06-27
+// -----------------------------------------------------------------------------
+bool DEC_ResourceNetworkFunctions::CreateResourceNetworkLinkFromResourceNetwork( boost::shared_ptr< DEC_ResourceNetwork > source, boost::shared_ptr< DEC_ResourceNetwork > target )
+{
+    if( !source.get() )
+        return false;
+    if( source->GetResource() != target->GetResource() )
+        return false;
+    MIL_Object_ABC* objectSource = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( source->GetObjectId() );
+    if( !objectSource )
+        return false;
+    return DoCreateResourceNetworkLink( *objectSource, target );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ResourceNetworkFunctions::DestroyResourceNetworkLinkWithObject
+// Created: DGE 2012-07-03
+// -----------------------------------------------------------------------------
+bool DEC_ResourceNetworkFunctions::DestroyResourceNetworkLinkWithObject( MIL_Object_ABC& objectSource, boost::shared_ptr< DEC_ResourceNetwork > target )
+{
+    if( !target.get() )
+        return false;
+    MIL_Object_ABC* objectTarget = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( target->GetObjectId() );
+    if( !objectTarget || !objectTarget->Retrieve< ResourceNetworkCapacity >())
+        return false;
+    ResourceNetworkCapacity* capacitySource = objectSource.Retrieve< ResourceNetworkCapacity >();
+    if( !capacitySource )
+        return false;
+    return capacitySource->DestroyLink( target->GetObjectId(), target->GetResource() );
+}

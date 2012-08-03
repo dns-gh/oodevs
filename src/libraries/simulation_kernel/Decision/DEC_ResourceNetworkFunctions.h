@@ -37,10 +37,12 @@ public:
     static void CreateResourceNetworkObjectAndLink( DEC_Decision_ABC* caller, const std::string& type, const TER_Localisation* pLocalisation, boost::shared_ptr< DEC_ResourceNetwork > target, unsigned int production );
     static bool CreateResourceNetworkLinkFromObject( boost::shared_ptr< DEC_Knowledge_Object > source, boost::shared_ptr< DEC_ResourceNetwork > target );
     static bool CreateResourceNetworkLinkFromUrbanBlock( UrbanObjectWrapper* source, boost::shared_ptr< DEC_ResourceNetwork > target );
+    static bool CreateResourceNetworkLinkFromResourceNetwork( boost::shared_ptr< DEC_ResourceNetwork > source, boost::shared_ptr< DEC_ResourceNetwork > target );
     static unsigned int CreateResourceNetworkObjectAndLinkReturn( DEC_Decision_ABC* caller, const std::string& type, const TER_Localisation* pLocalisation, boost::shared_ptr< DEC_ResourceNetwork > target, unsigned int production );
 
     static void DestroyResourceNetworkObjectLink( unsigned int objectResourceID );
     static bool DestroyResourceNetworkLink( boost::shared_ptr< DEC_ResourceNetwork > source, boost::shared_ptr< DEC_ResourceNetwork > target );
+    static bool DestroyResourceNetworkLinkWithObject( MIL_Object_ABC& objectSource, boost::shared_ptr< DEC_ResourceNetwork > target );
 
     static void DeactivateResourceNetworkElement( boost::shared_ptr< DEC_ResourceNetwork > resourceNetwork );
     static void ActivateResourceNetworkElement( boost::shared_ptr< DEC_ResourceNetwork > resourceNetwork );

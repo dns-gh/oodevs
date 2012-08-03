@@ -281,7 +281,9 @@ void RegisterResourceNetworkFunctions( directia::brain::Brain& brain )
     brain[ "DEC_ResourceNetwork_NodesInZoneByType" ] = &DEC_ResourceNetworkFunctions::GetResourceNetworksInZoneByType;
     brain[ "DEC_ResourceNetwork_CreateLinkFromObject" ] = &DEC_ResourceNetworkFunctions::CreateResourceNetworkLinkFromObject;
     brain[ "DEC_ResourceNetwork_CreateLinkFromUrbanBlock" ] = &DEC_ResourceNetworkFunctions::CreateResourceNetworkLinkFromUrbanBlock;
+    brain[ "DEC_ResourceNetwork_CreateLinkFromNode" ] = &DEC_ResourceNetworkFunctions::CreateResourceNetworkLinkFromResourceNetwork;
     brain[ "DEC_ResourceNetwork_DestroyLink" ] = &DEC_ResourceNetworkFunctions::DestroyResourceNetworkLink;
+    brain[ "DEC_ResourceNetwork_DestroyLinkWithObject" ] = &DEC_ResourceNetworkFunctions::DestroyResourceNetworkLinkWithObject;
     brain[ "DEC_ResourceNetwork_Create" ] = &DEC_ResourceNetworkFunctions::CreateNode;
     brain[ "DEC_ResourceNetwork_GetSupply" ] = &DEC_ResourceNetworkFunctions::GetSupply;
     brain[ "DEC_ResourceNetwork_Supply" ] = &DEC_ResourceNetworkFunctions::Supply;
