@@ -32,7 +32,6 @@ public:
     virtual unsigned long GetUrbanId() const;
     virtual const std::string& GetName() const;
     virtual MIL_UrbanObject_ABC* GetParent() const;
-    virtual void Accept( MIL_UrbanObjectVisitor_ABC& visitor ) const;
     virtual void Accept( MIL_UrbanMotivationsVisitor_ABC& visitor ) const;
     virtual void ComputeConvexHull();
     virtual void GetUrbanObjectLeaves( std::vector< const MIL_UrbanObject_ABC* >& leaves ) const;

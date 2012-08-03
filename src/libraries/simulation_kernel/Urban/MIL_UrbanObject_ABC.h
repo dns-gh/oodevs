@@ -14,7 +14,6 @@
 #include <tools/Extendable.h>
 #include <tools/Resolver.h>
 
-class MIL_UrbanObjectVisitor_ABC;
 class MIL_UrbanMotivationsVisitor_ABC;
 
 // TODO virer UrbanObjectWrapper à terme et ne garder que cette classe là
@@ -41,7 +40,6 @@ public:
     virtual unsigned long GetUrbanId() const = 0;
     virtual const std::string& GetName() const = 0;
     virtual MIL_UrbanObject_ABC* GetParent() const = 0;
-    virtual void Accept( MIL_UrbanObjectVisitor_ABC& visitor ) const = 0;
     virtual void Accept( MIL_UrbanMotivationsVisitor_ABC& visitor ) const = 0;
     virtual void ComputeConvexHull() = 0;
     virtual void GetUrbanObjectLeaves( std::vector< const MIL_UrbanObject_ABC* >& leaves ) const = 0;

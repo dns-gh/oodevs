@@ -101,7 +101,6 @@
 #include "tools/Loader_ABC.h"
 #include "Urban/MIL_UrbanCache.h"
 #include "Urban/MIL_UrbanObject.h"
-#include "Urban/MIL_UrbanObjectVisitor_ABC.h"
 #include "Urban/PHY_InfrastructureType.h"
 #include "Urban/PHY_MaterialCompositionType.h"
 #include "Urban/PHY_AccomodationType.h"

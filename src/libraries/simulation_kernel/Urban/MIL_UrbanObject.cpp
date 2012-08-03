@@ -13,7 +13,6 @@
 #include "UrbanGeometryAttribute.h"
 #include "UrbanPhysicalAttribute.h"
 #include "UrbanResourceNetworkAttribute.h"
-#include "MIL_UrbanObjectVisitor_ABC.h"
 #include <boost/lexical_cast.hpp>
 
 // -----------------------------------------------------------------------------
@@ -80,18 +79,6 @@ const std::string& MIL_UrbanObject::GetName() const
 MIL_UrbanObject_ABC* MIL_UrbanObject::GetParent() const
 {
     return parent_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_UrbanObject::Accept
-// Created: JSR 2012-08-01
-// -----------------------------------------------------------------------------
-void MIL_UrbanObject::Accept( MIL_UrbanObjectVisitor_ABC& visitor ) const
-{
-    tools::Iterator< const MIL_UrbanObject_ABC& > it = CreateIterator();
-    while( it.HasMoreElements() )
-        it.NextElement().Accept( visitor );
-    visitor.Visit( *this );
 }
 
 // -----------------------------------------------------------------------------
