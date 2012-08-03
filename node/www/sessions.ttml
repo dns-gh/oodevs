@@ -88,9 +88,9 @@
 [[ template "input_number" sub "id" "rng_seed" "label" "Seed" "prepend" 1 ]]
 <ul class="nav nav-pills controls">
     <li class="active"><a href="#pill_fire" data-toggle="tab">Fire</a></li>
-    <li><a href="#pill_wound" data-toggle="tab">Wounds</a></li>
-    <li><a href="#pill_perception" data-toggle="tab">Perceptions</a></li>
-    <li><a href="#pill_breakdown" data-toggle="tab">Breakdowns</a></li>
+    <li><a href="#pill_wound" data-toggle="tab">Wound</a></li>
+    <li><a href="#pill_perception" data-toggle="tab">Perception</a></li>
+    <li><a href="#pill_breakdown" data-toggle="tab">Breakdown</a></li>
 </ul>
 <div class="pill-content">
     <div class="pill-pane active" id="pill_fire"> [[ template "rng_context" sub "type" "fire" ]] </div>
