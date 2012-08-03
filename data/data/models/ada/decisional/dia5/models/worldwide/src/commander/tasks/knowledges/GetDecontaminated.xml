@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.tasks.knowledges.GetDecontaminated" source-version="1.0.0" extends="commander.tasks.knowledges.ReachingEffect">
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.tasks.knowledges.GetDecontaminated" source-version="1.0.0" extends="commander.tasks.knowledges.MoveTo">
     <description>The knowledge of the &quot;get decontaminated&quot; mission. This knowledge is used by the commander agent to perform its own mission.</description>
     <methods>
         <method name="getObject">

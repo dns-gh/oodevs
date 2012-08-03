@@ -1,49 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.tasks.MoveAlong" source-version="1.0.0" knowledge-class="commander.tasks.knowledges.MoveTo">
-    <description>For the commander agent, to order subordinates to follow a path defined as an ordered set of 'objectives' by the user. </description>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.tasks.GetTransported" source-version="1.0.0" knowledge-class="commander.tasks.knowledges.GetTransported">
+    <description>For the commander agent, to order subordinates to get transported.. &#xD;
+Each unit receives the &quot;get transported&quot; mission with the given &quot;position&quot;as parameter.</description>
     <parameters>
-        <parameter name="objectives">
-            <description>The list of entities defining the path. The list must be ordered such a way that its nth element represents the nth entity on the agent’s path.</description>
+        <parameter name="position">
+            <description>The position to reach to be transported.</description>
             <type>
-                <list>
-                    <class name="properties.Reachable"/>
-                </list>
+                <class name="properties.Reachable"/>
             </type>
         </parameter>
     </parameters>
+    <goal>
+        <description>To get all subordinates transported.</description>
+    </goal>
     <stages>
-        <stage label="move to destination" disable-when-done="true">
-            <description>Issue the 'agent.tasks.MoveAlong' mission to subordinates.</description>
+        <stage label="moving to position" disable-when-done="true">
             <skills>
                 <skill name="commander.skills.Lead" main="true">
                     <parameter name="noCoordination">
                         <value>
-                            <boolean>false</boolean>
+                            <boolean>true</boolean>
                         </value>
                     </parameter>
                     <parameter name="companyTask">
                         <value>
-                            <string>commander.tasks.MoveAlong</string>
+                            <string>commander.tasks.GetTransported</string>
                         </value>
                     </parameter>
                     <parameter name="mainTasks">
                         <value>
-                            <string>agent.tasks.MoveAlong</string>
+                            <string>agent.tasks.GetTransported</string>
                         </value>
                     </parameter>
                     <parameter name="supportTasks">
                         <value>
-                            <string>agent.tasks.MoveAlong</string>
+                            <string>agent.tasks.Follow</string>
                         </value>
                     </parameter>
                     <parameter name="taskForSupporting">
                         <value>
-                            <string>agent.tasks.MoveAlong</string>
+                            <string>agent.tasks.CombatSupport</string>
                         </value>
                     </parameter>
                     <parameter name="defaultTask">
                         <value>
-                            <string>agent.tasks.MoveAlong</string>
+                            <string>agent.tasks.Follow</string>
                         </value>
                     </parameter>
                 </skill>

@@ -92,6 +92,7 @@
         <skill name="agent.skills.actions.ApplyMortarFires"/>
         <skill name="agent.skills.UnloadTransportedUnits"/>
         <skill name="agent.skills.Settle"/>
+        <skill name="agent.skills.GetTransported"/>
     </skills>
     <resources>
         <resource name="agent.resources.EngageCapacity"/>

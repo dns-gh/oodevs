@@ -109,6 +109,21 @@
             <point>29TNF3479055835</point>
             <point>29TNF3541955823</point>
           </lima>
+          <lima name="Phase line 552">
+            <point>29TNF3312458688</point>
+            <point>29TNF3492157928</point>
+            <point>29TNF3598056993</point>
+            <point>29TNF3637656352</point>
+            <point>29TNF3751055996</point>
+          </lima>
+          <lima name="Phase line 553">
+            <point>29TNF3252555441</point>
+            <point>29TNF3354755508</point>
+            <point>29TNF3444754807</point>
+            <point>29TNF3470154510</point>
+            <point>29TNF3613254517</point>
+            <point>29TNF3688854520</point>
+          </lima>
           <limit name="Limit 333">
             <point>29TNF3668159906</point>
             <point>29TNF3466556848</point>
@@ -160,21 +175,6 @@
             <point>29TNF3513851675</point>
             <point>29TNF3527050328</point>
           </limit>
-          <lima name="Phase line 552">
-            <point>29TNF3312458688</point>
-            <point>29TNF3492157928</point>
-            <point>29TNF3598056993</point>
-            <point>29TNF3637656352</point>
-            <point>29TNF3751055996</point>
-          </lima>
-          <lima name="Phase line 553">
-            <point>29TNF3252555441</point>
-            <point>29TNF3354755508</point>
-            <point>29TNF3444754807</point>
-            <point>29TNF3470154510</point>
-            <point>29TNF3613254517</point>
-            <point>29TNF3688854520</point>
-          </lima>
           <limit name="Limit 561">
             <point>29TNF3555264110</point>
             <point>29TNF3447062875</point>
@@ -339,7 +339,13 @@
           <automat engaged="false" id="427" knowledge-group="377" name="OOTW.Refugees" symbol="symbols/sfgpue" type="OOTW.Refugees">
             <unit command-post="true" id="428" name="OOTW.Refugee" position="29TNF3583756613" type="OOTW.Refugee"/>
             <unit command-post="false" id="445" name="OOTW.Refugee" position="29TNF3596856576" type="OOTW.Refugee"/>
-            <unit command-post="false" id="446" name="OOTW.Refugee" position="29TNF3595256434" type="OOTW.Refugee"/>
+            <unit color="0x92dc1b" command-post="false" id="446" name="OOTW.Refugee" position="29TNF3595256434" type="OOTW.Refugee">
+              <adhesions>
+                <adhesion party="316" value="1"/>
+                <adhesion party="317" value="0.59"/>
+                <adhesion party="374" value="0.24"/>
+              </adhesions>
+            </unit>
             <unit command-post="false" id="447" name="OOTW.Refugee" position="29TNF3610456560" type="OOTW.Refugee"/>
             <unit command-post="false" id="448" name="OOTW.Refugee" position="29TNF3601656810" type="OOTW.Refugee"/>
           </automat>
@@ -408,4 +414,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="2772455289" -->
+<!-- signature="3655715036" -->

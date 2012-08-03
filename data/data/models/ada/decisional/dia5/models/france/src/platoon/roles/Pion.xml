@@ -18,7 +18,6 @@
         <skill name="platoon.skills.Produire"/>
         <skill name="agent.skills.RecoverHumanTransporters"/>
         <skill name="platoon.skills.ReparerReseau"/>
-        <skill name="platoon.skills.SeFaireTransporter"/>
         <skill name="platoon.skills.SortirDuReseauSouterrain"/>
         <skill name="platoon.skills.Transporter"/>
         <skill name="platoon.skills.TransporterFoule"/>
