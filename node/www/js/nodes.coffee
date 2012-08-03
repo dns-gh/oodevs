@@ -16,20 +16,31 @@ print_error = (text) ->
 
 pop_settings = (ui, data) ->
     ui.html node_settings data
-    force_input_regexp /\d/, ui.find ".num_sessions"
-    force_input_regexp /\d/, ui.find ".parallel_sessions"
+    num = $ "#num_sessions"
+    force_input_regexp /\d/, num
+    attach_checkbox_and_input num, $ "#num_sessions_check"
+    par = $ "#parallel_sessions"
+    force_input_regexp /\d/, par
+    attach_checkbox_and_input par, $ "#parallel_sessions_check"
     mod = ui.find ".modal"
     mod.modal "show"
     return [ui, mod]
 
+validate_number = (data, ui, id, min, max, msg) ->
+    widget = ui.find "#" + id
+    val = get_number widget
+    unless is_clipped val, min, max
+        toggle_input_error widget, msg
+        return false
+    data[id] = val
+    return true
+
 validate_settings = (ui) ->
-    name = ui.find ".name"
-    max  = ui.find ".num_sessions"
-    par  = ui.find ".parallel_sessions"
-    data =
-        num_sessions: parseInt max.val(), 10
-        parallel_sessions: parseInt par.val(), 10
+    data = {}
+    name = $ "#name"
     data.name = name.val() if name.val()?
+    return unless validate_number data, ui, "num_sessions", 0, Number.MAX_VALUE, "Invalid"
+    return unless validate_number data, ui, "parallel_sessions", 0, Number.MAX_VALUE, "Invalid"
     return data
 
 class NodeItem extends Backbone.Model
@@ -118,7 +129,7 @@ class NodeItemView extends Backbone.View
     edit: (evt) =>
         return if is_disabled evt
         previous = @model.get "ident"
-        [ui, mod] = pop_settings $(@el).find(".node_settings"), @model.attributes
+        [ui, mod] = pop_settings $("#node_settings"), @model.attributes
         mod.find(".apply").click =>
             data = validate_settings ui
             return unless data?

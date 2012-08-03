@@ -1,7 +1,6 @@
 <div class="row">
     <div class="span9">
         <div id="node_error"></div>
-        <div id="node_settings"></div>
         <div class="form-inline create_form">
             <div class="control-group">
                 <div class="controls">
@@ -19,6 +18,7 @@
         </div>
     </div>
 </div>
+<div id="node_settings"></div>
 <!-- Error Template -->
 <script type="text/template" id="node_error_template">
     <div class="alert alert-error"><b>Error</b> {{content}}</div>
@@ -32,24 +32,9 @@
         </div>
         <div class="modal-body">
             <form class="form-horizontal">
-                <div class="control-group">
-                    <label class="control-label">Name</label>
-                    <div class="controls">
-                        <input type="text" class="name" value="{{{name}}}"/>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">Max Sessions</label>
-                    <div class="controls">
-                        <input type="number" class="num_sessions" value="{{{num_sessions}}}"/>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">Parallel Sessions</label>
-                    <div class="controls">
-                        <input type="number" class="parallel_sessions" value="{{{parallel_sessions}}}"/>
-                    </div>
-                </div>
+                [[ template "input_text" sub "id" "name" "label" "Name" "value" "{{name}}" ]]
+                [[ template "input_number" sub "id" "num_sessions" "label" "Max" "prepend" 1 "prepend_value" "{{#is_positive num_sessions}} checked=\"checked\"{{/is_positive}}" "value" "{{num_sessions}}" "append" "Sessions" ]]
+                [[ template "input_number" sub "id" "parallel_sessions" "label" "Parallel" "prepend" 1 "prepend_value" "{{#is_positive parallel_sessions}} checked=\"checked\"{{/is_positive}}" "value" "{{parallel_sessions}}" "append" "Sessions" ]]
             </form>
         </div>
         <div class="modal-footer">
@@ -61,7 +46,6 @@
 <!-- Node Template -->
 <script type="text/template" id="node_template">
     <div id="id_{{{id}}}" class="node_row">
-        <div class="node_settings"></div>
         <div class="node_header accordion-heading">
             <div class="btn-group node_buttons">
                 {{#is_option status running=""}}
