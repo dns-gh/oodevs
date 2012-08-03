@@ -71,12 +71,7 @@
         <div id="collapse_{{{id}}}" class="accordion-body collapse{{#if is_open}} in{{/if}}">
             <div class="accordion-inner">
                 <form class="form-horizontal">
-                    <div class="control-group">
-                        <label class="control-label">Name</label>
-                        <div class="controls">
-                            <span class="uneditable-input read_only">{{name}}</span>
-                        </div>
-                    </div>
+                    [[ template "uneditable_input_text" sub "id" "{{id}}_name" "label" "Name" "value" "{{name}}" ]]
                     <div class="control-group">
                         <label class="control-label">Sessions</label>
                         <div class="controls">
@@ -91,18 +86,8 @@
                             <span class="uneditable-input read_only">{{num_parallel}} running</span>
                         </div>
                     </div>
-                    <div class="control-group">
-                        <label class="control-label">Exercises</label>
-                        <div class="controls">
-                            <span class="uneditable-input read_only">{{num_exercises}} available</span>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label">Data</label>
-                        <div class="controls">
-                            <span class="uneditable-input read_only">{{data_size}}</span>
-                        </div>
-                    </div>
+                    [[ template "uneditable_input_text" sub "id" "{{id}}_exercises" "label" "Exercises" "value" "{{num_exercises}} available" ]]
+                    [[ template "uneditable_input_text" sub "id" "{{id}}_size" "label" "Data" "value" "{{data_size}}" ]]
                 </form>
             </div>
         </div>
