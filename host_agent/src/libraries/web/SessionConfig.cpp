@@ -82,7 +82,7 @@ bool TryRead( T& dst, const Request_ABC& request, const std::string& key )
     const boost::optional< std::string > opt = request.GetParameter( key );
     if( opt == boost::none )
         return false;
-    dst = boost::lexical_cast< T >( opt );
+    dst = boost::lexical_cast< T >( *opt );
     return true;
 }
 
@@ -139,7 +139,7 @@ void TryPut( Tree& dst, const Request_ABC& request, const std::string& out, cons
     const boost::optional< std::string > opt = request.GetParameter( in );
     if( opt == boost::none )
         return;
-    dst.put( out, opt );
+    dst.put( out, *opt );
 }
 
 // -----------------------------------------------------------------------------
