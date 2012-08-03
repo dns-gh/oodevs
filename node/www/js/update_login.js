@@ -218,11 +218,14 @@
     });
   });
 
-  toggle_input_error = function(el, txt) {
+  toggle_input_error = function(el, txt, reset) {
     var msg, reset_error, root;
     root = el.parents(".control-group");
     if (root.hasClass("error")) {
       return;
+    }
+    if (reset != null) {
+      el.val('');
     }
     root.addClass("error");
     if (txt != null) {
@@ -410,8 +413,8 @@
       return;
     }
     if (pwd.val() !== bis.val()) {
-      toggle_input_error(pwd, "Invalid");
-      toggle_input_error(bis, "Invalid");
+      toggle_input_error(pwd, "Invalid", true);
+      toggle_input_error(bis, "Invalid", true);
       return;
     }
     return pajax("/api/update_login", {
@@ -440,7 +443,7 @@
       uri += window.location.hash;
       return window.location.href = uri;
     }, function() {
-      return toggle_input_error(cur, "Invalid");
+      return toggle_input_error(cur, "Invalid", true);
     });
   });
 

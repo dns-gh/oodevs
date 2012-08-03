@@ -218,11 +218,14 @@
     });
   });
 
-  toggle_input_error = function(el, txt) {
+  toggle_input_error = function(el, txt, reset) {
     var msg, reset_error, root;
     root = el.parents(".control-group");
     if (root.hasClass("error")) {
       return;
+    }
+    if (reset != null) {
+      el.val('');
     }
     root.addClass("error");
     if (txt != null) {
@@ -425,7 +428,7 @@
       uri += window.location.hash;
       return window.location.href = uri;
     }, function() {
-      return toggle_input_error(pwd, "Invalid");
+      return toggle_input_error(pwd, "Invalid", true);
     });
   });
 

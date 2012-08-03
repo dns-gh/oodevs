@@ -37,7 +37,7 @@ $(".log_in").click ->
             uri += window.location.hash
             window.location.href = uri
         ->
-            toggle_input_error pwd, "Invalid"
+            toggle_input_error pwd, "Invalid", true
 
 $("#sign_in_form").keypress (e) ->
     if e.which == 13

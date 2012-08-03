@@ -221,11 +221,14 @@
     });
   });
 
-  toggle_input_error = function(el, txt) {
+  toggle_input_error = function(el, txt, reset) {
     var msg, reset_error, root;
     root = el.parents(".control-group");
     if (root.hasClass("error")) {
       return;
+    }
+    if (reset != null) {
+      el.val('');
     }
     root.addClass("error");
     if (txt != null) {
@@ -421,7 +424,7 @@
   };
 
   validate_settings = function(ui, add) {
-    var bis, data, err, it, name, pwd, tmp, type, user, _i, _len, _ref, _ref1, _ref2;
+    var bis, data, err, name, pwd, tmp, type, user, _ref, _ref1;
     user = ui.find("#username");
     name = ui.find("#name");
     type = ui.find("#type option:selected");
@@ -435,12 +438,8 @@
       err |= check_missing([pwd, bis]);
     }
     if (pwd.length && pwd.val() !== bis.val()) {
-      _ref = [pwd, bis];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        it = _ref[_i];
-        toggle_input_error(it, "Invalid");
-        it.val('');
-      }
+      toggle_input_error(pwd, "Invalid", true);
+      toggle_input_error(bis, "Invalid", true);
       err = true;
     }
     if (err) {
@@ -452,10 +451,10 @@
       temporary: tmp.is(":checked"),
       type: "administrator"
     };
-    if (type != null ? (_ref1 = type.val()) != null ? _ref1.length : void 0 : void 0) {
+    if (type != null ? (_ref = type.val()) != null ? _ref.length : void 0 : void 0) {
       data.type = type.val();
     }
-    if (pwd != null ? (_ref2 = pwd.val()) != null ? _ref2.length : void 0 : void 0) {
+    if (pwd != null ? (_ref1 = pwd.val()) != null ? _ref1.length : void 0 : void 0) {
       data.password = pwd.val();
     }
     return data;

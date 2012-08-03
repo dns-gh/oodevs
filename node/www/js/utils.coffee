@@ -151,9 +151,10 @@ $(".sign_out").click ->
         ->  location.reload(),
         ->  location.reload()
 
-toggle_input_error = (el, txt) ->
+toggle_input_error = (el, txt, reset) ->
     root = el.parents ".control-group"
     return if root.hasClass "error"
+    el.val '' if reset?
     root.addClass "error"
     if txt?
         msg = $ "<span class='help-inline'>" + txt + "</span>"

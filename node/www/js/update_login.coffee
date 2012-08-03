@@ -28,8 +28,8 @@ $("a.update_login").click ->
     return if err
 
     if pwd.val() != bis.val()
-        toggle_input_error pwd, "Invalid"
-        toggle_input_error bis, "Invalid"
+        toggle_input_error pwd, "Invalid", true
+        toggle_input_error bis, "Invalid", true
         return
 
     pajax "/api/update_login",
@@ -50,7 +50,7 @@ $("a.update_login").click ->
             uri += window.location.hash
             window.location.href = uri
         ->
-            toggle_input_error cur, "Invalid"
+            toggle_input_error cur, "Invalid", true
 
 $("form.update_login").keypress (e) ->
     if e.which == 13
