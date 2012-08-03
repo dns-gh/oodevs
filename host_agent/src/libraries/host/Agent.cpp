@@ -28,8 +28,6 @@ using web::HttpException;
 
 namespace
 {
-#define CALL_MEMBER( obj, ptr ) ( ( obj ).*( ptr ) )
-
 template< typename T >
 T Clip( T value, T min, T max )
 {
@@ -65,29 +63,20 @@ Tree Create( T ptr )
 }
 
 template< typename T, typename U >
-Tree Dispatch( T& controller, const U& member, const Uuid& id )
+Tree Dispatch( T& controller, const U& operand )
 {
-    boost::shared_ptr< typename T::T_Base > ptr = CALL_MEMBER( controller, member )( id );
+    boost::shared_ptr< typename T::T_Base > ptr = operand( controller );
     if( !ptr )
         throw HttpException( web::NOT_FOUND );
     return ptr->GetProperties();
 }
 
 template< typename T, typename U >
-Tree DispatchNode( T& controller, const U& member, const Uuid& node, const Uuid& id )
-{
-    boost::shared_ptr< typename T::T_Base > ptr = CALL_MEMBER( controller, member )( node, id );
-    if( !ptr )
-        throw HttpException( web::NOT_FOUND );
-    return ptr->GetProperties();
-}
-
-template< typename T, typename U >
-Tree ClusterDispatch( T* controller, const U& member, const Uuid& id )
+Tree ClusterDispatch( T* controller, const U& operand )
 {
     if( !controller )
         throw HttpException( web::NOT_FOUND );
-    return Dispatch( *controller, member, id );
+    return Dispatch( *controller, operand );
 }
 }
 
@@ -129,7 +118,7 @@ Agent::~Agent()
 // -----------------------------------------------------------------------------
 Tree Agent::GetCluster() const
 {
-    return ClusterDispatch( cluster_, &NodeController_ABC::Get, clusterId_ );
+    return ClusterDispatch( cluster_, boost::bind( &NodeController_ABC::Get, _1, clusterId_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -138,7 +127,7 @@ Tree Agent::GetCluster() const
 // -----------------------------------------------------------------------------
 Tree Agent::StartCluster() const
 {
-    return ClusterDispatch( cluster_, &NodeController_ABC::Start, clusterId_ );
+    return ClusterDispatch( cluster_, boost::bind( &NodeController_ABC::Start, _1, clusterId_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -147,7 +136,7 @@ Tree Agent::StartCluster() const
 // -----------------------------------------------------------------------------
 Tree Agent::StopCluster() const
 {
-    return ClusterDispatch( cluster_, &NodeController_ABC::Stop, clusterId_ );
+    return ClusterDispatch( cluster_, boost::bind( &NodeController_ABC::Stop, _1, clusterId_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -174,7 +163,7 @@ size_t Agent::CountNodes() const
 // -----------------------------------------------------------------------------
 Tree Agent::GetNode( const Uuid& id ) const
 {
-    return Dispatch( nodes_, &NodeController_ABC::Get, id );
+    return Dispatch( nodes_, boost::bind( &NodeController_ABC::Get, _1, id ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -214,7 +203,7 @@ Tree Agent::DeleteNode( const Uuid& id )
 // -----------------------------------------------------------------------------
 Tree Agent::StartNode( const Uuid& id ) const
 {
-    return Dispatch( nodes_, &NodeController_ABC::Start, id );
+    return Dispatch( nodes_, boost::bind( &NodeController_ABC::Start, _1, id ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -223,7 +212,7 @@ Tree Agent::StartNode( const Uuid& id ) const
 // -----------------------------------------------------------------------------
 Tree Agent::StopNode( const Uuid& id ) const
 {
-    return Dispatch( nodes_, &NodeController_ABC::Stop, id );
+    return Dispatch( nodes_, boost::bind( &NodeController_ABC::Stop, _1, id ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -322,7 +311,7 @@ size_t Agent::CountSessions( const Uuid& node ) const
 // -----------------------------------------------------------------------------
 Tree Agent::GetSession( const Uuid& node, const Uuid& id ) const
 {
-    return DispatchNode( sessions_, &SessionController_ABC::Get, node, id );
+    return Dispatch( sessions_, boost::bind( &SessionController_ABC::Get, _1, node, id ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -341,7 +330,7 @@ Tree Agent::CreateSession( const Uuid& node, const std::string& name, const std:
 // -----------------------------------------------------------------------------
 Tree Agent::DeleteSession( const Uuid& node, const Uuid& id )
 {
-    return DispatchNode( sessions_, &SessionController_ABC::Delete, node, id );
+    return Dispatch( sessions_, boost::bind( &SessionController_ABC::Delete, _1, node, id ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -350,7 +339,7 @@ Tree Agent::DeleteSession( const Uuid& node, const Uuid& id )
 // -----------------------------------------------------------------------------
 Tree Agent::StartSession( const Uuid& node, const Uuid& id ) const
 {
-    return DispatchNode( sessions_, &SessionController_ABC::Start, node, id );
+    return Dispatch( sessions_, boost::bind( &SessionController_ABC::Start, _1, node, id ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -359,7 +348,7 @@ Tree Agent::StartSession( const Uuid& node, const Uuid& id ) const
 // -----------------------------------------------------------------------------
 Tree Agent::StopSession( const Uuid& node, const Uuid& id ) const
 {
-    return DispatchNode( sessions_, &SessionController_ABC::Stop, node, id );
+    return Dispatch( sessions_, boost::bind( &SessionController_ABC::Stop, _1, node, id ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -368,7 +357,7 @@ Tree Agent::StopSession( const Uuid& node, const Uuid& id ) const
 // -----------------------------------------------------------------------------
 Tree Agent::PauseSession( const Uuid& node, const Uuid& id ) const
 {
-    return DispatchNode( sessions_, &SessionController_ABC::Pause, node, id );
+    return Dispatch( sessions_, boost::bind( &SessionController_ABC::Pause, _1, node, id ) );
 }
 
 // -----------------------------------------------------------------------------
