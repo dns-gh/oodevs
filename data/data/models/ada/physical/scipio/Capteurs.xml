@@ -3304,7 +3304,7 @@
       </object-detection>
     </sensor>
     <sensor detection-delay="0h" name="Camera SDTI">
-      <unit-detection angle="15" firer-detection-distance="0" scanning="false">
+      <unit-detection angle="360" firer-detection-distance="0" scanning="false">
         <base-distances close-range="2500">
           <base-distance distance="2500" level="identification"/>
           <base-distance distance="3000" level="recognition"/>
@@ -7579,4 +7579,4 @@
     </sensor>
   </sensors>
 </sensors>
-<!-- signature="0322168716" -->
+<!-- signature="3197844817" -->
