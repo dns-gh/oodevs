@@ -26,6 +26,8 @@
 #include "protocol/Protocol.h"
 #include "protocol/ServerPublisher_ABC.h"
 #include "tools/ExerciseConfig.h"
+#include "tools/Loader_ABC.h"
+#include <boost/bind.hpp>
 #include <xeumeuleu/xml.h>
 
 using namespace plugins::script;
@@ -150,16 +152,24 @@ void Actions::IssueXmlOrder( const std::string& name )
 {
     try
     {
-        xml::xistringstream xis( name );
-        xis >> xml::start( "action" );
-        std::auto_ptr< actions::Action_ABC > action( factory_->CreateAction( xis ) );
-        if( action.get() )
-             action->Publish( *publisher_ );
+        config_.GetLoader().LoadFile( name, boost::bind( &Actions::Read, this, _1 ) );
     }
     catch( std::exception& e )
     {
         MT_LOG_ERROR_MSG( "Error in script: " << e.what() )
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Actions::Read
+// Created: LGY 2012-08-03
+// -----------------------------------------------------------------------------
+void Actions::Read( xml::xistream& xis )
+{
+    xis >> xml::start( "action" );
+    std::auto_ptr< actions::Action_ABC > action( factory_->CreateAction( xis ) );
+    if( action.get() )
+        action->Publish( *publisher_ );
 }
 
 // -----------------------------------------------------------------------------

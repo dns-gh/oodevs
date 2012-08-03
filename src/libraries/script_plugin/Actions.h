@@ -30,6 +30,11 @@ namespace kernel
     class Time_ABC;
 }
 
+namespace xml
+{
+    class xistream;
+}
+
 namespace tools
 {
     class ExerciseConfig;
@@ -80,6 +85,7 @@ private:
     void IssueXmlOrder( const std::string& name );
     void StartScheduler( const std::string& filename );
     void StopScheduler();
+    void Read( xml::xistream& xis );
     //@}
 
     //! @name Types
