@@ -31,21 +31,11 @@
 <div class="control-group">
     <label class="control-label" for="[[ .id ]]">[[ .label ]]</label>
     <div class="controls">
-        [[ if .prepend ]]
-        <div class="input-prepend checkbox_addon">
-            <label class="add-on">
-                <input id="[[ .id ]]_check" type="checkbox"/>
-            </label><input class="field" type="number" id="[[ .id ]]"/>
+        <div class="[[ if .prepend ]]input-prepend checkbox_addon[[ end ]][[ if .append ]] input-append[[ end ]]">
+            [[ if .prepend ]]<label class="add-on"><input id="[[ .id ]]_check" type="checkbox"/>
+            </label>[[ end ]]<input[[ if .prepend ]] class="field"[[ end ]] type="number" id="[[ .id ]]"/>[[ if .append ]]<span class="add-on">
+            [[ .append ]]</span>[[ end ]]
         </div>
-        [[ else ]]
-        [[ if .append ]]
-        <div class="input-append">
-            <input type="number" id="[[ .id ]]"/><span class="add-on">[[ .append ]]</span>
-        </div>
-        [[ else ]]
-        <input type="number" id="[[ .id ]]"/>
-        [[ end ]]
-        [[ end ]]
     </div>
 </div>
 [[ end ]]
