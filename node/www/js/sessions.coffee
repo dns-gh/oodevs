@@ -16,9 +16,81 @@ print_error = (text) ->
 
 pop_settings = (ui, data) ->
     ui.html session_settings_template data
+    n = [ "#checkpoints_frequency", "#checkpoints_keep",
+          "#time_step", "#time_factor", "#time_end_tick",
+          "#rng_seed", "#pathfind_threads", "#recorder_frequency" ]
+    for it in n
+        force_input_regexp /\d/, ui.find it
+    n = [ "#rng_fire_mean", "#rng_fire_deviation"
+          "#rng_wound_mean", "#rng_wound_deviation"
+          "#rng_perception_mean", "#rng_perception_deviation"
+          "#rng_breakdown_mean", "#rng_breakdown_deviation" ]
+    for it in n
+        force_input_regexp /[\d.]/, ui.find it
+    attach_checkbox_and_input $("#time_end_tick"), $("#time_end_tick_check")
+    attach_checkbox_and_input $("#rng_seed"), $("#rng_seed_check")
     mod = ui.find ".modal"
     mod.modal "show"
     return [ui, mod]
+
+check_value = (root, ui, cond, tab, msg) ->
+    return true if cond
+    root.find('a[href="#' + tab + '"]').tab 'show'
+    toggle_input_error ui, msg
+    return false
+
+validate_number = (data, ui, id, min, max, tab, msg) ->
+    widget = ui.find "#" + id
+    val = get_number widget
+    return false unless check_value ui, widget, is_clipped(val, min, max), tab, msg
+    data[id] = val
+    return true
+
+validate_double = (data, ui, id, min, max, tab, msg) ->
+    widget = ui.find "#" + id
+    val = get_double widget
+    return false unless check_value ui, widget, val? && is_clipped(val, min, max), tab, msg
+    data[id] = val
+    return true
+
+validate_rng = (data, ui, type) ->
+    tab = ui.find('a[href="#pill_' + type + '"]')
+    dist = ui.find "#rng_" + type + "_distribution option:selected"
+    dist_id = "rng_" + type + "_distribution"
+    data[dist_id] = dist.val()
+    return true if dist.val() == "linear"
+    unless validate_double data, ui, "rng_" + type + "_deviation", 1e-32, Number.MAX_VALUE, "tab_rng", "Invalid"
+        tab.tab 'show'
+        return false
+    unless validate_double data, ui, "rng_" + type + "_mean", 1e-32, Number.MAX_VALUE, "tab_rng", "Invalid"
+        tab.tab 'show'
+        return false
+    return true
+
+validate_settings = (ui) ->
+    data = {}
+
+    name = ui.find "#name"
+    return unless check_value ui, name, name.val().length, "tab_general", "Missing"
+    data.name = name.val()
+
+    return unless validate_number data, ui, "checkpoints_frequency", 1, 100, "tab_checkpoints", "[1, 100] Only"
+    return unless validate_number data, ui, "checkpoints_keep", 1, 100, "tab_checkpoints", "[1, 100] Only"
+    data.checkpoints_enabled = ui.find("#checkpoints_enabled").is ":checked"
+
+    return unless validate_number data, ui, "time_step", 1, Number.MAX_VALUE, "tab_time", "Invalid"
+    return unless validate_number data, ui, "time_factor", 1, Number.MAX_VALUE, "tab_time", "Invalid"
+    return unless validate_number data, ui, "time_end_tick", 0, Number.MAX_VALUE, "tab_time", "Invalid"
+    data.time_paused = ui.find("#time_paused").is ":checked"
+
+    return unless validate_number data, ui, "rng_seed", 0, Number.MAX_VALUE, "tab_rng", "Invalid"
+    for it in ["fire", "wound", "perception", "breakdown"]
+        return unless validate_rng data, ui, it
+
+    return unless validate_number data, ui, "pathfind_threads", 0, 8, "tab_advanced", "[0, 8] Only"
+    return unless validate_number data, ui, "recorder_frequency", 1, Number.MAX_VALUE, "Invalid"
+
+    return data
 
 class SessionItem extends Backbone.Model
     view: SessionItemView
@@ -170,8 +242,21 @@ class SessionItemView extends Backbone.View
 
     edit: (evt) =>
         return if is_disabled evt
-        box = $(@el).find ".settings"
-        [ui, mod] = pop_settings box, @model.attributes
+        data = $.extend {}, @model.attributes
+        data.checkpoints.frequency = Math.ceil( data.checkpoints.frequency / 60 )
+        [ui, mod] = pop_settings $("#settings"), data
+        mod.find(".apply").click =>
+            data = validate_settings ui, @model
+            return unless data?
+            data = $.extend {}, data
+            data.checkpoints_frequency *= 60
+            data.id = @model.id
+            mod.modal "hide"
+            ajax "/api/update_session", data,
+                (attr) =>
+                    @model.set attr
+                =>
+                    print_error "Unable to update session " + @model.get "name"
 
 get_filters = ->
     _.pluck $("#session_filters input:not(:checked)"), "name"

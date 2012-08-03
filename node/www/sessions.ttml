@@ -24,6 +24,8 @@
 <!-- Session List -->
 <div id="sessions">
 </div>
+<div id="settings">
+</div>
 <!-- general settings -->
 [[ define "general_session_settings" ]]
 [[ template "input_text" sub "id" "name" "label" "Name" "value" "{{name}}" ]]
@@ -31,9 +33,9 @@
 [[ end ]]
 <!-- checkpoint settings -->
 [[ define "checkpoint_session_settings" ]]
-[[ template "input_checkbox" sub "id" "checkpoint_enabled"   "label" "Save Automatically" "value" "{{#equal checkpoints.enabled \"true\"}} checked=\"checked\"{{/equal}}" ]]
-[[ template "input_number"   sub "id" "checkpoint_frequency" "label" "Frequency" "append" "Minutes" "value" "{{checkpoints.frequency}}" ]]
-[[ template "input_number"   sub "id" "checkpoint_keep"      "label" "Keep" "append" "Checkpoints" "value" "{{checkpoints.keep}}" ]]
+[[ template "input_checkbox" sub "id" "checkpoints_enabled"   "label" "Save Checkpoints" "value" "{{#equal checkpoints.enabled \"true\"}} checked=\"checked\"{{/equal}}" ]]
+[[ template "input_number"   sub "id" "checkpoints_frequency" "label" "Frequency" "append" "Minutes" "value" "{{checkpoints.frequency}}" ]]
+[[ template "input_number"   sub "id" "checkpoints_keep"      "label" "Keep" "append" "Checkpoints" "value" "{{checkpoints.keep}}" ]]
 [[ end ]]
 <!-- time settings -->
 [[ define "time_session_settings" ]]
@@ -52,10 +54,10 @@
 <div class="control-group">
     <label class="control-label">Distribution</label>
     <div class="controls">
-        <select id="rng_distribution_[[ .type ]]">
+        <select id="rng_[[ .type ]]_distribution">
             [[ $v := concat "rng." .type ".distribution" ]]
-            <option type="linear"{{#equal [[ $v ]] "linear"}} selected="selected"{{/equal}}>Linear</option>
-            <option type="gaussian"{{#equal [[ $v ]] "gaussian"}} selected="selected"{{/equal}}>Gaussian</option>
+            <option type="linear"{{#equal [[ $v ]] "linear"}} selected="selected"{{/equal}} value="linear">Linear</option>
+            <option type="gaussian"{{#equal [[ $v ]] "gaussian"}} selected="selected"{{/equal}} value="gaussian">Gaussian</option>
         </select>
     </div>
 </div>
@@ -96,14 +98,14 @@
                     <li class="active"><a href="#tab_general" data-toggle="tab"> General </a></li>
                     <li><a href="#tab_checkpoints" data-toggle="tab"> Checkpoints </a></li>
                     <li><a href="#tab_time" data-toggle="tab"> Time </a></li>
-                    <li><a href="#tab_random" data-toggle="tab"> Random </a></li>
+                    <li><a href="#tab_rng" data-toggle="tab"> Random </a></li>
                     <li><a href="#tab_advanced" data-toggle="tab"> Advanced </a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab_general">[[ template "general_session_settings" . ]] </div>
                     <div class="tab-pane" id="tab_checkpoints"> [[ template "checkpoint_session_settings" . ]] </div>
                     <div class="tab-pane" id="tab_time"> [[ template "time_session_settings" . ]] </div>
-                    <div class="tab-pane" id="tab_random">  [[ template "rng_session_settings" . ]] </div>
+                    <div class="tab-pane" id="tab_rng">  [[ template "rng_session_settings" . ]] </div>
                     <div class="tab-pane" id="tab_advanced"> [[ template "advanced_session_settings" . ]] </div>
                 </div>
             </form>
@@ -122,7 +124,6 @@
 <script type="text/template" id="session_template">
     <div id="{{{id}}}" class="span9">
         <div class="row-fluid well session_row">
-            <div class="settings"></div>
             <span class="well {{{status}}}"></span>
             <div class="session_name">{{name}}</div>
             <div class="span4">
