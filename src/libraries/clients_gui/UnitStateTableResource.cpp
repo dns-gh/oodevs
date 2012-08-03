@@ -128,6 +128,12 @@ void UnitStateTableResource::OnItemChanged( QStandardItem* item )
             double percentage = quantity * 100. / static_cast< double >( maximum );
             SetData( item->row(), ePercentage, locale().toString( percentage, 'f', 2 ), percentage );
         }
+        if( maximum == 0 )
+        {
+            QStandardItem* itemPercentage = dataModel_.item( item->row(), ePercentage );
+            if( itemPercentage )
+                itemPercentage->setFlags( Qt::ItemIsSelectable );
+        }
         blockSlots_ = false;
     }
     if( changed )
