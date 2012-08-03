@@ -85,8 +85,6 @@ struct Config
     }               recorder;
 };
 
-RngDistribution ConvertRngDistribution( const std::string& src );
-std::string     ConvertRngDistribution( RngDistribution src );
 Config          GetConfig( const Request_ABC& request );
 Tree            ConvertConfig( const Request_ABC& request );
 bool            ReadConfig( Config& dst, const Tree& src );

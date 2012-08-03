@@ -48,11 +48,13 @@ Config::Config()
     rng.seed = 0;
 }
 
+namespace
+{
 // -----------------------------------------------------------------------------
 // Name: ConvertDistribution
 // Created: BAX 2012-08-02
 // -----------------------------------------------------------------------------
-RngDistribution web::session::ConvertRngDistribution( const std::string& src )
+RngDistribution ConvertRngDistribution( const std::string& src )
 {
     if( src == "linear"   ) return RNG_DISTRIBUTION_LINEAR;
     if( src == "gaussian" ) return RNG_DISTRIBUTION_GAUSSIAN;
@@ -63,11 +65,12 @@ RngDistribution web::session::ConvertRngDistribution( const std::string& src )
 // Name: ConvertDistribution
 // Created: BAX 2012-08-02
 // -----------------------------------------------------------------------------
-std::string web::session::ConvertRngDistribution( RngDistribution src )
+std::string ConvertRngDistribution( RngDistribution src )
 {
     if( src == RNG_DISTRIBUTION_LINEAR   ) return "linear";
     if( src == RNG_DISTRIBUTION_GAUSSIAN ) return "gaussian";
     return "invalid";
+}
 }
 
 namespace
@@ -96,7 +99,7 @@ RngConfig GetRngConfig( const Request_ABC& request, const std::string& prefix )
     std::string dist;
     bool valid = TryRead( dist, request, prefix + "distribution" );
     if( valid )
-        cfg.distribution = session::ConvertRngDistribution( dist );
+        cfg.distribution = ConvertRngDistribution( dist );
     TryRead( cfg.deviation, request, prefix + "deviation" );
     TryRead( cfg.mean, request, prefix + "mean" );
     return cfg;
