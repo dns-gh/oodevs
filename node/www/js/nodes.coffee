@@ -22,7 +22,7 @@ pop_settings = (ui, data) ->
     mod.modal "show"
     return [ui, mod]
 
-validate_settings = (ui, item) ->
+validate_settings = (ui) ->
     name = ui.find ".name"
     max  = ui.find ".num_sessions"
     par  = ui.find ".parallel_sessions"
@@ -120,7 +120,7 @@ class NodeItemView extends Backbone.View
         previous = @model.get "ident"
         [ui, mod] = pop_settings $(@el).find(".node_settings"), @model.attributes
         mod.find(".apply").click =>
-            data = validate_settings ui, @model
+            data = validate_settings ui
             return unless data?
             mod.modal "hide"
             @model.save data,

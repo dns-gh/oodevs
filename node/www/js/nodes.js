@@ -349,7 +349,7 @@
     return [ui, mod];
   };
 
-  validate_settings = function(ui, item) {
+  validate_settings = function(ui) {
     var data, max, name, par;
     name = ui.find(".name");
     max = ui.find(".num_sessions");
@@ -534,7 +534,7 @@
       _ref = pop_settings($(this.el).find(".node_settings"), this.model.attributes), ui = _ref[0], mod = _ref[1];
       return mod.find(".apply").click(function() {
         var data;
-        data = validate_settings(ui, _this.model);
+        data = validate_settings(ui);
         if (data == null) {
           return;
         }
