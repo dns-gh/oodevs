@@ -39,7 +39,6 @@ local emptyTable = emptyTable
         if( ModuleBegins() ) then
             do
                 DEC_SetMission( myself, self._namedParams.mission )
-                DEC_Copie_Point( self.positionSite, myself.pointRegroupement_ )
                 if( not DEC_Agent_AutomateEstEmbraye() ) then
                     Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, emptyTable )
                 end

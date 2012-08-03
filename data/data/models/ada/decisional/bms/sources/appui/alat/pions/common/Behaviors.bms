@@ -86,14 +86,11 @@ include "Appui/Alat/Pions/Common/Behaviors/Behaviors - Ordre.bms"
                 myself.objectifCourant_ = nil
                 myself.bEnPhaseRavitaillement_ = false
                 myself.rNiveauAlerteRavitaillement_ = 0
-                myself.bMoteursEteints_ = true
                 myself.bEnCoursExtractionPersonnel_ = false
                 myself.bDemandeOrdreConduitePoursuivre_ = false
                 --[[//initialisation de la position de regroupement avec notre position 
-]]--[[//initiale        
-]]myself.pointRegroupement_ = DEC_Geometrie_CreerPoint()
+]]--[[//initiale         ]]
                 F_Pion_SeteEtatEchelon( myself, eEtatEchelon_Premier )
-                DEC_Copie_Point( myself:DEC_Agent_Position(), myself.pointRegroupement_ )
                 --[[// Activation de l'écoute radar
 ]]DEC_Perception_ActiverRadar( eRadarType_EcouteRadar )
                 --[[// Initialisation des paramètres de recompletement

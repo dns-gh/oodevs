@@ -84,7 +84,6 @@ include "bit.lua"
                 end
 
                 self.localisationCourante = DEC_UserTypeList_GetAt( self.listeLocalisations, 0 )
-                DEC_Copie_Point( self._namedParams.mission.pointRegroupement_, myself.pointRegroupement_ )
             end
         end
 
