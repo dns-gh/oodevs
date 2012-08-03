@@ -97,5 +97,11 @@ void UnitStateTableResource::OnItemChanged( QStandardItem* item )
         }
         dataModel_.item( item->row(), eMaximum )->setBackground( ( quantity <= maximum ) ? item->background() : QBrush( Qt::gray ) );
         dataModel_.item( item->row(), ePercentage )->setBackground( ( quantity <= maximum ) ? item->background() : QBrush( Qt::gray ) );
+        if( maximum == 0 )
+        {
+            QStandardItem* itemPercentage = dataModel_.item( item->row(), ePercentage );
+            if( itemPercentage )
+                itemPercentage->setFlags( Qt::ItemIsSelectable );
+        }
     }
 }
