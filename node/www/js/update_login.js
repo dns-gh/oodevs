@@ -218,32 +218,24 @@
     });
   });
 
-  toggle_input_error = function(el, txt, def) {
+  toggle_input_error = function(el, txt) {
     var msg, reset_error, root;
-    if (def == null) {
-      def = '';
-    }
-    if (def != null) {
-      el.val(def);
-    }
-    root = el.parent().parent();
+    root = el.parents(".control-group");
     if (root.hasClass("error")) {
       return;
     }
     root.addClass("error");
     if (txt != null) {
       msg = $("<span class='help-inline'>" + txt + "</span>");
-      el.after(msg);
+      el.parent().children().last().after(msg);
     }
     reset_error = function() {
       if (msg != null) {
-        msg.empty();
+        msg.remove();
       }
       return root.removeClass("error");
     };
-    el.focus(function() {
-      return reset_error();
-    });
+    on_input_event(el, reset_error);
     return setTimeout(reset_error, 3000);
   };
 

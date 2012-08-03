@@ -151,18 +151,17 @@ $(".sign_out").click ->
         ->  location.reload(),
         ->  location.reload()
 
-toggle_input_error = (el, txt, def = '') ->
-    el.val def if def?
-    root = el.parent().parent()
+toggle_input_error = (el, txt) ->
+    root = el.parents ".control-group"
     return if root.hasClass "error"
     root.addClass "error"
     if txt?
         msg = $ "<span class='help-inline'>" + txt + "</span>"
-        el.after msg
+        el.parent().children().last().after msg
     reset_error = ->
-        msg.empty() if msg?
+        msg.remove() if msg?
         root.removeClass "error"
-    el.focus -> reset_error()
+    on_input_event el, reset_error
     setTimeout reset_error, 3000
 
 is_clipped = (num, min, max) ->
