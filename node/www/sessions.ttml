@@ -52,7 +52,7 @@
 <!-- checkpoint settings -->
 [[ define "checkpoint_session_settings" ]]
 [[ template "input_checkbox" sub "id" "checkpoint_save"      "label" "Save Automatically" ]]
-[[ template "input_number"   sub "id" "checkpoint_frequency" "label" "Frequency" "append" "Ticks" ]]
+[[ template "input_number"   sub "id" "checkpoint_frequency" "label" "Frequency" "append" "Minutes" ]]
 [[ template "input_number"   sub "id" "checkpoint_keep"      "label" "Keep" "append" "Checkpoints" ]]
 [[ end ]]
 <!-- time settings -->
@@ -60,12 +60,12 @@
 [[ template "input_checkbox" sub "id" "start_paused" "label" "Start Paused" ]]
 [[ template "input_number"   sub "id" "time_step"    "label" "Time Step" "append" "Seconds" ]]
 [[ template "input_number"   sub "id" "time_factor"  "label" "Time Factor" "append" "&times;" ]]
-[[ template "input_number"   sub "id" "end_tick"     "label" "End Tick" "prepend" 1 ]]
+[[ template "input_number"   sub "id" "end_tick"     "label" "End" "prepend" 1 "append" "Ticks" ]]
 [[ end ]]
 <!-- advanced settings -->
 [[ define "advanced_session_settings" ]]
 [[ template "input_number" sub "id" "path_find" "label" "Path Find" "append" "Threads" ]]
-[[ template "input_number" sub "id" "recorder_frequency" "label" "Recorder Frequency" "append" "Hz" ]]
+[[ template "input_number" sub "id" "recorder_frequency" "label" "Recorder Frequency" "append" "Ticks" ]]
 [[ end ]]
 <!-- rng context -->
 [[ define "rng_context" ]]
@@ -79,7 +79,7 @@
     </div>
 </div>
 [[ $id := concat "rng_std_" .type ]]
-[[ template "input_number" sub "id" $id "label" "Standard Deviation" ]]
+[[ template "input_number" sub "id" $id "label" "Deviation" ]]
 [[ $id := concat "rng_mean_" .type ]]
 [[ template "input_number" sub "id" $id "label" "Mean" ]]
 [[ end ]]
