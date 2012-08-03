@@ -43,6 +43,7 @@ node "Interrogate"
     feedbacks = { "interrogated" },
 
     select = function( self )
+        meKnowledge:sendMessage( "getting information" )
         if self.params.entity:interrogateIt() then
             Feedback( self.feedbacks.interrogated )
         end
