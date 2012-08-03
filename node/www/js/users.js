@@ -421,7 +421,7 @@
   };
 
   validate_settings = function(ui, add) {
-    var bis, data, err, name, pwd, tmp, type, user, _ref, _ref1;
+    var bis, data, err, it, name, pwd, tmp, type, user, _i, _len, _ref, _ref1, _ref2;
     user = ui.find("#username");
     name = ui.find("#name");
     type = ui.find("#type option:selected");
@@ -434,9 +434,13 @@
     if (add != null) {
       err |= check_missing([pwd, bis]);
     }
-    if ((add != null) && pwd.val() !== bis.val()) {
-      toggle_input_error(pwd, "Invalid");
-      toggle_input_error(bis, "Invalid");
+    if (pwd.length && pwd.val() !== bis.val()) {
+      _ref = [pwd, bis];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        it = _ref[_i];
+        toggle_input_error(it, "Invalid");
+        it.val('');
+      }
       err = true;
     }
     if (err) {
@@ -448,10 +452,10 @@
       temporary: tmp.is(":checked"),
       type: "administrator"
     };
-    if (type != null ? (_ref = type.val()) != null ? _ref.length : void 0 : void 0) {
+    if (type != null ? (_ref1 = type.val()) != null ? _ref1.length : void 0 : void 0) {
       data.type = type.val();
     }
-    if (pwd != null ? (_ref1 = pwd.val()) != null ? _ref1.length : void 0 : void 0) {
+    if (pwd != null ? (_ref2 = pwd.val()) != null ? _ref2.length : void 0 : void 0) {
       data.password = pwd.val();
     }
     return data;

@@ -41,9 +41,10 @@ validate_settings = (ui, add) ->
     err |= check_missing [user]
     err |= check_missing [name]
     err |= check_missing [pwd, bis] if add?
-    if add? && pwd.val() != bis.val()
-        toggle_input_error pwd, "Invalid"
-        toggle_input_error bis, "Invalid"
+    if pwd.length && pwd.val() != bis.val()
+        for it in [pwd, bis]
+            toggle_input_error it, "Invalid"
+            it.val ''
         err = true
     return if err
 

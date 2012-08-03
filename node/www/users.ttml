@@ -36,18 +36,8 @@
         </div>
         <div class="modal-body">
             <form class="form-horizontal">
-                <div class="control-group">
-                    <label class="control-label">Email</label>
-                    <div class="controls">
-                        <input type="text" id="username"{{#if username}} value="{{username}}"{{/if}}/>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">Name</label>
-                    <div class="controls">
-                        <input type="text" id="name"{{#if name}} value="{{name}}"{{/if}}/>
-                    </div>
-                </div>
+                [[ template "input_text" sub "id" "username" "label" "Email" "value" "{{username}}" ]]
+                [[ template "input_text" sub "id" "name"     "label" "Name"  "value" "{{name}}" ]]
                 [[ if ne .type "cluster" ]]
                 {{#if add}}
                 <div class="control-group">
@@ -70,31 +60,10 @@
                     </div>
                 </div>
                 {{#if other}}
-                <div class="control-group">
-                    <label class="control-label" for="password">Password</label>
-                    <div class="controls">
-                        <input type="password" id="password"/>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="password_bis">Confirm</label>
-                    <div class="controls">
-                        <input type="password" id="password_bis"/>
-                    </div>
-                </div>
+                [[ template "input_text" sub "type" "password" "id" "password"     "label" "Password" ]]
+                [[ template "input_text" sub "type" "password" "id" "password_bis" "label" "Confirm" ]]
                 {{/if}}
-                <div class="control-group">
-                    <div class="controls">
-                        <label class="checkbox">
-                            <input type="checkbox" id="temporary"{{#equal temporary "true"}} checked="checked"{{/equal}}/>
-                            {{#if other}}
-                            Force password reset
-                            {{else}}
-                            Change password
-                            {{/if}}
-                        </label>
-                    </div>
-                </div>
+                [[ template "input_checkbox" sub "id" "temporary" "label" "{{#if other}}Force password reset{{else}}Change password{{/if}}" "value" "{{#equal temporary \"true\"}} checked=\"checked\"{{/equal}}" ]]
             </form>
         </div>
         <div class="modal-footer">
