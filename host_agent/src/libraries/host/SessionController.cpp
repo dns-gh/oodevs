@@ -286,3 +286,12 @@ SessionController::T_Session SessionController::Pause( const Uuid& node, const U
 {
     return Dispatch( node, id, boost::bind( &Session_ABC::Pause, _1 ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: SessionController::Update
+// Created: BAX 2012-08-02
+// -----------------------------------------------------------------------------
+SessionController::T_Session SessionController::Update( const Uuid& node, const Uuid& id, const Tree& cfg ) const
+{
+    return Dispatch( node, id, boost::bind( &Session_ABC::Update, _1, boost::cref( cfg ) ) );
+}

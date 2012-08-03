@@ -102,6 +102,7 @@ private:
     std::string StartSession ( const Request_ABC& request );
     std::string StopSession  ( const Request_ABC& request );
     std::string PauseSession ( const Request_ABC& request );
+    std::string UpdateSession( const Request_ABC& request );
     //@}
 
     //! @name Exercise Methods

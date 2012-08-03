@@ -205,6 +205,20 @@ T RequireParameter( const std::string& name, const Request_ABC& request )
 }
 
 // -----------------------------------------------------------------------------
+// Name: TryRead
+// Created: BAX 2012-08-02
+// -----------------------------------------------------------------------------
+template< typename T >
+bool TryRead( T& dst, const Request_ABC& request, const std::string& key )
+{
+    const boost::optional< std::string > opt = request.GetParameter( key );
+    if( opt == boost::none )
+        return false;
+    dst = boost::lexical_cast< T >( opt );
+    return true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Convert
 // Created: BAX 2012-07-19
 // -----------------------------------------------------------------------------
@@ -266,6 +280,7 @@ std::string Controller::DoGet( Request_ABC& request )
         if( uri == "/start_session" )      return StartSession( request );
         if( uri == "/stop_session" )       return StopSession( request );
         if( uri == "/pause_session" )      return PauseSession( request );
+        if( uri == "/update_session" )     return UpdateSession( request );
         // exercises
         if( uri == "/list_exercises")      return ListExercises( request );
         if( uri == "/count_exercises" )    return CountExercises( request );
@@ -571,20 +586,6 @@ std::string Controller::GetSession( const Request_ABC& request )
 namespace
 {
 // -----------------------------------------------------------------------------
-// Name: TryRead
-// Created: BAX 2012-08-02
-// -----------------------------------------------------------------------------
-template< typename T >
-bool TryRead( T& dst, const Request_ABC& request, const std::string& key )
-{
-    const boost::optional< std::string > opt = request.GetParameter( key );
-    if( opt == boost::none )
-        return false;
-    dst = boost::lexical_cast< T >( opt );
-    return true;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ReadRngConfiguration
 // Created: BAX 2012-08-02
 // -----------------------------------------------------------------------------
@@ -681,6 +682,68 @@ std::string Controller::PauseSession( const Request_ABC& request )
 {
     const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
     return WriteHttpReply( agent_.PauseSession( node, GetId( request ) ) );
+}
+
+namespace
+{
+// -----------------------------------------------------------------------------
+// Name: TryPut
+// Created: BAX 2012-08-02
+// -----------------------------------------------------------------------------
+void TryPut( Tree& dst, const Request_ABC& request, const std::string& out, const std::string& in )
+{
+    const boost::optional< std::string > opt = request.GetParameter( in );
+    if( opt == boost::none )
+        return;
+    dst.put( out, opt );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ConvertSessionRngConfig
+// Created: BAX 2012-08-02
+// -----------------------------------------------------------------------------
+void ConvertSessionRngConfig( Tree& dst, const Request_ABC& request, const std::string& out, const std::string& in )
+{
+    TryPut( dst, request, out + "distribution", in + "distribution" );
+    TryPut( dst, request, out + "deviation", in + "deviation" );
+    TryPut( dst, request, out + "mean", in + "mean" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ConvertSessionConfig
+// Created: BAX 2012-08-02
+// -----------------------------------------------------------------------------
+Tree ConvertSessionConfig( const Request_ABC& request )
+{
+    Tree dst;
+    TryPut( dst, request, "name", "name" );
+    TryPut( dst, request, "checkpoints.enabled", "checkpoints_enabled" );
+    TryPut( dst, request, "checkpoints.frequency", "checkpoints_frequency" );
+    TryPut( dst, request, "checkpoints.keep", "checkpoints_keep" );
+    TryPut( dst, request, "time.end_tick", "time_end_tick" );
+    TryPut( dst, request, "time.factor", "time_factor" );
+    TryPut( dst, request, "time.paused", "time_paused" );
+    TryPut( dst, request, "time.step", "time_step" );
+    TryPut( dst, request, "rng.seed", "rng_seed" );
+    ConvertSessionRngConfig( dst, request, "rng.breakdown.", "rng_breakdown_" );
+    ConvertSessionRngConfig( dst, request, "rng.fire.", "rng_fire_" );
+    ConvertSessionRngConfig( dst, request, "rng.perception.", "rng_perception_" );
+    ConvertSessionRngConfig( dst, request, "rng.wound.", "rng_wound_" );
+    TryPut( dst, request, "pathfind.threads", "pathfind_threads" );
+    TryPut( dst, request, "recorder.frequency", "recorder_frequency" );
+    return dst;
+}
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controller::UpdateSession
+// Created: BAX 2012-08-02
+// -----------------------------------------------------------------------------
+std::string Controller::UpdateSession( const Request_ABC& request )
+{
+    const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
+    const Tree cfg = ConvertSessionConfig( request );
+    return WriteHttpReply( agent_.UpdateSession( node, GetId( request ), cfg ) );
 }
 
 // -----------------------------------------------------------------------------

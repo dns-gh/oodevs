@@ -11,6 +11,7 @@
 #define SESSION_CONTROLLER_ABC_H
 
 #include <boost/noncopyable.hpp>
+#include <boost/property_tree/ptree_fwd.hpp>
 #include <string>
 #include <vector>
 
@@ -35,6 +36,7 @@ namespace session
 namespace host
 {
     struct Session_ABC;
+    typedef boost::property_tree::ptree Tree;
     typedef boost::uuids::uuid Uuid;
 }
 
@@ -74,6 +76,7 @@ struct SessionController_ABC : public boost::noncopyable
     virtual T_Session   Start ( const Uuid& node, const Uuid& id ) const = 0;
     virtual T_Session   Stop  ( const Uuid& node, const Uuid& id ) const = 0;
     virtual T_Session   Pause ( const Uuid& node, const Uuid& id ) const = 0;
+    virtual T_Session   Update( const Uuid& node, const Uuid& id, const Tree& cfg ) const = 0;
     //@}
 };
 }

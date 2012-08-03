@@ -95,6 +95,7 @@ struct Agent_ABC : public boost::noncopyable
     virtual Tree                StartSession ( const Uuid& node, const Uuid& id ) const = 0;
     virtual Tree                StopSession  ( const Uuid& node, const Uuid& id ) const = 0;
     virtual Tree                PauseSession ( const Uuid& node, const Uuid& id ) const = 0;
+    virtual Tree                UpdateSession( const Uuid& node, const Uuid& id, const Tree& cfg ) const = 0;
     //@}
 
     //! @name Exercise Methods

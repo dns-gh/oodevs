@@ -108,6 +108,7 @@ public:
     virtual bool Poll();
     virtual bool Pause();
     virtual void Remove();
+    virtual bool Update( const Tree& cfg );
     //@}
 
     //! @name Typedef helpers

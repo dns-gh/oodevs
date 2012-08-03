@@ -94,6 +94,7 @@ public:
     virtual Tree                StartSession ( const Uuid& node, const Uuid& id ) const;
     virtual Tree                StopSession  ( const Uuid& node, const Uuid& id ) const;
     virtual Tree                PauseSession ( const Uuid& node, const Uuid& id ) const;
+    virtual Tree                UpdateSession( const Uuid& node, const Uuid& id, const Tree& cfg ) const;
     //@}
 
     //! @name Exercise Methods

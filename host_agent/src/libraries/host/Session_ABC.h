@@ -83,6 +83,7 @@ struct Session_ABC : public boost::noncopyable
     virtual bool Poll() = 0;
     virtual bool Pause() = 0;
     virtual void Remove() = 0;
+    virtual bool Update( const Tree& cfg ) = 0;
     //@}
 };
 

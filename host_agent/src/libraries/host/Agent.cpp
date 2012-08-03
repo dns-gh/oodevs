@@ -361,6 +361,15 @@ Tree Agent::PauseSession( const Uuid& node, const Uuid& id ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Agent::UpdateSession
+// Created: BAX 2012-08-02
+// -----------------------------------------------------------------------------
+Tree Agent::UpdateSession( const Uuid& node, const Uuid& id, const Tree& cfg ) const
+{
+    return Dispatch( sessions_, boost::bind( &SessionController_ABC::Update, _1, node, id, boost::cref( cfg ) ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Agent::ListExercises
 // Created: BAX 2012-03-27
 // -----------------------------------------------------------------------------

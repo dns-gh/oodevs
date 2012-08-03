@@ -29,6 +29,7 @@ namespace mocks
         MOCK_METHOD( Start, 2 );
         MOCK_METHOD( Stop, 2 );
         MOCK_METHOD( Pause, 2 );
+        MOCK_METHOD( Update, 3 );
     };
 };
 

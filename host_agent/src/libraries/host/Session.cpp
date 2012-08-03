@@ -127,16 +127,15 @@ int GetPid( T& process )
     return process ? process->GetPid() : -1;
 }
 
-RngConfig ReadRngConfig( const Tree& src, const std::string& prefix )
+bool ReadRngConfig( RngConfig& dst, const Tree& src, const std::string& prefix )
 {
-    RngConfig cfg;
     std::string dist;
-    bool found = TryRead( dist, src, prefix + ".distribution" );
-    if( found )
-        cfg.distribution = ConvertRngDistribution( dist );
-    TryRead( cfg.deviation, src, prefix + ".deviation" );
-    TryRead( cfg.mean, src, prefix + ".mean" );
-    return cfg;
+    bool modified = TryRead( dist, src, prefix + ".distribution" );
+    if( modified )
+        dst.distribution = ConvertRngDistribution( dist );
+    modified |= TryRead( dst.deviation, src, prefix + ".deviation" );
+    modified |= TryRead( dst.mean, src, prefix + ".mean" );
+    return modified;
 }
 
 void WriteRngConfig( Tree& dst, const std::string& prefix, const RngConfig& cfg )
@@ -146,24 +145,31 @@ void WriteRngConfig( Tree& dst, const std::string& prefix, const RngConfig& cfg 
     dst.put( prefix + ".mean", cfg.mean );
 }
 
+bool ReadConfig( Config& dst, const Tree& src )
+{
+    bool modified = false;
+    modified |= TryRead( dst.name, src, "name" );
+    modified |= TryRead( dst.checkpoints.enabled, src, "checkpoints.enabled" );
+    modified |= TryRead( dst.checkpoints.frequency, src, "checkpoints.frequency" );
+    modified |= TryRead( dst.checkpoints.keep, src, "checkpoints.keep" );
+    modified |= TryRead( dst.time.end_tick, src, "time.end_tick" );
+    modified |= TryRead( dst.time.factor, src, "time.factor" );
+    modified |= TryRead( dst.time.paused, src, "time.paused" );
+    modified |= TryRead( dst.time.step, src, "time.step" );
+    modified |= TryRead( dst.rng.seed, src, "rng.seed" );
+    modified |= ReadRngConfig( dst.rng.breakdown, src, "rng.breakdown" );
+    modified |= ReadRngConfig( dst.rng.fire, src, "rng.fire" );
+    modified |= ReadRngConfig( dst.rng.perception, src, "rng.perception" );
+    modified |= ReadRngConfig( dst.rng.wound, src, "rng.wound" );
+    modified |= TryRead( dst.pathfind.threads, src, "pathfind.threads" );
+    modified |= TryRead( dst.recorder.frequency, src, "recorder.frequency" );
+    return modified;
+}
+
 Config ReadConfig( const Tree& src )
 {
     Config cfg;
-    TryRead( cfg.name, src, "name" );
-    TryRead( cfg.checkpoints.enabled, src, "checkpoints.enabled" );
-    TryRead( cfg.checkpoints.frequency, src, "checkpoints.frequency" );
-    TryRead( cfg.checkpoints.keep, src, "checkpoints.keep" );
-    TryRead( cfg.time.end_tick, src, "time.end_tick" );
-    TryRead( cfg.time.factor, src, "time.factor" );
-    TryRead( cfg.time.paused, src, "time.paused" );
-    TryRead( cfg.time.step, src, "time.step" );
-    TryRead( cfg.rng.seed, src, "rng.seed" );
-    cfg.rng.breakdown = ReadRngConfig( src, "rng.breakdown" );
-    cfg.rng.fire = ReadRngConfig( src, "rng.fire" );
-    cfg.rng.perception = ReadRngConfig( src, "rng.perception" );
-    cfg.rng.wound = ReadRngConfig( src, "rng.wound" );
-    TryRead( cfg.pathfind.threads, src, "pathfind.threads" );
-    TryRead( cfg.recorder.frequency, src, "recorder.frequency" );
+    ReadConfig( cfg, src );
     return cfg;
 }
 
@@ -707,4 +713,22 @@ void Session::Remove()
     node_->RemoveSession( id_ );
     system_.Remove( GetRoot() );
     system_.Remove( GetOutput() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Session::Update
+// Created: BAX 2012-08-02
+// -----------------------------------------------------------------------------
+bool Session::Update( const Tree& cfg )
+{
+    boost::upgrade_lock< boost::shared_mutex > lock( access_ );
+    if( status_ != STATUS_STOPPED )
+        return false;
+    web::session::Config next = cfg_;
+    bool modified = ReadConfig( next, cfg );
+    if( !modified )
+        return false;
+    boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );
+    cfg_ = next;
+    return true;
 }
