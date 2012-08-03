@@ -102,8 +102,8 @@ public:
     virtual Tree Save() const;
     virtual bool Start( const runtime::Runtime_ABC& runtime, const Path& apps );
     virtual bool Stop();
-    virtual bool Update();
-    virtual bool UpdateSize();
+    virtual bool Refresh();
+    virtual bool RefreshSize();
     virtual bool Poll();
     virtual bool Pause();
     virtual void Remove();

@@ -58,7 +58,7 @@ NodeController::NodeController( cpplog::BaseLogger& log,
         throw std::runtime_error( "'" + runtime::Utf8Convert( app_ ) + "' is not a binary" );
     if( !system_.IsDirectory( web_ ) )
         throw std::runtime_error( "'" + runtime::Utf8Convert( web_ ) + "' is not a directory" );
-    timer_ = runtime::MakeTimer( pool, boost::posix_time::seconds( 5 ), boost::bind( &NodeController::Update, this ) );
+    timer_ = runtime::MakeTimer( pool, boost::posix_time::seconds( 5 ), boost::bind( &NodeController::Refresh, this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -121,10 +121,10 @@ void NodeController::Reload()
 }
 
 // -----------------------------------------------------------------------------
-// Name: NodeController::Update
+// Name: NodeController::Refresh
 // Created: BAX 2012-06-14
 // -----------------------------------------------------------------------------
-void NodeController::Update()
+void NodeController::Refresh()
 {
     nodes_.ForeachRef( boost::bind( &NodeController::Start, this, _1, false, true ) );
 }

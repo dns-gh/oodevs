@@ -67,8 +67,8 @@ struct Session_ABC : public boost::noncopyable
     virtual Tree Save() const = 0;
     virtual bool Start( const runtime::Runtime_ABC& runtime, const Path& apps ) = 0;
     virtual bool Stop() = 0;
-    virtual bool Update() = 0;
-    virtual bool UpdateSize() = 0;
+    virtual bool Refresh() = 0;
+    virtual bool RefreshSize() = 0;
     virtual bool Poll() = 0;
     virtual bool Pause() = 0;
     virtual void Remove() = 0;

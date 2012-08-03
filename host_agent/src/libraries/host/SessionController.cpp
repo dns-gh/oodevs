@@ -52,8 +52,8 @@ SessionController::SessionController( cpplog::BaseLogger& log,
     const Path app = apps_ / "simulation_app.exe";
     if( !system_.IsFile( app ) )
         throw std::runtime_error( "'" + Utf8Convert( app ) + "' is not a file" );
-    timer_ = MakeTimer( pool, boost::posix_time::seconds( 5 ), boost::bind( &SessionController::Update, this ) );
-    sizes_ = MakeTimer( pool, boost::posix_time::minutes( 1 ), boost::bind( &SessionController::UpdateSize, this ) );
+    timer_ = MakeTimer( pool, boost::posix_time::seconds( 5 ), boost::bind( &SessionController::Refresh, this ) );
+    sizes_ = MakeTimer( pool, boost::posix_time::minutes( 1 ), boost::bind( &SessionController::RefreshSize, this ) );
 }
 
 namespace
@@ -88,41 +88,41 @@ void SessionController::Apply( SessionController::T_Session session,
 }
 
 // -----------------------------------------------------------------------------
-// Name: SessionController::UpdateSession
+// Name: SessionController::RefreshSession
 // Created: BAX 2012-06-19
 // -----------------------------------------------------------------------------
-void SessionController::UpdateSession( T_Session session )
+void SessionController::RefreshSession( T_Session session )
 {
-    Apply( session, boost::bind( &Session_ABC::Update, _1 ) );
+    Apply( session, boost::bind( &Session_ABC::Refresh, _1 ) );
     const T_Operand operand = boost::bind( &Session_ABC::Poll, _1 );
     async_.Go( boost::bind( &SessionController::Apply, this, session, operand ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: SessionController::Update
+// Name: SessionController::Refresh
 // Created: BAX 2012-06-14
 // -----------------------------------------------------------------------------
-void SessionController::Update()
+void SessionController::Refresh()
 {
-    sessions_.Foreach( boost::bind( &SessionController::UpdateSession, this, _1 ) );
+    sessions_.Foreach( boost::bind( &SessionController::RefreshSession, this, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: SessionController::UpdateSize
+// Name: SessionController::RefreshSize
 // Created: BAX 2012-07-19
 // -----------------------------------------------------------------------------
-void SessionController::UpdateSize( T_Session session )
+void SessionController::RefreshSize( T_Session session )
 {
-    Apply( session, boost::bind( &Session_ABC::UpdateSize, _1 ) );
+    Apply( session, boost::bind( &Session_ABC::RefreshSize, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: SessionController::UpdateSize
+// Name: SessionController::RefreshSize
 // Created: BAX 2012-07-19
 // -----------------------------------------------------------------------------
-void SessionController::UpdateSize()
+void SessionController::RefreshSize()
 {
-    sessions_.Foreach( boost::bind( &SessionController::UpdateSize, this, _1 ) );
+    sessions_.Foreach( boost::bind( &SessionController::RefreshSize, this, _1 ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -515,10 +515,10 @@ Path Session::GetOutput() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Session::Update
+// Name: Session::Refresh
 // Created: BAX 2012-06-14
 // -----------------------------------------------------------------------------
-bool Session::Update()
+bool Session::Refresh()
 {
     boost::upgrade_lock< boost::shared_mutex > lock( access_ );
     return ModifyStatus( lock, status_ );
@@ -534,10 +534,10 @@ void ResetBool( boost::upgrade_lock< boost::shared_mutex >& lock, bool& value, b
 }
 
 // -----------------------------------------------------------------------------
-// Name: Session::UpdateSize
+// Name: Session::RefreshSize
 // Created: BAX 2012-07-19
 // -----------------------------------------------------------------------------
-bool Session::UpdateSize()
+bool Session::RefreshSize()
 {
     boost::upgrade_lock< boost::shared_mutex > lock( access_ );
     if( sizing_ )

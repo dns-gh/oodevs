@@ -76,10 +76,10 @@ private:
     //! @name Private methods
     //@{
     void ReloadSession( const Path& path, T_Predicate predicate );
-    void Update();
-    void UpdateSession( T_Session session );
-    void UpdateSize();
-    void UpdateSize( T_Session session );
+    void Refresh();
+    void RefreshSession( T_Session session );
+    void RefreshSize();
+    void RefreshSize( T_Session session );
     void Save( const Session_ABC& session ) const;
     void Create( Session_ABC& session );
     //@}
