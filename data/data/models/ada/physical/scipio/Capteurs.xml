@@ -5560,8 +5560,8 @@
         <object detection-distance="500" type="mines">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
+            <distance-modifier type="Mouvement" value="0.5"/>
+            <distance-modifier type="MouvementDiscret" value="0.9"/>
             <distance-modifier type="Arret" value="1"/>
             <distance-modifier type="PosteReflexe" value="1"/>
             <distance-modifier type="Poste" value="1"/>
@@ -5608,8 +5608,8 @@
         <object detection-distance="500" type="anti tank obstacle">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
+            <distance-modifier type="Mouvement" value="0.5"/>
+            <distance-modifier type="MouvementDiscret" value="0.9"/>
             <distance-modifier type="Arret" value="1"/>
             <distance-modifier type="PosteReflexe" value="1"/>
             <distance-modifier type="Poste" value="1"/>
@@ -5620,8 +5620,8 @@
         <object detection-distance="500" type="mined area (linear)">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
+            <distance-modifier type="Mouvement" value="0.5"/>
+            <distance-modifier type="MouvementDiscret" value="0.9"/>
             <distance-modifier type="Arret" value="1"/>
             <distance-modifier type="PosteReflexe" value="1"/>
             <distance-modifier type="Poste" value="1"/>
@@ -5632,8 +5632,8 @@
         <object detection-distance="500" type="mined area (scattered)">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
+            <distance-modifier type="Mouvement" value="0.5"/>
+            <distance-modifier type="MouvementDiscret" value="0.9"/>
             <distance-modifier type="Arret" value="1"/>
             <distance-modifier type="PosteReflexe" value="1"/>
             <distance-modifier type="Poste" value="1"/>
@@ -7579,4 +7579,4 @@
     </sensor>
   </sensors>
 </sensors>
-<!-- signature="3853632083" -->
+<!-- signature="0322168716" -->
