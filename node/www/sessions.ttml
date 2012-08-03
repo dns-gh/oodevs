@@ -24,48 +24,28 @@
 <!-- Session List -->
 <div id="sessions">
 </div>
-<div id="settings">
-</div>
-<!-- Input number template -->
-[[ define "input_number" ]]
-<div class="control-group">
-    <label class="control-label" for="[[ .id ]]">[[ .label ]]</label>
-    <div class="controls">
-        <div class="[[ if .prepend ]]input-prepend checkbox_addon[[ end ]][[ if .append ]] input-append[[ end ]]">
-            [[ if .prepend ]]<label class="add-on"><input id="[[ .id ]]_check" type="checkbox"/>
-            </label>[[ end ]]<input[[ if .prepend ]] class="field"[[ end ]] type="number" id="[[ .id ]]"/>[[ if .append ]]<span class="add-on">
-            [[ .append ]]</span>[[ end ]]
-        </div>
-    </div>
-</div>
-[[ end ]]
-[[ define "input_checkbox" ]]
-<div class="control-group">
-    <div class="controls">
-        <label class="checkbox">
-            <input type="checkbox" id="[[ .id ]]"/>
-            [[ .label ]]
-        </label>
-    </div>
-</div>
+<!-- general settings -->
+[[ define "general_session_settings" ]]
+[[ template "input_text" sub "id" "name" "label" "Name" "value" "{{name}}" ]]
+[[ template "uneditable_input_text" sub "id" "exercise" "label" "Exercise" "value" "{{exercise.name}}" ]]
 [[ end ]]
 <!-- checkpoint settings -->
 [[ define "checkpoint_session_settings" ]]
-[[ template "input_checkbox" sub "id" "checkpoint_save"      "label" "Save Automatically" ]]
-[[ template "input_number"   sub "id" "checkpoint_frequency" "label" "Frequency" "append" "Minutes" ]]
-[[ template "input_number"   sub "id" "checkpoint_keep"      "label" "Keep" "append" "Checkpoints" ]]
+[[ template "input_checkbox" sub "id" "checkpoint_enabled"   "label" "Save Automatically" "value" "{{#equal checkpoints.enabled \"true\"}} checked=\"checked\"{{/equal}}" ]]
+[[ template "input_number"   sub "id" "checkpoint_frequency" "label" "Frequency" "append" "Minutes" "value" "{{checkpoints.frequency}}" ]]
+[[ template "input_number"   sub "id" "checkpoint_keep"      "label" "Keep" "append" "Checkpoints" "value" "{{checkpoints.keep}}" ]]
 [[ end ]]
 <!-- time settings -->
 [[ define "time_session_settings" ]]
-[[ template "input_checkbox" sub "id" "start_paused" "label" "Start Paused" ]]
-[[ template "input_number"   sub "id" "time_step"    "label" "Time Step" "append" "Seconds" ]]
-[[ template "input_number"   sub "id" "time_factor"  "label" "Time Factor" "append" "&times;" ]]
-[[ template "input_number"   sub "id" "end_tick"     "label" "End" "prepend" 1 "append" "Ticks" ]]
+[[ template "input_checkbox" sub "id" "time_paused"   "label" "Start Paused" "value" "{{#equal time.paused \"true\"}} checked=\"checked\"{{/equal}}" ]]
+[[ template "input_number"   sub "id" "time_step"     "label" "Time Step" "append" "Seconds" "value" "{{time.step}}" ]]
+[[ template "input_number"   sub "id" "time_factor"   "label" "Time Factor" "append" "&times;" "value" "{{time.factor}}" ]]
+[[ template "input_number"   sub "id" "time_end_tick" "label" "End" "prepend" 1 "prepend_value" "{{#is_positive time.end_tick}} checked=\"checked\"{{/is_positive}}" "append" "Ticks" "value" "{{time.end_tick}}" ]]
 [[ end ]]
 <!-- advanced settings -->
 [[ define "advanced_session_settings" ]]
-[[ template "input_number" sub "id" "path_find" "label" "Path Find" "append" "Threads" ]]
-[[ template "input_number" sub "id" "recorder_frequency" "label" "Recorder Frequency" "append" "Ticks" ]]
+[[ template "input_number" sub "id" "pathfind_threads"   "label" "Path Find" "append" "Threads" "value" "{{pathfind.threads}}" ]]
+[[ template "input_number" sub "id" "recorder_frequency" "label" "Recorder Frequency" "append" "Ticks" "value" "{{recorder.frequency}}" ]]
 [[ end ]]
 <!-- rng context -->
 [[ define "rng_context" ]]
@@ -73,19 +53,22 @@
     <label class="control-label">Distribution</label>
     <div class="controls">
         <select id="rng_distribution_[[ .type ]]">
-            <option type="linear">Linear</option>
-            <option type="gaussian">Gaussian</option>
+            [[ $v := concat "rng." .type ".distribution" ]]
+            <option type="linear"{{#equal [[ $v ]] "linear"}} selected="selected"{{/equal}}>Linear</option>
+            <option type="gaussian"{{#equal [[ $v ]] "gaussian"}} selected="selected"{{/equal}}>Gaussian</option>
         </select>
     </div>
 </div>
-[[ $id := concat "rng_std_" .type ]]
-[[ template "input_number" sub "id" $id "label" "Deviation" ]]
-[[ $id := concat "rng_mean_" .type ]]
-[[ template "input_number" sub "id" $id "label" "Mean" ]]
+[[ $id := concat "rng_" .type "_deviation" ]]
+[[ $v := concat "{{rng." .type ".deviation}}" ]]
+[[ template "input_number" sub "id" $id "label" "Deviation" "value" $v ]]
+[[ $id := concat "rng_" .type "_mean" ]]
+[[ $v := concat "{{rng." .type ".mean}}" ]]
+[[ template "input_number" sub "id" $id "label" "Mean" "value" $v ]]
 [[ end ]]
 <!-- rng settings -->
 [[ define "rng_session_settings" ]]
-[[ template "input_number" sub "id" "rng_seed" "label" "Seed" "prepend" 1 ]]
+[[ template "input_number" sub "id" "rng_seed" "label" "Seed" "prepend" 1 "prepend_value" "{{#is_positive rng.seed}} checked=\"checked\"{{/is_positive}}" "value" "{{rng.seed}}" ]]
 <ul class="nav nav-pills controls">
     <li class="active"><a href="#pill_fire" data-toggle="tab">Fire</a></li>
     <li><a href="#pill_wound" data-toggle="tab">Wound</a></li>
@@ -107,15 +90,18 @@
             <h3>{{name}} Session Settings</h3>
         </div>
         <div class="modal-body tabbable">
-            <ul class="nav nav-tabs">
-                <li class="active"><a href="#tab_checkpoints" data-toggle="tab"> Checkpoints </a></li>
-                <li><a href="#tab_time" data-toggle="tab"> Time </a></li>
-                <li><a href="#tab_random" data-toggle="tab"> Random </a></li>
-                <li><a href="#tab_advanced" data-toggle="tab"> Advanced </a></li>
-            </ul>
             <form class="form-horizontal">
+
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#tab_general" data-toggle="tab"> General </a></li>
+                    <li><a href="#tab_checkpoints" data-toggle="tab"> Checkpoints </a></li>
+                    <li><a href="#tab_time" data-toggle="tab"> Time </a></li>
+                    <li><a href="#tab_random" data-toggle="tab"> Random </a></li>
+                    <li><a href="#tab_advanced" data-toggle="tab"> Advanced </a></li>
+                </ul>
                 <div class="tab-content">
-                    <div class="tab-pane active" id="tab_checkpoints"> [[ template "checkpoint_session_settings" . ]] </div>
+                    <div class="tab-pane active" id="tab_general">[[ template "general_session_settings" . ]] </div>
+                    <div class="tab-pane" id="tab_checkpoints"> [[ template "checkpoint_session_settings" . ]] </div>
                     <div class="tab-pane" id="tab_time"> [[ template "time_session_settings" . ]] </div>
                     <div class="tab-pane" id="tab_random">  [[ template "rng_session_settings" . ]] </div>
                     <div class="tab-pane" id="tab_advanced"> [[ template "advanced_session_settings" . ]] </div>
@@ -136,6 +122,7 @@
 <script type="text/template" id="session_template">
     <div id="{{{id}}}" class="span9">
         <div class="row-fluid well session_row">
+            <div class="settings"></div>
             <span class="well {{{status}}}"></span>
             <div class="session_name">{{name}}</div>
             <div class="span4">

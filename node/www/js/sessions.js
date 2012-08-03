@@ -621,11 +621,12 @@
     };
 
     SessionItemView.prototype.edit = function(evt) {
-      var mod, ui, _ref;
+      var box, mod, ui, _ref;
       if (is_disabled(evt)) {
         return;
       }
-      return _ref = pop_settings($("#settings"), this.model.attributes), ui = _ref[0], mod = _ref[1], _ref;
+      box = $(this.el).find(".settings");
+      return _ref = pop_settings(box, this.model.attributes), ui = _ref[0], mod = _ref[1], _ref;
     };
 
     return SessionItemView;

@@ -170,7 +170,8 @@ class SessionItemView extends Backbone.View
 
     edit: (evt) =>
         return if is_disabled evt
-        [ui, mod] = pop_settings $("#settings"), @model.attributes
+        box = $(@el).find ".settings"
+        [ui, mod] = pop_settings box, @model.attributes
 
 get_filters = ->
     _.pluck $("#session_filters input:not(:checked)"), "name"
