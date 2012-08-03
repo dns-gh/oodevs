@@ -771,7 +771,7 @@ namespace
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeBlackBoard_Army::GetResourceNetworksInZone( T_ResourceNetworkVector& container, const TER_Localisation& zone, const std::string type /*= ""*/ )
 {
-    const std::vector< UrbanObjectWrapper* >& blocks = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanBlocks();
+    const std::vector< const UrbanObjectWrapper* >& blocks = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanBlocks();
     for( std::size_t i = 0; i < blocks.size(); ++i )
         FindResourceNetworks( *blocks[ i ], zone, type, container );
     sResourceNetworkInserter functor( container, zone, type );

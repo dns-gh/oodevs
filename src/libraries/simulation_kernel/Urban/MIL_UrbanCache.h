@@ -10,12 +10,11 @@
 #ifndef __MIL_UrbanCache_h_
 #define __MIL_UrbanCache_h_
 
-#include <geometry/types.h>
-#include <map>
+#include <map> // ??
+#include <spatialcontainer/SpatialContainer.h>
 
 class UrbanObjectWrapper;
 class MT_Vector2D;
-class MIL_UrbanModel;
 
 // =============================================================================
 /** @class  MIL_UrbanCache
@@ -26,19 +25,27 @@ class MIL_UrbanModel;
 class MIL_UrbanCache : private boost::noncopyable
 {
 public:
+    //! @name Types
+    //@{
+    struct QuadTreeTraits;
+    typedef spatialcontainer::SpatialContainer< const UrbanObjectWrapper*, QuadTreeTraits, double > T_QuadTree;
+    //@}
+
+public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_UrbanCache( MIL_UrbanModel& urbanModel );
+    explicit MIL_UrbanCache();
     virtual ~MIL_UrbanCache();
     //@}
 
 public:
     //! @name Operations
     //@{
+    void CreateQuadTree( std::vector< const UrbanObjectWrapper* >& cities, const geometry::Rectangle2d& rect );
     void GetUrbanBlocksWithinSegment( const MT_Vector2D& vSourcePoint, const MT_Vector2D& vTargetPoint, std::vector< const UrbanObjectWrapper* >& list );
-    void GetListWithinCircle( const MT_Vector2D& center, float radius, std::vector< UrbanObjectWrapper* >& result ) const;
+    void GetListWithinCircle( const MT_Vector2D& center, float radius, std::vector< const UrbanObjectWrapper* >& result ) const;
     const UrbanObjectWrapper* FindBlock( const MT_Vector2D& point ) const;
-    std::vector< const UrbanObjectWrapper* > GetCities() const;
+    const std::vector< const UrbanObjectWrapper* >& GetCities() const;
     double GetUrbanBlockCost( float weight, const MT_Vector2D& from, const MT_Vector2D& to ) const;
     void Clear();
     //@}
@@ -53,8 +60,11 @@ private:
 private:
     //! @name Member data
     //@{
-    MIL_UrbanModel& urbanModel_;
     T_Cache cache_;
+    std::auto_ptr< T_QuadTree > quadTree_;
+    double precision_;
+    double maxElementSize_;
+    std::vector< const UrbanObjectWrapper* > cities_;
     //@}
 };
 

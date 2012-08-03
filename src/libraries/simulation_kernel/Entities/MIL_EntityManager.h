@@ -71,7 +71,6 @@ class MIL_Population;
 class MIL_Inhabitant;
 class MIL_ProfilerMgr;
 class MIL_Time_ABC;
-class MIL_UrbanModel;
 class MissionController_ABC;
 class InhabitantFactory_ABC;
 class PopulationFactory_ABC;
@@ -123,7 +122,7 @@ public:
     virtual MIL_Object_ABC*     FindObject        ( unsigned int nID ) const;
     virtual const MIL_ObjectType_ABC& FindObjectType( const std::string& type ) const;
     virtual const std::set< MIL_Object_ABC* >& GetUniversalObjects() const;
-            const std::vector< UrbanObjectWrapper* >& GetUrbanBlocks() const;
+    const std::vector< const UrbanObjectWrapper* >& GetUrbanBlocks() const;
 
     MIL_Population* FindPopulation( UrbanObjectWrapper* urbanObject ) const;
     const tools::Resolver< MIL_Army_ABC >& MIL_EntityManager::GetArmies() const;
@@ -151,11 +150,13 @@ public:
     //! @name Operations
     //@{
     void ReadODB( const MIL_Config& config );
-    void CreateUrbanObjects( MIL_UrbanModel& urbanModel, const MIL_Config& config );
+    void LoadUrbanModel( const MIL_Config& config, bool checkpoint = false ); // checkpoint temporaire avant la fusion urban object wrapper
     void SendStateToNewClient() const;
     void Update();
     void Clean();
     void Finalize();
+    static const MIL_UrbanObject_ABC* GetTerrainObject( int urbanId ); //temporaire
+    void CreateQuadTreeForCheckpoint(); //temporaire
     //@}
 
     //! @external helper
@@ -234,6 +235,9 @@ private:
     //! @name Init
     //@{
     void ReadOrbat          ( xml::xistream& xis );
+    void ReadUrban          ( xml::xistream& xis, std::vector< const MIL_UrbanObject_ABC* >& cities );
+    void ReadCity           ( xml::xistream& xis, std::vector< const MIL_UrbanObject_ABC* >& cities );
+    void ReadUrbanObject    ( xml::xistream& xis, MIL_UrbanObject_ABC& parent );
     void InitializeArmies   ( xml::xistream& xis );
     void InitializeDiplomacy( xml::xistream& xis );
     void ReadDiplomacy      ( xml::xistream& xis );
@@ -243,6 +247,8 @@ private:
     //@{
     void ReadUrbanStates( xml::xistream& xis );
     void NotifyPionsInsideUrbanObject();
+    void RecursiveCreateWrappers( const MIL_UrbanObject_ABC& object, unsigned int& counter );
+    void DoCreateUrbanWrapper( const MIL_UrbanObject_ABC& object, unsigned int& counter, bool isCity );
     //@}
 
     //! @name Update
@@ -258,10 +264,21 @@ private:
     //@}
 
 private:
+    //! @name Types
+    //@{
+    typedef std::vector< const UrbanObjectWrapper* > T_Cities;
+    typedef T_Cities::iterator                      IT_Cities;
+    typedef T_Cities::const_iterator               CIT_Cities;
+    //@}
+
+private:
     //! @name Member data
     //@{
     const MIL_Time_ABC& time_;
     MIL_EffectManager& effectManager_;
+    T_Cities cities_;
+
+    static std::vector< const MIL_UrbanObject_ABC* > urbanblocks_; // temporaire
 
     // Profiling
     MIL_ProfilerMgr& profilerManager_;

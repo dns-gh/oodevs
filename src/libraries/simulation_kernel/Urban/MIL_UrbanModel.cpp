@@ -280,14 +280,9 @@ const MIL_UrbanObject_ABC* MIL_UrbanModel::FindBlock( const MT_Vector2D& point )
 // Name: MIL_UrbanModel::GetCities
 // Created: JSR 2012-07-26
 // -----------------------------------------------------------------------------
-std::vector< const MIL_UrbanObject_ABC* > MIL_UrbanModel::GetCities() const
+const std::vector< const MIL_UrbanObject_ABC* >& MIL_UrbanModel::GetCities() const
 {
-    // $$$$ _RC_ JSR 2010-09-17: Non utilisé et pas propre (copie de vector). A virer si inutile
-    std::vector< const MIL_UrbanObject_ABC* > cities;
-    tools::Iterator< const MIL_UrbanObject_ABC& > it = CreateIterator();
-    while( it.HasMoreElements() )
-        cities.push_back( &it.NextElement() );
-    return cities;
+    return cities_;
 }
 
 // -----------------------------------------------------------------------------
@@ -373,6 +368,7 @@ void MIL_UrbanModel::Load( const std::string& directoryPath, tools::ExerciseConf
 void MIL_UrbanModel::ReadCity( xml::xistream& xis )
 {
     MIL_UrbanObject_ABC& urbanObject = *new MIL_UrbanObject( xis );
+    cities_.push_back( &urbanObject );
     tools::Resolver< MIL_UrbanObject_ABC >::Register( urbanObject.GetUrbanId(), urbanObject );
     xis >> xml::optional >> xml::start( "urban-objects" )
             >> xml::list( "urban-object", *this, &MIL_UrbanModel::ReadItem, urbanObject )

@@ -52,7 +52,7 @@ DECLARE_HOOK( GetAgentListWithinCircle, void, ( const SWORD_Model* root, const M
 DECLARE_HOOK( GetObjectListWithinCircle, void, ( const MT_Vector2D& vCenter, double rRadius, void (*callback)( MIL_Object_ABC* object, void* userData ), void* userData ) )
 DECLARE_HOOK( GetConcentrationListWithinCircle, void, ( const MT_Vector2D& vCenter, double rRadius, void (*callback)( const MIL_PopulationConcentration* concentration, void* userData ), void* userData ) )
 DECLARE_HOOK( GetFlowListWithinCircle, void, ( const MT_Vector2D& vCenter, double rRadius, void (*callback)( const MIL_PopulationFlow* flow, void* userData ), void* userData ) )
-DECLARE_HOOK( GetUrbanObjectListWithinCircle, void, ( const MT_Vector2D& center, float radius, void (*callback)( UrbanObjectWrapper* urbanObjectWrapper, void* userData ), void* userData ) )
+DECLARE_HOOK( GetUrbanObjectListWithinCircle, void, ( const MT_Vector2D& center, float radius, void (*callback)( const UrbanObjectWrapper* urbanObjectWrapper, void* userData ), void* userData ) )
 DECLARE_HOOK( AppendAddedKnowledge, void, ( const SWORD_Model* root, const SWORD_Model* entity,
                                             void (*agentCallback)( const SWORD_Model* agent, void* userData ),
                                             void (*objectCallback)( MIL_Object_ABC* object, void* userData ),
@@ -327,11 +327,11 @@ namespace
             , occupation_           ( 0 )
             , count_                ( 0 )
         {}
-        static void NotifyUrbanObject( UrbanObjectWrapper* urbanObjectWrapper, void* userData )
+        static void NotifyUrbanObject( const UrbanObjectWrapper* urbanObjectWrapper, void* userData )
         {
             static_cast< UrbanObjectVisitor* >( userData )->NotifyPerception( urbanObjectWrapper );
         }
-        void NotifyPerception( UrbanObjectWrapper* urbanObjectWrapper )
+        void NotifyPerception( const UrbanObjectWrapper* urbanObjectWrapper )
         {
             count_++;
             perceiver_.NotifyPerceptionUrban( urbanObjectWrapper, sword::perception::PerceptionLevel::identified_ );
@@ -548,7 +548,7 @@ namespace
 {
     struct NullObserver : public PerceptionObserver_ABC
     {
-        virtual void NotifyPerceptionUrban( UrbanObjectWrapper*, const PerceptionLevel& ) {}
+        virtual void NotifyPerceptionUrban( const UrbanObjectWrapper*, const PerceptionLevel& ) {}
         virtual void NotifyPerception( const wrapper::View&, const PerceptionLevel& ) {}
         virtual void NotifyPerception( const wrapper::View&, const PerceptionLevel&, bool ) {}
         virtual void NotifyPerception( const MIL_Object_ABC*, const PerceptionLevel& ) {}

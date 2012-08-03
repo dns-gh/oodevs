@@ -42,7 +42,6 @@ class MIL_EffectManager;
 class MIL_EntityManager;
 class MIL_ProfilerMgr;
 class MIL_TacticalLineManager;
-class MIL_UrbanModel;
 class NET_AgentServer;
 class PHY_MeteoDataManager;
 class ProcessMonitor;
@@ -111,7 +110,6 @@ public:
     //! @name Accessors
     //@{
     MIL_EntityManager& GetEntityManager() const;
-    MIL_UrbanModel& GetUrbanModel() const;
     MIL_UrbanCache& GetUrbanCache() const;
     DEC_Workspace& GetWorkspaceDIA() const;
     NET_AgentServer& GetAgentServer() const;
@@ -154,7 +152,6 @@ private:
     //! @name
     //@{
     void ReadStaticData();
-    void ReadUrbanModel();
     void ReadTerData();
     //@}
 
@@ -197,7 +194,6 @@ private:
     MIL_ProfilerMgr* pProfilerMgr_;
     MIL_CheckPointManager* pCheckPointManager_;
     NET_AgentServer* pAgentServer_;
-    MIL_UrbanModel* pUrbanModel_;
     MIL_UrbanCache* pUrbanCache_;
     resource::ResourceNetworkModel* pResourceNetworkModel_;
     resource::ResourceTools_ABC* pResourceTools_;

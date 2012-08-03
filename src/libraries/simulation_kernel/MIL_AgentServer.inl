@@ -176,17 +176,6 @@ MIL_EntityManager& MIL_AgentServer::GetEntityManager() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentServer::UrbanModel
-// Created: SLG 2009-10-11
-// -----------------------------------------------------------------------------
-inline
-MIL_UrbanModel& MIL_AgentServer::GetUrbanModel() const
-{
-    assert( pUrbanModel_ );
-    return *pUrbanModel_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_AgentServer::GetUrbanCache
 // Created: LDC 2011-12-28
 // -----------------------------------------------------------------------------

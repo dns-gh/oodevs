@@ -144,7 +144,7 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
 
         if( !allTargets.empty() )
         {
-            std::vector< UrbanObjectWrapper* > urbanList;
+            std::vector< const UrbanObjectWrapper* > urbanList;
             if( MIL_AgentServer::IsInitialized() )
                 MIL_AgentServer::GetWorkspace().GetUrbanCache().GetListWithinCircle( vTargetPosition, static_cast< float >( rInterventionTypeFired * rDispersionX_ ), urbanList );
             for( TER_Agent_ABC::CIT_AgentPtrVector itAllTarget = allTargets.begin(); itAllTarget != allTargets.end(); ++itAllTarget )

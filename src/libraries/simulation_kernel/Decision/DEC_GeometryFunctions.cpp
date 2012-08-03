@@ -1120,8 +1120,7 @@ bool DEC_GeometryFunctions::IsPointInUrbanBlockTrafficableForPlatoon( DEC_Decisi
 // -----------------------------------------------------------------------------
 bool DEC_GeometryFunctions::IsPointInCity( const MT_Vector2D& point )
 {
-    // $$$$ LDC RC: static because the cities can't be changed at run-time and there's no point recomputing the vector everytime.
-    static std::vector< const UrbanObjectWrapper* > cities = MIL_AgentServer::GetWorkspace().GetUrbanCache().GetCities();
+    const std::vector< const UrbanObjectWrapper* >& cities = MIL_AgentServer::GetWorkspace().GetUrbanCache().GetCities();
     for( std::vector< const UrbanObjectWrapper* >::const_iterator it = cities.begin(); it != cities.end(); ++it )
     {
         if( !(*it) )

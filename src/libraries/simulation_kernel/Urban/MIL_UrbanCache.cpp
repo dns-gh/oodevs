@@ -6,15 +6,42 @@
 #include "MIL_UrbanCache.h"
 #include "MIL_AgentServer.h"
 #include "Entities/MIL_EntityManager.h"
+#include "MT_Tools/MT_Rect.h"
 #include "MT_Tools/MT_Logger.h"
-#include "Urban/MIL_UrbanModel.h"
+#include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
+#include "Urban/UrbanGeometryAttribute.h"
+#include "Urban/UrbanPhysicalAttribute.h"
+
+namespace
+{
+    spatialcontainer::SegmentIntersecter< double > Intersector( const MT_Rect& boundingBox )
+    {
+        return spatialcontainer::SegmentIntersecter< double >( geometry::Point2< double >( boundingBox.GetLeft(), boundingBox.GetBottom() )
+            , geometry::Point2< double >( boundingBox.GetRight(), boundingBox.GetTop() ) );
+    };
+}
+
+struct MIL_UrbanCache::QuadTreeTraits
+{
+    int CompareOnX( double value, const UrbanObjectWrapper* key ) const
+    {
+        return Intersector( key->GetLocalisation().GetBoundingBox() ).CompareOnX( value );
+    }
+
+    int CompareOnY( double value, const UrbanObjectWrapper* key ) const
+    {
+        return Intersector( key->GetLocalisation().GetBoundingBox() ).CompareOnY( value );
+    }
+};
 
 // -----------------------------------------------------------------------------
 // Name: MIL_UrbanCache constructor
 // Created: LDC 2011-12-28
 // -----------------------------------------------------------------------------
-MIL_UrbanCache::MIL_UrbanCache( MIL_UrbanModel& urbanModel )
-    : urbanModel_( urbanModel )
+MIL_UrbanCache::MIL_UrbanCache()
+    : precision_     ( 0 )
+    , maxElementSize_( 0 )
 {
     // NOTHING
 }
@@ -25,7 +52,168 @@ MIL_UrbanCache::MIL_UrbanCache( MIL_UrbanModel& urbanModel )
 // -----------------------------------------------------------------------------
 MIL_UrbanCache::~MIL_UrbanCache()
 {
-    // NOTHING
+    quadTree_.reset();
+}
+
+namespace
+{
+    template< typename CollisionChecker >
+    struct DataExtractor
+    {
+        explicit DataExtractor( const CollisionChecker& wrapper )
+            : wrapper_( wrapper )
+        {
+            // NOTHING
+        }
+
+        bool operator()( const UrbanObjectWrapper* key )
+        {
+            if( key && wrapper_.Check( key->GetLocalisation() ) )
+            {
+                data_.push_back( key );
+                return wrapper_.DoContinue();
+            }
+            return true;
+        }
+
+        std::vector< const UrbanObjectWrapper* > data_;
+        const CollisionChecker wrapper_;
+    };
+
+    class PointChecker
+    {
+    public:
+        explicit PointChecker( const MT_Vector2D& pick )
+            : pick_( pick )
+        {
+            // NOTHING
+        }
+        bool Check( const TER_Localisation& localisation ) const
+        {
+            return localisation.IsInside( pick_, 1e-8 );
+        }
+        bool DoContinue() const
+        {
+            return false;
+        }
+    private:
+        PointChecker& operator=( const PointChecker& );
+    private:
+        const MT_Vector2D& pick_;
+    };
+
+    class CircleChecker
+    {
+    public:
+        CircleChecker( const MT_Vector2D& center, double radius )
+            : center_( center )
+            , radius_( radius )
+        {
+            // NOTHING
+        }
+        bool Check( const TER_Localisation& localisation ) const
+        {
+            return localisation.Intersect2DWithCircle( center_, radius_ );
+        }
+        bool DoContinue() const
+        {
+            return true;
+        }
+    private:
+        CircleChecker& operator=( const CircleChecker& );
+    private:
+        const MT_Vector2D& center_;
+        double radius_;
+    };
+
+    class SegmentChecker
+    {
+    public:
+        explicit SegmentChecker( const MT_Line& segment )
+            : segment_( segment )
+        {
+            // NOTHING
+        }
+        bool Check( const TER_Localisation& localisation ) const
+        {
+            return localisation.Intersect2D( segment_, 1e-8 );
+        }
+        bool DoContinue() const
+        {
+            return true;
+        }
+    private:
+        SegmentChecker& operator=( const SegmentChecker& );
+    private:
+        const MT_Line& segment_;
+    };
+
+    template< typename CollisionChecker >
+    struct CostExtractor
+    {
+        CostExtractor( const CollisionChecker& wrapper, float weight )
+            : wrapper_( wrapper )
+            , weight_ ( weight )
+            , cost_   ( 0. )
+        {
+            // NOTHING
+        }
+
+        bool operator()( const UrbanObjectWrapper* key )
+        {
+            if( key && wrapper_.Check( key->GetLocalisation() ) )
+            {
+                double tempCost = 0.;
+                const UrbanPhysicalAttribute* pPhysical = key->GetObject().Retrieve< UrbanPhysicalAttribute >();
+                if( pPhysical )
+                    tempCost = pPhysical->GetPathfindCost( weight_ );
+                if( tempCost == -1. )
+                {
+                    cost_ = tempCost;
+                    return false;
+                }
+                else
+                    cost_ = std::max( cost_, tempCost );
+                return wrapper_.DoContinue();
+            }
+            return true;
+        }
+
+        double weight_;
+        double cost_;
+        const CollisionChecker wrapper_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_UrbanCache::CreateQuadTree
+// Created: JSR 2012-08-03
+// -----------------------------------------------------------------------------
+void MIL_UrbanCache::CreateQuadTree( std::vector< const UrbanObjectWrapper* >& cities, const geometry::Rectangle2d& rect )
+{
+    cities_ = cities;
+    if( cities.empty() )
+        return;
+    quadTree_.reset( new T_QuadTree( rect ) );
+    quadTree_->SetRefinementPolicy( 30 );
+    precision_ = sqrt( ( rect.Right() - rect.Left() ) * ( rect.Top() - rect.Bottom() ) * 1e-16f );
+    maxElementSize_ = 0;
+    // $$$$ _RC_ JSR 2010-09-17: TODO Optimiser le quadtree en utilisant aussi les villes et quartiers pour accélérer la recherche
+    std::vector< const MIL_UrbanObject_ABC* > objects;
+    for( std::vector< const UrbanObjectWrapper* >::const_iterator it = cities.begin(); it != cities.end(); ++it )
+        ( *it )->GetObject().GetUrbanObjectLeaves( objects );
+    for( std::vector< const MIL_UrbanObject_ABC* >::const_iterator it = objects.begin(); it != objects.end(); ++it )
+    {
+        const UrbanGeometryAttribute* pAttribute = ( *it )->Retrieve< UrbanGeometryAttribute >();
+        if( pAttribute )
+        {
+            quadTree_->Insert( &MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( **it ) );
+            geometry::Rectangle2f boundingBox = pAttribute->BoundingBox();
+            float size = 1.1f * std::max( boundingBox.Width(), boundingBox.Height() );
+            if( maxElementSize_ < size )
+                maxElementSize_ = size;
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -56,11 +244,19 @@ void MIL_UrbanCache::GetUrbanBlocksWithinSegment( const MT_Vector2D& vSourcePoin
             return;
         }
     }
-    std::vector< const MIL_UrbanObject_ABC* > tmpList;
-    urbanModel_.GetListWithinSegment( vSourcePoint, vTargetPoint, tmpList );
-    list.reserve( tmpList.size() );
-    for( std::size_t i = 0; i < tmpList.size(); ++i )
-        list.push_back( &MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *tmpList[ i ] ) );
+
+    if( quadTree_.get() )
+    {
+        spatialcontainer::SegmentIntersecter< double > intersecter( geometry::Point2d( vSourcePoint.rX_, vSourcePoint.rY_ ),
+                                                                    geometry::Point2d( vTargetPoint.rX_, vTargetPoint.rY_ ), maxElementSize_ );
+        MT_Line segment( vSourcePoint, vTargetPoint );
+        SegmentChecker checker( segment );
+        DataExtractor< SegmentChecker > extractor( checker );
+
+        quadTree_->Apply( intersecter, extractor );
+        std::swap( extractor.data_, list );
+    }
+
     cache_[ start ][ end ] = list;
 }
 
@@ -77,13 +273,18 @@ void MIL_UrbanCache::Clear()
 // Name: MIL_UrbanCache::GetListWithinCircle
 // Created: LDC 2011-12-30
 // -----------------------------------------------------------------------------
-void MIL_UrbanCache::GetListWithinCircle( const MT_Vector2D& center, float radius, std::vector< UrbanObjectWrapper* >& result ) const
+void MIL_UrbanCache::GetListWithinCircle( const MT_Vector2D& center, float radius, std::vector< const UrbanObjectWrapper* >& result ) const
 {
     std::vector< const MIL_UrbanObject_ABC* > tmpList;
-    urbanModel_.GetListWithinCircle( center, radius, tmpList );
-    result.reserve( tmpList.size() );
-    for( std::size_t i = 0; i < tmpList.size(); ++i )
-        result.push_back( &MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *tmpList[ i ] ) );
+    if( quadTree_.get() )
+    {
+        spatialcontainer::SegmentIntersecter< double > intersecter( geometry::Point2d( center.rX_ - radius, center.rY_ - radius ),
+            geometry::Point2d( center.rX_ + radius, center.rY_ + radius ), maxElementSize_ );
+        CircleChecker checker( center, radius );
+        DataExtractor< CircleChecker > extractor( checker );
+        quadTree_->Apply( intersecter, extractor );
+        std::swap( extractor.data_, result );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -92,21 +293,25 @@ void MIL_UrbanCache::GetListWithinCircle( const MT_Vector2D& center, float radiu
 // -----------------------------------------------------------------------------
 const UrbanObjectWrapper* MIL_UrbanCache::FindBlock( const MT_Vector2D& point ) const
 {
-    const MIL_UrbanObject_ABC* ret = urbanModel_.FindBlock( point );
-    return ret ? &MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *ret ) : 0;
+    if( quadTree_.get() )
+    {
+        spatialcontainer::PointIntersecter< double > intersecter( geometry::Point2d( point.rX_, point.rY_ ), precision_, maxElementSize_ );
+        PointChecker check( point );
+        DataExtractor< PointChecker > extractor( check );
+        quadTree_->Apply( intersecter, extractor );
+        if( !extractor.data_.empty() )
+            return *extractor.data_.begin();
+    }
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
-// Name: std::vector< const UrbanObjectWrapper* > MIL_UrbanCache::GetCities
+// Name: MIL_UrbanCache::GetCities
 // Created: JSR 2012-04-20
 // -----------------------------------------------------------------------------
-std::vector< const UrbanObjectWrapper* > MIL_UrbanCache::GetCities() const
+const std::vector< const UrbanObjectWrapper* >& MIL_UrbanCache::GetCities() const
 {
-    std::vector< const UrbanObjectWrapper* > result;
-    std::vector< const MIL_UrbanObject_ABC* > tmpList = urbanModel_.GetCities();
-    for( std::size_t i = 0; i < tmpList.size(); ++i )
-        result.push_back( &MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *tmpList[ i ] ) );
-    return result;
+    return cities_;
 }
 
 // -----------------------------------------------------------------------------
@@ -115,5 +320,15 @@ std::vector< const UrbanObjectWrapper* > MIL_UrbanCache::GetCities() const
 // -----------------------------------------------------------------------------
 double MIL_UrbanCache::GetUrbanBlockCost( float weight, const MT_Vector2D& from, const MT_Vector2D& to ) const
 {
-    return urbanModel_.GetUrbanBlockCost( weight, from, to );
+    if( quadTree_.get() )
+    {
+        spatialcontainer::SegmentIntersecter< double > intersecter( geometry::Point2d( from.rX_, from.rY_ ),
+                                                                    geometry::Point2d( to.rX_, to.rY_ ), maxElementSize_ );
+        MT_Line segment( from, to );
+        SegmentChecker checker( segment );
+        CostExtractor< SegmentChecker > extractor( checker, weight );
+        quadTree_->Apply( intersecter, extractor );
+        return extractor.cost_;
+    }
+    return 0;
 }

@@ -16,12 +16,12 @@
 #include "MedicalCapacity.h"
 #include "InfrastructureCapacity.h"
 #include "StructuralCapacity.h"
+#include "Entities/MIL_EntityManager.h"
 #include "Entities/Objects/MIL_ObjectBuilder_ABC.h"
 #include "Entities/Inhabitants/MIL_LivingArea.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
-#include "Urban/MIL_UrbanModel.h"
 #include "Urban/PHY_InfrastructureType.h"
 #include "Urban/PHY_MaterialCompositionType.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
@@ -125,7 +125,8 @@ void UrbanObjectWrapper::load( MIL_CheckPointInArchive& file, const unsigned int
     unsigned long urbanId;
     file >> boost::serialization::base_object< MIL_Object >( *this );
     file >> urbanId;
-    object_ = MIL_AgentServer::GetWorkspace().GetUrbanModel().GetTerrainObject( urbanId );
+    // TODO Checkpoint surement cassé
+    object_ = MIL_EntityManager::GetTerrainObject( urbanId );
     file >> inhabitants_
          >> livingAreas_;
 }

@@ -279,7 +279,7 @@ T_UrbanObjectVector DEC_KnowledgeFunctions::GetUrbanBlockInCircle( boost::shared
 // Name: DEC_KnowledgeFunctions::GetUrbanBlockForPosition
 // Created: DDA 2011-06-20
 // -----------------------------------------------------------------------------
-UrbanObjectWrapper* DEC_KnowledgeFunctions::GetUrbanBlockForPosition( const MIL_AgentPion& pion, boost::shared_ptr< MT_Vector2D >& point )
+const UrbanObjectWrapper* DEC_KnowledgeFunctions::GetUrbanBlockForPosition( const MIL_AgentPion& pion, boost::shared_ptr< MT_Vector2D >& point )
 {
     if( !point )
         throw std::runtime_error( __FUNCTION__ ": invalid parameter." );

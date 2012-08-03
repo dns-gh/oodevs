@@ -28,7 +28,6 @@
 #include "tools/ExerciseSettings.h"
 #include "tools/Loader_ABC.h"
 #include "Urban/MIL_UrbanCache.h"
-#include "Urban/MIL_UrbanModel.h"
 #include <boost/filesystem/path.hpp>
 #include <tools/thread/Thread.h>
 #include <tools/win32/ProcessMonitor.h>
@@ -67,8 +66,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     , pProfilerMgr_         ( new MIL_ProfilerMgr( config.IsProfilingEnabled() ) )
     , pCheckPointManager_   ( 0 )
     , pAgentServer_         ( 0 )
-    , pUrbanModel_          ( new MIL_UrbanModel() )
-    , pUrbanCache_          ( new MIL_UrbanCache( *pUrbanModel_ ) )
+    , pUrbanCache_          ( new MIL_UrbanCache() )
     , pResourceTools_       ( new ResourceTools() )
     , pBurningCells_        ( new MIL_BurningCells() )
     , pPropagationManager_  ( new MIL_PropagationManager() )
@@ -80,10 +78,12 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     config_.AddFileToCRC( config_.GetExerciseFile() );
     config_.GetLoader().LoadFile( config_.GetSettingsFile(), boost::bind( &tools::ExerciseSettings::Load, settings_, _1 ) );
     ReadStaticData();
-    ReadUrbanModel();
+    // TODO tester les checkpoints
     if( config_.HasCheckpoint() )
     {
+        pEntityManager_->LoadUrbanModel( config_, true ); // TODO a supprimer quand les urbanobjectwrapper seront virés
         MIL_CheckPointManager::LoadCheckPoint( config_ );
+        // TODO créer le quadtree, et associer les villes a l'urbancache
         SendControlInformation();
     }
     else
@@ -93,7 +93,8 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
         pEntityManager_ = new MIL_EntityManager( *this, *pEffectManager_, *pProfilerMgr_, config_.IsLegacy(), config_.ReadGCParameter_setPause(), config.ReadGCParameter_setStepMul() );
         pCheckPointManager_ = new MIL_CheckPointManager( config_ );
         pEntityManager_->ReadODB( config_ );
-        pEntityManager_->CreateUrbanObjects( *pUrbanModel_, config_ );
+        pEntityManager_->LoadUrbanModel( config_ );
+        
         pEntityManager_->Finalize();
         Resume( nextPause_ );
     }
@@ -150,28 +151,6 @@ void MIL_AgentServer::ReadStaticData()
     pAgentServer_ = new NET_AgentServer( config_, *this, *this );
     if( !config_.IsDataTestMode() )
         pPathFindManager_ = new DEC_PathFind_Manager( config_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentServer::ReadUrbanModel
-// Created: JSR 2010-11-22
-// -----------------------------------------------------------------------------
-void MIL_AgentServer::ReadUrbanModel()
-{
-    MT_LOG_STARTUP_MESSAGE( "--------------------------------" );
-    MT_LOG_STARTUP_MESSAGE( "----  Loading UrbanModel    ----" );
-    MT_LOG_STARTUP_MESSAGE( "--------------------------------" );
-    std::string directoryPath = bfs::path( config_.GetTerrainFile() ).branch_path().string();
-    try
-    {
-         MT_LOG_INFO_MSG( MT_FormatString( "Loading Urban Model from path '%s'", directoryPath.c_str() ) )
-         MIL_Tools::CheckXmlCrc32Signature( config_.GetUrbanTerrainFile() );
-         pUrbanModel_->Load( directoryPath, config_ );
-    }
-    catch( std::exception& e )
-    {
-        MT_LOG_ERROR_MSG( "Exception in loading Urban Model caught : " << e.what() );
-    }
 }
 
 //-----------------------------------------------------------------------------
@@ -407,6 +386,7 @@ void MIL_AgentServer::load( MIL_CheckPointInArchive& file )
          >> nInitialRealTime_
          >> nRealTime_
          >> localTime_;
+    pEntityManager_->CreateQuadTreeForCheckpoint(); // temporaire
     pBurningCells_->load( file );
     pBurningCells_->finalizeLoad( GetEntityManager() );
     MT_LOG_INFO_MSG( MT_FormatString( "Simulation acceleration factor : %d", nTimeFactor_ ) );

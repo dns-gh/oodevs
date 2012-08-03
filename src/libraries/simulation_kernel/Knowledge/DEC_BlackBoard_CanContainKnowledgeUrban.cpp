@@ -62,7 +62,7 @@ void DEC_BlackBoard_CanContainKnowledgeUrban::save( MIL_CheckPointOutArchive& fi
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeUrban::Finalize()
 {
-    const std::vector< UrbanObjectWrapper* >& blocks = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanBlocks();
+    const std::vector< const UrbanObjectWrapper* >& blocks = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanBlocks();
     for( std::size_t i = 0; i < blocks.size(); ++i )
         urbanMapFromConcrete_[ blocks[ i ]->GetID() ].reset( new DEC_Knowledge_Urban( army_, *blocks[ i ] ) );
 }

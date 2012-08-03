@@ -39,7 +39,7 @@ class TER_Localisation;
     APPLY( GetObjectListWithinCircle, 4, void, ( const MT_Vector2D& vCenter, double rRadius, void (*callback)( MIL_Object_ABC* object, void* userData ), void* userData ) ) \
     APPLY( GetConcentrationListWithinCircle, 4, void, ( const MT_Vector2D& vCenter, double rRadius, void (*callback)( const MIL_PopulationConcentration* concentration, void* userData ), void* userData ) ) \
     APPLY( GetFlowListWithinCircle, 4, void, ( const MT_Vector2D& vCenter, double rRadius, void (*callback)( const MIL_PopulationFlow* flow, void* userData ), void* userData ) ) \
-    APPLY( GetUrbanObjectListWithinCircle, 4, void, ( const MT_Vector2D& center, float radius, void (*callback)( UrbanObjectWrapper* urbanObjectWrapper, void* userData ), void* userData ) ) \
+    APPLY( GetUrbanObjectListWithinCircle, 4, void, ( const MT_Vector2D& center, float radius, void (*callback)( const UrbanObjectWrapper* urbanObjectWrapper, void* userData ), void* userData ) ) \
     APPLY( GetUrbanBlocksListWithinSegment, 4, void, ( MT_Vector2D first, MT_Vector2D second, void (*callback)( const UrbanObjectWrapper* urbanObjectWrapper, void* userData ), void* userData ) ) \
     APPLY( AppendAddedKnowledge, 7, void, ( const SWORD_Model* root, const SWORD_Model* entity, \
                                             void (*agentCallback)( const SWORD_Model* agent, void* userData ), \

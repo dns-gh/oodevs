@@ -22,13 +22,15 @@ namespace tools
 
 class MT_Vector2D;
 
+// TODO à virer
+
 // =============================================================================
 /** @class  MIL_UrbanModel
     @brief  MIL_UrbanModel
 */
 // Created: JSR 2012-07-26
 // =============================================================================
-class MIL_UrbanModel : public tools::Resolver< MIL_UrbanObject_ABC >
+class MIL_UrbanModel : private tools::Resolver< MIL_UrbanObject_ABC >
                      , private boost::noncopyable
 {
 public:
@@ -47,15 +49,26 @@ public:
 
     //! @name Operations
     //@{
+
+    // TODO Load à faire dans l'entitymanager, plus create quadtree.
+
     void Load( const std::string& directoryPath, tools::ExerciseConfig& config );
 
+    // TODO à faire dans UrbanCache (avec le quadtree déplacé dedans)
     void GetListWithinCircle( const MT_Vector2D& center, float radius, std::vector< const MIL_UrbanObject_ABC* >& result ) const;
     void GetListWithinSegment( const MT_Vector2D& start, const MT_Vector2D& end, std::vector< const MIL_UrbanObject_ABC* >& result ) const;
     const MIL_UrbanObject_ABC* FindBlock( const MT_Vector2D& point ) const;
-    std::vector< const MIL_UrbanObject_ABC* > GetCities() const;
+
+    // TODO stocker une fois pour toutes à la lecture d'urban.xml
+    const std::vector< const MIL_UrbanObject_ABC* >& GetCities() const;
+
+    // TODO à faire dans UrbanCache (avec le quadtree déplacé dedans)
     float GetUrbanBlockCost( float weight, const MT_Vector2D& from, const MT_Vector2D& to ) const;
+
+    // TODO inutile quand le Wrapper aura disparu
     const MIL_UrbanObject_ABC* GetTerrainObject( unsigned int id ) const;
 
+    // TODO inutile quand le Wrapper aura disparu
     void Accept( MIL_UrbanObjectVisitor_ABC& visitor ) const;
     //@}
 
@@ -77,6 +90,7 @@ private:
     std::auto_ptr< T_QuadTree > quadTree_;
     float precision_;
     float maxElementSize_;
+    std::vector< const MIL_UrbanObject_ABC* > cities_;
     //@}
 };
 

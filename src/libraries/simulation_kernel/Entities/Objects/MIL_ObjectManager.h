@@ -79,7 +79,7 @@ public:
     UrbanObjectWrapper& GetUrbanObjectWrapper( const MIL_UrbanObject_ABC& object );
     unsigned int ConvertUrbanIdToSimId( unsigned int urbanId );
     const std::set< MIL_Object_ABC* >& GetUniversalObjects() const;
-    const std::vector< UrbanObjectWrapper* >& GetUrbanBlocks() const;
+    const std::vector< const UrbanObjectWrapper* >& GetUrbanBlocks() const;
     //@}
 
     //! @name Network
@@ -104,9 +104,9 @@ private:
     typedef T_UrbanObjectMap::iterator                                 IT_UrbanObjectMap;
     typedef T_UrbanObjectMap::const_iterator                          CIT_UrbanObjectMap;
 
-    typedef std::vector< UrbanObjectWrapper* >    T_UrbanBlocksVector;
-    typedef T_UrbanBlocksVector::iterator        IT_UrbanBlocksVector;
-    typedef T_UrbanBlocksVector::const_iterator CIT_UrbanBlocksVector;
+    typedef std::vector< const UrbanObjectWrapper* >    T_UrbanBlocksVector;
+    typedef T_UrbanBlocksVector::iterator              IT_UrbanBlocksVector;
+    typedef T_UrbanBlocksVector::const_iterator       CIT_UrbanBlocksVector;
     //@}
 
 private:

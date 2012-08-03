@@ -48,7 +48,7 @@ PerceptionObserver::~PerceptionObserver()
 // Name: PerceptionObserver::NotifyPerceptionUrban
 // Created: SLI 2012-06-19
 // -----------------------------------------------------------------------------
-void PerceptionObserver::NotifyPerceptionUrban( UrbanObjectWrapper* urbanBlock, const PerceptionLevel& level )
+void PerceptionObserver::NotifyPerceptionUrban( const UrbanObjectWrapper* urbanBlock, const PerceptionLevel& level )
 {
     wrapper::Node notification = urbanBlockNotifications_.AddElement();
     notification[ "target" ] = reinterpret_cast< size_t >( urbanBlock );

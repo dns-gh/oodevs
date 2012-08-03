@@ -82,6 +82,7 @@
 #include "Objects/MIL_NbcAgentType.h"
 #include "Objects/MIL_ObjectManager.h"
 #include "Objects/MIL_Object_ABC.h"
+#include "Objects/UrbanObjectWrapper.h"
 #include "Orders/MIL_LimaFunction.h"
 #include "Orders/MIL_Report.h"
 #include "Populations/MIL_PopulationType.h"
@@ -98,8 +99,8 @@
 #include "protocol/Protocol.h"
 #include "resource_network/ResourceNetworkModel.h"
 #include "tools/Loader_ABC.h"
-#include "Urban/MIL_UrbanModel.h"
-#include "Urban/MIL_UrbanObject_ABC.h"
+#include "Urban/MIL_UrbanCache.h"
+#include "Urban/MIL_UrbanObject.h"
 #include "Urban/MIL_UrbanObjectVisitor_ABC.h"
 #include "Urban/PHY_InfrastructureType.h"
 #include "Urban/PHY_MaterialCompositionType.h"
@@ -125,7 +126,10 @@ using namespace sword;
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_EntityManager )
 
-// =============================================================================
+std::vector< const MIL_UrbanObject_ABC* > MIL_EntityManager::urbanblocks_; // temporaire
+
+
+    // =============================================================================
 // TOOLS
 // =============================================================================
 namespace
@@ -339,64 +343,170 @@ void MIL_EntityManager::ReadOrbat( xml::xistream& xis )
     InitializeDiplomacy( xis );
 }
 
-namespace
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::RecursiveCreateWrappers
+// Created: JSR 2012-08-03
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::RecursiveCreateWrappers( const MIL_UrbanObject_ABC& object, unsigned int& counter )
 {
-    class UrbanWrapperVisitor : public MIL_UrbanObjectVisitor_ABC
+    tools::Iterator< const MIL_UrbanObject_ABC& > it = object.CreateIterator();
+    while( it.HasMoreElements() )
     {
-    public:
-        UrbanWrapperVisitor( MIL_EntityManager& manager )
-            : manager_( manager )
-            , count_( 0 )
-        {
-            // NOTHING
-        }
-        ~UrbanWrapperVisitor()
-        {
-            // NOTHING
-        }
-        virtual void Visit( const MIL_UrbanObject_ABC& object )
-        {
-            const UrbanPhysicalAttribute* pPhysical = object.Retrieve< UrbanPhysicalAttribute >();
-            if( pPhysical && ( !PHY_MaterialCompositionType::Find( pPhysical->GetArchitecture().material_ ) || !PHY_RoofShapeType::Find( pPhysical->GetArchitecture().roofShape_ ) ) )
-            {
-                MT_LOG_INFO_MSG( MT_FormatString( "The architecture of the urban bloc '%d' ('%s') is not consistent with the architecture described in the urban file", object.GetUrbanId(), object.GetName().c_str() ) );
-            }
-            const UrbanGeometryAttribute* geometry = object.Retrieve< UrbanGeometryAttribute >();
-            if( !geometry || geometry->Vertices().empty() )
-            {
-                MT_LOG_ERROR_MSG( MT_FormatString( "Urban block %d ignored for lack of geometry", object.GetUrbanId() ) );
-                return;
-            }
-            manager_.CreateUrbanObject( object );
-            ++count_;
-        }
-        void Dump()
-        {
-            MT_LOG_INFO_MSG( MT_FormatString( "%d Urban blocs", count_ ) );
-        }
-    private:
-        MIL_EntityManager& manager_;
-        unsigned int count_;
-    };
+        const MIL_UrbanObject_ABC& object = it.NextElement();
+        RecursiveCreateWrappers( object, counter );
+        DoCreateUrbanWrapper( object, counter, false );
+    }
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::CreateUrbanObjects
-// Created: SLG 2010-06-23
+// Name: MIL_EntityManager::DoCreateUrbanWrapper
+// Created: JSR 2012-08-03
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::CreateUrbanObjects( MIL_UrbanModel& urbanModel, const MIL_Config& config )
+void MIL_EntityManager::DoCreateUrbanWrapper( const MIL_UrbanObject_ABC& object, unsigned int& counter, bool isCity )
 {
-    UrbanWrapperVisitor visitor( *this );
-    urbanModel.Accept( visitor );
-    visitor.Dump();
-
-    const std::string strUrbanState = config.GetUrbanStateFile();
-    if( !strUrbanState.empty() && bfs::exists( bfs::path( strUrbanState ) ) )
+    const UrbanPhysicalAttribute* pPhysical = object.Retrieve< UrbanPhysicalAttribute >();
+    if( pPhysical && ( !PHY_MaterialCompositionType::Find( pPhysical->GetArchitecture().material_ ) || !PHY_RoofShapeType::Find( pPhysical->GetArchitecture().roofShape_ ) ) )
     {
-        MT_LOG_INFO_MSG( MT_FormatString( "UrbanState file name : '%s'", strUrbanState.c_str() ) );
-        config.GetLoader().LoadFile( strUrbanState, boost::bind( &MIL_EntityManager::ReadUrbanStates, this, _1 ) );
+        MT_LOG_INFO_MSG( MT_FormatString( "The architecture of the urban bloc '%d' ('%s') is not consistent with the architecture described in the urban file", object.GetUrbanId(), object.GetName().c_str() ) );
     }
-    NotifyPionsInsideUrbanObject();
+    const UrbanGeometryAttribute* geometry = object.Retrieve< UrbanGeometryAttribute >();
+    if( !geometry || geometry->Vertices().empty() )
+    {
+        MT_LOG_ERROR_MSG( MT_FormatString( "Urban block %d ignored for lack of geometry", object.GetUrbanId() ) );
+        return;
+    }
+    MIL_Object_ABC* obj = pObjectManager_->CreateUrbanObject( object );
+    if( isCity )
+        cities_.push_back( static_cast< UrbanObjectWrapper* >( obj ) );
+    ++counter;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::LoadUrbanModel
+// Created: JSR 2012-08-03
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::LoadUrbanModel( const MIL_Config& config, bool checkpoint /*= false*/ )
+{
+    // TODO déplacer dans une factory? ou dans MIL_ObjectManager
+    std::string directoryPath = bfs::path( config.GetTerrainFile() ).branch_path().string();
+    try
+    {
+        // pUrbanModel_->Load( directoryPath, config_ );
+
+        // TODO Supprimer le chemin en hard
+        const bfs::path fullPath = bfs::path( directoryPath ) / "urban" / "urban.xml"; 
+        if( bfs::exists( fullPath ) ) // avoid exception
+        {
+            MT_LOG_STARTUP_MESSAGE( "--------------------------------" );
+            MT_LOG_STARTUP_MESSAGE( "----  Loading UrbanModel    ----" );
+            MT_LOG_STARTUP_MESSAGE( "--------------------------------" );
+
+            MT_LOG_INFO_MSG( MT_FormatString( "Loading Urban Model from path '%s'", directoryPath.c_str() ) )
+                MIL_Tools::CheckXmlCrc32Signature( config.GetUrbanTerrainFile() );
+
+            std::vector< const MIL_UrbanObject_ABC* > cities;
+            config.GetLoader().LoadFile( fullPath.string(), boost::bind( &MIL_EntityManager::ReadUrban, this, _1, boost::ref( cities ) ) );
+            if( cities.empty() )
+                return;
+
+            if( checkpoint )
+                return;
+
+            unsigned int counter = 0;
+            for( std::vector< const MIL_UrbanObject_ABC* >::const_iterator it = cities.begin(); it != cities.end(); ++it )
+            {
+                const MIL_UrbanObject_ABC& city = **it;
+                RecursiveCreateWrappers( city, counter );
+                DoCreateUrbanWrapper( city, counter, true );
+            }
+            
+            MT_LOG_INFO_MSG( MT_FormatString( "%d Urban blocs", counter ) );
+
+            geometry::Rectangle2d extent( geometry::Point2d( 0, 0 ), geometry::Point2d( config.GetTerrainWidth(), config.GetTerrainHeight() ) );
+            MIL_AgentServer::GetWorkspace().GetUrbanCache().CreateQuadTree( cities_, extent );
+
+            const std::string strUrbanState = config.GetUrbanStateFile();
+            if( !strUrbanState.empty() && bfs::exists( bfs::path( strUrbanState ) ) )
+            {
+                MT_LOG_INFO_MSG( MT_FormatString( "UrbanState file name : '%s'", strUrbanState.c_str() ) );
+                config.GetLoader().LoadFile( strUrbanState, boost::bind( &MIL_EntityManager::ReadUrbanStates, this, _1 ) );
+            }
+            NotifyPionsInsideUrbanObject();
+        }
+
+        // TODO détruire les mil_urbanobject dans le destructeur?
+
+
+    }
+    catch( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( "Exception in loading Urban Model caught : " << e.what() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::GetTerrainObject
+// Created: JSR 2012-08-03
+// -----------------------------------------------------------------------------
+const MIL_UrbanObject_ABC* MIL_EntityManager::GetTerrainObject( int urbanId )
+{
+    for( std::vector< const MIL_UrbanObject_ABC* >::const_iterator it = urbanblocks_.begin(); it != urbanblocks_.end(); ++it )
+        if( ( *it )->GetUrbanId() == urbanId )
+            return *it;
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::ReadUrban
+// Created: JSR 2012-08-03
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::ReadUrban( xml::xistream& xis, std::vector< const MIL_UrbanObject_ABC* >& cities )
+{
+    xis >> xml::start( "urban" )
+            >> xml::start( "urban-objects" )
+                >> xml::list( "urban-object", *this, &MIL_EntityManager::ReadCity, cities )
+            >> xml::end
+        >> xml::end;
+
+    // TODO faire dans un finalize?
+    for( std::vector< const MIL_UrbanObject_ABC* >::const_iterator city = cities.begin(); city != cities.end(); ++city )
+    {
+        tools::Iterator< const MIL_UrbanObject_ABC& > districts = ( *city )->CreateIterator();
+        while( districts.HasMoreElements() )
+        {
+            MIL_UrbanObject_ABC& district = const_cast< MIL_UrbanObject_ABC& >( districts.NextElement() );
+            district.ComputeConvexHull();
+        }
+        const_cast< MIL_UrbanObject_ABC* >( *city )->ComputeConvexHull();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::ReadCity
+// Created: JSR 2012-08-03
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::ReadCity( xml::xistream& xis, std::vector< const MIL_UrbanObject_ABC* >& cities )
+{
+    MIL_UrbanObject_ABC& urbanObject = *new MIL_UrbanObject( xis );
+    cities.push_back( &urbanObject );
+    urbanblocks_.push_back( &urbanObject );
+    xis >> xml::optional >> xml::start( "urban-objects" )
+            >> xml::list( "urban-object", *this, &MIL_EntityManager::ReadUrbanObject, urbanObject )
+        >> xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::ReadUrbanObject
+// Created: JSR 2012-08-03
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::ReadUrbanObject( xml::xistream& xis, MIL_UrbanObject_ABC& parent )
+{
+    MIL_UrbanObject_ABC& urbanObject = *new MIL_UrbanObject( xis, &parent );
+    urbanblocks_.push_back( &urbanObject );
+    parent.Register( urbanObject.GetUrbanId(), urbanObject );
+    xis >> xml::optional >> xml::start( "urban-objects" )
+        >> xml::list( "urban-object", *this, &MIL_EntityManager::ReadUrbanObject, urbanObject )
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -1952,7 +2062,8 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int 
          >> rActionsTime_
          >> rEffectsTime_
          >> rStatesTime_
-         >> nRandomBreakdownsNextTimeStep_;
+         >> nRandomBreakdownsNextTimeStep_
+         >> cities_;
 
     armyFactory_.reset( armyFactory );
     formationFactory_.reset( formationFactory );
@@ -1971,6 +2082,16 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int 
     MT_LOG_INFO_MSG( MT_FormatString( " => %d populations", populationFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d inhabitants", inhabitantFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d objects"    , pObjectManager_->Count() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::CreateQuadTreeForCheckpoint
+// Created: JSR 2012-08-03
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::CreateQuadTreeForCheckpoint()
+{
+    geometry::Rectangle2d extent( geometry::Point2d( 0, 0 ), geometry::Point2d( MIL_AgentServer::GetWorkspace().GetConfig().GetTerrainWidth(), MIL_AgentServer::GetWorkspace().GetConfig().GetTerrainHeight() ) );
+    MIL_AgentServer::GetWorkspace().GetUrbanCache().CreateQuadTree( cities_, extent );
 }
 
 // -----------------------------------------------------------------------------
@@ -2010,7 +2131,8 @@ void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const unsigned int
          << rActionsTime_
          << rEffectsTime_
          << rStatesTime_
-         << nRandomBreakdownsNextTimeStep_;
+         << nRandomBreakdownsNextTimeStep_
+         << cities_;
 }
 
 // -----------------------------------------------------------------------------
@@ -2353,7 +2475,7 @@ const std::set< MIL_Object_ABC* >& MIL_EntityManager::GetUniversalObjects() cons
 // Name: MIL_EntityManager::GetUrbanBlocks
 // Created: JSR 2012-04-27
 // -----------------------------------------------------------------------------
-const std::vector< UrbanObjectWrapper* >& MIL_EntityManager::GetUrbanBlocks() const
+const std::vector< const UrbanObjectWrapper* >& MIL_EntityManager::GetUrbanBlocks() const
 {
     return pObjectManager_->GetUrbanBlocks();
 }

@@ -499,7 +499,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_Connaissances_BlocUrbain" ] =
         boost::function< void( const directia::tools::binders::ScriptRef& ) >( boost::bind( &DEC_KnowledgeFunctions::GetUrbanBlock, boost::ref( brain ), boost::ref( GetPion() ), initQueryFunction, _1 ) );
     brain[ "DEC_Connaissances_BlocUrbainPourPosition" ] =
-        boost::function< UrbanObjectWrapper*( boost::shared_ptr< MT_Vector2D > ) >( boost::bind( &DEC_KnowledgeFunctions::GetUrbanBlockForPosition, boost::ref( GetPion() ), _1 ) );
+        boost::function< const UrbanObjectWrapper*( boost::shared_ptr< MT_Vector2D > ) >( boost::bind( &DEC_KnowledgeFunctions::GetUrbanBlockForPosition, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_Connaissances_BlocUrbainDansZone" ] =
         boost::function< T_UrbanObjectVector( TER_Localisation* )>( boost::bind( &DEC_KnowledgeFunctions::GetUrbanBlockInZone, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_ConnaissanceUrbanBlock_NiveauDeReconnaissanceCourant" ] = boost::function< float( UrbanObjectWrapper* )>( boost::bind( &DEC_UrbanObjectFunctions::GetCurrentRecceProgress, boost::ref( GetPion() ), _1 ) );

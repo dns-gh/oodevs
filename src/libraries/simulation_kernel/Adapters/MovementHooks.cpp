@@ -117,11 +117,11 @@ namespace
         BOOST_FOREACH( const TER_PopulationFlow_ABC* flow, perceivableFlows )
             callback( static_cast< const MIL_PopulationFlow* >( flow ), userData );
     }
-    DEFINE_HOOK( GetUrbanObjectListWithinCircle, void, ( const MT_Vector2D& center, float radius, void (*callback)( UrbanObjectWrapper* urbanObjectWrapper, void* userData ), void* userData ) )
+    DEFINE_HOOK( GetUrbanObjectListWithinCircle, void, ( const MT_Vector2D& center, float radius, void (*callback)( const UrbanObjectWrapper* urbanObjectWrapper, void* userData ), void* userData ) )
     {
-        std::vector< UrbanObjectWrapper* > perceivableUrbanBlock;
+        std::vector< const UrbanObjectWrapper* > perceivableUrbanBlock;
         MIL_AgentServer::GetWorkspace().GetUrbanCache().GetListWithinCircle( center, radius, perceivableUrbanBlock );
-        BOOST_FOREACH( UrbanObjectWrapper* urbanBlock, perceivableUrbanBlock )
+        BOOST_FOREACH( const UrbanObjectWrapper* urbanBlock, perceivableUrbanBlock )
             callback( urbanBlock, userData );
     }
     DEFINE_HOOK( GetUrbanBlocksListWithinSegment, void, ( MT_Vector2D first, MT_Vector2D second, void (*callback)( const UrbanObjectWrapper* urbanObjectWrapper, void* userData ), void* userData ) )
