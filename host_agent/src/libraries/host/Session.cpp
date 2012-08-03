@@ -127,69 +127,15 @@ int GetPid( T& process )
     return process ? process->GetPid() : -1;
 }
 
-bool ReadRngConfig( RngConfig& dst, const Tree& src, const std::string& prefix )
-{
-    std::string dist;
-    bool modified = TryRead( dist, src, prefix + ".distribution" );
-    if( modified )
-        dst.distribution = ConvertRngDistribution( dist );
-    modified |= TryRead( dst.deviation, src, prefix + ".deviation" );
-    modified |= TryRead( dst.mean, src, prefix + ".mean" );
-    return modified;
-}
-
-void WriteRngConfig( Tree& dst, const std::string& prefix, const RngConfig& cfg )
-{
-    dst.put( prefix + ".distribution", ConvertRngDistribution( cfg.distribution ) );
-    dst.put( prefix + ".deviation", cfg.deviation );
-    dst.put( prefix + ".mean", cfg.mean );
-}
-
-bool ReadConfig( Config& dst, const Tree& src )
-{
-    bool modified = false;
-    modified |= TryRead( dst.name, src, "name" );
-    modified |= TryRead( dst.checkpoints.enabled, src, "checkpoints.enabled" );
-    modified |= TryRead( dst.checkpoints.frequency, src, "checkpoints.frequency" );
-    modified |= TryRead( dst.checkpoints.keep, src, "checkpoints.keep" );
-    modified |= TryRead( dst.time.end_tick, src, "time.end_tick" );
-    modified |= TryRead( dst.time.factor, src, "time.factor" );
-    modified |= TryRead( dst.time.paused, src, "time.paused" );
-    modified |= TryRead( dst.time.step, src, "time.step" );
-    modified |= TryRead( dst.rng.seed, src, "rng.seed" );
-    modified |= ReadRngConfig( dst.rng.breakdown, src, "rng.breakdown" );
-    modified |= ReadRngConfig( dst.rng.fire, src, "rng.fire" );
-    modified |= ReadRngConfig( dst.rng.perception, src, "rng.perception" );
-    modified |= ReadRngConfig( dst.rng.wound, src, "rng.wound" );
-    modified |= TryRead( dst.pathfind.threads, src, "pathfind.threads" );
-    modified |= TryRead( dst.recorder.frequency, src, "recorder.frequency" );
-    return modified;
-}
-
+// -----------------------------------------------------------------------------
+// Name: ReadConfig
+// Created: BAX 2012-08-02
+// -----------------------------------------------------------------------------
 Config ReadConfig( const Tree& src )
 {
     Config cfg;
     ReadConfig( cfg, src );
     return cfg;
-}
-
-void WriteConfig( Tree& dst, const Config& cfg )
-{
-    dst.put( "name", cfg.name );
-    dst.put( "checkpoints.enabled", cfg.checkpoints.enabled );
-    dst.put( "checkpoints.frequency", cfg.checkpoints.frequency );
-    dst.put( "checkpoints.keep", cfg.checkpoints.keep );
-    dst.put( "time.end_tick", cfg.time.end_tick );
-    dst.put( "time.factor", cfg.time.factor );
-    dst.put( "time.paused", cfg.time.paused );
-    dst.put( "time.step", cfg.time.step );
-    dst.put( "rng.seed", cfg.rng.seed );
-    WriteRngConfig( dst, "rng.breakdown", cfg.rng.breakdown );
-    WriteRngConfig( dst, "rng.fire", cfg.rng.fire );
-    WriteRngConfig( dst, "rng.perception", cfg.rng.perception );
-    WriteRngConfig( dst, "rng.wound", cfg.rng.wound );
-    dst.put( "pathfind.threads", cfg.pathfind.threads );
-    dst.put( "recorder.frequency", cfg.recorder.frequency );
 }
 }
 

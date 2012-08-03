@@ -10,7 +10,14 @@
 #ifndef SESSION_CONFIG_H
 #define SESSION_CONFIG_H
 
+#include <boost/property_tree/ptree_fwd.hpp>
 #include <string>
+
+namespace web
+{
+    struct Request_ABC;
+    typedef boost::property_tree::ptree Tree;
+}
 
 namespace web
 {
@@ -79,7 +86,11 @@ struct Config
 };
 
 RngDistribution ConvertRngDistribution( const std::string& src );
-std::string ConvertRngDistribution( RngDistribution src );
+std::string     ConvertRngDistribution( RngDistribution src );
+Config          GetConfig( const Request_ABC& request );
+Tree            ConvertConfig( const Request_ABC& request );
+bool            ReadConfig( Config& dst, const Tree& src );
+void            WriteConfig( Tree& dst, const Config& cfg );
 }
 }
 
