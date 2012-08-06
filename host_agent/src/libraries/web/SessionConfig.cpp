@@ -110,21 +110,7 @@ RngConfig GetRngConfig( const Request_ABC& request, const std::string& prefix )
 Config web::session::GetConfig( const Request_ABC& request )
 {
     Config cfg;
-    TryRead( cfg.name, request, "name" );
-    TryRead( cfg.checkpoints.enabled, request, "checkpoints_enabled" );
-    TryRead( cfg.checkpoints.frequency, request, "checkpoints_frequency" );
-    TryRead( cfg.checkpoints.keep, request, "checkpoints_keep" );
-    TryRead( cfg.time.end_tick, request, "time_end_tick" );
-    TryRead( cfg.time.factor, request, "time_factory" );
-    TryRead( cfg.time.paused, request, "time_paused" );
-    TryRead( cfg.time.step, request, "time_step" );
-    TryRead( cfg.pathfind.threads, request, "pathfind_threads" );
-    TryRead( cfg.recorder.frequency, request, "recorder_frequency" );
-    TryRead( cfg.rng.seed, request, "rng_seed" );
-    cfg.rng.breakdown  = GetRngConfig( request, "rng_breakdown_" );
-    cfg.rng.fire       = GetRngConfig( request, "rng_fire_" );
-    cfg.rng.perception = GetRngConfig( request, "rng_perception_" );
-    cfg.rng.wound      = GetRngConfig( request, "rng_wound_" );
+    ReadConfig( cfg, ConvertConfig( request ) );
     return cfg;
 }
 
