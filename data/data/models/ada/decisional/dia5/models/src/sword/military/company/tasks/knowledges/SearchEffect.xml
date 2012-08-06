@@ -38,6 +38,13 @@
                 </type>
             </return>
         </method>
+        <method name="getSealOffPosition">
+            <return>
+                <type>
+                    <class name="sword.military.knowledge.decisional.Reachable"/>
+                </type>
+            </return>
+        </method>
     <method name="getTotalRecce">
       <return>
         <type>
