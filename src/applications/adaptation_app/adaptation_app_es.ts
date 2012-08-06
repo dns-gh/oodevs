@@ -2107,6 +2107,10 @@ tirador</translation>
         <source>Natures</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&lt;b&gt;Unused&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_ListView_Categories_LogisticSupplyClass</name>

@@ -726,7 +726,7 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatUse( ADN_Ref_ABC* da
     // All objects, fires, and sensors use urban material. Urban template and equipment that use urban material
     if( ADN_Urban_Data::UrbanMaterialInfos* infos = dynamic_cast< ADN_Urban_Data::UrbanMaterialInfos* >( data ) )
     {
-        result[ eFireClasses ];// All
+        result[ eFireClasses ]; // Empty list means all resources
         result[ eSensors ];
         result[ eObjects ] = GetObjects().GetData().GetObjectsWithCapacity( ADN_Objects_Data::ADN_CapacityInfos_UrbanDestruction::TAG );
         result[ eEquipement ] = GetEquipements().GetData().GetEquipmentsWithDirectFire();
