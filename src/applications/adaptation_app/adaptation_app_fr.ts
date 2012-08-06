@@ -2760,7 +2760,7 @@ du tireur</translation>
     </message>
     <message>
         <source>Click &quot;Ok&quot; to continue.</source>
-        <translation>Clique &quot;Ok&quot; to continue.</translation>
+        <translation>Cliquez sur &quot;Ok&quot; pour continuer.</translation>
     </message>
     <message>
         <source>All &apos;%1&apos;</source>
