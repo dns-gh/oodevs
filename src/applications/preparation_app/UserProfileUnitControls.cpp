@@ -44,7 +44,6 @@ UserProfileUnitControls::UserProfileUnitControls( QWidget* parent, Controllers& 
     controllers_.Register( *this );
     connect( this, SIGNAL( clicked( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnItemClicked( Q3ListViewItem*, const QPoint&, int ) ) );
     connect( this, SIGNAL( expanded( Q3ListViewItem* ) ), SLOT( OnItemExpanded( Q3ListViewItem* ) ) );
-    setSortColumn( -1 );
     setSorting( -1 );
 }
 
@@ -91,6 +90,7 @@ void UserProfileUnitControls::Display( const kernel::Entity_ABC& entity, gui::Va
 // -----------------------------------------------------------------------------
 void UserProfileUnitControls::Show()
 {
+    ValuedListItem* head = 0;
     tools::Iterator< const kernel::Team_ABC& > itTeam = model_.GetTeamResolver().CreateIterator();
     while( itTeam.HasMoreElements() )
     {
@@ -107,8 +107,18 @@ void UserProfileUnitControls::Show()
                 if( !first )
                     first = FindItem( &automat, firstChild() );
                 else if( ValuedListItem* item = FindItem( &automat, firstChild() ) )
-                        item->moveItem( first );
+                {
+                    item->moveItem( first );
+                    first = item;
+                }
             }
+        }
+        if( !head )
+            head = FindItem( static_cast< const kernel::Entity_ABC* >( &team ), firstChild() );
+        else if( ValuedListItem* item = FindItem( static_cast< const kernel::Entity_ABC* >( &team ), firstChild() ) )
+        {
+            item->moveItem( head );
+            head = item;
         }
     }
 }
