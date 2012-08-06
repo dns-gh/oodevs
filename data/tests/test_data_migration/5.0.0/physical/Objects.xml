@@ -611,7 +611,6 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
       <buildable/>
     </constructor>
-    <spawn action-range="500" nbc="false" object="Captage de victimes"/>
     <workable max-animator="1"/>
   </object>
   <object name="Meeting Place for Victims (PRV)" type="emergency meeting place">
@@ -857,4 +856,4 @@
     </geometries>
   </object>
 </objects>
-<!-- signature="2139849183" -->
+<!-- signature="1444953461" -->
