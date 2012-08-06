@@ -10,6 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_ListView_ResourceNetworks.h"
 #include "ADN_Connector_ListView.h"
+#include "ADN_People_Data.h"
 #include "ADN_ResourceNetworks_Data.h"
 #include "ADN_ResourceNetworks_GUI.h"
 #include "ADN_Wizard.h"
@@ -66,5 +67,25 @@ void ADN_ListView_ResourceNetworks::OnContextMenu( const QPoint& pt )
     Q3PopupMenu popupMenu( this );
     ADN_Wizard< ResourceNetworkInfos > wizard( ADN_Tr::ConvertFromWorkspaceElement( eResourceNetworks ).c_str(), ADN_Workspace::GetWorkspace().GetResourceNetworks().GetData().GetResourceNetworksInfos(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
+    if( pCurData_ != 0 )
+    {
+        ResourceNetworkInfos* pCastData = static_cast< ResourceNetworkInfos* >( pCurData_ );
+        assert( pCastData != 0 );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Tr::ConvertFromWorkspaceElement( ePeople ).c_str(),
+                                      ADN_Workspace::GetWorkspace().GetPeople().GetData().GetPeopleThatUse( *pCastData ), ePeople );
+    }
     popupMenu.exec( pt );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView_ResourceNetworks::GetToolTipFor
+// Created: ABR 2012-08-02
+// -----------------------------------------------------------------------------
+std::string ADN_ListView_ResourceNetworks::GetToolTipFor( Q3ListViewItem& item )
+{
+    void* pData = static_cast< ADN_ListViewItem& >( item ).GetData();
+    ResourceNetworkInfos* pCastData = static_cast< ResourceNetworkInfos* >( pData );
+    assert( pCastData != 0 );
+    return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( ePeople ).c_str(),
+                            ADN_Workspace::GetWorkspace().GetPeople().GetData().GetPeopleThatUse( *pCastData ) );
 }

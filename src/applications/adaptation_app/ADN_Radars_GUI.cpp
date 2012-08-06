@@ -105,9 +105,8 @@ void ADN_Radars_GUI::Build()
     pContentLayout->addWidget( pHQDetectTimesGroup );
 
     // List view
-    ADN_SearchListView< ADN_Radars_ListView >* pSearchListView = new ADN_SearchListView< ADN_Radars_ListView >( data_.vRadars_, vConnectors );
+    ADN_SearchListView< ADN_Radars_ListView >* pSearchListView = new ADN_SearchListView< ADN_Radars_ListView >( this, data_.vRadars_, vConnectors );
     pListView_ = pSearchListView->GetListView();
-    connect( pSearchListView->GetListView(), SIGNAL( UsersListRequested( const ADN_NavigationInfos::UsedBy& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_NavigationInfos::UsedBy& ) ) );
 
     // Main widget
     pMainWidget_ = CreateScrollArea( *pContent, pSearchListView, false, false, true, 0, 0 );

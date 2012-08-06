@@ -101,6 +101,9 @@ public:
     virtual void FilesNeeded( T_StringList& vFiles ) const;
     virtual void Reset();
     T_ActiveProtectionsInfosVector& GetActiveProtectionsInfos();
+
+    QStringList GetActiveProtectionsThatUse( ADN_Equipement_Data::AmmoCategoryInfo& ammo );
+    QStringList GetActiveProtectionsThatUse( ADN_Equipement_Data::CategoryInfo& category );
     //@}
 
     //! @name Member data

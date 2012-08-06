@@ -227,6 +227,7 @@ public:
 
     QStringList GetEquipmentsThatUse( ADN_Objects_Data_ObjectInfos& object );
     QStringList GetEquipmentsThatUse( helpers::ResourceNatureInfos& object );
+    QStringList GetEquipmentsWithDirectFire();
 
 private:
     void ReadArchive( xml::xistream& );

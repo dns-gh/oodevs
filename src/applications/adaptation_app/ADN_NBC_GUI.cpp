@@ -111,7 +111,7 @@ void ADN_NBC_GUI::Build()
     pSpecificLayout->addWidget( effectGroup );
 
     // List view
-    ADN_SearchListView< ADN_NBC_NbcAgentListView >* pSearchListView = new ADN_SearchListView< ADN_NBC_NbcAgentListView >( data_.GetNbcAgentVector(), vInfosConnectors );
+    ADN_SearchListView< ADN_NBC_NbcAgentListView >* pSearchListView = new ADN_SearchListView< ADN_NBC_NbcAgentListView >( this, data_.GetNbcAgentVector(), vInfosConnectors );
 
     // Sub content
     QWidget* pSubContent = CreateScrollArea( *pSpecificContent, pSearchListView, false, false, true, 0, 0 );

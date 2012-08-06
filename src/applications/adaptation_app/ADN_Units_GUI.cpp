@@ -268,9 +268,7 @@ void ADN_Units_GUI::Build()
     pContentLayout->addMultiCellWidget( pTrafficGroup, 7, 7, 0, 3 );
 
     // List view
-    ADN_SearchListView< ADN_ListView_Units >* pSearchListView = new ADN_SearchListView< ADN_ListView_Units >( data_.GetUnitsInfos(), vInfosConnectors );
-    connect( pSearchListView->GetListView(), SIGNAL( UsersListRequested( const ADN_NavigationInfos::UsedBy& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_NavigationInfos::UsedBy& ) ) );
-    connect( this, SIGNAL( ApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ), pSearchListView, SLOT( OnApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ) );
+    ADN_SearchListView< ADN_ListView_Units >* pSearchListView = new ADN_SearchListView< ADN_ListView_Units >( this, data_.GetUnitsInfos(), vInfosConnectors );
     pListView_ = pSearchListView->GetListView();
     connect( pListView_, SIGNAL( selectionChanged() ), this, SLOT( OnTypeChanged() ) );
 

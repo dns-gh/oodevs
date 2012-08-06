@@ -15,6 +15,7 @@
 #include "ADN_NavigationInfos.h"
 
 class ADN_Ref_ABC;
+class ADN_GUI_ABC;
 
 // =============================================================================
 /** @class  ADN_SearchListView_ABC
@@ -48,11 +49,11 @@ class ADN_SearchListView : public ADN_SearchListView_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_SearchListView( ADN_Ref_ABC& reference, const T_ConnectorVector& connector, int subTab = -1, QWidget* parent = 0 );
+             ADN_SearchListView( ADN_GUI_ABC* gui, ADN_Ref_ABC& reference, const T_ConnectorVector& connector, int subTab = -1, QWidget* parent = 0 );
              template< typename FirstParam >
-             ADN_SearchListView( FirstParam& first, ADN_Ref_ABC& reference, const T_ConnectorVector& connector, int subTab = -1, QWidget* parent = 0 );
+             ADN_SearchListView( ADN_GUI_ABC* gui, FirstParam& first, ADN_Ref_ABC& reference, const T_ConnectorVector& connector, int subTab = -1, QWidget* parent = 0 );
              template< typename FirstParam, typename SecondParam >
-             ADN_SearchListView( FirstParam& first, SecondParam& second, ADN_Ref_ABC& reference, const T_ConnectorVector& connector, int subTab = -1, QWidget* parent = 0 );
+             ADN_SearchListView( ADN_GUI_ABC* gui, FirstParam& first, SecondParam& second, ADN_Ref_ABC& reference, const T_ConnectorVector& connector, int subTab = -1, QWidget* parent = 0 );
     virtual ~ADN_SearchListView();
     //@}
 
@@ -76,7 +77,7 @@ private:
 // Created: ABR 2012-01-19
 // -----------------------------------------------------------------------------
 template< typename ListView >
-ADN_SearchListView< ListView >::ADN_SearchListView( ADN_Ref_ABC& reference, const T_ConnectorVector& connector, int subTab /*= -1*/, QWidget* parent /*= 0*/ )
+ADN_SearchListView< ListView >::ADN_SearchListView( ADN_GUI_ABC* gui, ADN_Ref_ABC& reference, const T_ConnectorVector& connector, int subTab /* = -1*/, QWidget* parent /* = 0*/ )
     : ADN_SearchListView_ABC( parent )
     , listView_( 0 )
     , lineEdit_( 0 )
@@ -90,6 +91,8 @@ ADN_SearchListView< ListView >::ADN_SearchListView( ADN_Ref_ABC& reference, cons
     listView_ = new ListView( this );
     listView_->GetConnector().Connect( &reference );
     listView_->SetItemConnectors( connector );
+    connect( listView_, SIGNAL( UsersListRequested( const ADN_NavigationInfos::UsedBy& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_NavigationInfos::UsedBy& ) ) );
+    connect( gui, SIGNAL( ApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ), this, SLOT( OnApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ) );
 
     // Search box
     lineEdit_ = new gui::SearchLineEdit( this );
@@ -104,7 +107,7 @@ ADN_SearchListView< ListView >::ADN_SearchListView( ADN_Ref_ABC& reference, cons
 // -----------------------------------------------------------------------------
 template< typename ListView >
 template< typename FirstParam >
-ADN_SearchListView< ListView >::ADN_SearchListView( FirstParam& first, ADN_Ref_ABC& reference, const T_ConnectorVector& connector, int subTab /*= -1*/, QWidget* parent /*= 0*/ )
+ADN_SearchListView< ListView >::ADN_SearchListView( ADN_GUI_ABC* gui, FirstParam& first, ADN_Ref_ABC& reference, const T_ConnectorVector& connector, int subTab /* = -1*/, QWidget* parent /* = 0*/ )
     : ADN_SearchListView_ABC( parent )
     , listView_( 0 )
     , lineEdit_( 0 )
@@ -118,6 +121,8 @@ ADN_SearchListView< ListView >::ADN_SearchListView( FirstParam& first, ADN_Ref_A
     listView_ = new ListView( first, this );
     listView_->GetConnector().Connect( &reference );
     listView_->SetItemConnectors( connector );
+    connect( listView_, SIGNAL( UsersListRequested( const ADN_NavigationInfos::UsedBy& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_NavigationInfos::UsedBy& ) ) );
+    connect( gui, SIGNAL( ApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ), this, SLOT( OnApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ) );
 
     // Search box
     lineEdit_ = new gui::SearchLineEdit( this );
@@ -132,7 +137,7 @@ ADN_SearchListView< ListView >::ADN_SearchListView( FirstParam& first, ADN_Ref_A
 // -----------------------------------------------------------------------------
 template< typename ListView >
 template< typename FirstParam, typename SecondParam >
-ADN_SearchListView< ListView >::ADN_SearchListView( FirstParam& first, SecondParam& second, ADN_Ref_ABC& reference, const T_ConnectorVector& connector, int subTab /*= -1*/, QWidget* parent /*= 0*/ )
+ADN_SearchListView< ListView >::ADN_SearchListView( ADN_GUI_ABC* gui, FirstParam& first, SecondParam& second, ADN_Ref_ABC& reference, const T_ConnectorVector& connector, int subTab /* = -1*/, QWidget* parent /* = 0*/ )
     : ADN_SearchListView_ABC( parent )
     , listView_( 0 )
     , lineEdit_( 0 )
@@ -146,6 +151,8 @@ ADN_SearchListView< ListView >::ADN_SearchListView( FirstParam& first, SecondPar
     listView_ = new ListView( first, second, this );
     listView_->GetConnector().Connect( &reference );
     listView_->SetItemConnectors( connector );
+    connect( listView_, SIGNAL( UsersListRequested( const ADN_NavigationInfos::UsedBy& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_NavigationInfos::UsedBy& ) ) );
+    connect( gui, SIGNAL( ApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ), this, SLOT( OnApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ) );
 
     // Search box
     lineEdit_ = new gui::SearchLineEdit( this );

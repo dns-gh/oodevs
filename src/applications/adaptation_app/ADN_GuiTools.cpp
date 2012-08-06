@@ -27,17 +27,21 @@
 // -----------------------------------------------------------------------------
 bool ADN_GuiTools::MultiRefWarning( ADN_Ref_ABC* data /* = 0 */ )
 {
+    ADN_Workspace::T_UsingElements elementsToDelete;
     ADN_Workspace::T_UsingElements usingElements;
     if( data )
+    {
+        elementsToDelete = ADN_Workspace::GetWorkspace().GetElementThatWillBeDeleted( data );
         usingElements = ADN_Workspace::GetWorkspace().GetElementThatUse( data );
-    if( usingElements.empty() )
+    }
+    if( elementsToDelete.empty() && usingElements.empty() )
         return QMessageBox::Ok == QMessageBox::warning( 0,
             qApp->translate( "ADN_Tools", "Multi references" ),
             qApp->translate( "ADN_Tools", "This item is referenced by at least one other item.\nClick \"Ok\" to destroy it and all its references." ),
             QMessageBox::Ok     | QMessageBox::Default,
             QMessageBox::Cancel | QMessageBox::Escape );
 
-    return ADN_MultiRefWarningDialog( 0, usingElements ).exec() == QMessageBox::Ok;
+    return ADN_MultiRefWarningDialog( 0, elementsToDelete, usingElements ).exec() == QMessageBox::Ok;
 }
 
 // -----------------------------------------------------------------------------

@@ -127,6 +127,9 @@ public:
     T_PeopleInfosVector& GetPeople();
     PeopleInfos* FindPeople( const std::string& strName );
 
+    QStringList GetPeopleThatUse( ADN_Population_Data::PopulationInfos& population );
+    QStringList GetPeopleThatUse( ADN_ResourceNetworks_Data::ResourceNetworkInfos& network );
+
 private:
     void ReadArchive( xml::xistream& input );
     void ReadPeople( xml::xistream& input );

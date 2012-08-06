@@ -79,7 +79,7 @@ void ADN_KnowledgeGroups_GUI::Build()
     pContentLayout->addWidget( pPopulationGroup );
 
     // List view
-    ADN_SearchListView< ADN_KnowledgeGroups_ListView >* pSearchListView = new ADN_SearchListView< ADN_KnowledgeGroups_ListView >( data_.vGroups_, vInfosConnectors );
+    ADN_SearchListView< ADN_KnowledgeGroups_ListView >* pSearchListView = new ADN_SearchListView< ADN_KnowledgeGroups_ListView >( this, data_.vGroups_, vInfosConnectors );
 
     // Main widget
     pMainWidget_ = CreateScrollArea( *pContent, pSearchListView );

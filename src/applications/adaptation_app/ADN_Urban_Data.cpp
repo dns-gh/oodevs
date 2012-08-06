@@ -692,7 +692,6 @@ ADN_Urban_Data::InfrastructureInfos::InfrastructureInfos()
     : strName_( "" )
     , pSymbol_( ADN_Workspace::GetWorkspace().GetSymbols().GetData().GetSymbolsInfras(), 0, 0 )
 {
-    BindExistenceTo( &pSymbol_ );
     strName_.SetDataName( "le nom de l'infrastructure" );
     strName_.SetParentNode( *this );
     capacities_[ "medical" ].reset( new ADN_Objects_Data::ADN_CapacityInfos_Medical() );

@@ -101,7 +101,7 @@ void ADN_People_GUI::Build()
     pContentLayout->addWidget( pConsumptionsGroup, 5, 1 );
 
     // List view
-    ADN_SearchListView< ADN_People_ListView >* pSearchListView = new ADN_SearchListView< ADN_People_ListView >( data_.GetPeople(), vInfosConnectors );
+    ADN_SearchListView< ADN_People_ListView >* pSearchListView = new ADN_SearchListView< ADN_People_ListView >( this, data_.GetPeople(), vInfosConnectors );
     pListView_ = pSearchListView->GetListView();
     connect( pSearchListView->GetListView(), SIGNAL( ItemSelected( void* ) ), pTable, SLOT( OnPeopleChanged( void* ) ) );
 

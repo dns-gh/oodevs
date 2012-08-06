@@ -217,9 +217,8 @@ void ADN_Population_GUI::Build()
     pSpecificLayout->addWidget( pUrbanAreaDestructionlGroup );
 
     // List view
-    ADN_SearchListView< ADN_Population_ListView >* pSearchListView = new ADN_SearchListView< ADN_Population_ListView >( data_.GetPopulation(), vInfosConnectors );
+    ADN_SearchListView< ADN_Population_ListView >* pSearchListView = new ADN_SearchListView< ADN_Population_ListView >( this, data_.GetPopulation(), vInfosConnectors );
     pListView_ = pSearchListView->GetListView();
-    connect( this, SIGNAL( ApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ), pSearchListView, SLOT( OnApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ) );
 
     // Sub content
     QWidget* pSubContent = CreateScrollArea( *pSpecificContent, pSearchListView );

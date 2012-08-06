@@ -213,3 +213,16 @@ void ADN_ResourceNetworks_Data::WriteArchive( xml::xostream& output )
         (*it)->WriteArchive( output );
     output << xml::end;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ResourceNetworks_Data::GetResourceNetworksThatUse
+// Created: ABR 2012-08-02
+// -----------------------------------------------------------------------------
+QStringList ADN_ResourceNetworks_Data::GetResourceNetworksThatUse( ADN_Equipement_Data::CategoryInfo& category )
+{
+    QStringList result;
+    for( IT_ResourceNetworkInfosVector it = resourceNetworks_.begin(); it != resourceNetworks_.end(); ++it )
+        if( ( *it )->ptrCategory_.GetData()->strName_.GetData() == category.strName_.GetData() )
+            result << ( *it )->strName_.GetData().c_str();
+    return result;
+}

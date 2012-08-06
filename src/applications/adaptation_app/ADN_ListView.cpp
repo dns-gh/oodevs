@@ -39,6 +39,7 @@ ADN_ListView::ADN_ListView( QWidget* pParent, const char* szName, Qt::WFlags f )
     , bDeletionEnabled_ ( false )
     , bDeletionWarning_ ( true )
     , bPrinting_        ( false )
+    , usedByMapper_     ( this )
 {
     viewport()->installEventFilter( new ADN_ListViewToolTip( viewport(), *this ) );
 
@@ -47,6 +48,8 @@ ADN_ListView::ADN_ListView( QWidget* pParent, const char* szName, Qt::WFlags f )
     connect( this, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( Q3ListViewItem*, const QPoint &, int ) ) );
 
     connect( static_cast< ADN_App* >( qApp )->GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
+
+    connect( &usedByMapper_, SIGNAL( mapped( int ) ), this, SLOT( ContextMenuSearchElements( int ) ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -217,6 +220,7 @@ void ADN_ListView::OnContextMenu( const QPoint& /*pt*/ )
 // -----------------------------------------------------------------------------
 void ADN_ListView::FillContextMenuWithDefault( Q3PopupMenu& popupMenu, ADN_ObjectCreator_ABC& objectCreator )
 {
+    usedByInfos_.clear();
     pObjectCreator_ = &objectCreator;
     popupMenu.insertItem( tr( "Create new" ), this, SLOT( ContextMenuNew() ) );
     if( pCurData_ != 0 )
@@ -234,12 +238,18 @@ void ADN_ListView::FillContextMenuWithUsersList( Q3PopupMenu& popupMenu, QString
 {
     if( pCurData_ != 0 && !userList.isEmpty() )
     {
-        usedByInfo_.usersList_.clear();
-        usedByInfo_.usingName_ = tr( "< Using: %1 >" ).arg( usingName );
-        usedByInfo_.usersList_ = userList;
-        usedByInfo_.targetTab_ = targetTab;
-        usedByInfo_.subTargetTab_ = subTargetTab;
-        popupMenu.insertItem( tr( "Search for '%1' that use" ).arg( userName.toLower() ), this, SLOT( ContextMenuSearchElements() ) );
+        ADN_NavigationInfos::UsedBy info;
+        info.usersList_.clear();
+        info.usingName_ = tr( "< Using: %1 >" ).arg( usingName );
+        info.usersList_ = userList;
+        info.targetTab_ = targetTab;
+        info.subTargetTab_ = subTargetTab;
+        usedByInfos_.push_back( info );
+
+        QAction* action = new QAction( tr( "Search for '%1' that use" ).arg( userName.toLower() ), &popupMenu );
+        connect( action, SIGNAL( triggered() ), &usedByMapper_, SLOT( map() ) );
+        popupMenu.addAction( action );
+        usedByMapper_.setMapping( action, usedByInfos_.size() - 1 );
     }
 }
 
@@ -277,9 +287,9 @@ void ADN_ListView::FillMultiUsersList( const QString& category, const QStringLis
 // Name: ADN_ListView::ContextMenuSearchElements
 // Created: ABR 2012-01-25
 // -----------------------------------------------------------------------------
-void ADN_ListView::ContextMenuSearchElements()
+void ADN_ListView::ContextMenuSearchElements( int id )
 {
-    emit UsersListRequested( usedByInfo_ );
+    emit UsersListRequested( usedByInfos_[ id ] );
 }
 
 // -----------------------------------------------------------------------------
@@ -345,7 +355,7 @@ void ADN_ListView::ContextMenuDelete()
     // Remove the item from the list.
     static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurrentData );
     static_cast< ADN_MainWindow* >( topLevelWidget() )->ChangeSaveState( false );
-    //$$$$ delete it?
+    delete pCurrentData;
 }
 
 //-----------------------------------------------------------------------------

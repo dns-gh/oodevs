@@ -316,30 +316,49 @@ void ADN_Automata_Data::WriteArchive( xml::xostream& output )
 
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Automata_Data::GetAutomataThatUseForPC
+// Created: ABR 2012-08-01
+// -----------------------------------------------------------------------------
+QStringList ADN_Automata_Data::GetAutomataThatUseForPC( ADN_Units_Data::UnitInfos& unit )
+{
+    QStringList result;
+    for( IT_AutomatonInfosVector it = vAutomata_.begin(); it != vAutomata_.end(); ++it )
+    {
+        if( ( *it )->ptrUnit_ == &unit )
+            result << ( *it )->strName_.GetData().c_str();
+    }
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Automata_Data::GetAutomataThatUseForElement
+// Created: ABR 2012-08-01
+// -----------------------------------------------------------------------------
+QStringList ADN_Automata_Data::GetAutomataThatUseForElement( ADN_Units_Data::UnitInfos& unit )
+{
+    QStringList result;
+    for( IT_AutomatonInfosVector it = vAutomata_.begin(); it != vAutomata_.end(); ++it )
+    {
+        for( IT_UnitInfosVector it2 = ( *it )->vSubUnits_.begin(); it2 != ( *it )->vSubUnits_.end(); ++it2 )
+        {
+            if( ( *it )->ptrUnit_.GetData() != ( *it2 )->ptrUnit_.GetData() && ( *it2 )->ptrUnit_.GetData() == &unit ) // all units except pc
+            {
+                result << ( *it )->strName_.GetData().c_str();
+                break;
+            }
+        }
+    }
+    return result;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Automata_Data::GetAutomataThatUse
 // Created: APE 2005-04-25
 // -----------------------------------------------------------------------------
 QStringList ADN_Automata_Data::GetAutomataThatUse( ADN_Units_Data::UnitInfos& unit )
 {
     QStringList result;
-    for( IT_AutomatonInfosVector it = vAutomata_.begin(); it != vAutomata_.end(); ++it )
-    {
-        AutomatonInfos* pAutomaton = *it;
-        if( pAutomaton->ptrUnit_ == &unit )
-        {
-            result << pAutomaton->strName_.GetData().c_str();
-            continue;
-        }
-
-        for( IT_UnitInfosVector it2 = pAutomaton->vSubUnits_.begin(); it2 != pAutomaton->vSubUnits_.end(); ++it2 )
-        {
-            if( (*it2)->ptrUnit_.GetData() == &unit  )
-            {
-                result << pAutomaton->strName_.GetData().c_str();
-                break;
-            }
-        }
-    }
+    result << GetAutomataThatUseForPC( unit ) << GetAutomataThatUseForElement( unit );
     return result;
 }
 

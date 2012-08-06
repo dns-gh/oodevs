@@ -69,7 +69,7 @@ void ADN_ResourceNetworks_GUI::Build()
     pContentLayout->addWidget( pInfoHolder );
 
     // Create the list view.
-    ADN_SearchListView< ADN_ListView_ResourceNetworks >* pSearchListView = new ADN_SearchListView< ADN_ListView_ResourceNetworks >( data_.GetResourceNetworksInfos(), vInfosConnectors );
+    ADN_SearchListView< ADN_ListView_ResourceNetworks >* pSearchListView = new ADN_SearchListView< ADN_ListView_ResourceNetworks >( this, data_.GetResourceNetworksInfos(), vInfosConnectors );
 
     // Main widget
     pMainWidget_ = CreateScrollArea( *pContent, pSearchListView );

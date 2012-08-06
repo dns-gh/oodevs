@@ -1273,7 +1273,7 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</comment>
 <context>
     <name>ADN_Equipement_AmmoListView</name>
     <message>
-        <source>Weapon systems</source>
+        <source>&lt;b&gt;Unused&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2073,6 +2073,22 @@ tirador</translation>
         <source>Fragmentary orders</source>
         <translation type="unfinished">Ordenes parciales</translation>
     </message>
+    <message>
+        <source>Unit models</source>
+        <translation type="unfinished">Modelos de unidad</translation>
+    </message>
+    <message>
+        <source>Automata models</source>
+        <translation type="unfinished">Modelos de autómata</translation>
+    </message>
+    <message>
+        <source>Crowds models</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Unused&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_ListView_Missions</name>
@@ -2595,15 +2611,27 @@ tirador</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Click &quot;Ok&quot; to destroy it and all its references.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This item is referenced by all the following item:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Tab</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click &quot;Ok&quot; to continue.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All &apos;urban material&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The following items will be &lt;b&gt;deleted&lt;/b&gt;:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The following items will be &lt;b&gt;modified&lt;/b&gt;:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2703,6 +2731,23 @@ tirador</translation>
     <message>
         <source>Contamination</source>
         <translation>Contaminación</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Objects_Data</name>
+    <message>
+        <source>Empty object referenced by object &apos;%1&apos;.
+The spawn capacity will be disabled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown object &apos;%2&apos; referenced by object &apos;%1&apos;.
+The spawn capacity will be disabled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reference error</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

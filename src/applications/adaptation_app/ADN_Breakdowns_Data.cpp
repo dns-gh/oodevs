@@ -330,5 +330,16 @@ void ADN_Breakdowns_Data::WriteArchive( xml::xostream& output )
     output << xml::end;
 }
 
-
-
+// -----------------------------------------------------------------------------
+// Name: ADN_Breakdowns_Data::GetBreakdownsThatUse
+// Created: ABR 2012-08-02
+// -----------------------------------------------------------------------------
+QStringList ADN_Breakdowns_Data::GetBreakdownsThatUse( ADN_Equipement_Data::CategoryInfo& part )
+{
+    QStringList result;
+    for( IT_BreakdownInfoVector it = vBreakdowns_.begin(); it != vBreakdowns_.end(); ++it )
+        for( IT_RepairPartInfoVector itPart = ( *it )->vRepairParts_.begin(); itPart != ( *it )->vRepairParts_.end(); ++itPart )
+            if( ( *itPart )->ptrPart_.GetData()->strName_ == part.strName_.GetData() )
+                result << ( *it )->strName_.GetData().c_str();
+    return result;
+}

@@ -17,6 +17,7 @@
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_CapacityInfos.h"
 #include "ADN_Equipement_Data.h"
+#include "ADN_Composantes_Data.h"
 #include "ADN_DataTreeNode_ABC.h"
 #include "ADN_FireClass_Data.h"
 #include "ADN_Drawings_Data.h"
@@ -72,14 +73,6 @@ public:
 
     typedef ADN_Type_Vector_ABC< ScoreLocationInfos > T_ScoreLocationInfosVector;
     typedef T_ScoreLocationInfosVector::iterator     IT_ScoreLocationInfosVector;
-
-//*****************************************************************************
-//    typedef helpers::AttritionInfos AttritionInfos;
-//    typedef ADN_Type_VectorFixed_ABC<AttritionInfos> T_AttritionInfosVector;
-//    typedef T_AttritionInfosVector::iterator        IT_AttritionInfosVector;
-
-
-//*****************************************************************************
 
     template <typename T> struct NamedField
     {
@@ -186,11 +179,11 @@ public:
     private:
         void ReadDotation( xml::xistream& xis );
 
-    private:
-        typedef ADN_Type_Vector_ABC< ADN_Equipement_Data::CategoryInfo > ::const_iterator CIT_Categories;
+    public:
+        typedef ADN_Type_Vector_ABC< ADN_Composantes_Data::CategoryInfos > ::const_iterator CIT_Categories;
 
     public:
-        ADN_Type_Vector_ABC< ADN_Equipement_Data::CategoryInfo > categories_;
+        ADN_Type_Vector_ABC< ADN_Composantes_Data::CategoryInfos > categories_;
     };
 
     class ADN_CapacityInfos_Bypassable
@@ -280,11 +273,11 @@ public:
     private:
         void ReadDotation( xml::xistream& xis );
 
-    private:
-        typedef ADN_Type_Vector_ABC< ADN_Equipement_Data::CategoryInfo > ::const_iterator CIT_Categories;
+    public:
+        typedef ADN_Type_Vector_ABC< ADN_Composantes_Data::CategoryInfos > ::const_iterator CIT_Categories;
 
     public:
-        ADN_Type_Vector_ABC< ADN_Equipement_Data::CategoryInfo > categories_;
+        ADN_Type_Vector_ABC< ADN_Composantes_Data::CategoryInfos > categories_;
     };
 
     class ADN_CapacityInfos_InteractionHeight
@@ -489,7 +482,7 @@ public:
         static const std::string DISPLAY_NAME;
         ADN_CapacityInfos_Spawn();
 
-        void Load();
+        void Load( const std::string& parentName );
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
@@ -497,7 +490,6 @@ public:
     public:
         ADN_TypePtr_InVector_ABC< ADN_Objects_Data_ObjectInfos > object_;
         std::string objectName_;
-        bool load_;
         ADN_Type_Double rActionRange_;
         ADN_Type_Bool nbc_;
     };
@@ -658,6 +650,10 @@ public:
 
     T_ObjectsInfos_Vector& GetObjectInfos();
     ADN_Objects_Data_ObjectInfos* FindObject( const std::string& strName );
+
+    QStringList GetObjectsThatUse( ADN_Objects_Data_ObjectInfos& object );
+    QStringList GetObjectsThatUse( ADN_Equipement_Data::CategoryInfo& object );
+    QStringList GetObjectsWithCapacity( const std::string& tag );
 
 private:
     void ReadArchive( xml::xistream& input );

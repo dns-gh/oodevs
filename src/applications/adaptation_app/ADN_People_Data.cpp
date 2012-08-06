@@ -449,3 +449,30 @@ void ADN_People_Data::WriteArchive( xml::xostream& output )
         ( *it )->WriteArchive( output, n );
     output << xml::end;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_People_Data::GetPeopleThatUse
+// Created: ABR 2012-08-01
+// -----------------------------------------------------------------------------
+QStringList ADN_People_Data::GetPeopleThatUse( ADN_Population_Data::PopulationInfos& population )
+{
+    QStringList result;
+    for( CIT_PeopleInfosVector it = vPeople_.begin(); it != vPeople_.end(); ++it )
+        if( ( *it )->ptrModel_.GetData()->strName_.GetData() == population.strName_.GetData() )
+            result << ( *it )->strName_.GetData().c_str();
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_People_Data::GetPeopleThatUse
+// Created: ABR 2012-08-02
+// -----------------------------------------------------------------------------
+QStringList ADN_People_Data::GetPeopleThatUse( ADN_ResourceNetworks_Data::ResourceNetworkInfos& network )
+{
+    QStringList result;
+    for( CIT_PeopleInfosVector it = vPeople_.begin(); it != vPeople_.end(); ++it )
+        for( CIT_PeopleInfosConsumptionVector itConsumption = ( *it )->consumptions_.begin(); itConsumption != ( *it )->consumptions_.end(); ++itConsumption )
+            if( ( *itConsumption )->ptrResource_.GetData()->strName_.GetData() == network.strName_.GetData() )
+                result << ( *it )->strName_.GetData().c_str();
+    return result;
+}

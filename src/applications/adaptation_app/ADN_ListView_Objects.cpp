@@ -15,6 +15,7 @@
 #include "ADN_Connector_ListView.h"
 #include "ADN_ComboBox.h"
 #include "ADN_Composantes_Data.h"
+#include "ADN_Missions_Data.h"
 #include "ADN_Sensors_Data.h"
 #include "ADN_Objects_Data_ObjectInfos.h"
 #include "ADN_Project_Data.h"
@@ -243,7 +244,6 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
     CONNECT_HELPER( Detection, RecoTime, recoTime_ );
 
     BUILDER_HELPER( Spawn );
-    Spawn.GetConnector().Load();
     CONNECT_HELPER( Spawn, ActionRange, rActionRange_ );
     CONNECT_HELPER( Spawn, ObjectType, object_ );
     CONNECT_HELPER( Spawn, NBC, nbc_ );
@@ -345,6 +345,9 @@ void ADN_ListView_Objects::OnContextMenu( const QPoint& pt )
             FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
                                           ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str(),
                                           ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ), eComposantes );
+            FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
+                                          ADN_Tr::ConvertFromWorkspaceElement( eObjects ).c_str(),
+                                          ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectsThatUse( *pCastData ), eObjects );
         }
         popupMenu.exec( pt );
     }
@@ -367,6 +370,8 @@ std::string ADN_ListView_Objects::GetToolTipFor( Q3ListViewItem& item )
                         ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetEquipmentsThatUse( *pCastData ), result );
     FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str(),
                         ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ), result );
+    FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eObjects ).c_str(),
+                        ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectsThatUse( *pCastData ), result );
 
     if( result.empty() )
         result = tr( "<b>Unused</b>" ).ascii();

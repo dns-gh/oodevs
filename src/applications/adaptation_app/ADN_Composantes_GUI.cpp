@@ -238,9 +238,7 @@ void ADN_Composantes_GUI::Build()
     pDataPageLayout->addMultiCellWidget( pObjectsGroup , 6, 6, 0, 2 );
 
     // List view
-    ADN_SearchListView< ADN_ListView_Composantes >* pSearchListView = new ADN_SearchListView< ADN_ListView_Composantes >( data_.GetComposantes(), vInfosConnectors );
-    connect( pSearchListView->GetListView(), SIGNAL( UsersListRequested( const ADN_NavigationInfos::UsedBy& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_NavigationInfos::UsedBy& ) ) );
-    connect( this, SIGNAL( ApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ), pSearchListView, SLOT( OnApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ) );
+    ADN_SearchListView< ADN_ListView_Composantes >* pSearchListView = new ADN_SearchListView< ADN_ListView_Composantes >( this, data_.GetComposantes(), vInfosConnectors );
     pListView_ = pSearchListView->GetListView();
     connect( pListView_, SIGNAL( selectionChanged() ), this, SLOT( OnProtectionTypeChanged() ) );
     connect( pListView_, SIGNAL( ItemSelected( void* ) ), pSpeeds_, SLOT( OnItemSelected( void* ) ) );

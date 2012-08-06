@@ -16,48 +16,20 @@
 // Name: ADN_MultiRefWarningDialog constructor
 // Created: ABR 2012-07-24
 // -----------------------------------------------------------------------------
-ADN_MultiRefWarningDialog::ADN_MultiRefWarningDialog( QWidget* parent, ADN_Workspace::T_UsingElements& usingElements )
+ADN_MultiRefWarningDialog::ADN_MultiRefWarningDialog( QWidget* parent, ADN_Workspace::T_UsingElements& elementsToDelete, ADN_Workspace::T_UsingElements& usingElements )
     : QDialog( parent )
 {
-    assert( !usingElements.empty() );
     setCaption( tr( "Multi references" ) );
-    setMinimumSize( 300, 300 );
+    setMinimumSize( 500, 500 );
 
     QVBoxLayout* mainLayout = new QVBoxLayout( this );
     mainLayout->setSpacing( 10 );
     mainLayout->setMargin( 5 );
-    QLabel* label = new QLabel( tr( "This item is referenced by all the following item:" ) );
-    label->setFont( QFont( "Arial", 10 ) );
-    mainLayout->addWidget( label, 0, Qt::AlignCenter );
 
-    QTableView* tableView = new QTableView();
-    tableView->setSortingEnabled( true );
-    tableView->setSelectionBehavior( QAbstractItemView::SelectRows );
-    tableView->setSelectionMode( QAbstractItemView::SingleSelection );
-    tableView->setAlternatingRowColors( true );
-    tableView->verticalHeader()->setVisible( false );
-    mainLayout->addWidget( tableView, 1 );
+    CreateTable( *mainLayout, tr( "The following items will be <b>deleted</b>:" ), elementsToDelete );
+    CreateTable( *mainLayout, tr( "The following items will be <b>modified</b>:" ), usingElements );
 
-    QStandardItemModel* dataModel = new QStandardItemModel( this );
-    tableView->setModel( dataModel );
-    dataModel->setColumnCount( 2 );
-    QStringList horizontalHeaders;
-    horizontalHeaders << tr( "Tab" ) << tr( "Item" );
-    dataModel->setHorizontalHeaderLabels( horizontalHeaders );
-    tableView->horizontalHeader()->setResizeMode( 0, QHeaderView::ResizeToContents );
-    tableView->horizontalHeader()->setResizeMode( 1, QHeaderView::Stretch );
-
-    int row = 0;
-    for( ADN_Workspace::CIT_UsingElements it = usingElements.begin(); it != usingElements.end(); ++it )
-    {
-        for( QStringList::const_iterator textIt = it->second.constBegin(); textIt != it->second.constEnd(); ++textIt, ++row )
-        {
-            dataModel->setItem( row, 0, new QStandardItem( ADN_Tr::ConvertFromWorkspaceElement( it->first ).c_str() ) );
-            dataModel->setItem( row, 1, new QStandardItem( *textIt ) );
-        }
-    }
-
-    label = new QLabel( tr( "Click \"Ok\" to destroy it and all its references." ) );
+    QLabel* label = new QLabel( tr( "Click \"Ok\" to continue." ) );
     label->setFont( QFont( "Arial", 10 ) );
     mainLayout->addWidget( label, 0, Qt::AlignCenter );
 
@@ -79,6 +51,78 @@ ADN_MultiRefWarningDialog::ADN_MultiRefWarningDialog( QWidget* parent, ADN_Works
 ADN_MultiRefWarningDialog::~ADN_MultiRefWarningDialog()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_MultiRefWarningDialog::CreateTable
+// Created: ABR 2012-08-02
+// -----------------------------------------------------------------------------
+void ADN_MultiRefWarningDialog::CreateTable( QVBoxLayout& layout, const QString& title, const ADN_Workspace::T_UsingElements& elements )
+{
+    if( !elements.empty() )
+    {
+        QLabel* label = new QLabel( title );
+        label->setFont( QFont( "Arial", 10 ) );
+        layout.addWidget( label, 0, Qt::AlignCenter );
+
+        QTableView* tableView = new QTableView();
+        tableView->setSortingEnabled( true );
+        tableView->setSelectionBehavior( QAbstractItemView::SelectRows );
+        tableView->setSelectionMode( QAbstractItemView::SingleSelection );
+        tableView->setAlternatingRowColors( true );
+        tableView->verticalHeader()->setVisible( false );
+        layout.addWidget( tableView, 1 );
+
+        QStandardItemModel* dataModel = new QStandardItemModel( this );
+        tableView->setModel( dataModel );
+        dataModel->setColumnCount( 2 );
+        QStringList horizontalHeaders;
+        horizontalHeaders << tr( "Tab" ) << tr( "Item" );
+        dataModel->setHorizontalHeaderLabels( horizontalHeaders );
+        tableView->horizontalHeader()->setResizeMode( 0, QHeaderView::ResizeToContents );
+        tableView->horizontalHeader()->setResizeMode( 1, QHeaderView::Stretch );
+
+        FillModel( *dataModel, elements );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_MultiRefWarningDialog::CreateItem
+// Created: ABR 2012-08-02
+// -----------------------------------------------------------------------------
+QStandardItem* ADN_MultiRefWarningDialog::CreateItem( const QString& text )
+{
+    QStandardItem* item = new QStandardItem( text );
+    item->setFlags( Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+    return item;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_MultiRefWarningDialog::FillModel
+// Created: ABR 2012-08-02
+// -----------------------------------------------------------------------------
+void ADN_MultiRefWarningDialog::FillModel( QStandardItemModel& model, const ADN_Workspace::T_UsingElements& elements )
+{
+    int row = 0;
+    for( ADN_Workspace::CIT_UsingElements it = elements.begin(); it != elements.end(); ++it )
+    {
+        if( it->second.isEmpty() )
+        {
+            QString tabName = ADN_Tr::ConvertFromWorkspaceElement( it->first ).c_str();
+            model.setItem( row, 0, CreateItem( tabName ) );
+            if( it->first == eUrban )
+                model.setItem( row, 1, CreateItem( tr( "All 'urban material'" ) ) );
+            else
+                model.setItem( row, 1, CreateItem( tr( "All '%1'" ).arg( tabName ) ) );
+            ++row;
+        }
+        else
+            for( QStringList::const_iterator textIt = it->second.constBegin(); textIt != it->second.constEnd(); ++textIt, ++row )
+            {
+                model.setItem( row, 0, CreateItem( ADN_Tr::ConvertFromWorkspaceElement( it->first ).c_str() ) );
+                model.setItem( row, 1, CreateItem( *textIt ) );
+            }
+    }
 }
 
 // -----------------------------------------------------------------------------

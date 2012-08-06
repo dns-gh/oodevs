@@ -408,7 +408,6 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
       <buildable/>
     </constructor>
-    <spawn action-range="500" nbc="false" object="Captage de victimes"/>
     <workable max-animator="1"/>
   </object>
   <object geometry="polygon" name="Meeting Place for Victims (PRV)" symbol="G*GPGAL---****X" type="emergency meeting place"/>
@@ -523,4 +522,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="0154352347" -->
+<!-- signature="3762742545" -->

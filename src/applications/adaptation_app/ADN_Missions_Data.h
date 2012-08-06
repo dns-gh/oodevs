@@ -16,6 +16,8 @@
 #include "IdentifierFactory.h"
 #include "ADN_Drawings_Data.h"
 
+class ADN_Objects_Data_ObjectInfos;
+
 namespace xml { class xistream; }
 
 // =============================================================================
