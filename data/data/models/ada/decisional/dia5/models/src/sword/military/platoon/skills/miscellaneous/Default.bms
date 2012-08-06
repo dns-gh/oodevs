@@ -66,11 +66,6 @@ rootnode
             Activate( skill.nodes.RC, 1, { RC = eRC_TransportEnCours } )
         end
 
-        -- Se rendre : on ne partage plus de connaissances avec son groupe de connaissances
-        if meKnowledge:isSurrendered() then
-            meKnowledge:switchRadioOff()
-        end
-
         -- Etat décisionnel sur les echelons
         local etat = meKnowledge:getEchelon()
         Activate( skill.nodes.DecisionalState, 1, { category = "Echelon", value = echelonString[ etat ] or "eEtatEchelon_None" } )
