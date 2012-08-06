@@ -79,6 +79,7 @@ PHY_RolePion_Communications::PHY_RolePion_Communications( MIL_Agent_ABC& entity,
     , bHasChanged_               ( true )
     , bBlackoutReceivedActivated_( false )
     , bBlackoutEmmittedActivated_( false )
+    , bSilentBeforeCapture_      ( false )
     , bIsAutonomous_             ( bIsAutonomous )
     , pJammingKnowledgeGroup_    ( 0 )
 {
@@ -144,6 +145,7 @@ void PHY_RolePion_Communications::serialize( Archive& file, const unsigned int )
          & bBlackoutReceivedActivated_
          & bBlackoutEmmittedActivated_
          & bHasChanged_
+         & bSilentBeforeCapture_
          & pJammingKnowledgeGroup_;
 }
 
@@ -411,4 +413,41 @@ bool PHY_RolePion_Communications::CanReceive() const
 bool PHY_RolePion_Communications::CanEmit() const
 {
     return jammers_.empty() && !bBlackoutEmmittedActivated_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Communications::NotifyCaptured
+// Created: JSR 2012-08-06
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Communications::NotifyCaptured()
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Communications::NotifyReleased
+// Created: JSR 2012-08-06
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Communications::NotifyReleased()
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Communications::NotifySurrendered
+// Created: LDC 2012-08-06
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Communications::NotifySurrendered()
+{
+    bSilentBeforeCapture_ = bBlackoutEmmittedActivated_;
+    if( !bBlackoutEmmittedActivated_ )
+        ActivateBlackout();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Communications::NotifySurrenderCanceled
+// Created: LDC 2012-08-06
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Communications::NotifySurrenderCanceled()
+{
+    if( !bSilentBeforeCapture_ )
+        DeactivateBlackout();
 }

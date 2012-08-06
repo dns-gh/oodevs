@@ -727,8 +727,11 @@ void MIL_Automate::Surrender( const MIL_Army_ABC& armySurrenderedTo )
 // -----------------------------------------------------------------------------
 void MIL_Automate::CancelSurrender()
 {
-    pArmySurrenderedTo_ = 0;
-    pLogisticHierarchy_->SwitchBackToNominalHierarchy();
+    if( pArmySurrenderedTo_ )
+    {
+        pArmySurrenderedTo_ = 0;
+        pLogisticHierarchy_->SwitchBackToNominalHierarchy();
+    }
 }
 
 // -----------------------------------------------------------------------------

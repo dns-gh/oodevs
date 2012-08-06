@@ -120,6 +120,8 @@ public:
     virtual void NotifyComponentHasChanged();
     virtual void NotifyCaptured();
     virtual void NotifyReleased();
+    virtual void NotifySurrendered();
+    virtual void NotifySurrenderCanceled();
     virtual void NotifyVisionConeDataHasChanged();
     virtual void NotifyIsLoadedForTransport();
     virtual void NotifyIsUnLoadedForTransport();

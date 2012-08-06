@@ -169,6 +169,8 @@ public:
     //@{
     virtual void NotifyCaptured();
     virtual void NotifyReleased();
+    virtual void NotifySurrendered();
+    virtual void NotifySurrenderCanceled();
     //@}
 
     //! @name Fire / Dangerosity
@@ -339,7 +341,6 @@ private:
     bool bExternalMustChange_;
     bool bTransportHasChanged_;
     bool bIsLoaded_;
-    bool bIsSurrender_;
     bool bNeutralized_;
 
     // Maintenance

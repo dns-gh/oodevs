@@ -1186,6 +1186,23 @@ void RolePion_Perceiver::NotifyCaptured()
     bExternalMustChangePerception_ = true;
     bExternalMustChangeRadar_ = true;
 }
+
+// -----------------------------------------------------------------------------
+// Name: RolePion_Perceiver::NotifySurrendered
+// Created: LDC 2012-08-06
+// -----------------------------------------------------------------------------
+void RolePion_Perceiver::NotifySurrendered()
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: RolePion_Perceiver::NotifySurrenderCanceled
+// Created: LDC 2012-08-06
+// -----------------------------------------------------------------------------
+void RolePion_Perceiver::NotifySurrenderCanceled()
+{
+}
+
 // -----------------------------------------------------------------------------
 // Name: RolePion_Perceiver::NotifyReleased
 // Created: MGD 2009-10-1

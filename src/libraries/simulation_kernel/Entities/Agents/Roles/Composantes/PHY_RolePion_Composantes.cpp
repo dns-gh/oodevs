@@ -105,7 +105,6 @@ PHY_RolePion_Composantes::PHY_RolePion_Composantes()
     , bExternalMustChange_        ( false )
     , bTransportHasChanged_       ( false )
     , bIsLoaded_                  ( false )
-    , bIsSurrender_               ( false )
     , bNeutralized_               ( false )
     , nTickRcMaintenanceQuerySent_( 0 )
 {
@@ -128,7 +127,6 @@ PHY_RolePion_Composantes::PHY_RolePion_Composantes( MIL_Agent_ABC& pion, bool in
     , bExternalMustChange_        ( false )
     , bTransportHasChanged_       ( false )
     , bIsLoaded_                  ( false )
-    , bIsSurrender_               ( false )
     , bNeutralized_               ( false )
     , nTickRcMaintenanceQuerySent_( 0 )
 {
@@ -246,7 +244,6 @@ void PHY_RolePion_Composantes::serialize( Archive& file, const unsigned int )
          & maintenanceComposanteStates_
          & nTickRcMaintenanceQuerySent_
          & bIsLoaded_
-         & bIsSurrender_
          & bNeutralized_;
 }
 
@@ -1402,13 +1399,6 @@ void PHY_RolePion_Composantes::RetrieveLentComposante( MIL_Agent_ABC& borrower, 
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::NotifyCaptured()
 {
-    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-    {
-        PHY_ComposantePion& composante = **it;
-        if( composante.GetState().IsUsable() )
-            composante.ReinitializeState( PHY_ComposanteState::prisoner_ );
-    }
-    bIsSurrender_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -1417,13 +1407,34 @@ void PHY_RolePion_Composantes::NotifyCaptured()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::NotifyReleased()
 {
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::NotifySurrendered
+// Created: JSR 2012-08-06
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::NotifySurrendered()
+{
+    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+    {
+        PHY_ComposantePion& composante = **it;
+        if( composante.GetState().IsUsable() )
+            composante.ReinitializeState( PHY_ComposanteState::prisoner_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::NotifySurrenderCanceled
+// Created: JSR 2012-08-06
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::NotifySurrenderCanceled()
+{
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
     {
         PHY_ComposantePion& composante = **it;
         if( composante.GetState().IsUsable() )
             composante.ReinitializeState( PHY_ComposanteState::undamaged_ );
     }
-    bIsSurrender_ = false;
 }
 
 // -----------------------------------------------------------------------------
