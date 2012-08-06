@@ -147,7 +147,7 @@ create = function( self )
         end
 
         -- Ceux qui n'ont toujours pas de mission recoivent la mission par défaut
-        issueMission ( self, self.params.defaultTask, #self.entitiesWithoutMission, eEtatEchelon_Second )
+        issueMission ( self, self.params.defaultTask, #self.entitiesWithoutMission, eEtatEchelon_Reserve )
 end,
 
 activate = function( self )
