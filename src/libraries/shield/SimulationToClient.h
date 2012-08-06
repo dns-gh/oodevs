@@ -63,7 +63,8 @@ public:
     static void Convert( const sword::ControlPauseAck& from, MsgsSimToClient::MsgControlPauseAck* to );
     static void Convert( const sword::ControlProfilingInformation& from, MsgsSimToClient::MsgControlProfilingInformation* to );
     static void Convert( const sword::ControlResumeAck& from, MsgsSimToClient::MsgControlResumeAck* to );
-    static void Convert( const sword::ControlExportRequestAck& from, MsgsSimToClient::MsgControlExportRequestAck* to );
+    static void Convert( const sword::ControlExportRequestAck& from, Common::MsgControlExportRequestAck* to );
+    static void Convert( const sword::ControlExportRequest& from, Common::MsgControlExportRequest* to );
     static void Convert( const sword::ControlSendCurrentStateBegin& from, MsgsSimToClient::MsgControlSendCurrentStateBegin* to );
     static void Convert( const sword::ControlSendCurrentStateEnd& from, MsgsSimToClient::MsgControlSendCurrentStateEnd* to );
     static void Convert( const sword::ControlStopAck& from, MsgsSimToClient::MsgControlStopAck* to );

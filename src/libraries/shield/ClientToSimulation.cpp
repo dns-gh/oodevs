@@ -257,7 +257,18 @@ void ClientToSimulation::Convert( const MsgsClientToSim::MsgOrderStream& from, s
 // Name: ClientToSimulation::Convert
 // Created: LDC 2012-02-15
 // -----------------------------------------------------------------------------
-void ClientToSimulation::Convert( const MsgsClientToSim::MsgControlExportRequest& from, sword::ControlExportRequest* to )
+void ClientToSimulation::Convert( const Common::MsgControlExportRequest& from, sword::ControlExportRequest* to )
 {
+    CONVERT( directory_name );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientToSimulation::Convert
+// Created: JSR 2012-08-06
+// -----------------------------------------------------------------------------
+void ClientToSimulation::Convert( const Common::MsgControlExportRequestAck& from, sword::ControlExportRequestAck* to )
+{
+    CONVERT_ENUM( error_code, ( sword::ControlExportRequestAck::success, Common::MsgControlExportRequestAck::success )
+                              ( sword::ControlExportRequestAck::failure, Common::MsgControlExportRequestAck::failure ) );
     CONVERT( directory_name );
 }

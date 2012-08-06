@@ -90,10 +90,6 @@ message MsgControlCheckPointDeleteRequest {
    required string checkpoint = 1;
 }
 
-message MsgControlExportRequest {
-   required string directory_name = 1;
-}
-
 message MsgControlCheckPointListRequest {}
 
 
@@ -126,8 +122,9 @@ message MsgClientToSim {
        optional MsgMagicAction                         magic_action                         = 17;
        optional MsgControlCheckPointListRequest        control_checkpoint_list_request      = 18;
        optional MsgControlCheckPointDeleteRequest      control_checkpoint_delete_request    = 19;
-       optional MsgControlExportRequest                control_export                       = 20;
+       optional Common.MsgControlExportRequest         control_export                       = 20; // FT 45354
        optional MsgOrderStream                         order_stream                         = 21;
+       optional Common.MsgControlExportRequestAck      control_export_request_ack           = 22; // FT 45354
     }
     optional int32   context = 1;
     required Content message = 2;

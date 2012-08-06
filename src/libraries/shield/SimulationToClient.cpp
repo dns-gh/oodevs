@@ -2523,9 +2523,18 @@ void SimulationToClient::Convert( const sword::PopulationUpdate& from, MsgsSimTo
 // Name: SimulationToClient::Convert
 // Created: LDC 2012-02-15
 // -----------------------------------------------------------------------------
-void SimulationToClient::Convert( const sword::ControlExportRequestAck& from, MsgsSimToClient::MsgControlExportRequestAck* to )
+void SimulationToClient::Convert( const sword::ControlExportRequestAck& from, Common::MsgControlExportRequestAck* to )
 {
-    CONVERT_ENUM( error_code, ( sword::ControlExportRequestAck::success, MsgsSimToClient::MsgControlExportRequestAck::success )
-                              ( sword::ControlExportRequestAck::failure, MsgsSimToClient::MsgControlExportRequestAck::failure ) );
+    CONVERT_ENUM( error_code, ( sword::ControlExportRequestAck::success, Common::MsgControlExportRequestAck::success )
+                              ( sword::ControlExportRequestAck::failure, Common::MsgControlExportRequestAck::failure ) );
+    CONVERT( directory_name );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SimulationToClient::Convert
+// Created: JSR 2012-08-06
+// -----------------------------------------------------------------------------
+void SimulationToClient::Convert( const sword::ControlExportRequest& from, Common::MsgControlExportRequest* to )
+{
     CONVERT( directory_name );
 }
