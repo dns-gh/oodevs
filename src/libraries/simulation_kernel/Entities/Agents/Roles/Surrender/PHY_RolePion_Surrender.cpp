@@ -53,6 +53,7 @@ PHY_RolePion_Surrender::PHY_RolePion_Surrender( MIL_AgentPion& pion )
     , pPrison_                   ( 0 )
     , bPrisoner_                 ( false )
     , bHasChanged_               ( true )
+    , bSurrendered_              ( false )
     , nbrHumansLodgingManaged_   ( 0 )
 {
     // NOTHING
@@ -116,9 +117,13 @@ void PHY_RolePion_Surrender::Update( bool /*bIsDead*/ )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Surrender::NotifySurrendered()
 {
-
-    MIL_Report::PostEvent( pion_, MIL_Report::eReport_Surrendered );
-    bHasChanged_ = true;
+    if( !bSurrendered_ )
+    {
+        MIL_Report::PostEvent( pion_, MIL_Report::eReport_Surrendered );
+        bHasChanged_ = true;
+        pion_.Apply(&SurrenderNotificationHandler_ABC::NotifySurrendered);
+        bSurrendered_ = true;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -127,10 +132,14 @@ void PHY_RolePion_Surrender::NotifySurrendered()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Surrender::NotifySurrenderCanceled()
 {
-
-    Release();
-    MIL_Report::PostEvent( pion_, MIL_Report::eReport_CancelSurrender );
-    bHasChanged_ = true;
+    if( bSurrendered_ )
+    {
+        Release();
+        MIL_Report::PostEvent( pion_, MIL_Report::eReport_CancelSurrender );
+        bHasChanged_ = true;
+        pion_.Apply(&SurrenderNotificationHandler_ABC::NotifySurrenderCanceled);
+        bSurrendered_ = false;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -234,7 +243,6 @@ bool PHY_RolePion_Surrender::IsImprisoned( const MIL_Object_ABC& camp )
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Surrender::IsSurrendered() const
 {
-
     return pion_.GetAutomate().IsSurrendered();
 }
 
@@ -244,7 +252,6 @@ bool PHY_RolePion_Surrender::IsSurrendered() const
 // -----------------------------------------------------------------------------
 const MIL_Army_ABC* PHY_RolePion_Surrender::GetArmySurrenderedTo() const
 {
-
     return pion_.GetAutomate().GetArmySurrenderedTo();
 }
 

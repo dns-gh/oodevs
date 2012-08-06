@@ -31,6 +31,8 @@ public:
     //@{
     virtual void NotifyCaptured() = 0;
     virtual void NotifyReleased() = 0;
+    virtual void NotifySurrendered() = 0;
+    virtual void NotifySurrenderCanceled() = 0;
     //@}
 };
 

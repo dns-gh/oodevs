@@ -89,6 +89,7 @@ private:
     MIL_Object_ABC*       pPrison_;
     bool                  bPrisoner_;
     bool                  bHasChanged_;
+    bool                  bSurrendered_;
     unsigned int          nbrHumansLodgingManaged_;
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Surrender* role, const unsigned int /*version*/ );

@@ -1445,6 +1445,22 @@ void PHY_RolePion_Perceiver::NotifyReleased()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::NotifySurrendered
+// Created: LDC 2012-08-06
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::NotifySurrendered()
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::NotifySurrenderCanceled
+// Created: LDC 2012-08-06
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::NotifySurrenderCanceled()
+{
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::NotifyVisionConeDataHasChanged
 // Created: MGD 2009-10-15
 // -----------------------------------------------------------------------------

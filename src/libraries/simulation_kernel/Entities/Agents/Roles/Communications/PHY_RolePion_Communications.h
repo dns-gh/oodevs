@@ -12,8 +12,9 @@
 #ifndef __PHY_RolePion_Communications_h_
 #define __PHY_RolePion_Communications_h_
 
-#include "PHY_RoleInterface_Communications.h"
 #include "NetworkUnitAttributesMessageSender_ABC.h"
+#include "SurrenderNotificationHandler_ABC.h"
+#include "PHY_RoleInterface_Communications.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 
 namespace xml
@@ -41,6 +42,7 @@ class PHY_RolePion_Communications : public PHY_RoleInterface_Communications
                                   , public tools::AlgorithmModifier_ABC< firing::WeaponReloadingComputer_ABC >
                                   , public tools::AlgorithmModifier_ABC<moving::SpeedComputer_ABC>
                                   , public network::NetworkUnitAttributesMessageSender_ABC
+                                  , public surrender::SurrenderNotificationHandler_ABC
 {
 public:
     //! @name Static
@@ -60,6 +62,10 @@ public:
     //@{
     void Update( bool bIsDead );
     void Clean();
+    virtual void NotifyCaptured();
+    virtual void NotifyReleased();
+    virtual void NotifySurrendered();
+    virtual void NotifySurrenderCanceled();
     //@}
 
     //! @name Main
@@ -120,6 +126,7 @@ private:
     bool bBlackoutEmmittedActivated_;
     bool bBlackoutReceivedActivated_;
     bool bHasChanged_;
+    bool bSilentBeforeCapture_;
 
     const bool bIsAutonomous_;
 

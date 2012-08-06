@@ -69,6 +69,8 @@ public:
     //! @name Notification
     void NotifyCaptured();
     void NotifyReleased();
+    virtual void NotifySurrendered();
+    virtual void NotifySurrenderCanceled();
     virtual void NotifyConsumeDotation( const PHY_DotationCategory& category, double& rNbr );
     virtual void RegisterDotationsCapacities  ( const PHY_DotationCapacities& capacities );
     virtual void UnregisterDotationsCapacities( const PHY_DotationCapacities& capacities );

@@ -223,6 +223,22 @@ void PHY_RolePion_Dotations::NotifyReleased()
     pDotations_->NotifyReleased();
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Dotations::NotifySurrendered
+// Created: LDC 2012-08-06
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Dotations::NotifySurrendered()
+{
+}
+ 
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Dotations::NotifySurrenderCanceled
+// Created: LDC 2012-08-06
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Dotations::NotifySurrenderCanceled()
+{
+}
+
 // =============================================================================
 // CONSUMPTIONS
 // =============================================================================
