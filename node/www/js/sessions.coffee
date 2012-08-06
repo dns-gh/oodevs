@@ -39,30 +39,29 @@ check_value = (root, ui, cond, tab, msg) ->
     toggle_input_error ui, msg
     return false
 
-validate_number = (data, ui, id, min, max, tab, msg) ->
-    widget = ui.find "#" + id
+validate_number = (data, key, ui, id, min, max, tab, msg) ->
+    widget = ui.find id
     val = get_number widget
     return false unless check_value ui, widget, is_clipped(val, min, max), tab, msg
-    data[id] = val
+    data[key] = val
     return true
 
-validate_double = (data, ui, id, min, max, tab, msg) ->
-    widget = ui.find "#" + id
+validate_double = (data, key, ui, id, min, max, tab, msg) ->
+    widget = ui.find id
     val = get_double widget
     return false unless check_value ui, widget, val? && is_clipped(val, min, max), tab, msg
-    data[id] = val
+    data[key] = val
     return true
 
 validate_rng = (data, ui, type) ->
     tab = ui.find('a[href="#pill_' + type + '"]')
     dist = ui.find "#rng_" + type + "_distribution option:selected"
-    dist_id = "rng_" + type + "_distribution"
-    data[dist_id] = dist.val()
+    data.distribution = dist.val()
     return true if dist.val() == "linear"
-    unless validate_double data, ui, "rng_" + type + "_deviation", 1e-32, Number.MAX_VALUE, "tab_rng", "Invalid"
+    unless validate_double data, "deviation", ui, "#rng_" + type + "_deviation", 1e-32, Number.MAX_VALUE, "tab_rng", "Invalid"
         tab.tab 'show'
         return false
-    unless validate_double data, ui, "rng_" + type + "_mean", 1e-32, Number.MAX_VALUE, "tab_rng", "Invalid"
+    unless validate_double data, "mean", ui, "#rng_" + type + "_mean", 1e-32, Number.MAX_VALUE, "tab_rng", "Invalid"
         tab.tab 'show'
         return false
     return true
@@ -74,22 +73,54 @@ validate_settings = (ui) ->
     return unless check_value ui, name, name.val().length, "tab_general", "Missing"
     data.name = name.val()
 
-    return unless validate_number data, ui, "checkpoints_frequency", 1, 100, "tab_checkpoints", "[1, 100] Only"
-    return unless validate_number data, ui, "checkpoints_keep", 1, 100, "tab_checkpoints", "[1, 100] Only"
-    data.checkpoints_enabled = ui.find("#checkpoints_enabled").is ":checked"
+    next = data.checkpoints = {}
+    return unless validate_number next, "frequency", ui, "#checkpoints_frequency", 1, 100, "tab_checkpoints", "[1, 100] Only"
+    return unless validate_number next, "keep", ui, "#checkpoints_keep", 1, 100, "tab_checkpoints", "[1, 100] Only"
+    next.enabled = ui.find("#checkpoints_enabled").is ":checked"
 
-    return unless validate_number data, ui, "time_step", 1, Number.MAX_VALUE, "tab_time", "Invalid"
-    return unless validate_number data, ui, "time_factor", 1, Number.MAX_VALUE, "tab_time", "Invalid"
-    return unless validate_number data, ui, "time_end_tick", 0, Number.MAX_VALUE, "tab_time", "Invalid"
-    data.time_paused = ui.find("#time_paused").is ":checked"
+    next = data.time = {}
+    return unless validate_number next, "step", ui, "#time_step", 1, Number.MAX_VALUE, "tab_time", "Invalid"
+    return unless validate_number next, "factor", ui, "#time_factor", 1, Number.MAX_VALUE, "tab_time", "Invalid"
+    return unless validate_number next, "end_tick", ui, "#time_end_tick", 0, Number.MAX_VALUE, "tab_time", "Invalid"
+    next.paused = ui.find("#time_paused").is ":checked"
 
-    return unless validate_number data, ui, "rng_seed", 0, Number.MAX_VALUE, "tab_rng", "Invalid"
+    next = data.rng = {}
+    return unless validate_number next, "seed", ui, "#rng_seed", 0, Number.MAX_VALUE, "tab_rng", "Invalid"
     for it in ["fire", "wound", "perception", "breakdown"]
-        return unless validate_rng data, ui, it
+        child = next[it] = {}
+        return unless validate_rng child, ui, it
 
-    return unless validate_number data, ui, "pathfind_threads", 0, 8, "tab_advanced", "[0, 8] Only"
-    return unless validate_number data, ui, "recorder_frequency", 1, Number.MAX_VALUE, "Invalid"
+    next = data.pathfind = {}
+    return unless validate_number next, "threads", ui, "#pathfind_threads", 0, 8, "tab_advanced", "[0, 8] Only"
 
+    next = data.recorder = {}
+    return unless validate_number next, "frequency", ui, "#recorder_frequency", 1, Number.MAX_VALUE, "Invalid"
+
+    return data
+
+flatten_item_attributes = (data, prefix, item) ->
+    for k, v of item
+        if _.isObject v
+            flatten_item_attributes data, prefix + k + "_", v
+        else
+            data[prefix+k] = v
+    return
+
+flatten_item = (item) ->
+    data = {}
+    flatten_item_attributes data, "", item
+    return data
+
+select_attributes = (item, list) ->
+    data = {}
+    for it in list
+        v = item[it]
+        unless v?
+            continue
+        else if _.isObject v
+            data[it] = $.extend {}, v
+        else
+            data[it] = v
     return data
 
 class SessionItem extends Backbone.Model
@@ -104,6 +135,11 @@ class SessionItem extends Backbone.Model
             return ajax "/api/create_session", params, options.success, options.error
         if method == "read"
             return ajax "/api/get_session", id: model.id,
+                options.success, options.error
+        if method == "update"
+            data = select_attributes model.attributes, ["id", "name", "time", "rng", "checkpoints", "pathfind", "recorder"]
+            data = flatten_item data
+            return ajax "/api/update_session", data,
                 options.success, options.error
         if method == "delete"
             return ajax "/api/delete_session", id: model.id,
@@ -248,14 +284,12 @@ class SessionItemView extends Backbone.View
         mod.find(".apply").click =>
             data = validate_settings ui, @model
             return unless data?
-            data = $.extend {}, data
-            data.checkpoints_frequency *= 60
+            data.checkpoints.frequency *= 60
             data.id = @model.id
             mod.modal "hide"
-            ajax "/api/update_session", data,
-                (attr) =>
-                    @model.set attr
-                =>
+            @model.save data,
+                wait: true
+                error: =>
                     print_error "Unable to update session " + @model.get "name"
 
 get_filters = ->
