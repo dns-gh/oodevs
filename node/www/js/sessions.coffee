@@ -127,23 +127,30 @@ class SessionItem extends Backbone.Model
     view: SessionItemView
 
     sync: (method, model, options) =>
+        cfg_attributes = ["name", "time", "rng", "checkpoints", "pathfind", "recorder"]
+
         if method == "create"
-            params =
-                node:     uuid
-                name:     model.get "name"
-                exercise: model.get "exercise"
-            return ajax "/api/create_session", params, options.success, options.error
+            data = select_attributes model.attributes, cfg_attributes
+            data = flatten_item data
+            data.node = uuid
+            data.exercise = model.attributes.exercise
+            return ajax "/api/create_session", data, options.success, options.error
+
         if method == "read"
             return ajax "/api/get_session", id: model.id,
                 options.success, options.error
+
         if method == "update"
-            data = select_attributes model.attributes, ["id", "name", "time", "rng", "checkpoints", "pathfind", "recorder"]
+            data = select_attributes model.attributes, cfg_attributes
             data = flatten_item data
+            data.id = model.id
             return ajax "/api/update_session", data,
                 options.success, options.error
+
         if method == "delete"
             return ajax "/api/delete_session", id: model.id,
                 options.success, options.error
+
         return Backbone.sync method, model, options
 
 status_order =
@@ -202,6 +209,7 @@ class SessionItemView extends Backbone.View
         "click .play" : "play"
         "click .pause" : "pause"
         "click .edit" : "edit"
+        "click .clone" : "clone"
 
     is_search: =>
         if contains @model.get("name"), @search
@@ -292,6 +300,12 @@ class SessionItemView extends Backbone.View
                 error: =>
                     print_error "Unable to update session " + @model.get "name"
 
+    clone: =>
+        data = $.extend {}, @model.attributes
+        data.exercise = data.exercise.name
+        delete data.id
+        @model.trigger 'clone', data
+
 get_filters = ->
     _.pluck $("#session_filters input:not(:checked)"), "name"
 
@@ -308,6 +322,7 @@ class SessionListView extends Backbone.View
         @model.bind "remove", @remove
         @model.bind "reset",  @reset
         @model.bind "change", @model.sort
+        @model.bind "clone",  @clone
         @model.fetch error: -> print_error "Unable to fetch sessions"
         setTimeout @delta, @delta_period
 
@@ -354,6 +369,17 @@ class SessionListView extends Backbone.View
         value = value.toLowerCase()
         for it in @model.models
             it.view.set_search value
+
+    clone: (data) =>
+        max = 1
+        regexp = new RegExp data.name + " \\((\\d+)\\)"
+        for it in @model.models
+            tab = regexp.exec it.get "name"
+            continue unless tab?.length
+            cur = parseInt tab[1]
+            max = cur + 1 if max <= cur
+        data.name += " (" + max + ")"
+        @create data
 
 class ExerciseListItem extends Backbone.Model
     view: ExerciseListItemView

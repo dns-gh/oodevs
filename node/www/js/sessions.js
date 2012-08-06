@@ -568,14 +568,14 @@
     SessionItem.prototype.view = SessionItemView;
 
     SessionItem.prototype.sync = function(method, model, options) {
-      var data, params;
+      var cfg_attributes, data;
+      cfg_attributes = ["name", "time", "rng", "checkpoints", "pathfind", "recorder"];
       if (method === "create") {
-        params = {
-          node: uuid,
-          name: model.get("name"),
-          exercise: model.get("exercise")
-        };
-        return ajax("/api/create_session", params, options.success, options.error);
+        data = select_attributes(model.attributes, cfg_attributes);
+        data = flatten_item(data);
+        data.node = uuid;
+        data.exercise = model.attributes.exercise;
+        return ajax("/api/create_session", data, options.success, options.error);
       }
       if (method === "read") {
         return ajax("/api/get_session", {
@@ -583,8 +583,9 @@
         }, options.success, options.error);
       }
       if (method === "update") {
-        data = select_attributes(model.attributes, ["id", "name", "time", "rng", "checkpoints", "pathfind", "recorder"]);
+        data = select_attributes(model.attributes, cfg_attributes);
         data = flatten_item(data);
+        data.id = model.id;
         return ajax("/api/update_session", data, options.success, options.error);
       }
       if (method === "delete") {
@@ -675,6 +676,8 @@
     __extends(SessionItemView, _super);
 
     function SessionItemView() {
+      this.clone = __bind(this.clone, this);
+
       this.edit = __bind(this.edit, this);
 
       this.set_search = __bind(this.set_search, this);
@@ -717,7 +720,8 @@
       "click .stop": "stop",
       "click .play": "play",
       "click .pause": "pause",
-      "click .edit": "edit"
+      "click .edit": "edit",
+      "click .clone": "clone"
     };
 
     SessionItemView.prototype.is_search = function() {
@@ -860,6 +864,14 @@
       });
     };
 
+    SessionItemView.prototype.clone = function() {
+      var data;
+      data = $.extend({}, this.model.attributes);
+      data.exercise = data.exercise.name;
+      delete data.id;
+      return this.model.trigger('clone', data);
+    };
+
     return SessionItemView;
 
   })(Backbone.View);
@@ -877,6 +889,8 @@
     __extends(SessionListView, _super);
 
     function SessionListView() {
+      this.clone = __bind(this.clone, this);
+
       this.set_search = __bind(this.set_search, this);
 
       this.set_filter = __bind(this.set_filter, this);
@@ -903,6 +917,7 @@
       this.model.bind("remove", this.remove);
       this.model.bind("reset", this.reset);
       this.model.bind("change", this.model.sort);
+      this.model.bind("clone", this.clone);
       this.model.fetch({
         error: function() {
           return print_error("Unable to fetch sessions");
@@ -990,6 +1005,26 @@
         _results.push(it.view.set_search(value));
       }
       return _results;
+    };
+
+    SessionListView.prototype.clone = function(data) {
+      var cur, it, max, regexp, tab, _i, _len, _ref;
+      max = 1;
+      regexp = new RegExp(data.name + " \\((\\d+)\\)");
+      _ref = this.model.models;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        it = _ref[_i];
+        tab = regexp.exec(it.get("name"));
+        if (!(tab != null ? tab.length : void 0)) {
+          continue;
+        }
+        cur = parseInt(tab[1]);
+        if (max <= cur) {
+          max = cur + 1;
+        }
+      }
+      data.name += " (" + max + ")";
+      return this.create(data);
     };
 
     return SessionListView;
