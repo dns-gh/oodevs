@@ -15123,7 +15123,7 @@
     <efficiencies combat="100" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ABC.PC" id="519" name="GLAISE - ABC . PC Escadron T62" type="Pion ABC">
+  <unit decisional-model="Masalife.ABC.AMX" id="519" name="GLAISE - ABC . PC Escadron T62" type="Pion ABC">
     <nature atlas-nature="Blinde" level="i" nature-app6="combat/armor/track"/>
     <equipments>
       <equipment count="1" crew="4" major="true" type="Char T62"/>
@@ -15152,7 +15152,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ABC.PC" id="520" name="GLAISE - ABC . PC Escadron T72 BM" type="Pion ABC">
+  <unit decisional-model="Masalife.ABC.AMX" id="520" name="GLAISE - ABC . PC Escadron T72 BM" type="Pion ABC">
     <nature atlas-nature="Blinde" level="i" nature-app6="combat/armor/track/heavy"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="Char T72 BM"/>
@@ -15181,7 +15181,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ABC.PC" id="521" name="GLAISE - ABC . PC Escadron CHIEFTAIN" type="Pion ABC">
+  <unit decisional-model="Masalife.ABC.AMX" id="521" name="GLAISE - ABC . PC Escadron CHIEFTAIN" type="Pion ABC">
     <nature atlas-nature="Blinde" level="i" nature-app6="combat/armor/track/heavy"/>
     <equipments>
       <equipment count="1" crew="4" major="true" type="Char CHIEFTAIN"/>
@@ -16046,7 +16046,7 @@
     <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ABC.PC" id="550" name="GLAISE - ABC . PC Escadron RECO" type="Pion ABC">
+  <unit decisional-model="Masalife.ABC.EI" id="550" name="GLAISE - ABC . PC Escadron RECO" type="Pion ABC">
     <nature atlas-nature="Blinde" level="i" nature-app6="combat/reconnaissance"/>
     <equipments>
       <equipment count="1" crew="4" major="true" type="BRDM 2"/>
@@ -16577,7 +16577,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ABC.PC" id="570" name="GLAISE - ABC . PC Escadron T72" type="Pion ABC">
+  <unit decisional-model="Masalife.ABC.AMX" id="570" name="GLAISE - ABC . PC Escadron T72" type="Pion ABC">
     <nature atlas-nature="Blinde" level="i" nature-app6="combat/armor/track/heavy"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="Char T72"/>
@@ -18096,4 +18096,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="0024179490" -->
+<!-- signature="1376194445" -->
