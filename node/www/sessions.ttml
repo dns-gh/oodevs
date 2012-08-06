@@ -147,6 +147,9 @@
                 {{#is_option status paused="" stopped=""}}
                 <a title="Play" class="btn play"><i class="icon-play"></i></a>
                 {{/is_option}}
+                {{#is_option status archived=""}}
+                <a title="Restore" class="btn restore"><i class="icon-eject"></i></a>
+                {{/is_option}}
                 {{#is_option status playing=""}}
                 <a title="Pause" class="btn pause"><i class="icon-pause"></i></a>
                 {{/is_option}}
@@ -167,9 +170,9 @@
                 <a title="Download" class="btn download disabled"><i class="icon-download-alt"></i></a>
                 {{/is_option}}
                 {{#is_option status stopped=""}}
-                <a title="Archive" class="btn archive disabled"><i class="icon-hdd"></i></a>
+                <a title="Archive" class="btn archive"><i class="icon-hdd"></i></a>
                 {{/is_option}}
-                {{#is_option status stopped=""}}
+                {{#is_option status stopped="" archived=""}}
                 <a title="Delete" class="btn delete"><i class="icon-trash"></i></a>
                 {{/is_option}}
             </div>

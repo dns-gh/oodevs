@@ -94,15 +94,17 @@ private:
 
     //! @name Session Methods
     //@{
-    std::string ListSessions ( const Request_ABC& request );
-    std::string CountSessions( const Request_ABC& request );
-    std::string GetSession   ( const Request_ABC& request );
-    std::string CreateSession( const Request_ABC& request );
-    std::string DeleteSession( const Request_ABC& request );
-    std::string StartSession ( const Request_ABC& request );
-    std::string StopSession  ( const Request_ABC& request );
-    std::string PauseSession ( const Request_ABC& request );
-    std::string UpdateSession( const Request_ABC& request );
+    std::string ListSessions  ( const Request_ABC& request );
+    std::string CountSessions ( const Request_ABC& request );
+    std::string GetSession    ( const Request_ABC& request );
+    std::string CreateSession ( const Request_ABC& request );
+    std::string DeleteSession ( const Request_ABC& request );
+    std::string StartSession  ( const Request_ABC& request );
+    std::string StopSession   ( const Request_ABC& request );
+    std::string PauseSession  ( const Request_ABC& request );
+    std::string UpdateSession ( const Request_ABC& request );
+    std::string ArchiveSession( const Request_ABC& request );
+    std::string RestoreSession( const Request_ABC& request );
     //@}
 
     //! @name Exercise Methods

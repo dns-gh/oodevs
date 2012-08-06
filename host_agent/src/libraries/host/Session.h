@@ -109,6 +109,8 @@ public:
     virtual bool Pause();
     virtual void Remove();
     virtual bool Update( const Tree& cfg );
+    virtual bool Archive();
+    virtual bool Restore();
     //@}
 
     //! @name Typedef helpers
@@ -125,6 +127,7 @@ public:
         STATUS_PLAYING,
         STATUS_REPLAYING,
         STATUS_PAUSED,
+        STATUS_ARCHIVED,
         STATUS_COUNT
     };
     //@}
@@ -135,6 +138,7 @@ private:
     Tree GetProperties( bool save ) const;
     bool StopProcess( boost::upgrade_lock< boost::shared_mutex >& lock );
     bool ModifyStatus( boost::upgrade_lock< boost::shared_mutex >& lock, Status next );
+    bool Archive( boost::upgrade_lock< boost::shared_mutex >& lock );
     //@}
 
 private:

@@ -4,6 +4,7 @@ body{padding-top:60px;padding-bottom:40px;}
 .paused{border:0;padding:0;margin:0;position:absolute;top:0;left:0;width:32px;height:100%;background-color:#ffd966;}
 .replaying{border:0;padding:0;margin:0;position:absolute;top:0;left:0;width:32px;height:100%;background-color:#6fa8dc;}
 .stopped{border:0;padding:0;margin:0;position:absolute;top:0;left:0;width:32px;height:100%;background-color:#e06666;}
+.archived{border:0;padding:0;margin:0;position:absolute;top:0;left:0;width:32px;height:100%;}
 .session_row{position:relative;width:auto !important;}
 .session_name{padding-left:32px;padding-bottom:12px;}
 .session_name,.package_name{font-size:large;font-weight:bold;}

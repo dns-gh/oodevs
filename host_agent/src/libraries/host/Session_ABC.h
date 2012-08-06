@@ -84,6 +84,8 @@ struct Session_ABC : public boost::noncopyable
     virtual bool Pause() = 0;
     virtual void Remove() = 0;
     virtual bool Update( const Tree& cfg ) = 0;
+    virtual bool Archive() = 0;
+    virtual bool Restore() = 0;
     //@}
 };
 

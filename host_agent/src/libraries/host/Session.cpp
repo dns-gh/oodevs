@@ -19,6 +19,7 @@
 #include "runtime/Scoper.h"
 #include "runtime/Utf8.h"
 #include "web/Client_ABC.h"
+#include "web/HttpException.h"
 
 #include <boost/assign/list_of.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
@@ -57,6 +58,7 @@ std::string ConvertStatus( Session::Status status )
         case Session::STATUS_PLAYING:   return "playing";
         case Session::STATUS_REPLAYING: return "replaying";
         case Session::STATUS_PAUSED:    return "paused";
+        case Session::STATUS_ARCHIVED:  return "archived";
     }
 }
 
@@ -65,6 +67,7 @@ Session::Status ConvertStatus( const std::string& status )
     if( status == "playing" )   return Session::STATUS_PLAYING;
     if( status == "replaying" ) return Session::STATUS_REPLAYING;
     if( status == "paused" )    return Session::STATUS_PAUSED;
+    if( status == "archived" )  return Session::STATUS_ARCHIVED;
     return Session::STATUS_STOPPED;
 }
 
@@ -137,6 +140,15 @@ Config ReadConfig( const Tree& src )
     ReadConfig( cfg, src );
     return cfg;
 }
+
+Session::Status AcquireStatus( Session::Status status, bool has_process )
+{
+    if( has_process )
+        return status;
+    if( status == Session::STATUS_ARCHIVED )
+        return status;
+    return Session::STATUS_STOPPED;
+}
 }
 
 // -----------------------------------------------------------------------------
@@ -194,7 +206,7 @@ Session::Session( const FileSystem_ABC& system,
     , port_        ( AcquirePort( Get< int >( tree, "port" ), ports ) )
     , process_     ( AcquireProcess( tree, runtime, port_->Get() ) )
     , running_     ( process_ ? node->StartSession( boost::posix_time::not_a_date_time ) : Node_ABC::T_Token() )
-    , status_      ( process_ ? ConvertStatus( Get< std::string >( tree, "status" ) ) : Session::STATUS_STOPPED )
+    , status_      ( AcquireStatus( ConvertStatus( Get< std::string >( tree, "status" ) ), process_ ) )
     , polling_     ( false )
     , counter_     ( 0 )
     , sizing_      ( false )
@@ -425,6 +437,19 @@ bool Session::StopProcess( boost::upgrade_lock< boost::shared_mutex >& lock )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Session::Archive
+// Created: BAX 2012-08-06
+// -----------------------------------------------------------------------------
+bool Session::Archive( boost::upgrade_lock< boost::shared_mutex >& lock )
+{
+    if( status_ != STATUS_STOPPED )
+        throw web::HttpException( web::FORBIDDEN );
+    boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );
+    status_ = STATUS_ARCHIVED;
+    return true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Session::ModifyStatus
 // Created: BAX 2012-06-20
 // -----------------------------------------------------------------------------
@@ -438,6 +463,9 @@ bool Session::ModifyStatus( boost::upgrade_lock< boost::shared_mutex >& lock, Se
 
     if( next == STATUS_STOPPED )
         return StopProcess( lock );
+
+    if( next == STATUS_ARCHIVED )
+        return Archive( lock );
 
     const size_t counter = counter_++;
     const int pid = GetPid( process_ );
@@ -677,4 +705,26 @@ bool Session::Update( const Tree& cfg )
     boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );
     cfg_ = next;
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Session::Archive
+// Created: BAX 2012-08-06
+// -----------------------------------------------------------------------------
+bool Session::Archive()
+{
+    boost::upgrade_lock< boost::shared_mutex > lock( access_ );
+    return ModifyStatus( lock, STATUS_ARCHIVED );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Session::Restore
+// Created: BAX 2012-08-06
+// -----------------------------------------------------------------------------
+bool Session::Restore()
+{
+    boost::upgrade_lock< boost::shared_mutex > lock( access_ );
+    if( status_ != STATUS_ARCHIVED )
+        throw web::HttpException( web::FORBIDDEN );
+    return ModifyStatus( lock, STATUS_STOPPED );
 }

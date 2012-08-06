@@ -686,11 +686,17 @@
 
       this.set_filter = __bind(this.set_filter, this);
 
+      this.restore = __bind(this.restore, this);
+
+      this.archive = __bind(this.archive, this);
+
       this.pause = __bind(this.pause, this);
 
       this.play = __bind(this.play, this);
 
       this.stop = __bind(this.stop, this);
+
+      this.modify = __bind(this.modify, this);
 
       this["delete"] = __bind(this["delete"], this);
 
@@ -721,7 +727,9 @@
       "click .play": "play",
       "click .pause": "pause",
       "click .edit": "edit",
-      "click .clone": "clone"
+      "click .clone": "clone",
+      "click .archive": "archive",
+      "click .restore": "restore"
     };
 
     SessionItemView.prototype.is_search = function() {
@@ -775,46 +783,38 @@
       });
     };
 
-    SessionItemView.prototype.stop = function() {
+    SessionItemView.prototype.modify = function(cmd) {
       var _this = this;
       this.toggle_load();
-      return ajax("/api/stop_session", {
+      return ajax("/api/" + cmd + "_session", {
         id: this.model.id
       }, function(item) {
         _this.toggle_load();
         return _this.model.set(item);
       }, function() {
-        print_error("Unable to stop session " + _this.model.get("name"));
+        print_error("Unable to " + cmd + " session " + _this.model.get("name"));
         return _this.toggle_load();
       });
+    };
+
+    SessionItemView.prototype.stop = function() {
+      return this.modify("stop");
     };
 
     SessionItemView.prototype.play = function() {
-      var _this = this;
-      this.toggle_load();
-      return ajax("/api/start_session", {
-        id: this.model.id
-      }, function(item) {
-        _this.toggle_load();
-        return _this.model.set(item);
-      }, function() {
-        print_error("Unable to start session " + _this.model.get("name"));
-        return _this.toggle_load();
-      });
+      return this.modify("start");
     };
 
     SessionItemView.prototype.pause = function() {
-      var _this = this;
-      this.toggle_load();
-      return ajax("/api/pause_session", {
-        id: this.model.id
-      }, function(item) {
-        _this.toggle_load();
-        return _this.model.set(item);
-      }, function() {
-        print_error("Unable to pause session " + _this.model.get("name"));
-        return _this.toggle_load();
-      });
+      return this.modify("pause");
+    };
+
+    SessionItemView.prototype.archive = function() {
+      return this.modify("archive");
+    };
+
+    SessionItemView.prototype.restore = function() {
+      return this.modify("restore");
     };
 
     SessionItemView.prototype.set_filter = function(list) {

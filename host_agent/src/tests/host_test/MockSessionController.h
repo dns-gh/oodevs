@@ -30,6 +30,8 @@ namespace mocks
         MOCK_METHOD( Stop, 2 );
         MOCK_METHOD( Pause, 2 );
         MOCK_METHOD( Update, 3 );
+        MOCK_METHOD( Archive, 2 );
+        MOCK_METHOD( Restore, 2 );
     };
 };
 

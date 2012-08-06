@@ -295,3 +295,21 @@ SessionController::T_Session SessionController::Update( const Uuid& node, const 
 {
     return Dispatch( node, id, boost::bind( &Session_ABC::Update, _1, boost::cref( cfg ) ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: SessionController::Archive
+// Created: BAX 2012-08-06
+// -----------------------------------------------------------------------------
+SessionController::T_Session SessionController::Archive( const Uuid& node, const Uuid& id ) const
+{
+    return Dispatch( node, id, boost::bind( &Session_ABC::Archive, _1 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SessionController::Restore
+// Created: BAX 2012-08-06
+// -----------------------------------------------------------------------------
+SessionController::T_Session SessionController::Restore( const Uuid& node, const Uuid& id ) const
+{
+    return Dispatch( node, id, boost::bind( &Session_ABC::Restore, _1 ) );
+}

@@ -370,6 +370,24 @@ Tree Agent::UpdateSession( const Uuid& node, const Uuid& id, const Tree& cfg ) c
 }
 
 // -----------------------------------------------------------------------------
+// Name: Agent::ArchiveSession
+// Created: BAX 2012-08-06
+// -----------------------------------------------------------------------------
+Tree Agent::ArchiveSession( const Uuid& node, const Uuid& id ) const
+{
+    return Dispatch( sessions_, boost::bind( &SessionController_ABC::Archive, _1, node, id ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::RestoreSession
+// Created: BAX 2012-08-06
+// -----------------------------------------------------------------------------
+Tree Agent::RestoreSession( const Uuid& node, const Uuid& id ) const
+{
+    return Dispatch( sessions_, boost::bind( &SessionController_ABC::Restore, _1, node, id ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Agent::ListExercises
 // Created: BAX 2012-03-27
 // -----------------------------------------------------------------------------

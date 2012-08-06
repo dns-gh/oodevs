@@ -210,6 +210,8 @@ class SessionItemView extends Backbone.View
         "click .pause" : "pause"
         "click .edit" : "edit"
         "click .clone" : "clone"
+        "click .archive" : "archive"
+        "click .restore" : "restore"
 
     is_search: =>
         if contains @model.get("name"), @search
@@ -242,35 +244,30 @@ class SessionItemView extends Backbone.View
         @toggle_load()
         @model.destroy wait: true, error: => print_error "Unable to delete session " + @model.get "name"
 
-    stop: =>
+    modify: (cmd) =>
         @toggle_load()
-        ajax "/api/stop_session", id: @model.id,
+        ajax "/api/" + cmd + "_session", id: @model.id,
             (item) =>
                 @toggle_load()
                 @model.set item
             () =>
-                print_error "Unable to stop session " + @model.get "name"
+                print_error "Unable to " + cmd + " session " + @model.get "name"
                 @toggle_load()
+
+    stop: =>
+        @modify "stop"
 
     play: =>
-        @toggle_load()
-        ajax "/api/start_session", id: @model.id,
-            (item) =>
-                @toggle_load()
-                @model.set item
-            () =>
-                print_error "Unable to start session " + @model.get "name"
-                @toggle_load()
+        @modify "start"
 
     pause: =>
-        @toggle_load()
-        ajax "/api/pause_session", id: @model.id,
-            (item) =>
-                @toggle_load()
-                @model.set item
-            () =>
-                print_error "Unable to pause session " + @model.get "name"
-                @toggle_load()
+        @modify "pause"
+
+    archive: =>
+        @modify "archive"
+
+    restore: =>
+        @modify "restore"
 
     set_filter: (list) =>
         @filters = list

@@ -267,6 +267,8 @@ std::string Controller::DoGet( Request_ABC& request )
         if( uri == "/stop_session" )       return StopSession( request );
         if( uri == "/pause_session" )      return PauseSession( request );
         if( uri == "/update_session" )     return UpdateSession( request );
+        if( uri == "/archive_session" )    return ArchiveSession( request );
+        if( uri == "/restore_session" )    return RestoreSession( request );
         // exercises
         if( uri == "/list_exercises")      return ListExercises( request );
         if( uri == "/count_exercises" )    return CountExercises( request );
@@ -635,6 +637,26 @@ std::string Controller::UpdateSession( const Request_ABC& request )
     const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
     const Tree cfg = session::ConvertConfig( request );
     return WriteHttpReply( agent_.UpdateSession( node, GetId( request ), cfg ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controller::ArchiveSession
+// Created: BAX 2012-08-06
+// -----------------------------------------------------------------------------
+std::string Controller::ArchiveSession( const Request_ABC& request )
+{
+    const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
+    return WriteHttpReply( agent_.ArchiveSession( node, GetId( request ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controller::RestoreSession
+// Created: BAX 2012-08-06
+// -----------------------------------------------------------------------------
+std::string Controller::RestoreSession( const Request_ABC& request )
+{
+    const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
+    return WriteHttpReply( agent_.RestoreSession( node, GetId( request ) ) );
 }
 
 // -----------------------------------------------------------------------------

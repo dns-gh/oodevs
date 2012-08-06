@@ -6,6 +6,7 @@
             <label class="checkbox"><input type="checkbox" checked="checked" name="paused"> Paused</label>
             <label class="checkbox"><input type="checkbox" checked="checked" name="replaying"> Replaying</label>
             <label class="checkbox"><input type="checkbox" checked="checked" name="stopped"> Stopped</label>
+            <label class="checkbox"><input type="checkbox" name="archived"> Archived</label>
         </li>
         <li class="nav-header">Order</li>
         <li class="controls">
