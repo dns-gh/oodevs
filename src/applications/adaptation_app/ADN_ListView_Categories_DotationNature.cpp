@@ -16,6 +16,7 @@
 #include "ADN_ResourceNatureInfos.h"
 #include "ADN_Tr.h"
 #include "ADN_Wizard.h"
+#include "ENT/ENT_Tr_Gen.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_Categories_DotationNature::ADN_ListView_Categories_DotationNature
@@ -63,6 +64,18 @@ void ADN_ListView_Categories_DotationNature::OnContextMenu( const QPoint& pt )
     Q3PopupMenu popupMenu( this );
     ADN_Wizard< helpers::ResourceNatureInfos > wizard( tools::translate( "ADN_ListView_Categories_DotationNature", "Natures" ), ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
+    if( pCurData_ != 0 )
+    {
+        helpers::ResourceNatureInfos* pCastData = static_cast< helpers::ResourceNatureInfos* >( pCurData_ );
+        assert( pCastData != 0 );
+        for( uint n = 0; n < eNbrDotationFamily; ++n )
+        {
+            E_DotationFamily value = static_cast< E_DotationFamily >( n );
+            FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
+                                          ENT_Tr::ConvertFromDotationFamily( value ).c_str(),
+                                          ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetEquipmentsThatUse( *pCastData, value ), eEquipement, value );
+        }
+    }
     popupMenu.exec( pt );
 }
 
@@ -75,6 +88,16 @@ std::string ADN_ListView_Categories_DotationNature::GetToolTipFor( Q3ListViewIte
     void* pData = static_cast< ADN_ListViewItem& >( item ).GetData();
     helpers::ResourceNatureInfos* pCastData = static_cast< helpers::ResourceNatureInfos* >( pData );
     assert( pCastData != 0 );
-    return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( eEquipement ).c_str(),
-                            ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetEquipmentsThatUse( *pCastData ) );
+
+    std::string result;
+    for( uint n = 0; n < eNbrDotationFamily; ++n )
+    {
+        E_DotationFamily value = static_cast< E_DotationFamily >( n );
+        FillMultiUsersList( ENT_Tr::ConvertFromDotationFamily( value ).c_str(),
+                            ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetEquipmentsThatUse( *pCastData, value ), result );
+    }
+
+    if( result.empty() )
+        result = tr( "<b>Unused</b>" ).ascii();
+    return result;
 }

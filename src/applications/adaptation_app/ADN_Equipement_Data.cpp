@@ -902,3 +902,17 @@ QStringList ADN_Equipement_Data::GetEquipmentsWithDirectFire()
     }
     return result;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Equipement_Data::GetEquipmentsThatUse
+// Created: ABR 2012-08-06
+// -----------------------------------------------------------------------------
+QStringList ADN_Equipement_Data::GetEquipmentsThatUse( helpers::ResourceNatureInfos& object, E_DotationFamily familly )
+{
+    QStringList result;
+    ResourceInfos& resourceInfos = GetDotation( familly );
+    for( CIT_CategoryInfos_Vector it = resourceInfos.categories_.begin(); it != resourceInfos.categories_.end(); ++it )
+        if( ( *it )->ptrResourceNature_.GetData()->strName_.GetData() == object.strName_.GetData() )
+                    result << ( *it )->strName_.GetData().c_str();
+    return result;
+}

@@ -227,6 +227,7 @@ public:
 
     QStringList GetEquipmentsThatUse( ADN_Objects_Data_ObjectInfos& object );
     QStringList GetEquipmentsThatUse( helpers::ResourceNatureInfos& object );
+    QStringList GetEquipmentsThatUse( helpers::ResourceNatureInfos& object, E_DotationFamily familly );
     QStringList GetEquipmentsWithDirectFire();
 
 private:

@@ -2045,6 +2045,10 @@ du tireur</translation>
         <source>Natures</source>
         <translation>Natures</translation>
     </message>
+    <message>
+        <source>&lt;b&gt;Unused&lt;/b&gt;</source>
+        <translation>&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
+    </message>
 </context>
 <context>
     <name>ADN_ListView_Categories_Size</name>
