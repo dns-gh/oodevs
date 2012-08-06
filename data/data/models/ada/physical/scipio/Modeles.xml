@@ -2817,16 +2817,12 @@
           <fragorder name="Modifier Priorites Reparations"/>
           <fragorder name="Modifier Priorites Tactiques Reparations"/>
           <fragorder name="Pion Renforcer En Remorqueurs"/>
-          <fragorder name="Pion Transferer Remorqueurs"/>
-          <fragorder name="Pion Reprendre Aux Ordres Remorqueurs"/>
         </mission>
         <mission name="PION LOGISTIQUE Reparer">
           <fragorder name="Modifier Regime Travail Maintenance"/>
           <fragorder name="Modifier Priorites Reparations"/>
           <fragorder name="Modifier Priorites Tactiques Reparations"/>
           <fragorder name="Pion Renforcer En Remorqueurs"/>
-          <fragorder name="Pion Transferer Remorqueurs"/>
-          <fragorder name="Pion Reprendre Aux Ordres Remorqueurs"/>
         </mission>
         <mission name="PION MELEE Renseigner sur foule"/>
       </missions>
@@ -2852,6 +2848,8 @@
         <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
+        <fragorder name="Pion Reprendre Aux Ordres Remorqueurs"/>
+        <fragorder name="Pion Transferer Remorqueurs"/>
       </fragorders>
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.LOG.Stock">
@@ -2979,8 +2977,7 @@
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION LOGISTIQUE Preparer bascule">
           <fragorder name="Pion Renforcer En VSRAM"/>
-          <fragorder name="Pion Reprendre Aux Ordres VSRAM"/>
-          <fragorder name="Pion Transferer VSRAM"/>
+          <fragorder name="Pion Renforcer En Equipements"/>
           <fragorder name="Modifier Priorites Tactiques Blesses"/>
           <fragorder name="Modifier Priorites Blesses"/>
         </mission>
@@ -2989,8 +2986,7 @@
           <fragorder name="Modifier Priorites Blesses"/>
           <fragorder name="Modifier Priorites Tactiques Blesses"/>
           <fragorder name="Pion Renforcer En VSRAM"/>
-          <fragorder name="Pion Transferer VSRAM"/>
-          <fragorder name="Pion Reprendre Aux Ordres VSRAM"/>
+          <fragorder name="Pion Renforcer En Equipements"/>
         </mission>
         <mission name="PION MELEE Renseigner sur foule"/>
       </missions>
@@ -3016,6 +3012,10 @@
         <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
+        <fragorder name="Pion Reprendre Aux Ordres Equipements"/>
+        <fragorder name="Pion Transferer Equipements"/>
+        <fragorder name="Pion Reprendre Aux Ordres VSRAM"/>
+        <fragorder name="Pion Transferer VSRAM"/>
       </fragorders>
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.LOG.Sante.ACA">
@@ -7519,4 +7519,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3350548586" -->
+<!-- signature="0165829660" -->

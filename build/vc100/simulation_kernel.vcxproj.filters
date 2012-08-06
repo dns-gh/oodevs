@@ -2544,6 +2544,9 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path.cpp">
       <Filter>Source Files\Decision\Path</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\ComposanteLending\PHY_ActionLendSpecificComposantes.cpp">
+      <Filter>Source Files\Entities\Agents\Actions\ComposanteLending</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL.h">
@@ -4999,6 +5002,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path.h">
       <Filter>Source Files\Decision\Path</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\ComposanteLending\PHY_ActionLendSpecificComposantes.h">
+      <Filter>Source Files\Entities\Agents\Actions\ComposanteLending</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

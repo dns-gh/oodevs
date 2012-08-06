@@ -3362,29 +3362,45 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_ExecuterTir" id="359" name="Pion Executer Tir"/>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_Emettre" id="360" name="Pion Emettre"/>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_StopperEmission" id="361" name="Pion Stopper Emission"/>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_RenforcerEnVSRAM" id="362" name="Pion Renforcer En VSRAM">
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Pion_RenforcerEnVSRAM" id="362" name="Pion Renforcer En VSRAM">
       <parameter dia-name="pionARenforcer_" name="Pion a renforcer" optional="false" type="Agent"/>
       <parameter dia-name="nbrAmbulances_" min-value="1" name="Nbr ambulances" optional="false" type="Integer"/>
     </fragorder>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_TransfererVSRAM" id="363" name="Pion Transferer VSRAM">
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Pion_TransfererVSRAM" id="363" name="Pion Transferer VSRAM">
       <parameter dia-name="pionRenforce_" name="Pion renforce" optional="false" type="Agent"/>
       <parameter dia-name="pionARenforcer_" name="Pion a renforcer" optional="false" type="Agent"/>
       <parameter dia-name="nbrAmbulances_" min-value="1" name="Nbr ambulances" optional="false" type="Integer"/>
     </fragorder>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_ReprendreAuxOrdresVSRAM" id="364" name="Pion Reprendre Aux Ordres VSRAM">
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Pion_ReprendreAuxOrdresVSRAM" id="364" name="Pion Reprendre Aux Ordres VSRAM">
       <parameter dia-name="pionRenforce_" name="Pion renforce" optional="false" type="Agent"/>
       <parameter dia-name="nbrAmbulances_" min-value="1" name="Nbr ambulances" optional="false" type="Integer"/>
     </fragorder>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_RenforcerEnRemorqueurs" id="365" name="Pion Renforcer En Remorqueurs">
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Pion_RenforcerEnEquipements" id="407" name="Pion Renforcer En Equipements">
+      <parameter dia-name="pionRenforce_" name="Pion renforce" optional="false" type="Agent"/>
+      <parameter dia-name="orderConduiteModifierPrioritesReparations_" name="Equipements" optional="false" type="MaintenancePriorities"/>
+      <parameter dia-name="nbrAmbulances_" min-value="1" name="Nbr equipements" optional="false" type="Integer"/>
+    </fragorder>
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Pion_TransfererEquipements" id="408" name="Pion Transferer Equipements">
+      <parameter dia-name="pionRenforce_" name="Pion renforce" optional="false" type="Agent"/>
+      <parameter dia-name="pionARenforcer_" name="Pion a renforcer" optional="false" type="Agent"/>
+      <parameter dia-name="orderConduiteModifierPrioritesReparations_" name="Equipements" optional="false" type="MaintenancePriorities"/>
+      <parameter dia-name="nbrAmbulances_" min-value="1" name="Nbr equipements" optional="false" type="Integer"/>
+    </fragorder>
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Pion_ReprendreAuxOrdresEquipements" id="409" name="Pion Reprendre Aux Ordres Equipements">
+      <parameter dia-name="pionRenforce_" name="Pion renforce" optional="false" type="Agent"/>
+      <parameter dia-name="orderConduiteModifierPrioritesReparations_" name="Equipements" optional="false" type="MaintenancePriorities"/>
+      <parameter dia-name="nbrAmbulances_" min-value="1" name="Nbr equipements" optional="false" type="Integer"/>
+    </fragorder>
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Pion_RenforcerEnRemorqueurs" id="365" name="Pion Renforcer En Remorqueurs">
       <parameter dia-name="pionARenforcer_" name="Pion a renforcer" optional="false" type="Agent"/>
       <parameter dia-name="nbrRemorqueurs_" min-value="1" name="Nbr remorqueurs" optional="false" type="Integer"/>
     </fragorder>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_TransfererRemorqueurs" id="366" name="Pion Transferer Remorqueurs">
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Pion_TransfererRemorqueurs" id="366" name="Pion Transferer Remorqueurs">
       <parameter dia-name="pionRenforce_" name="Pion renforce" optional="false" type="Agent"/>
       <parameter dia-name="pionARenforcer_" name="Pion a renforcer" optional="false" type="Agent"/>
       <parameter dia-name="nbrRemorqueurs_" min-value="1" name="Nbr remorqueurs" optional="false" type="Integer"/>
     </fragorder>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs" id="367" name="Pion Reprendre Aux Ordres Remorqueurs">
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs" id="367" name="Pion Reprendre Aux Ordres Remorqueurs">
       <parameter dia-name="pionRenforce_" name="Pion renforce" optional="false" type="Agent"/>
       <parameter dia-name="nbrRemorqueurs_" min-value="1" name="Nbr remorqueurs" optional="false" type="Integer"/>
     </fragorder>
@@ -3505,4 +3521,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ROEM_ArreterSilenceRadar" id="28801" name="ROEM Arreter Silence Radar"/>
   </fragorders>
 </missions>
-<!-- signature="3117047748" -->
+<!-- signature="2886269167" -->

@@ -22,7 +22,7 @@
 // Name: PHY_ActionLendComposantes constructor
 // Created: JVT 2005-05-12
 // -----------------------------------------------------------------------------
-PHY_ActionLendComposantes::PHY_ActionLendComposantes( MIL_AgentPion& pion, DEC_Decision_ABC* pStart, DEC_Decision_ABC* pTarget, unsigned int nbrToLend, T_ComposantePredicate predicate )
+PHY_ActionLendComposantes::PHY_ActionLendComposantes( MIL_AgentPion& pion, DEC_Decision_ABC* pStart, DEC_Decision_ABC* pTarget, unsigned int nbrToLend, const T_ComposantePredicate& predicate )
     : PHY_DecisionCallbackAction_ABC    ( pion )
     , pion_             ( pion )
     , target_           ( pTarget->GetPion() )
@@ -31,7 +31,7 @@ PHY_ActionLendComposantes::PHY_ActionLendComposantes( MIL_AgentPion& pion, DEC_D
     , bLoanDone_        ( false )
 {
     PHY_RolePion_Composantes& roleDepart = pStart->GetPion().GetRole< PHY_RolePion_Composantes >();
-    nTimer_ = roleDepart.GetLentComposantesTravelTime( target_, nNbrToLend_, std::mem_fun_ref( predicate_ ) );
+    nTimer_ = roleDepart.GetLentComposantesTravelTime( target_, nNbrToLend_, predicate_ );
 
     MIL_Report::PostEvent( pion, MIL_Report::eReport_EquipmentLoanInProgress );
 
@@ -65,8 +65,8 @@ void PHY_ActionLendComposantes::Execute()
 {
     if( !bLoanDone_ && !nTimer_-- )
     {
-        const unsigned int nNbrLent = pion_.GetRole< PHY_RolePion_Composantes >().LendComposantes( target_, nNbrToLend_, std::mem_fun_ref( predicate_ ) );
-
+        const unsigned int nNbrLent = pion_.GetRole< PHY_RolePion_Composantes >().LendComposantes( target_, nNbrToLend_, predicate_ );
+        
         if( nNbrLent == 0 )
             MIL_Report::PostEvent( pion_, MIL_Report::eReport_EquipmentLoanImpossible );
         else

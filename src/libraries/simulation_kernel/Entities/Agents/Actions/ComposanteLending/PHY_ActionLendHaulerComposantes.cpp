@@ -19,7 +19,7 @@
 // Created: NLD 2006-04-04
 // -----------------------------------------------------------------------------
 PHY_ActionLendHaulerComposantes::PHY_ActionLendHaulerComposantes( MIL_AgentPion& pion, DEC_Decision_ABC* pStart, DEC_Decision_ABC* pAgent, unsigned int nbrToLend )
-    : PHY_ActionLendComposantes( pion, pStart, pAgent, nbrToLend, &PHY_ComposantePion::CanHaul )
+    : PHY_ActionLendComposantes( pion, pStart, pAgent, nbrToLend, boost::bind( &PHY_ComposantePion::CanHaul, _1 ) )
 {
 
 }

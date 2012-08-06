@@ -33,6 +33,7 @@
 #include "Entities/Actions/PHY_ActionInterrogate.h"
 #include "Entities/Agents/Actions/ComposanteLending/PHY_ActionLendCollectionComposantes.h"
 #include "Entities/Agents/Actions/ComposanteLending/PHY_ActionLendHaulerComposantes.h"
+#include "Entities/Agents/Actions/ComposanteLending/PHY_ActionLendSpecificComposantes.h"
 #include "Entities/Agents/Actions/Objects/PHY_ActionConstructObject.h"
 #include "Entities/Agents/Actions/Objects/PHY_ActionPrepareObject.h"
 #include "Entities/Agents/Actions/Objects/PHY_ActionDestroyObject.h"
@@ -811,6 +812,10 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< unsigned int( DEC_Decision_ABC*, DEC_Decision_ABC*, unsigned int ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionLendCollectionComposantes, DEC_Decision_ABC*, DEC_Decision_ABC*, unsigned int >, boost::ref( GetPion() ), _1, _2, _3 ) );
     brain[ "DEC_StartPreterRemorqueurs" ] =
         boost::function< unsigned int( DEC_Decision_ABC*, DEC_Decision_ABC*, unsigned int ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionLendHaulerComposantes, DEC_Decision_ABC*, DEC_Decision_ABC*, unsigned int >, boost::ref( GetPion() ), _1, _2, _3 ) );
+    brain[ "DEC_StartPreterComposantes" ] =
+        boost::function< unsigned int( DEC_Decision_ABC*, DEC_Decision_ABC*, PHY_ComposanteTypePion*, unsigned int ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionLendSpecificComposantes, DEC_Decision_ABC*, DEC_Decision_ABC*, PHY_ComposanteTypePion*, unsigned int >, boost::ref( GetPion() ), _1, _2, _3, _4 ) );
+    brain[ "DEC_RecupererComposantes" ] =
+        boost::function< void( const DEC_Decision_ABC*, PHY_ComposanteTypePion*, const unsigned int ) >( boost::bind( &DEC_LogisticFunctions::UndoLendSpecificComposantes, boost::ref( GetPion() ), _1, _2, _3 ) );
     brain[ "DEC_RecupererVSRAM" ] =
         boost::function< void( const DEC_Decision_ABC*, const unsigned int ) >( boost::bind( &DEC_LogisticFunctions::UndoLendCollectionComposantes, boost::ref( GetPion() ), _1, _2 ) );
     brain[ "DEC_RecupererRemorqueurs" ] =

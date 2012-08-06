@@ -346,6 +346,40 @@ integration.startFragOrderTask = function( self )
         integration.cleanFragOrder( self )
         return
     end
+  elseif orderType == "Rep_OrderConduite_Pion_RenforcerEnEquipements" then
+    if integration.isLogisticTypeUnit( ) then
+        local equipments = self.source:GetorderConduiteModifierPrioritesReparations_()
+        if not equipments or #equipments ~= 1 then 
+            integration.cleanFragOrder( self )
+            error( "Need exactly one type of equipment" ) 
+        end
+        DEC_StartPreterComposantes( self.source:GetpionRenforce_(), self.source:GetpionRenforce_(), equipments[1], self.source:GetnbrAmbulances_() )
+    end
+    integration.cleanFragOrder( self )
+    return
+  elseif orderType == "Rep_OrderConduite_Pion_TransfererEquipements" then
+    if integration.isLogisticTypeUnit( ) then
+        local equipments = self.source:GetorderConduiteModifierPrioritesReparations_()
+        if not equipments or #equipments ~= 1 then 
+            integration.cleanFragOrder( self )
+            error( "Need exactly one type of equipment" ) 
+        end
+        DEC_RecupererComposantes( self.source:GetpionRenforce_(), equipments[1], self.source:GetnbrAmbulances_() )
+        DEC_StartPreterComposantes( self.source:GetpionRenforce_(), self.source:GetpionARenforcer_(), equipments[1], self.source:GetnbrAmbulances_() )
+    end
+    integration.cleanFragOrder( self )
+    return
+  elseif orderType == "Rep_OrderConduite_Pion_ReprendreAuxOrdresEquipements" then
+    if integration.isLogisticTypeUnit( ) then
+        local equipments = self.source:GetorderConduiteModifierPrioritesReparations_()
+        if not equipments or #equipments ~= 1 then 
+            integration.cleanFragOrder( self )
+            error( "Need exactly one type of equipment" ) 
+        end
+        DEC_RecupererComposantes( self.source:GetpionRenforce_(), equipments[1], self.source:GetnbrAmbulances_() )
+    end
+    integration.cleanFragOrder( self )
+    return
   elseif orderType == "Rep_OrderConduite_Pion_RenforcerEnRemorqueurs" then
     if integration.isLogisticTypeUnit( ) then
         orderType = "france.military.platoon.combat.support.log.tasks.RenforcerEnRemorqueurs"
