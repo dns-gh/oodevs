@@ -1,6 +1,7 @@
 queryImplementation "getEntitiesToIntercept" { ["execute"] = function ( params )
      local entities = {}
      local enemies = integration.getDestroyableInObjective ( params.objective )
+     local porteeMax = DEC_Tir_PorteeMaxPourTirer( params.probabilityToHit )
      local realEnemies = {}
      if myself.taskParams.entities and #myself.taskParams.entities ~= 0 then
         for i, enemyKnowledge in pairs( myself.taskParams.entities ) do
@@ -10,7 +11,11 @@ queryImplementation "getEntitiesToIntercept" { ["execute"] = function ( params )
      
            -- Mission Harceler (ne prend pas d'unité en parmètre et harcèle tous les ennemis qui rentre dans la zone)
       if not myself.taskParams.entities or #myself.taskParams.entities == 0 then
-           entities = enemies
+           for _, element in pairs( enemies ) do
+              if integration.distance( element, meKnowledge ) < porteeMax then
+                 entities[#entities + 1] = element
+              end
+           end
       else -- Mission Intercepter : on ne tire que sur l'ennemi renseigné par l'utilisateur mais uniquement quand il est dans la zone
           -- Controle magique de l'objectif qui simule l'effet de patrouiller
            for _, element in pairs( enemies ) do
@@ -22,7 +27,9 @@ queryImplementation "getEntitiesToIntercept" { ["execute"] = function ( params )
                         or ( masalife.brain.core.class.isOfType( params.objective, sword.military.world.UrbanBlock ) 
               and DEC_IsPointInUrbanBlock( element:getPosition(), params.objective.source ) ) )
                     then
-                        entities[ #entities + 1 ] = element
+                        if integration.distance( element, meKnowledge ) < porteeMax then
+                            entities[ #entities + 1 ] = element
+                        end
                     end
                 end
            end

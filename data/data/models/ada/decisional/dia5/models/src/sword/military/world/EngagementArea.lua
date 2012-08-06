@@ -10,12 +10,10 @@ return
                and meKnowledge:isInCrowd()
     end,
     destructionEfficiency = function( self, objective )
-         return ( self:proximityLevel() / 100 
-           + meKnowledge:computeDestructionCapability( objective, self ) ) / 100
+         return self:proximityLevel() / 100
     end,
     neutralizationEfficiency = function( self, objective )
-         return ( self:proximityLevel() / 100 
-            + meKnowledge:computeNeutralisationCapability( objective, self ) ) / 100
+         return self:proximityLevel() / 100
     end,
 
     -- -------------------------------------------------------------------------------- 

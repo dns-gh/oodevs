@@ -28,7 +28,7 @@
 					</parameter>
 					<parameter name="ph">
 						<value>
-							<number>0.5</number>
+							<number>1.0</number>
 						</value>
 					</parameter>
 				</skill>

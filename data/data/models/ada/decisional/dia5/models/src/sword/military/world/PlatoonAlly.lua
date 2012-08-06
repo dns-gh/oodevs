@@ -457,14 +457,11 @@ return
         return math.max( integration.normalizedInversedDistance( objective, position ), 1 )
     end,
     computeDestructionCapability = function( self, objective, position )
-        local pos = position:getPosition()
-        if not pos then
-          return 1
-        end
-        local attritionPower = integration.getAttrition( self, objective, position, 0.7 )
-        if not integration.isPointInUrbanBlockTrafficable( position, true ) then
+        local pos = position:getMyPosition() or self:getMyPosition()
+        local attritionPower = integration.getAttrition( self, objective, pos, 0.7 )
+        if not integration.isPointInUrbanBlockTrafficable( pos, true ) then
             if self:canDismount() then -- INF
-                return position:getProximity( objective ) * attritionPower -- hypothèse simplificatrice
+                return pos:getProximity( objective ) * attritionPower -- hypothèse simplificatrice
             else
                 return 0.1 * attritionPower
             end
@@ -473,15 +470,7 @@ return
         end
     end,
     computeNeutralisationCapability = function( self, objective, position )
-        if not integration.isPointInUrbanBlockTrafficable( position, true ) then
-            if self:canDismount() then -- INF
-                return position:getProximity( objective ) -- hypothèse simplificatrice
-            else
-                return 0.1
-            end
-        else -- cas normal
-            return math.max( integration.getAttrition( self, objective, position, 0.7 ), 1 ) -- sufficient PH estimated for destruction.
-        end
+        return meKnowledge:computeDestructionCapability( objective, position )
     end,
     computeBuildCapability = function( self, objective, position )
         return math.max( integration.normalizedInversedDistance( objective, position ), 1 )
