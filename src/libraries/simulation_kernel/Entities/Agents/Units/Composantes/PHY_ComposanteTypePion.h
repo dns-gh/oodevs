@@ -155,7 +155,7 @@ public:
     bool   CanRepair              ( const PHY_Breakdown& breakdown ) const;
     bool   CanRepair              () const;
     bool   CanHaul                () const;
-    bool   CanHaul                ( const PHY_ComposanteTypePion& type ) const;
+    bool   CanHaul1               ( const PHY_ComposanteTypePion& type ) const;
     double GetHaulerWeightCapacity() const;
     double GetHaulerLoadingTime   () const;
     double GetHaulerUnloadingTime () const;

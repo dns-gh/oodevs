@@ -838,13 +838,13 @@ bool PHY_ComposantePion::CanHaul() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::CanHaul
+// Name: PHY_ComposantePion::CanHaul1
 // Created: NLD 2005-03-29
 // -----------------------------------------------------------------------------
-bool PHY_ComposantePion::CanHaul( const PHY_ComposanteTypePion& composanteType ) const
+bool PHY_ComposantePion::CanHaul1( const PHY_ComposanteTypePion& composanteType ) const
 {
     assert( pType_ );
-    return pState_->IsUsable() && CanBeUsed() && pType_->CanHaul( composanteType );
+    return pState_->IsUsable() && CanBeUsed() && pType_->CanHaul1( composanteType );
 }
 
 // -----------------------------------------------------------------------------

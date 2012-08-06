@@ -27,7 +27,7 @@ class PHY_HumanWound;
 // =============================================================================
 class DEC_LogisticFunctions
 {
-    typedef bool (PHY_ComposantePion::*T_ComposantePredicate)() const;
+    typedef boost::function< bool( PHY_ComposantePion* ) > T_ComposantePredicate;
 
 public:
     //! @name Maintenance
@@ -109,6 +109,7 @@ public:
 
     static void UndoLendCollectionComposantes( MIL_Agent_ABC& callerAgent, const DEC_Decision_ABC* pTarget, const unsigned int nNbrToGetBack );
     static void UndoLendHaulerComposantes( MIL_Agent_ABC& callerAgent, const DEC_Decision_ABC* pTarget, const unsigned int nNbrToGetBack );
+    static void UndoLendSpecificComposantes( MIL_Agent_ABC& callerAgent, const DEC_Decision_ABC* pTarget, PHY_ComposanteTypePion* type, const unsigned int nNbrToGetBack );
     //@}
 
 private:

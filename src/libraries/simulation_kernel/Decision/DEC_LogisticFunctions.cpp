@@ -680,7 +680,7 @@ void DEC_LogisticFunctions::UndoLendComposantes( MIL_Agent_ABC& callerAgent, con
 {
     if( !pTarget )
         throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
-    const unsigned int nNbrGotBack   = callerAgent.GetRole< PHY_RolePion_Composantes >().RetrieveLentComposantes( pTarget->GetPion(), nNbrToGetBack, std::mem_fun_ref( funcPredicate ) );
+    const unsigned int nNbrGotBack   = callerAgent.GetRole< PHY_RolePion_Composantes >().RetrieveLentComposantes( pTarget->GetPion(), nNbrToGetBack, funcPredicate );
     if( nNbrGotBack == 0 )
         MIL_Report::PostEvent( callerAgent, MIL_Report::eReport_EquipmentLoanRetrievingImpossible );
     else
@@ -699,7 +699,7 @@ void DEC_LogisticFunctions::UndoLendComposantes( MIL_Agent_ABC& callerAgent, con
 // -----------------------------------------------------------------------------
 void DEC_LogisticFunctions::UndoLendCollectionComposantes( MIL_Agent_ABC& callerAgent, const DEC_Decision_ABC* pTarget, const unsigned int nNbrToGetBack )
 {
-    UndoLendComposantes( callerAgent, pTarget, nNbrToGetBack, &PHY_ComposantePion::CanCollectCasualties );
+    UndoLendComposantes( callerAgent, pTarget, nNbrToGetBack, boost::bind( &PHY_ComposantePion::CanCollectCasualties, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -708,7 +708,24 @@ void DEC_LogisticFunctions::UndoLendCollectionComposantes( MIL_Agent_ABC& caller
 // -----------------------------------------------------------------------------
 void DEC_LogisticFunctions::UndoLendHaulerComposantes( MIL_Agent_ABC& callerAgent, const DEC_Decision_ABC* pTarget, const unsigned int nNbrToGetBack )
 {
-    UndoLendComposantes( callerAgent, pTarget, nNbrToGetBack, &PHY_ComposantePion::CanHaul );
+    UndoLendComposantes( callerAgent, pTarget, nNbrToGetBack, boost::bind( &PHY_ComposantePion::CanHaul, _1 ) );
+}
+
+namespace
+{
+    bool CheckComposante( PHY_ComposantePion* composante, PHY_ComposanteTypePion* type )
+    {
+        return &composante->GetType() == type;
+    }
+} 
+
+// -----------------------------------------------------------------------------
+// Name: DEC_LogisticFunctions::UndoLendSpecificComposantes
+// Created: JSR 2012-08-06
+// -----------------------------------------------------------------------------
+void DEC_LogisticFunctions::UndoLendSpecificComposantes( MIL_Agent_ABC& callerAgent, const DEC_Decision_ABC* pTarget, PHY_ComposanteTypePion* type, const unsigned int nNbrToGetBack )
+{
+    UndoLendComposantes( callerAgent, pTarget, nNbrToGetBack, boost::function< bool( PHY_ComposantePion* ) >( boost::bind( &CheckComposante, _1, type ) ) );
 }
 
 // -----------------------------------------------------------------------------

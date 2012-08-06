@@ -1243,10 +1243,10 @@ bool PHY_ComposanteTypePion::CanRepair( const PHY_Breakdown& breakdown ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposanteTypePion::CanHaul
+// Name: PHY_ComposanteTypePion::CanHaul1
 // Created: NLD 2005-03-29
 // -----------------------------------------------------------------------------
-bool PHY_ComposanteTypePion::CanHaul( const PHY_ComposanteTypePion& type ) const
+bool PHY_ComposanteTypePion::CanHaul1( const PHY_ComposanteTypePion& type ) const
 {
     return ( rHaulerWeightCapacity_ - type.GetWeight() ) >= 0.;
 }

@@ -33,13 +33,13 @@ public:
 protected:
     //! @name Types
     //@{
-    typedef bool (PHY_ComposantePion::*T_ComposantePredicate)() const;
+    typedef boost::function< bool( PHY_ComposantePion* ) > T_ComposantePredicate;
     //@}
 
 protected:
     //! @name Constructors/Destructor
     //@{
-             PHY_ActionLendComposantes( MIL_AgentPion&, DEC_Decision_ABC* pStart, DEC_Decision_ABC* pTarget, unsigned int nbrToLend , T_ComposantePredicate predicate );
+             PHY_ActionLendComposantes( MIL_AgentPion&, DEC_Decision_ABC* pStart, DEC_Decision_ABC* pTarget, unsigned int nbrToLend , const T_ComposantePredicate& predicate );
     virtual ~PHY_ActionLendComposantes();
     //@}
 

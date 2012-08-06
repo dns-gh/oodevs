@@ -33,7 +33,7 @@ unsigned int PHY_RolePion_Composantes::LendComposantes( MIL_Agent_ABC& borrower,
     for( PHY_ComposantePion::RIT_ComposantePionVector it = composantes_.rbegin(); it != composantes_.rend() && nNbrDone < nNbr ; )
     {
         PHY_ComposantePion& composante = **it;
-        if( composante.CanBeLent() && funcPredicate( composante ) )
+        if( composante.CanBeLent() && funcPredicate( &composante ) )
         {
             ++nNbrDone;
             LendComposante( borrower, composante );
@@ -62,9 +62,9 @@ unsigned int PHY_RolePion_Composantes::RetrieveLentComposantes( MIL_Agent_ABC& b
         const PHY_ComposantePion::T_ComposantePionVector& lentComps = it->second;
         for( PHY_ComposantePion::CIT_ComposantePionVector it = lentComps.begin(); it != lentComps.end(); ++it )
         {
-            PHY_ComposantePion& composante = **it;
+            PHY_ComposantePion* composante = *it;
             if( funcPredicate( composante ) )
-                pComposante = &composante;
+                pComposante = composante;
         }
         if( !pComposante )
             return nNbrDone;
@@ -88,7 +88,7 @@ unsigned int PHY_RolePion_Composantes::GetLentComposantesTravelTime( MIL_Agent_A
     for( PHY_ComposantePion::RIT_ComposantePionVector it = composantes_.rbegin(); it != composantes_.rend() && nNbrDone < nNbr; ++it )
     {
         PHY_ComposantePion& composante = **it;
-        if( composante.CanBeLent() && funcPredicate( composante ) )
+        if( composante.CanBeLent() && funcPredicate( &composante ) )
         {
             ++nNbrDone;
             nTime = std::max( nTime, composante.ApproximateTravelTime( srcPos, destPos ) );

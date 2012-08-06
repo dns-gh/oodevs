@@ -100,7 +100,7 @@ public:
     //@{
     const PHY_Breakdown* GetBreakdown() const;
     bool CanHaul() const;
-    bool CanHaul( const PHY_ComposanteTypePion& composanteType ) const;
+    bool CanHaul1( const PHY_ComposanteTypePion& composanteType ) const;
     bool CanRepair() const;
     bool CanRepair( const PHY_Breakdown& breakdown ) const;
 

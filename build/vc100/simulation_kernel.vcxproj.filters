@@ -2541,6 +2541,9 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\PathPointAdapter.cpp">
       <Filter>Source Files\Adapters</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\ComposanteLending\PHY_ActionLendSpecificComposantes.cpp">
+      <Filter>Source Files\Entities\Agents\Actions\ComposanteLending</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\Sink.cpp">
       <Filter>Source Files\Adapters</Filter>
     </ClCompile>
@@ -5131,6 +5134,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\FloodModel.h">
       <Filter>Source Files\Adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\ComposanteLending\PHY_ActionLendSpecificComposantes.h">
+      <Filter>Source Files\Entities\Agents\Actions\ComposanteLending</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

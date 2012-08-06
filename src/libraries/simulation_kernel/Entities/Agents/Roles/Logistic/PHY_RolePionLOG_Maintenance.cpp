@@ -274,7 +274,7 @@ namespace
         }
         void operator() ( PHY_ComposantePion& composante )
         {
-            if( !composante.CanHaul( composanteType_ ) )
+            if( !composante.CanHaul1( composanteType_ ) )
                 return;
 
             double rNewScore = composante.GetType().GetHaulerWeightCapacity() - composanteType_.GetWeight();
@@ -308,7 +308,7 @@ PHY_ComposantePion* PHY_RolePionLOG_Maintenance::GetAvailableHauler( const PHY_C
 // -----------------------------------------------------------------------------
 bool PHY_RolePionLOG_Maintenance::HasUsableHauler( const PHY_ComposanteTypePion& composanteType ) const
 {
-    PHY_ComposanteTypePredicate1< PHY_ComposanteTypePion > predicate( &PHY_ComposanteTypePion::CanHaul, composanteType );
+    PHY_ComposanteTypePredicate1< PHY_ComposanteTypePion > predicate( &PHY_ComposanteTypePion::CanHaul1, composanteType );
     HasUsableComponentFunctor functor( predicate );
     std::auto_ptr< OnComponentComputer_ABC > computer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
     owner_.Execute( *computer );
@@ -557,7 +557,7 @@ int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForTransport( const PHY_Com
     if( !bSystemEnabled_ || ( composante.GetBreakdown()->AffectMobility() && !HasUsableHauler( composante.GetType() ) ) )
         return std::numeric_limits< int >::min();
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
-    PHY_ComposanteUsePredicate1< PHY_ComposanteTypePion > predicate( &PHY_ComposantePion::CanHaul, &PHY_ComposanteTypePion::CanHaul, composante.GetType() );
+    PHY_ComposanteUsePredicate1< PHY_ComposanteTypePion > predicate( &PHY_ComposantePion::CanHaul1, &PHY_ComposanteTypePion::CanHaul1, composante.GetType() );
     GetComponentUseFunctor functorOnComponent( predicate, composanteUse );
     std::auto_ptr< OnComponentComputer_ABC > componentComputer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functorOnComponent ) );
     owner_.Execute( *componentComputer );
