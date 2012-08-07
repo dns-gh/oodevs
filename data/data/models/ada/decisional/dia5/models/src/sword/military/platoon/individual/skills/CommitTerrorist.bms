@@ -28,7 +28,7 @@ rootnode
         self.commited = false
         self.firing = false
         self.IEDReady = false
-        self.dotation = integration.munitionPourTirIndirect( self.params.objective:getPosition() )
+        self.dotation = integration.munitionPourTirIndirect( nil )
     end,
 
     -- -------------------------------------------------------------------------------- 

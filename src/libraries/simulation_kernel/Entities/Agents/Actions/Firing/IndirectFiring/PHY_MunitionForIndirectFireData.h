@@ -30,7 +30,7 @@ namespace firing
 class PHY_MunitionForIndirectFireData : public FireData_ABC
 {
 public:
-             PHY_MunitionForIndirectFireData( MIL_Agent_ABC& firer, const PHY_IndirectFireDotationClass& indirectWeaponCategory, const MT_Vector2D& vTargetPosition );
+             PHY_MunitionForIndirectFireData( MIL_Agent_ABC& firer, const PHY_IndirectFireDotationClass& indirectWeaponCategory, const MT_Vector2D* vTargetPosition );
     virtual ~PHY_MunitionForIndirectFireData();
 
     //! @name Operations
@@ -44,7 +44,7 @@ private:
     //@{
     MIL_Agent_ABC&                          firer_;
     const PHY_IndirectFireDotationClass& indirectWeaponCategory_;
-    const MT_Vector2D&                      vTargetPosition_;
+    const MT_Vector2D*                      vTargetPosition_;
     const PHY_DotationCategory*             pChoosenMunition_;
     //@}
 };

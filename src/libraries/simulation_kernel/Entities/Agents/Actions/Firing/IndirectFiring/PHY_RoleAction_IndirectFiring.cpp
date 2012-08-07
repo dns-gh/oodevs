@@ -158,7 +158,7 @@ int PHY_RoleAction_IndirectFiring::ThrowSmoke( const MT_Vector2D& vTargetPositio
 // Name: PHY_RoleAction_IndirectFiring::GetMunitionForIndirectFire
 // Created: NLD 2006-08-08
 // -----------------------------------------------------------------------------
-const PHY_DotationCategory* PHY_RoleAction_IndirectFiring::GetMunitionForIndirectFire( const PHY_IndirectFireDotationClass& indirectWeaponCategory, const MT_Vector2D& vTargetPosition )
+const PHY_DotationCategory* PHY_RoleAction_IndirectFiring::GetMunitionForIndirectFire( const PHY_IndirectFireDotationClass& indirectWeaponCategory, const MT_Vector2D* vTargetPosition )
 {
     PHY_MunitionForIndirectFireData fireData( pion_, indirectWeaponCategory, vTargetPosition );
     std::auto_ptr< WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( pion_.GetAlgorithms().weaponAvailabilityComputerFactory_->Create( fireData ) );
