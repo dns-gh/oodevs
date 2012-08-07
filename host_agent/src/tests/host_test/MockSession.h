@@ -48,6 +48,7 @@ namespace mocks
         MOCK_METHOD( Update, 1 );
         MOCK_METHOD( Archive, 0 );
         MOCK_METHOD( Restore, 0 );
+        MOCK_METHOD( Download, 1 );
     };
 
     MOCK_BASE_CLASS( MockSessionFactory, host::SessionFactory_ABC )

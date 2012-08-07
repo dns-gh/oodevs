@@ -728,3 +728,15 @@ bool Session::Restore()
         throw web::HttpException( web::FORBIDDEN );
     return ModifyStatus( lock, STATUS_STOPPED );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Session::Download
+// Created: BAX 2012-08-06
+// -----------------------------------------------------------------------------
+bool Session::Download( std::ostream& dst ) const
+{
+    boost::shared_lock< boost::shared_mutex > lock( access_ );
+    FileSystem_ABC::T_Packer packer = system_.Pack( GetOutput(), dst );
+    packer->Pack();
+    return true;
+}

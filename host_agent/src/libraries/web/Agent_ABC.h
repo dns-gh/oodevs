@@ -87,17 +87,18 @@ struct Agent_ABC : public boost::noncopyable
 
     //! @name Session Methods
     //@{
-    virtual std::vector< Tree > ListSessions  ( const Uuid& node, int offset, int limit ) const = 0;
-    virtual size_t              CountSessions ( const Uuid& node ) const = 0;
-    virtual Tree                GetSession    ( const Uuid& node, const Uuid& id ) const = 0;
-    virtual Tree                CreateSession ( const Uuid& node, const session::Config& cfg, const std::string& exercise ) = 0;
-    virtual Tree                DeleteSession ( const Uuid& node, const Uuid& id ) = 0;
-    virtual Tree                StartSession  ( const Uuid& node, const Uuid& id ) const = 0;
-    virtual Tree                StopSession   ( const Uuid& node, const Uuid& id ) const = 0;
-    virtual Tree                PauseSession  ( const Uuid& node, const Uuid& id ) const = 0;
-    virtual Tree                UpdateSession ( const Uuid& node, const Uuid& id, const Tree& cfg ) const = 0;
-    virtual Tree                ArchiveSession( const Uuid& node, const Uuid& id ) const = 0;
-    virtual Tree                RestoreSession( const Uuid& node, const Uuid& id ) const = 0;
+    virtual std::vector< Tree > ListSessions   ( const Uuid& node, int offset, int limit ) const = 0;
+    virtual size_t              CountSessions  ( const Uuid& node ) const = 0;
+    virtual Tree                GetSession     ( const Uuid& node, const Uuid& id ) const = 0;
+    virtual Tree                CreateSession  ( const Uuid& node, const session::Config& cfg, const std::string& exercise ) = 0;
+    virtual Tree                DeleteSession  ( const Uuid& node, const Uuid& id ) = 0;
+    virtual Tree                StartSession   ( const Uuid& node, const Uuid& id ) const = 0;
+    virtual Tree                StopSession    ( const Uuid& node, const Uuid& id ) const = 0;
+    virtual Tree                PauseSession   ( const Uuid& node, const Uuid& id ) const = 0;
+    virtual Tree                UpdateSession  ( const Uuid& node, const Uuid& id, const Tree& cfg ) const = 0;
+    virtual Tree                ArchiveSession ( const Uuid& node, const Uuid& id ) const = 0;
+    virtual Tree                RestoreSession ( const Uuid& node, const Uuid& id ) const = 0;
+    virtual void                DownloadSession( const Uuid& node, const Uuid& id, std::ostream& dst ) const = 0;
     //@}
 
     //! @name Exercise Methods

@@ -32,6 +32,7 @@ namespace mocks
         MOCK_METHOD( Update, 3 );
         MOCK_METHOD( Archive, 2 );
         MOCK_METHOD( Restore, 2 );
+        MOCK_METHOD( Download, 3 );
     };
 };
 

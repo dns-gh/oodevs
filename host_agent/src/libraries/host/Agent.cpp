@@ -388,6 +388,15 @@ Tree Agent::RestoreSession( const Uuid& node, const Uuid& id ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Agent::DownloadSession
+// Created: BAX 2012-08-06
+// -----------------------------------------------------------------------------
+void Agent::DownloadSession( const Uuid& node, const Uuid& id, std::ostream& dst ) const
+{
+    sessions_.Download( node, id, dst );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Agent::ListExercises
 // Created: BAX 2012-03-27
 // -----------------------------------------------------------------------------

@@ -212,6 +212,7 @@ class SessionItemView extends Backbone.View
         "click .clone" : "clone"
         "click .archive" : "archive"
         "click .restore" : "restore"
+        "click .download" : "download"
 
     is_search: =>
         if contains @model.get("name"), @search
@@ -268,6 +269,12 @@ class SessionItemView extends Backbone.View
 
     restore: =>
         @modify "restore"
+
+    download: =>
+        uri = get_url "/api/download_session?"
+        uri += "node=" + uuid
+        uri += "&id=" + @model.id
+        window.location.href = uri
 
     set_filter: (list) =>
         @filters = list

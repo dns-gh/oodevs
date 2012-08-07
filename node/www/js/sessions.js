@@ -686,6 +686,8 @@
 
       this.set_filter = __bind(this.set_filter, this);
 
+      this.download = __bind(this.download, this);
+
       this.restore = __bind(this.restore, this);
 
       this.archive = __bind(this.archive, this);
@@ -729,7 +731,8 @@
       "click .edit": "edit",
       "click .clone": "clone",
       "click .archive": "archive",
-      "click .restore": "restore"
+      "click .restore": "restore",
+      "click .download": "download"
     };
 
     SessionItemView.prototype.is_search = function() {
@@ -815,6 +818,14 @@
 
     SessionItemView.prototype.restore = function() {
       return this.modify("restore");
+    };
+
+    SessionItemView.prototype.download = function() {
+      var uri;
+      uri = get_url("/api/download_session?");
+      uri += "node=" + uuid;
+      uri += "&id=" + this.model.id;
+      return window.location.href = uri;
     };
 
     SessionItemView.prototype.set_filter = function(list) {

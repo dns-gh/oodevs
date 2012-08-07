@@ -167,7 +167,7 @@
                 <a title="Clone" class="btn clone"><i class="icon-plus-sign"></i></a>
                 {{/is_option}}
                 {{#is_option status stopped=""}}
-                <a title="Download" class="btn download disabled"><i class="icon-download-alt"></i></a>
+                <a title="Download" class="btn download"><i class="icon-download-alt"></i></a>
                 {{/is_option}}
                 {{#is_option status stopped=""}}
                 <a title="Archive" class="btn archive"><i class="icon-hdd"></i></a>

@@ -111,6 +111,7 @@ public:
     virtual bool Update( const Tree& cfg );
     virtual bool Archive();
     virtual bool Restore();
+    virtual bool Download( std::ostream& dst ) const;
     //@}
 
     //! @name Typedef helpers

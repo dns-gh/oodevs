@@ -30,6 +30,15 @@
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
+#ifdef _MSC_VER
+#   pragma warning( push )
+#   pragma warning( disable : 4702 )
+#endif
+#include <boost/iostreams/stream.hpp>
+#ifdef _MSC_VER
+#   pragma warning( pop )
+#endif
+
 using namespace web;
 using namespace property_tree;
 
@@ -244,24 +253,25 @@ void Controller::DoGet( Reply_ABC& rpy, Request_ABC& request )
         if( uri == "/stop_node" )          return StopNode  ( rpy, request );
         if( uri == "/update_node" )        return UpdateNode( rpy, request );
         // install
-        if( uri == "/get_install" )        return GetInstall( rpy, request );
+        if( uri == "/get_install" )        return GetInstall   ( rpy, request );
         if( uri == "/delete_install" )     return DeleteInstall( rpy, request );
         // cache
         if( uri == "/get_cache" )          return GetCache        ( rpy, request );
         if( uri == "/delete_cache" )       return DeleteCache     ( rpy, request );
         if( uri == "/install_from_cache" ) return InstallFromCache( rpy, request );
         // sessions
-        if( uri == "/list_sessions" )      return ListSessions  ( rpy, request );
-        if( uri == "/count_sessions" )     return CountSessions ( rpy, request );
-        if( uri == "/get_session" )        return GetSession    ( rpy, request );
-        if( uri == "/create_session" )     return CreateSession ( rpy, request );
-        if( uri == "/delete_session" )     return DeleteSession ( rpy, request );
-        if( uri == "/start_session" )      return StartSession  ( rpy, request );
-        if( uri == "/stop_session" )       return StopSession   ( rpy, request );
-        if( uri == "/pause_session" )      return PauseSession  ( rpy, request );
-        if( uri == "/update_session" )     return UpdateSession ( rpy, request );
-        if( uri == "/archive_session" )    return ArchiveSession( rpy, request );
-        if( uri == "/restore_session" )    return RestoreSession( rpy, request );
+        if( uri == "/list_sessions" )      return ListSessions   ( rpy, request );
+        if( uri == "/count_sessions" )     return CountSessions  ( rpy, request );
+        if( uri == "/get_session" )        return GetSession     ( rpy, request );
+        if( uri == "/create_session" )     return CreateSession  ( rpy, request );
+        if( uri == "/delete_session" )     return DeleteSession  ( rpy, request );
+        if( uri == "/start_session" )      return StartSession   ( rpy, request );
+        if( uri == "/stop_session" )       return StopSession    ( rpy, request );
+        if( uri == "/pause_session" )      return PauseSession   ( rpy, request );
+        if( uri == "/update_session" )     return UpdateSession  ( rpy, request );
+        if( uri == "/archive_session" )    return ArchiveSession ( rpy, request );
+        if( uri == "/restore_session" )    return RestoreSession ( rpy, request );
+        if( uri == "/download_session" )   return DownloadSession( rpy, request );
         // exercises
         if( uri == "/list_exercises")      return ListExercises ( rpy, request );
         if( uri == "/count_exercises" )    return CountExercises( rpy, request );
@@ -650,6 +660,71 @@ void Controller::RestoreSession( Reply_ABC& rpy, const Request_ABC& request )
 {
     const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
     WriteHttpReply( rpy, agent_.RestoreSession( node, GetId( request ) ) );
+}
+
+namespace
+{
+static const std::string crlf = "\r\n";
+
+struct Sink : public boost::iostreams::sink
+{
+    Sink( Reply_ABC& res )
+        : res_  ( &res )
+        , write_( false)
+    {
+        // NOTHING
+    }
+
+    virtual ~Sink()
+    {
+        if( !write_ )
+            return;
+        std::stringstream chunk;
+        chunk << 0 << crlf << crlf;
+        WriteChunk( chunk );
+    }
+
+    void WriteChunk( const std::stringstream& chunk )
+    {
+        const std::string data = chunk.str();
+        res_->Write( data.c_str(), data.size() );
+    }
+
+    std::streamsize write( const void* data, size_t size )
+    {
+        if( !size )
+            return 0;
+        write_ = true;
+        std::stringstream chunk;
+        chunk << std::hex << size << crlf;
+        chunk.write( reinterpret_cast< const char* >( data ), size );
+        chunk << crlf;
+        WriteChunk( chunk );
+        return size;
+    }
+
+private:
+    Reply_ABC* res_;
+    bool write_;
+};
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controller::DownloadSession
+// Created: BAX 2012-08-06
+// -----------------------------------------------------------------------------
+void Controller::DownloadSession( Reply_ABC& response, const Request_ABC& request )
+{
+    const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
+    response.SetStatus( web::OK );
+    response.SetHeader( "Content-Type", "application/zip" );
+    response.SetHeader( "Content-Disposition", "attachment; filename=session.zip" );
+    response.SetHeader( "Transfer-Encoding", "chunked" );
+    response.SetHeader( "Connection", "Close" );
+    response.WriteHeaders();
+    boost::iostreams::stream< Sink > output( response );
+    agent_.DownloadSession( node, GetId( request ), output );
+    output.flush();
 }
 
 // -----------------------------------------------------------------------------
