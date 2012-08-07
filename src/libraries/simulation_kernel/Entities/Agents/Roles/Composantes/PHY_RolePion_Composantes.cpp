@@ -1289,7 +1289,6 @@ double PHY_RolePion_Composantes::GetMaxRangeToFire( const MIL_Agent_ABC&  pion, 
 {
     double rRange = 0.;
     for(  PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-        if( ( *it )->IsMajor() )
             rRange = std::max( rRange, ( **it ).GetMaxRangeToFire( pion, rWantedPH ) );
     return rRange;
 }

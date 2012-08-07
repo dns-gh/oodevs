@@ -16,7 +16,7 @@
 		<stage label="Défendre">
 			<skills>
 				<skill name="platoon.combat.support.art.skills.Defendre" main="true">
-                    <parameter name="typeDeploiement">
+					<parameter name="typeDeploiement">
 						<value>
 							<number>0.0</number>
 						</value>
@@ -28,7 +28,7 @@
 					</parameter>
 					<parameter name="ph">
 						<value>
-							<number>0.5</number>
+							<number>1.0</number>
 						</value>
 					</parameter>
 				</skill>
