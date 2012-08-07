@@ -946,7 +946,7 @@
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ASS . DAFA"/>
     <unit max-occurs="1" min-occurs="1" type="ASS . DAFV"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.CIRCU.Escadron Transport Blindes" id="821" name="CIRCU . Escadron Transport Blinde" type="Automate CIRCULATION">
+  <automat decisional-model="Masalife.Automate.CIRCU.Escadron Transport Blindes" id="821" name="TRAIN . Escadron Transport Blinde" type="Automate CIRCULATION">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRAIN . Peloton CDT ESC TRPT BLD"/>
     <unit max-occurs="3" min-occurs="1" type="TRAIN . Peloton Transport Blindes CL100"/>
     <unit max-occurs="3" min-occurs="1" type="TRAIN . Peloton Transport Blindes CL50"/>
@@ -963,7 +963,7 @@
     <unit command-post="true" max-occurs="1" min-occurs="1" type="CIRCU . PC sur VAB"/>
     <unit max-occurs="4" min-occurs="4" type="CIRCU . Patrouille VAB"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.CIRCU.Escadron Transport Blindes" id="825" name="CIRCU . Train" type="Automate SGTIA">
+  <automat decisional-model="Masalife.Automate.CIRCU.Escadron Transport Blindes" id="825" name="TRAIN . Train" type="Automate CIRCULATION">
     <unit command-post="true" min-occurs="1" type="TRAIN . Train"/>
   </automat>
   <automat decisional-model="Masalife.Automate.NRBC.Section reco" id="826" name="NRBC . Reco" type="Automate NBC">
@@ -1470,4 +1470,4 @@
     <unit max-occurs="6" min-occurs="6" type="ASA . Piece MISTRAL"/>
   </automat>
 </automats>
-<!-- signature="3259307938" -->
+<!-- signature="0294778242" -->
