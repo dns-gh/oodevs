@@ -24,7 +24,7 @@
 		<stage label="Déplacement" permanent="false">
 			<skills>
 				<skill name="platoon.combat.support.air.skills.MoveAlong" main="true">
-					<parameter name="entities">
+					<parameter name="objectives">
 						<value>
 							<parameter>objectives</parameter>
 						</value>
