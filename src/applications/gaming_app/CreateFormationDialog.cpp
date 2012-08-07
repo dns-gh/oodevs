@@ -19,6 +19,7 @@
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/Team_ABC.h"
+#include "ENT/ENT_Tr_Gen.h"
 
 // -----------------------------------------------------------------------------
 // Name: CreateFormationDialog constructor

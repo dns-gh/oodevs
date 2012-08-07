@@ -28,6 +28,7 @@
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 #include <QtGui/qmessagebox.h>
+#include "ENT/ENT_Tr_Gen.h"
 
 using namespace kernel;
 
