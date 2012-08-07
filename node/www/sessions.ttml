@@ -156,7 +156,7 @@
                 {{#is_option status playing="" paused="" replaying=""}}
                 <a title="Stop" class="btn stop"><i class="icon-stop"></i></a>
                 {{/is_option}}
-                {{#is_option status playing="" paused="" stopped=""}}
+                {{#is_option status stopped=""}}
                 <a title="Replay" class="btn replay disabled"><i class="icon-repeat"></i></a>
                 {{/is_option}}
                 <a title="Loading..." class="btn hide disabled spin_btn"></a>
