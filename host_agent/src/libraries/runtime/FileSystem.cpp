@@ -23,6 +23,7 @@
 #include <stdint.h>
 #include <fcntl.h>
 #include <io.h>
+#include <iostream>
 
 #define  LIBARCHIVE_STATIC
 #include <libarchive/archive.h>
@@ -274,6 +275,11 @@ bool FileSystem::WriteFile( const Path& path, const std::string& content ) const
     return false;
 }
 
+#ifdef _MSC_VER
+#undef write
+#undef close
+#endif
+
 // -----------------------------------------------------------------------------
 // Name: FileSystem::ReadFile
 // Created: BAX 2012-03-21
@@ -359,6 +365,16 @@ void CheckArchiveCode( cpplog::BaseLogger& log, Archive* arc, int err )
         LOG_WARN( log ) << "[archive] " << archive_error_string( arc );
 }
 
+Path StripPathPrefix( const Path& input, size_t diff )
+{
+    Path rpy;
+    Path::const_iterator it = input.begin();
+    std::advance( it, diff );
+    for( ; it != input.end(); ++it )
+        rpy /= *it;
+    return rpy;
+}
+
 void CopyBlocks( cpplog::BaseLogger& log, Archive* src, Archive* dst )
 {
     for( ;; )
@@ -369,10 +385,50 @@ void CopyBlocks( cpplog::BaseLogger& log, Archive* src, Archive* dst )
             return;
         if( err != ARCHIVE_OK )
             AbortArchive( log, src );
-        __LA_SSIZE_T len = archive_write_data_block( dst, buffer, size, offset );
-        if( len != ARCHIVE_OK )
+        __LA_SSIZE_T len = archive_write_data( dst, buffer, size );
+        if( len != size )
             AbortArchive( log, dst );
     }
+}
+
+void TransferArchive( cpplog::BaseLogger& log, Archive* dst, Archive* src, const Path& root, bool pack )
+{
+    const size_t diff = std::distance( root.begin(), root.end() );
+    boost::shared_ptr< ArchiveEntry > ptr( archive_entry_new(), archive_entry_free );
+    for( ;; )
+    {
+        ArchiveEntry* entry = ptr.get();
+        int err = archive_read_next_header2( src, entry );
+        if( err == ARCHIVE_EOF )
+            break;
+        if( err != ARCHIVE_OK )
+            CheckArchiveCode( log, src, err );
+
+        Path next;
+        if( pack )
+        {
+            archive_read_disk_descend( src );
+            next = StripPathPrefix( archive_entry_pathname_w( entry ), diff );
+            if( next.empty() )
+                continue;
+        }
+        else
+        {
+            next = root / archive_entry_pathname_w( entry );
+        }
+        archive_entry_update_pathname_utf8( entry, runtime::Utf8Convert( next ).c_str() );
+
+        err = archive_write_header( dst, entry );
+        if( err != ARCHIVE_OK )
+            CheckArchiveCode( log, dst, err );
+        else if( archive_entry_size( entry ) > 0 )
+            CopyBlocks( log, src, dst );
+        err = archive_write_finish_entry( dst );
+        if( err != ARCHIVE_OK )
+            CheckArchiveCode( log, dst, err );
+    }
+    archive_read_close( src );
+    archive_write_close( dst );
 }
 
 struct Unpacker : public Unpacker_ABC
@@ -393,7 +449,7 @@ struct Unpacker : public Unpacker_ABC
 
     static __LA_SSIZE_T Read( Archive* /*arc*/, void* userdata, const void** buffer )
     {
-        Unpacker* it = static_cast< Unpacker* >( userdata );
+        Unpacker* it = reinterpret_cast< Unpacker* >( userdata );
         __LA_SSIZE_T fill = 0;
         *buffer = &it->buffer_[0];
         while( fill < 1 && !it->stream_.eof() )
@@ -421,30 +477,7 @@ struct Unpacker : public Unpacker_ABC
               | ARCHIVE_EXTRACT_FFLAGS;
         archive_write_disk_set_options( dst.get(), flags );
         archive_write_disk_set_standard_lookup( dst.get() );
-
-        for( ;; )
-        {
-            ArchiveEntry* entry;
-            err = archive_read_next_header( src.get(), &entry );
-            if( err == ARCHIVE_EOF )
-                break;
-            if( err != ARCHIVE_OK )
-                CheckArchiveCode( log_, src.get(), err );
-
-            const Path next = output_ / archive_entry_pathname_w( entry );
-            archive_entry_update_pathname_utf8( entry, runtime::Utf8Convert( next ).c_str() );
-
-            err = archive_write_header( dst.get(), entry );
-            if( err != ARCHIVE_OK )
-                CheckArchiveCode( log_, dst.get(), err );
-            else if( archive_entry_size( entry ) > 0 )
-                CopyBlocks( log_, src.get(), dst.get() );
-            err = archive_write_finish_entry( dst.get() );
-            if( err != ARCHIVE_OK )
-                CheckArchiveCode( log_, dst.get(), err );
-        }
-        archive_read_close( src.get() );
-        archive_write_close( dst.get() );
+        TransferArchive( log_, dst.get(), src.get(), output_, false );
     }
 
     cpplog::BaseLogger& log_;
@@ -461,6 +494,68 @@ struct Unpacker : public Unpacker_ABC
 FileSystem_ABC::T_Unpacker FileSystem::Unpack( const Path& output, std::istream& src ) const
 {
     return boost::make_shared< Unpacker >( boost::ref( log_ ), output, boost::ref( src ) );
+}
+
+namespace
+{
+struct Packer : public Packer_ABC
+{
+    Packer( cpplog::BaseLogger& log, const Path& input, std::ostream& stream )
+        : log_   ( log )
+        , input_ ( input )
+        , stream_( stream )
+    {
+        // NOTHING
+    }
+
+    ~Packer()
+    {
+        // NOTHING
+    }
+
+    static int Dummy( Archive* /*arc*/, void* /*userdata*/ )
+    {
+        return ARCHIVE_OK;
+    }
+
+    static __LA_SSIZE_T Write( Archive* /*arc*/, void* userdata, const void* data, size_t size )
+    {
+        Packer& it = *reinterpret_cast< Packer* >( userdata );
+        const char* src = reinterpret_cast< const char* >( data );
+        it.stream_.write( src, size );
+        return size;
+    }
+
+    void Pack()
+    {
+        boost::shared_ptr< Archive > dst( archive_write_new(), archive_write_free );
+        archive_write_set_format_zip( dst.get() );
+        archive_write_set_bytes_in_last_block( dst.get(), 1 );
+        int err = archive_write_open( dst.get(), this, Packer::Dummy, Packer::Write, Packer::Dummy );
+        if( err != ARCHIVE_OK )
+            throw std::runtime_error( archive_error_string( dst.get() ) );
+
+        boost::shared_ptr< Archive > src( archive_read_disk_new(), archive_read_free );
+        err = archive_read_disk_open( src.get(), runtime::Utf8Convert( input_ ).c_str() );
+        if( err != ARCHIVE_OK )
+            throw std::runtime_error( archive_error_string( src.get() ) );
+
+        TransferArchive( log_, dst.get(), src.get(), input_, true );
+    }
+
+    cpplog::BaseLogger& log_;
+    const Path input_;
+    std::ostream& stream_;
+};
+}
+
+// -----------------------------------------------------------------------------
+// Name: FileSystem::Pack
+// Created: BAX 2012-08-06
+// -----------------------------------------------------------------------------
+FileSystem_ABC::T_Packer FileSystem::Pack( const Path& input, std::ostream& dst ) const
+{
+    return boost::make_shared< Packer >( boost::ref( log_ ), input, boost::ref( dst ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -49,6 +49,26 @@ struct Unpacker_ABC : public boost::noncopyable
 };
 
 // =============================================================================
+/** @class  Packer_ABC
+    @brief  Packer_ABC interface
+*/
+// Created: BAX 2012-08-06
+// =============================================================================
+struct Packer_ABC : public boost::noncopyable
+{
+    //! @name Constructors/Destructor
+    //@{
+             Packer_ABC() {}
+    virtual ~Packer_ABC() {}
+    //@}
+
+    //! @name Methods
+    //@{
+    virtual void Pack() = 0;
+    //@}
+};
+
+// =============================================================================
 /** @class  FileSystem_ABC
     @brief  FileSystem_ABC interface
 */
@@ -65,6 +85,7 @@ struct FileSystem_ABC : public boost::noncopyable
     //! @name Public helpers
     //@{
     typedef boost::shared_ptr< Unpacker_ABC > T_Unpacker;
+    typedef boost::shared_ptr< Packer_ABC > T_Packer;
     typedef boost::function< bool( const Path& ) > T_Predicate;
     //@}
 
@@ -84,6 +105,7 @@ struct FileSystem_ABC : public boost::noncopyable
     virtual std::vector< Path > Glob( const Path& path, const Path& name ) const = 0;
     virtual std::vector< Path > Walk( const Path& path, bool recurse ) const = 0;
     virtual T_Unpacker Unpack( const Path& output, std::istream& src ) const = 0;
+    virtual T_Packer Pack( const Path& input, std::ostream& dst ) const = 0;
     virtual std::string Checksum( const Path& root, const T_Predicate& predicate, size_t& read ) const = 0;
     virtual Path MakeAnyPath( const Path& root ) const = 0;
     virtual std::time_t GetLastWrite( const Path& file ) const = 0;
