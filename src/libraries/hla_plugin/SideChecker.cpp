@@ -198,3 +198,12 @@ void SideChecker::EmbeddedUnitListChanged( const std::string& /*identifier*/, co
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: SideChecker::PlatformCreated
+// Created: AHC 2012-07-26
+// -----------------------------------------------------------------------------
+void SideChecker::PlatformCreated( Agent_ABC& /*agent*/, unsigned int /*identifier*/, const std::string& /*name*/, rpr::ForceIdentifier /*force*/, const rpr::EntityType& /*type*/, const std::string& /*symbol*/ )
+{
+
+}

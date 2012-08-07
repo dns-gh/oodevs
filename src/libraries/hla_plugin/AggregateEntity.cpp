@@ -50,7 +50,7 @@ AggregateEntity::AggregateEntity( Agent_ABC& agent, unsigned int identifier,
     attributes_->Register( "SilentEntities", Wrapper< std::vector< SilentEntity > >( std::vector< SilentEntity >() ) );
     attributes_->Register( "SilentAggregates", Wrapper< uint32 >( 0 ) ); // no aggregates
     attributes_->Register( "SubAggregateIdentifiers", Wrapper< uint32 >( 0 ) ); // no sub aggregates identifiers
-    attributes_->Register( "EntityIdentifiers", Wrapper< uint32 >( 0 ) ); // no entity identifiers
+    attributes_->Register( "EntityIdentifiers", entities_ );
     agent_.Register( *this );
 }
 
@@ -172,4 +172,14 @@ void AggregateEntity::Register( ObjectListener_ABC& listener )
 void AggregateEntity::Unregister( ObjectListener_ABC& listener )
 {
     listeners_->Unregister( listener ) ;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AggregateEntity::EmbarkmentChanged
+// Created: AHC 2012-07-30
+// -----------------------------------------------------------------------------
+void AggregateEntity::PlatformAdded( const std::string& name, unsigned int /*id*/ )
+{
+    entities_.Add( name );
+    attributes_->Update( "EntityIdentifiers", entities_ );
 }

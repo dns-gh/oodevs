@@ -44,6 +44,7 @@
 #include "protocol/Simulation.h"
 #include "rpr/EntityTypeResolver.h"
 #include "rpr/EntityIdentifier.h"
+#include "tic/PlatformDelegateFactory.h"
 #include <hla/HLAException.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/lexical_cast.hpp>
@@ -84,10 +85,10 @@ namespace
     class ExtentResolver : public ExtentResolver_ABC
     {
     public:
-        ExtentResolver( xml::xisubstream xis, dispatcher::Logger_ABC& logger, const dispatcher::Config& config )
+        ExtentResolver( xml::xisubstream xis, dispatcher::Logger_ABC& logger, const kernel::CoordinateConverter_ABC& converter )
             : logger_   ( logger )
             , useExtent_( xis.attribute< bool >( "extent", false ) )
-            , converter_( new kernel::CoordinateConverter( config ) )
+            , converter_( converter )
         {}
         virtual bool IsInBoundaries( const geometry::Point2d& geoPoint ) const
         {
@@ -96,7 +97,7 @@ namespace
             geometry::Point2f xyPoint;
             try
             {
-                xyPoint = converter_->ConvertFromGeo( geoPoint );
+                xyPoint = converter_.ConvertFromGeo( geoPoint );
             }
             catch( std::exception& e )
             {
@@ -106,12 +107,12 @@ namespace
                                   ": " + e.what() );
                 return false;
             }
-            return converter_->IsInBoundaries( xyPoint );
+            return converter_.IsInBoundaries( xyPoint );
         }
     private:
         dispatcher::Logger_ABC& logger_;
         const bool useExtent_;
-        std::auto_ptr< kernel::CoordinateConverter_ABC > converter_;
+        const kernel::CoordinateConverter_ABC& converter_;
     };
 }
 
@@ -151,7 +152,8 @@ HlaPlugin::HlaPlugin( dispatcher::Model_ABC& dynamicModel, const dispatcher::Sta
     , pSubordinates_              ( new Subordinates( *pCallsignResolver_, dynamicModel.Automats() ) )
     , pMessageController_         ( new tools::MessageController< sword::SimToClient_Content >() )
     , pAutomatChecker_            ( new AutomatChecker( dynamicModel.Agents() ) )
-    , pExtentResolver_            ( new ExtentResolver( *pXis_, logger_, config ) )
+    , pConverter_                 ( new kernel::CoordinateConverter( config ) )
+    , pExtentResolver_            ( new ExtentResolver( *pXis_, logger_, *pConverter_ ) )
     , pSubject_                   ( 0 )
     , pFederate_                  ( 0 )
     , pInteractionBuilder_        ( 0 )
@@ -161,6 +163,7 @@ HlaPlugin::HlaPlugin( dispatcher::Model_ABC& dynamicModel, const dispatcher::Sta
     , pSideChecker_               ( 0 )
     , pTransportationFacade_      ( 0 )
     , pStepper_                   ( 0 )
+    , platforms_                  ( new tic::PlatformDelegateFactory( *pConverter_, static_cast< float >( ReadTimeStep( config.GetSessionFile() ) ) ) )
 {
     logger_.LogInfo( "Debug log enabled" );
 }
@@ -187,7 +190,8 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
         pMessageController_->Dispatch( message.message(), message.has_context() ? message.context() : -1 );
         if( message.message().has_control_end_tick() && !pSimulationFacade_.get() )
         {
-            pSubject_.reset( new AgentController( dynamicModel_, *pAggregateTypeResolver_, *pComponentTypeResolver_, *pComponentTypes_ ) );
+            pSubject_.reset( new AgentController( dynamicModel_, *pAggregateTypeResolver_, *pComponentTypeResolver_, *pComponentTypes_,
+                                                  *platforms_, *pConverter_, pXis_->attribute< bool >( "disaggregate", false ) ) );
             pFederate_.reset( new FederateFacade( *pXis_, *pMessageController_, *pSubject_, *pLocalAgentResolver_,
                                                   pXis_->attribute< bool >( "debug", false ) ? *pDebugRtiFactory_ : *pRtiFactory_,
                                                   pXis_->attribute< bool >( "debug", false ) ? *pDebugFederateFactory_ : *pFederateFactory_,

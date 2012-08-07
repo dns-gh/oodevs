@@ -122,7 +122,7 @@ namespace hla
     {
     public:
         SurfaceVesselBuilder()
-            : ClassBuilder( "BaseEntity.PhysicalEntity.Platform.SurfaceVessel", false, true
+            : ClassBuilder( "BaseEntity.PhysicalEntity.Platform.SurfaceVessel", true, true
             , boost::assign::list_of( "EntityType" )
                                     ( "EntityIdentifier" )
                                     ( "ForceIdentifier" )
@@ -134,7 +134,7 @@ namespace hla
     {
     public:
         NetnSurfaceVesselBuilder()
-            : NetnClassBuilder( "BaseEntity.PhysicalEntity.Platform.SurfaceVessel.NETN_SurfaceVessel", false, true
+            : NetnClassBuilder( "BaseEntity.PhysicalEntity.Platform.SurfaceVessel.NETN_SurfaceVessel", true, true
             , boost::assign::list_of( "UniqueID" )
                                     ( "Callsign" )
                                     ( "EmbeddedUnitList" )
@@ -145,7 +145,7 @@ namespace hla
     {
     public:
         AircraftBuilder()
-            : ClassBuilder( "BaseEntity.PhysicalEntity.Platform.Aircraft", false, true
+            : ClassBuilder( "BaseEntity.PhysicalEntity.Platform.Aircraft", true, true
             , boost::assign::list_of( "EntityType" )
                                     ( "EntityIdentifier" )
                                     ( "ForceIdentifier" )
@@ -157,11 +157,35 @@ namespace hla
     {
     public:
         NetnAircraftBuilder()
-            : NetnClassBuilder( "BaseEntity.PhysicalEntity.Platform.Aircraft.NETN_Aircraft", false, true
+            : NetnClassBuilder( "BaseEntity.PhysicalEntity.Platform.Aircraft.NETN_Aircraft", true, true
             , boost::assign::list_of( "UniqueID" )
                                     ( "Callsign" )
                                     ( "EmbeddedUnitList" )
             , std::auto_ptr< ClassBuilder_ABC >( new AircraftBuilder() ) )
+        {}
+    };
+
+    class GroundVehicleBuilder : public ClassBuilder
+    {
+    public:
+        GroundVehicleBuilder()
+            : ClassBuilder( "BaseEntity.PhysicalEntity.Platform.GroundVehicle", true, true
+            , boost::assign::list_of( "EntityType" )
+                                    ( "EntityIdentifier" )
+                                    ( "ForceIdentifier" )
+                                    ( "Marking" )
+                                    ( "Spatial" ) )
+        {}
+    };
+    class NetnGroundVehicleBuilder : public NetnClassBuilder
+    {
+    public:
+        NetnGroundVehicleBuilder()
+            : NetnClassBuilder( "BaseEntity.PhysicalEntity.Platform.GroundVehicle.NETN_GroundVehicle", true, true
+            , boost::assign::list_of( "UniqueID" )
+                                    ( "Callsign" )
+                                    ( "EmbeddedUnitList" )
+            , std::auto_ptr< ClassBuilder_ABC >( new GroundVehicleBuilder() ) )
         {}
     };
 }

@@ -8,28 +8,28 @@
 // *****************************************************************************
 
 #include "hla_plugin_pch.h"
-#include "SurfaceVessel.h"
+#include "GroundVehicle.h"
 #include "Agent_ABC.h"
 #include "SerializationTools.h"
 #include "Spatial.h"
 #include "AggregateMarking.h"
 #include "AttributesSerializer.h"
-#include "MarkingFactory_ABC.h"
 #include "ObjectListener_ABC.h"
 #include "ObjectListenerComposite.h"
+#include "MarkingFactory_ABC.h"
 #include "rpr/EntityIdentifier.h"
 #include <boost/bind.hpp>
 
 using namespace plugins::hla;
 
 // -----------------------------------------------------------------------------
-// Name: SurfaceVessel constructor
-// Created: SLI 2011-10-04
+// Name: GroundVehicle constructor
+// Created: AHC 2012-07-26
 // -----------------------------------------------------------------------------
-SurfaceVessel::SurfaceVessel( Agent_ABC& agent, unsigned int identifier,
+GroundVehicle::GroundVehicle( Agent_ABC& agent, unsigned int identifier,
                               const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const MarkingFactory_ABC& markingFactory,
                               unsigned short siteID, unsigned short applicationID )
-    : identifier_( name )
+    :  identifier_( name )
     , listeners_ ( new ObjectListenerComposite() )
     , agent_     ( agent )
     , attributes_( new AttributesSerializer() )
@@ -43,109 +43,109 @@ SurfaceVessel::SurfaceVessel( Agent_ABC& agent, unsigned int identifier,
 }
 
 // -----------------------------------------------------------------------------
-// Name: SurfaceVessel destructor
-// Created: SLI 2011-10-04
+// Name: GroundVehicle destructor
+// Created: AHC 2012-07-26
 // -----------------------------------------------------------------------------
-SurfaceVessel::~SurfaceVessel()
+GroundVehicle::~GroundVehicle()
 {
     agent_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: SurfaceVessel::Serialize
-// Created: SLI 2011-10-04
+// Name: GroundVehicle::Serialize
+// Created: AHC 2012-07-26
 // -----------------------------------------------------------------------------
-void SurfaceVessel::Serialize( ::hla::UpdateFunctor_ABC& functor, bool updateAll ) const
+void GroundVehicle::Serialize( ::hla::UpdateFunctor_ABC& functor, bool updateAll ) const
 {
     attributes_->Serialize( functor, updateAll );
 }
 
 // -----------------------------------------------------------------------------
-// Name: SurfaceVessel::Deserialize
-// Created: SLI 2011-10-04
+// Name: GroundVehicle::Deserialize
+// Created: AHC 2012-07-26
 // -----------------------------------------------------------------------------
-void SurfaceVessel::Deserialize( const ::hla::AttributeIdentifier& /*identifier*/, ::hla::Deserializer_ABC& /*deserializer*/ )
+void GroundVehicle::Deserialize( const ::hla::AttributeIdentifier& /*identifier*/, ::hla::Deserializer_ABC& /*deserializer*/ )
 {
     throw std::runtime_error( __FUNCTION__ " not implemented" );
 }
 
 // -----------------------------------------------------------------------------
-// Name: SurfaceVessel::SpatialChanged
-// Created: SLI 2011-10-04
+// Name: GroundVehicle::SpatialChanged
+// Created: AHC 2012-07-26
 // -----------------------------------------------------------------------------
-void SurfaceVessel::SpatialChanged( double latitude, double longitude, float altitude, float speed, float direction )
+void GroundVehicle::SpatialChanged( double latitude, double longitude, float altitude, float speed, float direction )
 {
     attributes_->Update( "Spatial", Spatial( false, latitude, longitude, altitude, speed, direction ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: SurfaceVessel::FormationChanged
-// Created: SLI 2011-10-04
+// Name: GroundVehicle::FormationChanged
+// Created: AHC 2012-07-26
 // -----------------------------------------------------------------------------
-void SurfaceVessel::FormationChanged( bool /*isOnRoad*/ )
+void GroundVehicle::FormationChanged( bool /*isOnRoad*/ )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: SurfaceVessel::EquipmentChanged
-// Created: SLI 2011-10-04
+// Name: GroundVehicle::EquipmentChanged
+// Created: AHC 2012-07-26
 // -----------------------------------------------------------------------------
-void SurfaceVessel::EquipmentChanged( unsigned int /*type*/, const rpr::EntityType& /*entityType*/, unsigned int /*available*/ )
+void GroundVehicle::EquipmentChanged( unsigned int /*type*/, const rpr::EntityType& /*entityType*/, unsigned int /*available*/ )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: SurfaceVessel::EmbarkmentChanged
-// Created: SLI 2011-10-04
+// Name: GroundVehicle::EmbarkmentChanged
+// Created: AHC 2012-07-26
 // -----------------------------------------------------------------------------
-void SurfaceVessel::EmbarkmentChanged( bool /*mounted*/ )
+void GroundVehicle::EmbarkmentChanged( bool /*mounted*/ )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: SurfaceVessel::SetIdentifier
-// Created: AHC 2012-03-15
+// Name: GroundVehicle::SetIdentifier
+// Created: AHC 2012-07-26
 // -----------------------------------------------------------------------------
-void SurfaceVessel::SetIdentifier( const std::string& id )
+void GroundVehicle::SetIdentifier( const std::string& id )
 {
     identifier_ = id;
 }
 
 // -----------------------------------------------------------------------------
-// Name: SurfaceVessel::GetIdentifier
-// Created: AHC 2012-04-18
+// Name: GroundVehicle::GetIdentifier
+// Created: AHC 2012-07-26
 // -----------------------------------------------------------------------------
-const std::string& SurfaceVessel::GetIdentifier( ) const
+const std::string& GroundVehicle::GetIdentifier( ) const
 {
     return identifier_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: SurfaceVessel::Register
-// Created: AHC 2012-02-27
+// Name: GroundVehicle::Register
+// Created: AHC 2012-07-26
 // -----------------------------------------------------------------------------
-void SurfaceVessel::Register( ObjectListener_ABC& listener )
+void GroundVehicle::Register( ObjectListener_ABC& listener )
 {
     listeners_->Register( listener );
 }
 
 // -----------------------------------------------------------------------------
-// Name: SurfaceVessel::Unregister
-// Created: AHC 2012-02-27
+// Name: GroundVehicle::Unregister
+// Created: AHC 2012-07-26
 // -----------------------------------------------------------------------------
-void SurfaceVessel::Unregister( ObjectListener_ABC& listener )
+void GroundVehicle::Unregister( ObjectListener_ABC& listener )
 {
     listeners_->Unregister( listener ) ;
 }
 
 // -----------------------------------------------------------------------------
-// Name: SurfaceVessel::EmbarkmentChanged
+// Name: GroundVehicle::EmbarkmentChanged
 // Created: AHC 2012-07-30
 // -----------------------------------------------------------------------------
-void SurfaceVessel::PlatformAdded( const std::string& /*name*/, unsigned int /*id*/ )
+void GroundVehicle::PlatformAdded( const std::string& /*name*/, unsigned int /*id*/ )
 {
     // NOTHING
 }

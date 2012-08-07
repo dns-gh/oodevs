@@ -11,6 +11,7 @@
 #define plugins_hla_AgentProxy_h
 
 #include "Agent_ABC.h"
+#include "EventListenerComposite.h"
 #include "dispatcher/Observer.h"
 #include <vector>
 
@@ -49,7 +50,8 @@ class AgentProxy : public Agent_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentProxy( dispatcher::Agent_ABC& agent, const ComponentTypes_ABC& componentTypes, const rpr::EntityTypeResolver_ABC& componentTypeResolver );
+             AgentProxy( dispatcher::Agent_ABC& agent, const ComponentTypes_ABC& componentTypes, const rpr::EntityTypeResolver_ABC& componentTypeResolver,
+                     bool doDisaggregation );
     virtual ~AgentProxy();
     //@}
 
@@ -59,6 +61,8 @@ public:
     virtual void Unregister( EventListener_ABC& listener );
     //@}
 
+    void PlatformAdded( const std::string& name, unsigned int id );
+
 private:
     //! @name Observer
     //@{
@@ -67,18 +71,15 @@ private:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::vector< EventListener_ABC* > T_Listeners;
-    //@}
 
 private:
     //! @name Member data
     //@{
+    bool doDisaggregation_;
     const dispatcher::Agent_ABC& agent_;
     const ComponentTypes_ABC& componentTypes_;
     const rpr::EntityTypeResolver_ABC& componentTypeResolver_;
-    T_Listeners listeners_;
+    EventListenerComposite listeners_;
     //@}
 };
 

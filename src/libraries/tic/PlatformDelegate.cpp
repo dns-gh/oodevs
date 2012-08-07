@@ -13,7 +13,7 @@
 #include "RoadFormation.h"
 #include "DiamondFormation.h"
 #include "PlatformVisitor_ABC.h"
-#include "dispatcher/Agent.h"
+#include "dispatcher/Agent_ABC.h"
 #include "clients_kernel/AgentComposition.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/ComponentType.h"
@@ -30,7 +30,7 @@ using namespace tic;
 // Name: PlatformDelegate constructor
 // Created: AGE 2008-03-31
 // -----------------------------------------------------------------------------
-PlatformDelegate::PlatformDelegate( dispatcher::Agent& holder, const kernel::CoordinateConverter_ABC& converter, float timeStep )
+PlatformDelegate::PlatformDelegate( dispatcher::Agent_ABC& holder, const kernel::CoordinateConverter_ABC& converter, float timeStep )
     : dispatcher::Observer< sword::UnitAttributes >     ( holder )
     , dispatcher::Observer< sword::UnitEnvironmentType >( holder )
     , dispatcher::Observer< sword::UnitPathFind >       ( holder )

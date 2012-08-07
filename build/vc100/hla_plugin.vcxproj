@@ -91,6 +91,7 @@
     <Lib />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\AgentAdapter.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\Aircraft.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\AttributesDeserializer.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\AutomatChecker.cpp" />
@@ -105,7 +106,9 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\DirectFireReceiver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\DirectFireSender.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\EquipmentUpdater.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\EventListenerComposite.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\FormationCreater.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\GroundVehicle.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\HlaClass.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\HlaObjectNameFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.cpp">
@@ -126,6 +129,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\MunitionTypeResolver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnAggregate.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnAircraft.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnGroundVehicle.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregate.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteAircraft.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteCallsignListener.cpp" />
@@ -133,6 +137,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnSurfaceVessel.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\ObjectListenerComposite.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\Omt13String.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\PlatformProxy.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentController.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentResolver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAggregate.cpp" />
@@ -169,6 +174,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\UnitTypeResolver.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\AgentAdapter.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Aircraft.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\AttributesDeserializer.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatChecker.h" />
@@ -194,8 +200,10 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\DirectFireReceiver.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\DirectFireSender.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\EquipmentUpdater.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\EventListenerComposite.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ExtentResolver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\FormationCreater.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\GroundVehicle.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\HlaClass.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\HlaClass_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\HlaFactories.h" />
@@ -226,6 +234,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\MunitionTypeResolver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnAggregate.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnAircraft.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnGroundVehicle.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregate.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteAircraft.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteCallsignListener.h" />
@@ -234,6 +243,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\ObjectListenerComposite.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ObjectListener_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Omt13String.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\PlatformProxy.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentController.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentResolver.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentResolver_ABC.h" />

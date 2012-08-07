@@ -48,3 +48,30 @@ std::string Omt13String::str() const
 {
     return data_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Omt13StringArray constructor
+// Created: AHC 2012-07-30
+// -----------------------------------------------------------------------------
+Omt13StringArray::Omt13StringArray()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Omt13StringArray destructor
+// Created: AHC 2012-07-30
+// -----------------------------------------------------------------------------
+Omt13StringArray::~Omt13StringArray()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Omt13StringArray::Add
+// Created: AHC 2012-07-30
+// -----------------------------------------------------------------------------
+void Omt13StringArray::Add( const std::string& name )
+{
+    values_.push_back( Omt13String( name ) );
+}

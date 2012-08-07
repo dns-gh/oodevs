@@ -142,3 +142,12 @@ void NetnAggregate::Unregister( ObjectListener_ABC& listener )
     aggregate_->Unregister( listener );
     listeners_->Unregister( listener ) ;
 }
+
+// -----------------------------------------------------------------------------
+// Name: NetnAggregate::EmbarkmentChanged
+// Created: AHC 2012-07-30
+// -----------------------------------------------------------------------------
+void NetnAggregate::PlatformAdded( const std::string& /*name*/, unsigned int /*id*/ )
+{
+    // NOTHING
+}

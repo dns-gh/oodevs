@@ -19,6 +19,11 @@ namespace xml
     class ximultistream;
 }
 
+namespace kernel
+{
+    class CoordinateConverter_ABC;
+}
+
 namespace dispatcher
 {
     class Config;
@@ -32,6 +37,11 @@ namespace dispatcher
 namespace rpr
 {
     class EntityTypeResolver_ABC;
+}
+
+namespace tic
+{
+    class PlatformDelegateFactory_ABC;
 }
 
 namespace sword
@@ -125,6 +135,7 @@ private:
     std::auto_ptr< Subordinates_ABC > pSubordinates_;
     std::auto_ptr< tools::MessageController< sword::SimToClient_Content > > pMessageController_;
     std::auto_ptr< AutomatChecker_ABC > pAutomatChecker_;
+    std::auto_ptr< kernel::CoordinateConverter_ABC > pConverter_;
     std::auto_ptr< ExtentResolver_ABC > pExtentResolver_;
     std::auto_ptr< AgentController > pSubject_;
     std::auto_ptr< FederateFacade > pFederate_;
@@ -135,6 +146,7 @@ private:
     std::auto_ptr< SideChecker_ABC > pSideChecker_;
     std::auto_ptr< TransportationFacade > pTransportationFacade_;
     std::auto_ptr< Stepper > pStepper_;
+    std::auto_ptr< tic::PlatformDelegateFactory_ABC > platforms_;
     //@}
 };
 

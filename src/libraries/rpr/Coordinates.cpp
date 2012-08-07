@@ -230,6 +230,18 @@ Orientation::Orientation()
 
 // -----------------------------------------------------------------------------
 // Name: Orientation::Orientation
+// Created: AHC 2012-07-13
+// -----------------------------------------------------------------------------
+Orientation::Orientation( float psi, float theta, float phi )
+    : psi_  ( psi )
+    , theta_( theta )
+    , phi_  ( phi )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Orientation::Orientation
 // Created: AGE 2008-02-21
 // -----------------------------------------------------------------------------
 Orientation::Orientation( const WorldLocation& location, const VelocityVector& velocity )

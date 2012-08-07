@@ -34,12 +34,26 @@ namespace rpr
     class EntityTypeResolver_ABC;
 }
 
+namespace tic
+{
+    class PlatformDelegateFactory_ABC;
+    class Platform_ABC;
+}
+
+namespace kernel
+{
+    class CoordinateConverter_ABC;
+}
+
 namespace plugins
 {
 namespace hla
 {
     class Agent_ABC;
+    class AgentProxy;
     class ComponentTypes_ABC;
+
+    class AgentAdapter;
 
 // =============================================================================
 /** @class  AgentController
@@ -54,7 +68,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              AgentController( dispatcher::Model_ABC& model, const rpr::EntityTypeResolver_ABC& aggregatesResolver,
-                              const rpr::EntityTypeResolver_ABC& componentTypeResolver, const ComponentTypes_ABC& componentTypes );
+                              const rpr::EntityTypeResolver_ABC& componentTypeResolver, const ComponentTypes_ABC& componentTypes,
+                              tic::PlatformDelegateFactory_ABC& factory, const kernel::CoordinateConverter_ABC& converter, bool sendPlatforms );
     virtual ~AgentController();
     //@}
 
@@ -75,6 +90,7 @@ private:
     //! @name Helpers
     //@{
     void CreateAgent( dispatcher::Agent_ABC& agent );
+    void NotifyPlatformCreation( Agent_ABC& agent, dispatcher::Agent_ABC&, const tic::Platform_ABC&, int childIndex );
     //@}
 
 private:
@@ -82,8 +98,10 @@ private:
     //@{
     typedef std::vector< AgentListener_ABC* > T_Listeners;
     typedef T_Listeners::const_iterator     CIT_Listeners;
-    typedef boost::shared_ptr< Agent_ABC > T_Agent;
-    typedef std::vector< T_Agent >         T_Agents;
+    typedef boost::shared_ptr< AgentProxy > T_Agent;
+    typedef std::map< unsigned long, T_Agent >         T_Agents;
+    typedef boost::shared_ptr< AgentAdapter > T_AgentAdapter;
+    typedef std::vector< T_AgentAdapter >     T_AgentAdapters;
     //@}
 
 private:
@@ -93,8 +111,12 @@ private:
     const rpr::EntityTypeResolver_ABC& aggregatesResolver_;
     const rpr::EntityTypeResolver_ABC& componentTypeResolver_;
     const ComponentTypes_ABC& componentTypes_;
+    tic::PlatformDelegateFactory_ABC& factory_;
+    const kernel::CoordinateConverter_ABC& converter_;
+    bool doDisaggregation_;
     T_Listeners listeners_;
     T_Agents agents_;
+    T_AgentAdapters adapters_;
     //@}
 };
 

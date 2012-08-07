@@ -36,7 +36,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< PlatformDelegate_ABC > Create( dispatcher::Agent& entity ) const;
+    virtual std::auto_ptr< PlatformDelegate_ABC > Create( dispatcher::Agent_ABC& entity ) const;
     //@}
 
 private:

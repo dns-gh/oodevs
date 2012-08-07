@@ -62,12 +62,13 @@ namespace
 // Name: AgentProxy constructor
 // Created: SLI 2011-02-04
 // -----------------------------------------------------------------------------
-AgentProxy::AgentProxy( dispatcher::Agent_ABC& agent, const ComponentTypes_ABC& componentTypes, const rpr::EntityTypeResolver_ABC& componentTypeResolver )
+AgentProxy::AgentProxy( dispatcher::Agent_ABC& agent, const ComponentTypes_ABC& componentTypes, const rpr::EntityTypeResolver_ABC& componentTypeResolver, bool doDisaggregation )
     : dispatcher::Observer< sword::UnitAttributes >( agent )
     , dispatcher::Observer< sword::UnitEnvironmentType >( agent )
     , agent_                ( agent )
     , componentTypes_       ( componentTypes )
     , componentTypeResolver_( componentTypeResolver )
+    , doDisaggregation_       ( doDisaggregation )
 {
     // NOTHING
 }
@@ -87,7 +88,7 @@ AgentProxy::~AgentProxy()
 // -----------------------------------------------------------------------------
 void AgentProxy::Register( EventListener_ABC& listener )
 {
-    listeners_.push_back( &listener );
+    listeners_.Register( listener );
     listener.SpatialChanged( agent_.GetPosition().X(), agent_.GetPosition().Y(),
                              agent_.GetAltitude(), agent_.GetSpeed(), agent_.GetDirection() );
     agent_.Equipments().Apply( boost::bind( &NotifyEquipment, boost::ref( listener ), _1, boost::cref( componentTypes_ ), boost::cref( componentTypeResolver_ ), agent_.GetType().GetId() ) );
@@ -99,8 +100,7 @@ void AgentProxy::Register( EventListener_ABC& listener )
 // -----------------------------------------------------------------------------
 void AgentProxy::Unregister( EventListener_ABC& listener )
 {
-    listeners_.erase( std::remove( listeners_.begin(), listeners_.end(), &listener ), listeners_.end() );
-}
+    listeners_.Unregister( listener );}
 
 // -----------------------------------------------------------------------------
 // Name: AgentProxy::Notify
@@ -109,15 +109,12 @@ void AgentProxy::Unregister( EventListener_ABC& listener )
 void AgentProxy::Notify( const sword::UnitAttributes& attributes )
 {
     if( attributes.has_position() || attributes.has_height() || attributes.has_speed() || attributes.has_direction() )
-        BOOST_FOREACH( EventListener_ABC* listener, listeners_ )
-            listener->SpatialChanged( agent_.GetPosition().X(), agent_.GetPosition().Y(),
+        listeners_.SpatialChanged( agent_.GetPosition().X(), agent_.GetPosition().Y(),
                                       agent_.GetAltitude(), agent_.GetSpeed(), agent_.GetDirection() );
-    if( attributes.has_equipment_dotations() )
-        BOOST_FOREACH( EventListener_ABC* listener, listeners_ )
-            agent_.Equipments().Apply( boost::bind( &NotifyEquipment, boost::ref( *listener ), _1, boost::cref( componentTypes_ ), boost::cref( componentTypeResolver_ ), agent_.GetType().GetId() ) );
+    if( attributes.has_equipment_dotations() && !doDisaggregation_ )
+        agent_.Equipments().Apply( boost::bind( &NotifyEquipment, boost::ref( listeners_ ), _1, boost::cref( componentTypes_ ), boost::cref( componentTypeResolver_ ), agent_.GetType().GetId() ) );
     if( attributes.has_embarked() )
-        BOOST_FOREACH( EventListener_ABC* listener, listeners_ )
-            listener->EmbarkmentChanged( agent_.IsMounted() );
+        listeners_.EmbarkmentChanged( agent_.IsMounted() );
 }
 
 namespace
@@ -137,6 +134,14 @@ namespace
 void AgentProxy::Notify( const sword::UnitEnvironmentType& message )
 {
     const bool isOnRoad = IsOnRoad( message );
-    BOOST_FOREACH( EventListener_ABC* listener, listeners_ )
-        listener->FormationChanged( isOnRoad );
+    listeners_.FormationChanged( isOnRoad );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentProxy::PlatformAdded
+// Created: AHC 2012-07-30
+// -----------------------------------------------------------------------------
+void AgentProxy::PlatformAdded( const std::string& name, unsigned int id )
+{
+    listeners_.PlatformAdded( name, id );
 }

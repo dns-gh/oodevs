@@ -23,6 +23,15 @@ namespace rpr
 class EntityType
 {
 public:
+    enum RPRDomain
+    {
+        OTHER = 0,
+        LAND = 1,
+        AIR = 2,
+        SURFACE = 3,
+        SUBSURFACE = 4,
+        SPACE = 5
+    };
     //! @name Constructors/Destructor
     //@{
              EntityType();
@@ -46,6 +55,7 @@ public:
     }
     
     std::string str() const;
+    unsigned char Domain() const { return domain_; }
     //@}
 
     //! @name Operators

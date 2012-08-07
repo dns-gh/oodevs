@@ -14,7 +14,7 @@
 
 namespace dispatcher
 {
-    class Agent;
+    class Agent_ABC;
 }
 
 namespace tic
@@ -37,7 +37,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< PlatformDelegate_ABC > Create( dispatcher::Agent& entity ) const = 0;
+    virtual std::auto_ptr< PlatformDelegate_ABC > Create( dispatcher::Agent_ABC& entity ) const = 0;
     //@}
 };
 }

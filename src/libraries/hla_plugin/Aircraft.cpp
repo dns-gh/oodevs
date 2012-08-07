@@ -75,7 +75,7 @@ void Aircraft::Deserialize( const ::hla::AttributeIdentifier& /*identifier*/, ::
 // -----------------------------------------------------------------------------
 void Aircraft::SpatialChanged( double latitude, double longitude, float altitude, float speed, float direction )
 {
-    attributes_->Update( "Spatial", Spatial( true, latitude, longitude, altitude, speed, direction ) );
+    attributes_->Update( "Spatial", Spatial( false, latitude, longitude, altitude, speed, direction ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -139,4 +139,13 @@ void Aircraft::Register( ObjectListener_ABC& listener )
 void Aircraft::Unregister( ObjectListener_ABC& listener )
 {
     listeners_->Unregister( listener ) ;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Aircraft::EmbarkmentChanged
+// Created: AHC 2012-07-30
+// -----------------------------------------------------------------------------
+void Aircraft::PlatformAdded( const std::string& /*name*/, unsigned int /*id*/ )
+{
+    // NOTHING
 }

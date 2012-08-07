@@ -99,7 +99,7 @@ BOOST_FIXTURE_TEST_CASE( surface_vessel_builder_registers_attributes, Fixture )
                                        ( "ForceIdentifier" )
                                        ( "Marking" )
                                        ( "Spatial" );
-    Check( builder, "BaseEntity.PhysicalEntity.Platform.SurfaceVessel", false, true );
+    Check( builder, "BaseEntity.PhysicalEntity.Platform.SurfaceVessel", true, true );
 }
 
 BOOST_FIXTURE_TEST_CASE( netn_surface_vessel_builder_registers_attributes, Fixture )
@@ -114,7 +114,7 @@ BOOST_FIXTURE_TEST_CASE( netn_surface_vessel_builder_registers_attributes, Fixtu
                                        ( "UniqueID" )
                                        ( "Callsign" )
                                        ( "EmbeddedUnitList" );
-    Check( builder, "BaseEntity.PhysicalEntity.Platform.SurfaceVessel.NETN_SurfaceVessel", false, true );
+    Check( builder, "BaseEntity.PhysicalEntity.Platform.SurfaceVessel.NETN_SurfaceVessel", true, true );
 }
 
 BOOST_FIXTURE_TEST_CASE( aircraft_builder_registers_attributes, Fixture )
@@ -125,7 +125,7 @@ BOOST_FIXTURE_TEST_CASE( aircraft_builder_registers_attributes, Fixture )
                                        ( "ForceIdentifier" )
                                        ( "Marking" )
                                        ( "Spatial" );
-    Check( builder, "BaseEntity.PhysicalEntity.Platform.Aircraft", false, true );
+    Check( builder, "BaseEntity.PhysicalEntity.Platform.Aircraft", true, true );
 }
 
 BOOST_FIXTURE_TEST_CASE( netn_aircraft_builder_registers_attributes, Fixture )
@@ -140,5 +140,31 @@ BOOST_FIXTURE_TEST_CASE( netn_aircraft_builder_registers_attributes, Fixture )
                                        ( "UniqueID" )
                                        ( "Callsign" )
                                        ( "EmbeddedUnitList" );
-    Check( builder, "BaseEntity.PhysicalEntity.Platform.Aircraft.NETN_Aircraft", false, true );
+    Check( builder, "BaseEntity.PhysicalEntity.Platform.Aircraft.NETN_Aircraft", true, true );
+}
+
+BOOST_FIXTURE_TEST_CASE( groundvehicle_builder_registers_attributes, Fixture )
+{
+    GroundVehicleBuilder builder;
+    attributes = boost::assign::list_of( "EntityType" )
+                                       ( "EntityIdentifier" )
+                                       ( "ForceIdentifier" )
+                                       ( "Marking" )
+                                       ( "Spatial" );
+    Check( builder, "BaseEntity.PhysicalEntity.Platform.GroundVehicle", true, true );
+}
+
+BOOST_FIXTURE_TEST_CASE( netn_groundvehicle_builder_registers_attributes, Fixture )
+{
+    NetnGroundVehicleBuilder builder;
+    attributes = boost::assign::list_of( "EntityType" )
+                                       ( "EntityIdentifier" )
+                                       ( "ForceIdentifier" )
+                                       ( "Marking" )
+                                       ( "Spatial" )
+                                       // NETN
+                                       ( "UniqueID" )
+                                       ( "Callsign" )
+                                       ( "EmbeddedUnitList" );
+    Check( builder, "BaseEntity.PhysicalEntity.Platform.GroundVehicle.NETN_GroundVehicle", true, true );
 }

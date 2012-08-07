@@ -10,6 +10,8 @@
 #ifndef plugins_hla_Omt13String_h
 #define plugins_hla_Omt13String_h
 
+#include <vector>
+
 namespace plugins
 {
 namespace hla
@@ -57,6 +59,51 @@ private:
     //! @name Member data
     //@{
     std::string data_;
+    //@}
+};
+
+// =============================================================================
+/** @class  Omt13StringArray
+    @brief  Omt13StringArray
+*/
+// Created: AHC 2012-07-30
+// =============================================================================
+class Omt13StringArray
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+    Omt13StringArray();
+    virtual ~Omt13StringArray();
+
+    //! @name Operations
+    //@{
+    void Add( const std::string& name );
+
+    template< typename Archive >
+    void Serialize( Archive& archive ) const
+    {
+        uint32 sz = values_.size();
+        archive << sz;
+        for( std::vector< Omt13String >::const_iterator it = values_.begin(); it != values_.end(); ++it )
+            archive << *it;
+    }
+    template< typename Archive >
+    void Deserialize( Archive& archive )
+    {
+        uint32 sz = 0;
+        archive >> sz;
+        values_.resize( sz );
+        for( std::vector< Omt13String >::iterator it = values_.begin(); it != values_.end(); ++it )
+            archive >> *it;
+    }
+    std::string str() const;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    std::vector< Omt13String > values_;
     //@}
 };
 

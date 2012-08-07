@@ -10,6 +10,7 @@
 #include "tic_pch.h"
 #include "PlatformDelegateFactory.h"
 #include "PlatformDelegate.h"
+#include "dispatcher/Agent.h"
 
 using namespace tic;
 
@@ -37,7 +38,7 @@ PlatformDelegateFactory::~PlatformDelegateFactory()
 // Name: PlatformDelegateFactory::Create
 // Created: AGE 2008-03-31
 // -----------------------------------------------------------------------------
-std::auto_ptr< PlatformDelegate_ABC > PlatformDelegateFactory::Create( dispatcher::Agent& entity ) const
+std::auto_ptr< PlatformDelegate_ABC > PlatformDelegateFactory::Create( dispatcher::Agent_ABC& entity ) const
 {
     return std::auto_ptr< PlatformDelegate_ABC >( new PlatformDelegate( entity, converter_, timeStep_ ) );
 }

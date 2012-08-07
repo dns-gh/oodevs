@@ -28,6 +28,8 @@
 #include "NetnAircraft.h"
 #include "RemoteAircraft.h"
 #include "NetnRemoteAircraft.h"
+#include "GroundVehicle.h"
+#include "NetnGroundVehicle.h"
 #include "MarkingFactory.h"
 #include "HlaObjectNameFactory.h"
 #include "MT_Tools/MT_Random.h"
@@ -50,6 +52,15 @@ namespace
             return std::auto_ptr< HlaObject_ABC >( 0 );
         }
     };
+
+    struct NullRemoteFactory :  public RemoteHlaObjectFactory_ABC
+    {
+        virtual std::auto_ptr< HlaObject_ABC > Create( const std::string& /*name*/ ) const
+        {
+            return std::auto_ptr< HlaObject_ABC >( 0 );
+        }
+    };
+
     std::auto_ptr< Federate_ABC > CreateFederate( xml::xisubstream xis, hla::RtiAmbassador_ABC& ambassador, const FederateAmbassadorFactory_ABC& factory, const std::string& pluginDirectory )
     {
         std::auto_ptr< Federate_ABC > federate = factory.Create( ambassador, xis.attribute< std::string >( "name", "SWORD" ), xis.attribute< int >( "lookahead", -1 ) );
@@ -169,6 +180,10 @@ FederateFacade::FederateFacade( xml::xisubstream xis, tools::MessageController_A
                                          CreateFactory< Aircraft, NetnAircraft >( xis.attribute< bool >( "netn", true ), callsignResolver, *markingFactory_, xis.attribute<unsigned short>("dis-site",1), xis.attribute<unsigned short>("dis-application", 1) ),
                                          CreateRemoteFactory< RemoteAircraft, NetnRemoteAircraft >( xis.attribute< bool >( "netn", true ) ),
                                          CreateClassBuilder< AircraftBuilder, NetnAircraftBuilder >( xis.attribute< bool >( "netn", true ) ) ) )
+    , groundVehicleClass_( new HlaClass( *federate_, resolver, *nameFactory_,
+                                         CreateFactory< GroundVehicle, NetnGroundVehicle >( xis.attribute< bool >( "netn", true ), callsignResolver, *markingFactory_, xis.attribute<unsigned short>("dis-site",1), xis.attribute<unsigned short>("dis-application", 1) ),
+                                         std::auto_ptr< RemoteHlaObjectFactory_ABC >( new NullRemoteFactory ),
+                                         CreateClassBuilder< GroundVehicleBuilder, NetnGroundVehicleBuilder >( xis.attribute< bool >( "netn", true ) ) ) )
     , rprAggregateClass_ ( xis.attribute< bool >( "netn", true ) && xis.attribute< bool >( "netn-subscribe-rpr", true ) ?
                                 new HlaClass( *federate_, resolver, *nameFactory_,
                                      std::auto_ptr< HlaObjectFactory_ABC >( new NullFactory ),
@@ -228,6 +243,7 @@ void FederateFacade::Register( ClassListener_ABC& listener )
     aggregateClass_->Register( listener );
     surfaceVesselClass_->Register( listener );
     aircraftClass_->Register( listener );
+    groundVehicleClass_->Register( listener );
     if( rprAggregateClass_.get() )
         rprAggregateClass_->Register( listener );
     if( rprSurfaceVesselClass_.get() )
@@ -245,6 +261,7 @@ void FederateFacade::Unregister( ClassListener_ABC& listener )
     aircraftClass_->Unregister( listener );
     surfaceVesselClass_->Unregister( listener );
     aggregateClass_->Unregister( listener );
+    groundVehicleClass_->Unregister( listener );
     if( rprAggregateClass_.get() )
         rprAggregateClass_->Unregister( listener );
     if( rprSurfaceVesselClass_.get() )
@@ -359,4 +376,24 @@ void FederateFacade::Register( ::hla::FederateAmbassador_ABC& listener )
 void FederateFacade::AggregateCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol )
 {
     aggregateClass_->Created( agent, identifier, name, force, type, symbol );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FederateFacade::PlatformCreated
+// Created: AHC 2012-07-26
+// -----------------------------------------------------------------------------
+void FederateFacade::PlatformCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol )
+{
+    switch( type.Domain() )
+    {
+    case rpr::EntityType::LAND:
+        groundVehicleClass_->Created( agent, identifier, name, force, type, symbol );
+        break;
+    case rpr::EntityType::AIR:
+        aircraftClass_->Created( agent, identifier, name, force, type, symbol );
+        break;
+    case rpr::EntityType::SURFACE:
+        surfaceVesselClass_->Created( agent, identifier, name, force, type, symbol );
+        break;
+    }
 }

@@ -123,6 +123,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Orientation();
+             Orientation( float psi, float theta, float phi );
              Orientation( const WorldLocation& location, const VelocityVector& velocity );
     virtual ~Orientation();
     //@}

@@ -12,6 +12,7 @@
 
 #include "HlaObject_ABC.h"
 #include "EventListener_ABC.h"
+#include "Omt13String.h"
 #include "rpr/ForceIdentifier.h"
 #include "rpr/EntityType.h"
 #include <vector>
@@ -73,6 +74,7 @@ private:
     virtual void FormationChanged( bool isOnRoad );
     virtual void EquipmentChanged( unsigned int type, const rpr::EntityType& entityType, unsigned int available );
     virtual void EmbarkmentChanged( bool mounted );
+    virtual void PlatformAdded( const std::string& name, unsigned int id );
     //@}
 
 private:
@@ -101,6 +103,7 @@ private:
     std::auto_ptr< ObjectListenerComposite > listeners_;
     Agent_ABC& agent_;
     T_Equipments equipments_;
+    Omt13StringArray entities_;
     std::auto_ptr< AttributesSerializer > attributes_;
     //@}
 };

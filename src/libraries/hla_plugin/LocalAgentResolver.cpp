@@ -10,6 +10,9 @@
 #include "hla_plugin_pch.h"
 #include "LocalAgentResolver.h"
 
+#include <boost/foreach.hpp>
+#include <fstream>
+
 using namespace plugins::hla;
 
 // -----------------------------------------------------------------------------

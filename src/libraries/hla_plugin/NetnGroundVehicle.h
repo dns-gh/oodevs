@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef plugins_hla_NetnAggregate_h
-#define plugins_hla_NetnAggregate_h
+#ifndef plugins_hla_NetnGroundVehicle_h
+#define plugins_hla_NetnGroundVehicle_h
 
 #include "HlaObject_ABC.h"
 #include "EventListener_ABC.h"
@@ -24,19 +24,18 @@ namespace hla
     class ObjectListenerComposite;
 
 // =============================================================================
-/** @class  NetnAggregate
-    @brief  Netn aggregate
+/** @class  NetnGroundVehicle
+    @brief  Netn surface vessel
 */
-// Created: SLI 2011-07-26
+    // Created: AHC 2012-07-27
 // =============================================================================
-class NetnAggregate : public HlaObject_ABC
-                    , private EventListener_ABC
+class NetnGroundVehicle : public HlaObject_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             NetnAggregate( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC& agent, const std::string& callsign, const std::string& uniqueIdentifier, const std::string& symbol );
-    virtual ~NetnAggregate();
+             NetnGroundVehicle( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC& agent, const std::string& callsign, const std::string& uniqueIdentifier, const std::string& symbol );
+    virtual ~NetnGroundVehicle();
     //@}
 
     //! @name Operations
@@ -50,21 +49,10 @@ public:
     //@}
 
 private:
-    //! @name Operations
-    //@{
-    virtual void SpatialChanged( double latitude, double longitude, float altitude, float speed, float direction );
-    virtual void FormationChanged( bool isOnRoad );
-    virtual void EquipmentChanged( unsigned int type, const rpr::EntityType& entityType, unsigned int available );
-    virtual void EmbarkmentChanged( bool mounted );
-    virtual void PlatformAdded( const std::string& name, unsigned int id );
-    //@}
-
-private:
     //! @name Member data
     //@{
     std::auto_ptr< ObjectListenerComposite > listeners_;
     std::auto_ptr< HlaObject_ABC > aggregate_;
-    Agent_ABC& agent_;
     std::auto_ptr< AttributesSerializer > attributes_;
     //@}
 };
@@ -72,4 +60,4 @@ private:
 }
 }
 
-#endif // plugins_hla_NetnAggregate_h
+#endif // plugins_hla_NetnGroundVehicle_h

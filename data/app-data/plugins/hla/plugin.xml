@@ -140,6 +140,12 @@
                         <description lang="fr" name="Utiliser l'empreinte terrain"><![CDATA[]]>Utiliser l'empreinte terrain pour éviter la création des unités en dehors.</description>
                     </descriptions>
                 </setting>
+                <setting attribute="@disaggregate" type="boolean" default="false">
+                    <descriptions>
+                        <description lang="en" name="Disaggregate units"><![CDATA[]]>Send individual vehicles (demos only).</description>
+                        <description lang="fr" name="Desagreger les pions"><![CDATA[]]>Emettre les vehicules (demos seulement).</description>
+                    </descriptions>
+                </setting>
             </settings>
         </group>
     </settings>

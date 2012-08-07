@@ -11,15 +11,23 @@
 #include "AgentController.h"
 #include "AgentListener_ABC.h"
 #include "AgentProxy.h"
+#include "AgentAdapter.h"
 #include "dispatcher/Model_ABC.h"
 #include "dispatcher/Automat_ABC.h"
 #include "dispatcher/Team_ABC.h"
 #include "dispatcher/Agent.h"
 #include "clients_kernel/AgentType.h"
+#include "clients_kernel/ComponentType.h"
 #include "clients_kernel/Karma.h"
 #include "rpr/EntityTypeResolver_ABC.h"
+#include "tic/PlatformDelegateFactory_ABC.h"
+#include "tic/Platform_ABC.h"
+
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
+#include <boost/function.hpp>
+#include <boost/bind.hpp>
+#include <limits>
 #include <xeumeuleu/xml.hpp>
 
 using namespace plugins::hla;
@@ -29,11 +37,16 @@ using namespace plugins::hla;
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
 AgentController::AgentController( dispatcher::Model_ABC& model, const rpr::EntityTypeResolver_ABC& aggregatesResolver,
-                                  const rpr::EntityTypeResolver_ABC& componentTypeResolver, const ComponentTypes_ABC& componentTypes )
+                                  const rpr::EntityTypeResolver_ABC& componentTypeResolver, const ComponentTypes_ABC& componentTypes,
+                                  tic::PlatformDelegateFactory_ABC& factory, const kernel::CoordinateConverter_ABC& converter,
+                                  bool sendPlatforms )
     : model_                 ( model )
     , aggregatesResolver_    ( aggregatesResolver )
     , componentTypeResolver_ ( componentTypeResolver )
     , componentTypes_        ( componentTypes )
+    , factory_               ( factory )
+    , converter_             ( converter )
+    , doDisaggregation_      ( sendPlatforms )
 {
     model_.RegisterFactory( *this );
 }
@@ -92,13 +105,16 @@ void AgentController::CreateAgent( dispatcher::Agent_ABC& agent )
 {
     if( !boost::algorithm::starts_with( agent.GetName().toStdString(), "HLA_" ) ) // $$$$ _RC_ SLI 2011-09-22: refactor this...
     {
-        agents_.push_back( T_Agent( new AgentProxy( agent, componentTypes_, componentTypeResolver_ ) ) );
+        T_Agents::iterator itAgent( agents_.insert( T_Agents::value_type( agent.GetId(), T_Agent( new AgentProxy( agent, componentTypes_, componentTypeResolver_, doDisaggregation_ ) ) ) ).first );
         const kernel::AgentType& agentType = agent.GetType();
         const std::string typeName = agentType.GetName();
         const rpr::EntityType entityType = aggregatesResolver_.Find( typeName );
         const rpr::ForceIdentifier forceIdentifier = GetForce( agent );
         for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
-            (*it)->AggregateCreated( *agents_.back(), agent.GetId(), agent.GetName().toStdString(), forceIdentifier, entityType, agentType.GetSymbol() );
+            (*it)->AggregateCreated( *(itAgent->second), agent.GetId(), agent.GetName().toStdString(), forceIdentifier, entityType, agentType.GetSymbol() );
+        if( doDisaggregation_ )
+            adapters_.push_back( T_AgentAdapter( new AgentAdapter( factory_, converter_, agent,
+                    AgentAdapter::T_NotificationCallback( boost::bind( &AgentController::NotifyPlatformCreation, boost::ref( *this ), _1, _2, _3, _4 ) ) ) ) );
     }
 }
 
@@ -118,4 +134,29 @@ void AgentController::Register( AgentListener_ABC& listener )
 void AgentController::Unregister( AgentListener_ABC& listener )
 {
     listeners_.erase( std::remove( listeners_.begin(), listeners_.end(), &listener ), listeners_.end() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentController::NotifyPlatformCreation
+// Created: AHC 2012-07-26
+// -----------------------------------------------------------------------------
+void AgentController::NotifyPlatformCreation( Agent_ABC& agent, dispatcher::Agent_ABC& parent, const tic::Platform_ABC& platform, int childIndex )
+{
+    static unsigned int identifier_factory = std::numeric_limits< short >::max();
+    const std::string symbol( parent.GetType().GetSymbol() ); // FIXME
+    const std::string typeName = platform.GetType().GetName();
+    const rpr::EntityType entityType = componentTypeResolver_.Find( typeName );
+    const rpr::ForceIdentifier forceIdentifier = GetForce( parent );
+    unsigned int identifier = --identifier_factory;  // FIXME
+    const std::string name( parent.GetName().toStdString() + "_" + typeName + " " + boost::lexical_cast< std::string >( childIndex ) );
+
+    for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
+        (*it)->PlatformCreated( agent, identifier, name, forceIdentifier, entityType, symbol );
+
+    T_Agents::const_iterator itAgent( agents_.find( parent.GetId() ) );
+    if( agents_.end() !=  itAgent )
+    {
+        AgentProxy& proxy( *itAgent->second );
+        proxy.PlatformAdded( name, identifier );
+    }
 }

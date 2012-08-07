@@ -104,6 +104,7 @@ private:
     //! @name Operations
     //@{
     virtual void AggregateCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol );
+    virtual void PlatformCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol );
     //@}
 
 private:
@@ -127,6 +128,7 @@ private:
     std::auto_ptr< HlaClass > aggregateClass_;
     std::auto_ptr< HlaClass > surfaceVesselClass_;
     std::auto_ptr< HlaClass > aircraftClass_;
+    std::auto_ptr< HlaClass > groundVehicleClass_;
     std::auto_ptr< HlaClass > rprAggregateClass_;
     std::auto_ptr< HlaClass > rprSurfaceVesselClass_;
     std::auto_ptr< HlaClass > rprAircraftClass_;

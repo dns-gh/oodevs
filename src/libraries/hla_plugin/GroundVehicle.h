@@ -3,16 +3,29 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2011 MASA Group
+// Copyright (c) 2008 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#ifndef plugins_hla_NetnAggregate_h
-#define plugins_hla_NetnAggregate_h
+#ifndef plugins_hla_GroundVehicle_h
+#define plugins_hla_GroundVehicle_h
 
 #include "HlaObject_ABC.h"
 #include "EventListener_ABC.h"
-#include <memory>
+#include "rpr/ForceIdentifier.h"
+#include "rpr/EntityType.h"
+
+namespace hla
+{
+    class AttributeIdentifier;
+    class Deserializer;
+    class UpdateFunctor_ABC;
+}
+
+namespace rpr
+{
+    class EntityType;
+}
 
 namespace plugins
 {
@@ -22,21 +35,24 @@ namespace hla
     class AttributesSerializer;
     class ObjectListener_ABC;
     class ObjectListenerComposite;
+    class MarkingFactory_ABC;
 
 // =============================================================================
-/** @class  NetnAggregate
-    @brief  Netn aggregate
+/** @class  GroundVehicle
+    @brief  Surface vessel
 */
-// Created: SLI 2011-07-26
+    // Created: AHC 2012-07-26
 // =============================================================================
-class NetnAggregate : public HlaObject_ABC
+class GroundVehicle : public HlaObject_ABC
                     , private EventListener_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             NetnAggregate( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC& agent, const std::string& callsign, const std::string& uniqueIdentifier, const std::string& symbol );
-    virtual ~NetnAggregate();
+             GroundVehicle( Agent_ABC& agent, unsigned int identifier,
+                            const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const MarkingFactory_ABC& markingFactory,
+                            unsigned short siteID, unsigned short applicationID );
+    virtual ~GroundVehicle();
     //@}
 
     //! @name Operations
@@ -50,7 +66,7 @@ public:
     //@}
 
 private:
-    //! @name Operations
+    //! @name Observer
     //@{
     virtual void SpatialChanged( double latitude, double longitude, float altitude, float speed, float direction );
     virtual void FormationChanged( bool isOnRoad );
@@ -62,8 +78,8 @@ private:
 private:
     //! @name Member data
     //@{
+    std::string identifier_;
     std::auto_ptr< ObjectListenerComposite > listeners_;
-    std::auto_ptr< HlaObject_ABC > aggregate_;
     Agent_ABC& agent_;
     std::auto_ptr< AttributesSerializer > attributes_;
     //@}
@@ -72,4 +88,4 @@ private:
 }
 }
 
-#endif // plugins_hla_NetnAggregate_h
+#endif // plugins_hla_GroundVehicle_h

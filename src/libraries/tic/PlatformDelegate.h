@@ -24,7 +24,7 @@ namespace kernel
 
 namespace dispatcher
 {
-    class Agent;
+    class Agent_ABC;
 }
 
 namespace tic
@@ -45,7 +45,7 @@ class PlatformDelegate : public PlatformDelegate_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PlatformDelegate( dispatcher::Agent& holder, const kernel::CoordinateConverter_ABC& converter, float timeStep );
+             PlatformDelegate( dispatcher::Agent_ABC& holder, const kernel::CoordinateConverter_ABC& converter, float timeStep );
     virtual ~PlatformDelegate();
     //@}
 
@@ -74,7 +74,7 @@ private:
 private:
     //! @name Member data
     //@{
-    dispatcher::Agent& holder_;
+    dispatcher::Agent_ABC& holder_;
     const kernel::CoordinateConverter_ABC& converter_;
     boost::ptr_vector< Platform > platforms_;
     std::vector< Platform* > sorted_;
