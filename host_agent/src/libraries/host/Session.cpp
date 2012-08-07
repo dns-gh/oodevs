@@ -367,7 +367,7 @@ void WriteSimulationConfiguration( Tree& tree, int base, const Config& cfg )
     tree.put( prefix + "GarbageCollector.<xmlattr>.setstepmul", 100 );
     if( cfg.checkpoints.enabled )
     {
-        tree.put( prefix + "checkpoint.<xmlattr>.frequency", cfg.checkpoints.frequency );
+        tree.put( prefix + "checkpoint.<xmlattr>.frequency", boost::lexical_cast< std::string >( cfg.checkpoints.frequency ) + "s" );
         tree.put( prefix + "checkpoint.<xmlattr>.keep", cfg.checkpoints.keep );
         tree.put( prefix + "checkpoint.<xmlattr>.usecrc", true );
     }
