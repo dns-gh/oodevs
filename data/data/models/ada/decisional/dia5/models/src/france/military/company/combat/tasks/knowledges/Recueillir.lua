@@ -7,13 +7,14 @@ return
         self.mainPositions = {}
 
         local listPlatoonAlly = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", false )
+        local listPlatoonAllyBis = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", false )
         self.nbMain = 0
         local tasks = explode( ";", params.mainTasks )
         for _, task in pairs( tasks ) do
             for _, platoon in pairs( listPlatoonAlly or {} ) do
-                if DEC_IsMissionAvailable( platoon.source, task ) and existsInside( { listPlatoonAlly }, platoon ) then
+                if DEC_IsMissionAvailable( platoon.source, task ) and existsInside( { listPlatoonAllyBis }, platoon ) then
                     platoon.entity = platoon
-                    listPlatoonAlly = removeFromListForLead( { platoon }, listPlatoonAlly )
+                    listPlatoonAllyBis = removeFromListForLead( { platoon }, listPlatoonAllyBis )
                     self.nbMain = self.nbMain + 1
                 end
             end
