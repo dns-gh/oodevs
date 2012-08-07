@@ -75,15 +75,15 @@
                     <div class="control-group">
                         <label class="control-label">Sessions</label>
                         <div class="controls">
-                            <span class="uneditable-input read_only">{{num_sessions}} total</span>
-                            <span class="uneditable-input read_only">{{num_played}} played</span>
+                            <span class="uneditable-input input-small read_only">{{num_sessions}} total</span>
+                            <span class="uneditable-input input-small read_only">{{num_played}} played</span>
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label"></label>
                         <div class="controls">
-                            <span class="uneditable-input read_only">{{parallel_sessions}} parallel</span>
-                            <span class="uneditable-input read_only">{{num_parallel}} running</span>
+                            <span class="uneditable-input input-small read_only">{{parallel_sessions}} parallel</span>
+                            <span class="uneditable-input input-small read_only">{{num_parallel}} running</span>
                         </div>
                     </div>
                     [[ template "uneditable_input_text" sub "id" "{{id}}_exercises" "label" "Exercises" "value" "{{num_exercises}} available" ]]
