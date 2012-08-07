@@ -137,8 +137,6 @@
                 {{#if start_time}}
                 <div><span class="item_label">Start</span> {{start_time}}</div>
                 <div><span class="item_label">Duration</span> {{duration}}</div>
-                {{/if}}
-                {{#if clients }}
                 <div><span class="item_label">Clients</span> {{clients.length}} connected</div>
                 {{/if}}
             </div>
