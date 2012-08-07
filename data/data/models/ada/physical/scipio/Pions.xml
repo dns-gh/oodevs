@@ -12330,7 +12330,7 @@
   <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="417" name="TRAIN . Train" type="Pion CIRCULATION">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/transportation/railhead/corps"/>
     <equipments>
-      <equipment count="1" crew="10" major="true" type="Train"/>
+      <equipment convoyer="true" count="1" crew="10" major="true" type="Train"/>
     </equipments>
     <sensors-range range="5000"/>
     <equipments-range range="5000"/>
@@ -18096,4 +18096,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="1376194445" -->
+<!-- signature="0588602710" -->
