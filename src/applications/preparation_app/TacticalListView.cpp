@@ -331,7 +331,8 @@ void TacticalListView::NotifyContextMenu( const Formation_ABC& formation, Contex
     contextMenuEntity_ = &formation;
     if( !isVisible() || !IsActivated() )
         return;
-    AddFormationMenu( menu, static_cast< E_NatureLevel >( formation.GetLevel() ) );
+    if( formation.GetLevel() > eNatureLevel_c )
+        AddFormationMenu( menu, static_cast< E_NatureLevel >( formation.GetLevel() ) );
 }
 
 // -----------------------------------------------------------------------------
