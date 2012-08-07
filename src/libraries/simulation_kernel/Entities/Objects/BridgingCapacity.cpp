@@ -59,16 +59,15 @@ BridgingCapacity::~BridgingCapacity()
 
 namespace
 {
+    bool IsBridge( const std::string& type ) { return type == "bridge"; }
+
     TerrainData Convert( const std::string& type )
     {
-        if( type == "highway" )
-            return TerrainData::Motorway();
-        else if( type == "main road" )
-            return TerrainData::LargeRoad();
-        else if( type == "secondary road" )
-            return TerrainData::MediumRoad();
-        else if( type == "country road" )
-            return TerrainData::SmallRoad();
+        if( type == "highway" )             return TerrainData::Motorway();
+        else if( type == "main road" )      return TerrainData::LargeRoad();
+        else if( type == "secondary road" ) return TerrainData::MediumRoad();
+        else if( type == "country road" )   return TerrainData::SmallRoad();
+        else if( IsBridge( type ) )         return TerrainData::Bridge();
         return TerrainData::Bridge();
     }
 }
@@ -79,10 +78,13 @@ namespace
 // -----------------------------------------------------------------------------
 void BridgingCapacity::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
+    bool isPathData = true;
     file >> boost::serialization::base_object< ObjectCapacity_ABC >( *this )
          >> type_
-         >> bridge_;
-    handler_.Reset( new TER_DynamicData( bridge_, Convert( type_ ) ) );
+         >> bridge_
+         >> isPathData;
+    if( isPathData )
+        CreatePathData();
 }
 
 // -----------------------------------------------------------------------------
@@ -91,9 +93,11 @@ void BridgingCapacity::load( MIL_CheckPointInArchive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void BridgingCapacity::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
+    bool isPathData = IsPathData();
     file << boost::serialization::base_object< ObjectCapacity_ABC >( *this )
          << type_
-         << bridge_;
+         << bridge_
+         << isPathData;
 }
 
 // -----------------------------------------------------------------------------
@@ -120,11 +124,36 @@ void BridgingCapacity::Instanciate( MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 void BridgingCapacity::Finalize( MIL_Object_ABC& object )
 {
-    if( type_ != "" )
-    {
-        CreateBridgeGeometry( object.GetLocalisation().GetPoints() );
-        handler_.Reset( new TER_DynamicData( bridge_, Convert( type_ ) ) );
-    }
+    CreateBridgeGeometry( object.GetLocalisation().GetPoints() );
+    if( type_ != "" && !IsBridge( type_ ) )
+        CreatePathData();
+}
+
+// -----------------------------------------------------------------------------
+// Name: BridgingCapacity::CreatePathData
+// Created: MMC 2012-08-06
+// -----------------------------------------------------------------------------
+void BridgingCapacity::CreatePathData()
+{
+    handler_.Reset( new TER_DynamicData( bridge_, Convert( type_ ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BridgingCapacity::IsBridgeType
+// Created: MMC 2012-08-01
+// -----------------------------------------------------------------------------
+bool BridgingCapacity::IsBridgeType() const
+{
+    return IsBridge( type_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BridgingCapacity::IsPathData
+// Created: MMC 2012-08-01
+// -----------------------------------------------------------------------------
+bool BridgingCapacity::IsPathData() const
+{
+    return handler_.IsPathfindData();
 }
 
 // -----------------------------------------------------------------------------

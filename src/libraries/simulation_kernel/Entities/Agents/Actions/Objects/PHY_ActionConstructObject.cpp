@@ -14,6 +14,7 @@
 #include "PHY_RoleAction_Objects.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Objects/BridgingCapacity.h"
 #include "Entities/Objects/ConstructionAttribute.h"
 #include "Entities/Objects/MineAttribute.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
@@ -32,11 +33,11 @@ PHY_ActionConstructObject::PHY_ActionConstructObject( MIL_AgentPion& pion, boost
 {
     role_.SetCreator( *pObject_ );
     pObject_->Initialize( *pGenObject.get() );
-    ConstructionAttribute* attribute = pObject_->RetrieveAttribute< ConstructionAttribute >();
-    if( attribute )
+    ConstructionAttribute* pConstruction = pObject_->RetrieveAttribute< ConstructionAttribute >();
+    if( pConstruction )
     {
-        attribute->Set( 0. );//default construction is set to 100%
-        attribute->NotifyBuildByGen();
+        pConstruction->Set( 0. );//default construction is set to 100%
+        pConstruction->NotifyBuildByGen();
     }
     MineAttribute* mineAttribute = pObject_->RetrieveAttribute< MineAttribute >();
     if( mineAttribute )
@@ -62,7 +63,16 @@ PHY_ActionConstructObject::~PHY_ActionConstructObject()
 void PHY_ActionConstructObject::StopAction()
 {
     if( pObject_ )
+    {
+        ConstructionAttribute* pConstruction = pObject_->RetrieveAttribute< ConstructionAttribute >();
+        if( pConstruction && pConstruction->IsConstructed() )
+        {
+            BridgingCapacity* pBridging = pObject_->Retrieve< BridgingCapacity >();
+            if( pBridging && pBridging->IsBridgeType() && !pBridging->IsPathData() )
+                pBridging->CreatePathData();
+        }
         pObject_->RetrieveAttribute< ConstructionAttribute >()->NotifyStopBuildByGen();
+    }
     Callback( role_.GetFinalReturnCode() );
 }
 

@@ -53,6 +53,13 @@ public:
     virtual void Instanciate( MIL_Object_ABC& object ) const;
     virtual void Register( MIL_Object_ABC& object );
     virtual void Finalize( MIL_Object_ABC& object );
+    virtual void CreatePathData();
+    //@}
+
+    //! @name Accessors
+    //@{
+    bool IsBridgeType() const;
+    bool IsPathData() const;
     //@}
 
 private:

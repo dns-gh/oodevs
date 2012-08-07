@@ -32,6 +32,11 @@ public:
     void Reset( TER_DynamicData* data );
     //@}
 
+    //! @name Accessors
+    //@{
+    bool IsPathfindData() const { return pPathfindData_ != 0; }
+    //@}
+
 private:
     //! @name Member data
     //@{
