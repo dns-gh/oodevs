@@ -421,8 +421,6 @@ bool Session::StopProcess( boost::upgrade_lock< boost::shared_mutex >& lock )
         copy.swap( process_ );
         token.swap( running_ );
         clients_.clear();
-        start_time_.clear();
-        current_time_.clear();
     }
     if( !copy || !copy->IsAlive() )
         return true;
@@ -532,6 +530,8 @@ bool Session::Start( const Runtime_ABC& runtime, const Path& apps )
         return false;
 
     boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );
+    start_time_.clear();
+    current_time_.clear();
     const Path output = GetOutput();
     system_.MakePaths( output );
     system_.WriteFile( output / "session.xml", GetConfiguration( cfg_, port_->Get() ) );
