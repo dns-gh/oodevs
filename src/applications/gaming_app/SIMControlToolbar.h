@@ -11,6 +11,7 @@
 #define __SIMControlToolbar_h_
 
 #include "clients_gui/Types.h"
+#include "gaming/Simulation.h"
 #include "tools/ElementObserver_ABC.h"
 
 #pragma warning( push, 0 )
@@ -30,7 +31,6 @@ namespace kernel
 
 class ConnectDialog;
 class DisconnectDialog;
-class Simulation;
 class Services;
 class Network;
 class Publisher_ABC;
@@ -46,6 +46,8 @@ class SIMControlToolbar : public QToolBar
                         , public tools::ElementObserver_ABC< Simulation >
                         , public tools::ElementObserver_ABC< Services >
                         , public tools::ElementObserver_ABC< kernel::Profile_ABC >
+                        , public tools::ElementObserver_ABC< Simulation::sStartTick >
+                        , public tools::ElementObserver_ABC< Simulation::sEndTick >
 {
     Q_OBJECT
 
@@ -85,6 +87,8 @@ private:
     virtual void NotifyUpdated( const Simulation& simulation );
     virtual void NotifyUpdated( const Services& services );
     virtual void NotifyUpdated( const kernel::Profile_ABC& profile );
+    virtual void NotifyUpdated( const Simulation::sStartTick& startTick );
+    virtual void NotifyUpdated( const Simulation::sEndTick& endTick );
     void RequestCheckpoint( const std::string& name );
     //@}
 
@@ -105,6 +109,7 @@ private:
     int speed_;
     bool connected_, paused_;
     bool hasReplay_, hasSimulation_;
+    bool gamingPaused_;
 
     QIcon connectPix_, disconnectPix_;
     QIcon playPix_, stopPix_;

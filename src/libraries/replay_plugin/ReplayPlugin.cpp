@@ -33,6 +33,7 @@ ReplayPlugin::ReplayPlugin( Model_ABC& model, ClientPublisher_ABC& clients, tool
     , tickNumber_ ( 0 )
     , running_    ( false )
     , skipToFrame_( -1 )
+    , nextPause_  ( 0 )
     , factory_    ( new ReplayExtensionFactory( replayModel ) )
 {
     model.RegisterFactory( *factory_ );
@@ -102,6 +103,8 @@ void ReplayPlugin::OnTimer()
         loader_.Tick();
     if( running_ || tickNumber_ != loader_.GetTickNumber() )
         SendReplayInfo( clients_ );
+    if( nextPause_ > 0 && --nextPause_ == 0 )
+        Pause();
 }
 
 // -----------------------------------------------------------------------------
@@ -123,7 +126,7 @@ void ReplayPlugin::OnReceive( const std::string& , const sword::ClientToReplay& 
     if( wrapper.message().has_control_pause() )
         Pause();
     else if( wrapper.message().has_control_resume() )
-        Resume();
+        Resume( wrapper.message().control_resume().has_tick() ? wrapper.message().control_resume().tick() : 0 );
     else if( wrapper.message().has_control_change_time_factor() )
         ChangeTimeFactor( wrapper.message().control_change_time_factor().time_factor() );
     else if( wrapper.message().has_control_skip_to_tick() )
@@ -167,8 +170,9 @@ void ReplayPlugin::Pause()
 // Name: ReplayPlugin::Resume
 // Created: AGE 2007-08-27
 // -----------------------------------------------------------------------------
-void ReplayPlugin::Resume()
+void ReplayPlugin::Resume( int ticks )
 {
+    nextPause_ = ticks;
     ::replay::ControlResumeAck asn;
     asn().set_error_code( running_ ? sword::ControlAck::error_not_paused : sword::ControlAck::no_error );
     asn.Send( clients_ );

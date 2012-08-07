@@ -107,6 +107,7 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
     , paused_( false )
     , hasReplay_( false )
     , hasSimulation_( true )
+    , gamingPaused_( true )
     , connectPix_   ( MAKE_ICON( notconnected ) )
     , disconnectPix_( MAKE_ICON( connected ) )
     , playPix_      ( MAKE_ICON( play ) )
@@ -221,12 +222,14 @@ void SIMControlToolbar::SlotConnectDisconnect()
 //-----------------------------------------------------------------------------
 void SIMControlToolbar::SlotPlayPause()
 {
+    gamingPaused_ = !gamingPaused_;
     // $$$$ AGE 2007-08-24:
     if( paused_ )
     {
         if( hasReplay_ )
         {
             replay::ControlResume message;
+            message().set_tick( 1 );
             message.Send( publisher_ );
         }
         if( hasSimulation_ )
@@ -358,7 +361,8 @@ void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
     if( paused_ != simulation.IsPaused() )
     {
         paused_ = simulation.IsPaused();
-        if( paused_ )
+        bool paused = hasReplay_ ? gamingPaused_ : paused_;
+        if( paused )
         {
             pPlayButton_->setIconSet( playPix_ );
             pPlayButton_->setTextLabel( tr( "Unpause (Alt+P)" ) );
@@ -391,6 +395,31 @@ void SIMControlToolbar::NotifyUpdated( const kernel::Profile_ABC& profile )
     pSpeedButton_->setEnabled( super );
     pCheckpointButton_->setEnabled( super );
     pCheckpointAction_->setVisible( super );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SIMControlToolbar::NotifyUpdated
+// Created: LDC 2012-08-07
+// -----------------------------------------------------------------------------
+void SIMControlToolbar::NotifyUpdated( const Simulation::sStartTick& )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: SIMControlToolbar::NotifyUpdated
+// Created: LDC 2012-08-07
+// -----------------------------------------------------------------------------
+void SIMControlToolbar::NotifyUpdated( const Simulation::sEndTick& )
+{
+    if( hasReplay_ )
+    {
+        if( !gamingPaused_ )
+        {
+            replay::ControlResume message;
+            message().set_tick( 1 );
+            message.Send( publisher_ );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------

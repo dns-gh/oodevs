@@ -193,6 +193,8 @@ void TimelineView::NotifyDeleted( const kernel::Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void TimelineView::Update()
 {
+    if( !isVisible() )
+        return;
     int row = 0;
     if( magicVisible_ )
         DrawActions( magicActions_, row );
