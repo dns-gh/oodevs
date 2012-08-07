@@ -29,6 +29,7 @@
 #include "ADN_DialogLog.h"
 #include "ADN_Drawings_Data.h"
 #include "ADN_Drawings_GUI.h"
+#include "ADN_enums.h"
 #include "ADN_Equipement_Data.h"
 #include "ADN_Equipement_GUI.h"
 #include "ADN_FireClass_Data.h"
@@ -680,16 +681,16 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatUse( ADN_Ref_ABC* da
     if( ADN_Missions_Data::Mission* infos = dynamic_cast< ADN_Missions_Data::Mission* >( data ) )
     {
         QStringList& list = result[ eModels ];
-        for( int i = 0; i < ADN_Models_Data::ModelInfos::eNbrModelEntityTypes; ++i )
-            list << GetModels().GetData().GetModelsThatUse( static_cast< ADN_Models_Data::ModelInfos::E_ModelEntityType >( i ), *infos );
+        for( int i = 0; i < eNbrEntityTypes; ++i )
+            list << GetModels().GetData().GetModelsThatUse( static_cast< E_EntityType >( i ), *infos );
         return result;
     }
     // Models that use frag order
     if( ADN_Missions_Data::FragOrder* infos = dynamic_cast< ADN_Missions_Data::FragOrder* >( data ) )
     {
         QStringList& list = result[ eModels ];
-        for( int i = 0; i < ADN_Models_Data::ModelInfos::eNbrModelEntityTypes; ++i )
-            list << GetModels().GetData().GetModelsThatUse( static_cast< ADN_Models_Data::ModelInfos::E_ModelEntityType >( i ), *infos );
+        for( int i = 0; i < eNbrEntityTypes; ++i )
+            list << GetModels().GetData().GetModelsThatUse( static_cast< E_EntityType >( i ), *infos );
         return result;
     }
 

@@ -37,8 +37,6 @@ typedef T_StringList::const_iterator CIT_StringList;
 class ADN_Data_ABC : public QObject
                    , private boost::noncopyable
 {
-    Q_OBJECT
-
 public:
     //! @name Constructors/Destructor
     //@{

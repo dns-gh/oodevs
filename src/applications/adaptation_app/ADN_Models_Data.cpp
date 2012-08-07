@@ -18,6 +18,7 @@
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
+#include "ADN_enums.h"
 #include "ENT/ENT_Tr.h"
 
 // =============================================================================
@@ -506,13 +507,13 @@ void ADN_Models_Data::WriteArchive( xml::xostream& output )
 // Name: ADN_Models_Data::GetModelsThatUse
 // Created: ABR 2011-09-29
 // -----------------------------------------------------------------------------
-QStringList ADN_Models_Data::GetModelsThatUse( ModelInfos::E_ModelEntityType type, ADN_Missions_Data::Mission& mission )
+QStringList ADN_Models_Data::GetModelsThatUse( E_EntityType type, ADN_Missions_Data::Mission& mission )
 {
     QStringList result;
     T_ModelInfos_Vector* currentVector = 0;
-    if( type == ModelInfos::ePawn )
+    if( type == eEntityType_Pawn )
         currentVector = &vUnitModels_;
-    else if( type == ModelInfos::eAutomat )
+    else if( type == eEntityType_Automat )
         currentVector = &vAutomataModels_;
     else
         currentVector = &vPopulationModels_;
@@ -535,13 +536,13 @@ QStringList ADN_Models_Data::GetModelsThatUse( ModelInfos::E_ModelEntityType typ
 // Name: ADN_Models_Data::GetModelsThatUse
 // Created: ABR 2012-08-02
 // -----------------------------------------------------------------------------
-QStringList ADN_Models_Data::GetModelsThatUse( ModelInfos::E_ModelEntityType type, ADN_Missions_Data::FragOrder& fragOrder )
+QStringList ADN_Models_Data::GetModelsThatUse( E_EntityType type, ADN_Missions_Data::FragOrder& fragOrder )
 {
     QStringList result;
     T_ModelInfos_Vector* currentVector = 0;
-    if( type == ModelInfos::ePawn )
+    if( type == eEntityType_Pawn )
         currentVector = &vUnitModels_;
-    else if( type == ModelInfos::eAutomat )
+    else if( type == eEntityType_Automat )
         currentVector = &vAutomataModels_;
     else
         currentVector = &vPopulationModels_;

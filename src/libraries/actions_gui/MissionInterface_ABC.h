@@ -10,6 +10,8 @@
 #ifndef __MissionInterface_ABC_h_
 #define __MissionInterface_ABC_h_
 
+QT_FORWARD_DECLARE_CLASS( QTextEdit )
+
 #include "ParamInterface_ABC.h"
 #include <boost/noncopyable.hpp>
 #pragma warning( push, 0 )
@@ -23,6 +25,11 @@ namespace kernel
     class OrderType;
     class GlTools_ABC;
     class Viewport_ABC;
+}
+
+namespace tools
+{
+    class ExerciseConfig;
 }
 
 class QTabWidget;
@@ -46,12 +53,12 @@ class MissionInterface_ABC : public Q3VBox
                            , public ParamInterface_ABC
                            , private boost::noncopyable
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionInterface_ABC( QWidget* parent, const kernel::OrderType& order, kernel::Entity_ABC& entity, kernel::ActionController& controller );
+             MissionInterface_ABC( QWidget* parent, const kernel::OrderType& order, kernel::Entity_ABC& entity, kernel::ActionController& controller, const tools::ExerciseConfig& config, std::string missionType = "" );
     virtual ~MissionInterface_ABC();
     //@}
 

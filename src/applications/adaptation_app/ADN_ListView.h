@@ -92,10 +92,10 @@ private:
     ADN_ListViewItem* FindItem( Q3ListViewItem* qItem, const QString& itemName );
     void FinishCreation( ADN_Ref_ABC* ref );
 
-private slots:
+protected slots:
     virtual void ContextMenuNew();
     virtual void ContextMenuNewCopy();
-    virtual void ContextMenuDelete();
+    virtual bool ContextMenuDelete();
     virtual void ContextMenuSearchElements( int id );
 
     void GoToOnDoubleClicked( Q3ListViewItem* pItem );

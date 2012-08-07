@@ -19,10 +19,15 @@
 #include "ADN_AiEngine_Data.h"
 #include "ADN_DataException.h"
 #include "ADN_Tr.h"
+#include "ADN_enums.h"
 #include "tools/Loader_ABC.h"
-#include <boost/bind.hpp>
 #include <tools/XmlCrc32Signature.h>
 #include <xeuseuleu/xsl.hpp>
+
+#include <boost/bind.hpp>
+#include <boost/filesystem.hpp>
+
+namespace bfs = boost::filesystem;
 
 IdentifierFactory ADN_Missions_Data::idFactory_;
 
@@ -378,15 +383,14 @@ std::string ADN_Missions_Data::Mission::GetItemName()
 // -----------------------------------------------------------------------------
 ADN_Missions_Data::Mission* ADN_Missions_Data::Mission::CreateCopy()
 {
-    Mission* newMission              = new Mission( ADN_Missions_Data::idFactory_.Create() );
-    newMission->strName_             = strName_.GetData();
-    newMission->diaType_             = diaType_.GetData();
-    newMission->diaBehavior_         = diaBehavior_.GetData();
-    newMission->cdtDiaBehavior_      = cdtDiaBehavior_.GetData();
-    newMission->mrtDiaBehavior_      = mrtDiaBehavior_.GetData();
-    newMission->doctrineDescription_ = doctrineDescription_.GetData();
-    newMission->usageDescription_    = usageDescription_.GetData();
-    newMission->symbol_              = symbol_.GetData();
+    Mission* newMission                  = new Mission( ADN_Missions_Data::idFactory_.Create() );
+    newMission->strName_                 = strName_.GetData();
+    newMission->diaType_                 = diaType_.GetData();
+    newMission->diaBehavior_             = diaBehavior_.GetData();
+    newMission->cdtDiaBehavior_          = cdtDiaBehavior_.GetData();
+    newMission->mrtDiaBehavior_          = mrtDiaBehavior_.GetData();
+    newMission->missionSheetContent_     = missionSheetContent_.GetData();
+    newMission->symbol_                  = symbol_.GetData();
     newMission->parameters_.reserve( parameters_.size() );
     for( IT_MissionParameter_Vector it = parameters_.begin(); it != parameters_.end(); ++it )
     {
@@ -400,9 +404,9 @@ ADN_Missions_Data::Mission* ADN_Missions_Data::Mission::CreateCopy()
 // Name: ADN_Missions_Data::Mission::ReadArchive
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-void ADN_Missions_Data::Mission::ReadArchive( xml::xistream& input, std::size_t contextLength )
+void ADN_Missions_Data::Mission::ReadArchive( xml::xistream& input, std::size_t contextLength, E_EntityType type )
 {
-    std::string doctrineDesc, usageDesc, symbol;
+    std::string missionSheetDesc, symbol;
     std::size_t index = 0;
     input >> xml::attribute( "name", strName_ )
         >> xml::attribute( "dia-type", diaType_ )
@@ -410,18 +414,13 @@ void ADN_Missions_Data::Mission::ReadArchive( xml::xistream& input, std::size_t 
         >> xml::optional >> xml::attribute( "dia-behavior", diaBehavior_ )
         >> xml::optional >> xml::attribute( "cdt-dia-behavior", cdtDiaBehavior_ )
         >> xml::optional >> xml::attribute( "mrt-dia-behavior", mrtDiaBehavior_ )
-        >> xml::optional >> xml::start( "description" )
-            >> xml::optional >> xml::start( "doctrine" ) >> doctrineDesc >> xml::end
-            >> xml::optional >> xml::start( "usage" ) >> usageDesc >> xml::end
-        >> xml::end
         >> xml::optional >> xml::attribute( "package", strPackage_ )
         >> xml::list( "parameter", boost::bind( &ADN_Missions_Data::Mission::ReadParameter, this , _1,  boost::ref( index ), contextLength ) );
-    doctrineDescription_ = doctrineDesc;
-    usageDescription_ = usageDesc;
     const std::string code = symbol.empty() ? " - " : symbol;
     ADN_Drawings_Data& drawingsData = ADN_Workspace::GetWorkspace().GetDrawings().GetData();
     symbol_.SetVector( drawingsData.GetCategoryDrawings( "tasks" ) );
     symbol_.SetData( drawingsData.GetDrawing( code ), false );
+    ReadMissionSheet( type );
 }
 
 // -----------------------------------------------------------------------------
@@ -490,15 +489,6 @@ void ADN_Missions_Data::Mission::WriteArchive( xml::xostream& output, const std:
         output << xml::attribute( "mrt-dia-behavior", mrtDiaBehavior_ )
                << xml::attribute( "cdt-dia-behavior", cdtDiaBehavior_ );
     }
-    if( ! doctrineDescription_.GetData().empty() || ! usageDescription_.GetData().empty() )
-    {
-        output << xml::start( "description" );
-        if( ! doctrineDescription_.GetData().empty() )
-            output << xml::start( "doctrine" ) << xml::cdata( doctrineDescription_.GetData() ) << xml::end;
-        if( ! usageDescription_.GetData().empty() )
-            output << xml::start( "usage" ) << xml::cdata( usageDescription_.GetData() ) << xml::end;
-        output << xml::end;
-    }
     if( ! context.empty() )
     {
         for( unsigned i = 0; i < context.size(); ++i )
@@ -508,6 +498,83 @@ void ADN_Missions_Data::Mission::WriteArchive( xml::xostream& output, const std:
         parameters_[i]->WriteArchive( output );
 
     output << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::ReadMissionSheet
+// Created: NPT 2012-07-27
+// -----------------------------------------------------------------------------
+void ADN_Missions_Data::Mission::ReadMissionSheet( E_EntityType type )
+{
+    std::string path = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + FromEntityTypeToRepository( type );
+    std::string fileName = std::string( path + "/" + strName_.GetData() + ".html" );
+    missionSheetPath_ = fileName;
+    if( bfs::is_directory( path ) && bfs::is_regular_file( fileName ) )
+    {
+        std::ifstream file( fileName );
+        std::stringstream buffer; 
+        buffer << file.rdbuf();
+        missionSheetContent_ = std::string( buffer.str() );
+        file.close();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::RemoveMissionSheet
+// Created: NPT 2012-07-31
+// -----------------------------------------------------------------------------
+void ADN_Missions_Data::Mission::RemoveDifferentNamedMissionSheet( E_EntityType type )
+{
+    std::string missionDirectoryPath = FromEntityTypeToRepository( type );
+    std::string directoryPath = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData();
+    std::string file = directoryPath + missionDirectoryPath + std::string( "/" + strName_.GetData() + ".html" );
+
+    if( file != missionSheetPath_.GetData() && missionSheetPath_.GetData() != "" )
+        bfs::remove( missionSheetPath_.GetData() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::WriteMissionSheet
+// Created: NPT 2012-07-27
+// -----------------------------------------------------------------------------
+void ADN_Missions_Data::Mission::WriteMissionSheet( E_EntityType type )
+{
+    std::string missionDirectoryPath = FromEntityTypeToRepository( type );
+    std::string directoryPath = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData();
+    std::string fileName = directoryPath + missionDirectoryPath + std::string( "/" + strName_.GetData() + ".html" );
+
+    if( !bfs::is_directory( directoryPath+missionDirectoryPath ) )
+        bfs::create_directories( directoryPath+missionDirectoryPath + "/obsolete" );
+
+    if( !bfs::is_regular_file( fileName ) && missionDirectoryPath != "" )
+    {
+        FILE* file = std::fopen( fileName.c_str(), "w" );
+        std::fclose( file );
+    }
+    std::fstream fichier( fileName );
+    fichier.clear();
+    fichier << missionSheetContent_.GetData();
+    fichier.close();
+    missionSheetPath_ = fileName;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::FromEntityTypeToRepository
+// Created: NPT 2012-07-30
+// -----------------------------------------------------------------------------
+std::string ADN_Missions_Data::Mission::FromEntityTypeToRepository( E_EntityType type )
+{
+    switch( type )
+    {
+    case eEntityType_Pawn:
+        return ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szUnitsMissionPath_.GetData();
+    case eEntityType_Automat:
+        return ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szAutomataMissionPath_.GetData();
+    case eEntityType_Population:
+        return ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szCrowdsMissionPath_.GetData();
+    default:
+        return "";
+    }
 }
 
 // =============================================================================
@@ -563,8 +630,7 @@ ADN_Missions_Data::FragOrder* ADN_Missions_Data::FragOrder::CreateCopy()
     FragOrder* newFragOrder = new FragOrder( ADN_Missions_Data::idFactory_.Create() );
     newFragOrder->strName_ = strName_.GetData();
     newFragOrder->diaType_ = diaType_.GetData();
-    newFragOrder->doctrineDescription_ = doctrineDescription_.GetData();
-    newFragOrder->usageDescription_ = doctrineDescription_.GetData();
+    newFragOrder->missionSheetContent_ = missionSheetContent_.GetData();
     newFragOrder->parameters_.reserve( parameters_.size() );
     for( IT_MissionParameter_Vector it = parameters_.begin(); it != parameters_.end(); ++it )
     {
@@ -580,17 +646,11 @@ ADN_Missions_Data::FragOrder* ADN_Missions_Data::FragOrder::CreateCopy()
 // -----------------------------------------------------------------------------
 void ADN_Missions_Data::FragOrder::ReadArchive( xml::xistream& input )
 {
-    std::string doctrineDesc, usageDesc;
     input >> xml::attribute( "name", strName_ )
           >> xml::attribute( "dia-type", diaType_ )
           >> xml::optional >> xml::attribute( "available-without-mission", isAvailableWithoutMission_ )
-          >> xml::optional >> xml::start( "description" )
-            >> xml::start( "doctrine" ) >> doctrineDesc >> xml::end
-            >> xml::start( "usage" ) >> usageDesc >> xml::end
-          >> xml::end
           >> xml::list( "parameter", *this, &ADN_Missions_Data::FragOrder::ReadParameter );
-    doctrineDescription_ = doctrineDesc;
-    usageDescription_ = usageDesc;
+    ReadMissionSheet();
 }
 
 // -----------------------------------------------------------------------------
@@ -632,18 +692,70 @@ void ADN_Missions_Data::FragOrder::WriteArchive( xml::xostream& output )
             << xml::attribute( "dia-type", diaType_ )
             << xml::attribute( "id", id_ )
             << xml::attribute( "available-without-mission", isAvailableWithoutMission_ );
-    if( ! doctrineDescription_.GetData().empty() || ! usageDescription_.GetData().empty() )
-    {
-        output << xml::start( "description" );
-        if( ! doctrineDescription_.GetData().empty() )
-            output << xml::start( "doctrine" ) << xml::cdata( doctrineDescription_.GetData() ) << xml::end;
-        if( ! usageDescription_.GetData().empty() )
-            output << xml::start( "usage" ) << xml::cdata( usageDescription_.GetData() ) << xml::end;
-        output << xml::end;
-    }
+
     for( unsigned int i = 0; i < parameters_.size(); ++i )
         parameters_[i]->WriteArchive( output );
     output << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::Mission::ReadMissionSheet
+// Created: NPT 2012-07-27
+// -----------------------------------------------------------------------------
+void ADN_Missions_Data::FragOrder::ReadMissionSheet()
+{
+    std::string path = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData()
+                     + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szFragOrdersMissionPath_.GetData();
+    std::string fileName = std::string( path + "/" + strName_.GetData() + ".html");
+    missionSheetPath_ = fileName;
+    if( bfs::is_directory( path ) && bfs::is_regular_file( fileName ) )
+    {
+        std::ifstream file( fileName );
+        std::stringstream buffer; 
+        buffer << file.rdbuf();
+        missionSheetContent_ = std::string( buffer.str() );
+        file.close();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::RemoveMissionSheet
+// Created: NPT 2012-07-31
+// -----------------------------------------------------------------------------
+void ADN_Missions_Data::FragOrder::RemoveDifferentNamedMissionSheet()
+{
+    std::string missionDirectoryPath = ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szFragOrdersMissionPath_.GetData();
+    std::string directoryPath = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData();
+    std::string file = directoryPath + missionDirectoryPath + std::string( "/" + strName_.GetData() + ".html");
+
+    if( file != missionSheetPath_.GetData() && missionSheetPath_.GetData() != "" )
+        bfs::remove( missionSheetPath_.GetData() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::Mission::WriteMissionSheet
+// Created: NPT 2012-07-27
+// -----------------------------------------------------------------------------
+void ADN_Missions_Data::FragOrder::WriteMissionSheet()
+{
+    std::string missionDirectoryPath = ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szFragOrdersMissionPath_.GetData();
+    std::string directoryPath = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData();
+    std::string fileName = directoryPath + missionDirectoryPath + std::string( "/" + strName_.GetData() + ".html");
+
+    if( !bfs::is_directory( directoryPath+missionDirectoryPath ) )
+        bfs::create_directories( directoryPath+missionDirectoryPath + "/obsolete" );
+
+    if( !bfs::is_regular_file( fileName ) )
+    {
+        FILE* file = std::fopen( fileName.c_str(), "w" );
+        std::fclose( file );
+    }
+
+    std::fstream fichier( fileName );
+    fichier.clear();
+    fichier << missionSheetContent_.GetData();
+    fichier.close();
+    missionSheetPath_ = fileName;
 }
 
 // =============================================================================
@@ -705,6 +817,69 @@ void ADN_Missions_Data::Load( const tools::Loader_ABC& fileLoader )
     }
 }
 
+namespace
+{
+    template< typename T >
+    void InitializeMissions( const ADN_Type_Vector_ABC< T >& vector )
+    {
+        for( ADN_Type_Vector_ABC< T >::const_iterator itMission = vector.begin(); itMission != vector.end(); ++itMission )
+        {
+            T* mission = *itMission;
+            QRegExp regExp( "[/\"<>|*\?:\\\\]" );
+            QString name( mission->strName_.GetData().c_str() );
+            int indexBadCaracter = regExp.lastIndexIn( name );
+            if( indexBadCaracter != -1 )
+            {
+                while( indexBadCaracter != -1 )
+                {
+                    name.replace( indexBadCaracter, 1, "-" );
+                    indexBadCaracter = regExp.lastIndexIn( name );
+                }
+                mission->strName_ = name.toUtf8().constData();
+            }
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::Initialize
+// Created: NPT 2012-08-07
+// -----------------------------------------------------------------------------
+void ADN_Missions_Data::Initialize()
+{
+    InitializeMissions( unitMissions_ );
+    InitializeMissions( automatMissions_ );
+    InitializeMissions( populationMissions_ );
+    InitializeMissions( fragOrders_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::NotifyElementDeleted
+// Created: NPT 2012-07-31
+// -----------------------------------------------------------------------------
+void ADN_Missions_Data::NotifyElementDeleted( std::string elementName, E_EntityType elementType )
+{
+    std::string missionDirectoryPath;
+    switch( elementType )
+    {
+    case eEntityType_Pawn:
+        missionDirectoryPath = ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szUnitsMissionPath_.GetData();
+        break;
+    case eEntityType_Automat:
+        missionDirectoryPath = ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szAutomataMissionPath_.GetData();
+        break;
+    case eEntityType_Population:
+        missionDirectoryPath = ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szCrowdsMissionPath_.GetData();
+        break;
+    default:
+        missionDirectoryPath = ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szFragOrdersMissionPath_.GetData();
+        break;
+    }
+    std::string directoryPath = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData();
+    std::string fileName = directoryPath + missionDirectoryPath + std::string( "/" + elementName + ".html");
+    toDeleteMissionSheets_.push_back( fileName );
+}
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_Data::ReadArchive
 // Created: APE 2005-03-14
@@ -733,13 +908,13 @@ void ADN_Missions_Data::ReadArchive( xml::xistream& input )
 
     input >> xml::start( "missions" )
             >> xml::start( "units" )
-                >> xml::list( "mission", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, boost::ref( unitMissions_ ), unitContext_.size() ) )
+                >> xml::list( "mission", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, boost::ref( unitMissions_ ), unitContext_.size(), eEntityType_Pawn ) )
             >> xml::end
             >> xml::start( "automats" )
-                >> xml::list( "mission", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, boost::ref( automatMissions_ ), automatContext_.size() ) )
+                >> xml::list( "mission", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, boost::ref( automatMissions_ ), automatContext_.size(), eEntityType_Automat ) )
             >> xml::end
             >> xml::start( "populations" )
-                >> xml::list( "mission", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, boost::ref( populationMissions_ ), populationContext_.size() ) )
+                >> xml::list( "mission", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, boost::ref( populationMissions_ ), populationContext_.size(), eEntityType_Population ) )
             >> xml::end
             >> xml::start( "fragorders" )
                 >> xml::list( "fragorder", *this, &ADN_Missions_Data::ReadFragOrder )
@@ -762,10 +937,10 @@ void ADN_Missions_Data::ReadFragOrder( xml::xistream& xis )
 // Name: ADN_Missions_Data::ReadMission
 // Created: AGE 2007-08-16
 // -----------------------------------------------------------------------------
-void ADN_Missions_Data::ReadMission( xml::xistream& xis, T_Mission_Vector& missions, std::size_t contextLength )
+void ADN_Missions_Data::ReadMission( xml::xistream& xis, T_Mission_Vector& missions, std::size_t contextLength, E_EntityType modelType )
 {
     std::auto_ptr< ADN_Missions_Data::Mission > spNew( new Mission( xis.attribute< unsigned int >( "id" ) ) );
-    spNew->ReadArchive( xis, contextLength );
+    spNew->ReadArchive( xis, contextLength, modelType );
     missions.AddItem( spNew.release() );
 }
 
@@ -795,9 +970,17 @@ namespace
 {
     void WriteMissions( xml::xostream& output, const std::string& name, const ADN_Missions_Data::T_MissionParameter_Vector& context, const ADN_Missions_Data::T_Mission_Vector& missions )
     {
+        //xml datas saving
         output << xml::start( name );
         for( unsigned int i = 0; i < missions.size(); ++i )
             missions[i]->WriteArchive( output, name, context );
+
+        //mission sheets saving
+        E_EntityType type = ( name == "units"? eEntityType_Pawn : ( name == "automats"? eEntityType_Automat : eEntityType_Population ) );
+        for( unsigned int i = 0; i < missions.size(); ++i )
+            missions[i]->RemoveDifferentNamedMissionSheet( type );
+         for( unsigned int i = 0; i < missions.size(); ++i )
+             missions[i]->WriteMissionSheet( type );
         output << xml::end;
     }
 }
@@ -814,11 +997,35 @@ void ADN_Missions_Data::WriteArchive( xml::xostream& output )
     WriteMissions( output, "automats"   , automatContext_,    automatMissions_ );
     WriteMissions( output, "populations", populationContext_, populationMissions_ );
 
+    //frag orders datas saving
     output << xml::start( "fragorders" );
     for( unsigned int i = 0; i < fragOrders_.size(); ++i )
         fragOrders_[i]->WriteArchive( output );
+
+    //frag orders mission sheets saving
+    for( unsigned int i = 0; i < fragOrders_.size(); ++i )
+        fragOrders_[i]->RemoveDifferentNamedMissionSheet();
+    for( unsigned int i = 0; i < fragOrders_.size(); ++i )
+         fragOrders_[i]->WriteMissionSheet();
+
+    //move mission sheets to obsolete directory when mission is deleted
+    for( IT_StringList it = toDeleteMissionSheets_.begin(); it != toDeleteMissionSheets_.end() ; ++it )
+       MoveMissionSheetsToObsolete( *it );
+
     output << xml::end
         << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::MoveMissionSheetsToObsolete
+// Created: NPT 2012-08-01
+// -----------------------------------------------------------------------------
+void ADN_Missions_Data::MoveMissionSheetsToObsolete( std::string fileName )
+{
+    std::string newFileName = fileName;
+    size_t pos = newFileName.find_last_of("//");
+    newFileName.insert(pos,"/obsolete");
+    std::rename( fileName.c_str(), newFileName.c_str() );
 }
 
 // -----------------------------------------------------------------------------

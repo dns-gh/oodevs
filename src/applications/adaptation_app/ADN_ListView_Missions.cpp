@@ -18,9 +18,8 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_ListView_Missions.h"
-
 #include "ADN_App.h"
-#include "ADN_Connector_ListView_ABC.h"
+#include "ADN_Connector_ListView.h"
 #include "ADN_Models_Data.h"
 #include "ADN_Models_GUI.h"
 #include "ADN_Workspace.h"
@@ -29,35 +28,15 @@
 #include "ADN_Mission_CheckItem.h"
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
+#include "ADN_enums.h"
 
 typedef ADN_Models_Data::MissionInfos MissionInfos;
-
-//-----------------------------------------------------------------------------
-// Internal List View connector
-//-----------------------------------------------------------------------------
-class ADN_CLV_Missions : public ADN_Connector_ListView_ABC
-{
-public:
-    ADN_CLV_Missions(ADN_ListView_Missions& list)
-        : ADN_Connector_ListView_ABC(list) {}
-
-    virtual ~ADN_CLV_Missions() {}
-
-    ADN_ListViewItem* CreateItem(void * obj)
-    {
-        ADN_ListViewItem *pItem = new ADN_ListViewItem(&list_,obj,1);
-        pItem->Connect(0,&static_cast<MissionInfos*>(obj)->strName_);
-        return pItem;
-    }
-private:
-    ADN_CLV_Missions& operator=( const ADN_CLV_Missions& );
-};
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_Missions constructor
 // Created: AGN 2003-11-27
 // -----------------------------------------------------------------------------
-ADN_ListView_Missions::ADN_ListView_Missions( ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType, QWidget * parent /* = 0*/, const char * name , Qt::WFlags f )
+ADN_ListView_Missions::ADN_ListView_Missions( E_EntityType eEntityType, QWidget * parent /* = 0*/, const char * name , Qt::WFlags f )
     : ADN_ListView  ( parent, name, f )
     , eEntityType_  ( eEntityType )
     , currentMissions_( 0 )
@@ -67,7 +46,7 @@ ADN_ListView_Missions::ADN_ListView_Missions( ADN_Models_Data::ModelInfos::E_Mod
     setResizeMode(Q3ListView::AllColumns);
 
     // connector creation
-    pConnector_=new ADN_CLV_Missions(*this);
+    pConnector_=new ADN_Connector_ListView< MissionInfos >(*this);
 
     this->SetDeletionEnabled( true );
 }
@@ -116,12 +95,12 @@ void ADN_ListView_Missions::OnContextMenu( const QPoint& pt )
     Q3ListView* pMissionList = cfgDlg.GetMissionList();
     Q3CheckListItem* pParent = 0;
 
-    if( eEntityType_ == ADN_Models_Data::ModelInfos::ePawn )
+    if( eEntityType_ == eEntityType_Pawn )
     {
         pParent = new Q3CheckListItem( pMissionList, tools::translate( "ADN_ListView_Missions", "Unit" ), Q3CheckListItem::CheckBoxController );
         FillList( pParent, ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissions() );
     }
-    else if( eEntityType_ == ADN_Models_Data::ModelInfos::eAutomat )
+    else if( eEntityType_ == eEntityType_Automat )
     {
         pParent = new Q3CheckListItem( pMissionList, tools::translate( "ADN_ListView_Missions", "Automate" ), Q3CheckListItem::CheckBoxController );
         FillList( pParent, ADN_Workspace::GetWorkspace().GetMissions().GetData().GetAutomatMissions() );

@@ -2610,14 +2610,6 @@ tirador</translation>
         <translation>Nombre</translation>
     </message>
     <message>
-        <source>Doctrine description</source>
-        <translation>Descripción de doctrina</translation>
-    </message>
-    <message>
-        <source>Usage description</source>
-        <translation>Descripción de uso</translation>
-    </message>
-    <message>
         <source>Parameters</source>
         <translation>Parámetros</translation>
     </message>
@@ -2630,10 +2622,6 @@ tirador</translation>
         <translation>Tipos permitidos</translation>
     </message>
     <message>
-        <source>Available without mission</source>
-        <translation>Disponible sin misión</translation>
-    </message>
-    <message>
         <source>Type</source>
         <translation>Tipo</translation>
     </message>
@@ -2643,6 +2631,22 @@ tirador</translation>
     </message>
     <message>
         <source>Crowd missions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Limits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Minimum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Maximum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>all</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2662,19 +2666,19 @@ tirador</translation>
         <translation type="unfinished">Simbolo</translation>
     </message>
     <message>
-        <source>Limits</source>
+        <source>General</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Minimum</source>
+        <source>Mission sheets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Maximum</source>
+        <source>Available without mission</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>all</source>
+        <source>Mission name cannot contain the following caracters: / &lt; &gt; * \ : &quot; |</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -2619,18 +2619,6 @@ du tireur</translation>
         <translation>Ordres de conduite</translation>
     </message>
     <message>
-        <source>Available without mission</source>
-        <translation>Disponible sans mission</translation>
-    </message>
-    <message>
-        <source>Doctrine description</source>
-        <translation>Description de la doctrine</translation>
-    </message>
-    <message>
-        <source>Usage description</source>
-        <translation>Description du fonctionnement</translation>
-    </message>
-    <message>
         <source>Allowed types</source>
         <translation>Types autorisés</translation>
     </message>
@@ -2645,6 +2633,22 @@ du tireur</translation>
     <message>
         <source>Crowd missions</source>
         <translation>Missions foules</translation>
+    </message>
+    <message>
+        <source>Limits</source>
+        <translation>Limites</translation>
+    </message>
+    <message>
+        <source>Minimum</source>
+        <translation>Minimum</translation>
+    </message>
+    <message>
+        <source>Maximum</source>
+        <translation>Maximum</translation>
+    </message>
+    <message>
+        <source>all</source>
+        <translation>tout</translation>
     </message>
     <message>
         <source>MRT Behavior</source>
@@ -2663,20 +2667,20 @@ du tireur</translation>
         <translation>Symbole</translation>
     </message>
     <message>
-        <source>Limits</source>
-        <translation>Limites</translation>
+        <source>General</source>
+        <translation>Général</translation>
     </message>
     <message>
-        <source>Minimum</source>
-        <translation>Minimum</translation>
+        <source>Mission sheets</source>
+        <translation>Fiches missions</translation>
     </message>
     <message>
-        <source>Maximum</source>
-        <translation>Maximum</translation>
+        <source>Available without mission</source>
+        <translation>Disponible sans mission</translation>
     </message>
     <message>
-        <source>all</source>
-        <translation>tout</translation>
+        <source>Mission name cannot contain the following caracters: / &lt; &gt; * \ : &quot; |</source>
+        <translation>Un nom de mission ne peut contenir les caractères suivants : / &lt; &gt; * \ : &quot; |</translation>
     </message>
 </context>
 <context>

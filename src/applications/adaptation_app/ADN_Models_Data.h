@@ -18,6 +18,8 @@
 #include "ADN_Tools.h"
 #include "ADN_Missions_Data.h"
 
+enum E_EntityType;
+
 namespace xml { class xistream; }
 
 //*****************************************************************************
@@ -86,15 +88,6 @@ public:
     {
 
     public:
-        enum E_ModelEntityType
-        {
-            ePawn                = 0,
-            eAutomat             = 1,
-            ePopulation          = 2,
-            eNbrModelEntityTypes = 3
-        };
-
-    public:
                  ModelInfos();
         explicit ModelInfos( ADN_Missions_Data::T_Mission_Vector& missions );
         virtual ~ModelInfos();
@@ -131,8 +124,8 @@ public:
 
     void            FilesNeeded(T_StringList& l) const;
     void            Reset();
-    QStringList     GetModelsThatUse( ModelInfos::E_ModelEntityType type, ADN_Missions_Data::Mission& model );
-    QStringList     GetModelsThatUse( ModelInfos::E_ModelEntityType type, ADN_Missions_Data::FragOrder& fragOrder );
+    QStringList     GetModelsThatUse( E_EntityType type, ADN_Missions_Data::Mission& model );
+    QStringList     GetModelsThatUse( E_EntityType type, ADN_Missions_Data::FragOrder& fragOrder );
 
     T_ModelInfos_Vector&    GetUnitModelsInfos();
     ModelInfos*             FindUnitModel( const std::string& strName );

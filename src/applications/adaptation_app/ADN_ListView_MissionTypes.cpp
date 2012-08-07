@@ -9,12 +9,14 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_ListView_MissionTypes.h"
-#include "ADN_Missions_Data.h"
+#include "moc_ADN_ListView_MissionTypes.cpp"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Tools.h"
+#include "ADN_Models_Data.h"
 #include "ADN_Missions_GUI.h"
 #include "ADN_Tr.h"
 #include "ADN_Wizard.h"
+#include "ADN_enums.h"
 
 typedef ADN_Missions_Data::Mission Mission;
 
@@ -22,7 +24,7 @@ typedef ADN_Missions_Data::Mission Mission;
 // Name: ADN_ListView_MissionTypes constructor
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-ADN_ListView_MissionTypes::ADN_ListView_MissionTypes( ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType, ADN_Missions_Data::T_Mission_Vector& missions, QWidget* parent /* = 0*/, const char* szName /* = 0*/ )
+ADN_ListView_MissionTypes::ADN_ListView_MissionTypes( E_EntityType eEntityType, ADN_Missions_Data::T_Mission_Vector& missions, QWidget* parent /* = 0*/, const char* szName /* = 0*/ )
     : ADN_ListView( parent, szName )
     , missions_   ( missions )
     , eEntityType_( eEntityType )
@@ -54,8 +56,7 @@ void ADN_ListView_MissionTypes::ConnectItem( bool bConnect )
     Mission* pInfos = static_cast< Mission* >( pCurData_ );
     //ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Missions_GUI::eNbrGuiElements );
     vItemConnectors_[ADN_Missions_GUI::eName]->Connect( &pInfos->strName_, bConnect );
-    vItemConnectors_[ADN_Missions_GUI::eDoctrineDescription]->Connect( &pInfos->doctrineDescription_, bConnect );
-    vItemConnectors_[ADN_Missions_GUI::eUsageDescription]->Connect( &pInfos->usageDescription_, bConnect );
+    vItemConnectors_[ADN_Missions_GUI::eMissionSheetDescription]->Connect( &pInfos->missionSheetContent_, bConnect );
     vItemConnectors_[ADN_Missions_GUI::eParameters]->Connect( &pInfos->parameters_, bConnect );
     vItemConnectors_[ADN_Missions_GUI::eDiaType]->Connect( &pInfos->diaType_, bConnect );
     if( vItemConnectors_[ADN_Missions_GUI::eBehavior] )
@@ -76,9 +77,9 @@ void ADN_ListView_MissionTypes::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
     ADN_Missions_Data::T_Mission_Vector* pMissionList;
-    if( eEntityType_ == ADN_Models_Data::ModelInfos::eAutomat )
+    if( eEntityType_ == eEntityType_Automat )
         pMissionList = &ADN_Workspace::GetWorkspace().GetMissions().GetData().GetAutomatMissions();
-    else if( eEntityType_ == ADN_Models_Data::ModelInfos::ePawn )
+    else if( eEntityType_ == eEntityType_Pawn )
         pMissionList = &ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissions();
     else
         pMissionList = &ADN_Workspace::GetWorkspace().GetMissions().GetData().GetPopulationMissions();
@@ -95,6 +96,23 @@ void ADN_ListView_MissionTypes::OnContextMenu( const QPoint& pt )
                                       ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( eEntityType_, *pCastData ), eModels, static_cast< int >( eEntityType_ ) );
     }
     popupMenu.exec( pt );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView_Missions::ContextMenuDelete
+// Created: NPT 2012-08-01
+// -----------------------------------------------------------------------------
+bool ADN_ListView_MissionTypes::ContextMenuDelete()
+{
+    if( pCurData_ == 0 )
+        return false;
+    std::string name = static_cast< Mission* >( pCurData_ )->strName_.GetData();
+    if( ADN_ListView::ContextMenuDelete() )
+    {
+        emit NotifyMissionDeleted( name, eEntityType_ );
+        return true;
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

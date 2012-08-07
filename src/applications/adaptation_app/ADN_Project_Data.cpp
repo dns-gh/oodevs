@@ -50,6 +50,20 @@ namespace
               >> xml::end;
     }
 
+    void ReadPath( xml::xistream& input, const std::string& file, ADN_Type_String& outfile )
+    {
+        input >> xml::start( file )
+            >> xml::attribute( "path", outfile )
+            >> xml::end;
+    }
+
+    void ReadOptionalPath( xml::xistream& input, const std::string& file, ADN_Type_String& outfile )
+    {
+        input >> xml::optional >> xml::start( file )
+            >> xml::attribute( "path", outfile )
+            >> xml::end;
+    }
+
     void ReadOptionalFile( xml::xistream& input, const std::string& file, ADN_Type_String& outfile )
     {
         input >> xml::optional >> xml::start( file )
@@ -64,6 +78,15 @@ namespace
         output << xml::start( file )
                  << xml::attribute( "file", outfile )
                << xml::end;
+    }
+
+    void WritePath( xml::xostream& output, const std::string& file, ADN_Type_String& outfile )
+    {
+        if( outfile.GetData().empty() )
+            return;
+        output << xml::start( file )
+            << xml::attribute( "path", outfile )
+            << xml::end;
     }
 }
 
@@ -144,6 +167,11 @@ void ADN_Project_Data::DataInfos::ReadArchive( xml::xistream& input )
     ReadFile( input, "urban-templates", szUrbanTemplates_ );
     ReadOptionalFile( input, "extensions", szExtensions_ );
     ReadOptionalFile( input, "filters", szFilters_ );
+
+    ReadOptionalPath( input, "units-mission-sheets-directory", szUnitsMissionPath_ );
+    ReadOptionalPath( input, "automata-mission-sheets-directory", szAutomataMissionPath_ );
+    ReadOptionalPath( input, "crowds-mission-sheets-directory", szCrowdsMissionPath_ );
+    ReadOptionalPath( input, "fragorders-mission-sheets-directory", szFragOrdersMissionPath_ );
     input >> xml::end;
 }
 
@@ -198,6 +226,10 @@ void ADN_Project_Data::DataInfos::WriteArchive( xml::xostream& output )
     WriteFile( output, "symbols", szSymbols_ );
     WriteFile( output, "filters", szFilters_);
     WriteFile( output, "urban-templates", szUrbanTemplates_ );
+    WritePath( output, "units-mission-sheets-directory", szUnitsMissionPath_ );
+    WritePath( output, "automata-mission-sheets-directory", szAutomataMissionPath_ );
+    WritePath( output, "crowds-mission-sheets-directory", szCrowdsMissionPath_ );
+    WritePath( output, "fragorders-mission-sheets-directory", szFragOrdersMissionPath_ );
     output << xml::end;
 }
 

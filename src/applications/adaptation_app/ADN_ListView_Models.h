@@ -16,6 +16,8 @@
 #include "ADN_ListView.h"
 #include "ADN_Models_Data.h"
 
+enum E_EntityType;
+
 //*****************************************************************************
 // Created: JDY 03-07-25
 //*****************************************************************************
@@ -25,7 +27,7 @@ class ADN_ListView_Models
 public:
     //! @name Constructors/Destructor
     //@{
-    ADN_ListView_Models( ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType, QWidget* pParent = 0, const char* szName = 0, Qt::WFlags f = 0 );
+    ADN_ListView_Models( E_EntityType eEntityType, QWidget* pParent = 0, const char* szName = 0, Qt::WFlags f = 0 );
     virtual ~ADN_ListView_Models();
     //@}
 
@@ -38,7 +40,7 @@ private:
     //@}
 
 private:
-    ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType_;
+    E_EntityType eEntityType_;
 };
 
 #endif // __ADN_ListView_Models_h_

@@ -53,9 +53,9 @@ void ADN_Models_GUI::Build()
 
     // Tab management
     pTabWidget_ = new QTabWidget( pMainWidget_ );
-    pTabWidget_->addTab( BuildPage( ADN_Models_Data::ModelInfos::ePawn, data_.GetUnitModelsInfos() ), tr( "Unit models" ) );
-    pTabWidget_->addTab( BuildPage( ADN_Models_Data::ModelInfos::eAutomat, data_.GetAutomataModelsInfos() ), tr( "Automata models" ) );
-    pTabWidget_->addTab( BuildPage( ADN_Models_Data::ModelInfos::ePopulation, data_.GetPopulationModelsInfos() ), tr( "Crowds models" ) );
+    pTabWidget_->addTab( BuildPage( eEntityType_Pawn, data_.GetUnitModelsInfos() ), tr( "Unit models" ) );
+    pTabWidget_->addTab( BuildPage( eEntityType_Automat, data_.GetAutomataModelsInfos() ), tr( "Automata models" ) );
+    pTabWidget_->addTab( BuildPage( eEntityType_Population, data_.GetPopulationModelsInfos() ), tr( "Crowds models" ) );
 
     // Main widget
     pMainWidget_ = new QWidget();
@@ -69,7 +69,7 @@ void ADN_Models_GUI::Build()
 // Name: ADN_Models_GUI::BuildPage
 // Created: APE 2005-02-09
 // -----------------------------------------------------------------------------
-QWidget* ADN_Models_GUI::BuildPage( ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType, ADN_Models_Data::T_ModelInfos_Vector& model )
+QWidget* ADN_Models_GUI::BuildPage( E_EntityType eEntityType, ADN_Models_Data::T_ModelInfos_Vector& model )
 {
     // -------------------------------------------------------------------------
     // Creations
@@ -136,6 +136,6 @@ QWidget* ADN_Models_GUI::BuildPage( ADN_Models_Data::ModelInfos::E_ModelEntityTy
 // -----------------------------------------------------------------------------
 void ADN_Models_GUI::Enable( bool enable )
 {
-    for( int i = 0; i < ADN_Models_Data::ModelInfos::eNbrModelEntityTypes; ++i )
+    for( int i = 0; i < eNbrEntityTypes; ++i )
         pWidgets_[ i ]->setEnabled( enable );
 }

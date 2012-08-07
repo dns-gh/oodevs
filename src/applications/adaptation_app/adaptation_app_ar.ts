@@ -2605,30 +2605,6 @@ stance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Doctrine description</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Usage description</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>MRT Behavior</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>CDT Behavior</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Behavior</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Symbol</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Parameters</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2657,7 +2633,35 @@ stance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>MRT Behavior</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CDT Behavior</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Behavior</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mission sheets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Available without mission</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mission name cannot contain the following caracters: / &lt; &gt; * \ : &quot; |</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

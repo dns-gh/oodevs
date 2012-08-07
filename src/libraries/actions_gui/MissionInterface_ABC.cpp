@@ -8,14 +8,23 @@
 // *****************************************************************************
 
 #include "actions_gui_pch.h"
+#include "actions_gui/resources.h"
 #include "MissionInterface_ABC.h"
 #include "moc_MissionInterface_ABC.cpp"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/OrderType.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Viewport_ABC.h"
-#include "actions_gui/resources.h"
 #include "ParamComboBox.h"
+
+#include "tools/ExerciseConfig.h"
+#include <boost/filesystem.hpp>
+
+#pragma warning( push, 0 )
+#include <QtGui/qtextedit.h>
+#pragma warning( pop )
+
+namespace bfs = boost::filesystem;
 
 using namespace actions::gui;
 
@@ -48,7 +57,7 @@ namespace
 // Name: MissionInterface_ABC constructor
 // Created: APE 2004-04-20
 // -----------------------------------------------------------------------------
-MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, const kernel::OrderType& order, kernel::Entity_ABC& entity, kernel::ActionController& controller )
+MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, const kernel::OrderType& order, kernel::Entity_ABC& entity, kernel::ActionController& controller, const tools::ExerciseConfig& config, std::string missionType /*=""*/ )
     : Q3VBox            ( parent )
     , ParamInterface_ABC()
     , title_     ( order.GetName().c_str() )
@@ -61,20 +70,36 @@ MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, const kernel::Order
     mainTab_ = CreateTab( tabs_, tools::translate( "MissionInterface_ABC", "Mandatory" ) );
     optionalTab_ = CreateTab( tabs_, tools::translate( "MissionInterface_ABC", "Optional" ) );
     {
-        const std::string doctrine = order.GetDoctrineInformation();
-        const std::string usage = order.GetUsageInformation();
-        Q3VBox* helpTab = CreateTab( tabs_, tools::translate( "MissionInterface_ABC", "Help" ), !doctrine.empty() || !usage.empty() );
-        if( !doctrine.empty() )
+        std::string path;
+        if( missionType == "Units" )
+            path = config.GetPhysicalChildPath( "units-mission-sheets-directory" );
+        else if( missionType == "Automata" )
+            path = config.GetPhysicalChildPath( "automata-mission-sheets-directory" );
+        else if( missionType == "Population" )
+            path = config.GetPhysicalChildPath( "crowds-mission-sheets-directory" );
+        else if( missionType == "FragOrders")
+            path = config.GetPhysicalChildPath( "fragorders-mission-sheets-directory" );
+
+        std::string fileName = std::string( path + "/" + order.GetName() + ".html" );
+        std::string missionSheet;
+        if( bfs::is_directory( path ) && bfs::is_regular_file( fileName ) )
         {
-            Q3GroupBox* box = new Q3GroupBox( 1, Qt::Horizontal, tools::translate( "MissionInteface_ABC", "Doctrine" ), helpTab );
-            QLabel* label = new QLabel( doctrine.c_str(), box );
-            label->setAlignment( Qt::TextWordWrap );
-        }
-        if( !usage.empty() )
-        {
-            Q3GroupBox* box = new Q3GroupBox( 1, Qt::Horizontal, tools::translate( "MissionInteface_ABC", "Usage" ), helpTab );
-            QLabel* label = new QLabel( usage.c_str(), box );
-            label->setAlignment( Qt::TextWordWrap );
+            std::ifstream file( fileName );
+            std::stringstream buffer; 
+            buffer << file.rdbuf();
+            missionSheet = std::string( buffer.str() );
+            file.close();
+
+            QWidget* helpTab = new QWidget(tabs_);
+            tabs_->addTab( helpTab, tools::translate( "MissionInterface_ABC", "Help" ) );
+            if( !missionSheet.empty() )
+            {
+                QVBoxLayout* helpLayout = new QVBoxLayout( helpTab );
+                QTextEdit* missionSheetText = new QTextEdit();
+                missionSheetText->setHtml( QString( missionSheet.c_str() ) );
+                missionSheetText->setReadOnly( true );
+                helpLayout->addWidget( missionSheetText );
+            }
         }
     }
     CreateOkCancelButtons();

@@ -18,6 +18,7 @@
 #include "ADN_Automata_Data.h"
 #include "ADN_Population_Data.h"
 #include "ADN_Wizard.h"
+#include "ADN_enums.h"
 
 typedef ADN_Models_Data::ModelInfos ModelInfos;
 
@@ -25,7 +26,7 @@ typedef ADN_Models_Data::ModelInfos ModelInfos;
 // Name: ADN_ListView_Models constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_ListView_Models::ADN_ListView_Models( ModelInfos::E_ModelEntityType eEntityType, QWidget* pParent, const char* szName, Qt::WFlags f )
+ADN_ListView_Models::ADN_ListView_Models( E_EntityType eEntityType, QWidget* pParent, const char* szName, Qt::WFlags f )
     : ADN_ListView( pParent, szName, f )
     , eEntityType_( eEntityType )
 {
@@ -74,9 +75,9 @@ void ADN_ListView_Models::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
     ADN_Models_Data::T_ModelInfos_Vector* pUnitsList;
-    if( eEntityType_ == ADN_Models_Data::ModelInfos::eAutomat )
+    if( eEntityType_ == eEntityType_Automat )
         pUnitsList = &ADN_Workspace::GetWorkspace().GetModels().GetData().GetAutomataModelsInfos();
-    else if( eEntityType_ == ADN_Models_Data::ModelInfos::ePawn )
+    else if( eEntityType_ == eEntityType_Pawn )
         pUnitsList = &ADN_Workspace::GetWorkspace().GetModels().GetData().GetUnitModelsInfos();
     else
         pUnitsList = &ADN_Workspace::GetWorkspace().GetModels().GetData().GetPopulationModelsInfos();
@@ -88,15 +89,15 @@ void ADN_ListView_Models::OnContextMenu( const QPoint& pt )
     {
         ModelInfos* pCastData = static_cast< ModelInfos* >( pCurData_ );
         assert( pCastData != 0 );
-        if( eEntityType_ == ModelInfos::ePawn )
+        if( eEntityType_ == eEntityType_Pawn )
             FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
                                           ADN_Tr::ConvertFromWorkspaceElement( eUnits ).c_str(),
                                           ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsThatUse( *pCastData ), eUnits );
-        else if( eEntityType_ == ModelInfos::eAutomat )
+        else if( eEntityType_ == eEntityType_Automat )
             FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
                                           ADN_Tr::ConvertFromWorkspaceElement( eAutomata ).c_str(),
                                           ADN_Workspace::GetWorkspace().GetAutomata().GetData().GetAutomataThatUse( *pCastData ), eAutomata );
-        else if( eEntityType_ == ModelInfos::ePopulation )
+        else if( eEntityType_ == eEntityType_Population )
             FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
                                           ADN_Tr::ConvertFromWorkspaceElement( ePopulation ).c_str(),
                                           ADN_Workspace::GetWorkspace().GetPopulation().GetData().GetPopulationsThatUse( *pCastData ), ePopulation );
@@ -113,13 +114,13 @@ std::string ADN_ListView_Models::GetToolTipFor( Q3ListViewItem& item )
     void* pData = static_cast<ADN_ListViewItem&>( item ).GetData();
     ModelInfos* pCastData = static_cast< ModelInfos* >( pData );
     assert( pCastData != 0 );
-    if( eEntityType_ == ModelInfos::ePawn )
+    if( eEntityType_ == eEntityType_Pawn )
         return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( eUnits ).c_str(),
                                 ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsThatUse( *pCastData ) );
-    else if( eEntityType_ == ModelInfos::eAutomat )
+    else if( eEntityType_ == eEntityType_Automat )
         return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( eAutomata ).c_str(),
                                 ADN_Workspace::GetWorkspace().GetAutomata().GetData().GetAutomataThatUse( *pCastData ) );
-    else if( eEntityType_ == ModelInfos::ePopulation )
+    else if( eEntityType_ == eEntityType_Population )
         return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( ePopulation ).c_str(),
                                 ADN_Workspace::GetWorkspace().GetPopulation().GetData().GetPopulationsThatUse( *pCastData ) );
     return "";

@@ -15,6 +15,8 @@
 #include "ADN_GUI_ABC.h"
 #include "ADN_Models_Data.h"
 
+#include "ADN_enums.h"
+
 // =============================================================================
 /** @class  ADN_Models_GUI
     @brief  ADN_Models_GUI
@@ -57,14 +59,14 @@ public:
 private:
     //! @name Helpers
     //@{
-    QWidget* BuildPage( ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType, ADN_Models_Data::T_ModelInfos_Vector& model );
+    QWidget* BuildPage( E_EntityType eEntityType, ADN_Models_Data::T_ModelInfos_Vector& model );
     //@}
 
 private:
     //! @name Member data
     //@{
     ADN_Models_Data& data_;
-    QWidget*         pWidgets_[ ADN_Models_Data::ModelInfos::eNbrModelEntityTypes ];
+    QWidget*         pWidgets_[ eNbrEntityTypes ];
     //@}
 };
 

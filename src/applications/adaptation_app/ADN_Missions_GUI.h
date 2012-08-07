@@ -14,6 +14,13 @@
 #include "ADN_Missions_Data.h"
 #include "ADN_Models_Data.h"
 
+enum E_EntityType;
+
+namespace gui
+{
+    class HtmlEditor;
+}
+
 // =============================================================================
 /** @class  ADN_Missions_GUI
     @brief  ADN_Missions_GUI
@@ -22,13 +29,13 @@
 // =============================================================================
 class ADN_Missions_GUI : public ADN_Tabbed_GUI_ABC
 {
+    Q_OBJECT
 
 public:
     enum E_GuiElements
     {
         eName,
-        eDoctrineDescription,
-        eUsageDescription,
+        eMissionSheetDescription,
         eParameters,
         eParameterValues,
         eFragOrderAvailableWithoutMission,
@@ -59,7 +66,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    QWidget* BuildMissions( QWidget*& pContent, ADN_Missions_Data::T_Mission_Vector& missions, ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType );
+    QWidget* BuildMissions( QWidget*& pContent, ADN_Missions_Data::T_Mission_Vector& missions, E_EntityType eEntityType );
     QWidget* BuildUnitMissions();
     QWidget* BuildAutomatMissions();
     QWidget* BuildPopulationMissions();
@@ -74,6 +81,12 @@ private:
     QWidget* pAutomatMissionsWidget_;
     QWidget* pPopulationMissionsWidget_;
     QWidget* pFragOrderWidget_;
+    //@}
+
+private slots:
+    //! @name slots
+    //@{
+    void OnNotifyElementDeleted( std::string elementName, E_EntityType elementType );
     //@}
 };
 

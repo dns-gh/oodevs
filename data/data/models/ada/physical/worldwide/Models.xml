@@ -78,7 +78,7 @@
         <mission name="SAFETY - Patrol"/>
         <mission name="SAFETY - Patrol within area"/>
         <mission name="SAFETY - Reinforce"/>
-        <mission name="SAFETY - Stay/hide within a crowd"/>
+        <mission name="SAFETY - Stay or hide within a crowd"/>
         <mission name="SAFETY - Patrol along urban blocks (within area)"/>
       </missions>
       <fragorders/>
@@ -157,7 +157,7 @@
         <mission name="SAFETY - Patrol"/>
         <mission name="SAFETY - Patrol within area"/>
         <mission name="SAFETY - Damage urban blocks within area"/>
-        <mission name="SAFETY - Stay/hide within a crowd"/>
+        <mission name="SAFETY - Stay or hide within a crowd"/>
       </missions>
       <fragorders/>
     </unit>
@@ -3592,7 +3592,7 @@
         <mission name="COMMON - move"/>
         <mission name="COMMON - move parallel"/>
         <mission name="COMMON - withdraw"/>
-        <mission name="ElectronicIntelligence : report information"/>
+        <mission name="ElectronicIntelligence - report information"/>
         <mission name="COMMON - go through decontamination process"/>
         <mission name="COMMON - resupply"/>
         <mission name="COMMON - cross"/>
@@ -3621,7 +3621,7 @@
         <mission name="COMMON - move"/>
         <mission name="COMMON - move parallel"/>
         <mission name="COMMON - withdraw"/>
-        <mission name="ElectronicIntelligence : report information"/>
+        <mission name="ElectronicIntelligence - report information"/>
         <mission name="COMMON - go through decontamination process"/>
         <mission name="COMMON - resupply"/>
         <mission name="COMMON - park"/>
@@ -3650,7 +3650,7 @@
         <mission name="COMMON - move"/>
         <mission name="COMMON - move parallel"/>
         <mission name="COMMON - withdraw"/>
-        <mission name="ElectronicIntelligence : report information"/>
+        <mission name="ElectronicIntelligence - report information"/>
         <mission name="COMMON - go through decontamination process"/>
         <mission name="COMMON - resupply"/>
         <mission name="COMMON - park"/>
@@ -3939,4 +3939,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2256390688" -->
+<!-- signature="3931008210" -->

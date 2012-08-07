@@ -41,5 +41,9 @@
   <symbols file="symbols.xml"/>
   <filters file="Filters/Filters.xml"/>
   <urban-templates file="UrbanTemplates.xml"/>
+  <units-mission-sheets-directory path="Mission sheets/units"/>
+  <automata-mission-sheets-directory path="Mission sheets/automata"/>
+  <crowds-mission-sheets-directory path="Mission sheets/crowds"/>
+  <fragorders-mission-sheets-directory path="Mission sheets/fragmentary orders"/>
 </physical>
-<!-- signature="2808700349" -->
+<!-- signature="3883388301" -->

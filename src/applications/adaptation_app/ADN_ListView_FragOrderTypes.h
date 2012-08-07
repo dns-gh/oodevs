@@ -12,6 +12,7 @@
 
 #include "ADN_ListView.h"
 #include "ADN_Missions_Data.h"
+#include <boost/noncopyable.hpp>
 
 // =============================================================================
 /** @class  ADN_ListView_FragOrderTypes
@@ -20,6 +21,7 @@
 // Created: SBO 2006-12-06
 // =============================================================================
 class ADN_ListView_FragOrderTypes : public ADN_ListView
+                                  , private boost::noncopyable
 {
        Q_OBJECT;
 public:
@@ -35,19 +37,19 @@ private:
     void ConnectItem( bool bConnect );
     void OnContextMenu( const QPoint& pt );
     std::string GetToolTipFor( Q3ListViewItem& item );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    ADN_ListView_FragOrderTypes( const ADN_ListView_FragOrderTypes& );            //!< Copy constructor
-    ADN_ListView_FragOrderTypes& operator=( const ADN_ListView_FragOrderTypes& ); //!< Assignment operator
+    bool ContextMenuDelete();
     //@}
 
 public slots:
-    //! @name slots
+    //! @name Slots
     //@{
     void OnToogled( bool );
+    //@}
+
+signals:
+    //! @name Signals
+    //@{
+    void NotifyFragOrderDeleted( std::string name, E_EntityType type );
     //@}
 
 private:

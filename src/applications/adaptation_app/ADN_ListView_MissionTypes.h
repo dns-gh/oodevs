@@ -12,7 +12,10 @@
 
 #include "ADN_ListView.h"
 #include "ADN_Missions_Data.h"
-#include "ADN_Models_Data.h"
+
+enum E_EntityType;
+
+class ADN_ListView_Models;
 
 // =============================================================================
 /** @class  ADN_ListView_MissionTypes
@@ -22,10 +25,12 @@
 // =============================================================================
 class ADN_ListView_MissionTypes : public ADN_ListView
 {
+    Q_OBJECT
+
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_ListView_MissionTypes( ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType, ADN_Missions_Data::T_Mission_Vector& missions, QWidget* pParent = 0, const char* szName = 0 );
+             ADN_ListView_MissionTypes( E_EntityType eEntityType, ADN_Missions_Data::T_Mission_Vector& missions, QWidget* pParent = 0, const char* szName = 0 );
     virtual ~ADN_ListView_MissionTypes();
     //@}
 
@@ -34,6 +39,7 @@ private:
     //@{
     void ConnectItem( bool bConnect );
     void OnContextMenu( const QPoint& pt );
+    bool ContextMenuDelete();
     std::string GetToolTipFor( Q3ListViewItem& item );
     //@}
 
@@ -44,11 +50,17 @@ private:
     ADN_ListView_MissionTypes& operator=( const ADN_ListView_MissionTypes& ); //!< Assignment operator
     //@}
 
+signals:
+    //! @name Copy/Assignment
+    //@{
+    void NotifyMissionDeleted( std::string name, E_EntityType type );
+    //@}
+
 private:
     //! @name Member data
     //@{
     ADN_Missions_Data::T_Mission_Vector& missions_;
-    ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType_;
+    E_EntityType eEntityType_;
     //@}
 };
 

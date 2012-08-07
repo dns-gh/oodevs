@@ -50,6 +50,11 @@ namespace actions
     }
 }
 
+namespace tools
+{
+    class ExerciseConfig;
+}
+
 class kernel::ContextMenu;
 class Decisions_ABC;
 class Decisions;
@@ -79,7 +84,8 @@ public:
     //@{
     MissionPanel( QWidget* pParent, kernel::Controllers& controllers, const ::StaticModel& model, Publisher_ABC& publisher,
                   const kernel::GlTools_ABC& tools, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel,
-                  const kernel::Time_ABC& simulation, actions::gui::InterfaceBuilder_ABC& interfaceBuilder );
+                  const kernel::Time_ABC& simulation, actions::gui::InterfaceBuilder_ABC& interfaceBuilder,
+                  const tools::ExerciseConfig& config );
     virtual ~MissionPanel();
     //@}
 
@@ -139,6 +145,7 @@ private:
     const kernel::Time_ABC& simulation_;
     actions::gui::MissionInterface_ABC* pMissionInterface_;
     actions::gui::InterfaceBuilder_ABC& interfaceBuilder_;
+    const tools::ExerciseConfig& config_;
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
     bool isPlanifMode_;
     //@}

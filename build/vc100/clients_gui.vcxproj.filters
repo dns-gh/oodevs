@@ -868,6 +868,9 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\Application_ABC.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\HtmlEditor.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -1767,6 +1770,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\CriticalIntelligenceDialog.h">
       <Filter>Source Files\Dialogs</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\HtmlEditor.h">
+      <Filter>Source Files\Tools</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

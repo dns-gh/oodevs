@@ -90,7 +90,7 @@ void ADN_Population_GUI::Build()
         // Information
         QWidget* pInfoHolder = builder.AddFieldHolder( pPropertiesGroup );
         builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[ eName ] );
-        ADN_GoToButton* goToButton = new ADN_GoToButton( eModels, ADN_Models_Data::ModelInfos::ePopulation );
+        ADN_GoToButton* goToButton = new ADN_GoToButton( eModels, eEntityType_Population );
         goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector<ADN_Models_Data::ModelInfos> >( pInfoHolder, tr( "Behavior model" ), vInfosConnectors[ eModel ], 0, eNone, goToButton ) );
         // Density
         Q3GroupBox* pDensity = new Q3GroupBox( 3, Qt::Horizontal, "", pPropertiesGroup );

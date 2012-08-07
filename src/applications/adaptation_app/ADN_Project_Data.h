@@ -87,6 +87,11 @@ public:
         ADN_Type_String szScores_;
         ADN_Type_String szSymbols_;
         ADN_Type_String szFilters_;
+        // $$$$ NPT 2012-07-27: Mission sheets data path
+        ADN_Type_String szUnitsMissionPath_;
+        ADN_Type_String szAutomataMissionPath_;
+        ADN_Type_String szCrowdsMissionPath_;
+        ADN_Type_String szFragOrdersMissionPath_;
 
     private:
         bool readOnlyEnabled_;

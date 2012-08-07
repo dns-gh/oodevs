@@ -417,4 +417,12 @@ enum E_PropagationModel
     eNbrPropagationModel
 };
 
+enum E_EntityType
+{
+    eEntityType_Pawn                = 0,
+    eEntityType_Automat             = 1,
+    eEntityType_Population          = 2,
+    eNbrEntityTypes                 = 3
+};
+
 #endif // __ADN_Enums_h_

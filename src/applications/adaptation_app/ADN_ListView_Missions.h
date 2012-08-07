@@ -15,6 +15,8 @@
 #include "ADN_Models_Data.h"
 #include "ADN_Missions_Data.h"
 
+enum E_EntityType;
+
 class ADN_ListView_Models;
 
 // =============================================================================
@@ -25,8 +27,9 @@ class ADN_ListView_Models;
 // =============================================================================
 class ADN_ListView_Missions : public ADN_ListView
 {
+
 public:
-    explicit ADN_ListView_Missions( ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType, QWidget * parent = 0, const char * name = 0, Qt::WFlags f = 0 );
+    explicit ADN_ListView_Missions( E_EntityType eEntityType, QWidget * parent = 0, const char * name = 0, Qt::WFlags f = 0 );
     virtual ~ADN_ListView_Missions();
 
 private:
@@ -38,7 +41,7 @@ private:
     void ApplyModifications( Q3CheckListItem* pStart );
 
 private:
-    ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType_;
+    E_EntityType eEntityType_;
     ADN_Missions_Data::T_Mission_Vector* currentMissions_;
 };
 

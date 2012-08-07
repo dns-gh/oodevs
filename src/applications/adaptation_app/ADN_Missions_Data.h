@@ -17,6 +17,8 @@
 #include "ADN_Drawings_Data.h"
 #include "ADN_MissionGenObjectTypes_Infos.h"
 
+enum E_EntityType;
+
 namespace xml { class xistream; }
 
 // =============================================================================
@@ -126,9 +128,14 @@ public:
         std::string GetItemName();
         Mission* CreateCopy();
 
-        void ReadArchive ( xml::xistream& input, std::size_t contextLength );
+        void ReadArchive ( xml::xistream& input, std::size_t contextLength, E_EntityType modelType );
         void ReadParameter( xml::xistream& input, std::size_t& index, std::size_t contextLength );
         void WriteArchive( xml::xostream& output, const std::string& type, const T_MissionParameter_Vector& context );
+
+        void ReadMissionSheet ( E_EntityType type );
+        void RemoveDifferentNamedMissionSheet ( E_EntityType type );
+        void WriteMissionSheet ( E_EntityType type );
+        std::string FromEntityTypeToRepository( E_EntityType type);
 
     public:
         ADN_Type_Int id_;
@@ -138,14 +145,15 @@ public:
         ADN_Type_String diaBehavior_;
         ADN_Type_String cdtDiaBehavior_;
         ADN_Type_String mrtDiaBehavior_;
-        ADN_Type_String doctrineDescription_;
-        ADN_Type_String usageDescription_;
+        ADN_Type_String missionSheetContent_;
+        ADN_Type_String missionSheetPath_;
         ADN_Type_String strPackage_;
         ADN_TypePtr_InVector_ABC< ADN_Drawings_Data::DrawingInfo > symbol_;
     };
 
-    typedef ADN_Type_Vector_ABC<Mission>  T_Mission_Vector;
-    typedef T_Mission_Vector::iterator   IT_Mission_Vector;
+    typedef ADN_Type_Vector_ABC<Mission>         T_Mission_Vector;
+    typedef T_Mission_Vector::iterator          IT_Mission_Vector;
+    typedef T_Mission_Vector::const_iterator   CIT_Mission_Vector;
 
 // =============================================================================
 // Frag orders
@@ -166,14 +174,18 @@ public:
         void ReadParameter( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
 
+        void ReadMissionSheet ();
+        void RemoveDifferentNamedMissionSheet ();
+        void WriteMissionSheet ();
+
     public:
         ADN_Type_Int              id_;
         ADN_Type_String           strName_;
         T_MissionParameter_Vector parameters_;
         ADN_Type_String           diaType_;
         ADN_Type_Bool             isAvailableWithoutMission_;
-        ADN_Type_String           doctrineDescription_;
-        ADN_Type_String           usageDescription_;
+        ADN_Type_String           missionSheetContent_;
+        ADN_Type_String           missionSheetPath_;
     };
 
     typedef ADN_Type_Vector_ABC<FragOrder>  T_FragOrder_Vector;
@@ -201,6 +213,7 @@ public:
     FragOrder*          FindFragOrder( const std::string& strName );
     Mission*            FindMission( T_Mission_Vector& missions, const std::string& strName );
     virtual void Load( const tools::Loader_ABC& fileLoader );
+    virtual void Initialize();
 
     QStringList         GetAllMissionsThatUse( ADN_Objects_Data_ObjectInfos& object ); // $$$$ ABR 2012-08-03: Warning, return not only the name, but concatenation of tab name and mission name
 
@@ -208,15 +221,18 @@ public:
     QStringList         GetAutomatMissionsThatUse( ADN_Objects_Data_ObjectInfos& object );
     QStringList         GetPopulationMissionsThatUse( ADN_Objects_Data_ObjectInfos& object );
     QStringList         GetFragOrdersThatUse( ADN_Objects_Data_ObjectInfos& object );
+
+    void NotifyElementDeleted( std::string elementName, E_EntityType elementType );
     //@}
 
 private:
     void ReadArchive( xml::xistream& input );
     void ReadFragOrder( xml::xistream& input );
-    void ReadMission( xml::xistream& input, T_Mission_Vector& missions, std::size_t contextLength );
+    void ReadMission( xml::xistream& input, T_Mission_Vector& missions, std::size_t contextLength, E_EntityType modelType );
     void ReadContext( xml::xistream& input, T_MissionParameter_Vector& context );
     void ReadContextParameter( xml::xistream& input, T_MissionParameter_Vector& context );
     void WriteArchive( xml::xostream& output );
+    void MoveMissionSheetsToObsolete( std::string file );
 
 public:
     T_MissionParameter_Vector   unitContext_;
@@ -226,6 +242,7 @@ public:
     T_MissionParameter_Vector   populationContext_;
     T_Mission_Vector            populationMissions_;
     T_FragOrder_Vector          fragOrders_;
+    T_StringList toDeleteMissionSheets_;
 
 private:
     static IdentifierFactory idFactory_;

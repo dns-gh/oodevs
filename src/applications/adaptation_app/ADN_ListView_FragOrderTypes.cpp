@@ -54,8 +54,7 @@ void ADN_ListView_FragOrderTypes::ConnectItem( bool bConnect )
         return;
     FragOrder* pInfos = (FragOrder*)pCurData_;
     vItemConnectors_[ADN_Missions_GUI::eName]                            ->Connect( &pInfos->strName_, bConnect );
-    vItemConnectors_[ADN_Missions_GUI::eDoctrineDescription]             ->Connect( &pInfos->doctrineDescription_, bConnect );
-    vItemConnectors_[ADN_Missions_GUI::eUsageDescription]                ->Connect( &pInfos->usageDescription_, bConnect );
+    vItemConnectors_[ADN_Missions_GUI::eMissionSheetDescription]         ->Connect( &pInfos->missionSheetContent_, bConnect );
     vItemConnectors_[ADN_Missions_GUI::eParameters]                      ->Connect( &pInfos->parameters_, bConnect );
     vItemConnectors_[ADN_Missions_GUI::eFragOrderAvailableWithoutMission]->Connect( &pInfos->isAvailableWithoutMission_, bConnect );
     vItemConnectors_[ADN_Missions_GUI::eDiaType]                         ->Connect( &pInfos->diaType_, bConnect );
@@ -135,11 +134,11 @@ void ADN_ListView_FragOrderTypes::OnContextMenu( const QPoint& pt )
             FragOrder* pCastData = static_cast< FragOrder* >( pCurData_ );
             assert( pCastData != 0 );
             FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tr( "Unit models" ),
-                                          ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( ADN_Models_Data::ModelInfos::ePawn, *pCastData ), eModels, static_cast< int >( ADN_Models_Data::ModelInfos::ePawn ) );
+                                          ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( eEntityType_Pawn, *pCastData ), eModels, static_cast< int >( eEntityType_Pawn ) );
             FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tr( "Automata models" ),
-                                          ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( ADN_Models_Data::ModelInfos::eAutomat, *pCastData ), eModels, static_cast< int >( ADN_Models_Data::ModelInfos::eAutomat ) );
+                                          ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( eEntityType_Automat, *pCastData ), eModels, static_cast< int >( eEntityType_Automat ) );
             FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tr( "Crowds models" ),
-                                          ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( ADN_Models_Data::ModelInfos::ePopulation, *pCastData ), eModels, static_cast< int >( ADN_Models_Data::ModelInfos::ePopulation ) );
+                                          ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( eEntityType_Population, *pCastData ), eModels, static_cast< int >( eEntityType_Population ) );
         }
         popupMenu.exec( pt );
     }
@@ -156,13 +155,30 @@ std::string ADN_ListView_FragOrderTypes::GetToolTipFor( Q3ListViewItem& item )
     assert( pCastData != 0 );
 
     std::string result;
-    FillMultiUsersList( tr( "Unit models" ), ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( ADN_Models_Data::ModelInfos::ePawn, *pCastData ), result );
-    FillMultiUsersList( tr( "Automata models" ), ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( ADN_Models_Data::ModelInfos::eAutomat, *pCastData ), result );
-    FillMultiUsersList( tr( "Crowds models" ), ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( ADN_Models_Data::ModelInfos::ePopulation, *pCastData ), result );
+    FillMultiUsersList( tr( "Unit models" ), ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( eEntityType_Pawn, *pCastData ), result );
+    FillMultiUsersList( tr( "Automata models" ), ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( eEntityType_Automat, *pCastData ), result );
+    FillMultiUsersList( tr( "Crowds models" ), ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( eEntityType_Population, *pCastData ), result );
 
     if( result.empty() )
         result = tr( "<b>Unused</b>" ).toUtf8().constData();
     return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView_Missions::ContextMenuDelete
+// Created: NPT 2012-08-01
+// -----------------------------------------------------------------------------
+bool ADN_ListView_FragOrderTypes::ContextMenuDelete()
+{
+    if( pCurData_ == 0 )
+        return false;
+    std::string name = static_cast< FragOrder* >( pCurData_ )->strName_.GetData();
+    if( ADN_ListView::ContextMenuDelete() )
+    {
+        emit NotifyFragOrderDeleted( name, eNbrEntityTypes );
+        return true;
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

@@ -42,6 +42,7 @@ GraphicPreferences.cpp \
 HelpSystem.cpp \
 HierarchyListView_ABC.cpp \
 HighlightColorModifier.cpp \
+HtmlEditor.cpp \
 InhabitantListView.cpp \
 InhabitantPanel.cpp \
 InputPropagationPrototype_ABC.cpp \

@@ -336,25 +336,25 @@ void ADN_ListView::FinishCreation( ADN_Ref_ABC* ref )
 // Name: ADN_ListView::ContextMenuDelete
 // Created: APE 2005-01-27
 // -----------------------------------------------------------------------------
-void ADN_ListView::ContextMenuDelete()
+bool ADN_ListView::ContextMenuDelete()
 {
     if( pCurData_ == 0 || !bDeletionEnabled_ )
-        return;
-
+        return false;
     ADN_Ref_ABC* pCurrentData = static_cast< ADN_Ref_ABC* >( pCurData_ );
 
     // Check if the item is multi-referenced, and warn the user if it's the case.
     if( pCurrentData->IsMultiRef() )
     {
         if( !ADN_GuiTools::MultiRefWarning( pCurrentData ) )
-            return;
+            return false;
     }
     else if( !ADN_GuiTools::DeletionWarning() )
-        return;
+        return false;
     // Remove the item from the list.
     static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurrentData );
     static_cast< ADN_MainWindow* >( topLevelWidget() )->ChangeSaveState( false );
     delete pCurrentData;
+    return true;
 }
 
 //-----------------------------------------------------------------------------
