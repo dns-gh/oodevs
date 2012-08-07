@@ -63,7 +63,7 @@ DialogContainer::DialogContainer( QWidget* parent, kernel::Controllers& controll
     new LogisticLinksEditor( parent, controllers );
     new LogisticStockEditor( parent, controllers, staticModel );
     new LongNameEditor( parent, controllers, staticModel );
-    new FormationHierarchyEditor( parent, controllers, staticModel.levels_ );
+    new FormationHierarchyEditor( parent, controllers );
 
     prefDialog_ = new gui::PreferencesDialog( parent, controllers, lighting, staticModel.coordinateSystems_, painter, selector );
     prefDialog_->AddPage( tr( "Orbat" ), *new OrbatPanel( prefDialog_, controllers ) );

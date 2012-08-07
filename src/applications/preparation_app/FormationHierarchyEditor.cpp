@@ -14,20 +14,19 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
-#include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/tools.h"
 #include "preparation/Formation.h"
+#include "ENT/ENT_Tr_Gen.h"
 
 // -----------------------------------------------------------------------------
 // Name: FormationHierarchyEditor constructor
 // Created: MMC 2012-01-05
 // -----------------------------------------------------------------------------
-FormationHierarchyEditor::FormationHierarchyEditor( QWidget* parent, kernel::Controllers& controllers, const kernel::FormationLevels& levels )
+FormationHierarchyEditor::FormationHierarchyEditor( QWidget* parent, kernel::Controllers& controllers )
     : QObject( parent )
     , controllers_( controllers )
     , selected_   ( controllers )
-    , levels_     ( levels )
 {
     controllers_.Register( *this );
 }
@@ -50,11 +49,12 @@ void FormationHierarchyEditor::NotifyContextMenu( const kernel::Formation_ABC& e
     const Formation* pFormation = dynamic_cast< const Formation* >( &entity );
     if ( !pFormation )
         return;
-    
+
     selected_ = pFormation;
     Q3PopupMenu* subMenu = menu.SubMenu( "Helpers", tr( "Change hierarchy level" ), false, 4 );
-    for( const kernel::HierarchyLevel_ABC* level = levels_.Resolve( "xxxxx" ); level; level = level->GetNext() )
-        subMenu->insertItem( tools::findTranslation( "models::app6", level->GetName().ascii() ),this, SLOT( OnChangeLevel( int ) ), 0, level->GetId() );
+
+    for( int level = static_cast< int >( eNatureLevel_xxxxx ); level > 0; level-- )
+        subMenu->insertItem( ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( level ), ENT_Tr_ABC::eToTr ).c_str(), this, SLOT( OnChangeLevel( int ) ), 0, level );
 }
 
 // -----------------------------------------------------------------------------
@@ -65,7 +65,7 @@ void FormationHierarchyEditor::OnChangeLevel( int levelId )
 {
     if( selected_ )
     {
-        selected_.ConstCast()->SetLevel( levelId );
+        selected_.ConstCast()->SetLevel( static_cast< E_NatureLevel >( levelId ) );
         UpdateHierarchies();
     }
     selected_ = 0;

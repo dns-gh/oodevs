@@ -17,7 +17,6 @@
 #include "CoordinateSystems.h"
 #include "DetectionMap.h"
 #include "ExtensionTypes.h"
-#include "FormationLevels.h"
 #include "ObjectTypes.h"
 
 using namespace kernel;
@@ -31,7 +30,6 @@ StaticModel::StaticModel()
     , coordinateConverter_( *new CoordinateConverter( coordinateSystems_ ) )
     , types_              ( *new AgentTypes() )
     , objectTypes_        ( *new ObjectTypes() )
-    , levels_             ( *new FormationLevels() )
     , extensions_         ( *new ExtensionTypes() )
     , atlasNatures_       ( *new AtlasNatures() )
     , accommodationTypes_ ( *new AccommodationTypes() )
@@ -50,7 +48,6 @@ StaticModel::~StaticModel()
     delete &accommodationTypes_;
     delete &atlasNatures_;
     delete &extensions_;
-    delete &levels_;
     delete &objectTypes_;
     delete &types_;
     delete &coordinateConverter_;

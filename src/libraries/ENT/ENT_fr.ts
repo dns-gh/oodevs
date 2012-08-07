@@ -41,7 +41,7 @@
     </message>
     <message>
         <source>b</source>
-        <translation>b Binôme</translation>
+        <translation>b Binôme/Individu</translation>
     </message>
     <message>
         <source>c</source>

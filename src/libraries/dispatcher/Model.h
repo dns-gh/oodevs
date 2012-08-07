@@ -18,7 +18,6 @@ namespace kernel
 {
     class AgentType;
     class AgentTypes;
-    class FormationLevels;
     class FragOrderType;
     class MissionType;
     class ObjectType;

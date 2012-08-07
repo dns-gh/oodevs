@@ -84,7 +84,6 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/ExtensionTypes.h"
-#include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/ModeController_ABC.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/OptionVariant.h"

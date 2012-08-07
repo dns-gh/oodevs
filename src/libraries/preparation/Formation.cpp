@@ -13,7 +13,6 @@
 #include "IdManager.h"
 #include "LogisticBaseStates.h"
 #include "clients_gui/Tools.h"
-#include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -27,6 +26,7 @@
 #include "LogisticLevelAttritube.h"
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/Tools.h"
+#include "ENT/ENT_Tr_Gen.h"
 #include <xeumeuleu/xml.hpp>
 #include <QtGui/qmessagebox.h>
 
@@ -36,10 +36,9 @@ using namespace kernel;
 // Name: Formation constructor
 // Created: SBO 2006-09-19
 // -----------------------------------------------------------------------------
-Formation::Formation( kernel::Controller& controller, const HierarchyLevel_ABC& level, const FormationLevels& levels, IdManager& idManager )
+Formation::Formation( kernel::Controller& controller, E_NatureLevel level, IdManager& idManager )
     : EntityImplementation< Formation_ABC >( controller, idManager.GetNextId(), "" )
-    , level_         ( &level )
-    , levels_        ( levels )
+    , level_( level )
     , verticalOffset_( 0.f )
 {
     RegisterSelf( *this );
@@ -51,16 +50,15 @@ Formation::Formation( kernel::Controller& controller, const HierarchyLevel_ABC& 
 // Name: Formation constructor
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-Formation::Formation( xml::xistream& xis, Controller& controller, const FormationLevels& levels, IdManager& idManager )
+Formation::Formation( xml::xistream& xis, Controller& controller, IdManager& idManager )
     : EntityImplementation< Formation_ABC >( controller, 0, "" )
-    , levels_        ( levels )
     , verticalOffset_( 0.f )
 {
     std::string level, name;
     xis >> xml::attribute( "id", ( int& ) id_ )
         >> xml::attribute( "level", level )
         >> xml::attribute( "name", name );
-    level_ = levels.Resolve( level.c_str() );
+    level_ = ENT_Tr::ConvertToNatureLevel( level );
     name_  = name.empty() ? tools::translate( "Formation", "Formation [%L1]" ).arg( id_ ) : name.c_str();
 
     idManager.Lock( id_ );
@@ -83,7 +81,7 @@ Formation::~Formation()
 // -----------------------------------------------------------------------------
 QString Formation::GetName() const
 {
-    return level_->GetName() + ( name_.isEmpty() ? "" : " - " + name_ );
+    return QString( "%1%2%3" ).arg( ENT_Tr::ConvertFromNatureLevel( level_ ).c_str() ).arg( name_.isEmpty() ? "" : " - " ).arg( name_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -99,9 +97,9 @@ QString Formation::GetBasicName() const
 // Name: Formation::GetLevel
 // Created: SBO 2006-09-20
 // -----------------------------------------------------------------------------
-const HierarchyLevel_ABC& Formation::GetLevel() const
+E_NatureLevel Formation::GetLevel() const
 {
-    return *level_;
+    return level_;
 }
 
 namespace
@@ -158,7 +156,7 @@ void Formation::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC
 // -----------------------------------------------------------------------------
 void Formation::Rename( const QString& name )
 {
-    const QString prefix = level_->GetName() + " - ";
+    const QString prefix = QString( "%1 - ").arg( ENT_Tr::ConvertFromNatureLevel( level_ ).c_str() );
     name_ = name.startsWith( prefix ) ? name.right( name.length() - prefix.length() ) : name;
     Touch();
 }
@@ -167,15 +165,15 @@ void Formation::Rename( const QString& name )
 // Name: Formation::SetLevelName
 // Created: MMC 2012-01-05
 // -----------------------------------------------------------------------------
-void Formation::SetLevel( int levelId )
+void Formation::SetLevel( E_NatureLevel level )
 {
     kernel::TacticalHierarchies& hierarchies = Get< kernel::TacticalHierarchies >();
     FormationHierarchies* pFormationHierachies = dynamic_cast< FormationHierarchies* >( &hierarchies );
     if( pFormationHierachies )
     {
-        level_ = levels_.Resolve( levelId );
+        level_ = level;
         Rename( name_ );
-        pFormationHierachies->SetLevel( *level_ );
+        pFormationHierachies->SetLevel( level_ );
         InitializeSymbol();
     }
 }
@@ -188,7 +186,7 @@ void Formation::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::attribute( "id", long( id_ ) )
         << xml::attribute( "name", name_.ascii() )
-        << xml::attribute( "level", level_->GetName().ascii() );
+        << xml::attribute( "level", ENT_Tr::ConvertFromNatureLevel( level_ ) );
 }
 
 // -----------------------------------------------------------------------------

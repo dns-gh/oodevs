@@ -52,7 +52,6 @@
 #include "actions/ActionParameterFactory.h"
 #include "actions/ActionsModel.h"
 #include "clients_kernel/AgentTypes.h"
-#include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/SymbolFactory.h"
 #include "indicators/GaugeTypes.h"
 

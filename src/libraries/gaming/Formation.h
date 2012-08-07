@@ -41,13 +41,13 @@ class Formation : public kernel::EntityImplementation< kernel::Formation_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Formation( const sword::FormationCreation& message, kernel::Controller& controller, const tools::Resolver_ABC< kernel::HierarchyLevel_ABC >& resolver );
+             Formation( const sword::FormationCreation& message, kernel::Controller& controller );
     virtual ~Formation();
     //@}
 
     //! @name Accessors
     //@{
-    virtual const kernel::HierarchyLevel_ABC& GetLevel() const;
+    virtual E_NatureLevel GetLevel() const;
     virtual const kernel::LogisticLevel& GetLogisticLevel() const;
     //@}
 
@@ -75,11 +75,11 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controller&               controller_;
-    const kernel::HierarchyLevel_ABC& level_;
-    const kernel::LogisticLevel*      logisticLevel_;
-    mutable std::string               symbolPath_; // $$$$ RC LDC: code duplication with preparation
-    mutable std::string               levelPath_;
+    kernel::Controller&          controller_;
+    E_NatureLevel                level_;
+    const kernel::LogisticLevel* logisticLevel_;
+    mutable std::string          symbolPath_; // $$$$ RC LDC: code duplication with preparation
+    mutable std::string          levelPath_;
     //@}
 };
 

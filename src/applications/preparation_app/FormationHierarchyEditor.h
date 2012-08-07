@@ -24,7 +24,6 @@ namespace kernel
     class ModelLoaded;
     class ModelUnLoaded;
     class SymbolFactory;
-    class FormationLevels;
 }
 
 namespace gui
@@ -55,7 +54,7 @@ class FormationHierarchyEditor: public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             FormationHierarchyEditor( QWidget* parent, kernel::Controllers& controllers, const kernel::FormationLevels& levels );
+             FormationHierarchyEditor( QWidget* parent, kernel::Controllers& controllers );
     virtual ~FormationHierarchyEditor();
     //@}
 
@@ -81,7 +80,6 @@ private:
     //@{
     kernel::Controllers& controllers_;
     kernel::SafePointer< Formation > selected_;
-    const kernel::FormationLevels& levels_;
     //@}
 };
 

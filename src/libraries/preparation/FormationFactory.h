@@ -20,6 +20,7 @@ namespace kernel
 
 class IdManager;
 class StaticModel;
+enum E_NatureLevel;
 
 // =============================================================================
 /** @class  FormationFactory
@@ -38,8 +39,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::Formation_ABC* Create( kernel::Entity_ABC& parent, const kernel::HierarchyLevel_ABC& level, const kernel::FormationLevels& levels, const QString& name = "" );
-    virtual kernel::Formation_ABC* Create( xml::xistream& xis, kernel::Entity_ABC& parent, const kernel::FormationLevels& levels );
+    virtual kernel::Formation_ABC* Create( kernel::Entity_ABC& parent, E_NatureLevel level, const QString& name = "" );
+    virtual kernel::Formation_ABC* Create( xml::xistream& xis, kernel::Entity_ABC& parent );
     //@}
 
 private:

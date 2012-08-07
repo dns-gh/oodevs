@@ -16,7 +16,6 @@
 #include "LimitsModel.h"
 #include "StaticModel.h"
 #include "clients_kernel/DictionaryExtensions.h"
-#include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -33,7 +32,6 @@ FormationModel::FormationModel( kernel::Controllers& controllers, FormationFacto
                                 const tools::Resolver< kernel::Automat_ABC>& automatResolver, const ::StaticModel& staticModel )
     : controllers_    ( controllers )
     , factory_        ( formationFactory )
-    , levels_         ( *new FormationLevels() )
     , automatResolver_( automatResolver )
     , staticModel_    ( staticModel )
 {
@@ -46,7 +44,6 @@ FormationModel::FormationModel( kernel::Controllers& controllers, FormationFacto
 // -----------------------------------------------------------------------------
 FormationModel::~FormationModel()
 {
-    delete &levels_;
     Purge();
     controllers_.Unregister( *this );
 }
@@ -55,12 +52,9 @@ FormationModel::~FormationModel()
 // Name: FormationModel::Create
 // Created: SBO 2006-09-22
 // -----------------------------------------------------------------------------
-kernel::Formation_ABC* FormationModel::Create( kernel::Entity_ABC& parent, unsigned int levelId, const QString& name )
+kernel::Formation_ABC* FormationModel::Create( kernel::Entity_ABC& parent, E_NatureLevel level, const QString& name )
 {
-    const HierarchyLevel_ABC* level = levels_.Resolve( levelId );
-    if( !level )
-        return 0;
-    Formation_ABC* formation = factory_.Create( parent, *level, levels_, name );
+    Formation_ABC* formation = factory_.Create( parent, level, name );
     Register( formation->GetId(), *formation );
     return formation;
 }
@@ -73,7 +67,7 @@ void FormationModel::Create( xml::xistream& xis, kernel::Entity_ABC& parent, Mod
 {
     try
     {
-        Formation_ABC* formation = factory_.Create( xis, parent, levels_ );
+        Formation_ABC* formation = factory_.Create( xis, parent );
         Register( formation->GetId(), *formation );
         xis >> xml::list( "formation", *this        , &FormationModel::Create    , *formation, model )
             >> xml::list( "automat"  , model.agents_, &AgentsModel::CreateAutomat, *formation, model )

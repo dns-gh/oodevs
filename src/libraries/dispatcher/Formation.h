@@ -21,6 +21,8 @@ namespace sword
     class FormationUpdate;
 }
 
+enum E_NatureLevel;
+
 namespace dispatcher
 {
     class Model_ABC;
@@ -40,13 +42,13 @@ class Formation : public dispatcher::Formation_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Formation( const Model_ABC& model, const sword::FormationCreation& msg, const tools::Resolver_ABC< kernel::HierarchyLevel_ABC >& levels );
+             Formation( const Model_ABC& model, const sword::FormationCreation& msg );
     virtual ~Formation();
     //@}
 
     //! @name Accessors
     //@{
-    virtual const kernel::HierarchyLevel_ABC& GetLevel() const;
+    virtual E_NatureLevel GetLevel() const;
     virtual dispatcher::Formation_ABC* GetParent() const;
     virtual dispatcher::Team_ABC& GetTeam() const;
     virtual const tools::Resolver< dispatcher::Formation_ABC >& GetFormations() const;
@@ -94,7 +96,7 @@ private:
     const Model_ABC&                             model_;
     const std::string                            name_;
     dispatcher::Team_ABC&                        team_;
-    const kernel::HierarchyLevel_ABC&            level_;
+    E_NatureLevel                                level_;
     std::string                                  app6symbol_;
     std::string                                  symbol_;
     sword::RgbColor                              color_;

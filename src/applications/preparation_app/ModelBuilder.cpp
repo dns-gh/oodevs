@@ -28,8 +28,6 @@
 #include "preparation/Ghost.h"
 #include "preparation/Object.h"
 #include "clients_kernel/UrbanObject_ABC.h"
-#include "clients_kernel/FormationLevels.h"
-#include "clients_kernel/Level.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Controllers.h"
@@ -99,9 +97,9 @@ ModelBuilder::~ModelBuilder()
 void ModelBuilder::OnCreateFormation( int levelId )
 {
     if( selectedTeam_ )
-        model_.formations_.Create( *selectedTeam_.ConstCast(), levelId );
+        model_.formations_.Create( *selectedTeam_.ConstCast(), static_cast< E_NatureLevel >( levelId ) );
     else if( selectedFormation_ )
-        model_.formations_.Create( *selectedFormation_.ConstCast(), levelId );
+        model_.formations_.Create( *selectedFormation_.ConstCast(), static_cast< E_NatureLevel >( levelId ) );
 }
 
 // -----------------------------------------------------------------------------

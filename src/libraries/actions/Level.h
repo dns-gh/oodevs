@@ -19,11 +19,7 @@ namespace sword
     enum EnumNatureLevel;
 }
 
-namespace kernel
-{
-    class HierarchyLevel_ABC;
-    class FormationLevels;
-}
+enum E_NatureLevel;
 
 namespace actions {
     namespace parameters {
@@ -35,6 +31,7 @@ namespace actions {
 // Created: SBO 2007-10-23
 // =============================================================================
 class Level : public Parameter< QString >
+
 {
 public:
     //! @name Functors
@@ -45,9 +42,9 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             Level( const kernel::OrderParameter& parameter, const kernel::HierarchyLevel_ABC& level );
-             Level( const kernel::OrderParameter& parameter, const sword::EnumNatureLevel& message, const kernel::FormationLevels& levels );
-             Level( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::FormationLevels& levels );
+             Level( const kernel::OrderParameter& parameter, E_NatureLevel level );
+             Level( const kernel::OrderParameter& parameter, const sword::EnumNatureLevel& message );
+             Level( const kernel::OrderParameter& parameter, xml::xistream& xis );
     virtual ~Level();
     //@}
 
@@ -57,12 +54,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Level( const Level& );            //!< Copy constructor
-    Level& operator=( const Level& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual std::string SerializeType() const;
@@ -72,7 +63,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::HierarchyLevel_ABC& level_;
+    E_NatureLevel level_;
     //@}
 };
 

@@ -12,6 +12,8 @@
 
 #include "Entity_ABC.h"
 
+enum E_NatureLevel;
+
 namespace kernel
 {
     class HierarchyLevel_ABC;
@@ -40,7 +42,7 @@ public:
 
     //! @name Accessors
     //@{
-    virtual const HierarchyLevel_ABC& GetLevel() const = 0;
+    virtual E_NatureLevel GetLevel() const = 0;
     virtual const LogisticLevel& GetLogisticLevel() const = 0;
     //@}
 

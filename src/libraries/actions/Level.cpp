@@ -10,8 +10,8 @@
 #include "actions_pch.h"
 #include "Level.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
-#include "clients_kernel/FormationLevels.h"
 #include "protocol/Protocol.h"
+#include "ENT/ENT_Tr_Gen.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace actions;
@@ -21,8 +21,8 @@ using namespace parameters;
 // Name: Level constructor
 // Created: SBO 2007-10-29
 // -----------------------------------------------------------------------------
-Level::Level( const kernel::OrderParameter& parameter, const kernel::HierarchyLevel_ABC& level )
-    : Parameter< QString >( parameter, level.GetName() )
+Level::Level( const kernel::OrderParameter& parameter, E_NatureLevel level )
+    : Parameter< QString >( parameter, ENT_Tr::ConvertFromNatureLevel( level ).c_str() )
     , level_( level )
 {
     // NOTHING
@@ -32,22 +32,22 @@ Level::Level( const kernel::OrderParameter& parameter, const kernel::HierarchyLe
 // Name: Level constructor
 // Created: SBO 2007-10-29
 // -----------------------------------------------------------------------------
-Level::Level( const kernel::OrderParameter& parameter, const sword::EnumNatureLevel& message, const kernel::FormationLevels& levels )
+Level::Level( const kernel::OrderParameter& parameter, const sword::EnumNatureLevel& message )
     : Parameter< QString >( parameter )
-    , level_( *levels.Resolve( message ) )
+    , level_( static_cast< E_NatureLevel >( message ) )
 {
-    SetValue( level_.GetName() );
+    SetValue( ENT_Tr::ConvertFromNatureLevel( level_ ).c_str() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Level constructor
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
-Level::Level( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::FormationLevels& levels )
+Level::Level( const kernel::OrderParameter& parameter, xml::xistream& xis )
     : Parameter< QString >( parameter )
-    , level_( *levels.Resolve( xis.attribute< std::string >( "value" ).c_str() ) )
+    , level_( ENT_Tr::ConvertToNatureLevel( xis.attribute< std::string >( "value" ).c_str() ) )
 {
-    SetValue( level_.GetName() );
+    SetValue( ENT_Tr::ConvertFromNatureLevel( level_ ).c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -65,7 +65,7 @@ Level::~Level()
 // -----------------------------------------------------------------------------
 void Level::CommitTo( T_Setter setter ) const
 {
-    setter( sword::EnumNatureLevel( level_.GetId() ) );
+    setter( sword::EnumNatureLevel( level_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,7 +75,7 @@ void Level::CommitTo( T_Setter setter ) const
 void Level::Serialize( xml::xostream& xos ) const
 {
     Parameter< QString >::Serialize( xos );
-    xos << xml::attribute( "value", level_.GetName().ascii() );
+    xos << xml::attribute( "value", ENT_Tr::ConvertFromNatureLevel( level_ ) );
 }
 
 // -----------------------------------------------------------------------------

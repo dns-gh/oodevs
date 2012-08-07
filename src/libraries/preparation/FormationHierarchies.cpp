@@ -17,6 +17,7 @@
 #include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/SymbolFactory.h"
+#include "ENT/ENT_Tr_Gen.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
@@ -26,7 +27,7 @@
 FormationHierarchies::FormationHierarchies( kernel::Controller& controller, kernel::Formation_ABC& holder, kernel::Entity_ABC* superior, kernel::SymbolFactory& factory )
     : kernel::MergingTacticalHierarchies( controller, holder, 0 )
     , superior_( superior )
-    , level_   ( factory.CreateLevelSymbol( holder.GetLevel() ) )
+    , level_   ( factory.CreateLevelSymbol( ENT_Tr::ConvertFromNatureLevel( holder.GetLevel() ) ) )
     , symbolFactory_( factory )
 {
     // NOTHING
@@ -54,9 +55,9 @@ std::string FormationHierarchies::GetLevel() const
 // Name: FormationHierarchies::SetLevel
 // Created: MMC 2012-01-05
 // -----------------------------------------------------------------------------
-void FormationHierarchies::SetLevel( const kernel::HierarchyLevel_ABC& hierarchyLevel )
+void FormationHierarchies::SetLevel( E_NatureLevel level )
 {
-    level_ = symbolFactory_.CreateLevelSymbol( hierarchyLevel );
+    level_ = symbolFactory_.CreateLevelSymbol( ENT_Tr::ConvertFromNatureLevel( level ) );
 }
 
 // -----------------------------------------------------------------------------

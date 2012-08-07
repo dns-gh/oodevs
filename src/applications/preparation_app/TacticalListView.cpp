@@ -27,10 +27,8 @@
 #include "preparation/LogisticLevelAttritube.h"
 #include "clients_gui/ChangeSuperiorDialog.h"
 #include "clients_kernel/AutomatType.h"
-#include "clients_kernel/Level.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
-#include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -42,6 +40,7 @@
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/CommandPostAttributes_ABC.h"
 #include "clients_kernel/Positions.h"
+#include "ENT/ENT_Tr_Gen.h"
 #include "icons.h"
 
 using namespace gui;
@@ -79,7 +78,6 @@ TacticalListView::TacticalListView( QWidget* pParent, Controllers& controllers, 
     , agentTypes_          ( agentTypes )
     , model_               ( model )
     , modelBuilder_        ( modelBuilder )
-    , levels_              ( model.formations_.levels_ )
     , tools_               ( tools )
     , lock_                ( MAKE_PIXMAP( lock ) )
     , changeSuperiorDialog_( 0 )
@@ -321,8 +319,7 @@ void TacticalListView::NotifyContextMenu( const Team_ABC& team, ContextMenu& men
     contextMenuEntity_ = &team;
     if( !isVisible() || !IsActivated() )
         return;
-    if( const HierarchyLevel_ABC* root = levels_.GetRoot() )
-        AddFormationMenu( menu, *root );
+    AddFormationMenu( menu, eNatureLevel_xxxxx );
 }
 
 // -----------------------------------------------------------------------------
@@ -334,7 +331,7 @@ void TacticalListView::NotifyContextMenu( const Formation_ABC& formation, Contex
     contextMenuEntity_ = &formation;
     if( !isVisible() || !IsActivated() )
         return;
-    AddFormationMenu( menu, formation.GetLevel() );
+    AddFormationMenu( menu, static_cast< E_NatureLevel >( formation.GetLevel() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -360,11 +357,11 @@ void TacticalListView::NotifyContextMenu( const Automat_ABC& agent, ContextMenu&
 // Name: TacticalListView::AddFormationMenu
 // Created: SBO 2011-05-16
 // -----------------------------------------------------------------------------
-void TacticalListView::AddFormationMenu( ContextMenu& menu, const HierarchyLevel_ABC& root )
+void TacticalListView::AddFormationMenu( ContextMenu& menu, E_NatureLevel root )
 {
     kernel::ContextMenu* subMenu = menu.SubMenu( "Command", tr( "Create formation" ), false, 3 );
-    for( const HierarchyLevel_ABC* level = &root; level; level = level->GetNext() )
-        subMenu->insertItem( tools::findTranslation( "models::app6", level->GetName().ascii() ), &modelBuilder_, SLOT( OnCreateFormation( int ) ), 0, level->GetId() );
+    for( int level = static_cast< int >( root ); level > 0; level-- )
+        subMenu->insertItem( ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( level ), ENT_Tr_ABC::eToTr ).c_str(), &modelBuilder_, SLOT( OnCreateFormation( int ) ), 0, level );
 }
 
 // -----------------------------------------------------------------------------

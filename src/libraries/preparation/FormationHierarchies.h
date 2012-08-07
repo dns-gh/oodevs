@@ -39,7 +39,7 @@ public:
     //@{
     virtual const kernel::Entity_ABC* GetSuperior() const;
     virtual std::string GetLevel() const;
-    virtual void SetLevel( const kernel::HierarchyLevel_ABC& hierarchyLevel );
+    virtual void SetLevel( E_NatureLevel level );
     void ChangeSuperior( kernel::Entity_ABC& superior );
     virtual void UnregisterParent();
     //@}

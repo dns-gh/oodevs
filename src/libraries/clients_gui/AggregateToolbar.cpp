@@ -20,6 +20,7 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/ContextMenu.h"
+#include "ENT/ENT_Tr_Gen.h"
 #include <boost/assign/list_of.hpp>
 
 using namespace gui;
@@ -130,7 +131,7 @@ void AggregateToolbar::Aggregate( int id )
     DisaggregateAll();
     const std::string level = LEVELS[ id ];
     for( IT_Formations it = formations_.begin(); it != formations_.end(); ++it )
-        if( IsValid( (*it)->GetLevel().GetName().ascii(), level ) )
+        if( IsValid( ENT_Tr::ConvertFromNatureLevel( (*it)->GetLevel() ), level ) )
             formationsLayer_.Aggregate( **it );
     for( IT_Automats it = automats_.begin(); it != automats_.end(); ++it )
     {

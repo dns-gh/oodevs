@@ -22,7 +22,6 @@ namespace kernel
 {
     class AgentKnowledgeConverter_ABC;
     class Controllers;
-    class FormationLevels;
     class ObjectKnowledgeConverter_ABC;
     class SymbolFactory;
     class Workers;
