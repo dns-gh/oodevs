@@ -2640,9 +2640,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\PHY_RoofShapeType.cpp">
       <Filter>Source Files\Urban\Types</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\MIL_UrbanModel.cpp">
-      <Filter>Source Files\Urban</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\MIL_UrbanObject.cpp">
       <Filter>Source Files\Urban</Filter>
     </ClCompile>
@@ -5393,9 +5390,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\PHY_RoofShapeType.h">
       <Filter>Source Files\Urban\Types</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\MIL_UrbanModel.h">
-      <Filter>Source Files\Urban</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\MIL_UrbanCache.h">
       <Filter>Source Files\Urban</Filter>
     </ClInclude>
@@ -5403,9 +5397,6 @@
       <Filter>Source Files\Urban</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\MIL_UrbanObject_ABC.h">
-      <Filter>Source Files\Urban</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\MIL_UrbanObjectVisitor_ABC.h">
       <Filter>Source Files\Urban</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\MIL_UrbanMotivationsVisitor_ABC.h">
