@@ -50,7 +50,7 @@ public:
     virtual std::vector< Path > Glob( const Path& path, const Path& name ) const;
     virtual std::vector< Path > Walk( const Path& path, bool recurse ) const;
     virtual T_Unpacker Unpack( const Path& output, std::istream& src ) const;
-    virtual T_Packer Pack( const Path& input, std::ostream& dst ) const;
+    virtual T_Packer Pack( std::ostream& dst ) const;
     virtual std::string Checksum( const Path& root, const T_Predicate& predicate, size_t& read ) const;
     virtual Path MakeAnyPath( const Path& root ) const;
     virtual std::time_t GetLastWrite( const Path& file ) const;

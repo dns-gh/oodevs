@@ -428,7 +428,6 @@ void TransferArchive( cpplog::BaseLogger& log, Archive* dst, Archive* src, const
             CheckArchiveCode( log, dst, err );
     }
     archive_read_close( src );
-    archive_write_close( dst );
 }
 
 struct Unpacker : public Unpacker_ABC
@@ -478,6 +477,7 @@ struct Unpacker : public Unpacker_ABC
         archive_write_disk_set_options( dst.get(), flags );
         archive_write_disk_set_standard_lookup( dst.get() );
         TransferArchive( log_, dst.get(), src.get(), output_, false );
+        archive_write_close( dst.get() );
     }
 
     cpplog::BaseLogger& log_;
@@ -500,17 +500,21 @@ namespace
 {
 struct Packer : public Packer_ABC
 {
-    Packer( cpplog::BaseLogger& log, const Path& input, std::ostream& stream )
+    Packer( cpplog::BaseLogger& log, std::ostream& stream )
         : log_   ( log )
-        , input_ ( input )
         , stream_( stream )
+        , dst_   ( archive_write_new(), archive_write_free )
     {
-        // NOTHING
+        archive_write_set_format_zip( dst_.get() );
+        archive_write_set_bytes_in_last_block( dst_.get(), 1 );
+        int err = archive_write_open( dst_.get(), this, Packer::Dummy, Packer::Write, Packer::Dummy );
+        if( err != ARCHIVE_OK )
+            throw std::runtime_error( archive_error_string( dst_.get() ) );
     }
 
     ~Packer()
     {
-        // NOTHING
+        archive_write_close( dst_.get() );
     }
 
     static int Dummy( Archive* /*arc*/, void* /*userdata*/ )
@@ -526,26 +530,18 @@ struct Packer : public Packer_ABC
         return size;
     }
 
-    void Pack()
+    void Pack( const Path& input )
     {
-        boost::shared_ptr< Archive > dst( archive_write_new(), archive_write_free );
-        archive_write_set_format_zip( dst.get() );
-        archive_write_set_bytes_in_last_block( dst.get(), 1 );
-        int err = archive_write_open( dst.get(), this, Packer::Dummy, Packer::Write, Packer::Dummy );
-        if( err != ARCHIVE_OK )
-            throw std::runtime_error( archive_error_string( dst.get() ) );
-
         boost::shared_ptr< Archive > src( archive_read_disk_new(), archive_read_free );
-        err = archive_read_disk_open( src.get(), runtime::Utf8Convert( input_ ).c_str() );
+        int err = archive_read_disk_open( src.get(), runtime::Utf8Convert( input ).c_str() );
         if( err != ARCHIVE_OK )
             throw std::runtime_error( archive_error_string( src.get() ) );
-
-        TransferArchive( log_, dst.get(), src.get(), input_, true );
+        TransferArchive( log_, dst_.get(), src.get(), input, true );
     }
 
     cpplog::BaseLogger& log_;
-    const Path input_;
     std::ostream& stream_;
+    boost::shared_ptr< Archive > dst_;
 };
 }
 
@@ -553,9 +549,9 @@ struct Packer : public Packer_ABC
 // Name: FileSystem::Pack
 // Created: BAX 2012-08-06
 // -----------------------------------------------------------------------------
-FileSystem_ABC::T_Packer FileSystem::Pack( const Path& input, std::ostream& dst ) const
+FileSystem_ABC::T_Packer FileSystem::Pack( std::ostream& dst ) const
 {
-    return boost::make_shared< Packer >( boost::ref( log_ ), input, boost::ref( dst ) );
+    return boost::make_shared< Packer >( boost::ref( log_ ), boost::ref( dst ) );
 }
 
 // -----------------------------------------------------------------------------

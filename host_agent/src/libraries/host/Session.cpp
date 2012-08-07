@@ -736,7 +736,8 @@ bool Session::Restore()
 bool Session::Download( std::ostream& dst ) const
 {
     boost::shared_lock< boost::shared_mutex > lock( access_ );
-    FileSystem_ABC::T_Packer packer = system_.Pack( GetOutput(), dst );
-    packer->Pack();
+    FileSystem_ABC::T_Packer packer = system_.Pack( dst );
+    packer->Pack( root_ );
+    packer->Pack( GetOutput() );
     return true;
 }
