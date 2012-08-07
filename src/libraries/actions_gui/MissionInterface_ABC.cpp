@@ -84,7 +84,7 @@ MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, const kernel::Order
         std::string missionSheet;
         if( bfs::is_directory( path ) && bfs::is_regular_file( fileName ) )
         {
-            std::ifstream file( fileName );
+            std::ifstream file( fileName.c_str() );
             std::stringstream buffer; 
             buffer << file.rdbuf();
             missionSheet = std::string( buffer.str() );
