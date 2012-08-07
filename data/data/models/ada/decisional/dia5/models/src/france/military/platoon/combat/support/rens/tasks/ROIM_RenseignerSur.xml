@@ -20,7 +20,7 @@
 				<skill name="france.military.platoon.combat.support.air.skills.Decoller" main="true">
 					<parameter name="HauteurDeVol">
 						<value>
-							<number>1000.0</number>
+							<number>200.0</number>
 						</value>
 					</parameter>
 				</skill>
