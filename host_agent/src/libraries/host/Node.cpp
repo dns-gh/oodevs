@@ -66,6 +66,8 @@ Node::T_Process AcquireProcess( const Tree& tree, const runtime::Runtime_ABC& ru
         return ptr;
     return Node::T_Process();
 }
+
+static const std::string install_directory = "_";
 }
 
 // -----------------------------------------------------------------------------
@@ -100,7 +102,7 @@ Node::Node( const PackageFactory_ABC& packages,
     , sessions_size_    ( 0 )
     , min_play_seconds_ ( config.min_play_seconds )
 {
-    install_ = packages_.Make( root_ / "install", true );
+    install_ = packages_.Make( root_ / install_directory, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -403,7 +405,7 @@ void Node::UploadCache( std::istream& src )
 void Node::ParsePackages( const Path& cache )
 {
     boost::lock_guard< boost::shared_mutex > lock( access_ );
-    ParseInline( packages_, install_, root_ / "install" );
+    ParseInline( packages_, install_, root_ / install_directory );
     num_exercises_ = install_->CountExercises();
     install_size_ = install_->GetSize();
     if( cache.empty() )
