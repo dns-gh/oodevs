@@ -23,8 +23,8 @@
 		</stage>
 		<stage label="Déplacement" permanent="false">
 			<skills>
-				<skill name="sword.military.platoon.skills.MoveAlong" main="true">
-					<parameter name="entities">
+				<skill name="france.military.platoon.combat.support.air.skills.MoveAlong" main="true">
+					<parameter name="objectives">
 						<value>
 							<parameter>objectives</parameter>
 						</value>
