@@ -43,7 +43,6 @@
 #include "protocol/ClientSenders.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/StaticModel.h"
 #include "clients_kernel/AutomatType.h"
@@ -276,7 +275,7 @@ void Model::Update( const sword::SimToClient& wrapper )
     else if( message.has_knowledge_group_update() )
         knowledgeGroups_.Get( message.knowledge_group_update().knowledge_group().id() ).Update( message.knowledge_group_update() );
     else if( message.has_formation_creation() )
-        CreateUpdate< Formation >( formations_, message.formation_creation().formation().id(), message.formation_creation(), staticModel_.levels_ );
+        CreateUpdate< Formation >( formations_, message.formation_creation().formation().id(), message.formation_creation() );
     else if( message.has_formation_update() )
         formations_.Get( message.formation_update().formation().id() ).Update( message.formation_update() );
     else if( message.has_formation_destruction() )

@@ -79,13 +79,7 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\clients_kernel_pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_kernel\FormationLevels.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_kernel\Karma.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_kernel\Level.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_kernel\LogisticLevel.cpp">
@@ -507,16 +501,10 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\clients_kernel_pch.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\FormationLevels.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\HierarchyLevel_ABC.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\Karma.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\Level.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\LogisticLevel.h">

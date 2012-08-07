@@ -101,11 +101,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_kernel\Color.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Drawing_ABC.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_kernel\FormationLevels.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Ghost_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Gradient.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Karma.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_kernel\Level.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\LogisticLevel.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\LogisticSupplyClass.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\PhysicalAttribute_ABC.cpp" />
@@ -249,14 +247,12 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\DisplayableModesObserver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Drawing_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Finalizable_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\FormationLevels.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\GhostPrototype.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Ghost_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Gradient.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\HierarchyLevel_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\HumanDefs.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Karma.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\Level.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\LogisticLevel.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\LogisticSupplyClass.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\MaintenanceStates_ABC.h" />

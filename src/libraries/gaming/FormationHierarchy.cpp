@@ -12,6 +12,7 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/SymbolFactory.h"
+#include "ENT/ENT_Tr_Gen.h"
 
 using namespace kernel;
 
@@ -22,7 +23,7 @@ using namespace kernel;
 FormationHierarchy::FormationHierarchy( Controller& controller, Formation_ABC& entity, Entity_ABC* superior, kernel::SymbolFactory& factory )
     : MergingTacticalHierarchies( controller, entity, 0 )
     , superior_( superior )
-    , level_   ( factory.CreateLevelSymbol( entity.GetLevel() ) )
+    , level_   ( factory.CreateLevelSymbol( ENT_Tr::ConvertFromNatureLevel( entity.GetLevel() ) ) )
 {
     // NOTHING
 }

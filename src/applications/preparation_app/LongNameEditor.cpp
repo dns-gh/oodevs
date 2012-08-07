@@ -120,8 +120,7 @@ namespace
         if( entity.GetTypeName() != Formation_ABC::typeName_ )
             return false;
         const Formation_ABC& formation = static_cast< const Formation_ABC& >( entity );
-        QString level = formation.GetLevel().GetName();
-        return ( level == "ii" || level == "iii" || level.endsWith( 'x' ) ); // >= battalion
+        return formation.GetLevel() >= eNatureLevel_ii; // >= battalion
     }
 }
 

@@ -19,6 +19,7 @@
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include "ENT/ENT_Tr_Gen.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/SimulationSenders.h"
 
@@ -28,14 +29,14 @@ using namespace kernel;
 // Name: Formation constructor
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
-Formation::Formation( const sword::FormationCreation& message, Controller& controller, const tools::Resolver_ABC< HierarchyLevel_ABC >& resolver )
+Formation::Formation( const sword::FormationCreation& message, Controller& controller )
     : EntityImplementation< Formation_ABC >( controller, message.formation().id(), QString( message.name().c_str() ) )
     , controller_   ( controller )
-    , level_        ( resolver.Get( message.level() ) )
+    , level_        ( static_cast< E_NatureLevel >( message.level() ) )
     , logisticLevel_( &kernel::LogisticLevel::Resolve( message.logistic_level() ) )
 {
     if( name_.isEmpty() )
-        name_ = QString( "%1 %L2" ).arg( level_.GetName() ).arg( message.formation().id() );
+        name_ = QString( "%1 %L2" ).arg( ENT_Tr::ConvertFromNatureLevel( level_ ).c_str() ).arg( message.formation().id() );
     RegisterSelf( *this );
     CreateDictionary( controller );
 }
@@ -53,7 +54,7 @@ Formation::~Formation()
 // Name: Formation::GetLevel
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
-const kernel::HierarchyLevel_ABC& Formation::GetLevel() const
+E_NatureLevel Formation::GetLevel() const
 {
     return level_;
 }

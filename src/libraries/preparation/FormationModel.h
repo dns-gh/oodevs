@@ -13,6 +13,7 @@
 #include "tools/Resolver.h"
 #include "tools/ElementObserver_ABC.h"
 #include <boost/noncopyable.hpp>
+#include "ENT/ENT_Tr_Gen.h"
 
 namespace kernel
 {
@@ -20,7 +21,6 @@ namespace kernel
     class Entity_ABC;
     class Formation_ABC;
     class Team_ABC;
-    class FormationLevels;
     class Automat_ABC;
 }
 
@@ -55,7 +55,7 @@ public:
 
     //! @name Operations
     //@{
-    kernel::Formation_ABC* Create( kernel::Entity_ABC& parent, unsigned int levelId, const QString& name = "" );
+    kernel::Formation_ABC* Create( kernel::Entity_ABC& parent, E_NatureLevel level, const QString& name = "" );
     void Create( xml::xistream& xis, kernel::Entity_ABC& parent, Model& model );
     void Purge();
     //@}
@@ -77,7 +77,6 @@ private:
 public:
     //! @name Member data
     //@{
-    kernel::FormationLevels& levels_;
     const tools::Resolver< kernel::Automat_ABC>& automatResolver_;
     //@}
 };

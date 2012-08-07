@@ -334,7 +334,6 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Automat )
 //{
 //    // $$$$ FHD 2009-10-30: TODO find a right formatted level order
 //    const std::string input( "<parameter name='test' type='level' value='42'/>" );
-//    kernel::FormationLevels levels;
 //    std::auto_ptr< sword::MissionParameter > message( Serialize( "level", input,
 //        bl::bind( bl::new_ptr< actions::parameters::Level >(), bl::_1, bl::_2, bl::var( levels ) ) ) );
 //    CheckSet( *message );

@@ -13,6 +13,7 @@
 #include "clients_gui/ChangeSuperior_ABC.h"
 #include "clients_gui/HierarchyListView.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "ENT/ENT_Tr_Gen.h"
 
 namespace gui
 {
@@ -25,8 +26,6 @@ namespace kernel
     class AgentTypes;
     class Automat_ABC;
     class Formation_ABC;
-    class FormationLevels;
-    class HierarchyLevel_ABC;
     class Ghost_ABC;
     class KnowledgeGroup_ABC;
 }
@@ -113,7 +112,7 @@ private:
     bool Drop( const kernel::KnowledgeGroup_ABC& item, const kernel::Entity_ABC& target );
     bool Drop( const kernel::AgentType& item, kernel::Entity_ABC& target );
     bool Drop( const kernel::AutomatType& item, kernel::Entity_ABC& target );
-    void AddFormationMenu( kernel::ContextMenu& menu, const kernel::HierarchyLevel_ABC& root );
+    void AddFormationMenu( kernel::ContextMenu& menu, E_NatureLevel root );
     void UpdatePixmap( const kernel::Entity_ABC& entity, gui::ValuedListItem* item );
     //@}
 
@@ -124,7 +123,6 @@ private:
     gui::ItemFactory_ABC& itemFactory_;
     const kernel::AgentTypes& agentTypes_;
     ModelBuilder& modelBuilder_;
-    const kernel::FormationLevels& levels_;
     QPixmap lock_;
     QPixmap commandPost_;
     gui::ChangeSuperiorDialog* changeSuperiorDialog_;

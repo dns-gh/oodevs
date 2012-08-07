@@ -11,6 +11,7 @@
 #define __Formation_ABC_h_
 
 #include "Entity_ABC.h"
+#include "ENT/ENT_Enums_Gen.h"
 
 namespace kernel
 {
@@ -40,7 +41,7 @@ public:
 
     //! @name Accessors
     //@{
-    virtual const HierarchyLevel_ABC& GetLevel() const = 0;
+    virtual E_NatureLevel GetLevel() const = 0;
     virtual const LogisticLevel& GetLogisticLevel() const = 0;
     //@}
 

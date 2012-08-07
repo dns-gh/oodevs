@@ -73,6 +73,6 @@ std::string FormationSymbols::BuildSymbol( bool up /*= true*/ ) const
             symbols = &holder_.GetTeam().Get< EntitySymbols_ABC >();
         aggregator.symbol_ = tools::app6::MergeSymbol( symbols->BuildSymbol(), aggregator.symbol_ );
     }
-    tools::app6::SetLevel( aggregator.symbol_, holder_.GetLevel().GetId() );
+    tools::app6::SetLevel( aggregator.symbol_, static_cast< unsigned int >( holder_.GetLevel() ) );
     return aggregator.symbol_;
 }

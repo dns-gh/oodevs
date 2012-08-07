@@ -16,20 +16,19 @@
 #include "actions/ActionTiming.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Formation_ABC.h"
-#include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/Team_ABC.h"
+#include "ENT/ENT_Tr_Gen.h"
 
 // -----------------------------------------------------------------------------
 // Name: CreateFormationDialog constructor
 // Created: LDC 2010-10-12
 // -----------------------------------------------------------------------------
-CreateFormationDialog::CreateFormationDialog( QWidget* parent, kernel::Controllers& controllers, const kernel::FormationLevels& levels, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel, const kernel::Time_ABC& time )
+CreateFormationDialog::CreateFormationDialog( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel, const kernel::Time_ABC& time )
     : QDialog       ( parent )
     , controllers_  ( controllers )
     , profile_      ( profile )
-    , levels_       ( levels )
     , actionsModel_ ( actionsModel )
     , currentEntity_( 0 )
     , time_         ( time )
@@ -52,8 +51,7 @@ CreateFormationDialog::~CreateFormationDialog()
 // -----------------------------------------------------------------------------
 void CreateFormationDialog::NotifyContextMenu( const kernel::Team_ABC& entity, kernel::ContextMenu& menu )
 {
-    const kernel::HierarchyLevel_ABC* level = levels_.GetRoot();
-    NotifyContextMenu( entity, level, menu );
+    NotifyContextMenu( entity, eNatureLevel_xxxxx, menu );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,22 +60,21 @@ void CreateFormationDialog::NotifyContextMenu( const kernel::Team_ABC& entity, k
 // -----------------------------------------------------------------------------
 void CreateFormationDialog::NotifyContextMenu( const kernel::Formation_ABC& entity, kernel::ContextMenu& menu )
 {
-    const kernel::HierarchyLevel_ABC* level = &entity.GetLevel();
-    NotifyContextMenu( entity, level, menu );
+    NotifyContextMenu( entity, entity.GetLevel(), menu );
 }
 
 // -----------------------------------------------------------------------------
 // Name: CreateFormationDialog::NotifyContextMenu
 // Created: LDC 2010-10-13
 // -----------------------------------------------------------------------------
-void CreateFormationDialog::NotifyContextMenu( const kernel::Entity_ABC& entity, const kernel::HierarchyLevel_ABC* level, kernel::ContextMenu& menu )
+void CreateFormationDialog::NotifyContextMenu( const kernel::Entity_ABC& entity, E_NatureLevel level, kernel::ContextMenu& menu )
 {
-    if( profile_.CanDoMagic( entity ) )
+    if( profile_.CanDoMagic( entity ) && level > eNatureLevel_c )
     {
         currentEntity_ = &entity;
         kernel::ContextMenu* subMenu = menu.SubMenu( "Creation", tr( "Create formation" ) );
-        while( level && ( level = level->GetNext() ) )
-            subMenu->insertItem( level->GetName(), this, SLOT( OnCreateFormation( int ) ), 0, level->GetId() );
+        for( int levelIt = static_cast< int >( level ); levelIt > 0; --levelIt )
+            subMenu->insertItem( ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( levelIt ), ENT_Tr_ABC::eToTr ).c_str(), this, SLOT( OnCreateFormation( int ) ), 0, levelIt );
     }
 }
 

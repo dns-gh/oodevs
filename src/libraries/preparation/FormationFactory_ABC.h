@@ -11,13 +11,13 @@
 #define __FormationFactory_ABC_h_
 
 #include <boost/noncopyable.hpp>
+#include "ENT/ENT_Tr_Gen.h"
 
 namespace kernel
 {
     class Entity_ABC;
     class Formation_ABC;
     class HierarchyLevel_ABC;
-    class FormationLevels;
 }
 
 namespace xml
@@ -42,8 +42,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::Formation_ABC* Create( kernel::Entity_ABC& parent, const kernel::HierarchyLevel_ABC& level, const kernel::FormationLevels& levels, const QString& name = "" ) = 0;
-    virtual kernel::Formation_ABC* Create( xml::xistream& xis, kernel::Entity_ABC& parent, const kernel::FormationLevels& levels ) = 0;
+    virtual kernel::Formation_ABC* Create( kernel::Entity_ABC& parent, E_NatureLevel level, const QString& name = "" ) = 0;
+    virtual kernel::Formation_ABC* Create( xml::xistream& xis, kernel::Entity_ABC& parent ) = 0;
     //@}
 };
 

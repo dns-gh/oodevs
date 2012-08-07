@@ -27,7 +27,7 @@
 // -----------------------------------------------------------------------------
 FormationTemplateElement::FormationTemplateElement( FormationModel& formations, const kernel::Formation_ABC& formation )
     : formations_( formations )
-    , levelId_   ( formation.GetLevel().GetId() )
+    , levelId_   ( static_cast< unsigned int >( formation.GetLevel() ) )
     , name_      ( formation.GetName() )
 {
     const kernel::DictionaryExtensions& extensions = formation.Get< kernel::DictionaryExtensions >();
@@ -85,7 +85,7 @@ FormationTemplateElement::~FormationTemplateElement()
 // -----------------------------------------------------------------------------
 kernel::Entity_ABC* FormationTemplateElement::Instanciate( kernel::Entity_ABC& superior, const geometry::Point2f&, ColorController& colorController )
 {
-    kernel::Formation_ABC* formation = formations_.Create( superior, levelId_, name_ );
+    kernel::Formation_ABC* formation = formations_.Create( superior, static_cast< E_NatureLevel >( levelId_ ), name_ );
     if( formation )
     {
         if( !extensions_.empty() )
@@ -154,7 +154,7 @@ void FormationTemplateElement::ReadExtension( xml::xistream& xis )
 bool FormationTemplateElement::IsCompatible( const kernel::Entity_ABC& superior ) const
 {
     const kernel::Formation_ABC* formation = dynamic_cast< const kernel::Formation_ABC* >( &superior );
-    return ( formation && formation->GetLevel().GetId() > levelId_ )
+    return ( formation && static_cast< unsigned int >( formation->GetLevel() ) > levelId_ )
         || dynamic_cast< const kernel::Team_ABC* >( &superior );
 }
 

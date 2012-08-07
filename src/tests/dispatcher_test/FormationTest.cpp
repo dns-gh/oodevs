@@ -12,7 +12,6 @@
 #include "MockClientPublisher.h"
 #include "MockModel.h"
 #include "MockSide.h"
-#include "clients_kernel/FormationLevels.h"
 #include "dispatcher/Formation.h"
 #include "protocol/ClientSenders.h"
 
@@ -33,7 +32,6 @@ BOOST_AUTO_TEST_CASE( Formation_CanBeCreated )
     MOCK_EXPECT( side.GetId ).returns( 2 );
     sides.Register( side.GetId(), side );
 
-    kernel::FormationLevels levels;
     tools::Resolver< dispatcher::Automat_ABC > automats;
     tools::Resolver< dispatcher::Formation_ABC > formations;
 
@@ -55,7 +53,7 @@ BOOST_AUTO_TEST_CASE( Formation_CanBeCreated )
 
         // creation
         MOCK_EXPECT( side.RegisterFormation ).once();
-        std::auto_ptr< dispatcher::Formation_ABC > result( new dispatcher::Formation( model, message, levels ) ); // $$$$ MCO : why is it an auto_ptr ?
+        std::auto_ptr< dispatcher::Formation_ABC > result( new dispatcher::Formation( model, message ) ); // $$$$ MCO : why is it an auto_ptr ?
 
         // network serialization
         MockClientPublisher publisher;

@@ -14,11 +14,11 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
+#include "ENT/ENT_Enums_Gen.h"
 
 namespace kernel
 {
     class Controller;
-    class FormationLevels;
     class GlTools_ABC;
     class Viewport_ABC;
 }
@@ -44,8 +44,8 @@ class Formation : public kernel::EntityImplementation< kernel::Formation_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Formation( kernel::Controller& controller, const kernel::HierarchyLevel_ABC& level, const kernel::FormationLevels& levels, IdManager& idManager );
-             Formation( xml::xistream& xis, kernel::Controller& controller, const kernel::FormationLevels& levels, IdManager& idManager );
+             Formation( kernel::Controller& controller, E_NatureLevel level, IdManager& idManager );
+             Formation( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager );
     virtual ~Formation();
     //@}
 
@@ -53,9 +53,9 @@ public:
     //@{
     virtual QString GetName() const;
     virtual QString GetBasicName() const;
-    virtual const kernel::HierarchyLevel_ABC& GetLevel() const;
+    virtual E_NatureLevel GetLevel() const;
     void Rename( const QString& name );
-    void SetLevel( int levelId );
+    void SetLevel( E_NatureLevel level );
     virtual const kernel::LogisticLevel& GetLogisticLevel() const;
     //@}
 
@@ -83,10 +83,9 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::HierarchyLevel_ABC* level_;
+    E_NatureLevel level_;
     mutable std::string symbolPath_;
     mutable std::string levelPath_;
-    const kernel::FormationLevels& levels_;
     //@}
 };
 

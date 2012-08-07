@@ -38,7 +38,6 @@
 #include "UrbanKnowledges.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Color_ABC.h"
@@ -133,7 +132,7 @@ kernel::Formation_ABC* TeamFactory::CreateFormation( const sword::FormationCreat
         (kernel::Entity_ABC*) &model_.teams_.Resolver< kernel::Formation_ABC >::Get( message.parent().id() ) :
         (kernel::Entity_ABC*) &model_.teams_.Resolver< kernel::Team_ABC >::Get( message.party().id() );
 
-    Formation* result = new Formation( message, controllers_.controller_, model_.static_.levels_ );
+    Formation* result = new Formation( message, controllers_.controller_ );
     result->Attach< Lives_ABC >( *new FormationLives( *result ) );
     kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
     result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( message.has_symbol() ? message.symbol() : std::string() ) );

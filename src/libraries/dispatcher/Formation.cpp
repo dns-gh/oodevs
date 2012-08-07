@@ -13,7 +13,6 @@
 #include "Automat_ABC.h"
 #include "Team_ABC.h"
 #include "LogisticEntity.h"
-#include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/LogisticLevel.h"
 #include "protocol/ClientPublisher_ABC.h"
@@ -27,12 +26,12 @@ using namespace dispatcher;
 // Name: Formation constructor
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-Formation::Formation( const Model_ABC& model, const sword::FormationCreation& msg, const tools::Resolver_ABC< kernel::HierarchyLevel_ABC >& levels )
+Formation::Formation( const Model_ABC& model, const sword::FormationCreation& msg )
     : Formation_ABC  ( msg.formation().id(), QString( msg.name().c_str() ) )
     , model_         ( model )
     , name_          ( msg.name() )
     , team_          ( model.Sides().Get( msg.party().id() ) )
-    , level_         ( levels.Get( msg.level() ) )
+    , level_         ( static_cast< E_NatureLevel >( msg.level() ) )
     , app6symbol_    ( msg.app6symbol() )
     , logisticEntity_( 0 )
     , parent_        ( msg.has_parent() ? &model.Formations().Get( msg.parent().id() ) : 0 )
@@ -126,7 +125,7 @@ void Formation::SendCreation( ClientPublisher_ABC& publisher ) const
     client::FormationCreation message;
     message().mutable_formation()->set_id( GetId() );
     message().mutable_party()->set_id( team_.GetId() );
-    message().set_level( sword::EnumNatureLevel( level_.GetId() ) );
+    message().set_level( sword::EnumNatureLevel( level_ ) );
     message().set_name( name_ );
     message().set_app6symbol( app6symbol_ );
     if( !symbol_.empty() )
@@ -198,7 +197,7 @@ void Formation::Accept( kernel::ModelVisitor_ABC& visitor ) const
 // Name: Formation::GetLevel
 // Created: AGE 2008-06-20
 // -----------------------------------------------------------------------------
-const kernel::HierarchyLevel_ABC& Formation::GetLevel() const
+E_NatureLevel Formation::GetLevel() const
 {
     return level_;
 }

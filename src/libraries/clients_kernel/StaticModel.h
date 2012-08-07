@@ -27,7 +27,6 @@ namespace kernel
     class CoordinateSystems;
     class DetectionMap;
     class ExtensionTypes;
-    class FormationLevels;
     class ObjectTypes;
 
 // =============================================================================
@@ -58,7 +57,6 @@ public:
     CoordinateConverter_ABC& coordinateConverter_;
     AgentTypes&              types_;
     ObjectTypes&             objectTypes_;
-    FormationLevels&         levels_;
     ExtensionTypes&          extensions_;
     AtlasNatures&            atlasNatures_;
     AccommodationTypes&      accommodationTypes_;

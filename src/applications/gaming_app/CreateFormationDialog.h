@@ -12,6 +12,7 @@
 
 #include "tools/Observer_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
+#include "ENT/ENT_Enums_Gen.h"
 
 namespace actions
 {
@@ -23,7 +24,6 @@ namespace kernel
     class Controllers;
     class Entity_ABC;
     class Formation_ABC;
-    class FormationLevels;
     class HierarchyLevel_ABC;
     class Profile_ABC;
     class Team_ABC;
@@ -47,7 +47,7 @@ class CreateFormationDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             CreateFormationDialog( QWidget* parent, kernel::Controllers& controllers, const kernel::FormationLevels& levels, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel, const kernel::Time_ABC& time );
+             CreateFormationDialog( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel, const kernel::Time_ABC& time );
     virtual ~CreateFormationDialog();
     //@}
 
@@ -58,15 +58,9 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    CreateFormationDialog( const CreateFormationDialog& );            //!< Copy constructor
-    CreateFormationDialog& operator=( const CreateFormationDialog& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
-    void NotifyContextMenu( const kernel::Entity_ABC&, const kernel::HierarchyLevel_ABC* level, kernel::ContextMenu& menu);
+    void NotifyContextMenu( const kernel::Entity_ABC&, E_NatureLevel level, kernel::ContextMenu& menu);
     //@}
 
 private slots:
@@ -80,7 +74,6 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const kernel::Profile_ABC& profile_;
-    const kernel::FormationLevels& levels_;
     actions::ActionsModel& actionsModel_;
     const kernel::Entity_ABC* currentEntity_;
     const kernel::Time_ABC& time_;
