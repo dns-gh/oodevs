@@ -28,7 +28,7 @@ using namespace firing;
 // Name: PHY_MunitionForIndirectFireData constructor
 // Created: NLD 2004-10-21
 // -----------------------------------------------------------------------------
-PHY_MunitionForIndirectFireData::PHY_MunitionForIndirectFireData( MIL_Agent_ABC& firer, const PHY_IndirectFireDotationClass& indirectWeaponCategory, const MT_Vector2D& vTargetPosition  )
+PHY_MunitionForIndirectFireData::PHY_MunitionForIndirectFireData( MIL_Agent_ABC& firer, const PHY_IndirectFireDotationClass& indirectWeaponCategory, const MT_Vector2D* vTargetPosition  )
     : firer_                 ( firer )
     , indirectWeaponCategory_( indirectWeaponCategory )
     , vTargetPosition_       ( vTargetPosition )
@@ -60,10 +60,13 @@ void PHY_MunitionForIndirectFireData::operator()( const PHY_ComposantePion& comp
     if( !category.CanBeUsedForIndirectFire() || !category.HasIndirectWeaponCategory( indirectWeaponCategory_ ) )
         return;
 
-    const double rRange = firer_.GetRole< PHY_RoleInterface_Location >().GetPosition().Distance( vTargetPosition_ );
+    if( vTargetPosition_ )
+    {
+        const double rRange = firer_.GetRole< PHY_RoleInterface_Location >().GetPosition().Distance( *vTargetPosition_ );
 
-    if( rRange < weapon.GetMinRangeToIndirectFire() || rRange > weapon.GetMaxRangeToIndirectFire() )
-        return;
+        if( rRange < weapon.GetMinRangeToIndirectFire() || rRange > weapon.GetMaxRangeToIndirectFire() )
+            return;
+    }
 
     if( pChoosenMunition_ && weapon.GetDotationCategory() == *pChoosenMunition_ )
         return;

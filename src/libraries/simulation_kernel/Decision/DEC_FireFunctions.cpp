@@ -241,8 +241,7 @@ const PHY_DotationCategory* DEC_FireFunctions::GetMunitionForIndirectFire( MIL_A
 {
     const PHY_IndirectFireDotationClass* pClass = PHY_IndirectFireDotationClass::Find( indirectFireDotationClassID );
     assert( pClass );
-    assert ( pTarget );
-    const PHY_DotationCategory* pDotationCategory = callerAgent.GetRole< PHY_RoleAction_IndirectFiring >().GetMunitionForIndirectFire( *pClass, *pTarget );
+    const PHY_DotationCategory* pDotationCategory = callerAgent.GetRole< PHY_RoleAction_IndirectFiring >().GetMunitionForIndirectFire( *pClass, pTarget );
     return pDotationCategory;
 }
 
