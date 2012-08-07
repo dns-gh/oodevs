@@ -36,11 +36,12 @@ public:
 public:
              MIL_Fuseau();
              MIL_Fuseau( const MT_Vector2D& vOrientationRefPos, const T_PointVector& leftLimit, const T_PointVector& rightLimit, const MIL_LimaOrder* pBeginMissionLima = 0, const MIL_LimaOrder* pEndMissionLima = 0 );
+             MIL_Fuseau( const T_PointVector& leftLimit, const T_PointVector& rightLimit );
     virtual ~MIL_Fuseau();
 
     //! @name Init
     //@{
-    void Reset( const MT_Vector2D& vOrientationRefPos, const T_PointVector& leftLimit, const T_PointVector& rightLimit, const MIL_LimaOrder* pBeginMissionLima, const MIL_LimaOrder* pEndMissionLima = 0 );
+    void Reset( const MT_Vector2D* vOrientationRefPos, const T_PointVector& leftLimit, const T_PointVector& rightLimit, const MIL_LimaOrder* pBeginMissionLima, const MIL_LimaOrder* pEndMissionLima = 0 );
     void Reset();
     //@}
 
@@ -118,7 +119,7 @@ private:
     //! @name Init
     //@{
     void InitializePolygon        ();
-    void TruncateAndReorientLimits( T_PointVector& leftLimit, T_PointVector& rightLimit, const MIL_LimaOrder* pBeginMissionLima, const MIL_LimaOrder* pEndMissionLima );
+    void TruncateAndReorientLimits( const MT_Vector2D* vOrientationRefPos, T_PointVector& leftLimit, T_PointVector& rightLimit, const MIL_LimaOrder* pBeginMissionLima, const MIL_LimaOrder* pEndMissionLima );
     void SplitLimit               ( const MIL_LimaOrder* pBeginMissionLima, const MIL_LimaOrder* pEndMissionLima, const T_PointVector& limit, T_PointVectorVector& parts ) const;
     bool IsPointInsidePolygon     ( T_PointVector& leftPoints, T_PointVector& rightPoints, const MT_Vector2D& vPoint );
     void InitializeMiddleLimit    ();
@@ -135,7 +136,6 @@ private:
     const TER_LimitData* pMiddleLimit_;
 
     // Fuseau global direction
-    MT_Vector2D vOrientationRefPos_;
     MT_Vector2D vStartGlobalDirection_;
     MT_Vector2D vEndGlobalDirection_;
     MT_Line globalDirectionLine_;
