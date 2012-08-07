@@ -15,6 +15,7 @@
 #include "Agent_ABC.h"
 #include "HttpException.h"
 #include "Request_ABC.h"
+#include "Reply_ABC.h"
 #include "SessionConfig.h"
 #include "UserController_ABC.h"
 
@@ -23,7 +24,6 @@
 #include <boost/bind.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/foreach.hpp>
-#include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/static_assert.hpp>
 #include <boost/xpressive/xpressive.hpp>
@@ -94,39 +94,32 @@ const char* GetStatusMessage( HttpStatus code )
 // Name: WriteHttpReply
 // Created: BAX 2012-02-28
 // -----------------------------------------------------------------------------
-std::string WriteHttpReply( HttpStatus code, const std::string& content = std::string() )
+void WriteHttpReply( Reply_ABC& rpy, HttpStatus code, const std::string& content = std::string() )
 {
-    const HttpCode& status = httpCodes[ code ];
-    return ( boost::format(
-        "HTTP/1.1 %1% %2%\r\n"
-        "Content-Type: text/plain; charset=utf-8\r\n"
-        "Content-Length: %3%\r\n"
-        "Connection: close\r\n"
-        "\r\n"
-        "%4%" )
-        % status.code
-        % status.text
-        % content.size()
-        % content
-    ).str();
+    rpy.SetStatus( code );
+    rpy.SetHeader( "Content-Type", "text/plain; charset=utf-8" );
+    rpy.SetHeader( "Content-Length", boost::lexical_cast< std::string >( content.size() ) );
+    rpy.SetHeader( "Connection", "close" );
+    rpy.WriteHeaders();
+    rpy.WriteContent( content );
 }
 
 // -----------------------------------------------------------------------------
 // Name: WriteHttpReply
 // Created: BAX 2012-07-19
 // -----------------------------------------------------------------------------
-std::string WriteHttpReply( const Tree& tree )
+void WriteHttpReply( Reply_ABC& rpy, const Tree& tree )
 {
-    return WriteHttpReply( OK, ToJson( tree ) );
+    WriteHttpReply( rpy, OK, ToJson( tree ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: WriteHttpReply
 // Created: BAX 2012-07-19
 // -----------------------------------------------------------------------------
-std::string WriteHttpReply( size_t count )
+void WriteHttpReply( Reply_ABC& rpy, size_t count )
 {
-    return WriteHttpReply( OK, "{\"count\":\"" + boost::lexical_cast< std::string >( count ) + "\"}" );
+    WriteHttpReply( rpy, OK, "{\"count\":\"" + boost::lexical_cast< std::string >( count ) + "\"}" );
 }
 
 // -----------------------------------------------------------------------------
@@ -147,19 +140,19 @@ std::string FixJsonList( const std::ostringstream& stream )
 // Name: WriteHttpReply
 // Created: BAX 2012-07-19
 // -----------------------------------------------------------------------------
-std::string WriteHttpReply( const std::vector< Tree >& list )
+void WriteHttpReply( Reply_ABC& rpy, const std::vector< Tree >& list )
 {
     std::ostringstream stream;
     BOOST_FOREACH( const Tree& it, list )
         stream << ToJson( it ) << ",";
-    return WriteHttpReply( OK, FixJsonList( stream ) );
+    WriteHttpReply( rpy, OK, FixJsonList( stream ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: WriteHttpReply
 // Created: BAX 2012-07-19
 // -----------------------------------------------------------------------------
-std::string WriteHttpReply( const std::vector< Path >& list )
+void WriteHttpReply( Reply_ABC& rpy, const std::vector< Path >& list )
 {
     std::ostringstream stream;
     BOOST_FOREACH( const Path& it, list )
@@ -168,7 +161,7 @@ std::string WriteHttpReply( const std::vector< Path >& list )
         std::replace( item.begin(), item.end(), '\\', '/' );
         stream << "\"" << item << "\",";
     }
-    return WriteHttpReply( OK, FixJsonList( stream ) );
+    WriteHttpReply( rpy, OK, FixJsonList( stream ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -232,167 +225,167 @@ Uuid GetId( const Request_ABC& request )
 // Name: Controller::DoGet
 // Created: BAX 2012-03-07
 // -----------------------------------------------------------------------------
-std::string Controller::DoGet( Request_ABC& request )
+void Controller::DoGet( Reply_ABC& rpy, Request_ABC& request )
 {
     const std::string& uri = request.GetUri();
     try
     {
         // cluster
-        if( uri == "/get_cluster" )        return GetCluster( request );
-        if( uri == "/start_cluster" )      return StartCluster( request );
-        if( uri == "/stop_cluster" )       return StopCluster( request );
+        if( uri == "/get_cluster" )        return GetCluster  ( rpy, request );
+        if( uri == "/start_cluster" )      return StartCluster( rpy, request );
+        if( uri == "/stop_cluster" )       return StopCluster ( rpy, request );
         // nodes
-        if( uri == "/list_nodes" )         return ListNodes( request );
-        if( uri == "/count_nodes" )        return CountNodes( request );
-        if( uri == "/get_node" )           return GetNode( request );
-        if( uri == "/create_node" )        return CreateNode( request );
-        if( uri == "/delete_node" )        return DeleteNode( request );
-        if( uri == "/start_node" )         return StartNode( request );
-        if( uri == "/stop_node" )          return StopNode( request );
-        if( uri == "/update_node" )        return UpdateNode( request );
+        if( uri == "/list_nodes" )         return ListNodes ( rpy, request );
+        if( uri == "/count_nodes" )        return CountNodes( rpy, request );
+        if( uri == "/get_node" )           return GetNode   ( rpy, request );
+        if( uri == "/create_node" )        return CreateNode( rpy, request );
+        if( uri == "/delete_node" )        return DeleteNode( rpy, request );
+        if( uri == "/start_node" )         return StartNode ( rpy, request );
+        if( uri == "/stop_node" )          return StopNode  ( rpy, request );
+        if( uri == "/update_node" )        return UpdateNode( rpy, request );
         // install
-        if( uri == "/get_install" )        return GetInstall( request );
-        if( uri == "/delete_install" )     return DeleteInstall( request );
+        if( uri == "/get_install" )        return GetInstall( rpy, request );
+        if( uri == "/delete_install" )     return DeleteInstall( rpy, request );
         // cache
-        if( uri == "/get_cache" )          return GetCache( request );
-        if( uri == "/delete_cache" )       return DeleteCache( request );
-        if( uri == "/install_from_cache" ) return InstallFromCache( request );
+        if( uri == "/get_cache" )          return GetCache        ( rpy, request );
+        if( uri == "/delete_cache" )       return DeleteCache     ( rpy, request );
+        if( uri == "/install_from_cache" ) return InstallFromCache( rpy, request );
         // sessions
-        if( uri == "/list_sessions" )      return ListSessions( request );
-        if( uri == "/count_sessions" )     return CountSessions( request );
-        if( uri == "/get_session" )        return GetSession( request );
-        if( uri == "/create_session" )     return CreateSession( request );
-        if( uri == "/delete_session" )     return DeleteSession( request );
-        if( uri == "/start_session" )      return StartSession( request );
-        if( uri == "/stop_session" )       return StopSession( request );
-        if( uri == "/pause_session" )      return PauseSession( request );
-        if( uri == "/update_session" )     return UpdateSession( request );
-        if( uri == "/archive_session" )    return ArchiveSession( request );
-        if( uri == "/restore_session" )    return RestoreSession( request );
+        if( uri == "/list_sessions" )      return ListSessions  ( rpy, request );
+        if( uri == "/count_sessions" )     return CountSessions ( rpy, request );
+        if( uri == "/get_session" )        return GetSession    ( rpy, request );
+        if( uri == "/create_session" )     return CreateSession ( rpy, request );
+        if( uri == "/delete_session" )     return DeleteSession ( rpy, request );
+        if( uri == "/start_session" )      return StartSession  ( rpy, request );
+        if( uri == "/stop_session" )       return StopSession   ( rpy, request );
+        if( uri == "/pause_session" )      return PauseSession  ( rpy, request );
+        if( uri == "/update_session" )     return UpdateSession ( rpy, request );
+        if( uri == "/archive_session" )    return ArchiveSession( rpy, request );
+        if( uri == "/restore_session" )    return RestoreSession( rpy, request );
         // exercises
-        if( uri == "/list_exercises")      return ListExercises( request );
-        if( uri == "/count_exercises" )    return CountExercises( request );
+        if( uri == "/list_exercises")      return ListExercises ( rpy, request );
+        if( uri == "/count_exercises" )    return CountExercises( rpy, request );
         // users
-        if( uri == "/logout" )             return UserLogout( request );
-        if( uri == "/is_authenticated" )   return UserIsAuthenticated( request );
-        if( uri == "/list_users" )         return ListUsers( request );
-        if( uri == "/count_users" )        return CountUsers( request );
-        if( uri == "/get_user" )           return GetUser( request );
-        if( uri == "/delete_user" )        return DeleteUser( request );
-        if( uri == "/update_user" )        return UpdateUser( request );
+        if( uri == "/logout" )             return UserLogout         ( rpy, request );
+        if( uri == "/is_authenticated" )   return UserIsAuthenticated( rpy, request );
+        if( uri == "/list_users" )         return ListUsers          ( rpy, request );
+        if( uri == "/count_users" )        return CountUsers         ( rpy, request );
+        if( uri == "/get_user" )           return GetUser            ( rpy, request );
+        if( uri == "/delete_user" )        return DeleteUser         ( rpy, request );
+        if( uri == "/update_user" )        return UpdateUser         ( rpy, request );
     }
     catch( const HttpException& err )
     {
         LOG_WARN( log_ ) << "[web] " << uri << " " << GetStatusMessage( err.code ) << " " << err.msg;
-        return WriteHttpReply( err.code, err.msg );
+        return WriteHttpReply( rpy, err.code, err.msg );
     }
     catch( const std::exception& err )
     {
         LOG_WARN( log_ ) << "[web] " << uri << " " << err.what();
-        return WriteHttpReply( INTERNAL_SERVER_ERROR, err.what() );
+        return WriteHttpReply( rpy, INTERNAL_SERVER_ERROR, err.what() );
     }
     catch( ... )
     {
         LOG_WARN( log_ ) << "[web] " << uri << " unknown exception";
-        return WriteHttpReply( INTERNAL_SERVER_ERROR );
+        return WriteHttpReply( rpy, INTERNAL_SERVER_ERROR );
     }
-    return WriteHttpReply( NOT_FOUND );
+    WriteHttpReply( rpy, NOT_FOUND );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::DoPost
 // Created: BAX 2012-03-07
 // -----------------------------------------------------------------------------
-std::string Controller::DoPost( Request_ABC& request )
+void Controller::DoPost( Reply_ABC& rpy, Request_ABC& request )
 {
     const std::string& uri = request.GetUri();
     try
     {
-        if( uri == "/upload_cache" ) return UploadCache( request );
-        if( uri == "/login" )        return UserLogin( request );
-        if( uri == "/update_login" ) return UserUpdateLogin( request );
-        if( uri == "/create_user" )  return CreateUser( request );
+        if( uri == "/upload_cache" ) return UploadCache    ( rpy, request );
+        if( uri == "/login" )        return UserLogin      ( rpy, request );
+        if( uri == "/update_login" ) return UserUpdateLogin( rpy, request );
+        if( uri == "/create_user" )  return CreateUser     ( rpy, request );
     }
     catch( const HttpException& err )
     {
         LOG_WARN( log_ ) << "[web] " << uri << " " << GetStatusMessage( err.code ) << " " << err.msg;
-        return WriteHttpReply( err.code, err.msg );
+        return WriteHttpReply( rpy, err.code, err.msg );
     }
     catch( const std::exception& err )
     {
         LOG_WARN( log_ ) << "[web] " << uri << " " << err.what();
-        return WriteHttpReply( INTERNAL_SERVER_ERROR, err.what() );
+        return WriteHttpReply( rpy, INTERNAL_SERVER_ERROR, err.what() );
     }
     catch( ... )
     {
         LOG_WARN( log_ ) << "[web] " << uri << " unknown exception";
-        return WriteHttpReply( INTERNAL_SERVER_ERROR );
+        return WriteHttpReply( rpy, INTERNAL_SERVER_ERROR );
     }
-    return WriteHttpReply( NOT_FOUND );
+    WriteHttpReply( rpy, NOT_FOUND );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::GetCluster
 // Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
-std::string Controller::GetCluster( const Request_ABC& request )
+void Controller::GetCluster( Reply_ABC& rpy, const Request_ABC& request )
 {
     Authenticate( request, USER_TYPE_ADMINISTRATOR );
-    return WriteHttpReply( agent_.GetCluster() );
+    WriteHttpReply( rpy, agent_.GetCluster() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::StartCluster
 // Created: BAX 2012-04-23
 // -----------------------------------------------------------------------------
-std::string Controller::StartCluster( const Request_ABC& request )
+void Controller::StartCluster( Reply_ABC& rpy, const Request_ABC& request )
 {
     Authenticate( request, USER_TYPE_ADMINISTRATOR );
     LOG_INFO( log_ ) << "[web] start_cluster";
-    return WriteHttpReply( agent_.StartCluster() );
+    WriteHttpReply( rpy, agent_.StartCluster() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::StopCluster
 // Created: BAX 2012-04-23
 // -----------------------------------------------------------------------------
-std::string Controller::StopCluster( const Request_ABC& request )
+void Controller::StopCluster( Reply_ABC& rpy, const Request_ABC& request )
 {
     Authenticate( request, USER_TYPE_ADMINISTRATOR );
     LOG_INFO( log_ ) << "[web] stop_cluster";
-    return WriteHttpReply( agent_.StopCluster() );
+    WriteHttpReply( rpy, agent_.StopCluster() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::ListNodes
 // Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
-std::string Controller::ListNodes( const Request_ABC& request )
+void Controller::ListNodes( Reply_ABC& rpy, const Request_ABC& request )
 {
     Authenticate( request, USER_TYPE_ADMINISTRATOR );
     const int offset = GetParameter( "offset", request, 0 );
     const int limit  = GetParameter( "limit",  request, 100 );
-    return WriteHttpReply( agent_.ListNodes( offset, limit ) );
+    WriteHttpReply( rpy, agent_.ListNodes( offset, limit ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::CountNodes
 // Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
-std::string Controller::CountNodes( const Request_ABC& request )
+void Controller::CountNodes( Reply_ABC& rpy, const Request_ABC& request )
 {
     Authenticate( request, USER_TYPE_ADMINISTRATOR );
-    return WriteHttpReply( agent_.CountNodes() );
+    WriteHttpReply( rpy, agent_.CountNodes() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::GetNode
 // Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
-std::string Controller::GetNode( const Request_ABC& request )
+void Controller::GetNode( Reply_ABC& rpy, const Request_ABC& request )
 {
     Authenticate( request, USER_TYPE_ADMINISTRATOR );
-    return WriteHttpReply( agent_.GetNode( GetId( request ) ) );
+    WriteHttpReply( rpy, agent_.GetNode( GetId( request ) ) );
 }
 
 namespace
@@ -404,7 +397,7 @@ const boost::xpressive::sregex identRegex = boost::xpressive::sregex::compile( "
 // Name: Controller::CreateNode
 // Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
-std::string Controller::CreateNode( const Request_ABC& request )
+void Controller::CreateNode( Reply_ABC& rpy, const Request_ABC& request )
 {
     Authenticate( request, USER_TYPE_ADMINISTRATOR );
     const std::string ident = RequireParameter< std::string >( "ident", request );
@@ -415,46 +408,46 @@ std::string Controller::CreateNode( const Request_ABC& request )
     const int num_sessions = GetParameter( "num_sessions", request, 16 );
     const int parallel_sessions = GetParameter( "parallel_sessions", request, 4 );
     LOG_INFO( log_ ) << "[web] /create_node ident: " << ident;
-    return WriteHttpReply( agent_.CreateNode( ident, name, num_sessions, parallel_sessions ) );
+    WriteHttpReply( rpy, agent_.CreateNode( ident, name, num_sessions, parallel_sessions ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::DeleteNode
 // Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
-std::string Controller::DeleteNode( const Request_ABC& request )
+void Controller::DeleteNode( Reply_ABC& rpy, const Request_ABC& request )
 {
     Authenticate( request, USER_TYPE_ADMINISTRATOR );
     const std::string id = RequireParameter< std::string >( "id", request );
     LOG_INFO( log_ ) << "[web] /delete_node id: " << id;
-    return WriteHttpReply( agent_.DeleteNode( Convert( id ) ) );
+    WriteHttpReply( rpy, agent_.DeleteNode( Convert( id ) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::StartNode
 // Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
-std::string Controller::StartNode( const Request_ABC& request )
+void Controller::StartNode( Reply_ABC& rpy, const Request_ABC& request )
 {
     Authenticate( request, USER_TYPE_ADMINISTRATOR );
-    return WriteHttpReply( agent_.StartNode( GetId( request ) ) );
+    WriteHttpReply( rpy, agent_.StartNode( GetId( request ) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::StopNode
 // Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
-std::string Controller::StopNode( const Request_ABC& request )
+void Controller::StopNode( Reply_ABC& rpy, const Request_ABC& request )
 {
     Authenticate( request, USER_TYPE_ADMINISTRATOR );
-    return WriteHttpReply( agent_.StopNode( GetId( request ) ) );
+    WriteHttpReply( rpy, agent_.StopNode( GetId( request ) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::UpdateNode
 // Created: BAX 2012-07-17
 // -----------------------------------------------------------------------------
-std::string Controller::UpdateNode( const Request_ABC& request )
+void Controller::UpdateNode( Reply_ABC& rpy, const Request_ABC& request )
 {
     Authenticate( request, USER_TYPE_ADMINISTRATOR );
     const Uuid id = GetId( request );
@@ -463,23 +456,23 @@ std::string Controller::UpdateNode( const Request_ABC& request )
         throw HttpException( BAD_REQUEST );
     const size_t num_sessions = RequireParameter< size_t >( "num_sessions", request );
     const size_t parallel_sessions = RequireParameter< size_t >( "parallel_sessions", request );
-    return WriteHttpReply( agent_.UpdateNode( id, name, num_sessions, parallel_sessions ) );
+    WriteHttpReply( rpy, agent_.UpdateNode( id, name, num_sessions, parallel_sessions ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::GetInstall
 // Created: BAX 2012-05-25
 // -----------------------------------------------------------------------------
-std::string Controller::GetInstall( const Request_ABC& request )
+void Controller::GetInstall( Reply_ABC& rpy, const Request_ABC& request )
 {
     const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "id" );
-    return WriteHttpReply( agent_.GetInstall( node ) );
+    WriteHttpReply( rpy, agent_.GetInstall( node ) );
 }
 
 namespace
 {
 template< typename T >
-std::string ListDispatch( const Request_ABC& request, const Uuid& id, const T& functor )
+void ListDispatch( Reply_ABC& rpy, const Request_ABC& request, const Uuid& id, const T& functor )
 {
     const std::string join = RequireParameter< std::string >( "items", request );
     std::vector< std::string > tokens;
@@ -489,7 +482,7 @@ std::string ListDispatch( const Request_ABC& request, const Uuid& id, const T& f
     std::vector< size_t > list;
     BOOST_FOREACH( const std::string& item, tokens )
         list.push_back( boost::lexical_cast< size_t >( item ) );
-    return WriteHttpReply( functor( id, list ) );
+    WriteHttpReply( rpy, functor( id, list ) );
 }
 }
 
@@ -497,85 +490,85 @@ std::string ListDispatch( const Request_ABC& request, const Uuid& id, const T& f
 // Name: Controller::DeleteCache
 // Created: BAX 2012-05-22
 // -----------------------------------------------------------------------------
-std::string Controller::DeleteInstall( const Request_ABC& request )
+void Controller::DeleteInstall( Reply_ABC& rpy, const Request_ABC& request )
 {
     const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "id" );
-    return ListDispatch( request, node, boost::bind( &Agent_ABC::DeleteInstall, &agent_, _1, _2 ) );
+    ListDispatch( rpy, request, node, boost::bind( &Agent_ABC::DeleteInstall, &agent_, _1, _2 ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::GetCache
 // Created: BAX 2012-05-14
 // -----------------------------------------------------------------------------
-std::string Controller::GetCache( const Request_ABC& request )
+void Controller::GetCache( Reply_ABC& rpy, const Request_ABC& request )
 {
     const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "id" );
     if( node.is_nil() )
         throw HttpException( web::BAD_REQUEST );
-    return WriteHttpReply( agent_.GetCache( node ) );
+    WriteHttpReply( rpy, agent_.GetCache( node ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::DeleteCache
 // Created: BAX 2012-05-22
 // -----------------------------------------------------------------------------
-std::string Controller::DeleteCache( const Request_ABC& request )
+void Controller::DeleteCache( Reply_ABC& rpy, const Request_ABC& request )
 {
     const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "id" );
     if( node.is_nil() )
         throw HttpException( web::BAD_REQUEST );
-    return WriteHttpReply( agent_.DeleteCache( node ) );
+    WriteHttpReply( rpy, agent_.DeleteCache( node ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::InstallFromCache
 // Created: BAX 2012-05-24
 // -----------------------------------------------------------------------------
-std::string Controller::InstallFromCache( const Request_ABC& request )
+void Controller::InstallFromCache( Reply_ABC& rpy, const Request_ABC& request )
 {
     const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "id" );
     if( node.is_nil() )
         throw HttpException( web::BAD_REQUEST );
-    return ListDispatch( request, node, boost::bind( &Agent_ABC::InstallFromCache, &agent_, _1, _2 ) );
+    ListDispatch( rpy, request, node, boost::bind( &Agent_ABC::InstallFromCache, &agent_, _1, _2 ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::ListSessions
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
-std::string Controller::ListSessions( const Request_ABC& request )
+void Controller::ListSessions( Reply_ABC& rpy, const Request_ABC& request )
 {
     const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
     const int offset = GetParameter( "offset", request, 0 );
     const int limit  = GetParameter( "limit",  request, 100 );
-    return WriteHttpReply( agent_.ListSessions( node, offset, limit ) );
+    WriteHttpReply( rpy, agent_.ListSessions( node, offset, limit ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::CountSessions
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
-std::string Controller::CountSessions( const Request_ABC& request )
+void Controller::CountSessions( Reply_ABC& rpy, const Request_ABC& request )
 {
     const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
-    return WriteHttpReply( agent_.CountSessions( node ) );
+    WriteHttpReply( rpy, agent_.CountSessions( node ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::GetSession
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
-std::string Controller::GetSession( const Request_ABC& request )
+void Controller::GetSession( Reply_ABC& rpy, const Request_ABC& request )
 {
     const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
-    return WriteHttpReply( agent_.GetSession( node, GetId( request ) ) );
+    WriteHttpReply( rpy, agent_.GetSession( node, GetId( request ) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::CreateSession
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
-std::string Controller::CreateSession( const Request_ABC& request )
+void Controller::CreateSession( Reply_ABC& rpy, const Request_ABC& request )
 {
     const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
     if( node.is_nil() )
@@ -583,106 +576,106 @@ std::string Controller::CreateSession( const Request_ABC& request )
     const std::string exercise = RequireParameter< std::string >( "exercise", request );
     session::Config cfg = session::GetConfig( request );
     LOG_INFO( log_ ) << "[web] /create_session node: " << node << " name: " << cfg.name << " exercise: " << exercise;
-    return WriteHttpReply( agent_.CreateSession( node, cfg, exercise ) );
+    WriteHttpReply( rpy, agent_.CreateSession( node, cfg, exercise ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::DeleteSession
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
-std::string Controller::DeleteSession( const Request_ABC& request )
+void Controller::DeleteSession( Reply_ABC& rpy, const Request_ABC& request )
 {
     const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
     const Uuid id = GetId( request );
     LOG_INFO( log_ ) << "[web] /delete_session id: " << id;
-    return WriteHttpReply( agent_.DeleteSession( node, id ) );
+    WriteHttpReply( rpy, agent_.DeleteSession( node, id ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::StartSession
 // Created: BAX 2012-03-30
 // -----------------------------------------------------------------------------
-std::string Controller::StartSession( const Request_ABC& request )
+void Controller::StartSession( Reply_ABC& rpy, const Request_ABC& request )
 {
     const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
-    return WriteHttpReply( agent_.StartSession( node, GetId( request ) ) );
+    WriteHttpReply( rpy, agent_.StartSession( node, GetId( request ) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::StopSession
 // Created: BAX 2012-03-30
 // -----------------------------------------------------------------------------
-std::string Controller::StopSession( const Request_ABC& request )
+void Controller::StopSession( Reply_ABC& rpy, const Request_ABC& request )
 {
     const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
-    return WriteHttpReply( agent_.StopSession( node, GetId( request ) ) );
+    WriteHttpReply( rpy, agent_.StopSession( node, GetId( request ) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::PauseSession
 // Created: BAX 2012-06-19
 // -----------------------------------------------------------------------------
-std::string Controller::PauseSession( const Request_ABC& request )
+void Controller::PauseSession( Reply_ABC& rpy, const Request_ABC& request )
 {
     const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
-    return WriteHttpReply( agent_.PauseSession( node, GetId( request ) ) );
+    WriteHttpReply( rpy, agent_.PauseSession( node, GetId( request ) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::UpdateSession
 // Created: BAX 2012-08-02
 // -----------------------------------------------------------------------------
-std::string Controller::UpdateSession( const Request_ABC& request )
+void Controller::UpdateSession( Reply_ABC& rpy, const Request_ABC& request )
 {
     const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
     const Tree cfg = session::ConvertConfig( request );
-    return WriteHttpReply( agent_.UpdateSession( node, GetId( request ), cfg ) );
+    WriteHttpReply( rpy, agent_.UpdateSession( node, GetId( request ), cfg ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::ArchiveSession
 // Created: BAX 2012-08-06
 // -----------------------------------------------------------------------------
-std::string Controller::ArchiveSession( const Request_ABC& request )
+void Controller::ArchiveSession( Reply_ABC& rpy, const Request_ABC& request )
 {
     const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
-    return WriteHttpReply( agent_.ArchiveSession( node, GetId( request ) ) );
+    WriteHttpReply( rpy, agent_.ArchiveSession( node, GetId( request ) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::RestoreSession
 // Created: BAX 2012-08-06
 // -----------------------------------------------------------------------------
-std::string Controller::RestoreSession( const Request_ABC& request )
+void Controller::RestoreSession( Reply_ABC& rpy, const Request_ABC& request )
 {
     const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
-    return WriteHttpReply( agent_.RestoreSession( node, GetId( request ) ) );
+    WriteHttpReply( rpy, agent_.RestoreSession( node, GetId( request ) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::ListExercises
 // Created: BAX 2012-03-27
 // -----------------------------------------------------------------------------
-std::string Controller::ListExercises( const Request_ABC& request )
+void Controller::ListExercises( Reply_ABC& rpy, const Request_ABC& request )
 {
     const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "id" );
     if( node.is_nil() )
         throw HttpException( web::BAD_REQUEST );
     const int offset = GetParameter( "offset", request, 0 );
     const int limit  = GetParameter( "limit",  request, 100 );
-    return WriteHttpReply( agent_.ListExercises( node, offset, limit ) );
+    WriteHttpReply( rpy, agent_.ListExercises( node, offset, limit ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::CountExercises
 // Created: BAX 2012-03-27
 // -----------------------------------------------------------------------------
-std::string Controller::CountExercises( const Request_ABC& request )
+void Controller::CountExercises( Reply_ABC& rpy, const Request_ABC& request )
 {
     const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "id" );
     if( node.is_nil() )
         throw HttpException( web::BAD_REQUEST );
-    return WriteHttpReply( agent_.CountExercises( node ) );
+    WriteHttpReply( rpy, agent_.CountExercises( node ) );
 }
 
 namespace
@@ -697,7 +690,7 @@ void OnUploadCache( boost::optional< Tree >& reply, Agent_ABC& agent, const Uuid
 // Name: Controller::UploadCache
 // Created: BAX 2012-05-03
 // -----------------------------------------------------------------------------
-std::string Controller::UploadCache( Request_ABC& request )
+void Controller::UploadCache( Reply_ABC& rpy, Request_ABC& request )
 {
     const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "id" );
     if( node.is_nil() )
@@ -707,8 +700,8 @@ std::string Controller::UploadCache( Request_ABC& request )
     request.RegisterMime( "cache", boost::bind( &OnUploadCache, boost::ref( reply ), boost::ref( agent_ ), node, _1 ) );
     request.ParseMime();
     if( reply == boost::none )
-        return WriteHttpReply( NOT_FOUND );
-    return WriteHttpReply( *reply );
+        return WriteHttpReply( rpy, NOT_FOUND );
+    WriteHttpReply( rpy, *reply );
 }
 
 namespace
@@ -730,79 +723,79 @@ std::string GetSource( const Request_ABC& request )
 // Name: Controller::UserIsAuthenticated
 // Created: BAX 2012-07-02
 // -----------------------------------------------------------------------------
-std::string Controller::UserIsAuthenticated( const Request_ABC& request )
+void Controller::UserIsAuthenticated( Reply_ABC& rpy, const Request_ABC& request )
 {
-    return WriteHttpReply( users_.IsAuthenticated( request.GetSid(), GetSource( request ) ) );
+    WriteHttpReply( rpy, users_.IsAuthenticated( request.GetSid(), GetSource( request ) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::UserLogin
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-std::string Controller::UserLogin( Request_ABC& request )
+void Controller::UserLogin( Reply_ABC& rpy, Request_ABC& request )
 {
     request.ParseForm();
     const std::string username = RequireParameter< std::string >( "username", request );
     const std::string password = RequireParameter< std::string >( "password", request );
-    return WriteHttpReply( users_.Login( username, password, GetSource( request ) ) );
+    WriteHttpReply( rpy, users_.Login( username, password, GetSource( request ) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::UserLogout
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-std::string Controller::UserLogout( const Request_ABC& request )
+void Controller::UserLogout( Reply_ABC& rpy, const Request_ABC& request )
 {
     users_.Logout( request.GetSid() );
-    return WriteHttpReply( OK );
+    WriteHttpReply( rpy, OK );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::UserUpdateLogin
 // Created: BAX 2012-07-05
 // -----------------------------------------------------------------------------
-std::string Controller::UserUpdateLogin( Request_ABC& request )
+void Controller::UserUpdateLogin( Reply_ABC& rpy, Request_ABC& request )
 {
     request.ParseForm();
     const std::string username = RequireParameter< std::string >( "username", request );
     const std::string current  = RequireParameter< std::string >( "current" , request );
     const std::string password = RequireParameter< std::string >( "password", request );
     if( password.empty() || username.empty() )
-        return WriteHttpReply( BAD_REQUEST );
-    return WriteHttpReply( users_.UpdateLogin( username, current, password, GetSource( request ) ) );
+        return WriteHttpReply( rpy, BAD_REQUEST );
+    WriteHttpReply( rpy, users_.UpdateLogin( username, current, password, GetSource( request ) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::ListUsers
 // Created: BAX 2012-07-11
 // -----------------------------------------------------------------------------
-std::string Controller::ListUsers( const Request_ABC& request )
+void Controller::ListUsers( Reply_ABC& rpy, const Request_ABC& request )
 {
     const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "node" );
     const int offset = GetParameter( "offset", request, 0 );
     const int limit = GetParameter( "limit", request, 100 );
-    return WriteHttpReply( users_.ListUsers( node, offset, limit ) );
+    WriteHttpReply( rpy, users_.ListUsers( node, offset, limit ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::CountUsers
 // Created: BAX 2012-07-11
 // -----------------------------------------------------------------------------
-std::string Controller::CountUsers( const Request_ABC& request )
+void Controller::CountUsers( Reply_ABC& rpy, const Request_ABC& request )
 {
     const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "node" );
-    return WriteHttpReply( users_.CountUsers( node ) );
+    WriteHttpReply( rpy, users_.CountUsers( node ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::GetUser
 // Created: BAX 2012-07-11
 // -----------------------------------------------------------------------------
-std::string Controller::GetUser( const Request_ABC& request )
+void Controller::GetUser( Reply_ABC& rpy, const Request_ABC& request )
 {
     const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "node" );
     const int id = RequireParameter< int >( "id", request );
-    return WriteHttpReply( users_.GetUser( node, id ) );
+    WriteHttpReply( rpy, users_.GetUser( node, id ) );
 }
 
 namespace
@@ -817,7 +810,7 @@ bool ToBool( const std::string& value )
 // Name: Controller::CreateUser
 // Created: BAX 2012-07-11
 // -----------------------------------------------------------------------------
-std::string Controller::CreateUser( Request_ABC& request )
+void Controller::CreateUser( Reply_ABC& rpy, Request_ABC& request )
 {
     request.ParseForm();
     const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "node" );
@@ -836,32 +829,32 @@ std::string Controller::CreateUser( Request_ABC& request )
         if( current > type )
             throw HttpException( UNAUTHORIZED );
     }
-    return WriteHttpReply( users_.CreateUser( node, username, name, password, type, ToBool( temporary ) ) );
+    WriteHttpReply( rpy, users_.CreateUser( node, username, name, password, type, ToBool( temporary ) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::DeleteUser
 // Created: BAX 2012-07-11
 // -----------------------------------------------------------------------------
-std::string Controller::DeleteUser( const Request_ABC& request )
+void Controller::DeleteUser( Reply_ABC& rpy, const Request_ABC& request )
 {
     const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "node" );
     const int id = RequireParameter< int >( "id", request );
-    return WriteHttpReply( users_.DeleteUser( node, request.GetSid(), id ) );
+    WriteHttpReply( rpy, users_.DeleteUser( node, request.GetSid(), id ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::UpdateUser
 // Created: BAX 2012-07-13
 // -----------------------------------------------------------------------------
-std::string Controller::UpdateUser( const Request_ABC& request )
+void Controller::UpdateUser( Reply_ABC& rpy, const Request_ABC& request )
 {
     const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "node" );
     const int id = RequireParameter< int >( "id", request );
     const std::string user = RequireParameter< std::string >( "username", request );
     const std::string name = RequireParameter< std::string >( "name", request );
     const std::string temporary = RequireParameter< std::string >( "temporary", request );
-    return WriteHttpReply( users_.UpdateUser( node, request.GetSid(), id, user, name, ToBool( temporary ), request.GetParameter( "password" ) ) );
+    WriteHttpReply( rpy, users_.UpdateUser( node, request.GetSid(), id, user, name, ToBool( temporary ), request.GetParameter( "password" ) ) );
 }
 
 namespace

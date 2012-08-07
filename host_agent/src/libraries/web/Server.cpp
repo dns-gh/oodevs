@@ -11,9 +11,11 @@
 
 #include "AsyncStream.h"
 #include "cpplog/cpplog.hpp"
+#include "HttpException.h"
 #include "MimeReader.h"
 #include "Observer_ABC.h"
 #include "Request_ABC.h"
+#include "Reply_ABC.h"
 #include "runtime/Async.h"
 #include "runtime/Pool_ABC.h"
 
@@ -295,6 +297,75 @@ void SetError( HttpServer::connection_ptr link, T error, const std::string& mess
     link->write( message );
 }
 
+HttpServer::connection::status_t Convert( HttpStatus status )
+{
+    switch( status )
+    {
+        case web::OK:                    return HttpServer::connection::ok;
+        case web::BAD_REQUEST:           return HttpServer::connection::bad_request;
+        case web::UNAUTHORIZED:          return HttpServer::connection::unauthorized;
+        case web::FORBIDDEN:             return HttpServer::connection::forbidden;
+        case web::NOT_FOUND:             return HttpServer::connection::not_found;
+        default:
+        case web::INTERNAL_SERVER_ERROR: return HttpServer::connection::internal_server_error;
+        case web::NOT_IMPLEMENTED:       return HttpServer::connection::not_implemented;
+    }
+}
+
+struct Reply : public Reply_ABC
+{
+    Reply( HttpServer::connection_ptr link )
+        : link_   ( link )
+        , headers_()
+    {
+        // NOTHING
+    }
+
+    virtual ~Reply()
+    {
+        // NOTHING
+    }
+
+    void SetHeader( const std::string& key, const std::string& value )
+    {
+        boost::network::http::response_header_narrow header;
+        header.name = key;
+        header.value = value;
+        headers_.push_back( header );
+    }
+
+    void SetStatus( HttpStatus code )
+    {
+        link_->set_status( Convert( code ) );
+    }
+
+    void WriteHeaders()
+    {
+        link_->set_headers( boost::make_iterator_range( headers_.begin(), headers_.end() ) );
+    }
+
+    void WriteContent( const std::string& data )
+    {
+        link_->write( data );
+    }
+
+    void Write( const void* data, size_t size )
+    {
+        const char* text = reinterpret_cast< const char* >( data );
+        boost::shared_ptr< std::string > output = boost::make_shared< std::string >( text, size );
+        link_->write( boost::asio::buffer( *output ), boost::bind( &Reply::OnWriteEnd, this, output, _1 ) );
+    }
+
+    void OnWriteEnd( boost::shared_ptr< std::string > /*output*/, const boost::system::error_code& /*ec*/ )
+    {
+        // NOTHING
+    }
+
+private:
+     HttpServer::connection_ptr link_;
+     std::vector< boost::network::http::response_header_narrow > headers_;
+};
+
 struct Context : public boost::noncopyable
 {
     Context( Async& async, Observer_ABC& observer )
@@ -318,31 +389,26 @@ struct Context : public boost::noncopyable
     void Serve( const HttpServer::request& request, HttpServer::connection_ptr link )
     {
         if( request.method == "GET" )
-            async_.Post( boost::bind( &Context::Write< &Context::Get >, this, boost::cref( request ), link ) );
+            async_.Post( boost::bind( &Context::Get, this, boost::cref( request ), link ) );
         else if( request.method == "POST" )
-            async_.Go( boost::bind( &Context::Write< &Context::Post >, this, boost::cref( request ), link ) );
+            async_.Go( boost::bind( &Context::Post, this, boost::cref( request ), link ) );
         else
             SetError( link, link->bad_request, "Invalid request method" );
     }
 
 private:
-    #define CALL_MEMBER( obj, ptr ) ( ( obj ).*( ptr ) )
-    template< std::string( Context::*callback )( const HttpServer::request&, HttpServer::connection_ptr ) >
-    void Write( const HttpServer::request& request, HttpServer::connection_ptr link )
+    void Get( const HttpServer::request& request, HttpServer::connection_ptr link )
     {
-        link->write( CALL_MEMBER( *this, callback )( request, link ) );
+        WebRequest req( request );
+        Reply rpy( link );
+        observer_.DoGet( rpy, req );
     }
 
-    std::string Get( const HttpServer::request& request, HttpServer::connection_ptr link )
+    void Post( const HttpServer::request& request, HttpServer::connection_ptr link )
     {
-        WebRequest next( request );
-        return observer_.DoGet( next );
-    }
-
-    std::string Post( const HttpServer::request& request, HttpServer::connection_ptr link )
-    {
-        MimeWebRequest next( async_.GetPool(), *server_, request, link );
-        return observer_.DoPost( next );
+        MimeWebRequest req( async_.GetPool(), *server_, request, link );
+        Reply rpy( link );
+        return observer_.DoPost( rpy, req );
     }
 
 private:

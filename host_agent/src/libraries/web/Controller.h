@@ -54,82 +54,82 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::string DoGet ( Request_ABC& request );
-    virtual std::string DoPost( Request_ABC& request );
+    virtual void DoGet ( Reply_ABC& reply, Request_ABC& request );
+    virtual void DoPost( Reply_ABC& reply, Request_ABC& request );
     //@}
 
 private:
     //! @name Cluster Methods
     //@{
-    std::string GetCluster  ( const Request_ABC& request );
-    std::string StartCluster( const Request_ABC& request );
-    std::string StopCluster ( const Request_ABC& request );
+    void GetCluster  ( Reply_ABC& reply, const Request_ABC& request );
+    void StartCluster( Reply_ABC& reply, const Request_ABC& request );
+    void StopCluster ( Reply_ABC& reply, const Request_ABC& request );
     //@}
 
     //! @name Node Methods
     //@{
-    std::string ListNodes ( const Request_ABC& request );
-    std::string CountNodes( const Request_ABC& request );
-    std::string GetNode   ( const Request_ABC& request );
-    std::string CreateNode( const Request_ABC& request );
-    std::string DeleteNode( const Request_ABC& request );
-    std::string StartNode ( const Request_ABC& request );
-    std::string StopNode  ( const Request_ABC& request );
-    std::string UpdateNode( const Request_ABC& request );
+    void ListNodes ( Reply_ABC& reply, const Request_ABC& request );
+    void CountNodes( Reply_ABC& reply, const Request_ABC& request );
+    void GetNode   ( Reply_ABC& reply, const Request_ABC& request );
+    void CreateNode( Reply_ABC& reply, const Request_ABC& request );
+    void DeleteNode( Reply_ABC& reply, const Request_ABC& request );
+    void StartNode ( Reply_ABC& reply, const Request_ABC& request );
+    void StopNode  ( Reply_ABC& reply, const Request_ABC& request );
+    void UpdateNode( Reply_ABC& reply, const Request_ABC& request );
     //@}
 
     //! @name Install Methods
     //@{
-    std::string GetInstall   ( const Request_ABC& request );
-    std::string DeleteInstall( const Request_ABC& request );
+    void GetInstall   ( Reply_ABC& reply, const Request_ABC& request );
+    void DeleteInstall( Reply_ABC& reply, const Request_ABC& request );
     //@}
 
     //! @name Cache Methods
     //@{
-    std::string UploadCache     ( Request_ABC& request );
-    std::string GetCache        ( const Request_ABC& request );
-    std::string DeleteCache     ( const Request_ABC& request );
-    std::string InstallFromCache( const Request_ABC& request );
+    void UploadCache     ( Reply_ABC& reply, Request_ABC& request );
+    void GetCache        ( Reply_ABC& reply, const Request_ABC& request );
+    void DeleteCache     ( Reply_ABC& reply, const Request_ABC& request );
+    void InstallFromCache( Reply_ABC& reply, const Request_ABC& request );
     //@}
 
     //! @name Session Methods
     //@{
-    std::string ListSessions  ( const Request_ABC& request );
-    std::string CountSessions ( const Request_ABC& request );
-    std::string GetSession    ( const Request_ABC& request );
-    std::string CreateSession ( const Request_ABC& request );
-    std::string DeleteSession ( const Request_ABC& request );
-    std::string StartSession  ( const Request_ABC& request );
-    std::string StopSession   ( const Request_ABC& request );
-    std::string PauseSession  ( const Request_ABC& request );
-    std::string UpdateSession ( const Request_ABC& request );
-    std::string ArchiveSession( const Request_ABC& request );
-    std::string RestoreSession( const Request_ABC& request );
+    void ListSessions  ( Reply_ABC& reply, const Request_ABC& request );
+    void CountSessions ( Reply_ABC& reply, const Request_ABC& request );
+    void GetSession    ( Reply_ABC& reply, const Request_ABC& request );
+    void CreateSession ( Reply_ABC& reply, const Request_ABC& request );
+    void DeleteSession ( Reply_ABC& reply, const Request_ABC& request );
+    void StartSession  ( Reply_ABC& reply, const Request_ABC& request );
+    void StopSession   ( Reply_ABC& reply, const Request_ABC& request );
+    void PauseSession  ( Reply_ABC& reply, const Request_ABC& request );
+    void UpdateSession ( Reply_ABC& reply, const Request_ABC& request );
+    void ArchiveSession( Reply_ABC& reply, const Request_ABC& request );
+    void RestoreSession( Reply_ABC& reply, const Request_ABC& request );
     //@}
 
     //! @name Exercise Methods
     //@{
-    std::string ListExercises ( const Request_ABC& request );
-    std::string CountExercises( const Request_ABC& request );
+    void ListExercises ( Reply_ABC& reply, const Request_ABC& request );
+    void CountExercises( Reply_ABC& reply, const Request_ABC& request );
     //@}
 
     //! @name User Methods
     //@{
-    std::string UserLogin          ( Request_ABC& request );
-    std::string UserLogout         ( const Request_ABC& request );
-    std::string UserIsAuthenticated( const Request_ABC& request );
-    std::string UserUpdateLogin    ( Request_ABC& request );
-    std::string ListUsers          ( const Request_ABC& request );
-    std::string CountUsers         ( const Request_ABC& request );
-    std::string GetUser            ( const Request_ABC& request );
-    std::string CreateUser         ( Request_ABC& request );
-    std::string DeleteUser         ( const Request_ABC& request );
-    std::string UpdateUser         ( const Request_ABC& request );
+    void UserLogin          ( Reply_ABC& reply, Request_ABC& request );
+    void UserLogout         ( Reply_ABC& reply, const Request_ABC& request );
+    void UserIsAuthenticated( Reply_ABC& reply, const Request_ABC& request );
+    void UserUpdateLogin    ( Reply_ABC& reply, Request_ABC& request );
+    void ListUsers          ( Reply_ABC& reply, const Request_ABC& request );
+    void CountUsers         ( Reply_ABC& reply, const Request_ABC& request );
+    void GetUser            ( Reply_ABC& reply, const Request_ABC& request );
+    void CreateUser         ( Reply_ABC& reply, Request_ABC& request );
+    void DeleteUser         ( Reply_ABC& reply, const Request_ABC& request );
+    void UpdateUser         ( Reply_ABC& reply, const Request_ABC& request );
     //@}
 
     //! @name Helpers
     //@{
-    void Authenticate( const Request_ABC& request, UserType required );
+    void Authenticate    ( const Request_ABC& request, UserType required );
     Uuid AuthenticateNode( const Request_ABC& request, UserType required, const std::string& id );
     //@}
 

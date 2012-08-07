@@ -6,38 +6,37 @@
 // Copyright (c) 2012 MASA Group
 //
 // *****************************************************************************
+#ifndef REPLY_ABC_H
+#define REPLY_ABC_H
 
-#ifndef OBSERVER_ABC_H
-#define OBSERVER_ABC_H
-
-#include <boost/noncopyable.hpp>
-#include <map>
+#include "HttpException.h"
 #include <string>
+#include <vector>
 
 namespace web
 {
-    struct Request_ABC;
-    struct Reply_ABC;
-
 // =============================================================================
-/** @class  Observer_ABC
-    @brief  Web observer definition
+/** @class  Reply_ABC
+    @brief  Web response interface
 */
-// Created: BAX 2012-02-28
+// Created: BAX 2012-08-06
 // =============================================================================
-struct Observer_ABC : public boost::noncopyable
+struct Reply_ABC : public boost::noncopyable
 {
     //! @name Constructor/Destructor
-             Observer_ABC() {}
-    virtual ~Observer_ABC() {}
+             Reply_ABC() {}
+    virtual ~Reply_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void DoGet ( Reply_ABC& reply, Request_ABC& request ) = 0;
-    virtual void DoPost( Reply_ABC& reply, Request_ABC& request ) = 0;
+    virtual void SetHeader( const std::string& key, const std::string& value ) = 0;
+    virtual void SetStatus( HttpStatus code ) = 0;
+    virtual void WriteHeaders() = 0;
+    virtual void WriteContent( const std::string& data ) = 0;
+    virtual void Write( const void* data, size_t size ) = 0;
     //@}
 };
 }
 
-#endif // OBSERVER_ABC_H
+#endif // REPLY_ABC_H
