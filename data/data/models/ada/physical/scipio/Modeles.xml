@@ -6,7 +6,7 @@
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
-        <mission name="PION COMMUNES Interroger"/>
+        <mission name="PION COMMUNES Mener Un Entretien"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="PION COMMUNES Escorter Prisonniers Vers Camp"/>
@@ -146,7 +146,7 @@
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
-        <mission name="PION COMMUNES Interroger"/>
+        <mission name="PION COMMUNES Mener Un Entretien"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="PION COMMUNES Escorter Prisonniers Vers Camp"/>
@@ -214,7 +214,7 @@
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
-        <mission name="PION COMMUNES Interroger"/>
+        <mission name="PION COMMUNES Mener Un Entretien"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="PION COMMUNES Escorter Prisonniers Vers Camp"/>
@@ -1244,7 +1244,7 @@
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
-        <mission name="PION COMMUNES Interroger"/>
+        <mission name="PION COMMUNES Mener Un Entretien"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="PION COMMUNES Escorter Prisonniers Vers Camp"/>
@@ -1889,7 +1889,7 @@
       <missions>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
-        <mission name="PION COMMUNES Interroger"/>
+        <mission name="PION COMMUNES Mener Un Entretien"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="PION COMMUNES Escorter Prisonniers Vers Camp"/>
@@ -1940,7 +1940,7 @@
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
-        <mission name="PION COMMUNES Interroger"/>
+        <mission name="PION COMMUNES Mener Un Entretien"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="PION COMMUNES Escorter Prisonniers Vers Camp"/>
@@ -1994,7 +1994,7 @@
       <missions>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
-        <mission name="PION COMMUNES Interroger"/>
+        <mission name="PION COMMUNES Mener Un Entretien"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="PION COMMUNES Escorter Prisonniers Vers Camp"/>
@@ -2048,7 +2048,7 @@
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
-        <mission name="PION COMMUNES Interroger"/>
+        <mission name="PION COMMUNES Mener Un Entretien"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="PION COMMUNES Escorter Prisonniers Vers Camp"/>
@@ -2113,7 +2113,7 @@
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
-        <mission name="PION COMMUNES Interroger"/>
+        <mission name="PION COMMUNES Mener Un Entretien"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="PION COMMUNES Escorter Prisonniers Vers Camp"/>
@@ -2178,7 +2178,7 @@
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
-        <mission name="PION COMMUNES Interroger"/>
+        <mission name="PION COMMUNES Mener Un Entretien"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="PION COMMUNES Escorter Prisonniers Vers Camp"/>
@@ -2240,7 +2240,7 @@
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
-        <mission name="PION COMMUNES Interroger"/>
+        <mission name="PION COMMUNES Mener Un Entretien"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="PION COMMUNES Escorter Prisonniers Vers Camp"/>
@@ -2930,6 +2930,9 @@
         <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
+        <fragorder name="Pion Renforcer En Equipements"/>
+        <fragorder name="Pion Transferer Equipements"/>
+        <fragorder name="Pion Reprendre Aux Ordres Equipements"/>
       </fragorders>
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.LOG.Soutien homme">
@@ -3297,6 +3300,9 @@
         <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
+        <fragorder name="Pion Reprendre Aux Ordres Equipements"/>
+        <fragorder name="Pion Transferer Equipements"/>
+        <fragorder name="Pion Renforcer En Equipements"/>
       </fragorders>
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.CIRCU.Patrouille Circulation">
@@ -3396,6 +3402,9 @@
         <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
+        <fragorder name="Pion Transferer Equipements"/>
+        <fragorder name="Pion Renforcer En Equipements"/>
+        <fragorder name="Pion Reprendre Aux Ordres Equipements"/>
       </fragorders>
     </unit>
     <unit dia-type="france.military.platoon.terrorism.roles.Individu" file="BMPion.bms" masalife="true" name="Masalife.Individu Isole.Journaliste">
@@ -3404,7 +3413,7 @@
         <mission name="PION COMMUNES Se Faire Decontaminer"/>
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Suivre"/>
-        <mission name="PION COMMUNES Interroger"/>
+        <mission name="PION COMMUNES Mener Un Entretien"/>
         <mission name="PION ASYMETRIQUE Renseigner"/>
         <mission name="PION ASYMETRIQUE S'Infiltrer"/>
       </missions>
@@ -4824,7 +4833,7 @@
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
-        <mission name="AUTOMATE COMMUNES Interroger"/>
+        <mission name="AUTOMATE COMMUNES Mener Un Entretien"/>
         <mission name="AUTOMATE MELEE Appuyer En Mouvement"/>
         <mission name="AUTOMATE MELEE Appuyer Sur Position"/>
         <mission name="AUTOMATE MELEE Attaquer">
@@ -4879,9 +4888,9 @@
         <mission name="AUTOMATE MELEE Controler foule"/>
         <mission name="AUTOMATE MELEE Canaliser foule"/>
         <mission name="AUTOMATE MELEE Maintenir Le Contact"/>
-        <mission name="AUTOMATE HLA Faire Une Requete de Transport"/>
-        <mission name="AUTOMATE HLA Debarquer"/>
-        <mission name="AUTOMATE HLA Embarquer"/>
+        <mission name="HLA Faire Une Requete de Transport"/>
+        <mission name="HLA Debarquer"/>
+        <mission name="HLA Embarquer"/>
       </missions>
       <fragorders>
         <fragorder name="Passer En NBC4"/>
@@ -4920,7 +4929,7 @@
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
-        <mission name="AUTOMATE COMMUNES Interroger"/>
+        <mission name="AUTOMATE COMMUNES Mener Un Entretien"/>
         <mission name="AUTOMATE MELEE Appuyer En Mouvement"/>
         <mission name="AUTOMATE MELEE Appuyer Sur Position"/>
         <mission name="AUTOMATE MELEE Controler">
@@ -4974,7 +4983,7 @@
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
-        <mission name="AUTOMATE COMMUNES Interroger"/>
+        <mission name="AUTOMATE COMMUNES Mener Un Entretien"/>
         <mission name="AUTOMATE MELEE Appuyer En Mouvement"/>
         <mission name="AUTOMATE MELEE Appuyer Sur Position"/>
         <mission name="AUTOMATE MELEE Attaquer">
@@ -5012,8 +5021,8 @@
         <mission name="AUTOMATE MELEE Canaliser foule"/>
         <mission name="AUTOMATE MELEE Controler foule"/>
         <mission name="AUTOMATE MELEE Interdire foules"/>
-        <mission name="AUTOMATE HLA Debarquer"/>
-        <mission name="AUTOMATE HLA Embarquer"/>
+        <mission name="HLA Debarquer"/>
+        <mission name="HLA Embarquer"/>
         <mission name="AUTOMATE MELEE Donner Coup Arret">
           <fragorder name="Decrocher"/>
         </mission>
@@ -5054,7 +5063,7 @@
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
-        <mission name="AUTOMATE COMMUNES Interroger"/>
+        <mission name="AUTOMATE COMMUNES Mener Un Entretien"/>
         <mission name="AUTOMATE MELEE Controler">
           <fragorder name="Activer Obstacles"/>
         </mission>
@@ -5092,7 +5101,7 @@
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
-        <mission name="AUTOMATE COMMUNES Interroger"/>
+        <mission name="AUTOMATE COMMUNES Mener Un Entretien"/>
         <mission name="AUTOMATE MELEE Appuyer En Mouvement"/>
         <mission name="AUTOMATE MELEE Appuyer Sur Position"/>
         <mission name="AUTOMATE MELEE Couvrir"/>
@@ -5146,7 +5155,7 @@
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
-        <mission name="AUTOMATE COMMUNES Interroger"/>
+        <mission name="AUTOMATE COMMUNES Mener Un Entretien"/>
         <mission name="AUTOMATE MELEE Appuyer En Mouvement"/>
         <mission name="AUTOMATE MELEE Appuyer Sur Position"/>
         <mission name="AUTOMATE MELEE Defendre">
@@ -5198,7 +5207,7 @@
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
-        <mission name="AUTOMATE COMMUNES Interroger"/>
+        <mission name="AUTOMATE COMMUNES Mener Un Entretien"/>
         <mission name="AUTOMATE MELEE Appuyer En Mouvement"/>
         <mission name="AUTOMATE MELEE Appuyer Sur Position"/>
         <mission name="AUTOMATE MELEE Controler">
@@ -5253,7 +5262,7 @@
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
-        <mission name="AUTOMATE COMMUNES Interroger"/>
+        <mission name="AUTOMATE COMMUNES Mener Un Entretien"/>
         <mission name="AUTOMATE MELEE Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
@@ -5342,7 +5351,7 @@
         <mission name="AUTOMATE MELEE Canaliser foule"/>
         <mission name="AUTOMATE MELEE Controler foule"/>
         <mission name="AUTOMATE MELEE Interdire foules"/>
-        <mission name="AUTOMATE COMMUNES Interroger"/>
+        <mission name="AUTOMATE COMMUNES Mener Un Entretien"/>
       </missions>
       <fragorders>
         <fragorder name="Passer En NBC4"/>
@@ -5377,7 +5386,7 @@
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
-        <mission name="AUTOMATE COMMUNES Interroger"/>
+        <mission name="AUTOMATE COMMUNES Mener Un Entretien"/>
       </missions>
       <fragorders>
         <fragorder name="Passer En NBC4"/>
@@ -6672,7 +6681,7 @@
         <mission name="AUTOMATE MILICE Appui contre mobilite">
           <fragorder name="Activer Obstacles"/>
         </mission>
-        <mission name="AUTOMATE COMMUNES Interroger"/>
+        <mission name="AUTOMATE COMMUNES Mener Un Entretien"/>
       </missions>
       <fragorders>
         <fragorder name="Passer En NBC4"/>
@@ -6963,8 +6972,8 @@
         <mission name="AUTOMATE AIR Suivre">
           <fragorder name="Modifier altitude"/>
         </mission>
-        <mission name="AUTOMATE HLA Atterrir"/>
-        <mission name="AUTOMATE HLA Decoller"/>
+        <mission name="HLA Atterrir"/>
+        <mission name="HLA Decoller"/>
       </missions>
       <fragorders>
         <fragorder name="Passer En NBC4"/>
@@ -7519,4 +7528,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0165829660" -->
+<!-- signature="2774375007" -->

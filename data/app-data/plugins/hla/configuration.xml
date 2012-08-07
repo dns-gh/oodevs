@@ -15,11 +15,11 @@
             <cancel>Interrompre</cancel>
         </fragOrders>
         <request>
-            <transport>AUTOMATE HLA Faire Une Requete de Transport</transport>
-            <embarkment>AUTOMATE HLA Atterrir</embarkment>
-            <disembarkment>AUTOMATE HLA Decoller</disembarkment>
-            <embarkment>AUTOMATE HLA Embarquer</embarkment>
-            <disembarkment>AUTOMATE HLA Debarquer</disembarkment>
+            <transport>HLA Faire Une Requete de Transport</transport>
+            <embarkment>HLA Atterrir</embarkment>
+            <disembarkment>HLA Decoller</disembarkment>
+            <embarkment>HLA Embarquer</embarkment>
+            <disembarkment>HLA Debarquer</disembarkment>
         </request>
         <offer>
             <!--transport>COMMON - offer transport</transport>

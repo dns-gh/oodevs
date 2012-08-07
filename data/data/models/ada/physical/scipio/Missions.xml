@@ -1028,7 +1028,7 @@
       </parameter>
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="A partir de" optional="true" type="Point"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.tasks.Interroger" dia-type="france.military.platoon.tasks.Interroger" id="2129" name="PION COMMUNES Interroger" package="intelligence">
+    <mission dia-behavior="france.military.platoon.tasks.Interroger" dia-type="france.military.platoon.tasks.Interroger" id="2129" name="PION COMMUNES Mener Un Entretien" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1658,7 +1658,7 @@
       <parameter dia-name="meetingPoint" name="Point regroupement" optional="false" type="Point"/>
       <parameter dia-name="jammingTime" max-value="240" min-value="0" name="Délais de brouillage" optional="false" type="Integer"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.tasks.SeFaireTransporter" dia-type="france.military.platoon.tasks.HLADemandeTransport" id="28789" name="AUTOMATE HLA Faire Une Requete de Transport">
+    <mission dia-behavior="france.military.platoon.tasks.SeFaireTransporter" dia-type="france.military.platoon.tasks.HLADemandeTransport" id="28789" name="HLA Faire Une Requete de Transport">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1668,7 +1668,7 @@
       <parameter dia-name="pointDebarquement" name="Point debarquement" optional="false" type="Point"/>
       <parameter dia-name="heureDebaquement" name="Heure debarquement" optional="false" type="DateTime"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.tasks.SeFaireTransporter" dia-type="france.military.platoon.tasks.HLAAtterrir" id="28790" name="AUTOMATE HLA Atterrir">
+    <mission dia-behavior="france.military.platoon.tasks.SeFaireTransporter" dia-type="france.military.platoon.tasks.HLAAtterrir" id="28790" name="HLA Atterrir">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1676,7 +1676,7 @@
       <parameter dia-name="position" name="Point d'embarquement" optional="false" type="Point"/>
       <parameter dia-name="heureEmbarquement" name="Heure embarquement" optional="false" type="DateTime"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.tasks.SeFaireTransporter" dia-type="france.military.platoon.tasks.HLAEmbarquer" id="28791" name="AUTOMATE HLA Embarquer">
+    <mission dia-behavior="france.military.platoon.tasks.SeFaireTransporter" dia-type="france.military.platoon.tasks.HLAEmbarquer" id="28791" name="HLA Embarquer">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1684,7 +1684,7 @@
       <parameter dia-name="position" name="Point d'embarquement" optional="false" type="Point"/>
       <parameter dia-name="heureEmbarquement" name="Heure embarquement" optional="false" type="DateTime"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.tasks.Stationner" dia-type="france.military.platoon.tasks.HLADebarquer" id="28792" name="AUTOMATE HLA Debarquer">
+    <mission dia-behavior="france.military.platoon.tasks.Stationner" dia-type="france.military.platoon.tasks.HLADebarquer" id="28792" name="HLA Debarquer">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1698,7 +1698,7 @@
       </parameter>
       <parameter dia-name="heureDebarquement" name="Heure debarquement" optional="false" type="DateTime"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.tasks.Stationner" dia-type="france.military.platoon.tasks.HLADecoller" id="28793" name="AUTOMATE HLA Decoller">
+    <mission dia-behavior="france.military.platoon.tasks.Stationner" dia-type="france.military.platoon.tasks.HLADecoller" id="28793" name="HLA Decoller">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2964,7 +2964,7 @@
         <value id="1" name="discontinu"/>
       </parameter>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.tasks.Stationner" dia-type="france.military.company.tasks.SeFaireTransporterHLA" id="28762" mrt-dia-behavior="france.military.company.tasks.Stationner" name="AUTOMATE HLA Faire Une Requete de Transport">
+    <mission cdt-dia-behavior="france.military.company.tasks.Stationner" dia-type="france.military.company.tasks.SeFaireTransporterHLA" id="28762" mrt-dia-behavior="france.military.company.tasks.Stationner" name="HLA Faire Une Requete de Transport">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -2978,7 +2978,7 @@
       <parameter dia-name="destination" name="Point de debarquement" optional="false" type="Point"/>
       <parameter dia-name="debarkment_time" name="Heure de debarquement" optional="false" type="DateTime"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.tasks.Stationner" dia-type="france.military.company.tasks.AtterrirHLA" id="28763" mrt-dia-behavior="france.military.company.tasks.Stationner" name="AUTOMATE HLA Atterrir">
+    <mission cdt-dia-behavior="france.military.company.tasks.Stationner" dia-type="france.military.company.tasks.AtterrirHLA" id="28763" mrt-dia-behavior="france.military.company.tasks.Stationner" name="HLA Atterrir">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -2990,7 +2990,7 @@
       </parameter>
       <parameter dia-name="embarkment_time" name="Heure d'embarquement" optional="false" type="DateTime"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.tasks.Stationner" dia-type="france.military.company.tasks.HLA Decoller" id="28764" mrt-dia-behavior="france.military.company.tasks.Stationner" name="AUTOMATE HLA Decoller">
+    <mission cdt-dia-behavior="france.military.company.tasks.Stationner" dia-type="france.military.company.tasks.HLA Decoller" id="28764" mrt-dia-behavior="france.military.company.tasks.Stationner" name="HLA Decoller">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -3207,7 +3207,7 @@
       <parameter dia-name="area" name="Zone à reconnaitre" optional="false" type="Polygon"/>
       <parameter dia-name="ficelleDeVol" name="Ficelle de vol" optional="true" type="Path"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.tasks.Stationner" dia-type="france.military.company.tasks.EmbarquerHLA" id="28787" mrt-dia-behavior="france.military.company.tasks.Stationner" name="AUTOMATE HLA Embarquer">
+    <mission cdt-dia-behavior="france.military.company.tasks.Stationner" dia-type="france.military.company.tasks.EmbarquerHLA" id="28787" mrt-dia-behavior="france.military.company.tasks.Stationner" name="HLA Embarquer">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -3219,7 +3219,7 @@
       </parameter>
       <parameter dia-name="embarkment_time" name="Heure d'embarquement" optional="false" type="DateTime"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.tasks.Stationner" dia-type="france.military.company.tasks.DebarquerHLA" id="28788" mrt-dia-behavior="france.military.company.tasks.Stationner" name="AUTOMATE HLA Debarquer">
+    <mission cdt-dia-behavior="france.military.company.tasks.Stationner" dia-type="france.military.company.tasks.DebarquerHLA" id="28788" mrt-dia-behavior="france.military.company.tasks.Stationner" name="HLA Debarquer">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -3231,7 +3231,7 @@
       </parameter>
       <parameter dia-name="debarkment_time" name="Heure de debarquement" optional="false" type="DateTime"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.tasks.Interroger" dia-type="T_Mission_Automate_AUTOMATE_COMMUNE_Interroger" id="28796" mrt-dia-behavior="france.military.company.tasks.Interroger" name="AUTOMATE COMMUNES Interroger">
+    <mission cdt-dia-behavior="france.military.company.tasks.Interroger" dia-type="T_Mission_Automate_AUTOMATE_COMMUNE_Interroger" id="28796" mrt-dia-behavior="france.military.company.tasks.Interroger" name="AUTOMATE COMMUNES Mener Un Entretien">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -3521,4 +3521,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ROEM_ArreterSilenceRadar" id="28801" name="ROEM Arreter Silence Radar"/>
   </fragorders>
 </missions>
-<!-- signature="4074256815" -->
+<!-- signature="0616871979" -->
