@@ -10,10 +10,10 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_PathWalker.h"
 #include "Decision/DEC_PathPoint.h"
-#include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Actions/PHY_MovingEntity_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "protocol/Protocol.h"
 #include "simulation_terrain/TER_ObjectManager.h"
@@ -137,8 +137,8 @@ DEC_PathWalker::E_ReturnCode DEC_PathWalker::SetCurrentPath( boost::shared_ptr< 
 {
     if( pCurrentPath_.get() && pPath == pCurrentPath_ && !bForcePathCheck_  /*&& !GetRole< PHY_RoleInterface_Location >().HasDoneMagicMove()*/ )
         return eRunning;
-	
-	DEC_PathWalker::E_ReturnCode rc = eRunning;
+    
+    DEC_PathWalker::E_ReturnCode rc = eRunning;
     bool bCanSendTerrainReport = pPath != pCurrentPath_;
     pCurrentPath_ = pPath;
     pPath->InsertDecPoints(); // $$$ HIDEUX
@@ -152,7 +152,7 @@ DEC_PathWalker::E_ReturnCode DEC_PathWalker::SetCurrentPath( boost::shared_ptr< 
     if( *itCurrentPathPoint_ )
         pPath->NotifyPointReached( itCurrentPathPoint_ );
     if( ( pPath->GetState() == DEC_PathResult::ePartial ) && bCanSendTerrainReport )
-	{
+    {
         bool isInsideObject = false;
         const MT_Vector2D& lastWaypoint = pPath->GetLastWaypoint();
         TER_Object_ABC::T_ObjectVector objects;
@@ -169,8 +169,8 @@ DEC_PathWalker::E_ReturnCode DEC_PathWalker::SetCurrentPath( boost::shared_ptr< 
         }
         if( !isInsideObject )
             movingEntity_.SendRC( MIL_Report::eReport_DifficultTerrain );
-		rc = ePartialPath;
-	}
+        rc = ePartialPath;
+    }
     itNextPathPoint_ = itCurrentPathPoint_;
     ++itNextPathPoint_;
     InitializeEnvironment( *pPath );
@@ -430,7 +430,7 @@ int DEC_PathWalker::Move( boost::shared_ptr< DEC_PathResult > pPath )
         return eRunning;
     }
 
-	pathSet_ = SetCurrentPath( pPath );
+    pathSet_ = SetCurrentPath( pPath );
     if( pathSet_ == eItineraireMustBeJoined )
         return eItineraireMustBeJoined;
 

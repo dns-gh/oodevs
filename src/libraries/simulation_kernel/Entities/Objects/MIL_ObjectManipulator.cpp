@@ -39,6 +39,8 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Actions/Flying/PHY_RoleAction_InterfaceFlying.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
+#include "Entities/Objects/BridgingCapacity.h"
+#include "Entities/Objects/ConstructionAttribute.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
@@ -316,6 +318,13 @@ bool MIL_ObjectManipulator::IsTrafficable( const MIL_Agent_ABC& agent ) const
 {
     if( !agent.GetRole< PHY_RoleAction_InterfaceFlying >().IsFlying() )
     {
+        BridgingCapacity* bridgingCapacity = object_.Retrieve< BridgingCapacity >();
+        if( bridgingCapacity && bridgingCapacity->IsBridgeType() )
+        {
+            const ConstructionAttribute* pConstruction = object_.RetrieveAttribute< ConstructionAttribute >();
+            if( pConstruction && !pConstruction->IsConstructed() )
+                return false;
+        }
         if( const TrafficabilityAttribute* pTrafficability = object_.RetrieveAttribute< TrafficabilityAttribute >() )
         {
             const InteractWithSideCapacity* pSideInteraction = object_.Retrieve< InteractWithSideCapacity >();

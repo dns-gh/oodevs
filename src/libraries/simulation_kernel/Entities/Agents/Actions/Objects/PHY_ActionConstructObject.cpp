@@ -15,6 +15,7 @@
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/AltitudeModifierAttribute.h"
+#include "Entities/Objects/BridgingCapacity.h"
 #include "Entities/Objects/ConstructionAttribute.h"
 #include "Entities/Objects/LodgingAttribute.h"
 #include "Entities/Objects/MineAttribute.h"
@@ -70,7 +71,16 @@ PHY_ActionConstructObject::~PHY_ActionConstructObject()
 void PHY_ActionConstructObject::StopAction()
 {
     if( pObject_ )
+    {
+        ConstructionAttribute* pConstruction = pObject_->RetrieveAttribute< ConstructionAttribute >();
+        if( pConstruction && pConstruction->IsConstructed() )
+        {
+            BridgingCapacity* pBridging = pObject_->Retrieve< BridgingCapacity >();
+            if( pBridging && pBridging->IsBridgeType() && !pBridging->IsPathData() )
+                pBridging->CreatePathData();
+        }
         pObject_->RetrieveAttribute< ConstructionAttribute >()->NotifyStopBuildByGen();
+    }
     Callback( role_.GetFinalReturnCode() );
 }
 

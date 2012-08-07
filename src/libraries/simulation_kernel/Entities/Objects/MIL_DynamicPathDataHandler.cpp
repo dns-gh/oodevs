@@ -39,6 +39,7 @@ void MIL_DynamicPathDataHandler::Reset( TER_DynamicData* data )
 {
     if( pPathfindData_ )
         TER_PathFindManager::GetPathFindManager().RemoveDynamicData( *pPathfindData_ );
-    TER_PathFindManager::GetPathFindManager().AddDynamicData( *data );
+    if( data )
+        TER_PathFindManager::GetPathFindManager().AddDynamicData( *data );
     pPathfindData_ = data;
 }
