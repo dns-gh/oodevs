@@ -30,13 +30,13 @@ public:
     virtual ~AsyncStream();
     //@}
 
-    //! @name Writer Methods
+    //! @name Write Methods
     //@{
     void Write( const char* data, size_t size );
     void CloseWrite();
     //@}
 
-    //! @name Writer Methods
+    //! @name Read Methods
     //@{
     typedef boost::function< void( std::istream& ) > Handler;
     void Read( Handler handler );
