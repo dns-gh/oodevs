@@ -32,15 +32,16 @@ PHY_ActionInterrogate::PHY_ActionInterrogate( MIL_AgentPion& caller, boost::shar
     : PHY_DecisionCallbackAction_ABC( caller )
     , rBaseTime_   ( MIL_AgentServer::GetWorkspace().GetRealTime() )
     , rTimeToWait_ ( 0 )
-    , pKnowledge_ ( pKnowledge )
+    , pKnowledge_  ( pKnowledge )
+    , caller_      ( caller )
 {
     unsigned int callerTeamID = caller.GetArmy().GetID();
 
     float affinity = pKnowledge->GetAgentKnown().GetAffinity( callerTeamID );
     ComputeTimeToWait( affinity );
     E_ReturnCode result = eRunning;
-    if( affinity < 0 || pKnowledge->IsAnEnemy( caller.GetArmy() ) == eTristate_True && pKnowledge->GetAgentKnown().GetKnowledge().GetRapForLocalValue() >= 2.25 )
-            result = eFailed;
+    if( affinity < 0 || ( pKnowledge_->IsAnEnemy( caller.GetArmy() ) == eTristate_True && caller_.GetKnowledge().GetRapForLocalValue() < 2.25 ) )
+        result = eFailed;
     else
         MIL_Report::PostEvent( pKnowledge->GetAgentKnown(), MIL_Report::eReport_Questionning );
     Callback( static_cast< int >( result ) );
@@ -54,6 +55,7 @@ PHY_ActionInterrogate::PHY_ActionInterrogate( MIL_AgentPion& caller, int knowled
     : PHY_DecisionCallbackAction_ABC( caller )
     , rBaseTime_   ( MIL_AgentServer::GetWorkspace().GetRealTime() )
     , rTimeToWait_ ( 0 )
+    , caller_      ( caller )
 {
     unsigned int callerTeamID = caller.GetArmy().GetID();
     DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( knowledgeCrowdId );
@@ -91,7 +93,7 @@ void PHY_ActionInterrogate::ComputeTimeToWait( float affinity )
 // -----------------------------------------------------------------------------
 void PHY_ActionInterrogate::Execute()
 {
-    if( pKnowledge_ && pKnowledge_->GetAgentKnown().GetKnowledge().GetRapForLocalValue() >= 2.25 )
+    if( pKnowledge_ && ( pKnowledge_->IsAnEnemy( caller_.GetArmy() ) == eTristate_True && caller_.GetKnowledge().GetRapForLocalValue() < 2.25 ) )
          Callback( static_cast< int >( eFailed ) );
     else
     {

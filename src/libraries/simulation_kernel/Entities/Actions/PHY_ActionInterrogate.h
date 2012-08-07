@@ -61,6 +61,7 @@ private:
     unsigned int rBaseTime_;
     unsigned int rTimeToWait_;
     boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge_;
+    MIL_AgentPion& caller_;
     //@}
 };
 
