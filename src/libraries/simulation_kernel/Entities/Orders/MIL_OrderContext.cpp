@@ -111,7 +111,7 @@ void MIL_OrderContext::ReadLimits( const sword::MissionParameter& limit1, const 
     if( !empty1 && equal )
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_limit );
     if( !empty1 && !empty2 )
-        fuseau_.Reset( orientationReference, limit1Data, limit2Data, FindLima( MIL_LimaFunction::LDM_ ), FindLima( MIL_LimaFunction::LFM_ ) );
+        fuseau_.Reset( &orientationReference, limit1Data, limit2Data, FindLima( MIL_LimaFunction::LDM_ ), FindLima( MIL_LimaFunction::LFM_ ) );
 }
 
 // -----------------------------------------------------------------------------

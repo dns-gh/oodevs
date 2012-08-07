@@ -40,13 +40,29 @@ MIL_Fuseau::MIL_Fuseau( const MT_Vector2D& vOrientationRefPos, const T_PointVect
     , pLeftLimit_           ( 0 )
     , pRightLimit_          ( 0 )
     , pMiddleLimit_         ( 0 )
-    , vOrientationRefPos_   ()
     , vStartGlobalDirection_()
     , vEndGlobalDirection_  ()
     , globalDirectionLine_  ( vStartGlobalDirection_, vEndGlobalDirection_ )
 {
-    Reset( vOrientationRefPos, leftLimit, rightLimit, pBeginMissionLima, pEndMissionLima );
+    Reset( &vOrientationRefPos, leftLimit, rightLimit, pBeginMissionLima, pEndMissionLima );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Fuseau constructor
+// Created: LDC 2012-08-06
+// -----------------------------------------------------------------------------
+MIL_Fuseau::MIL_Fuseau( const T_PointVector& leftLimit, const T_PointVector& rightLimit )
+    : TER_Polygon           ()
+    , pLeftLimit_           ( 0 )
+    , pRightLimit_          ( 0 )
+    , pMiddleLimit_         ( 0 )
+    , vStartGlobalDirection_()
+    , vEndGlobalDirection_  ()
+    , globalDirectionLine_  ( vStartGlobalDirection_, vEndGlobalDirection_ )
+{
+    Reset( 0, leftLimit, rightLimit, 0, 0 );
+}
+
 
 //-----------------------------------------------------------------------------
 // Name: MIL_Fuseau constructor
@@ -57,7 +73,6 @@ MIL_Fuseau::MIL_Fuseau()
     , pLeftLimit_           ( 0 )
     , pRightLimit_          ( 0 )
     , pMiddleLimit_         ( 0 )
-    , vOrientationRefPos_   ()
     , vStartGlobalDirection_()
     , vEndGlobalDirection_  ()
     , globalDirectionLine_( vStartGlobalDirection_, vEndGlobalDirection_ )
@@ -282,7 +297,7 @@ bool MIL_Fuseau::IsPointInsidePolygon( T_PointVector& leftPoints, T_PointVector&
 // Name: MIL_Fuseau::TruncateAndOrienteLimits
 // Created: NLD 2004-05-19
 // -----------------------------------------------------------------------------
-void MIL_Fuseau::TruncateAndReorientLimits( T_PointVector& leftLimit, T_PointVector& rightLimit, const MIL_LimaOrder* pBeginMissionLima, const MIL_LimaOrder* pEndMissionLima )
+void MIL_Fuseau::TruncateAndReorientLimits( const MT_Vector2D* vOrientationRefPos, T_PointVector& leftLimit, T_PointVector& rightLimit, const MIL_LimaOrder* pBeginMissionLima, const MIL_LimaOrder* pEndMissionLima )
 {
     if( leftLimit.empty() || rightLimit.empty() )
         throw std::runtime_error( "Null MIL_Fuseau" );
@@ -300,7 +315,7 @@ void MIL_Fuseau::TruncateAndReorientLimits( T_PointVector& leftLimit, T_PointVec
     // Orientation = From the closest border to the furthest
     MT_Line lineBorder1( *leftLimit.begin (), *rightLimit.begin() );
     MT_Line lineBorder2( *leftLimit.rbegin(), *rightLimit.rbegin() );
-    if( vOrientationRefPos_.SquareDistance( lineBorder1.GetCenter() ) > vOrientationRefPos_.SquareDistance( lineBorder2.GetCenter() ) )
+    if( vOrientationRefPos && vOrientationRefPos->SquareDistance( lineBorder1.GetCenter() ) > vOrientationRefPos->SquareDistance( lineBorder2.GetCenter() ) )
     {
         std::reverse( rightLimit.begin(), rightLimit.end() );
         std::reverse( leftLimit.begin(), leftLimit.end() );
@@ -329,7 +344,7 @@ void MIL_Fuseau::TruncateAndReorientLimits( T_PointVector& leftLimit, T_PointVec
     else if( nNbParts == 2 )
     {
         // Si 2 parties, on prend en priorité celle dans laquelle le point de réference se trouve
-        if( IsPointInsidePolygon( leftParts[1], rightParts[1], vOrientationRefPos_ ) )
+        if( vOrientationRefPos && IsPointInsidePolygon( leftParts[1], rightParts[1], *vOrientationRefPos ) )
         {
             leftLimit  = leftParts [1];
             rightLimit = rightParts[1];
@@ -399,21 +414,20 @@ void MIL_Fuseau::InitializeMiddleLimit()
 // Name: MIL_Fuseau::Reset
 // Created: NLD 2003-01-14
 //-----------------------------------------------------------------------------
-void MIL_Fuseau::Reset( const MT_Vector2D& vOrientationRefPos, const T_PointVector& leftLimit, const T_PointVector& rightLimit, const MIL_LimaOrder* pBeginMissionLima, const MIL_LimaOrder* pEndMissionLima )
+void MIL_Fuseau::Reset( const MT_Vector2D* vOrientationRefPos, const T_PointVector& leftLimit, const T_PointVector& rightLimit, const MIL_LimaOrder* pBeginMissionLima, const MIL_LimaOrder* pEndMissionLima )
 {
     if( leftLimit .empty() || rightLimit.empty() )
         throw std::runtime_error( "Error MILFuseau::Reset" );
 
     MIL_Fuseau::Reset();
 
-    vOrientationRefPos_ = vOrientationRefPos;
     if( !pBeginMissionLima || !pEndMissionLima )
         pBeginMissionLima = pEndMissionLima = 0;
 
     T_PointVector leftLimitTmp  = leftLimit;
     T_PointVector rightLimitTmp = rightLimit;
 
-    TruncateAndReorientLimits( leftLimitTmp, rightLimitTmp, pBeginMissionLima, pEndMissionLima  );
+    TruncateAndReorientLimits( vOrientationRefPos, leftLimitTmp, rightLimitTmp, pBeginMissionLima, pEndMissionLima  );
 
     pLeftLimit_  = &MIL_Singletons::GetTacticalLineManager().CreateLimitData( leftLimitTmp  );
     pRightLimit_ = &MIL_Singletons::GetTacticalLineManager().CreateLimitData( rightLimitTmp );
@@ -450,7 +464,6 @@ void MIL_Fuseau::Reset()
 
     vStartGlobalDirection_.Reset();
     vEndGlobalDirection_  .Reset();
-    vOrientationRefPos_   .Reset();
 
     if( pLeftLimit_ )
         pLeftLimit_->DecRef( *this );
@@ -642,11 +655,11 @@ bool MIL_Fuseau::SplitIntoSubFuseaux( unsigned int nNbrSubFuseau, T_FuseauPtrLis
     for( CIT_PointVectorVector it = intermediateLimits.begin(); it != intermediateLimits.end(); ++it )
     {
         const T_PointVector* pCurLimit = &*it;
-        MIL_Fuseau* pNewSubFuseau = new MIL_Fuseau( vOrientationRefPos_, *pPrevLimit, *pCurLimit );
+        MIL_Fuseau* pNewSubFuseau = new MIL_Fuseau( *pPrevLimit, *pCurLimit );
         container.push_back( pNewSubFuseau );
         pPrevLimit = pCurLimit;
     }
-    MIL_Fuseau* pNewSubFuseau = new MIL_Fuseau( vOrientationRefPos_, *pPrevLimit, pRightLimit_->GetPoints() );
+    MIL_Fuseau* pNewSubFuseau = new MIL_Fuseau( *pPrevLimit, pRightLimit_->GetPoints() );
     container.push_back( pNewSubFuseau );
 
     assert( container.size() == nNbrSubFuseau );
@@ -1095,7 +1108,6 @@ MIL_Fuseau& MIL_Fuseau::operator=( const MIL_Fuseau& fuseau )
     TER_Polygon::operator=( fuseau );
 
     //globalDirectionLine_    = fuseau.globalDirectionLine_; $$ NE PAS COPIER - MT_LINE SUCKS
-    vOrientationRefPos_     = fuseau.vOrientationRefPos_;
     vStartGlobalDirection_  = fuseau.vStartGlobalDirection_;
     vEndGlobalDirection_    = fuseau.vEndGlobalDirection_;
 
@@ -1328,8 +1340,7 @@ void MIL_Fuseau::load( MIL_CheckPointInArchive& file, const unsigned int )
             pRightLimit.push_back( MT_Vector2D( x, y ) );
         }
     }
-    file >> vOrientationRefPos_
-         >> vStartGlobalDirection_
+    file >> vStartGlobalDirection_
          >> vEndGlobalDirection_;
     globalDirectionLine_ = MT_Line( vStartGlobalDirection_, vEndGlobalDirection_ );
     if( !pLeftLimit.empty() && !pRightLimit.empty() )
@@ -1372,7 +1383,6 @@ void MIL_Fuseau::save( MIL_CheckPointOutArchive& file, const unsigned int ) cons
              << it->rY_;
     }
 
-    file << vOrientationRefPos_
-         << vStartGlobalDirection_
+    file << vStartGlobalDirection_
          << vEndGlobalDirection_;
 }
