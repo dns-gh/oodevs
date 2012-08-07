@@ -69,6 +69,7 @@
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 #include "Entities/Specialisations/LOG/LogisticLink_ABC.h"
+#include "flood/FloodModel.h"
 #include "Inhabitants/MIL_InhabitantType.h"
 #include "Inhabitants/MIL_Inhabitant.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
@@ -116,8 +117,7 @@
 
 #include "Adapters/Sink.h"
 #include "Adapters/Legacy/Sink.h"
-#include "Adapters/FloodModelFactory.h"
-#include "Adapters/Legacy/FloodModelFactory.h"
+#include "Adapters/FloodModel.h"
 
 namespace bfs = boost::filesystem;
 
@@ -230,8 +230,8 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , agentFactory_                 ( new AgentFactory( *idManager_, *missionController_ ) )
     , sink_                         ( isLegacy ? std::auto_ptr< sword::Sink_ABC >( new sword::legacy::Sink( *agentFactory_, gcPause, gcMult ) )
                                                : std::auto_ptr< sword::Sink_ABC >( new sword::Sink( *agentFactory_, gcPause, gcMult ) ) )
-    , pFloodModelFactory_           ( sink_->CreateFloodModelFactory() )
-    , pObjectManager_               ( new MIL_ObjectManager( pFloodModelFactory_.get() ) )
+    , pFloodModel_                  ( sink_->CreateFloodModel() )
+    , pObjectManager_               ( new MIL_ObjectManager( *pFloodModel_ ) )
     , automateFactory_              ( new AutomateFactory( *idManager_, gcPause, gcMult ) )
     , formationFactory_             ( new FormationFactory( *automateFactory_ ) )
     , knowledgeGroupFactory_        ( new KnowledgeGroupFactory() )
@@ -2037,7 +2037,6 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int 
     PopulationFactory_ABC * populationFactory;
     InhabitantFactory_ABC * inhabitantFactory;
     KnowledgeGroupFactory_ABC * knowledgeGroupFactory; // LTO
-    FloodModelFactory_ABC* floodModelFactory;
     MIL_ObjectManager* objectManager;
     MissionController_ABC* missionController;
     file >> sink;
@@ -2051,7 +2050,6 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int 
          >> automateFactory
          >> populationFactory
          >> inhabitantFactory
-         >> floodModelFactory
          >> objectManager
          >> missionController
          >> rKnowledgesTime_
@@ -2070,7 +2068,6 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int 
     automateFactory_.reset( automateFactory );
     populationFactory_.reset( populationFactory );
     inhabitantFactory_.reset( inhabitantFactory );
-    pFloodModelFactory_.reset( floodModelFactory );
     pObjectManager_.reset( objectManager );
     missionController_.reset( missionController );
     missionController_->Initialize( *sink_, *populationFactory );
@@ -2107,7 +2104,6 @@ void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const unsigned int
     const PopulationFactory_ABC * const populationFactory = populationFactory_.get();
     const InhabitantFactory_ABC * const inhabitantFactory = inhabitantFactory_.get();
     const KnowledgeGroupFactory_ABC* const knowledgeGroupFactory = knowledgeGroupFactory_.get();
-    const FloodModelFactory_ABC* const floodModelFactory = pFloodModelFactory_.get();
     const MIL_ObjectManager* const objectManager = pObjectManager_.get();
     const MissionController_ABC* const missionController = missionController_.get();
 
@@ -2120,7 +2116,6 @@ void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const unsigned int
          << tempAutomateFactory
          << populationFactory
          << inhabitantFactory
-         << floodModelFactory
          << objectManager
          << missionController
          << rKnowledgesTime_

@@ -44,7 +44,7 @@ public:
     virtual MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition );
     virtual MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name );
 
-    virtual std::auto_ptr< FloodModelFactory_ABC > CreateFloodModelFactory() const;
+    virtual std::auto_ptr< flood::FloodModel_ABC > CreateFloodModel() const;
     //@}
 
     //! @name CheckPoint
@@ -64,6 +64,11 @@ private:
     MIL_AgentPion& Configure( MIL_AgentPion& pion );
 
     void Initialize( MIL_AgentPion& pion, const MT_Vector2D& vPosition );
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual short GetElevationAt( const geometry::Point2f& point ) const;
     //@}
 
 private:

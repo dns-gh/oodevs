@@ -20,7 +20,7 @@
 namespace flood
 {
     class FloodDrawer;
-    class FloodModel;
+    class FloodModel_ABC;
 }
 
 namespace kernel
@@ -89,7 +89,7 @@ private:
     const kernel::Positions& positions_;
     kernel::UnitedValue< int > depth_;
     kernel::UnitedValue< int > refDist_;
-    std::auto_ptr< flood::FloodModel > floodModel_;
+    std::auto_ptr< flood::FloodModel_ABC > floodModel_;
     std::auto_ptr< flood::FloodDrawer > floodDrawer_;
     //@}
 };

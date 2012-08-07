@@ -15,8 +15,7 @@
 
 namespace flood
 {
-class FloodModel;
-
+    class FloodModel_ABC;
 // =============================================================================
 /** @class  FloodDrawer
     @brief  FloodDrawer
@@ -28,14 +27,22 @@ class FloodDrawer
 public:
     //! @name Constructors/Destructor
     //@{
-             FloodDrawer( const FloodModel& model );
+             FloodDrawer();
+             FloodDrawer( const flood::FloodModel_ABC& model, const geometry::Point2f& point, int depth, int refDist );
     virtual ~FloodDrawer();
     //@}
 
     //! @name Operations
     //@{
     void Draw() const;
-    void ResetTexture();
+    void Reset( const flood::FloodModel_ABC& model, const geometry::Point2f& point, int depth, int refDist );
+    //@}
+
+    //! @name Accessors
+    //@{
+    const geometry::Point2f& GetCenter() const { return point_; }
+    int GetReferenceDistance() const { return refDist_; }
+    int GetDepth() const { return depth_; }
     //@}
 
 private:
@@ -47,14 +54,19 @@ private:
 
     //! @name Helpers
     //@{
-    void RenderTexture();
+    void RenderTexture( const std::vector< geometry::Polygon2f* >& deepAreas, const std::vector< geometry::Polygon2f* >& lowAreas );
+    void ResetTexture();
     void DrawPolygons( const std::vector< geometry::Polygon2f* >& polygons ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    const FloodModel& model_;
+    std::vector< geometry::Polygon2f* > deepAreas_;
+    std::vector< geometry::Polygon2f* > lowAreas_;
+    const geometry::Point2f point_;
+    int depth_;
+    int refDist_;
     mutable unsigned int callListId_;
     //@}
 };

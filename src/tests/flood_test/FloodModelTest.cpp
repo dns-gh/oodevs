@@ -56,10 +56,10 @@ BOOST_FIXTURE_TEST_CASE( FloodModel_GenerateSwimmingPool, Fixture )
     MOCK_EXPECT( elevationGetter_.GetElevationAt ).once().with( geometry::Point2f(    0.f, -100.f ) ).returns( deepElevation_ );
     MOCK_EXPECT( elevationGetter_.GetElevationAt ).once().with( geometry::Point2f(  100.f, -100.f ) ).returns( deepElevation_ );
 
-    flood_.GenerateFlood( center_, depth_, refDist_ );
+    flood::FloodModel_ABC::T_Polygons deepArea;
+    flood::FloodModel_ABC::T_Polygons lowArea;
 
-    const flood::FloodModel::T_Polygons& deepArea = flood_.GetDeepAreas();
-    const flood::FloodModel::T_Polygons& lowArea = flood_.GetLowAreas();
+    flood_.GenerateFlood( center_, deepArea, lowArea, depth_, refDist_ );
 
     BOOST_CHECK_EQUAL( 1u, deepArea.size() );
     BOOST_CHECK_EQUAL( 0u, lowArea.size() );
@@ -85,10 +85,10 @@ BOOST_FIXTURE_TEST_CASE( FloodModel_GenerateStrips, Fixture )
     MOCK_EXPECT( elevationGetter_.GetElevationAt ).once().with( geometry::Point2f(    0.f, -100.f ) ).returns( deepElevation_ );
     MOCK_EXPECT( elevationGetter_.GetElevationAt ).once().with( geometry::Point2f(  100.f, -100.f ) ).returns( deepElevation_ );
 
-    flood_.GenerateFlood( center_, depth_, refDist_ );
+    flood::FloodModel_ABC::T_Polygons deepArea;
+    flood::FloodModel_ABC::T_Polygons lowArea;
 
-    const flood::FloodModel::T_Polygons& deepArea = flood_.GetDeepAreas();
-    const flood::FloodModel::T_Polygons& lowArea = flood_.GetLowAreas();
+    flood_.GenerateFlood( center_, deepArea, lowArea, depth_, refDist_ );
 
     BOOST_CHECK_EQUAL( 1u, deepArea.size() );
     BOOST_CHECK_EQUAL( 1u, lowArea.size() );

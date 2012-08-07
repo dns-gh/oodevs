@@ -20,8 +20,9 @@ using namespace flood;
 // Created: JSR 2011-10-07
 // -----------------------------------------------------------------------------
 FloodProxy::FloodProxy( const kernel::DetectionMap& detection )
-    : detection_( detection )
-    , idManager_( 0 )
+    : detection_  ( detection )
+    , idManager_  ( 0 )
+    , pFloodModel_( new FloodModel( *this ) )
 {
     // NOTHING
 }
@@ -54,7 +55,7 @@ void FloodProxy::Draw( unsigned int floodId ) const
 {
     CIT_Floods it = floods_.find( floodId );
     if( it != floods_.end() )
-        it->second.second->Draw();
+        it->second->Draw();
 }
 
 // -----------------------------------------------------------------------------
@@ -75,15 +76,12 @@ unsigned int FloodProxy::GenerateFlood( unsigned int floodId, const geometry::Po
     CIT_Floods it = floods_.find( floodId );
     if( it == floods_.end() )
     {
-        FloodModel* floodModel = new FloodModel( *this );
-        FloodDrawer* floodDrawer = new FloodDrawer( *floodModel );
+        FloodDrawer* floodDrawer = new FloodDrawer( *pFloodModel_, point, depth, refDist );
         ++idManager_;
-        floods_[ idManager_ ].first.reset( floodModel );
-        floods_[ idManager_ ].second.reset( floodDrawer );
+        floods_[ idManager_ ].reset( floodDrawer );
         it = floods_.find( idManager_ );
     }
-    it->second.first->GenerateFlood( point, depth, refDist, true);
-    it->second.second->ResetTexture();
+    it->second->Reset( *pFloodModel_, point, depth, refDist );
     return it->first;
 }
 
@@ -95,8 +93,8 @@ unsigned int FloodProxy::FindFlood( const geometry::Point2f& point, int depth, i
 {
     for( CIT_Floods it = floods_.begin(); it != floods_.end(); ++it )
     {
-        const FloodModel& model = *it->second.first;
-        if( model.GetCenter() == point && model.GetDepth() == depth && model.GetReferenceDistance() == refDist )
+        const FloodDrawer& drawer = *it->second;
+        if( drawer.GetCenter() == point && drawer.GetDepth() == depth && drawer.GetReferenceDistance() == refDist )
             return it->first;
     }
     return 0;

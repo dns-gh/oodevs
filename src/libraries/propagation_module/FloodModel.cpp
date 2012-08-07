@@ -3,16 +3,21 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2010 MASA Group
+// Copyright (c) 2012 MASA Group
 //
 // *****************************************************************************
 
 #include "FloodModel.h"
-#include "ElevationGetter_ABC.h"
+#include "wrapper/Hook.h"
+#include "wrapper/Event.h"
+#include "wrapper/Node.h"
+#include <boost/foreach.hpp>
 #include <queue>
 
-using namespace flood;
 using namespace geometry;
+using namespace sword::propagation;
+
+DECLARE_HOOK( GetAltitude, double, ( double x, double y ) )
 
 const int FloodModel::cellWidth_ = 100;
 
@@ -20,8 +25,7 @@ const int FloodModel::cellWidth_ = 100;
 // Name: FloodModel constructor
 // Created: JSR 2010-12-10
 // -----------------------------------------------------------------------------
-FloodModel::FloodModel( const ElevationGetter_ABC& getter )
-    : getter_( getter )
+FloodModel::FloodModel()
 {
     // NOTHING
 }
@@ -36,25 +40,26 @@ FloodModel::~FloodModel()
 }
 
 // -----------------------------------------------------------------------------
-// Name: FloodModel::ComputePolygons
+// Name: FloodModel::Generate
 // Created: JSR 2010-12-08
 // -----------------------------------------------------------------------------
-void FloodModel::GenerateFlood( const Point2f& center, T_Polygons& deepAreas, T_Polygons& lowAreas, int depth, int refDist ) const
+void FloodModel::Generate( const geometry::Point2f& center, sword::wrapper::Event& event, int depth, int refDist ) const
 {
-    deepAreas.clear();
-    lowAreas.clear();
     unsigned short halfWidth = static_cast< unsigned short >( refDist / cellWidth_ );
     int width = 2 * halfWidth + 1;
     sCell** ppCells = new sCell*[ width ];
     for( int x = 0; x < width; ++x )
         ppCells[ x ] = new sCell[ width ];
     // propagate from center
-    Propagate( getter_.GetElevationAt( center ) + depth, halfWidth, center, ppCells, refDist );
+    Propagate( GET_HOOK( GetAltitude )( center.X(), center.Y() ) + depth, halfWidth, center, ppCells, refDist );
     // mark cells
     int nCurrentPolIndex = 0;
     int unmarkedX, unmarkedY;
     while( FindFirstUnmarkedCell( unmarkedX, unmarkedY, halfWidth, ppCells ) )
         MarkCells( unmarkedX, unmarkedY, ++nCurrentPolIndex, halfWidth, ppCells );
+
+    sword::wrapper::Node deepAreas = event[ "deep-areas" ];
+    sword::wrapper::Node lowAreas = event[ "low-areas" ];
 
     // polygons creation
     for( int nPol = 1; nPol <= nCurrentPolIndex; ++nPol )
@@ -64,15 +69,6 @@ void FloodModel::GenerateFlood( const Point2f& center, T_Polygons& deepAreas, T_
     for( unsigned int i = width; i; )
         delete [] ppCells[ --i ];
     delete [] ppCells;
-}
-
-// -----------------------------------------------------------------------------
-// Name: FloodModel::GenerateFlood
-// Created: JSR 2010-12-21
-// -----------------------------------------------------------------------------
-void FloodModel::GenerateFlood( const Point2d& center, T_Polygons& deepAreas, T_Polygons& lowAreas, int depth, int refDist ) const
-{
-    return GenerateFlood( Point2f( static_cast< float >( center.X() ), static_cast< float >( center.Y() ) ), deepAreas, lowAreas, depth, refDist );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,7 +87,7 @@ void FloodModel::Propagate( int floodElevation, unsigned short halfWidth, const 
         sCell& cell = ppCells[ x ][ y ];
         if( !cell.visited_ )
         {
-            short elevation = getter_.GetElevationAt( cellCenter );
+            short elevation = GET_HOOK( GetAltitude )( cellCenter.X(), cellCenter.Y() );
             cell.visited_ = true;
             if( cellCenter.SquareDistance( center ) < refDist * refDist && elevation <= floodElevation )
             {
@@ -165,11 +161,25 @@ void FloodModel::MarkCells( int xStart, int yStart, int nPolygonIndex, unsigned 
     }
 }
 
+namespace
+{
+    void Fill( sword::wrapper::Node& area, geometry::Polygon2f::T_Vertices& vertices )
+    {
+        sword::wrapper::Node parent = area.AddElement();
+        BOOST_FOREACH( geometry::Point2f point, vertices )
+        {
+            sword::wrapper::Node child = parent.AddElement();
+            child[ "x" ] = point.X();
+            child[ "y" ] = point.Y();
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: FloodModel::CreatePolygon
 // Created: JSR 2010-12-14
 // -----------------------------------------------------------------------------
-void FloodModel::CreatePolygon( int nPolygonIndex, const geometry::Point2f& center, unsigned short halfWidth, sCell** ppCells, T_Polygons& deepAreas, T_Polygons& lowAreas ) const
+void FloodModel::CreatePolygon( int nPolygonIndex, const geometry::Point2f& center, unsigned short halfWidth, sCell** ppCells, sword::wrapper::Node& deepAreas, sword::wrapper::Node& lowAreas ) const
 {
     static const float halfCellWidth = static_cast< float >( 0.5 * cellWidth_ );
     static const Vector2f vBottomLeft( -halfCellWidth, -halfCellWidth );
@@ -217,9 +227,9 @@ void FloodModel::CreatePolygon( int nPolygonIndex, const geometry::Point2f& cent
             }
         }
         if( ppCells[ cellX ][ cellY ].deep_ )
-            deepAreas.push_back( new Polygon2f( vertices ) );
+            Fill( deepAreas, vertices );
         else
-            lowAreas.push_back( new Polygon2f( vertices ) );
+            Fill( lowAreas, vertices );
     }
 }
 
@@ -264,14 +274,4 @@ int FloodModel::FindLastMarkedOnLine( int y, int index, unsigned short halfWidth
         if( ppCells[ x ][ y ].polIndex_ == index )
             return x;
     return -1;
-}
-
-// -----------------------------------------------------------------------------
-// Name: FloodModel::serialize
-// Created: LGY 2012-07-31
-// -----------------------------------------------------------------------------
-template< typename Archive >
-void FloodModel::serialize( Archive& archive, const unsigned int )
-{
-    archive & boost::serialization::base_object< FloodModel_ABC >( *this );
 }

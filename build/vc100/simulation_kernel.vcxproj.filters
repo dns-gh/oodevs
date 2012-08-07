@@ -2562,12 +2562,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\FloodModel.cpp">
       <Filter>Source Files\Adapters</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\FloodModelFactory.cpp">
-      <Filter>Source Files\Adapters</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\Legacy\FloodModelFactory.cpp">
-      <Filter>Source Files\Adapters\Legacy</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\DirectFirePionAttackEventListener.cpp">
       <Filter>Source Files\Adapters\EventListeners</Filter>
     </ClCompile>
@@ -5306,15 +5300,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\CoreLogger.h">
       <Filter>Source Files\Adapters</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\FloodModelFactory.h">
-      <Filter>Source Files\Adapters</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\Legacy\FloodModelFactory.h">
-      <Filter>Source Files\Adapters\Legacy</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\FloodModelFactory_ABC.h">
-      <Filter>Source Files\Adapters</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\ExternalPerceptionEventListener.h">
       <Filter>Source Files\Adapters\EventListeners</Filter>
     </ClInclude>
@@ -5416,6 +5401,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\UrbanExtension_ABC.h">
       <Filter>Source Files\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\FloodModelFactory_ABC.h">
+      <Filter>Source Files\Adapters</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

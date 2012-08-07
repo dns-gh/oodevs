@@ -9,14 +9,15 @@
 
 #include "simulation_kernel_pch.h"
 #include "Sink.h"
+#include "flood/FloodModel.h"
 #include "RolePion_Decision.h"
 #include "NullRoleAdapter.h"
-#include "FloodModelFactory.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
+#include "simulation_kernel/Meteo/PHY_MeteoDataManager.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include "Tools/MIL_Tools.h"
 
@@ -178,10 +179,19 @@ void Sink::Initialize( MIL_AgentPion& pion, const MT_Vector2D& vPosition )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Sink::CreateFloodModelFactory
-// Created: LGY 2012-06-20
+// Name: Sink::GetElevationAt
+// Created: LGY 2012-07-31
 // -----------------------------------------------------------------------------
-std::auto_ptr< sword::FloodModelFactory_ABC > Sink::CreateFloodModelFactory() const
+short Sink::GetElevationAt( const geometry::Point2f& point ) const
 {
-    return std::auto_ptr< sword::FloodModelFactory_ABC >( new FloodModelFactory() );
+    return static_cast< short >( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetAltitude( point.X(), point.Y() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Sink::CreateFloodModel
+// Created: LGY 2012-08-07
+// -----------------------------------------------------------------------------
+std::auto_ptr< flood::FloodModel_ABC > Sink::CreateFloodModel() const
+{
+    return std::auto_ptr< flood::FloodModel_ABC >( new flood::FloodModel( *this ) );
 }

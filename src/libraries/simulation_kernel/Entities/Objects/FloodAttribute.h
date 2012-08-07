@@ -26,11 +26,6 @@ namespace flood
 class MIL_CheckPointInArchive;
 class MIL_CheckPointOutArchive;
 
-namespace sword
-{
-    class FloodModelFactory_ABC;
-}
-
 // =============================================================================
 /** @class  FloodAttribute
     @brief  FloodAttribute
@@ -39,7 +34,6 @@ namespace sword
 // =============================================================================
 class FloodAttribute : public ObjectAttribute_ABC
                      , private UpdatableAttribute_ABC
-                     , public flood::ElevationGetter_ABC
 {
 public:
     typedef DEC_Knowledge_ObjectAttributeProxyPassThrough< FloodAttribute > T_KnowledgeProxyType;
@@ -48,8 +42,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              FloodAttribute();
-             FloodAttribute( xml::xistream& xis, const TER_Localisation& objectLocation, const sword::FloodModelFactory_ABC& floodFactory );
-             FloodAttribute( const sword::MissionParameter_Value& attributes, const TER_Localisation& objectLocation, const sword::FloodModelFactory_ABC& floodFactory );
+             FloodAttribute( xml::xistream& xis, const TER_Localisation& objectLocation );
+             FloodAttribute( const sword::MissionParameter_Value& attributes, const TER_Localisation& objectLocation );
     virtual ~FloodAttribute();
     //@}
 
@@ -72,11 +66,6 @@ public:
     virtual void Instanciate( DEC_Knowledge_Object& object ) const;
     //@}
 
-    //! @name From ElevationGetter_ABC
-    //@{
-    virtual short GetElevationAt( const geometry::Point2f& point ) const;
-    //@}
-
     //! @name ODB
     //@{
     virtual void WriteODB( xml::xostream& xos ) const;
@@ -90,7 +79,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void GenerateFlood( bool force = false );
+    virtual void GenerateFlood( const flood::FloodModel_ABC& model );
     virtual const TER_Localisation& GetLocalisation() const;
     virtual const std::vector< geometry::Polygon2f* >& GetDeepAreas() const;
     virtual const std::vector< geometry::Polygon2f* >& GetLowAreas() const;
@@ -105,11 +94,11 @@ private:
 private:
     //! @name Member data
     //@{
-    boost::shared_ptr< flood::FloodModel_ABC > pFloodModel_;
-    const sword::FloodModelFactory_ABC* pFloodFactory_;
     int depth_;
     int refDist_;
     TER_Localisation location_;
+    std::vector< geometry::Polygon2f* > deepAreas_;
+    std::vector< geometry::Polygon2f* > lowAreas_;
     //@}
 };
 

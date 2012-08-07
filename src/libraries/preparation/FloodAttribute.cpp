@@ -34,7 +34,7 @@ FloodAttribute::FloodAttribute( PropertiesDictionary& dico, const kernel::Detect
     , depth_      ( 0, Units::meters )
     , refDist_    ( 0, Units::meters )
     , floodModel_ ( new flood::FloodModel( *this ) )
-    , floodDrawer_( new flood::FloodDrawer( *floodModel_ ) )
+    , floodDrawer_( new flood::FloodDrawer() )
 {
     controllers_.Register( *this );
     CreateDictionary( dico );
@@ -51,13 +51,13 @@ FloodAttribute::FloodAttribute( xml::xistream& xis, const kernel::DetectionMap& 
     , depth_      ( 0, Units::meters )
     , refDist_    ( 0, Units::meters )
     , floodModel_ ( new flood::FloodModel( *this ) )
-    , floodDrawer_( new flood::FloodDrawer( *floodModel_ ) )
 {
     controllers_.Register( *this );
     xis >> xml::attribute( "depth", depth_.value_ )
         >> xml::attribute( "reference-distance", refDist_.value_ );
     CreateDictionary( dico );
-    floodModel_->GenerateFlood( positions_.GetPosition(), depth_.value_, refDist_.value_ );
+
+    floodDrawer_.reset( new flood::FloodDrawer( *floodModel_, positions.GetPosition(), depth_.value_, refDist_.value_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -108,10 +108,7 @@ void FloodAttribute::Draw( const geometry::Point2f& /*where*/, const Viewport_AB
 void FloodAttribute::NotifyUpdated( const FloodAttribute& attribute )
 {
     if( &attribute == this )
-    {
-        if( floodModel_->GenerateFlood( positions_.GetPosition(), depth_.value_, refDist_.value_ ) )
-            floodDrawer_->ResetTexture();
-    }
+        floodDrawer_->Reset( *floodModel_, positions_.GetPosition(), depth_.value_, refDist_.value_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -122,10 +119,7 @@ void FloodAttribute::NotifyUpdated( const AltitudeModified& attribute )
 {
     const geometry::Point2f& center = positions_.GetPosition();
     if( attribute.polygon_.Intersect( center, static_cast< float >( refDist_.value_ ) ) )
-    {
-        floodModel_->GenerateFlood( center, depth_.value_, refDist_.value_, true );
-        floodDrawer_->ResetTexture();
-    }
+        floodDrawer_->Reset( *floodModel_, center, depth_.value_, refDist_.value_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -149,8 +143,7 @@ void FloodAttribute::SetValues( int depth, int refDist )
     {
         depth_.value_ = depth;
         refDist_.value_ = refDist;
-        floodModel_->GenerateFlood( positions_.GetPosition(), depth_.value_, refDist_.value_ );
-        floodDrawer_->ResetTexture();
+        floodDrawer_->Reset( *floodModel_, positions_.GetPosition(), depth_.value_, refDist_.value_ );
     }
 }
 

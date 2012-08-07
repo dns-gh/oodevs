@@ -11,6 +11,7 @@
 #include "Sink.h"
 #include "Hook.h"
 #include "MovementHooks.h"
+#include "FloodModel.h"
 #include "FireHooks.h"
 #include "PerceptionHooks.h"
 #include "RoleAdapter.h"
@@ -31,7 +32,6 @@
 #include "MovementCallbackEventListener.h"
 #include "MovementEventListener.h"
 #include "AlatMonitoringEventListener.h"
-#include "FloodModelFactory.h"
 #include "Entities/Agents/Roles/Deployment/PHY_RoleInterface_Deployment.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
@@ -50,6 +50,7 @@
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeAgent.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KS_Perception.h"
+#include "Meteo/PHY_MeteoDataManager.h"
 #include "Tools/MIL_Tools.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include "tools/Loader_ABC.h"
@@ -405,10 +406,19 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
 }
 
 // -----------------------------------------------------------------------------
-// Name: Sink::CreateFloodModelFactory
-// Created: LGY 2012-06-20
+// Name: Sink::GetElevationAt
+// Created: LGY 2012-07-31
 // -----------------------------------------------------------------------------
-std::auto_ptr< FloodModelFactory_ABC > Sink::CreateFloodModelFactory() const
+short Sink::GetElevationAt( const geometry::Point2f& /*point*/ ) const
 {
-    return std::auto_ptr< sword::FloodModelFactory_ABC >( new FloodModelFactory() );
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Sink::CreateFloodModel
+// Created: LGY 2012-08-07
+// -----------------------------------------------------------------------------
+std::auto_ptr< flood::FloodModel_ABC > Sink::CreateFloodModel() const
+{
+    return std::auto_ptr< flood::FloodModel_ABC >( new sword::FloodModel( *facade_ ) );
 }

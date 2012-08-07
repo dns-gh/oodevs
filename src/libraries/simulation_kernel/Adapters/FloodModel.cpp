@@ -9,6 +9,10 @@
 
 #include "simulation_kernel_pch.h"
 #include "FloodModel.h"
+#include <core/EventListener_ABC.h>
+#include <core/Facade.h>
+#include <core/Model.h>
+#include <core/MakeModel.h>
 
 using namespace sword;
 
@@ -16,9 +20,11 @@ using namespace sword;
 // Name: FloodModel constructor
 // Created: LGY 2012-06-13
 // -----------------------------------------------------------------------------
-FloodModel::FloodModel()
+FloodModel::FloodModel( core::Facade& facade )
+    : facade_    ( facade )
+    , identifier_( 0 )
 {
-    // NOTHING
+    facade.Register( "flood event", *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -32,29 +38,69 @@ FloodModel::~FloodModel()
 
 // -----------------------------------------------------------------------------
 // Name: FloodModel::GenerateFlood
-// Created: LGY 2012-06-18
+// Created: LGY 2012-07-30
 // -----------------------------------------------------------------------------
-bool FloodModel::GenerateFlood( const geometry::Point2d& /*center*/, int /*depth*/, int /*refDist*/, bool /*force*/ )
+void FloodModel::GenerateFlood( const geometry::Point2d& center, T_Polygons& deepAreas, T_Polygons& lowAreas, int depth, int refDist ) const
 {
-    return true;
+    GenerateFlood( geometry::Point2f( static_cast< float >( center.X() ), static_cast< float >( center.Y() ) ), deepAreas, lowAreas, depth, refDist );
 }
 
 // -----------------------------------------------------------------------------
-// Name: FloodModel::GetDeepAreas
-// Created: LGY 2012-06-18
+// Name: FloodModel::GenerateFlood
+// Created: LGY 2012-07-30
 // -----------------------------------------------------------------------------
-const std::vector< geometry::Polygon2f* >& FloodModel::GetDeepAreas() const
+void FloodModel::GenerateFlood( const geometry::Point2f& center, T_Polygons& deepAreas, T_Polygons& lowAreas, int depth, int refDist ) const
 {
-    static const std::vector< geometry::Polygon2f* > v;
-    return v;
+    T_FloodEvent& event = floods_[ ++identifier_ ];
+    event.deepAreas_ = &deepAreas;
+    event.lowAreas_ = &lowAreas;
+    facade_.PostCommand( "flood command", core::MakeModel( "center", core::MakeModel( "x", center.X() )
+                                                                                    ( "y", center.Y() ) )
+                                                         ( "depth", depth )
+                                                         ( "radius", refDist )
+                                                         ( "identifier", identifier_ ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: FloodModel::GetLowAreas
-// Created: LGY 2012-06-18
+// Name: FloodModel::Notify
+// Created: LGY 2012-07-31
 // -----------------------------------------------------------------------------
-const std::vector< geometry::Polygon2f* >& FloodModel::GetLowAreas() const
+void FloodModel::Notify( const core::Model& event )
 {
-    static const std::vector< geometry::Polygon2f* > v;
-    return v;
+    unsigned int identifier = event[ "identifier" ];
+    const T_FloodEvent& flood = floods_[ identifier ];
+
+    Fill( flood.deepAreas_, event[ "deep-areas" ] );
+    Fill( flood.lowAreas_, event[ "low-areas" ] );
+
+    floods_.erase( identifier );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FloodModel::Fill
+// Created: LGY 2012-08-01
+// -----------------------------------------------------------------------------
+void FloodModel::Fill( T_Polygons* polygons, const core::Model& areas )
+{
+    for( std::size_t i = 0; i < areas.GetSize(); ++i )
+    {
+        polygons->push_back( new geometry::Polygon2f() );
+        const core::Model& area = areas.GetElement( i );
+        for( std::size_t j = 0; j < area.GetSize(); ++j )
+        {
+            const core::Model& point = area.GetElement( j );
+            polygons->back()->Add( geometry::Point2f( point[ "x" ], point[ "y" ] ) );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: FloodModel::serialize
+// Created: LGY 2012-08-01
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void FloodModel::serialize( Archive& archile, const unsigned int )
+{
+    archive & boost::serialization::base_object< FloodModel_ABC >( *this )
+            & identifier_;
 }

@@ -11,12 +11,12 @@
 #define SWORD_SINK_ABC_H
 
 #include "AgentFactory_ABC.h"
+#include "FloodModelFactory_ABC.h"
+#include "flood/ElevationGetter_ABC.h"
 #include <boost/serialization/export.hpp>
 
 namespace sword
 {
-    class FloodModelFactory_ABC;
-
 // =============================================================================
 /** @class  Sink_ABC
     @brief  Sink base class
@@ -24,6 +24,8 @@ namespace sword
 // Created: SBO 2011-06-06
 // =============================================================================
 class Sink_ABC : public AgentFactory_ABC
+               , public FloodModelFactory_ABC
+               , public flood::ElevationGetter_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -37,8 +39,6 @@ public:
     virtual void ExecuteCommands() = 0;
     virtual void ApplyEffects() = 0;
     virtual void UpdateModel( unsigned int tick, int duration ) = 0;
-
-    virtual std::auto_ptr< FloodModelFactory_ABC > CreateFloodModelFactory() const = 0;
     //@}
 
     //! @name CheckPoints
@@ -46,7 +46,9 @@ public:
     template< typename Archive >
     void serialize( Archive& archive, const unsigned int )
     {
-        archive & boost::serialization::base_object< AgentFactory_ABC >( *this );
+        archive & boost::serialization::base_object< AgentFactory_ABC >( *this )
+                & boost::serialization::base_object< FloodModelFactory_ABC >( *this )
+                & boost::serialization::base_object< flood::ElevationGetter_ABC >( *this );
     }
     //@}
 };

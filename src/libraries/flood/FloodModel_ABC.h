@@ -31,11 +31,25 @@ public:
     virtual ~FloodModel_ABC() {}
     //@}
 
+   //! @name Types
+   //@{
+   typedef std::vector< geometry::Polygon2f* > T_Polygons;
+   typedef T_Polygons::const_iterator        CIT_Polygons;
+   //@}
+
     //! @name Operations
     //@{
-    virtual bool GenerateFlood( const geometry::Point2d& center, int depth, int refDist, bool force = false ) = 0;
-    virtual const std::vector< geometry::Polygon2f* >& GetDeepAreas() const = 0;
-    virtual const std::vector< geometry::Polygon2f* >& GetLowAreas() const = 0;
+    virtual void GenerateFlood( const geometry::Point2d& center, T_Polygons& deepAreas, T_Polygons& lowAreas, int depth, int refDist ) const = 0;
+    virtual void GenerateFlood( const geometry::Point2f& center, T_Polygons& deepAreas, T_Polygons& lowAreas, int depth, int refDist ) const = 0;
+    //@}
+
+    //! @name CheckPoints
+    //@{
+    template< typename Archive >
+    void serialize( Archive&, const unsigned int )
+    {
+        // NOTHING
+    }
     //@}
 };
 

@@ -11,6 +11,13 @@
 #define SWORD_FLOOD_MODEL_H
 
 #include "flood/FloodModel_ABC.h"
+#include <core/EventListener_ABC.h>
+#include <map>
+
+namespace core
+{
+    class Facade;
+}
 
 namespace sword
 {
@@ -21,19 +28,55 @@ namespace sword
 // Created: LGY 2012-06-13
 // =============================================================================
 class FloodModel : public flood::FloodModel_ABC
+                 , private core::EventListener_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             FloodModel();
+    explicit FloodModel( core::Facade& facade );
     virtual ~FloodModel();
     //@}
 
     //! @name Operations
     //@{
-    virtual bool GenerateFlood( const geometry::Point2d& center, int depth, int refDist, bool force = false );
-    virtual const std::vector< geometry::Polygon2f* >& GetDeepAreas() const;
-    virtual const std::vector< geometry::Polygon2f* >& GetLowAreas() const;
+    virtual void GenerateFlood( const geometry::Point2d& center, T_Polygons& deepAreas, T_Polygons& lowAreas, int depth, int refDis ) const;
+    virtual void GenerateFlood( const geometry::Point2f& center, T_Polygons& deepAreas, T_Polygons& lowAreas, int depth, int refDist ) const;
+    //@}
+
+    //! @name CheckPoints
+    //@{
+    template< typename Archive >
+    void serialize( Archive&, const unsigned int );
+    //@}
+
+private:
+    //! @name Operations
+    //@{
+    virtual void Notify( const core::Model& event );
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    struct T_FloodEvent
+    {
+        T_Polygons* deepAreas_;
+        T_Polygons* lowAreas_;
+    };
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void Fill( T_Polygons* polygons, const core::Model& areas );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    core::Facade& facade_;
+    mutable std::size_t identifier_;
+    mutable std::map< std::size_t, T_FloodEvent > floods_;
     //@}
 };
 

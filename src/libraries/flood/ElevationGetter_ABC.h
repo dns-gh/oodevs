@@ -34,6 +34,15 @@ public:
     //@{
     virtual short GetElevationAt( const geometry::Point2f& point ) const = 0;
     //@}
+
+    //! @name CheckPoints
+    //@{
+    template< typename Archive >
+    void serialize( Archive&, const unsigned int )
+    {
+        // NOTHING
+    }
+    //@}
 };
 
 }

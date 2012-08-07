@@ -22,7 +22,11 @@ namespace sword
     class MagicAction;
     class ObjectMagicAction;
     enum ObjectMagicActionAck_ErrorCode;
-    class FloodModelFactory_ABC;
+}
+
+namespace flood
+{
+    class FloodModel_ABC;
 }
 
 namespace xml
@@ -47,7 +51,7 @@ class MIL_ObjectManager : private boost::noncopyable
 {
 public:
              MIL_ObjectManager();
-    explicit MIL_ObjectManager( sword::FloodModelFactory_ABC* floodFactory );
+    explicit MIL_ObjectManager( const flood::FloodModel_ABC& floodModel );
     virtual ~MIL_ObjectManager();
 
     //! @name CheckPoints
@@ -125,7 +129,7 @@ private:
 private:
     //! @name
     //@{
-    sword::FloodModelFactory_ABC* floodFactory_;
+    const flood::FloodModel_ABC* pFloodModel_;
     T_ObjectMap objects_;
     T_ObjectSet universalObjects_;
     T_UrbanObjectMap urbanObjects_;

@@ -112,10 +112,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\propagation_module\FloodCommand.cpp" />
+    <ClCompile Include="..\..\src\libraries\propagation_module\FloodModel.cpp" />
     <ClCompile Include="..\..\src\libraries\propagation_module\ModuleFacade.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\propagation_module\FloodCommand.h" />
+    <ClInclude Include="..\..\src\libraries\propagation_module\FloodModel.h" />
     <ClInclude Include="..\..\src\libraries\propagation_module\ModuleFacade.h" />
   </ItemGroup>
   <ItemGroup>

@@ -14,7 +14,6 @@
 #include "protocol/Protocol.h"
 #include "reports/ReportFactory.h"
 #include "reports/Report.h"
-#include "reports/RcEntityResolver_ABC.h"
 #include <boost/bind.hpp>
 
 using namespace kernel;

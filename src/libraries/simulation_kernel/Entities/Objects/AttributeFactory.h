@@ -15,7 +15,6 @@
 namespace sword
 {
     class MissionParameter;
-    class FloodModelFactory_ABC;
 }
 
 class Object;
@@ -37,8 +36,8 @@ public:
 
     //! @name Operations
     //@{
-    void Create( Object& object, const std::string& attribute, xml::xistream& xis, const sword::FloodModelFactory_ABC& floodFactory ) const;
-    void Create( Object& object, const sword::MissionParameter& parameter, const sword::FloodModelFactory_ABC& floodFactory ) const;
+    void Create( Object& object, const std::string& attribute, xml::xistream& xis ) const;
+    void Create( Object& object, const sword::MissionParameter& parameter ) const;
 
     void Initialize( Object& object ) const;
     //@}

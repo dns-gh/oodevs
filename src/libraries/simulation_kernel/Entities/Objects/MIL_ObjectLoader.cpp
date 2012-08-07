@@ -147,7 +147,7 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const std::string& name, const s
 // Name: MIL_ObjectLoader::ReadObject
 // Created: JCR 2008-05-23
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectLoader::CreateObject( xml::xistream& xis, MIL_Army_ABC* army, const sword::FloodModelFactory_ABC& floodFactory ) const
+MIL_Object_ABC* MIL_ObjectLoader::CreateObject( xml::xistream& xis, MIL_Army_ABC* army ) const
 {
     const std::string type( xis.attribute< std::string >( "type" ) );
 
@@ -159,7 +159,7 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( xml::xistream& xis, MIL_Army_ABC
     // $$$$ SBO 2009-06-08: Check geometry constraint
     Object* object = new Object( xis, *it->second, army, &location );
     xis >> xml::optional >> xml::start( "attributes" )
-            >> xml::list( *this, &MIL_ObjectLoader::ReadAttributes, *object, floodFactory )
+            >> xml::list( *this, &MIL_ObjectLoader::ReadAttributes, *object )
         >> xml::end;
     object->Finalize();
     return object;
@@ -169,7 +169,7 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( xml::xistream& xis, MIL_Army_ABC
 // Name: MIL_ObjectLoader::CreateObject
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const sword::MissionParameters& message, MIL_Army_ABC* army, sword::ObjectMagicActionAck_ErrorCode& value, const sword::FloodModelFactory_ABC& floodFactory ) const
+MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const sword::MissionParameters& message, MIL_Army_ABC* army, sword::ObjectMagicActionAck_ErrorCode& value ) const
 {
     CIT_Prototypes it = prototypes_.find( message.elem( 0 ).value( 0 ).acharstr() );
     if( it == prototypes_.end() )
@@ -188,7 +188,7 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const sword::MissionParameters& 
         if( message.elem_size() < 5 )
             attributes_->Initialize( *pObject );
         else
-            attributes_->Create( *pObject, message.elem( 4 ), floodFactory );
+            attributes_->Create( *pObject, message.elem( 4 ) );
     }
     catch( std::runtime_error& )
     {
@@ -235,9 +235,9 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateUrbanObject( const MIL_UrbanObject_ABC& 
 // Name: MIL_ObjectLoader::ReadAttributes
 // Created: JCR 2008-05-26
 // -----------------------------------------------------------------------------
-void MIL_ObjectLoader::ReadAttributes( const std::string& attribute, xml::xistream& xis, Object& object, const sword::FloodModelFactory_ABC& floodFactory ) const
+void MIL_ObjectLoader::ReadAttributes( const std::string& attribute, xml::xistream& xis, Object& object ) const
 {
-    attributes_->Create( object, attribute, xis, floodFactory );
+    attributes_->Create( object, attribute, xis );
 }
 
 // -----------------------------------------------------------------------------

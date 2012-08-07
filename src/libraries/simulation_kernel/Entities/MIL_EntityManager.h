@@ -17,6 +17,7 @@
 #include "MIL_EntityManager_ABC.h"
 #include "MIL_EntityManagerStaticMethods.h"
 #include "tools/Resolver.h"
+#include "flood/ElevationGetter_ABC.h"
 
 namespace sword
 {
@@ -36,7 +37,6 @@ namespace sword
     class BurningCellRequest;
     class ParentEntity;
     class Sink_ABC;
-    class FloodModelFactory_ABC;
 }
 
 namespace xml
@@ -45,6 +45,10 @@ namespace xml
     class xistream;
 }
 
+namespace flood
+{
+    class FloodModel_ABC;
+}
 class ArmyFactory_ABC;
 class AgentFactory_ABC;
 class AutomateFactory_ABC;
@@ -301,7 +305,7 @@ private:
     std::auto_ptr< InhabitantFactory_ABC >        inhabitantFactory_;      // have to be declared before armyFactory
     std::auto_ptr< AgentFactory_ABC >             agentFactory_;           // have to be declared before armyFactory
     std::auto_ptr< sword::Sink_ABC >              sink_;
-    std::auto_ptr< sword::FloodModelFactory_ABC > pFloodModelFactory_;
+    std::auto_ptr< flood::FloodModel_ABC >        pFloodModel_;
     std::auto_ptr< MIL_ObjectManager >            pObjectManager_;
     std::auto_ptr< AutomateFactory_ABC >          automateFactory_;        // have to be declared before armyFactory & formation factory
     std::auto_ptr< FormationFactory_ABC >         formationFactory_;       // have to be declared before armyFactory

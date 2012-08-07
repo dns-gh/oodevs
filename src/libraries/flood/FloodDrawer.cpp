@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "FloodDrawer.h"
-#include "FloodModel.h"
+#include "FloodModel_ABC.h"
 #include <windows.h>
 #include <gl/gl.h>
 
@@ -17,13 +17,25 @@ using namespace geometry;
 
 // -----------------------------------------------------------------------------
 // Name: FloodDrawer constructor
-// Created: JSR 2010-12-21
+// Created: LGY 2012-06-29
 // -----------------------------------------------------------------------------
-FloodDrawer::FloodDrawer( const FloodModel& model )
-    : model_     ( model )
-    , callListId_( 0 )
+FloodDrawer::FloodDrawer()
+    : callListId_( 0 )
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: FloodDrawer constructor
+// Created: JSR 2010-12-21
+// -----------------------------------------------------------------------------
+FloodDrawer::FloodDrawer( const flood::FloodModel_ABC& model, const geometry::Point2f& point, int depth, int refDist )
+    : callListId_( 0 )
+    , point_     ( point )
+    , depth_     ( depth )
+    , refDist_   ( refDist )
+{
+    model.GenerateFlood( point, deepAreas_, lowAreas_, depth, refDist );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,7 +54,7 @@ FloodDrawer::~FloodDrawer()
 void FloodDrawer::Draw() const
 {
     if( callListId_ == 0 )
-        const_cast< FloodDrawer* >( this )->RenderTexture();
+        const_cast< FloodDrawer* >( this )->RenderTexture( deepAreas_, lowAreas_ );
 
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_STENCIL_BUFFER_BIT | GL_LIGHTING_BIT );
 
@@ -53,11 +65,23 @@ void FloodDrawer::Draw() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: FloodDrawer::RenderTexture
+// Created: LGY 2012-06-29
+// -----------------------------------------------------------------------------
+void FloodDrawer::Reset( const flood::FloodModel_ABC& model, const geometry::Point2f& point, int depth, int refDist )
+{
+    ResetTexture();
+    model.GenerateFlood( point, deepAreas_, lowAreas_, depth, refDist );
+}
+
+// -----------------------------------------------------------------------------
 // Name: FloodDrawer::ResetTexture
 // Created: JSR 2010-12-21
 // -----------------------------------------------------------------------------
 void FloodDrawer::ResetTexture()
 {
+    deepAreas_.clear();
+    lowAreas_.clear();
     if( callListId_ )
     {
         glDeleteLists( callListId_, 1 );
@@ -69,7 +93,7 @@ void FloodDrawer::ResetTexture()
 // Name: FloodDrawer::RenderTexture
 // Created: JSR 2010-12-21
 // -----------------------------------------------------------------------------
-void FloodDrawer::RenderTexture()
+void FloodDrawer::RenderTexture( const std::vector< geometry::Polygon2f* >& deepAreas, const std::vector< geometry::Polygon2f* >& lowAreas )
 {
     callListId_ = glGenLists( 1 );
     glNewList( callListId_, GL_COMPILE );
@@ -77,9 +101,9 @@ void FloodDrawer::RenderTexture()
     glDisable(GL_LIGHTING);
     glEnable( GL_STENCIL_TEST );
     glColor4f( 0, 0, 1.f, 0.5f );
-    DrawPolygons( model_.GetDeepAreas() );
+    DrawPolygons( deepAreas );
     glColor4f( 0.3f, 0.3f, 1.f, 0.5f );
-    DrawPolygons( model_.GetLowAreas() );
+    DrawPolygons( lowAreas );
     glDisable( GL_STENCIL_TEST );
     glDisableClientState( GL_VERTEX_ARRAY );
     glEndList();
@@ -90,9 +114,9 @@ void FloodDrawer::RenderTexture()
 // Name: FloodDrawer::DrawPolygons
 // Created: JSR 2010-12-21
 // -----------------------------------------------------------------------------
-void FloodDrawer::DrawPolygons( const FloodModel::T_Polygons& polygons ) const
+void FloodDrawer::DrawPolygons( const std::vector< geometry::Polygon2f* >& polygons ) const
 {
-    for( FloodModel::CIT_Polygons it = polygons.begin(); it != polygons.end(); ++it )
+    for( std::vector< geometry::Polygon2f* >::const_iterator it = polygons.begin(); it != polygons.end(); ++it )
         if( !( *it )->Vertices().empty() )
         {
             GLsizei size = static_cast< GLsizei >( ( *it )->Vertices().size() );

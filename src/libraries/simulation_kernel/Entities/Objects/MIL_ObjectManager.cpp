@@ -20,7 +20,6 @@
 #include "MIL_Object_ABC.h"
 #include "MIL_ObjectManipulator_ABC.h"
 #include "UrbanObjectWrapper.h"
-#include "Adapters/FloodModelFactory_ABC.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
@@ -41,8 +40,8 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_ObjectManager )
 // Created: LGY 2012-06-13
 // -----------------------------------------------------------------------------
 MIL_ObjectManager::MIL_ObjectManager()
-    : floodFactory_( 0 )
-    , builder_     ( 0 )
+    : pFloodModel_( 0 )
+    , builder_    ( 0 )
 {
     // NOTHING
 }
@@ -51,9 +50,9 @@ MIL_ObjectManager::MIL_ObjectManager()
 // Name: MIL_ObjectManager constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-MIL_ObjectManager::MIL_ObjectManager( sword::FloodModelFactory_ABC* floodFactory )
-    : floodFactory_( floodFactory )
-    , builder_     ( new MIL_ObjectFactory( *floodFactory ) )
+MIL_ObjectManager::MIL_ObjectManager( const flood::FloodModel_ABC& floodModel )
+    : pFloodModel_( &floodModel )
+    , builder_    ( new MIL_ObjectFactory() )
 {
     // NOTHING
 }
@@ -74,9 +73,9 @@ MIL_ObjectManager::~MIL_ObjectManager()
 // -----------------------------------------------------------------------------
 void MIL_ObjectManager::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> floodFactory_
-         >> objects_;
-    builder_.reset( new MIL_ObjectFactory( *floodFactory_ ) );
+    //todo
+    file >> objects_;
+    builder_.reset( new MIL_ObjectFactory() );
     for( CIT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
     {
         if( UrbanObjectWrapper* wrapper = dynamic_cast< UrbanObjectWrapper* >( it->second ) )
@@ -97,8 +96,7 @@ void MIL_ObjectManager::load( MIL_CheckPointInArchive& file, const unsigned int 
 // -----------------------------------------------------------------------------
 void MIL_ObjectManager::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << floodFactory_
-         << objects_;
+    file << objects_;
 }
 
 // -----------------------------------------------------------------------------
@@ -139,8 +137,8 @@ void MIL_ObjectManager::UpdateStates()
                     altitude->ResetAltitude( localisation );
                     for( IT_ObjectMap obj = objects_.begin(); obj != objects_.end(); ++obj )
                         if( FloodAttribute* flood = obj->second->RetrieveAttribute< FloodAttribute >() )
-                            if( localisation.IsIntersecting( flood->GetLocalisation() ) )
-                                flood->GenerateFlood( true );
+                            if( pFloodModel_ && localisation.IsIntersecting( flood->GetLocalisation() ) )
+                                flood->GenerateFlood( *pFloodModel_ );
                 }
                 object.SendDestruction();
                 if( UrbanObjectWrapper* wrapper = dynamic_cast< UrbanObjectWrapper* >( &object ) )
@@ -266,8 +264,8 @@ sword::ObjectMagicActionAck_ErrorCode MIL_ObjectManager::CreateObject( const swo
         const TER_Localisation& localisation = pObject->GetLocalisation();
         for( IT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
             if( FloodAttribute* flood = it->second->RetrieveAttribute< FloodAttribute >() )
-                if( localisation.IsIntersecting( flood->GetLocalisation() ) )
-                    flood->GenerateFlood( true );
+                if( pFloodModel_ && localisation.IsIntersecting( flood->GetLocalisation() ) )
+                    flood->GenerateFlood( *pFloodModel_ );
     }
     RegisterObject( pObject );
     return errorCode;
@@ -406,7 +404,8 @@ void MIL_ObjectManager::FinalizeObjects()
     }
     for( IT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
         if( FloodAttribute* flood = it->second->RetrieveAttribute< FloodAttribute >() )
-            flood->GenerateFlood();
+            if( pFloodModel_ )
+                flood->GenerateFlood( *pFloodModel_ );
 }
 
 // -----------------------------------------------------------------------------
