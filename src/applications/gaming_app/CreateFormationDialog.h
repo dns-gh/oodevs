@@ -12,6 +12,7 @@
 
 #include "tools/Observer_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
+#include "ENT/ENT_Enums_Gen.h"
 
 namespace actions
 {
@@ -28,8 +29,6 @@ namespace kernel
     class Team_ABC;
     class Time_ABC;
 }
-
-enum E_NatureLevel;
 
 // =============================================================================
 /** @class  CreateFormationDialog

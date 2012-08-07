@@ -11,6 +11,7 @@
 #define __FormationFactory_ABC_h_
 
 #include <boost/noncopyable.hpp>
+#include "ENT/ENT_Tr_Gen.h"
 
 namespace kernel
 {
@@ -23,8 +24,6 @@ namespace xml
 {
     class xistream;
 }
-
-enum E_NatureLevel;
 
 // =============================================================================
 /** @class  FormationFactory_ABC

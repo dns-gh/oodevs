@@ -12,6 +12,7 @@
 
 #include "Formation_ABC.h"
 #include "protocol/SimulationSenders.h"
+#include "ENT/ENT_Tr_Gen.h"
 
 namespace sword
 {
@@ -20,8 +21,6 @@ namespace sword
     class FormationCreation;
     class FormationUpdate;
 }
-
-enum E_NatureLevel;
 
 namespace dispatcher
 {

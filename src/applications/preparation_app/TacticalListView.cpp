@@ -40,7 +40,6 @@
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/CommandPostAttributes_ABC.h"
 #include "clients_kernel/Positions.h"
-#include "ENT/ENT_Tr_Gen.h"
 #include "icons.h"
 
 using namespace gui;

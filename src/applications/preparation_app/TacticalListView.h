@@ -13,6 +13,7 @@
 #include "clients_gui/ChangeSuperior_ABC.h"
 #include "clients_gui/HierarchyListView.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "ENT/ENT_Tr_Gen.h"
 
 namespace gui
 {
@@ -33,7 +34,6 @@ namespace kernel
 class AutomatDecisions;
 class ModelBuilder;
 class Model;
-enum E_NatureLevel;
 
 // =============================================================================
 /** @class  TacticalListView

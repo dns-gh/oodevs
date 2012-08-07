@@ -11,8 +11,7 @@
 #define __Formation_ABC_h_
 
 #include "Entity_ABC.h"
-
-enum E_NatureLevel;
+#include "ENT/ENT_Enums_Gen.h"
 
 namespace kernel
 {

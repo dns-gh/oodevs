@@ -14,6 +14,7 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
+#include "ENT/ENT_Enums_Gen.h"
 
 namespace kernel
 {
@@ -27,7 +28,6 @@ namespace xml
     class xistream;
 }
 
-enum E_NatureLevel;
 class IdManager;
 
 // =============================================================================

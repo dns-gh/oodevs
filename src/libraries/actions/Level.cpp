@@ -11,7 +11,6 @@
 #include "Level.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "protocol/Protocol.h"
-#include "ENT/ENT_Tr_Gen.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace actions;

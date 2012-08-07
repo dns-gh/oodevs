@@ -26,7 +26,6 @@
 #include "LogisticLevelAttritube.h"
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/Tools.h"
-#include "ENT/ENT_Tr_Gen.h"
 #include <xeumeuleu/xml.hpp>
 #include <QtGui/qmessagebox.h>
 

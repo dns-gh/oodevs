@@ -13,13 +13,12 @@
 #include "Parameter.h"
 #include "tools/Resolver_ABC.h"
 #include <boost/function.hpp>
+#include "ENT/ENT_Tr_Gen.h"
 
 namespace sword
 {
     enum EnumNatureLevel;
 }
-
-enum E_NatureLevel;
 
 namespace actions {
     namespace parameters {

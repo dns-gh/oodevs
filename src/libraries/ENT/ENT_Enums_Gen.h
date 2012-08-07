@@ -63,7 +63,7 @@ enum E_NatureLevel
     eNatureLevel_xxx   = 11,
     eNatureLevel_xxxx  = 12,
     eNatureLevel_xxxxx = 13,
-    eNbrNatureLevel    = 14,
+    eNbrNatureLevel    = 14
 };
 
 enum E_Diplomacy

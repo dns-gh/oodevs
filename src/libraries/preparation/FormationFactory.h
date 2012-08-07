@@ -11,6 +11,7 @@
 #define __FormationFactory_h_
 
 #include "FormationFactory_ABC.h"
+#include "ENT/ENT_Tr_Gen.h"
 
 namespace kernel
 {
@@ -20,7 +21,6 @@ namespace kernel
 
 class IdManager;
 class StaticModel;
-enum E_NatureLevel;
 
 // =============================================================================
 /** @class  FormationFactory

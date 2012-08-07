@@ -13,6 +13,7 @@
 #include "tools/Resolver.h"
 #include "tools/ElementObserver_ABC.h"
 #include <boost/noncopyable.hpp>
+#include "ENT/ENT_Tr_Gen.h"
 
 namespace kernel
 {
@@ -32,7 +33,6 @@ namespace xml
 class FormationFactory_ABC;
 class Model;
 class StaticModel;
-enum E_NatureLevel;
 
 // =============================================================================
 /** @class  FormationModel
