@@ -511,7 +511,7 @@ void ADN_Missions_Data::Mission::ReadMissionSheet( E_EntityType type )
     missionSheetPath_ = fileName;
     if( bfs::is_directory( path ) && bfs::is_regular_file( fileName ) )
     {
-        std::ifstream file( fileName );
+        std::ifstream file( fileName.c_str() );
         std::stringstream buffer; 
         buffer << file.rdbuf();
         missionSheetContent_ = std::string( buffer.str() );
@@ -551,7 +551,7 @@ void ADN_Missions_Data::Mission::WriteMissionSheet( E_EntityType type )
         FILE* file = std::fopen( fileName.c_str(), "w" );
         std::fclose( file );
     }
-    std::fstream fichier( fileName );
+    std::fstream fichier( fileName.c_str() );
     fichier.clear();
     fichier << missionSheetContent_.GetData();
     fichier.close();
@@ -710,7 +710,7 @@ void ADN_Missions_Data::FragOrder::ReadMissionSheet()
     missionSheetPath_ = fileName;
     if( bfs::is_directory( path ) && bfs::is_regular_file( fileName ) )
     {
-        std::ifstream file( fileName );
+        std::ifstream file( fileName.c_str() );
         std::stringstream buffer; 
         buffer << file.rdbuf();
         missionSheetContent_ = std::string( buffer.str() );
@@ -751,7 +751,7 @@ void ADN_Missions_Data::FragOrder::WriteMissionSheet()
         std::fclose( file );
     }
 
-    std::fstream fichier( fileName );
+    std::fstream fichier( fileName.c_str() );
     fichier.clear();
     fichier << missionSheetContent_.GetData();
     fichier.close();
