@@ -75,7 +75,7 @@ private:
     void OnReceive( const std::string& link, const sword::ClientToReplay& asnMsg );
     void ChangeTimeFactor( unsigned int factor );
     void Pause();
-    void Resume();
+    void Resume( int ticks );
     void SkipToFrame( unsigned int frame );
     void RequestTimeTable( const sword::TimeTableRequest_TimeRange& msg );
     void SendReplayInfo( dispatcher::ClientPublisher_ABC& client );
@@ -91,6 +91,7 @@ private:
     unsigned int tickNumber_;
     bool running_;
     int skipToFrame_;
+    int nextPause_;
     MT_TimerManager manager_;
     std::auto_ptr< ReplayExtensionFactory > factory_;
     //@}
