@@ -608,7 +608,8 @@ void Controller::DeleteSession( Reply_ABC& rpy, const Request_ABC& request )
 void Controller::StartSession( Reply_ABC& rpy, const Request_ABC& request )
 {
     const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
-    WriteHttpReply( rpy, agent_.StartSession( node, GetId( request ) ) );
+    const std::string checkpoint = GetParameter( "checkpoint", request, std::string() );
+    WriteHttpReply( rpy, agent_.StartSession( node, GetId( request ), checkpoint ) );
 }
 
 // -----------------------------------------------------------------------------

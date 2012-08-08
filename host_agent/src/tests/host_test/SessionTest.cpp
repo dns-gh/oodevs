@@ -15,6 +15,7 @@
 #include "runtime/PropertyTree.h"
 #include "web/SessionConfig.h"
 
+#include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid//uuid_io.hpp>
@@ -23,6 +24,7 @@
 #include "MockClient.h"
 #include "MockFileSystem.h"
 #include "MockNode.h"
+#include "MockPool.h"
 #include "MockPortFactory.h"
 #include "MockProcess.h"
 #include "MockRuntime.h"
@@ -71,6 +73,11 @@ namespace
         return data.get< std::string >( "status" );
     }
 
+    host::Path MakePath( int& idx, const host::Path& root )
+    {
+        return root / boost::lexical_cast< std::string >( ++idx );
+    }
+
     struct Fixture
     {
         typedef boost::shared_ptr< Session > SessionPtr;
@@ -79,13 +86,20 @@ namespace
         MockFileSystem system;
         MockRuntime runtime;
         MockPortFactory ports;
+        MockPool pool;
         boost::shared_ptr< MockNode > node;
         const host::Path apps;
+        int any_idx;
         Fixture()
-            : node ( boost::make_shared< MockNode >( defaultNode, FromJson( "{\"ident\":\"a\",\"name\":\"a\",\"port\":\"1\"}" ) ) )
-            , apps ( "apps" )
+            : node   ( boost::make_shared< MockNode >( defaultNode, FromJson( "{\"ident\":\"a\",\"name\":\"a\",\"port\":\"1\"}" ) ) )
+            , apps   ( "apps" )
+            , any_idx( 0 )
         {
             MOCK_EXPECT( system.GetDirectorySize ).returns( 0 );
+            MOCK_EXPECT( system.IsDirectory ).returns( false) ;
+            MOCK_EXPECT( system.MakePaths );
+            MOCK_EXPECT( system.MakeAnyPath ).calls( boost::bind( &MakePath, boost::ref( any_idx ), _1 ) );
+            MOCK_EXPECT( system.Walk ).returns( std::vector< host::Path >() );
             MOCK_EXPECT( node->StartSession ).returns( boost::make_shared< host::node::Token >() );
             MOCK_EXPECT( node->UpdateSessionSize );
         }
@@ -95,7 +109,7 @@ namespace
             MOCK_EXPECT( node->LinkExerciseName ).once().with( defaultExercise ).returns( FromJson( links ) );
             web::session::Config cfg;
             cfg.name = defaultName;
-            return boost::make_shared< Session >( system, client, node, "", defaultId, cfg, defaultExercise, Port( new MockPort( defaultPort ) ) );
+            return boost::make_shared< Session >( system, client, pool, node, "", defaultId, cfg, defaultExercise, Port( new MockPort( defaultPort ) ) );
         }
 
         SessionPtr ReloadSession( const Tree& tree, ProcessPtr process = ProcessPtr() )
@@ -105,16 +119,15 @@ namespace
                 MOCK_EXPECT( runtime.GetProcess ).once().with( process->GetPid() ).returns( process );
             const Tree data = FromJson( links );
             MOCK_EXPECT( node->LinkExerciseTree ).once().with( data ).returns( data );
-            return boost::make_shared< Session >( system, client, node, "", tree, runtime, ports );
+            return boost::make_shared< Session >( system, client, pool, node, "", tree, runtime, ports );
         }
 
         ProcessPtr StartSession( Session& session, int pid, const std::string& name )
         {
             ProcessPtr process = boost::make_shared< MockProcess >( pid, name );
             MOCK_EXPECT( runtime.Start ).once().returns( process );
-            MOCK_EXPECT( system.MakePaths ).once();
             MOCK_EXPECT( system.WriteFile ).once().returns( true );
-            BOOST_REQUIRE( session.Start( runtime, apps ) );
+            BOOST_REQUIRE( session.Start( runtime, apps, std::string() ) );
             return process;
         }
 
@@ -243,7 +256,7 @@ BOOST_FIXTURE_TEST_CASE( session_can_start_twice, Fixture )
 {
     SessionPtr session = MakeSession();
     StartSession( *session, processPid, processName );
-    BOOST_CHECK( !session->Start( runtime, apps ) );
+    BOOST_CHECK( !session->Start( runtime, apps, std::string() ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( session_can_pause_and_restart, Fixture )
@@ -254,7 +267,7 @@ BOOST_FIXTURE_TEST_CASE( session_can_pause_and_restart, Fixture )
     BOOST_CHECK( session->Pause() );
     BOOST_CHECK( !session->Pause() );
     ExpectWebRequest( "/play", 200 );
-    BOOST_CHECK( session->Start( runtime, apps ) );
+    BOOST_CHECK( session->Start( runtime, apps, std::string() ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( session_discards_outdated_updates_due_to_invalidated_process, Fixture )
@@ -300,7 +313,7 @@ BOOST_FIXTURE_TEST_CASE( session_discard_outdated_updates_due_to_invalidated_cou
     ExpectWebRequest( "/pause", 200 );
     session->Pause();
     ExpectWebRequest( "/play", 200 );
-    session->Start( runtime, apps );
+    session->Start( runtime, apps, std::string() );
     BOOST_CHECK_EQUAL( GetState( *session ), "playing" );
 
     endPause.Signal();

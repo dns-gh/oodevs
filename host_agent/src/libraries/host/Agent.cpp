@@ -337,9 +337,9 @@ Tree Agent::DeleteSession( const Uuid& node, const Uuid& id )
 // Name: Agent::StartSession
 // Created: BAX 2012-03-30
 // -----------------------------------------------------------------------------
-Tree Agent::StartSession( const Uuid& node, const Uuid& id ) const
+Tree Agent::StartSession( const Uuid& node, const Uuid& id, const std::string& checkpoint ) const
 {
-    return Dispatch( sessions_, boost::bind( &SessionController_ABC::Start, _1, node, id ) );
+    return Dispatch( sessions_, boost::bind( &SessionController_ABC::Start, _1, node, id, checkpoint ) );
 }
 
 // -----------------------------------------------------------------------------

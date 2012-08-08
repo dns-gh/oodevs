@@ -39,6 +39,8 @@ using web::Client_ABC;
 
 namespace
 {
+static const std::string trash = "_";
+
 enum SessionPort
 {
     DISPATCHER_PORT,
@@ -157,6 +159,7 @@ Session::Status AcquireStatus( Session::Status status, bool has_process )
 // -----------------------------------------------------------------------------
 Session::Session( const FileSystem_ABC& system,
                   Client_ABC& client,
+                  runtime::Pool_ABC& pool,
                   const boost::shared_ptr< Node_ABC > node,
                   const Path& root,
                   const Uuid& id,
@@ -165,6 +168,7 @@ Session::Session( const FileSystem_ABC& system,
                   const Port& port )
     : system_      ( system )
     , client_      ( client )
+    , async_       ( pool )
     , node_        ( node )
     , id_          ( id )
     , root_        ( root )
@@ -181,8 +185,9 @@ Session::Session( const FileSystem_ABC& system,
     , clients_     ()
     , start_time_  ()
     , current_time_()
+    , checkpoints_ ()
 {
-    // NOTHING
+    system_.MakePaths( GetOutput() / trash );
 }
 
 // -----------------------------------------------------------------------------
@@ -191,6 +196,7 @@ Session::Session( const FileSystem_ABC& system,
 // -----------------------------------------------------------------------------
 Session::Session( const FileSystem_ABC& system,
                   Client_ABC& client,
+                  runtime::Pool_ABC& pool,
                   const boost::shared_ptr< Node_ABC > node,
                   const Path& root,
                   const Tree& tree,
@@ -198,6 +204,7 @@ Session::Session( const FileSystem_ABC& system,
                   PortFactory_ABC& ports )
     : system_      ( system )
     , client_      ( client )
+    , async_       ( pool )
     , node_        ( node )
     , id_          ( Get< Uuid >( tree, "id" ) )
     , root_        ( root )
@@ -214,8 +221,11 @@ Session::Session( const FileSystem_ABC& system,
     , clients_     ()
     , start_time_  ()
     , current_time_()
+    , checkpoints_ ()
 {
     node_->UpdateSessionSize( id_, size_ );
+    if( !process_ )
+        ParseCheckpoints();
 }
 
 // -----------------------------------------------------------------------------
@@ -304,6 +314,17 @@ Tree Session::GetProperties( bool save ) const
     return tree;
 }
 
+namespace
+{
+template< typename T >
+void PutList( Tree& dst, const std::string& name, const T& list )
+{
+    Tree& sub = dst.put_child( name, Tree() );
+    typedef typename T::value_type Value;
+    BOOST_FOREACH( const Value& value, list )
+        sub.push_back( std::make_pair( "", value ) );
+}
+}
 // -----------------------------------------------------------------------------
 // Name: Session::GetProperties
 // Created: BAX 2012-04-19
@@ -314,9 +335,8 @@ Tree Session::GetProperties() const
     Tree tree = GetProperties( false );
     tree.put( "start_time", start_time_ );
     tree.put( "current_time", current_time_ );
-    Tree& sub = tree.put_child( "clients", Tree() );
-    BOOST_FOREACH( const T_Clients::value_type& value, clients_ )
-        sub.push_back( std::make_pair( "", value ) );
+    PutList( tree, "clients", clients_ );
+    PutList( tree, "checkpoints.list", checkpoints_ );
     return tree;
 }
 
@@ -426,11 +446,11 @@ bool Session::StopProcess( boost::upgrade_lock< boost::shared_mutex >& lock )
         return true;
 
     client_.Get( "localhost", port_->Get() + WEB_CONTROL_PORT, "/stop", Client_ABC::T_Parameters() );
-    if( copy->Join( 15 * 1000 ) )
-        return true;
-
-    copy->Kill();
+    const bool done = copy->Join( 15 * 1000 );
+    if( !done )
+        copy->Kill();
     copy->Join( 5 * 1000 );
+    ParseCheckpoints();
     return true;
 }
 
@@ -518,7 +538,7 @@ std::string MakeOption( const std::string& option, const T& value )
 // Name: Session::Start
 // Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------
-bool Session::Start( const Runtime_ABC& runtime, const Path& apps )
+bool Session::Start( const Runtime_ABC& runtime, const Path& apps, const std::string& checkpoint )
 {
     boost::upgrade_lock< boost::shared_mutex > lock( access_ );
     if( process_ )
@@ -534,17 +554,21 @@ bool Session::Start( const Runtime_ABC& runtime, const Path& apps )
     current_time_.clear();
     const Path output = GetOutput();
     system_.MakePaths( output );
+    if( checkpoint.empty() )
+        ClearCheckpoints();
     system_.WriteFile( output / "session.xml", GetConfiguration( cfg_, port_->Get() ) );
-    T_Process ptr = runtime.Start( Utf8Convert( apps / "simulation_app.exe" ), boost::assign::list_of
+    std::vector< std::string > options = boost::assign::list_of
         ( MakeOption( "debug-dir", Utf8Convert( GetRoot() / "debug" ) ) )
         ( MakeOption( "exercises-dir", Utf8Convert( GetPath( "exercise" ) ) ) )
         ( MakeOption( "terrains-dir", Utf8Convert( GetPath( "terrain" ) ) ) )
         ( MakeOption( "models-dir", Utf8Convert( GetPath( "model" ) ) ) )
         ( MakeOption( "exercise", Utf8Convert( GetExercise() ) ) )
         ( MakeOption( "session",  output.filename() ) )
-        ( "--silent" ),
-        Utf8Convert( apps ),
-        Utf8Convert( GetRoot() / "session.log" ) );
+        ( "--silent" );
+    if( !checkpoint.empty() )
+        options.push_back( MakeOption( "checkpoint", checkpoint ) );
+    T_Process ptr = runtime.Start( Utf8Convert( apps / "simulation_app.exe" ),
+        options, Utf8Convert( apps ), Utf8Convert( GetRoot() / "session.log" ) );
     if( !ptr )
         return false;
 
@@ -740,4 +764,30 @@ bool Session::Download( std::ostream& dst ) const
     packer->Pack( root_ );
     packer->Pack( GetOutput() );
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Session::ClearCheckpoints
+// Created: BAX 2012-08-08
+// -----------------------------------------------------------------------------
+void Session::ClearCheckpoints()
+{
+    const Path output = system_.MakeAnyPath( GetOutput() / trash );
+    checkpoints_.clear();
+    const Path checkpoints = GetOutput() / "checkpoints";
+    if( !system_.IsDirectory( checkpoints ) )
+        return;
+    system_.Rename( checkpoints, output / "_" );
+    async_.Go( boost::bind( &FileSystem_ABC::Remove, &system_, output ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Session::ParseCheckpoints
+// Created: BAX 2012-08-08
+// -----------------------------------------------------------------------------
+void Session::ParseCheckpoints()
+{
+    BOOST_FOREACH( const Path& path, system_.Walk( GetOutput() / "checkpoints", false ) )
+        if( system_.IsFile( path / "data" ) )
+            checkpoints_.push_back( runtime::Utf8Convert( path.filename() ) );
 }

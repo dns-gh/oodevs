@@ -264,9 +264,9 @@ SessionController::T_Session SessionController::Dispatch( const Uuid& node, cons
 // Name: SessionController::Start
 // Created: BAX 2012-04-20
 // -----------------------------------------------------------------------------
-SessionController::T_Session SessionController::Start( const Uuid& node, const Uuid& id ) const
+SessionController::T_Session SessionController::Start( const Uuid& node, const Uuid& id, const std::string& checkpoint ) const
 {
-    return Dispatch( node, id, boost::bind( &Session_ABC::Start, _1, boost::cref( runtime_ ), boost::cref( apps_ ) ) );
+    return Dispatch( node, id, boost::bind( &Session_ABC::Start, _1, boost::cref( runtime_ ), boost::cref( apps_ ), boost::cref( checkpoint ) ) );
 }
 
 // -----------------------------------------------------------------------------

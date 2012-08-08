@@ -67,7 +67,7 @@ public:
     virtual T_Session   Get     ( const Uuid& node, const Uuid& id ) const;
     virtual T_Session   Create  ( const Uuid& node, const web::session::Config& cfg, const std::string& exercise );
     virtual T_Session   Delete  ( const Uuid& node, const Uuid& id );
-    virtual T_Session   Start   ( const Uuid& node, const Uuid& id ) const;
+    virtual T_Session   Start   ( const Uuid& node, const Uuid& id, const std::string& checkpoint ) const;
     virtual T_Session   Stop    ( const Uuid& node, const Uuid& id ) const;
     virtual T_Session   Pause   ( const Uuid& node, const Uuid& id ) const;
     virtual T_Session   Update  ( const Uuid& node, const Uuid& id, const Tree& cfg ) const;

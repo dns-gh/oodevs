@@ -314,8 +314,8 @@ BOOST_FIXTURE_TEST_CASE( agent_delete_session, Fixture<> )
 
 BOOST_FIXTURE_TEST_CASE( agent_start_session, Fixture<> )
 {
-    MOCK_EXPECT( sessions.Start ).once().with( anotherNode, mockSessions[1]->GetId() ).returns( mockSessions[1] );
-    CheckTree( boost::bind( &Agent_ABC::StartSession, &agent, anotherNode, mockSessions[1]->GetId() ), ToJson( mockSessions[1]->GetProperties() ) );
+    MOCK_EXPECT( sessions.Start ).once().with( anotherNode, mockSessions[1]->GetId(), mock::any ).returns( mockSessions[1] );
+    CheckTree( boost::bind( &Agent_ABC::StartSession, &agent, anotherNode, mockSessions[1]->GetId(), std::string() ), ToJson( mockSessions[1]->GetProperties() ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_stop_session, Fixture<> )

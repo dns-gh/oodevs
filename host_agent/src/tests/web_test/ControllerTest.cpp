@@ -80,7 +80,7 @@ namespace
         MOCK_METHOD( GetSession, 2 );
         MOCK_METHOD( CreateSession, 3 );
         MOCK_METHOD( DeleteSession, 2 );
-        MOCK_METHOD( StartSession, 2 );
+        MOCK_METHOD( StartSession, 3 );
         MOCK_METHOD( StopSession, 2 );
         MOCK_METHOD( PauseSession, 2 );
         MOCK_METHOD( UpdateSession, 3 );
@@ -357,7 +357,8 @@ BOOST_FIXTURE_TEST_CASE( controller_start_session, Fixture )
     ExpectRequest( "GET", "/start_session", boost::assign::map_list_of( "id", defaultIdString ) );
     const std::string expected = "{\"dummy\":\"ymmud\"}";
     MOCK_EXPECT( request.GetParameter ).once().with( "node" ).returns( boost::none );
-    MOCK_EXPECT( agent.StartSession ).once().with( mock::any, defaultId ).returns( FromJson( expected ) );
+    MOCK_EXPECT( request.GetParameter ).once().with( "checkpoint" ).returns( "checkpoint" );
+    MOCK_EXPECT( agent.StartSession ).once().with( mock::any, defaultId, "checkpoint" ).returns( FromJson( expected ) );
     ExpectReply( reply, web::OK, expected );
     controller.DoGet( reply, request );
 }
@@ -406,6 +407,8 @@ BOOST_FIXTURE_TEST_CASE( controller_reject_invalid_ids, Fixture )
         ExpectRequest( "GET", targets[i], boost::assign::map_list_of( "id", "1" ) );
         if( boost::algorithm::contains( targets[i], "session" ) )
             MOCK_EXPECT( request.GetParameter ).once().with( "node" ).returns( boost::none );
+        if( targets[i] == "/start_session" )
+            MOCK_EXPECT( request.GetParameter ).once().with( "checkpoint" ).returns( boost::none );
         ExpectReply( reply, web::BAD_REQUEST, std::string() );
         controller.DoGet( reply, request );
     }

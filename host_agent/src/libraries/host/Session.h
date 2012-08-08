@@ -11,6 +11,7 @@
 #define SESSION_H
 
 #include "Session_ABC.h"
+#include "runtime/Async.h"
 #include "web/SessionConfig.h"
 
 #include <boost/filesystem/path.hpp>
@@ -67,6 +68,7 @@ public:
     //@{
              Session( const runtime::FileSystem_ABC& system,
                       web::Client_ABC& client,
+                      runtime::Pool_ABC& pool,
                       boost::shared_ptr< Node_ABC > node,
                       const Path& root,
                       const Uuid& id,
@@ -76,6 +78,7 @@ public:
                       );
              Session( const runtime::FileSystem_ABC& system,
                       web::Client_ABC& client,
+                      runtime::Pool_ABC& pool,
                       boost::shared_ptr< Node_ABC > node,
                       const Path& root,
                       const Tree& tree,
@@ -101,7 +104,7 @@ public:
     virtual Path GetPath( const std::string& type ) const;
     virtual Path GetOutput() const;
     virtual Tree Save() const;
-    virtual bool Start( const runtime::Runtime_ABC& runtime, const Path& apps );
+    virtual bool Start( const runtime::Runtime_ABC& runtime, const Path& apps, const std::string& checkpoint );
     virtual bool Stop();
     virtual bool Refresh();
     virtual bool RefreshSize();
@@ -118,6 +121,7 @@ public:
     //@{
     typedef boost::shared_ptr< runtime::Process_ABC > T_Process;
     typedef std::vector< std::string > T_Clients;
+    typedef std::vector< std::string > T_Checkpoints;
     //@}
 
     //! @name Status enumeration
@@ -140,6 +144,8 @@ private:
     bool StopProcess( boost::upgrade_lock< boost::shared_mutex >& lock );
     bool ModifyStatus( boost::upgrade_lock< boost::shared_mutex >& lock, Status next );
     bool Archive( boost::upgrade_lock< boost::shared_mutex >& lock );
+    void ClearCheckpoints();
+    void ParseCheckpoints();
     //@}
 
 private:
@@ -164,6 +170,8 @@ private:
     std::string start_time_;
     std::string current_time_;
     web::session::Config cfg_;
+    T_Checkpoints checkpoints_;
+    mutable runtime::Async async_;
     //@}
 };
 }

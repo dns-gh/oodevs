@@ -243,14 +243,20 @@ struct PackageFactory : public PackageFactory_ABC
 
 struct SessionFactory : public SessionFactory_ABC
 {
-    SessionFactory( const FileSystem_ABC& system, const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids,
-                    const NodeController_ABC& nodes, PortFactory_ABC& ports, web::Client_ABC& client )
+    SessionFactory( const FileSystem_ABC& system,
+                    const runtime::Runtime_ABC& runtime,
+                    const UuidFactory_ABC& uuids,
+                    const NodeController_ABC& nodes,
+                    PortFactory_ABC& ports,
+                    web::Client_ABC& client,
+                    Pool_ABC& pool )
         : system ( system )
         , runtime( runtime )
         , uuids  ( uuids )
         , nodes  ( nodes )
         , ports  ( ports )
         , client ( client )
+        , pool   ( pool )
     {
         // NOTHING
     }
@@ -260,7 +266,7 @@ struct SessionFactory : public SessionFactory_ABC
         NodeController_ABC::T_Node node = nodes.Get( id );
         if( !node )
             return Ptr();
-        return boost::make_shared< Session >( boost::cref( system ), boost::ref( client ), node, root, uuids.Create(), boost::cref( cfg ), exercise, ports.Create() );
+        return boost::make_shared< Session >( boost::cref( system ), boost::ref( client ), boost::ref( pool ), node, root, uuids.Create(), boost::cref( cfg ), exercise, ports.Create() );
     }
 
     Ptr Make( const Path& tag ) const
@@ -272,7 +278,7 @@ struct SessionFactory : public SessionFactory_ABC
         NodeController_ABC::T_Node node = nodes.Get( boost::uuids::string_generator()( *id ) );
         if( !node )
             throw std::runtime_error( "unknown node " + *id );
-        return boost::make_shared< Session >( boost::cref( system ), boost::ref( client ), node, Path( tag ).remove_filename(), tree, runtime, boost::ref( ports ) );
+        return boost::make_shared< Session >( boost::cref( system ), boost::ref( client ), boost::ref( pool ), node, Path( tag ).remove_filename(), tree, runtime, boost::ref( ports ) );
     }
 
     const FileSystem_ABC& system;
@@ -281,6 +287,7 @@ struct SessionFactory : public SessionFactory_ABC
     const NodeController_ABC& nodes;
     PortFactory_ABC& ports;
     web::Client_ABC& client;
+    Pool_ABC& pool;
 };
 
 int Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system, const Configuration& cfg, const Waiter& waiter )
@@ -301,7 +308,7 @@ int Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const F
     NodeController nodes( log, runtime, system, fnodes, cfg.root, cfg.node.app, cfg.node.root, "node", host->Get(), pool, proxy );
     fnodes.observer = &nodes;
     NodeController cluster( log, runtime, system, fnodes, cfg.root, cfg.node.app, cfg.node.root, "cluster", host->Get(), pool, proxy );
-    SessionFactory fsessions( system, runtime, uuids, nodes, ports, client );
+    SessionFactory fsessions( system, runtime, uuids, nodes, ports, client, pool );
     SessionController sessions( log, runtime, system, fsessions, nodes, cfg.root, cfg.session.apps, pool );
     Agent agent( log, cfg.cluster.enabled ? &cluster : 0, nodes, sessions );
     Crypt crypt;

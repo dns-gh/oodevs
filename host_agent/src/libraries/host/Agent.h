@@ -91,7 +91,7 @@ public:
     virtual Tree                GetSession     ( const Uuid& node, const Uuid& id ) const;
     virtual Tree                CreateSession  ( const Uuid& node, const web::session::Config& cfg, const std::string& exercise );
     virtual Tree                DeleteSession  ( const Uuid& node, const Uuid& id );
-    virtual Tree                StartSession   ( const Uuid& node, const Uuid& id ) const;
+    virtual Tree                StartSession   ( const Uuid& node, const Uuid& id, const std::string& checkpoint ) const;
     virtual Tree                StopSession    ( const Uuid& node, const Uuid& id ) const;
     virtual Tree                PauseSession   ( const Uuid& node, const Uuid& id ) const;
     virtual Tree                UpdateSession  ( const Uuid& node, const Uuid& id, const Tree& cfg ) const;

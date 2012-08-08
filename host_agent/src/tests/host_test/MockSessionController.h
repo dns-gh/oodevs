@@ -26,7 +26,7 @@ namespace mocks
         MOCK_METHOD( Get, 2 );
         MOCK_METHOD( Create, 3 );
         MOCK_METHOD( Delete, 2 );
-        MOCK_METHOD( Start, 2 );
+        MOCK_METHOD( Start, 3 );
         MOCK_METHOD( Stop, 2 );
         MOCK_METHOD( Pause, 2 );
         MOCK_METHOD( Update, 3 );
