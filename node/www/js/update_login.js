@@ -152,6 +152,13 @@
     return options.inverse(this);
   });
 
+  Handlebars.registerHelper("count", function(value, options) {
+    if (value != null ? value.length : void 0) {
+      return options.fn(this);
+    }
+    return options.inverse(this);
+  });
+
   display_error = function(id, template, text) {
     var ctl;
     ctl = $("#" + id);

@@ -107,6 +107,11 @@ Handlebars.registerHelper "is_positive", (value, options) ->
         return options.fn this
     return options.inverse this
 
+Handlebars.registerHelper "count", (value, options) ->
+    if value?.length
+        return options.fn this
+    return options.inverse this
+
 display_error = (id, template, text) ->
     ctl = $ "#" + id
     ctl.html template content: text
