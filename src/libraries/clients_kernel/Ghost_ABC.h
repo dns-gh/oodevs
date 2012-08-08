@@ -52,6 +52,7 @@ public:
     //@{
     virtual const QString& GetType() const = 0;
     virtual E_GhostType GetGhostType() const = 0;
+    virtual const std::string& GetLevel() const = 0;
     virtual const std::string& GetSymbol() const = 0;
     virtual const std::string GetLevelSymbol() const = 0;
     virtual const std::string& GetNature() const = 0;

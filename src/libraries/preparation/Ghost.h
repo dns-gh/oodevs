@@ -73,6 +73,7 @@ public:
     //@{
     virtual const QString& GetType() const;
     virtual E_GhostType GetGhostType() const;
+    virtual const std::string& GetLevel() const;
     virtual bool IsConverted() const;
     virtual const std::string& GetNature() const;
     virtual void UpdateSymbol( const std::string& level, const std::string& nature, const std::string& symbol );
