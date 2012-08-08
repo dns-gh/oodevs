@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "Sink.h"
 #include "flood/FloodModel.h"
+#include "flood/ElevationGetter_ABC.h"
 #include "RolePion_Decision.h"
 #include "NullRoleAdapter.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
@@ -24,6 +25,26 @@
 using namespace sword::legacy;
 
 BOOST_CLASS_EXPORT_IMPLEMENT( sword::legacy::Sink )
+
+namespace
+{
+    class ElevationGetter : public flood::ElevationGetter_ABC
+    {
+    public:
+        ElevationGetter()
+        {
+            // NOTHING
+        }
+        virtual ~ElevationGetter()
+        {
+            // NOTHING
+        }
+        virtual short GetElevationAt( const geometry::Point2f& point ) const
+        {
+            return static_cast< short >( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetAltitude( point.X(), point.Y() ) );
+        }
+    };
+}
 
 namespace sword
 {
@@ -62,9 +83,10 @@ namespace legacy
 // Created: SLI 2012-01-13
 // -----------------------------------------------------------------------------
 Sink::Sink( AgentFactory_ABC& factory, unsigned int gcPause, unsigned int gcMult )
-    : factory_( factory )
-    , gcPause_( gcPause )
-    , gcMult_ ( gcMult )
+    : pElevation_( new ElevationGetter() )
+    , factory_   ( factory )
+    , gcPause_   ( gcPause )
+    , gcMult_    ( gcMult )
 {
     // NOTHING
 }
@@ -179,19 +201,10 @@ void Sink::Initialize( MIL_AgentPion& pion, const MT_Vector2D& vPosition )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Sink::GetElevationAt
-// Created: LGY 2012-07-31
-// -----------------------------------------------------------------------------
-short Sink::GetElevationAt( const geometry::Point2f& point ) const
-{
-    return static_cast< short >( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetAltitude( point.X(), point.Y() ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: Sink::CreateFloodModel
 // Created: LGY 2012-08-07
 // -----------------------------------------------------------------------------
 std::auto_ptr< flood::FloodModel_ABC > Sink::CreateFloodModel() const
 {
-    return std::auto_ptr< flood::FloodModel_ABC >( new flood::FloodModel( *this ) );
+    return std::auto_ptr< flood::FloodModel_ABC >( new flood::FloodModel( *pElevation_ ) );
 }

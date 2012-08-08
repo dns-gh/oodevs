@@ -406,15 +406,6 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
 }
 
 // -----------------------------------------------------------------------------
-// Name: Sink::GetElevationAt
-// Created: LGY 2012-07-31
-// -----------------------------------------------------------------------------
-short Sink::GetElevationAt( const geometry::Point2f& /*point*/ ) const
-{
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
 // Name: Sink::CreateFloodModel
 // Created: LGY 2012-08-07
 // -----------------------------------------------------------------------------

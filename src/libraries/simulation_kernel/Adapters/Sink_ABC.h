@@ -12,7 +12,6 @@
 
 #include "AgentFactory_ABC.h"
 #include "FloodModelFactory_ABC.h"
-#include "flood/ElevationGetter_ABC.h"
 #include <boost/serialization/export.hpp>
 
 namespace sword
@@ -25,7 +24,6 @@ namespace sword
 // =============================================================================
 class Sink_ABC : public AgentFactory_ABC
                , public FloodModelFactory_ABC
-               , public flood::ElevationGetter_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -47,8 +45,7 @@ public:
     void serialize( Archive& archive, const unsigned int )
     {
         archive & boost::serialization::base_object< AgentFactory_ABC >( *this )
-                & boost::serialization::base_object< FloodModelFactory_ABC >( *this )
-                & boost::serialization::base_object< flood::ElevationGetter_ABC >( *this );
+                & boost::serialization::base_object< FloodModelFactory_ABC >( *this );
     }
     //@}
 };

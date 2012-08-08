@@ -11,6 +11,12 @@
 #define SWORD_LEGACY_SINK_H
 
 #include "Adapters/Sink_ABC.h"
+#include <memory>
+
+namespace
+{
+    class ElevationGetter;
+}
 
 namespace sword
 {
@@ -66,14 +72,10 @@ private:
     void Initialize( MIL_AgentPion& pion, const MT_Vector2D& vPosition );
     //@}
 
-    //! @name Operations
-    //@{
-    virtual short GetElevationAt( const geometry::Point2f& point ) const;
-    //@}
-
 private:
     //! @name Member data
     //@{
+    std::auto_ptr< ElevationGetter > pElevation_;
     AgentFactory_ABC& factory_;
     const unsigned int gcPause_;
     unsigned int gcMult_;

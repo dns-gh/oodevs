@@ -21,7 +21,7 @@ namespace flood
 */
 // Created: JSR 2010-12-15
 // =============================================================================
-class ElevationGetter_ABC : boost::noncopyable
+class ElevationGetter_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

@@ -79,11 +79,6 @@ private:
     MIL_AgentPion& Configure( MIL_AgentPion& pion, const MT_Vector2D& vPosition );
     //@}
 
-    //! @name Operations
-    //@{
-    virtual short GetElevationAt( const geometry::Point2f& point ) const;
-    //@}
-
 private:
     //! @name Member data
     //@{
