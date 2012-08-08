@@ -42,7 +42,7 @@ class ResourceNetworkAttribute : public kernel::ResourceNetwork_ABC
                                , public tools::ElementObserver_ABC< kernel::Object_ABC >
                                , public tools::ElementObserver_ABC< kernel::UrbanObject_ABC >
 {
-private:
+public:
     //! @name Types
     //@{
     typedef tools::Resolver_ABC< kernel::UrbanObject_ABC > T_Urbans;
@@ -71,6 +71,7 @@ public:
     virtual void NotifyDeleted( const kernel::Object_ABC& object );
     virtual void NotifyDeleted( const kernel::UrbanObject_ABC& object );
     const std::set< std::string >& GetInvalidResources() const;
+    void CleanLinksToDeletedUrbanBlocks();
     //@}
 
     //! @name Serializable_ABC

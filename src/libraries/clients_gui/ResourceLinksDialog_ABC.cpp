@@ -357,6 +357,12 @@ void ResourceLinksDialog_ABC::DoNotifyContextMenu( const kernel::Entity_ABC& ent
                 subMenu->insertItem( resource.GetName().c_str(), resourceMenu );
                 resourceMenu->insertItem( tr( "Create node" ), this , SLOT( OnCreateNode( int ) ), 0, resourceId );
             }
+            else
+            {
+                ContextMenu* resourceMenu = new ContextMenu( subMenu );
+                subMenu->insertItem( resource.GetName().c_str(), resourceMenu );
+                resourceMenu->insertItem( tr( "Remove node" ), this , SLOT( OnRemoveNode( int ) ), 0, resourceId );
+            }
             ++resourceId;
         }
         else
@@ -460,12 +466,39 @@ void ResourceLinksDialog_ABC::OnCreateNode( int resourceId )
     tools::Iterator< const ResourceNetworkType& > it = resources_.CreateIterator();
     int index = 0;
     ResourceNetwork_ABC& resourceNetwork = selected_.front()->Get< ResourceNetwork_ABC >();
-    while( it.HasMoreElements() )
+    while( it.HasMoreElements() ) // $$$$ LDC RC WTF? Why not resources_.Get or Find( resourceId) ????
     {
         const ResourceNetworkType& resource = it.NextElement();
         if( index++ == resourceId )
         {
             resourceNetwork.FindOrCreateResourceNode( resource.GetName() );
+            controllers_.controller_.Update( resourceNetwork );
+            break;
+        }
+    }
+    Show();
+    DoValidate();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceLinksDialog_ABC::OnRemoveNode
+// Created: LDC 2012-08-08
+// -----------------------------------------------------------------------------
+void ResourceLinksDialog_ABC::OnRemoveNode( int resourceId )
+{
+    if( selected_.size() != 1 )
+        return;
+    tools::Iterator< const ResourceNetworkType& > it = resources_.CreateIterator();
+    int index = 0;
+    kernel::Entity_ABC* selected = selected_.front();
+    ResourceNetwork_ABC& resourceNetwork = selected->Get< ResourceNetwork_ABC >();
+    while( it.HasMoreElements() ) // $$$$ LDC RC WTF? Why not resources_.Get or Find( resourceId) ????
+    {
+        const ResourceNetworkType& resource = it.NextElement();
+        if( index++ == resourceId )
+        {
+            bool isUrban = ( dynamic_cast< kernel::UrbanObject_ABC* >( selected ) != 0 );
+            resourceNetwork.RemoveNode( resource.GetName(), isUrban, selected->GetId() );
             controllers_.controller_.Update( resourceNetwork );
             break;
         }

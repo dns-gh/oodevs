@@ -142,6 +142,35 @@ void ResourceNetworkAttribute::Draw( const kernel::Viewport_ABC& viewport, const
     glPopAttrib();
 }
 
+namespace
+{
+    class IsUrbanDeleted
+    {
+    public:
+        IsUrbanDeleted( const ResourceNetworkAttribute::T_Urbans& urbans ) : urbans_( urbans ) {}
+        bool operator() ( const kernel::ResourceNetwork_ABC::ResourceLink& link )
+        {
+            return ( link.urban_ && !urbans_.Find( link.id_ ) );
+        }
+    private:
+        const ResourceNetworkAttribute::T_Urbans& urbans_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetworkAttribute::CleanLinksToDeletedUrbanBlocks
+// Created: JSR 2012-08-08
+// -----------------------------------------------------------------------------
+void ResourceNetworkAttribute::CleanLinksToDeletedUrbanBlocks()
+{
+    for( IT_ResourceNodes node = resourceNodes_.begin(); node != resourceNodes_.end(); ++node )
+    {
+        T_ResourceLinks& links = node->second.links_;
+        IsUrbanDeleted isUrbanDeleted( urbans_ );
+        std::remove_if( links.begin(), links.end(), isUrbanDeleted );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ResourceNetworkAttribute::SerializeAttributes
 // Created: JSR 2010-09-08
