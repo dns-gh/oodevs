@@ -139,10 +139,6 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.PIA">
       <missions>
-        <mission name="PION Entrer dans un reseau souterrain"/>
-        <mission name="PION Sortir du reseau souterrain"/>
-        <mission name="PION Faire mouvement dans reseau souterrain"/>
-        <mission name="PION Faire mouvement via reseau souterrain"/>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
@@ -182,6 +178,7 @@
         <mission name="PION MELEE Interdire foule"/>
         <mission name="PION MELEE Renseigner sur foule"/>
         <mission name="PION MELEE Organiser Accueil Colonne Refugies"/>
+        <mission name="PION MELEE Surveiller"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -497,7 +494,7 @@
         <mission name="PION GENIE Reparer">
           <fragorder name="Abandonner travaux"/>
         </mission>
-        <mission name="PION GENIE Reprendre Travaux">
+        <mission name="PION GENIE Reprendre Constructions">
           <fragorder name="Abandonner travaux"/>
         </mission>
         <mission name="PION GENIE Retablir Itineraire">
@@ -606,7 +603,7 @@
           <fragorder name="Activer Obstacles"/>
           <fragorder name="Abandonner travaux"/>
         </mission>
-        <mission name="PION GENIE Reprendre Travaux">
+        <mission name="PION GENIE Reprendre Constructions">
           <fragorder name="Abandonner travaux"/>
         </mission>
         <mission name="PION GENIE Retablir Itineraire">
@@ -876,7 +873,7 @@
           <fragorder name="Activer Obstacles"/>
           <fragorder name="Abandonner travaux"/>
         </mission>
-        <mission name="PION GENIE Reprendre Travaux">
+        <mission name="PION GENIE Reprendre Constructions">
           <fragorder name="Abandonner travaux"/>
         </mission>
         <mission name="PION GENIE Valoriser"/>
@@ -1149,7 +1146,6 @@
         <mission name="PION Faire mouvement dans reseau souterrain"/>
         <mission name="PION Faire mouvement via reseau souterrain"/>
         <mission name="PION Desactiver Point Du Reseau"/>
-        <mission name="PION MILICE Appui contre mobilite"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -2286,6 +2282,7 @@
         <mission name="PION MELEE Neutraliser"/>
         <mission name="PION MELEE Renseigner Sur"/>
         <mission name="PION MELEE Tenir"/>
+        <mission name="PION MELEE Eclairer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -2359,6 +2356,7 @@
         <mission name="PION MELEE Neutraliser"/>
         <mission name="PION MELEE Renseigner Sur"/>
         <mission name="PION MELEE Tenir"/>
+        <mission name="PION MELEE Eclairer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -5274,7 +5272,6 @@
           <fragorder name="Activer Obstacles"/>
           <fragorder name="Decrocher"/>
         </mission>
-        <mission name="AUTOMATE MELEE Flanc-Garder"/>
         <mission name="AUTOMATE MELEE Freiner">
           <fragorder name="Decrocher"/>
           <fragorder name="Activer Obstacles"/>
@@ -5375,7 +5372,6 @@
     </automat>
     <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.INF.Commando">
       <missions>
-        <mission name="AUTOMATE COMMUNES Decrocher"/>
         <mission name="AUTOMATE COMMUNES Faire Mouvement"/>
         <mission name="AUTOMATE COMMUNES Franchir"/>
         <mission name="AUTOMATE COMMUNES Se Faire Decontaminer"/>
@@ -7135,7 +7131,6 @@
     </automat>
     <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.RENS.ELGE">
       <missions>
-        <mission name="AUTOMATE RENS ROEM Appuyer"/>
         <mission name="AUTOMATE RENS ROEM Renseigner Sur">
           <fragorder name="ROEM Passer En Silence Radar"/>
           <fragorder name="ROEM Arreter Silence Radar"/>
@@ -7147,6 +7142,7 @@
         <mission name="AUTOMATE COMMUNES Se Recompleter"/>
         <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE RENS Reconnaitre"/>
+        <mission name="AUTOMATE RENS ROEM Brouiller"/>
       </missions>
       <fragorders>
         <fragorder name="Passer En NBC4"/>
@@ -7172,7 +7168,6 @@
         <mission name="AUTOMATE COMMUNES Se Faire Decontaminer"/>
         <mission name="AUTOMATE COMMUNES Se Recompleter"/>
         <mission name="AUTOMATE COMMUNES Stationner"/>
-        <mission name="AUTOMATE RENS ROEM Appuyer"/>
       </missions>
       <fragorders>
         <fragorder name="Passer En NBC4"/>
@@ -7529,4 +7524,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3817753456" -->
+<!-- signature="2075796206" -->

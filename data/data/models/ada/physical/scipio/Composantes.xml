@@ -34734,7 +34734,10 @@
       <weapon-system launcher="Fusil Assaut FAMAS" munition="CART 5.56 F1A F1"/>
     </weapon-systems>
     <human-protections/>
-    <objects/>
+    <objects>
+      <object type="mrls deployment area"/>
+      <object initial-construction-time="1200s" initial-destruction-time="1000s" type="cobra deployment area"/>
+    </objects>
     <breakdowns>
       <breakdown origin="random" percentage="11" type="Panne MOB 1 EB"/>
       <breakdown origin="random" percentage="11" type="Panne MOB 2 EB"/>
@@ -35740,4 +35743,4 @@
     <equipment-category>VTT</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="1901352892" -->
+<!-- signature="0235420384" -->

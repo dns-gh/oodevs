@@ -881,7 +881,7 @@
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Chantiers" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.ReprendreTravaux" dia-type="france.military.platoon.combat.support.engineer.tasks.ReprendreTravaux" id="2122" name="PION GENIE Reprendre Travaux" package="support">
+    <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.ReprendreTravaux" dia-type="france.military.platoon.combat.support.engineer.tasks.ReprendreTravaux" id="2122" name="PION GENIE Reprendre Constructions" package="support">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1718,7 +1718,12 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="zone" name="Zone à observer" optional="false" type="Polygon"/>
-      <parameter dia-name="position" name="Position d'installation" optional="false" type="Point"/>
+      <parameter dia-name="position" name="Position d'installation" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="ObjectKnowledge"/>
+        </choice>
+      </parameter>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.support.art.tasks.DefendreUnites" dia-type="france.military.platoon.combat.support.art.tasks.DefendreUnites" id="28800" name="PION ASA Defendre Unites" package="defence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3529,4 +3534,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ROEM_ArreterSilenceRadar" id="28801" name="ROEM Arreter Silence Radar"/>
   </fragorders>
 </missions>
-<!-- signature="3964816829" -->
+<!-- signature="1789550523" -->
