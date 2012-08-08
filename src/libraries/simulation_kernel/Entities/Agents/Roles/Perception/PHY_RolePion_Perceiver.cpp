@@ -927,7 +927,6 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
         NotifyPerception( const_cast< MIL_Agent_ABC& >( *transporter ), PHY_PerceptionLevel::identified_, false );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::ComputePerception
 // Created: NLD 2004-09-07

@@ -33,7 +33,7 @@
 #pragma warning( disable: 4702 )
 #include <boost/geometry/geometry.hpp>
 #include <boost/geometry/geometries/geometries.hpp>
-#include <boost/geometry/multi/geometries/multi_geometries.hpp> 
+#include <boost/geometry/multi/geometries/multi_geometries.hpp>
 #include <boost/geometry/algorithms/union.hpp>
 #include <boost/geometry/geometries/register/point.hpp>
 #pragma warning( pop )

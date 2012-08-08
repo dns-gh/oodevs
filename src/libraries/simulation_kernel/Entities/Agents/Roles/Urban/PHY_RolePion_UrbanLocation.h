@@ -110,7 +110,7 @@ private:
     std::auto_ptr< UrbanBlockPosition_ABC > delegate_;
     bool                                    isInCity_;
     bool                                    isFlying_;
-    std::set< unsigned int > 				collisions_;
+    std::set< unsigned int >                collisions_;
     //@}
 };
 

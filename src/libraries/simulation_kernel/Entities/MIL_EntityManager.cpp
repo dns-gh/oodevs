@@ -127,7 +127,6 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_EntityManager )
 
 std::vector< const MIL_UrbanObject_ABC* > MIL_EntityManager::urbanblocks_; // temporaire
 
-
     // =============================================================================
 // TOOLS
 // =============================================================================
@@ -393,7 +392,7 @@ void MIL_EntityManager::LoadUrbanModel( const MIL_Config& config, bool checkpoin
         // pUrbanModel_->Load( directoryPath, config_ );
 
         // TODO Supprimer le chemin en hard
-        const bfs::path fullPath = bfs::path( directoryPath ) / "urban" / "urban.xml"; 
+        const bfs::path fullPath = bfs::path( directoryPath ) / "urban" / "urban.xml";
         if( bfs::exists( fullPath ) ) // avoid exception
         {
             MT_LOG_STARTUP_MESSAGE( "--------------------------------" );
@@ -418,7 +417,7 @@ void MIL_EntityManager::LoadUrbanModel( const MIL_Config& config, bool checkpoin
                 RecursiveCreateWrappers( city, counter );
                 DoCreateUrbanWrapper( city, counter, true );
             }
-            
+
             MT_LOG_INFO_MSG( MT_FormatString( "%d Urban blocs", counter ) );
 
             geometry::Rectangle2d extent( geometry::Point2d( 0, 0 ), geometry::Point2d( config.GetTerrainWidth(), config.GetTerrainHeight() ) );
@@ -434,7 +433,6 @@ void MIL_EntityManager::LoadUrbanModel( const MIL_Config& config, bool checkpoin
         }
 
         // TODO détruire les mil_urbanobject dans le destructeur?
-
 
     }
     catch( std::exception& e )

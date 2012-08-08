@@ -94,7 +94,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
         pCheckPointManager_ = new MIL_CheckPointManager( config_ );
         pEntityManager_->ReadODB( config_ );
         pEntityManager_->LoadUrbanModel( config_ );
-        
+
         pEntityManager_->Finalize();
         Resume( nextPause_ );
     }

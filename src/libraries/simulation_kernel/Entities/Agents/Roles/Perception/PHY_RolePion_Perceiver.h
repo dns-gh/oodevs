@@ -41,7 +41,7 @@ namespace detection
 }
 
 namespace dotation
-{    
+{
     class ConsumptionComputer_ABC;
 }
 
@@ -114,7 +114,7 @@ public:
     virtual void SetVisionModePoint    ( const MT_Vector2D& vPoint );
     virtual bool IsUsingActiveRadar() const;
     virtual bool IsUsingActiveRadar( const PHY_RadarClass& radarClass ) const; // LTO
-    
+
     virtual void Execute( dotation::ConsumptionComputer_ABC& algorithm ) const;
     virtual void Execute( detection::DetectionComputer_ABC& algorithm ) const;
     virtual void NotifyComponentHasChanged();

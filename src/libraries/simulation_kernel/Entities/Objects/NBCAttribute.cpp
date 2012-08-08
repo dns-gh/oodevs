@@ -134,7 +134,7 @@ void NBCAttribute::save( MIL_CheckPointOutArchive& file, const unsigned int ) co
     file << danger_;
     file << nForm_;
     std::size_t size = agents_.size();
-    for ( CIT_NBCAgents it = agents_.begin(); it != agents_.end(); ++it )
+    for( CIT_NBCAgents it = agents_.begin(); it != agents_.end(); ++it )
     {
         if( !*it )
             --size;

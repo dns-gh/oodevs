@@ -175,7 +175,6 @@ double RoleAction_Moving::GetTheoricMaxSpeed( bool loaded ) const
     return computer->GetSpeed();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: RoleAction_Moving::GetSpeedWithReinforcement
 // Created: NLD 2004-09-23

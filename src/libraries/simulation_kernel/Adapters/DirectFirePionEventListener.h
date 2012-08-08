@@ -38,7 +38,7 @@ public:
              DirectFirePionEventListener( const core::Model& model, core::Facade& facade, tools::Resolver< MIL_AgentPion >& resolver );
     virtual ~DirectFirePionEventListener();
     //@}
-    
+
     //! @name Operations
     //@{
     virtual void Notify( const core::Model& event );

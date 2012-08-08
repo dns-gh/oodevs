@@ -63,7 +63,6 @@ MIL_Fuseau::MIL_Fuseau( const T_PointVector& leftLimit, const T_PointVector& rig
     Reset( 0, leftLimit, rightLimit, 0, 0 );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: MIL_Fuseau constructor
 // Created: NLD 2003-01-14

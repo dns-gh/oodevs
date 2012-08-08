@@ -149,7 +149,7 @@ namespace
         ListenerHelper position_;
         boost::shared_ptr< MT_Vector2D >& pPosition_;
     };
-    
+
     class DirectionListener : public RoleListener_ABC
     {
     public:

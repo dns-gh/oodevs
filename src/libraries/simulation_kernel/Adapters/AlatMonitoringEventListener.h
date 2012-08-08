@@ -37,7 +37,7 @@ public:
              AlatMonitoringEventListener( const core::Model& model, core::Facade& facade, tools::Resolver< MIL_AgentPion >& resolver );
     virtual ~AlatMonitoringEventListener();
     //@}
-    
+
     //! @name Operations
     //@{
     virtual void Notify( const core::Model& event );

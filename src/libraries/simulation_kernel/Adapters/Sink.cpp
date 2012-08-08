@@ -234,7 +234,7 @@ namespace
             component[ "volume" ] = composantes[ i ].GetType().GetVolume().GetID();
             component[ "score" ] = composantes[ i ].GetMajorScore();
             component[ "major" ] = composantes[ i ].IsMajor();
-            component[ "component" ].SetUserData( components2.GetElement( i )[ "component" ].GetData() );			
+            component[ "component" ].SetUserData( components2.GetElement( i )[ "component" ].GetData() );
             component[ "weapons" ] = components2.GetElement( i )[ "weapons" ]; // $$$$ MCO 2012-07-02: could be a link because that info is 'static'
         }
     }
