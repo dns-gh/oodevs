@@ -22,6 +22,9 @@
 
 namespace
 {
+    // bax: global var is unavoidable as exception filters have no context...
+    static std::string rootDirectory = "Debug";
+
     bool Log( HANDLE hFile, BOOL bMiniDumpSuccessful )
     {
         bool bSuccess = false;
@@ -127,7 +130,8 @@ namespace
 
         GetLocalTime( &stLocalTime );
 
-        StringCchPrintf( szFileName, MAX_PATH, "Debug\\SWORD-crash-%04d%02d%02d-%02d%02d%02d-%ld-%ld.dmp", 
+        const std::string filename = rootDirectory + "\\SWORD-crash-%04d%02d%02d-%02d%02d%02d-%ld-%ld.dmp";
+        StringCchPrintf( szFileName, MAX_PATH, filename.c_str(),
                    stLocalTime.wYear, stLocalTime.wMonth, stLocalTime.wDay, 
                    stLocalTime.wHour, stLocalTime.wMinute, stLocalTime.wSecond, 
                    GetCurrentProcessId(), GetCurrentThreadId());
@@ -196,4 +200,13 @@ int MT_CrashHandler::ContinueExecution( EXCEPTION_POINTERS* pExceptionPointers )
     int result = StackWalkerProxy::ContinueExecution( pExceptionPointers, stream );
     MT_LOG_ERROR_MSG( stream.str() );
     return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MT_CrashHandler::SetRootDirectory
+// Created: BAX 2012-08-08
+// -----------------------------------------------------------------------------
+void MT_CrashHandler::SetRootDirectory( const std::string& root )
+{
+    rootDirectory = root;
 }
