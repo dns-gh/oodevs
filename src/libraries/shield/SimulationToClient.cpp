@@ -623,6 +623,8 @@ void SimulationToClient::Convert( const sword::UnitCreation& from, MsgsSimToClie
     CONVERT( pc );
     CONVERT_CB( color, ConvertRgbColor );
     CONVERT_CB( repartition, ConvertRepartition );
+    ConvertNatureLevel( from, to );
+    CONVERT( app6symbol );
 }
 
 namespace

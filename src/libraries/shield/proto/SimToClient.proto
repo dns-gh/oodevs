@@ -368,7 +368,7 @@ message MsgUnitCreation {
     optional Common.RgbColor         color       = 6;
     optional Common.HumanRepartition repartition = 7;
     optional Common.EnumNatureLevel  level       = 8; // FT 45350
-    optional string                  app6symbol  = 9; // FT 45350            
+    optional string                  app6symbol  = 9; // FT 45350
 }
 
 message EquipmentUpdate {  // A supprimer de l'ICD car pas dans SCIPIO [29/11/2011]

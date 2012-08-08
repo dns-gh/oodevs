@@ -214,6 +214,8 @@ private:
     //@{
     const MIL_AgentTypePion*                  pType_;
     bool                                      bHasChanged_;
+    std::string                               app6Symbol_;
+    std::string                               level_;
     std::string                               criticalIntelligence_;
     MIL_Automate*                             pAutomate_;
     const AlgorithmsFactories&                algorithmFactories_;

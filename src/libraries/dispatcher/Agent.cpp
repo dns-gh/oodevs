@@ -88,6 +88,8 @@ Agent::Agent( Model_ABC& model, const sword::UnitCreation& msg, const tools::Res
     , transportedCrowd_           ( -1 )
     , statisfaction_              ( 0 )
     , humanRepartition_           ( 0 )
+    , app6Symbol_                 ( "" )
+    , level_                      ( eNatureLevel_None )
 {
     if ( msg.has_repartition() )
         humanRepartition_.reset( new HumanRepartition( msg.repartition().male(), msg.repartition().female(), msg.repartition().children() ) );
@@ -95,6 +97,12 @@ Agent::Agent( Model_ABC& model, const sword::UnitCreation& msg, const tools::Res
     automat_->Register( *this );
     if( msg.has_color() )
         color_ = msg.color();
+
+    if( msg.has_level() )
+        level_ = static_cast< E_NatureLevel >( msg.level() );
+    if( msg.has_app6symbol() )
+        app6Symbol_ = msg.app6symbol();
+
     RegisterSelf( *this );
 }
 
@@ -449,6 +457,10 @@ void Agent::SendCreation( ClientPublisher_ABC& publisher ) const
         message().mutable_repartition()->set_female( humanRepartition_->female_ );
         message().mutable_repartition()->set_children( humanRepartition_->children_ );
     }
+    if( !app6Symbol_.empty() )
+        message().set_app6symbol( app6Symbol_ );
+    if( level_ != eNatureLevel_None )
+        message().set_level( sword::EnumNatureLevel( level_ ) );
     message.Send( publisher );
 }
 

@@ -17,6 +17,7 @@
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/EntityHierarchies.h"
 #include "clients_kernel/Updatable_ABC.h"
+#include "ENT/ENT_Tr_Gen.h"
 
 namespace sword
 {
@@ -119,6 +120,10 @@ void AgentHierarchies< I >::DoUpdate( const sword::UnitCreation& message )
     const kernel::Diplomacies_ABC* diplo = superior.Get< I >().GetTop().Retrieve< kernel::Diplomacies_ABC >();
     if( diplo )
         kernel::App6Symbol::SetKarma( symbol_, diplo->GetKarma() );
+    if( message.has_level() )
+        level_ = "levels/" + ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( message.level() ) );
+    if( message.has_app6symbol() )
+        symbol_ = "symbols/" + message.app6symbol();
     SetSuperior( & superior );
 }
 
