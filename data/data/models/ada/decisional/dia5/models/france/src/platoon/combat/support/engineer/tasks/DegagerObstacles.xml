@@ -9,7 +9,7 @@
                 </list>
             </type>
         </parameter>
-        <parameter name="meetingPoint">
+        <parameter name="meetingPoint" nullable="true">
             <description>Point de regroupement vers lequel se déplacera l'unité en fin de mission.</description>
             <type>
                 <class name="properties.Reachable"/>
