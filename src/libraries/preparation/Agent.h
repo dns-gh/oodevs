@@ -16,6 +16,7 @@
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/SubTypes.h"
+#include "ENT/ENT_Enums_Gen.h"
 
 namespace kernel
 {
