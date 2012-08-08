@@ -793,12 +793,10 @@
       });
     };
 
-    SessionItemView.prototype.modify = function(cmd) {
+    SessionItemView.prototype.modify = function(cmd, data) {
       var _this = this;
       this.toggle_load();
-      return ajax("/api/" + cmd + "_session", {
-        id: this.model.id
-      }, function(item) {
+      return ajax("/api/" + cmd + "_session", data, function(item) {
         _this.toggle_load();
         return _this.model.set(item);
       }, function() {
@@ -808,23 +806,39 @@
     };
 
     SessionItemView.prototype.stop = function() {
-      return this.modify("stop");
+      return this.modify("stop", {
+        id: this.model.id
+      });
     };
 
-    SessionItemView.prototype.play = function() {
-      return this.modify("start");
+    SessionItemView.prototype.play = function(e) {
+      var data, name;
+      data = {
+        id: this.model.id
+      };
+      name = $(e.currentTarget).attr("name");
+      if (name != null ? name.length : void 0) {
+        data.checkpoint = name;
+      }
+      return this.modify("start", data);
     };
 
     SessionItemView.prototype.pause = function() {
-      return this.modify("pause");
+      return this.modify("pause", {
+        id: this.model.id
+      });
     };
 
     SessionItemView.prototype.archive = function() {
-      return this.modify("archive");
+      return this.modify("archive", {
+        id: this.model.id
+      });
     };
 
     SessionItemView.prototype.restore = function() {
-      return this.modify("restore");
+      return this.modify("restore", {
+        id: this.model.id
+      });
     };
 
     SessionItemView.prototype.download = function() {

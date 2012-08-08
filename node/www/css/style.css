@@ -10,6 +10,7 @@ body{padding-top:60px;padding-bottom:40px;}
 .session_name,.package_name{font-size:large;font-weight:bold;}
 .shift_right{padding-left:24px;}
 .session_top_right{position:absolute;top:6px;right:6px;}
+.session_top_right .dropdown-toggle{border-top-right-radius:0;border-bottom-right-radius:0;}
 .session_bottom_right{position:absolute;right:6px;bottom:6px;}
 .session_search{float:right;margin-bottom:20px;position:relative;}
 .session_search i{position:absolute;top:8px;left:8px;}

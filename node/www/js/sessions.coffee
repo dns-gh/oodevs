@@ -245,9 +245,9 @@ class SessionItemView extends Backbone.View
         @toggle_load()
         @model.destroy wait: true, error: => print_error "Unable to delete session " + @model.get "name"
 
-    modify: (cmd) =>
+    modify: (cmd, data) =>
         @toggle_load()
-        ajax "/api/" + cmd + "_session", id: @model.id,
+        ajax "/api/" + cmd + "_session", data,
             (item) =>
                 @toggle_load()
                 @model.set item
@@ -256,19 +256,22 @@ class SessionItemView extends Backbone.View
                 @toggle_load()
 
     stop: =>
-        @modify "stop"
+        @modify "stop", id: @model.id
 
-    play: =>
-        @modify "start"
+    play: (e) =>
+        data = id: @model.id
+        name = $(e.currentTarget).attr "name"
+        data.checkpoint = name if name?.length
+        @modify "start", data
 
     pause: =>
-        @modify "pause"
+        @modify "pause", id: @model.id
 
     archive: =>
-        @modify "archive"
+        @modify "archive", id: @model.id
 
     restore: =>
-        @modify "restore"
+        @modify "restore", id: @model.id
 
     download: =>
         uri = get_url "/api/download_session?"
