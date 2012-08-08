@@ -10,8 +10,6 @@
 #include "ModuleFacade.h"
 #include "FloodCommand.h"
 #include "wrapper/Command.h"
-#include "wrapper/Hook.h"
-#include "wrapper/View.h"
 
 using namespace sword;
 using namespace sword::propagation;

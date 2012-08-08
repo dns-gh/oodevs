@@ -16,10 +16,6 @@
 
 namespace sword
 {
-namespace wrapper
-{
-    class View;
-}
 namespace propagation
 {
 // =============================================================================
