@@ -191,6 +191,15 @@ std::string SymbolFactory::CreateSymbol( const std::string& hierarchy ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: SymbolFactory::GetNatureFromSymbol
+// Created: ABR 2012-08-08
+// -----------------------------------------------------------------------------
+std::string SymbolFactory::GetNatureFromSymbol( const std::string& symbol ) const
+{
+    return symbolRule_->ConvertToNature( symbol );
+}
+
+// -----------------------------------------------------------------------------
 // Name: SymbolFactory::CreateLevelSymbol
 // Created: AGE 2006-10-23
 // -----------------------------------------------------------------------------

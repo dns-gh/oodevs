@@ -85,6 +85,7 @@ private slots:
     void Engage();
     void Disengage();
     void ChangeAutomatType();
+    void OnChangeLevel( int levelId );
     //@}
 
 private:

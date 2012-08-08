@@ -15,7 +15,10 @@
 namespace kernel
 {
     class Entity_ABC;
+    class SymbolFactory;
 }
+
+class Agent;
 
 // =============================================================================
 /** @class  AgentHierarchies
@@ -28,7 +31,7 @@ class AgentHierarchies : public TacticalHierarchies
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, const std::string& level, const std::string& symbol, kernel::Entity_ABC* superior );
+             AgentHierarchies( kernel::Controller& controller, Agent& holder, kernel::Entity_ABC* superior, kernel::SymbolFactory& factory );
     virtual ~AgentHierarchies();
     //@}
 
@@ -36,7 +39,9 @@ public:
     //@{
     virtual const kernel::Entity_ABC* GetSuperior() const;
     virtual std::string GetLevel() const;
+    void SetLevel( E_NatureLevel level );
     virtual std::string GetSymbol() const;
+    void SetSymbol( const std::string& symbol );
     virtual void UpdateSymbolUpward();
     void UpdateSymbol( const std::string& level, const std::string& symbol );
     //@}
@@ -57,6 +62,7 @@ private:
 private:
     //! @name Member data
     //@{
+    kernel::SymbolFactory& symbolFactory_;
     std::string level_;
     std::string baseSymbol_;
     std::string symbol_;

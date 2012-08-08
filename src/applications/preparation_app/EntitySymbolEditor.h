@@ -3,12 +3,13 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2011 MASA Group
+// Copyright (c) 2012 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __GhostSymbolEditor_h_
-#define __GhostSymbolEditor_h_
+#ifndef __EntitySymbolEditor_h_
+#define __EntitySymbolEditor_h_
+
 
 #include "clients_kernel/SymbolVisitor_ABC.h"
 #include "ENT/ENT_Enums_Gen.h"
@@ -16,6 +17,7 @@
 
 namespace kernel
 {
+    class Agent_ABC;
     class Controllers;
     class Ghost_ABC;
     class Entity_ABC;
@@ -32,26 +34,27 @@ namespace gui
 }
 
 // =============================================================================
-/** @class  GhostSymbolEditor
-    @brief  GhostSymbolEditor
+/** @class  EntitySymbolEditor
+    @brief  EntitySymbolEditor
 */
-// Created: ABR 2011-10-28
+// Created: ABR 2012-08-08
 // =============================================================================
-class GhostSymbolEditor : public QWidget
-                        , private boost::noncopyable
+class EntitySymbolEditor : public QWidget
+                         , private boost::noncopyable
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             GhostSymbolEditor( QGridLayout* layout, int row, kernel::Controllers& controllers, kernel::SymbolFactory& symbolsFactory, gui::SymbolIcons& icons, gui::ColorStrategy_ABC& colorStrategy );
-    virtual ~GhostSymbolEditor();
+             EntitySymbolEditor( QGridLayout* layout, int row, kernel::Controllers& controllers, kernel::SymbolFactory& symbolsFactory,
+                                 gui::SymbolIcons& icons, gui::ColorStrategy_ABC& colorStrategy, const QString& iconPreviewToolTips = QString() );
+    virtual ~EntitySymbolEditor();
     //@}
 
     //! @name Operations
     //@{
-    void Fill( const kernel::Ghost_ABC& ghost );
+    void Fill( const kernel::Entity_ABC& entity, const QString& nature, const QString& level );
     void Reset();
     //@}
 
@@ -62,12 +65,13 @@ public:
     const std::string& GetNature() const;
     E_GhostType GetGhostType() const;
     bool IsLevelValid() const;
+    void SetDeep( int deep );
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void FillLevelFromParent( const kernel::Entity_ABC* parent );
+    void FillLevel();
     //@}
 
 signals:
@@ -89,8 +93,8 @@ private:
     //@{
     kernel::SymbolFactory&          symbolsFactory_;
     // Level
-    std::string                     level_;
     E_GhostType                     ghostType_;
+    std::string                     level_;
     QString                         levelBase_;
     QComboBox*                      levelComboBox_;
     QStringList                     levelNames_;
@@ -102,4 +106,4 @@ private:
     //@}
 };
 
-#endif // __GhostSymbolEditor_h_
+#endif // __EntitySymbolEditor_h_

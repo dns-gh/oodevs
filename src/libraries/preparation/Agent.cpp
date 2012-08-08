@@ -10,6 +10,8 @@
 #include "preparation_pch.h"
 #include "Agent.h"
 #include "IdManager.h"
+#include "AgentHierarchies.h"
+#include "clients_kernel/AgentNature.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/Controller.h"
@@ -18,9 +20,11 @@
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Styles.h"
+#include "clients_kernel/SymbolFactory.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "ENT/ENT_Tr_Gen.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -32,8 +36,11 @@ using namespace kernel;
 Agent::Agent( const AgentType& type, Controller& controller, IdManager& idManager )
     : EntityImplementation< Agent_ABC >( controller, idManager.GetNextId(), type.GetName().c_str() )
     , type_                ( type )
-    , symbol_              ( type_.GetSymbol() )
+    , symbolPath_          ( type_.GetSymbol() )
     , criticalIntelligence_( "" )
+    , level_               ( ENT_Tr::ConvertToNatureLevel( type.GetNature().GetLevel() ) )
+    , overridenSymbol_     ( false )
+    , nature_              ( type.GetNature().GetNature() )
 {
     RegisterSelf( *this );
     CreateDictionary( controller );
@@ -53,16 +60,29 @@ namespace
 // Name: Agent constructor
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-Agent::Agent( xml::xistream& xis, Controller& controller, IdManager& idManager, const AgentType& type )
+Agent::Agent( xml::xistream& xis, Controller& controller, IdManager& idManager, const AgentType& type, const kernel::SymbolFactory& symbolFactory )
     : EntityImplementation< Agent_ABC >( controller, xis.attribute< unsigned long >( "id" ), ReadName( xis ) )
-    , type_       ( type )
-    , symbol_     ( type_.GetSymbol() )
+    , type_           ( type )
+    , symbolPath_     ( type_.GetSymbol() )
+    , overridenSymbol_( xis.attribute< bool >( "overridden-symbol", false ) )
+    , nature_         ( type.GetNature().GetNature() )
 {
-    std::string criticalIntelligence;
+    std::string criticalIntelligence = "";
+    std::string level = "";
     xis >> xml::optional
             >> xml::start( "critical-intelligence" )
                 >> xml::attribute( "content", criticalIntelligence )
-            >> xml::end;
+            >> xml::end
+        >> xml::optional
+            >> xml::attribute( "level", level );
+    if( overridenSymbol_ && xis.has_attribute( "nature" ) )
+    {
+        xis >> xml::attribute( "nature", nature_ );
+        symbolPath_ = "symbols/" + nature_;
+        nature_ = symbolFactory.GetNatureFromSymbol( nature_ );
+    }
+
+    level_ = ENT_Tr::ConvertToNatureLevel( ( level.empty() ) ? type.GetNature().GetLevel() : level );
     criticalIntelligence_ = criticalIntelligence.c_str();
     idManager.Lock( id_ );
     RegisterSelf( *this );
@@ -94,6 +114,21 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
+// Name: Agent::InitializeSymbol
+// Created: ABR 2012-08-08
+// -----------------------------------------------------------------------------
+void Agent::InitializeSymbol() const
+{
+    const kernel::TacticalHierarchies& hierarchies = Get< kernel::TacticalHierarchies >();
+    const std::string symbol = hierarchies.GetSymbol();
+    const std::string level = hierarchies.GetLevel();
+    if( symbolPath_ == symbol && levelPath_ == level )
+        return;
+    symbolPath_ = symbol;
+    levelPath_ = level;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Agent::Draw
 // Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
@@ -101,11 +136,12 @@ void Agent::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& vi
 {
     if( viewport.IsHotpointVisible() )
     {
-        const kernel::Karma& karma = Get< TacticalHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
-        kernel::App6Symbol::SetKarma( symbol_,karma );
-        tools.DrawApp6Symbol( symbol_, where, -1.f );
+        InitializeSymbol();
+        const kernel::Karma& karma = Get< kernel::TacticalHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
+        kernel::App6Symbol::SetKarma( symbolPath_, karma );
+        tools.DrawApp6Symbol( symbolPath_, where, -1.f );
         geometry::Point2f center( where.X(), where.Y() + GetFactor( karma ) );
-        tools.DrawApp6Symbol( type_.GetLevelSymbol(), center, -1.f );
+        tools.DrawApp6Symbol( levelPath_, center, -1.f );
     }
 }
 
@@ -152,6 +188,15 @@ void Agent::SerializeAttributes( xml::xostream& xos ) const
     xos << xml::attribute( "id", long( id_ ) )
         << xml::attribute( "type", type_.GetName() )
         << xml::attribute( "name", name_.ascii() );
+    if( level_ != ENT_Tr::ConvertToNatureLevel( type_.GetNature().GetLevel() ) )
+        xos << xml::attribute( "level", ENT_Tr::ConvertFromNatureLevel( level_ ) );
+    if( overridenSymbol_ )
+    {
+        std::string symbol = symbolPath_;
+        symbol.erase( 0, 8 );
+        xos << xml::attribute( "overridden-symbol", true )
+            << xml::attribute( "nature", symbol );
+    }
     if( criticalIntelligence_() != "" )
     {
         xos << xml::start( "critical-intelligence" )
@@ -171,4 +216,63 @@ void Agent::DisplayInTooltip( Displayer_ABC& displayer ) const
                  .Add( (Agent_ABC*)this )
                  .AddToDisplay( id );
     displayer.End();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::GetLevel
+// Created: ABR 2012-08-08
+// -----------------------------------------------------------------------------
+E_NatureLevel Agent::GetLevel() const
+{
+    return level_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::GetNature
+// Created: ABR 2012-08-08
+// -----------------------------------------------------------------------------
+const std::string& Agent::GetNature() const
+{
+    return nature_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::GetSymbol
+// Created: ABR 2012-08-08
+// -----------------------------------------------------------------------------
+const std::string& Agent::GetSymbol() const
+{
+    return symbolPath_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::SetLevel
+// Created: ABR 2012-08-08
+// -----------------------------------------------------------------------------
+void Agent::SetLevel( E_NatureLevel level )
+{
+    AgentHierarchies& pAgentHierachies = static_cast< AgentHierarchies& >( Get< kernel::TacticalHierarchies >() );
+    level_ = level;
+    pAgentHierachies.SetLevel( level_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::SetSymbol
+// Created: ABR 2012-08-08
+// -----------------------------------------------------------------------------
+void Agent::SetSymbol( const std::string& symbol )
+{
+    AgentHierarchies& pAgentHierachies = static_cast< AgentHierarchies& >( Get< kernel::TacticalHierarchies >() );
+    overridenSymbol_ = true;
+    symbolPath_ = "symbols/" + symbol;
+    pAgentHierachies.SetSymbol( symbol );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::SetNature
+// Created: ABR 2012-08-08
+// -----------------------------------------------------------------------------
+void Agent::SetNature( const std::string& nature )
+{
+    nature_ = nature;
 }

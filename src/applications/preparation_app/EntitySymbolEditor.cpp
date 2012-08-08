@@ -3,13 +3,13 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2011 MASA Group
+// Copyright (c) 2012 MASA Group
 //
 // *****************************************************************************
 
 #include "preparation_app_pch.h"
-#include "GhostSymbolEditor.h"
-#include "moc_GhostSymbolEditor.cpp"
+#include "EntitySymbolEditor.h"
+#include "moc_EntitySymbolEditor.cpp"
 
 #include "clients_gui/NatureEditionCategory.h"
 #include "clients_gui/NatureEditionWidget.h"
@@ -24,27 +24,28 @@
 #include "clients_kernel/Tools.h"
 
 // -----------------------------------------------------------------------------
-// Name: GhostSymbolEditor constructor
+// Name: EntitySymbolEditor constructor
 // Created: ABR 2011-11-02
 // -----------------------------------------------------------------------------
-GhostSymbolEditor::GhostSymbolEditor( QGridLayout* layout, int row, kernel::Controllers& controllers, kernel::SymbolFactory& symbolsFactory, gui::SymbolIcons& icons, gui::ColorStrategy_ABC& colorStrategy )
+EntitySymbolEditor::EntitySymbolEditor( QGridLayout* layout, int row, kernel::Controllers& controllers, kernel::SymbolFactory& symbolsFactory,
+                                        gui::SymbolIcons& icons, gui::ColorStrategy_ABC& colorStrategy, const QString& iconPreviewToolTips )
     : QWidget( ( layout && layout->parentWidget() ) ? layout->parentWidget() : 0 )
     , symbolsFactory_( symbolsFactory )
 {
     // Level
-    layout->addWidget( new QLabel( tr( "Level:" ), this ), row, 0 );
+    layout->addWidget( new QLabel( tr( "Hierarchy level:" ), this ), row, 0 );
     levelComboBox_ = new QComboBox( this );
     levelBase_ = tr( "Select a parent automat or formation" );
     connect( levelComboBox_, SIGNAL( activated( int ) ), SLOT( UpdateSymbol() ) );
     layout->addWidget( levelComboBox_, row, 1 );
 
     // Nature
-    natureWidget_ = new gui::NatureEditionWidget( layout, row + 1, 2 );
+    natureWidget_ = new gui::NatureEditionWidget( layout, row + 1, 4 );
     connect( natureWidget_, SIGNAL( textChanged( const QString& ) ), SLOT( UpdateSymbol() ) );
 
     // Icon
-    icon_ = new gui::UnitPreviewIcon( this, controllers, icons, colorStrategy, tr( "Drag and drop symbol to map to create a new phantom." ) );
-    layout->addWidget( icon_, row + 3, 0, 1, 2 );
+    icon_ = new gui::UnitPreviewIcon( this, controllers, icons, colorStrategy, iconPreviewToolTips );
+    layout->addWidget( icon_, row + 5, 0, 1, 2 );
     connect( icon_, SIGNAL( StartDrag() ), SIGNAL( StartDrag() ) );
     connect( icon_, SIGNAL( SelectionChanged( const kernel::Entity_ABC* ) ), SLOT( OnSelectionChanged( const kernel::Entity_ABC* ) ) );
 
@@ -55,64 +56,64 @@ GhostSymbolEditor::GhostSymbolEditor( QGridLayout* layout, int row, kernel::Cont
 }
 
 // -----------------------------------------------------------------------------
-// Name: GhostSymbolEditor destructor
+// Name: EntitySymbolEditor destructor
 // Created: ABR 2011-10-28
 // -----------------------------------------------------------------------------
-GhostSymbolEditor::~GhostSymbolEditor()
+EntitySymbolEditor::~EntitySymbolEditor()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: GhostSymbolEditor::GetSymbol
+// Name: EntitySymbolEditor::GetSymbol
 // Created: ABR 2011-11-04
 // -----------------------------------------------------------------------------
-const std::string& GhostSymbolEditor::GetSymbol() const
+const std::string& EntitySymbolEditor::GetSymbol() const
 {
     return icon_->GetSymbol();
 }
 
 // -----------------------------------------------------------------------------
-// Name: GhostSymbolEditor::GetNature
+// Name: EntitySymbolEditor::GetNature
 // Created: ABR 2011-11-04
 // -----------------------------------------------------------------------------
-const std::string& GhostSymbolEditor::GetNature() const
+const std::string& EntitySymbolEditor::GetNature() const
 {
     return nature_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: GhostSymbolEditor::GetLevel
+// Name: EntitySymbolEditor::GetLevel
 // Created: ABR 2011-11-04
 // -----------------------------------------------------------------------------
-const std::string& GhostSymbolEditor::GetLevel() const
+const std::string& EntitySymbolEditor::GetLevel() const
 {
     return level_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: GhostSymbolEditor::GetGhostType
+// Name: EntitySymbolEditor::GetGhostType
 // Created: ABR 2011-11-04
 // -----------------------------------------------------------------------------
-E_GhostType GhostSymbolEditor::GetGhostType() const
+E_GhostType EntitySymbolEditor::GetGhostType() const
 {
     return ghostType_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: GhostSymbolEditor::IsLevelValid
+// Name: EntitySymbolEditor::IsLevelValid
 // Created: ABR 2011-11-04
 // -----------------------------------------------------------------------------
-bool GhostSymbolEditor::IsLevelValid() const
+bool EntitySymbolEditor::IsLevelValid() const
 {
     return levelComboBox_->currentText() != levelBase_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: GhostSymbolEditor::UpdateSymbol
+// Name: EntitySymbolEditor::UpdateSymbol
 // Created: ABR 2011-10-28
 // -----------------------------------------------------------------------------
-void GhostSymbolEditor::UpdateSymbol()
+void EntitySymbolEditor::UpdateSymbol()
 {
     nature_ = natureWidget_->text().ascii();
     icon_->SetSymbol( symbolsFactory_.CreateSymbol( nature_ ) );
@@ -130,53 +131,50 @@ void GhostSymbolEditor::UpdateSymbol()
 }
 
 // -----------------------------------------------------------------------------
-// Name: GhostSymbolEditor::FillLevelFromParent
+// Name: EntitySymbolEditor::FillLevel
 // Created: ABR 2011-11-04
 // -----------------------------------------------------------------------------
-void GhostSymbolEditor::FillLevelFromParent( const kernel::Entity_ABC* parent )
+void EntitySymbolEditor::FillLevel()
 {
-    E_NatureLevel parentLevel = eNatureLevel_None;
-
-    if( parent )
-    {
-        const kernel::TacticalHierarchies* pHierarchy = parent->Retrieve< kernel::TacticalHierarchies >();
-        if( pHierarchy )
-        {
-            std::string level = pHierarchy->GetLevel();
-            level.erase( 0, 7 );
-            parentLevel = tools::NatureLevelFromString( level );
-        }
-    }
     levelComboBox_->clear();
-    for( int i = parentLevel - 1; i > eNatureLevel_None; --i )
+    for( int i = eNatureLevel_xxxxx; i > eNatureLevel_None; --i )
         levelComboBox_->addItem( levelNames_[ i ] );
-    if( levelComboBox_->count() == 0 )
-        levelComboBox_->addItem( levelBase_ );
     emit( LevelChanged() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: GhostSymbolEditor::OnSelectionChanged
+// Name: EntitySymbolEditor::OnSelectionChanged
 // Created: ABR 2011-10-28
 // -----------------------------------------------------------------------------
-void GhostSymbolEditor::OnSelectionChanged( const kernel::Entity_ABC* parent )
+void EntitySymbolEditor::OnSelectionChanged( const kernel::Entity_ABC* parent )
 {
     ghostType_ = eGhostType_Invalid;
-
+    levelComboBox_->clear();
     if( parent )
+    {
         ghostType_ = ( parent->GetTypeName() == kernel::Automat_ABC::typeName_ ) ? eGhostType_Agent :
-                    ( parent->GetTypeName() == kernel::Formation_ABC::typeName_ ) ? eGhostType_Automat :
-                    eGhostType_Invalid;
-
-    FillLevelFromParent( parent );
+            ( parent->GetTypeName() == kernel::Formation_ABC::typeName_ ) ? eGhostType_Automat :
+            eGhostType_Invalid;
+    if( ghostType_ != eGhostType_Invalid )
+    {
+        FillLevel();
+        std::string level = parent->Get< kernel::TacticalHierarchies >().GetLevel();
+        level.erase( 0, 7 );
+        levelComboBox_->setCurrentText( level.c_str() );
+    }
+    else
+        levelComboBox_->addItem( levelBase_ );
+    }
+    else
+        levelComboBox_->addItem( levelBase_ );
     UpdateSymbol();
 }
 
 // -----------------------------------------------------------------------------
-// Name: GhostSymbolEditor::Reset
+// Name: EntitySymbolEditor::Reset
 // Created: ABR 2011-10-28
 // -----------------------------------------------------------------------------
-void GhostSymbolEditor::Reset()
+void EntitySymbolEditor::Reset()
 {
     natureWidget_->Clear();
     natureWidget_->SetRootSymbolRule( *symbolsFactory_.GetSymbolRule() );
@@ -185,21 +183,26 @@ void GhostSymbolEditor::Reset()
 }
 
 // -----------------------------------------------------------------------------
-// Name: GhostSymbolEditor::Fill
+// Name: EntitySymbolEditor::Fill
 // Created: ABR 2011-11-02
 // -----------------------------------------------------------------------------
-void GhostSymbolEditor::Fill( const kernel::Ghost_ABC& ghost )
+void EntitySymbolEditor::Fill( const kernel::Entity_ABC& entity, const QString& nature, const QString& level )
 {
     natureWidget_->Clear();
     natureWidget_->SetRootSymbolRule( *symbolsFactory_.GetSymbolRule() );
     natureWidget_->setText( "undefined/undefined/undefined/undefined" );
-    {
-        const kernel::TacticalHierarchies* pHierarchy = ghost.Retrieve< kernel::TacticalHierarchies >();
-        assert( pHierarchy && pHierarchy->GetSuperior() );
-        FillLevelFromParent( pHierarchy->GetSuperior() );
-        assert( IsLevelValid() );
-    }
-    icon_->SetSelectedParent( &ghost ); // $$$$ ABR 2011-11-07: We want color and karma from the ghost, not from his parent
+    FillLevel();
+    levelComboBox_->setCurrentText( level );
+    icon_->SetSelectedParent( &entity );
     UpdateSymbol();
-    natureWidget_->setText( ghost.GetNature().c_str() );
+    natureWidget_->setText( nature );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntitySymbolEditor::SetDeep
+// Created: ABR 2012-08-08
+// -----------------------------------------------------------------------------
+void EntitySymbolEditor::SetDeep( int deep )
+{
+    natureWidget_->SetDeep( deep );
 }

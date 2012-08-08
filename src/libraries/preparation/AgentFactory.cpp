@@ -121,7 +121,7 @@ Agent_ABC* AgentFactory::Create( Automat_ABC& parent, const AgentType& type, con
         result->Rename( name );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( *new AgentPositions( *result, static_.coordinateConverter_, controllers_.controller_, position, dico ) );
-    result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, result->GetType().GetLevelSymbol(), result->GetType().GetSymbol(), &parent ) );
+    result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent, symbolsFactory_ ) );
     result->Attach( *new InitialState( static_, result->GetType().GetId() ) );
     result->Attach< Affinities >( *new AgentAffinities( *result, controllers_, model_, dico, tools::translate( "Affinities", "Affinities" ) ) );
     if( result->GetType().IsLogisticSupply() )
@@ -253,10 +253,10 @@ Agent_ABC* AgentFactory::Create( xml::xistream& xis, Automat_ABC& parent )
     const AgentType* type = static_.types_.Resolver< AgentType, std::string >::Find( xis.attribute< std::string >( "type" ) );
     if( !type )
         return 0;
-    Agent* result = new Agent( xis, controllers_.controller_, idManager_, *type );
+    Agent* result = new Agent( xis, controllers_.controller_, idManager_, *type, symbolsFactory_ );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( *new AgentPositions( xis, *result, static_.coordinateConverter_, controllers_.controller_, dico ) );
-    result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, result->GetType().GetLevelSymbol(), result->GetType().GetSymbol(), &parent ) );
+    result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent, symbolsFactory_ ) );
     result->Attach( *new InitialState( xis, static_, result->GetType().GetId() ) );
     result->Attach< Affinities >( *new AgentAffinities( xis, *result, controllers_, model_, dico, tools::translate( "Affinities", "Affinities" ) ) );
     result->Attach< CommandPostAttributes_ABC >( *new ::CommandPostAttributes( xis, controllers_.controller_, *result, *type, dico ) );
@@ -352,7 +352,7 @@ kernel::Agent_ABC* AgentFactory::Create( kernel::Ghost_ABC& ghost, const kernel:
         Entity_ABC* tactSuperior = const_cast< Entity_ABC* >( ghostHierarchy->GetSuperior() );
         assert( tactSuperior );
 
-        result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, result->GetType().GetLevelSymbol(), result->GetType().GetSymbol(), tactSuperior ) );
+        result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, tactSuperior, symbolsFactory_ ) );
     }
     result->Attach( *new InitialState( static_, result->GetType().GetId() ) );
     result->Attach< Affinities >( *new AgentAffinities( *result, controllers_, model_, dico, tools::translate( "Affinities", "Affinities" ) ) );

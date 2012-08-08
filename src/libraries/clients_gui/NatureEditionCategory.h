@@ -39,6 +39,7 @@ public:
     void SetNature( const QString& nature );
     void SetRootSymbolRule( kernel::SymbolRule& root );
     void Clear();
+    void SetDeep( int deep );
     //@}
 
 signals:

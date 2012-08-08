@@ -10,7 +10,7 @@
 #ifndef __GhostHierarchies_h_
 #define __GhostHierarchies_h_
 
-#include "AgentHierarchies.h"
+#include "TacticalHierarchies.h"
 #include "clients_kernel/Serializable_ABC.h"
 
 namespace kernel
@@ -24,7 +24,7 @@ namespace kernel
 */
 // Created: ABR 2012-06-28
 // =============================================================================
-class GhostHierarchies : public AgentHierarchies
+class GhostHierarchies : public TacticalHierarchies
                        , public kernel::Serializable_ABC
 {
 
@@ -39,6 +39,30 @@ public:
     //@{
     virtual void SerializeAttributes( xml::xostream& ) const;
     //@}
+
+    //! @name Operations
+    //@{
+    virtual const kernel::Entity_ABC* GetSuperior() const;
+    virtual std::string GetLevel() const;
+    virtual std::string GetSymbol() const;
+    virtual void UpdateSymbolUpward();
+    void UpdateSymbol( const std::string& level, const std::string& symbol );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    virtual void DoUpdate( const kernel::InstanciationComplete& );
+    void UpdateKarma( const kernel::Entity_ABC& superior );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    std::string level_;
+    std::string baseSymbol_;
+    std::string symbol_;
+    kernel::Entity_ABC* superior_;
 };
 
 #endif // __GhostHierarchies_h_

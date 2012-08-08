@@ -11,6 +11,7 @@ CsvExport.cpp \
 DockContainer.cpp \
 DotationsEditor.cpp \
 EditorFactory.cpp \
+EntitySymbolEditor.cpp \
 ExerciseCreationDialog.cpp \
 ExerciseDialog.cpp \
 ExtensionsPanel.cpp \
@@ -25,10 +26,7 @@ FilterManager.cpp \
 FilterPartiesListView.cpp \
 FilterOrbatReIndexer.cpp \
 FilterXsl.cpp \
-FormationHierarchyEditor.cpp \
 GhostsPanel.cpp \
-GhostSymbolDialog.cpp \
-GhostSymbolEditor.cpp \
 InhabitantCreationPanel.cpp \
 InhabitantListView.cpp \
 InitialStateDialog.cpp \
@@ -72,6 +70,7 @@ SuccessFactorConditionsEditor.cpp \
 SuccessFactorDialog.cpp \
 SuccessFactorEditor.cpp \
 SuccessFactorList.cpp \
+SymbolDialog.cpp \
 SymbolEditor.cpp \
 TacticalListView.cpp \
 TemplateListView.cpp \

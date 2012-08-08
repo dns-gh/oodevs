@@ -83,8 +83,6 @@ kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, const kerne
     else
     {
         assert( prototype.ghostType_ == eGhostType_Automat );
-        const kernel::Karma& karma = parent.Get< kernel::TacticalHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
-        result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( symbolsFactory_.GetSymbolBase( karma ) ) );
         Entity_ABC* kg = AgentFactory::FindorCreateKnowledgeGroup( parent, knowledgeGroupFactory_ );
         result->Attach< CommunicationHierarchies >( *new AutomatCommunications( controllers_.controller_, *result, kg ) );
         result->Attach( *new LogisticLevelAttritube( controllers_, *result, dico ) );
@@ -114,7 +112,6 @@ kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, xml::xistre
     else
     {
         assert( result->GetGhostType() == eGhostType_Automat );
-        result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( xis ) );
         result->Attach< CommunicationHierarchies >( *new AutomatCommunications( xis, controllers_.controller_, *result, model_.knowledgeGroups_ ) );
         result->Attach( *new LogisticLevelAttritube( controllers_, xis, *result, true, dico ) );
         result->Attach< LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_, *result, staticModel_.objectTypes_, dico, result->GetLogisticLevel() != LogisticLevel::none_ ) );
@@ -146,7 +143,6 @@ kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, xml::xistre
         assert( result->GetGhostType() == eGhostType_Automat );
         const geometry::Point2f position = ComputeAutomatPosition( xis );
         result->Attach< Positions >( *new GhostPositions( *result, staticModel_.coordinateConverter_, controllers_.controller_, position, dico ) );
-        result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( xis ) );
         result->Attach< CommunicationHierarchies >( *new AutomatCommunications( xis, controllers_.controller_, *result, model_.knowledgeGroups_ ) );
         result->Attach( *new LogisticLevelAttritube( controllers_, xis, *result, true, dico ) );
         result->Attach< LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_, *result, staticModel_.objectTypes_, dico, result->GetLogisticLevel() != LogisticLevel::none_ ) );

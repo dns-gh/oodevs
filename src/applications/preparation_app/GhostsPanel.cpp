@@ -10,6 +10,7 @@
 #include "preparation_app_pch.h"
 #include "GhostsPanel.h"
 #include "moc_GhostsPanel.cpp"
+#include "EntitySymbolEditor.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -20,8 +21,6 @@
 #include "clients_kernel/Tools.h"
 #include "clients_gui/UnitPreviewIcon.h"
 #include "clients_gui/ValuedDragObject.h"
-
-#include "GhostSymbolEditor.h"
 
 using namespace kernel;
 
@@ -53,7 +52,8 @@ GhostsPanel::GhostsPanel( QWidget* parent, gui::PanelStack_ABC& panel, Controlle
     layout->addWidget( typeLineEdit_, 1, 1 );
 
     // Symbol Editor
-    symbolEditor_ = new GhostSymbolEditor( layout, 2, controllers_, symbolsFactory_, icons, colorStrategy );
+    symbolEditor_ = new EntitySymbolEditor( layout, 2, controllers_, symbolsFactory_, icons, colorStrategy, tr( "Drag and drop symbol to map to create a new phantom." ) );
+    symbolEditor_->SetDeep( 2 );
     connect( symbolEditor_, SIGNAL( LevelChanged() ), SLOT( UpdateWarning() ) );
     connect( symbolEditor_, SIGNAL( StartDrag() ), SLOT( IconDragged() ) );
 
