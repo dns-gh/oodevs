@@ -92,7 +92,7 @@ public:
     //@{
     virtual QString GetLinkName( const std::string& resource, unsigned int i ) const = 0;
     virtual void Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const = 0;
-    virtual ResourceNode& FindOrCreateResourceNode( std::string resource )
+    virtual ResourceNode& FindOrCreateResourceNode( const std::string& resource )
     {
         IT_ResourceNodes it = resourceNodes_.find( resource );
         if( it == resourceNodes_.end() )
@@ -101,6 +101,28 @@ public:
             return resourceNodes_[ resource ];
         }
         return it->second;
+    }
+    virtual void RemoveNode( const std::string& resource, bool urban, unsigned int id )
+    {
+        IT_ResourceNodes it = resourceNodes_.find( resource );
+        if( it == resourceNodes_.end() )
+            return;
+        for( IT_ResourceNodes it = resourceNodes_.begin(); it != resourceNodes_.end(); ++it )
+        {
+            T_ResourceLinks& links = it->second.links_;
+            if( !links.empty() )
+            {
+                IT_ResourceLinks link = links.begin();
+                while( link != links.end() )
+                {
+                    if( link->id_ == id && link->urban_ == urban )
+                        link = links.erase( link );
+                    else
+                        ++link;
+                }
+            }
+        }
+        resourceNodes_.erase( resource );
     }
     void Select( bool selected ) { selected_ = selected; }
     bool IsSelected() const { return selected_; }

@@ -1543,6 +1543,10 @@ Voulez-vous le supprimer?</translation>
         <source>Create node</source>
         <translation>Créer un nouveau noeud</translation>
     </message>
+    <message>
+        <source>Remove node</source>
+        <translation>Supprimer le noeud</translation>
+    </message>
 </context>
 <context>
     <name>gui::ResourceNetworkPrototype_ABC</name>

@@ -1537,6 +1537,10 @@ Voulez-vous le supprimer?</translation>
         <source>Create node</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Remove node</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::ResourceNetworkPrototype_ABC</name>

@@ -224,6 +224,7 @@ void UrbanModel::LoadUrban( xml::xistream& xis )
                 >> xml::list( "urban-object", *this, &UrbanModel::ReadCity )
             >> xml::end
         >> xml::end;
+    CleanLinks();
 }
 
 // -----------------------------------------------------------------------------
@@ -591,4 +592,21 @@ void UrbanModel::ExportShapeFile( const std::string exportDirectory, const tools
     pUrbanExportManager->Run();
     pUrbanExportManager.release();
     SetProgression( progressDialog, 100, "" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanModel::CleanLinks
+// Created: JSR 2012-08-08
+// -----------------------------------------------------------------------------
+void UrbanModel::CleanLinks()
+{
+    for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    {
+        kernel::Entity_ABC& entity = *it->second;
+        kernel::ResourceNetwork_ABC* abstractExtension = entity.Retrieve< kernel::ResourceNetwork_ABC >();
+        if( !abstractExtension )
+            continue;
+        ResourceNetworkAttribute* extension = static_cast< ResourceNetworkAttribute* >( abstractExtension );
+        extension->CleanLinksToDeletedUrbanBlocks();
+    }
 }
