@@ -379,20 +379,20 @@
     Client must first establish a TCP connection to a running Dispatcher. @n
     The network port on which the Simulation and Dispatcher accept connections are defined for each exercise session into the session.xml file :
     @code
-<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<session>
-  <config>
-    <dispatcher>
-      <network client="localhost:10000" server="10001"/>
-    </dispatcher>
-[...]
-    <simulation>
-[...]
-      <network port="10000"/>
-[...]
-    </simulation>
-  </config>
-</session>
+    <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+    <session>
+      <config>
+        <dispatcher>
+          <network client="localhost:10000" server="10001"/>
+        </dispatcher>
+    [...]
+        <simulation>
+    [...]
+          <network port="10000"/>
+    [...]
+        </simulation>
+      </config>
+    </session>
     @endcode
 
     <table border="1" style="border-collapse: collapse; border:1px solid gray;">
@@ -427,34 +427,34 @@
     Here is a short C++ example of message decoding :
 
     @code
-void Decode( std::istream& input, MessageHandler& handler )
-{
-    // read header and tag
-    unsigned long size, tag;
-    input >> size >> tag;
-    size = ntohl( size );
-    tag = ntohl( size );
-    // read message content buffer
-    const unsigned long contentSize = size - sizeof( tag );
-    char* buffer = new char[ contentSize ];
-    input.read( buffer, contentSize ];
-    // check tag to determine the type of message
-    if( tag == MESSAGE_AUTHENTICATION_TO_CLIENT )
+    void Decode( std::istream& input, MessageHandler& handler )
     {
-        // allocate result container message
-        sword::AuthenticationToClient result;
-        // decode message buffer to result
-        if( !result.ParseFromString( std::string( buffer, contentSize ) ) )
+        // read header and tag
+        unsigned long size, tag;
+        input >> size >> tag;
+        size = ntohl( size );
+        tag = ntohl( size );
+        // read message content buffer
+        const unsigned long contentSize = size - sizeof( tag );
+        char* buffer = new char[ contentSize ];
+        input.read( buffer, contentSize ];
+        // check tag to determine the type of message
+        if( tag == MESSAGE_AUTHENTICATION_TO_CLIENT )
         {
-            delete[] buffer;
-            throw std::runtime_error( "message decoding failed" );
+            // allocate result container message
+            sword::AuthenticationToClient result;
+            // decode message buffer to result
+            if( !result.ParseFromString( std::string( buffer, contentSize ) ) )
+            {
+                delete[] buffer;
+                throw std::runtime_error( "message decoding failed" );
+            }
+            // notify result message reception
+            handler.NotifyMessage( result );
         }
-        // notify result message reception
-        handler.NotifyMessage( result );
+        delete[] buffer;
     }
-    delete[] buffer;
-}
-@endcode
+    @endcode
 
     @subsection encoding Message encoding
 
@@ -466,21 +466,21 @@ void Decode( std::istream& input, MessageHandler& handler )
 
     Here is a short C++ example of message decoding:
 
-@code
-void Encode( std::ostream& output, const sword::ClientToSim& message )
-{
-    // allocate output buffer
-    google::protobuf::uint8* buffer = new google::protobuf::uint8[ message.ByteSize() ];
-    // serialize message to buffer
-    if( !message.SerializeWithCachedSizesToArray( buffer ) )
-        throw std::runtime_error( "message encoding failed" );
-    const unsigned long tag = MESSAGE_CLIENT_TO_AUTHENTICATION;
-    // write size and tag to output
-    output << htonl( message.GetCachedSize() + sizeof( tag ) ) << htonl( tag );
-    // write buffer to output
-    output.write( buffer, message.GetCachedSize() );
-}
-@endcode
+    @code
+    void Encode( std::ostream& output, const sword::ClientToSim& message )
+    {
+        // allocate output buffer
+        google::protobuf::uint8* buffer = new google::protobuf::uint8[ message.ByteSize() ];
+        // serialize message to buffer
+        if( !message.SerializeWithCachedSizesToArray( buffer ) )
+            throw std::runtime_error( "message encoding failed" );
+        const unsigned long tag = MESSAGE_CLIENT_TO_AUTHENTICATION;
+        // write size and tag to output
+        output << htonl( message.GetCachedSize() + sizeof( tag ) ) << htonl( tag );
+        // write buffer to output
+        output.write( buffer, message.GetCachedSize() );
+    }
+    @endcode
 
   @page initializing Initializing the situation
 
