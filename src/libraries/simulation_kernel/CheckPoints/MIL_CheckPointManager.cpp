@@ -218,9 +218,9 @@ boost::crc_32_type::value_type MIL_CheckPointManager::CreateData( const std::str
     MIL_CheckPointOutArchive* pArchive = new MIL_CheckPointOutArchive( file );
     MIL_AgentServer::GetWorkspace().save( *pArchive );
     file.close();
-#ifndef _DEBUG //$$$$ boost + nedmalloc + binary_ioarchive + std::locale = crash
+//#ifndef _DEBUG //$$$$ boost + nedmalloc + binary_ioarchive + std::locale = crash // $$$$ LDC better avoided by defining BOOST_NO_STD_LOCALE
     delete pArchive;
-#endif
+//#endif
     return MIL_Tools::ComputeCRC( strFileName );
 }
 

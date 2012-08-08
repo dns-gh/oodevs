@@ -10,6 +10,8 @@
 #ifndef __MIL_CheckPointInArchive_h_
 #define __MIL_CheckPointInArchive_h_
 
+#define BOOST_NO_STD_LOCALE
+
 #pragma warning( push, 0 )
 #include <boost/serialization/export.hpp>
 #include <boost/archive/binary_iarchive_impl.hpp>
