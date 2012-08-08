@@ -9,22 +9,25 @@
 
 #include "preparation_pch.h"
 #include "AgentHierarchies.h"
-#include "clients_kernel/Agent_ABC.h"
+#include "Agent.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Karma.h"
+#include "clients_kernel/SymbolFactory.h"
+#include "ENT/ENT_Tr_Gen.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentHierarchies constructor
 // Created: SBO 2006-09-22
 // -----------------------------------------------------------------------------
-AgentHierarchies::AgentHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, const std::string& level, const std::string& symbol, kernel::Entity_ABC* superior )
+AgentHierarchies::AgentHierarchies( kernel::Controller& controller, Agent& holder, kernel::Entity_ABC* superior, kernel::SymbolFactory& factory )
     : TacticalHierarchies( controller, holder, 0 )
-    , level_ ( level )
-    , baseSymbol_( symbol )
-    , symbol_( symbol )
-    , superior_( superior )
+    , level_        ( factory.CreateLevelSymbol( ENT_Tr::ConvertFromNatureLevel( holder.GetLevel() ) ) )
+    , baseSymbol_   ( holder.GetSymbol() )
+    , symbol_       ( holder.GetSymbol() )
+    , superior_     ( superior )
+    , symbolFactory_( factory )
 {
     // NOTHING
 }
@@ -109,4 +112,22 @@ void AgentHierarchies::UpdateSymbol( const std::string& level, const std::string
     level_ = level;
     symbol_ = symbol;
     baseSymbol_ = symbol;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentHierarchies::SetLevel
+// Created: ABR 2012-08-08
+// -----------------------------------------------------------------------------
+void AgentHierarchies::SetLevel( E_NatureLevel level )
+{
+    level_ = symbolFactory_.CreateLevelSymbol( ENT_Tr::ConvertFromNatureLevel( level ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentHierarchies::SetSymbol
+// Created: ABR 2012-08-08
+// -----------------------------------------------------------------------------
+void AgentHierarchies::SetSymbol( const std::string& symbol )
+{
+    symbol_ = symbol;
 }

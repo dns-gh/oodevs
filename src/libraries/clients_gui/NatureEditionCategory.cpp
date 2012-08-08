@@ -222,3 +222,12 @@ void NatureEditionCategory::SetRootSymbolRule( kernel::SymbolRule& root )
     rule_ = &root;
     rule_->Accept( *this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: NatureEditionCategory::SetDeep
+// Created: ABR 2012-08-08
+// -----------------------------------------------------------------------------
+void NatureEditionCategory::SetDeep( int deep )
+{
+    deep_ = deep;
+}

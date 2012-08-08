@@ -17,8 +17,7 @@
 #include "FileLoaderObserver.h"
 #include "FilterDialog.h"
 #include "FilterDialogs.h"
-#include "FormationHierarchyEditor.h"
-#include "GhostSymbolDialog.h"
+#include "SymbolDialog.h"
 #include "LogisticStockEditor.h"
 #include "LogisticLinksEditor.h"
 #include "LongNameEditor.h"
@@ -59,11 +58,10 @@ DialogContainer::DialogContainer( QWidget* parent, kernel::Controllers& controll
     new PeopleAffinitiesDialog( parent, controllers );
     new ColorEditor( parent, controllers, colorStrategy, colorEditor );
     new SymbolEditor( parent, controllers, symbols, config );
-    new GhostSymbolDialog( parent, controllers, model.GetSymbolsFactory(), icons, colorStrategy );
+    new SymbolDialog( parent, controllers, model.GetSymbolsFactory(), icons, colorStrategy );
     new LogisticLinksEditor( parent, controllers );
     new LogisticStockEditor( parent, controllers, staticModel );
     new LongNameEditor( parent, controllers, staticModel );
-    new FormationHierarchyEditor( parent, controllers );
 
     prefDialog_ = new gui::PreferencesDialog( parent, controllers, lighting, staticModel.coordinateSystems_, painter, selector );
     prefDialog_->AddPage( tr( "Orbat" ), *new OrbatPanel( prefDialog_, controllers ) );

@@ -44,6 +44,7 @@ public:
     //! @name Operations
     //@{
     void                       Evaluate( const std::string& request, std::string& result ) const;
+    std::string                ConvertToNature( std::string symbol ) const;
     void                       Accept( SymbolVisitor_ABC& visitor ) const;
     const SymbolRule::T_Cases& GetCases() const;
     //@}
@@ -57,7 +58,8 @@ private:
 
     //! @name Helpers
     //@{
-    void          ReadCase( xml::xistream& xis );
+    void ReadCase( xml::xistream& xis );
+    void InternalConvertToNature( std::string& symbol, std::string& result ) const;
     //@}
 
 private:

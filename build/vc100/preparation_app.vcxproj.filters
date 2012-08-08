@@ -448,12 +448,6 @@
     <ClCompile Include="..\..\src\applications\preparation_app\GhostsLayer.cpp">
       <Filter>Source Files\Layers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\preparation_app\GhostSymbolDialog.cpp">
-      <Filter>Source Files\Dialogs\Editors</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\preparation_app\GhostSymbolEditor.cpp">
-      <Filter>Source Files\Dialogs\Editors</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\ProfilesChecker.cpp">
       <Filter>Source Files\Dialogs\Profiles</Filter>
     </ClCompile>
@@ -465,9 +459,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\UrbanLayer.cpp">
       <Filter>Source Files\Layers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\preparation_app\FormationHierarchyEditor.cpp">
-      <Filter>Source Files\Dialogs\Editors</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\InhabitantLayer.cpp">
       <Filter>Source Files\Layers</Filter>
@@ -521,6 +512,12 @@
       <Filter>Source Files\Panels</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\ChangeAutomatTypeDialog.cpp">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\SymbolDialog.cpp">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\EntitySymbolEditor.cpp">
       <Filter>Source Files\Dialogs\Editors</Filter>
     </ClCompile>
   </ItemGroup>
@@ -913,20 +910,11 @@
     <CustomBuild Include="..\..\src\applications\preparation_app\GhostsPanel.h">
       <Filter>Source Files\Panels\Creation</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\preparation_app\GhostSymbolDialog.h">
-      <Filter>Source Files\Dialogs\Editors</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\preparation_app\GhostSymbolEditor.h">
-      <Filter>Source Files\Dialogs\Editors</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\CommunicationListView.h">
       <Filter>Source Files\Lists</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\NewProfileDialog.h">
       <Filter>Source Files\Dialogs\Profiles</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\preparation_app\FormationHierarchyEditor.h">
-      <Filter>Source Files\Dialogs\Editors</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\LivingAreaPanel.h">
       <Filter>Source Files\Panels\Living area</Filter>
@@ -968,6 +956,12 @@
       <Filter>Source Files\Panels</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\ChangeAutomatTypeDialog.h">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\EntitySymbolEditor.h">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\SymbolDialog.h">
       <Filter>Source Files\Dialogs\Editors</Filter>
     </CustomBuild>
   </ItemGroup>

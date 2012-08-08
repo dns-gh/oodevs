@@ -36,7 +36,7 @@ namespace gui
     class NatureEditionWidget;
 }
 
-class GhostSymbolEditor;
+class EntitySymbolEditor;
 
 // =============================================================================
 /** @class  GhostsPanel
@@ -87,7 +87,7 @@ private:
     QLineEdit*             nameLineEdit_;
     QLineEdit*             typeLineEdit_;
     // Symbol
-    GhostSymbolEditor*     symbolEditor_;
+    EntitySymbolEditor*    symbolEditor_;
     // Warning
     QLabel*                warningLabel_;
     //@}

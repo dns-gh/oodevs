@@ -496,7 +496,7 @@ message FormationCreation {
     required FormationId       formation             = 1;  //!< The formation identifier @see FormationId
     required PartyId           party                 = 2;  //!< The party identifier @see PartyId
     optional FormationId       parent                = 3;  //!< The parent formation identifier @see FormationId
-    required EnumNatureLevel   level                 = 4;  //!< @todo What's this ?
+    required EnumNatureLevel   level                 = 4;  //!< The formation nature level @see EnumNatureLevel
     required string            name                  = 5;  //!< The formation name
     required string            app6symbol            = 7;  //!< The formation APP-6 symbol
     required EnumLogisticLevel logistic_level        = 8;  //!< @todo What's this ?
@@ -618,6 +618,8 @@ message UnitCreation {
    required bool             pc          = 5; //!< Whether the unit is headquarters of its automata
    optional RgbColor         color       = 6; //!< The unit color @see RgbColor
    optional HumanRepartition repartition = 7; //!< The unit human repartition @see HumanRepartition
+   optional EnumNatureLevel  level       = 8; //!< The unit nature level @see EnumNatureLevel
+   optional string           app6symbol  = 9; //!< The unit APP-6 symbol
 }
 
 /** @struct BorrowedEquipments

@@ -16,12 +16,14 @@
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/SubTypes.h"
+#include "ENT/ENT_Enums_Gen.h"
 
 namespace kernel
 {
-    class Controller;
     class AgentType;
     class Automat_ABC;
+    class Controller;
+    class SymbolFactory;
 }
 
 namespace xml
@@ -48,13 +50,19 @@ public:
     //! @name Constructors/Destructor
     //@{
              Agent( const kernel::AgentType& type, kernel::Controller& controller, IdManager& idManager );
-             Agent( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, const kernel::AgentType& type );
+             Agent( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, const kernel::AgentType& type, const kernel::SymbolFactory& symbolFactory );
     virtual ~Agent();
     //@}
 
     //! @name Operations
     //@{
     virtual const kernel::AgentType& GetType() const;
+    virtual E_NatureLevel GetLevel() const;
+    virtual const std::string& GetNature() const;
+    virtual const std::string& GetSymbol() const;
+    virtual void SetLevel( E_NatureLevel level );
+    virtual void SetSymbol( const std::string& symbol );
+    virtual void SetNature( const std::string& nature );
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void DisplayInTooltip( kernel::Displayer_ABC& ) const;
@@ -78,9 +86,13 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::AgentType& type_;
-    mutable std::string symbol_;
-    kernel::CriticalIntelligence criticalIntelligence_;
+    E_NatureLevel                   level_;
+    const kernel::AgentType&        type_;
+    mutable std::string             symbolPath_;
+    mutable std::string             levelPath_;
+    std::string                     nature_;
+    bool                            overridenSymbol_;
+    kernel::CriticalIntelligence    criticalIntelligence_;
     //@}
 };
 

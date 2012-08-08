@@ -332,6 +332,17 @@
     </message>
 </context>
 <context>
+    <name>EntitySymbolEditor</name>
+    <message>
+        <source>Hierarchy level:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a parent automat or formation</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ExerciseCreationDialog</name>
     <message>
         <source>Exercise Creation</source>
@@ -666,47 +677,6 @@
     </message>
 </context>
 <context>
-    <name>FormationHierarchyEditor</name>
-    <message>
-        <source>Change hierarchy level</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>GhostSymbolDialog</name>
-    <message>
-        <source>Phantom symbol editor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
-    </message>
-    <message>
-        <source>Symbol</source>
-        <translation type="unfinished">Símbolo</translation>
-    </message>
-</context>
-<context>
-    <name>GhostSymbolEditor</name>
-    <message>
-        <source>Level:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select a parent automat or formation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Drag and drop symbol to map to create a new phantom.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>GhostsPanel</name>
     <message>
         <source>Phantom</source>
@@ -742,6 +712,10 @@
     </message>
     <message>
         <source>- Superior not set to a formation or an automat.&lt;br&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drag and drop symbol to map to create a new phantom.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2435,6 +2409,25 @@ This data can&apos;t be projected.</source>
     </message>
 </context>
 <context>
+    <name>SymbolDialog</name>
+    <message>
+        <source>Symbol and hierarchy level editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>Symbol and hierarchy level</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SymbolEditor</name>
     <message>
         <source>Symbol</source>
@@ -2477,6 +2470,10 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Replace by a new automat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change hierarchy level</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

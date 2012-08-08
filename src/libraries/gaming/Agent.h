@@ -16,6 +16,7 @@
 #include "tools/Resolver_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
 #include "protocol/SimulationSenders.h"
+#include "ENT/ENT_Enums_Gen.h"
 
 namespace sword
 {
@@ -65,7 +66,7 @@ private:
     //@{
     void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     void CreateDictionary( kernel::Controller& controller );
-    void InitializeSymbol() const;
+    //void InitializeSymbol() const;
     //@}
 
 private:
@@ -73,6 +74,8 @@ private:
     //@{
     const kernel::AgentType& type_;
     mutable std::string symbol_;
+    std::string level_;
+    mutable bool initialized_;
     //@}
 };
 

@@ -74,3 +74,12 @@ void NatureEditionWidget::Clear()
 {
     rootWidget_->Clear();
 }
+
+// -----------------------------------------------------------------------------
+// Name: NatureEditionWidget::SetDeep
+// Created: ABR 2012-08-08
+// -----------------------------------------------------------------------------
+void NatureEditionWidget::SetDeep( int deep )
+{
+    rootWidget_->SetDeep( ( deep < 0 ) ? -1 : deep - 1 );
+}

@@ -44,9 +44,10 @@ UnitPreviewIcon::UnitPreviewIcon( QWidget* parent, Controllers& controllers, Sym
 {
     setStyleSheet( "background-color: white" );
     setFrameStyle( QFrame::Plain | QFrame::Box );
+    setMinimumSize( 135, 135 );
     layout()->setAlignment( Qt::AlignCenter | Qt::AlignHCenter );
     icon_ = new QLabel( this );
-    icon_->setMargin( 10 );
+    icon_->setMargin( 5 );
     if( !tooltips.isEmpty() )
         QToolTip::add( icon_, tooltips );
     UpdateSymbol();

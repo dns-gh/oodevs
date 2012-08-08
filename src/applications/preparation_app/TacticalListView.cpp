@@ -13,6 +13,7 @@
 #include "ChangeAutomatTypeDialog.h"
 #include "ModelBuilder.h"
 #include "PreparationProfile.h"
+#include "Preparation/Agent.h"
 #include "preparation/AgentsModel.h"
 #include "preparation/AutomatDecisions.h"
 #include "preparation/TacticalHierarchies.h"
@@ -314,6 +315,10 @@ void TacticalListView::NotifyContextMenu( const Formation_ABC& formation, Contex
         return;
     if( formation.GetLevel() > eNatureLevel_c )
         AddFormationMenu( menu, static_cast< E_NatureLevel >( formation.GetLevel() ) );
+
+    Q3PopupMenu* subMenu = menu.SubMenu( "Helpers", tr( "Change hierarchy level" ), false, 4 );
+    for( int level = static_cast< int >( eNatureLevel_xxxxx ); level > 0; level-- )
+        subMenu->insertItem( ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( level ), ENT_Tr_ABC::eToTr ).c_str(), this, SLOT( OnChangeLevel( int ) ), 0, level );
 }
 
 // -----------------------------------------------------------------------------
@@ -356,6 +361,25 @@ void TacticalListView::NotifyContextMenu( const kernel::Ghost_ABC& ghost, kernel
         return;
     contextMenuEntity_ = &ghost;
     menu.InsertItem( "Command", tr( "Replace by a new automat" ), this, SLOT( ChangeAutomatType() ), false, 6 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalListView::OnChangeLevel
+// Created: ABR 2012-08-08
+// -----------------------------------------------------------------------------
+void TacticalListView::OnChangeLevel( int levelId )
+{
+    if( contextMenuEntity_ )
+    {
+        if( contextMenuEntity_->GetTypeName() != Formation_ABC::typeName_ )
+            return;
+        static_cast< Formation* >( contextMenuEntity_.ConstCast() )->SetLevel( static_cast< E_NatureLevel >( levelId ) );
+        if( kernel::TacticalHierarchies* pTactical = contextMenuEntity_.ConstCast()->Retrieve< kernel::TacticalHierarchies >() )
+        {
+            pTactical->UpdateSymbolUpward();
+            controllers_.controller_.Update( *pTactical );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -48,6 +48,7 @@
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Agents/Actions/Firing/PHY_FireResults_Pion.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
+#include "Entities/Agents/Units/Categories/PHY_NatureLevel.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Units/Dotations/PHY_AmmoDotationClass.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
@@ -103,6 +104,8 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
     , pExtensions_         ( new MIL_DictionaryExtensions( xis ) )
     , pColor_              ( new MIL_Color( xis ) )
     , pHumanRepartition_   ( new MIL_HumanRepartition( type.GetHumanRepartition() ) )
+    , app6Symbol_          ( "" )
+    , level_               ( "" )
 {
     automate.RegisterPion( *this );
     xis >> xml::optional
@@ -110,7 +113,12 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
                 >> xml::attribute( "content", criticalIntelligence_ )
             >> xml::end;
     bool isPC( xis.attribute< bool >( "command-post", false ) );
-    SetPionAsCommandPost( isPC );        
+    SetPionAsCommandPost( isPC );
+    xis >> xml::optional
+            >> xml::attribute( "level", level_ );
+    bool bOverridenSymbol = xis.attribute< bool >( "overridden-symbol", false );
+    if( bOverridenSymbol && xis.has_attribute( "nature" ) )
+        xis >> xml::attribute( "nature", app6Symbol_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -128,6 +136,8 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
     , pAffinities_         ( new MIL_AffinitiesMap() )
     , pExtensions_         ( new MIL_DictionaryExtensions() )
     , pHumanRepartition_   ( new MIL_HumanRepartition( type.GetHumanRepartition() ) )
+    , app6Symbol_          ( "" )
+    , level_               ( "" )
 {
     pColor_.reset( new MIL_Color( automate.GetColor() ) );
     automate.RegisterPion( *this );
@@ -149,6 +159,8 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, const AlgorithmsFac
     , pExtensions_         ( 0 )
     , pColor_              ( 0 )
     , pHumanRepartition_   ( new MIL_HumanRepartition( type.GetHumanRepartition() ) )
+    , app6Symbol_          ( "" )
+    , level_               ( "" )
 {
     // NOTHING
 }
@@ -211,7 +223,10 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> pAffinities
          >> pExtensions
          >> pColor
-         >> pRepartition;
+         >> pRepartition
+         >> criticalIntelligence_
+         >> app6Symbol_
+         >> level_;
     LoadRole< network::NET_RolePion_Dotations >( file, *this );
     LoadRole< PHY_RolePion_Reinforcement >( file, *this );
     LoadRole< PHY_RolePion_Posture >( file, *this );
@@ -271,7 +286,10 @@ void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const unsigned int ) c
         << pAffinities
         << pExtensions
         << pColor
-        << pRepartition;
+        << pRepartition
+        << criticalIntelligence_
+        << app6Symbol_
+        << level_;
     SaveRole< network::NET_RolePion_Dotations >( *this, file );
     SaveRole< PHY_RolePion_Reinforcement >( *this, file );
     SaveRole< PHY_RolePion_Posture >( *this, file );
@@ -321,6 +339,11 @@ void MIL_AgentPion::WriteODB( xml::xostream& xos ) const
         << xml::attribute( "type", pType_->GetName() )
         << xml::attribute( "command-post", IsPC() )
         << xml::attribute( "position", MIL_Tools::ConvertCoordSimToMos( GetRole< PHY_RoleInterface_Location >().GetPosition() ) );
+    if( !level_.empty() )
+        xos << xml::attribute( "level", level_ );
+    if( !app6Symbol_.empty() )
+        xos << xml::attribute( "overridden-symbol", true )
+            << xml::attribute( "nature", app6Symbol_ );
     pColor_->WriteODB( xos );
     GetRole< PHY_RolePion_Composantes >().WriteODB( xos );         // Equipments
     GetRole< human::PHY_RolePion_Humans >().WriteODB( xos );       // Humans
@@ -689,6 +712,11 @@ void MIL_AgentPion::SendCreation( unsigned int nCtx ) const
     creationMsg().set_pc( IsPC() );
     pHumanRepartition_->SendFullState( creationMsg );
     pColor_->SendFullState( creationMsg );
+    if( !level_.empty() )
+        if( const PHY_NatureLevel* nature = PHY_NatureLevel::Find( level_ ) )
+            creationMsg().set_level( nature->GetAsnID() );
+    if( !app6Symbol_.empty() )
+        creationMsg().set_app6symbol( app6Symbol_ );
     creationMsg.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
 

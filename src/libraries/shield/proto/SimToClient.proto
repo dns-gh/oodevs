@@ -360,6 +360,8 @@ message MsgUnitCreation {
     required bool                    pc          = 5;
     optional Common.RgbColor         color       = 6;
     optional Common.HumanRepartition repartition = 7;
+    optional Common.EnumNatureLevel  level       = 8; // FT 45350
+    optional string                  app6symbol  = 9; // FT 45350
 }
 
 message EquipmentUpdate {

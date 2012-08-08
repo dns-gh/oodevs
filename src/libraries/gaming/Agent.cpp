@@ -19,6 +19,7 @@
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/Styles.h"
 #include "clients_kernel/Tools.h"
+#include "ENT/ENT_Tr_Gen.h"
 
 using namespace kernel;
 
@@ -28,10 +29,15 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 Agent::Agent( const sword::UnitCreation& message, Controller& controller, const tools::Resolver_ABC< AgentType >& resolver )
     : EntityImplementation< Agent_ABC >( controller, message.unit().id(), QString( message.name().c_str() ) )
-    , type_( resolver.Get( message.type().id() ) )
+    , type_       ( resolver.Get( message.type().id() ) )
+    , initialized_( false )
 {
     if( name_.isEmpty() )
         name_ = QString( "%1 %L2" ).arg( type_.GetName().c_str() ).arg( message.unit().id() );
+
+    level_ = ( message.has_level() ) ? "levels/" + ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( message.level() ) ) : type_.GetLevelSymbol();
+    symbol_ = ( message.has_app6symbol() ) ? "symbols/" + message.app6symbol() : type_.GetSymbol();
+
     RegisterSelf( *this );
     CreateDictionary( controller );
 }
@@ -51,12 +57,17 @@ Agent::~Agent()
 // -----------------------------------------------------------------------------
 void Agent::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
+    if( !initialized_ )
+    {
+        initialized_ = true;
+        const Entity_ABC& team = Get< CommunicationHierarchies >().GetTop();
+        const Diplomacies_ABC* diplo = team.Retrieve< Diplomacies_ABC >();
+        kernel::App6Symbol::SetKarma( symbol_, diplo ? diplo->GetKarma() : Karma::unknown_ );
+    }
     if( viewport.IsHotpointVisible() )
     {
-        if( symbol_.empty() )
-            InitializeSymbol();
         tools.DrawApp6Symbol( symbol_, where, -1.f );
-        tools.DrawApp6Symbol( type_.GetLevelSymbol(), where, -1.f );
+        tools.DrawApp6Symbol( level_, where, -1.f );
     }
 }
 
@@ -64,13 +75,12 @@ void Agent::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& vi
 // Name: Agent::InitializeSymbol
 // Created: AGE 2006-10-25
 // -----------------------------------------------------------------------------
-void Agent::InitializeSymbol() const
-{
-    symbol_ = type_.GetSymbol();
-    const Entity_ABC& team = Get< CommunicationHierarchies >().GetTop();
-    const Diplomacies_ABC* diplo = team.Retrieve< Diplomacies_ABC >();
-    kernel::App6Symbol::SetKarma( symbol_, diplo ? diplo->GetKarma() : Karma::unknown_ );
-}
+//void Agent::InitializeSymbol() const
+//{
+//    const Entity_ABC& team = Get< CommunicationHierarchies >().GetTop();
+//    const Diplomacies_ABC* diplo = team.Retrieve< Diplomacies_ABC >();
+//    kernel::App6Symbol::SetKarma( symbol_, diplo ? diplo->GetKarma() : Karma::unknown_ );
+//}
 
 // -----------------------------------------------------------------------------
 // Name: Agent::GetType

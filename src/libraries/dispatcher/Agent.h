@@ -16,6 +16,7 @@
 #include "tools/Resolver.h"
 #include "protocol/SimulationSenders.h"
 #include <map>
+#include "ENT/ENT_Tr_Gen.h"
 
 namespace kernel
 {
@@ -212,8 +213,10 @@ private:
     std::auto_ptr< Satisfaction >              statisfaction_;
     std::auto_ptr< HumanRepartition >          humanRepartition_;
     std::string                                decisionalModel_;
-    T_UnitDetection                                unitDetections_;
+    T_UnitDetection                            unitDetections_;
     T_ObjectDetection                          objectDetections_;
+    std::string                                app6Symbol_;
+    E_NatureLevel                              level_;
 };
 
 }

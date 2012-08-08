@@ -79,6 +79,38 @@ void SymbolRule::Evaluate( const std::string& request, std::string& result ) con
 }
 
 // -----------------------------------------------------------------------------
+// Name: SymbolRule::ConvertToNature
+// Created: ABR 2012-08-08
+// -----------------------------------------------------------------------------
+std::string SymbolRule::ConvertToNature( std::string symbol ) const
+{
+    std::string result = "";
+    if( symbol.find( "symbols/" ) != std::string::npos )
+        symbol.erase( 0, 8 ); // remove symbols/
+    symbol.erase( 0, 5 ); // remove s*gpu
+    InternalConvertToNature( symbol, result );
+    result.erase( result.size() - 1, 1 ); // remove last /
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SymbolRule::InternalConvertToNature
+// Created: ABR 2012-08-08
+// -----------------------------------------------------------------------------
+void SymbolRule::InternalConvertToNature( std::string& symbol, std::string& result ) const
+{
+    for( CIT_Cases it = cases_.begin(); !symbol.empty() && it != cases_.end(); ++it )
+        if( it->second->GetValue() == symbol.substr( 0, 1 ) )
+        {
+            result = result + it->first + '/';
+            symbol.erase( 0, 1 ); // remove first symbol
+            if( it->second->GetRule() != 0 )
+                it->second->GetRule()->InternalConvertToNature( symbol, result );
+            break;
+        }
+}
+
+// -----------------------------------------------------------------------------
 // Name: SymbolRule::Accept
 // Created: AGE 2006-10-24
 // -----------------------------------------------------------------------------

@@ -43,6 +43,7 @@ public:
     QString text();
     void SetRootSymbolRule( kernel::SymbolRule& root );
     void Clear();
+    void SetDeep( int deep );
     //@}
 
 public slots:

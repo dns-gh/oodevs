@@ -332,6 +332,17 @@
     </message>
 </context>
 <context>
+    <name>EntitySymbolEditor</name>
+    <message>
+        <source>Hierarchy level:</source>
+        <translation>Niveau hiérarchique:</translation>
+    </message>
+    <message>
+        <source>Select a parent automat or formation</source>
+        <translation>Selectionner un automate ou une formation parent</translation>
+    </message>
+</context>
+<context>
     <name>ExerciseCreationDialog</name>
     <message>
         <source>Exercise Creation</source>
@@ -666,47 +677,6 @@
     </message>
 </context>
 <context>
-    <name>FormationHierarchyEditor</name>
-    <message>
-        <source>Change hierarchy level</source>
-        <translation>Changer le niveau hiérarchique</translation>
-    </message>
-</context>
-<context>
-    <name>GhostSymbolDialog</name>
-    <message>
-        <source>Phantom symbol editor</source>
-        <translation>Editeur de symbole de fantôme</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuler</translation>
-    </message>
-    <message>
-        <source>Symbol</source>
-        <translation>Symbole</translation>
-    </message>
-</context>
-<context>
-    <name>GhostSymbolEditor</name>
-    <message>
-        <source>Level:</source>
-        <translation>Niveau:</translation>
-    </message>
-    <message>
-        <source>Select a parent automat or formation</source>
-        <translation>Selectionner un automate ou une formation parent</translation>
-    </message>
-    <message>
-        <source>Drag and drop symbol to map to create a new phantom.</source>
-        <translation>Glissez/déposez le symbole sur la carte pour créer un nouveau fantôme.</translation>
-    </message>
-</context>
-<context>
     <name>GhostsPanel</name>
     <message>
         <source>Phantom</source>
@@ -743,6 +713,10 @@
     <message>
         <source>Error, missing informations:&lt;br&gt;</source>
         <translation>Erreur, informations manquantes :&lt;br&gt;</translation>
+    </message>
+    <message>
+        <source>Drag and drop symbol to map to create a new phantom.</source>
+        <translation>Glissez/déposez le symbole sur la carte pour créer un nouveau fantôme.</translation>
     </message>
 </context>
 <context>
@@ -2438,6 +2412,25 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
 </context>
 <context>
+    <name>SymbolDialog</name>
+    <message>
+        <source>Symbol and hierarchy level editor</source>
+        <translation>Editeur de symbol et de niveau hiérarchique</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Symbol and hierarchy level</source>
+        <translation>Symbole et niveau hiérarchique</translation>
+    </message>
+</context>
+<context>
     <name>SymbolEditor</name>
     <message>
         <source>Symbol</source>
@@ -2481,6 +2474,10 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Replace by a new automat</source>
         <translation type="unfinished">Remplacer par un nouvel automate</translation>
+    </message>
+    <message>
+        <source>Change hierarchy level</source>
+        <translation>Changer le niveau hiérarchique</translation>
     </message>
 </context>
 <context>
