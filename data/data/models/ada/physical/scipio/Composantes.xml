@@ -32172,7 +32172,7 @@
     <objects/>
     <logistic-functions>
       <supply-functions>
-        <carrying mass="20" nature="Solide" volume="28"/>
+        <carrying mass="4000" nature="Solide" volume="5600"/>
       </supply-functions>
     </logistic-functions>
     <breakdowns>
@@ -35740,4 +35740,4 @@
     <equipment-category>VTT</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="1554419935" -->
+<!-- signature="1901352892" -->
