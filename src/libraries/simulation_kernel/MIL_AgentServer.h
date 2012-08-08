@@ -46,7 +46,6 @@ class NET_AgentServer;
 class PHY_MeteoDataManager;
 class ProcessMonitor;
 class MIL_BurningCells;
-class MIL_PropagationManager;
 class MIL_UrbanCache;
 
 //*****************************************************************************
@@ -122,7 +121,6 @@ public:
     resource::ResourceTools_ABC& GetResourceTools() const;
     MIL_Config& GetConfig();
     MIL_BurningCells& GetBurningCells() const;
-    MIL_PropagationManager& GetPropagationManager() const;
     tools::ExerciseSettings& GetSettings() const;
     //@}
 
@@ -198,7 +196,6 @@ private:
     resource::ResourceNetworkModel* pResourceNetworkModel_;
     resource::ResourceTools_ABC* pResourceTools_;
     MIL_BurningCells* pBurningCells_;
-    MIL_PropagationManager* pPropagationManager_;
     ProcessMonitor* pProcessMonitor_;
     //@}
 

@@ -1431,9 +1431,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_DynamicPathDataHandler.cpp">
       <Filter>Source Files\Entities\Objects\Capacities</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_PropagationManager.cpp">
-      <Filter>Source Files\Entities\Objects\Capacities</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MobilityCapacity.cpp">
       <Filter>Source Files\Entities\Objects\Capacities</Filter>
     </ClCompile>
@@ -3846,9 +3843,6 @@
       <Filter>Source Files\Entities\Objects\Capacities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_DynamicPathDataHandler.h">
-      <Filter>Source Files\Entities\Objects\Capacities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_PropagationManager.h">
       <Filter>Source Files\Entities\Objects\Capacities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MobilityCapacity.h">

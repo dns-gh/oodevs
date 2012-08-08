@@ -10,7 +10,6 @@
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Objects/MIL_BurningCells.h"
-#include "Entities/Objects/MIL_PropagationManager.h"
 #include "Entities/Objects/ResourceTools.h"
 #include "Entities/Orders/MIL_TacticalLineManager.h"
 #include "Meteo/PHY_MeteoDataManager.h"
@@ -69,7 +68,6 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     , pUrbanCache_          ( new MIL_UrbanCache() )
     , pResourceTools_       ( new ResourceTools() )
     , pBurningCells_        ( new MIL_BurningCells() )
-    , pPropagationManager_  ( new MIL_PropagationManager() )
     , pResourceNetworkModel_( new resource::ResourceNetworkModel() )
     , pProcessMonitor_      ( new ProcessMonitor() )
 {
@@ -114,7 +112,6 @@ MIL_AgentServer::~MIL_AgentServer()
     timerManager_.Unregister( *this );
     MT_LOG_INFO_MSG( "Terminating pathfind threads" );
     delete pPathFindManager_;
-    delete pPropagationManager_;
     delete pBurningCells_;
     // $$$$ AGE 2005-02-21:
 //    MT_LOG_INFO_MSG( "Cleaning up simulation data" );

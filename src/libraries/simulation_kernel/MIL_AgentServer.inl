@@ -219,17 +219,6 @@ MIL_BurningCells& MIL_AgentServer::GetBurningCells() const
     return *pBurningCells_;
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentServer::GetPropagationManager
-// Created: BCI 2010-12-22
-// -----------------------------------------------------------------------------
-inline
-MIL_PropagationManager& MIL_AgentServer::GetPropagationManager() const
-{
-    assert( pPropagationManager_ );
-    return *pPropagationManager_;
-}
-
 //-----------------------------------------------------------------------------
 // Name: MIL_AgentServer::GetWorkspace
 // Created: DFT 02-03-13

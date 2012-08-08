@@ -34,7 +34,6 @@
 #include "Entities/Objects/FloodCapacity.h"
 #include "Entities/Objects/BurnSurfaceCapacity.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
-#include "Entities/Objects/MIL_BurningCells.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
 #include "Entities/Orders/MIL_AutomateOrderManager.h"
 #include "Entities/Orders/MIL_Report.h"

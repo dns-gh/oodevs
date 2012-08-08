@@ -525,7 +525,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MedicalCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_BurningCells.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_DynamicPathDataHandler.cpp" />
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_PropagationManager.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MobilityCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\PerceptionCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\PHY_ObjectExplosionFireResult.cpp" />
@@ -1376,7 +1375,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MedicalCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_BurningCells.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_DynamicPathDataHandler.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_PropagationManager.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MobilityCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\PerceptionCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\PHY_ObjectExplosionFireResult.h" />
