@@ -12,7 +12,7 @@
         </parameter>
     </parameters>
     <stages>
-        <stage label="Mouvement vers position de deploiement" permanent="true">
+        <stage label="Deploiement" permanent="true">
             <skills>
                 <skill name="agent.skills.Deploy">
                     <parameter name="objective">
