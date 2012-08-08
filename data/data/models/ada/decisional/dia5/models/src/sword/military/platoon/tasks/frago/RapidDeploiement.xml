@@ -45,7 +45,7 @@
 				</skill>
 			</skills>
 		</stage>
-		<stage label="Appliquer feux">
+		<stage label="Appliquer feux" disable-when-done="true">
 			<skills>
 				<skill name="sword.military.platoon.skills.ApplyIndirectFire" main="true" priority="1000.0">
 					<parameter name="entities">
