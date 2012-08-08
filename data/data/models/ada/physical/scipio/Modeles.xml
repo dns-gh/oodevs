@@ -1140,7 +1140,7 @@
         <mission name="PION ASYMETRIQUE Renseigner"/>
         <mission name="PION ASYMETRIQUE Se Dissimuler"/>
         <mission name="PION ASYMETRIQUE S'Infiltrer"/>
-        <mission name="PION ASYMETRIQUE Effectuer Un Tir Embusque"/>
+        <mission name="PION ASYMETRIQUE Effectuer Tirs Embusques"/>
         <mission name="PION Entrer dans un reseau souterrain"/>
         <mission name="PION Sortir du reseau souterrain"/>
         <mission name="PION Faire mouvement dans reseau souterrain"/>
@@ -7524,4 +7524,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2075796206" -->
+<!-- signature="2177231393" -->

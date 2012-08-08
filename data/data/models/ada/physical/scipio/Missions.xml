@@ -1744,7 +1744,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objectives" name="Itineraire" optional="false" type="Path"/>
     </mission>
-    <mission dia-behavior="sword.military.platoon.individual.tasks.Ambush" dia-type="sword.military.platoon.individual.tasks.Ambush" id="2067" name="PION ASYMETRIQUE Effectuer Un Tir Embusque" package="attack">
+    <mission dia-behavior="sword.military.platoon.individual.tasks.Ambush" dia-type="sword.military.platoon.individual.tasks.Ambush" id="2067" name="PION ASYMETRIQUE Effectuer Tirs Embusques" package="attack">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -3534,4 +3534,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ROEM_ArreterSilenceRadar" id="28801" name="ROEM Arreter Silence Radar"/>
   </fragorders>
 </missions>
-<!-- signature="1789550523" -->
+<!-- signature="2617939423" -->
