@@ -74,6 +74,8 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
     if( debugRoot.empty() )
         debugRoot = "./Debug";
 
+    MT_CrashHandler::SetRootDirectory( debugRoot );
+
     // Init logger
     _mkdir( debugRoot.c_str() );
     MT_FileLogger           fileLogger     ( ( debugRoot + "/Sim.log" ).c_str(), 1, -1, MT_Logger_ABC::eLogLevel_All );
