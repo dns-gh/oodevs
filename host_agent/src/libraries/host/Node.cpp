@@ -352,7 +352,9 @@ bool Node::Update( const Tree& cfg )
     const bool reset = cfg_.sessions.reset;
     ReadConfig( cfg_, cfg );
     num_play_ = 0;
-    return cfg_.name != name || cfg_.sessions.reset != reset;
+    if( process_ && process_->IsAlive() )
+        return cfg_.name != name || cfg_.sessions.reset != reset;
+    return false;
 }
 
 namespace
