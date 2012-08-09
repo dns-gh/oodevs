@@ -14,6 +14,9 @@
 
 #pragma execution_character_set("utf-8")
 
+#define BOOST_NO_STD_LOCALE
+#define BOOST_LEXICAL_CAST_ASSUME_C_LOCALE
+
 #include <boost/serialization/extended_type_info.hpp> // $$$$ MCO : see http://old.nabble.com/-Serialization--extended_type_info.hpp-to27448440.html
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
