@@ -98,31 +98,6 @@ validate_settings = (ui) ->
 
     return data
 
-flatten_item_attributes = (data, prefix, item) ->
-    for k, v of item
-        if _.isObject v
-            flatten_item_attributes data, prefix + k + "_", v
-        else
-            data[prefix+k] = v
-    return
-
-flatten_item = (item) ->
-    data = {}
-    flatten_item_attributes data, "", item
-    return data
-
-select_attributes = (item, list) ->
-    data = {}
-    for it in list
-        v = item[it]
-        unless v?
-            continue
-        else if _.isObject v
-            data[it] = $.extend {}, v
-        else
-            data[it] = v
-    return data
-
 class SessionItem extends Backbone.Model
     view: SessionItemView
 

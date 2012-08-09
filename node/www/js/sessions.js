@@ -397,6 +397,42 @@
     });
   };
 
+  flatten_item_attributes = function(data, prefix, item) {
+    var k, v;
+    for (k in item) {
+      v = item[k];
+      if (_.isObject(v)) {
+        flatten_item_attributes(data, prefix + k + "_", v);
+      } else {
+        data[prefix + k] = v;
+      }
+    }
+  };
+
+  flatten_item = function(item) {
+    var data;
+    data = {};
+    flatten_item_attributes(data, "", item);
+    return data;
+  };
+
+  select_attributes = function(item, list) {
+    var data, it, v, _i, _len;
+    data = {};
+    for (_i = 0, _len = list.length; _i < _len; _i++) {
+      it = list[_i];
+      v = item[it];
+      if (v == null) {
+        continue;
+      } else if (_.isObject(v)) {
+        data[it] = $.extend({}, v);
+      } else {
+        data[it] = v;
+      }
+    }
+    return data;
+  };
+
   session_template = Handlebars.compile($("#session_template").html());
 
   session_error_template = Handlebars.compile($("#session_error_template").html());
@@ -523,42 +559,6 @@
     next = data.recorder = {};
     if (!validate_number(next, "frequency", ui, "#recorder_frequency", 1, Number.MAX_VALUE, "Invalid")) {
       return;
-    }
-    return data;
-  };
-
-  flatten_item_attributes = function(data, prefix, item) {
-    var k, v;
-    for (k in item) {
-      v = item[k];
-      if (_.isObject(v)) {
-        flatten_item_attributes(data, prefix + k + "_", v);
-      } else {
-        data[prefix + k] = v;
-      }
-    }
-  };
-
-  flatten_item = function(item) {
-    var data;
-    data = {};
-    flatten_item_attributes(data, "", item);
-    return data;
-  };
-
-  select_attributes = function(item, list) {
-    var data, it, v, _i, _len;
-    data = {};
-    for (_i = 0, _len = list.length; _i < _len; _i++) {
-      it = list[_i];
-      v = item[it];
-      if (v == null) {
-        continue;
-      } else if (_.isObject(v)) {
-        data[it] = $.extend({}, v);
-      } else {
-        data[it] = v;
-      }
     }
     return data;
   };
