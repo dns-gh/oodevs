@@ -303,6 +303,7 @@ Tree Session::GetProperties( bool save ) const
     tree.put( "port", port_->Get() );
     WriteConfig( tree, cfg_ );
     tree.put( "status", ConvertStatus( status_ ) );
+    tree.put( "first_time", first_time_ );
     if( save )
         tree.put_child( "links", links_ );
     else
@@ -311,7 +312,6 @@ Tree Session::GetProperties( bool save ) const
             tree.put( it.first + ".name",     Get< std::string >( it.second, "name" ) );
             tree.put( it.first + ".checksum", Get< std::string >( it.second, "checksum" ) );
         }
-    tree.put( "first_time", first_time_ );
     return tree;
 }
 

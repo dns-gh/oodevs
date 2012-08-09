@@ -200,20 +200,24 @@ BOOST_FIXTURE_TEST_CASE( session_converts, Fixture )
     const std::string stats = ",\"start_time\":\"\",\"current_time\":\"\",\"clients\":\"\"";
     BOOST_CHECK_EQUAL( Filter( session->GetProperties() ), base +
         "\"status\":\"stopped\","
+        "\"first_time\":\"true\","
         + items + stats +
         "}" );
     BOOST_CHECK_EQUAL( Filter( session->Save() ), base +
         "\"status\":\"stopped\","
+        "\"first_time\":\"true\","
         "\"links\":" + links + ","
         "\"size\":\"0\""
         "}" );
     ProcessPtr process = StartSession( *session, processPid, processName );
     BOOST_CHECK_EQUAL( Filter( session->GetProperties() ), base +
         "\"status\":\"playing\","
+        "\"first_time\":\"false\","
         + items + stats +
         "}" );
     BOOST_CHECK_EQUAL( Filter( session->Save() ), base +
         "\"status\":\"playing\","
+        "\"first_time\":\"false\","
         "\"links\":" + links + ","
         "\"size\":\"0\","
         "\"process\":{"
@@ -223,10 +227,12 @@ BOOST_FIXTURE_TEST_CASE( session_converts, Fixture )
     StopSession( *session, process );
     BOOST_CHECK_EQUAL( Filter( session->GetProperties() ), base +
         "\"status\":\"stopped\","
+        "\"first_time\":\"false\","
         + items + stats +
         "}" );
     BOOST_CHECK_EQUAL( Filter( session->Save() ), base +
         "\"status\":\"stopped\","
+        "\"first_time\":\"false\","
         "\"links\":" + links + ","
         "\"size\":\"0\""
         "}" );

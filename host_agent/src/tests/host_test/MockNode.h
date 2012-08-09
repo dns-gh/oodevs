@@ -46,7 +46,7 @@ namespace mocks
         MOCK_METHOD_EXT( LinkExercise, 1, host::Tree( const std::string& ), LinkExerciseName );
         MOCK_METHOD_EXT( LinkExercise, 1, host::Tree( const host::Tree& ), LinkExerciseTree );
         MOCK_METHOD( UnlinkExercise, 1 );
-        MOCK_METHOD( StartSession, 1 );
+        MOCK_METHOD( StartSession, 2 );
         MOCK_METHOD( RemoveSession, 1 );
         MOCK_METHOD( UpdateSessionSize, 2 );
     };
