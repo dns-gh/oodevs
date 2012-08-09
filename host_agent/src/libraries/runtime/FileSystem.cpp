@@ -627,6 +627,8 @@ size_t FileSystem::GetDirectorySize( const Path& root ) const
     size_t sum = 0;
     try
     {
+        if( !boost::filesystem::is_directory( root ) )
+            return 0;
         for( boost::filesystem::recursive_directory_iterator it( root ); it != boost::filesystem::recursive_directory_iterator(); ++it )
             if( boost::filesystem::is_regular_file( it.status() ) )
                 sum += static_cast< size_t >( boost::filesystem::file_size( it->path() ) );

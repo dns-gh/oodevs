@@ -633,7 +633,8 @@ bool Session::RefreshSize()
     lock.unlock();
 
     bool modified = false;
-    const size_t next = system_.GetDirectorySize( paths_.root );
+    const size_t next = system_.GetDirectorySize( paths_.root )
+                      + system_.GetDirectorySize( GetOutput() );
     lock.lock();
     modified = next != size_;
     size_ = next;
