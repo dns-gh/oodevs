@@ -97,12 +97,11 @@ const PerceptionLevel& PerceptionView::Compute( const wrapper::View& perceiver, 
 
     if( !IsEnabled( perceiver ) )
         return PerceptionLevel::notSeen_;
-
-    if( !GET_HOOK( IsInCity )( perceiver ) )
-    {
-        const ZOPerceptionComputer computer;
-        return computer.ComputePerception( perceiver, surfaces, target );
-    }
+    
+    const ZOPerceptionComputer computer;
+    const PerceptionLevel& result = computer.ComputePerception( perceiver, surfaces, target );
+    if( result == PerceptionLevel::notSeen_ || !GET_HOOK( IsInCity )( perceiver ) )
+        return result;
     else
     {
         CIT_PerceptionTickMap it = perceptionsUnderway_.find( target[ "identifier" ] );
@@ -117,7 +116,8 @@ const PerceptionLevel& PerceptionView::Compute( const wrapper::View& perceiver, 
             roll = static_cast< double >( GET_HOOK( GetPerceptionRandom )() );
         perceptionsBuffer_[ target[ "identifier" ] ] = std::pair< unsigned int, double >( tick + 1, roll );
         const ZURBPerceptionComputer computer( roll, tick );
-        return computer.ComputePerception( perceiver, surfaces, target );
+        const PerceptionLevel& urbanResult = computer.ComputePerception( perceiver, surfaces, target );
+        return result < urbanResult ? result : urbanResult;
     }
 }
 
