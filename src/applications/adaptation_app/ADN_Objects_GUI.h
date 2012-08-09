@@ -156,6 +156,7 @@ public:
     //@{
     void OnSpeedImpactComboChanged();
     void OnGeometryChanged( const QString& );
+    void OnSelectionChanged();
     //@}
 
 private:
@@ -165,6 +166,11 @@ private:
     QComboBox* pSpeedImpactCombo_;
     QWidget* pMaxAgentSpeed_;
     ADN_EditLine_Double* pPointDistance_;
+    ADN_EditLine_IntPercentage* floodHurtHuman1_;
+    ADN_EditLine_IntPercentage* floodHurtHuman2_;
+    ADN_EditLine_IntPercentage* floodHurtHuman3_;
+    ADN_EditLine_IntPercentage* floodHurtHumanE_;
+    ADN_EditLine_IntPercentage* floodDeadHuman_;
     QWidget* pContent_;
     //@}
 };
