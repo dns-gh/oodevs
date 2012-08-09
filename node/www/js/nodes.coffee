@@ -55,9 +55,9 @@ class NodeItem extends Backbone.Model
     sync: (method, model, options) =>
         data = select_attributes model.attributes, ["name", "sessions"]
         data = flatten_item data
-        data.id = model.id
 
         if method == "create"
+            data.ident = model.get "ident"
             return ajax "/api/create_node", data, options.success, options.error
 
         if method == "read"
@@ -65,6 +65,7 @@ class NodeItem extends Backbone.Model
                 options.success, options.error
 
         if method == "update"
+            data.id = model.id
             return ajax "/api/update_node", data, options.success, options.error
 
         if method == "delete"
