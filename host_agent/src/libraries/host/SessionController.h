@@ -105,6 +105,7 @@ private:
     const SessionFactory_ABC& factory_;
     const NodeController_ABC& nodes_;
     const Path root_;
+    const Path trash_;
     const Path apps_;
     Container< Session_ABC > sessions_;
     runtime::Timer timer_;

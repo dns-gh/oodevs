@@ -39,8 +39,6 @@ using web::Client_ABC;
 
 namespace
 {
-static const std::string trash = "_";
-
 enum SessionPort
 {
     DISPATCHER_PORT,
@@ -161,7 +159,7 @@ Session::Session( const FileSystem_ABC& system,
                   Client_ABC& client,
                   runtime::Pool_ABC& pool,
                   const boost::shared_ptr< Node_ABC > node,
-                  const Path& root,
+                  const SessionPaths& paths,
                   const Uuid& id,
                   const Config& cfg,
                   const std::string& exercise,
@@ -171,7 +169,7 @@ Session::Session( const FileSystem_ABC& system,
     , async_       ( pool )
     , node_        ( node )
     , id_          ( id )
-    , root_        ( root )
+    , paths_       ( paths )
     , cfg_         ( cfg )
     , links_       ( node->LinkExercise( exercise ) )
     , port_        ( port )
@@ -187,7 +185,7 @@ Session::Session( const FileSystem_ABC& system,
     , current_time_()
     , checkpoints_ ()
 {
-    system_.MakePaths( GetOutput() / trash );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -198,7 +196,7 @@ Session::Session( const FileSystem_ABC& system,
                   Client_ABC& client,
                   runtime::Pool_ABC& pool,
                   const boost::shared_ptr< Node_ABC > node,
-                  const Path& root,
+                  const SessionPaths& paths,
                   const Tree& tree,
                   const runtime::Runtime_ABC& runtime,
                   PortFactory_ABC& ports )
@@ -207,7 +205,7 @@ Session::Session( const FileSystem_ABC& system,
     , async_       ( pool )
     , node_        ( node )
     , id_          ( Get< Uuid >( tree, "id" ) )
-    , root_        ( root )
+    , paths_       ( paths )
     , cfg_         ( ReadConfig( tree ) )
     , links_       ( node->LinkExercise( tree.get_child( "links" ) ) )
     , port_        ( AcquirePort( Get< int >( tree, "port" ), ports ) )
@@ -252,7 +250,7 @@ Uuid Session::GetId() const
 // -----------------------------------------------------------------------------
 Path Session::GetRoot() const
 {
-    return root_;
+    return paths_.root;
 }
 
 // -----------------------------------------------------------------------------
@@ -553,9 +551,9 @@ bool Session::Start( const Runtime_ABC& runtime, const Path& apps, const std::st
     start_time_.clear();
     current_time_.clear();
     const Path output = GetOutput();
-    system_.MakePaths( output );
     if( checkpoint.empty() )
-        ClearCheckpoints();
+        ClearOutput( output );
+    system_.MakePaths( output );
     system_.WriteFile( output / "session.xml", GetConfiguration( cfg_, port_->Get() ) );
     std::vector< std::string > options = boost::assign::list_of
         ( MakeOption( "debug-dir", Utf8Convert( GetRoot() / "debug" ) ) )
@@ -635,7 +633,7 @@ bool Session::RefreshSize()
     lock.unlock();
 
     bool modified = false;
-    const size_t next = system_.GetDirectorySize( root_ );
+    const size_t next = system_.GetDirectorySize( paths_.root );
     lock.lock();
     modified = next != size_;
     size_ = next;
@@ -761,23 +759,22 @@ bool Session::Download( std::ostream& dst ) const
 {
     boost::shared_lock< boost::shared_mutex > lock( access_ );
     FileSystem_ABC::T_Packer packer = system_.Pack( dst );
-    packer->Pack( root_ );
+    packer->Pack( paths_.root );
     packer->Pack( GetOutput() );
     return true;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Session::ClearCheckpoints
+// Name: Session::ClearOutput
 // Created: BAX 2012-08-08
 // -----------------------------------------------------------------------------
-void Session::ClearCheckpoints()
+void Session::ClearOutput( const Path& path )
 {
-    const Path output = system_.MakeAnyPath( GetOutput() / trash );
     checkpoints_.clear();
-    const Path checkpoints = GetOutput() / "checkpoints";
-    if( !system_.IsDirectory( checkpoints ) )
+    if( !system_.IsDirectory( path ) )
         return;
-    system_.Rename( checkpoints, output / "_" );
+    const Path output = system_.MakeAnyPath( paths_.trash );
+    system_.Rename( path, output / "_" );
     async_.Go( boost::bind( &FileSystem_ABC::Remove, &system_, output ) );
 }
 

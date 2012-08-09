@@ -53,8 +53,9 @@ namespace mocks
 
     MOCK_BASE_CLASS( MockSessionFactory, host::SessionFactory_ABC )
     {
-        MOCK_METHOD_EXT( Make, 1, host::SessionFactory_ABC::Ptr( const host::Path& tag ), Make1 );
-        MOCK_METHOD_EXT( Make, 4, host::SessionFactory_ABC::Ptr( const host::Path& root, const host::Uuid& node, const web::session::Config& cfg, const std::string& exercise ), Make4 );
+        MOCK_METHOD_EXT( Make, 2, host::SessionFactory_ABC::Ptr( const host::Path& tag,  const host::Path& trash ), Make2 );
+        MOCK_METHOD_EXT( Make, 5, host::SessionFactory_ABC::Ptr( const host::Path& root, const host::Path& trash,
+                         const host::Uuid& node, const web::session::Config& cfg, const std::string& exercise ), Make5 );
     };
 };
 

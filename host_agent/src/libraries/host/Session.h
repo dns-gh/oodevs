@@ -55,6 +55,22 @@ namespace node
 
 namespace host
 {
+// -----------------------------------------------------------------------------
+// Name: SessionPaths
+// Created: BAX 2012-08-09
+// -----------------------------------------------------------------------------
+struct SessionPaths
+{
+    SessionPaths( const Path& root, const Path& trash )
+        : root ( root )
+        , trash( trash )
+    {
+        // NOTHING
+    }
+    Path root;
+    Path trash;
+};
+
 // =============================================================================
 /** @class  Session
     @brief  Session class definition
@@ -70,7 +86,7 @@ public:
                       web::Client_ABC& client,
                       runtime::Pool_ABC& pool,
                       boost::shared_ptr< Node_ABC > node,
-                      const Path& root,
+                      const SessionPaths& paths,
                       const Uuid& id,
                       const web::session::Config& cfg,
                       const std::string& exercise,
@@ -80,7 +96,7 @@ public:
                       web::Client_ABC& client,
                       runtime::Pool_ABC& pool,
                       boost::shared_ptr< Node_ABC > node,
-                      const Path& root,
+                      const SessionPaths& paths,
                       const Tree& tree,
                       const runtime::Runtime_ABC& runtime,
                       PortFactory_ABC& ports
@@ -144,7 +160,7 @@ private:
     bool StopProcess( boost::upgrade_lock< boost::shared_mutex >& lock );
     bool ModifyStatus( boost::upgrade_lock< boost::shared_mutex >& lock, Status next );
     bool Archive( boost::upgrade_lock< boost::shared_mutex >& lock );
-    void ClearCheckpoints();
+    void ClearOutput( const Path& path );
     void ParseCheckpoints();
     //@}
 
@@ -155,7 +171,7 @@ private:
     web::Client_ABC& client_;
     const boost::shared_ptr< Node_ABC > node_;
     const Uuid id_;
-    const Path root_;
+    const SessionPaths paths_;
     const Tree links_;
     const Port port_;
     mutable boost::shared_mutex access_;

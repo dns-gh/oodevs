@@ -100,6 +100,8 @@ namespace
             MOCK_EXPECT( system.MakePaths );
             MOCK_EXPECT( system.MakeAnyPath ).calls( boost::bind( &MakePath, boost::ref( any_idx ), _1 ) );
             MOCK_EXPECT( system.Walk ).returns( std::vector< host::Path >() );
+            MOCK_EXPECT( system.Rename ).returns( true );
+            MOCK_EXPECT( system.Remove ).returns( true );
             MOCK_EXPECT( node->StartSession ).returns( boost::make_shared< host::node::Token >() );
             MOCK_EXPECT( node->UpdateSessionSize );
         }
@@ -109,7 +111,8 @@ namespace
             MOCK_EXPECT( node->LinkExerciseName ).once().with( defaultExercise ).returns( FromJson( links ) );
             web::session::Config cfg;
             cfg.name = defaultName;
-            return boost::make_shared< Session >( system, client, pool, node, "", defaultId, cfg, defaultExercise, Port( new MockPort( defaultPort ) ) );
+            SessionPaths paths( "a", "b" );
+            return boost::make_shared< Session >( system, client, pool, node, paths, defaultId, cfg, defaultExercise, Port( new MockPort( defaultPort ) ) );
         }
 
         SessionPtr ReloadSession( const Tree& tree, ProcessPtr process = ProcessPtr() )
@@ -119,7 +122,8 @@ namespace
                 MOCK_EXPECT( runtime.GetProcess ).once().with( process->GetPid() ).returns( process );
             const Tree data = FromJson( links );
             MOCK_EXPECT( node->LinkExerciseTree ).once().with( data ).returns( data );
-            return boost::make_shared< Session >( system, client, pool, node, "", tree, runtime, ports );
+            SessionPaths paths( "a", "b" );
+            return boost::make_shared< Session >( system, client, pool, node, paths, tree, runtime, ports );
         }
 
         ProcessPtr StartSession( Session& session, int pid, const std::string& name )

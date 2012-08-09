@@ -43,10 +43,11 @@ SessionController::SessionController( cpplog::BaseLogger& log,
     , factory_ ( sessions )
     , nodes_   ( nodes )
     , root_    ( root / "sessions" )
+    , trash_   ( root_ / "_" )
     , apps_    ( apps )
     , async_   ( pool )
 {
-    system_.MakePaths( root_ );
+    system_.MakePaths( trash_ );
     if( !system_.IsDirectory( apps_ ) )
         throw std::runtime_error( "'" + runtime::Utf8Convert( apps_ ) + "' is not a directory" );
     const Path app = apps_ / "simulation_app.exe";
@@ -74,6 +75,7 @@ SessionController::~SessionController()
     sizes_->Stop();
     async_.Join();
     sessions_.Foreach( boost::bind( &AsyncStop, boost::ref( async_ ), _1 ) );
+    system_.Remove( trash_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -133,7 +135,7 @@ void SessionController::ReloadSession( const Path& path, T_Predicate predicate )
 {
     try
     {
-        boost::shared_ptr< Session_ABC > ptr = factory_.Make( path );
+        boost::shared_ptr< Session_ABC > ptr = factory_.Make( path, trash_ );
         if( !ptr || !predicate( *ptr ) )
             return;
         sessions_.Attach( ptr );
@@ -212,7 +214,7 @@ void SessionController::Create( Session_ABC& session )
 SessionController::T_Session SessionController::Create( const Uuid& node, const web::session::Config& cfg, const std::string& exercise )
 {
     const Path output = system_.MakeAnyPath( root_ );
-    boost::shared_ptr< Session_ABC > session = factory_.Make( output, node, cfg, exercise );
+    boost::shared_ptr< Session_ABC > session = factory_.Make( output, trash_, node, cfg, exercise );
     sessions_.Attach( session );
     Create( *session );
     return session;

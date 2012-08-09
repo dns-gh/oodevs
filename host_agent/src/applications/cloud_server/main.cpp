@@ -261,15 +261,16 @@ struct SessionFactory : public SessionFactory_ABC
         // NOTHING
     }
 
-    Ptr Make( const Path& root, const Uuid& id, const web::session::Config& cfg, const std::string& exercise ) const
+    Ptr Make( const Path& root, const Path& trash, const Uuid& id, const web::session::Config& cfg, const std::string& exercise ) const
     {
         NodeController_ABC::T_Node node = nodes.Get( id );
         if( !node )
             return Ptr();
-        return boost::make_shared< Session >( boost::cref( system ), boost::ref( client ), boost::ref( pool ), node, root, uuids.Create(), boost::cref( cfg ), exercise, ports.Create() );
+        SessionPaths paths( root, trash );
+        return boost::make_shared< Session >( boost::cref( system ), boost::ref( client ), boost::ref( pool ), node, paths, uuids.Create(), boost::cref( cfg ), exercise, ports.Create() );
     }
 
-    Ptr Make( const Path& tag ) const
+    Ptr Make( const Path& tag, const Path& trash ) const
     {
         const Tree tree = FromJson( system.ReadFile( tag ) );
         const boost::optional< std::string > id = tree.get_optional< std::string >( "node" );
@@ -278,7 +279,8 @@ struct SessionFactory : public SessionFactory_ABC
         NodeController_ABC::T_Node node = nodes.Get( boost::uuids::string_generator()( *id ) );
         if( !node )
             throw std::runtime_error( "unknown node " + *id );
-        return boost::make_shared< Session >( boost::cref( system ), boost::ref( client ), boost::ref( pool ), node, Path( tag ).remove_filename(), tree, runtime, boost::ref( ports ) );
+        SessionPaths paths( Path( tag ).remove_filename(), trash );
+        return boost::make_shared< Session >( boost::cref( system ), boost::ref( client ), boost::ref( pool ), node, paths, tree, runtime, boost::ref( ports ) );
     }
 
     const FileSystem_ABC& system;

@@ -111,8 +111,9 @@ struct SessionFactory_ABC : public boost::noncopyable
 
     //! @name Methods
     //@{
-    virtual Ptr Make( const Path& root, const Uuid& node, const web::session::Config& cfg, const std::string& exercise ) const = 0;
-    virtual Ptr Make( const Path& tag ) const = 0;
+    virtual Ptr Make( const Path& root, const Path& trash, const Uuid& node,
+                      const web::session::Config& cfg, const std::string& exercise ) const = 0;
+    virtual Ptr Make( const Path& tag, const Path& trash ) const = 0;
     //@}
 };
 }

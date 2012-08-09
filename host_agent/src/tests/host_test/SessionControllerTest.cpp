@@ -56,6 +56,7 @@ namespace
             MOCK_EXPECT( system.Exists ).with( GetApp( apps ) ).returns( true );
             MOCK_EXPECT( system.IsFile ).with( GetApp( apps ) ).returns( true );
             MOCK_EXPECT( system.MakeAnyPath ).calls( boost::bind( &SubFixture::MakePath, this, _1 ) );
+            MOCK_EXPECT( system.Remove ).returns( true );
         };
 
         Path MakePath( const Path& root )
@@ -125,9 +126,9 @@ namespace
             const Tree tree = FromJson( text );
             boost::shared_ptr< MockSession > session = boost::make_shared< MockSession >( id, node, tree );
             if( path.empty() )
-                MOCK_EXPECT( sub.factory.Make4 ).once().with( mock::any, node, mock::any, session->GetExercise() ).returns( session );
+                MOCK_EXPECT( sub.factory.Make5 ).once().with( mock::any, mock::any, node, mock::any, session->GetExercise() ).returns( session );
             else
-                MOCK_EXPECT( sub.factory.Make1 ).once().returns( session );
+                MOCK_EXPECT( sub.factory.Make2 ).once().returns( session );
             MOCK_EXPECT( sub.system.WriteFile ).returns( true );
             MOCK_EXPECT( session->Stop ).once().returns( true );
             return session;
