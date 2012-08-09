@@ -50,7 +50,7 @@ namespace
             : nodes( false )
             , idx  ( 0 )
         {
-            MOCK_EXPECT( system.MakePaths ).with( root / "sessions" );
+            MOCK_EXPECT( system.MakePaths ).with( root / "sessions" / "_" );
             MOCK_EXPECT( system.IsDirectory ).with( root ).returns( true );
             MOCK_EXPECT( system.IsDirectory ).with( apps ).returns( true );
             MOCK_EXPECT( system.Exists ).with( GetApp( apps ) ).returns( true );
