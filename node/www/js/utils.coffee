@@ -112,6 +112,20 @@ Handlebars.registerHelper "count", (value, options) ->
         return options.fn this
     return options.inverse this
 
+Handlebars.registerHelper "bool", (value, options) ->
+    valid = false
+    unless valid?
+        valid = false
+    else if _.isBoolean value
+        valid = value
+    else if _.isNumber value
+        valid = value > 0
+    else if _.isString value
+        valid = value == "true" or value == "1"
+    if valid
+        return options.fn this
+    return options.inverse this
+
 display_error = (id, template, text) ->
     ctl = $ "#" + id
     ctl.html template content: text

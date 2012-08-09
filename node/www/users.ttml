@@ -63,7 +63,7 @@
                 [[ template "input_text" sub "type" "password" "id" "password"     "label" "Password" ]]
                 [[ template "input_text" sub "type" "password" "id" "password_bis" "label" "Confirm" ]]
                 {{/if}}
-                [[ template "input_checkbox" sub "id" "temporary" "label" "{{#if other}}Force password reset{{else}}Change password{{/if}}" "value" "{{#equal temporary \"true\"}} checked=\"checked\"{{/equal}}" ]]
+                [[ template "input_checkbox" sub "id" "temporary" "label" "{{#if other}}Force password reset{{else}}Change password{{/if}}" "value" "{{#bool temporary}} checked=\"checked\"{{/bool}}" ]]
             </form>
         </div>
         <div class="modal-footer">

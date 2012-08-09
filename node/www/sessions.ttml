@@ -33,13 +33,13 @@
 [[ end ]]
 <!-- checkpoint settings -->
 [[ define "checkpoint_session_settings" ]]
-[[ template "input_checkbox" sub "id" "checkpoints_enabled"   "label" "Save Checkpoints" "value" "{{#equal checkpoints.enabled \"true\"}} checked=\"checked\"{{/equal}}" ]]
+[[ template "input_checkbox" sub "id" "checkpoints_enabled"   "label" "Save Checkpoints" "value" "{{#bool checkpoints.enabled}} checked=\"checked\"{{/bool}}" ]]
 [[ template "input_number"   sub "id" "checkpoints_frequency" "label" "Frequency" "append" "Minutes" "value" "{{checkpoints.frequency}}" ]]
 [[ template "input_number"   sub "id" "checkpoints_keep"      "label" "Keep" "append" "Checkpoints" "value" "{{checkpoints.keep}}" ]]
 [[ end ]]
 <!-- time settings -->
 [[ define "time_session_settings" ]]
-[[ template "input_checkbox" sub "id" "time_paused"   "label" "Start Paused" "value" "{{#equal time.paused \"true\"}} checked=\"checked\"{{/equal}}" ]]
+[[ template "input_checkbox" sub "id" "time_paused"   "label" "Start Paused" "value" "{{#bool time.paused}} checked=\"checked\"{{/bool}}" ]]
 [[ template "input_number"   sub "id" "time_step"     "label" "Time Step" "append" "Seconds" "value" "{{time.step}}" ]]
 [[ template "input_number"   sub "id" "time_factor"   "label" "Time Factor" "append" "&times;" "value" "{{time.factor}}" ]]
 [[ template "input_number"   sub "id" "time_end_tick" "label" "End" "prepend" 1 "prepend_value" "{{#is_positive time.end_tick}} checked=\"checked\"{{/is_positive}}" "append" "Ticks" "value" "{{time.end_tick}}" ]]
@@ -160,9 +160,9 @@
                     {{/each}}
                 </ul>
                 {{else}}
-                [[ if .reset ]][[ else ]]{{#equal first_time "true"}}[[ end ]]
+                [[ if .reset ]][[ else ]]{{#bool first_time}}[[ end ]]
                 <a title="Play" class="btn play"><i class="icon-play"></i></a>
-                [[ if .reset ]][[ else ]]{{/equal}}[[ end ]]
+                [[ if .reset ]][[ else ]]{{/bool}}[[ end ]]
                 {{/count}}
                 {{/is_option}}
                 {{#is_option status paused=""}}

@@ -162,6 +162,24 @@
     return options.inverse(this);
   });
 
+  Handlebars.registerHelper("bool", function(value, options) {
+    var valid;
+    valid = false;
+    if (valid == null) {
+      valid = false;
+    } else if (_.isBoolean(value)) {
+      valid = value;
+    } else if (_.isNumber(value)) {
+      valid = value > 0;
+    } else if (_.isString(value)) {
+      valid = value === "true" || value === "1";
+    }
+    if (valid) {
+      return options.fn(this);
+    }
+    return options.inverse(this);
+  });
+
   display_error = function(id, template, text) {
     var ctl;
     ctl = $("#" + id);
