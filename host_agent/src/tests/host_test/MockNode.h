@@ -34,7 +34,7 @@ namespace mocks
         MOCK_METHOD( Stop, 1 );
         MOCK_METHOD( SoftKill, 0 );
         MOCK_METHOD( Remove, 2 );
-        MOCK_METHOD( Update, 3 );
+        MOCK_METHOD( Update, 1 );
         MOCK_METHOD( GetInstall, 0 );
         MOCK_METHOD( DeleteInstall, 1 );
         MOCK_METHOD( UploadCache, 1 );
@@ -54,8 +54,7 @@ namespace mocks
     MOCK_BASE_CLASS( MockNodeFactory, host::NodeFactory_ABC )
     {
         MOCK_METHOD_EXT( Make, 1, host::NodeFactory_ABC::Ptr( const host::Path& tag ), Make1 );
-        MOCK_METHOD_EXT( Make, 5, host::NodeFactory_ABC::Ptr( const host::Path& root,
-                         const std::string& ident, const std::string& name, size_t num_sessions, size_t parallel_sessions ), Make5 );
+        MOCK_METHOD_EXT( Make, 3, host::NodeFactory_ABC::Ptr( const host::Path& root, const std::string& ident, const web::node::Config& ), Make3 );
     };
 };
 

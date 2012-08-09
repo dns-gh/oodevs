@@ -13,6 +13,7 @@
 #include "runtime/PropertyTree.h"
 #include "runtime/Utf8.h"
 #include "web/Agent_ABC.h"
+#include "web/Configs.h"
 #include "web/Controller.h"
 #include "web/Observer_ABC.h"
 #include "web/HttpException.h"
@@ -61,11 +62,11 @@ namespace
         MOCK_METHOD( ListNodes, 2 );
         MOCK_METHOD( CountNodes, 0 );
         MOCK_METHOD( GetNode, 1 );
-        MOCK_METHOD( CreateNode, 4 );
+        MOCK_METHOD( CreateNode, 2 );
         MOCK_METHOD( DeleteNode, 1 );
         MOCK_METHOD( StartNode, 1 );
         MOCK_METHOD( StopNode, 1 );
-        MOCK_METHOD( UpdateNode, 4 );
+        MOCK_METHOD( UpdateNode, 2 );
         // install
         MOCK_METHOD( GetInstall, 1 );
         MOCK_METHOD( DeleteInstall, 2 );
@@ -231,17 +232,33 @@ BOOST_FIXTURE_TEST_CASE( controller_get_node, Fixture )
     controller.DoGet( reply, request );
 }
 
+namespace
+{
+bool Equal( const node::Config& actual, const node::Config& expected )
+{
+    if( actual.name != expected.name ) return false;
+    if( actual.sessions.max_play != expected.sessions.max_play ) return false;
+    if( actual.sessions.max_parallel != expected.sessions.max_parallel ) return false;
+    if( actual.sessions.reset != expected.sessions.reset ) return false;
+    return true;
+}
+}
+
 BOOST_FIXTURE_TEST_CASE( controller_create_node, Fixture )
 {
-    const std::string name = "node_name";
+    node::Config cfg;
+    cfg.name = "some_name";
+    cfg.sessions.max_play = 16;
+    cfg.sessions.max_parallel = 8;
     ExpectRequest( "GET", "/create_node", boost::assign::map_list_of
-        ( "ident", name )
-        ( "name", name )
-        ( "num_sessions", "16" )
-        ( "parallel_sessions", "8" )
+        ( "ident", cfg.name )
+        ( "name", cfg.name )
+        ( "sessions_max_play", boost::lexical_cast< std::string >( cfg.sessions.max_play ) )
+        ( "sessions_max_parallel", boost::lexical_cast< std::string >( cfg.sessions.max_parallel ) )
+        ( "sessions_reset", cfg.sessions.reset ? "true" : "false" )
     );
     const std::string expected = "{\"dummy\":\"ymmud\"}";
-    MOCK_EXPECT( agent.CreateNode ).once().with( name, name, 16, 8 ).returns( FromJson( expected ) );
+    MOCK_EXPECT( agent.CreateNode ).once().with( cfg.name, boost::bind( &Equal, cfg, _1 ) ).returns( FromJson( expected ) );
     ExpectReply( reply, web::OK, expected );
     controller.DoGet( reply, request );
 }

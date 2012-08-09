@@ -28,13 +28,24 @@ namespace uuids
 }
 }
 
+namespace web
+{
+namespace node
+{
+    struct Config;
+}
+}
+
 namespace host
 {
     struct Node_ABC;
     typedef boost::filesystem::path Path;
     typedef boost::property_tree::ptree Tree;
     typedef boost::uuids::uuid Uuid;
+}
 
+namespace host
+{
 // =============================================================================
 /** @class  NodeController_ABC
     @brief  NodeController_ABC interface
@@ -64,11 +75,11 @@ struct NodeController_ABC : public boost::noncopyable
     virtual size_t  Count() const = 0;
     virtual bool    Has( const Uuid& id ) const = 0;
     virtual T_Node  Get( const Uuid& id ) const = 0;
-    virtual T_Node  Create( const std::string& ident, const std::string& name, size_t num_sessions, size_t parallel_sessions ) = 0;
+    virtual T_Node  Create( const std::string& ident, const web::node::Config& cfg ) = 0;
     virtual T_Node  Delete( const Uuid& id ) = 0;
     virtual T_Node  Start( const Uuid& id ) const = 0;
     virtual T_Node  Stop( const Uuid& id ) const = 0;
-    virtual T_Node  Update( const Uuid& id, const boost::optional< std::string >& name, size_t num_sessions, size_t parallel_sessions ) = 0;
+    virtual T_Node  Update( const Uuid& id, const Tree& cfg ) = 0;
     //@}
 
     //! @name Install Methods

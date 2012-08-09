@@ -7,21 +7,21 @@
 //
 // *****************************************************************************
 
-#include "SessionConfig.h"
+#include "Configs.h"
 #include "Request_ABC.h"
 #include "runtime/PropertyTree.h"
 
 #include <boost/lexical_cast.hpp>
 
 using namespace web;
-using namespace web::session;
+using session::RngDistribution;
 using property_tree::TryRead;
 
 // -----------------------------------------------------------------------------
 // Name: RngConfig::RngConfig
 // Created: BAX 2012-08-02
 // -----------------------------------------------------------------------------
-RngConfig::RngConfig()
+session::RngConfig::RngConfig()
     : distribution( RNG_DISTRIBUTION_LINEAR )
     , deviation   ( 0.5 )
     , mean        ( 0.5 )
@@ -33,7 +33,7 @@ RngConfig::RngConfig()
 // Name: Config::Config
 // Created: BAX 2012-08-02
 // -----------------------------------------------------------------------------
-Config::Config()
+session::Config::Config()
     : name()
 {
     checkpoints.enabled = true;
@@ -56,9 +56,9 @@ namespace
 // -----------------------------------------------------------------------------
 RngDistribution ConvertRngDistribution( const std::string& src )
 {
-    if( src == "linear"   ) return RNG_DISTRIBUTION_LINEAR;
-    if( src == "gaussian" ) return RNG_DISTRIBUTION_GAUSSIAN;
-    return RNG_DISTRIBUTION_GAUSSIAN;
+    if( src == "linear"   ) return session::RNG_DISTRIBUTION_LINEAR;
+    if( src == "gaussian" ) return session::RNG_DISTRIBUTION_GAUSSIAN;
+    return session::RNG_DISTRIBUTION_LINEAR;
 }
 
 // -----------------------------------------------------------------------------
@@ -67,8 +67,8 @@ RngDistribution ConvertRngDistribution( const std::string& src )
 // -----------------------------------------------------------------------------
 std::string ConvertRngDistribution( RngDistribution src )
 {
-    if( src == RNG_DISTRIBUTION_LINEAR   ) return "linear";
-    if( src == RNG_DISTRIBUTION_GAUSSIAN ) return "gaussian";
+    if( src == session::RNG_DISTRIBUTION_LINEAR   ) return "linear";
+    if( src == session::RNG_DISTRIBUTION_GAUSSIAN ) return "gaussian";
     return "invalid";
 }
 
@@ -90,9 +90,9 @@ bool TryRead( T& dst, const Request_ABC& request, const std::string& key )
 // Name: GetRngConfig
 // Created: BAX 2012-08-02
 // -----------------------------------------------------------------------------
-RngConfig GetRngConfig( const Request_ABC& request, const std::string& prefix )
+session::RngConfig GetRngConfig( const Request_ABC& request, const std::string& prefix )
 {
-    RngConfig cfg;
+    session::RngConfig cfg;
     std::string dist;
     bool valid = TryRead( dist, request, prefix + "distribution" );
     if( valid )
@@ -107,10 +107,10 @@ RngConfig GetRngConfig( const Request_ABC& request, const std::string& prefix )
 // Name: ReadConfiguration
 // Created: BAX 2012-08-02
 // -----------------------------------------------------------------------------
-Config web::session::GetConfig( const Request_ABC& request )
+session::Config web::session::GetConfig( const Request_ABC& request )
 {
-    Config cfg;
-    ReadConfig( cfg, ConvertConfig( request ) );
+    session::Config cfg;
+    session::ReadConfig( cfg, session::ConvertConfig( request ) );
     return cfg;
 }
 
@@ -171,7 +171,7 @@ namespace
 // Name: ReadRngConfig
 // Created: BAX 2012-08-02
 // -----------------------------------------------------------------------------
-bool ReadRngConfig( RngConfig& dst, const Tree& src, const std::string& prefix )
+bool ReadRngConfig( session::RngConfig& dst, const Tree& src, const std::string& prefix )
 {
     std::string dist;
     bool modified = ::TryRead( dist, src, prefix + "distribution" );
@@ -186,7 +186,7 @@ bool ReadRngConfig( RngConfig& dst, const Tree& src, const std::string& prefix )
 // Name: WriteRngConfig
 // Created: BAX 2012-08-02
 // -----------------------------------------------------------------------------
-void WriteRngConfig( Tree& dst, const std::string& prefix, const RngConfig& cfg )
+void WriteRngConfig( Tree& dst, const std::string& prefix, const session::RngConfig& cfg )
 {
     dst.put( prefix + "distribution", ConvertRngDistribution( cfg.distribution ) );
     dst.put( prefix + "deviation", cfg.deviation );
@@ -198,7 +198,7 @@ void WriteRngConfig( Tree& dst, const std::string& prefix, const RngConfig& cfg 
 // Name: ReadConfig
 // Created: BAX 2012-08-02
 // -----------------------------------------------------------------------------
-bool web::session::ReadConfig( Config& dst, const Tree& src )
+bool web::session::ReadConfig( session::Config& dst, const Tree& src )
 {
     bool modified = false;
     modified |= TryRead( dst.name, src, "name" );
@@ -223,7 +223,7 @@ bool web::session::ReadConfig( Config& dst, const Tree& src )
 // Name: WriteConfig
 // Created: BAX 2012-08-02
 // -----------------------------------------------------------------------------
-void web::session::WriteConfig( Tree& dst, const Config& cfg )
+void web::session::WriteConfig( Tree& dst, const session::Config& cfg )
 {
     dst.put( "name", cfg.name );
     dst.put( "checkpoints.enabled", cfg.checkpoints.enabled );
@@ -240,4 +240,67 @@ void web::session::WriteConfig( Tree& dst, const Config& cfg )
     WriteRngConfig( dst, "rng.fire.", cfg.rng.fire );
     WriteRngConfig( dst, "rng.perception.", cfg.rng.perception );
     WriteRngConfig( dst, "rng.wound.", cfg.rng.wound );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Config::Config
+// Created: BAX 2012-08-09
+// -----------------------------------------------------------------------------
+node::Config::Config()
+    : name()
+{
+    sessions.max_play = 0;
+    sessions.max_parallel = 0;
+    sessions.reset = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReadConfiguration
+// Created: BAX 2012-08-09
+// -----------------------------------------------------------------------------
+node::Config web::node::GetConfig( const Request_ABC& request )
+{
+    node::Config cfg;
+    node::ReadConfig( cfg, node::ConvertConfig( request ) );
+    return cfg;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ConvertConfig
+// Created: BAX 2012-08-09
+// -----------------------------------------------------------------------------
+Tree web::node::ConvertConfig( const Request_ABC& request )
+{
+    Tree dst;
+    TryPut( dst, request, "name", "name" );
+    TryPut( dst, request, "sessions.max_play", "sessions_max_play" );
+    TryPut( dst, request, "sessions.max_parallel", "sessions_max_parallel" );
+    TryPut( dst, request, "sessions.reset", "sessions_reset" );
+    return dst;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReadConfig
+// Created: BAX 2012-08-09
+// -----------------------------------------------------------------------------
+bool web::node::ReadConfig( node::Config& dst, const Tree& src )
+{
+    bool modified = false;
+    modified |= TryRead( dst.name, src, "name" );
+    modified |= TryRead( dst.sessions.max_play, src, "sessions.max_play" );
+    modified |= TryRead( dst.sessions.max_parallel, src, "sessions.max_parallel" );
+    modified |= TryRead( dst.sessions.reset, src, "sessions.reset" );
+    return modified;
+}
+
+// -----------------------------------------------------------------------------
+// Name: WriteConfig
+// Created: BAX 2012-08-09
+// -----------------------------------------------------------------------------
+void web::node::WriteConfig( Tree& dst, const node::Config& cfg )
+{
+    dst.put( "name", cfg.name );
+    dst.put( "sessions.max_play", cfg.sessions.max_play );
+    dst.put( "sessions.max_parallel", cfg.sessions.max_parallel );
+    dst.put( "sessions.reset", cfg.sessions.reset );
 }

@@ -186,10 +186,10 @@ void NodeController::Create( Node_ABC& node, bool reload )
 // Name: NodeController::Create
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-NodeController::T_Node NodeController::Create( const std::string& ident, const std::string& name, size_t num_sessions, size_t parallel_sessions )
+NodeController::T_Node NodeController::Create( const std::string& ident, const web::node::Config& cfg )
 {
     const Path output = system_.MakeAnyPath( root_ );
-    T_Node node = factory_.Make( output, ident, name, num_sessions, parallel_sessions );
+    T_Node node = factory_.Make( output, ident, cfg );
     bool valid = nodes_.AttachUnless( node, boost::bind( &HasSameIdent, ident, _1 ) );
     if( !valid )
     {
@@ -276,16 +276,20 @@ void NodeController::Stop( Node_ABC& node, bool skip, bool weak ) const
 // Name: NodeController::Update
 // Created: BAX 2012-07-27
 // -----------------------------------------------------------------------------
-NodeController::T_Node NodeController::Update( const Uuid& id, const boost::optional< std::string >& name, size_t num_sessions, size_t parallel_sessions )
+NodeController::T_Node NodeController::Update( const Uuid& id, const Tree& cfg )
 {
     T_Node node = nodes_.Get( id );
     if( !node )
         return node;
-    bool restart = node->Update( name, num_sessions, parallel_sessions );
+    bool restart = node->Update( cfg );
     if( restart )
     {
         node->SoftKill();
         Start( *node, false, true );
+    }
+    else
+    {
+        Save( *node );
     }
     return node;
 }

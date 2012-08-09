@@ -12,8 +12,8 @@
 #include "host/Agent.h"
 #include "runtime/PropertyTree.h"
 #include "runtime/Utf8.h"
+#include "web/Configs.h"
 #include "web/HttpException.h"
-#include "web/SessionConfig.h"
 
 #include <boost/assign/list_of.hpp>
 #include <boost/filesystem/path.hpp>
@@ -167,8 +167,9 @@ namespace
         boost::shared_ptr< MockNode > AddNode( const std::string& id, const std::string& name )
         {
             boost::shared_ptr< MockNode > node = CreateMockNode( id, name );
-            MOCK_EXPECT( nodes.Create ).once().with( name, name, 16, 8 ).returns( node );
-            CheckTree( boost::bind( &Agent_ABC::CreateNode, &agent, name, name, 16, 8 ), ToJson( node->GetProperties() ) );
+            web::node::Config cfg;
+            MOCK_EXPECT( nodes.Create ).once().with( cfg.name, mock::same( cfg ) ).returns( node );
+            CheckTree( boost::bind( &Agent_ABC::CreateNode, &agent, cfg.name, boost::cref( cfg ) ), ToJson( node->GetProperties() ) );
             return node;
         }
 
@@ -248,8 +249,9 @@ BOOST_FIXTURE_TEST_CASE( agent_get_node, Fixture<> )
 
 BOOST_FIXTURE_TEST_CASE( agent_create_node, Fixture<> )
 {
-    MOCK_EXPECT( nodes.Create ).once().with( "zomg", "zomg", 16, 8 ).returns( node );
-    CheckTree( boost::bind( &Agent_ABC::CreateNode, &agent, "zomg", "zomg", 16, 8 ), ToJson( node->GetProperties() ) );
+    web::node::Config cfg;
+    MOCK_EXPECT( nodes.Create ).once().with( cfg.name, mock::same( cfg ) ).returns( node );
+    CheckTree( boost::bind( &Agent_ABC::CreateNode, &agent, cfg.name, boost::cref( cfg ) ), ToJson( node->GetProperties() ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_delete_node, Fixture<> )

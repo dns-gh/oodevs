@@ -192,25 +192,17 @@ struct NodeFactory : public NodeFactory_ABC
         // NOTHING
     }
 
-    Ptr Make( const Path& root, const std::string& ident, const std::string& name, size_t num_sessions, size_t parallel_sessions ) const
+    Ptr Make( const Path& root, const std::string& ident, const web::node::Config& cfg ) const
     {
-        NodeConfig cfg;
-        cfg.root = root;
-        cfg.ident = ident;
-        cfg.name = name;
-        cfg.num_sessions = num_sessions;
-        cfg.parallel_sessions = parallel_sessions;
-        cfg.min_play_seconds = min_play;
-        return boost::make_shared< Node >( packages, system, uuids, *observer, boost::ref( pool ), boost::ref( ports ), cfg );
+        NodeDependencies deps( packages, system, uuids, *observer, pool, ports );
+        return boost::make_shared< Node >( deps, root, min_play, ident, cfg );
     }
 
     Ptr Make( const Path& tag ) const
     {
-        NodeConfig cfg;
-        cfg.root = Path( tag ).remove_filename();
-        cfg.min_play_seconds = min_play;
-        return boost::make_shared< Node >( packages, system, uuids, *observer, boost::ref( pool ), boost::ref( ports ),
-                                           cfg, FromJson( system.ReadFile( tag ) ), runtime );
+        NodeDependencies deps( packages, system, uuids, *observer, pool, ports );
+        return boost::make_shared< Node >( deps, Path( tag ).remove_filename(), min_play,
+                                           FromJson( system.ReadFile( tag ) ), runtime );
     }
 
     const PackageFactory_ABC& packages;

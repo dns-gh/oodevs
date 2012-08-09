@@ -11,6 +11,7 @@
 
 #include "host/NodeController.h"
 #include "runtime/PropertyTree.h"
+#include "web/Configs.h"
 
 #include <boost/assign/list_of.hpp>
 #include <boost/filesystem/path.hpp>
@@ -110,7 +111,9 @@ namespace
             const std::string idText = tree.get< std::string >( "id" );
             if( path.empty() )
             {
-                MOCK_EXPECT( sub.nodes.Make5 ).once().with( mock::any, mock::any, tree.get< std::string >( "name" ), mock::any, mock::any ).returns( node );
+                web::node::Config cfg;
+                cfg.name = tree.get< std::string >( "name" );
+                MOCK_EXPECT( sub.nodes.Make3 ).once().with( mock::any, cfg.name, mock::any ).returns( node );
                 MOCK_EXPECT( node->Start ).once().returns( true );
             }
             else
@@ -148,7 +151,9 @@ BOOST_FIXTURE_TEST_CASE( node_controller_reloads, Fixture<> )
 BOOST_FIXTURE_TEST_CASE( node_controller_creates, Fixture<> )
 {
     AddNode( idIdle, nodeIdle );
-    NodeController::T_Node node = control.Create( "myName2", "myName2", 16, 8 );
+    web::node::Config cfg;
+    cfg.name = "myName2";
+    NodeController::T_Node node = control.Create( cfg.name, cfg );
     BOOST_CHECK_EQUAL( node->GetId(), idIdle );
     BOOST_CHECK_EQUAL( control.Count(), size_t( 1 ) );
     BOOST_CHECK( control.Has( idIdle ) );
@@ -229,7 +234,8 @@ BOOST_FIXTURE_TEST_CASE( node_controller_cannot_create_node_with_duplicate_ident
     tree.put( "ident", "myName" );
     tree.put( "port", 4567 );
     boost::shared_ptr< MockNode > node = boost::make_shared< MockNode >( id, tree );
-    MOCK_EXPECT( sub.nodes.Make5 ).once().returns( node );
-    control.Create( "myName", "zomg", 16, 8 );
+    web::node::Config cfg;
+    MOCK_EXPECT( sub.nodes.Make3 ).once().with( mock::any, "myName", mock::same( cfg  ) ).returns( node );
+    control.Create( "myName", cfg );
     MOCK_EXPECT( sub.system.Remove ).once().returns( true );
 }

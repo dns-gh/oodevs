@@ -13,10 +13,10 @@
 #include "runtime/PropertyTree.h"
 #include "runtime/Utf8.h"
 #include "Agent_ABC.h"
+#include "Configs.h"
 #include "HttpException.h"
 #include "Request_ABC.h"
 #include "Reply_ABC.h"
-#include "SessionConfig.h"
 #include "UserController_ABC.h"
 
 #include <boost/algorithm/string.hpp>
@@ -413,12 +413,11 @@ void Controller::CreateNode( Reply_ABC& rpy, const Request_ABC& request )
     const std::string ident = RequireParameter< std::string >( "ident", request );
     if( !boost::xpressive::regex_match( ident, identRegex ) )
         throw HttpException( BAD_REQUEST );
-    const boost::optional< std::string > opt = request.GetParameter( "name" );
-    const std::string name = opt == boost::none || opt->empty() ? ident : *opt;
-    const int num_sessions = GetParameter( "num_sessions", request, 16 );
-    const int parallel_sessions = GetParameter( "parallel_sessions", request, 4 );
+    node::Config cfg = node::GetConfig( request );
+    if( cfg.name.empty() )
+        cfg.name = ident;
     LOG_INFO( log_ ) << "[web] /create_node ident: " << ident;
-    WriteHttpReply( rpy, agent_.CreateNode( ident, name, num_sessions, parallel_sessions ) );
+    WriteHttpReply( rpy, agent_.CreateNode( ident, cfg ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -461,12 +460,8 @@ void Controller::UpdateNode( Reply_ABC& rpy, const Request_ABC& request )
 {
     Authenticate( request, USER_TYPE_ADMINISTRATOR );
     const Uuid id = GetId( request );
-    const boost::optional< std::string > name = request.GetParameter( "name" );
-    if( name != boost::none && name->empty() )
-        throw HttpException( BAD_REQUEST );
-    const size_t num_sessions = RequireParameter< size_t >( "num_sessions", request );
-    const size_t parallel_sessions = RequireParameter< size_t >( "parallel_sessions", request );
-    WriteHttpReply( rpy, agent_.UpdateNode( id, name, num_sessions, parallel_sessions ) );
+    const Tree cfg = node::ConvertConfig( request );
+    WriteHttpReply( rpy, agent_.UpdateNode( id, cfg ) );
 }
 
 // -----------------------------------------------------------------------------

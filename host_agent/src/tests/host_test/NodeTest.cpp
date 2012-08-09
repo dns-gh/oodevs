@@ -12,6 +12,7 @@
 #include "host/Node.h"
 #include "runtime/PropertyTree.h"
 
+#include <boost/foreach.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
@@ -67,13 +68,10 @@ namespace
             MOCK_EXPECT( packages.Make ).once().with( mock::any, true ).returns( installed );
             MOCK_EXPECT( uuids.Create ).once().returns( defaultId );
             MOCK_EXPECT( ports.Create0 ).once().returns( new MockPort( defaultPort ) );
-            host::NodeConfig cfg;
-            cfg.root = defaultRoot;
+            host::NodeDependencies deps( packages, system, uuids, observer, pool, ports );
+            web::node::Config cfg;
             cfg.name = defaultName;
-            cfg.num_sessions = 16;
-            cfg.parallel_sessions = 8;
-            cfg.min_play_seconds = 5*60;
-            return boost::make_shared< Node >( packages, system, uuids, observer, pool, ports, cfg );
+            return boost::make_shared< Node >( deps, defaultRoot, 5*60, cfg.name, cfg );
         }
 
         NodePtr ReloadNode( const Tree& tree, ProcessPtr process = ProcessPtr() )
@@ -86,9 +84,8 @@ namespace
             MOCK_EXPECT( ports.Create1 ).once().with( defaultPort ).returns( new MockPort( defaultPort ) );
             if( process )
                 MOCK_EXPECT( runtime.GetProcess ).once().with( process->GetPid() ).returns( process );
-            host::NodeConfig cfg;
-            cfg.min_play_seconds = 5*60;
-            return boost::make_shared< Node >( packages, system, uuids, observer, pool, ports, cfg, tree, runtime );
+            host::NodeDependencies deps( packages, system, uuids, observer, pool, ports );
+            return boost::make_shared< Node >( deps, defaultRoot, 5*60, tree, runtime );
         }
 
         ProcessPtr StartNode( Node& node, int pid, const std::string& name )
@@ -121,50 +118,74 @@ BOOST_FIXTURE_TEST_CASE( node_starts_and_stops, Fixture )
     StopNode( *node, process );
 }
 
+namespace
+{
+void Contains( const Tree& src, const std::string& key, const std::string& value )
+{
+    const boost::optional< std::string > opt = src.get_optional< std::string >( key );
+    BOOST_REQUIRE( opt != boost::none );
+    BOOST_CHECK_EQUAL( *opt, value );
+}
+
+template< typename T >
+void Check( const T& list, const Tree& src )
+{
+    typedef typename T::value_type Value;
+    BOOST_FOREACH( const Value& value, list )
+        value( src );
+}
+}
+
 BOOST_FIXTURE_TEST_CASE( node_converts, Fixture )
 {
     NodePtr node = MakeNode();
-    const std::string base = "{"
-        "\"id\":\"12345678-90ab-cdef-9876-543210123456\","
-        "\"ident\":\"\","
-        "\"name\":\"myName\","
-        "\"port\":\"1337\","
-        "\"num_sessions\":\"16\","
-        "\"parallel_sessions\":\"8\",";
-    const std::string properties =
-        "\"num_exercises\":\"0\","
-        "\"num_played\":\"0\","
-        "\"num_parallel\":\"0\","
-        "\"data_size\":\"0\",";
-    BOOST_CHECK_EQUAL( ToJson( node->GetProperties() ), base +
-        properties +
-        "\"status\":\"stopped\""
-        "}" );
-    BOOST_CHECK_EQUAL( ToJson( node->Save() ), base +
-        "\"num_counter\":\"0\","
-        "\"stopped\":\"false\""
-        "}" );
+    typedef std::vector< boost::function< void( const Tree& src ) > > T_Constraints;
+
+    T_Constraints base;
+    base.push_back( boost::bind( &Contains, _1, "id", "12345678-90ab-cdef-9876-543210123456" ) );
+    base.push_back( boost::bind( &Contains, _1, "ident", "myName" ) );
+    base.push_back( boost::bind( &Contains, _1, "port", "1337" ) );
+    base.push_back( boost::bind( &Contains, _1, "name", "myName" ) );
+    base.push_back( boost::bind( &Contains, _1, "sessions.max_play", "0" ) );
+    base.push_back( boost::bind( &Contains, _1, "sessions.max_parallel", "0" ) );
+    base.push_back( boost::bind( &Contains, _1, "sessions.reset", "true" ) );
+
+    T_Constraints props;
+    props.push_back( boost::bind( &Contains, _1, "num_exercises", "0" ) );
+    props.push_back( boost::bind( &Contains, _1, "sessions.num_play", "0" ) );
+    props.push_back( boost::bind( &Contains, _1, "sessions.num_parallel", "0" ) );
+    props.push_back( boost::bind( &Contains, _1, "data_size", "0" ) );
+
+    Tree src = node->GetProperties();
+    Check( base, src );
+    Check( props, src );
+    Contains( src, "status", "stopped" );
+    src = node->Save();
+    Check( base, src );
+    Contains( src, "sessions.num_play", "0" );
+    Contains( src, "stopped", "false" );
+
     ProcessPtr process = StartNode( *node, processPid, processName );
-    BOOST_CHECK_EQUAL( ToJson( node->GetProperties() ), base +
-        properties +
-        "\"status\":\"running\""
-        "}" );
-    BOOST_CHECK_EQUAL( ToJson( node->Save() ), base +
-        "\"num_counter\":\"0\","
-        "\"stopped\":\"false\","
-        "\"process\":{"
-            "\"pid\":\"7331\","
-            "\"name\":\"myProcessName\""
-        "}}" );
+    src = node->GetProperties();
+    Check( base, src );
+    Check( props, src );
+    Contains( src, "status", "running" );
+    src = node->Save();
+    Check( base, src );
+    Contains( src, "sessions.num_play", "0" );
+    Contains( src, "stopped", "false" );
+    Contains( src, "process.pid", "7331" );
+    Contains( src, "process.name", "myProcessName" );
+
     StopNode( *node, process );
-    BOOST_CHECK_EQUAL( ToJson( node->GetProperties() ), base +
-        properties +
-        "\"status\":\"stopped\""
-        "}" );
-    BOOST_CHECK_EQUAL( ToJson( node->Save() ), base +
-        "\"num_counter\":\"0\","
-        "\"stopped\":\"true\""
-        "}" );
+    src = node->GetProperties();
+    Check( base, src );
+    Check( props, src );
+    Contains( src, "status", "stopped" );
+    src = node->Save();
+    Check( base, src );
+    Contains( src, "sessions.num_play", "0" );
+    Contains( src, "stopped", "true" );
 }
 
 BOOST_FIXTURE_TEST_CASE( node_reloads, Fixture )

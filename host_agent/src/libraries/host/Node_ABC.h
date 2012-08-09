@@ -37,6 +37,14 @@ namespace runtime
     struct Runtime_ABC;
 }
 
+namespace web
+{
+namespace node
+{
+    struct Config;
+}
+}
+
 namespace host
 {
     typedef boost::filesystem::path Path;
@@ -80,7 +88,7 @@ struct Node_ABC : public boost::noncopyable
                         const Path& web, const std::string& type, int host, bool weak ) = 0;
     virtual bool Stop( bool weak ) = 0;
     virtual void Remove( const runtime::FileSystem_ABC& system, runtime::Async& async ) = 0;
-    virtual bool Update( const boost::optional< std::string >& name, size_t num_sessions, size_t parallel_sessions ) = 0;
+    virtual bool Update( const Tree& cfg ) = 0;
     virtual void SoftKill() = 0;
     //@}
 
@@ -138,7 +146,7 @@ struct NodeFactory_ABC : public boost::noncopyable
 
     //! @name Methods
     //@{
-    virtual Ptr Make( const Path& root, const std::string& ident, const std::string& name, size_t num_sessions, size_t parallel_sessions ) const = 0;
+    virtual Ptr Make( const Path& root, const std::string& ident, const web::node::Config& cfg ) const = 0;
     virtual Ptr Make( const Path& tag ) const = 0;
     //@}
 };

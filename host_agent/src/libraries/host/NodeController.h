@@ -36,7 +36,10 @@ namespace host
     struct NodeFactory_ABC;
     struct Proxy_ABC;
     typedef boost::filesystem::path Path;
+}
 
+namespace host
+{
 // =============================================================================
 /** @class  NodeController
     @brief  NodeController interface
@@ -69,11 +72,11 @@ public:
     virtual size_t  Count() const;
     virtual bool    Has( const Uuid& id ) const;
     virtual T_Node  Get( const Uuid& id ) const;
-    virtual T_Node  Create( const std::string& ident, const std::string& name, size_t num_sessions, size_t parallel_sessions );
+    virtual T_Node  Create( const std::string& ident, const web::node::Config& cfg );
     virtual T_Node  Delete( const Uuid& id );
     virtual T_Node  Start( const Uuid& id ) const;
     virtual T_Node  Stop( const Uuid& id ) const;
-    virtual T_Node  Update( const Uuid& id, const boost::optional< std::string >& name, size_t num_sessions, size_t parallel_sessions );
+    virtual T_Node  Update( const Uuid& id, const Tree& cfg );
     //@}
 
     //! @name Install Methods

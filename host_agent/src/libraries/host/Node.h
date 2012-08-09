@@ -13,6 +13,7 @@
 #include "Node_ABC.h"
 
 #include "runtime/Async.h"
+#include "web/Configs.h"
 #include <boost/filesystem/path.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/thread/shared_mutex.hpp>
@@ -43,14 +44,33 @@ namespace host
 
 namespace host
 {
-struct NodeConfig
+// -----------------------------------------------------------------------------
+// Name: NodeDependencies
+// Created: BAX 2012-08-09
+// -----------------------------------------------------------------------------
+struct NodeDependencies
 {
-    Path root;
-    std::string ident;
-    std::string name;
-    size_t num_sessions;
-    size_t parallel_sessions;
-    int min_play_seconds;
+    NodeDependencies( const PackageFactory_ABC& packages,
+                      const runtime::FileSystem_ABC& system,
+                      const UuidFactory_ABC& uuids,
+                      const NodeObserver_ABC& observer,
+                      runtime::Pool_ABC& pool,
+                      PortFactory_ABC& ports )
+        : packages( packages )
+        , system  ( system )
+        , uuids   ( uuids )
+        , observer( observer )
+        , pool    ( pool )
+        , ports   ( ports )
+    {
+        // NOTHING
+    }
+    const PackageFactory_ABC& packages;
+    const runtime::FileSystem_ABC& system;
+    const UuidFactory_ABC& uuids;
+    const NodeObserver_ABC& observer;
+    runtime::Pool_ABC& pool;
+    PortFactory_ABC& ports;
 };
 
 // =============================================================================
@@ -64,21 +84,15 @@ class Node : public Node_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Node( const PackageFactory_ABC& packages,
-                   const runtime::FileSystem_ABC& system,
-                   const UuidFactory_ABC& uuids,
-                   const NodeObserver_ABC& observer,
-                   runtime::Pool_ABC& pool,
-                   PortFactory_ABC& ports,
-                   const NodeConfig& config
+             Node( const NodeDependencies& deps,
+                   const Path& root,
+                   int min_play_seconds,
+                   const std::string& ident,
+                   const web::node::Config& cfg
                    );
-             Node( const PackageFactory_ABC& packages,
-                   const runtime::FileSystem_ABC& system,
-                   const UuidFactory_ABC& uuids,
-                   const NodeObserver_ABC& observer,
-                   runtime::Pool_ABC& pool,
-                   PortFactory_ABC& ports,
-                   const NodeConfig& config,
+             Node( const NodeDependencies& deps,
+                   const Path& root,
+                   int min_play_seconds,
                    const Tree& tree,
                    const runtime::Runtime_ABC& runtime
                    );
@@ -101,7 +115,7 @@ public:
                         const Path& web, const std::string& type, int host, bool weak );
     virtual bool Stop( bool weak );
     virtual void Remove( const runtime::FileSystem_ABC& system, runtime::Async& async );
-    virtual bool Update( const boost::optional< std::string >& name, size_t num_sessions, size_t parallel_sessions );
+    virtual bool Update( const Tree& cfg );
     virtual void SoftKill();
     //@}
 
@@ -172,11 +186,9 @@ private:
     T_Process process_;
     bool stopped_;
     mutable runtime::Async async_;
-    std::string name_;
-    size_t num_sessions_;
-    size_t num_counter_;
-    size_t parallel_sessions_;
-    size_t parallel_counter_;
+    web::node::Config cfg_;
+    size_t num_play_;
+    size_t num_parallel_;
     size_t num_exercises_;
     size_t install_size_;
     size_t cache_size_;

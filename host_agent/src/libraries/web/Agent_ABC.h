@@ -30,6 +30,10 @@ namespace web
     typedef boost::filesystem::path Path;
     typedef boost::property_tree::ptree Tree;
     typedef boost::uuids::uuid Uuid;
+namespace node
+{
+    struct Config;
+}
 namespace session
 {
     struct Config;
@@ -64,11 +68,11 @@ struct Agent_ABC : public boost::noncopyable
     virtual std::vector< Tree > ListNodes ( int offset, int limit ) const = 0;
     virtual size_t              CountNodes() const = 0;
     virtual Tree                GetNode   ( const Uuid& id ) const = 0;
-    virtual Tree                CreateNode( const std::string& ident, const std::string& name, size_t num_sessions, size_t parallel_sessions ) = 0;
+    virtual Tree                CreateNode( const std::string& ident, const node::Config& cfg ) = 0;
     virtual Tree                DeleteNode( const Uuid& id ) = 0;
     virtual Tree                StartNode ( const Uuid& id ) const = 0;
     virtual Tree                StopNode  ( const Uuid& id ) const = 0;
-    virtual Tree                UpdateNode( const Uuid& id, const boost::optional< std::string >& name, size_t num_sessions, size_t parallel_sessions ) = 0;
+    virtual Tree                UpdateNode( const Uuid& id, const Tree& cfg ) = 0;
     //@}
 
     //! @name Install Methods

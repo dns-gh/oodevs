@@ -29,6 +29,7 @@
 
 using namespace host;
 using namespace property_tree;
+using namespace web::node;
 using runtime::Utf8Convert;
 using runtime::Async;
 using runtime::FileSystem_ABC;
@@ -67,6 +68,17 @@ Node::T_Process AcquireProcess( const Tree& tree, const runtime::Runtime_ABC& ru
     return Node::T_Process();
 }
 
+// -----------------------------------------------------------------------------
+// Name: ReadConfig
+// Created: BAX 2012-08-09
+// -----------------------------------------------------------------------------
+Config ReadConfig( const Tree& src )
+{
+    Config cfg;
+    ReadConfig( cfg, src );
+    return cfg;
+}
+
 static const std::string install_directory = "_";
 }
 
@@ -74,33 +86,29 @@ static const std::string install_directory = "_";
 // Name: Node::Node
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-Node::Node( const PackageFactory_ABC& packages,
-            const runtime::FileSystem_ABC& system,
-            const UuidFactory_ABC& uuids,
-            const NodeObserver_ABC& observer,
-            runtime::Pool_ABC& pool,
-            PortFactory_ABC& ports,
-            const NodeConfig& config )
-    : packages_         ( packages )
-    , system_           ( system )
-    , uuids_            ( uuids )
-    , observer_         ( observer )
-    , id_               ( uuids.Create() )
-    , ident_            ( config.ident )
-    , name_             ( config.name )
-    , root_             ( config.root )
-    , port_             ( ports.Create() )
-    , stopped_          ( false )
-    , async_            ( pool )
-    , num_sessions_     ( config.num_sessions )
-    , num_counter_      ( 0 )
-    , parallel_sessions_( config.parallel_sessions )
-    , parallel_counter_ ( 0 )
-    , num_exercises_    ( 0 )
-    , install_size_     ( 0 )
-    , cache_size_       ( 0 )
-    , sessions_size_    ( 0 )
-    , min_play_seconds_ ( config.min_play_seconds )
+Node::Node( const NodeDependencies& deps,
+            const Path& root,
+            int min_play_seconds,
+            const std::string& ident,
+            const web::node::Config& cfg )
+    : packages_        ( deps.packages )
+    , system_          ( deps.system )
+    , uuids_           ( deps.uuids )
+    , observer_        ( deps.observer )
+    , id_              ( deps.uuids.Create() )
+    , ident_           ( ident )
+    , root_            ( root )
+    , port_            ( deps.ports.Create() )
+    , min_play_seconds_( min_play_seconds )
+    , stopped_         ( false )
+    , async_           ( deps.pool )
+    , cfg_             ( cfg )
+    , num_play_        ( 0 )
+    , num_parallel_    ( 0 )
+    , num_exercises_   ( 0 )
+    , install_size_    ( 0 )
+    , cache_size_      ( 0 )
+    , sessions_size_   ( 0 )
 {
     install_ = packages_.Make( root_ / install_directory, true );
 }
@@ -109,36 +117,30 @@ Node::Node( const PackageFactory_ABC& packages,
 // Name: Node::Node
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-Node::Node( const PackageFactory_ABC& packages,
-            const runtime::FileSystem_ABC& system,
-            const UuidFactory_ABC& uuids,
-            const NodeObserver_ABC& observer,
-            runtime::Pool_ABC& pool,
-            PortFactory_ABC& ports,
-            const NodeConfig& config,
+Node::Node( const NodeDependencies& deps,
+            const Path& root,
+            int min_play_seconds,
             const Tree& tree,
             const runtime::Runtime_ABC& runtime )
-    : packages_         ( packages )
-    , system_           ( system )
-    , uuids_            ( uuids )
-    , observer_         ( observer )
-    , id_               ( Get< Uuid >( tree, "id" ) )
-    , ident_            ( Get< std::string >( tree, "ident" ) )
-    , name_             ( Get< std::string >( tree, "name" ) )
-    , root_             ( config.root )
-    , port_             ( AcquirePort( Get< int >( tree, "port" ), ports ) )
-    , process_          ( AcquireProcess( tree, runtime, port_->Get() ) )
-    , stopped_          ( Get< bool >( tree, "stopped" ) )
-    , async_            ( pool )
-    , num_sessions_     ( Get< size_t >( tree, "num_sessions" ) )
-    , num_counter_      ( Get< size_t >( tree, "num_counter" ) )
-    , parallel_sessions_( Get< size_t >( tree, "parallel_sessions" ) )
-    , parallel_counter_ ( 0 )
-    , num_exercises_    ( 0 )
-    , install_size_     ( 0 )
-    , cache_size_       ( 0 )
-    , sessions_size_    ( 0 )
-    , min_play_seconds_ ( config.min_play_seconds )
+    : packages_        ( deps.packages )
+    , system_          ( deps.system )
+    , uuids_           ( deps.uuids )
+    , observer_        ( deps.observer )
+    , id_              ( Get< Uuid >( tree, "id" ) )
+    , ident_           ( Get< std::string >( tree, "ident" ) )
+    , root_            ( root )
+    , port_            ( AcquirePort( Get< int >( tree, "port" ), deps.ports ) )
+    , min_play_seconds_( min_play_seconds )
+    , process_         ( AcquireProcess( tree, runtime, port_->Get() ) )
+    , stopped_         ( Get< bool >( tree, "stopped" ) )
+    , async_           ( deps.pool )
+    , cfg_             ( ReadConfig( tree ) )
+    , num_play_        ( Get< size_t >( tree, "sessions.num_play" ) )
+    , num_parallel_    ( 0 )
+    , num_exercises_   ( 0 )
+    , install_size_    ( 0 )
+    , cache_size_      ( 0 )
+    , sessions_size_   ( 0 )
 {
     const boost::optional< std::string > cache = tree.get_optional< std::string >( "cache" );
     ParsePackages( cache == boost::none ? Path() : Utf8Convert( *cache ) );
@@ -198,10 +200,8 @@ Tree Node::GetCommonProperties() const
     Tree tree;
     tree.put( "id", id_ );
     tree.put( "ident", ident_ );
-    tree.put( "name", name_ );
     tree.put( "port", port_->Get() );
-    tree.put( "num_sessions", num_sessions_ );
-    tree.put( "parallel_sessions", parallel_sessions_ );
+    WriteConfig( tree, cfg_ );
     return tree;
 }
 
@@ -214,8 +214,8 @@ Tree Node::GetProperties() const
     boost::shared_lock< boost::shared_mutex > lock( access_ );
     Tree tree = GetCommonProperties();
     tree.put( "num_exercises", num_exercises_ );
-    tree.put( "num_played", num_counter_ );
-    tree.put( "num_parallel", parallel_counter_ );
+    tree.put( "sessions.num_play", num_play_ );
+    tree.put( "sessions.num_parallel", num_parallel_ );
     tree.put( "data_size", install_size_ + cache_size_ + sessions_size_ );
     tree.put( "status", process_ ? "running" : "stopped" );
     return tree;
@@ -229,7 +229,7 @@ Tree Node::Save() const
 {
     boost::shared_lock< boost::shared_mutex > lock( access_ );
     Tree tree = GetCommonProperties();
-    tree.put( "num_counter", num_counter_ );
+    tree.put( "sessions.num_play", num_play_ );
     if( cache_ )
         tree.put( "cache", Utf8Convert( cache_->GetPath().filename() ) );
     tree.put( "stopped", stopped_ );
@@ -272,7 +272,7 @@ bool Node::Start( const Runtime_ABC& runtime, const Path& app, const Path& web,
         ( MakeOption( "www",  Utf8Convert( web ) ) )
         ( MakeOption( "uuid", id_ ) )
         ( MakeOption( "type", type ) )
-        ( MakeOption( "name", name_ ) )
+        ( MakeOption( "name", cfg_.name ) )
         ( MakeOption( "host", host ) )
         ( MakeOption( "port", port_->Get() ) ),
         std::string(), Utf8Convert( root_ / ( type + ".log" ) ) );
@@ -342,17 +342,13 @@ void Node::Remove( const FileSystem_ABC& system, Async& async )
 // Name: Node::Update
 // Created: BAX 2012-06-25
 // -----------------------------------------------------------------------------
-bool Node::Update( const boost::optional< std::string >& name, size_t num_sessions, size_t parallel_sessions )
+bool Node::Update( const Tree& cfg )
 {
     boost::lock_guard< boost::shared_mutex > lock( access_ );
-    num_sessions_ = num_sessions;
-    num_counter_ = 0;
-    parallel_sessions_ = parallel_sessions;
-    if( name == boost::none )
-        return false;
-    std::string next = *name;
-    std::swap( next, name_ );
-    return next != name_;
+    const std::string name = cfg_.name;
+    ReadConfig( cfg_, cfg );
+    num_play_ = 0;
+    return cfg_.name != name;
 }
 
 namespace
@@ -572,17 +568,17 @@ Node_ABC::T_Token Node::StartSession( const boost::posix_time::ptime& start )
     const bool force = start == boost::posix_time::not_a_date_time;
 
     boost::unique_lock< boost::shared_mutex > lock( access_ );
-    if( !force && parallel_sessions_ )
-        if( parallel_counter_ >= parallel_sessions_ )
+    if( !force && cfg_.sessions.max_parallel )
+        if( num_parallel_ >= cfg_.sessions.max_parallel )
             throw web::HttpException( web::FORBIDDEN );
 
-    if( !force && num_sessions_ )
-        if( num_counter_ >= num_sessions_ )
+    if( !force && cfg_.sessions.max_play )
+        if( num_play_ >= cfg_.sessions.max_play )
             throw web::HttpException( web::FORBIDDEN );
 
-    ++parallel_counter_;
+    ++num_parallel_;
     if( !force )
-        ++num_counter_;
+        ++num_play_;
     lock.unlock();
 
     if( !force )
@@ -597,14 +593,14 @@ Node_ABC::T_Token Node::StartSession( const boost::posix_time::ptime& start )
 void Node::StopSession( const boost::posix_time::ptime& start )
 {
     boost::unique_lock< boost::shared_mutex > lock( access_ );
-    parallel_counter_ = std::max( size_t( 0 ), parallel_counter_ - 1 );
+    num_parallel_ = std::max( size_t( 0 ), num_parallel_ - 1 );
     if( start == boost::posix_time::not_a_date_time )
         return;
     if( start + boost::posix_time::seconds( min_play_seconds_ ) > boost::posix_time::second_clock::local_time() )
         return;
-    if( num_counter_ < 1 )
+    if( num_play_ < 1 )
         return;
-    --num_counter_;
+    --num_play_;
     lock.unlock();
 
     observer_.Notify( *this );

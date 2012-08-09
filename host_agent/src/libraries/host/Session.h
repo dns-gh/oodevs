@@ -12,7 +12,7 @@
 
 #include "Session_ABC.h"
 #include "runtime/Async.h"
-#include "web/SessionConfig.h"
+#include "web/Configs.h"
 
 #include <boost/filesystem/path.hpp>
 #include <boost/property_tree/ptree.hpp>

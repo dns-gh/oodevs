@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef SESSION_CONFIG_H
-#define SESSION_CONFIG_H
+#ifndef CONFIGS_H
+#define CONFIGS_H
 
 #include <boost/property_tree/ptree_fwd.hpp>
 #include <string>
@@ -85,11 +85,35 @@ struct Config
     }               recorder;
 };
 
-Config          GetConfig( const Request_ABC& request );
-Tree            ConvertConfig( const Request_ABC& request );
-bool            ReadConfig( Config& dst, const Tree& src );
-void            WriteConfig( Tree& dst, const Config& cfg );
+Config GetConfig    ( const Request_ABC& request );
+Tree   ConvertConfig( const Request_ABC& request );
+bool   ReadConfig   ( Config& dst, const Tree& src );
+void   WriteConfig  ( Tree& dst, const Config& cfg );
+}
+
+namespace node
+{
+// -----------------------------------------------------------------------------
+// Name: node::Config
+// Created: BAX 2012-08-09
+// -----------------------------------------------------------------------------
+struct Config
+{
+    Config();
+    std::string     name;
+    struct
+    {
+        size_t      max_play;
+        size_t      max_parallel;
+        bool        reset;
+    }               sessions;
+};
+
+Config GetConfig    ( const Request_ABC& request );
+Tree   ConvertConfig( const Request_ABC& request );
+bool   ReadConfig   ( Config& dst, const Tree& src );
+void   WriteConfig  ( Tree& dst, const Config& cfg );
 }
 }
 
-#endif // SESSION_CONFIG_H
+#endif // CONFIGS_H

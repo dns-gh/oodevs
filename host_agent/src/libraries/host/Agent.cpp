@@ -14,6 +14,7 @@
 #include "NodeController_ABC.h"
 #include "Session_ABC.h"
 #include "SessionController_ABC.h"
+#include "web/Configs.h"
 #include "web/HttpException.h"
 
 #include <boost/foreach.hpp>
@@ -92,11 +93,13 @@ Agent::Agent( cpplog::BaseLogger& log, NodeController_ABC* cluster, NodeControll
 {
     if( cluster_ )
     {
+        web::node::Config cfg;
+        cfg.name = "cluster";
         cluster_->Reload();
         if( cluster_->Count() )
             clusterId_ = cluster_->List( 0, 1 ).front()->GetId();
         else
-            clusterId_ = cluster_->Create( std::string(), "cluster", 0, 0 )->GetId();
+            clusterId_ = cluster_->Create( std::string(), cfg )->GetId();
         cluster_->Start( clusterId_ );
     }
     nodes_.Reload();
@@ -170,10 +173,10 @@ Tree Agent::GetNode( const Uuid& id ) const
 // Name: Agent::CreateNode
 // Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
-Tree Agent::CreateNode( const std::string& ident, const std::string& name, size_t num_sessions, size_t parallel_sessions )
+Tree Agent::CreateNode( const std::string& ident, const web::node::Config& cfg )
 {
     boost::lock_guard< boost::mutex > lock( access_ );
-    return Create( nodes_.Create( ident, name, num_sessions, parallel_sessions ) );
+    return Create( nodes_.Create( ident, cfg ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -219,9 +222,9 @@ Tree Agent::StopNode( const Uuid& id ) const
 // Name: Agent::UpdateNode
 // Created: BAX 2012-07-17
 // -----------------------------------------------------------------------------
-Tree Agent::UpdateNode( const Uuid& id, const boost::optional< std::string >& name, size_t num_sessions, size_t parallel_sessions )
+Tree Agent::UpdateNode( const Uuid& id, const Tree& cfg )
 {
-    NodeController_ABC::T_Node ptr = nodes_.Update( id, name, num_sessions, parallel_sessions );
+    NodeController_ABC::T_Node ptr = nodes_.Update( id, cfg );
     if( !ptr )
         throw HttpException( web::NOT_FOUND );
     return Tree( ptr->GetProperties() );

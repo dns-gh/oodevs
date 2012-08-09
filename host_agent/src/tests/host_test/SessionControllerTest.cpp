@@ -12,7 +12,7 @@
 #include "host/SessionController.h"
 #include "runtime/PropertyTree.h"
 #include "runtime/Utf8.h"
-#include "web/SessionConfig.h"
+#include "web/Configs.h"
 
 #include <boost/assign/list_of.hpp>
 #include <boost/filesystem/path.hpp>

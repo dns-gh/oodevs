@@ -13,7 +13,7 @@
 #include "runtime/Event.h"
 #include "runtime/Pool.h"
 #include "runtime/PropertyTree.h"
-#include "web/SessionConfig.h"
+#include "web/Configs.h"
 
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
