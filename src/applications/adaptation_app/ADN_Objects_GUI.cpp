@@ -281,11 +281,11 @@ void ADN_Objects_GUI::Build()
 
         ADN_GroupBox* flood = CreateCapacityGroupBox( 3, tr( "Flood" ), vInfosConnectors[ eFloodCapacityPresent ] );
         QWidget* pInjuriesHolder = builder.AddFieldHolder( flood );
-        builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Wounded seriousness level 1" ), vInfosConnectors[ eFloodCapacity_HurtHumans1 ], tr( "%" ), ePercentage );
-        builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Wounded seriousness level 2" ), vInfosConnectors[ eFloodCapacity_HurtHumans2 ], tr( "%" ), ePercentage );
-        builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Wounded seriousness level 3" ), vInfosConnectors[ eFloodCapacity_HurtHumans3 ], tr( "%" ), ePercentage );
-        builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Wounded extreme seriousness" ), vInfosConnectors[ eFloodCapacity_HurtHumansE ], tr( "%" ), ePercentage );
-        builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Killed" ), vInfosConnectors[ eFloodCapacity_DeadHumans ], tr( "%" ), ePercentage  );
+        floodHurtHuman1_  = builder.AddField< ADN_EditLine_IntPercentage >( pInjuriesHolder, tr( "Wounded seriousness level 1" ), vInfosConnectors[ eFloodCapacity_HurtHumans1 ], tr( "%" ), ePercentage );
+        floodHurtHuman2_ = builder.AddField< ADN_EditLine_IntPercentage >( pInjuriesHolder, tr( "Wounded seriousness level 2" ), vInfosConnectors[ eFloodCapacity_HurtHumans2 ], tr( "%" ), ePercentage );
+        floodHurtHuman3_ = builder.AddField< ADN_EditLine_IntPercentage >( pInjuriesHolder, tr( "Wounded seriousness level 3" ), vInfosConnectors[ eFloodCapacity_HurtHumans3 ], tr( "%" ), ePercentage );
+        floodHurtHumanE_ = builder.AddField< ADN_EditLine_IntPercentage >( pInjuriesHolder, tr( "Wounded extreme seriousness" ), vInfosConnectors[ eFloodCapacity_HurtHumansE ], tr( "%" ), ePercentage );
+        floodDeadHuman_ = builder.AddField< ADN_EditLine_IntPercentage >( pInjuriesHolder, tr( "Killed" ), vInfosConnectors[ eFloodCapacity_DeadHumans ], tr( "%" ), ePercentage  );
 
         ADN_GroupBox* firePropagationModifier = CreateCapacityGroupBox( 3, tr( "Fire propagation modifier" ), vInfosConnectors[ eFirePropagationModifierCapacityPresent ] );
         ADN_Table_Objects_FirePropagationModifier* pFirePropagationModifierTable = new ADN_Table_Objects_FirePropagationModifier( firePropagationModifier );
@@ -343,6 +343,7 @@ void ADN_Objects_GUI::Build()
     ADN_SearchListView< ADN_ListView_Objects >* pSearchListView = new ADN_SearchListView< ADN_ListView_Objects >( this, data_.GetObjectInfos(), vInfosConnectors );
     pListView_ = pSearchListView->GetListView();
     pListView_->setObjectName( strClassName_ + "_List" );
+    connect( pListView_, SIGNAL( selectionChanged() ), this, SLOT( OnSelectionChanged() ) );
 
     // Tab widget
     QTabWidget* pTabWidget = new QTabWidget();
@@ -424,4 +425,41 @@ void ADN_Objects_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QStri
 
     QString strText = "<a href=\"" + tr( "Objects/" ) + "index.htm\">" + tr( "Objects" ) + "</a>";
     mainIndexBuilder.ListItem( strText );
+}
+
+namespace
+{
+    void LinkValues( ADN_IntPercentageValidator* validator, ADN_Type_ABC< int >& value1, ADN_Type_ABC< int >& value2, ADN_Type_ABC< int >& value3, ADN_Type_ABC< int >& value4 )
+    {
+        validator->AddLinkedValue( value1 );
+        validator->AddLinkedValue( value2 );
+        validator->AddLinkedValue( value3 );
+        validator->AddLinkedValue( value4 );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_GUI::OnSelectionChanged
+// Created: ABR 2012-08-09
+// -----------------------------------------------------------------------------
+void ADN_Objects_GUI::OnSelectionChanged()
+{
+    static_cast< ADN_IntPercentageValidator* >( &floodHurtHuman1_->GetValidator() )->ClearLinkedValues();
+    static_cast< ADN_IntPercentageValidator* >( &floodHurtHuman2_->GetValidator() )->ClearLinkedValues();
+    static_cast< ADN_IntPercentageValidator* >( &floodHurtHuman3_->GetValidator() )->ClearLinkedValues();
+    static_cast< ADN_IntPercentageValidator* >( &floodHurtHumanE_->GetValidator() )->ClearLinkedValues();
+    static_cast< ADN_IntPercentageValidator* >( &floodDeadHuman_->GetValidator() )->ClearLinkedValues();
+
+    ADN_Objects_Data_ObjectInfos* pInfos = reinterpret_cast< ADN_Objects_Data_ObjectInfos* >( pListView_->GetCurrentData() );
+    if( !pInfos )
+        return;
+    ADN_Objects_Data::ADN_CapacityInfos_Flood* flood = static_cast< ADN_Objects_Data::ADN_CapacityInfos_Flood* >( pInfos->capacities_[ ADN_Objects_Data::ADN_CapacityInfos_Flood::TAG ].get() );
+    if( !flood )
+        return;
+
+    LinkValues( static_cast< ADN_IntPercentageValidator* >( &floodHurtHuman1_->GetValidator() ), flood->nNbHurtHumans2_, flood->nNbHurtHumans3_, flood->nNbHurtHumansE_, flood->nNbDeadHumans_ );
+    LinkValues( static_cast< ADN_IntPercentageValidator* >( &floodHurtHuman2_->GetValidator() ), flood->nNbHurtHumans1_, flood->nNbHurtHumans3_, flood->nNbHurtHumansE_, flood->nNbDeadHumans_ );
+    LinkValues( static_cast< ADN_IntPercentageValidator* >( &floodHurtHuman3_->GetValidator() ), flood->nNbHurtHumans1_, flood->nNbHurtHumans2_, flood->nNbHurtHumansE_, flood->nNbDeadHumans_ );
+    LinkValues( static_cast< ADN_IntPercentageValidator* >( &floodHurtHumanE_->GetValidator() ), flood->nNbHurtHumans1_, flood->nNbHurtHumans2_, flood->nNbHurtHumans3_, flood->nNbDeadHumans_ );
+    LinkValues( static_cast< ADN_IntPercentageValidator* >( &floodDeadHuman_->GetValidator() ) , flood->nNbHurtHumans1_, flood->nNbHurtHumans2_, flood->nNbHurtHumans3_, flood->nNbHurtHumansE_ );
 }
