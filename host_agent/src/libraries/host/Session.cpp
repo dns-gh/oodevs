@@ -383,12 +383,12 @@ void WriteSimulationConfiguration( Tree& tree, int base, const Config& cfg )
     const std::string prefix = "session.config.simulation.";
     tree.put( prefix + "GarbageCollector.<xmlattr>.setpause", 100 );
     tree.put( prefix + "GarbageCollector.<xmlattr>.setstepmul", 100 );
+    std::string frequency = "100000h";
     if( cfg.checkpoints.enabled )
-    {
-        tree.put( prefix + "checkpoint.<xmlattr>.frequency", boost::lexical_cast< std::string >( cfg.checkpoints.frequency ) + "s" );
-        tree.put( prefix + "checkpoint.<xmlattr>.keep", cfg.checkpoints.keep );
-        tree.put( prefix + "checkpoint.<xmlattr>.usecrc", true );
-    }
+        frequency = boost::lexical_cast< std::string >( cfg.checkpoints.frequency ) + "s";
+    tree.put( prefix + "checkpoint.<xmlattr>.frequency", frequency );
+    tree.put( prefix + "checkpoint.<xmlattr>.keep", cfg.checkpoints.keep );
+    tree.put( prefix + "checkpoint.<xmlattr>.usecrc", true );
     tree.put( prefix + "debug.<xmlattr>.decisional", false );
     tree.put( prefix + "debug.<xmlattr>.diadebugger", false );
     tree.put( prefix + "debug.<xmlattr>.diadebuggerport", base + DIA_DEBUGGER_PORT );
