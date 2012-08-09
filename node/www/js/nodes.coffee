@@ -49,8 +49,10 @@ class NodeItem extends Backbone.Model
     view: NodeItemView
 
     defaults:
-        num_sessions: 0
-        parallel_sessions: 0
+        sessions:
+            max_play: 0,
+            max_parallel: 0,
+            reset: true
 
     sync: (method, model, options) =>
         data = select_attributes model.attributes, ["name", "sessions"]
@@ -224,9 +226,7 @@ $("#node_edit").click ->
     mod.find(".apply").click ->
         data = validate_settings ui, node_default
         return unless data?
-        node_default.set "name", data.name if data.name?
-        node_default.set "num_sessions", data.num_sessions
-        node_default.set "parallel_sessions", data.parallel_sessions
+        node_default.set data
         mod.modal "hide"
 
 $(".create_form").keypress (e) ->

@@ -517,8 +517,11 @@
     NodeItem.prototype.view = NodeItemView;
 
     NodeItem.prototype.defaults = {
-      num_sessions: 0,
-      parallel_sessions: 0
+      sessions: {
+        max_play: 0,
+        max_parallel: 0,
+        reset: true
+      }
     };
 
     NodeItem.prototype.sync = function(method, model, options) {
@@ -843,11 +846,7 @@
       if (data == null) {
         return;
       }
-      if (data.name != null) {
-        node_default.set("name", data.name);
-      }
-      node_default.set("num_sessions", data.num_sessions);
-      node_default.set("parallel_sessions", data.parallel_sessions);
+      node_default.set(data);
       return mod.modal("hide");
     });
   });
