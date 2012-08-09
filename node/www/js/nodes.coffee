@@ -16,31 +16,33 @@ print_error = (text) ->
 
 pop_settings = (ui, data) ->
     ui.html node_settings data
-    num = $ "#num_sessions"
+    num = $ "#sessions_max_play"
     force_input_regexp /\d/, num
-    attach_checkbox_and_input num, $ "#num_sessions_check"
-    par = $ "#parallel_sessions"
+    attach_checkbox_and_input num, $ "#sessions_max_play_check"
+    par = $ "#sessions_max_parallel"
     force_input_regexp /\d/, par
-    attach_checkbox_and_input par, $ "#parallel_sessions_check"
+    attach_checkbox_and_input par, $ "#sessions_max_parallel_check"
     mod = ui.find ".modal"
     mod.modal "show"
     return [ui, mod]
 
-validate_number = (data, ui, id, min, max, msg) ->
+validate_number = (data, key, ui, id, min, max, msg) ->
     widget = ui.find "#" + id
     val = get_number widget
     unless is_clipped val, min, max
         toggle_input_error widget, msg
         return false
-    data[id] = val
+    data[key] = val
     return true
 
 validate_settings = (ui) ->
     data = {}
     name = $ "#name"
     data.name = name.val() if name.val()?
-    return unless validate_number data, ui, "num_sessions", 0, Number.MAX_VALUE, "Invalid"
-    return unless validate_number data, ui, "parallel_sessions", 0, Number.MAX_VALUE, "Invalid"
+    next = data.sessions = {}
+    return unless validate_number next, "max_play",     ui, "sessions_max_play",     0, Number.MAX_VALUE, "Invalid"
+    return unless validate_number next, "max_parallel", ui, "sessions_max_parallel", 0, Number.MAX_VALUE, "Invalid"
+    next.reset = ui.find("#sessions_reset").is ":checked"
     return data
 
 class NodeItem extends Backbone.Model
@@ -51,18 +53,24 @@ class NodeItem extends Backbone.Model
         parallel_sessions: 0
 
     sync: (method, model, options) =>
+        data = select_attributes model.attributes, ["name", "sessions"]
+        data = flatten_item data
+        data.id = model.id
+
         if method == "create"
-            return ajax "/api/create_node", model.attributes,
-                options.success, options.error
+            return ajax "/api/create_node", data, options.success, options.error
+
         if method == "read"
             return ajax "/api/get_node", id: model.id,
                 options.success, options.error
+
         if method == "update"
-            return ajax "/api/update_node", model.attributes,
-                options.success, options.error
+            return ajax "/api/update_node", data, options.success, options.error
+
         if method == "delete"
             return ajax "/api/delete_node", id: model.id,
                 options.success, options.error
+
         return Backbone.sync method, model, options
 
 class NodeList extends Backbone.Collection

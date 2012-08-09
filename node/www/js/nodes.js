@@ -446,18 +446,18 @@
   pop_settings = function(ui, data) {
     var mod, num, par;
     ui.html(node_settings(data));
-    num = $("#num_sessions");
+    num = $("#sessions_max_play");
     force_input_regexp(/\d/, num);
-    attach_checkbox_and_input(num, $("#num_sessions_check"));
-    par = $("#parallel_sessions");
+    attach_checkbox_and_input(num, $("#sessions_max_play_check"));
+    par = $("#sessions_max_parallel");
     force_input_regexp(/\d/, par);
-    attach_checkbox_and_input(par, $("#parallel_sessions_check"));
+    attach_checkbox_and_input(par, $("#sessions_max_parallel_check"));
     mod = ui.find(".modal");
     mod.modal("show");
     return [ui, mod];
   };
 
-  validate_number = function(data, ui, id, min, max, msg) {
+  validate_number = function(data, key, ui, id, min, max, msg) {
     var val, widget;
     widget = ui.find("#" + id);
     val = get_number(widget);
@@ -465,23 +465,25 @@
       toggle_input_error(widget, msg);
       return false;
     }
-    data[id] = val;
+    data[key] = val;
     return true;
   };
 
   validate_settings = function(ui) {
-    var data, name;
+    var data, name, next;
     data = {};
     name = $("#name");
     if (name.val() != null) {
       data.name = name.val();
     }
-    if (!validate_number(data, ui, "num_sessions", 0, Number.MAX_VALUE, "Invalid")) {
+    next = data.sessions = {};
+    if (!validate_number(next, "max_play", ui, "sessions_max_play", 0, Number.MAX_VALUE, "Invalid")) {
       return;
     }
-    if (!validate_number(data, ui, "parallel_sessions", 0, Number.MAX_VALUE, "Invalid")) {
+    if (!validate_number(next, "max_parallel", ui, "sessions_max_parallel", 0, Number.MAX_VALUE, "Invalid")) {
       return;
     }
+    next.reset = ui.find("#sessions_reset").is(":checked");
     return data;
   };
 
@@ -502,8 +504,12 @@
     };
 
     NodeItem.prototype.sync = function(method, model, options) {
+      var data;
+      data = select_attributes(model.attributes, ["name", "sessions"]);
+      data = flatten_item(data);
+      data.id = model.id;
       if (method === "create") {
-        return ajax("/api/create_node", model.attributes, options.success, options.error);
+        return ajax("/api/create_node", data, options.success, options.error);
       }
       if (method === "read") {
         return ajax("/api/get_node", {
@@ -511,7 +517,7 @@
         }, options.success, options.error);
       }
       if (method === "update") {
-        return ajax("/api/update_node", model.attributes, options.success, options.error);
+        return ajax("/api/update_node", data, options.success, options.error);
       }
       if (method === "delete") {
         return ajax("/api/delete_node", {

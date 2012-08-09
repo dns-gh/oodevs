@@ -33,8 +33,9 @@
         <div class="modal-body">
             <form class="form-horizontal">
                 [[ template "input_text" sub "id" "name" "label" "Name" "value" "{{name}}" ]]
-                [[ template "input_number" sub "id" "num_sessions" "label" "Max" "prepend" 1 "prepend_value" "{{#is_positive num_sessions}} checked=\"checked\"{{/is_positive}}" "value" "{{num_sessions}}" "append" "Sessions" ]]
-                [[ template "input_number" sub "id" "parallel_sessions" "label" "Parallel" "prepend" 1 "prepend_value" "{{#is_positive parallel_sessions}} checked=\"checked\"{{/is_positive}}" "value" "{{parallel_sessions}}" "append" "Sessions" ]]
+                [[ template "input_number" sub "id" "sessions_max_play" "label" "Max" "prepend" 1 "prepend_value" "{{#is_positive sessions.max_play}} checked=\"checked\"{{/is_positive}}" "value" "{{sessions.max_play}}" "append" "Sessions" ]]
+                [[ template "input_number" sub "id" "sessions_max_parallel" "label" "Parallel" "prepend" 1 "prepend_value" "{{#is_positive sessions.max_parallel}} checked=\"checked\"{{/is_positive}}" "value" "{{sessions.max_parallel}}" "append" "Sessions" ]]
+                [[ template "input_checkbox" sub "id" "sessions_reset" "label" "Allow Session Reset" "value" "{{#equal sessions.reset \"true\"}} checked=\"checked\"{{/equal}}" ]]
             </form>
         </div>
         <div class="modal-footer">
@@ -75,17 +76,18 @@
                     <div class="control-group">
                         <label class="control-label">Sessions</label>
                         <div class="controls">
-                            <span class="uneditable-input input-small read_only">{{num_sessions}} total</span>
-                            <span class="uneditable-input input-small read_only">{{num_played}} played</span>
+                            <span class="uneditable-input input-small read_only">{{sessions.max_play}} total</span>
+                            <span class="uneditable-input input-small read_only">{{sessions.num_play}} played</span>
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label"></label>
                         <div class="controls">
-                            <span class="uneditable-input input-small read_only">{{parallel_sessions}} parallel</span>
-                            <span class="uneditable-input input-small read_only">{{num_parallel}} running</span>
+                            <span class="uneditable-input input-small read_only">{{sessions.max_parallel}} parallel</span>
+                            <span class="uneditable-input input-small read_only">{{sessions.num_parallel}} running</span>
                         </div>
                     </div>
+                    [[ template "uneditable_input_text" sub "id" "session_reset_label" "label" "" "value" "Reset {{#equal sessions.reset \"true\"}}enabled{{else}}disabled{{/equal}}" ]]
                     [[ template "uneditable_input_text" sub "id" "{{id}}_exercises" "label" "Exercises" "value" "{{num_exercises}} available" ]]
                     [[ template "uneditable_input_text" sub "id" "{{id}}_size" "label" "Data" "value" "{{data_size}}" ]]
                 </form>
