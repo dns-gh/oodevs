@@ -1425,7 +1425,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Profile</source>
-        <translation>Profile</translation>
+        <translation>Profil</translation>
     </message>
     <message>
         <source>Ghost</source>
