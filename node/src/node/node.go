@@ -22,6 +22,7 @@ func main() {
 	log.Println("Sword Node - copyright Masa Group 2012")
 
 	debug := flag.Bool("debug", false, "debug mode")
+	reset := flag.Bool("reset", false, "allow session reset")
 	host := flag.Int("host", 0, "")
 	name := flag.String("name", "", "node name")
 	node := flag.String("type", "cluster", "node type")
@@ -37,8 +38,9 @@ func main() {
 	log.Println("type", *node)
 	log.Println("uuid", *uuid)
 	log.Println("www", *www)
+	log.Println("reset", *reset)
 
-	handler := NewHandler(*debug, *host, *name, *node, *uuid, *www)
+	handler := NewHandler(*debug, *reset, *host, *name, *node, *uuid, *www)
 	server := &http.Server{
 		Addr:           fmt.Sprintf(":%d", *port),
 		Handler:        handler,
@@ -56,6 +58,7 @@ func main() {
 type Handler struct {
 	http.Handler
 	debug  bool
+	reset  bool
 	host   int
 	name   string
 	node   string
@@ -72,9 +75,10 @@ func loadTemplates(pattern string) (*template.Template, error) {
 	return t, err
 }
 
-func NewHandler(debug bool, host int, name, node, uuid, www string) *Handler {
+func NewHandler(debug, reset bool, host int, name, node, uuid, www string) *Handler {
 	it := &Handler{
 		debug: debug,
+		reset: reset,
 		host:  host,
 		name:  name,
 		node:  node,
@@ -205,6 +209,7 @@ func (it *Handler) MakeModel(params url.Values, user User) map[string]interface{
 	model["type"] = it.node
 	model["debug"] = it.debug
 	model["user"] = user
+	model["reset"] = it.reset
 	return model
 }
 

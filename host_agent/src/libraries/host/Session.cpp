@@ -184,6 +184,7 @@ Session::Session( const FileSystem_ABC& system,
     , start_time_  ()
     , current_time_()
     , checkpoints_ ()
+    , first_time_  ( true )
 {
     // NOTHING
 }
@@ -210,7 +211,7 @@ Session::Session( const FileSystem_ABC& system,
     , links_       ( node->LinkExercise( tree.get_child( "links" ) ) )
     , port_        ( AcquirePort( Get< int >( tree, "port" ), ports ) )
     , process_     ( AcquireProcess( tree, runtime, port_->Get() ) )
-    , running_     ( process_ ? node->StartSession( boost::posix_time::not_a_date_time ) : Node_ABC::T_Token() )
+    , running_     ( process_ ? node->StartSession( boost::posix_time::not_a_date_time, true ) : Node_ABC::T_Token() )
     , status_      ( AcquireStatus( ConvertStatus( Get< std::string >( tree, "status" ) ), process_ ) )
     , polling_     ( false )
     , counter_     ( 0 )
@@ -220,6 +221,7 @@ Session::Session( const FileSystem_ABC& system,
     , start_time_  ()
     , current_time_()
     , checkpoints_ ()
+    , first_time_  ( Get< bool >( tree, "first_time" ) )
 {
     node_->UpdateSessionSize( id_, size_ );
     if( !process_ )
@@ -309,6 +311,7 @@ Tree Session::GetProperties( bool save ) const
             tree.put( it.first + ".name",     Get< std::string >( it.second, "name" ) );
             tree.put( it.first + ".checksum", Get< std::string >( it.second, "checksum" ) );
         }
+    tree.put( "first_time", first_time_ );
     return tree;
 }
 
@@ -543,7 +546,7 @@ bool Session::Start( const Runtime_ABC& runtime, const Path& apps, const std::st
         return ModifyStatus( lock, STATUS_PLAYING );
 
     const boost::posix_time::ptime now = boost::posix_time::second_clock::local_time();
-    Node_ABC::T_Token token = node_->StartSession( now );
+    Node_ABC::T_Token token = node_->StartSession( now, first_time_ || !checkpoint.empty() );
     if( !token )
         return false;
 
@@ -570,9 +573,10 @@ bool Session::Start( const Runtime_ABC& runtime, const Path& apps, const std::st
     if( !ptr )
         return false;
 
-    process_ = ptr;
-    running_ = token;
-    status_  = STATUS_PLAYING;
+    process_    = ptr;
+    running_    = token;
+    status_     = STATUS_PLAYING;
+    first_time_ = false;
     return true;
 }
 

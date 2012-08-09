@@ -187,6 +187,7 @@ private:
     std::string current_time_;
     web::session::Config cfg_;
     T_Checkpoints checkpoints_;
+    bool first_time_;
     mutable runtime::Async async_;
     //@}
 };

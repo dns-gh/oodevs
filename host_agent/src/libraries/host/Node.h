@@ -144,7 +144,7 @@ public:
 
     //! @name Session methods
     //@{
-    virtual T_Token StartSession( const boost::posix_time::ptime& start );
+    virtual T_Token StartSession( const boost::posix_time::ptime& start, bool first_time );
     virtual void UpdateSessionSize( const Uuid& id, size_t size );
     virtual void RemoveSession( const Uuid& id );
     void StopSession( const boost::posix_time::ptime& start );

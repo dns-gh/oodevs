@@ -151,14 +151,18 @@
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
+                    [[ if .reset ]]
                     <li><a class="play emu_btn">From Scratch</a></li>
                     <li class="divider"></li>
+                    [[ end ]]
                     {{#each checkpoints.list}}
                     <li><a class="play emu_btn" name="{{.}}">{{.}}</a></li>
                     {{/each}}
                 </ul>
                 {{else}}
+                [[ if .reset ]][[ else ]]{{#equal first_time "true"}}[[ end ]]
                 <a title="Play" class="btn play"><i class="icon-play"></i></a>
+                [[ if .reset ]][[ else ]]{{/equal}}[[ end ]]
                 {{/count}}
                 {{/is_option}}
                 {{#is_option status paused=""}}

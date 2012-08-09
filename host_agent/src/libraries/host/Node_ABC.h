@@ -119,7 +119,7 @@ struct Node_ABC : public boost::noncopyable
     //! @name Session methods
     //@{
     typedef boost::shared_ptr< node::Token > T_Token;
-    virtual T_Token StartSession( const boost::posix_time::ptime& start ) = 0;
+    virtual T_Token StartSession( const boost::posix_time::ptime& start, bool first_time ) = 0;
     virtual void UpdateSessionSize( const Uuid& id, size_t size ) = 0;
     virtual void RemoveSession( const Uuid& id ) = 0;
     //@}

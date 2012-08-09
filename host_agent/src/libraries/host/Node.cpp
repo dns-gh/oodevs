@@ -265,7 +265,7 @@ bool Node::Start( const Runtime_ABC& runtime, const Path& app, const Path& web,
     if( process_  && process_->IsAlive() )
         return modified;
 
-    T_Process ptr = runtime.Start( Utf8Convert( app ), boost::assign::list_of< std::string >
+    std::vector< std::string > args = boost::assign::list_of< std::string >
 #ifdef _DEBUG
         ( "--debug" )
 #endif
@@ -274,8 +274,11 @@ bool Node::Start( const Runtime_ABC& runtime, const Path& app, const Path& web,
         ( MakeOption( "type", type ) )
         ( MakeOption( "name", cfg_.name ) )
         ( MakeOption( "host", host ) )
-        ( MakeOption( "port", port_->Get() ) ),
-        std::string(), Utf8Convert( root_ / ( type + ".log" ) ) );
+        ( MakeOption( "port", port_->Get() ) );
+    if( cfg_.sessions.reset )
+        args.push_back( "--reset" );
+    T_Process ptr = runtime.Start( Utf8Convert( app ), args, std::string(),
+                                   Utf8Convert( root_ / ( type + ".log" ) ) );
     if( !ptr )
         return modified;
 
@@ -346,9 +349,10 @@ bool Node::Update( const Tree& cfg )
 {
     boost::lock_guard< boost::shared_mutex > lock( access_ );
     const std::string name = cfg_.name;
+    const bool reset = cfg_.sessions.reset;
     ReadConfig( cfg_, cfg );
     num_play_ = 0;
-    return cfg_.name != name;
+    return cfg_.name != name || cfg_.sessions.reset != reset;
 }
 
 namespace
@@ -563,15 +567,16 @@ size_t accumulate( const T& map )
 // Name: Node::StartSession
 // Created: BAX 2012-07-18
 // -----------------------------------------------------------------------------
-Node_ABC::T_Token Node::StartSession( const boost::posix_time::ptime& start )
+Node_ABC::T_Token Node::StartSession( const boost::posix_time::ptime& start, bool first_time )
 {
     const bool force = start == boost::posix_time::not_a_date_time;
 
     boost::unique_lock< boost::shared_mutex > lock( access_ );
+    if( !first_time && !cfg_.sessions.reset )
+        return T_Token();
     if( !force && cfg_.sessions.max_parallel )
         if( num_parallel_ >= cfg_.sessions.max_parallel )
             throw web::HttpException( web::FORBIDDEN );
-
     if( !force && cfg_.sessions.max_play )
         if( num_play_ >= cfg_.sessions.max_play )
             throw web::HttpException( web::FORBIDDEN );
