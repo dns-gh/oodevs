@@ -125,6 +125,18 @@
     <Filter Include="Source Files\Dialogs\Consistency">
       <UniqueIdentifier>{933d723c-eea0-40d6-89c9-d42e04cfabfe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\MVC">
+      <UniqueIdentifier>{f1f64376-a700-4dcd-9e4f-fc02c4376587}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\MVC\Model">
+      <UniqueIdentifier>{ec5ab0d7-c292-47a0-8f3f-d2d118974221}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\MVC\Controller">
+      <UniqueIdentifier>{b9647876-b475-4198-a317-a94f20d1ef2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\MVC\View">
+      <UniqueIdentifier>{fc70547b-557f-4096-ad92-7fd43680e4eb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\clients_gui\clients_gui_pch.cpp">
