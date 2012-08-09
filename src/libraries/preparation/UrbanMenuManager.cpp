@@ -232,8 +232,13 @@ void UrbanMenuManager::OnCreateDistrict()
 // -----------------------------------------------------------------------------
 void UrbanMenuManager::OnDelete()
 {
-    model_.DeleteBlocks( selected_ );
-    selected_.clear();
+    if( selected_.empty() && element_ )
+        selected_.push_back( element_ );
+    if( !selected_.empty() )
+    {
+        model_.DeleteBlocks( selected_ );
+        selected_.clear();
+    }
 }
 
 // -----------------------------------------------------------------------------
