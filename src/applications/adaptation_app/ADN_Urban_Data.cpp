@@ -1002,7 +1002,7 @@ ADN_Urban_Data::UsageTemplateInfos::UsageTemplateInfos( xml::xistream& input )
     std::string type = input.attribute< std::string >( "type" );
     ADN_Urban_Data::AccommodationInfos* accomodation = ADN_Workspace::GetWorkspace().GetUrban().GetData().FindAccommodation( type );
     if( !accomodation )
-        throw ADN_DataException( "Invalid data", tools::translate( "ADN_Urban_Data", "Urban data - Invalid accomodation type '%1'" ).arg( type.c_str() ).ascii();
+        throw ADN_DataException( "Invalid data", tools::translate( "ADN_Urban_Data", "Urban data - Invalid accomodation type '%1'" ).arg( type.c_str() ).ascii() );
     accommodation_ = accomodation;
 }
 
