@@ -237,3 +237,13 @@ integration.getAgentFromAutomatKnowledge = function( entity )
     local agent = DEC_Connaissance_EnAgent( entity.source )
     return CreateKnowledge(world.PlatoonAlly, agent)
 end
+
+function DEC_GetMission( entity )
+    local mission = DEC_GetRawMission( entity )
+    if entity.mission == mission then
+        return entity.mission
+    end
+    DEC_FillMissionParameters( mission, mission )
+    entity.mission = mission
+    return mission
+end

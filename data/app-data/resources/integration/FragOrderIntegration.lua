@@ -217,9 +217,19 @@ integration.startFragOrderTask = function( self )
     integration.cleanFragOrder( self )
     return
   elseif orderType =="Rep_OrderConduite_Interrompre" then
-    masalife.brain.core.stopTasks()
-    integration.cleanFragOrder( self )
-    return
+    if myself.currentMission then
+        local missionCourante = DEC_GetMission( meKnowledge.source )
+        if missionCourante.meetingPoint then
+            mission.objectives = { CreateKnowledge( integration.ontology.types.point, DEC_Geometrie_CopiePoint( missionCourante.meetingPoint.source ) ) }
+            integration.communication.StartMissionPionVersPion( {mission_type = "platoon.tasks.FaireMouvement", 
+                                                              mission_objectives = { objectives = mission.objectives}, 
+                                                              echelon = eEtatEchelon_None } )
+        else
+            masalife.brain.core.stopTasks()
+        end
+        integration.cleanFragOrder( self )
+        return
+    end
   elseif orderType == "Rep_OrderConduite_PasserEnSilenceRadar" then
     stopTask( "agent.frago.ActivateRadar" )
     orderType = "agent.frago.ObserveRadarSilence"
