@@ -36,7 +36,7 @@ Saver::Saver( dispatcher::ClientPublisher_ABC& client, const dispatcher::Config&
     : client_            ( client )
     , recorderDirectory_ ( config.GetRecordDirectory() )
     , frameCount_        ( 0 )
-    , fragmentFirstFrame_( 0 )
+    , fragmentFirstFrame_( 1 )
     , currentFolder_     ( 0 )
     , hasCheckpoint_     ( config.HasCheckpoint() )
 {
