@@ -3936,7 +3936,6 @@
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -7263,7 +7262,6 @@
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -7524,4 +7522,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2177231393" -->
+<!-- signature="2702523327" -->
