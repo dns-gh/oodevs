@@ -8,7 +8,7 @@
       <preferred-terrains/>
       <avoided-terrains strength="7"/>
       <zone>
-        <outter-tolerance cost-per-meter="1" with-automat="10000" without-automat="1000"/>
+        <outter-tolerance cost-per-meter="0.005" with-automat="10000" without-automat="1000"/>
         <inner-comfort cost-per-meter="0.002" distance="500"/>
       </zone>
       <automat-zone>
@@ -377,4 +377,4 @@
     <rule channeling-range="1" cost-out-of-channeling="5000" type="base"/>
   </population-rules>
 </pathfind>
-<!-- signature="3084358419" -->
+<!-- signature="0781623995" -->
