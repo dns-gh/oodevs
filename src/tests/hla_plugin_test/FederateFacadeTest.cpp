@@ -18,6 +18,7 @@
 #include "MockMessageController.h"
 #include "MockLocalAgentResolver.h"
 #include "MockCallsignResolver.h"
+#include "MockTacticalObjectSubject.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace plugins::hla;
@@ -32,6 +33,7 @@ namespace
             , listener( 0 )
         {}
         MockAgentSubject subject;
+        MockTacticalObjectSubject tacticalObjectSubject;
         MockRtiAmbassadorFactory rtiFactory;
         MockFederateAmbassadorFactory federateFactory;
         MockFederate* federate;
@@ -58,10 +60,13 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_initialization_declares_publications_with_ne
     MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "BaseEntity.AggregateEntity", mock::any, true, true );
     MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "BaseEntity.PhysicalEntity.Platform.SurfaceVessel", mock::any, true, true );
     MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "BaseEntity.PhysicalEntity.Platform.Aircraft", mock::any, true, true );
+    MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "Minefield", mock::any, true, true );
 
     MOCK_EXPECT( subject.Register ).once();
+    MOCK_EXPECT( tacticalObjectSubject.Register ).once();
     MOCK_EXPECT( controller.Register ).once().in( s );
-    FederateFacade facade( xis, controller, subject, localResolver, rtiFactory, federateFactory, "directory", callsignResolver );
+    FederateFacade facade( xis, controller, subject, localResolver, rtiFactory, federateFactory, "directory", callsignResolver, tacticalObjectSubject );
+    MOCK_EXPECT( tacticalObjectSubject.Unregister ).once();
     MOCK_EXPECT( subject.Unregister ).once();
     MOCK_EXPECT( controller.Unregister ).once().in( s );
     MOCK_EXPECT( rtiFactory.DeleteAmbassador ).once().calls( boost::bind( &::operator delete, _1 ) );
@@ -79,9 +84,12 @@ BOOST_FIXTURE_TEST_CASE( netn_use_can_be_desactivated, Fixture )
     MOCK_EXPECT( federate->RegisterClass ).once().with( "BaseEntity.PhysicalEntity.Platform.SurfaceVessel", mock::any, true, true );
     MOCK_EXPECT( federate->RegisterClass ).once().with( "BaseEntity.PhysicalEntity.Platform.Aircraft", mock::any, true, true );
     MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "BaseEntity.PhysicalEntity.Platform.GroundVehicle", mock::any, true, true );
+    MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "Minefield", mock::any, true, true );
     MOCK_EXPECT( subject.Register ).once();
+    MOCK_EXPECT( tacticalObjectSubject.Register ).once();
     MOCK_EXPECT( controller.Register ).once();
-    FederateFacade facade( xis, controller, subject, localResolver, rtiFactory, federateFactory, "directory", callsignResolver );
+    FederateFacade facade( xis, controller, subject, localResolver, rtiFactory, federateFactory, "directory", callsignResolver, tacticalObjectSubject );
+    MOCK_EXPECT( tacticalObjectSubject.Unregister ).once();
     MOCK_EXPECT( subject.Unregister ).once();
     MOCK_EXPECT( controller.Unregister ).once();
     MOCK_EXPECT( rtiFactory.DeleteAmbassador ).once().calls( boost::bind( &::operator delete, _1 ) );
@@ -95,10 +103,12 @@ namespace
         BuildFixture()
         {
             MOCK_EXPECT( subject.Register );
+            MOCK_EXPECT( tacticalObjectSubject.Register ).once();
             MOCK_EXPECT( subject.Unregister );
+            MOCK_EXPECT( tacticalObjectSubject.Unregister ).once();
             MOCK_EXPECT( controller.Register ).once().with( mock::retrieve( listener ) );
             MOCK_EXPECT( controller.Unregister ).once();
-            MOCK_EXPECT( federate->RegisterClass ).exactly( 7 );
+            MOCK_EXPECT( federate->RegisterClass ).exactly( 8 );
             MOCK_EXPECT( federate->Connect ).once().returns( true );
         }
     };
@@ -112,7 +122,7 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_xml_options_overrides_default_values, BuildF
     MOCK_EXPECT( rtiFactory.CreateAmbassador ).once().with( mock::any, mock::any, hla::RtiAmbassador_ABC::TimeStampOrder, "host", "1337" ).returns( new ::hla::MockRtiAmbassador() );
     MOCK_EXPECT( federateFactory.Create ).once().with( mock::any, "name", 3 ).returns( std::auto_ptr< Federate_ABC >( federate ) );
     MOCK_EXPECT( federate->Join ).once().with( "federation", false, false ).returns( true );
-    FederateFacade facade( xis, controller, subject, localResolver, rtiFactory, federateFactory, "directory", callsignResolver );
+    FederateFacade facade( xis, controller, subject, localResolver, rtiFactory, federateFactory, "directory", callsignResolver, tacticalObjectSubject );
     MOCK_EXPECT( rtiFactory.DeleteAmbassador ).once().calls( boost::bind( &::operator delete, _1 ) );
 }
 
@@ -125,7 +135,7 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_can_create_federation, BuildFixture )
     MOCK_EXPECT( federate->Join ).once().in( s ).returns( false );
     MOCK_EXPECT( federate->Create1 ).once().in( s ).with( "Federation", "directory/fom" ).returns( true );
     MOCK_EXPECT( federate->Join ).once().in( s ).returns( true );
-    FederateFacade facade( xis, controller, subject, localResolver, rtiFactory, federateFactory, "directory", callsignResolver );
+    FederateFacade facade( xis, controller, subject, localResolver, rtiFactory, federateFactory, "directory", callsignResolver, tacticalObjectSubject );
     MOCK_EXPECT( rtiFactory.DeleteAmbassador ).once().calls( boost::bind( &::operator delete, _1 ) );
 }
 
@@ -138,7 +148,7 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_can_create_federation_with_absolute_fom, Bui
     MOCK_EXPECT( federate->Join ).once().in( s ).returns( false );
     MOCK_EXPECT( federate->Create1 ).once().in( s ).with( "Federation", "c:/fom" ).returns( true );
     MOCK_EXPECT( federate->Join ).once().in( s ).returns( true );
-    FederateFacade facade( xis, controller, subject, localResolver, rtiFactory, federateFactory, "directory", callsignResolver );
+    FederateFacade facade( xis, controller, subject, localResolver, rtiFactory, federateFactory, "directory", callsignResolver, tacticalObjectSubject );
     MOCK_EXPECT( rtiFactory.DeleteAmbassador ).once().calls( boost::bind( &::operator delete, _1 ) );
 }
 
@@ -155,7 +165,7 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_can_create_federation_with_fom_modules, Buil
     MOCK_EXPECT( federate->Join ).once().in( s ).returns( false );
     MOCK_EXPECT( federate->CreateV ).once().in( s ).with( "Federation", FOM_FILES ).returns( true );
     MOCK_EXPECT( federate->Join ).once().in( s ).returns( true );
-    FederateFacade facade( xis, controller, subject, localResolver, rtiFactory, federateFactory, "directory", callsignResolver );
+    FederateFacade facade( xis, controller, subject, localResolver, rtiFactory, federateFactory, "directory", callsignResolver, tacticalObjectSubject );
     MOCK_EXPECT( rtiFactory.DeleteAmbassador ).once().calls( boost::bind( &::operator delete, _1 ) );
 }
 
@@ -166,7 +176,7 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_can_destroy_federation, BuildFixture )
     MOCK_EXPECT( rtiFactory.CreateAmbassador ).once().returns( new ::hla::MockRtiAmbassador() );
     MOCK_EXPECT( federateFactory.Create ).once().returns( std::auto_ptr< Federate_ABC >( federate ) );
     MOCK_EXPECT( federate->Join ).once().returns( true );
-    FederateFacade facade( xis, controller, subject, localResolver, rtiFactory, federateFactory, "directory", callsignResolver );
+    FederateFacade facade( xis, controller, subject, localResolver, rtiFactory, federateFactory, "directory", callsignResolver, tacticalObjectSubject );
     MOCK_EXPECT( federate->Destroy ).once().with( "Federation" ).returns( true );
     MOCK_EXPECT( rtiFactory.DeleteAmbassador ).once().calls( boost::bind( &::operator delete, _1 ) );
 }
@@ -178,7 +188,7 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_steps, BuildFixture )
     MOCK_EXPECT( rtiFactory.CreateAmbassador ).once().returns(  new ::hla::MockRtiAmbassador() );
     MOCK_EXPECT( federateFactory.Create ).once().returns( std::auto_ptr< Federate_ABC >( federate ) );
     MOCK_EXPECT( federate->Join ).once().returns( true );
-    FederateFacade facade( xis, controller, subject, localResolver, rtiFactory, federateFactory, "directory", callsignResolver );
+    FederateFacade facade( xis, controller, subject, localResolver, rtiFactory, federateFactory, "directory", callsignResolver, tacticalObjectSubject );
     BOOST_REQUIRE( listener );
     MOCK_EXPECT( federate->Step ).once();
     sword::SimToClient_Content message;

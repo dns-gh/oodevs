@@ -94,6 +94,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\AgentAdapter.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\Aircraft.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\AttributesDeserializer.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\AttributesUpdater.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\AutomatChecker.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\AutomatCreater.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\AutomatDisengager.cpp" />
@@ -111,6 +112,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\GroundVehicle.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\HlaClass.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\HlaObjectNameFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\HlaTacticalObjectClass.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
@@ -125,6 +127,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\InteractionBuilder.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\LocalAgentResolver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\MarkingFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\Minefield.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\MissionResolver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\MunitionTypeResolver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnAggregate.cpp" />
@@ -149,6 +152,8 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\Spatial.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\Subordinates.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\SurfaceVessel.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\TacticalObjectController.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\TacticalObjectProxy.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\Transportation.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\TransportationFacade.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\TransportationOfferer.cpp" />
@@ -177,6 +182,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\AgentAdapter.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Aircraft.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\AttributesDeserializer.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\AttributesUpdater.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatChecker.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatChecker_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatCreater.h" />
@@ -211,6 +217,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\HlaObjectNameFactory.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\HlaObjectNameFactory_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\HlaObject_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\HlaTacticalObjectClass.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\HlaPlugin.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\AggregateMarking.h" />
@@ -228,6 +235,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\LocalAgentResolver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\MarkingFactory.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\MarkingFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\Minefield.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\MissionResolver.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\MissionResolver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\MunitionTypeResolver.h" />
@@ -262,6 +270,11 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\Subordinates.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Subordinates_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\SurfaceVessel.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\TacticalObjectController.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\TacticalObjectListener_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\TacticalObjectProxy.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\TacticalObjectSubject_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\TacticalObject_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Transportation.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\TransportationFacade.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\TransportationOfferer.h" />

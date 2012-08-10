@@ -33,6 +33,7 @@
 #include "AutomatChecker.h"
 #include "InteractionBuilder.h"
 #include "ExtentResolver_ABC.h"
+#include "TacticalObjectController.h"
 #include "tools/MessageController.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/ObjectTypes.h"
@@ -155,6 +156,7 @@ HlaPlugin::HlaPlugin( dispatcher::Model_ABC& dynamicModel, const dispatcher::Sta
     , pConverter_                 ( new kernel::CoordinateConverter( config ) )
     , pExtentResolver_            ( new ExtentResolver( *pXis_, logger_, *pConverter_ ) )
     , pSubject_                   ( 0 )
+    , pTacticalObjectSubject_     ( 0 )
     , pFederate_                  ( 0 )
     , pInteractionBuilder_        ( 0 )
     , pSimulationFacade_          ( 0 )
@@ -192,10 +194,11 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
         {
             pSubject_.reset( new AgentController( dynamicModel_, *pAggregateTypeResolver_, *pComponentTypeResolver_, *pComponentTypes_,
                                                   *platforms_, *pConverter_, pXis_->attribute< bool >( "disaggregate", false ) ) );
+            pTacticalObjectSubject_.reset( new TacticalObjectController ( dynamicModel_, *pConverter_ ) );
             pFederate_.reset( new FederateFacade( *pXis_, *pMessageController_, *pSubject_, *pLocalAgentResolver_,
                                                   pXis_->attribute< bool >( "debug", false ) ? *pDebugRtiFactory_ : *pRtiFactory_,
                                                   pXis_->attribute< bool >( "debug", false ) ? *pDebugFederateFactory_ : *pFederateFactory_,
-                                                  config_.BuildPluginDirectory( "hla" ), *pCallsignResolver_ ) );
+                                                  config_.BuildPluginDirectory( "hla" ), *pCallsignResolver_, *pTacticalObjectSubject_ ) );
             pInteractionBuilder_.reset( new InteractionBuilder( logger_, *pFederate_ ) );
             pSimulationFacade_.reset( new SimulationFacade( *pXis_, *pContextFactory_, *pMessageController_, simulationPublisher_, dynamicModel_, *pComponentTypeResolver_, staticModel_, *pUnitTypeResolver_, *pFederate_, *pComponentTypes_, *pCallsignResolver_, logger_, *pExtentResolver_ ) );
             pRemoteAgentResolver_.reset( new RemoteAgentResolver( *pFederate_, *pSimulationFacade_ ) );
@@ -204,6 +207,7 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
             pTransportationFacade_.reset( pXis_->attribute< bool >( "netn", true ) ? new TransportationFacade( *pXis_, *pMissionResolver_, *pMessageController_, *pCallsignResolver_, *pSubordinates_, *pInteractionBuilder_, *pContextFactory_, simulationPublisher_, clientsPublisher_ ) : 0 );
             pStepper_.reset( new Stepper( *pXis_, *pMessageController_, simulationPublisher_ ) );
             pSubject_->Visit( dynamicModel_ );
+			pTacticalObjectSubject_->Visit( dynamicModel_ );
         }
     }
     catch( ::hla::HLAException& e )

@@ -85,6 +85,23 @@ namespace hla
     private:
         std::auto_ptr< RemoteHlaObjectFactory_ABC > factory_;
     };
+
+    template< typename T >
+    class TacticalObjectFactory : public HlaTacticalObjectFactory_ABC
+    {
+    public:
+        TacticalObjectFactory( unsigned short siteID, unsigned short applicationID )
+            : siteID_( siteID )
+            , applicationID_ ( applicationID )
+        {}
+        virtual std::auto_ptr< HlaObject_ABC > Create( TacticalObject_ABC& object, const std::string& name, unsigned int identifier, rpr::ForceIdentifier force, const rpr::EntityType& type ) const
+        {
+            return std::auto_ptr< HlaObject_ABC >( new T( identifier, name, force, type, siteID_, applicationID_ ) );
+        }
+    private:
+        unsigned short siteID_;
+        unsigned short applicationID_;
+    };
 }
 }
 

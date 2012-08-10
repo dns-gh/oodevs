@@ -13,6 +13,7 @@
 #include "RemoteAgentSubject_ABC.h"
 #include "Federate_ABC.h"
 #include "AgentListener_ABC.h"
+#include "TacticalObjectListener_ABC.h"
 #include "tools/MessageObserver.h"
 #include <memory>
 
@@ -47,7 +48,9 @@ namespace hla
     class MarkingFactory_ABC;
     class ClassListener_ABC;
     class HlaClass;
+    class HlaTacticalObjectClass;
     class HlaObjectNameFactory_ABC;
+    class TacticalObjectSubject_ABC;
 
 // =============================================================================
 /** @class  FederateFacade
@@ -58,6 +61,7 @@ namespace hla
 class FederateFacade : public RemoteAgentSubject_ABC
                      , public Federate_ABC
                      , private AgentListener_ABC
+                     , private TacticalObjectListener_ABC
                      , private tools::MessageObserver< sword::ControlEndTick >
 {
 public:
@@ -65,7 +69,8 @@ public:
     //@{
              FederateFacade( xml::xisubstream xis, tools::MessageController_ABC< sword::SimToClient_Content >& controller,
                              AgentSubject_ABC& subject, LocalAgentResolver_ABC& resolver, const RtiAmbassadorFactory_ABC& rtiFactory,
-                             const FederateAmbassadorFactory_ABC& federateFactory, const std::string& pluginDirectory, CallsignResolver_ABC& callsignResolver );
+                             const FederateAmbassadorFactory_ABC& federateFactory, const std::string& pluginDirectory, CallsignResolver_ABC& callsignResolver,
+                             TacticalObjectSubject_ABC& tacticalObjectSubject );
     virtual ~FederateFacade();
     //@}
 
@@ -105,6 +110,7 @@ private:
     //@{
     virtual void AggregateCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol );
     virtual void PlatformCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol );
+    virtual void ObjectCreated( TacticalObject_ABC& object, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type );
     //@}
 
 private:
@@ -117,6 +123,7 @@ private:
     //! @name Member data
     //@{
     AgentSubject_ABC& subject_;
+    TacticalObjectSubject_ABC& tacticalObjectSubject_;
     const RtiAmbassadorFactory_ABC& rtiFactory_;
     std::auto_ptr< MarkingFactory_ABC > markingFactory_;
     std::auto_ptr< ::hla::TimeFactory_ABC > timeFactory_;
@@ -132,6 +139,7 @@ private:
     std::auto_ptr< HlaClass > rprAggregateClass_;
     std::auto_ptr< HlaClass > rprSurfaceVesselClass_;
     std::auto_ptr< HlaClass > rprAircraftClass_;
+    std::auto_ptr< HlaTacticalObjectClass > minefieldClass_;
     //@}
 };
 

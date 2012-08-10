@@ -277,6 +277,21 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\EventListenerComposite.cpp">
       <Filter>Source Files\Resolvers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\HlaTacticalObjectClass.cpp">
+      <Filter>Source Files\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\Minefield.cpp">
+      <Filter>Source Files\Classes\rpr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\AttributesUpdater.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\TacticalObjectController.cpp">
+      <Filter>Source Files\Dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\TacticalObjectProxy.cpp">
+      <Filter>Source Files\Dispatcher</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h">
@@ -647,6 +662,30 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\EventListenerComposite.h">
       <Filter>Source Files\Resolvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\HlaTacticalObjectClass.h">
+      <Filter>Source Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\Minefield.h">
+      <Filter>Source Files\Classes\rpr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\AttributesUpdater.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\TacticalObject_ABC.h">
+      <Filter>Source Files\Dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\TacticalObjectListener_ABC.h">
+      <Filter>Source Files\Dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\TacticalObjectController.h">
+      <Filter>Source Files\Dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\TacticalObjectSubject_ABC.h">
+      <Filter>Source Files\Dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\TacticalObjectProxy.h">
+      <Filter>Source Files\Dispatcher</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

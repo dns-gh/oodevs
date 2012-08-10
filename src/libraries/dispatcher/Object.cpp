@@ -142,3 +142,12 @@ std::string Object::GetSymbol() const
 {
     return type_.GetSymbol( localisation_.GetTypeName() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Object::GetLocalisation
+// Created: AHC 2012-08-08
+// -----------------------------------------------------------------------------
+const Localisation& Object::GetLocalisation() const
+{
+    return localisation_;
+}

@@ -1,0 +1,121 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+
+// Copyright (c) 2012 MASA Group
+//
+// *****************************************************************************
+
+#include "hla_plugin_pch.h"
+#include "TacticalObjectController.h"
+#include "TacticalObjectListener_ABC.h"
+#include "TacticalObjectProxy.h"
+
+#include "dispatcher/Model_ABC.h"
+#include "dispatcher/Object.h"
+#include "dispatcher/Team_ABC.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/ObjectType.h"
+#include "clients_kernel/Karma.h"
+#include "rpr/EntityType.h"
+#include "rpr/ForceIdentifier.h"
+
+#include <boost/lexical_cast.hpp>
+#include <boost/algorithm/string.hpp>
+
+using namespace plugins::hla;
+
+// -----------------------------------------------------------------------------
+// Name: TacticalObjectController::Register
+// Created: AHC 2012-08-08
+// -----------------------------------------------------------------------------
+TacticalObjectController::TacticalObjectController( dispatcher::Model_ABC& model, const kernel::CoordinateConverter_ABC& converter )
+    : model_( model )
+    , converter_( converter )
+{
+    // TODO
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalObjectController constructor
+// Created: AHC 2012-08-08
+// -----------------------------------------------------------------------------
+TacticalObjectController::~TacticalObjectController()
+{
+    // TODO
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalObjectController::Register
+// Created: AHC 2012-08-08
+// -----------------------------------------------------------------------------
+void TacticalObjectController::Register( TacticalObjectListener_ABC& listener )
+{
+    listeners_.push_back( &listener );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalObjectController::Unregister
+// Created: AHC 2012-08-08
+// -----------------------------------------------------------------------------
+void TacticalObjectController::Unregister( TacticalObjectListener_ABC& listener )
+{
+    listeners_.erase( std::remove( listeners_.begin(), listeners_.end(), &listener ), listeners_.end() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalObjectController::Visit
+// Created: AHC 2012-08-08
+// -----------------------------------------------------------------------------
+void TacticalObjectController::Visit( dispatcher::Model_ABC& model )
+{
+    for( tools::Iterator< const dispatcher::Object_ABC& > it = model.Objects().CreateIterator(); it.HasMoreElements(); )
+    {
+        dispatcher::Object_ABC& object = const_cast< dispatcher::Object_ABC& >( it.NextElement() ); // $$$$ _RC_ SLI 2011-09-28: erk...
+        CreateObject( object );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalObjectController::Create
+// Created: AHC 2012-08-08
+// -----------------------------------------------------------------------------
+void TacticalObjectController::Create( dispatcher::Object& object )
+{
+    CreateObject( object );
+}
+
+namespace
+{
+    rpr::ForceIdentifier GetForce( const dispatcher::Object_ABC& object )
+    {
+        const kernel::Karma& karma = object.GetTeam().GetKarma();
+        if( karma == kernel::Karma::friend_ )
+            return rpr::Friendly;
+        if( karma == kernel::Karma::enemy_ )
+            return rpr::Opposing;
+        if( karma == kernel::Karma::neutral_ )
+            return rpr::Neutral;
+        return rpr::Other;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalObjectController::Create
+// Created: AHC 2012-08-08
+// -----------------------------------------------------------------------------
+void TacticalObjectController::CreateObject( dispatcher::Object_ABC& object )
+{
+    // TODO check if object must be created
+    if( !boost::algorithm::starts_with( object.GetName().toStdString(), "HLA_" ) ) // $$$$ _RC_ SLI 2011-09-22: refactor this...
+    {
+        T_Objects::iterator itObject( objects_.insert( T_Objects::value_type( object.GetId(), T_Object( new TacticalObjectProxy( object ) ) ) ).first );
+        const kernel::ObjectType& objectType = object.GetType();
+        const std::string typeName = objectType.GetName();
+        const rpr::EntityType entityType ( "2 0 225 3 7 0 0" ); // FIXME = aggregatesResolver_.Find( typeName );
+        const rpr::ForceIdentifier forceIdentifier = GetForce( object );
+        for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
+            (*it)->ObjectCreated( *(itObject->second), object.GetId(), object.GetName().toStdString(), forceIdentifier, entityType );
+    }
+}

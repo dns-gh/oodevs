@@ -9,13 +9,18 @@
 
 #include "hla_plugin_pch.h"
 #include "FederateFacade.h"
+
 #include "HlaClass.h"
+#include "HlaTacticalObjectClass.h"
+
 #include "Federate_ABC.h"
 #include "FederateAmbassadorFactory_ABC.h"
 #include "RtiAmbassadorFactory_ABC.h"
 #include "AgentSubject_ABC.h"
+#include "TacticalObjectSubject_ABC.h"
 #include "HlaFactories.h"
 #include "ClassBuilders.h"
+
 #include "AggregateEntity.h"
 #include "NetnAggregate.h"
 #include "RemoteAggregate.h"
@@ -30,6 +35,8 @@
 #include "NetnRemoteAircraft.h"
 #include "GroundVehicle.h"
 #include "NetnGroundVehicle.h"
+#include "Minefield.h"
+
 #include "MarkingFactory.h"
 #include "HlaObjectNameFactory.h"
 #include "MT_Tools/MT_Random.h"
@@ -157,8 +164,11 @@ private:
 // -----------------------------------------------------------------------------
 FederateFacade::FederateFacade( xml::xisubstream xis, tools::MessageController_ABC< sword::SimToClient_Content >& controller,
                                 AgentSubject_ABC& subject, LocalAgentResolver_ABC& resolver, const RtiAmbassadorFactory_ABC& rtiFactory,
-                                const FederateAmbassadorFactory_ABC& federateFactory, const std::string& pluginDirectory, CallsignResolver_ABC& callsignResolver )
+                                const FederateAmbassadorFactory_ABC& federateFactory, const std::string& pluginDirectory, CallsignResolver_ABC& callsignResolver,
+                                TacticalObjectSubject_ABC& tacticalObjectSubject )
+
     : subject_           ( subject )
+    , tacticalObjectSubject_( tacticalObjectSubject )
     , rtiFactory_        ( rtiFactory )
     , markingFactory_    ( new MarkingFactory( xis ) )
     , timeFactory_       ( new ::hla::SimpleTimeFactory() )
@@ -205,8 +215,15 @@ FederateFacade::FederateFacade( xml::xisubstream xis, tools::MessageController_A
                                      CreateClassBuilder< AircraftBuilder, NetnAircraftBuilder >( false )
                                     )
                                 : 0 )
+    , minefieldClass_ ( xis.attribute< bool >( "handle_objects", true ) ?
+                                new HlaTacticalObjectClass( *federate_, *nameFactory_,
+                                    std::auto_ptr< HlaTacticalObjectFactory_ABC > ( new TacticalObjectFactory< Minefield >( xis.attribute<unsigned short>("dis-site",1), xis.attribute<unsigned short>("dis-application", 1) ) ) ,
+                                    std::auto_ptr< RemoteHlaObjectFactory_ABC > ( new RemoteHlaObjectFactory< Minefield >() ),
+                                    CreateClassBuilder< MinefieldBuilder, MinefieldBuilder >( false) )
+                                : 0)
 {
     subject_.Register( *this );
+    tacticalObjectSubject_.Register( *this );
     CONNECT( controller, *this, control_end_tick );
 }
 
@@ -216,6 +233,7 @@ FederateFacade::FederateFacade( xml::xisubstream xis, tools::MessageController_A
 // -----------------------------------------------------------------------------
 FederateFacade::~FederateFacade()
 {
+    tacticalObjectSubject_.Unregister( *this );
     subject_.Unregister( *this );
     aircraftClass_.reset( 0 );
     surfaceVesselClass_.reset( 0 );
@@ -396,4 +414,14 @@ void FederateFacade::PlatformCreated( Agent_ABC& agent, unsigned int identifier,
         surfaceVesselClass_->Created( agent, identifier, name, force, type, symbol );
         break;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: FederateFacade::ObjectCreated
+// Created: AHC 2012-08-08
+// -----------------------------------------------------------------------------
+void FederateFacade::ObjectCreated( TacticalObject_ABC& object, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type )
+{
+    if( minefieldClass_.get() )
+        minefieldClass_->Created( object, identifier, name, force, type );
 }

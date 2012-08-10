@@ -26,6 +26,7 @@ namespace hla
 {
     class HlaObject_ABC;
     class Agent_ABC;
+    class TacticalObject_ABC;
 
 // =============================================================================
 /** @class  HlaObjectFactory_ABC
@@ -47,6 +48,28 @@ public:
     virtual std::auto_ptr< HlaObject_ABC > Create( Agent_ABC& agent, const std::string& name, unsigned int identifier, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol ) const = 0;
     //@}
 };
+
+// =============================================================================
+/** @class  HlaTacticalObjectFactory_ABC
+    @brief  Hla object factory definition
+*/
+// Created: AHC 2012-08-08
+// =============================================================================
+class HlaTacticalObjectFactory_ABC : private boost::noncopyable
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+        HlaTacticalObjectFactory_ABC() {}
+    virtual ~HlaTacticalObjectFactory_ABC() {}
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual std::auto_ptr< HlaObject_ABC > Create( TacticalObject_ABC& object, const std::string& name, unsigned int identifier, rpr::ForceIdentifier force, const rpr::EntityType& type ) const = 0;
+    //@}
+};
+
 
 }
 }

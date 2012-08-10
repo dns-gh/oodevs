@@ -168,3 +168,30 @@ BOOST_FIXTURE_TEST_CASE( netn_groundvehicle_builder_registers_attributes, Fixtur
                                        ( "EmbeddedUnitList" );
     Check( builder, "BaseEntity.PhysicalEntity.Platform.GroundVehicle.NETN_GroundVehicle", true, true );
 }
+
+BOOST_FIXTURE_TEST_CASE( minefield_builder_registers_attributes, Fixture )
+{
+    MinefieldBuilder builder;
+    attributes = boost::assign::list_of ( "ActiveStatus" )
+                                        ( "ForceIdentifier" )
+                                        ( "MinefieldIdentifier" )
+                                        ( "MinefieldLocation" )
+                                        ( "MinefieldOrientation" )
+                                        ( "MinefieldType" )
+                                        ( "MineTypes" )
+                                        ( "PerimeterPointCoordinates" )
+                                        ( "ProtocolMode" )
+                                        ( "State" );
+    Check( builder, "Minefield", true, true );
+}
+
+BOOST_FIXTURE_TEST_CASE( culturefeature_builder_registers_attributes, Fixture )
+{
+    CulturalFeaturedBuilder builder;
+    attributes = boost::assign::list_of ( "EntityType" )
+                                        ( "EntityIdentifier" )
+                                        ( "ForceIdentifier" )
+                                        ( "Marking" )
+                                        ( "Spatial" );
+    Check( builder, "BaseEntity.PhysicalEntity.CulturalFeature", true, true );
+}

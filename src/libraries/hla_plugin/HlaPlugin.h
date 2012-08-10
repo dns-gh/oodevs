@@ -80,6 +80,7 @@ namespace hla
     class SimulationFacade;
     class DetonationFacade;
     class TransportationFacade;
+    class TacticalObjectController;
 
 // =============================================================================
 /** @class  HlaPlugin
@@ -138,6 +139,7 @@ private:
     std::auto_ptr< kernel::CoordinateConverter_ABC > pConverter_;
     std::auto_ptr< ExtentResolver_ABC > pExtentResolver_;
     std::auto_ptr< AgentController > pSubject_;
+    std::auto_ptr< TacticalObjectController > pTacticalObjectSubject_;
     std::auto_ptr< FederateFacade > pFederate_;
     std::auto_ptr< InteractionBuilder > pInteractionBuilder_;
     std::auto_ptr< SimulationFacade > pSimulationFacade_;

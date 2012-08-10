@@ -188,6 +188,37 @@ namespace hla
             , std::auto_ptr< ClassBuilder_ABC >( new GroundVehicleBuilder() ) )
         {}
     };
+
+    // Objects
+    class CulturalFeaturedBuilder : public ClassBuilder
+    {
+    public:
+        CulturalFeaturedBuilder()
+            : ClassBuilder( "BaseEntity.PhysicalEntity.CulturalFeature", true, true
+            , boost::assign::list_of( "EntityType" )
+                                    ( "EntityIdentifier" )
+                                    ( "ForceIdentifier" )
+                                    ( "Marking" )
+                                    ( "Spatial" ) )
+        {}
+    };
+    class MinefieldBuilder : public ClassBuilder
+    {
+    public:
+        MinefieldBuilder()
+            : ClassBuilder( "Minefield", true, true
+            , boost::assign::list_of( "ActiveStatus" )
+                                    ( "ForceIdentifier" )
+                                    ( "MinefieldIdentifier" )
+                                    ( "MinefieldLocation" )
+                                    ( "MinefieldOrientation" )
+                                    ( "MinefieldType" )
+                                    ( "MineTypes" )
+                                    ( "PerimeterPointCoordinates" )
+                                    ( "ProtocolMode" )
+                                    ( "State" ) )
+        {}
+    };
 }
 }
 

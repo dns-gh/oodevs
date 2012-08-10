@@ -16,6 +16,7 @@
 namespace dispatcher
 {
     class Team_ABC;
+    class Localisation;
 
 // =============================================================================
 /** @class  Object_ABC
@@ -36,6 +37,7 @@ public:
     //! @name Operations
     //@{
     virtual const dispatcher::Team_ABC& GetTeam() const = 0;
+    //virtual const Localisation& GetLocalisation() const = 0;
     //@}
 };
 

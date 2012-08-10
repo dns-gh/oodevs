@@ -53,6 +53,7 @@ public:
     virtual const kernel::ObjectType& GetType() const;
     virtual const Team_ABC& GetTeam() const;
     std::string GetSymbol() const;
+    virtual const Localisation& GetLocalisation() const;
     //@}
 
 private:
