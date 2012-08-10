@@ -66,7 +66,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
@@ -1183,7 +1182,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
@@ -1267,7 +1265,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
@@ -1909,7 +1906,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
@@ -1964,7 +1960,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
@@ -2017,7 +2012,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
@@ -2081,7 +2075,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
@@ -2146,7 +2139,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
@@ -2208,7 +2200,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
@@ -3278,7 +3269,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
@@ -3338,7 +3328,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
@@ -3380,7 +3369,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
@@ -3420,7 +3408,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
@@ -3648,7 +3635,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
@@ -7522,4 +7508,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2702523327" -->
+<!-- signature="2633888795" -->
