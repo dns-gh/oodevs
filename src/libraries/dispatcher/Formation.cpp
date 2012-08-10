@@ -300,3 +300,16 @@ void Formation::DoUpdate( const sword::FormationUpdate& msg )
         for( int i = 0; i < msg.extension().entries_size(); ++i )
             extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
 }
+
+// -----------------------------------------------------------------------------
+// Name: Formation::GetExtension
+// Created: MMC 2012-08-10
+// -----------------------------------------------------------------------------
+bool Formation::GetExtension( const std::string& key, std::string& result ) const
+{
+    std::map< std::string, std::string >::const_iterator it = extensions_.find( key );
+    if( it == extensions_.end() )
+        return false;
+    result = it->second;
+    return true;
+}

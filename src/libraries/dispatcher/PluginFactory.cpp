@@ -20,6 +20,7 @@
 #include "PluginFactory_ABC.h"
 #include "rights_plugin/RightsPlugin.h"
 #include "logger_plugin/LoggerPlugin.h"
+#include "logistic_plugin/LogisticPlugin.h"
 #include "messenger_plugin/MessengerPlugin.h"
 #include "MT_Tools/MT_Logger.h"
 #include "saver_plugin/SaverPlugin.h"
@@ -86,6 +87,7 @@ void PluginFactory::Instanciate()
     handler_.Add( new script::ScriptPlugin( model_, staticModel_, config_, simulation_, clients_, clients_, *rights_, registrables_ ) );
     handler_.Add( new score::ScorePlugin( clients_, clients_, clients_, config_, registrables_ ) );
     handler_.Add( new logger::LoggerPlugin( model_, staticModel_, config_, services_ ) );
+    handler_.Add( new logistic::LogisticPlugin( model_, staticModel_, config_ ) );
     xml::xifstream xis( config_.GetSessionFile() );
     xis >> xml::start( "session" )
             >> xml::start( "config" )

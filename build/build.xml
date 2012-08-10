@@ -361,6 +361,12 @@
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
+    
+    <target name="library.logistic_plugin" depends="library.dispatcher,library.reports" description="build logistic_plugin static library">
+        <build-lib name="logistic_plugin" depends="qt4" pattern="lib${ant.project.name}_logistic_plugin-${platform}-mt@{suffix}" suffix="-gd">
+            <defineset define="QT3_SUPPORT"/>
+        </build-lib>
+    </target>
 
     <target name="library.client_proxy" depends="library.protocol,library.tools" description="build clients_kernel static library">
         <build-lib name="client_proxy" pattern="lib${ant.project.name}_client_proxy-${platform}-mt@{suffix}" suffix="-gd">
@@ -374,7 +380,7 @@
                                             library.bml_plugin,library.bml_plugin_dll,
                                             library.script_plugin,library.score_plugin,
                                             library.crossbow_plugin_dll,library.timeline_plugin_dll,
-                                            library.logger_plugin,library.positions_plugin" description="build all dispatcher plugins"/>
+                                            library.logger_plugin,library.positions_plugin,library.logistic_plugin" description="build all dispatcher plugins"/>
 
     <target name="library.mission_tester" depends="library.clients_kernel,library.actions,library.client_proxy" description="build mission tester lib">
         <build-lib name="mission_tester" pattern="lib${ant.project.name}_mission_tester-${platform}-mt@{suffix}" suffix="-gd" depends="qt4">
@@ -440,6 +446,7 @@
                   lib${ant.project.name}_messenger_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_script_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_order_plugin-${platform}-mt@{suffix},
+                  lib${ant.project.name}_logistic_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_3a-${platform}-mt@{suffix},
                   lib${ant.project.name}_score_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_dispatcher-${platform}-mt@{suffix},

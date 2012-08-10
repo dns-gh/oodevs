@@ -56,6 +56,7 @@ public:
     virtual Automat_ABC* GetParentAutomat() const = 0;
     virtual Formation_ABC* GetFormation() const = 0;
     virtual LogisticEntity_ABC* GetLogisticEntity() const = 0;
+    virtual bool GetExtension( const std::string& , std::string& ) const { return false; }
     //@}
 
     //! @name Operations

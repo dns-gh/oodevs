@@ -775,3 +775,16 @@ bool Agent::IsMounted() const
 {
     return isMounted_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Agent::GetExtension
+// Created: MMC 2012-08-10
+// -----------------------------------------------------------------------------
+bool Agent::GetExtension( const std::string& key, std::string& result ) const
+{
+    std::map< std::string, std::string >::const_iterator it = extensions_.find( key );
+    if( it == extensions_.end() )
+        return false;
+    result = it->second;
+    return true;
+}

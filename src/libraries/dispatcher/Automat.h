@@ -70,6 +70,7 @@ public:
     virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     virtual LogisticEntity_ABC* GetLogisticEntity() const;
     virtual const kernel::LogisticLevel& GetLogisticLevel() const;
+    virtual bool GetExtension( const std::string& key, std::string& result ) const;
     //@}
 
     //! @name Operations

@@ -489,3 +489,16 @@ const kernel::LogisticLevel& Automat::GetLogisticLevel() const
         return logisticEntity_->GetLogisticLevel();
     return kernel::LogisticLevel::none_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Automat::GetExtension
+// Created: MMC 2012-08-10
+// -----------------------------------------------------------------------------
+bool Automat::GetExtension( const std::string& key, std::string& result ) const
+{
+    std::map< std::string, std::string >::const_iterator it = extensions_.find( key );
+    if( it == extensions_.end() )
+        return false;
+    result = it->second;
+    return true;
+}
