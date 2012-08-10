@@ -49,7 +49,7 @@ public:
 private:
     //! @name Member data
     //@{
-    const std::string sessionConfigFile_;
+    std::string sessionConfigFile_;
     std::string sessionName_;
     bool hasCheckPoint_;
     std::string strCheckPointName_;

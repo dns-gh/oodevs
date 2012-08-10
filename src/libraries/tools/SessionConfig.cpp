@@ -31,6 +31,7 @@ SessionConfig::SessionConfig( RealFileLoaderObserver_ABC& observer )
     desc.add_options()
         ( "session", po::value< std::string >( &sessionName_ ), "specify session name" )
         ( "checkpoint", po::value< std::string >( &strCheckPointName_ ), "specify checkpoint to load" )
+        ( "session-file", po::value< std::string >( &sessionConfigFile_ ), "specify session file name" )
     ;
     AddOptions( desc );
 }
