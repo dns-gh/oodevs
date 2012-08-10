@@ -3286,12 +3286,7 @@
       <parameter dia-name="objectif" name="Unite a suivre" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="france.military.crowd.tasks.FaireMouvement" dia-type="france.military.crowd.tasks.FaireMouvement" id="3004" name="FOULES COMMUNES Faire Mouvement" package="move">
-      <parameter dia-name="objectifs" max-occurs="unbounded" min-occurs="1" name="Itineraire" optional="false" type="LocationComposite">
-        <choice>
-          <parameter type="Point"/>
-          <parameter type="UrbanKnowledge"/>
-        </choice>
-      </parameter>
+      <parameter dia-name="objectifs" name="Itineraire" optional="false" type="Path"/>
     </mission>
     <mission dia-behavior="france.military.crowd.tasks.Agresser" dia-type="france.military.crowd.tasks.Agresser" id="3001" name="FOULES Agresser" package="attack">
       <parameter dia-name="objectif" name="Cible" optional="false" type="LocationComposite">
@@ -3534,4 +3529,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ROEM_ArreterSilenceRadar" id="28801" name="ROEM Arreter Silence Radar"/>
   </fragorders>
 </missions>
-<!-- signature="0395519057" -->
+<!-- signature="0277480060" -->
