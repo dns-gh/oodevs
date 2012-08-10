@@ -219,7 +219,7 @@ integration.startFragOrderTask = function( self )
   elseif orderType =="Rep_OrderConduite_Interrompre" then
     if myself.currentMission then
         local missionCourante = DEC_GetMission( meKnowledge.source )
-        if missionCourante.meetingPoint then
+        if missionCourante.meetingPoint and missionCourante.meetingPoint ~= NIL then
             mission.objectives = { CreateKnowledge( integration.ontology.types.point, DEC_Geometrie_CopiePoint( missionCourante.meetingPoint.source ) ) }
             integration.communication.StartMissionPionVersPion( {mission_type = "platoon.tasks.FaireMouvement", 
                                                               mission_objectives = { objectives = mission.objectives}, 
