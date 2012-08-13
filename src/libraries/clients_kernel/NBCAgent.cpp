@@ -17,11 +17,10 @@ using namespace kernel;
 // Name: NBCAgent constructor
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-NBCAgent::NBCAgent( xml::xistream& xis )
+NBCAgent::NBCAgent( xml::xistream& input )
 {
-    xis >> xml::attribute( "name", name_ )
-        >> xml::attribute( "id", id_ )
-        >> xml::list( "effects", *this, &NBCAgent::ReadEffect );
+    input >> xml::attribute( "name", name_ )
+          >> xml::attribute( "id", id_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -50,31 +49,3 @@ std::string NBCAgent::GetName() const
 {
     return name_;
 }
-
-// -----------------------------------------------------------------------------
-// Name: NBCAgent::ReadEffect
-// Created: NPT 2012-07-20
-// -----------------------------------------------------------------------------
-void NBCAgent::ReadEffect( xml::xistream& xis )
-{
-    std::string attribute; 
-    attribute = xis.attribute< std::string >( "type", "" );
-    
-    if( attribute == "liquid" )
-        effectTypes_.push_back( eLiquid );
-    else if( attribute == "gaseous" )
-        effectTypes_.push_back( eGazeous );
-    else
-        throw std::exception( __FUNCTION__ "invalid effect type" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: std::vector< E_EffectType > NBCAgent::GetEffects
-// Created: NPT 2012-07-20
-// -----------------------------------------------------------------------------
-const NBCAgent::T_Effects& NBCAgent::GetEffects() const
-{
-    return effectTypes_ ;
-}
-
-
