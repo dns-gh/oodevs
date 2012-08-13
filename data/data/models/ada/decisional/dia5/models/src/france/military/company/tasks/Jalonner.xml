@@ -48,7 +48,7 @@
                     </parameter>
                     <parameter name="pcTasks">
                         <value>
-                            <string>france.military.platoon.tasks.Decrocher</string>
+                            <string>france.military.platoon.combat.tasks.Jalonner;france.military.platoon.tasks.Decrocher</string>
                         </value>
                     </parameter>
                     <parameter name="engineerTask">
