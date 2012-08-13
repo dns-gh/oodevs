@@ -10,8 +10,6 @@
 #ifndef __mission_tester_pch_h_
 #define __mission_tester_pch_h_
 
-#pragma execution_character_set("utf-8")
-
 #include <map>
 #include <memory>
 #include <string>

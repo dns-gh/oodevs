@@ -10,8 +10,6 @@
 #ifndef __geostore_pch_h_
 #define __geostore_pch_h_
 
-#pragma execution_character_set("utf-8")
-
 #pragma warning ( push, 0 )
 #pragma warning ( disable : 4100 4512 )
 #pragma warning ( disable : 4290 )

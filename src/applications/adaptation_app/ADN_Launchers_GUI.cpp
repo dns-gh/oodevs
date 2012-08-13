@@ -119,6 +119,6 @@ void ADN_Launchers_GUI::ExportPHModifiers( ADN_HtmlBuilder& builder, ADN_Launche
 
     pListView_->SetCurrentItem( &infos );
     builder.Section( tr( "Phs modificators" ) );
-    builder.Stream() << tr( "Shooter's stance / Target's stance" ).toUtf8().constData();
+    builder.Stream() << tr( "Shooter's stance / Target's stance" ).toStdString();
     builder.CreateTableFrom( *pModifPhs_ );
 }

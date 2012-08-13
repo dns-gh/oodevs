@@ -149,7 +149,7 @@ namespace
 // -----------------------------------------------------------------------------
 void CsvExport::WriteEntity( bfs::path& path, const std::string& separator )
 {
-    bfs::path odbPath( bfs::path( path / bfs::path( tools::translate( "CsvExport", "orbat" ).toStdString() + ".csv" ).filename() ) );
+    bfs::path odbPath( bfs::path( path / bfs::path( std::string( tools::translate( "CsvExport", "orbat" ).toStdString() ) + ".csv" ).filename() ) );
     std::ofstream file( odbPath.string().c_str() );
     file    << tools::translate( "CsvExport", "SIDE" ) << separator << tools::translate( "CsvExport", "CATEGORY" )
             << separator << tools::translate( "CsvExport", "NAME" ) << separator << tools::translate( "CsvExport", "TYPE" )

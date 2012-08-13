@@ -10,8 +10,6 @@
 #ifndef __selftraining_app_pch_h_
 #define __selftraining_app_pch_h_
 
-#pragma execution_character_set("utf-8")
-
 #pragma warning( disable: 4231 4355 )
 #include <string>
 #include <exception>

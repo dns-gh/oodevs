@@ -208,7 +208,7 @@ float Settings::Load( const std::string& name, float defaultValue )
 TristateOption Settings::Load( const std::string& name, const TristateOption& defaultValue )
 {
     QString value = readEntry( ( "/" + AddType( name, tristatePrefix ) ).c_str(), QString( defaultValue ) );
-    return TristateOption( value.toUtf8().constData() );
+    return TristateOption( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -218,7 +218,7 @@ TristateOption Settings::Load( const std::string& name, const TristateOption& de
 FourStateOption Settings::Load( const std::string& name, const kernel::FourStateOption& defaultValue )
 {
     QString value = readEntry( ( "/" + AddType( name, fourstatePrefix ) ).c_str(), QString( defaultValue ) );
-    return FourStateOption( value.toUtf8().constData() );
+    return FourStateOption( value );
 }
 
 // -----------------------------------------------------------------------------

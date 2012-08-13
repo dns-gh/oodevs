@@ -211,8 +211,8 @@ void Ghost::SerializeAttributes( xml::xostream& xos ) const
     assert( ghostType_ != eGhostType_Invalid );
     xos << xml::attribute( "id", long( id_ ) )
         << xml::attribute( "ghost-type", ENT_Tr::ConvertFromGhostType( ghostType_, ENT_Tr::eToSim ) )
-        << xml::attribute( "type", type_.toUtf8().constData() )
-        << xml::attribute( "name", name_.toUtf8().constData() )
+        << xml::attribute( "type", type_.toStdString() )
+        << xml::attribute( "name", name_.toStdString() )
         << xml::attribute( "nature", nature_ )
         << xml::attribute( "level", level_ );
     for( CIT_Children it = children_.begin(); it != children_.end(); ++it )

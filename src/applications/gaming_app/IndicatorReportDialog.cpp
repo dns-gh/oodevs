@@ -160,8 +160,8 @@ void IndicatorReportDialog::OnAccept()
 // -----------------------------------------------------------------------------
 void IndicatorReportDialog::CreateReport() const
 {
-    std::ifstream input( templateFile_->text().toUtf8().constData() );
-    std::ofstream output( outputFile_->text().toUtf8().constData() );
+    std::ifstream input( templateFile_->text().toStdString() );
+    std::ofstream output( outputFile_->text().toStdString() );
     std::string line;
     while( input.good() )
     {
@@ -188,7 +188,7 @@ namespace
         virtual void StartDisplay() {}
         virtual void DisplayFormatted( const QString& formatted )
         {
-            boost::replace_all( result_, "${" + score_ + "." + attribute_ + "}", formatted.toUtf8().constData() );
+            boost::replace_all( result_, "${" + score_ + "." + attribute_ + "}", formatted.toStdString() );
         }
         virtual void EndDisplay() {}
 

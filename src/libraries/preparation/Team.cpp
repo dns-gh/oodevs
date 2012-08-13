@@ -68,6 +68,6 @@ void Team::Rename( const QString& name )
 void Team::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::attribute( "id", id_ )
-        << xml::attribute( "name", name_.toUtf8().constData() );
+        << xml::attribute( "name", name_.toStdString() );
 }
 

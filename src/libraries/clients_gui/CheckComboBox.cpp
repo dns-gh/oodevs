@@ -329,11 +329,11 @@ bool CheckComboBox::ApplyFilter( ValuedListItem* item ) const
 
                 for( QStringList::const_iterator it = items.constBegin(); !result && it != items.constEnd(); ++it )
                     for( std::vector< std::string >::const_iterator extractedIt = extractedVector.begin(); !result && extractedIt != extractedVector.end(); ++extractedIt )
-                        result = result || ( *it == noneText_ ) ? empty : *extractedIt == it->toStdString();
+                        result = result || ( *it == noneText_ ) ? empty : *extractedIt == it->toUtf8().constData();
             }
             else                                                    // Single result
                 for( QStringList::const_iterator it = items.constBegin(); !result && it != items.constEnd(); ++it )
-                    result = result || ( *it == noneText_ ) ? empty : extractedText == it->toStdString();
+                    result = result || ( *it == noneText_ ) ? empty : extractedText == it->toUtf8().constData();
         }
     }
     return result;

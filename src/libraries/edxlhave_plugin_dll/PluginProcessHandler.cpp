@@ -310,7 +310,7 @@ void PluginProcessHandler::LoadSimulationConfig( const PluginConfig& config )
 
     AddArgument( "--sword.waitconnection=true" );
     
-    // bfs::path iniFile = bfs::path( config.GetExerciseDir( exercise.toUtf8().constData() ) ) / "edxl.ini";
+    // bfs::path iniFile = bfs::path( config.GetExerciseDir( exercise.toStdString() ) ) / "edxl.ini";
     // mustRun_ = bfs::exists( iniFile );
     // AddArgument( QString( "--ini=\"" ) + iniFile.string().c_str() + "\"" );
 }

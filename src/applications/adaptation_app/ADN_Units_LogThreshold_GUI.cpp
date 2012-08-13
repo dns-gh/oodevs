@@ -109,7 +109,7 @@ void ADN_Units_LogThreshold_GUI::OnContextMenu( int /*row*/, int /*col*/, const 
     {
         bool found = false;
         for( int i = 0; i < numRows() && !found; ++i )
-            if( text( i, 0 ).toUtf8().constData() == (*it)->strName_.GetData() )
+            if( text( i, 0 ).toStdString() == (*it)->strName_.GetData() )
                 found = true;
 
         if( !found )

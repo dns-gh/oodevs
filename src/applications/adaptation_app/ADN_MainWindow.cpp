@@ -57,7 +57,7 @@ namespace
     {
         const QString regDir = ReadDataDirectory();
         if( !regDir.isEmpty() )
-            return regDir.toUtf8().constData();
+            return regDir.toStdString();
         char myDocuments[ MAX_PATH ];
         SHGetSpecialFolderPath( 0, myDocuments, CSIDL_PERSONAL, 0 );
         return ( bfs::path( myDocuments ) / appName ).string();
@@ -85,7 +85,7 @@ namespace
 //-----------------------------------------------------------------------------
 ADN_MainWindow::ADN_MainWindow( ADN_Config& config, int argc, char** argv )
     : QMainWindow       ()
-    , generalConfig_     ( new tools::GeneralConfig( GetDefaultRoot( qApp->translate( "Application", "SWORD" ).toUtf8().constData() ) ) )
+    , generalConfig_     ( new tools::GeneralConfig( GetDefaultRoot( qApp->translate( "Application", "SWORD" ).toStdString() ) ) )
     , fileLoaderObserver_( new ADN_FileLoaderObserver() )
     , fileLoader_        ( new tools::DefaultLoader( *fileLoaderObserver_ ) )
     , workspace_         ( ADN_Workspace::GetWorkspace() )
@@ -407,7 +407,7 @@ void ADN_MainWindow::OpenProject()
         return;
     try
     {
-        OpenProject( qfilename.toUtf8().constData() );
+        OpenProject( qfilename.toStdString() );
     }
     catch( ADN_Exception_ABC& exception )
     {
@@ -479,7 +479,7 @@ void ADN_MainWindow::ExportHtml()
     if( strPath.at( strPath.length() - 1 ) != '/' )
         strPath += '/';
 
-    workspace_.ExportHtml( strPath.toUtf8().constData() );
+    workspace_.ExportHtml( strPath.toStdString() );
 }
 
 //-----------------------------------------------------------------------------
@@ -613,7 +613,7 @@ bool ADN_MainWindow::SelectOpenMode()
             assert( nMode == eOpenMode_Admin );
             QString strGivenPassword = openModeDialog.GetPassword();
 
-            if( strAdminPassword_ == strGivenPassword.toUtf8().constData() )
+            if( strAdminPassword_ == strGivenPassword )
                 break; // password ok
 
             // wrong password, inform the user and let him try again

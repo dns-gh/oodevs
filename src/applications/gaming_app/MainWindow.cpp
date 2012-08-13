@@ -608,7 +608,7 @@ void MainWindow::Load()
     {
         Close();
         QMessageBox::critical( this, tools::translate( "Application", "SWORD" )
-                                   , ( tools::translate( "MainWindow", "Error loading exercise: " ) + e.what() ).toUtf8().constData() );
+                                   , ( tools::translate( "MainWindow", "Error loading exercise: " ) + e.what() ) );
     }
 }
 

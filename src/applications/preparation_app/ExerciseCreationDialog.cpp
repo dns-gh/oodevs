@@ -65,7 +65,7 @@ ExerciseCreationDialog::ExerciseCreationDialog( QWidget* parent, const tools::Ge
         const QStringList decisionalModels = frontend::commands::ListModels( config_ );
         for( QStringList::const_iterator it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
         {
-            const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).toUtf8().constData() );
+            const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).toStdString() );
             for( QStringList::const_iterator itP = physicalModels.begin(); itP != physicalModels.end(); ++itP )
                 editModelList_->insertItem( QString( "%1/%2" ).arg( *it ).arg( *itP ) );
         }
@@ -99,9 +99,9 @@ void ExerciseCreationDialog::OnAccept()
 {
     try
     {
-        const std::string terrain = editTerrainList_->currentText().toUtf8().constData();
+        const std::string terrain = editTerrainList_->currentText().toStdString();
         const QStringList model = QStringList::split( "/", editModelList_->currentText() );
-        frontend::CreateExercise( config_, exerciseName_->text().toUtf8().constData(), terrain, model.front().toUtf8().constData(), model.back().toUtf8().constData() );
+        frontend::CreateExercise( config_, exerciseName_->text().toStdString(), terrain, model.front().toStdString(), model.back().toStdString() );
         accept();
     }
     catch( const QString& message )
@@ -126,7 +126,7 @@ void ExerciseCreationDialog::OnCancel()
 // -----------------------------------------------------------------------------
 QString ExerciseCreationDialog::GetFileName() const
 {
-    return config_.GetExerciseFile( exerciseName_->text().toUtf8().constData() ).c_str();
+    return config_.GetExerciseFile( exerciseName_->text().toStdString() ).c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -135,5 +135,5 @@ QString ExerciseCreationDialog::GetFileName() const
 // -----------------------------------------------------------------------------
 void ExerciseCreationDialog::OnFileChanged()
 {
-    ok_->setDisabled( exerciseName_->text().isEmpty() ||  bfs::exists( config_.GetExerciseFile( exerciseName_->text().toUtf8().constData() ) ) || editTerrainList_->count() == 0 || editModelList_->count() == 0 );
+    ok_->setDisabled( exerciseName_->text().isEmpty() ||  bfs::exists( config_.GetExerciseFile( exerciseName_->text().toStdString() ) ) || editTerrainList_->count() == 0 || editModelList_->count() == 0 );
 }

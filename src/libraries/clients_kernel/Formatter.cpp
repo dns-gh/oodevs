@@ -68,7 +68,7 @@ void Formatter< Unit >::operator()( const Unit& value, Displayer_ABC& displayer 
 
 void Formatter< kernel::UrbanKnowledge_ABC >::operator()( const kernel::UrbanKnowledge_ABC& value, Displayer_ABC& displayer ) const
 {
-    displayer.AddToDisplay( QString( value.GetName().toUtf8().constData() ) );
+    displayer.AddToDisplay( QString( value.GetName() ) );
 }
 
 void Formatter< Separator >::operator()( const Separator& , Displayer_ABC& displayer ) const

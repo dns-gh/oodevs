@@ -45,7 +45,7 @@ bool XyParser::Parse( QString content, geometry::Point2f& result, QString& hint 
     hint.replace( ')', ' ' );
     hint.stripWhiteSpace();
 
-    std::stringstream str( hint.toUtf8().constData() );
+    std::stringstream str( hint.toStdString() );
     float x, y;
     str >> x >> y;
     if( ! str )
@@ -64,11 +64,11 @@ bool XyParser::Parse( QString content, geometry::Point2f& result, QStringList& h
     QString hintY = listValue[ 1 ].stripWhiteSpace();
 
     float x, y;
-    std::stringstream strX( hintX.toUtf8().constData() );
+    std::stringstream strX( hintX.toStdString() );
     strX >> x ;
     if( ! strX )
         return false;
-    std::stringstream strY( hintY.toUtf8().constData() );
+    std::stringstream strY( hintY.toStdString() );
     strY >> y ;
     if( ! strY )
         return false;

@@ -38,7 +38,7 @@ namespace
     {
         const QString regDir = ReadDataDirectory();
         if( !regDir.isEmpty() )
-            return regDir.toUtf8().constData();
+            return regDir.toStdString();
         char myDocuments[ MAX_PATH ];
         SHGetSpecialFolderPath( 0, myDocuments, CSIDL_PERSONAL, 0 );
         return ( bfs::path( myDocuments ) / appName ).string();
@@ -50,7 +50,7 @@ namespace
 // Created: SBO 2008-03-14
 // -----------------------------------------------------------------------------
 Config::Config()
-    : GeneralConfig( GetDefaultRoot( tools::translate( "Application", "SWORD" ).toUtf8().constData() ) )
+    : GeneralConfig( GetDefaultRoot( tools::translate( "Application", "SWORD" ).toStdString() ) )
     , launcherPort_( 33000 )
 {
     po::options_description desc( "Frontend options" );

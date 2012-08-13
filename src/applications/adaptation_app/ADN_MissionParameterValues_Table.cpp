@@ -69,7 +69,7 @@ ADN_MissionParameterValues_Table::~ADN_MissionParameterValues_Table()
 void ADN_MissionParameterValues_Table::AddNewElement()
 {
     ADN_Missions_Data::MissionParameterValue* newElement = new ADN_Missions_Data::MissionParameterValue();
-    newElement->name_ = tr( "New value" ).toUtf8().constData();
+    newElement->name_ = tr( "New value" ).toStdString();
 
     ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
     pCTable->AddItem( newElement );

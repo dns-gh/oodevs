@@ -164,7 +164,7 @@ void Formation::SetLevel( E_NatureLevel level )
 void Formation::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::attribute( "id", long( id_ ) )
-        << xml::attribute( "name", name_.toUtf8().constData() )
+        << xml::attribute( "name", name_.toStdString() )
         << xml::attribute( "level", ENT_Tr::ConvertFromNatureLevel( level_ ) );
 }
 

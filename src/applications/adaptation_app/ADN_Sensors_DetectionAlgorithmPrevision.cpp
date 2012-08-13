@@ -335,7 +335,7 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnDetectionChanged( const QString&
     if( !value.isEmpty() )
         try
     {
-        detection_ = boost::lexical_cast< double >( value.toUtf8().constData() );
+        detection_ = boost::lexical_cast< double >( value.toStdString() );
     }
     catch( boost::bad_lexical_cast& /*e*/ )
     {
@@ -354,7 +354,7 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnRecognitionChanged( const QStrin
     if( !value.isEmpty() )
         try
     {
-        recognition_ = boost::lexical_cast< double >( value.toUtf8().constData() );
+        recognition_ = boost::lexical_cast< double >( value.toStdString() );
     }
     catch( boost::bad_lexical_cast& /*e*/ )
     {
@@ -372,7 +372,7 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnIdentificationChanged( const QSt
     if( !value.isEmpty() )
             try
         {
-            identification_ = boost::lexical_cast< double >( value.toUtf8().constData() );
+            identification_ = boost::lexical_cast< double >( value.toStdString() );
         }
         catch( boost::bad_lexical_cast& /*e*/ )
         {
@@ -390,7 +390,7 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnPopulationDensityChanged( const 
     if( !value.isEmpty() )
         try
         {
-             populationDensityFactor_ = boost::lexical_cast< double >( value.toUtf8().constData() );
+             populationDensityFactor_ = boost::lexical_cast< double >( value.toStdString() );
         }
        catch( boost::bad_lexical_cast& /*e*/ )
         {
@@ -410,7 +410,7 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnPopulationModifierChanged( const
     if( !value.isEmpty() )
         try
         {
-            populationModifier_ = boost::lexical_cast< double >( value.toUtf8().constData() );
+            populationModifier_ = boost::lexical_cast< double >( value.toStdString() );
         }
       catch( boost::bad_lexical_cast& /*e*/ )
          {
@@ -457,7 +457,7 @@ void ADN_Sensors_DetectionAlgorithmPrevision::UpdatePreview( double& parameter, 
     if( !value.isEmpty() )
        try
        {
-           parameter = boost::lexical_cast< double >( value.toUtf8().constData() );
+           parameter = boost::lexical_cast< double >( value.toStdString() );
        }
        catch( boost::bad_lexical_cast& /*e*/ )
        {

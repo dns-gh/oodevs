@@ -103,7 +103,7 @@ xml::xostream& plugins::bml::operator<<( xml::xostream& xos, const Who& who )
     xos << xml::start( "C_BML_Who" )
             << xml::start( "WhoRef" )
                 << xml::start( "UnitRef" )
-                    << xml::content( "jc3iedm:OID", who.agent_ ? who.agent_->GetName().toUtf8().constData() : who.automat_->GetName().toUtf8().constData() );
+                    << xml::content( "jc3iedm:OID", who.agent_ ? who.agent_->GetName().toStdString() : who.automat_->GetName().toStdString() );
     if( who.attributes_ )
         who.SendEquipmentStatus( xos );
     if( who.level_ != -1 )

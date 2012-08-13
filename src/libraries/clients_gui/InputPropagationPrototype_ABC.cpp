@@ -112,7 +112,7 @@ void InputPropagationPrototype_ABC::FillInPaths()
     QStringList result( ListDirectories( path, &IsPropagationDir ) );
 
     for( QStringList::const_iterator it = result.constBegin(); it != result.constEnd(); ++it )
-        propagationFiles_->AddItem( *it, (*it).toUtf8().constData() );
+        propagationFiles_->AddItem( *it, (*it).toStdString() );
 }
 
 // -----------------------------------------------------------------------------

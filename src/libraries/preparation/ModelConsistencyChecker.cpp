@@ -506,7 +506,7 @@ void ModelConsistencyChecker::CheckGhosts()
     {
         const Ghost_ABC& ghost = it.NextElement();
         if( ghost.IsConverted() )
-            AddError( eGhostConverted, &ghost, ghost.GetType().toUtf8().constData() );
+            AddError( eGhostConverted, &ghost, ghost.GetType().toStdString() );
         else
             AddError( eGhostExistence, &ghost );
     }

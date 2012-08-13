@@ -1,9 +1,9 @@
-﻿// *****************************************************************************
+// *****************************************************************************
 //
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2008 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2008 Math�matiques Appliqu�es SA (MASA)
 //
 // *****************************************************************************
 
@@ -47,10 +47,10 @@ OptionsPage::OptionsPage( QWidget* parent, Q3WidgetStack* pages, Page_ABC& previ
     // Language
     languageLabel_ = new QLabel( box );
     languageCombo_ = new QComboBox( box );
-    languages_[ "en" ] = QString::fromUtf8( "English" );
-    languages_[ "fr" ] = QString::fromUtf8( "Français" );
-    languages_[ "es" ] = QString::fromUtf8( "Español" );
-    languages_[ "ar" ] = QString::fromUtf8( "العربية" );
+    languages_[ "en" ] = tools::translate( "OptionsPage", "English" );
+    languages_[ "fr" ] = tools::translate( "OptionsPage", "French" );
+    languages_[ "es" ] = tools::translate( "OptionsPage", "Spanish" );
+    languages_[ "ar" ] = tools::translate( "OptionsPage", "Arabic" );
     BOOST_FOREACH( const T_Languages::value_type& lang, languages_ )
     {
         languageCombo_->insertItem( lang.second );
@@ -143,7 +143,7 @@ void OptionsPage::OnChangeDataDirectory()
     const QString directory = QDir::convertSeparators( Q3FileDialog::getExistingDirectory( dataDirectory_->text(), this ) );
     if( directory.isEmpty() )
         return;
-    selectedDataDir_ = directory.toUtf8().constData();
+    selectedDataDir_ = directory.toStdString();
     dataDirectory_->setText( directory );
     hasChanged_ = true;
     EnableButton( eButtonApply, true );
@@ -155,7 +155,7 @@ void OptionsPage::OnChangeDataDirectory()
 // -----------------------------------------------------------------------------
 void OptionsPage::OnEditDataDirectory( const QString& text )
 {
-    selectedDataDir_ = text.toUtf8().constData();
+    selectedDataDir_ = text.toStdString();
     hasChanged_ = true;
     EnableButton( eButtonApply, true );
 }
@@ -200,7 +200,7 @@ void OptionsPage::OnBack()
 // -----------------------------------------------------------------------------
 void OptionsPage::CreateDataDirectory()
 {
-    const std::string directory = dataDirectory_->text().toUtf8().constData();
+    const std::string directory = dataDirectory_->text().toStdString();
     if( !bfs::exists( directory ) )
     {
         MessageDialog message( parent_, tools::translate( "OptionsPage", "Invalid directory" ), tools::translate( "OptionsPage", "Directory \'%1\' doesn't exist. Do you want to create it ?" ).arg( directory.c_str() ), QMessageBox::Yes, QMessageBox::No );

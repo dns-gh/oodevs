@@ -100,7 +100,7 @@ void CreateExerciceWidget::Update()
     Q3ListBoxItem* item = exerciseList_->selectedItem();
     if( item )
     {
-        std::string exercise( item->text().toUtf8().constData() );
+        std::string exercise( item->text().toStdString() );
         contentList_->clear();
         contentList_->insertItem( frontend::BuildExerciseFeatures( exercise, config_, contentList_ ) );
     }
@@ -122,7 +122,7 @@ void CreateExerciceWidget::UpdateExercises()
     QStringList decisionalModels = frontend::commands::ListModels( config_ );
     for( QStringList::const_iterator it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
     {
-        const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).toUtf8().constData() );
+        const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).toStdString() );
         for( QStringList::const_iterator itP = physicalModels.begin(); itP != physicalModels.end(); ++itP )
             editModelList_->insertItem( QString( "%1/%2" ).arg( *it ).arg( *itP ) );
     }
@@ -146,7 +146,7 @@ void CreateExerciceWidget::CreateExercise()
         if( name.isEmpty() || page_.ExerciceExists( name ) )
             return;
 
-        const std::string terrain = editTerrainList_->currentText().toUtf8().constData();
+        const std::string terrain = editTerrainList_->currentText().toStdString();
         const QStringList model = QStringList::split( "/", editModelList_->currentText() );
 
         if( saveAsGroupBox_->isChecked() )
@@ -155,16 +155,16 @@ void CreateExerciceWidget::CreateExercise()
             if( item == 0 )
                 return;
             frontend::ExerciseCopyParameters params;
-            params.from_ = item->text().toUtf8().constData();
-            params.to_ = name.toUtf8().constData();
+            params.from_ = item->text().toStdString();
+            params.to_ = name.toStdString();
             params.terrain_ = terrain;
-            params.model_ = model.front().toUtf8().constData();
-            params.physical_ = model.back().toUtf8().constData();
+            params.model_ = model.front().toStdString();
+            params.physical_ = model.back().toStdString();
             params.iterator_ = Q3ListViewItemIterator( contentList_ );
             frontend::CreateExerciseAsCopyOf( config_, params );
         }
         else
-            frontend::CreateExercise( config_, name.toUtf8().constData(), terrain, model.front().toUtf8().constData(), model.back().toUtf8().constData() );
+            frontend::CreateExercise( config_, name.toStdString(), terrain, model.front().toStdString(), model.back().toStdString() );
 
         page_.Edit( name );
     }
@@ -189,7 +189,7 @@ void CreateExerciceWidget::OnSelectionChanged( Q3ListBoxItem* item )
 {
     if( !item )
         return;
-    std::auto_ptr< xml::xistream > xis= fileLoader_.LoadFile( config_.GetExerciseFile( item->text().toUtf8().constData() ) );
+    std::auto_ptr< xml::xistream > xis= fileLoader_.LoadFile( config_.GetExerciseFile( item->text().toStdString() ) );
     std::string terrain, physical;
     *xis >> xml::start( "exercise" )
             >> xml::start( "terrain" )
@@ -205,7 +205,7 @@ void CreateExerciceWidget::OnSelectionChanged( Q3ListBoxItem* item )
     const QStringList decisionalModels = frontend::commands::ListModels( config_ );
     for( QStringList::const_iterator it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
     {
-        const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).toUtf8().constData() );
+        const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).toStdString() );
         int index = physicalModels.findIndex( QString( physical.c_str() ) );
         if( index != -1 )
             editModelList_->setCurrentItem( index + 1 );

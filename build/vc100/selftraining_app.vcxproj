@@ -692,6 +692,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\selftraining_app\selftraining_app_ar.ts" />
+    <None Include="..\..\src\applications\selftraining_app\selftraining_app_en.ts" />
     <None Include="..\..\src\applications\selftraining_app\selftraining_app_es.ts">
       <SubType>Designer</SubType>
     </None>

@@ -79,25 +79,25 @@ void MagicActionType::Initialize()
     else if( name == "change_human_factors" )
     {
         OrderParameter* tiredness = CreateOrderParameter( "Tiredness", "enumeration" );
-        tiredness->AddValue( eUnitTiredness_Normal, tools::ToString( eUnitTiredness_Normal ).toUtf8().constData() );
-        tiredness->AddValue( eUnitTiredness_Fatigue, tools::ToString( eUnitTiredness_Fatigue ).toUtf8().constData() );
-        tiredness->AddValue( eUnitTiredness_Epuise, tools::ToString( eUnitTiredness_Epuise ).toUtf8().constData() );
+        tiredness->AddValue( eUnitTiredness_Normal, tools::ToString( eUnitTiredness_Normal ).toStdString() );
+        tiredness->AddValue( eUnitTiredness_Fatigue, tools::ToString( eUnitTiredness_Fatigue ).toStdString() );
+        tiredness->AddValue( eUnitTiredness_Epuise, tools::ToString( eUnitTiredness_Epuise ).toStdString() );
 
         OrderParameter* morale = CreateOrderParameter( "Morale", "enumeration" );
-        morale->AddValue( eUnitMorale_Fanatique, tools::ToString( eUnitMorale_Fanatique ).toUtf8().constData() );
-        morale->AddValue( eUnitMorale_Bon, tools::ToString( eUnitMorale_Bon ).toUtf8().constData() );
-        morale->AddValue( eUnitMorale_Moyen, tools::ToString( eUnitMorale_Moyen ).toUtf8().constData() );
-        morale->AddValue( eUnitMorale_Mauvais, tools::ToString( eUnitMorale_Mauvais ).toUtf8().constData() );
+        morale->AddValue( eUnitMorale_Fanatique, tools::ToString( eUnitMorale_Fanatique ).toStdString() );
+        morale->AddValue( eUnitMorale_Bon, tools::ToString( eUnitMorale_Bon ).toStdString() );
+        morale->AddValue( eUnitMorale_Moyen, tools::ToString( eUnitMorale_Moyen ).toStdString() );
+        morale->AddValue( eUnitMorale_Mauvais, tools::ToString( eUnitMorale_Mauvais ).toStdString() );
 
         OrderParameter* experience = CreateOrderParameter( "Experience", "enumeration" );
-        experience->AddValue( eUnitExperience_Veteran, tools::ToString( eUnitExperience_Veteran ).toUtf8().constData() );
-        experience->AddValue( eUnitExperience_Experimente, tools::ToString( eUnitExperience_Experimente ).toUtf8().constData() );
-        experience->AddValue( eUnitExperience_Conscrit, tools::ToString( eUnitExperience_Conscrit ).toUtf8().constData() );
+        experience->AddValue( eUnitExperience_Veteran, tools::ToString( eUnitExperience_Veteran ).toStdString() );
+        experience->AddValue( eUnitExperience_Experimente, tools::ToString( eUnitExperience_Experimente ).toStdString() );
+        experience->AddValue( eUnitExperience_Conscrit, tools::ToString( eUnitExperience_Conscrit ).toStdString() );
 
         OrderParameter* stress = CreateOrderParameter( "Stress", "enumeration" );
-        stress->AddValue( eUnitStress_Calm, tools::ToString( eUnitStress_Calm ).toUtf8().constData() );
-        stress->AddValue( eUnitStress_Worried, tools::ToString( eUnitStress_Worried ).toUtf8().constData() );
-        stress->AddValue( eUnitStress_Stressed, tools::ToString( eUnitStress_Stressed ).toUtf8().constData() );
+        stress->AddValue( eUnitStress_Calm, tools::ToString( eUnitStress_Calm ).toStdString() );
+        stress->AddValue( eUnitStress_Worried, tools::ToString( eUnitStress_Worried ).toStdString() );
+        stress->AddValue( eUnitStress_Stressed, tools::ToString( eUnitStress_Stressed ).toStdString() );
     }
     else if( name == "partial_recovery" )
     {
@@ -128,10 +128,10 @@ void MagicActionType::Initialize()
     else if( name == "crowd_change_attitude" )
     {
         OrderParameter* attitude = CreateOrderParameter( "Attitude", "enumeration" );
-        attitude->AddValue( ePopulationAttitude_Calme, tools::ToString( ePopulationAttitude_Calme ).toUtf8().constData() );
-        attitude->AddValue( ePopulationAttitude_Agitee, tools::ToString( ePopulationAttitude_Agitee ).toUtf8().constData() );
-        attitude->AddValue( ePopulationAttitude_Excitee, tools::ToString( ePopulationAttitude_Excitee ).toUtf8().constData() );
-        attitude->AddValue( ePopulationAttitude_Agressive, tools::ToString( ePopulationAttitude_Agressive ).toUtf8().constData() );
+        attitude->AddValue( ePopulationAttitude_Calme, tools::ToString( ePopulationAttitude_Calme ).toStdString() );
+        attitude->AddValue( ePopulationAttitude_Agitee, tools::ToString( ePopulationAttitude_Agitee ).toStdString() );
+        attitude->AddValue( ePopulationAttitude_Excitee, tools::ToString( ePopulationAttitude_Excitee ).toStdString() );
+        attitude->AddValue( ePopulationAttitude_Agressive, tools::ToString( ePopulationAttitude_Agressive ).toStdString() );
     }
     else if( name == "fire_order" )
     {
@@ -238,10 +238,10 @@ void MagicActionType::Initialize()
         CreateOrderParameter( "Camp1", "identifier" );
         CreateOrderParameter( "Camp2", "identifier" );
         OrderParameter* diplomacy = CreateOrderParameter( "Diplomacy", "enumeration" );
-        diplomacy->AddValue( sword::unknown, Karma::unknown_.GetName().toUtf8().constData() );
-        diplomacy->AddValue( sword::friendly, Karma::friend_.GetName().toUtf8().constData() );
-        diplomacy->AddValue( sword::enemy, Karma::enemy_.GetName().toUtf8().constData() );
-        diplomacy->AddValue( sword::neutral, Karma::neutral_.GetName().toUtf8().constData() );
+        diplomacy->AddValue( sword::unknown, Karma::unknown_.GetName().toStdString() );
+        diplomacy->AddValue( sword::friendly, Karma::friend_.GetName().toStdString() );
+        diplomacy->AddValue( sword::enemy, Karma::enemy_.GetName().toStdString() );
+        diplomacy->AddValue( sword::neutral, Karma::neutral_.GetName().toStdString() );
     }
     else if( name == "create_knowledge_group" )
     {

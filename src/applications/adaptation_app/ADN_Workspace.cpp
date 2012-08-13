@@ -400,8 +400,8 @@ bool ADN_Workspace::SaveAs( const std::string& filename, const tools::Loader_ABC
     // dialog log
     ADN_DialogLog dlgLog( 0 );
     dlgLog.setCaption( tr( "Sword Adaptation Tool - Saving Errors" ) );
-    dlgLog.setMsg( tr( "Error(s) have been encountered during saving of project " ).toUtf8().constData() + filename );
-    dlgLog.setMsgFormat( tr( "<p>- Unable to save %s : file is write protected</p>" ).toUtf8().constData());
+    dlgLog.setMsg( tr( "Error(s) have been encountered during saving of project " ).toStdString() + filename );
+    dlgLog.setMsgFormat( tr( "<p>- Unable to save %s : file is write protected</p>" ).toStdString());
 
     T_StringList uncopiedFiles;
     if( szOldWorkDir != dirInfos.GetWorkingDirectory().GetData() )

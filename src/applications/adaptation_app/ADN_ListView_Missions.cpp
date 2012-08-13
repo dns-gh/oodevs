@@ -141,7 +141,7 @@ ADN_ListViewItem* ADN_ListView_Missions::FindItem( const std::string& strMission
     ADN_ListViewItem* pItem = static_cast< ADN_ListViewItem* >( firstChild() );
     while( pItem != 0 )
     {
-        if( strMissionName == pItem->text( 0 ).toUtf8().constData() )
+        if( strMissionName == pItem->text( 0 ).toStdString() )
             return pItem;
 
         pItem = static_cast< ADN_ListViewItem* >( pItem->nextSibling() );

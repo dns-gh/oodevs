@@ -219,7 +219,7 @@ void ADN_HtmlBuilder::CreateTableFrom( Q3ListView& listView )
 
     strOutput_ << "<tr>\n";
     for( int n = 0; n < listView.columns(); ++n )
-        strOutput_ << "<th>" << listView.columnText( n ).toUtf8().constData() << "</th>";
+        strOutput_ << "<th>" << listView.columnText( n ).toStdString() << "</th>";
     strOutput_ << "</tr>\n";
 
     Q3ListViewItem* pItem = listView.firstChild();
@@ -228,7 +228,7 @@ void ADN_HtmlBuilder::CreateTableFrom( Q3ListView& listView )
         strOutput_ << "<tr>";
         for( int nR = 0; nR < listView.columns(); ++nR )
         {
-            strOutput_ << "<td>" << pItem->text( nR ).toUtf8().constData() << "</td>";
+            strOutput_ << "<td>" << pItem->text( nR ).toStdString() << "</td>";
         }
         strOutput_ << "</tr>\n";
         pItem = pItem->nextSibling();
@@ -251,7 +251,7 @@ void ADN_HtmlBuilder::CreateTableFrom( Q3Table& table )
         if( ! table.verticalHeader()->isHidden() )
             strOutput_ << "<th></th>";
         for( int n = 0; n < table.horizontalHeader()->count(); ++n )
-            strOutput_ << "<th>" << table.horizontalHeader()->label( n ).toUtf8().constData() << "</th>";
+            strOutput_ << "<th>" << table.horizontalHeader()->label( n ).toStdString() << "</th>";
         strOutput_ << "</tr>\n";
     }
 
@@ -259,10 +259,10 @@ void ADN_HtmlBuilder::CreateTableFrom( Q3Table& table )
     {
         strOutput_ << "<tr>";
         if( ! table.verticalHeader()->isHidden() )
-            strOutput_ << "<th>" << table.verticalHeader()->label( nR ).toUtf8().constData() << "</th>";
+            strOutput_ << "<th>" << table.verticalHeader()->label( nR ).toStdString() << "</th>";
         for( int nC = 0; nC < table.numCols(); ++nC )
         {
-            strOutput_ << "<td>" << table.text( nR, nC ).toUtf8().constData() << "</td>";
+            strOutput_ << "<td>" << table.text( nR, nC ).toStdString() << "</td>";
         }
         strOutput_ << "</tr>\n";
     }

@@ -30,7 +30,7 @@ namespace
 
     std::string RgbToHex( unsigned int red, unsigned int green, unsigned int blue )
     {
-        std::string result = QColor( red, green, blue ).name().toUtf8().constData();
+        std::string result = QColor( red, green, blue ).name().toStdString();
         boost::replace_all( result, "#", "0x" );
         return result;
     }

@@ -31,4 +31,4 @@ SessionTray.cpp \
 TrayMenu.cpp \
 main.cpp \
 
-TRANSLATIONS = selftraining_app_fr.ts selftraining_app_es.ts selftraining_app_ar.ts
+TRANSLATIONS = selftraining_app_en.ts selftraining_app_fr.ts selftraining_app_es.ts selftraining_app_ar.ts

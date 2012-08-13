@@ -105,7 +105,7 @@ void AddRasterDialog::OnValueChanged()
     {
         QStringList list = QStringList::split( ";", fileEditor_->text() );
         for( QStringList::const_iterator it = list.constBegin(); it != list.constEnd(); ++it )
-            if( !bfs::exists( it->toStdString() ) )
+            if( !bfs::exists( it->toUtf8().constData() ) )
                 warning += "<font color=\"#FF0000\">" + tr( "File '%1' doesn't exist." ).arg( *it ) + "</font><br/>";
     }
     warningLabel_->setText( warning );

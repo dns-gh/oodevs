@@ -26,7 +26,7 @@ namespace
             : host_( host ), port_( port ), runningOnly_( runningOnly ) {}
         virtual bool Allows( const frontend::Exercise_ABC& exercise ) const
         {
-            return exercise.IsHostedBy( QString( "%1:%2" ).arg( host_.text() ).arg( port_.value() ).toUtf8().constData() )
+            return exercise.IsHostedBy( QString( "%1:%2" ).arg( host_.text() ).arg( port_.value() ).toStdString() )
                 && ( !runningOnly_ || runningOnly_ && exercise.IsRunning() );
         }
         const QLineEdit& host_;
@@ -176,7 +176,7 @@ void RemoteControlPage::UpdateExerciseList()
 {
     ClearSelection();
     exercises_->Clear();
-    Connect( host_->text().toUtf8().constData(), static_cast< unsigned short >( port_->value() ) );
+    Connect( host_->text(), static_cast< unsigned short >( port_->value() ) );
 }
 
 // -----------------------------------------------------------------------------

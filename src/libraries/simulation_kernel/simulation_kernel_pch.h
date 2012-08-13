@@ -12,8 +12,6 @@
 #ifndef __MIL_pch_h_
 #define __MIL_pch_h_
 
-#pragma execution_character_set("utf-8")
-
 #define BOOST_NO_STD_LOCALE
 #define BOOST_LEXICAL_CAST_ASSUME_C_LOCALE
 

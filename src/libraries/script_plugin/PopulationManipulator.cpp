@@ -60,5 +60,5 @@ unsigned int PopulationManipulator::GetIdentifier() const
 std::string PopulationManipulator::GetName() const
 {
     const QString name = population_.GetName();
-    return name.isEmpty() ? "" : name.toUtf8().constData();
+    return name.isEmpty() ? "" : name.toStdString();
 }

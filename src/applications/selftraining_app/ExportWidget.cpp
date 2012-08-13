@@ -163,16 +163,16 @@ QString ExportWidget::GetCurrentSelection() const
     {
     case eTabs_Exercise:
         if( Q3ListViewItem* item = exerciseList_->selectedItem() )
-            result = item->text( 0 ).toUtf8().constData();
+            result = item->text( 0 );
         break;
     case eTabs_Terrain:
         if( Q3ListBoxItem* item = terrainList_->selectedItem() )
-            result = item->text().toUtf8().constData();
+            result = item->text();
         break;
     case eTabs_Models:
         if( !modelName_->text().isEmpty() )
             if( Q3ListBoxItem* item = physicalList_->selectedItem() )
-                result = item->text().toUtf8().constData();
+                result = item->text();
         break;
     default:
         break;
@@ -205,7 +205,7 @@ namespace
 {
     std::pair< std::string, std::string > Extract( const QString& text )
     {
-        std::string selectedText = text.toUtf8().constData();
+        std::string selectedText = text.toStdString();
         size_t separator = selectedText.find_first_of( '/' );
         std::string base = selectedText.substr( 0, separator );
         std::string physical = selectedText.substr( separator, std::string::npos );
@@ -291,7 +291,7 @@ void ExportWidget::Update( Q3ListBoxItem* item /*= 0*/ )
         QStringList decisionalModels = frontend::commands::ListModels( config_ );
         for( QStringList::const_iterator it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
         {
-            const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).toUtf8().constData() );
+            const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).toStdString() );
             for( QStringList::const_iterator itP = physicalModels.begin(); itP != physicalModels.end(); ++itP )
                 physicalBase << QString( "%1/%2" ).arg( *it ).arg( *itP );
         }
@@ -390,7 +390,7 @@ namespace
     {
         while( item != 0 && ! dynamic_cast< frontend::CheckListItem* >( item ) )
         {
-            std::string file( item->text( 0 ).toUtf8().constData() );
+            std::string file( item->text( 0 ).toStdString() );
             Serialize( base, file, zos, recursive );
             callback();
             item = item->nextSibling();
@@ -404,7 +404,7 @@ namespace
             frontend::CheckListItem* item = dynamic_cast< frontend::CheckListItem* >( iterator.current() );
             if( item && item->isOn() )
             {
-                std::string file( iterator.current()->text( 0 ).toUtf8().constData() );
+                std::string file( iterator.current()->text( 0 ).toStdString() );
                 Serialize( base, file, zos, item->IsRecursive() );
                 if( item->childCount() > 0 )
                     BrowseChildren( base, item->firstChild(), zos, callback, item->IsRecursive() );
@@ -458,7 +458,7 @@ bool ExportWidget::BrowseClicked()
     const QString filename = QFileDialog::getSaveFileName( package_.second.c_str(), "SWORD packages (*.otpak)", this, "", tools::translate( "ExportWidget", "Select a package" ) );
     if( filename.isEmpty() )
         return false;
-    const bfs::path file = bfs::path( std::string( filename.toUtf8().constData() ) );
+    const bfs::path file = bfs::path( std::string( filename.toStdString() ) );
     package_.first = file.parent_path().string();
     package_.second = file.filename().string();
     if( bfs::exists( file ) )
@@ -478,11 +478,11 @@ void ExportWidget::WriteContent( zip::ozipfile& archive ) const
     QString text = GetCurrentSelection();
     if( !text.isEmpty() )
     {
-        std::string description = GetCurrentDescription()->text().toUtf8().constData();
+        std::string description = GetCurrentDescription()->text().toStdString();
         QString package = GetCurrentPackage();
 
         if( description.empty() )
-            description = "Packaged scenario of " + package.toStdString() + ".";
+            description = "Packaged scenario of " + std::string( package.toStdString() ) + ".";
         xos << xml::start( "content" )
             << xml::content( "name", package.toStdString() )
             << xml::content( "description", description )
@@ -515,7 +515,7 @@ void ExportWidget::InternalExportPackage( zip::ozipfile& archive )
         {
             assert( terrainList_->selectedItem() );
             progress_->setProgress( 0, 1 );
-            bfs::path diffPath = GetDiffPath( config_.GetRootDir(), config_.GetTerrainDir( terrainList_->selectedItem()->text().toUtf8().constData() ) );
+            bfs::path diffPath = GetDiffPath( config_.GetRootDir(), config_.GetTerrainDir( terrainList_->selectedItem()->text().toStdString() ) );
             Serialize( config_.GetRootDir(), diffPath.string(), archive, true );
             progress_->setProgress( 1 );
         }
@@ -526,7 +526,7 @@ void ExportWidget::InternalExportPackage( zip::ozipfile& archive )
             std::pair< std::string, std::string > content( Extract( physicalList_->selectedItem()->text() ) );
 
             bfs::path diffPath = GetDiffPath( config_.GetRootDir(), config_.GetModelsDir() ) / content.first;
-            bfs::path exportPath = GetDiffPath( config_.GetRootDir(), config_.GetModelsDir() ) / modelName_->text().toUtf8().constData();
+            bfs::path exportPath = GetDiffPath( config_.GetRootDir(), config_.GetModelsDir() ) / modelName_->text().toStdString();
 
             if( decisionalCheckBox_->isChecked() )
             {

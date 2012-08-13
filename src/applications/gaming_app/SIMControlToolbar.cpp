@@ -441,7 +441,7 @@ void SIMControlToolbar::SlotNamedCheckPoint()
     if( obj->isA( "QLineEdit" ) )
     {
         const QLineEdit* edit = static_cast< const QLineEdit* >( obj );
-        RequestCheckpoint( edit->text().toUtf8().constData() );
+        RequestCheckpoint( edit->text().toStdString() );
     }
 }
 

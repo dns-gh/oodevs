@@ -466,7 +466,7 @@ void ADN_Weapons_GUI::RegisterTable( ADN_MainWindow& mainWindow )
 void ADN_Weapons_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QString& strPath )
 {
     QString strLocalPath = strPath + tr( "WeaponSystems/" );
-    ADN_Tools::CreatePathToFile( strLocalPath.toUtf8().constData() );
+    ADN_Tools::CreatePathToFile( strLocalPath.toStdString() );
     ADN_HtmlBuilder indexBuilder;
     indexBuilder.BeginHtml( tr( "Weapon Systems" ) );
     indexBuilder.BeginList();

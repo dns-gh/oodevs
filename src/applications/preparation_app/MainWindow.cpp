@@ -392,7 +392,7 @@ void MainWindow::DoLoad( QString filename, bool checkConsistency /*= true*/ )
     SetProgression( 0, tr( "Initialize data ..." ) );
     if( filename.startsWith( "//" ) )
         filename.replace( "/", "\\" );
-    config_.LoadExercise( filename.toUtf8().constData() );
+    config_.LoadExercise( filename.toStdString() );
     if( Load() )
     {
         SetWindowTitle( true );
@@ -479,7 +479,7 @@ bool MainWindow::Load()
         SetNeedsSaving( false );
         Close();
         QMessageBox::critical( this, tools::translate( "Application", "SWORD" )
-                                   , ( tr( "Error reading xml file: " ) + e.what() ).toUtf8().constData() );
+                                   , ( tr( "Error reading xml file: " ) + e.what() ) );
         return false;
     }
     ReadOptions();
@@ -549,7 +549,7 @@ void MainWindow::LoadExercise( bool checkConsistency /*= true*/ )
         SetNeedsSaving( false );
         Close();
         QMessageBox::critical( this, tools::translate( "Application", "SWORD" )
-                                   , ( tr( "Error loading exercise: " ) + e.what() ).toUtf8().constData() );
+                                   , ( tr( "Error loading exercise: " ) + e.what() ) );
     }
 }
 
@@ -616,14 +616,14 @@ void MainWindow::SaveAs()
                 QLineEdit::Normal, tr( "Type exercise name here" ), &ok, this );
             if( ok && !name.isEmpty() )
             {
-                exerciseDirectory = bfs::path( config_.GetExercisesDir() ) / name.toUtf8().constData();
-                exist = frontend::commands::ExerciseExists( config_, name.toUtf8().constData() ) || bfs::exists( exerciseDirectory );
+                exerciseDirectory = bfs::path( config_.GetExercisesDir() ) / name.toStdString();
+                exist = frontend::commands::ExerciseExists( config_, name.toStdString() ) || bfs::exists( exerciseDirectory );
             }
             else
                 return;
         } while( exist );
         bfs::create_directories( exerciseDirectory );
-        bfs::path exerciseFile( config_.tools::ExerciseConfig::GeneralConfig::GetExerciseFile( name.toUtf8().constData() ) );
+        bfs::path exerciseFile( config_.tools::ExerciseConfig::GeneralConfig::GetExerciseFile( name.toStdString() ) );
         bfs::copy_file( config_.GetExerciseFile(), exerciseFile );
         config_.LoadExercise( exerciseFile.string() );
         model_.exercise_.SetName( name );
@@ -640,8 +640,8 @@ void MainWindow::SaveAs()
                 QLineEdit::Normal, tr( "Type terrain name here" ), &ok, this );
             if( ok && !name.isEmpty() )
             {
-                terrainDirectory = bfs::path( config_.GetTerrainsDir() ) / name.toUtf8().constData();
-                exist = frontend::commands::TerrainExists( config_, name.toUtf8().constData() ) || bfs::exists( terrainDirectory );
+                terrainDirectory = bfs::path( config_.GetTerrainsDir() ) / name.toStdString();
+                exist = frontend::commands::TerrainExists( config_, name.toStdString() ) || bfs::exists( terrainDirectory );
             }
             else
                 return;

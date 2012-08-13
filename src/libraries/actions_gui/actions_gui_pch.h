@@ -10,8 +10,6 @@
 #ifndef __actions_gui_pch_h_
 #define __actions_gui_pch_h_
 
-#pragma execution_character_set("utf-8")
-
 #pragma warning( push, 0 )
 #include <windows.h>
 #include <QtCore/qstring.h>

@@ -80,7 +80,7 @@ namespace
         virtual ~StringParameter() {}
         virtual void CommitTo( std::string& content ) const
         {
-            content += GetValue().toUtf8().constData();
+            content += GetValue().toStdString();
         }
         virtual std::string SerializeType() const
         {

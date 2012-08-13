@@ -10,8 +10,6 @@
 #ifndef __crossbow_plugin_pch_h_
 #define __crossbow_plugin_pch_h_
 
-#pragma execution_character_set("utf-8")
-
 #include <string>
 #include <sstream>
 #include <iostream>

@@ -46,7 +46,7 @@ QDateTime tools::BoostTimeToQTime( const boost::posix_time::ptime& btime )
 // -----------------------------------------------------------------------------
 boost::posix_time::ptime tools::QTimeToBoostTime( const QDateTime& qtime )
 {
-    return boost::posix_time::from_iso_string( qtime.toString( "yyyyMMddThhmmss" ).toUtf8().constData() );
+    return boost::posix_time::from_iso_string( qtime.toString( "yyyyMMddThhmmss" ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------

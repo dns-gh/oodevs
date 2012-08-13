@@ -292,7 +292,7 @@ void ProfilesModel::Visit( T_Units& units ) const
         std::vector< unsigned long > ids;
         (*it)->Visit( ids );
         BOOST_FOREACH( unsigned long id, ids )
-            units[ id ].insert( (*it)->GetLogin().toUtf8().constData() );
+            units[ id ].insert( (*it)->GetLogin().toStdString() );
     }
 }
 
@@ -303,7 +303,7 @@ void ProfilesModel::Visit( T_Units& units ) const
 void ProfilesModel::Visit( T_Profiles& profiles ) const
 {
     for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
-        profiles.insert( (*it)->GetLogin().toUtf8().constData() );
+        profiles.insert( (*it)->GetLogin().toStdString() );
 }
 
 // -----------------------------------------------------------------------------

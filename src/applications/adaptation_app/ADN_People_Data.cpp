@@ -137,7 +137,7 @@ void ADN_People_Data::PeopleInfosConsumption::ReadArchive( xml::xistream& xis )
         >> xml::attribute( "need", consumption_ );
     ADN_ResourceNetworks_Data::ResourceNetworkInfos* pResource = ADN_Workspace::GetWorkspace().GetResourceNetworks().GetData().FindResourceNetwork( strResource );
     if( !pResource )
-        throw ADN_DataException( tools::translate( "People_Data", "Invalid data" ).toUtf8().constData(), tools::translate( "People_Data", "Population - Invalid resource '%1/%2'" ).arg( strResource.c_str() ).toUtf8().constData() );
+        throw ADN_DataException( tools::translate( "People_Data", "Invalid data" ).toStdString(), tools::translate( "People_Data", "Population - Invalid resource '%1/%2'" ).arg( strResource.c_str() ).toStdString() );
     ptrResource_ = pResource;
 }
 
@@ -247,7 +247,7 @@ void ADN_People_Data::PeopleInfos::ReadArchive( xml::xistream& input )
 
     ADN_Population_Data::PopulationInfos* pModel = ADN_Workspace::GetWorkspace().GetPopulation().GetData().FindPopulation( strModel );
     if( !pModel )
-        throw ADN_DataException( "Invalid data", tools::translate( "Population_Data", "Population types - Invalid Population type '%1'" ).arg( strModel.c_str() ).toUtf8().constData() );
+        throw ADN_DataException( "Invalid data", tools::translate( "Population_Data", "Population types - Invalid Population type '%1'" ).arg( strModel.c_str() ).toStdString() );
     ptrModel_ = pModel;
 
     input >> xml::start( "repartition" );
@@ -308,7 +308,7 @@ const std::string ADN_People_Data::PeopleInfos::CheckErrors() const
         for( CIT_Events it2 = schedule_.begin(); it2 != schedule_.end(); ++it2 )
             if( it1->first != it2->first && it1->second->day_.GetData() == it2->second->day_.GetData() &&
                 !CheckTime( it1->second->from_.GetData(), it1->second->to_.GetData(), it2->second->from_.GetData(), it2->second->to_.GetData() ) )
-                    return tools::translate( "People_Data", "Invalid schedule - You have already an appointment on the same moment :" ).toUtf8().constData() + std::string( "\n" ) + "- " + it1->second->day_.GetData() + " : " + it1->second->from_.GetData() + " / " + it1->second->to_.GetData() + "\n" +
+                    return tools::translate( "People_Data", "Invalid schedule - You have already an appointment on the same moment :" ).toStdString() + std::string( "\n" ) + "- " + it1->second->day_.GetData() + " : " + it1->second->from_.GetData() + " / " + it1->second->to_.GetData() + "\n" +
                            "- " + it2->second->day_.GetData() + " : " + it2->second->from_.GetData() + " / " + it2->second->to_.GetData() + "\n";
     repartition_.CheckNoError( "ADN_People_Data", strName_.GetData().c_str() );
     return "";
@@ -322,7 +322,7 @@ void ADN_People_Data::PeopleInfos::WriteArchive( xml::xostream& output, int mosI
 {
     const std::string error = CheckErrors();
     if( error != "" )
-        throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).toUtf8().constData(), error );
+        throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).toStdString(), error );
     output << xml::start( "population" )
             << xml::attribute( "name", strName_ )
             << xml::attribute( "id", mosId )

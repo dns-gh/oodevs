@@ -466,6 +466,22 @@ Voulez-vous vraiment le remplacer ?</translation>
         <source>Can&apos;t create directory &apos;%1&apos;, error &apos;%2&apos; happen.</source>
         <translation>Impossible de créer le répertoire &apos;%1&apos;, l&apos;erreur &apos;%2&apos; est survenue.</translation>
     </message>
+    <message>
+        <source>English</source>
+        <translation>English</translation>
+    </message>
+    <message>
+        <source>French</source>
+        <translation>Français</translation>
+    </message>
+    <message>
+        <source>Spanish</source>
+        <translation>Español</translation>
+    </message>
+    <message>
+        <source>Arabic</source>
+        <translation>العربية</translation>
+    </message>
 </context>
 <context>
     <name>Page_ABC</name>

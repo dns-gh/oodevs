@@ -10,8 +10,6 @@
 #ifndef __gaming_pch_h_
 #define __gaming_pch_h_
 
-#pragma execution_character_set("utf-8")
-
 #pragma warning( disable : 4290 4702 4996 4355 )
 
 #define WIN32_LEAN_AND_MEAN

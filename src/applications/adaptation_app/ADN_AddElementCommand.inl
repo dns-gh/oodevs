@@ -66,7 +66,7 @@ void ADN_AddElementCommand< ObjectType >::UpdateDescription()
 
     std::string strItemName = pAddedObject_->GetItemName();
     if( strItemName.empty() )
-        strItemName = tr( "new " ).toUtf8().constData() + modifiedData_.GetItemTypeName();
+        strItemName = tr( "new " ).toStdString() + modifiedData_.GetItemTypeName();
     else
         strItemName = modifiedData_.GetItemTypeName() + " " + strItemName;
 

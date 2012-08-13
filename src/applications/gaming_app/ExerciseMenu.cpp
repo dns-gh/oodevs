@@ -71,7 +71,7 @@ namespace
 {
     std::string MakeLink( const std::string& file )
     {
-        return QFileInfo( file.c_str() ).absFilePath().toUtf8().constData();
+        return QFileInfo( file.c_str() ).absFilePath().toStdString();
     }
 }
 

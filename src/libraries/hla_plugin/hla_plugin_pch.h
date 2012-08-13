@@ -10,8 +10,6 @@
 #ifndef plugins_hla_plugin_pch_h
 #define plugins_hla_plugin_pch_h
 
-#pragma execution_character_set("utf-8")
-
 #include <string>
 #include <memory>
 #include <map>

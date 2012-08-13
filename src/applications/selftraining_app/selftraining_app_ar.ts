@@ -462,6 +462,22 @@ Do really you want to replace it ?</source>
         <source>Can&apos;t create directory &apos;%1&apos;, error &apos;%2&apos; happen.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>English</source>
+        <translation>English</translation>
+    </message>
+    <message>
+        <source>French</source>
+        <translation>Français</translation>
+    </message>
+    <message>
+        <source>Spanish</source>
+        <translation>Español</translation>
+    </message>
+    <message>
+        <source>Arabic</source>
+        <translation>العربية</translation>
+    </message>
 </context>
 <context>
     <name>Page_ABC</name>

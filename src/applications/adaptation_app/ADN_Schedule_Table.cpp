@@ -118,8 +118,8 @@ void ADN_Schedule_Table::OnContextMenu( int row, int col, const QPoint& point )
         AddRow( rows );
         QTime toTime = static_cast< Q3TimeEdit* >( cellWidget( rows, 2 ) )->time();
         QTime fromTime = static_cast< Q3TimeEdit* >( cellWidget( rows, 1 ) )->time();
-        AddEvent( rows, 0u, fromTime.toString( "hh:mm" ).toUtf8().constData(),
-                  toTime.toString( "hh:mm" ).toUtf8().constData(), item( rows, 3 )->text().toUtf8().constData() );
+        AddEvent( rows, 0u, fromTime.toString( "hh:mm" ).toStdString(),
+                  toTime.toString( "hh:mm" ).toStdString(), item( rows, 3 )->text().toStdString() );
     }
     else if( item( row, col ) )
             Remove( row );
@@ -197,8 +197,8 @@ void ADN_Schedule_Table::OnValueChanged( int row, int /*col*/ )
         QTime toTime = static_cast< Q3TimeEdit* >( cellWidget( row, 2 ) )->time();
         QTime fromTime = static_cast< Q3TimeEdit* >( cellWidget( row, 1 ) )->time();
         Q3ComboTableItem* pDay = static_cast< Q3ComboTableItem* >( item( row, 0 ) );
-        AddEvent( row, pDay->currentItem(), fromTime.toString( "hh:mm" ).toUtf8().constData(),
-                  toTime.toString( "hh:mm" ).toUtf8().constData(), item( row, 3 )->text().toUtf8().constData() );
+        AddEvent( row, pDay->currentItem(), fromTime.toString( "hh:mm" ).toStdString(),
+                  toTime.toString( "hh:mm" ).toStdString(), item( row, 3 )->text().toStdString() );
     }
 }
 

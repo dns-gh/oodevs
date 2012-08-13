@@ -89,7 +89,7 @@ namespace
         QString str = datetime.toString( Qt::ISODate );
         str.remove( ':' );
         str.remove( '-' );
-        return str.toUtf8().constData();
+        return str.toStdString();
     }
 }
 

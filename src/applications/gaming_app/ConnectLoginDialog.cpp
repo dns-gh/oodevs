@@ -26,7 +26,7 @@ namespace
             setText( profile_.GetLogin().isEmpty() ? tools::translate( "LoginDialog", "Anonymous" ) : profile_.GetLogin() );
             const QString pixmap = QString( "images/gaming/profile/%1%2.png" ).arg( profile_.IsSupervision() ? "supervisor" : "standard" )
                 .arg( profile_.IsPasswordProtected() ? "_password" : "" );
-            QImage img( tools::ExerciseConfig::BuildResourceChildFile( pixmap.toUtf8().constData() ).c_str() );
+            QImage img( tools::ExerciseConfig::BuildResourceChildFile( pixmap.toStdString() ).c_str() );
             img = img.scaled( 30, 30 );
             setPixmap( QPixmap::fromImage( img ) );
         }
@@ -95,7 +95,7 @@ void ConnectLoginDialog::OnAccept()
     if( UserItem* item = static_cast< UserItem* >( users_->currentItem() ) )
     {
         profiles_.clear();
-        profile_.Login( item->Login().toUtf8().constData(), password_->text().toUtf8().constData() );
+        profile_.Login( item->Login().toStdString(), password_->text().toStdString() );
         accept();
     }
 }
