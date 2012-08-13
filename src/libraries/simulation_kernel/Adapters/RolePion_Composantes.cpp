@@ -106,7 +106,7 @@ namespace
 // Name: RolePion_Composantes::NotifyComposanteAdded
 // Created: SLI 2012-03-22
 // -----------------------------------------------------------------------------
-void RolePion_Composantes::NotifyComposanteAdded( PHY_ComposantePion& composante )
+void RolePion_Composantes::NotifyComposanteAdded( PHY_ComposantePion& composante, std::map< const PHY_DotationCategory*, double >* dotations  )
 {
     core::Model& component = entity_[ "components" ].AddElement();
     component[ "component" ].SetUserData( &composante );
@@ -129,17 +129,17 @@ void RolePion_Composantes::NotifyComposanteAdded( PHY_ComposantePion& composante
         boost::function< void( const PHY_ComposantePion&, const PHY_Weapon& ) > visitor = boost::bind( &AddWeapon, boost::ref( component[ "weapons" ] ), _2 );
         composante.ApplyOnWeapons( visitor );
     }
-    PHY_RolePion_Composantes::NotifyComposanteAdded( composante );
+    PHY_RolePion_Composantes::NotifyComposanteAdded( composante, dotations );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RolePion_Composantes::NotifyComposanteRemoved
 // Created: MCO 2012-03-23
 // -----------------------------------------------------------------------------
-void RolePion_Composantes::NotifyComposanteRemoved( PHY_ComposantePion& composante )
+std::map< const PHY_DotationCategory*, double > RolePion_Composantes::NotifyComposanteRemoved( PHY_ComposantePion& composante )
 {
     T_Components::iterator it = components_.find( &composante );
     entity_[ "components" ].RemoveElement( *it->second );
     components_.erase( it );
-    PHY_RolePion_Composantes::NotifyComposanteRemoved( composante );
+    return PHY_RolePion_Composantes::NotifyComposanteRemoved( composante );
 }

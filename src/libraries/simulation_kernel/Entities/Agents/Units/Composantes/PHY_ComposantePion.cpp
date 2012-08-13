@@ -67,7 +67,7 @@ PHY_ComposantePion::PHY_ComposantePion( const MIL_Time_ABC& time, const PHY_Comp
     pType_->InstanciateWeapons( std::back_inserter( weapons_ ) );
     pType_->InstanciateSensors( std::back_inserter( sensors_ ) );
     pType_->InstanciateProtections( std::back_inserter( protections_ ) );
-    pRole_->NotifyComposanteAdded( *this );
+    pRole_->NotifyComposanteAdded( *this, 0 );
     assert( pHumans_->IsViable() ); //$$$ Pre-check in PHY_UnitType
 }
 
@@ -194,9 +194,9 @@ void PHY_ComposantePion::TransferComposante( PHY_RoleInterface_Composantes& newR
         pMaintenanceState_ = 0;
     }
     pHumans_->NotifyComposanteTransfered( *pRole_, newRole );
-    pRole_->NotifyComposanteRemoved( *this );
+    std::map< const PHY_DotationCategory*, double > dotationsRemoved = pRole_->NotifyComposanteRemoved( *this );
     pRole_ = &newRole;
-    pRole_->NotifyComposanteAdded( *this );
+    pRole_->NotifyComposanteAdded( *this, &dotationsRemoved );
 }
 
 // -----------------------------------------------------------------------------

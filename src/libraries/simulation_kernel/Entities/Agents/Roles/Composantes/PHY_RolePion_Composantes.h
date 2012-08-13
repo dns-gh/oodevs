@@ -226,8 +226,8 @@ public:
 
     //! @name Notifications (internal)
     //@{
-    virtual void NotifyComposanteAdded   ( PHY_ComposantePion& composante );
-    virtual void NotifyComposanteRemoved ( PHY_ComposantePion& composante );
+    virtual void NotifyComposanteAdded   ( PHY_ComposantePion& composante, std::map< const PHY_DotationCategory*, double >* dotations );
+    virtual std::map< const PHY_DotationCategory*, double > NotifyComposanteRemoved ( PHY_ComposantePion& composante );
     virtual void NotifyComposanteChanged ( PHY_ComposantePion& composante, const PHY_ComposanteState& oldState );
     virtual void NotifyComposanteRepaired();
     //@}

@@ -34,8 +34,8 @@ public:
 
     //! @name Operations
     //@{
-    void RegisterCapacities ( PHY_DotationGroupContainer& container ) const;
-    void UnregisterCapacities( PHY_DotationGroupContainer& container ) const;
+    void RegisterCapacities ( PHY_DotationGroupContainer& container, std::map< const PHY_DotationCategory*, double >* dotations ) const;
+    std::map< const PHY_DotationCategory*, double > UnregisterCapacities( PHY_DotationGroupContainer& container ) const;
     //@}
 
 private:

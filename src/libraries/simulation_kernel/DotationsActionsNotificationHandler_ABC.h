@@ -25,8 +25,8 @@ public:
              DotationsActionsNotificationHandler_ABC() {}
     virtual ~DotationsActionsNotificationHandler_ABC() {}
 
-    virtual void RegisterDotationsCapacities  ( const PHY_DotationCapacities& capacities ) = 0;
-    virtual void UnregisterDotationsCapacities( const PHY_DotationCapacities& capacities ) = 0;
+    virtual void RegisterDotationsCapacities  ( const PHY_DotationCapacities& capacities, std::map< const PHY_DotationCategory*, double >*& dotations ) = 0;
+    virtual void UnregisterDotationsCapacities( const PHY_DotationCapacities& capacities, std::map< const PHY_DotationCategory*, double >*& dotations ) = 0;
 };
 
 } // namespace dotation

@@ -79,18 +79,29 @@ PHY_DotationCapacities::~PHY_DotationCapacities()
 // Name: PHY_DotationCapacities::RegisterCapacities
 // Created: NLD 2004-08-16
 // -----------------------------------------------------------------------------
-void PHY_DotationCapacities::RegisterCapacities( PHY_DotationGroupContainer& container ) const
+void PHY_DotationCapacities::RegisterCapacities( PHY_DotationGroupContainer& container, std::map< const PHY_DotationCategory*, double >* dotations ) const
 {
     for( CIT_DotationCapacityMap it = dotationCapacities_.begin(); it != dotationCapacities_.end(); ++it )
-        container.AddCapacity( *it->second );
+    {
+        double quantity = std::numeric_limits< double >::max();
+        if( dotations )
+        {
+            std::map< const PHY_DotationCategory*, double >::const_iterator itDotation = dotations->find( it->first );
+            if( itDotation != dotations->end() )
+                quantity = itDotation->second;
+        }
+        container.AddCapacity( *it->second, quantity );
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCapacities::UnregisterCapacities
 // Created: NLD 2004-08-17
 // -----------------------------------------------------------------------------
-void PHY_DotationCapacities::UnregisterCapacities( PHY_DotationGroupContainer& container ) const
+std::map< const PHY_DotationCategory*, double > PHY_DotationCapacities::UnregisterCapacities( PHY_DotationGroupContainer& container ) const
 {
+    std::map< const PHY_DotationCategory*, double > result;
     for( CIT_DotationCapacityMap it = dotationCapacities_.begin(); it != dotationCapacities_.end(); ++it )
-        container.RemoveCapacity( *it->second );
+        result[ &( it->second->GetCategory() ) ] = container.RemoveCapacity( *it->second );
+    return result;
 }

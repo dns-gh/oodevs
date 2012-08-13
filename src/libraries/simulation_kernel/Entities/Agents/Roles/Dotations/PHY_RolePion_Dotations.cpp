@@ -109,7 +109,7 @@ PHY_RolePion_Dotations::PHY_RolePion_Dotations( MIL_AgentPion& pion )
     , pDotations_                ( 0 )
 {
     pDotations_ = new PHY_DotationGroupContainer( *this, MIL_AgentServer::GetWorkspace().GetSettings().GetValue< bool >( "infinite-dotation" ) );
-    pion.GetType().GetUnitType().GetTC1Capacities().RegisterCapacities( *pDotations_ );
+    pion.GetType().GetUnitType().GetTC1Capacities().RegisterCapacities( *pDotations_, 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -188,20 +188,22 @@ void PHY_RolePion_Dotations::ReadOverloading( xml::xistream& xis )
 // Name: PHY_RolePion_Dotations::RegisterDotationsCapacities
 // Created: NLD 2004-08-17
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Dotations::RegisterDotationsCapacities( const PHY_DotationCapacities& capacities )
+void PHY_RolePion_Dotations::RegisterDotationsCapacities( const PHY_DotationCapacities& capacities, std::map< const PHY_DotationCategory*, double >*& dotations )
 {
     assert( pDotations_ );
-    capacities.RegisterCapacities( *pDotations_ );
+    capacities.RegisterCapacities( *pDotations_, dotations );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Dotations::UnregisterDotationsCapacities
 // Created: NLD 2004-08-17
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Dotations::UnregisterDotationsCapacities( const PHY_DotationCapacities& capacities )
+void PHY_RolePion_Dotations::UnregisterDotationsCapacities( const PHY_DotationCapacities& capacities, std::map< const PHY_DotationCategory*, double >*& dotations )
 {
     assert( pDotations_ );
-    capacities.UnregisterCapacities( *pDotations_ );
+    std::map< const PHY_DotationCategory*, double > dotationsRemoved = capacities.UnregisterCapacities( *pDotations_ );
+    if( dotations )
+        *dotations = dotationsRemoved;
 }
 
 // -----------------------------------------------------------------------------
