@@ -164,6 +164,8 @@ void PHY_Dotation::AddCapacity( const PHY_DotationCapacity& capacity, double qua
         rCapacity_ = std::min( rCapacity_ + capacity.GetCapacity(), maxCapacity_ );
         SetValue( std::min( rValue_ + std::min( capacity.GetCapacity(), quantity ), maxCapacity_ ) );
     }
+    if( quantity )
+        pGroup_->NotifyDotationChanged( *this );
     rSupplyThreshold_ = std::min( rCapacity_, rSupplyThreshold_ + capacity.GetSupplyThreshold() );
 }
 
@@ -204,6 +206,8 @@ double PHY_Dotation::RemoveCapacity( const PHY_DotationCapacity& capacity )
             SetValue( newValue );
         }
     }
+    if( removed )
+        pGroup_->NotifyDotationChanged( *this );
     return removed;
 }
 
