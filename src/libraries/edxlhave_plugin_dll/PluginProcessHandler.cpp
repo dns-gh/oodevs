@@ -32,7 +32,7 @@ struct PluginProcessHandler::InternalData
     InternalData() { ZeroMemory( &pid_ , sizeof( pid_ ) ); }
 };
 
-class PluginProcessHandler::PluginConfig 
+class PluginProcessHandler::PluginConfig : boost::noncopyable
 {
 public:
     PluginProcessHandler::PluginConfig( const std::string& data, const std::string& session, dispatcher::Logger_ABC& logger )
