@@ -174,22 +174,23 @@ PHY_Dotation& PHY_DotationGroup::CreateDotation( const PHY_DotationCategory& dot
 // Name: PHY_DotationGroup::AddCapacity
 // Created: NLD 2004-08-16
 // -----------------------------------------------------------------------------
-void PHY_DotationGroup::AddCapacity( const PHY_DotationCapacity& capacity )
+void PHY_DotationGroup::AddCapacity( const PHY_DotationCapacity& capacity, double toAdd )
 {
     PHY_Dotation& dotation = CreateDotation( capacity.GetCategory() );
-    dotation.AddCapacity( capacity );
+    dotation.AddCapacity( capacity, toAdd );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationGroup::RemoveCapacity
 // Created: NLD 2004-08-17
 // -----------------------------------------------------------------------------
-void PHY_DotationGroup::RemoveCapacity( const PHY_DotationCapacity& capacity )
+double PHY_DotationGroup::RemoveCapacity( const PHY_DotationCapacity& capacity )
 {
     PHY_Dotation* pDotation = GetDotation( capacity.GetCategory() );
     assert( pDotation );
     if( pDotation )
-        pDotation->RemoveCapacity( capacity );
+        return pDotation->RemoveCapacity( capacity );
+    return 0.;
 }
 
 // -----------------------------------------------------------------------------

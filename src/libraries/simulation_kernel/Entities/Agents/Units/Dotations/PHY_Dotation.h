@@ -46,8 +46,8 @@ public:
 
     //! @name Operations
     //@{
-    void   AddCapacity        ( const PHY_DotationCapacity& capacity );
-    void   RemoveCapacity     ( const PHY_DotationCapacity& capacity );
+    void   AddCapacity        ( const PHY_DotationCapacity& capacity, double quantity );
+    double RemoveCapacity     ( const PHY_DotationCapacity& capacity );
     double GetCapacity        () const;
 
     double AddConsumptionReservation    ( double rNbr );

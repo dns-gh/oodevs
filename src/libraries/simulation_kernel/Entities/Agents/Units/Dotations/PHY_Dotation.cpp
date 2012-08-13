@@ -151,7 +151,7 @@ void PHY_Dotation::SetValue( double rValue )
 // Name: PHY_Dotation::AddCapacity
 // Created: NLD 2004-08-16
 // -----------------------------------------------------------------------------
-void PHY_Dotation::AddCapacity( const PHY_DotationCapacity& capacity )
+void PHY_Dotation::AddCapacity( const PHY_DotationCapacity& capacity, double quantity )
 {
     assert( rValue_ <= rCapacity_ );
     if( bInfiniteDotations_ && MT_IsZero( rCapacity_ ) )
@@ -162,7 +162,7 @@ void PHY_Dotation::AddCapacity( const PHY_DotationCapacity& capacity )
     else
     {
         rCapacity_ = std::min( rCapacity_ + capacity.GetCapacity(), maxCapacity_ );
-        SetValue( std::min( rValue_ + capacity.GetCapacity(), maxCapacity_ ) );
+        SetValue( std::min( rValue_ + std::min( capacity.GetCapacity(), quantity ), maxCapacity_ ) );
     }
     rSupplyThreshold_ += capacity.GetSupplyThreshold();
 }
@@ -171,10 +171,14 @@ void PHY_Dotation::AddCapacity( const PHY_DotationCapacity& capacity )
 // Name: PHY_Dotation::RemoveCapacity
 // Created: NLD 2004-08-17
 // -----------------------------------------------------------------------------
-void PHY_Dotation::RemoveCapacity( const PHY_DotationCapacity& capacity )
+double PHY_Dotation::RemoveCapacity( const PHY_DotationCapacity& capacity )
 {
-    assert( rCapacity_ >= capacity.GetCapacity() );
-    rCapacity_        -= capacity.GetCapacity();
+    double ratio = rCapacity_ ? (rValue_ / rCapacity_) : 1.;
+    double capacityToRemove = capacity.GetCapacity();
+    double quantityToRemove = capacityToRemove * ratio;
+    double removed = rCapacity_ > quantityToRemove ? quantityToRemove : rCapacity_;
+    assert( rCapacity_ >= capacityToRemove );
+    rCapacity_        -= capacityToRemove;
     if( std::abs( rCapacity_ ) < 1e-3 )
         rCapacity_ = 0;
     rSupplyThreshold_ -= capacity.GetSupplyThreshold();
@@ -183,15 +187,28 @@ void PHY_Dotation::RemoveCapacity( const PHY_DotationCapacity& capacity )
     if( rFireReservation_ > rCapacity_ )
     {
         rFireReservation_ = rCapacity_;
+        removed = rValue_;
         SetValue( 0. );
     }
     else if( rConsumptionReservation_ + rFireReservation_ > rCapacity_ )
     {
+        rFireReservation_ = 0;
         rConsumptionReservation_ = rCapacity_;
+        removed = rValue_;
         SetValue( 0. );
     }
-    else if( rFireReservation_ + rConsumptionReservation_ + rValue_ > rCapacity_ )
-        SetValue( rCapacity_ - rConsumptionReservation_ );
+    else
+    {
+        SetValue( rValue_ - quantityToRemove );
+        removed = quantityToRemove;
+        if( rFireReservation_ + rConsumptionReservation_ + rValue_ > rCapacity_ )
+        {
+            double newValue = rCapacity_ - rConsumptionReservation_ - rFireReservation_;
+            removed += ( rValue_ - newValue );
+            SetValue( newValue );
+        }
+    }
+    return removed;
 }
 
 // -----------------------------------------------------------------------------

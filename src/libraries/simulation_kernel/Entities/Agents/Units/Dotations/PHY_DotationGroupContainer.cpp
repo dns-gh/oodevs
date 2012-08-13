@@ -182,7 +182,7 @@ void PHY_DotationGroupContainer::ReadDotation( xml::xistream& xis, T_DotationSet
     if( !pGroup )
     {
         pGroup = &CreateDotationGroup( pDotationCategory->GetType() );
-        pGroup->AddCapacity( PHY_DotationCapacity( *pDotationCategory, xis.attribute< double >( "quantity" ), xis.attribute( "logistic-threshold", 0. ) ) );
+        pGroup->AddCapacity( PHY_DotationCapacity( *pDotationCategory, xis.attribute< double >( "quantity" ), xis.attribute( "logistic-threshold", 0. ) ), 0 );
     }
     PHY_Dotation& dotation = pGroup->ReadValues( xis, *pDotationCategory );
     overloadedDotations.insert( &dotation );
@@ -216,21 +216,21 @@ PHY_DotationGroup& PHY_DotationGroupContainer::CreateDotationGroup( const PHY_Do
 // Name: PHY_DotationGroupContainer::AddCapacity
 // Created: NLD 2004-08-16
 // -----------------------------------------------------------------------------
-void PHY_DotationGroupContainer::AddCapacity( const PHY_DotationCapacity& capacity )
+void PHY_DotationGroupContainer::AddCapacity( const PHY_DotationCapacity& capacity, double toAdd )
 {
     PHY_DotationGroup& group = CreateDotationGroup( capacity.GetCategory().GetType() );
-    group.AddCapacity( capacity );
+    group.AddCapacity( capacity, toAdd );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationGroupContainer::RemoveCapacity
 // Created: NLD 2004-08-17
 // -----------------------------------------------------------------------------
-void PHY_DotationGroupContainer::RemoveCapacity( const PHY_DotationCapacity& capacity )
+double PHY_DotationGroupContainer::RemoveCapacity( const PHY_DotationCapacity& capacity )
 {
     PHY_DotationGroup* pGroup = GetDotationGroup( capacity.GetCategory().GetType() );
     assert( pGroup );
-    pGroup->RemoveCapacity( capacity );
+    return pGroup->RemoveCapacity( capacity );
 }
 
 // -----------------------------------------------------------------------------
