@@ -6048,6 +6048,7 @@
         <mission name="AUTOMATE MELEE Canaliser foule"/>
         <mission name="AUTOMATE MELEE Interdire foules"/>
         <mission name="AUTOMATE MELEE Organiser accueil colonne refugies"/>
+        <mission name="AUTOMATE GENIE Brecher Obstacles"/>
       </missions>
       <fragorders>
         <fragorder name="Arreter Silence Radio"/>
@@ -7508,4 +7509,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2633888795" -->
+<!-- signature="0587257221" -->
