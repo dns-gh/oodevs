@@ -5,11 +5,10 @@
 
     <target name="configure">
         <update name="golang"/>
-        <mkdir dir="${out.dir}"/>
     </target>
 
     <target name="build">
-        <go_build module="proxy"/>
+        <go module="proxy"/>
     </target>
 
     <target name="all" depends="configure,build" />
