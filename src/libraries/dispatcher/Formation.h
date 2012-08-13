@@ -98,7 +98,6 @@ private:
     dispatcher::Team_ABC&                        team_;
     E_NatureLevel                                level_;
     std::string                                  app6symbol_;
-    std::string                                  symbol_;
     sword::RgbColor                              color_;
     std::auto_ptr< LogisticEntity >              logisticEntity_;
     dispatcher::Formation_ABC*                   parent_;

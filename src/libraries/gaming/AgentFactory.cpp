@@ -120,7 +120,7 @@ kernel::Automat_ABC* AgentFactory::Create( const sword::AutomatCreation& message
 {
     Automat* result = new Automat( message, controllers_.controller_, static_.types_ );
     kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
-    result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( message.has_symbol() ? message.symbol() : std::string() ) );
+    result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( message.has_app6symbol() ? "symbols/" + message.app6symbol() : std::string() ) );
     result->Attach< kernel::CommunicationHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, model_.knowledgeGroups_, dico ) );
     kernel::Entity_ABC* superior = 0;
 

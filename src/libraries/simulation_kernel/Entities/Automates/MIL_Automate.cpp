@@ -115,10 +115,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
     , pStockSupplyManager_           ( new MIL_StockSupplyManager( *this ) )
     , pColor_                        ( new MIL_Color( xis ) )
 {
-    std::string symbol = xis.attribute< std::string >( "nature", "" );
-    if ( !symbol.empty() && symbol.find( "symbols/" ) == std::string::npos )
-        symbol = "symbols/" + symbol;
-    symbol_ = symbol;
+    symbol_ = xis.attribute< std::string >( "nature", "" );
     Initialize( xis, gcPause, gcMult );
     if( pParentFormation_ )
         pParentFormation_->RegisterAutomate( *this );
@@ -440,10 +437,7 @@ void MIL_Automate::WriteODB( xml::xostream& xos ) const
         << xml::attribute( "type", pType_->GetName() );
     if( !symbol_.empty() )
     {
-        std::string nature = symbol_;
-        if ( nature.find( "symbols/" ) == 0 )
-            nature = nature.substr( 8, nature.length() - 8 );
-        xos << xml::attribute( "nature", nature );
+        xos << xml::attribute( "nature", symbol_ );
     }
     pColor_->WriteODB( xos );
     for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
@@ -844,9 +838,7 @@ void MIL_Automate::SendCreation( unsigned int context ) const
     message().mutable_type()->set_id( pType_->GetID() );
     message().mutable_party()->set_id( GetArmy().GetID() );
     message().mutable_knowledge_group()->set_id( GetKnowledgeGroup().GetId() );
-    message().set_app6symbol( "combat" );
-    if( !symbol_.empty() )
-        message().set_symbol( symbol_ );
+    message().set_app6symbol( symbol_ );
     message().set_logistic_level( pBrainLogistic_.get() ?
         (sword::EnumLogisticLevel)pBrainLogistic_->GetLogisticLevel().GetID() : sword::none );
     message().set_name( GetName() );

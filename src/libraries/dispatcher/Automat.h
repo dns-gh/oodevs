@@ -143,7 +143,6 @@ private:
     tools::Resolver< dispatcher::Automat_ABC > automats_;
     std::map< std::string, std::string > extensions_;
     std::string app6symbol_;
-    std::string symbol_;
     //@}
 };
 

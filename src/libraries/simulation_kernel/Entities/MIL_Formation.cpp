@@ -49,10 +49,7 @@ MIL_Formation::MIL_Formation( xml::xistream& xis, MIL_Army_ABC& army, MIL_Format
     , pExtensions_( new MIL_DictionaryExtensions( xis ) )
     , pColor_     ( new MIL_Color( xis ) )
 {
-    std::string symbol = xis.attribute< std::string >( "nature", "" );
-    if ( !symbol.empty() && symbol.find( "symbols/" ) == std::string::npos )
-        symbol = "symbols/" + symbol;
-    symbol_ = symbol;
+    symbol_ = xis.attribute< std::string >( "nature", "" );
     pLevel_ = PHY_NatureLevel::Find( xis.attribute< std::string >( "level" ) );
     if( !pLevel_ )
         xis.error( "Unknown level" );
@@ -254,10 +251,7 @@ void MIL_Formation::WriteODB( xml::xostream& xos ) const
             << xml::attribute( "name", GetName() );
     if( !symbol_.empty() )
     {
-        std::string nature = symbol_;
-        if ( nature.find( "symbols/" ) == 0 )
-            nature = nature.substr( 8, nature.length() - 8 );
-        xos << xml::attribute( "nature", nature );
+        xos << xml::attribute( "nature", symbol_ );
     }
     pColor_->WriteODB( xos );
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::WriteODB, _1, boost::ref( xos ) ) );
@@ -291,10 +285,8 @@ void MIL_Formation::SendCreation( unsigned int context /*= 0*/ ) const
     message().mutable_party()->set_id( pArmy_->GetID() );
     message().set_name( GetName() );
     message().set_level( pLevel_->GetAsnID() );
-    message().set_app6symbol( "combat" );
+    message().set_app6symbol( symbol_ );
     pColor_->SendFullState( message );
-    if( !symbol_.empty() )
-        message().set_symbol( symbol_ );
     message().set_logistic_level( pBrainLogistic_.get() ?
         (sword::EnumLogisticLevel)pBrainLogistic_->GetLogisticLevel().GetID() : sword::none );
     if( pParent_ )
