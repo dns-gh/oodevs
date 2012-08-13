@@ -2125,7 +2125,7 @@
     </weapon-systems>
     <human-protections/>
     <objects>
-      <object construction-time-factor="5.4s" initial-construction-time="90m" type="mined area (linear)"/>
+      <object construction-time-factor="0.08s" initial-construction-time="1m" type="mined area (linear)"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="11" type="Panne MOB 1"/>
@@ -35743,4 +35743,4 @@
     <equipment-category>VTT</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="0235420384" -->
+<!-- signature="4055597607" -->
