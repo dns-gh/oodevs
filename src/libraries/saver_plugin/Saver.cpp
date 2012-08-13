@@ -129,7 +129,7 @@ void Saver::CreateNewFragment( bool first /*= false*/ )
     {
         exists = bfs::exists( currentDirectory );
     }
-    catch( std::exception& e )
+    catch( std::exception& )
     {
         exists = false;
     }
