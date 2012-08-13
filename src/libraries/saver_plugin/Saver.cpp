@@ -124,7 +124,16 @@ void Saver::ControlInformation( const sword::ControlInformation& controlInformat
 void Saver::CreateNewFragment( bool first /*= false*/ )
 {
     const bfs::path currentDirectory = bfs::path( recorderDirectory_ ) / currentFolderName_;
-    if( !bfs::exists( currentDirectory ) )
+    bool exists = false;
+    try
+    {
+        exists = bfs::exists( currentDirectory );
+    }
+    catch( std::exception& e )
+    {
+        exists = false;
+    }
+    if( !exists )
         bfs::create_directories( currentDirectory );
     if( !first )
         TerminateFragment();
