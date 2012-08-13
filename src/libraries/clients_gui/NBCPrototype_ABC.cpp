@@ -11,7 +11,6 @@
 
 #include "clients_gui_pch.h"
 #include "NBCPrototype_ABC.h"
-#include "moc_NBCPrototype_ABC.cpp"
 #include "clients_kernel/NBCAgent.h"
 #include "tools/Iterator.h"
 #include "RichLabel.h"
@@ -41,12 +40,12 @@ NBCPrototype_ABC::NBCPrototype_ABC( QWidget* parent, const tools::Resolver_ABC< 
     nbcAgents_->setResizeMode( Q3ListView::AllColumns );
     nbcAgents_->setMinimumHeight( 100 );
     nbcAgents_->addColumn( tools::translate( "gui::NBCPrototype_ABC", "Type" ) );
-    connect( nbcAgents_, SIGNAL( selectionChanged( Q3ListViewItem* ) ), SLOT( OnSelectionChanged( Q3ListViewItem* ) ) );
     layout->addWidget( nbcAgents_ );
 
     layout->addWidget( new QLabel( tools::translate( "gui::NBCPrototype_ABC", "NBC agent state:" ) ) );
     nbcStates_ = new ValuedComboBox< std::string >( this );
-
+    nbcStates_->AddItem( tools::translate( "gui::NBCPrototype_ABC", "Liquid" ), std::string( "liquid" ) );
+    nbcStates_->AddItem( tools::translate( "gui::NBCPrototype_ABC", "Gaseous" ), std::string( "gaseous" ) );
     layout->addWidget( nbcStates_ );
 
     UpdateSelection();
@@ -149,29 +148,3 @@ void NBCPrototype_ABC::UpdateMaxToxic( int toxic )
         UpdateSelection();
     }
 }
-
-// -----------------------------------------------------------------------------
-// Name: NBCPrototype_ABC::OnSelectionChanged
-// Created: NPT 2012-07-20
-// -----------------------------------------------------------------------------
-void NBCPrototype_ABC::OnSelectionChanged( Q3ListViewItem* item )
-{
-    nbcStates_->Clear();
-
-    ValuedListItem* valuedItem = static_cast< ValuedListItem* >( item );
-    if( !valuedItem )
-        return;
-    NBCAgent* agent = valuedItem->GetValue< NBCAgent >();
-    if( !agent )
-        return;
-
-    NBCAgent::T_Effects effects = agent->GetEffects();
-    for( NBCAgent::CIT_Effects it = effects.begin(); it != effects.end(); ++it )
-    {
-        if( *it == NBCAgent::eLiquid )
-            nbcStates_->AddItem( tools::translate( "gui::NBCPrototype_ABC", "Liquid" ), std::string( "liquid" ) );
-        else
-            nbcStates_->AddItem( tools::translate( "gui::NBCPrototype_ABC", "Gaseous" ), std::string( "gaseous" ) );
-    }
-}
-

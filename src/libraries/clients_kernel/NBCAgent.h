@@ -26,15 +26,8 @@ class NBCAgent
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit NBCAgent( xml::xistream& xis );
+    explicit NBCAgent( xml::xistream& input );
     virtual ~NBCAgent();
-    //@}
-
-    //! @name Types 
-    //@{
-    enum E_EffectType { eLiquid, eGazeous };
-    typedef std::vector<E_EffectType>   T_Effects;
-    typedef T_Effects::const_iterator CIT_Effects;
     //@}
 
     //! @name Operations
@@ -42,13 +35,6 @@ public:
     unsigned long GetId() const;
     std::string GetName() const;
     //void Update();
-    const T_Effects& GetEffects() const;
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    void ReadEffect( xml::xistream& xis );
     //@}
 
 private:
@@ -56,7 +42,6 @@ private:
     //@{
     unsigned long id_;
     std::string name_;
-    T_Effects effectTypes_;
     //@}
 };
 
