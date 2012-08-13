@@ -125,7 +125,7 @@ void Model::CreateAgent( const sword::UnitCreation& message )
 // Name: Model::CreateAgentKnowledge
 // Created: RCD 2011-08-25
 // -----------------------------------------------------------------------------
-void Model::CreateAgentKnowledge( const sword::UnitKnowledgeCreation& message )
+void Model::CreateAgentKnowledge( const sword::UnitKnowledgeCreation& /*message*/ )
 {
   //  boost::shared_ptr< actions::parameters::AgentKnowledge > agentKnowledge( new actions::parameters::AgentKnowledge( message ) );
 //    agentKnowledges_[ message.knowledge().id() ] = agentKnowledge;

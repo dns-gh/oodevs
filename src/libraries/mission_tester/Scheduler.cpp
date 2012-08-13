@@ -56,7 +56,7 @@ void Scheduler::Schedule( boost::shared_ptr< Schedulable_ABC > schedulable )
 // Name: Scheduler::Step
 // Created: PHC 2011-03-30
 // -----------------------------------------------------------------------------
-void Scheduler::Step( Exercise& exercise, Model& model )
+void Scheduler::Step( Exercise& exercise, Model& /*model*/ )
 {
     bpt::ptime current( bpt::microsec_clock::local_time() );
     if( last_ + bpt::milliseconds( delta_ ) < current )
