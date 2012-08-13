@@ -32,14 +32,14 @@ struct PluginProcessHandler::InternalData
     InternalData() { ZeroMemory( &pid_ , sizeof( pid_ ) ); }
 };
 
-class PluginProcessHandler::PluginConfig : boost::noncopyable
+class PluginProcessHandler::PluginConfig
 {
 public:
     PluginProcessHandler::PluginConfig( const std::string& data, const std::string& session, dispatcher::Logger_ABC& logger )
         : data_ ( data )
         , exercise_ ( bfs::path( bfs::path( session ).parent_path().parent_path().parent_path() ).string() )
         , session_ ( session )
-        , logger_ ( logger )
+        , logger_ ( &logger )
     {
         // NOTHING
     }
@@ -98,11 +98,11 @@ private:
         }
         catch( const xml::exception& e ) 
         {
-            logger_.LogWarning( LOG_MESSAGE( e.what() ) );
+            logger_->LogWarning( LOG_MESSAGE( e.what() ) );
         }
         catch( ... )
         {
-            logger_.LogWarning( LOG_MESSAGE( "Unable to load profile information. Try to load anonymous profile." ) );
+            logger_->LogWarning( LOG_MESSAGE( "Unable to load profile information. Try to load anonymous profile." ) );
         }
     }
 
@@ -116,10 +116,10 @@ private:
     }
 
 private:
-    const std::string data_;
-    const std::string exercise_;
-    const std::string session_;
-    dispatcher::Logger_ABC& logger_;
+    std::string data_;
+    std::string exercise_;
+    std::string session_;
+    dispatcher::Logger_ABC* logger_;
 };
 
 // -----------------------------------------------------------------------------
