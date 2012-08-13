@@ -66,7 +66,7 @@ MOCK_BASE_CLASS( MockPHY_RoleInterface_Composantes, PHY_RoleInterface_Composante
     MOCK_METHOD( GetMinRangeToIndirectFire, 2 );
     MOCK_METHOD( GetMaxRangeToFire, 2 );
     MOCK_METHOD( ApplyInjury, 1 );
-    MOCK_METHOD( NotifyComposanteAdded, 1 );
+    MOCK_METHOD( NotifyComposanteAdded, 2 );
     MOCK_METHOD( NotifyComposanteRemoved, 1 );
     MOCK_METHOD( NotifyComposanteChanged, 2 );
     MOCK_METHOD( NotifyComposanteRepaired, 0 );

@@ -52,7 +52,7 @@ public:
         xml::xistringstream xisCapacity( "<category capacity='1' logistic-threshold='50'/>" );
         xisCapacity >> xml::start( "category" );
         pCapacity_.reset( new PHY_DotationCapacity( *PHY_DotationType::FindDotationCategory( "ammo" ), xisCapacity ) );
-        dotationGroupContainer_.AddCapacity( *pCapacity_ );
+        dotationGroupContainer_.AddCapacity( *pCapacity_, 1000. );
     }
     virtual ~TestIndirectFireModifier()
     {
