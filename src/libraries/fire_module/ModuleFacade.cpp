@@ -31,7 +31,7 @@ DEFINE_HOOK( GetDangerousEnemies, void, ( const SWORD_Model* model, const SWORD_
     const Knowledge_RapForLocal::T_KnowledgeAgents& enemies = rapfor.GetDangerousEnemies( model, entity ); // $$$$ MCO 2012-05-15: cache this and/or GetDangerousEnemies()
     std::for_each( enemies.begin(), enemies.end(), boost::bind( visitor, _1, userData ) );
 }
-DEFINE_HOOK( GetAmmunitionForIndirectFire, const char*, ( const SWORD_Model* model, const SWORD_Model* firer, const char* type, const MT_Vector2D& target ) )
+DEFINE_HOOK( GetAmmunitionForIndirectFire, const char*, ( const SWORD_Model* model, const SWORD_Model* firer, const char* type, const MT_Vector2D* target ) )
 {
     if( ! type )
     {

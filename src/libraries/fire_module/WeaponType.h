@@ -14,6 +14,8 @@
 #include <boost/shared_ptr.hpp>
 #include <map>
 
+class MT_Vector2D;
+
 namespace xml
 {
     class xistream;
@@ -57,7 +59,7 @@ public:
     double GetBurstDuration() const;
     double GetReloadingDuration() const;
     bool CanDirectFire( const wrapper::View& entity, const wrapper::View& component, int nComposanteFiringType, int ammoDotationClass ) const;
-    bool CanIndirectFire( const wrapper::View& entity, const wrapper::View& component, double range, const std::string& type ) const;
+    bool CanIndirectFire( const wrapper::View& entity, const wrapper::View& component, const std::string& type, const MT_Vector2D* target ) const;
     bool HasDotation( const wrapper::View& firer ) const;
     const DotationCategory& GetDotation() const;
     //@}

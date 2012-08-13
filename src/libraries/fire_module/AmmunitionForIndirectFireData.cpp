@@ -19,7 +19,7 @@ using namespace sword::fire;
 // Name: AmmunitionForIndirectFireData constructor
 // Created: NLD 2004-10-21
 // -----------------------------------------------------------------------------
-AmmunitionForIndirectFireData::AmmunitionForIndirectFireData( const wrapper::View& firer, const std::string& type, const MT_Vector2D& target )
+AmmunitionForIndirectFireData::AmmunitionForIndirectFireData( const wrapper::View& firer, const std::string& type, const MT_Vector2D* target )
     : firer_        ( firer )
     , type_         ( type )
     , target_       ( target )
@@ -44,11 +44,8 @@ AmmunitionForIndirectFireData::~AmmunitionForIndirectFireData()
 // -----------------------------------------------------------------------------
 void AmmunitionForIndirectFireData::ApplyOnWeapon( const wrapper::View& model, const wrapper::View& component, const wrapper::View& weapon )
 {
-    const wrapper::View& movement = firer_[ "movement" ];
-    const MT_Vector2D position( movement[ "position/x" ], movement[ "position/y" ] );
-    const double range = position.Distance( target_ );
     const Weapon w( model, weapon );
-    if( ! w.CanIndirectFire( firer_, component, range, type_ ) )
+    if( ! w.CanIndirectFire( firer_, component, type_, target_ ) )
         return;
     const DotationCategory& ammunition = w.GetDotation();
     const double value = ammunition.GetValue( firer_ );

@@ -243,9 +243,9 @@ bool Weapon::CanDirectFire( const wrapper::View& entity, const wrapper::View& co
 // Name: Weapon::CanIndirectFire
 // Created: MCO 2012-06-27
 // -----------------------------------------------------------------------------
-bool Weapon::CanIndirectFire( const wrapper::View& entity, const wrapper::View& component, double range, const std::string& type ) const
+bool Weapon::CanIndirectFire( const wrapper::View& entity, const wrapper::View& component, const std::string& type, const MT_Vector2D* target ) const
 {
-    return type_->CanIndirectFire( entity, component, range, type );
+    return type_->CanIndirectFire( entity, component, type, target );
 }
 
 // -----------------------------------------------------------------------------

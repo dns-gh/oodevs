@@ -10,9 +10,10 @@
 #ifndef fire_module_AmmunitionForIndirectFireData_h
 #define fire_module_AmmunitionForIndirectFireData_h
 
-#include "MT_Tools/MT_Vector2D.h"
 #include <wrapper/View.h>
 #include <boost/noncopyable.hpp>
+
+class MT_Vector2D;
 
 namespace sword
 {
@@ -29,7 +30,7 @@ namespace fire
 class AmmunitionForIndirectFireData : boost::noncopyable
 {
 public:
-             AmmunitionForIndirectFireData( const wrapper::View& firer, const std::string& type, const MT_Vector2D& target );
+             AmmunitionForIndirectFireData( const wrapper::View& firer, const std::string& type, const MT_Vector2D* target );
     virtual ~AmmunitionForIndirectFireData();
 
     //! @name Operations
@@ -44,7 +45,7 @@ private:
     //@{
     const wrapper::View firer_;
     const std::string type_;
-    const MT_Vector2D target_;
+    const MT_Vector2D* target_;
     const DotationCategory* pAmmunition_;
     double dotationValue_;
     //@}

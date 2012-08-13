@@ -28,7 +28,7 @@
     APPLY( GetMinRangeToFireOnWithPosture, 4, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), double rWantedPH ) ) \
     APPLY( GetForceRatio, 2, double, ( const SWORD_Model* model, const SWORD_Model* entity ) ) \
     APPLY( GetDangerousEnemies, 4, void, ( const SWORD_Model* model, const SWORD_Model* entity, void(*visitor)( const SWORD_Model* knowledge, void* userData ), void* userData ) ) \
-    APPLY( GetAmmunitionForIndirectFire, 4, const char*, ( const SWORD_Model* model, const SWORD_Model* firer, const char* type, const MT_Vector2D& target ) )
+    APPLY( GetAmmunitionForIndirectFire, 4, const char*, ( const SWORD_Model* model, const SWORD_Model* firer, const char* type, const MT_Vector2D* target ) )
 
 #define USED_HOOKS( APPLY ) \
     APPLY( HasDotation, 2, bool, ( const SWORD_Model* entity, const char* dotation ) ) \

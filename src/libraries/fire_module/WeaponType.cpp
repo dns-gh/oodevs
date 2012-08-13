@@ -12,6 +12,7 @@
 #include "DotationCategory.h"
 #include "WeaponDataType_DirectFire.h"
 #include "WeaponDataType_IndirectFire.h"
+#include "MT_Tools/MT_Vector2D.h"
 #include "tools/Codec.h"
 #include <wrapper/Hook.h>
 #include <wrapper/View.h>
@@ -481,10 +482,16 @@ bool WeaponType::CanDirectFire( const wrapper::View& entity, const wrapper::View
 // Name: WeaponType::CanIndirectFire
 // Created: MCO 2012-06-27
 // -----------------------------------------------------------------------------
-bool WeaponType::CanIndirectFire( const wrapper::View& entity, const wrapper::View& component, double range, const std::string& type ) const
+bool WeaponType::CanIndirectFire( const wrapper::View& entity, const wrapper::View& component, const std::string& type, const MT_Vector2D* target ) const
 {
-    return pIndirectFireData_.get() && dotation_->CanFire( entity, component, type ) &&
-        pIndirectFireData_->GetMinRange() <= range && range <= pIndirectFireData_->GetMaxRange();
+    if( ! pIndirectFireData_.get() || ! dotation_->CanFire( entity, component, type ) )
+        return false;
+    if( ! target )
+        return true;
+    const wrapper::View& movement = entity[ "movement" ];
+    const MT_Vector2D position( movement[ "position/x" ], movement[ "position/y" ] );
+    const double range = position.Distance( *target );
+    return pIndirectFireData_->GetMinRange() <= range && range <= pIndirectFireData_->GetMaxRange();
 }
 
 // -----------------------------------------------------------------------------

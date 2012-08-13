@@ -13,6 +13,8 @@
 #include <boost/shared_ptr.hpp>
 #include <wrapper/View.h>
 
+class MT_Vector2D;
+
 namespace sword
 {
 namespace fire
@@ -39,7 +41,7 @@ public:
     bool IsReady() const;
 
     bool CanDirectFire( const wrapper::View& entity, const wrapper::View& component, int nComposanteFiringType, int ammoDotationClass ) const;
-    bool CanIndirectFire( const wrapper::View& entity, const wrapper::View& component, double range, const std::string& type ) const;
+    bool CanIndirectFire( const wrapper::View& entity, const wrapper::View& component, const std::string& type, const MT_Vector2D* target ) const;
 
     bool HasDotation( const wrapper::View& firer ) const;
 

@@ -110,7 +110,7 @@ DECLARE_HOOK( GetMaxRangeToIndirectFire, double, ( const SWORD_Model* firer, boo
 DECLARE_HOOK( GetMinRangeToIndirectFire, double, ( const SWORD_Model* firer, bool(*filter)( const SWORD_Model* component ), const char* dotation, bool checkAmmo ) )
 DECLARE_HOOK( GetForceRatio, double, ( const SWORD_Model* model, const SWORD_Model* entity ) )
 DECLARE_HOOK( GetDangerousEnemies, void, ( const SWORD_Model* model, const SWORD_Model* entity, void(*visitor)( const SWORD_Model* knowledge, void* userData ), void* userData ) )
-DECLARE_HOOK( GetAmmunitionForIndirectFire, const char*, ( const SWORD_Model* model, const SWORD_Model* firer, const char* type, const MT_Vector2D& target ) )
+DECLARE_HOOK( GetAmmunitionForIndirectFire, const char*, ( const SWORD_Model* model, const SWORD_Model* firer, const char* type, const MT_Vector2D* target ) )
 
 // -----------------------------------------------------------------------------
 // Name: RolePion_Decision::Initialize
@@ -941,13 +941,11 @@ namespace
     }
     const PHY_DotationCategory* GetAmmunitionForIndirectFire( const MIL_Agent_ABC& agent, const core::Model& model, int indirectFireDotationClassID, const MT_Vector2D* pTarget )
     {
-        if( ! pTarget )
-            return 0;
         const PHY_IndirectFireDotationClass* pClass = PHY_IndirectFireDotationClass::Find( indirectFireDotationClassID );
         if( ! pClass )
             return 0;
         const core::Model& entity = model[ "entities" ][ agent.GetID() ];
-        const char* dotation = GET_HOOK( GetAmmunitionForIndirectFire )( core::Convert( &model ), core::Convert( &entity ), pClass->GetName().c_str(), *pTarget );
+        const char* dotation = GET_HOOK( GetAmmunitionForIndirectFire )( core::Convert( &model ), core::Convert( &entity ), pClass->GetName().c_str(), pTarget );
         if( ! dotation )
             return 0;
         const PHY_DotationCategory* category = PHY_DotationType::FindDotationCategory( dotation );

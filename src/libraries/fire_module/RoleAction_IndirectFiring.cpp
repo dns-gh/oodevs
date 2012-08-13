@@ -127,7 +127,7 @@ using namespace sword::fire;
 // Name: RoleAction_IndirectFiring::GetAmmunitionForIndirectFire
 // Created: NLD 2006-08-08
 // -----------------------------------------------------------------------------
-const char* RoleAction_IndirectFiring::GetAmmunitionForIndirectFire( const wrapper::View& model, const wrapper::View& firer, const std::string& type, const MT_Vector2D& target )
+const char* RoleAction_IndirectFiring::GetAmmunitionForIndirectFire( const wrapper::View& model, const wrapper::View& firer, const std::string& type, const MT_Vector2D* target )
 {
     AmmunitionForIndirectFireData data( firer, type, target );
     const wrapper::View& components = firer[ "components" ];
