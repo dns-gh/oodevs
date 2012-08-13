@@ -278,10 +278,8 @@ void MIL_Formation::SendCreation( unsigned int context /*= 0*/ ) const
     message().mutable_party()->set_id( pArmy_->GetID() );
     message().set_name( GetName() );
     message().set_level( pLevel_->GetAsnID() );
-    message().set_app6symbol( "combat" );
+    message().set_app6symbol( symbol_ );
     pColor_->SendFullState( message );
-    if( !symbol_.empty() )
-        message().set_symbol( symbol_ );
     message().set_logistic_level( pBrainLogistic_.get() ?
         (sword::EnumLogisticLevel)pBrainLogistic_->GetLogisticLevel().GetID() : sword::none );
     if( pParent_ )

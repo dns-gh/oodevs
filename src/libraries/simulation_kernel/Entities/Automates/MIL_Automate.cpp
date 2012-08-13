@@ -820,9 +820,7 @@ void MIL_Automate::SendCreation( unsigned int context ) const
     message().mutable_type()->set_id( pType_->GetID() );
     message().mutable_party()->set_id( GetArmy().GetID() );
     message().mutable_knowledge_group()->set_id( GetKnowledgeGroup().GetId() );
-    message().set_app6symbol( "combat" );
-    if( !symbol_.empty() )
-        message().set_symbol( symbol_ );
+    message().set_app6symbol( symbol_ );
     message().set_logistic_level( pBrainLogistic_.get() ?
         (sword::EnumLogisticLevel)pBrainLogistic_->GetLogisticLevel().GetID() : sword::none );
     message().set_name( GetName() );

@@ -135,7 +135,7 @@ kernel::Formation_ABC* TeamFactory::CreateFormation( const sword::FormationCreat
     Formation* result = new Formation( message, controllers_.controller_ );
     result->Attach< Lives_ABC >( *new FormationLives( *result ) );
     kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
-    result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( message.has_symbol() ? message.symbol() : std::string() ) );
+    result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( message.has_app6symbol() ? "symbols/" + message.app6symbol() : std::string() ) );
     result->Attach< kernel::TacticalHierarchies >( *new FormationHierarchy( controllers_.controller_, *result, superior, model_.symbolsFactory_ ) );
     if( result->GetLogisticLevel() != kernel::LogisticLevel::none_ )
         result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, model_.teams_, static_.objectTypes_, result->GetLogisticLevel(), dico, *result ) );
