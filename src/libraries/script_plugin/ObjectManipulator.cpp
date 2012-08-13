@@ -60,7 +60,7 @@ unsigned int ObjectManipulator::GetIdentifier() const
 // -----------------------------------------------------------------------------
 std::string ObjectManipulator::GetName() const
 {
-    return entity_.GetName().ascii();
+    return entity_.GetName().toStdString();
 }
 
 // -----------------------------------------------------------------------------

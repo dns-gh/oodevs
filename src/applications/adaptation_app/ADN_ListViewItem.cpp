@@ -68,19 +68,19 @@ public:
         {
             case ADN_ListViewItem::eString:
             {
-                std::string string=text.ascii();
+                std::string string=text.toStdString();
                 emit DataChanged(&string);
                 break;
             }
             case ADN_ListViewItem::eInt:
             {
-                int newval=atoi(text.ascii());
+                int newval=atoi(text.toStdString().c_str());
                 emit DataChanged(&newval);
                 break;
             }
             case ADN_ListViewItem::eDouble:
             {
-                double newval=atof(text.ascii());
+                double newval=atof(text.toStdString().c_str());
                 emit DataChanged(&newval);
                 break;
             }

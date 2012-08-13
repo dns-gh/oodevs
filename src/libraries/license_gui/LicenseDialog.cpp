@@ -338,7 +338,7 @@ void LicenseDialog::ReadTranslations()
         {
             bfs::path filePath( szAppPath );
             filePath.remove_filename();
-            const std::string language = ReadLang().ascii();
+            const std::string language = ReadLang().toStdString();
             filePath /= bfs::path( "resources/locales" ) / bfs::path( "license_gui_" + language + ".ts" );
             if( bfs::exists( filePath) )
             {

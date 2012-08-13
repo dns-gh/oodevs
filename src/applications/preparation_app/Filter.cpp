@@ -17,7 +17,7 @@ namespace
     std::string ReadLang()
     {
         QSettings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
-        return settings.readEntry( "/Common/Language", QTextCodec::locale() ).ascii();
+        return settings.readEntry( "/Common/Language", QTextCodec::locale() ).toStdString();
     }
 }
 

@@ -114,7 +114,7 @@ void ExerciseProperties::Update()
         int index = 1;
         for( QStringList::const_iterator it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
         {
-            const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).ascii() );
+            const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).toStdString() );
             for( QStringList::const_iterator itP = physicalModels.begin(); itP != physicalModels.end(); ++itP, ++index )
                 modelList_->insertItem( QString( "%1/%2" ).arg( *it ).arg( *itP ), index );
         }
@@ -161,7 +161,7 @@ void ExerciseProperties::Select( const frontend::Exercise_ABC* exercise )
                             >> xml::list( "text", *this, &ExerciseProperties::ReadBriefingText );
             if( !image.empty() )
             {
-                const std::string imagePath = config_.GetExerciseDir( QString( "%1/%2" ).arg( exercise->GetName().c_str() ).arg( image.c_str() ).ascii() );
+                const std::string imagePath = config_.GetExerciseDir( QString( "%1/%2" ).arg( exercise->GetName().c_str() ).arg( image.c_str() ).toStdString() );
                 const QImage pix( imagePath.c_str() );
                 QPixmap px;
                 px.fromImage( pix );
@@ -193,7 +193,7 @@ void ExerciseProperties::ReadBriefingText( xml::xistream& xis )
     std::string lang, text;
     xis >> xml::attribute( "lang", lang )
         >> text;
-    if( lang == language_.ascii() )
+    if( lang == language_.toStdString() )
     {
         briefingText_->setText( text.c_str() );
         briefingText_->show();
@@ -245,7 +245,7 @@ bool ExerciseProperties::Commit( const frontend::Exercise_ABC& exercise )
     if( terrainList_ && modelList_ && IsValid() )
     {
         const QStringList selectedModel = QStringList::split( "/", modelList_->currentText() );
-        const std::string selectedTerrain = terrainList_->currentText().ascii();
+        const std::string selectedTerrain = terrainList_->currentText().toStdString();
         QString message = "";
 
         if( selectedTerrain != currentTerrain_ )
@@ -253,11 +253,11 @@ bool ExerciseProperties::Commit( const frontend::Exercise_ABC& exercise )
             message += tools::translate( "ExerciseProperties", "The selected terrain does not fit the one referenced by the selected exercise. Some units may be outside of the terrain area." ) + "\n";
 
             std::string terrainModel = ::GetModelFromTerrain( config_, selectedTerrain );
-            if( !terrainModel.empty() && terrainModel != modelList_->currentText().ascii() )
+            if( !terrainModel.empty() && terrainModel != modelList_->currentText().toStdString() )
                 message += tools::translate( "ExerciseProperties", "The selected model does not fit the one referenced by the selected terrain, you may lose infrastructure or resource network information." ) + "\n";
         }
 
-        if( selectedModel.front().ascii() != currentData_ || selectedModel.back().ascii() != currentPhysical_ )
+        if( selectedModel.front().toStdString() != currentData_ || selectedModel.back().toStdString() != currentPhysical_ )
             message += tools::translate( "ExerciseProperties", "The selected model does not fit the one referenced by the selected exercise, you may lose some exercise data." ) + "\n";
 
         if( !message.isEmpty() )
@@ -271,7 +271,7 @@ bool ExerciseProperties::Commit( const frontend::Exercise_ABC& exercise )
         }
 
         if( dataChanged_ )
-            frontend::EditExerciseParameters( config_, exercise.GetName(), selectedTerrain, selectedModel.front().ascii(), selectedModel.back().ascii() );
+            frontend::EditExerciseParameters( config_, exercise.GetName(), selectedTerrain, selectedModel.front().toStdString(), selectedModel.back().toStdString() );
     }
     dataChanged_ = false;
     return true;

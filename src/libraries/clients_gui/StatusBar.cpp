@@ -164,7 +164,7 @@ void StatusBar::ParameterSelected( int index )
 // -----------------------------------------------------------------------------
 void StatusBar::TerrainPicked( const QString& type )
 {
-    pTerrainType_->setText( ENT_Tr::ConvertFromLocation( ENT_Tr::ConvertToLocation( type.ascii() ), ENT_Tr::eToTr ).c_str() );
+    pTerrainType_->setText( ENT_Tr::ConvertFromLocation( ENT_Tr::ConvertToLocation( type.toStdString() ), ENT_Tr::eToTr ).c_str() );
 }
 
 // -----------------------------------------------------------------------------

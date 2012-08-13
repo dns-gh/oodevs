@@ -82,10 +82,10 @@ Q3ListViewItem* ExerciseListView::FindExerciseItem( const QString& path ) const
 // -----------------------------------------------------------------------------
 QString ExerciseListView::GetExerciseDisplayName( const QString& exercise ) const
 {
-    std::string displayName( exercise.ascii() );
+    std::string displayName( exercise.toStdString() );
     try
     {
-        const std::string file = config_.GetExerciseFile( exercise.ascii() );
+        const std::string file = config_.GetExerciseFile( exercise.toStdString() );
         if( boost::filesystem::exists( file ) )
         {
             std::auto_ptr< xml::xistream > xis = fileLoader_.LoadFile( file );

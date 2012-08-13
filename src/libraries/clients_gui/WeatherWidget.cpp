@@ -158,8 +158,8 @@ void WeatherWidget::CommitTo( weather::Meteo& meteo ) const
     meteo.SetWind( wind );
     meteo.SetCloud( cloud );
     meteo.SetTemperature( temperature_->value() );
-    const weather::PHY_Precipitation* precipitation = weather::PHY_Precipitation::FindPrecipitation( tools::ToString( type_->GetValue() ).ascii() );
+    const weather::PHY_Precipitation* precipitation = weather::PHY_Precipitation::FindPrecipitation( tools::ToString( type_->GetValue() ).toStdString() );
     if( !precipitation )
-        throw std::runtime_error( std::string( __FUNCTION__ ) + " unknown precipitation: " + tools::ToString( type_->GetValue() ).ascii() );
+        throw std::runtime_error( std::string( __FUNCTION__ ) + " unknown precipitation: " + tools::ToString( type_->GetValue() ).toStdString() );
     meteo.SetPrecipitation( *precipitation );
 }

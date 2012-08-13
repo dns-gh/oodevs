@@ -113,7 +113,7 @@ void LocationEditorToolbar::CreateBookmark()
         if( !ok || name.isEmpty() )
             return;
         bookmarksMenu_->clear();
-        bookmarks_.push_back( Bookmark( name.ascii(), utm, menuPoint_ ) );
+        bookmarks_.push_back( Bookmark( name.toStdString(), utm, menuPoint_ ) );
         layer_.AddLocation( menuPoint_ );
         CreateMenu();
     }

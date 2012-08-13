@@ -366,16 +366,16 @@ void ADN_Objects_GUI::Enable( bool enable )
 void ADN_Objects_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QString& strPath )
 {
     QString strLocalPath = strPath + tr( "Objects/" );
-    ADN_Tools::CreatePathToFile( strLocalPath.ascii() );
+    ADN_Tools::CreatePathToFile( strLocalPath.toStdString() );
     ADN_HtmlBuilder indexBuilder;
     indexBuilder.BeginHtml( tr( "Objects" ) );
 
     ADN_Objects_Data::T_ObjectsInfos_Vector& objects = data_.GetObjectInfos();
     indexBuilder.BeginTable( static_cast< int >( objects.size() + 1 ), 4 );
-    indexBuilder.TableItem( 0, 0, tr( "Name" ).ascii(), true );
-    indexBuilder.TableItem( 0, 1, tr( "Type" ).ascii(), true );
-    indexBuilder.TableItem( 0, 2, tr( "Geometry" ).ascii(), true );
-    indexBuilder.TableItem( 0, 3, tr( "Capacities" ).ascii(), true );
+    indexBuilder.TableItem( 0, 0, tr( "Name" ).toStdString().c_str(), true );
+    indexBuilder.TableItem( 0, 1, tr( "Type" ).toStdString().c_str(), true );
+    indexBuilder.TableItem( 0, 2, tr( "Geometry" ).toStdString().c_str(), true );
+    indexBuilder.TableItem( 0, 3, tr( "Capacities" ).toStdString().c_str(), true );
     int n = 1;
     for( ADN_Objects_Data::IT_ObjectsInfos_Vector it = objects.begin(); it != objects.end(); ++it, ++n )
     {

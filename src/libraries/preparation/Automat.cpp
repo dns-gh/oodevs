@@ -152,7 +152,7 @@ void Automat::CreateDictionary( kernel::Controller& controller )
 void Automat::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::attribute( "id", id_ )
-        << xml::attribute( "name", name_.ascii() )
+        << xml::attribute( "name", name_.toStdString() )
         << xml::attribute( "type", type_.GetName() );
 }
 

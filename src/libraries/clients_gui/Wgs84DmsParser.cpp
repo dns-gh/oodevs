@@ -51,7 +51,7 @@ bool Wgs84DmsParser::Parse( QString content, geometry::Point2f& result, QStringL
 
         if( formatCoordX && formatCoordY )
         {
-            result = converter_.ConvertFromGeoDms( hintx.ascii(), hinty.ascii() );
+            result = converter_.ConvertFromGeoDms( hintx.toStdString(), hinty.toStdString() );
             hint.append( hintx );
             hint.append( hinty );
             return true;

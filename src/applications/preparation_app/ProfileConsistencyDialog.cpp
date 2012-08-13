@@ -80,7 +80,7 @@ int ProfileConsistencyDialog::Exec( const T_Errors& errors )
     BOOST_FOREACH( const T_Error& error, errors )
     {
         dataModel_->setItem( dataModel_->rowCount(), 0, CreateItem( tools::translate( "ProfileConsistencyDialog", "Unit '%1' is already controlled by '%2' profile.\n" )
-                            .arg( error.second->GetName().ascii() ).arg( error.first.c_str() ) ) );
+                            .arg( error.second->GetName() ).arg( error.first.c_str() ) ) );
     }
     return exec();
 }

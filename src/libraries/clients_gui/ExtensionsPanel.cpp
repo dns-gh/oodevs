@@ -42,7 +42,7 @@ namespace
     std::string ReadLang()
     {
         QSettings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
-        return settings.readEntry( "/Common/Language", QTextCodec::locale() ).ascii();
+        return settings.readEntry( "/Common/Language", QTextCodec::locale() ).toStdString();
     }
 }
 
@@ -249,7 +249,7 @@ namespace
         attribute.GetDictionaryValues( dictionary, kind, language );
         DictionaryType* dico = resolver.Find( dictionary );
         if( dico )
-            return dico->GetKey( label.ascii(), kind, language, hasAlias );
+            return dico->GetKey( label.toStdString(), kind, language, hasAlias );
         return "";
     }
 }
@@ -442,7 +442,7 @@ void ExtensionsPanel::Commit()
                 {
                     QTextEdit* edit = static_cast< QTextEdit* >( *it );
                     QString text = edit->text();
-                    ext->SetValue( edit->name(), enabled ? text.ascii() : "" );
+                    ext->SetValue( edit->name(), enabled ? text.toStdString() : "" );
                 }
                 else
                 {
@@ -451,7 +451,7 @@ void ExtensionsPanel::Commit()
                     int pos = 0;
                     if( !edit->validator() || edit->validator()->validate( text, pos ) == QValidator::Acceptable )
                     {
-                        ext->SetValue( edit->name(), enabled ? text.ascii() : "" );
+                        ext->SetValue( edit->name(), enabled ? text.toStdString() : "" );
                         edit->setPaletteBackgroundColor( Qt::white );
                     }
                     else
@@ -475,7 +475,7 @@ void ExtensionsPanel::Commit()
                     int pos = 0;
                     if( !combo->validator() || combo->validator()->validate( text, pos ) == QValidator::Acceptable )
                     {
-                        ext->SetValue( ( *it )->name(), enabled ? text.ascii() : "" );
+                        ext->SetValue( ( *it )->name(), enabled ? text.toStdString() : "" );
                         combo->setPaletteBackgroundColor( Qt::white );
                     }
                     else
@@ -536,7 +536,7 @@ void ExtensionsPanel::UpdateDisplay()
             case AttributeType::ETypeDictionary:
                 {
                     QComboBox* combo = static_cast< QComboBox* >( *it );
-                    const std::string& selected = GetDictionaryString( value.ascii(), *attribute, extensions_, attribute->GetName() == "Nationalite" );
+                    const std::string& selected = GetDictionaryString( value.toStdString(), *attribute, extensions_, attribute->GetName() == "Nationalite" );
                     if( !selected.empty() )
                         combo->setCurrentText( selected.c_str() );
                 }

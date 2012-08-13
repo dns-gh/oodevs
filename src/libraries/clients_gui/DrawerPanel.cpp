@@ -259,7 +259,7 @@ void DrawerPanel::Open()
         filename.replace( "/", "\\" );
     try
     {
-        model_.Load( config_.GetLoader(), filename.ascii() );
+        model_.Load( config_.GetLoader(), filename.toStdString() );
     }
     catch( xml::exception& )
     {
@@ -283,7 +283,7 @@ void DrawerPanel::Save()
     try
     {
         tools::SchemaWriter schemaWriter; //$$ Probablement à remonter
-        model_.Serialize( filename.ascii(), schemaWriter );
+        model_.Serialize( filename.toStdString(), schemaWriter );
     }
     catch( xml::exception& )
     {

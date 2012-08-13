@@ -51,8 +51,8 @@ namespace
 {
     QString ReadName( const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& checkpoint )
     {
-        bfs::path p( config.GetCheckpointsDir( exercise.ascii(), session.ascii() ) );
-        p = p / checkpoint.ascii() / "MetaData.xml";
+        bfs::path p( config.GetCheckpointsDir( exercise.toStdString(), session.toStdString() ) );
+        p = p / checkpoint.toStdString() / "MetaData.xml";
         try
         {
             if( bfs::exists( p ) )
@@ -77,12 +77,12 @@ namespace
 // -----------------------------------------------------------------------------
 void CheckpointList::Update( const QString& exercise, const QString& session )
 {
-    if( exercise_ != exercise.ascii() || session_ != session.ascii() )
+    if( exercise_ != exercise || session_ != session )
     {
         exercise_ = exercise;
         session_ = session;
         list_->clear();
-        checkpoints_ = frontend::commands::ListCheckpoints( config_, exercise.ascii(), session.ascii() );
+        checkpoints_ = frontend::commands::ListCheckpoints( config_, exercise.toStdString(), session.toStdString() );
         QStringList visibleNames;
         for( QStringList::const_iterator it = checkpoints_.begin(); it != checkpoints_.end(); ++it )
             visibleNames.push_back( ReadName( config_, exercise, session, *it ) );

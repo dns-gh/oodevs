@@ -40,9 +40,9 @@ int main( int argc, char** argv )
         file.close();
     }
 
-    BugTrap::Setup( tools::translate( "Application", "SWORD" ).ascii() )
-            .SetEmail( tools::translate( "Application", "sword-ot@masagroup.net" ).ascii() )
-            .SetVersion( QString( "%1 - " __TIMESTAMP__ ).arg( tools::AppVersion() ).ascii() );
+    BugTrap::Setup( tools::translate( "Application", "SWORD" ).toStdString() )
+            .SetEmail( tools::translate( "Application", "sword-ot@masagroup.net" ).toStdString() )
+            .SetVersion( QString( "%1 - " __TIMESTAMP__ ).arg( tools::AppVersion() ).toStdString() );
     try
     {
         if( app.Initialize() )

@@ -89,7 +89,7 @@ UserProfile::~UserProfile()
 void UserProfile::RequestCreation()
 {
     authentication::ProfileCreationRequest message;
-    message().mutable_profile()->set_login( login_.ascii() );
+    message().mutable_profile()->set_login( login_.toStdString() );
     message().mutable_profile()->set_supervisor( supervision_ );
     message.Send( publisher_ );
 }
@@ -101,7 +101,7 @@ void UserProfile::RequestCreation()
 void UserProfile::RequestDeletion()
 {
     authentication::ProfileDestructionRequest message;
-    message().set_login( login_.ascii() );
+    message().set_login( login_.toStdString() );
     message.Send( publisher_ );
 }
 
@@ -122,10 +122,10 @@ namespace
 void UserProfile::RequestUpdate( const QString& newLogin )
 {
     authentication::ProfileUpdateRequest message;
-    message().set_login( login_.ascii() );
+    message().set_login( login_.toStdString() );
     sword::Profile& profile = *message().mutable_profile();
-    profile.set_login( newLogin.ascii() );
-    profile.set_password( password_.ascii() );
+    profile.set_login( newLogin.toStdString() );
+    profile.set_password( password_.toStdString() );
     profile.set_supervisor( supervision_ );
     if( role_ != -1 )
         profile.mutable_role()->set_id( role_ );

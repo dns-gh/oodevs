@@ -79,7 +79,7 @@ void DataPage::Update()
     QStringList decisionalModels = frontend::commands::ListModels( config_ );
     for( QStringList::const_iterator it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
     {
-        const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).ascii() );
+        const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).toStdString() );
         for( QStringList::const_iterator itP = physicalModels.begin(); itP != physicalModels.end(); ++itP )
             physicalBase << QString( "%1/%2" ).arg( *it ).arg( *itP );
     }
@@ -138,10 +138,10 @@ void DataPage::OnDelete()
     {
         std::string path;
         if( mainTabs_->currentIndex() == eTabs_Terrains )
-            path = config_.GetTerrainDir( item->text().ascii() );
+            path = config_.GetTerrainDir( item->text().toStdString() );
         else
         {
-            std::pair< std::string, std::string > info( Extract( item->text().ascii() ) );
+            std::pair< std::string, std::string > info( Extract( item->text().toStdString() ) );
             path = config_.GetPhysicalsDir( info.first, info.second );
         }
         MessageDialog message( parent_, tools::translate( "DataPage", "Delete" ), tools::translate( "DataPage", "Are you sure you want to delete?" ), QMessageBox::Yes, QMessageBox::No );

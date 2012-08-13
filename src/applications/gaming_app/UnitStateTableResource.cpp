@@ -280,7 +280,7 @@ void UnitStateTableResource::RecursiveMagicAction( kernel::Entity_ABC& entity, c
                 last = &entity;
 
                 kernel::AgentType& agent = staticModel_.types_.tools::Resolver< kernel::AgentType >::Get( static_cast< kernel::Agent_ABC& >( entity ).GetType().GetId() );
-                std::pair< unsigned int, double > capacityAndConsumption = GetCapacityAndConsumption( name.ascii(), agent.CreateResourcesIterator(), agent.CreateIterator() );
+                std::pair< unsigned int, double > capacityAndConsumption = GetCapacityAndConsumption( name.toStdString(), agent.CreateResourcesIterator(), agent.CreateIterator() );
 
                 unsigned int newQuantity = std::min( quantity, static_cast< unsigned int >( capacityAndConsumption.first * percentage ) );
                 quantity -= newQuantity;

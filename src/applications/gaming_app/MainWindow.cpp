@@ -607,7 +607,7 @@ void MainWindow::Load()
     {
         Close();
         QMessageBox::critical( this, tools::translate( "Application", "SWORD" )
-                                   , ( tools::translate( "MainWindow", "Error loading exercise: " ) + e.what() ).ascii() );
+                                   , ( tools::translate( "MainWindow", "Error loading exercise: " ) + e.what() ) );
     }
 }
 

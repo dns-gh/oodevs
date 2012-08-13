@@ -98,6 +98,6 @@ std::string ADN_ListView_Categories_DotationNature::GetToolTipFor( Q3ListViewIte
     }
 
     if( result.empty() )
-        result = tr( "<b>Unused</b>" ).ascii();
+        result = tr( "<b>Unused</b>" ).toStdString();
     return result;
 }

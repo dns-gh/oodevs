@@ -94,7 +94,7 @@ void TerrainPicker::OnTimeOut()
                             tools::ToDisplayedString( meteo->GetPrecipitation().GetID() ),
                             tools::translate( "gui::TerrainPicker", "Wind speed: %L1km/h, direction: %L2°" )
                             .arg( meteo->GetWind().rSpeed_ / meteo->GetConversionFactor(), 0, 'f', 0 )
-                            .arg( meteo->GetWind().eAngle_ ).ascii(), tools::translate( "gui::TerrainPicker", "Temperature: %L2°C" ).arg( meteo->GetTemperature() ) );
+                            .arg( meteo->GetWind().eAngle_ ), tools::translate( "gui::TerrainPicker", "Temperature: %L2°C" ).arg( meteo->GetTemperature() ) );
     }
     if( objects_ )
     {

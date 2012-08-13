@@ -397,7 +397,7 @@ void ProfilesModel::Visit( T_Units& units ) const
             std::vector< unsigned long > ids;
             (*it)->Visit( ids );
             BOOST_FOREACH( unsigned long id, ids )
-                units[ id ].insert( (*it)->GetLogin().ascii() );
+                units[ id ].insert( (*it)->GetLogin().toStdString() );
         }
 }
 

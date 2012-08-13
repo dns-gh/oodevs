@@ -67,7 +67,7 @@ QString SuccessFactorActionParameter::GetValue() const
 void SuccessFactorActionParameter::Serialize( xml::xostream& xos ) const
 {
     xos << xml::start( "parameter" )
-            << xml::attribute( "name", name_.ascii() )
-            << xml::attribute( "value", value_.ascii() )
+            << xml::attribute( "name", name_.toStdString() )
+            << xml::attribute( "value", value_.toStdString() )
         << xml::end;
 }

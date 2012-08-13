@@ -161,7 +161,7 @@ std::string ADN_ListView_FragOrderTypes::GetToolTipFor( Q3ListViewItem& item )
     FillMultiUsersList( tr( "Crowds models" ), ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( ADN_Models_Data::ModelInfos::ePopulation, *pCastData ), result );
 
     if( result.empty() )
-        result = tr( "<b>Unused</b>" ).ascii();
+        result = tr( "<b>Unused</b>" ).toStdString();
     return result;
 }
 

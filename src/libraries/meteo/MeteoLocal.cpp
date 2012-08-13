@@ -55,7 +55,7 @@ MeteoLocal::MeteoLocal( const MeteoLocal& meteo )
 // Created: SBO 2006-12-20
 // -----------------------------------------------------------------------------
 MeteoLocal::MeteoLocal( const kernel::CoordinateConverter_ABC& converter, const std::string& name /*= ""*/ )
-    : Meteo( localCounter_, 0, name + QString::number( localCounter_ - 1).ascii() )
+    : Meteo( localCounter_, 0, name + QString::number( localCounter_ - 1).toStdString() )
     , converter_( &converter )
     , created_( false )
 {
@@ -67,7 +67,7 @@ MeteoLocal::MeteoLocal( const kernel::CoordinateConverter_ABC& converter, const 
 // Created: SBO 2006-12-20
 // -----------------------------------------------------------------------------
 MeteoLocal::MeteoLocal( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const std::string& name /*= ""*/ )
-    : Meteo( localCounter_, xis, 0, 0, name + QString::number( localCounter_ - 1 ).ascii() )
+    : Meteo( localCounter_, xis, 0, 0, name + QString::number( localCounter_ - 1 ).toStdString() )
     , converter_( &converter )
     , created_  ( false )
 {
@@ -88,7 +88,7 @@ MeteoLocal::MeteoLocal( xml::xistream& xis, const kernel::CoordinateConverter_AB
 // Created: ABR 2011-06-06
 // -----------------------------------------------------------------------------
 MeteoLocal::MeteoLocal( const sword::ControlLocalWeatherCreation& msg, const kernel::CoordinateConverter_ABC& converter, unsigned int timeStep, const std::string& name /*= ""*/ )
-    : Meteo( msg.weather().id(), msg.attributes(), timeStep, name + QString::number( msg.weather().id() - 1 ).ascii() )
+    : Meteo( msg.weather().id(), msg.attributes(), timeStep, name + QString::number( msg.weather().id() - 1 ).toStdString() )
     , converter_( &converter )
     , created_  ( false )
 {
@@ -129,8 +129,8 @@ void MeteoLocal::Serialize( xml::xostream& xos ) const
     assert( converter_ );
     const QString start = ( startTime_.isValid() ? startTime_ : QDateTime() ).toString( "yyyyMMddThhmmss" );
     const QString end   = ( endTime_.isValid() ? endTime_ : QDateTime() ).toString( "yyyyMMddThhmmss" );
-    xos << xml::attribute( "start-time", start.isNull() ? "19700101Thhmmss" : start.ascii() )
-        << xml::attribute( "end-time", end.isNull() ? "19700101Thhmmss" : end.ascii() )
+    xos << xml::attribute( "start-time", start.isNull() ? "19700101Thhmmss" : start.toStdString() )
+        << xml::attribute( "end-time", end.isNull() ? "19700101Thhmmss" : end.toStdString() )
         << xml::attribute( "top-left", converter_->ConvertToMgrs( topLeft_ ) )
         << xml::attribute( "bottom-right"  , converter_->ConvertToMgrs( bottomRight_ ) );
     Meteo::Serialize( xos );

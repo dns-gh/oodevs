@@ -213,7 +213,7 @@ void UrbanFileExporter::WriteObject( const kernel::UrbanObject_ABC& urbanObject,
     // Initializing
     OGRFeature* pFeature = OGRFeature::CreateFeature( layer_->GetLayerDefn() );
     pFeature->SetField( "ID", static_cast< int >( urbanObject.GetId() ) );
-    pFeature->SetField( "NAME", urbanObject.GetName().ascii() );
+    pFeature->SetField( "NAME", urbanObject.GetName().toStdString().c_str() );
 
     // Infrastructure
     {
@@ -229,13 +229,13 @@ void UrbanFileExporter::WriteObject( const kernel::UrbanObject_ABC& urbanObject,
         const kernel::UrbanObject_ABC* districtObject = static_cast< const kernel::UrbanObject_ABC* >( urbanHierarchies.GetSuperior() );
         assert( districtObject );
         pFeature->SetField( "DIST_ID", static_cast< int >( districtObject->GetId() ) );
-        pFeature->SetField( "DIST_NAME", districtObject->GetName().ascii() );
+        pFeature->SetField( "DIST_NAME", districtObject->GetName().toStdString().c_str() );
         const UrbanHierarchies& districtHierarchies = static_cast< const UrbanHierarchies& >( districtObject->Get< kernel::Hierarchies >() );
         assert( districtHierarchies.GetLevel() == eUrbanLevelDistrict );
         const kernel::UrbanObject_ABC* cityObject = static_cast< const kernel::UrbanObject_ABC* >( districtHierarchies.GetSuperior() );
         assert( cityObject );
         pFeature->SetField( "TOWN_ID", static_cast< int >( cityObject->GetId() ) );
-        pFeature->SetField( "TOWN_NAME", cityObject->GetName().ascii() );
+        pFeature->SetField( "TOWN_NAME", cityObject->GetName().toStdString().c_str() );
     }
 
     // Physical

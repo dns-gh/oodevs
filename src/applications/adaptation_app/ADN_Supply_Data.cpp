@@ -148,13 +148,13 @@ void ADN_Supply_Data::SupplyDataInfos::ReadArchive( xml::xistream& input )
 
     ADN_Units_Data::UnitInfos* pUnit = ADN_Workspace::GetWorkspace().GetUnits().GetData().FindUnit( strUnit );
     if( pUnit == 0 )
-        throw ADN_DataException( tools::translate( "Supply_Data", "Invalid data" ).ascii(), tools::translate( "Supply_Data",  "Logistic supply system - Invalid unit '%1'" ).arg( strUnit.c_str() ).ascii() );
+        throw ADN_DataException( tools::translate( "Supply_Data", "Invalid data" ).toStdString(), tools::translate( "Supply_Data",  "Logistic supply system - Invalid unit '%1'" ).arg( strUnit.c_str() ).toStdString() );
     ptrUnit_ = pUnit;
 
     ADN_Missions_Data::T_Mission_Vector& missions = ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissions();
     ADN_Missions_Data::Mission* mission = ADN_Workspace::GetWorkspace().GetMissions().GetData().FindMission( missions, supplyMission );
     if( mission == 0 )
-        throw ADN_DataException( tools::translate( "Supply_Data",  "Invalid data" ).ascii(), tools::translate( "Supply_Data",  "Logistic supply system - Invalid mission '%1'" ).arg( supplyMission.c_str() ).ascii() );
+        throw ADN_DataException( tools::translate( "Supply_Data",  "Invalid data" ).toStdString(), tools::translate( "Supply_Data",  "Logistic supply system - Invalid mission '%1'" ).arg( supplyMission.c_str() ).toStdString() );
     ptrSupplyMission_ = mission;
     ADN_Workspace::GetWorkspace().GetLogistic().GetGui().GetElement< ADN_Supply_GUI >( eSupply ).ConnectMission( true );
     //ADN_Workspace::GetWorkspace().GetSupply().GetGui().ConnectMission( true );
@@ -243,7 +243,7 @@ void ADN_Supply_Data::SupplyDataInfos::WriteArchive( xml::xostream& output )
     if( ptrUnit_.GetData() == 0 )
         return;
     if( ptrUnit_.GetData()->eTypeId_.GetData() != eAgentTypePionLOGConvoi )
-        throw ADN_DataException( tools::translate( "Supply_Data",  "Invalid data" ).ascii(), tools::translate( "Supply_Data",  "Logistic supply system - Invalid unit type for convoy units" ).ascii() );
+        throw ADN_DataException( tools::translate( "Supply_Data",  "Invalid data" ).toStdString(), tools::translate( "Supply_Data",  "Logistic supply system - Invalid unit type for convoy units" ).toStdString() );
 
     output << xml::start( "supply" );
     ADN_Tools::AddSchema( output, "Supply" );

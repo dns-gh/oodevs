@@ -374,6 +374,6 @@ std::string ADN_ListView_Objects::GetToolTipFor( Q3ListViewItem& item )
                         ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectsThatUse( *pCastData ), result );
 
     if( result.empty() )
-        result = tr( "<b>Unused</b>" ).ascii();
+        result = tr( "<b>Unused</b>" ).toStdString();
     return result;
 }

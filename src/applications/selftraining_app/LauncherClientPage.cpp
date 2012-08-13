@@ -38,7 +38,7 @@ LauncherClientPage::~LauncherClientPage()
 // -----------------------------------------------------------------------------
 void LauncherClientPage::Connect( const QString& host, unsigned short port )
 {
-    launcher_.Connect( host.ascii(), port, *this );
+    launcher_.Connect( host.toStdString(), port, *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -56,7 +56,7 @@ void LauncherClientPage::OnConnectionSucceeded()
 // -----------------------------------------------------------------------------
 void LauncherClientPage::OnConnectionFailed( const std::string& reason )
 {
-    OnError( tools::translate( "LauncherClientPage", "Failed to connect to host: %1." ).arg( reason.c_str() ).ascii() );
+    OnError( tools::translate( "LauncherClientPage", "Failed to connect to host: %1." ).arg( reason.c_str() ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------

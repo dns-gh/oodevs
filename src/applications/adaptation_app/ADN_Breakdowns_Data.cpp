@@ -78,7 +78,7 @@ void ADN_Breakdowns_Data::RepairPartInfo::ReadArchive( xml::xistream& input )
           >> xml::attribute( "quantity", nNbr_ );
     ADN_Equipement_Data::CategoryInfo* pCategory = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Piece ).FindCategory( strCategoryName );
     if( pCategory == 0 )
-        throw ADN_DataException( tools::translate( "Breakdown_Data", "Invalid data" ).ascii(), tools::translate( "Breakdown_Data", "Breakdowns - Invalid part '%1'" ).arg( strCategoryName.c_str() ).ascii() );
+        throw ADN_DataException( tools::translate( "Breakdown_Data", "Invalid data" ).toStdString(), tools::translate( "Breakdown_Data", "Breakdowns - Invalid part '%1'" ).arg( strCategoryName.c_str() ).toStdString() );
     ptrPart_ = pCategory;
 }
 
@@ -142,7 +142,7 @@ std::string ADN_Breakdowns_Data::BreakdownInfo::GetItemName()
 ADN_Breakdowns_Data::BreakdownInfo* ADN_Breakdowns_Data::BreakdownInfo::CreateCopy()
 {
     BreakdownInfo* pCopy = new BreakdownInfo();
-    pCopy->strName_ = tools::translate( "Breakdown_Data", "New breakdown" ).ascii();
+    pCopy->strName_ = tools::translate( "Breakdown_Data", "New breakdown" ).toStdString();
     pCopy->nType_ = nType_.GetData();
     pCopy->nNTI_  = nNTI_.GetData();
     pCopy->repairTime_ = repairTime_.GetData();
@@ -178,7 +178,7 @@ void ADN_Breakdowns_Data::BreakdownInfo::ReadArchive( xml::xistream& input )
           >> xml::attribute( "variance", repairTimeVariance_ );
     nType_ = ADN_Tr::ConvertToBreakdownType( type );
     if( nType_ == E_BreakdownType( -1 ) )
-        throw ADN_DataException( tools::translate( "Breakdown_Data", "Invalid data" ).ascii(), tools::translate( "Breakdown_Data", "Breakdowns - Invalid breakdown type '%1'" ).arg( type.c_str() ).ascii() );
+        throw ADN_DataException( tools::translate( "Breakdown_Data", "Invalid data" ).toStdString(), tools::translate( "Breakdown_Data", "Breakdowns - Invalid breakdown type '%1'" ).arg( type.c_str() ).toStdString() );
     input >> xml::list( "part", *this, &ADN_Breakdowns_Data::BreakdownInfo::ReadPart );
 }
 

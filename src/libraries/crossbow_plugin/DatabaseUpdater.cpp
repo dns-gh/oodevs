@@ -240,7 +240,7 @@ void DatabaseUpdater::Update( const sword::ObjectKnowledgeCreation& msg )
     if( msg.attributes().has_construction() )
         row.SetField( "state", FieldVariant( msg.attributes().construction().percentage() ) );
     if( tools::app6::GetAffiliation( symbol ) != "U" )
-        row.SetField( "name", FieldVariant( std::string( entity->GetName().ascii() ) ) );
+        row.SetField( "name", FieldVariant( std::string( entity->GetName().toStdString() ) ) );
     if( const dispatcher::KnowledgeGroup* knowledgeGroup = static_cast< const dispatcher::KnowledgeGroup* >( model_.KnowledgeGroups().Find( msg.party().id() ) ) )
     {
         tools::app6::SetAffiliation( symbol, (unsigned int) knowledgeGroup->GetTeam().GetKarma().GetUId() );

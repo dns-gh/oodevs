@@ -261,7 +261,7 @@ std::string ADN_ListView::FormatUsersList( const QString& category, const QStrin
 {
     std::string result = "";
     if( usersList.isEmpty() )
-        result = tr( "<b>Unused</b>" ).ascii();
+        result = tr( "<b>Unused</b>" ).toStdString();
     else
         FillMultiUsersList( category, usersList, result );
     return result;
@@ -277,7 +277,7 @@ void ADN_ListView::FillMultiUsersList( const QString& category, const QStringLis
     {
         if( !result.empty() )
             result += "<br>";
-        result += tr( "<nobr><b>Used by the following '%1':</b></nobr>" ).arg( category.toLower() ).ascii();
+        result += tr( "<nobr><b>Used by the following '%1':</b></nobr>" ).arg( category.toLower() ).toStdString();
         for( QStringList::const_iterator constIterator = usersList.constBegin(); constIterator != usersList.constEnd(); ++constIterator )
             result += "<br><nobr>" + (*constIterator).toStdString() + "</nobr>";
     }
@@ -542,7 +542,7 @@ void ADN_ListView::SaveToXls( const QString& path, const QString& sheetName ) co
     if( nbRow < numeric_limits< USHORT >::max() )
     {
         xls.New( 1 );
-        SaveToSheet( xls, sheetName.ascii(), 0, firstChild(), maxDepth );
+        SaveToSheet( xls, sheetName.toStdString().c_str(), 0, firstChild(), maxDepth );
     }
     else
     {
@@ -551,10 +551,10 @@ void ADN_ListView::SaveToXls( const QString& path, const QString& sheetName ) co
         xls.New( sheet );
         sheet = 0;
         for( Q3ListViewItem* item = firstChild(); item; item = item->nextSibling(), ++sheet )
-            SaveToSheet( xls, item->text( 0 ).ascii(), sheet, item->firstChild(), maxDepth - 1 );
+            SaveToSheet( xls, item->text( 0 ).toStdString().c_str(), sheet, item->firstChild(), maxDepth - 1 );
     }
 
-    xls.SaveAs( path.ascii() );
+    xls.SaveAs( path.toStdString().c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -591,7 +591,7 @@ void ADN_ListView::SaveToSheet( BasicExcel& xls, const char* sheetName, int shee
             if( !cell )
                 return;
             QString content = header()->label( col );
-            cell->Set( content.ascii() );
+            cell->Set( content.toStdString().c_str() );
             cell->SetFormat( format );
             if( col == 0 )
             {
@@ -676,7 +676,7 @@ void ADN_ListView::FillSheetFromItem( Q3ListViewItem* qItem, BasicExcelWorksheet
             if( ok )
                 cell->Set( content.toDouble() );
             else
-                cell->Set( content.ascii() );
+                cell->Set( content.toStdString().c_str() );
         }
 
         // Column size

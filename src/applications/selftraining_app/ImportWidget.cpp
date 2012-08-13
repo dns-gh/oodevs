@@ -179,7 +179,7 @@ void ImportWidget::SelectPackage( const QString& filename )
         packageDescription_->setText( "" );
         packageContent_->clear();
         if( ReadPackageContentFile() )
-            packageContent_->insertStringList( frontend::commands::ListPackageFiles( package_->text().ascii() ) );
+            packageContent_->insertStringList( frontend::commands::ListPackageFiles( package_->text().toStdString() ) );
         else
             packageName_->setText( tools::translate( "ImportWidget", "otpak corrupted: unable to load content properly" ) );
     }

@@ -113,7 +113,7 @@ void ProcessService::SendExerciseList( sword::ExerciseListResponse& message )
 {
     const QStringList exercises = frontend::commands::ListExercises( config_ );
     for( QStringList::const_iterator it = exercises.begin(); it != exercises.end(); ++it )
-        message.add_exercise( ( *it ).ascii() );
+        message.add_exercise( ( *it ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------
@@ -125,7 +125,7 @@ void ProcessService::SendSessionList( sword::SessionListResponse& message )
     const QStringList sessions = frontend::commands::ListSessions( config_, message.exercise() );
     for( QStringList::const_iterator it = sessions.begin(); it != sessions.end(); ++it )
     {
-        message.add_session( ( *it ).ascii() );
+        message.add_session( ( *it ).toStdString() );
     }
 }
 
@@ -162,8 +162,8 @@ namespace
         {
             if( !found_ && profile.IsSupervision() )
             {
-                supervisorProfile_ = profile.GetLogin().ascii();
-                supervisorPassword_ = profile.GetPassword().ascii();
+                supervisorProfile_ = profile.GetLogin().toStdString();
+                supervisorPassword_ = profile.GetPassword().toStdString();
                 found_ = true;
             }
         }

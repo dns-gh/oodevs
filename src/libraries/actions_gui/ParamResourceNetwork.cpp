@@ -80,7 +80,7 @@ QWidget* ParamResourceNetwork::BuildInterface( QWidget* parent )
 void ParamResourceNetwork::CommitTo( actions::ParameterContainer_ABC& parameter ) const
 {
     if( IsChecked() && selected_ )
-        parameter.AddParameter( *new actions::parameters::ResourceNetwork( parameter_, *selected_, resourceName_->text().ascii(), controller_ ) );
+        parameter.AddParameter( *new actions::parameters::ResourceNetwork( parameter_, *selected_, resourceName_->text().toStdString(), controller_ ) );
     else
         parameter.AddParameter( *new actions::parameters::ResourceNetwork( parameter_, controller_ ) );
 }

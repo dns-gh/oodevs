@@ -346,7 +346,7 @@ void UserProfileControls_ABC::CheckErrors( gui::ValuedListItem* item, T_Errors& 
 void UserProfileControls_ABC::CheckErrors( const kernel::Entity_ABC& entity, T_Errors& errors )
 {
     BOOST_FOREACH( const std::string& result, checker_.Find( entity ) )
-        if( profile_->GetLogin().ascii() != result )
+        if( profile_->GetLogin().toStdString() != result )
             errors.push_back( std::make_pair( result, &entity ) );
 }
 

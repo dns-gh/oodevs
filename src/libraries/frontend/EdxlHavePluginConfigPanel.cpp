@@ -116,7 +116,7 @@ void EdxlHavePluginConfigPanel::Commit( const std::string& exercise, const std::
     if( mainBox_->isChecked() )
     {
         std::ofstream of( file.string().c_str() );
-        of << "edxl.host=" << host_->text().ascii() << std::endl
+        of << "edxl.host=" << host_->text().toStdString() << std::endl
            << "edxl.initialization.serviceURI=" << initializeServiceURI_->text() << std::endl
            << "edxl.update.serviceURI=" << updateServiceURI_->text() << std::endl
            << "edxl.update.frequency=" << QTime().secsTo( frequency_->time() ) << 's' << std::endl

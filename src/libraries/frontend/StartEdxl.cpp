@@ -23,10 +23,10 @@ using namespace frontend;
 // -----------------------------------------------------------------------------
 StartEdxl::StartEdxl( const tools::GeneralConfig& config, const QString& exercise, const QString& session, bool attach )
     : SpawnCommand( config, "edxlhave_app.exe", attach )
-    , configManipulator_( new ConfigurationManipulator( config, exercise.ascii(), session.ascii() ) )
+    , configManipulator_( new ConfigurationManipulator( config, exercise.toStdString(), session.toStdString() ) )
 {
     namespace bfs = boost::filesystem;
-    bfs::path iniFile = bfs::path( config.GetExerciseDir( exercise.ascii() ) ) / "edxl.ini";
+    bfs::path iniFile = bfs::path( config.GetExerciseDir( exercise.toStdString() ) ) / "edxl.ini";
     mustRun_ = bfs::exists( iniFile );
 
     if( mustRun_ )

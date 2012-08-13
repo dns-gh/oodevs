@@ -62,7 +62,7 @@ QString DrawingCategory::GetDescription() const
 void DrawingCategory::ReadTemplate( xml::xistream& xis, svg::TextRenderer& renderer )
 {
     DrawingTemplate* style = new DrawingTemplate( xis, name_, renderer );
-    Register( style->GetName(), style->GetCode().ascii(), *style );
+    Register( style->GetName(), style->GetCode().toStdString(), *style );
 }
 
 // -----------------------------------------------------------------------------

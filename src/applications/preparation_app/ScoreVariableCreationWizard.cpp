@@ -124,7 +124,7 @@ namespace
             if( type_ == "circle" || type_ == "polygon" )
                 type_ = "zone";
 
-            pVariable_.reset( new indicators::Variable( name_.ascii(), types.Instanciate( type_ ), value ) );
+            pVariable_.reset( new indicators::Variable( name_.toStdString(), types.Instanciate( type_ ), value ) );
             delete &parameter;
         }
         const QString name_;
@@ -219,92 +219,92 @@ namespace
 {
     std::map< std::string, std::string > AmbulanceTypes()
     {
-        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Evacuation" ).ascii(), "evacuation" )
-            ( tools::translate( "ScoreDef", "Collection" ).ascii(), "collection" );
+        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Evacuation" ).toStdString(), "evacuation" )
+            ( tools::translate( "ScoreDef", "Collection" ).toStdString(), "collection" );
     }
 
     std::map< std::string, std::string > MaintenanceTypes()
     {
-        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Repairers" ).ascii(), "repairers" )
-            ( tools::translate( "ScoreDef", "Haulers" ).ascii(), "haulers" );
+        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Repairers" ).toStdString(), "repairers" )
+            ( tools::translate( "ScoreDef", "Haulers" ).toStdString(), "haulers" );
     }
 
     std::map< std::string, std::string > ForceRatioTypes()
     {
-        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Favorable" ).ascii(), "favorable" )
-            ( tools::translate( "ScoreDef", "Neutral" ).ascii(), "neutral" )
-            ( tools::translate( "ScoreDef", "Unfavorable" ).ascii(), "unfavorable" );
+        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Favorable" ).toStdString(), "favorable" )
+            ( tools::translate( "ScoreDef", "Neutral" ).toStdString(), "neutral" )
+            ( tools::translate( "ScoreDef", "Unfavorable" ).toStdString(), "unfavorable" );
     }
 
     std::map< std::string, std::string > CrowdStates()
     {
-        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Healthy" ).ascii(), "healthy" )
-            ( tools::translate( "ScoreDef", "Wounded" ).ascii(), "wounded" )
-            ( tools::translate( "ScoreDef", "Dead" ).ascii(), "dead" )
-            ( tools::translate( "ScoreDef", "Contaminated" ).ascii(), "contaminated" );
+        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Healthy" ).toStdString(), "healthy" )
+            ( tools::translate( "ScoreDef", "Wounded" ).toStdString(), "wounded" )
+            ( tools::translate( "ScoreDef", "Dead" ).toStdString(), "dead" )
+            ( tools::translate( "ScoreDef", "Contaminated" ).toStdString(), "contaminated" );
     }
 
     std::map< std::string, std::string > EquipmentStates()
     {
-        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Available" ).ascii(), "available" )
-            ( tools::translate( "ScoreDef", "Unavailable" ).ascii(), "unavailable" )
-            ( tools::translate( "ScoreDef", "Repairable" ).ascii(), "repairable" )
-            ( tools::translate( "ScoreDef", "Repairing" ).ascii(), "repairing" )
-            ( tools::translate( "ScoreDef", "Prisoner" ).ascii(), "prisoner" );
+        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Available" ).toStdString(), "available" )
+            ( tools::translate( "ScoreDef", "Unavailable" ).toStdString(), "unavailable" )
+            ( tools::translate( "ScoreDef", "Repairable" ).toStdString(), "repairable" )
+            ( tools::translate( "ScoreDef", "Repairing" ).toStdString(), "repairing" )
+            ( tools::translate( "ScoreDef", "Prisoner" ).toStdString(), "prisoner" );
     }
 
     std::map< std::string, std::string > FireTypes()
     {
-        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Direct fires" ).ascii(), "direct" )
-            ( tools::translate( "ScoreDef", "Indirect fires" ).ascii(), "indirect" );
+        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Direct fires" ).toStdString(), "direct" )
+            ( tools::translate( "ScoreDef", "Indirect fires" ).toStdString(), "indirect" );
     }
 
     std::map< std::string, std::string > Fratricide()
     {
-        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Non fratricide fires" ).ascii(), "false" )
-            ( tools::translate( "ScoreDef", "Fratricide fires" ).ascii(), "true" );
+        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Non fratricide fires" ).toStdString(), "false" )
+            ( tools::translate( "ScoreDef", "Fratricide fires" ).toStdString(), "true" );
     }
 
     std::map< std::string, std::string > HumanStates()
     {
-        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Total" ).ascii(), "total" )
-            ( tools::translate( "ScoreDef", "Operational" ).ascii(), "operational" )
-            ( tools::translate( "ScoreDef", "Dead" ).ascii(), "dead" )
-            ( tools::translate( "ScoreDef", "Wounded" ).ascii(), "wounded" )
-            ( tools::translate( "ScoreDef", "Mental" ).ascii(), "mental" )
-            ( tools::translate( "ScoreDef", "Nbc" ).ascii(), "nbc" )
-            ( tools::translate( "ScoreDef", "In treatment" ).ascii(), "in-treatment" )
-            ( tools::translate( "ScoreDef", "In maintenance" ).ascii(), "in-maintenance" );
+        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Total" ).toStdString(), "total" )
+            ( tools::translate( "ScoreDef", "Operational" ).toStdString(), "operational" )
+            ( tools::translate( "ScoreDef", "Dead" ).toStdString(), "dead" )
+            ( tools::translate( "ScoreDef", "Wounded" ).toStdString(), "wounded" )
+            ( tools::translate( "ScoreDef", "Mental" ).toStdString(), "mental" )
+            ( tools::translate( "ScoreDef", "Nbc" ).toStdString(), "nbc" )
+            ( tools::translate( "ScoreDef", "In treatment" ).toStdString(), "in-treatment" )
+            ( tools::translate( "ScoreDef", "In maintenance" ).toStdString(), "in-maintenance" );
     }
 
     std::map< std::string, std::string > HumanRanks()
     {
-        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Officer" ).ascii(), "officer" )
-            ( tools::translate( "ScoreDef", "Sub officer" ).ascii(), "sub-officer" )
-            ( tools::translate( "ScoreDef", "Troopers" ).ascii(), "troopers" );
+        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Officer" ).toStdString(), "officer" )
+            ( tools::translate( "ScoreDef", "Sub officer" ).toStdString(), "sub-officer" )
+            ( tools::translate( "ScoreDef", "Troopers" ).toStdString(), "troopers" );
     }
 
    std::map< std::string, std::string > PerceptionLevels()
     {
-        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Invisible" ).ascii(), "invisible" )
-            ( tools::translate( "ScoreDef", "Detected" ).ascii(), "detected" )
-            ( tools::translate( "ScoreDef", "Recognized" ).ascii(), "recognized" )
-            ( tools::translate( "ScoreDef", "Identified" ).ascii(), "identified" )
-            ( tools::translate( "ScoreDef", "Recorded" ).ascii(), "recorded" );
+        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Invisible" ).toStdString(), "invisible" )
+            ( tools::translate( "ScoreDef", "Detected" ).toStdString(), "detected" )
+            ( tools::translate( "ScoreDef", "Recognized" ).toStdString(), "recognized" )
+            ( tools::translate( "ScoreDef", "Identified" ).toStdString(), "identified" )
+            ( tools::translate( "ScoreDef", "Recorded" ).toStdString(), "recorded" );
     }
 
    std::map< std::string, std::string > PopulationStates()
    {
-       return boost::assign::map_list_of( tools::translate( "ScoreDef", "Healthy" ).ascii(), "healthy" )
-           ( tools::translate( "ScoreDef", "Wounded" ).ascii(), "wounded" )
-           ( tools::translate( "ScoreDef", "Dead" ).ascii(), "dead" );
+       return boost::assign::map_list_of( tools::translate( "ScoreDef", "Healthy" ).toStdString(), "healthy" )
+           ( tools::translate( "ScoreDef", "Wounded" ).toStdString(), "wounded" )
+           ( tools::translate( "ScoreDef", "Dead" ).toStdString(), "dead" );
    }
 
    std::map< std::string, std::string > SatisfactionTypes()
    {
-       return boost::assign::map_list_of( tools::translate( "ScoreDef", "Lodging" ).ascii(), "lodging" )
-           ( tools::translate( "ScoreDef", "Health" ).ascii(), "health" )
-           ( tools::translate( "ScoreDef", "Safety" ).ascii(), "safety" );
+       return boost::assign::map_list_of( tools::translate( "ScoreDef", "Lodging" ).toStdString(), "lodging" )
+           ( tools::translate( "ScoreDef", "Health" ).toStdString(), "health" )
+           ( tools::translate( "ScoreDef", "Safety" ).toStdString(), "safety" );
    }
 }
 
@@ -340,7 +340,7 @@ boost::shared_ptr< actions::gui::Param_ABC > ScoreVariableCreationWizard::Create
 
     if( !compatibleType.empty() )
     {
-        const OrderParameter parameter( variableName.ascii(), compatibleType, false, 1, nbOccur );
+        const OrderParameter parameter( variableName.toStdString(), compatibleType, false, 1, nbOccur );
         actions::gui::Param_ABC* param = &builder_.BuildOne( parameter, false );
         if( compatibleType == "location" )
             static_cast< actions::gui::ParamLocation* >( param )->SetShapeFilter( false, false, true, true, false );
@@ -349,7 +349,7 @@ boost::shared_ptr< actions::gui::Param_ABC > ScoreVariableCreationWizard::Create
     else
     {
         // TODO: move ParamStringEnumeration to actions_gui and make it creatable by the builder
-        const OrderParameter parameter( variableName.ascii(), type, false );
+        const OrderParameter parameter( variableName.toStdString(), type, false );
         if( type == "force-ratio types" )
             result.reset( new ParamStringEnumeration( this, *this, tr( "Force ratio types" ),   parameter, ForceRatioTypes() ) );
         else if( type == "ambulance types" )

@@ -41,9 +41,9 @@ ParamObstacle::ParamObstacle( const InterfaceBuilder_ABC& builder, const kernel:
     , typeCombo_  ( 0 )
     , obstacleTypeCombo_( 0 )
 {
-    location_   = static_cast< ParamLocation* > ( AddElement( "location", tr( "Obstacle location" ).ascii() ) );
-    density_    = static_cast< ParamFloat* >    ( AddElement( "float", tr( "Density per 100 square meter" ).ascii() ) );
-    tc2_        = static_cast< ParamAutomat* >  ( AddElement( "automat", tr( "TC2" ).ascii() ) );
+    location_   = static_cast< ParamLocation* > ( AddElement( "location", tr( "Obstacle location" ).toStdString() ) );
+    density_    = static_cast< ParamFloat* >    ( AddElement( "float", tr( "Density per 100 square meter" ).toStdString() ) );
+    tc2_        = static_cast< ParamAutomat* >  ( AddElement( "automat", tr( "TC2" ).toStdString() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -186,7 +186,7 @@ void ParamObstacle::CommitTo( actions::ParameterContainer_ABC& action ) const
         if( type->HasLogistic() )
             tc2_->CommitTo( *param );
         if( type->CanBeReservedObstacle() )
-            param->AddParameter( *new actions::parameters::ObstacleType( kernel::OrderParameter( tr( "Obstacle type" ).ascii(), "obstacletype", false ), obstacleTypeCombo_->GetValue() ) );
+            param->AddParameter( *new actions::parameters::ObstacleType( kernel::OrderParameter( tr( "Obstacle type" ).toStdString(), "obstacletype", false ), obstacleTypeCombo_->GetValue() ) );
         location_->CommitTo( *param );
         action.AddParameter( *param.release() );
     }
