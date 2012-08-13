@@ -40,7 +40,7 @@ ColorController::~ColorController()
 // Name: ColorController::UpdateHierarchies
 // Created: LDC 2012-05-04
 // -----------------------------------------------------------------------------
-void ColorController::UpdateHierarchies( const kernel::Entity_ABC& entity )
+void ColorController::UpdateHierarchies( const kernel::Entity_ABC& /*entity*/ )
 {
     // NOTHING
 }

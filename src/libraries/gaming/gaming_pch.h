@@ -12,9 +12,7 @@
 
 #pragma execution_character_set("utf-8")
 
-#pragma warning( disable : 4290 )
-#pragma warning( disable : 4702 )
-#pragma warning( disable : 4996 )
+#pragma warning( disable : 4290 4702 4996 4355 )
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
