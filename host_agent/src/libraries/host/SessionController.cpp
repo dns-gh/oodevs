@@ -149,18 +149,25 @@ void SessionController::ReloadSession( const Path& path, T_Predicate predicate )
 }
 
 // -----------------------------------------------------------------------------
+// Name: SessionController::ReloadDirectory
+// Created: BAX 2012-08-10
+// -----------------------------------------------------------------------------
+bool SessionController::ReloadDirectory( runtime::Async& reload, const Path& dir, T_Predicate predicate )
+{
+    const Path path = dir / "session.id";
+    if( system_.IsFile( path ) )
+        reload.Go( boost::bind( &SessionController::ReloadSession, this, path, predicate ) );
+    return true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: SessionController::Reload
 // Created: BAX 2012-03-21
 // -----------------------------------------------------------------------------
 void SessionController::Reload( T_Predicate predicate )
 {
     Async reload( async_.GetPool() );
-    BOOST_FOREACH( const Path& dir, system_.Walk( root_, false ) )
-    {
-        const Path path = dir / "session.id";
-        if( system_.IsFile( path ) )
-            reload.Go( boost::bind( &SessionController::ReloadSession, this, path, predicate ) );
-    }
+    system_.Walk( root_, false, boost::bind( &SessionController::ReloadDirectory, this, boost::ref( reload ), _1, predicate ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -99,7 +99,7 @@ namespace
             MOCK_EXPECT( system.IsDirectory ).returns( false) ;
             MOCK_EXPECT( system.MakePaths );
             MOCK_EXPECT( system.MakeAnyPath ).calls( boost::bind( &MakePath, boost::ref( any_idx ), _1 ) );
-            MOCK_EXPECT( system.Walk ).returns( std::vector< host::Path >() );
+            MOCK_EXPECT( system.Walk );
             MOCK_EXPECT( system.Rename ).returns( true );
             MOCK_EXPECT( system.Remove ).returns( true );
             MOCK_EXPECT( node->StartSession ).returns( boost::make_shared< host::node::Token >() );

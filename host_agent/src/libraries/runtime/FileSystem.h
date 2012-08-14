@@ -47,8 +47,8 @@ public:
     virtual bool Rename( const Path& src, const Path& dst ) const;
     virtual bool WriteFile( const Path& path, const std::string& content ) const;
     virtual std::string ReadFile( const Path& path ) const;
-    virtual std::vector< Path > Glob( const Path& path, const Path& name ) const;
-    virtual std::vector< Path > Walk( const Path& path, bool recurse ) const;
+    virtual void Glob( const Path& path, const Path& name, const T_Predicate& operand ) const;
+    virtual void Walk( const Path& path, bool recurse, const T_Predicate& operand ) const;
     virtual T_Unpacker Unpack( const Path& output, std::istream& src ) const;
     virtual T_Packer Pack( std::ostream& dst ) const;
     virtual std::string Checksum( const Path& root, const T_Predicate& predicate, size_t& read ) const;

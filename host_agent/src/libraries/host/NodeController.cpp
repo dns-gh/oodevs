@@ -106,18 +106,25 @@ void NodeController::ReloadNode( const Path& path )
 }
 
 // -----------------------------------------------------------------------------
+// Name: NodeController::ReloadDirectory
+// Created: BAX 2012-08-10
+// -----------------------------------------------------------------------------
+bool NodeController::ReloadDirectory( runtime::Async& reload, const Path& dir )
+{
+    const Path path = dir / ( type_ + ".id" );
+    if( system_.IsFile( path ) )
+        reload.Go( boost::bind( &NodeController::ReloadNode, this, path ) );
+    return true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: NodeController::Reload
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
 void NodeController::Reload()
 {
     Async reload( async_.GetPool() );
-    BOOST_FOREACH( const Path& dir, system_.Walk( root_, false ) )
-    {
-        const Path path = dir / ( type_ + ".id" );
-        if( system_.IsFile( path ) )
-            reload.Go( boost::bind( &NodeController::ReloadNode, this, path ) );
-    }
+    system_.Walk( root_, false, boost::bind( &NodeController::ReloadDirectory, this, boost::ref( reload ), _1 ) );
 }
 
 // -----------------------------------------------------------------------------

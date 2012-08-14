@@ -437,11 +437,25 @@ std::string GetFilename( Path path, const std::string& root )
     return Utf8Convert( reply );
 }
 
-template< typename T, typename U >
-void AttachItem( Async& async, const FileSystem_ABC& system, T& items, const U& item )
+template< typename T >
+void AttachItem( Async& async, const FileSystem_ABC& system, Package::T_Items& items, const T& item )
 {
     items.push_back( item );
     async.Go( boost::bind( &Item::MakeChecksum, item, boost::cref( system ) ) );
+}
+
+template< typename T >
+bool AttachSimple( Async& async, const Path& path, const FileSystem_ABC& system, const Path& root, Package::T_Items& items, const Metadata* meta )
+{
+    AttachItem( async, system, items, boost::make_shared< T >( system, root, path, items.size(), meta ) );
+    return true;
+}
+
+template< typename T >
+bool AttachExtended( Async& async, const Path& path, const FileSystem_ABC& system, const Path& root, Package::T_Items& items, const Metadata* meta )
+{
+    AttachItem( async, system, items, boost::make_shared< T >( system, root, path, items.size(), meta, FromXml( system.ReadFile( path ) ) ) );
+    return true;
 }
 
 struct Model : public Item
@@ -462,11 +476,10 @@ struct Model : public Item
         return Path( "data" ) / "models" / name_;
     }
 
-    template< typename T >
-    static void Parse( Async& async, const FileSystem_ABC& system, const Path& root, T& items, const Metadata* meta )
+    static void Parse( Async& async, const FileSystem_ABC& system, const Path& root, Package::T_Items& items, const Metadata* meta )
     {
-        BOOST_FOREACH( const Path& path, system.Glob( root / "data" / "models", "decisional.xml" ) )
-            AttachItem( async, system, items, boost::make_shared< Model >( system, root, path, items.size(), meta ) );
+        FileSystem_ABC::T_Predicate op = boost::bind( AttachSimple< Model >, boost::ref( async ), _1, boost::cref( system ), boost::cref( root ), boost::ref( items ), meta );
+        system.Glob( root / "data" / "models", "decisional.xml", op );
     }
 };
 
@@ -488,12 +501,10 @@ struct Terrain : public Item
         return Path( "data" ) / "terrains" / name_;
     }
 
-    template< typename T >
-    static void Parse( Async& async, const FileSystem_ABC& system, const Path& root, T& items, const Metadata* meta )
+    static void Parse( Async& async, const FileSystem_ABC& system, const Path& root, Package::T_Items& items, const Metadata* meta )
     {
-        BOOST_FOREACH( const Path& path, system.Glob( root / "data" / "terrains", "Terrain.xml" ) )
-            AttachItem( async, system, items,
-                        boost::make_shared< Terrain >( system, root, path, items.size(), meta ) );
+        FileSystem_ABC::T_Predicate op = boost::bind( AttachSimple< Terrain >, boost::ref( async ), _1, boost::cref( system ), boost::cref( root ), boost::ref( items ), meta );
+        system.Glob( root / "data" / "terrains", "Terrain.xml", op );
     }
 };
 
@@ -564,12 +575,10 @@ struct Exercise : public Item
         return true;
     }
 
-    template< typename T >
-    static void Parse( Async& async, const FileSystem_ABC& system, const Path& root, T& items, const Metadata* meta )
+    static void Parse( Async& async, const FileSystem_ABC& system, const Path& root, Package::T_Items& items, const Metadata* meta )
     {
-        BOOST_FOREACH( const Path& path, system.Glob( root / "exercises", "exercise.xml" ) )
-            AttachItem( async, system, items,
-                        boost::make_shared< Exercise >( system, root, path, items.size(), meta, FromXml( system.ReadFile( path ) ) ) );
+        FileSystem_ABC::T_Predicate op = boost::bind( AttachExtended< Exercise >, boost::ref( async ), _1, boost::cref( system ), boost::cref( root ), boost::ref( items ), meta );
+        system.Glob( root / "exercises", "exercise.xml", op );
     }
 
     const std::string briefing_;
@@ -634,12 +643,12 @@ Path Package::GetPath() const
 
 namespace
 {
-template< typename T >
-void FillItems( Async& async, const FileSystem_ABC& system, const Path& path, T& items, Metadata* meta )
+bool FillItems( Async& async, const FileSystem_ABC& system, const Path& path, Package::T_Items& items, Metadata* meta )
 {
     Model::Parse   ( async, system, path, items, meta );
     Terrain::Parse ( async, system, path, items, meta );
     Exercise::Parse( async, system, path, items, meta );
+    return true;
 }
 }
 
@@ -672,8 +681,10 @@ bool Package::Parse()
     items_.clear();
     Async async( pool_ );
     if( reference_ )
-        BOOST_FOREACH( const Path& path, system_.Walk( path_, false ) )
-            FillItems( async, system_, path, items_, meta.get() );
+    {
+        FileSystem_ABC::T_Predicate predicate = boost::bind( &FillItems, boost::ref( async ), boost::cref( system_ ), _1, boost::ref( items_ ), meta.get() );
+        system_.Walk( path_, false, predicate );
+    }
     else
         FillItems( async, system_, path_, items_, meta.get() );
     async.Join();

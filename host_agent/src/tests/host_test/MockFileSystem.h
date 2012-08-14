@@ -11,6 +11,7 @@
 #define MOCK_FILE_SYSTEM_H
 
 #include "runtime/FileSystem_ABC.h"
+#include <boost/foreach.hpp>
 
 namespace mocks
 {
@@ -27,14 +28,21 @@ namespace mocks
         MOCK_METHOD( Rename, 2 );
         MOCK_METHOD( WriteFile, 2 );
         MOCK_METHOD( ReadFile, 1 );
-        MOCK_METHOD( Glob, 2 );
-        MOCK_METHOD( Walk, 2 );
+        MOCK_METHOD( Glob, 3 );
+        MOCK_METHOD( Walk, 3 );
         MOCK_METHOD( Unpack, 2 );
         MOCK_METHOD( Pack, 1 );
         MOCK_METHOD( Checksum, 3 );
         MOCK_METHOD( MakeAnyPath, 1 );
         MOCK_METHOD( GetLastWrite, 1 );
         MOCK_METHOD( GetDirectorySize, 1 );
+
+        bool Apply( const T_Predicate& operand, const std::vector< boost::filesystem::path >& list )
+        {
+            BOOST_FOREACH( const boost::filesystem::path& it, list )
+                operand( it );
+            return true;
+        }
     };
 
     MOCK_BASE_CLASS( MockUnpack, runtime::Unpacker_ABC )

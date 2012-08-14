@@ -80,6 +80,7 @@ private:
     //! @name Private methods
     //@{
     void ReloadSession( const Path& path, T_Predicate predicate );
+    bool ReloadDirectory( runtime::Async& reload, const Path& dir, T_Predicate predicate );
     void Refresh();
     void RefreshSession( T_Session session );
     void RefreshSize();

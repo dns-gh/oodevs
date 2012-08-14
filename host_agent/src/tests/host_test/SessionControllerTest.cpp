@@ -136,7 +136,8 @@ namespace
 
         void Reload()
         {
-            MOCK_EXPECT( sub.system.Walk ).once().with( root / "sessions", false ).returns( boost::assign::list_of< Path >( "a" )( "b" ) );
+            MOCK_EXPECT( sub.system.Walk ).once().with( root / "sessions", false,
+                boost::bind( &MockFileSystem::Apply, &sub.system, _1, boost::assign::list_of< Path >( "a" )( "b" ) ) );
             MOCK_EXPECT( sub.system.IsFile ).once().with( "a/session.id" ).returns( true );
             MOCK_EXPECT( sub.system.IsFile ).once().with( "b/session.id" ).returns( true );
             active = AddSession( idActive, idNode, sessionActive, "a/session.id" );

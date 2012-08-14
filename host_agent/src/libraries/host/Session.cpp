@@ -783,13 +783,23 @@ void Session::ClearOutput( const Path& path )
     async_.Go( boost::bind( &FileSystem_ABC::Remove, &system_, output ) );
 }
 
+namespace
+{
+template< typename T >
+bool Attach( const FileSystem_ABC& system, const Path& path, T& items )
+{
+    if( system.IsFile( path / "data" ) )
+        items.push_back( runtime::Utf8Convert( path.filename() ) );
+    return true;
+}
+}
+
 // -----------------------------------------------------------------------------
 // Name: Session::ParseCheckpoints
 // Created: BAX 2012-08-08
 // -----------------------------------------------------------------------------
 void Session::ParseCheckpoints()
 {
-    BOOST_FOREACH( const Path& path, system_.Walk( GetOutput() / "checkpoints", false ) )
-        if( system_.IsFile( path / "data" ) )
-            checkpoints_.push_back( runtime::Utf8Convert( path.filename() ) );
+    system_.Walk( GetOutput() / "checkpoints", false, boost::bind( &Attach< T_Checkpoints >,
+                  boost::cref( system_ ), _1, boost::ref( checkpoints_ ) ) );
 }

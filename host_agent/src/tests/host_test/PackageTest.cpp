@@ -84,9 +84,9 @@ struct Fixture
     {
         const Path data = root / prefix;
         const Path file = data / name / suffix;
-        MOCK_EXPECT( system.Glob ).once().with( data, suffix.filename() ).returns( boost::assign::list_of( file ) );
+        MOCK_EXPECT( system.Glob ).once().with( data, suffix.filename(), boost::bind( &MockFileSystem::Apply, &system, _1, boost::assign::list_of( file ) ) );
         if( ref )
-            MOCK_EXPECT( system.Glob ).exactly( 2 ).with( boost::bind( &BeginWith, root, _1 ), mock::any ).returns( std::vector< Path >() );
+            MOCK_EXPECT( system.Glob ).exactly( 2 ).with( boost::bind( &BeginWith, root, _1 ), mock::any, mock::any );
         MOCK_EXPECT( system.GetLastWrite ).with( file ).returns( std::time_t() );
         MOCK_EXPECT( system.ReadFile ).with( file ).returns( contents );
         MOCK_EXPECT( system.ReadFile ).with( root / "metadata.tag" ).returns( "" );
@@ -160,7 +160,7 @@ struct Fixture
             return;
 
         AddExercise( dst, ref, GetItemRoot( root, ref ), "castle", "34567890", "ada", "avalon" );
-        MOCK_EXPECT( system.Walk ).once().with( root, false ).returns( GetItemRoots( dst ) );
+        MOCK_EXPECT( system.Walk ).once().with( root, false, boost::bind( &MockFileSystem::Apply, &system, _1, GetItemRoots( dst ) ) );
     }
 
     size_t CountItemType( const Tree& src, const std::string& type )

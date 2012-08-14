@@ -128,7 +128,8 @@ namespace
 
         void Reload()
         {
-            MOCK_EXPECT( sub.system.Walk ).once().with( root / "nodes", false ).returns( boost::assign::list_of< Path >( "a" )( "b" ) );
+            MOCK_EXPECT( sub.system.Walk ).once().with( root / "nodes", false,
+                boost::bind( &MockFileSystem::Apply, &sub.system, _1, boost::assign::list_of< Path >( "a" )( "b" ) ) );
             MOCK_EXPECT( sub.system.IsFile ).once().with( "a/node.id" ).returns( true );
             MOCK_EXPECT( sub.system.IsFile ).once().with( "b/node.id" ).returns( true );
             active = AddNode( idActive, nodeActive, "a/node.id" );

@@ -304,32 +304,28 @@ std::string FileSystem::ReadFile( const Path& path ) const
 // Name: FileSystem::Glob
 // Created: BAX 2012-03-21
 // -----------------------------------------------------------------------------
-std::vector< Path > FileSystem::Glob( const Path& path, const Path& name ) const
+void FileSystem::Glob( const Path& path, const Path& name, const T_Predicate& operand ) const
 {
-    std::vector< Path > paths;
     if( !IsDirectory( path ) )
-        return paths;
-    for( boost::filesystem::recursive_directory_iterator it( path ); it != boost::filesystem::recursive_directory_iterator(); ++it )
+        return;
+    for( boost::filesystem::recursive_directory_iterator it( path ), end; it != end; ++it )
     {
         if( !boost::filesystem::is_regular_file( it->status() ) )
             continue;
-        const Path path = it->path();
+        const Path& path = it->path();
         if( path.filename() == name )
-            paths.push_back( path );
+            operand( path );
     }
-    return paths;
 }
 
 namespace
 {
-template< typename T >
-std::vector< Path > Iterate( const Path& path )
+template< typename T, typename U >
+void Iterate( const Path& path, const U& operand )
 {
-    std::vector< Path > paths;
     if( boost::filesystem::is_directory( path ) )
-        for( T it( path); it != T(); ++it )
-            paths.push_back( *it );
-    return paths;
+        for( T it( path), end; it != end; ++it )
+            operand( it->path() );
 }
 }
 
@@ -337,12 +333,12 @@ std::vector< Path > Iterate( const Path& path )
 // Name: FileSystem::Walk
 // Created: BAX 2012-05-14
 // -----------------------------------------------------------------------------
-std::vector< Path > FileSystem::Walk( const Path& path, bool recurse ) const
+void FileSystem::Walk( const Path& path, bool recurse, const T_Predicate& operand ) const
 {
     if( recurse )
-        return Iterate< boost::filesystem::recursive_directory_iterator >( path );
+        Iterate< boost::filesystem::recursive_directory_iterator >( path, operand );
     else
-        return Iterate< boost::filesystem::directory_iterator >( path );
+        Iterate< boost::filesystem::directory_iterator >( path, operand );
 }
 
 namespace
