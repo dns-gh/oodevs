@@ -42,11 +42,16 @@ integration.stopBypassIt = function( object )
     object[myself] = object[myself] or {}
     if object[myself].actionBypassState == eActionObjetTerminee then
         meKnowledge:RC( eRC_FinTravaux )
+        object[myself].actionBypass = DEC__StopAction( object[myself].actionBypass )
+        object[myself].actionBypassState = nil
         return true
     else
+        object[myself].actionBypass = DEC__StopAction( object[myself].actionBypass )
+        object[myself].actionBypassState = nil
         DEC_Trace( "pause work bypass" )
         return false
     end
     object[myself].actionBypass = DEC__StopAction( object[myself].actionBypass )
+    object[myself].actionBypassState = nil
     return true
 end
