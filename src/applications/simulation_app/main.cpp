@@ -20,6 +20,7 @@
 #pragma warning( push )
 #pragma warning( disable: 4512 )
 #include <boost/program_options.hpp>
+#include <boost/optional.hpp>
 #pragma warning( pop )
 
 int __cdecl NoMoreMemoryHandler( std::size_t nSize )
@@ -53,13 +54,13 @@ void SetLowFragmentationHeapAlgorithm()
 namespace
 {
 typedef std::vector< std::string > T_Args;
-std::string GetOption( const T_Args& args, const std::string& name )
+boost::optional< std::string > GetOption( const T_Args& args, const std::string& name )
 {
     T_Args::const_iterator it = std::find( args.begin(), args.end(), name );
     if( it != args.end() )
         if( ++it != args.end() )
             return *it;
-    return std::string();
+    return boost::none;
 }
 }
 
@@ -70,9 +71,8 @@ std::string GetOption( const T_Args& args, const std::string& name )
 int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdShow )
 {
     const T_Args argv = boost::program_options:: split_winmain( lpCmdLine );
-    std::string debugRoot = GetOption( argv, "--debug-dir" );
-    if( debugRoot.empty() )
-        debugRoot = "./Debug";
+    boost::optional< std::string > opt = GetOption( argv, "--debug-dir" );
+    const std::string debugRoot = opt == boost::none ? "./Debug" : *opt;
 
     MT_CrashHandler::SetRootDirectory( debugRoot );
 
