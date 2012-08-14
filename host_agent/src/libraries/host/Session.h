@@ -184,9 +184,7 @@ private:
 private:
     //! @name Private const members
     //@{
-    const runtime::FileSystem_ABC& system_;
-    const runtime::Runtime_ABC& runtime_;
-    web::Client_ABC& client_;
+    const SessionDependencies deps_;
     const boost::shared_ptr< Node_ABC > node_;
     const Uuid id_;
     const SessionPaths paths_;

@@ -161,9 +161,7 @@ Session::Session( const SessionDependencies& deps,
                   const Uuid& id,
                   const Config& cfg,
                   const std::string& exercise )
-    : system_      ( deps.system )
-    , runtime_     ( deps.runtime )
-    , client_      ( deps.client )
+    : deps_        ( deps )
     , async_       ( deps.pool )
     , node_        ( node )
     , id_          ( id )
@@ -195,9 +193,7 @@ Session::Session( const SessionDependencies& deps,
                   boost::shared_ptr< Node_ABC > node,
                   const SessionPaths& paths,
                   const Tree& tree )
-    : system_      ( deps.system )
-    , runtime_     ( deps.runtime )
-    , client_      ( deps.client )
+    : deps_        ( deps )
     , async_       ( deps.pool )
     , node_        ( node )
     , id_          ( Get< Uuid >( tree, "id" ) )
@@ -205,7 +201,7 @@ Session::Session( const SessionDependencies& deps,
     , cfg_         ( ReadConfig( tree ) )
     , links_       ( node->LinkExercise( tree.get_child( "links" ) ) )
     , port_        ( AcquirePort( Get< int >( tree, "port" ), deps.ports ) )
-    , process_     ( AcquireProcess( tree, runtime_, port_->Get() ) )
+    , process_     ( AcquireProcess( tree, deps_.runtime, port_->Get() ) )
     , running_     ( process_ ? node->StartSession( boost::posix_time::not_a_date_time, true ) : Node_ABC::T_Token() )
     , status_      ( AcquireStatus( ConvertStatus( Get< std::string >( tree, "status" ) ), process_ ) )
     , polling_     ( false )
@@ -441,7 +437,7 @@ bool Session::StopProcess( boost::upgrade_lock< boost::shared_mutex >& lock )
     if( !copy || !copy->IsAlive() )
         return true;
 
-    client_.Get( "localhost", port_->Get() + WEB_CONTROL_PORT, "/stop", Client_ABC::T_Parameters() );
+    deps_.client.Get( "localhost", port_->Get() + WEB_CONTROL_PORT, "/stop", Client_ABC::T_Parameters() );
     const bool done = copy->Join( 15 * 1000 );
     if( !done )
         copy->Kill();
@@ -489,7 +485,7 @@ bool Session::ModifyStatus( boost::upgrade_lock< boost::shared_mutex >& lock, Se
     if( url.empty() )
         return false;
 
-    Client_ABC::T_Response response = client_.Get( "localhost", port_->Get() + WEB_CONTROL_PORT, url, Client_ABC::T_Parameters() );
+    Client_ABC::T_Response response = deps_.client.Get( "localhost", port_->Get() + WEB_CONTROL_PORT, url, Client_ABC::T_Parameters() );
     if( response->GetStatus() != 200 )
         return false;
 
@@ -551,8 +547,8 @@ bool Session::Start( const Path& apps, const std::string& checkpoint )
     const Path output = GetOutput();
     if( checkpoint.empty() )
         ClearOutput( output );
-    system_.MakePaths( output );
-    system_.WriteFile( output / "session.xml", GetConfiguration( cfg_, port_->Get() ) );
+    deps_.system.MakePaths( output );
+    deps_.system.WriteFile( output / "session.xml", GetConfiguration( cfg_, port_->Get() ) );
     std::vector< std::string > options = boost::assign::list_of
         ( MakeOption( "debug-dir", Utf8Convert( GetRoot() / "debug" ) ) )
         ( MakeOption( "exercises-dir", Utf8Convert( GetPath( "exercise" ) ) ) )
@@ -563,7 +559,7 @@ bool Session::Start( const Path& apps, const std::string& checkpoint )
         ( "--silent" );
     if( !checkpoint.empty() )
         options.push_back( MakeOption( "checkpoint", checkpoint ) );
-    T_Process ptr = runtime_.Start( Utf8Convert( apps / "simulation_app.exe" ),
+    T_Process ptr = deps_.runtime.Start( Utf8Convert( apps / "simulation_app.exe" ),
         options, Utf8Convert( apps ), Utf8Convert( GetRoot() / "session.log" ) );
     if( !ptr )
         return false;
@@ -632,8 +628,8 @@ bool Session::RefreshSize()
     lock.unlock();
 
     bool modified = false;
-    const size_t next = system_.GetDirectorySize( paths_.root )
-                      + system_.GetDirectorySize( GetOutput() );
+    const size_t next = deps_.system.GetDirectorySize( paths_.root )
+                      + deps_.system.GetDirectorySize( GetOutput() );
     lock.lock();
     modified = next != size_;
     size_ = next;
@@ -671,7 +667,7 @@ bool Session::Poll()
     runtime::Scoper unpoll( boost::bind( &ResetBool, boost::ref( lock ), boost::ref( polling_ ), false ) );
     lock.unlock();
 
-    Client_ABC::T_Response response = client_.Get( "localhost", port_->Get() + WEB_CONTROL_PORT, "/get", Client_ABC::T_Parameters() );
+    Client_ABC::T_Response response = deps_.client.Get( "localhost", port_->Get() + WEB_CONTROL_PORT, "/get", Client_ABC::T_Parameters() );
     if( response->GetStatus() != 200 )
         return false;
 
@@ -705,10 +701,10 @@ void Session::Remove()
 {
     boost::upgrade_lock< boost::shared_mutex > lock( access_ );
     ModifyStatus( lock, STATUS_STOPPED );
-    system_.Remove( GetOutput() );
+    deps_.system.Remove( GetOutput() );
     node_->UnlinkExercise( links_ );
     node_->RemoveSession( id_ );
-    system_.Remove( GetRoot() );
+    deps_.system.Remove( GetRoot() );
 }
 
 // -----------------------------------------------------------------------------
@@ -758,7 +754,7 @@ bool Session::Restore()
 bool Session::Download( std::ostream& dst ) const
 {
     boost::shared_lock< boost::shared_mutex > lock( access_ );
-    FileSystem_ABC::T_Packer packer = system_.Pack( dst );
+    FileSystem_ABC::T_Packer packer = deps_.system.Pack( dst );
     packer->Pack( paths_.root );
     packer->Pack( GetOutput() );
     return true;
@@ -771,11 +767,11 @@ bool Session::Download( std::ostream& dst ) const
 void Session::ClearOutput( const Path& path )
 {
     checkpoints_.clear();
-    if( !system_.IsDirectory( path ) )
+    if( !deps_.system.IsDirectory( path ) )
         return;
-    const Path output = system_.MakeAnyPath( paths_.trash );
-    system_.Rename( path, output / "_" );
-    async_.Go( boost::bind( &FileSystem_ABC::Remove, &system_, output ) );
+    const Path output = deps_.system.MakeAnyPath( paths_.trash );
+    deps_.system.Rename( path, output / "_" );
+    async_.Go( boost::bind( &FileSystem_ABC::Remove, &deps_.system, output ) );
 }
 
 namespace
@@ -795,6 +791,6 @@ bool Attach( const FileSystem_ABC& system, const Path& path, T& items )
 // -----------------------------------------------------------------------------
 void Session::ParseCheckpoints()
 {
-    system_.Walk( GetOutput() / "checkpoints", false, boost::bind( &Attach< T_Checkpoints >,
-                  boost::cref( system_ ), _1, boost::ref( checkpoints_ ) ) );
+    deps_.system.Walk( GetOutput() / "checkpoints", false, boost::bind( &Attach< T_Checkpoints >,
+                  boost::cref( deps_.system ), _1, boost::ref( checkpoints_ ) ) );
 }
