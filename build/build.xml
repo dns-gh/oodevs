@@ -1741,6 +1741,10 @@
                 <include name="data/terrains/Angers_x9_en/**"/>
                 <include name="data/terrains/Sw_terrain2/**"/>
                 <include name="data/terrains/TerrainTest/**"/>
+                <include name="data/models/ada/decisional/bms/**"/>
+                <include name="data/models/ada/decisional/dia5/**"/>
+                <exclude name="data/models/ada/decisional/dia5/models/security_test/**"/>
+                <include name="data/models/ada/decisional/decisional.xml"/>
             </zipfileset>
             <zipfileset dir="${data.dir}/exercises/worldwide" prefix="exercises">
                 <include name="Egypt/**"/>
