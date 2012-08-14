@@ -182,8 +182,8 @@ func (it *Server) Register(q url.Values) error {
 func (it *Server) Unregister(q url.Values) {
 	prefix := it.GetPrefix(q)
 	it.access.Lock()
-	defer it.access.Unlock()
 	delete(it.targets, prefix)
+	it.access.Unlock()
 	log.Println("removed proxy", prefix)
 }
 
