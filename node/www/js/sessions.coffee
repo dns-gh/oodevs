@@ -179,15 +179,15 @@ class SessionItemView extends Backbone.View
         @render()
 
     events:
-        "click .delete" : "delete"
-        "click .stop" : "stop"
-        "click .play" : "play"
-        "click .pause" : "pause"
-        "click .edit" : "edit"
-        "click .clone" : "clone"
-        "click .archive" : "archive"
-        "click .restore" : "restore"
+        "click .archive"  : "archive"
+        "click .clone"    : "clone"
+        "click .delete"   : "delete"
         "click .download" : "download"
+        "click .edit"     : "edit"
+        "click .pause"    : "pause"
+        "click .play"     : "play"
+        "click .restore"  : "restore"
+        "click .stop"     : "stop"
 
     is_search: =>
         if contains @model.get("name"), @search

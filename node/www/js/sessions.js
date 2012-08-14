@@ -749,15 +749,15 @@
     };
 
     SessionItemView.prototype.events = {
-      "click .delete": "delete",
-      "click .stop": "stop",
-      "click .play": "play",
-      "click .pause": "pause",
-      "click .edit": "edit",
-      "click .clone": "clone",
       "click .archive": "archive",
+      "click .clone": "clone",
+      "click .delete": "delete",
+      "click .download": "download",
+      "click .edit": "edit",
+      "click .pause": "pause",
+      "click .play": "play",
       "click .restore": "restore",
-      "click .download": "download"
+      "click .stop": "stop"
     };
 
     SessionItemView.prototype.is_search = function() {
