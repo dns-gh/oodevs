@@ -159,9 +159,16 @@ public:
 
     T_ObjectPtr Detach( const Uuid& id )
     {
+        return DetachUnless( id, T_Predicate() );
+    }
+
+    T_ObjectPtr DetachUnless( const Uuid& id, const T_Predicate& predicate )
+    {
         boost::upgrade_lock< boost::shared_mutex > lock( access_ );
         typename T_Objects::iterator it = objects_.find( id );
         if( it == objects_.end() )
+            return T_ObjectPtr();
+        if( predicate && predicate( *it->second ) )
             return T_ObjectPtr();
         T_ObjectPtr ptr = it->second;
         boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );
