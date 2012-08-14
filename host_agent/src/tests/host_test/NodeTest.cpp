@@ -9,6 +9,7 @@
 
 #include "host_test.h"
 
+#include "TreeHelpers.h"
 #include "host/Node.h"
 #include "runtime/PropertyTree.h"
 
@@ -118,74 +119,55 @@ BOOST_FIXTURE_TEST_CASE( node_starts_and_stops, Fixture )
     StopNode( *node, process );
 }
 
-namespace
-{
-void Contains( const Tree& src, const std::string& key, const std::string& value )
-{
-    const boost::optional< std::string > opt = src.get_optional< std::string >( key );
-    BOOST_REQUIRE( opt != boost::none );
-    BOOST_CHECK_EQUAL( *opt, value );
-}
-
-template< typename T >
-void Check( const T& list, const Tree& src )
-{
-    typedef typename T::value_type Value;
-    BOOST_FOREACH( const Value& value, list )
-        value( src );
-}
-}
-
 BOOST_FIXTURE_TEST_CASE( node_converts, Fixture )
 {
     NodePtr node = MakeNode();
-    typedef std::vector< boost::function< void( const Tree& src ) > > T_Constraints;
 
     T_Constraints base;
-    base.push_back( boost::bind( &Contains, _1, "id", "12345678-90ab-cdef-9876-543210123456" ) );
-    base.push_back( boost::bind( &Contains, _1, "ident", "myName" ) );
-    base.push_back( boost::bind( &Contains, _1, "port", "1337" ) );
-    base.push_back( boost::bind( &Contains, _1, "name", "myName" ) );
-    base.push_back( boost::bind( &Contains, _1, "sessions.max_play", "0" ) );
-    base.push_back( boost::bind( &Contains, _1, "sessions.max_parallel", "0" ) );
-    base.push_back( boost::bind( &Contains, _1, "sessions.reset", "true" ) );
+    base.push_back( boost::bind( &EqualValue, _1, "id", "12345678-90ab-cdef-9876-543210123456" ) );
+    base.push_back( boost::bind( &EqualValue, _1, "ident", "myName" ) );
+    base.push_back( boost::bind( &EqualValue, _1, "port", "1337" ) );
+    base.push_back( boost::bind( &EqualValue, _1, "name", "myName" ) );
+    base.push_back( boost::bind( &EqualValue, _1, "sessions.max_play", "0" ) );
+    base.push_back( boost::bind( &EqualValue, _1, "sessions.max_parallel", "0" ) );
+    base.push_back( boost::bind( &EqualValue, _1, "sessions.reset", "true" ) );
 
     T_Constraints props;
-    props.push_back( boost::bind( &Contains, _1, "num_exercises", "0" ) );
-    props.push_back( boost::bind( &Contains, _1, "sessions.num_play", "0" ) );
-    props.push_back( boost::bind( &Contains, _1, "sessions.num_parallel", "0" ) );
-    props.push_back( boost::bind( &Contains, _1, "data_size", "0" ) );
+    props.push_back( boost::bind( &EqualValue, _1, "num_exercises", "0" ) );
+    props.push_back( boost::bind( &EqualValue, _1, "sessions.num_play", "0" ) );
+    props.push_back( boost::bind( &EqualValue, _1, "sessions.num_parallel", "0" ) );
+    props.push_back( boost::bind( &EqualValue, _1, "data_size", "0" ) );
 
     Tree src = node->GetProperties();
     Check( base, src );
     Check( props, src );
-    Contains( src, "status", "stopped" );
+    EqualValue( src, "status", "stopped" );
     src = node->Save();
     Check( base, src );
-    Contains( src, "sessions.num_play", "0" );
-    Contains( src, "stopped", "false" );
+    EqualValue( src, "sessions.num_play", "0" );
+    EqualValue( src, "stopped", "false" );
 
     ProcessPtr process = StartNode( *node, processPid, processName );
     src = node->GetProperties();
     Check( base, src );
     Check( props, src );
-    Contains( src, "status", "running" );
+    EqualValue( src, "status", "running" );
     src = node->Save();
     Check( base, src );
-    Contains( src, "sessions.num_play", "0" );
-    Contains( src, "stopped", "false" );
-    Contains( src, "process.pid", "7331" );
-    Contains( src, "process.name", "myProcessName" );
+    EqualValue( src, "sessions.num_play", "0" );
+    EqualValue( src, "stopped", "false" );
+    EqualValue( src, "process.pid", "7331" );
+    EqualValue( src, "process.name", "myProcessName" );
 
     StopNode( *node, process );
     src = node->GetProperties();
     Check( base, src );
     Check( props, src );
-    Contains( src, "status", "stopped" );
+    EqualValue( src, "status", "stopped" );
     src = node->Save();
     Check( base, src );
-    Contains( src, "sessions.num_play", "0" );
-    Contains( src, "stopped", "true" );
+    EqualValue( src, "sessions.num_play", "0" );
+    EqualValue( src, "stopped", "true" );
 }
 
 BOOST_FIXTURE_TEST_CASE( node_reloads, Fixture )
