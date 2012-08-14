@@ -19,9 +19,29 @@
 #include <boost/program_options.hpp>
 #pragma warning( pop )
 #include <windows.h>
+#include <boost/optional.hpp>
+
+namespace
+{
+typedef std::vector< std::string > T_Args;
+boost::optional< std::string > GetOption( const T_Args& args, const std::string& name )
+{
+    T_Args::const_iterator it = std::find( args.begin(), args.end(), name );
+    if( it == args.end() )
+        if( ++it != args.end() )
+            return *it;
+    return boost::none;
+}
+}
 
 int RunReplayer(  HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdShow )
 {
+    const T_Args argv = boost::program_options:: split_winmain( lpCmdLine );
+    boost::optional< std::string > opt = GetOption( argv, "--debug-dir" );
+    const std::string debugRoot = opt == boost::none ? "./Debug" : *opt;
+
+    MT_CrashHandler::SetRootDirectory( debugRoot );
+
     int nResult = EXIT_SUCCESS;
     MT_ConsoleLogger        consoleLogger;
     MT_LOG_REGISTER_LOGGER( consoleLogger );
@@ -29,7 +49,6 @@ int RunReplayer(  HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, 
     try
     {
         // Silent mode
-        std::vector< std::string > argv = boost::program_options:: split_winmain( lpCmdLine );
         silentMode = ( std::find( argv.begin(), argv.end(), "--silent" ) != argv.end() );
 
 #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
