@@ -83,10 +83,13 @@ func NewProxyServer() *Server {
 func (it *Server) FindProxy(url string) *ProxyContext {
 	var rpy *ProxyContext
 	max := 0
+	exact := GetPrefix(url)
 	it.access.RLock()
 	defer it.access.RUnlock()
 	for k, v := range it.targets {
-		if strings.HasPrefix(url, k) {
+		if exact == k {
+			return v
+		} else if strings.HasPrefix(url, k) {
 			if c := strings.Count(k, "/"); c > max {
 				max = c
 				rpy = v
@@ -121,6 +124,11 @@ func (it *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	ctx := it.FindProxy(r.URL.Path)
 	if ctx == nil {
 		http.NotFound(w, r)
+		return
+	}
+	// url path is a target prefix without trailing slash
+	if len(r.URL.Path) < len(ctx.prefix) {
+		http.Redirect(w, r, ctx.prefix, http.StatusMovedPermanently)
 		return
 	}
 
