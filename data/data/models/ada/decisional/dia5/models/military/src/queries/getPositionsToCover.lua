@@ -97,6 +97,15 @@ queryImplementation "getPositionsToCover"
                 -- Add unit position 
                 local unitPosition = meKnowledge:getPosition()
                 AddPoint( unitPosition, result, newResult )
+
+                if DEC_HasMission( meKnowledge.source ) then
+                    local mission = DEC_GetRawMission( meKnowledge.source )
+                    local dirDanger = DEC_GetDirectionDanger( mission )
+ 
+                    local positionSurete = DEC_Geometrie_PositionTranslateDir( meKnowledge:getPosition(), dirDanger, - distanceToFindOpenFieldPositions )
+
+                    AddPoint( positionSurete, result, newResult )
+                end
             end
         end
        
