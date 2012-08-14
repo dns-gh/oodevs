@@ -400,6 +400,15 @@ void Agent::DownloadSession( const Uuid& node, const Uuid& id, std::ostream& dst
 }
 
 // -----------------------------------------------------------------------------
+// Name: Agent::ReplaySession
+// Created: BAX 2012-08-10
+// -----------------------------------------------------------------------------
+Tree Agent::ReplaySession  ( const Uuid& node, const Uuid& id ) const
+{
+    return Dispatch( sessions_, boost::bind( &SessionController_ABC::Replay, _1, node, id ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Agent::ListExercises
 // Created: BAX 2012-03-27
 // -----------------------------------------------------------------------------

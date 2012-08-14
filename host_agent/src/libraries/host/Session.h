@@ -151,6 +151,7 @@ public:
     virtual bool Archive();
     virtual bool Restore();
     virtual bool Download( std::ostream& dst ) const;
+    virtual bool Replay();
     //@}
 
     //! @name Typedef helpers

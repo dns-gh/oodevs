@@ -106,6 +106,7 @@ private:
     void ArchiveSession ( Reply_ABC& reply, const Request_ABC& request );
     void RestoreSession ( Reply_ABC& reply, const Request_ABC& request );
     void DownloadSession( Reply_ABC& reply, const Request_ABC& request );
+    void ReplaySession  ( Reply_ABC& reply, const Request_ABC& request );
     //@}
 
     //! @name Exercise Methods

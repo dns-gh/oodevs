@@ -74,6 +74,7 @@ public:
     virtual T_Session   Archive ( const Uuid& node, const Uuid& id ) const;
     virtual T_Session   Restore ( const Uuid& node, const Uuid& id ) const;
     virtual void        Download( const Uuid& node, const Uuid& id, std::ostream& dst ) const;
+    virtual T_Session   Replay  ( const Uuid& node, const Uuid& id ) const;
     //@}
 
 private:

@@ -331,3 +331,12 @@ void SessionController::Download( const Uuid& node, const Uuid& id, std::ostream
 {
     Dispatch( node, id, boost::bind( &Session_ABC::Download, _1, boost::ref( dst ) ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: SessionController::Replay
+// Created: BAX 2012-08-10
+// -----------------------------------------------------------------------------
+SessionController::T_Session SessionController::Replay( const Uuid& node, const Uuid& id ) const
+{
+    return Dispatch( node, id, boost::bind( &Session_ABC::Replay, _1 ) );
+}

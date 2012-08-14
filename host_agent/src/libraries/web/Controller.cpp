@@ -272,6 +272,7 @@ void Controller::DoGet( Reply_ABC& rpy, Request_ABC& request )
         if( uri == "/archive_session" )    return ArchiveSession ( rpy, request );
         if( uri == "/restore_session" )    return RestoreSession ( rpy, request );
         if( uri == "/download_session" )   return DownloadSession( rpy, request );
+        if( uri == "/replay_session" )     return ReplaySession  ( rpy, request );
         // exercises
         if( uri == "/list_exercises")      return ListExercises ( rpy, request );
         if( uri == "/count_exercises" )    return CountExercises( rpy, request );
@@ -721,6 +722,16 @@ void Controller::DownloadSession( Reply_ABC& rpy, const Request_ABC& request )
     boost::iostreams::stream< Sink > output( rpy );
     agent_.DownloadSession( node, GetId( request ), output );
     output.flush();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controller::ReplaySession
+// Created: BAX 2012-08-10
+// -----------------------------------------------------------------------------
+void Controller::ReplaySession( Reply_ABC& rpy, const Request_ABC& request )
+{
+    const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
+    WriteHttpReply( rpy, agent_.ReplaySession( node, GetId( request ) ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -98,6 +98,7 @@ public:
     virtual Tree                ArchiveSession ( const Uuid& node, const Uuid& id ) const;
     virtual Tree                RestoreSession ( const Uuid& node, const Uuid& id ) const;
     virtual void                DownloadSession( const Uuid& node, const Uuid& id, std::ostream& dst ) const;
+    virtual Tree                ReplaySession  ( const Uuid& node, const Uuid& id ) const;
     //@}
 
     //! @name Exercise Methods

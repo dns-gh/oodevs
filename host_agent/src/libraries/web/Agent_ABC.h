@@ -103,6 +103,7 @@ struct Agent_ABC : public boost::noncopyable
     virtual Tree                ArchiveSession ( const Uuid& node, const Uuid& id ) const = 0;
     virtual Tree                RestoreSession ( const Uuid& node, const Uuid& id ) const = 0;
     virtual void                DownloadSession( const Uuid& node, const Uuid& id, std::ostream& dst ) const = 0;
+    virtual Tree                ReplaySession  ( const Uuid& node, const Uuid& id ) const = 0;
     //@}
 
     //! @name Exercise Methods
