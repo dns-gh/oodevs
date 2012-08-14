@@ -19,6 +19,7 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/uuid/string_generator.hpp>
+#include <boost/uuid/nil_generator.hpp>
 #include <boost/uuid/uuid_io.hpp>
 #include <boost/uuid/uuid_serialize.hpp>
 
@@ -177,6 +178,7 @@ BOOST_FIXTURE_TEST_CASE( session_controller_deletes, Fixture )
 
     MOCK_RESET( active->Stop );
     MOCK_EXPECT( active->Remove ).once();
+    MOCK_EXPECT( idle->DetachReplay ).once().with( mock::same( *active ) );
     SessionController::T_Session session = control.Delete( idNode, idActive );
     BOOST_CHECK_EQUAL( session->GetId(), idActive );
     BOOST_CHECK_EQUAL( control.Count(), size_t( 1 ) );

@@ -29,6 +29,8 @@ namespace mocks
             MOCK_EXPECT( GetName ).returns( tree.get< std::string >( "name" ) );
             MOCK_EXPECT( GetPort ).returns( tree.get< int >( "port" ) );
             MOCK_EXPECT( Save ).returns( tree );
+            MOCK_EXPECT( IsReplay ).returns( false );
+            MOCK_EXPECT( HasReplays ).returns( false );
         }
         MOCK_METHOD( GetId, 0 );
         MOCK_METHOD( GetRoot, 0 );
@@ -50,12 +52,17 @@ namespace mocks
         MOCK_METHOD( Restore, 0 );
         MOCK_METHOD( Download, 1 );
         MOCK_METHOD( Replay, 0 );
+        MOCK_METHOD( IsReplay, 0 );
+        MOCK_METHOD( GetReplayId, 0 );
+        MOCK_METHOD( HasReplays, 0 );
+        MOCK_METHOD( AttachReplay, 1 );
+        MOCK_METHOD( DetachReplay, 1 );
     };
 
     MOCK_BASE_CLASS( MockSessionFactory, host::SessionFactory_ABC )
     {
-        MOCK_METHOD_EXT( Make, 2, host::SessionFactory_ABC::Ptr( const host::Path& tag,  const host::Path& trash ), Make2 );
-        MOCK_METHOD_EXT( Make, 5, host::SessionFactory_ABC::Ptr( const host::Path& root, const host::Path& trash,
+        MOCK_METHOD_EXT( Make, 2, host::Session_ABC::T_Ptr( const host::Path& tag,  const host::Path& trash ), Make2 );
+        MOCK_METHOD_EXT( Make, 5, host::Session_ABC::T_Ptr( const host::Path& root, const host::Path& trash,
                          const host::Uuid& node, const web::session::Config& cfg, const std::string& exercise ), Make5 );
     };
 };

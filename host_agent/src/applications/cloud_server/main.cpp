@@ -40,6 +40,7 @@
 #include <boost/make_shared.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/uuid/string_generator.hpp>
+#include <boost/uuid/nil_generator.hpp>
 
 #include <sqlite/sqlite3.h>
 
@@ -248,16 +249,16 @@ struct SessionFactory : public SessionFactory_ABC
         // NOTHING
     }
 
-    Ptr Make( const Path& root, const Path& trash, const Uuid& id, const web::session::Config& cfg, const std::string& exercise ) const
+    Session_ABC::T_Ptr Make( const Path& root, const Path& trash, const Uuid& id, const web::session::Config& cfg, const std::string& exercise ) const
     {
         NodeController_ABC::T_Node node = nodes.Get( id );
         if( !node )
-            return Ptr();
+            return Session_ABC::T_Ptr();
         SessionPaths paths( root, trash );
-        return boost::make_shared< Session >( boost::cref( deps ), node, paths, boost::cref( cfg ), exercise );
+        return boost::make_shared< Session >( boost::cref( deps ), node, paths, boost::cref( cfg ), exercise, boost::uuids::nil_uuid() );
     }
 
-    Ptr Make( const Path& tag, const Path& trash ) const
+    Session_ABC::T_Ptr Make( const Path& tag, const Path& trash ) const
     {
         const Tree tree = FromJson( deps.system.ReadFile( tag ) );
         const boost::optional< std::string > id = tree.get_optional< std::string >( "node" );

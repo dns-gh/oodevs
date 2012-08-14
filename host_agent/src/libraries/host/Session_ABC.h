@@ -66,23 +66,33 @@ struct Session_ABC : public boost::noncopyable
     virtual std::string GetName() const = 0;
     virtual int GetPort() const = 0;
     virtual Tree GetProperties() const = 0;
+    virtual bool IsReplay() const = 0;
+    virtual Uuid GetReplayId() const = 0;
+    virtual bool HasReplays() const = 0;
+    //@}
+
+    //! @name Typedef helpers
+    //@{
+    typedef boost::shared_ptr< Session_ABC > T_Ptr;
     //@}
 
     //! @name Public methods
     //@{
-    virtual Tree Save() const = 0;
-    virtual bool Start( const Path& apps, const std::string& checkpoint ) = 0;
-    virtual bool Stop() = 0;
-    virtual bool Refresh() = 0;
-    virtual bool RefreshSize() = 0;
-    virtual bool Poll() = 0;
-    virtual bool Pause() = 0;
-    virtual void Remove() = 0;
-    virtual bool Update( const Tree& cfg ) = 0;
-    virtual bool Archive() = 0;
-    virtual bool Restore() = 0;
-    virtual bool Download( std::ostream& dst ) const = 0;
-    virtual bool Replay() = 0;
+    virtual Tree  Save() const = 0;
+    virtual bool  Start( const Path& apps, const std::string& checkpoint ) = 0;
+    virtual bool  Stop() = 0;
+    virtual bool  Refresh() = 0;
+    virtual bool  RefreshSize() = 0;
+    virtual bool  Poll() = 0;
+    virtual bool  Pause() = 0;
+    virtual void  Remove() = 0;
+    virtual bool  Update( const Tree& cfg ) = 0;
+    virtual bool  Archive() = 0;
+    virtual bool  Restore() = 0;
+    virtual bool  Download( std::ostream& dst ) const = 0;
+    virtual T_Ptr Replay() = 0;
+    virtual void  AttachReplay( const Session_ABC& replay ) = 0;
+    virtual void  DetachReplay( const Session_ABC& replay ) = 0;
     //@}
 };
 
@@ -100,16 +110,11 @@ struct SessionFactory_ABC : public boost::noncopyable
     virtual ~SessionFactory_ABC() {}
     //@}
 
-    //! @name Typedef helpers
-    //@{
-    typedef boost::shared_ptr< Session_ABC > Ptr;
-    //@}
-
     //! @name Methods
     //@{
-    virtual Ptr Make( const Path& root, const Path& trash, const Uuid& node,
-                      const web::session::Config& cfg, const std::string& exercise ) const = 0;
-    virtual Ptr Make( const Path& tag, const Path& trash ) const = 0;
+    virtual Session_ABC::T_Ptr Make( const Path& root, const Path& trash, const Uuid& node,
+                                     const web::session::Config& cfg, const std::string& exercise ) const = 0;
+    virtual Session_ABC::T_Ptr Make( const Path& tag, const Path& trash ) const = 0;
     //@}
 };
 }

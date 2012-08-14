@@ -161,6 +161,19 @@ bool SessionController::ReloadDirectory( runtime::Async& reload, const Path& dir
 }
 
 // -----------------------------------------------------------------------------
+// Name: SessionController::AttachReplay
+// Created: BAX 2012-08-13
+// -----------------------------------------------------------------------------
+void SessionController::ReloadReplay( Session_ABC& session )
+{
+    if( !session.IsReplay() )
+        return;
+    T_Session root = sessions_.Get( session.GetReplayId() );
+    if( root )
+        root->AttachReplay( session );
+}
+
+// -----------------------------------------------------------------------------
 // Name: SessionController::Reload
 // Created: BAX 2012-03-21
 // -----------------------------------------------------------------------------
@@ -168,6 +181,8 @@ void SessionController::Reload( T_Predicate predicate )
 {
     Async reload( async_.GetPool() );
     system_.Walk( root_, false, boost::bind( &SessionController::ReloadDirectory, this, boost::ref( reload ), _1, predicate ) );
+    reload.Join();
+    sessions_.ForeachRef( boost::bind( &SessionController::ReloadReplay, this, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -237,19 +252,30 @@ void SessionController::Save( const Session_ABC& session ) const
     async_.Post( boost::bind( &FileSystem_ABC::WriteFile, &system_, path, ToJson( session.Save() ) ) );
 }
 
+namespace
+{
+bool IsInvalidDelete( const Uuid& node, const Session_ABC& session )
+{
+    if( !node.is_nil() && node != session.GetNode() )
+        return true;
+    if( session.HasReplays() )
+        return true;
+    return false;
+}
+}
+
 // -----------------------------------------------------------------------------
 // Name: SessionController::Delete
 // Created: BAX 2012-04-20
 // -----------------------------------------------------------------------------
 SessionController::T_Session SessionController::Delete( const Uuid& node, const Uuid& id )
 {
-    boost::shared_ptr< Session_ABC > session = sessions_.Detach( id );
+    boost::shared_ptr< Session_ABC > session = sessions_.DetachUnless( id, boost::bind( &IsInvalidDelete, node, _1 ) );
     if( !session )
         return session;
-    if( !node.is_nil() && node != session->GetNode() )
-        return T_Session();
     LOG_INFO( log_ ) << "[session] Removed " << session->GetId() << " " << session->GetName() << " :" << session->GetPort();
     async_.Go( boost::bind( &Session_ABC::Remove, session ) );
+    sessions_.Foreach( boost::bind( &Session_ABC::DetachReplay, _1, boost::ref( *session ) ) );
     return session;
 }
 
@@ -332,11 +358,27 @@ void SessionController::Download( const Uuid& node, const Uuid& id, std::ostream
     Dispatch( node, id, boost::bind( &Session_ABC::Download, _1, boost::ref( dst ) ) );
 }
 
+namespace
+{
+bool Replay( Session_ABC::T_Ptr& next, Session_ABC::T_Ptr current )
+{
+    next = current->Replay();
+    return true;
+}
+}
+
 // -----------------------------------------------------------------------------
 // Name: SessionController::Replay
 // Created: BAX 2012-08-10
 // -----------------------------------------------------------------------------
-SessionController::T_Session SessionController::Replay( const Uuid& node, const Uuid& id ) const
+SessionController::T_Session SessionController::Replay( const Uuid& node, const Uuid& id )
 {
-    return Dispatch( node, id, boost::bind( &Session_ABC::Replay, _1 ) );
+    T_Session next;
+    Dispatch( node, id, boost::bind( &::Replay, boost::ref( next ), _1 ) );
+    if( !next )
+        return next;
+    sessions_.Attach( next );
+    Create( *next );
+    Apply( next, boost::bind( &Session_ABC::Start, _1, boost::cref( apps_ ), std::string() ) );
+    return next;
 }

@@ -9,6 +9,7 @@
 
 #include "host_test.h"
 
+#include "TreeHelpers.h"
 #include "host/Session.h"
 #include "runtime/Event.h"
 #include "runtime/Pool.h"
@@ -117,7 +118,7 @@ namespace
             cfg.name = defaultName;
             SessionPaths paths( "a", "b" );
             SessionDependencies deps( system, runtime, uuids, client, pool, ports );
-            return boost::make_shared< Session >( deps, node, paths, cfg, defaultExercise );
+            return boost::make_shared< Session >( deps, node, paths, cfg, defaultExercise, boost::uuids::nil_uuid() );
         }
 
         SessionPtr ReloadSession( const Tree& tree, ProcessPtr process = ProcessPtr() )
@@ -198,50 +199,69 @@ std::string Filter( Tree& tree )
 BOOST_FIXTURE_TEST_CASE( session_converts, Fixture )
 {
     SessionPtr session = MakeSession();
-    const std::string base = "{"
-        "\"id\":\"12345678-90ab-cdef-9876-543210123456\","
-        "\"node\":\"10123456-cdef-9876-90ab-543212345678\","
-        "\"port\":\"1337\","
-        "\"name\":\"myName\",";
-    const std::string stats = ",\"start_time\":\"\",\"current_time\":\"\",\"clients\":\"\"";
-    BOOST_CHECK_EQUAL( Filter( session->GetProperties() ), base +
-        "\"status\":\"stopped\","
-        "\"first_time\":\"true\","
-        + items + stats +
-        "}" );
-    BOOST_CHECK_EQUAL( Filter( session->Save() ), base +
-        "\"status\":\"stopped\","
-        "\"first_time\":\"true\","
-        "\"links\":" + links + ","
-        "\"size\":\"0\""
-        "}" );
+
+    T_Constraints base;
+    base.push_back( boost::bind( &EqualValue, _1, "id", "12345678-90ab-cdef-9876-543210123456" ) );
+    base.push_back( boost::bind( &EqualValue, _1, "node", "10123456-cdef-9876-90ab-543212345678" ) );
+    base.push_back( boost::bind( &EqualValue, _1, "port", "1337" ) );
+    base.push_back( boost::bind( &EqualValue, _1, "name", "myName" ) );
+
+    T_Constraints stats;
+    stats.push_back( boost::bind( &EqualValue, _1, "start_time", "" ) );
+    stats.push_back( boost::bind( &EqualValue, _1, "current_time", "" ) );
+    stats.push_back( boost::bind( &EqualValue, _1, "clients", "" ) );
+
+    T_Constraints items;
+    items.push_back( boost::bind( &EqualTree, _1, "model",    "{\"name\":\"a\",\"checksum\":\"c\"}" ) );
+    items.push_back( boost::bind( &EqualTree, _1, "terrain",  "{\"name\":\"a\",\"checksum\":\"c\"}" ) );
+    items.push_back( boost::bind( &EqualTree, _1, "exercise", "{\"name\":\"a\",\"checksum\":\"c\"}" ) );
+
+    Tree src = session->GetProperties();
+    Check( base, src );
+    Check( stats, src );
+    Check( items, src );
+    EqualValue( src, "status", "stopped" );
+    EqualValue( src, "first_time", "true" );
+
+    src = session->Save();
+    Check( base, src );
+    EqualValue( src, "status", "stopped" );
+    EqualValue( src, "first_time", "true" );
+    EqualTree ( src, "links", links );
+    EqualValue( src, "size", "0" );
+
     ProcessPtr process = StartSession( *session, processPid, processName );
-    BOOST_CHECK_EQUAL( Filter( session->GetProperties() ), base +
-        "\"status\":\"playing\","
-        "\"first_time\":\"false\","
-        + items + stats +
-        "}" );
-    BOOST_CHECK_EQUAL( Filter( session->Save() ), base +
-        "\"status\":\"playing\","
-        "\"first_time\":\"false\","
-        "\"links\":" + links + ","
-        "\"size\":\"0\","
-        "\"process\":{"
-            "\"pid\":\"7331\","
-            "\"name\":\"myProcessName\""
-        "}}" );
+
+    src = session->GetProperties();
+    Check( base, src );
+    Check( stats, src );
+    Check( items, src );
+    EqualValue( src, "status", "playing" );
+    EqualValue( src, "first_time", "false" );
+
+    src = session->Save();
+    Check( base, src );
+    EqualValue( src, "status", "playing" );
+    EqualValue( src, "first_time", "false" );
+    EqualTree ( src, "links", links );
+    EqualValue( src, "size", "0" );
+    EqualTree ( src, "process", "{\"pid\":\"7331\",""\"name\":\"myProcessName\"}" );
+
     StopSession( *session, process );
-    BOOST_CHECK_EQUAL( Filter( session->GetProperties() ), base +
-        "\"status\":\"stopped\","
-        "\"first_time\":\"false\","
-        + items + stats +
-        "}" );
-    BOOST_CHECK_EQUAL( Filter( session->Save() ), base +
-        "\"status\":\"stopped\","
-        "\"first_time\":\"false\","
-        "\"links\":" + links + ","
-        "\"size\":\"0\""
-        "}" );
+
+    src = session->GetProperties();
+    Check( base, src );
+    Check( stats, src );
+    Check( items, src );
+    EqualValue( src, "status", "stopped" );
+    EqualValue( src, "first_time", "false" );
+
+    src = session->Save();
+    Check( base, src );
+    EqualValue( src, "status", "stopped" );
+    EqualValue( src, "first_time", "false" );
+    EqualTree ( src, "links", links );
+    EqualValue( src, "size", "0" );
 }
 
 BOOST_FIXTURE_TEST_CASE( session_reloads, Fixture )

@@ -160,7 +160,8 @@ Session::Session( const SessionDependencies& deps,
                   boost::shared_ptr< Node_ABC > node,
                   const SessionPaths& paths,
                   const Config& cfg,
-                  const std::string& exercise )
+                  const std::string& exercise,
+                  const Uuid& replay )
     : deps_        ( deps )
     , async_       ( deps.pool )
     , node_        ( node )
@@ -169,6 +170,7 @@ Session::Session( const SessionDependencies& deps,
     , cfg_         ( cfg )
     , links_       ( node->LinkExercise( exercise ) )
     , port_        ( deps.ports.Create() )
+    , replay_      ( replay )
     , running_     ()
     , process_     ()
     , status_      ( STATUS_STOPPED )
@@ -181,6 +183,7 @@ Session::Session( const SessionDependencies& deps,
     , current_time_()
     , checkpoints_ ()
     , first_time_  ( true )
+    , replays_     ()
 {
     // NOTHING
 }
@@ -201,6 +204,7 @@ Session::Session( const SessionDependencies& deps,
     , cfg_         ( ReadConfig( tree ) )
     , links_       ( node->LinkExercise( tree.get_child( "links" ) ) )
     , port_        ( AcquirePort( Get< int >( tree, "port" ), deps.ports ) )
+    , replay_      ( Get< Uuid >( tree, "replay.root" ) )
     , process_     ( AcquireProcess( tree, deps_.runtime, port_->Get() ) )
     , running_     ( process_ ? node->StartSession( boost::posix_time::not_a_date_time, true ) : Node_ABC::T_Token() )
     , status_      ( AcquireStatus( ConvertStatus( Get< std::string >( tree, "status" ) ), process_ ) )
@@ -213,9 +217,10 @@ Session::Session( const SessionDependencies& deps,
     , current_time_()
     , checkpoints_ ()
     , first_time_  ( Get< bool >( tree, "first_time" ) )
+    , replays_     ()
 {
     node_->UpdateSessionSize( id_, size_ );
-    if( !process_ )
+    if( !process_ && !IsReplay() )
         ParseCheckpoints();
 }
 
@@ -283,6 +288,34 @@ int Session::GetPort() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Session::IsReplay
+// Created: BAX 2012-08-13
+// -----------------------------------------------------------------------------
+bool Session::IsReplay() const
+{
+    return !replay_.is_nil();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Session::GetReplayId
+// Created: BAX 2012-08-13
+// -----------------------------------------------------------------------------
+Uuid Session::GetReplayId() const
+{
+    return replay_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Session::HasReplays
+// Created: BAX 2012-08-13
+// -----------------------------------------------------------------------------
+bool Session::HasReplays() const
+{
+    boost::shared_lock< boost::shared_mutex > lock( access_ );
+    return !replays_.empty();
+}
+
+// -----------------------------------------------------------------------------
 // Name: Session::GetProperties
 // Created: BAX 2012-06-11
 // -----------------------------------------------------------------------------
@@ -295,6 +328,8 @@ Tree Session::GetProperties( bool save ) const
     WriteConfig( tree, cfg_ );
     tree.put( "status", ConvertStatus( status_ ) );
     tree.put( "first_time", first_time_ );
+    if( IsReplay() )
+        tree.put( "replay.root", replay_ );
     if( save )
         tree.put_child( "links", links_ );
     else
@@ -314,9 +349,10 @@ void PutList( Tree& dst, const std::string& name, const T& list )
     Tree& sub = dst.put_child( name, Tree() );
     typedef typename T::value_type Value;
     BOOST_FOREACH( const Value& value, list )
-        sub.push_back( std::make_pair( "", value ) );
+        sub.push_back( std::make_pair( "", boost::lexical_cast< std::string >( value ) ) );
 }
 }
+
 // -----------------------------------------------------------------------------
 // Name: Session::GetProperties
 // Created: BAX 2012-04-19
@@ -329,6 +365,7 @@ Tree Session::GetProperties() const
     tree.put( "current_time", current_time_ );
     PutList( tree, "clients", clients_ );
     PutList( tree, "checkpoints.list", checkpoints_ );
+    PutList( tree, "replay.list", replays_ );
     return tree;
 }
 
@@ -437,12 +474,18 @@ bool Session::StopProcess( boost::upgrade_lock< boost::shared_mutex >& lock )
     if( !copy || !copy->IsAlive() )
         return true;
 
-    deps_.client.Get( "localhost", port_->Get() + WEB_CONTROL_PORT, "/stop", Client_ABC::T_Parameters() );
-    const bool done = copy->Join( 15 * 1000 );
+    const bool replay = IsReplay();
+    bool done = false;
+    if( !replay )
+    {
+        deps_.client.Get( "localhost", port_->Get() + WEB_CONTROL_PORT, "/stop", Client_ABC::T_Parameters() );
+        done = copy->Join( 15 * 1000 );
+    }
     if( !done )
         copy->Kill();
     copy->Join( 5 * 1000 );
-    ParseCheckpoints();
+    if( !replay )
+        ParseCheckpoints();
     return true;
 }
 
@@ -474,8 +517,14 @@ bool Session::ModifyStatus( boost::upgrade_lock< boost::shared_mutex >& lock, Se
     if( next == STATUS_STOPPED )
         return StopProcess( lock );
 
+    if( IsReplay() )
+        throw web::HttpException( web::FORBIDDEN );
+
     if( next == STATUS_ARCHIVED )
-        return Archive( lock );
+        if( !replays_.empty() )
+            throw web::HttpException( web::FORBIDDEN );
+        else
+            return Archive( lock );
 
     const size_t counter = counter_++;
     const int pid = GetPid( process_ );
@@ -533,8 +582,10 @@ std::string MakeOption( const std::string& option, const T& value )
 bool Session::Start( const Path& apps, const std::string& checkpoint )
 {
     boost::upgrade_lock< boost::shared_mutex > lock( access_ );
+    const bool replay = IsReplay();
+    const Status next = replay ? STATUS_REPLAYING : STATUS_PLAYING;
     if( process_ )
-        return ModifyStatus( lock, STATUS_PLAYING );
+        return ModifyStatus( lock, next );
 
     const boost::posix_time::ptime now = boost::posix_time::second_clock::local_time();
     Node_ABC::T_Token token = node_->StartSession( now, first_time_ || !checkpoint.empty() );
@@ -545,10 +596,9 @@ bool Session::Start( const Path& apps, const std::string& checkpoint )
     start_time_.clear();
     current_time_.clear();
     const Path output = GetOutput();
-    if( checkpoint.empty() )
+    if( !replay && checkpoint.empty() )
         ClearOutput( output );
     deps_.system.MakePaths( output );
-    deps_.system.WriteFile( output / "session.xml", GetConfiguration( cfg_, port_->Get() ) );
     std::vector< std::string > options = boost::assign::list_of
         ( MakeOption( "debug-dir", Utf8Convert( GetRoot() / "debug" ) ) )
         ( MakeOption( "exercises-dir", Utf8Convert( GetPath( "exercise" ) ) ) )
@@ -557,16 +607,26 @@ bool Session::Start( const Path& apps, const std::string& checkpoint )
         ( MakeOption( "exercise", Utf8Convert( GetExercise() ) ) )
         ( MakeOption( "session",  output.filename() ) )
         ( "--silent" );
+    std::string file = "session.xml";
+    Path app = "simulation_app.exe";
+    if( replay )
+    {
+        file = boost::lexical_cast< std::string >( id_ );
+        options.push_back( MakeOption( "session-file", file ) );
+        options.push_back( "--no-log" );
+        app = "replayer_app.exe";
+    }
+    deps_.system.WriteFile( output / file, GetConfiguration( cfg_, port_->Get() ) );
     if( !checkpoint.empty() )
         options.push_back( MakeOption( "checkpoint", checkpoint ) );
-    T_Process ptr = deps_.runtime.Start( Utf8Convert( apps / "simulation_app.exe" ),
+    T_Process ptr = deps_.runtime.Start( Utf8Convert( apps / app ),
         options, Utf8Convert( apps ), Utf8Convert( GetRoot() / "session.log" ) );
     if( !ptr )
         return false;
 
     process_    = ptr;
     running_    = token;
-    status_     = STATUS_PLAYING;
+    status_     = next;
     first_time_ = false;
     return true;
 }
@@ -592,7 +652,8 @@ Path Session::GetPath( const std::string& type ) const
 // -----------------------------------------------------------------------------
 Path Session::GetOutput() const
 {
-    return GetPath( "exercise" ) / GetExercise() / "sessions" / boost::lexical_cast< std::string >( id_ );
+    const Uuid& id = IsReplay() ? replay_ : id_;
+    return GetPath( "exercise" ) / GetExercise() / "sessions" / boost::lexical_cast< std::string >( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -622,6 +683,8 @@ bool Session::RefreshSize()
 {
     boost::upgrade_lock< boost::shared_mutex > lock( access_ );
     if( sizing_ )
+        return false;
+    if( IsReplay() )
         return false;
     sizing_ = true;
     runtime::Scoper unsize( boost::bind( &ResetBool, boost::ref( lock ), boost::ref( sizing_ ), false ) );
@@ -658,7 +721,9 @@ const boost::xpressive::sregex portRegex = boost::xpressive::sregex::compile( ":
 bool Session::Poll()
 {
     boost::upgrade_lock< boost::shared_mutex > lock( access_ );
-    if( polling_ || !process_ || !process_->IsAlive() )
+    if( polling_ )
+        return false;
+    if( !process_ || !process_->IsAlive() )
         return false;
 
     polling_ = true;
@@ -701,7 +766,8 @@ void Session::Remove()
 {
     boost::upgrade_lock< boost::shared_mutex > lock( access_ );
     ModifyStatus( lock, STATUS_STOPPED );
-    deps_.system.Remove( GetOutput() );
+    if( !IsReplay() )
+        deps_.system.Remove( GetOutput() );
     node_->UnlinkExercise( links_ );
     node_->RemoveSession( id_ );
     deps_.system.Remove( GetRoot() );
@@ -789,11 +855,37 @@ bool Attach( const FileSystem_ABC& system, const Path& path, T& items )
 // Name: Session::Replay
 // Created: BAX 2012-08-10
 // -----------------------------------------------------------------------------
-bool Session::Replay()
+Session::T_Ptr Session::Replay()
 {
-    return false;
+    boost::lock_guard< boost::shared_mutex > read( access_ );
+    web::session::Config cfg = cfg_;
+    cfg.name += " replay " + boost::lexical_cast< std::string >( replays_.size() + 1 );
+    SessionPaths paths = paths_;
+    paths.root = deps_.system.MakeAnyPath( paths.root.remove_filename() );
+    T_Ptr next = boost::make_shared< Session >( deps_, node_, paths, cfg, Utf8Convert( GetExercise() ), id_ );
+    replays_.insert( next->GetId() );
+    return next;
 }
 
+// -----------------------------------------------------------------------------
+// Name: Session::AttachReplay
+// Created: BAX 2012-08-13
+// -----------------------------------------------------------------------------
+void Session::AttachReplay( const Session_ABC& replay )
+{
+    boost::lock_guard< boost::shared_mutex > lock( access_ );
+    replays_.insert( replay.GetId() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Session::DetachReplay
+// Created: BAX 2012-08-14
+// -----------------------------------------------------------------------------
+void Session::DetachReplay( const Session_ABC& replay )
+{
+    boost::lock_guard< boost::shared_mutex > lock( access_ );
+    replays_.erase( replay.GetId() );
+}
 // -----------------------------------------------------------------------------
 // Name: Session::ParseCheckpoints
 // Created: BAX 2012-08-08

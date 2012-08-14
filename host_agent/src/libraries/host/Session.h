@@ -19,6 +19,7 @@
 #include <boost/thread/locks.hpp>
 #include <boost/thread/shared_mutex.hpp>
 #include <boost/uuid/uuid.hpp>
+#include <set>
 
 namespace boost
 {
@@ -116,7 +117,8 @@ public:
                       boost::shared_ptr< Node_ABC > node,
                       const SessionPaths& paths,
                       const web::session::Config& cfg,
-                      const std::string& exercise );
+                      const std::string& exercise,
+                      const Uuid& replay );
              Session( const SessionDependencies& deps,
                       boost::shared_ptr< Node_ABC > node,
                       const SessionPaths& paths,
@@ -133,25 +135,30 @@ public:
     virtual std::string GetName() const;
     virtual int GetPort() const;
     virtual Tree GetProperties() const;
+    virtual bool IsReplay() const;
+    virtual Uuid GetReplayId() const;
+    virtual bool HasReplays() const;
     //@}
 
     //! @name Public methods
     //@{
-    virtual Path GetPath( const std::string& type ) const;
-    virtual Path GetOutput() const;
-    virtual Tree Save() const;
-    virtual bool Start( const Path& apps, const std::string& checkpoint );
-    virtual bool Stop();
-    virtual bool Refresh();
-    virtual bool RefreshSize();
-    virtual bool Poll();
-    virtual bool Pause();
-    virtual void Remove();
-    virtual bool Update( const Tree& cfg );
-    virtual bool Archive();
-    virtual bool Restore();
-    virtual bool Download( std::ostream& dst ) const;
-    virtual bool Replay();
+    virtual Path  GetPath( const std::string& type ) const;
+    virtual Path  GetOutput() const;
+    virtual Tree  Save() const;
+    virtual bool  Start( const Path& apps, const std::string& checkpoint );
+    virtual bool  Stop();
+    virtual bool  Refresh();
+    virtual bool  RefreshSize();
+    virtual bool  Poll();
+    virtual bool  Pause();
+    virtual void  Remove();
+    virtual bool  Update( const Tree& cfg );
+    virtual bool  Archive();
+    virtual bool  Restore();
+    virtual bool  Download( std::ostream& dst ) const;
+    virtual T_Ptr Replay();
+    virtual void  AttachReplay( const Session_ABC& replay );
+    virtual void  DetachReplay( const Session_ABC& replay );
     //@}
 
     //! @name Typedef helpers
@@ -159,6 +166,7 @@ public:
     typedef boost::shared_ptr< runtime::Process_ABC > T_Process;
     typedef std::vector< std::string > T_Clients;
     typedef std::vector< std::string > T_Checkpoints;
+    typedef std::set< Uuid > T_Replays;
     //@}
 
     //! @name Status enumeration
@@ -194,6 +202,7 @@ private:
     const SessionPaths paths_;
     const Tree links_;
     const Port port_;
+    const Uuid replay_;
     //@}
 
     //! @name Private members
@@ -212,6 +221,7 @@ private:
     web::session::Config cfg_;
     T_Checkpoints checkpoints_;
     bool first_time_;
+    T_Replays replays_;
     mutable runtime::Async async_;
     //@}
 };
