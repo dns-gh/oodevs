@@ -222,7 +222,7 @@ NodeController::T_Node NodeController::Delete( const Uuid& id )
         return node;
     LOG_INFO( log_ ) << "[" << type_ << "] Removed " << node->GetId() << " " << node->GetIdent() << " :" << node->GetPort();
     proxy_.Unregister( node->GetIdent() );
-    node->Remove( system_, async_ );
+    node->Remove( async_ );
     return node;
 }
 
@@ -256,7 +256,7 @@ NodeController::T_Node NodeController::Stop( const Uuid& id ) const
 // -----------------------------------------------------------------------------
 void NodeController::Start( Node_ABC& node, bool force, bool weak ) const
 {
-    bool modified = node.Start( runtime_, app_, web_, type_, host_, weak );
+    bool modified = node.Start( app_, web_, type_, host_, weak );
     if( modified || force )
         Save( node );
 }

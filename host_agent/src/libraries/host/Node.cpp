@@ -91,10 +91,7 @@ Node::Node( const NodeDependencies& deps,
             int min_play_seconds,
             const std::string& ident,
             const web::node::Config& cfg )
-    : packages_        ( deps.packages )
-    , system_          ( deps.system )
-    , uuids_           ( deps.uuids )
-    , observer_        ( deps.observer )
+    : deps_            ( deps )
     , id_              ( deps.uuids.Create() )
     , ident_           ( ident )
     , root_            ( root )
@@ -110,7 +107,7 @@ Node::Node( const NodeDependencies& deps,
     , cache_size_      ( 0 )
     , sessions_size_   ( 0 )
 {
-    install_ = packages_.Make( root_ / install_directory, true );
+    install_ = deps_.packages.Make( root_ / install_directory, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -120,18 +117,14 @@ Node::Node( const NodeDependencies& deps,
 Node::Node( const NodeDependencies& deps,
             const Path& root,
             int min_play_seconds,
-            const Tree& tree,
-            const runtime::Runtime_ABC& runtime )
-    : packages_        ( deps.packages )
-    , system_          ( deps.system )
-    , uuids_           ( deps.uuids )
-    , observer_        ( deps.observer )
+            const Tree& tree )
+    : deps_            ( deps )
     , id_              ( Get< Uuid >( tree, "id" ) )
     , ident_           ( Get< std::string >( tree, "ident" ) )
     , root_            ( root )
     , port_            ( AcquirePort( Get< int >( tree, "port" ), deps.ports ) )
     , min_play_seconds_( min_play_seconds )
-    , process_         ( AcquireProcess( tree, runtime, port_->Get() ) )
+    , process_         ( AcquireProcess( tree, deps_.runtime, port_->Get() ) )
     , stopped_         ( Get< bool >( tree, "stopped" ) )
     , async_           ( deps.pool )
     , cfg_             ( ReadConfig( tree ) )
@@ -253,8 +246,8 @@ std::string MakeOption( const std::string& option, const T& value )
 // Name: Node::Start
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-bool Node::Start( const Runtime_ABC& runtime, const Path& app, const Path& web,
-                  const std::string& type, int host, bool weak )
+bool Node::Start( const Path& app, const Path& web, const std::string& type,
+                  int host, bool weak )
 {
     boost::lock_guard< boost::shared_mutex > lock( access_ );
     if( stopped_ && weak )
@@ -277,8 +270,8 @@ bool Node::Start( const Runtime_ABC& runtime, const Path& app, const Path& web,
         ( MakeOption( "port", port_->Get() ) );
     if( cfg_.sessions.reset )
         args.push_back( "--reset" );
-    T_Process ptr = runtime.Start( Utf8Convert( app ), args, std::string(),
-                                   Utf8Convert( root_ / ( type + ".log" ) ) );
+    T_Process ptr = deps_.runtime.Start( Utf8Convert( app ), args, std::string(),
+                                         Utf8Convert( root_ / ( type + ".log" ) ) );
     if( !ptr )
         return modified;
 
@@ -335,10 +328,10 @@ void Cleanup( Node::T_Process process, const FileSystem_ABC& system, const Path&
 // Name: Node::Remove
 // Created: BAX 2012-06-25
 // -----------------------------------------------------------------------------
-void Node::Remove( const FileSystem_ABC& system, Async& async )
+void Node::Remove( Async& async )
 {
     std::pair< T_Process, bool > pair = StopProcess( true );
-    async.Go( boost::bind( ::Cleanup, pair.first, boost::cref( system ), GetRoot() ) );
+    async.Go( boost::bind( ::Cleanup, pair.first, boost::cref( deps_.system ), GetRoot() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -376,19 +369,19 @@ void ParseInline( const T& packages, U& dst, const Path& path, U reference = U()
 // -----------------------------------------------------------------------------
 void Node::UploadCache( std::istream& src )
 {
-    const Path output = system_.MakeAnyPath( root_ );
+    const Path output = deps_.system.MakeAnyPath( root_ );
     boost::shared_ptr< Package_ABC > next;
     try
     {
-        FileSystem_ABC::T_Unpacker unpacker = system_.Unpack( output, src );
+        FileSystem_ABC::T_Unpacker unpacker = deps_.system.Unpack( output, src );
         unpacker->Unpack();
-        next = packages_.Make( output, false );
+        next = deps_.packages.Make( output, false );
         if( !next->Parse() )
             throw std::runtime_error( "invalid package contents" );
     }
     catch( ... )
     {
-        async_.Go( boost::bind( &FileSystem_ABC::Remove, &system_, output ) );
+        async_.Go( boost::bind( &FileSystem_ABC::Remove, &deps_.system, output ) );
         throw;
     }
 
@@ -397,7 +390,7 @@ void Node::UploadCache( std::istream& src )
     next.swap( cache_ );
     cache_size_ = cache_->GetSize();
     if( next )
-        async_.Go( boost::bind( &FileSystem_ABC::Remove, &system_, next->GetPath() ) );
+        async_.Go( boost::bind( &FileSystem_ABC::Remove, &deps_.system, next->GetPath() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -407,12 +400,12 @@ void Node::UploadCache( std::istream& src )
 void Node::ParsePackages( const Path& cache )
 {
     boost::lock_guard< boost::shared_mutex > lock( access_ );
-    ParseInline( packages_, install_, root_ / install_directory );
+    ParseInline( deps_.packages, install_, root_ / install_directory );
     num_exercises_ = install_->CountExercises();
     install_size_ = install_->GetSize();
     if( cache.empty() )
         return;
-    ParseInline( packages_, cache_,   root_ / cache, install_ );
+    ParseInline( deps_.packages, cache_,   root_ / cache, install_ );
     cache_size_ = cache_->GetSize();
 }
 
@@ -462,7 +455,7 @@ Tree Node::DeleteCache()
     if( !cache_ )
         return Tree();
     next.swap( cache_ );
-    async_.Go( boost::bind( &FileSystem_ABC::Remove, &system_, next->GetPath() ) );
+    async_.Go( boost::bind( &FileSystem_ABC::Remove, &deps_.system, next->GetPath() ) );
     cache_size_ = 0;
     return next->GetProperties();
 }
@@ -589,7 +582,7 @@ Node_ABC::T_Token Node::StartSession( const boost::posix_time::ptime& start, boo
     lock.unlock();
 
     if( !force )
-        observer_.Notify( *this );
+        deps_.observer.Notify( *this );
     return boost::make_shared< node::Token >( this, start );
 }
 
@@ -610,7 +603,7 @@ void Node::StopSession( const boost::posix_time::ptime& start )
     --num_play_;
     lock.unlock();
 
-    observer_.Notify( *this );
+    deps_.observer.Notify( *this );
 }
 
 // -----------------------------------------------------------------------------

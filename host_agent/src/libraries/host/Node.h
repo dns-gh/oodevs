@@ -27,8 +27,10 @@ namespace boost
 
 namespace runtime
 {
+    struct FileSystem_ABC;
     struct Pool_ABC;
     struct Process_ABC;
+    struct Runtime_ABC;
 }
 
 namespace host
@@ -54,12 +56,14 @@ struct NodeDependencies
                       const runtime::FileSystem_ABC& system,
                       const UuidFactory_ABC& uuids,
                       const NodeObserver_ABC& observer,
+                      const runtime::Runtime_ABC& runtime,
                       runtime::Pool_ABC& pool,
                       PortFactory_ABC& ports )
         : packages( packages )
         , system  ( system )
         , uuids   ( uuids )
         , observer( observer )
+        , runtime ( runtime )
         , pool    ( pool )
         , ports   ( ports )
     {
@@ -69,6 +73,7 @@ struct NodeDependencies
     const runtime::FileSystem_ABC& system;
     const UuidFactory_ABC& uuids;
     const NodeObserver_ABC& observer;
+    const runtime::Runtime_ABC& runtime;
     runtime::Pool_ABC& pool;
     PortFactory_ABC& ports;
 };
@@ -88,14 +93,11 @@ public:
                    const Path& root,
                    int min_play_seconds,
                    const std::string& ident,
-                   const web::node::Config& cfg
-                   );
+                   const web::node::Config& cfg );
              Node( const NodeDependencies& deps,
                    const Path& root,
                    int min_play_seconds,
-                   const Tree& tree,
-                   const runtime::Runtime_ABC& runtime
-                   );
+                   const Tree& tree );
     virtual ~Node();
     //@}
 
@@ -111,10 +113,10 @@ public:
     //! @name Public methods
     //@{
     virtual Tree Save() const;
-    virtual bool Start( const runtime::Runtime_ABC& runtime, const Path& app,
-                        const Path& web, const std::string& type, int host, bool weak );
+    virtual bool Start( const Path& app, const Path& web,
+                        const std::string& type, int host, bool weak );
     virtual bool Stop( bool weak );
-    virtual void Remove( const runtime::FileSystem_ABC& system, runtime::Async& async );
+    virtual void Remove( runtime::Async& async );
     virtual bool Update( const Tree& cfg );
     virtual void SoftKill();
     //@}
@@ -167,10 +169,7 @@ private:
 private:
     //! @name Private constant members
     //@{
-    const runtime::FileSystem_ABC& system_;
-    const UuidFactory_ABC& uuids_;
-    const PackageFactory_ABC& packages_;
-    const NodeObserver_ABC& observer_;
+    const NodeDependencies deps_;
     const Uuid id_;
     const std::string ident_;
     const Path root_;

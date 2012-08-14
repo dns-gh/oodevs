@@ -194,15 +194,15 @@ struct NodeFactory : public NodeFactory_ABC
 
     Ptr Make( const Path& root, const std::string& ident, const web::node::Config& cfg ) const
     {
-        NodeDependencies deps( packages, system, uuids, *observer, pool, ports );
+        NodeDependencies deps( packages, system, uuids, *observer, runtime, pool, ports );
         return boost::make_shared< Node >( deps, root, min_play, ident, cfg );
     }
 
     Ptr Make( const Path& tag ) const
     {
-        NodeDependencies deps( packages, system, uuids, *observer, pool, ports );
+        NodeDependencies deps( packages, system, uuids, *observer, runtime, pool, ports );
         return boost::make_shared< Node >( deps, Path( tag ).remove_filename(), min_play,
-                                           FromJson( system.ReadFile( tag ) ), runtime );
+                                           FromJson( deps.system.ReadFile( tag ) ) );
     }
 
     const PackageFactory_ABC& packages;

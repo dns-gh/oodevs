@@ -68,7 +68,7 @@ namespace
             MOCK_EXPECT( packages.Make ).once().with( mock::any, true ).returns( installed );
             MOCK_EXPECT( uuids.Create ).once().returns( defaultId );
             MOCK_EXPECT( ports.Create0 ).once().returns( new MockPort( defaultPort ) );
-            host::NodeDependencies deps( packages, system, uuids, observer, pool, ports );
+            host::NodeDependencies deps( packages, system, uuids, observer, runtime, pool, ports );
             web::node::Config cfg;
             cfg.name = defaultName;
             return boost::make_shared< Node >( deps, defaultRoot, 5*60, cfg.name, cfg );
@@ -84,15 +84,15 @@ namespace
             MOCK_EXPECT( ports.Create1 ).once().with( defaultPort ).returns( new MockPort( defaultPort ) );
             if( process )
                 MOCK_EXPECT( runtime.GetProcess ).once().with( process->GetPid() ).returns( process );
-            host::NodeDependencies deps( packages, system, uuids, observer, pool, ports );
-            return boost::make_shared< Node >( deps, defaultRoot, 5*60, tree, runtime );
+            host::NodeDependencies deps( packages, system, uuids, observer, runtime, pool, ports );
+            return boost::make_shared< Node >( deps, defaultRoot, 5*60, tree );
         }
 
         ProcessPtr StartNode( Node& node, int pid, const std::string& name )
         {
             ProcessPtr process = boost::make_shared< MockProcess >( pid, name );
             MOCK_EXPECT( runtime.Start ).once().returns( process );
-            BOOST_REQUIRE( node.Start( runtime, "node.exe", "web", "node", 0, false ) );
+            BOOST_REQUIRE( node.Start( "node.exe", "web", "node", 0, false ) );
             return process;
         }
 
@@ -216,7 +216,7 @@ BOOST_FIXTURE_TEST_CASE( node_can_start_twice, Fixture )
 {
     NodePtr node = MakeNode();
     StartNode( *node, processPid, processName );
-    BOOST_CHECK( !node->Start( runtime, "node.exe", "web", "node", 0, false ) );
+    BOOST_CHECK( !node->Start( "node.exe", "web", "node", 0, false ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( node_cache, Fixture )
