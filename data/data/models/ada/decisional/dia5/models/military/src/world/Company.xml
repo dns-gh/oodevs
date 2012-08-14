@@ -379,6 +379,7 @@
         <predicate name="isCommanding"/>
         <predicate name="isContaminated"/>
         <predicate name="isPoisoned"/>
+        <predicate name="isOperational"/>
         <predicate name="isFar" abstract="false">
             <description> Utilisée dans les requêtes ou dans les méthodes utilisées dans les comportements.&#xD;
             &#xD;

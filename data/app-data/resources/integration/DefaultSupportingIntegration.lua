@@ -22,7 +22,7 @@ integration.getPositionToSupportFriend = function( friendToSupport )
     if DEC_HasMission( meKnowledge.source ) then
         local mission = DEC_GetRawMission( meKnowledge.source )
         local dir = DEC_GetDirectionDanger( mission )
-        local friendPos = friendToSupport.source:DEC_Agent_Position()
+        local friendPos = friendToSupport:getPosition()
         local positionToSupport = DEC_Geometrie_PositionTranslateDir( friendPos, dir, - rangeDistance )
         return CreateKnowledge( sword.military.world.Point, positionToSupport )
     end

@@ -458,8 +458,7 @@ DEC_AutomateDecision* DEC_AutomateDecision::GetDecAutomate() const
 // -----------------------------------------------------------------------------
 std::string DEC_AutomateDecision::GetName() const
 {
-    assert( false );
-    throw std::runtime_error( "Unexpected call to DEC_GetSzName on automate" );
+    return pEntity_->GetName();
 }
 
 // -----------------------------------------------------------------------------

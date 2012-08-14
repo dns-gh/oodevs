@@ -43,7 +43,7 @@ node "StayCloseToElement"
     -- Move toward closest positionable elements using the skill MoveAndTakePosition
     -- --------------------------------------------------------------------------------
     activate = function( self )
-        if self.params.entity:operationalLevel() == 0 then
+        if not self.params.entity:isOperational() then
                DEC_RC( eRC_FollowingUnitIsDead, DEC_GetSzName(self.params.entity.source) )
                Feedback( self.feedbacks.failed, {entity = self.params.entity } )
         end
