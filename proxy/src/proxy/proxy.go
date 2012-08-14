@@ -145,8 +145,7 @@ func (it *Server) SetRemoteAddress(r *http.Request) string {
 	return ip
 }
 
-func (it *Server) GetPrefix(q url.Values) string {
-	prefix := q.Get("prefix")
+func GetPrefix(prefix string) string {
 	if len(prefix) == 0 {
 		return "/"
 	}
@@ -166,7 +165,7 @@ func (it *Server) Register(q url.Values) error {
 	if err != nil {
 		return err
 	}
-	prefix := it.GetPrefix(q)
+	prefix := GetPrefix(q.Get("prefix"))
 	it.access.Lock()
 	defer it.access.Unlock()
 	it.targets[prefix] = &ProxyContext{
@@ -180,7 +179,7 @@ func (it *Server) Register(q url.Values) error {
 }
 
 func (it *Server) Unregister(q url.Values) {
-	prefix := it.GetPrefix(q)
+	prefix := GetPrefix(q.Get("prefix"))
 	it.access.Lock()
 	delete(it.targets, prefix)
 	it.access.Unlock()
