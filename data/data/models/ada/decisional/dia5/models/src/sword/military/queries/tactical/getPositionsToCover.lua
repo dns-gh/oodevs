@@ -93,6 +93,15 @@ queryImplementation "getPositionsToCover"
                 if distanceToFindOpenFieldPositions ~= 0 then
                     local point = DEC_Geometrie_CalculerPositionSurete(element.source, distanceToFindOpenFieldPositions)
                     AddPoint( point, result, newResult )
+
+                    if DEC_HasMission( meKnowledge.source ) then
+                        local mission = DEC_GetRawMission( meKnowledge.source )
+                        local dirDanger = DEC_GetDirectionDanger( mission )
+ 
+                        local positionSurete = DEC_Geometrie_PositionTranslateDir( meKnowledge:getPosition(), dirDanger, - distanceToFindOpenFieldPositions )
+
+                        AddPoint( positionSurete, result, newResult )
+                    end
                 end
                 -- Add unit position 
                 local unitPosition = meKnowledge:getPosition()

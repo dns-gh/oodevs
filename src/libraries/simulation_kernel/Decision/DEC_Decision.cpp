@@ -239,7 +239,8 @@ void RegisterGeometryFunctions( directia::brain::Brain& brain)
     brain[ "DEC_Geometrie_LocalisationsEgales" ] = &DEC_GeometryFunctions::CompareLocalisations;
     brain[ "DEC_Geometrie_CalculerPointSurFuseau" ] = &DEC_GeometryFunctions::GetPointAlongFuseau;
     brain[ "DEC_Geometrie_StartCalculLignesAvantEtArrierePourPion" ] = &DEC_GeometryFunctions::StartComputingFrontAndBackLinesForPlatoon;
-    
+    brain.Register( "DEC_Geometrie_X", &MT_Vector2D::GetX );
+    brain.Register( "DEC_Geometrie_Y", &MT_Vector2D::GetY );    
 }
 
 // -----------------------------------------------------------------------------

@@ -26,7 +26,7 @@ return
         return self:getNBCState()
     end,
     safetyEfficiency = function( self, objective )
-       return( ( ( 100 - objective:getProximity( self ) )/100 ) + meKnowledge:computeProtectionCapability( objective, self ) ) / 100 
+       return( ( 100 - objective:getProximity( self ) ) + meKnowledge:computeProtectionCapability( objective, self ) ) / 200 
         -- $$$ MIA TODO: et si le point est dans un BU, récupérer la protection du BU?
     end,
     destructionEfficiency = function( self, objective )
@@ -293,12 +293,28 @@ return
         return integration.isPointInUrbanBlockTrafficable( self, forLoadedState )
     end,
     getCoverAndConcealmentLevelFor = function( self, entity, objective )
-        -- HYPOTHESES: pour un point, la protection est assimilée au fait d'être non vu sur ce point
-        -- we suppose that ennemi's perception on me is equal to my perception on objective's position 
-        if  integration.getPerception( self, objective ) > 0 then 
-            return 0 -- point is not concealed, means that it has no protection capability.
-        else 
-            return 100
+        local scalaire = 0.50
+        if DEC_HasMission( meKnowledge.source ) then
+            local mission = DEC_GetRawMission( meKnowledge.source )
+            local dirDanger = DEC_GetDirectionDanger( mission )
+            local dirEni = DEC_Geometrie_CreerDirection(meKnowledge:getPosition(), self:getPosition())
+            
+            local xDanger = dirDanger:DEC_Geometrie_X()
+            local yDanger = dirDanger:DEC_Geometrie_Y()
+            local xEni = dirEni:DEC_Geometrie_X()
+            local yEni = dirEni:DEC_Geometrie_Y()
+            scalaire = ( xDanger * xEni ) + ( yDanger * yEni )            
+        end
+
+        local perception = 100
+        if integration.getPerception( self, objective ) > 0 then -- l'ennemi me voit
+            return (1 - scalaire) * 35 -- resultat en 0 et 70
+        else
+            if scalaire > 0 then
+                return (1 - scalaire) * 50 -- resultat en 0 et 100
+            else
+                return (1 - scalaire) * 35 -- resultat en 0 et 70
+            end
         end
     end,
     computeSupportCapabilityFor = function( self, platoon, objective )

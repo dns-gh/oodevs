@@ -41,6 +41,8 @@ public:
     MT_Vector2D&      Rotate180         ();
     bool              IsZero() const;
     void              Reset();
+    inline double     GetX() const { return rX_; }
+    inline double     GetY() const { return rY_; }
 
     //! @name Operators
     //@{

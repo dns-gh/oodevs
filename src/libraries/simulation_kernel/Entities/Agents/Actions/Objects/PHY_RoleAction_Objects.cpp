@@ -752,7 +752,7 @@ std::pair< const PHY_DotationCategory*, double > PHY_RoleAction_Objects::GetAgen
     std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( pion.GetAlgorithms().dotationComputerFactory_->Create() );
     pion.Execute( *dotationComputer );
 
-    double number;
+    double number = 0;
     int dotationNumber =  capacity->GetDotationNumber( object->GetLocalisation() );
     if ( dotationNumber != 0 )
         number = std::max((int) ( dotationNumber - dotationComputer->GetDotationValue( *pDotationCategory )), 0);
