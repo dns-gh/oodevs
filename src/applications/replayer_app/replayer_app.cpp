@@ -27,7 +27,7 @@ typedef std::vector< std::string > T_Args;
 boost::optional< std::string > GetOption( const T_Args& args, const std::string& name )
 {
     T_Args::const_iterator it = std::find( args.begin(), args.end(), name );
-    if( it == args.end() )
+    if( it != args.end() )
         if( ++it != args.end() )
             return *it;
     return boost::none;
