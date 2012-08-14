@@ -72,7 +72,7 @@ node "SupportElement"
     activate = function( self )
         local Activate = Activate
 
-        if self.params.entity:operationalLevel() == 0 then
+        if not self.params.entity:isOperational() then
                DEC_RC( eRC_CombatSupportUnitIsDead, DEC_GetSzName(self.params.entity.source) )
                Feedback( self.feedbacks.failed, {entity = self.params.entity } )
         end

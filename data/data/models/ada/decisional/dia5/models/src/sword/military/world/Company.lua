@@ -106,7 +106,7 @@ predicate "isContaminated"
     dependencies = "none",
     method = function( self )
         local DEC_Automate_PionEstContamine = DEC_Automate_PionEstContamine
-        local listCommanding = DEC_Automate_PionsAvecPC()
+        local listCommanding = self.source:DEC_Automate_PionsAvecPC()
         for _, entity in pairs( listCommanding or emptyTable ) do
             if DEC_Automate_PionEstContamine( entity ) then
                 return true
@@ -120,13 +120,28 @@ predicate "isPoisoned"
     dependencies = "none",
     method = function( self )
         local DEC_Automate_PionEstEmpoisonne = DEC_Automate_PionEstEmpoisonne
-        local listCommanding = DEC_Automate_PionsAvecPC()
+        local listCommanding = self.source:DEC_Automate_PionsAvecPC()
         for _, entity in pairs( listCommanding or emptyTable ) do
             if DEC_Automate_PionEstEmpoisonne( entity ) then
                 return true
             end
         end
         return false
+    end
+}
+predicate "isOperational"
+{
+    dependencies = "none",
+    method = function( self )
+        local listCommanding = self.source:DEC_Automate_PionsAvecPC()
+        local operationalThreshold = 0
+        local listOperational = 0
+        for _, entity in pairs( listCommanding or emptyTable ) do
+            if entity:DEC_Agent_EtatOpsMajeur() ~= 0 then
+                listOperational = listOperational +1
+            end
+        end
+        return (listOperational > operationalThreshold)
     end
 }
 
