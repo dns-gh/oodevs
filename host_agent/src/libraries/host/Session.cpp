@@ -710,10 +710,10 @@ void Session::Remove()
 {
     boost::upgrade_lock< boost::shared_mutex > lock( access_ );
     ModifyStatus( lock, STATUS_STOPPED );
+    system_.Remove( GetOutput() );
     node_->UnlinkExercise( links_ );
     node_->RemoveSession( id_ );
     system_.Remove( GetRoot() );
-    system_.Remove( GetOutput() );
 }
 
 // -----------------------------------------------------------------------------
