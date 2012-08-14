@@ -103,8 +103,13 @@ Section $(^Name)
     File "${SWORD}\*_module.dll"
 
     ; website
-    SetOutPath "$INSTDIR"
-    File /r /x ".svn" "${NODE}\www"
+    SetOutPath "$INSTDIR\www\js"
+    File /r /x ".svn" "${NODE}\www\js\*.js"
+    SetOutPath "$INSTDIR\www\css"
+    File /r /x ".svn" "${NODE}\www\css\*.css"
+    SetOutPath "$INSTDIR\www"
+    File /r /x ".svn" "${NODE}\www\*.ttml"
+    File /r /x ".svn" "${NODE}\www\img"
 
     ; shortcuts
     CreateDirectory "$SMPROGRAMS\$(^Name)"
