@@ -38,7 +38,7 @@ class App
 public:
     //! @name Constructors/Destructor
     //@{
-             App( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdShow );
+             App( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdShow, bool replayLog );
     virtual ~App();
     //@}
 
@@ -81,7 +81,6 @@ private:
     std::auto_ptr< boost::thread > guiThread_ ;
     static bool                    bUserInterrupt_;
     //@}
-
 };
 
 #endif // __App_h_

@@ -39,6 +39,7 @@ int RunReplayer(  HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, 
     const T_Args argv = boost::program_options:: split_winmain( lpCmdLine );
     boost::optional< std::string > opt = GetOption( argv, "--debug-dir" );
     const std::string debugRoot = opt == boost::none ? "./Debug" : *opt;
+    const bool replayLog = std::find( argv.begin(), argv.end(), "--no-log" ) == argv.end();
 
     MT_CrashHandler::SetRootDirectory( debugRoot );
 
@@ -55,7 +56,7 @@ int RunReplayer(  HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, 
         license_gui::LicenseDialog::CheckLicense( "sword-replayer", silentMode );
 #endif
         tools::SetCodec();
-        App app( hinstance, hPrevInstance, lpCmdLine, nCmdShow );
+        App app( hinstance, hPrevInstance, lpCmdLine, nCmdShow, replayLog );
         app.Execute();
     }
     catch( std::exception& e )
