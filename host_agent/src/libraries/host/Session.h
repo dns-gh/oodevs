@@ -56,6 +56,32 @@ namespace node
 namespace host
 {
 // -----------------------------------------------------------------------------
+// Name: SessionDependencies
+// Created: BAX 2012-08-10
+// -----------------------------------------------------------------------------
+struct SessionDependencies
+{
+    SessionDependencies( const runtime::FileSystem_ABC& system,
+                         const runtime::Runtime_ABC& runtime,
+                         web::Client_ABC& client,
+                         runtime::Pool_ABC& pool,
+                         PortFactory_ABC& ports )
+        : system ( system )
+        , runtime( runtime )
+        , client ( client )
+        , pool   ( pool )
+        , ports  ( ports )
+    {
+        // NOTHING
+    }
+    const runtime::FileSystem_ABC& system;
+    const runtime::Runtime_ABC& runtime;
+    web::Client_ABC& client;
+    runtime::Pool_ABC& pool;
+    PortFactory_ABC& ports;
+};
+
+// -----------------------------------------------------------------------------
 // Name: SessionPaths
 // Created: BAX 2012-08-09
 // -----------------------------------------------------------------------------
@@ -82,25 +108,16 @@ class Session : public Session_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Session( const runtime::FileSystem_ABC& system,
-                      web::Client_ABC& client,
-                      runtime::Pool_ABC& pool,
+             Session( const SessionDependencies& deps,
                       boost::shared_ptr< Node_ABC > node,
                       const SessionPaths& paths,
                       const Uuid& id,
                       const web::session::Config& cfg,
-                      const std::string& exercise,
-                      const Port& port
-                      );
-             Session( const runtime::FileSystem_ABC& system,
-                      web::Client_ABC& client,
-                      runtime::Pool_ABC& pool,
+                      const std::string& exercise );
+             Session( const SessionDependencies& deps,
                       boost::shared_ptr< Node_ABC > node,
                       const SessionPaths& paths,
-                      const Tree& tree,
-                      const runtime::Runtime_ABC& runtime,
-                      PortFactory_ABC& ports
-                      );
+                      const Tree& tree );
     virtual ~Session();
     //@}
 
@@ -120,7 +137,7 @@ public:
     virtual Path GetPath( const std::string& type ) const;
     virtual Path GetOutput() const;
     virtual Tree Save() const;
-    virtual bool Start( const runtime::Runtime_ABC& runtime, const Path& apps, const std::string& checkpoint );
+    virtual bool Start( const Path& apps, const std::string& checkpoint );
     virtual bool Stop();
     virtual bool Refresh();
     virtual bool RefreshSize();
@@ -165,15 +182,20 @@ private:
     //@}
 
 private:
-    //! @name Private members
+    //! @name Private const members
     //@{
     const runtime::FileSystem_ABC& system_;
+    const runtime::Runtime_ABC& runtime_;
     web::Client_ABC& client_;
     const boost::shared_ptr< Node_ABC > node_;
     const Uuid id_;
     const SessionPaths paths_;
     const Tree links_;
     const Port port_;
+    //@}
+
+    //! @name Private members
+    //@{
     mutable boost::shared_mutex access_;
     T_Process process_;
     boost::shared_ptr< node::Token > running_;

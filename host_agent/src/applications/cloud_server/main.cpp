@@ -242,13 +242,9 @@ struct SessionFactory : public SessionFactory_ABC
                     PortFactory_ABC& ports,
                     web::Client_ABC& client,
                     Pool_ABC& pool )
-        : system ( system )
-        , runtime( runtime )
-        , uuids  ( uuids )
+        : uuids  ( uuids )
         , nodes  ( nodes )
-        , ports  ( ports )
-        , client ( client )
-        , pool   ( pool )
+        , deps   ( system, runtime, client, pool, ports )
     {
         // NOTHING
     }
@@ -259,12 +255,12 @@ struct SessionFactory : public SessionFactory_ABC
         if( !node )
             return Ptr();
         SessionPaths paths( root, trash );
-        return boost::make_shared< Session >( boost::cref( system ), boost::ref( client ), boost::ref( pool ), node, paths, uuids.Create(), boost::cref( cfg ), exercise, ports.Create() );
+        return boost::make_shared< Session >( boost::cref( deps ), node, paths, uuids.Create(), boost::cref( cfg ), exercise );
     }
 
     Ptr Make( const Path& tag, const Path& trash ) const
     {
-        const Tree tree = FromJson( system.ReadFile( tag ) );
+        const Tree tree = FromJson( deps.system.ReadFile( tag ) );
         const boost::optional< std::string > id = tree.get_optional< std::string >( "node" );
         if( id == boost::none )
             throw std::runtime_error( "missing node id in " + Utf8Convert( tag ) );
@@ -272,16 +268,12 @@ struct SessionFactory : public SessionFactory_ABC
         if( !node )
             throw std::runtime_error( "unknown node " + *id );
         SessionPaths paths( Path( tag ).remove_filename(), trash );
-        return boost::make_shared< Session >( boost::cref( system ), boost::ref( client ), boost::ref( pool ), node, paths, tree, runtime, boost::ref( ports ) );
+        return boost::make_shared< Session >( boost::cref( deps ), node, paths, tree );
     }
 
-    const FileSystem_ABC& system;
-    const runtime::Runtime_ABC& runtime;
     const UuidFactory_ABC& uuids;
     const NodeController_ABC& nodes;
-    PortFactory_ABC& ports;
-    web::Client_ABC& client;
-    Pool_ABC& pool;
+    const SessionDependencies deps;
 };
 
 int Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system, const Configuration& cfg, const Waiter& waiter )

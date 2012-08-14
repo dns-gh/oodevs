@@ -192,7 +192,7 @@ BOOST_FIXTURE_TEST_CASE( session_controller_starts, Fixture )
 {
     Reload();
     const std::string checkpoint = "checkpoint";
-    MOCK_EXPECT( idle->Start ).once().with( mock::any, mock::any, checkpoint ).returns( true );
+    MOCK_EXPECT( idle->Start ).once().with( mock::any, checkpoint ).returns( true );
     SessionController::T_Session session = control.Start( idNode, idIdle, checkpoint );
     BOOST_CHECK_EQUAL( session->GetId(), idIdle );
 }

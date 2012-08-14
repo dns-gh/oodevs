@@ -155,24 +155,22 @@ Session::Status AcquireStatus( Session::Status status, bool has_process )
 // Name: Session::Session
 // Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------
-Session::Session( const FileSystem_ABC& system,
-                  Client_ABC& client,
-                  runtime::Pool_ABC& pool,
-                  const boost::shared_ptr< Node_ABC > node,
+Session::Session( const SessionDependencies& deps,
+                  boost::shared_ptr< Node_ABC > node,
                   const SessionPaths& paths,
                   const Uuid& id,
                   const Config& cfg,
-                  const std::string& exercise,
-                  const Port& port )
-    : system_      ( system )
-    , client_      ( client )
-    , async_       ( pool )
+                  const std::string& exercise )
+    : system_      ( deps.system )
+    , runtime_     ( deps.runtime )
+    , client_      ( deps.client )
+    , async_       ( deps.pool )
     , node_        ( node )
     , id_          ( id )
     , paths_       ( paths )
     , cfg_         ( cfg )
     , links_       ( node->LinkExercise( exercise ) )
-    , port_        ( port )
+    , port_        ( deps.ports.Create() )
     , running_     ()
     , process_     ()
     , status_      ( STATUS_STOPPED )
@@ -193,24 +191,21 @@ Session::Session( const FileSystem_ABC& system,
 // Name: Session::Session
 // Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------
-Session::Session( const FileSystem_ABC& system,
-                  Client_ABC& client,
-                  runtime::Pool_ABC& pool,
-                  const boost::shared_ptr< Node_ABC > node,
+Session::Session( const SessionDependencies& deps,
+                  boost::shared_ptr< Node_ABC > node,
                   const SessionPaths& paths,
-                  const Tree& tree,
-                  const runtime::Runtime_ABC& runtime,
-                  PortFactory_ABC& ports )
-    : system_      ( system )
-    , client_      ( client )
-    , async_       ( pool )
+                  const Tree& tree )
+    : system_      ( deps.system )
+    , runtime_     ( deps.runtime )
+    , client_      ( deps.client )
+    , async_       ( deps.pool )
     , node_        ( node )
     , id_          ( Get< Uuid >( tree, "id" ) )
     , paths_       ( paths )
     , cfg_         ( ReadConfig( tree ) )
     , links_       ( node->LinkExercise( tree.get_child( "links" ) ) )
-    , port_        ( AcquirePort( Get< int >( tree, "port" ), ports ) )
-    , process_     ( AcquireProcess( tree, runtime, port_->Get() ) )
+    , port_        ( AcquirePort( Get< int >( tree, "port" ), deps.ports ) )
+    , process_     ( AcquireProcess( tree, runtime_, port_->Get() ) )
     , running_     ( process_ ? node->StartSession( boost::posix_time::not_a_date_time, true ) : Node_ABC::T_Token() )
     , status_      ( AcquireStatus( ConvertStatus( Get< std::string >( tree, "status" ) ), process_ ) )
     , polling_     ( false )
@@ -539,7 +534,7 @@ std::string MakeOption( const std::string& option, const T& value )
 // Name: Session::Start
 // Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------
-bool Session::Start( const Runtime_ABC& runtime, const Path& apps, const std::string& checkpoint )
+bool Session::Start( const Path& apps, const std::string& checkpoint )
 {
     boost::upgrade_lock< boost::shared_mutex > lock( access_ );
     if( process_ )
@@ -568,7 +563,7 @@ bool Session::Start( const Runtime_ABC& runtime, const Path& apps, const std::st
         ( "--silent" );
     if( !checkpoint.empty() )
         options.push_back( MakeOption( "checkpoint", checkpoint ) );
-    T_Process ptr = runtime.Start( Utf8Convert( apps / "simulation_app.exe" ),
+    T_Process ptr = runtime_.Start( Utf8Convert( apps / "simulation_app.exe" ),
         options, Utf8Convert( apps ), Utf8Convert( GetRoot() / "session.log" ) );
     if( !ptr )
         return false;

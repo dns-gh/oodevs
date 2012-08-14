@@ -26,11 +26,6 @@ namespace uuids
 }
 }
 
-namespace runtime
-{
-    struct Runtime_ABC;
-}
-
 namespace web
 {
 namespace session
@@ -76,7 +71,7 @@ struct Session_ABC : public boost::noncopyable
     //! @name Public methods
     //@{
     virtual Tree Save() const = 0;
-    virtual bool Start( const runtime::Runtime_ABC& runtime, const Path& apps, const std::string& checkpoint ) = 0;
+    virtual bool Start( const Path& apps, const std::string& checkpoint ) = 0;
     virtual bool Stop() = 0;
     virtual bool Refresh() = 0;
     virtual bool RefreshSize() = 0;
