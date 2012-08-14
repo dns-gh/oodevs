@@ -83,6 +83,7 @@ Section $(^Name)
     File "${SWORD}\plugin_motivation_${PLATFORM}-mt-4_6.plugin"
     File "${SWORD}\proj.dll"
     File "${SWORD}\simulation_app.exe"
+    File "${SWORD}\replayer_app.exe"
     File /x "*_d.dll" "${SWORD}\gdal*.dll"
     File /x "*D.dll" "${SWORD}\Xalan*.dll"
     File /x "*D.dll" "${SWORD}\xerces*.dll"
