@@ -476,10 +476,18 @@ struct Model : public Item
         return Path( "data" ) / "models" / name_;
     }
 
+    static bool Filter( const FileSystem_ABC& system, const Path& path, FileSystem_ABC::T_Predicate operand, const std::string& suffix )
+    {
+        const Path target = path / suffix;
+        if( system.IsFile( target ) )
+            operand( target );
+        return true;
+    }
+
     static void Parse( Async& async, const FileSystem_ABC& system, const Path& root, Package::T_Items& items, const Metadata* meta )
     {
         FileSystem_ABC::T_Predicate op = boost::bind( AttachSimple< Model >, boost::ref( async ), _1, boost::cref( system ), boost::cref( root ), boost::ref( items ), meta );
-        system.Glob( root / "data" / "models", "decisional.xml", op );
+        system.Walk( root / "data" / "models", false, boost::bind( &Model::Filter, boost::cref( system ), _1, op, "decisional/decisional.xml" ) );
     }
 };
 

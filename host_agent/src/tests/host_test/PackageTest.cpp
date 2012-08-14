@@ -80,13 +80,27 @@ struct Fixture
         return "<exercise><model dataset=\"" + model + "\"/><terrain name=\"" + terrain + "\"/></exercise>";
     }
 
-    void AddItem( T_Paths& dst, bool ref, const Path& root, const Path& prefix, const Path& name, const Path& suffix, const std::string& checksum, const std::string& contents )
+    void AddItem( T_Paths& dst, bool ref, const Path& root, const Path& prefix, const Path& name, const Path& suffix,
+                  const std::string& checksum, const std::string& contents, bool glob )
     {
         const Path data = root / prefix;
         const Path file = data / name / suffix;
-        MOCK_EXPECT( system.Glob ).once().with( data, suffix.filename(), boost::bind( &MockFileSystem::Apply, &system, _1, boost::assign::list_of( file ) ) );
-        if( ref )
-            MOCK_EXPECT( system.Glob ).exactly( 2 ).with( boost::bind( &BeginWith, root, _1 ), mock::any, mock::any );
+        if( glob )
+        {
+            MOCK_EXPECT( system.Glob ).once().with( data, suffix.filename(), boost::bind( &MockFileSystem::Apply, &system, _1, boost::assign::list_of( file ) ) );
+            if( ref )
+            {
+                MOCK_EXPECT( system.Walk ).once().with( boost::bind( &BeginWith, root, _1 ), false, mock::any );
+                MOCK_EXPECT( system.Glob ).once().with( boost::bind( &BeginWith, root, _1 ), mock::any, mock::any );
+            }
+        }
+        else
+        {
+            MOCK_EXPECT( system.Walk ).once().with( data, false, boost::bind( &MockFileSystem::Apply, &system, _1, boost::assign::list_of( data / name ) ) );
+            MOCK_EXPECT( system.IsFile ).once().with( file ).returns( true );
+            if( ref )
+                MOCK_EXPECT( system.Glob ).exactly( 2 ).with( boost::bind( &BeginWith, root, _1 ), mock::any, mock::any );
+        }
         MOCK_EXPECT( system.GetLastWrite ).with( file ).returns( std::time_t() );
         MOCK_EXPECT( system.ReadFile ).with( file ).returns( contents );
         MOCK_EXPECT( system.ReadFile ).with( root / "metadata.tag" ).returns( "" );
@@ -96,17 +110,17 @@ struct Fixture
 
     void AddModel( T_Paths& dst, bool ref, const Path& root, const Path& name, const std::string& checksum )
     {
-        AddItem( dst, ref, root, "data/models", name, "decisional/decisional.xml", checksum, "" );
+        AddItem( dst, ref, root, "data/models", name, "decisional/decisional.xml", checksum, "", false );
     }
 
     void AddTerrain( T_Paths& dst, bool ref, const Path& root, const Path& name, const std::string& checksum )
     {
-        AddItem( dst, ref, root, "data/terrains", name, "Terrain.xml", checksum, "" );
+        AddItem( dst, ref, root, "data/terrains", name, "Terrain.xml", checksum, "", true );
     }
 
     void AddExercise( T_Paths& dst, bool ref, const Path& root, const Path& name, const std::string& checksum, const std::string& model, const std::string& terrain )
     {
-        AddItem( dst, ref, root, "exercises", name, "exercise.xml", checksum, MakeExerciseData( model, terrain ) );
+        AddItem( dst, ref, root, "exercises", name, "exercise.xml", checksum, MakeExerciseData( model, terrain ), true );
     }
 
     Path Decompose( const Path& path, size_t offset )
