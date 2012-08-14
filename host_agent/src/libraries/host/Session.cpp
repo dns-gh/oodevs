@@ -11,6 +11,7 @@
 
 #include "Node_ABC.h"
 #include "PortFactory_ABC.h"
+#include "UuidFactory_ABC.h"
 #include "runtime/Async.h"
 #include "runtime/FileSystem_ABC.h"
 #include "runtime/Process_ABC.h"
@@ -158,13 +159,12 @@ Session::Status AcquireStatus( Session::Status status, bool has_process )
 Session::Session( const SessionDependencies& deps,
                   boost::shared_ptr< Node_ABC > node,
                   const SessionPaths& paths,
-                  const Uuid& id,
                   const Config& cfg,
                   const std::string& exercise )
     : deps_        ( deps )
     , async_       ( deps.pool )
     , node_        ( node )
-    , id_          ( id )
+    , id_          ( deps.uuids.Create() )
     , paths_       ( paths )
     , cfg_         ( cfg )
     , links_       ( node->LinkExercise( exercise ) )

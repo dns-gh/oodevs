@@ -47,6 +47,7 @@ namespace host
     struct Port_ABC;
     struct PortFactory_ABC;
     typedef boost::shared_ptr< const Port_ABC > Port;
+    struct UuidFactory_ABC;
 namespace node
 {
     struct Token;
@@ -63,11 +64,13 @@ struct SessionDependencies
 {
     SessionDependencies( const runtime::FileSystem_ABC& system,
                          const runtime::Runtime_ABC& runtime,
+                         const UuidFactory_ABC& uuids,
                          web::Client_ABC& client,
                          runtime::Pool_ABC& pool,
                          PortFactory_ABC& ports )
         : system ( system )
         , runtime( runtime )
+        , uuids  ( uuids )
         , client ( client )
         , pool   ( pool )
         , ports  ( ports )
@@ -76,6 +79,7 @@ struct SessionDependencies
     }
     const runtime::FileSystem_ABC& system;
     const runtime::Runtime_ABC& runtime;
+    const UuidFactory_ABC& uuids;
     web::Client_ABC& client;
     runtime::Pool_ABC& pool;
     PortFactory_ABC& ports;
@@ -111,7 +115,6 @@ public:
              Session( const SessionDependencies& deps,
                       boost::shared_ptr< Node_ABC > node,
                       const SessionPaths& paths,
-                      const Uuid& id,
                       const web::session::Config& cfg,
                       const std::string& exercise );
              Session( const SessionDependencies& deps,

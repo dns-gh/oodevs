@@ -28,6 +28,7 @@
 #include "MockPortFactory.h"
 #include "MockProcess.h"
 #include "MockRuntime.h"
+#include "MockUuidFactory.h"
 
 using namespace host;
 using namespace mocks;
@@ -87,6 +88,7 @@ namespace
         MockRuntime runtime;
         MockPortFactory ports;
         MockPool pool;
+        MockUuidFactory uuids;
         boost::shared_ptr< MockNode > node;
         const host::Path apps;
         int any_idx;
@@ -108,13 +110,14 @@ namespace
 
         SessionPtr MakeSession()
         {
+            MOCK_EXPECT( uuids.Create ).once().returns( defaultId );
             MOCK_EXPECT( ports.Create0 ).once().returns( new MockPort( defaultPort ) );
             MOCK_EXPECT( node->LinkExerciseName ).once().with( defaultExercise ).returns( FromJson( links ) );
             web::session::Config cfg;
             cfg.name = defaultName;
             SessionPaths paths( "a", "b" );
-            SessionDependencies deps( system, runtime, client, pool, ports );
-            return boost::make_shared< Session >( deps, node, paths, defaultId, cfg, defaultExercise );
+            SessionDependencies deps( system, runtime, uuids, client, pool, ports );
+            return boost::make_shared< Session >( deps, node, paths, cfg, defaultExercise );
         }
 
         SessionPtr ReloadSession( const Tree& tree, ProcessPtr process = ProcessPtr() )
@@ -125,7 +128,7 @@ namespace
             const Tree data = FromJson( links );
             MOCK_EXPECT( node->LinkExerciseTree ).once().with( data ).returns( data );
             SessionPaths paths( "a", "b" );
-            SessionDependencies deps( system, runtime, client, pool, ports );
+            SessionDependencies deps( system, runtime, uuids, client, pool, ports );
             return boost::make_shared< Session >( deps, node, paths, tree );
         }
 

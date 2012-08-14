@@ -242,9 +242,8 @@ struct SessionFactory : public SessionFactory_ABC
                     PortFactory_ABC& ports,
                     web::Client_ABC& client,
                     Pool_ABC& pool )
-        : uuids  ( uuids )
-        , nodes  ( nodes )
-        , deps   ( system, runtime, client, pool, ports )
+        : nodes  ( nodes )
+        , deps   ( system, runtime, uuids, client, pool, ports )
     {
         // NOTHING
     }
@@ -255,7 +254,7 @@ struct SessionFactory : public SessionFactory_ABC
         if( !node )
             return Ptr();
         SessionPaths paths( root, trash );
-        return boost::make_shared< Session >( boost::cref( deps ), node, paths, uuids.Create(), boost::cref( cfg ), exercise );
+        return boost::make_shared< Session >( boost::cref( deps ), node, paths, boost::cref( cfg ), exercise );
     }
 
     Ptr Make( const Path& tag, const Path& trash ) const
@@ -271,7 +270,6 @@ struct SessionFactory : public SessionFactory_ABC
         return boost::make_shared< Session >( boost::cref( deps ), node, paths, tree );
     }
 
-    const UuidFactory_ABC& uuids;
     const NodeController_ABC& nodes;
     const SessionDependencies deps;
 };
