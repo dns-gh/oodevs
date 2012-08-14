@@ -709,16 +709,16 @@ private:
 // Name: Controller::DownloadSession
 // Created: BAX 2012-08-06
 // -----------------------------------------------------------------------------
-void Controller::DownloadSession( Reply_ABC& response, const Request_ABC& request )
+void Controller::DownloadSession( Reply_ABC& rpy, const Request_ABC& request )
 {
     const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
-    response.SetStatus( web::OK );
-    response.SetHeader( "Content-Type", "application/zip" );
-    response.SetHeader( "Content-Disposition", "attachment; filename=session.zip" );
-    response.SetHeader( "Transfer-Encoding", "chunked" );
-    response.SetHeader( "Connection", "Close" );
-    response.WriteHeaders();
-    boost::iostreams::stream< Sink > output( response );
+    rpy.SetStatus( web::OK );
+    rpy.SetHeader( "Content-Type", "application/zip" );
+    rpy.SetHeader( "Content-Disposition", "attachment; filename=session.zip" );
+    rpy.SetHeader( "Transfer-Encoding", "chunked" );
+    rpy.SetHeader( "Connection", "Close" );
+    rpy.WriteHeaders();
+    boost::iostreams::stream< Sink > output( rpy );
     agent_.DownloadSession( node, GetId( request ), output );
     output.flush();
 }
