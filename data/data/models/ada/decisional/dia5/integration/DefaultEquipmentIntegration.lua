@@ -625,3 +625,14 @@ integration.isLogisticConvoy = function( platoon )
         return false
     end
 end
+
+integration.unitAltitude = function( entity )
+    local nomPion = DEC_Pion_GetMilPionName( entity )
+	local altitude = 1000
+    if nomPion == "RENS . Drone SDTI" then
+        altitude = 1000
+    elseif nomPion == "RENS . Drone DRAC" or nomPion == "RENS . DRAC" then
+        altitude = 200
+    end
+	return altitude
+end

@@ -113,6 +113,7 @@ void RegisterUnitFunctions( directia::brain::Brain& brain)
     brain[ "DEC_IsMissionPionAvailable" ] = &DEC_OrdersFunctions::IsPionMissionAvailable;
     brain[ "DEC_IsAutomateMissionPionAvailable" ] = &DEC_OrdersFunctions::IsAutomateMissionAvailable;
     brain[ "DEC_Pion_GetMilPionType" ] = &DEC_AgentFunctions::GetMilPionType;
+    brain[ "DEC_Pion_GetMilPionName" ] = &DEC_AgentFunctions::GetMilPionName;
     brain[ "DEC_Agent_EstImmobilise" ] = &DEC_AgentFunctions::IsImmobilized;
     brain[ "DEC_Agent_CanMoveOn" ] =
         boost::function< bool( const DEC_Decision_ABC*, boost::shared_ptr< MT_Vector2D > )>( boost::bind( &DEC_TerrainFunctions::CanMoveOn, _1, _2 ) );

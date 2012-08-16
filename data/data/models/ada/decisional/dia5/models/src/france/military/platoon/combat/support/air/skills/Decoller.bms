@@ -5,7 +5,11 @@ rootnode
     -- --------------------------------------------------------------------------------
     create = function( self )
         if not DEC_Agent_EstEnVol() then
-            myself.altitude = self.params.HauteurDeVol
+            if self.params.HauteurDeVol ~= nil and self.params.HauteurDeVol ~= NIL then
+                  myself.altitude = self.params.HauteurDeVol
+            else
+                  myself.altitude = integration.unitAltitude( myself )
+            end
             DEC_Agent_HauteurDeVol( myself.altitude )
         end
         integration.activateSensors()
