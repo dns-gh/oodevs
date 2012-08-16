@@ -143,6 +143,9 @@
     <ProjectReference Include="dispatcher.vcxproj">
       <Project>{e761ba44-a370-4f9d-97b5-a047e068ba5b}</Project>
     </ProjectReference>
+    <ProjectReference Include="MT_Tools.vcxproj">
+      <Project>{8979d7d9-b248-4739-a7be-04ac0112ac08}</Project>
+    </ProjectReference>
     <ProjectReference Include="web_control_plugin.vcxproj">
       <Project>{9eea7cf4-c108-4c59-9f09-7668ac04cae1}</Project>
     </ProjectReference>
