@@ -22,7 +22,7 @@ namespace xml
 
 inline std::ostream& operator<<( std::ostream& os, const QString& value )
 {
-    return os << value.toStdString();
+    return os << value.toAscii().constData();
 }
 
 namespace frontend

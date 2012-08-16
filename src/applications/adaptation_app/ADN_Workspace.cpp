@@ -196,7 +196,7 @@ void ADN_Workspace::Build( ADN_MainWindow& mainwindow )
     {
         elements_[n]->GetGuiABC().Build();
         elements_[n]->GetGuiABC().RegisterTable( mainwindow );
-        pProgressIndicator_->Increment( elements_[n]->GetName().toStdString().c_str() );
+        pProgressIndicator_->Increment( elements_[n]->GetName().toAscii().constData() );
     }
 
     // Tab order
@@ -257,7 +257,7 @@ void ADN_Workspace::Reset(const std::string& filename, bool bVisible )
     for( int n = eNbrWorkspaceElements - 1; n >= 0; --n )
     {
         if( bVisible )
-            pProgressIndicator_->Increment( tr( "Unloading: %1..." ).arg( elements_[n]->GetName() ).toStdString().c_str() );
+            pProgressIndicator_->Increment( tr( "Unloading: %1..." ).arg( elements_[n]->GetName() ).toAscii().constData() );
         qApp->processEvents();
         elements_[n]->GetDataABC().Reset();
     }
@@ -293,7 +293,7 @@ void ADN_Workspace::Load( const std::string& filename, const tools::Loader_ABC& 
     // Treatment order, ie E_WorkspaceElements order.
     for( int n = 0; n < eNbrWorkspaceElements; ++n )
     {
-        pProgressIndicator_->Increment( tr( "Loading: %1..." ).arg( elements_[n]->GetName() ).toStdString().c_str() );
+        pProgressIndicator_->Increment( tr( "Loading: %1..." ).arg( elements_[n]->GetName() ).toAscii().constData() );
         qApp->processEvents();
         elements_[n]->GetDataABC().Load( fileLoader );
     }
@@ -400,8 +400,8 @@ bool ADN_Workspace::SaveAs( const std::string& filename, const tools::Loader_ABC
     // dialog log
     ADN_DialogLog dlgLog( 0 );
     dlgLog.setCaption( tr( "Sword Adaptation Tool - Saving Errors" ) );
-    dlgLog.setMsg( tr( "Error(s) have been encountered during saving of project " ).toStdString() + filename );
-    dlgLog.setMsgFormat( tr( "<p>- Unable to save %s : file is write protected</p>" ).toStdString());
+    dlgLog.setMsg( tr( "Error(s) have been encountered during saving of project " ).toAscii().constData() + filename );
+    dlgLog.setMsgFormat( tr( "<p>- Unable to save %s : file is write protected</p>" ).toAscii().constData());
 
     T_StringList uncopiedFiles;
     if( szOldWorkDir != dirInfos.GetWorkingDirectory().GetData() )
@@ -448,7 +448,7 @@ bool ADN_Workspace::SaveAs( const std::string& filename, const tools::Loader_ABC
         for( int n = 0; n < eNbrWorkspaceElements; ++n )
         {
             elements_[n]->GetDataABC().Save();
-            pProgressIndicator_->Increment( elements_[n]->GetName().toStdString().c_str() );
+            pProgressIndicator_->Increment( elements_[n]->GetName().toAscii().constData() );
         }
 
         for( T_StringList::iterator it = uncopiedFiles.begin(); it != uncopiedFiles.end(); ++it )

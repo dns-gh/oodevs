@@ -105,7 +105,7 @@ void ExerciseProperties::Update()
         int index = 1;
         for( QStringList::const_iterator it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
         {
-            const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).toStdString() );
+            const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).toAscii().constData() );
             for( QStringList::const_iterator itP = physicalModels.begin(); itP != physicalModels.end(); ++itP, ++index )
                 modelList_->insertItem( QString( "%1/%2" ).arg( *it ).arg( *itP ), index );
         }
@@ -152,7 +152,7 @@ void ExerciseProperties::Select( const frontend::Exercise_ABC* exercise )
                             >> xml::list( "text", *this, &ExerciseProperties::ReadBriefingText );
             if( !image.empty() )
             {
-                const std::string imagePath = config_.GetExerciseDir( QString( "%1/%2" ).arg( exercise->GetName().c_str() ).arg( image.c_str() ).toStdString() );
+                const std::string imagePath = config_.GetExerciseDir( QString( "%1/%2" ).arg( exercise->GetName().c_str() ).arg( image.c_str() ).toAscii().constData() );
                 const QImage pix( imagePath.c_str() );
                 QPixmap px;
                 px.fromImage( pix );
@@ -184,7 +184,7 @@ void ExerciseProperties::ReadBriefingText( xml::xistream& xis )
     std::string lang, text;
     xis >> xml::attribute( "lang", lang )
         >> text;
-    if( lang == language_.toStdString() )
+    if( lang == language_.toAscii().constData() )
     {
         briefingText_->setText( text.c_str() );
         briefingText_->show();
@@ -208,7 +208,7 @@ void ExerciseProperties::ModelChanged()
 bool ExerciseProperties::Commit( const frontend::Exercise_ABC& exercise )
 {
     // Be sure to commit if mismatched terrain or data, even if no changes has occured 
-    if( terrainList_ && terrainList_->currentItem() > 0 && terrainList_->currentText().toStdString() != currentTerrain_ )
+    if( terrainList_ && terrainList_->currentItem() > 0 && terrainList_->currentText().toAscii().constData() != currentTerrain_ )
     {
         MessageDialog message( parent_, tools::translate( "ExerciseProperties", "Warning" ), tools::translate( "ExerciseProperties", "The selected terrain is not the one referenced by the selected exercise.\nDo really you want to replace it ?" ), QMessageBox::Yes, QMessageBox::No );
         if( message.exec() == QMessageBox::Yes )
@@ -219,7 +219,7 @@ bool ExerciseProperties::Commit( const frontend::Exercise_ABC& exercise )
     if( modelList_ && modelList_->currentItem() > 0 )
     {
         const QStringList model = QStringList::split( "/", modelList_->currentText() );
-        if( model.front().toStdString() != currentData_ || model.back().toStdString() != currentPhysical_ )
+        if( model.front().toAscii().constData() != currentData_ || model.back().toAscii().constData() != currentPhysical_ )
         {
             MessageDialog message( parent_, tools::translate( "ExerciseProperties", "Warning" ), tools::translate( "ExerciseProperties", "The selected model is not the one referenced by the selected exercise.\nDo really you want to replace it ?" ), QMessageBox::Yes, QMessageBox::No );
             if( message.exec() == QMessageBox::Yes )
@@ -232,9 +232,9 @@ bool ExerciseProperties::Commit( const frontend::Exercise_ABC& exercise )
     if( dataChanged_ )
         if( terrainList_ && terrainList_->currentItem() > 0 && modelList_ && modelList_->currentItem() > 0 )
         {
-            const std::string terrain = terrainList_->currentText().toStdString();
+            const std::string terrain = terrainList_->currentText().toAscii().constData();
             const QStringList model = QStringList::split( "/", modelList_->currentText() );
-            frontend::EditExerciseParameters( config_, exercise.GetName(), terrain, model.front().toStdString(), model.back().toStdString() );
+            frontend::EditExerciseParameters( config_, exercise.GetName(), terrain, model.front().toAscii().constData(), model.back().toAscii().constData() );
         }
     dataChanged_ = false;
     return true;

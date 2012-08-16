@@ -163,13 +163,13 @@ void PluginSetting::OnLanguageChanged()
 void PluginSetting::Accept( PluginSettingVisitor_ABC& visitor )
 {
     if( type_ == "string" )
-        visitor.Visit( attribute_, std::string( stringValue_->text().toStdString() ) );
+        visitor.Visit( attribute_, std::string( stringValue_->text().toAscii().constData() ) );
     else if( type_ == "integer" )
         visitor.Visit( attribute_, integerValue_->value() );
     else if( type_ == "boolean" )
         visitor.Visit( attribute_, booleanValue_->isChecked() );
     else if( type_ == "time" )
-        visitor.Visit( attribute_, std::string( QString( "%1s" ).arg( QTime().secsTo( timeValue_->time() ) ).toStdString() ) );
+        visitor.Visit( attribute_, std::string( QString( "%1s" ).arg( QTime().secsTo( timeValue_->time() ) ).toAscii().constData() ) );
     else if( type_ == "file" )
     {
         // TODO:
@@ -184,7 +184,7 @@ void PluginSetting::Accept( PluginSettingVisitor_ABC& visitor )
         visitor.Visit( attribute_,  fileList_->GetFilesDelimited());
     }
     else if( type_ == "enumeration" )
-        visitor.Visit( attribute_, std::string( enumerationValue_->currentText().toStdString() ) );
+        visitor.Visit( attribute_, std::string( enumerationValue_->currentText().toAscii().constData() ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -28,7 +28,7 @@ Drawing::Drawing( unsigned int id, const sword::ShapeCreationRequest& asn, const
     : converter_( converter )
     , id_       ( id )
     , category_ ( asn.shape().category() )
-    , color_    ( QColor( asn.shape().color().red(), asn.shape().color().green(), asn.shape().color().blue() ).name().toStdString() )
+    , color_    ( QColor( asn.shape().color().red(), asn.shape().color().green(), asn.shape().color().blue() ).name().toAscii().constData() )
     , pattern_  ( asn.shape().pattern() )
 {
     if( asn.shape().has_diffusion() )
@@ -142,7 +142,7 @@ void Drawing::Update( const sword::ShapeUpdateRequest& asn )
     if( asn.has_category() )
         category_ = asn.category();
     if( asn.has_color() )
-        color_ = QColor( asn.color().red(), asn.color().green(), asn.color().blue() ).name().toStdString();
+        color_ = QColor( asn.color().red(), asn.color().green(), asn.color().blue() ).name().toAscii().constData();
     if( asn.has_pattern() )
         pattern_ = asn.pattern();
     if( asn.has_points() )

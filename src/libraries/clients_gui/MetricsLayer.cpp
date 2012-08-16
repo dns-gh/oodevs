@@ -82,7 +82,7 @@ void MetricsLayer::Paint( kernel::Viewport_ABC& )
                 tooltip_ = tooltip;
             }
             // $$$$ SBO 2008-03-19: GlTooltip_ABC maybe should be a Displayer_ABC...
-            static_cast< kernel::Displayer_ABC& >( *tooltip_ ).Start( Styles::bold ).Add( message.toStdString() ).End();
+            static_cast< kernel::Displayer_ABC& >( *tooltip_ ).Start( Styles::bold ).Add( message.toAscii().constData() ).End();
             tooltip_->Draw( middle );
         glPopAttrib();
     }

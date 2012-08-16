@@ -260,7 +260,7 @@ void UsagesDockWidget::Add()
 {
     if( selectedElements_.size() != 1 )
         return;
-    const std::string motivation = pMotivations_->currentText().toStdString();
+    const std::string motivation = pMotivations_->currentText().toAscii().constData();
     QList< QTableWidgetItem* > pList = pTable_->findItems( motivation.c_str(), Qt::MatchExactly );
     if( pList.empty() )
     {
@@ -281,7 +281,7 @@ void UsagesDockWidget::OnItemValueChanged()
         QTableWidgetItem* pName = pTable_->item( i, 0 );
         QSpinBox* pValue = static_cast< QSpinBox* >( pTable_->cellWidget( i, 1 ) );
         if( pName && pValue )
-            AddMotivation( pName->text().toStdString(), pValue->value() );
+            AddMotivation( pName->text().toAscii().constData(), pValue->value() );
     }
     Validate();
     isEditing_ = false;
@@ -315,6 +315,6 @@ void UsagesDockWidget::Delete()
     BOOST_FOREACH( QTableWidgetItem* pItem, pList )
         if( pItem && pItem->column() == 0 )
         {
-            RemoveMotivation( pItem->text().toStdString() );
+            RemoveMotivation( pItem->text().toAscii().constData() );
         }
 }

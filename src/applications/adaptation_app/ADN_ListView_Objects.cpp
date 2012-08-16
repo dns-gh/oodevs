@@ -393,6 +393,6 @@ std::string ADN_ListView_Objects::GetToolTipFor( Q3ListViewItem& item )
     FillMultiUsersList( tools::translate( "ADN_ListView_Objects", "Fragmentary orders" ), ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrdersThatUse( *pCastData ),           result );
 
     if( result.empty() )
-        result = tr( "<b>Unused</b>" ).toStdString();
+        result = tr( "<b>Unused</b>" ).toAscii().constData();
     return result;
 }

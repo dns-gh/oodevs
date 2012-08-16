@@ -126,7 +126,7 @@ void DotationsEditor::OnAccept()
 {
     (*value_)->Clear();
     for( int i = 0; i < table_->numRows() - 1; ++i )
-        (*value_)->AddDotation( staticModel_.objectTypes_.Resolver2< DotationType >::Get( table_->text( i, 0 ).toStdString() ), locale().toUInt( table_->text( i, 1 ) ) );
+        (*value_)->AddDotation( staticModel_.objectTypes_.Resolver2< DotationType >::Get( table_->text( i, 0 ).toAscii().constData() ), locale().toUInt( table_->text( i, 1 ) ) );
     (*value_)->Update();
     accept();
 }
@@ -192,7 +192,7 @@ void DotationsEditor::UpdateInfos()
             const double dotationQuantity = locale().toDouble( table_->text( i, 1 ), &ok );
             if( !ok )
                 continue;
-            const DotationType& dotationType = staticModel_.objectTypes_.Resolver2< DotationType >::Get( table_->text( i, 0 ).toStdString() );
+            const DotationType& dotationType = staticModel_.objectTypes_.Resolver2< DotationType >::Get( table_->text( i, 0 ).toAscii().constData() );
             currentCapacities[ dotationType.GetNature() ].first += dotationQuantity * dotationType.GetUnitWeight();
             currentCapacities[ dotationType.GetNature() ].second += dotationQuantity * dotationType.GetUnitVolume();
         }

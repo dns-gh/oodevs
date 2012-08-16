@@ -200,7 +200,7 @@ void Population::CreateDictionary( Controller& controller )
 void Population::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::attribute( "id", static_cast< long >( id_ ) )
-        << xml::attribute( "name", name_.toStdString() )
+        << xml::attribute( "name", name_.toAscii().constData() )
         << xml::attribute( "type", type_.GetName() )
         << xml::attribute( "attitude", attitude_.ToXml() )
         << xml::start( "composition" )
@@ -215,7 +215,7 @@ void Population::SerializeAttributes( xml::xostream& xos ) const
             << xml::end;
     if( !criticalIntelligence_.isEmpty() )
         xos << xml::start( "critical-intelligence" )
-                << xml::attribute( "content", criticalIntelligence_.toStdString() )
+                << xml::attribute( "content", criticalIntelligence_.toAscii().constData() )
         << xml::end;
     if( repartition_->male_ != 100 )
         xos << xml::start( "repartition" )

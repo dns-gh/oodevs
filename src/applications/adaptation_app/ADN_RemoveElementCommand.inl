@@ -66,7 +66,7 @@ void ADN_RemoveElementCommand< ObjectType >::UpdateDescription()
 
     std::string strItemName = pRemovedObject_->GetItemName();
     if( strItemName.empty() )
-        strItemName = qApp->translate("ADN_RemoveElementCommand","new ").toStdString() + modifiedData_.GetItemTypeName();
+        strItemName = qApp->translate("ADN_RemoveElementCommand","new ").toAscii().constData() + modifiedData_.GetItemTypeName();
     else
         strItemName = modifiedData_.GetItemTypeName() + " " + strItemName;
 

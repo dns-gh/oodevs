@@ -264,7 +264,7 @@ void InitialState::FillResources( tools::Iterator< const kernel::DotationCapacit
 // -----------------------------------------------------------------------------
 const QString InitialState::RetrieveResourceCategory( const QString& resourceName ) const
 {
-    const kernel::DotationType& category = staticModel_.objectTypes_.kernel::Resolver2< kernel::DotationType >::Get( resourceName.toStdString() );
+    const kernel::DotationType& category = staticModel_.objectTypes_.kernel::Resolver2< kernel::DotationType >::Get( resourceName.toAscii().constData() );
     return category.GetCategoryName().c_str();
 }
 
@@ -285,7 +285,7 @@ double InitialState::RetrieveNormalizedConsumption( const QString& resourceName 
         while( dotationIterator.HasMoreElements() )
         {
             const kernel::DotationCapacityType& type = dotationIterator.NextElement();
-            if( type.GetName() == resourceName.toStdString() )
+            if( type.GetName() == resourceName.toAscii().constData() )
             {
                 normalizedConsumption += agentComposition.GetCount() * type.GetNormalizedConsumption();
                 break;

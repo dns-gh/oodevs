@@ -76,7 +76,7 @@ unsigned int AgentManipulator::GetIdentifier() const
 // -----------------------------------------------------------------------------
 std::string AgentManipulator::GetName() const
 {
-    return agent_.GetName().toStdString();
+    return agent_.GetName().toAscii().constData();
 }
 
 // -----------------------------------------------------------------------------

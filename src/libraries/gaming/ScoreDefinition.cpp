@@ -75,7 +75,7 @@ std::string ScoreDefinition::Commit( const T_Parameters& /*parameters*/ ) const
 {
     indicators::Serializer serializer( *elementFactory_ );
     indicators::FormulaParser parser( serializer );
-    parser.Parse( QString( "plot( %1 )" ).arg( formula_.c_str() ).toStdString() );
+    parser.Parse( QString( "plot( %1 )" ).arg( formula_.c_str() ).toAscii().constData() );
     xml::xostringstream xos;
     serializer.Serialize( xos );
     return xos.str();

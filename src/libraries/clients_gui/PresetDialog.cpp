@@ -85,11 +85,11 @@ void PresetDialog::Accept()
 {
     if( pLineEdit_->text().isEmpty() )
         QMessageBox::warning( this, tr( "Warning" ), tr( "Preset name is empty.") );
-    else if( std::find( presets_.begin(), presets_.end(), pLineEdit_->text().toStdString() ) != presets_.end() )
+    else if( std::find( presets_.begin(), presets_.end(), pLineEdit_->text().toAscii().constData() ) != presets_.end() )
         QMessageBox::warning( this, tr( "Warning" ), tr( "Preset name already exists." ) );
     else
     {
-        options_.Remove( std::string( "Gradients/" ) + gradient_.GetName().toStdString() );
+        options_.Remove( std::string( "Gradients/" ) + gradient_.GetName().toAscii().constData() );
         gradient_.SetName( pLineEdit_->text() );
         QDialog::accept();
     }

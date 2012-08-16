@@ -58,7 +58,7 @@ namespace
 // -----------------------------------------------------------------------------
 void FilterCsv::Execute()
 {
-    bfs::path ouput( output_->text().toStdString() );
+    bfs::path ouput( output_->text().toAscii().constData() );
     pExport_->Execute( ouput, *this );
 }
 
@@ -80,7 +80,7 @@ void FilterCsv::Update( unsigned int value )
 // -----------------------------------------------------------------------------
 const std::string FilterCsv::GetName() const
 {
-    return tools::translate( "FilterCsv", "CSV export" ).toStdString();
+    return tools::translate( "FilterCsv", "CSV export" ).toAscii().constData();
 }
 
 // -----------------------------------------------------------------------------
@@ -89,7 +89,7 @@ const std::string FilterCsv::GetName() const
 // -----------------------------------------------------------------------------
 const std::string FilterCsv::GetDescription() const
 {
-    return tools::translate( "FilterCsv", "Export orbat, resources, stocks, weather schedule, diplomacy matrix, profiles and logistic links as CSV files." ).toStdString();;
+    return tools::translate( "FilterCsv", "Export orbat, resources, stocks, weather schedule, diplomacy matrix, profiles and logistic links as CSV files." ).toAscii().constData();;
 }
 
 // -----------------------------------------------------------------------------
@@ -113,7 +113,7 @@ QWidget* FilterCsv::CreateParametersWidget( QWidget* parent )
 // -----------------------------------------------------------------------------
 bool FilterCsv::IsValid() const
 {
-    return output_ && !output_->text().isEmpty() && bfs::exists( output_->text().toStdString() );
+    return output_ && !output_->text().isEmpty() && bfs::exists( output_->text().toAscii().constData() );
 }
 
 // -----------------------------------------------------------------------------

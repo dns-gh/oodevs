@@ -103,7 +103,7 @@ void AgentController::Create( dispatcher::Agent& entity )
 // -----------------------------------------------------------------------------
 void AgentController::CreateAgent( dispatcher::Agent_ABC& agent )
 {
-    if( !boost::algorithm::starts_with( agent.GetName().toStdString(), "HLA_" ) ) // $$$$ _RC_ SLI 2011-09-22: refactor this...
+    if( !boost::algorithm::starts_with( agent.GetName().toAscii().constData(), "HLA_" ) ) // $$$$ _RC_ SLI 2011-09-22: refactor this...
     {
         T_Agents::iterator itAgent( agents_.insert( T_Agents::value_type( agent.GetId(), T_Agent( new AgentProxy( agent, componentTypes_, componentTypeResolver_, doDisaggregation_ ) ) ) ).first );
         const kernel::AgentType& agentType = agent.GetType();
@@ -111,7 +111,7 @@ void AgentController::CreateAgent( dispatcher::Agent_ABC& agent )
         const rpr::EntityType entityType = aggregatesResolver_.Find( typeName );
         const rpr::ForceIdentifier forceIdentifier = GetForce( agent );
         for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
-            (*it)->AggregateCreated( *(itAgent->second), agent.GetId(), agent.GetName().toStdString(), forceIdentifier, entityType, agentType.GetSymbol() );
+            (*it)->AggregateCreated( *(itAgent->second), agent.GetId(), agent.GetName().toAscii().constData(), forceIdentifier, entityType, agentType.GetSymbol() );
         if( doDisaggregation_ )
             adapters_.push_back( T_AgentAdapter( new AgentAdapter( factory_, converter_, agent,
                     AgentAdapter::T_NotificationCallback( boost::bind( &AgentController::NotifyPlatformCreation, boost::ref( *this ), _1, _2, _3, _4 ) ) ) ) );
@@ -148,7 +148,7 @@ void AgentController::NotifyPlatformCreation( Agent_ABC& agent, dispatcher::Agen
     const rpr::EntityType entityType = componentTypeResolver_.Find( typeName );
     const rpr::ForceIdentifier forceIdentifier = GetForce( parent );
     unsigned int identifier = --identifier_factory;  // FIXME
-    const std::string name( parent.GetName().toStdString() + "_" + typeName + " " + boost::lexical_cast< std::string >( childIndex ) );
+    const std::string name( std::string( parent.GetName().toAscii().constData() ) + "_" + typeName + " " + boost::lexical_cast< std::string >( childIndex ) );
 
     for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
         (*it)->PlatformCreated( agent, identifier, name, forceIdentifier, entityType, symbol );

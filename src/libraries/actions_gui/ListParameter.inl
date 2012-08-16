@@ -382,7 +382,7 @@ template< typename ConcreteElement >
 Param_ABC* ListParameter< ConcreteElement >::CreateElement()
 {
     kernel::OrderParameter param = parameter_;
-    param.SetName( ( potential_ != 0 ) ?  CreateNextName().toStdString() : "POTENTIAL" );
+    param.SetName( ( potential_ != 0 ) ?  CreateNextName().toAscii().constData() : "POTENTIAL" );
     param.SetOptional( false );
     param.SetMinMaxOccurs( 1, 1 );
     Param_ABC& parameter = builder_.BuildOne( param, false );

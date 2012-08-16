@@ -15,12 +15,12 @@
 
 inline std::ostream& operator<<( std::ostream& os, const QString& s )
 {
-    return os << s.toStdString();
+    return os << s.toAscii().constData();
 }
 
 inline xml::xostream& operator<<( xml::xostream& xos, const QString& s )
 {
-    return xos << s.toStdString();
+    return xos << s.toAscii().constData();
 }
 
 namespace dispatcher

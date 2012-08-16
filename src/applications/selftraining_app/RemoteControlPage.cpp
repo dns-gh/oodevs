@@ -26,7 +26,7 @@ namespace
             : host_( host ), port_( port ), runningOnly_( runningOnly ) {}
         virtual bool Allows( const frontend::Exercise_ABC& exercise ) const
         {
-            return exercise.IsHostedBy( QString( "%1:%2" ).arg( host_.text() ).arg( port_.value() ).toStdString() )
+            return exercise.IsHostedBy( QString( "%1:%2" ).arg( host_.text() ).arg( port_.value() ).toAscii().constData() )
                 && ( !runningOnly_ || runningOnly_ && exercise.IsRunning() );
         }
         const QLineEdit& host_;

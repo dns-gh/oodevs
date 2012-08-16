@@ -234,7 +234,7 @@ void LogisticBaseStates::SerializeLogistics( xml::xostream& xos ) const
     if( !children.HasMoreElements() || dynamic_cast< const kernel::Ghost_ABC* >( &GetEntity() ) )
         return;
 
-    xos << xml::start( GetLinkType().toStdString() )
+    xos << xml::start( GetLinkType().toAscii().constData() )
             << xml::attribute( "id", GetEntity().GetId());
     while( children.HasMoreElements() )
     {

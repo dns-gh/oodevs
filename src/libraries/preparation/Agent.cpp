@@ -171,7 +171,7 @@ void Agent::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::attribute( "id", long( id_ ) )
         << xml::attribute( "type", type_.GetName() )
-        << xml::attribute( "name", name_.toStdString() );
+        << xml::attribute( "name", name_.toAscii().constData() );
     if( level_ != ENT_Tr::ConvertToNatureLevel( type_.GetNature().GetLevel() ) )
         xos << xml::attribute( "level", ENT_Tr::ConvertFromNatureLevel( level_ ) );
     if( overridenSymbol_ )
@@ -184,7 +184,7 @@ void Agent::SerializeAttributes( xml::xostream& xos ) const
     if( criticalIntelligence_() != "" )
     {
         xos << xml::start( "critical-intelligence" )
-                << xml::attribute( "content", criticalIntelligence_().toStdString() )
+                << xml::attribute( "content", criticalIntelligence_().toAscii().constData() )
             << xml::end;
     }
 }

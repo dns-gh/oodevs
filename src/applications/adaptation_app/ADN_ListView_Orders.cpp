@@ -140,7 +140,7 @@ bool ADN_ListView_Orders::Contains( const std::string& strComposanteName ) const
     ADN_ListViewItem* pItem = static_cast< ADN_ListViewItem* >( firstChild() );
     while( pItem != 0 )
     {
-        if( strComposanteName == pItem->text( 0 ).toStdString() )
+        if( strComposanteName == pItem->text( 0 ).toAscii().constData() )
             return true;
 
         pItem = static_cast< ADN_ListViewItem* >( pItem->nextSibling() );

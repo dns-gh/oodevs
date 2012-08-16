@@ -77,12 +77,12 @@ typedef T_PointVector::const_iterator  CIT_PointVector;
 
 inline std::ostream& operator<<( std::ostream& os, const QString& s )
 {
-    return os << s.toStdString();
+    return os << s.toAscii().constData();
 }
 
 inline xml::xostream& operator<<( xml::xostream& xos, const QString& s )
 {
-    return xos << s.toStdString();
+    return xos << s.toAscii().constData();
 }
 
 #endif // __preparation_app_pch_h_

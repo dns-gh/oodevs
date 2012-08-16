@@ -73,7 +73,7 @@ weather::Meteo* WeatherListView::SelectedItem()
     {
         const QString text = selectedItem()->text( 0 );
         for( IT_Weathers it = weathers_.begin(); it != weathers_.end(); ++it )
-            if( (*it)->GetName() == text.toStdString() )
+            if( (*it)->GetName() == text.toAscii().constData() )
                 return it->get();
     }
     return 0;
@@ -91,7 +91,7 @@ void WeatherListView::DeleteItem()
         removeItem( selectedItem() );
 
         for( IT_Weathers it = weathers_.begin(); it != weathers_.end(); ++it )
-            if( (*it)->GetName() == text.toStdString() )
+            if( (*it)->GetName() == text.toAscii().constData() )
             {
                 weathers_.erase( it );
                 break;

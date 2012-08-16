@@ -174,7 +174,7 @@ void ResourceLinksDialog_ABC::Update()
         return;
     }
     selectedItem_ = item;
-    std::string resource = item->text().toStdString();
+    std::string resource = item->text().toAscii().constData();
     ResourceNetwork_ABC::ResourceNode& node = resourceNodes_[ resource ];
     groupBox_->setChecked( node.isEnabled_ );
     production_->setValue( node.production_ );
@@ -210,7 +210,7 @@ void ResourceLinksDialog_ABC::Update()
 void ResourceLinksDialog_ABC::OnActivationChanged( bool on )
 {
     if( dotationList_->selectedItem() )
-        resourceNodes_[ dotationList_->selectedItem()->text().toStdString() ].isEnabled_ = on;
+        resourceNodes_[ dotationList_->selectedItem()->text().toAscii().constData() ].isEnabled_ = on;
 }
 
 // -----------------------------------------------------------------------------
@@ -220,7 +220,7 @@ void ResourceLinksDialog_ABC::OnActivationChanged( bool on )
 void ResourceLinksDialog_ABC::OnProductionChanged( int value )
 {
     if( dotationList_->selectedItem() )
-        resourceNodes_[ dotationList_->selectedItem()->text().toStdString() ].production_ = value;
+        resourceNodes_[ dotationList_->selectedItem()->text().toAscii().constData() ].production_ = value;
 }
 
 // -----------------------------------------------------------------------------
@@ -230,7 +230,7 @@ void ResourceLinksDialog_ABC::OnProductionChanged( int value )
 void ResourceLinksDialog_ABC::OnConsumptionChanged( int value )
 {
     if( dotationList_->selectedItem() )
-        resourceNodes_[ dotationList_->selectedItem()->text().toStdString() ].consumption_ = value;
+        resourceNodes_[ dotationList_->selectedItem()->text().toAscii().constData() ].consumption_ = value;
 }
 
 // -----------------------------------------------------------------------------
@@ -240,7 +240,7 @@ void ResourceLinksDialog_ABC::OnConsumptionChanged( int value )
 void ResourceLinksDialog_ABC::OnCriticalChanged( bool on )
 {
     if( dotationList_->selectedItem() )
-        resourceNodes_[ dotationList_->selectedItem()->text().toStdString() ].critical_ = on;
+        resourceNodes_[ dotationList_->selectedItem()->text().toAscii().constData() ].critical_ = on;
 }
 
 // -----------------------------------------------------------------------------
@@ -250,7 +250,7 @@ void ResourceLinksDialog_ABC::OnCriticalChanged( bool on )
 void ResourceLinksDialog_ABC::OnMaxStockChanged( int value )
 {
     if( dotationList_->selectedItem() )
-        resourceNodes_[ dotationList_->selectedItem()->text().toStdString() ].maxStock_ = value;
+        resourceNodes_[ dotationList_->selectedItem()->text().toAscii().constData() ].maxStock_ = value;
 }
 
 // -----------------------------------------------------------------------------
@@ -260,7 +260,7 @@ void ResourceLinksDialog_ABC::OnMaxStockChanged( int value )
 void ResourceLinksDialog_ABC::OnStockChanged( int value )
 {
     if( dotationList_->selectedItem() )
-        resourceNodes_[ dotationList_->selectedItem()->text().toStdString() ].stock_ = value;
+        resourceNodes_[ dotationList_->selectedItem()->text().toAscii().constData() ].stock_ = value;
 }
 
 // -----------------------------------------------------------------------------
@@ -271,7 +271,7 @@ void ResourceLinksDialog_ABC::OnValueChanged( int, int )
 {
     if( dotationList_->selectedItem() )
     {
-        std::string resource = dotationList_->selectedItem()->text().toStdString();
+        std::string resource = dotationList_->selectedItem()->text().toAscii().constData();
         for( int j = 0; j < table_->numRows(); ++j )
         {
             Q3CheckTableItem* item = static_cast< Q3CheckTableItem* >( table_->item( j, 1 ) );
@@ -296,7 +296,7 @@ void ResourceLinksDialog_ABC::Validate()
     if( dotationList_->selectedItem() )
     {
         // in case spin boxes have not been validated
-        std::string resource = dotationList_->selectedItem()->text().toStdString();
+        std::string resource = dotationList_->selectedItem()->text().toAscii().constData();
         resourceNodes_[ resource ].production_ = production_->value();
         resourceNodes_[ resource ].consumption_ = consumption_->value();
         resourceNodes_[ resource ].maxStock_ = maxStock_->value();
