@@ -688,5 +688,5 @@ void Model::DeleteCheckpoint( const std::string& name )
 // -----------------------------------------------------------------------------
 void Model::ClearReports()
 {
-    reports_.Clear();
+    reports_.DeleteAll();
 }
