@@ -10,6 +10,7 @@
 #include "DllConfig.h"
 #include "dis_plugin/Plugin.h"
 #include "dispatcher/Logger_ABC.h"
+#include "tools/Codec.h"
 #include <windows.h>
 
 namespace dispatcher
@@ -68,6 +69,7 @@ DIS_PLUGIN_DLL_API void DestroyInstance( dispatcher::Plugin_ABC* plugin, dispatc
 // -----------------------------------------------------------------------------
 BOOL APIENTRY DllMain( HANDLE /*hModule*/, DWORD ulReasonForCall, LPVOID /*lpReserved*/ )
 {
+    tools::SetCodec();
     switch( ulReasonForCall )
     {
     case DLL_PROCESS_ATTACH:

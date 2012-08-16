@@ -11,6 +11,7 @@
 #include "LauncherFacade.h"
 #include "Launcher.h"
 #include "Config.h"
+#include "tools/Codec.h"
 #include <boost/lexical_cast.hpp>
 #include <windows.h>
 
@@ -19,10 +20,11 @@
 // Created: SBO 2010-11-03
 // -----------------------------------------------------------------------------
 LauncherFacade::LauncherFacade()
-    : config_  ( new launcher::Config() )
+    : config_( 0 )
     , launcher_( 0 )
 {
-    // NOTHING
+    tools::SetCodec();
+    config_.reset( new launcher::Config() );
 }
 
 // -----------------------------------------------------------------------------
@@ -32,6 +34,7 @@ LauncherFacade::LauncherFacade()
 LauncherFacade::LauncherFacade( const std::string& path )
     : launcher_( 0 )
 {
+    tools::SetCodec();
     ::SetCurrentDirectory( path.c_str() );
     config_.reset( new launcher::Config() );
 }

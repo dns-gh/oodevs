@@ -12,6 +12,7 @@
 #include "dispatcher/StaticModel.h"
 #include "dispatcher/Config.h"
 #include "PluginProcessHandler.h"
+#include "tools/Codec.h"
 #include <windows.h>
 
 namespace dispatcher
@@ -73,6 +74,7 @@ BML_PLUGIN_DLL_API void DestroyInstance( dispatcher::Plugin_ABC* plugin, dispatc
 // -----------------------------------------------------------------------------
 BOOL APIENTRY DllMain( HANDLE /*hModule*/, DWORD ulReasonForCall, LPVOID /*lpReserved*/ )
 {
+    tools::SetCodec();
     switch( ulReasonForCall )
     {
     case DLL_PROCESS_ATTACH:

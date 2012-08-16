@@ -11,6 +11,7 @@
 #include "dispatcher/Logger_ABC.h"
 #include "hla_plugin/HlaPlugin.h"
 #include <hla/HLAException.h>
+#include "tools/Codec.h"
 #include <windows.h>
 
 namespace dispatcher
@@ -82,6 +83,7 @@ HLA_PLUGIN_DLL_API void DestroyInstance( dispatcher::Plugin_ABC* plugin, dispatc
 // -----------------------------------------------------------------------------
 BOOL APIENTRY DllMain( HANDLE /*hModule*/, DWORD ulReasonForCall, LPVOID /*lpReserved*/ )
 {
+    tools::SetCodec();
     switch( ulReasonForCall )
     {
     case DLL_PROCESS_ATTACH:

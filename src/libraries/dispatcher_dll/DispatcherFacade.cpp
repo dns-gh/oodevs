@@ -11,6 +11,7 @@
 #include "dispatcher/Config.h"
 #include "dispatcher/Dispatcher.h"
 #include "positions_plugin/PositionsPluginFactory.h"
+#include "tools/Codec.h"
 #include "tools/NullFileLoaderObserver.h"
 #include "MT_Tools/MT_ConsoleLogger.h"
 #include "MT_Tools/MT_FileLogger.h"
@@ -23,9 +24,13 @@ using namespace plugins;
 // Created: AGE 2008-05-21
 // -----------------------------------------------------------------------------
 DispatcherFacade::DispatcherFacade( int argc, char** argv, int maxConnections )
-    : observer_( new tools::NullFileLoaderObserver() )
-    , config_  ( new dispatcher::Config( *observer_ ) )
+    : observer_( 0 )
+    , config_( 0 )
+    , dispatcher_( 0 )
 {
+    tools::SetCodec();
+    observer_.reset( new tools::NullFileLoaderObserver() );
+    config_.reset( new dispatcher::Config( *observer_ ) );
     MT_LOG_REGISTER_LOGGER( *new MT_ConsoleLogger() );
     config_->Parse( argc, argv );
     bool bClearPreviousLog = !config_->HasCheckpoint();

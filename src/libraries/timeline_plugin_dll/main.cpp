@@ -12,6 +12,7 @@
 #include "dispatcher/Config.h"
 #include "dispatcher/StaticModel.h"
 #include "timeline_plugin/TimelinePlugin.h"
+#include "tools/Codec.h"
 #include <windows.h>
 
 namespace dispatcher
@@ -73,6 +74,7 @@ TIMELINE_PLUGIN_DLL_API void DestroyInstance( dispatcher::Plugin_ABC* plugin, di
 // -----------------------------------------------------------------------------
 BOOL APIENTRY DllMain( HANDLE /*hModule*/, DWORD ulReasonForCall, LPVOID /*lpReserved*/ )
 {
+    tools::SetCodec();
     switch( ulReasonForCall )
     {
     case DLL_PROCESS_ATTACH:

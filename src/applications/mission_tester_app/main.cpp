@@ -9,12 +9,14 @@
 
 #include "mission_tester/Config.h"
 #include "mission_tester/Facade.h"
+#include "tools/Codec.h"
 #include <iostream>
 
 int main( int argc, char* argv[] )
 {
     try
     {
+        tools::SetCodec();
         mission_tester::Config config( argc, argv );
         mission_tester::Facade facade( config, config );
         facade.Run();

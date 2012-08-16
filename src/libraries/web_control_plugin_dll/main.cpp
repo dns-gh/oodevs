@@ -14,6 +14,7 @@
 #include "dispatcher/StaticModel.h"
 #include "dispatcher/Config.h"
 #include "web_control_plugin/WebPlugin.h"
+#include "tools/Codec.h"
 #include <xeumeuleu/xml.hpp>
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
@@ -69,5 +70,6 @@ WEB_CONTROL_PLUGIN_DLL_API void DestroyInstance( dispatcher::Plugin_ABC* plugin,
 // -----------------------------------------------------------------------------
 BOOL APIENTRY DllMain( HANDLE /*hModule*/, DWORD /*ulReasonForCall*/, LPVOID /*lpReserved*/ )
 {
+    tools::SetCodec();
     return true;
 }
