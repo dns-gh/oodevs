@@ -25,7 +25,7 @@
 // Created: SLG 2011-02-17
 // -----------------------------------------------------------------------------
 ADN_Symbols_Data::SymbolsInfra::SymbolsInfra( const QString& label )
-    : strName_( label.toStdString() )
+    : strName_( label.toAscii().constData() )
 {
     // NOTHING
 }
@@ -136,7 +136,7 @@ void ADN_Symbols_Data::ReadInfra( xml::xistream& xis )
     const std::string type = xis.attribute< std::string >( "name" );
     const QString label = tools::findTranslation( "infrastructures", type.c_str() );
     infras_.AddItem( new SymbolsInfra( label ) );
-    types_[ label.toStdString() ] = type;
+    types_[ label.toAscii().constData() ] = type;
 }
 
 // -----------------------------------------------------------------------------

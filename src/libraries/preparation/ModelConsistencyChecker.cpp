@@ -527,7 +527,7 @@ namespace
 {
     bool compare_ghosts ( const Ghost_ABC* ghost1, const Ghost_ABC* ghost2 )
     {
-        return ghost1->GetType().toStdString() < ghost2->GetType().toStdString();
+        return ghost1->GetType().toAscii().constData() < ghost2->GetType().toAscii().constData();
     }
 }
 
@@ -549,7 +549,7 @@ void ModelConsistencyChecker::CheckGhosts()
     }
     convertedEntities.sort( compare_ghosts );
     for ( std::list< const Ghost_ABC* >::const_iterator cit = convertedEntities.begin(); cit != convertedEntities.end(); ++cit )
-        AddError( eGhostConverted, *cit, (*cit)->GetType().toStdString() );
+        AddError( eGhostConverted, *cit, (*cit)->GetType().toAscii().constData() );
 }
 
 // -----------------------------------------------------------------------------

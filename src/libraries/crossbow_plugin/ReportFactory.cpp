@@ -86,12 +86,12 @@ std::string ReportFactory::RenderParameter( const sword::MissionParameter& value
     else if( param.has_agent() )
     {
         if( const dispatcher::Agent_ABC* agent = model_.Agents().Find( param.agent().id() ) )
-            ss << agent->GetName().toStdString() << " [" << agent->GetId() << "]";
+            ss << agent->GetName().toAscii().constData() << " [" << agent->GetId() << "]";
     }
     else if( param.has_agentknowledge() )
     {
         if( const dispatcher::AgentKnowledge_ABC* knowledge = model_.AgentKnowledges().Find( param.agentknowledge().id() ) )
-            ss << knowledge->GetName().toStdString() << " [" << knowledge->GetId() << "]";
+            ss << knowledge->GetName().toAscii().constData() << " [" << knowledge->GetId() << "]";
     }
 //    else if( value.value().has_objectknowledge() )
 //        ss << value.value().objectknowledge(); // $$$$ SBO 2007-08-27: resolve...

@@ -50,7 +50,7 @@ void ProfileList::Update( const QString& exercise )
     try
     {
         if( !exercise.isEmpty() )
-            ReadProfiles( exercise.toStdString() );
+            ReadProfiles( exercise.toAscii().constData() );
         emit highlighted( 0 );
     }
     catch( ... )

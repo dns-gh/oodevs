@@ -127,7 +127,7 @@ void SpawnCommand::Start()
                          &internal_->pid_) )                    // lpProcessInformation
     {
         DWORD errCode = GetLastError();
-        throw std::exception( tools::translate( "SpawnCommand", "Could not start process: %1, error: %2" ).arg( debug.c_str() ).arg( errCode ).toStdString().c_str() );
+        throw std::exception( tools::translate( "SpawnCommand", "Could not start process: %1, error: %2" ).arg( debug.c_str() ).arg( errCode ).toAscii().constData() );
     }
 }
 
@@ -314,7 +314,7 @@ QString SpawnCommand::GetStatus() const
 // -----------------------------------------------------------------------------
 void SpawnCommand::SetWorkingDirectory( const QString& directory )
 {
-    workingDirectory_ = directory.toStdString();
+    workingDirectory_ = directory.toAscii().constData();
 }
 
 // -----------------------------------------------------------------------------

@@ -290,7 +290,7 @@ namespace
         while( list.size() > keep )
             list.pop_back();
         QString result = list.join( "/" );
-        return result.isNull() ? "" : result.toStdString();
+        return result.isNull() ? "" : result.toAscii().constData();
     }
 }
 

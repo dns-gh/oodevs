@@ -165,7 +165,7 @@ void ResourceNetwork::CommitTo( sword::MissionParameter_Value& message ) const
 // -----------------------------------------------------------------------------
 void ResourceNetwork::AddResourceParameter( const std::string& resource )
 {
-    AddParameter( *new Resource( kernel::OrderParameter( tools::translate( "Parameter", "Resource" ).toStdString(), "resource", false ), resource ) );
+    AddParameter( *new Resource( kernel::OrderParameter( tools::translate( "Parameter", "Resource" ).toAscii().constData(), "resource", false ), resource ) );
 }
 
 // -----------------------------------------------------------------------------

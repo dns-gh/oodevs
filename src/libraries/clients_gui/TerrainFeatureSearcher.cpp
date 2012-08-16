@@ -88,7 +88,7 @@ bool TerrainFeatureSearcher::Search( const QString& name, geometry::Point2f& poi
 {
     if( !pendingSourceFile_.empty() )
         LoadFeatures();
-    const T_Feature* feature = nameLocations_->Find( Cleanup( name.toStdString() ) );
+    const T_Feature* feature = nameLocations_->Find( Cleanup( name.toAscii().constData() ) );
     if( feature != current_ )
         index_ = 0;
     current_ = feature;

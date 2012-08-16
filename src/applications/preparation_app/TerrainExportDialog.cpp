@@ -101,7 +101,7 @@ namespace
 void TerrainExportDialog::accept()
 {
     QDialog::accept();
-    const std::string path = pathEditor_->text().toStdString();
+    const std::string path = pathEditor_->text().toAscii().constData();
     assert( !path.empty() && bfs::exists( path ) && bfs::is_directory( path ) );
 
     QProgressDialog progressDialog( "", "", 0, 100, this, Qt::SplashScreen );
@@ -129,5 +129,5 @@ void TerrainExportDialog::OnBrowseExportShp()
 {
     QString newDirectory = QFileDialog::getExistingDirectory( this, tr( "Select export directory" ), pathEditor_->text() );
     pathEditor_->setText( newDirectory );
-    okButton_->setEnabled( !newDirectory.isEmpty() && bfs::exists( newDirectory.toStdString() ) && bfs::is_directory( newDirectory.toStdString() ) );
+    okButton_->setEnabled( !newDirectory.isEmpty() && bfs::exists( newDirectory.toAscii().constData() ) && bfs::is_directory( newDirectory.toAscii().constData() ) );
 }

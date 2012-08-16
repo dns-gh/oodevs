@@ -115,11 +115,11 @@ bool EntitySymbolEditor::IsLevelValid() const
 // -----------------------------------------------------------------------------
 void EntitySymbolEditor::UpdateSymbol()
 {
-    nature_ = natureWidget_->text().toStdString();
+    nature_ = natureWidget_->text().toAscii().constData();
     icon_->SetSymbol( symbolsFactory_.CreateSymbol( nature_ ) );
     if( levelComboBox_->currentText() != levelBase_ )
     {
-        level_ = levelComboBox_->currentText().toStdString();
+        level_ = levelComboBox_->currentText().toAscii().constData();
         icon_->SetLevel( std::string( "levels/" ) + level_ );
     }
     else

@@ -75,7 +75,7 @@ Position ObjectKnowledgeManipulator::GetPosition() const
 // -----------------------------------------------------------------------------
 std::string ObjectKnowledgeManipulator::GetOwnerTeam() const
 {
-    return std::string( knowledge_.GetOwner().GetName().toStdString() );
+    return std::string( knowledge_.GetOwner().GetName().toAscii().constData() );
     // return knowledge_.model_.sides().Get( knowledge_.team_.GetId() ).name_;
 }
 

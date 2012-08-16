@@ -90,7 +90,7 @@ void AgentController::Create( dispatcher::Agent& entity )
 // -----------------------------------------------------------------------------
 void AgentController::CreateAgent( dispatcher::Agent_ABC& agent )
 {
-    if( !boost::algorithm::starts_with( agent.GetName().toStdString(), "HLA_" ) ) // $$$$ _RC_ SLI 2011-09-22: refactor this...
+    if( !boost::algorithm::starts_with( agent.GetName().toAscii().constData(), "HLA_" ) ) // $$$$ _RC_ SLI 2011-09-22: refactor this...
     {
         agents_.push_back( T_Agent( new AgentProxy( agent, componentTypes_, componentTypeResolver_ ) ) );
         const kernel::AgentType& agentType = agent.GetType();
@@ -98,7 +98,7 @@ void AgentController::CreateAgent( dispatcher::Agent_ABC& agent )
         const rpr::EntityType entityType = aggregatesResolver_.Find( typeName );
         const rpr::ForceIdentifier forceIdentifier = GetForce( agent );
         for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
-            (*it)->AggregateCreated( *agents_.back(), agent.GetId(), agent.GetName().toStdString(), forceIdentifier, entityType, agentType.GetSymbol() );
+            (*it)->AggregateCreated( *agents_.back(), agent.GetId(), agent.GetName().toAscii().constData(), forceIdentifier, entityType, agentType.GetSymbol() );
     }
 }
 

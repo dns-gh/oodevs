@@ -274,7 +274,7 @@ bool ProfilesModel::IsWriteableByLowLevel( const kernel::Entity_ABC& entity ) co
 bool ProfilesModel::IsReadable( const kernel::Entity_ABC& entity, const std::string& profile ) const
 {
     for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
-        if( (*it)->GetLogin().toStdString() == profile && (*it)->IsReadable( entity ) )
+        if( (*it)->GetLogin().toAscii().constData() == profile && (*it)->IsReadable( entity ) )
                 return true;
     const kernel::Entity_ABC* superior = entity.Get< kernel::TacticalHierarchies >().GetSuperior();
     return superior ? IsReadable( *superior, profile ) : false;
@@ -287,7 +287,7 @@ bool ProfilesModel::IsReadable( const kernel::Entity_ABC& entity, const std::str
 bool ProfilesModel::IsWriteable( const kernel::Entity_ABC& entity, const std::string& profile ) const
 {
     for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
-        if( (*it)->GetLogin().toStdString() == profile && (*it)->IsWriteable( entity ) )
+        if( (*it)->GetLogin().toAscii().constData() == profile && (*it)->IsWriteable( entity ) )
             return true;
     const kernel::Entity_ABC* superior = entity.Get< kernel::TacticalHierarchies >().GetSuperior();
     return superior ? IsWriteable( *superior, profile ) : false;
@@ -300,7 +300,7 @@ bool ProfilesModel::IsWriteable( const kernel::Entity_ABC& entity, const std::st
 bool ProfilesModel::IsControlledByLowLevel( const std::set< std::string >& editors, const kernel::Entity_ABC& entity )
 {
     for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
-        if( editors.find( (*it)->GetLogin().toStdString() ) == editors.end() && (*it)->IsLowLevel() && (*it)->IsWriteable( entity ) )
+        if( editors.find( (*it)->GetLogin().toAscii().constData() ) == editors.end() && (*it)->IsLowLevel() && (*it)->IsWriteable( entity ) )
             return true;
     const kernel::Entity_ABC* superior = entity.Get< kernel::TacticalHierarchies >().GetSuperior();
     return superior ? IsControlledByLowLevel( editors, *superior ) : false;
@@ -397,7 +397,7 @@ void ProfilesModel::Visit( T_Units& units ) const
             std::vector< unsigned long > ids;
             (*it)->Visit( ids );
             BOOST_FOREACH( unsigned long id, ids )
-                units[ id ].insert( (*it)->GetLogin().toStdString() );
+                units[ id ].insert( (*it)->GetLogin().toAscii().constData() );
         }
 }
 
@@ -443,7 +443,7 @@ std::vector< std::string > ProfilesModel::GetProfilesWhoCanRead( const kernel::E
     std::vector< std::string > result;
     for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         if( ( *it )->IsReadable( entity ) )
-            result.push_back( ( *it )->GetLogin().toStdString() );
+            result.push_back( ( *it )->GetLogin().toAscii().constData() );
     return result;
 }
 
@@ -456,6 +456,6 @@ std::vector< std::string > ProfilesModel::GetProfilesWhoCanWrite( const kernel::
     std::vector< std::string > result;
     for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         if( ( *it )->IsWriteable( entity ) )
-            result.push_back( ( *it )->GetLogin().toStdString() );
+            result.push_back( ( *it )->GetLogin().toAscii().constData() );
     return result;
 }

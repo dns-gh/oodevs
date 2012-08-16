@@ -54,7 +54,7 @@ ADN_OpenFile_Exception::~ADN_OpenFile_Exception()
 // -----------------------------------------------------------------------------
 std::string ADN_OpenFile_Exception::GetExceptionTitle() const
 {
-    return qApp->translate( "ADN_OpenFile_Exception", "File error" ).toStdString();
+    return qApp->translate( "ADN_OpenFile_Exception", "File error" ).toAscii().constData();
 }
 
 
@@ -64,7 +64,7 @@ std::string ADN_OpenFile_Exception::GetExceptionTitle() const
 // -----------------------------------------------------------------------------
 std::string ADN_OpenFile_Exception::GetExceptionMessage() const
 {
-    return qApp->translate( "ADN_OpenFile_Exception", "Could not open file '%1'.\nMake sure the file exists." ).arg( strFileName_.c_str() ).toStdString();
+    return qApp->translate( "ADN_OpenFile_Exception", "Could not open file '%1'.\nMake sure the file exists." ).arg( strFileName_.c_str() ).toAscii().constData();
 }
 
 

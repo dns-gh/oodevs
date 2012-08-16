@@ -58,7 +58,7 @@ ADN_DataException::~ADN_DataException()
 // -----------------------------------------------------------------------------
 std::string ADN_DataException::GetExceptionTitle() const
 {
-    return qApp->translate( "ADN_DataException", "Data error" ).toStdString();
+    return qApp->translate( "ADN_DataException", "Data error" ).toAscii().constData();
 }
 
 

@@ -510,7 +510,7 @@ void ADN_Composantes_Data::LogSupplyInfos::ReadArchive( xml::xistream& input )
         bIsCarrier_ = true;
         helpers::ResourceNatureInfos* pNature = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindDotationNature( strNature );
         if( !pNature )
-            throw ADN_DataException( tools::translate( "Composante_Data", "Invalid data" ).toStdString(), tools::translate( "Composante_Data", "Equipment - Invalid resource nature '%1'" ).arg( strNature.c_str() ).toStdString() );
+            throw ADN_DataException( tools::translate( "Composante_Data", "Invalid data" ).toAscii().constData(), tools::translate( "Composante_Data", "Equipment - Invalid resource nature '%1'" ).arg( strNature.c_str() ).toAscii().constData() );
         ptrResourceNature_ = pNature;
     }
 }
@@ -679,7 +679,7 @@ void ADN_Composantes_Data::BreakdownInfos::ReadArchive( xml::xistream& input )
           >> xml::attribute( "percentage", rPercentage_ );
     ADN_Breakdowns_Data::BreakdownInfo* pBreakdown = ADN_Workspace::GetWorkspace().GetBreakdowns().GetData().FindBreakdown( strName );
     if( pBreakdown == 0 )
-        throw ADN_DataException( tools::translate( "Composante_Data", "Invalid data" ).toStdString(), tools::translate( "Composante_Data", "Equipment - Invalid breakdown type '%1'" ).arg( strName.c_str() ).toStdString() );
+        throw ADN_DataException( tools::translate( "Composante_Data", "Invalid data" ).toAscii().constData(), tools::translate( "Composante_Data", "Equipment - Invalid breakdown type '%1'" ).arg( strName.c_str() ).toAscii().constData() );
     ptrBreakdown_ = pBreakdown;
     ptrBreakdown_.SetVector( ADN_Workspace::GetWorkspace().GetBreakdowns().GetData().vBreakdowns_ );
 }
@@ -793,7 +793,7 @@ void ADN_Composantes_Data::BreakdownGroupInfos::WriteArchive( xml::xostream& out
     for( CIT_BreakdownInfos_Vector it = vBreakdowns_.begin(); it != vBreakdowns_.end() ; ++it )
         rSum += (*it)->rPercentage_.GetData();
     if( rSum != 100.0 )
-        throw ADN_DataException( tools::translate( "Composante_Data",  "Invalid data" ).toStdString(), tools::translate( "Composante_Data", "Equipment '%1' - Invalid breakdown data : sum != 100" ).arg( composante.c_str() ).toStdString() );
+        throw ADN_DataException( tools::translate( "Composante_Data",  "Invalid data" ).toAscii().constData(), tools::translate( "Composante_Data", "Equipment '%1' - Invalid breakdown data : sum != 100" ).arg( composante.c_str() ).toAscii().constData() );
 
     for( CIT_BreakdownInfos_Vector it = vBreakdowns_.begin(); it != vBreakdowns_.end() ; ++it )
         (*it)->WriteArchive( strName_, output );
@@ -913,7 +913,7 @@ void ADN_Composantes_Data::SensorInfos::ReadArchive( xml::xistream& input )
           >> xml::attribute( "type", type );
     ADN_Sensors_Data::SensorInfos* pSensor = ADN_Workspace::GetWorkspace().GetSensors().GetData().FindSensor( type );
     if( pSensor == NULL )
-        throw ADN_DataException( tools::translate( "Composante_Data",  "Invalid data" ).toStdString(),  tools::translate( "Composante_Data", "Equipment - Invalid sensor type '%1'" ).arg( type.c_str() ).toStdString() );
+        throw ADN_DataException( tools::translate( "Composante_Data",  "Invalid data" ).toAscii().constData(),  tools::translate( "Composante_Data", "Equipment - Invalid sensor type '%1'" ).arg( type.c_str() ).toAscii().constData() );
     ptrSensor_ = pSensor;
 }
 
@@ -981,7 +981,7 @@ void ADN_Composantes_Data::RadarInfos::ReadArchive( xml::xistream& input )
     input >> xml::attribute( "type", strRadarName );
     ADN_Radars_Data::RadarInfos* pRadar = ADN_Workspace::GetWorkspace().GetSensors().GetData().radarData_.FindRadar( strRadarName );
     if( pRadar == 0 )
-        throw ADN_DataException( tools::translate( "Composante_Data",  "Invalid data" ).toStdString(),  tools::translate( "Composante_Data", "Equipment - Invalid radar type '%1'" ).arg( strRadarName.c_str() ).toStdString() );
+        throw ADN_DataException( tools::translate( "Composante_Data",  "Invalid data" ).toAscii().constData(),  tools::translate( "Composante_Data", "Equipment - Invalid radar type '%1'" ).arg( strRadarName.c_str() ).toAscii().constData() );
     ptrRadar_ = pRadar;
     strName_ = strRadarName;
 }
@@ -1062,7 +1062,7 @@ void ADN_Composantes_Data::WeaponInfos::ReadArchive( xml::xistream& input )
           >> xml::attribute( "munition", strAmmunition );
     ADN_Weapons_Data::WeaponInfos* pWeapon = ADN_Workspace::GetWorkspace().GetWeapons().GetData().FindWeapon( strLauncher, strAmmunition );
     if( !pWeapon )
-        throw ADN_DataException( tools::translate( "Composante_Data",  "Invalid data" ).toStdString(), tools::translate( "Composante_Data",  "Equipment - Invalid weapon system '%1/%2'" ).arg( strLauncher.c_str(), strAmmunition.c_str() ).toStdString() );
+        throw ADN_DataException( tools::translate( "Composante_Data",  "Invalid data" ).toAscii().constData(), tools::translate( "Composante_Data",  "Equipment - Invalid weapon system '%1/%2'" ).arg( strLauncher.c_str(), strAmmunition.c_str() ).toAscii().constData() );
     ptrWeapon_ = pWeapon;
     strName_ = pWeapon->strName_.GetData();
 }
@@ -1198,7 +1198,7 @@ void ADN_Composantes_Data::ActiveProtectionsInfos::ReadArchive( xml::xistream& i
     input >> xml::attribute( "name", strActiveProtectionName );
     ADN_ActiveProtections_Data::ActiveProtectionsInfos* pActiveProtection = ADN_Workspace::GetWorkspace().GetActiveProtections().GetData().FindActiveProtection( strActiveProtectionName );
     if( pActiveProtection == 0 )
-        throw ADN_DataException( tools::translate( "Composante_Data",  "Invalid data" ).toStdString(), tools::translate( "Composante_Data",  "Equipment - Invalid active protection type '%1'" ).arg( strActiveProtectionName.c_str() ).toStdString() );
+        throw ADN_DataException( tools::translate( "Composante_Data",  "Invalid data" ).toAscii().constData(), tools::translate( "Composante_Data",  "Equipment - Invalid active protection type '%1'" ).arg( strActiveProtectionName.c_str() ).toAscii().constData() );
     ptrActiveProtections_ = pActiveProtection;
     strName_ = strActiveProtectionName;
 }
@@ -1276,7 +1276,7 @@ void ADN_Composantes_Data::CategoryInfos::ReadArchive( xml::xistream& input )
           >> xml::optional >> xml::attribute( "normalized-consumption", rNormalizedConsumption_ );
     ADN_Equipement_Data::CategoryInfo* pCat = ptrDotation_.GetData()->FindCategory( strCategory );
     if( !pCat )
-        throw ADN_DataException( tools::translate( "Composante_Data",  "Invalid data" ).toStdString(), tools::translate( "Composante_Data",  "Equipment - Invalid resource type '%1'" ).arg( strCategory.c_str() ).toStdString() );
+        throw ADN_DataException( tools::translate( "Composante_Data",  "Invalid data" ).toAscii().constData(), tools::translate( "Composante_Data",  "Equipment - Invalid resource type '%1'" ).arg( strCategory.c_str() ).toAscii().constData() );
     ptrCategory_ = pCat;
 }
 
@@ -1506,7 +1506,7 @@ void ADN_Composantes_Data::ObjectInfos::ReadArchive( xml::xistream& input )
 
     ADN_Objects_Data_ObjectInfos* pObject = ADN_Workspace::GetWorkspace().GetObjects().GetData().FindObject( strType );
     if( !pObject )
-        throw ADN_DataException( tools::translate( "Composante_Data",  "Invalid data" ).toStdString(), tools::translate( "Composante_Data",  "Equipment - Invalid object type '%1'" ).arg( strType.c_str() ).toStdString() );
+        throw ADN_DataException( tools::translate( "Composante_Data",  "Invalid data" ).toAscii().constData(), tools::translate( "Composante_Data",  "Equipment - Invalid object type '%1'" ).arg( strType.c_str() ).toAscii().constData() );
     ptrObject_ = pObject;
 
     input >> xml::optional >> xml::attribute( "initial-construction-time", initialBuildTime_ )
@@ -1672,7 +1672,7 @@ void ADN_Composantes_Data::ConsumptionsInfos::ReadConsumption( xml::xistream& in
     input >> xml::attribute( "status", status );
     E_ConsumptionType type = ADN_Tr::ConvertToConsumptionType( status );
     if( type == E_ConsumptionType( -1 ) )
-        throw ADN_DataException( tools::translate( "Composante_Data",  "Invalid data" ).toStdString(), tools::translate( "Composante_Data",  "Equipment - Invalid activty '%1'" ).arg( status.c_str() ).toStdString() );
+        throw ADN_DataException( tools::translate( "Composante_Data",  "Invalid data" ).toAscii().constData(), tools::translate( "Composante_Data",  "Equipment - Invalid activty '%1'" ).arg( status.c_str() ).toAscii().constData() );
     input >> xml::list( "resource", *this, &ADN_Composantes_Data::ConsumptionsInfos::ReadDotation, type );
 }
 
@@ -1687,7 +1687,7 @@ void ADN_Composantes_Data::ConsumptionsInfos::ReadDotation( xml::xistream& input
           >> xml::attribute( "name", name );
     ADN_Equipement_Data::CategoryInfo* pCategory = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( category, name );
     if( !pCategory )
-        throw ADN_DataException( tools::translate( "Composante_Data",  "Invalid data" ).toStdString(), tools::translate( "Composante_Data",  "Equipment - Invalid resource type '%1'" ).arg( name.c_str() ).toStdString() );
+        throw ADN_DataException( tools::translate( "Composante_Data",  "Invalid data" ).toAscii().constData(), tools::translate( "Composante_Data",  "Equipment - Invalid resource type '%1'" ).arg( name.c_str() ).toAscii().constData() );
     std::auto_ptr<ConsumptionItem> spNew( new ConsumptionItem( type, *pCategory ) );
     spNew->ReadArchive( input );
     vConsumptions_.AddItem( spNew.release() );
@@ -1933,7 +1933,7 @@ void ADN_Composantes_Data::ComposanteInfos::ReadSpeed( xml::xistream& input )
     }
     catch ( const std::exception& /*ex*/ )
     {
-        throw ADN_DataException( tools::translate( "Composantes_Data", "Invalid data" ).toStdString(), tools::translate( "Composantes_Data", "Equipment - Invalid terrain type '%1'" ).arg( strLocation.c_str() ).toStdString() );
+        throw ADN_DataException( tools::translate( "Composantes_Data", "Invalid data" ).toAscii().constData(), tools::translate( "Composantes_Data", "Equipment - Invalid terrain type '%1'" ).arg( strLocation.c_str() ).toAscii().constData() );
     }
 }
 
@@ -2019,13 +2019,13 @@ void ADN_Composantes_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
     {
         equipmentCategory_ = ADN_Tr::ConvertToEquipmentCategory( equipmentCategory );
         if( equipmentCategory_ == E_EquipmentCategory( -1 ) )
-            throw ADN_DataException( tr( "Invalid data" ).toStdString(), tr( "Composantes - Invalid equipment category '%1'" ).arg( equipmentCategory.c_str() ).toStdString() );
+            throw ADN_DataException( tr( "Invalid data" ).toAscii().constData(), tr( "Composantes - Invalid equipment category '%1'" ).arg( equipmentCategory.c_str() ).toAscii().constData() );
     }
 
     ptrArmor_ = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindArmor( strArmor );
     ptrSize_ = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindSize( strSize );
     if( ! ptrArmor_.GetData() || ! ptrSize_.GetData() )
-        throw ADN_DataException( tools::translate( "Composante_Data",  "Invalid data" ).toStdString(), tools::translate( "Composante_Data",  "Equipment - Invalid armor and/or volume" ).toStdString() );
+        throw ADN_DataException( tools::translate( "Composante_Data",  "Invalid data" ).toAscii().constData(), tools::translate( "Composante_Data",  "Equipment - Invalid armor and/or volume" ).toAscii().constData() );
 
     input >> xml::start( "speeds" )
             >> xml::attribute( "max", rMaxSpeed_ )
@@ -2256,7 +2256,7 @@ void ADN_Composantes_Data::ComposanteInfos::WriteArchive( xml::xostream& output 
         output << xml::end;
     }
     else if( !IsValidDatabase() )
-        throw ADN_DataException( tools::translate( "Composante_Data", "Missing breakdown" ).toStdString(), tools::translate( "Composante_Data", "Equipment - Shall contain at least one breakdown for " ).toStdString() + strName_.GetData() );
+        throw ADN_DataException( tools::translate( "Composante_Data", "Missing breakdown" ).toAscii().constData(), tools::translate( "Composante_Data", "Equipment - Shall contain at least one breakdown for " ).toAscii().constData() + strName_.GetData() );
     if( bMaxSlope_.GetData() )
         output << xml::attribute( "max-slope", rMaxSlope_.GetData() / 100.0 );
 

@@ -107,7 +107,7 @@ void Profile::ReadList( const T& idList, T_Ids& ids )
 void Profile::Update( const sword::AuthenticationResponse& message )
 {
     if( message.error_code() == sword::AuthenticationResponse::too_many_connections )
-        throw std::exception( tools::translate( "Profile", "Too many connections" ).toStdString().c_str() );
+        throw std::exception( tools::translate( "Profile", "Too many connections" ).toAscii().constData() );
     else
     {
         loggedIn_ = ( message.error_code() == sword::AuthenticationResponse::success );

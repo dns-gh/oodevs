@@ -30,7 +30,7 @@ namespace
     std::string ReadLang()
     {
         QSettings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
-        return settings.readEntry( "/Common/Language", QTextCodec::locale() ).toStdString();
+        return settings.readEntry( "/Common/Language", QTextCodec::locale() ).toAscii().constData();
     }
 
     bool IsInputArgument( const std::string& argument )
@@ -110,7 +110,7 @@ std::string FilterCommand::ConvertArgumentVariable( const std::string& value ) c
     if( value == "$rootdir$" )
         result = config_.GetRootDir();
     else if( value == "$exercise$" )
-        result = model_.IsLoaded() && !model_.exercise_.GetName().isEmpty() ? model_.exercise_.GetName().toStdString() : config_.GetExerciseName();
+        result = model_.IsLoaded() && !model_.exercise_.GetName().isEmpty() ? model_.exercise_.GetName().toAscii().constData() : config_.GetExerciseName();
     else if( value == "$exercise_dir$" )
         result = config_.GetExerciseDir( config_.GetExerciseName() );
     else if( value == "$orbat_file$" )
@@ -355,7 +355,7 @@ void FilterCommand::NotifyError( const std::string& error, std::string /*command
 void FilterCommand::OnValueChanged()
 {
     for( CIT_InputArguments it = inputArguments_.begin(); it != inputArguments_.end(); ++it )
-        arguments_[ it->first ].value_ = it->second->GetText().toStdString();
+        arguments_[ it->first ].value_ = it->second->GetText().toAscii().constData();
     ComputeArgument();
 }
 

@@ -371,7 +371,7 @@ template< typename ConcreteElement >
 Param_ABC* ListParameter< ConcreteElement >::CreateElement() 
 {
     kernel::OrderParameter param = parameter_;
-    param.SetName( tools::translate( "ListParameter", "%1 (item %2)" ).arg( parameter_.GetName().c_str() ).arg( ++count_ ).toStdString() );
+    param.SetName( tools::translate( "ListParameter", "%1 (item %2)" ).arg( parameter_.GetName().c_str() ).arg( ++count_ ).toAscii().constData() );
     param.SetOptional( false );
     param.SetMinMaxOccurs( 1, 1 );
     Param_ABC& parameter = builder_.BuildOne( param, false );

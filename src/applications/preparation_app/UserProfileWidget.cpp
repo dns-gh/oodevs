@@ -221,7 +221,7 @@ void UserProfileWidget::Display( UserProfile& profile )
         if( !role.empty() )
             userRole_->setCurrentText( userRoleDico_->GetLabel( role, dicoKind_, dicoLanguage_ ).c_str() );
         else if( userRole_->currentText() != "" )
-            profile_->SetUserRole( userRoleDico_->GetKey( userRole_->currentText().toStdString(), dicoKind_, dicoLanguage_ ) );
+            profile_->SetUserRole( userRoleDico_->GetKey( userRole_->currentText().toAscii().constData(), dicoKind_, dicoLanguage_ ) );
     }
 
     pUnits_->Display( profile );
@@ -243,9 +243,9 @@ void UserProfileWidget::OnLoginChanged()
         {
             QString login = login_->text();
             if( profile_->GetLogin() != login && checker_.Exists( profile_->GetLogin(), login ) )
-                throw std::exception( tools::translate( "UserProfileWidget", "Duplicate login: '%1'." ).arg( login ).toStdString().c_str() );
+                throw std::exception( tools::translate( "UserProfileWidget", "Duplicate login: '%1'." ).arg( login ).toAscii().constData() );
             if( profile_->GetLogin() != login && model_.profiles_.Exists( login ) && !checker_.Exists( login ) )
-                throw std::exception( tools::translate( "UserProfileWidget", "Duplicate login: '%1'." ).arg( login ).toStdString().c_str() );
+                throw std::exception( tools::translate( "UserProfileWidget", "Duplicate login: '%1'." ).arg( login ).toAscii().constData() );
             profile_->SetLogin( login );
         }
     }
@@ -274,7 +274,7 @@ void UserProfileWidget::OnUserRole( const QString& role )
 {
     if( userRoleDico_ && profile_ )
     {
-        const std::string& key = userRoleDico_->GetKey( role.toStdString(), dicoKind_, dicoLanguage_ );
+        const std::string& key = userRoleDico_->GetKey( role.toAscii().constData(), dicoKind_, dicoLanguage_ );
         profile_->SetUserRole( key );
         pUnits_->Initialize();
         Update();

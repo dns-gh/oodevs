@@ -125,10 +125,10 @@ void ADN_Composantes_GUI::Build()
 
     // Breakdowns
     pBreakdownsGroup_ = new Q3GroupBox( 1, Qt::Horizontal, tr( "Breakdowns" ) );
-    ADN_Composantes_BreakdownsTable* pAttritionBreakdowns = new ADN_Composantes_BreakdownsTable( tr( "Attrition breakdowns" ).toStdString(), pBreakdownsGroup_ );
+    ADN_Composantes_BreakdownsTable* pAttritionBreakdowns = new ADN_Composantes_BreakdownsTable( tr( "Attrition breakdowns" ).toAscii().constData(), pBreakdownsGroup_ );
     pAttritionBreakdowns->SetGoToOnDoubleClick( ::eBreakdowns );
     vInfosConnectors[eAttritionBreakdowns] = &pAttritionBreakdowns->GetConnector();
-    ADN_Composantes_BreakdownsTable* pRandomBreakdowns = new ADN_Composantes_BreakdownsTable( tr( "Random breakdowns" ).toStdString(), pBreakdownsGroup_ );
+    ADN_Composantes_BreakdownsTable* pRandomBreakdowns = new ADN_Composantes_BreakdownsTable( tr( "Random breakdowns" ).toAscii().constData(), pBreakdownsGroup_ );
     pRandomBreakdowns->SetGoToOnDoubleClick( ::eBreakdowns );
     vInfosConnectors[eRandomBreakdowns] = &pRandomBreakdowns->GetConnector();
 
@@ -441,7 +441,7 @@ void ADN_Composantes_GUI::RegisterTable( ADN_MainWindow& mainWindow )
 void ADN_Composantes_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QString& strPath )
 {
     QString strLocalPath = strPath + tr( "Equipments/" );
-    ADN_Tools::CreatePathToFile( strLocalPath.toStdString() );
+    ADN_Tools::CreatePathToFile( strLocalPath.toAscii().constData() );
     ADN_HtmlBuilder indexBuilder;
     indexBuilder.BeginHtml( tr( "Equipments" ) );
     indexBuilder.BeginList();

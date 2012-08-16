@@ -56,7 +56,7 @@ EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, con
     : Parameter< std::string >( parameter )
     , type_( &types.Get( message.type() ) )
 {
-    AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Obstacle location" ).toStdString(), "location", false ), converter, message.position() ) );
+    AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Obstacle location" ).toAscii().constData(), "location", false ), converter, message.position() ) );
     SetValue( type_->GetName() );
     SetParameters( message, entities, controller );
 }
@@ -69,12 +69,12 @@ void EngineerConstruction::SetParameters( const sword::PlannedWork& message, con
 {
     if( message.combat_train().id() != 0 )
     {
-        const OrderParameter param( tools::translate( "ActionParameter", "Obstacle tc2" ).toStdString(), "tc2", false );
+        const OrderParameter param( tools::translate( "ActionParameter", "Obstacle tc2" ).toAscii().constData(), "tc2", false );
         AddParameter( *new Automat( param, message.combat_train().id(), entities, controller ) );
     }
     if( message.density() != 0 )
     {
-        const OrderParameter param( tools::translate( "ActionParameter", "Density" ).toStdString(), "density", false );
+        const OrderParameter param( tools::translate( "ActionParameter", "Density" ).toAscii().constData(), "density", false );
         AddParameter( *new Numeric( param, message.density() ) );
     }
 }
@@ -128,7 +128,7 @@ void EngineerConstruction::ReadParameter( xml::xistream& xis, const CoordinateCo
     if( type == "obstacletype" )
         AddParameter( *new ObstacleType( xis ) );
     else if( type == "location" || type == "circle" || type == "rectangle" || type == "point" || type == "polygon" || type == "line" )
-        AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Obstacle location" ).toStdString(), "location", false ), converter, xis ) );
+        AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Obstacle location" ).toAscii().constData(), "location", false ), converter, xis ) );
     else if( type == "tc2" )
         AddParameter( *new Automat( xis, entities, controller ) );
 }

@@ -57,7 +57,7 @@ bool UtmParser::Parse( QString content, geometry::Point2f& result, QStringList& 
             content = zone_.c_str() + content;
         if( content.length() < 15 )
             content = Fill( content );
-        result = converter_.ConvertToXY( std::string( content.toStdString() ) );
+        result = converter_.ConvertToXY( std::string( content.toAscii().constData() ) );
         hint.append( content );
         return true;
     }

@@ -36,7 +36,7 @@ namespace
 // -----------------------------------------------------------------------------
 StartExercise::StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, bool attach, bool launchDispatchedIfNotEmbedded /*= true*/, std::string commanderEndpoint /*= ""*/ )
     : SpawnCommand( config, "simulation_app.exe", attach, commanderEndpoint )
-    , configManipulator_ ( new ConfigurationManipulator( config_, exercise.toStdString(), session.toStdString() ) )
+    , configManipulator_ ( new ConfigurationManipulator( config_, exercise.toAscii().constData(), session.toAscii().constData() ) )
     , percentage_( 0 )
 {
     if( ! HasEmbeddedDispatcher( *configManipulator_ ) && launchDispatchedIfNotEmbedded )
@@ -55,7 +55,7 @@ StartExercise::StartExercise( const tools::GeneralConfig& config, const QString&
 // -----------------------------------------------------------------------------
 StartExercise::StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& checkpoint, bool attach, bool launchDispatchedIfNotEmbedded /*= true*/, std::string commanderEndpoint /*= ""*/ )
     : SpawnCommand( config, "simulation_app.exe", attach, commanderEndpoint )
-    , configManipulator_ ( new ConfigurationManipulator( config_, exercise.toStdString(), session.toStdString() ) )
+    , configManipulator_ ( new ConfigurationManipulator( config_, exercise.toAscii().constData(), session.toAscii().constData() ) )
     , percentage_( 0 )
 {
     if( ! HasEmbeddedDispatcher( *configManipulator_ ) && launchDispatchedIfNotEmbedded )

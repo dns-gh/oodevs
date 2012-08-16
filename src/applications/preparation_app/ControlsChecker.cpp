@@ -72,9 +72,9 @@ std::set< std::string > ControlsChecker::Find( const kernel::Entity_ABC& entity 
     for( CIT_ProfileEditors it = editors_.begin(); it != editors_.end(); ++it )
         if( it->first )
         {
-            editors.insert( it->first->GetLogin().toStdString() );
+            editors.insert( it->first->GetLogin().toAscii().constData() );
             if( it->second && it->second->IsLowLevel() && IsWriteable( entity, *it->second ) )
-                results.insert( it->second->GetLogin().toStdString() );
+                results.insert( it->second->GetLogin().toAscii().constData() );
         }
     ProfilesModel::T_Units units;
     model_.profiles_.Visit( units );
@@ -156,8 +156,8 @@ bool ControlsChecker::IsControlledByLowLevel( const std::string& exclude, const 
     for( CIT_ProfileEditors it = editors_.begin(); it != editors_.end(); ++it )
         if( it->first )
         {
-            editors.insert( it->first->GetLogin().toStdString() );
-            if( it->second && it->second->IsLowLevel() && it->second->GetLogin().toStdString() != exclude && IsWriteable( entity, *it->second ) )
+            editors.insert( it->first->GetLogin().toAscii().constData() );
+            if( it->second && it->second->IsLowLevel() && it->second->GetLogin().toAscii().constData() != exclude && IsWriteable( entity, *it->second ) )
                 return true;
         }
     editors.insert( exclude );

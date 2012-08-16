@@ -178,7 +178,7 @@ void PopulationOptionChooser::OnPopulationToggled( bool toggled )
     const QAbstractButton* senderObject = dynamic_cast< const QAbstractButton* >( sender() );
     if( senderObject )
     {
-        kernel::ChangePopulationDisplay display( senderObject->text().toStdString(), toggled );
+        kernel::ChangePopulationDisplay display( senderObject->text().toAscii().constData(), toggled );
         controllers_.controller_.Update( display );
     }
 }

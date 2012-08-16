@@ -80,21 +80,21 @@ void NoteDialog::OnAccept()
     if (update_)
     {
         plugins::messenger::MarkerUpdateRequest message;
-        message().set_name( textName_->text().toStdString() );
+        message().set_name( textName_->text().toAscii().constData() );
         message().mutable_marker()->set_id( noteId_ );
-        message().set_number( textId_->text().toStdString() );
+        message().set_number( textId_->text().toAscii().constData() );
         QString text = textDesc_->text();
-        message().set_description( text.toStdString() );
+        message().set_description( text.toAscii().constData() );
         message().mutable_parent()->set_id( note_ );
         message.Send( publisher_ );
     }
     else
     {
         plugins::messenger::MarkerCreationRequest message;
-        message().mutable_marker()->set_name( textName_->text().toStdString() );
-        message().mutable_marker()->set_number( textId_->text().toStdString() );
+        message().mutable_marker()->set_name( textName_->text().toAscii().constData() );
+        message().mutable_marker()->set_number( textId_->text().toAscii().constData() );
         QString text = textDesc_->text();
-        message().mutable_marker()->set_description( text.toStdString() );
+        message().mutable_marker()->set_description( text.toAscii().constData() );
         message().mutable_marker()->mutable_parent()->set_id( note_ );
         message.Send( publisher_ );
     }

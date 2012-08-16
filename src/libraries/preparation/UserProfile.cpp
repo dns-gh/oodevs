@@ -211,8 +211,8 @@ void UserProfile::Serialize( xml::xostream& xos ) const
     
     xos << xml::start( "profile" )
             << xml::attribute( "role", userRole_ )
-            << xml::attribute( "name", login_.toStdString() )
-            << xml::attribute( "password", password_.toStdString() )
+            << xml::attribute( "name", login_.toAscii().constData() )
+            << xml::attribute( "password", password_.toAscii().constData() )
             << xml::attribute( "supervision", HasProperty( "magicActions" ) )
             << xml::start( "rights" )
                 << xml::start( "readonly" );

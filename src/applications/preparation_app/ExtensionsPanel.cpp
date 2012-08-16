@@ -191,7 +191,7 @@ namespace
         if( entity.GetTypeName() == kernel::Ghost_ABC::typeName_ )
         {
             const kernel::Ghost_ABC& ghost = static_cast< const kernel::Ghost_ABC& >( entity );
-            return std::make_pair< std::string, std::string >( ghost.GetType().toStdString(), ghost.GetLevel() );
+            return std::make_pair< std::string, std::string >( ghost.GetType().toAscii().constData(), ghost.GetLevel() );
         }
         return std::make_pair< std::string, std::string >( "", "" );
     }

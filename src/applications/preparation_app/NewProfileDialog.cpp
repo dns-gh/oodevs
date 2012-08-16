@@ -126,7 +126,7 @@ void NewProfileDialog::Validate()
 {
     if( userRoleDico_ )
     {
-        model_.CreateProfile( value_->text(), userRoleDico_->GetKey( userRole_->currentText().toStdString(), dicoKind_, dicoLanguage_ ) );
+        model_.CreateProfile( value_->text(), userRoleDico_->GetKey( userRole_->currentText().toAscii().constData(), dicoKind_, dicoLanguage_ ) );
         accept();
     }
 }

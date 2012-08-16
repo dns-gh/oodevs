@@ -52,7 +52,7 @@ namespace
             {
                 MT_ValuedListViewItem<int>* pItem = new MT_ValuedListViewItem<int>( (int)(*it), listView_, (*it)->strName_.GetData().c_str() );
                 for( int i = 0; i < receiver_->numRows(); ++i )
-                    if( receiver_->text( i, 0 ).toStdString() == (*it)->strName_.GetData() )
+                    if( receiver_->text( i, 0 ).toAscii().constData() == (*it)->strName_.GetData() )
                     {
                         pItem->setEnabled( false );
                         break;

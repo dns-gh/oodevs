@@ -117,8 +117,8 @@ namespace
     std::string  GetType( const QString& type )
     {
         if( type == kernel::Automat_ABC::typeName_ )
-            return tools::translate( "CsvExport", "Automat" ).toStdString();
-        return tools::translate( "CsvExport", "Entity" ).toStdString();
+            return tools::translate( "CsvExport", "Automat" ).toAscii().constData();
+        return tools::translate( "CsvExport", "Entity" ).toAscii().constData();
     }
     std::string GetType( const kernel::Entity_ABC& entity )
     {
@@ -141,11 +141,11 @@ namespace
     std::string GetName( const kernel::Entity_ABC& entity )
     {
         std::string longName = gui::LongNameHelper::GetEntityLongName( entity );
-        return longName.empty() ? entity.GetName().toStdString() : longName.c_str();
+        return longName.empty() ? entity.GetName().toAscii().constData() : longName.c_str();
     }
     std::string GetSide( const kernel::Entity_ABC& entity )
     {
-        return entity.Get< kernel::TacticalHierarchies >().GetTop().GetName().toStdString();
+        return entity.Get< kernel::TacticalHierarchies >().GetTop().GetName().toAscii().constData();
     }
 }
 
@@ -164,28 +164,28 @@ void CsvExport::WriteEntity( bfs::path& path, const std::string& separator )
     while( itTeam.HasMoreElements() )
     {
         const kernel::Team_ABC& team = itTeam.NextElement();
-        WriteEntity( team, team.GetName().toStdString(), file, separator );
+        WriteEntity( team, team.GetName().toAscii().constData(), file, separator );
     }
     tools::Iterator< const kernel::Object_ABC& > itObject = model_.objects_.CreateIterator();
     while( itObject.HasMoreElements() )
     {
         const kernel::Object_ABC& object = itObject.NextElement();
-        Write( file, separator, GetSide( object ), tools::translate( "CsvExport", "Object" ).toStdString(),
-               object.GetName().toStdString(), object.GetType().GetName(), GetPosition( object, converter_, separator ) );
+        Write( file, separator, GetSide( object ), tools::translate( "CsvExport", "Object" ).toAscii().constData(),
+               object.GetName().toAscii().constData(), object.GetType().GetName(), GetPosition( object, converter_, separator ) );
     }
     tools::Iterator< const kernel::Population_ABC& > itPopulation = model_.GetPopulationResolver().CreateIterator();
     while( itPopulation.HasMoreElements() )
     {
         const kernel::Population_ABC& population = itPopulation.NextElement();
-        Write( file, separator, GetSide( population ), tools::translate( "CsvExport", "Population" ).toStdString(),
-               population.GetName().toStdString(), population.GetType().GetName(), GetPosition( population, converter_, separator ) );
+        Write( file, separator, GetSide( population ), tools::translate( "CsvExport", "Population" ).toAscii().constData(),
+               population.GetName().toAscii().constData(), population.GetType().GetName(), GetPosition( population, converter_, separator ) );
     }
     tools::Iterator< const kernel::Inhabitant_ABC& > itInhabitant = model_.GetInhabitantResolver().CreateIterator();
     while( itInhabitant.HasMoreElements() )
     {
         const kernel::Inhabitant_ABC& inhabitant = itInhabitant.NextElement();
-        Write( file, separator, GetSide( inhabitant ), tools::translate( "CsvExport", "Inhabitant" ).toStdString(),
-               inhabitant.GetName().toStdString(), inhabitant.GetType().GetName(), GetPosition( inhabitant, converter_, separator ) );
+        Write( file, separator, GetSide( inhabitant ), tools::translate( "CsvExport", "Inhabitant" ).toAscii().constData(),
+               inhabitant.GetName().toAscii().constData(), inhabitant.GetType().GetName(), GetPosition( inhabitant, converter_, separator ) );
     }
     file.close();
 }

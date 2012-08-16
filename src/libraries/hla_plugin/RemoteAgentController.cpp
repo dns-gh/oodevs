@@ -61,7 +61,7 @@ RemoteAgentController::RemoteAgentController( RemoteAgentSubject_ABC& agentSubje
         const dispatcher::Team_ABC& team = it.NextElement();
         if( team.GetId() )
         {
-            logger_.LogInfo( "karmas[ " + boost::lexical_cast< std::string >( team.GetId() ) + " ] = " + team.GetKarma().GetName().toStdString() + " (" + team.GetName().toStdString() + ")" );
+            logger_.LogInfo( "karmas[ " + boost::lexical_cast< std::string >( team.GetId() ) + " ] = " + team.GetKarma().GetName().toAscii().constData() + " (" + team.GetName().toAscii().constData() + ")" );
             karmas_[ team.GetKarma() ] = team.GetId();
         }
     }
@@ -230,7 +230,7 @@ unsigned long RemoteAgentController::FindAutomat( rpr::ForceIdentifier force ) c
     const kernel::Karma& karma = GetKarma( force );
     T_Karmas::const_iterator itKarma = karmas_.find( karma );
     if( itKarma == karmas_.end() )
-        throw std::runtime_error( "Karma '" + karma.GetName().toStdString() + "' not found in scenario" );
+        throw std::runtime_error( "Karma '" + std::string( karma.GetName().toAscii().constData() )+ "' not found in scenario" );
     T_Parties::const_iterator itParty = parties_.find( itKarma->second );
     if( itParty == parties_.end() )
     {

@@ -97,7 +97,7 @@ const QPixmap& ADN_UnitSymbols_Data::UnitSymbolInfo::GetPixmap() const
 // -----------------------------------------------------------------------------
 const std::string ADN_UnitSymbols_Data::UnitSymbolInfo::GetCode() const
 {
-    return template_->GetCode().toStdString();
+    return template_->GetCode().toAscii().constData();
 }
 
 // -----------------------------------------------------------------------------
@@ -106,7 +106,7 @@ const std::string ADN_UnitSymbols_Data::UnitSymbolInfo::GetCode() const
 // -----------------------------------------------------------------------------
 const std::string ADN_UnitSymbols_Data::UnitSymbolInfo::GetGeometry() const
 {
-    return template_->GetType().toStdString();
+    return template_->GetType().toAscii().constData();
 }
 
 // -----------------------------------------------------------------------------

@@ -46,12 +46,12 @@ void SideList::Update( const QString& exercise )
     {
         if( !exercise.isEmpty() )
         {
-            std::auto_ptr< xml::xistream > xis = fileLoader_.LoadFile( config_.GetExerciseFile( exercise.toStdString() ) );
+            std::auto_ptr< xml::xistream > xis = fileLoader_.LoadFile( config_.GetExerciseFile( exercise.toAscii().constData() ) );
             std::string orbatFile;
             *xis >> xml::start( "exercise" )
                     >> xml::start( "orbat" )
                         >> xml::attribute( "file", orbatFile );
-            UpdateSides( config_.BuildChildPath( config_.GetExerciseFile( exercise.toStdString() ), orbatFile ) );
+            UpdateSides( config_.BuildChildPath( config_.GetExerciseFile( exercise.toAscii().constData() ), orbatFile ) );
         }
     }
     catch(...)

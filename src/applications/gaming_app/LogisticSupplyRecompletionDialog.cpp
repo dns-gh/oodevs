@@ -336,7 +336,7 @@ namespace
 {
     std::string CreateName( const std::string& str, int& index )
     {
-        return QString( (str + " %L1" ).c_str() ).arg( index++ ).toStdString();
+        return QString( (str + " %L1" ).c_str() ).arg( index++ ).toAscii().constData();
     }
 }
 

@@ -57,7 +57,7 @@ namespace
     {
         const QString regDir = ReadDataDirectory();
         if( !regDir.isEmpty() )
-            return regDir.toStdString();
+            return regDir.toAscii().constData();
         char myDocuments[ MAX_PATH ];
         SHGetSpecialFolderPath( 0, myDocuments, CSIDL_PERSONAL, 0 );
         return ( bfs::path( myDocuments, bfs::native ) / appName ).native_file_string();
@@ -85,7 +85,7 @@ namespace
 //-----------------------------------------------------------------------------
 ADN_MainWindow::ADN_MainWindow( ADN_Config& config, int argc, char** argv )
     : QMainWindow       ()
-    , generalConfig_     ( new tools::GeneralConfig( GetDefaultRoot( qApp->translate( "Application", "SWORD" ).toStdString() ) ) )
+    , generalConfig_     ( new tools::GeneralConfig( GetDefaultRoot( qApp->translate( "Application", "SWORD" ).toAscii().constData() ) ) )
     , fileLoaderObserver_( new ADN_FileLoaderObserver() )
     , fileLoader_        ( new tools::DefaultLoader( *fileLoaderObserver_ ) )
     , workspace_         ( ADN_Workspace::GetWorkspace() )
@@ -321,7 +321,7 @@ void ADN_MainWindow::SaveAsProject()
         return;
 
     QApplication::setOverrideCursor( Qt::waitCursor ); // this might take time
-    std::string res = strDirectoryName.toStdString();
+    std::string res = strDirectoryName.toAscii().constData();
     std::replace( res.begin(), res.end(), '\\', '/' );
     res += "/physical.xml";
     bool hasSaved = true;
@@ -382,7 +382,7 @@ void ADN_MainWindow::OpenProject()
         return;
     try
     {
-        OpenProject( qfilename.toStdString() );
+        OpenProject( qfilename.toAscii().constData() );
     }
     catch( ADN_Exception_ABC& exception )
     {
@@ -450,7 +450,7 @@ void ADN_MainWindow::ExportHtml()
     if( strPath.at( strPath.length() - 1 ) != '/' )
         strPath += '/';
 
-    workspace_.ExportHtml( strPath.toStdString() );
+    workspace_.ExportHtml( strPath.toAscii().constData() );
 }
 
 //-----------------------------------------------------------------------------

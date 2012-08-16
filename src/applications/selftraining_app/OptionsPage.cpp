@@ -29,7 +29,7 @@ namespace
     std::string ReadLang()
     {
         QSettings settings( "MASA Group", qApp->translate( "Application", "SWORD" ) );
-        return settings.readEntry( "/Common/Language", QTextCodec::locale() ).toStdString();
+        return settings.readEntry( "/Common/Language", QTextCodec::locale() ).toAscii().constData();
     }
 
     bool TransformLang( std::string& language )
@@ -155,7 +155,7 @@ void OptionsPage::OnChangeDataDirectory()
     const QString directory = QDir::convertSeparators( Q3FileDialog::getExistingDirectory( dataDirectory_->text(), this ) );
     if( directory.isEmpty() )
         return;
-    selectedDataDir_ = directory.toStdString();
+    selectedDataDir_ = directory.toAscii().constData();
     dataDirectory_->setText( directory );
     hasChanged_ = true;
     EnableButton( eButtonApply, true );
@@ -167,7 +167,7 @@ void OptionsPage::OnChangeDataDirectory()
 // -----------------------------------------------------------------------------
 void OptionsPage::OnEditDataDirectory( const QString& text )
 {
-    selectedDataDir_ = text.toStdString();
+    selectedDataDir_ = text.toAscii().constData();
     hasChanged_ = true;
     EnableButton( eButtonApply, true );
 }
@@ -255,7 +255,7 @@ void OptionsPage::Reset()
 // -----------------------------------------------------------------------------
 void OptionsPage::CreateDataDirectory()
 {
-    const std::string directory = dataDirectory_->text().toStdString();
+    const std::string directory = dataDirectory_->text().toAscii().constData();
     if( !bfs::exists( directory ) )
     {
         MessageDialog message( parent_, tools::translate( "OptionsPage", "Invalid directory" ), tools::translate( "OptionsPage", "Directory \'%1\' doesn't exist. Do you want to create it ?" ).arg( directory.c_str() ), QMessageBox::Yes, QMessageBox::No );

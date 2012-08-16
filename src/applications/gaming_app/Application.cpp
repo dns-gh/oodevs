@@ -99,7 +99,7 @@ Application::Application( int& argc, char** argv, const QString& expiration )
     ENT_Tr::InitTranslations();
     setStyle( new gui::VerticalHeaderStyle( style() ) );
 
-    std::string localeStr = locale.toStdString();
+    std::string localeStr = locale.toAscii().constData();
     TransformLang( localeStr );
     QLocale::setDefault( Locale( localeStr ) );
 }

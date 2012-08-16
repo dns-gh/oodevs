@@ -102,9 +102,9 @@ LivingAreaDialog::LivingAreaDialog( QWidget* pParent, kernel::Controllers& contr
     resize( 650, 400 );
     Q3VBoxLayout* mainLayout = new Q3VBoxLayout( this, 0, 5 );
     table_ = new LivingAreaTable( this );
-    Initialize( *table_, boost::assign::list_of( tools::translate( "LivingAreaDialog", "Name" ).toStdString() )( tools::translate( "LivingAreaDialog", "Resident" ).toStdString() )
-                                               ( tools::translate( "LivingAreaDialog", "Angriness" ).toStdString() )( tools::translate( "LivingAreaDialog", "Alerted" ).toStdString() )
-                                               ( tools::translate( "LivingAreaDialog", "Confined" ).toStdString() )( tools::translate( "LivingAreaDialog", "Evacuated" ).toStdString() ) );
+    Initialize( *table_, boost::assign::list_of( tools::translate( "LivingAreaDialog", "Name" ).toAscii().constData() )( tools::translate( "LivingAreaDialog", "Resident" ).toAscii().constData() )
+                                               ( tools::translate( "LivingAreaDialog", "Angriness" ).toAscii().constData() )( tools::translate( "LivingAreaDialog", "Alerted" ).toAscii().constData() )
+                                               ( tools::translate( "LivingAreaDialog", "Confined" ).toAscii().constData() )( tools::translate( "LivingAreaDialog", "Evacuated" ).toAscii().constData() ) );
     mainLayout->add( table_ );
     controllers_.Register( *this );
 }

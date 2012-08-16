@@ -20,7 +20,7 @@ namespace
     std::string ReadLang()
     {
         QSettings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
-        return settings.readEntry( "/Common/Language", QTextCodec::locale() ).toStdString();
+        return settings.readEntry( "/Common/Language", QTextCodec::locale() ).toAscii().constData();
     }
 }
 
@@ -84,7 +84,7 @@ void FilterManager::ReadFilter( xml::xistream& xis, Q3ListBox& list, Q3WidgetSta
     else
     {
         if( !xis.has_attribute( "target" ) || !xis.has_attribute( "xsl" ) || !xis.has_attribute( "output" ) )
-            throw std::runtime_error( tools::translate( "FilterManager", "Bad filter attribute, either 'command' attribute or 'target', 'xsl' and 'output' attributes." ).toStdString() );
+            throw std::runtime_error( tools::translate( "FilterManager", "Bad filter attribute, either 'command' attribute or 'target', 'xsl' and 'output' attributes." ).toAscii().constData() );
         filter = new FilterXsl( xis, config_ );
     }
     AddFilter( *filter, list, stack );

@@ -41,9 +41,9 @@ int main( int argc, char** argv )
         file.close();
     }
 
-    BugTrap::Setup( tools::translate( "Application", "SWORD" ).toStdString() )
-            .SetEmail( tools::translate( "Application", "sword@masagroup.net" ).toStdString() )
-            .SetVersion( QString( "%1 - " __TIMESTAMP__ ).arg( tools::AppVersion() ).toStdString() );
+    BugTrap::Setup( tools::translate( "Application", "SWORD" ).toAscii().constData() )
+            .SetEmail( tools::translate( "Application", "sword@masagroup.net" ).toAscii().constData() )
+            .SetVersion( QString( "%1 - " __TIMESTAMP__ ).arg( tools::AppVersion() ).toAscii().constData() );
 
     try
     {

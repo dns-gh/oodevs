@@ -145,7 +145,7 @@ bool ADN_App::Initialize( const std::string& inputFile, const std::string& outpu
     ENT_Tr::InitTranslations();
 
     // Set default locale
-    std::string localeStr = locale.toStdString();
+    std::string localeStr = locale.toAscii().constData();
     TransformLang( localeStr );
     QLocale::setDefault( Locale( localeStr ) );
 

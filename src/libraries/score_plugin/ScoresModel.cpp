@@ -274,7 +274,7 @@ std::size_t ScoresModel::AddHeader( std::ostream& file ) const
 // -----------------------------------------------------------------------------
 void ScoresModel::AddLine( std::ostream& file, std::size_t index ) const
 {
-    file << index << separator_ << initialDateTime_.addSecs( static_cast< int >( index * tickDuration_ ) ).toString( Qt::ISODate ).toStdString();
+    file << index << separator_ << initialDateTime_.addSecs( static_cast< int >( index * tickDuration_ ) ).toString( Qt::ISODate ).toAscii().constData();
     for( T_Scores::const_iterator score = scores_.begin(); score != scores_.end(); ++score )
     {
         try

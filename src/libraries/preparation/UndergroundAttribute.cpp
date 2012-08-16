@@ -131,7 +131,7 @@ void UndergroundAttribute::SerializeAttributes( xml::xostream& xos ) const
     std::map< std::string, QColor >::const_iterator it = undergroundColors_.find( network_);
     if( it != undergroundColors_.end() )
     {
-        std::string color = it->second.name().toStdString();
+        std::string color = it->second.name().toAscii().constData();
         boost::replace_all( color, "#", "0x" );
         xos << xml::attribute( "color", color );
     }

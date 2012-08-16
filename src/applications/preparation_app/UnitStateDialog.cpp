@@ -158,7 +158,7 @@ void UnitStateDialog::Export()
 {
     if( selected_ )
     {
-        std::string fileName = QFileDialog::getExistingDirectory( this, tools::translate( "UnitStateDialog", "Export unit state" ) ).toStdString();
+        std::string fileName = QFileDialog::getExistingDirectory( this, tools::translate( "UnitStateDialog", "Export unit state" ) ).toAscii().constData();
         if( fileName != "" )
         {
             bfs::path path( fileName / bfs::path( selected_->GetName() ) );

@@ -185,7 +185,7 @@ namespace frontend
                         p = p.parent_path();
                     }
                     CheckpointStatus item;
-                    item.name_ = entry.join( "/" ).toStdString();
+                    item.name_ = entry.join( "/" ).toAscii().constData();
                     item.auto_ = bfs::exists( p / "auto" );
                     result.push_back( item );
                     it.no_push();

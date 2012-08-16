@@ -87,7 +87,7 @@ namespace
         while( it.HasMoreElements() )
         {
             const dispatcher::Automat_ABC& element = it.NextElement();
-            if( element.GetName().toStdString() == name )
+            if( element.GetName().toAscii().constData() == name )
                 return &element;
         }
         return 0;
@@ -99,7 +99,7 @@ namespace
         while( it.HasMoreElements() )
         {
             const dispatcher::Agent_ABC& element = it.NextElement();
-            if( element.GetName().toStdString() == name )
+            if( element.GetName().toAscii().constData() == name )
                 return &element;
         }
         return 0;

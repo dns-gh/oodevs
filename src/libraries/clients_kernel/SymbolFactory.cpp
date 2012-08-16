@@ -220,7 +220,7 @@ std::string SymbolFactory::CreateLevelSymbol( const HierarchyLevel_ABC& level ) 
 {
     if( !initialized_ )
         return "";
-    return CreateLevelSymbol( level.GetName().toStdString() );
+    return CreateLevelSymbol( level.GetName().toAscii().constData() );
 }
 
 // -----------------------------------------------------------------------------

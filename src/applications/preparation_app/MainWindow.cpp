@@ -394,7 +394,7 @@ void MainWindow::DoLoad( QString filename, bool checkConsistency /*= true*/ )
     SetProgression( 0, tr( "Initialize data ..." ) );
     if( filename.startsWith( "//" ) )
         filename.replace( "/", "\\" );
-    config_.LoadExercise( filename.toStdString() );
+    config_.LoadExercise( filename.toAscii().constData() );
     if( Load() )
     {
         SetWindowTitle( true );
@@ -627,14 +627,14 @@ void MainWindow::SaveAs()
                 QLineEdit::Normal, tr( "Type exercise name here" ), &ok, this );
             if( ok && !name.isEmpty() )
             {
-                exerciseDirectory = bfs::path( config_.GetExercisesDir(), bfs::native ) / name.toStdString();
-                exist = frontend::commands::ExerciseExists( config_, name.toStdString() ) || bfs::exists( exerciseDirectory );
+                exerciseDirectory = bfs::path( config_.GetExercisesDir(), bfs::native ) / name.toAscii().constData();
+                exist = frontend::commands::ExerciseExists( config_, name.toAscii().constData() ) || bfs::exists( exerciseDirectory );
             }
             else
                 return;
         } while( exist );
         bfs::create_directories( exerciseDirectory );
-        bfs::path exerciseFile( config_.tools::ExerciseConfig::GeneralConfig::GetExerciseFile( name.toStdString() ) );
+        bfs::path exerciseFile( config_.tools::ExerciseConfig::GeneralConfig::GetExerciseFile( name.toAscii().constData() ) );
         bfs::copy_file( config_.GetExerciseFile(), exerciseFile );
         config_.LoadExercise( exerciseFile.native_file_string() );
         model_.exercise_.SetName( name );
@@ -651,15 +651,15 @@ void MainWindow::SaveAs()
                 QLineEdit::Normal, tr( "Type terrain name here" ), &ok, this );
             if( ok && !name.isEmpty() )
             {
-                terrainDirectory = bfs::path( config_.GetTerrainsDir(), bfs::native ) / name.toStdString();
-                exist = frontend::commands::TerrainExists( config_, name.toStdString() ) || bfs::exists( terrainDirectory );
+                terrainDirectory = bfs::path( config_.GetTerrainsDir(), bfs::native ) / name.toAscii().constData();
+                exist = frontend::commands::TerrainExists( config_, name.toAscii().constData() ) || bfs::exists( terrainDirectory );
             }
             else
                 return;
         } while( exist );
         bfs::create_directories( terrainDirectory );
         frontend::Copy( config_.GetTerrainDir( config_.GetTerrainName() ), terrainDirectory.string() );
-        config_.LoadTerrain( name.toStdString() );
+        config_.LoadTerrain( name.toAscii().constData() );
         terrainHasChanged_ = true;
     }
     dialogContainer_->Purge();
@@ -917,7 +917,7 @@ void MainWindow::OnAddRaster()
         {
             QStringList parameters;
             parameters << ( std::string( "--config=" ) + bfs::system_complete( config_.BuildTerrainChildFile( "config.xml" ) ).string() ).c_str();
-            parameters << ( std::string( "--raster=" ) + dialog.GetFiles().toStdString() ).c_str();
+            parameters << ( std::string( "--raster=" ) + dialog.GetFiles().toAscii().constData() ).c_str();
             parameters << ( std::string( "--pixelsize=" ) + boost::lexical_cast< std::string >( dialog.GetPixelSize() ) ).c_str();
             bfs::path filename = bfs::system_complete( bfs::path( config_.GetGraphicsDirectory(), bfs::native ) / "~~tmp.texture.bin" );
             parameters << ( std::string( "--file=" ) + filename.string() ).c_str();
