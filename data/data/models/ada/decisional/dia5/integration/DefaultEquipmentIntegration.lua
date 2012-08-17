@@ -629,9 +629,9 @@ end
 integration.unitAltitude = function( entity )
     local nomPion = DEC_Pion_GetMilPionName( entity )
 	local altitude = 1000
-    if nomPion == "RENS . Drone SDTI" then
+    if string.find (nomPion, "SDTI") then
         altitude = 1000
-    elseif nomPion == "RENS . Drone DRAC" or nomPion == "RENS . DRAC" then
+    elseif  string.find (nomPion, "DRAC") then
         altitude = 200
     end
 	return altitude
