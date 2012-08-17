@@ -5,19 +5,19 @@
 
 <!-- Milices -->
   <action id="358" name="Change population ROE" target="159" time="2008-01-30T19:54:39" type="fragorder">
-    <parameter name="Order conduite changer regles engagement population" type="Enumeration" value="4"/>
+    <parameter name="Order conduite changer regles engagement population" type="Enumeration" value="3"/>
   </action>
     <action id="358" name="Change population ROE" target="160" time="2008-01-30T19:54:39" type="fragorder">
-    <parameter name="Order conduite changer regles engagement population" type="Enumeration" value="4"/>
+    <parameter name="Order conduite changer regles engagement population" type="Enumeration" value="3"/>
   </action>
     <action id="358" name="Change population ROE" target="161" time="2008-01-30T19:54:39" type="fragorder">
-    <parameter name="Order conduite changer regles engagement population" type="Enumeration" value="4"/>
+    <parameter name="Order conduite changer regles engagement population" type="Enumeration" value="3"/>
   </action>
     <action id="358" name="Change population ROE" target="162" time="2008-01-30T19:54:39" type="fragorder">
-    <parameter name="Order conduite changer regles engagement population" type="Enumeration" value="4"/>
+    <parameter name="Order conduite changer regles engagement population" type="Enumeration" value="3"/>
   </action>
     <action id="358" name="Change population ROE" target="163" time="2008-01-30T19:54:39" type="fragorder">
-    <parameter name="Order conduite changer regles engagement population" type="Enumeration" value="4"/>
+    <parameter name="Order conduite changer regles engagement population" type="Enumeration" value="3"/>
   </action>
   
 
