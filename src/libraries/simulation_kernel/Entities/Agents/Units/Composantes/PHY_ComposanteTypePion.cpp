@@ -1455,3 +1455,31 @@ double PHY_ComposanteTypePion::GetAttritionIndexComposante( const PHY_MaterialCo
         rRange = std::max( rRange, it->first->GetDotationCategory().GetUrbanAttritionScore( material ) );
     return rRange;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::CanHaveBreakdown
+// Created: LDC 2012-08-17
+// -----------------------------------------------------------------------------
+bool PHY_ComposanteTypePion::CanHaveBreakdown() const
+{
+    return !randomBreakdownTypeProbabilities_.empty();
+}
+    
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::CanHaveBreakdown
+// Created: LDC 2012-08-17
+// -----------------------------------------------------------------------------
+bool PHY_ComposanteTypePion::CanHaveBreakdown( const PHY_BreakdownType* type ) const
+{
+    for( T_BreakdownTypeProbabilityVector::const_iterator it = attritionBreakdownTypeProbabilities_.begin(); it != attritionBreakdownTypeProbabilities_.end();++it )
+    {
+        if( it->pBreakdownType_ == type )
+            return true;
+    }
+    for( T_BreakdownTypeProbabilityVector::const_iterator it = randomBreakdownTypeProbabilities_.begin(); it != randomBreakdownTypeProbabilities_.end();++it )
+    {
+        if( it->pBreakdownType_ == type )
+            return true;
+    }
+    return false;
+}

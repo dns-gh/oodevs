@@ -39,6 +39,7 @@
 #include "Entities/Actions/PHY_FireDamages_Agent.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Knowledge/DEC_Knowledge_AgentComposante.h"
+#include "Network/NET_AsnException.h"
 
 double PHY_ComposantePion::rOpStateWeightHumans_ = 0.;
 
@@ -217,6 +218,8 @@ void PHY_ComposantePion::ReinitializeState( const PHY_ComposanteState& state, co
     pState_ = pNewState;
     if( breakdownType )
     {
+        if( !pType_->CanHaveBreakdown( breakdownType ) )
+            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
         if( pBreakdown_ )
             delete pBreakdown_;
         pBreakdown_ = new PHY_Breakdown( *breakdownType );

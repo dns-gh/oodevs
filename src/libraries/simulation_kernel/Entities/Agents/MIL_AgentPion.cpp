@@ -1585,7 +1585,7 @@ void MIL_AgentPion::OnReceiveCreateBreakdowns( const sword::MissionParameters& m
             breakdownId = elem.list( 2 ).identifier();
         }
         const PHY_ComposanteTypePion* pComposanteType = PHY_ComposanteTypePion::Find( type );
-        if( !pComposanteType )
+        if( !pComposanteType || !pComposanteType->CanHaveBreakdown() )
             throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
         roleComposantes.CreateBreakdowns( *pComposanteType, static_cast< unsigned int >( number ), breakdownId );
     }
