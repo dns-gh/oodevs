@@ -168,7 +168,6 @@ namespace
 // -----------------------------------------------------------------------------
 void ADN_Schedule_Table::OnPeopleChanged( void* pData )
 {
-    QWidget* focused = qApp->focusWidget();
     for( int i = numRows() - 1; i >= 0; --i )
         removeRow( i );
     pCurData_ = pData;
@@ -182,8 +181,6 @@ void ADN_Schedule_Table::OnPeopleChanged( void* pData )
             AddRow( it->first, ConvertDay( it->second->day_.GetData() ), it->second->from_.GetData(), it->second->to_.GetData(),
                     it->second->motivation_.GetData() );
     }
-    if( focused )
-        focused->setFocus();
 }
 
 // -----------------------------------------------------------------------------
