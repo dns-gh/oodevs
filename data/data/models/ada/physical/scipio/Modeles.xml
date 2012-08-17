@@ -1901,6 +1901,7 @@
         <mission name="PION MELEE Freiner"/>
         <mission name="PION MELEE Interdire"/>
         <mission name="PION MELEE Appuyer En Mouvement"/>
+        <mission name="PION MELEE Harceler"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -1955,6 +1956,7 @@
         <mission name="PION MELEE Appuyer Sur Position"/>
         <mission name="PION MELEE Interdire"/>
         <mission name="PION MELEE Couvrir"/>
+        <mission name="PION MELEE Harceler"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -7508,4 +7510,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0531653077" -->
+<!-- signature="3255971506" -->
