@@ -420,6 +420,9 @@ return
     sendCriticalIntelligence = function( self, receiver, value )
         integration.SendMessage( "writeCriticalIntelligence", receiver, value, { type = "dynamic" } )
     end,
+    sendNoDisponibleDrone = function( self, receiver )
+       integration.SendMessage( "noDisponibleDrone", receiver, {}, { type = "dynamic" } )
+    end,
     getObstaclesOnAllyPath = function( self )
         return myself.engineerObjectsOnPath
     end,

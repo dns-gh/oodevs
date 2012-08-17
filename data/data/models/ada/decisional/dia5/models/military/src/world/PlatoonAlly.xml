@@ -1296,6 +1296,14 @@ que pourrait subir l'agent dans son efficacité à résoudre la tâche de groupe
                 </type>
             </argument>
         </method>
+        <method name="sendNoDisponibleDrone">
+            <description>The unit sends message report to display.</description>
+            <argument name="receiver">
+                <type>
+                    <class name="world.Company"/>
+                </type>
+            </argument>
+        </method>
         <method name="isCaught">
             <description>Retourne vrai si capturé (pour un terroriste), retourne faux sinon</description>
             <return>
