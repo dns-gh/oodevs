@@ -62,6 +62,10 @@ masalife.brain.communication.setMessageTreatment( "writeCriticalIntelligence",
     function( content, sender )
     meKnowledge:RC( content.RC, content.criticalIntelligence )  
     end )
+masalife.brain.communication.setMessageTreatment( "noDisponibleDrone",
+    function( content, sender )
+    meKnowledge:RC( eRC_PasDeDroneDisponible )  
+    end )
     
 -- -------------------------------------------------------------------------------- 
 -- Predicates
