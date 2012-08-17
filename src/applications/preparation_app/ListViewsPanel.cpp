@@ -65,7 +65,7 @@ ListViewsPanel::ListViewsPanel( kernel::Controllers& controllers, gui::ItemFacto
     }
     // Urban
     {
-        gui::SearchListView_ABC* searchListView = new gui::SearchListView< UrbanListView >( this, controllers, factory, modelBuilder, symbols, staticModel );
+        gui::SearchListView_ABC* searchListView = new gui::SearchListView< UrbanListView >( this, controllers, factory, modelBuilder, symbols, staticModel, model.urban_ );
         Configure( searchListView, listViews, aggregateToolbar );
         addTab( searchListView, tools::translate( "DockContainer","Urban" ) );
     }

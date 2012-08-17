@@ -11,6 +11,7 @@
 #include "UrbanLayer.h"
 #include "preparation/UrbanHierarchies.h"
 #include "preparation/UrbanModel.h"
+#include "preparation/UrbanMenuManager.h"
 #include "clients_kernel/ModeController_ABC.h"
 
 // -----------------------------------------------------------------------------
@@ -77,6 +78,7 @@ bool UrbanLayer::HandleKeyPress( QKeyEvent* key )
 {
     if( key->key() != Qt::Key_Delete || ( controllers_.modes_ && controllers_.modes_->GetCurrentMode() != ePreparationMode_Terrain ) || actualSelection_.empty() )
         return false;
+    model_.GetUrbanMenuManager().ClearSelection();
     model_.DeleteBlocks( actualSelection_ );
     return true;
 }

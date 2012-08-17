@@ -610,3 +610,12 @@ void UrbanModel::CleanLinks()
         extension->CleanLinksToDeletedUrbanBlocks();
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: UrbanModel::GetUrbanMenuManager
+// Created: ABR 2012-08-17
+// -----------------------------------------------------------------------------
+UrbanMenuManager& UrbanModel::GetUrbanMenuManager() const
+{
+    return *menuManager_.get();
+}

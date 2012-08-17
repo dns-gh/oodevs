@@ -31,6 +31,7 @@ namespace gui
 
 class ModelBuilder;
 class StaticModel;
+class UrbanModel;
 
 // =============================================================================
 /** @class  UrbanListView
@@ -46,7 +47,8 @@ class UrbanListView : public gui::EntityListView
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ModelBuilder& modelBuilder, gui::SymbolIcons& symbols, const StaticModel& staticModel );
+             UrbanListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ModelBuilder& modelBuilder,
+                            gui::SymbolIcons& symbols, const StaticModel& staticModel, UrbanModel& urbanModel );
     virtual ~UrbanListView();
     //@}
 
@@ -103,6 +105,7 @@ private:
     std::vector< kernel::Entity_ABC* >  dragged_;
     T_InfrastructurePixmaps             infrastructures_;
     QTimer*                             timer_;
+    UrbanModel&                         urbanModel_;
     //@}
 };
 
