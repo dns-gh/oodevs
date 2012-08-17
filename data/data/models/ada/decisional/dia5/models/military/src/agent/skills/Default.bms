@@ -15,7 +15,9 @@ rootnode
         skill.nodes.ChangeEtatOperationnel,
         skill.links.dismount,
         skill.links.moveTo,
-        skill.nodes.RC
+        skill.nodes.RC,
+        skill.nodes.UnloadCrowd,
+        skill.nodes.UnloadQueue
     },
 
     done = function( self, params, additionalParams ) -- skill moveTo
@@ -92,6 +94,19 @@ rootnode
             Activate( skill.nodes.DecisionalState, 1, { category = "EtatOps", value = "eEtatDestruction_None" } )
             Activate( skill.nodes.ChangeEtatOperationnel, 1, { value = 2 } ) -- $$$ MIA TODO trouver l'enum!
         end
+
+        -- Comportement par défaut pour le transport de pion et de foule
+        if meKnowledge.isStoppingTransport then
+            meKnowledge.isStoppingTransport = false
+            local pos = CreateKnowledge( world.Point, meKnowledge:getPosition() )
+            Activate( skill.links.moveTo, 1, {entities = { pos } } )
+            if DEC_Transport_EnCoursDeTransport() then
+                Activate( skill.nodes.UnloadQueue, 1, emptyTable )
+            elseif meKnowledge.crowdTransporting and DEC_Agent_TransporteFoule( meKnowledge.source ) then
+                local pos = CreateKnowledge( sword.military.world.Point, meKnowledge:getPosition() )
+                Activate( skill.nodes.UnloadCrowd, 1, { crowd = meKnowledge.crowdTransporting, position = pos } )
+            end
+        end
     end
 }
 
@@ -121,4 +136,18 @@ node "RC"
     create = function( self )
         meKnowledge:RC( self.params.RC )
     end
+}
+node "UnloadCrowd"
+{
+    select = function( self )
+        meKnowledge.isStoppingTransport = true
+        self.params.crowd:unloadIt( self.params.position )
+    end,
+}
+node "UnloadQueue"
+{
+    select = function( self )
+        meKnowledge.isStoppingTransport = true
+        meKnowledge:dropTroups()
+    end,
 }
