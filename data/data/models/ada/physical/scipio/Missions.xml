@@ -3093,15 +3093,6 @@
       </parameter>
       <parameter dia-name="angle" max-value="360" min-value="1" name="Angle" optional="true" type="Integer"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.combat.support.rens.tasks.Appuyer" dia-type="france.military.company.combat.support.rens.tasks.Appuyer" id="28772" mrt-dia-behavior="france.military.company.combat.support.rens.tasks.Appuyer" name="AUTOMATE RENS ROEM Appuyer">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="objective" name="Zone de brouillage" optional="false" type="Polygon"/>
-      <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
-      <parameter dia-name="jammingTime" max-value="240" min-value="1" name="Délais de brouillage" optional="false" type="Integer"/>
-    </mission>
     <mission cdt-dia-behavior="france.military.company.combat.support.rens.tasks.ROHUM_RenseignerSur" dia-type="france.military.company.combat.support.rens.tasks.ROHUM_RenseignerSur" id="28773" mrt-dia-behavior="france.military.company.combat.support.rens.tasks.ROHUM_RenseignerSur" name="AUTOMATE RENS ROHUM Renseigner Sur">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -3182,7 +3173,7 @@
       </parameter>
       <parameter dia-name="byNight" name="Attendre la nuit" optional="true" type="Boolean"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.combat.support.rens.tasks.Appuyer" dia-type="france.military.company.combat.support.rens.tasks.Appuyer2" id="28782" mrt-dia-behavior="france.military.company.combat.support.rens.tasks.Appuyer" name="AUTOMATE RENS ROEM Brouiller">
+    <mission cdt-dia-behavior="france.military.company.combat.support.rens.tasks.Appuyer" dia-type="france.military.company.combat.support.rens.tasks.Appuyer" id="28782" mrt-dia-behavior="france.military.company.combat.support.rens.tasks.Appuyer" name="AUTOMATE RENS ROEM Brouiller">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -3524,4 +3515,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ROEM_ArreterSilenceRadar" id="28801" name="ROEM Arreter Silence Radar"/>
   </fragorders>
 </missions>
-<!-- signature="2003283733" -->
+<!-- signature="3008786946" -->
