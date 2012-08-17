@@ -46,6 +46,7 @@ rootnode
 
     -- init
     create = function( self )
+        meKnowledge.isStoppingTransport = false
         -- filtrer les unites transportables
         self.loadableUnits = {}
         for _, unit in pairs( self.params.units ) do
@@ -91,6 +92,10 @@ rootnode
         Activate( skill.links.moveToward, 1, { entities = { self.position } } )
         self.arrivedLoadPoint = false
         self.arrivedDestination = false
+    end,
+
+    destroy = function( self )
+        meKnowledge.isStoppingTransport = true
     end,
 }
 

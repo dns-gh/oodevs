@@ -38,10 +38,11 @@ rootnode
 
     -- init
     create = function( self )
+        meKnowledge.isStoppingTransport = false
         -- init crowd's concentration information
-        self.crowd = self.params.crowd
-        self.concentration = integration.getNearbyConcentration( self.crowd, self.params.loadingPoint )
-        self.position = integration.getPositionConcentration( self.crowd, self.concentration )
+        meKnowledge.crowdTransporting = self.params.crowd
+        self.concentration = integration.getNearbyConcentration(  meKnowledge.crowdTransporting, self.params.loadingPoint )
+        self.position = integration.getPositionConcentration(  meKnowledge.crowdTransporting, self.concentration )
         self.positionInit = self.position
         
         self.arrivedLoadPoint = false
@@ -68,16 +69,16 @@ rootnode
 
         if self.arrivedDestination and not self.unloadFinished then
             -- Unload Crowd
-            Activate( skill.nodes.UnloadCrowd, 1, { crowd = self.crowd, position = self.position } )
+            Activate( skill.nodes.UnloadCrowd, 1, { crowd = meKnowledge.crowdTransporting, position = self.position } )
         end
  
         if self.arrivedLoadPoint and not self.loadFinished then
             -- Load Crowd
-            Activate( skill.nodes.LoadCrowd, 1, { crowd = self.crowd, concentration = self.concentration } )
+            Activate( skill.nodes.LoadCrowd, 1, { crowd = meKnowledge.crowdTransporting, concentration = self.concentration } )
         end
 
         if self.unloadFinished then
-            local concentration = integration.getNearbyConcentration( self.crowd, self.params.loadingPoint )
+            local concentration = integration.getNearbyConcentration( meKnowledge.crowdTransporting, self.params.loadingPoint )
             if concentration == 0 or concentration ~= self.concentration then
                 Feedback( self.feedbacks.done )
             end
@@ -89,6 +90,11 @@ rootnode
         self.arrivedLoadPoint = false
         self.arrivedDestination = false
     end,
+    
+    destroy = function( self )
+        meKnowledge.isStoppingTransport = true
+    end,
+
 }
 
 node "LoadCrowd"
