@@ -162,6 +162,8 @@ public:
 
     const PHY_BreakdownType& GetRandomBreakdownType   () const;
     const PHY_BreakdownType& GetAttritionBreakdownType() const;
+    bool CanHaveBreakdown() const;
+    bool CanHaveBreakdown( const PHY_BreakdownType* ) const;
     //@}
 
     //! @name Logistic - medical
