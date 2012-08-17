@@ -36,6 +36,8 @@
 #include "clients_gui/ValuedDragObject.h"
 #include "preparation/StaticModel.h"
 #include "preparation/UrbanHierarchies.h"
+#include "preparation/UrbanMenuManager.h"
+#include "preparation/UrbanModel.h"
 #include "preparation/Usages.h"
 #include <boost/bind.hpp>
 
@@ -45,12 +47,13 @@
 // Name: UrbanListView constructor
 // Created: JSR 2012-05-15
 // -----------------------------------------------------------------------------
-UrbanListView::UrbanListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ModelBuilder& modelBuilder, gui::SymbolIcons& symbols, const StaticModel& staticModel )
+UrbanListView::UrbanListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ModelBuilder& modelBuilder, gui::SymbolIcons& symbols, const StaticModel& staticModel, UrbanModel& urbanModel )
     : EntityListView( pParent, controllers, factory, PreparationProfile::GetProfile() )
     , controllers_ ( controllers )
     , modelBuilder_( modelBuilder )
     , symbols_     ( symbols )
     , staticModel_ ( staticModel )
+    , urbanModel_  ( urbanModel )
 {
     viewport()->installEventFilter( new ListItemToolTip( viewport(), *this ) );
 
@@ -198,6 +201,7 @@ void UrbanListView::keyPressEvent( QKeyEvent* key )
         }
         if( !blocks.empty() )
         {
+            urbanModel_.GetUrbanMenuManager().ClearSelection();
             modelBuilder_.DeleteBlocks( blocks );
             key->accept();
             return;

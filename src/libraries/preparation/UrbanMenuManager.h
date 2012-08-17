@@ -53,6 +53,7 @@ public:
     //@{
     void Register();
     void Unregister();
+    void ClearSelection();
     //@}
 
 private slots:
