@@ -654,5 +654,8 @@
   <report category="operational" id="443" message="Libéré"/>
   <report category="operational" id="444" message="Pris sous tir éclairant"/>
   <report category="operational" id="445" message="Pris sous tir fumigène"/>
+  <report category="operational" id="446" message="Objet détecté : %1">
+    <parameter type="ObjectKnowledge"/>
+  </report>
 </reports>
-<!-- signature="1421627273" -->
+<!-- signature="2785145979" -->

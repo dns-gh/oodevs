@@ -457,4 +457,5 @@ eRc_NeutralUnitIdentified = 442
 eRC_CaptureEnd = 443
 eRC_PrisSousTirEclairant = 444
 eRC_PrisSousTirFumigene = 445
-eNbr = 446
+eRC_DetectedObject = 446
+eNbr = 447

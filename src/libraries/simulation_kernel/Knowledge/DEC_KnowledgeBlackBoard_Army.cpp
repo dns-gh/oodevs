@@ -614,27 +614,27 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Army::ResolveK
 // Name: DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeObject
 // Created: LGY 2011-07-11
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeObject( const MIL_Object_ABC& /*object*/ ) const
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeObject( const MIL_Object_ABC& object ) const
 {
-    return boost::shared_ptr< DEC_Knowledge_Object >();
+    return pKnowledgeObjectContainer_ ? pKnowledgeObjectContainer_->GetKnowledgeObject( object ) : boost::shared_ptr< DEC_Knowledge_Object >();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeObject
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeObject( unsigned int /*nID*/ ) const
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeObject( unsigned int nID ) const
 {
-    return boost::shared_ptr< DEC_Knowledge_Object >();
+    return pKnowledgeObjectContainer_ ? pKnowledgeObjectContainer_->GetKnowledgeObjectFromID( nID )  : boost::shared_ptr< DEC_Knowledge_Object >();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeObjectByObjectID
 // Created: JSR 2011-09-28
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeObjectByObjectID( unsigned int /*nID*/ ) const
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeObjectByObjectID( unsigned int nID ) const
 {
-    return boost::shared_ptr< DEC_Knowledge_Object >();
+    return pKnowledgeObjectContainer_ ? pKnowledgeObjectContainer_->GetKnowledgeObjectFromObjectID( nID ) : boost::shared_ptr< DEC_Knowledge_Object >();
 }
 
 // -----------------------------------------------------------------------------

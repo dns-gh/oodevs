@@ -157,6 +157,7 @@ void MIL_Report::Initialize( xml::xistream& xis )
     diaEvents_[ eReport_EnemyUnitIdentified ] = eRc_EnemyUnitIdentified;
     diaEvents_[ eReport_NeutralUnitRecognized ] = eRc_NeutralUnitRecognized;
     diaEvents_[ eReport_NeutralUnitIdentified ] = eRc_NeutralUnitIdentified;
+    diaEvents_[ eReport_DetectedObject ] = eRC_DetectedObject;
 }
 
 // -----------------------------------------------------------------------------

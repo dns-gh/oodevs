@@ -160,6 +160,7 @@ public:
         eReport_NeutralUnitIdentified,
         eReport_UnderLightingFire,
         eReport_UnderSmokeFire,
+        eReport_DetectedObject,
         eNbrReport
     };
 
@@ -611,6 +612,7 @@ public:
         eRC_CaptureEnd,
         eRC_PrisSousTirEclairant,
         eRC_PrisSousTirFumigene,
+        eRC_DetectedObject,
         eLast
     };
     //@}
@@ -639,6 +641,7 @@ public:
     template< typename T > static void PostEvent( const T& receiver, E_EngineReport nReport, boost::shared_ptr< DEC_Knowledge_Agent > agentKnowledge );
     template< typename T > static void PostEvent( const T& receiver, E_EngineReport nReport, DEC_Knowledge_Population& populationKnowledge );
     template< typename T > static void PostEvent( const T& receiver, E_EngineReport nReport, int nParam1, const std::string& nParam2, int nParam3, int nParam4, int nParam5 );
+    template< typename T > static void PostEvent( const T& receiver, E_EngineReport nReport, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters );
     //@}
 
 private:
@@ -650,9 +653,6 @@ private:
 
     //! @name Tools
     //@{
-    template< typename T >
-    static void PostEvent( const T& receiver, E_EngineReport nReport, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters );
-
     bool DoSend( client::Report& message, E_Type nType, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& params ) const;
     //@}
 

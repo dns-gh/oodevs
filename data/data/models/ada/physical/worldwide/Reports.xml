@@ -654,5 +654,8 @@
   <report category="operational" id="443" message="Released"/>
   <report category="operational" id="444" message="Under lighting fire"/>
   <report category="operational" id="445" message="Under smoke fire"/>
+  <report category="operational" id="446" message="Object detected : %1">
+    <parameter type="ObjectKnowledge"/>
+  </report>
 </reports>
-<!-- signature="1500013323" -->
+<!-- signature="2736009267" -->
