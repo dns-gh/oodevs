@@ -76,32 +76,40 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
     <PreBuildEvent>
-      <Message>Generating protobuf code</Message>
-      <Command>"..\..\bin\protoc.exe" -I=..\..\src\libraries\protocol\proto --cpp_out=..\..\src\libraries\protocol\generated ..\..\src\libraries\protocol\proto\*.proto</Command>
+      <Message>
+      </Message>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <ClCompile />
     <Lib />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
     <PreBuildEvent>
-      <Message>Generating protobuf code</Message>
-      <Command>"..\..\bin\protoc.exe" -I=..\..\src\libraries\protocol\proto --cpp_out=..\..\src\libraries\protocol\generated ..\..\src\libraries\protocol\proto\*.proto</Command>
+      <Message>
+      </Message>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <ClCompile />
     <Lib />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
     <PreBuildEvent>
-      <Message>Generating protobuf code</Message>
-      <Command>"..\..\bin\protoc.exe" -I=..\..\src\libraries\protocol\proto --cpp_out=..\..\src\libraries\protocol\generated ..\..\src\libraries\protocol\proto\*.proto</Command>
+      <Message>
+      </Message>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <ClCompile />
     <Lib />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
     <PreBuildEvent>
-      <Message>Generating protobuf code</Message>
-      <Command>"..\..\bin\protoc.exe" -I=..\..\src\libraries\protocol\proto --cpp_out=..\..\src\libraries\protocol\generated ..\..\src\libraries\protocol\proto\*.proto</Command>
+      <Message>
+      </Message>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <ClCompile />
     <Lib />
