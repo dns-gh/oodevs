@@ -1,14 +1,17 @@
 /* MASA Group Style */
 
-@black:  #000000;
-@run:    #93C47D;
-@pause:  #FFD966;
-@replay: #6FA8DC;
-@stop:   #E06666;
+@black:     #000000;
+@run:       #93C47D;
+@pause:     #FFD966;
+@replay:    #6FA8DC;
+@stop:      #E06666;
+@noreplay:  #8E7CC3;
 
 @common_padding: 24px;
 @session_margin:  6px;
 @topbar_margin:  20px;
+@button_margin:  10px;
+@session_bottom: 24px;
 
 body
 {
@@ -46,6 +49,12 @@ body
     background-color:   @replay;
 }
 
+.noreplay
+{
+    .session;
+    background-color:   @noreplay;
+}
+
 .stopped
 {
     .session;
@@ -59,14 +68,26 @@ body
 
 .session_row
 {
-    position:   relative;
-    width:      auto !important;
+    position:       relative;
+    width:          auto !important;
+    margin-bottom:  @session_bottom;
+}
+
+.sub_session
+{
+    margin-left:    20px;
+    margin-top:     4px - @session_bottom;
 }
 
 .session_name
 {
     padding-left:   32px;
-    padding-bottom: 12px;
+}
+
+.session_content
+{
+    margin-left:    12px;
+    margin-top:     12px;
 }
 
 .session_name, .package_name
@@ -83,8 +104,8 @@ body
 .session_top_right
 {
     position:   absolute;
-    top:        @session_margin;
-    right:      @session_margin;
+    top:        @button_margin;
+    right:      @button_margin;
 }
 
 .session_top_right .dropdown-toggle
@@ -139,9 +160,7 @@ body
 
 .node_buttons
 {
-    position:   absolute;
-    top:        10px;
-    right:      8px;
+    .session_top_right;
 }
 
 .node_header

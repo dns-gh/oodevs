@@ -14,6 +14,13 @@ session_settings_template = Handlebars.compile $("#session_settings_template").h
 print_error = (text) ->
     display_error "session_error", session_error_template, text
 
+Handlebars.registerHelper "can_play", (data, options) ->
+    valid  = data.first_time
+    valid |= data.replay.root?.length
+    if valid
+        return options.fn this
+    return options.inverse this
+
 pop_settings = (ui, data) ->
     ui.html session_settings_template data
     n = [ "#checkpoints_frequency", "#checkpoints_keep",
@@ -134,6 +141,11 @@ status_order =
     replaying: 2
     stopped:   3
 
+get_replay_root = (collection, data) ->
+    id = data.replay.root
+    return unless id?.length
+    return collection.get id
+
 class SessionList extends Backbone.Collection
     model: SessionItem
     order: "name"
@@ -144,7 +156,28 @@ class SessionList extends Backbone.Collection
                 options.success, options.error
         return Backbone.sync method, model, options
 
+    get_root: (item) =>
+        next = get_replay_root this, item.attributes
+        if next?
+            return next
+        return item
+
+    is_parent: (lhs, rhs) =>
+        id = rhs.attributes.replay.root
+        if id?.length
+            return lhs.id == id
+        return false
+
     comparator: (lhs, rhs) =>
+        # group replays together
+        return -1 if @is_parent lhs, rhs
+        return +1 if @is_parent rhs, lhs
+        left  = @get_root lhs
+        right = @get_root rhs
+        [lhs, rhs] = [left, right] if left.id != right.id
+        return @item_compare lhs, rhs
+
+    item_compare: (lhs, rhs) =>
         if @order == "status"
             return @status_compare lhs, rhs
         return @name_compare lhs, rhs
@@ -186,23 +219,41 @@ class SessionItemView extends Backbone.View
         "click .edit"     : "edit"
         "click .pause"    : "pause"
         "click .play"     : "play"
+        "click .replay"   : "replay"
         "click .restore"  : "restore"
         "click .stop"     : "stop"
 
-    is_search: =>
-        if contains @model.get("name"), @search
+    is_filtered: (item) =>
+        status = item.attributes.status
+        for filter in @filters
+            if filter == status
+                return true
+        return false
+
+    is_searched: (item) =>
+        unless @search
             return true
-        if contains @model.get("exercise").name, @search
+        if contains item.attributes.name, @search
+            return true
+        if contains item.attributes.exercise.name, @search
             return true
         return false
 
+    is_skip_render: (item) =>
+        root = item.collection.get_root item
+        # skip replay render if its parent is skipped
+        return true  if @is_filtered root
+        return true  if @is_filtered item
+        # do not skip parent if one replay is searched
+        return false if @is_searched item
+        for id in item.attributes.replay.list
+            return false if @is_searched item.collection.get id
+        return true
+
     render: =>
         $(@el).empty()
-        for filter in @filters
-            if filter == @model.get "status"
-                return
-        if @search and !@is_search()
-            return
+        return if @is_skip_render @model
+
         data = $.extend {}, @model.attributes
         if data.start_time?.length
             start = new Date data.start_time
@@ -210,15 +261,21 @@ class SessionItemView extends Backbone.View
             duration = current.getTime() - start.getTime()
             data.start_time = start.toUTCString()
             data.duration = ms_to_duration duration
+        if data.replay.root?.length
+            if data.status == "stopped"
+                data.status = "noreplay"
         $(@el).html session_template data
         set_spinner $(@el).find ".session_top_right .spin_btn"
         for it in $(@el).find ".link"
             $(it).attr "href", "sword://" + window.location.hostname + ":" + @model.get("port") + "/"
         return
 
-    delete: =>
+    delete: (evt) =>
+        return if is_disabled evt
         @toggle_load()
-        @model.destroy wait: true, error: => print_error "Unable to delete session " + @model.get "name"
+        @model.destroy wait: true, error: =>
+            @toggle_load()
+            print_error "Unable to delete session " + @model.get "name"
 
     modify: (cmd, data) =>
         @toggle_load()
@@ -227,22 +284,24 @@ class SessionItemView extends Backbone.View
                 @toggle_load()
                 @model.set item
             () =>
-                print_error "Unable to " + cmd + " session " + @model.get "name"
                 @toggle_load()
+                print_error "Unable to " + cmd + " session " + @model.get "name"
 
     stop: =>
         @modify "stop", id: @model.id
 
-    play: (e) =>
+    play: (evt) =>
+        return if is_disabled evt
         data = id: @model.id
-        name = $(e.currentTarget).attr "name"
+        name = $(evt.currentTarget).attr "name"
         data.checkpoint = name if name?.length
         @modify "start", data
 
     pause: =>
         @modify "pause", id: @model.id
 
-    archive: =>
+    archive: (evt) =>
+        return if is_disabled evt
         @modify "archive", id: @model.id
 
     restore: =>
@@ -288,6 +347,17 @@ class SessionItemView extends Backbone.View
         delete data.id
         @model.trigger 'clone', data
 
+    replay: (evt) =>
+        return if is_disabled evt
+        @toggle_load()
+        ajax "/api/replay_session", id: @model.id,
+            (item) =>
+                @toggle_load()
+                @model.trigger 'replay', item
+            () =>
+                @toggle_load()
+                print_error "Unable to replay session " + @model.get "name"
+
 get_filters = ->
     _.pluck $("#session_filters input:not(:checked)"), "name"
 
@@ -300,11 +370,13 @@ class SessionListView extends Backbone.View
 
     initialize: ->
         @model = new SessionList
-        @model.bind "add",    @add
-        @model.bind "remove", @remove
-        @model.bind "reset",  @reset
-        @model.bind "change", @model.sort
-        @model.bind "clone",  @clone
+        @model.bind "add",           @add
+        @model.bind "remove",        @remove
+        @model.bind "reset",         @reset
+        @model.bind "change:name",   @model.sort
+        @model.bind "change:status", @model.sort
+        @model.bind "clone",         @clone
+        @model.bind "replay",        @replay
         @model.fetch error: -> print_error "Unable to fetch sessions"
         setTimeout @delta, @delta_period
 
@@ -325,6 +397,12 @@ class SessionListView extends Backbone.View
 
     remove: (item, list, index) =>
         $("#" + item.id).parent().remove()
+        # update parent replay list
+        root = get_replay_root @model, item.attributes
+        return unless root
+        replay = $.extend {}, root.attributes.replay
+        replay.list = _.without replay.list, item.id
+        root.set 'replay', replay
 
     create: (data) =>
         item = new SessionItem
@@ -351,6 +429,7 @@ class SessionListView extends Backbone.View
         value = value.toLowerCase()
         for it in @model.models
             it.view.set_search value
+        return
 
     clone: (data) =>
         max = 1
@@ -361,6 +440,17 @@ class SessionListView extends Backbone.View
             cur = parseInt tab[1]
             max = cur + 1 if max <= cur
         data.name += " (" + max + ")"
+        @create data
+
+    replay: (data) =>
+        # update parent replay list
+        root = get_replay_root @model, data
+        if root?
+            replay = $.extend {}, root.attributes.replay
+            replay.list = [] unless _.isArray replay.list
+            replay.list = _.union replay.list, [data.id]
+            root.set 'replay', replay
+        # add new item
         @create data
 
 class ExerciseListItem extends Backbone.Model

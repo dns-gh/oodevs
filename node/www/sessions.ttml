@@ -123,32 +123,42 @@
 <!-- Session Template -->
 <script type="text/template" id="session_template">
     <div id="{{{id}}}" class="span9">
-        <div class="row-fluid well session_row">
+        <div class="row-fluid well session_row{{#is_option status replaying="" noreplay=""}} sub_session{{/is_option}}">
             <span class="well {{{status}}}"></span>
             <div class="session_name">{{name}}</div>
-            <div class="span4">
-                <div class="shift_right">
-                    <div><span class="item_label">Model</span> {{model.name}}</div>
-                    <div><span class="item_label">Terrain</span> {{terrain.name}}</div>
-                    <div><span class="item_label">Exercise</span> {{exercise.name}}</div>
+            {{#is_option status replaying="" noreplay=""}}
+            {{else}}
+            <div class="session_content">
+                <div class="span4">
+                    <div class="shift_right">
+                        <div><span class="item_label">Model</span> {{model.name}}</div>
+                        <div><span class="item_label">Terrain</span> {{terrain.name}}</div>
+                        <div><span class="item_label">Exercise</span> {{exercise.name}}</div>
+                    </div>
+                </div>
+                <div>
+                    {{#if start_time}}
+                    <div><span class="item_label">Start</span> {{start_time}}</div>
+                    <div><span class="item_label">Duration</span> {{duration}}</div>
+                    <div><span class="item_label">Clients</span> {{clients.length}} connected</div>
+                    {{/if}}
                 </div>
             </div>
-            <div>
-                {{#if start_time}}
-                <div><span class="item_label">Start</span> {{start_time}}</div>
-                <div><span class="item_label">Duration</span> {{duration}}</div>
-                <div><span class="item_label">Clients</span> {{clients.length}} connected</div>
-                {{/if}}
-            </div>
+            {{/is_option}}
             <div class="btn-group session_top_right">
                 {{#is_option status playing="" paused="" replaying=""}}
-                <a title="URL" class="btn link"><i class="icon-tag"></i></a>
+                <a title="URL" class="btn link"><i class="icon-share"></i></a>
                 {{/is_option}}
-                {{#is_option status stopped=""}}
+                {{#is_option status stopped="" noreplay=""}}
                 {{#count checkpoints.list}}
+                {{#count replay.list}}
+                <a class="btn disabled">
+                    <i class="icon-play"></i>
+                {{else}}
                 <a class="btn dropdown-toggle" data-toggle="dropdown">
                     <i class="icon-play"></i>
                     <span class="caret"></span>
+                {{/count}}
                 </a>
                 <ul class="dropdown-menu">
                     [[ if .reset ]]
@@ -160,27 +170,30 @@
                     {{/each}}
                 </ul>
                 {{else}}
-                [[ if .reset ]][[ else ]]{{#bool first_time}}[[ end ]]
-                <a title="Play" class="btn play"><i class="icon-play"></i></a>
-                [[ if .reset ]][[ else ]]{{/bool}}[[ end ]]
+                [[ if .reset ]][[ else ]]{{#can_play .}}[[ end ]]
+                <a title="Play" class="btn play{{#count replay.list}} disabled{{/count}}"><i class="icon-play"></i></a>
+                [[ if .reset ]][[ else ]]{{/can_play}}[[ end ]]
                 {{/count}}
                 {{/is_option}}
                 {{#is_option status paused=""}}
-                <a title="Play" class="btn play"><i class="icon-play"></i></a>
+                <a title="Play" class="btn play{{#count replay.list}} disabled{{/count}}"><i class="icon-play"></i></a>
                 {{/is_option}}
                 {{#is_option status archived=""}}
                 <a title="Restore" class="btn restore"><i class="icon-eject"></i></a>
                 {{/is_option}}
+                <a title="Loading..." class="btn hide disabled spin_btn"></a>
                 {{#is_option status playing=""}}
                 <a title="Pause" class="btn pause"><i class="icon-pause"></i></a>
                 {{/is_option}}
                 {{#is_option status playing="" paused="" replaying=""}}
                 <a title="Stop" class="btn stop"><i class="icon-stop"></i></a>
                 {{/is_option}}
-                {{#is_option status stopped=""}}
-                <a title="Replay" class="btn replay disabled"><i class="icon-repeat"></i></a>
+                {{#is_option status stopped="" playing="" paused=""}}
+                {{#bool first_time}}
+                {{else}}
+                <a title="Replay" class="btn replay"><i class="icon-repeat"></i></a>
+                {{/bool}}
                 {{/is_option}}
-                <a title="Loading..." class="btn hide disabled spin_btn"></a>
                 {{#is_option status stopped=""}}
                 <a title="Settings" class="btn edit"><i class="icon-cog"></i> </a>
                 {{/is_option}}
@@ -191,10 +204,10 @@
                 <a title="Download" class="btn download"><i class="icon-download-alt"></i></a>
                 {{/is_option}}
                 {{#is_option status stopped=""}}
-                <a title="Archive" class="btn archive"><i class="icon-hdd"></i></a>
+                <a title="Archive" class="btn archive{{#count replay.list}} disabled{{/count}}"><i class="icon-hdd"></i></a>
                 {{/is_option}}
-                {{#is_option status stopped="" archived=""}}
-                <a title="Delete" class="btn delete"><i class="icon-trash"></i></a>
+                {{#is_option status stopped="" archived="" noreplay=""}}
+                <a title="Delete" class="btn delete{{#count replay.list}} disabled{{/count}}"><i class="icon-trash"></i></a>
                 {{/is_option}}
             </div>
             [[/*
