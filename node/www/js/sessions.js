@@ -639,7 +639,8 @@
     playing: 0,
     paused: 1,
     replaying: 2,
-    stopped: 3
+    stopped: 3,
+    archived: 4
   };
 
   get_replay_root = function(collection, data) {

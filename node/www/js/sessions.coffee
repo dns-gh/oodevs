@@ -140,6 +140,7 @@ status_order =
     paused:    1
     replaying: 2
     stopped:   3
+    archived:  4
 
 get_replay_root = (collection, data) ->
     id = data.replay.root
