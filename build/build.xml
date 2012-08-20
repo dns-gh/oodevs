@@ -51,6 +51,12 @@
     </target>
 
     <target name="library.protocol" description="build protocol static library">
+        <exec taskname="protolint" executable="python.exe"
+            failonerror="true" timeout="60000">
+            <arg value="${src.dir}/libraries/protocol/protolint.py"/>
+            <arg value="${src.dir}/libraries/protocol/proto"/>
+            <arg value="braces"/>
+        </exec>
         <build-lib name="protocol" pattern="lib${ant.project.name}_protocol-${platform}-mt@{suffix}" suffix="-gd">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
