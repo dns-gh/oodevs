@@ -128,7 +128,15 @@ void FilterDialog::OnAccept()
     }
     catch( std::exception& e )
     {
+        setEnabled( true );
+        reject();
         QMessageBox::critical( this, tools::translate( "FilterDialog", "Error on filter execution" ), e.what() );
+    }
+    catch( ... )
+    {
+        setEnabled( true );
+        reject();
+        QMessageBox::critical( this, tools::translate( "FilterDialog", "Error on filter execution" ), "Unexpected exception" );
     }
 }
 
