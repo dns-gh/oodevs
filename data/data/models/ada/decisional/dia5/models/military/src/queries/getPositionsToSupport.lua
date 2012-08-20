@@ -24,53 +24,54 @@ queryImplementation "getPositionsToSupport"
     [ "execute" ] = function ( params )
         local result = knowledgeManager.getQueryResult( "getPositionsToSupport" )
         local newResult = {}
-        local knowledges = {}
-        local newPositions = {}
-        local DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition = DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition
-        local DEC_Tir_PorteeMaxPourTirer = DEC_Tir_PorteeMaxPourTirer
-        local DEC_Connaissances_BlocUrbainDansCercle = DEC_Connaissances_BlocUrbainDansCercle
-        local DEC_Geometrie_CalculerLocalisationsBU = DEC_Geometrie_CalculerLocalisationsBU
-        if ( knowledgeManager.bCanCallStaticQuery or params.dynamic ) then
-           local rangeDistanceMax = DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition() / 2 -- indirect fire case
-           local rangeDistanceMin = DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition() / 3
-           if rangeDistanceMax <= 0 then -- direct fire case
-               rangeDistanceMax = DEC_Tir_PorteeMaxPourTirer( 0.7 ) / 2
-               rangeDistanceMin = DEC_Tir_PorteeMaxPourTirer( 0.8 ) / 2
-           end
-            -- Pour toutes les connaissances, garder celles qui sont bonnes pour soutenir
-            for _, objective in pairs ( params.elementsToSupport ) do
-                local foundAPositionForThisObjective = false
-                if not objective:isNearby() then 
-                    knowledges[ #knowledges + 1 ] = CreateProxyKnowledge( 
-                       world.SupportingArea, objective,{ distanceMin = rangeDistanceMin , distanceMax = rangeDistanceMax } )
-                else
-                    -- Les blocs urbains
-                    local urbanknowledges = DEC_Connaissances_BlocUrbainDansCercle( objective:getPosition(), 100 )
-                    -- Les positions autours des BUs et son barycentre (un point dans le BU)
-                    for _, bu in pairs ( urbanknowledges ) do
-                        AddPointKnowledge( DEC_Geometrie_CalculerLocalisationsBU( bu ), result, newResult, knowledges )
-                    end
+        if params.retrogradeContext then
+            newResult = { integration.getPositionToSupportFriend( params.elementsToSupport ) } 
+        else
+            local knowledges = {}
+            local newPositions = {}
+            local DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition = DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition
+            local DEC_Tir_PorteeMaxPourTirer = DEC_Tir_PorteeMaxPourTirer
+            local DEC_Connaissances_BlocUrbainDansCercle = DEC_Connaissances_BlocUrbainDansCercle
+            local DEC_Geometrie_CalculerLocalisationsBU = DEC_Geometrie_CalculerLocalisationsBU
+            if ( knowledgeManager.bCanCallStaticQuery or params.dynamic ) then
+               local rangeDistanceMax = DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition() / 2 -- indirect fire case
+               local rangeDistanceMin = DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition() / 3
+               if rangeDistanceMax <= 0 then -- direct fire case
+                   rangeDistanceMax = DEC_Tir_PorteeMaxPourTirer( 0.7 ) / 2
+                   rangeDistanceMin = DEC_Tir_PorteeMaxPourTirer( 0.8 ) / 2
+               end
+                -- Pour toutes les connaissances, garder celles qui sont bonnes pour soutenir
+               for _, objective in pairs ( params.elementsToSupport ) do
+                   local foundAPositionForThisObjective = false
+                   if not objective:isNearby() then 
+                       knowledges[ #knowledges + 1 ] = CreateProxyKnowledge( 
+                          world.SupportingArea, objective,{ distanceMin = rangeDistanceMin , distanceMax = rangeDistanceMax } )
+                   else
+                       -- Les blocs urbains
+                       local urbanknowledges = DEC_Connaissances_BlocUrbainDansCercle( objective:getPosition(), 100 )
+                       -- Les positions autours des BUs et son barycentre (un point dans le BU)
+                       for _, bu in pairs ( urbanknowledges ) do
+                           AddPointKnowledge( DEC_Geometrie_CalculerLocalisationsBU( bu ), result, newResult, knowledges )
+                       end
+                   end
+                   -- Verify that position are good to support unit
+                   for _, element in pairs ( knowledges ) do
+                       if element:isSupportingFor( objective ) then
+                           foundAPositionForThisObjective = true
+                           if not exists( newResult, element ) then
+                               newResult[ #newResult + 1 ] = CreateKnowledge( world.Point, DEC_Geometrie_CopiePoint(element:getPosition()))
+                           end
+                       end
+                   end
+                   -- si pas de position
+                   if not foundAPositionForThisObjective then
+                       newResult[ #newResult + 1 ] = CreateProxyKnowledge( 
+                          world.SupportingArea, objective, {distanceMin = rangeDistanceMin , distanceMax = rangeDistanceMax } )
+                   end
                 end
-
-                -- Verify that position are good to support unit
-                for _, element in pairs ( knowledges ) do
-                    if element:isSupportingFor( objective ) then
-                        foundAPositionForThisObjective = true
-                        if not exists( newResult, element ) then
-                            newResult[ #newResult + 1 ] = CreateKnowledge( world.Point, DEC_Geometrie_CopiePoint(element:getPosition()))
-                        end
-                    end
-                end
-                
-                 -- si pas de position
-                if not foundAPositionForThisObjective then
-                    newResult[ #newResult + 1 ] = CreateProxyKnowledge( 
-                       world.SupportingArea, objective, {distanceMin = rangeDistanceMin , distanceMax = rangeDistanceMax } )
-                end
+                knowledgeManager.setQueryResult( "getPositionsToSupport", newResult )
             end
-            
-            knowledgeManager.setQueryResult( "getPositionsToSupport", newResult )
+            return newResult
         end
-        return newResult
     end
 }

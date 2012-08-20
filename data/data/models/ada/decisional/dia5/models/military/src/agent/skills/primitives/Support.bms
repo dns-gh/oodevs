@@ -5,10 +5,7 @@
 -- ****************************************************************************
 rootnode
 {
-    connections =
-    {
-        skill.nodes.SupportElement
-    },
+    connections = { skill.nodes.SupportElement },
 
     -- --------------------------------------------------------------------------------
     -- A support position is reached
@@ -63,9 +60,16 @@ node "SupportElement"
         Feedback( self.feedbacks.done, additionalParams )
     end,
 
+    -- --------------------------------------------------------------------------------
+    -- Init: get supporting positions yto support the entity
+    -- --------------------------------------------------------------------------------
     create = function( self )
-        self.positions = integration.query.getPositionsToSupport( self.params.retrogradeContext, self.params.entity )
+        self.positions = queries.getPositionsToSupport[ "execute" ]( 
+                                            { elementsToSupport = { self.params.entity }, 
+                                              retrogradeContext = self.params.retrogradeContext,
+                                              dynamic           = true } )
     end,
+
     -- --------------------------------------------------------------------------------
     -- Move toward a destroying element and edstroy the entity
     -- --------------------------------------------------------------------------------
@@ -85,7 +89,7 @@ node "SupportElement"
         --If the old bestPosition is still good
         if self.bestPosition then
             if self.bestPosition:supportEfficiency( self.params.entity ) > 0.8 then
-                for i=1, #self.positions do
+                for i = 1, #self.positions do
                      Activate( skill.links.moveAndTakePosition,
                                self.efficiencies[self.positions[i]], { entity = self.positions[i] } )
                 end
@@ -94,10 +98,14 @@ node "SupportElement"
                 end
             end
         end
+
         -- If the bestPosition is not enought good for supporting the entity
         self.efficiencies = {}
         self.maxEfficiency = 0
-        self.positions = integration.query.getPositionsToSupport( self.params.retrogradeContext, self.params.entity )
+        self.positions = queries.getPositionsToSupport[ "execute" ]( { 
+                                      elementsToSupport = { self.params.entity }, 
+                                      retrogradeContext = self.params.retrogradeContext,
+                                      dynamic           = true } )
         for i = 1, #self.positions do
             local position = self.positions[i]
             local efficiency = position:supportEfficiency( self.params.entity )

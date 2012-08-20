@@ -21,8 +21,7 @@ rootnode
     -- --------------------------------------------------------------------------------
     activate = function( self )
         local Activate = Activate
-        Activate( skill.links.support, 1, { entities  = self.params.entities,  retrogradeContext = self.params.retrogradeContext  } )
-
+        Activate( skill.links.support, 1, { entities  = self.params.entities, retrogradeContext = self.params.retrogradeContext  } )
     end,
 
     -- -------------------------------------------------------------------------------- 

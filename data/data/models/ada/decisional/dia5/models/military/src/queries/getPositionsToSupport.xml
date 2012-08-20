@@ -15,6 +15,11 @@
                 <simple name="boolean"/>
             </type>
         </parameter>
+        <parameter name="retrogradeContext">
+            <type>
+                <simple name="boolean"/>
+            </type>
+        </parameter>
     </parameters>
     <target name="supportingPosition">
         <type>
