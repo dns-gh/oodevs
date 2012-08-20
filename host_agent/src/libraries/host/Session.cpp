@@ -582,15 +582,22 @@ std::string MakeOption( const std::string& option, const T& value )
 bool Session::Start( const Path& apps, const std::string& checkpoint )
 {
     boost::upgrade_lock< boost::shared_mutex > lock( access_ );
+    if( replays_.size() )
+        throw web::HttpException( web::FORBIDDEN );
+
     const bool replay = IsReplay();
     const Status next = replay ? STATUS_REPLAYING : STATUS_PLAYING;
     if( process_ )
         return ModifyStatus( lock, next );
 
-    const boost::posix_time::ptime now = boost::posix_time::second_clock::local_time();
-    Node_ABC::T_Token token = node_->StartSession( now, first_time_ || !checkpoint.empty() );
-    if( !token )
-        return false;
+    Node_ABC::T_Token token;
+    if( !replay )
+    {
+        const boost::posix_time::ptime now = boost::posix_time::second_clock::local_time();
+        token = node_->StartSession( now, first_time_ || !checkpoint.empty() );
+        if( !token )
+            return false;
+    }
 
     boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );
     start_time_.clear();
@@ -858,6 +865,8 @@ bool Attach( const FileSystem_ABC& system, const Path& path, T& items )
 Session::T_Ptr Session::Replay()
 {
     boost::lock_guard< boost::shared_mutex > read( access_ );
+    if( first_time_ )
+        throw web::HttpException( web::FORBIDDEN );
     web::session::Config cfg = cfg_;
     cfg.name += " replay " + boost::lexical_cast< std::string >( replays_.size() + 1 );
     SessionPaths paths = paths_;

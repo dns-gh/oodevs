@@ -15,6 +15,7 @@
 #include "runtime/Pool.h"
 #include "runtime/PropertyTree.h"
 #include "web/Configs.h"
+#include "web/HttpException.h"
 
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
@@ -105,7 +106,6 @@ namespace
             MOCK_EXPECT( system.Walk );
             MOCK_EXPECT( system.Rename ).returns( true );
             MOCK_EXPECT( system.Remove ).returns( true );
-            MOCK_EXPECT( node->StartSession ).returns( boost::make_shared< host::node::Token >() );
             MOCK_EXPECT( node->UpdateSessionSize );
         }
 
@@ -121,11 +121,13 @@ namespace
             return boost::make_shared< Session >( deps, node, paths, cfg, defaultExercise, boost::uuids::nil_uuid() );
         }
 
-        SessionPtr ReloadSession( const Tree& tree, ProcessPtr process = ProcessPtr() )
+        SessionPtr ReloadSession( const Tree& tree, ProcessPtr process = ProcessPtr(), bool valid = true )
         {
             MOCK_EXPECT( ports.Create1 ).once().with( defaultPort ).returns( new MockPort( defaultPort ) );
             if( process )
                 MOCK_EXPECT( runtime.GetProcess ).once().with( process->GetPid() ).returns( process );
+            if( process && valid )
+                MOCK_EXPECT( node->StartSession ).once().returns( boost::make_shared< host::node::Token >() );
             const Tree data = FromJson( links );
             MOCK_EXPECT( node->LinkExerciseTree ).once().with( data ).returns( data );
             SessionPaths paths( "a", "b" );
@@ -138,6 +140,7 @@ namespace
             ProcessPtr process = boost::make_shared< MockProcess >( pid, name );
             MOCK_EXPECT( runtime.Start ).once().returns( process );
             MOCK_EXPECT( system.WriteFile ).once().returns( true );
+            MOCK_EXPECT( node->StartSession ).once().returns( boost::make_shared< host::node::Token >() );
             BOOST_REQUIRE( session.Start( apps, std::string() ) );
             return process;
         }
@@ -165,6 +168,14 @@ namespace
                 MOCK_EXPECT( process->Join ).returns( true );
             }
             BOOST_CHECK( session.Stop() );
+        }
+
+        Session_ABC::T_Ptr ReplaySession( Session& session )
+        {
+            MOCK_EXPECT( uuids.Create ).once().returns( boost::uuids::random_generator()() );
+            MOCK_EXPECT( node->LinkExerciseName ).once().with( session.GetExercise() ).returns( FromJson( links ) );
+            MOCK_EXPECT( ports.Create0 ).once().returns( new MockPort( defaultPort + 17 ) );
+            return session.Replay();
         }
     };
 }
@@ -284,7 +295,7 @@ BOOST_FIXTURE_TEST_CASE( session_rejects_bind_to_another_process, Fixture )
     SessionPtr session = MakeSession();
     StartSession( *session, processPid, processName );
     const Tree save = session->Save();
-    session = ReloadSession( save, boost::make_shared< MockProcess >( processPid, processName + "_" ) );
+    session = ReloadSession( save, boost::make_shared< MockProcess >( processPid, processName + "_" ), false );
     BOOST_CHECK( !session->Stop() );
 }
 
@@ -355,4 +366,27 @@ BOOST_FIXTURE_TEST_CASE( session_discard_outdated_updates_due_to_invalidated_cou
     endPause.Signal();
     pause.wait();
     BOOST_CHECK_EQUAL( GetState( *session ), "playing" );
+}
+
+BOOST_FIXTURE_TEST_CASE( session_cannot_replay_without_one_play, Fixture )
+{
+    SessionPtr session = MakeSession();
+    BOOST_CHECK_THROW( session->Replay(), web::HttpException );
+}
+
+BOOST_FIXTURE_TEST_CASE( session_can_replay, Fixture )
+{
+    SessionPtr session = MakeSession();
+    ProcessPtr process = StartSession( *session, processPid, processName );
+    Session_ABC::T_Ptr replay = ReplaySession( *session );
+    BOOST_CHECK( replay );
+}
+
+BOOST_FIXTURE_TEST_CASE( session_cannot_restart_with_replays, Fixture )
+{
+    SessionPtr session = MakeSession();
+    ProcessPtr process = StartSession( *session, processPid, processName );
+    Session_ABC::T_Ptr replay = ReplaySession( *session );
+    StopSession( *session, process );
+    BOOST_CHECK_THROW( session->Start( apps, std::string() ), web::HttpException );
 }
