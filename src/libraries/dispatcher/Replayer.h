@@ -28,6 +28,11 @@ namespace replay
 }
 }
 
+namespace xml
+{
+    class xistream;
+}
+
 namespace dispatcher
 {
     class Config;
@@ -38,6 +43,7 @@ namespace dispatcher
     class Services;
     class Shield;
     class MemoryLogger_ABC;
+    class SimulationPublisher_ABC;
 
 // =============================================================================
 /** @class  Replayer
@@ -57,6 +63,7 @@ public:
     //! @name Operations
     //@{
     void Update();
+    void OnWebControl( xml::xistream& xis );
     //@}
 
 private:
@@ -80,9 +87,9 @@ private:
     std::auto_ptr< Loader >                            loader_;
     boost::shared_ptr< plugins::replay::ReplayPlugin > plugin_;
     std::auto_ptr< Shield >                            shield_;
+    std::auto_ptr< SimulationPublisher_ABC >           publisher_;
     //@}
 };
-
 }
 
 #endif // __Replayer_h_

@@ -13,6 +13,7 @@
 #include "Model.h"
 #include "ClientsNetworker.h"
 #include "SimulationDispatcher.h"
+#include "SimulationPublisher_ABC.h"
 #include "Loader.h"
 #include "Services.h"
 #include "StaticModel.h"
@@ -23,6 +24,7 @@
 #include "rights_plugin/RightsPlugin.h"
 #include "score_plugin/ScorePlugin.h"
 #include "messenger_plugin/MessengerPlugin.h"
+#include "web_control_plugin/WebPlugin.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace dispatcher;
@@ -59,6 +61,12 @@ namespace
             // NOTHING
         }
     };
+
+    struct NullPublisher : public SimulationPublisher_ABC
+    {
+        virtual void Send( const sword::ClientToSim& ) {}
+        virtual void Send( const sword::DispatcherToSim& ) {}
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -75,6 +83,7 @@ Replayer::Replayer( const Config& config )
     , loader_          ( new Loader( *simulation_, handler_, config ) )
     , plugin_          ( new plugins::replay::ReplayPlugin( *model_, *clientsNetworker_, *clientsNetworker_, *loader_, *simulation_ ) )
     , shield_          ( new Shield( config, *model_, *clientsNetworker_, *clientsNetworker_ ) )
+    , publisher_       ( new NullPublisher() )
 {
     handler_.AddHandler( model_ );
     handler_.AddHandler( clientsNetworker_ );
@@ -85,6 +94,12 @@ Replayer::Replayer( const Config& config )
     handler_.Add( new plugins::aar::AarPlugin( *clientsNetworker_, *rights, config ) );
     handler_.Add( new plugins::score::ScorePlugin( *clientsNetworker_, *clientsNetworker_, *clientsNetworker_, config, registrables_ ) );
     handler_.Add( new plugins::messenger::MessengerPlugin( *clientsNetworker_, *clientsNetworker_, *clientsNetworker_, config, registrables_ ) );
+    xml::xifstream xis( config.GetSessionFile() );
+    xis >> xml::start( "session" )
+            >> xml::start( "config" )
+                >> xml::start( "dispatcher" )
+                    >> xml::start( "plugins" )
+                        >> xml::list("web_control", *this, &Replayer::OnWebControl );
     handler_.Register( *services_ );
     loader_->Start();
 }
@@ -107,4 +122,13 @@ void Replayer::Update()
     clientsNetworker_->Update();
     handler_.Update();
     shield_->Update();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Replayer::OnWebControl
+// Created: BAX 2012-08-20
+// -----------------------------------------------------------------------------
+void Replayer::OnWebControl( xml::xistream& xis )
+{
+    handler_.Add( new plugins::web_control::WebPlugin( *publisher_, xis ) );
 }
