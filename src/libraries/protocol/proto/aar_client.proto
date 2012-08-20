@@ -25,8 +25,7 @@ package sword;
     @bug This message is not correctly filled by AarPlugin but is filled by ScorePlugin.
          We should probably use different messages for both plugins.
 */
-message AarInformation
-{
+message AarInformation {
     /** @property information
         @brief Definition of indicators supported by After Action Review module
 
@@ -44,8 +43,7 @@ message AarInformation
 
     @see PlotRequest
 */
-message PlotResult
-{
+message PlotResult {
     required uint32 identifier = 1; //!< An identifier for the request
     repeated float  values     = 2; //!< The result values
     required string error      = 3; //!< The description of an error
@@ -54,8 +52,7 @@ message PlotResult
 
 /** @struct Indicator
 */
-message Indicator
-{
+message Indicator {
     required string name  = 1;
     required float  value = 2;
 }
@@ -65,14 +62,12 @@ message Indicator
 
     This is the actual message sent over the network.
 */
-message AarToClient
-{
+message AarToClient {
     /** @struct Content
         @brief The possible messages contained in a AAR to client message
         @warning Each Content message must contain exactly one of the possible messages.
     */
-    message Content
-    {
+    message Content {
         optional AarInformation aar_information = 1; //!< An information message
         optional PlotResult     plot_result     = 2; //!< A plot result message
         optional Indicator      indicator       = 3; //!< An indicator message

@@ -535,8 +535,7 @@ message ControlChangeTimeFactor {
 /** @struct RgbColor
     @brief Defines a color
 */
-message RgbColor
-{
+message RgbColor {
     required int32 red   = 1; //!< The red component between 0 and 255
     required int32 green = 2; //!< The green component between 0 and 255
     required int32 blue  = 3; //!< The blue component between 0 and 255
@@ -776,8 +775,7 @@ message Extension {
 /** @struct ResourceNetworkElement
     @brief A resource network element message
 */
-message ResourceNetworkElement
-{
+message ResourceNetworkElement {
     required ObjectId            object   = 1; //! An object identifier
     required ResourceNetworkType resource = 2; //!< The resource network type
 }
@@ -786,8 +784,7 @@ message ResourceNetworkElement
     @brief The resource part of supply flow (push/pull) messages
     @todo What's this ?
 */
-message SupplyFlowResource
-{
+message SupplyFlowResource {
     required ResourceType resourceType = 1; //!< The resource type that will be conveyed
     required uint32       quantity     = 2; //!< The quantity that will be conveyed
 }
@@ -796,8 +793,7 @@ message SupplyFlowResource
     @brief The transporters (conveyors) part of supply flow (push/pull) messages
     @todo 
 */
-message SupplyFlowTransporter
-{
+message SupplyFlowTransporter {
     required EquipmentType equipmentType = 1; //!< The equipment (trucks ...) that will be used to convey the resources
     required uint32        quantity      = 2; //!< The previous equipment type quantity
 }
@@ -806,8 +802,7 @@ message SupplyFlowTransporter
     @brief The recipient(receiver) of a supply flow
     @todo What's this ?
 */
-message SupplyFlowRecipient
-{
+message SupplyFlowRecipient {
     required AutomatId          receiver  = 1; //!< The receiver of the supply flow
     repeated SupplyFlowResource resources = 2; //!< The resources conveyed  - must contain at least one element
     optional PointList          path      = 3; //!< The optional way points the convey has to take to go to the receiver
@@ -817,8 +812,7 @@ message SupplyFlowRecipient
     @brief The parameters of a supply push flow operation
     @todo What's this ?
 */
-message PushFlowParameters
-{
+message PushFlowParameters {
     repeated SupplyFlowRecipient   recipients   = 1; //!< The recipients (and the associated path/resources) of the supply - must contain at least one element
     repeated SupplyFlowTransporter transporters = 2; //!< The optional explicit transporter to use for the supply operation - If no transporters are specified, they are chosen automatically
     optional PointList             wayBackPath  = 3; //!< The optional way points the convey has to take when going back to its logistic base
@@ -828,8 +822,7 @@ message PushFlowParameters
     @brief The parameters of a supply pull flow operation
     @todo What's this ?
 */
-message PullFlowParameters
-{
+message PullFlowParameters {
     required ParentEntity          supplier     = 1; //!< The logistic base which will provide the resources
     repeated SupplyFlowResource    resources    = 2; //!< The resources to supply - must contain at least one element
     repeated SupplyFlowTransporter transporters = 3; //!< The optional explicit transporter to use for the supply operation - If no transporters are specified, they are chosen automatically

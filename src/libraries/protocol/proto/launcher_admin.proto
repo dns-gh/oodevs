@@ -120,7 +120,7 @@ message ConnectedProfileListResponse {
 /** @struct SessionStatus
     @brief pushed session status
 */
-message SessionStatus{
+message SessionStatus {
     enum Status {
         starting    = 0;
         running     = 1;
@@ -247,8 +247,7 @@ message ClientConnectionNotification {
 /** @struct TickInformation
     @brief tick information from client
 */
-message TickInformation
-{
+message TickInformation {
    required int32 current_tick                   = 1;
    required int32 tick_duration                  = 2;
    required int32 time_factor                    = 3;

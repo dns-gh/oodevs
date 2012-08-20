@@ -69,17 +69,16 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
-    <PreBuildEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='debug|win32'">false</PreBuildEventUseInBuild>
-    <PreBuildEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='debug|x64'">false</PreBuildEventUseInBuild>
-    <PreBuildEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='release|win32'">false</PreBuildEventUseInBuild>
-    <PreBuildEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='release|x64'">false</PreBuildEventUseInBuild>
+    <PreBuildEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='debug|win32'">true</PreBuildEventUseInBuild>
+    <PreBuildEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='debug|x64'">true</PreBuildEventUseInBuild>
+    <PreBuildEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='release|win32'">true</PreBuildEventUseInBuild>
+    <PreBuildEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='release|x64'">true</PreBuildEventUseInBuild>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
     <PreBuildEvent>
       <Message>
       </Message>
-      <Command>
-      </Command>
+      <Command>python $(SrcDir)/protolint.py  $(SrcDir)/proto braces</Command>
     </PreBuildEvent>
     <ClCompile />
     <Lib />
@@ -88,8 +87,7 @@
     <PreBuildEvent>
       <Message>
       </Message>
-      <Command>
-      </Command>
+      <Command>python $(SrcDir)/protolint.py  $(SrcDir)/proto braces</Command>
     </PreBuildEvent>
     <ClCompile />
     <Lib />
@@ -98,8 +96,7 @@
     <PreBuildEvent>
       <Message>
       </Message>
-      <Command>
-      </Command>
+      <Command>python $(SrcDir)/protolint.py  $(SrcDir)/proto braces</Command>
     </PreBuildEvent>
     <ClCompile />
     <Lib />
@@ -108,8 +105,7 @@
     <PreBuildEvent>
       <Message>
       </Message>
-      <Command>
-      </Command>
+      <Command>python $(SrcDir)/protolint.py  $(SrcDir)/proto braces</Command>
     </PreBuildEvent>
     <ClCompile />
     <Lib />

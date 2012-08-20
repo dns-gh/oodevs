@@ -1132,8 +1132,7 @@ message Explosion {
     optional CrowdsFireDamages crowds_damages = 3; //!< The resulting damages dealt to crowds
 }
 
-message UnitDamagedByUnitFire
-{
+message UnitDamagedByUnitFire {
     required UnitId                       unit        = 1; //!< The target unit identifier
     required PartyId                      party       = 2; //!< The target party identifier
     required UnitId                       firer       = 3; //!< The firer unit identifier
@@ -1144,8 +1143,7 @@ message UnitDamagedByUnitFire
     required SeqOfUnitEquipmentFireDamage equipments  = 8; //!< The damages to the equipments
 }
 
-message CrowdDamagedByUnitFire
-{
+message CrowdDamagedByUnitFire {
     required CrowdId crowd       = 1; //!< The target crowd identifier
     required PartyId party       = 2; //!< The target party identifier
     required UnitId  firer       = 3; //!< The firer unit identifier
@@ -1157,8 +1155,7 @@ message CrowdDamagedByUnitFire
     required int32   scattered   = 9; //!< The number of scattered persons
 }
 
-message UnitDamagedByCrowdFire
-{
+message UnitDamagedByCrowdFire {
     required UnitId                       unit       = 1; //!< The target unit identifier
     required PartyId                      party      = 2; //!< The target party identifier
     required CrowdId                      firer      = 3; //!< The firer crowd identifier
@@ -1677,13 +1674,11 @@ message SupplyResourceRequest {
     @brief The recipient(receiver) of a supply flow
     @todo What's this ?
 */
-message SupplyRecipientResourcesRequest
-{
+message SupplyRecipientResourcesRequest {
     required AutomatId             recipient = 1; //!< The recipient of the supply flow
     repeated SupplyResourceRequest resources = 2; //!< The resources requested/granted/convoyed
 }
-message SupplyRecipientResourceRequests
-{
+message SupplyRecipientResourceRequests {
     repeated SupplyRecipientResourcesRequest requests = 1;
 }
 
@@ -2129,8 +2124,7 @@ message ControlSendCurrentStateEnd {
 /** @struct RgbaColor
     @brief Defines a color with alpha channel
 */
-message RgbaColor
-{
+message RgbaColor {
     required int32 red   = 1; //!< The red component between 0 and 255
     required int32 green = 2; //!< The green component between 0 and 255
     required int32 blue  = 3; //!< The blue component between 0 and 255
