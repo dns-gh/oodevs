@@ -1,12 +1,11 @@
 local result = 
 {
-
-    fillParameters = function( self, companyTask, params, entity, retrogradeContext, objectif )
+    fillParameters = function( self, companyTask, params )
         return { position = companyTask:getEmbarkPoint( params ) }
     end
 }
 
 local t = initTaskKnowledge( result )
-taskKnowledge["platoon.tasks.knowledges.WaitTransport"] = t
+taskKnowledge[ "platoon.tasks.knowledges.WaitTransport" ] = t
 
 return result
