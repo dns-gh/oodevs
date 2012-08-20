@@ -197,7 +197,7 @@ namespace
             T_PointVector shape;
             for( std::size_t i = 0; i < points.GetSize(); ++i )
                 shape.push_back( MT_Vector2D( points.GetElement( i )[ "x" ], points.GetElement( i )[ "y" ] ) );
-            T_Notification notifier = boost::bind( static_cast< bool(DEC_KS_Perception::*)( MIL_PopulationFlow&, const PHY_PerceptionLevel&, const std::vector< MT_Vector2D >&, bool ) >(&DEC_KS_Perception::NotifyPerception), _1, boost::ref( flow ), boost::ref( level ), boost::cref( shape ), recorded );
+            T_Notification notifier = boost::bind( static_cast< bool(DEC_KS_Perception::*)( MIL_PopulationFlow&, const PHY_PerceptionLevel&, const std::vector< MT_Vector2D >&, bool ) >(&DEC_KS_Perception::NotifyPerception), _1, boost::ref( flow ), boost::ref( level ), shape, recorded );
             notifications.push_back( notifier );
         }
     }
