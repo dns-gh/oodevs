@@ -5,13 +5,18 @@ import sys, os, re, optparse
 
 class Ui:
     def __init__(self):
-        pass
+        self.errors = 0
 
     def write(self, s):
         sys.stdout.write(s)
-        
+
     def writeerr(self, s):
         sys.stderr.write(s)
+
+    def error(self, path, lineno, s, line=None):
+        line = line and ('   ' + line.rstrip() + '\n') or ''
+        self.writeerr('%s:%d: %s\n%s' % (path, lineno, s, line))
+        self.errors += 1
 
 def listproto(rootdir):
     """Return a list of paths of .proto found under rootdir."""
@@ -423,16 +428,13 @@ def cmdbraces(ui, rootdir):
       {
 
     """
-    ret = 0
     rebrace = re.compile(r'^\s*(message|enum)\s+\S+[^\{]*$')
     for path in listproto(rootdir):
         fname = os.path.basename(path)
         for i, line in readproto(path):
             if rebrace.search(line):
-                ui.writeerr('%s:%d: invalid brace style\n' % (fname, i + 1))
-                ui.writeerr('  %s\n' % line.rstrip())
-                ret += 1
-    return ret
+                ui.error(fname, i + 1, 'invalid brace style', line)
+    return ui.errors
 
 
 def cmdstyle(ui, rootdir):
