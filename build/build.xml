@@ -55,7 +55,7 @@
             failonerror="true" timeout="60000">
             <arg value="${src.dir}/libraries/protocol/protolint.py"/>
             <arg value="${src.dir}/libraries/protocol/proto"/>
-            <arg value="braces"/>
+            <arg value="style"/>
         </exec>
         <build-lib name="protocol" pattern="lib${ant.project.name}_protocol-${platform}-mt@{suffix}" suffix="-gd">
             <defineset define="QT3_SUPPORT"/>

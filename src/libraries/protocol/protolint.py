@@ -391,7 +391,7 @@ def findtodo(path):
     return matching
 
 parser = optparse.OptionParser(
-        usage='mapproto.py path (check|todo|style|braces)')
+        usage='mapproto.py path (check|todo|naming|style)')
 
 def cmdcheck(ui, rootdir):
     try:
@@ -420,7 +420,7 @@ def cmdtodo(ui, rootdir):
         for i, l in findtodo(path):
             ui.write('%s:%d: %s\n' % (fname, i, l.rstrip()))
 
-def cmdbraces(ui, rootdir):
+def cmdstyle(ui, rootdir):
     """Check braces are written like:
 
       message FooBar {
@@ -440,7 +440,7 @@ def cmdbraces(ui, rootdir):
     return ui.errors
 
 
-def cmdstyle(ui, rootdir):
+def cmdnaming(ui, rootdir):
     refield = re.compile(r'^[a-z0-9_]+$')
     modules = parsemodules(ui, rootdir)
     for parts, m in itermessages(modules):
@@ -459,8 +459,8 @@ if __name__ == '__main__':
     cmds = {
         'check': cmdcheck,
         'todo': cmdtodo,
+        'naming': cmdnaming,
         'style': cmdstyle,
-        'braces': cmdbraces,
         }
     ui = Ui()
     res = 0
