@@ -287,12 +287,12 @@ message CheckpointDeleteResponse {
 */
 message SessionNotification {
     message UnitUpdate {
-       required UnitId    unit       = 1;
-       optional Extension extensions = 2;
+        required UnitId    unit       = 1;
+        optional Extension extensions = 2;
     }
     message FormationUpdate {
-       required FormationId formation  = 1;
-       optional Extension   extensions = 2;
+        required FormationId formation  = 1;
+        optional Extension   extensions = 2;
     }
     message ProfileCreation {
         required Profile profile = 1;
@@ -316,8 +316,8 @@ message SessionNotification {
 */
 message ClientConnectionNotification {
     message ClientConnection {
-       required string login = 1;
-       required bool   connected = 2;
+        required string login = 1;
+        required bool   connected = 2;
     }
     required string           exercise   = 1;
     required string           session    = 2;
@@ -328,11 +328,11 @@ message ClientConnectionNotification {
     @brief tick information from client
 */
 message TickInformation {
-   required int32 current_tick                   = 1;
-   required int32 tick_duration                  = 2;
-   required int32 time_factor                    = 3;
-   required int32 pathfind_request_number        = 4;
-   optional int32 last_checkpoint_build_duration = 5;
+    required int32 current_tick                   = 1;
+    required int32 tick_duration                  = 2;
+    required int32 time_factor                    = 3;
+    required int32 pathfind_request_number        = 4;
+    optional int32 last_checkpoint_build_duration = 5;
 }
 
 /** @struct LauncherToAdmin

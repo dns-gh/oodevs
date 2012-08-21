@@ -115,15 +115,15 @@ message ClientToAuthentication {
     */
     message Content {
         //! An authentication request message
-       optional AuthenticationRequest     authentication_request      = 1;
-       //! A profile creation request message
-       optional ProfileCreationRequest    profile_creation_request    = 2;
-       //! A profile update request message
-       optional ProfileUpdateRequest      profile_update_request      = 3;
-       //! A profile destruction request message
-       optional ProfileDestructionRequest profile_destruction_request = 4;
-       //! Connected profiles request message
-       optional ConnectedProfilesRequest  connected_profiles_request  = 5;
+        optional AuthenticationRequest     authentication_request      = 1;
+        //! A profile creation request message
+        optional ProfileCreationRequest    profile_creation_request    = 2;
+        //! A profile update request message
+        optional ProfileUpdateRequest      profile_update_request      = 3;
+        //! A profile destruction request message
+        optional ProfileDestructionRequest profile_destruction_request = 4;
+        //! Connected profiles request message
+        optional ConnectedProfilesRequest  connected_profiles_request  = 5;
     }
     /** @property context
         @brief Identifies the request matching the response.

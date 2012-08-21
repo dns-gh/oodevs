@@ -778,7 +778,7 @@ message PolygonList {
 */
 message LogMedicalPriorities {
     //! The wounds
-   repeated EnumHumanWound elem = 1;
+    repeated EnumHumanWound elem = 1;
 }
 
 /** @struct ObstacleType
@@ -790,9 +790,9 @@ message ObstacleType {
     */
     enum DemolitionTargetType {
         //! The obstacle is already built and will always be active
-       preliminary = 0;
-       //! The obstacle can be activated or deactivated during the exercise
-       reserved    = 1;
+        preliminary = 0;
+        //! The obstacle can be activated or deactivated during the exercise
+        reserved    = 1;
     }
 }
 
@@ -933,7 +933,7 @@ message Nature {
         helicopter       = 256;
         //! Anti Aircraft
         anti_aircraft    = 1024;
-   }
+    }
     //! The combination of flags
     required int32 flags = 1;
 }
@@ -1162,7 +1162,7 @@ message MissionParameter {
 */
 message MissionParameters {
     //! A list of mission parameters
-   repeated MissionParameter elem = 1;
+    repeated MissionParameter elem = 1;
 }
 
 /** @struct UnitOrder
@@ -1224,17 +1224,17 @@ message CrowdOrder {
 */
 message FragOrder {
     //! The tasker
-   required Tasker            tasker         = 1;
-   //! The mission type
-   required FragOrderType     type           = 2;
-   //! The mission parameters
-   optional MissionParameters parameters     = 3;
-   //! The label
-   optional string            label          = 4;
-   //! The symbol location
-   optional Location          symbolLocation = 5;
-   //! The start date and time
-   optional DateTime          start_time     = 6;
+    required Tasker            tasker         = 1;
+    //! The mission type
+    required FragOrderType     type           = 2;
+    //! The mission parameters
+    optional MissionParameters parameters     = 3;
+    //! The label
+    optional string            label          = 4;
+    //! The symbol location
+    optional Location          symbolLocation = 5;
+    //! The start date and time
+    optional DateTime          start_time     = 6;
 }
 
 /** @struct ClientObjectProperty
@@ -1267,13 +1267,13 @@ message ClientObjectProperty {
 */
 message Diffusion {
     //! The automat identifier
-   optional AutomatId        automat         = 1;
-   //! The formation identifier
-   optional FormationId      formation       = 2;
-   //! The party identifier
-   repeated PartyId          party           = 3;
-   //! The knowledge group identifier
-   optional KnowledgeGroupId knowledge_group = 4;
+    optional AutomatId        automat         = 1;
+    //! The formation identifier
+    optional FormationId      formation       = 2;
+    //! The party identifier
+    repeated PartyId          party           = 3;
+    //! The knowledge group identifier
+    optional KnowledgeGroupId knowledge_group = 4;
 }
 
 /** @struct TacticalLine
@@ -1293,15 +1293,15 @@ message TacticalLine {
 */
 message Shape {
     //! The category
-   required string           category  = 1;
-   //! The color
-   required RgbColor         color     = 2;
-   //! The pattern
-   required string           pattern   = 3;
-   //! The coordinates
-   required CoordLatLongList points    = 4;
-   //! The Diffusion
-   optional Diffusion        diffusion = 5;
+    required string           category  = 1;
+    //! The color
+    required RgbColor         color     = 2;
+    //! The pattern
+    required string           pattern   = 3;
+    //! The coordinates
+    required CoordLatLongList points    = 4;
+    //! The Diffusion
+    optional Diffusion        diffusion = 5;
 }
 
 /** @struct ChatTarget
@@ -1309,7 +1309,7 @@ message Shape {
 */
 message ChatTarget {
     //! The profile
-   required string profile = 1;
+    required string profile = 1;
 }
 
 /** @struct TextMessage

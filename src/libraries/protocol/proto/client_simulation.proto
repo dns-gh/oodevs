@@ -75,109 +75,109 @@ message UnitMagicAction {
         @todo Explain what parameters are expected for each type
         @todo Uniformize, for instance unit_creation != create_wound
     */
-   enum Type {
-       //! A move to magic action
-       move_to                           = 0;
-       //! A surrender to magic action
-       surrender_to                      = 1;
-       //! A cancel surrender magic action
-       cancel_surrender                  = 2;
-       //! A recover transporters magic action
-       recover_transporters              = 3;
-       //! A destroy component magic action
-       destroy_component                 = 4;
-       //! A recover all magic action
-       recover_all                       = 5;
-       //! A recover troops magic action
-       recover_troops                    = 6;
-       //! A recover equiments magic action
-       recover_equipments                = 7;
-       //! A recover resources magic action
-       recover_resources                 = 8;
-       //! A destroy all magic action
-       destroy_all                       = 9;
-       //! A change human factors magic action
-       change_human_factors              = 10;
-       //! A partial recovery magic action
-       partial_recovery                  = 11;
-       //! A unit creation magic action
-       unit_creation                     = 12;
-       //! A create fire order magic action
-       create_fire_order                 = 13;
-       //! A crowd total destruction magic action
-       crowd_total_destruction           = 14;
-       //! A crowd change health state magic action
-       crowd_change_health_state         = 15;
-       //! A crowd change attitude magic action
-       crowd_change_attitude             = 16;
-       //! A crowd change affinities magic action
-       crowd_change_affinities           = 17;
-       //! A crowd change armed individuals magic action
-       crowd_change_armed_individuals    = 18;
-       //! A change knowledge group magic action
-       change_knowledge_group            = 19;
-       //! A change logistic links magic action
-       change_logistic_links             = 20;
-       //! A unit change superior magic action
-       unit_change_superior              = 21;
-       //! A change automate superior magic action
-       change_automat_superior           = 22;
-       //! A change formation superior magic action
-       change_formation_superior         = 23;
-       //! A knowledge group update magic action
-       knowledge_group_update            = 24;
-       //! A log supply push flow magic action
-       log_supply_push_flow              = 25;
-       //! A log supply change quotas magic action
-       log_supply_change_quotas          = 26;
-       //! An automate creation magic action
-       automat_creation                  = 27;
-       //! A formation creation magic action
-       formation_creation                = 28;
-       //! A crowd creation magic action
-       crowd_creation                    = 29;
-       //! A log supply pull flow magic action
-       log_supply_pull_flow              = 30;
-       //! A create wound magic action
-       create_wound                      = 31;
-       //! A change of health state on inhabitant magic action
-       inhabitant_change_health_state    = 32;
-       //! A change of affinities on inhabitant magic action
-       inhabitant_change_affinities      = 33;
-       //! A change of alerted state on inhabitant magic action
-       inhabitant_change_alerted_state   = 34;
-       //! A change of confined state on inhabitant magic action
-       inhabitant_change_confined_state  = 35;
-       //! A change of affinities on unit magic action
-       unit_change_affinities            = 36;
-       //! An extension change magic action
-       change_extension                  = 37;
-       //! Change critical intelligence magic action
-       change_critical_intelligence      = 38;
-       //! An equipment transfer magic action
-       transfer_equipment                = 39;
-       //! A change equipment human size magic action
-       change_equipment_human_size       = 40;
-       //! A create breakdowns magic action
-       create_breakdowns                 = 41;
-       //! A create wounds magic action
-       create_wounds                     = 42;
-       //! A magic action forcing to reload the brain of the entity
-       reload_brain                      = 43;
-       //! No parameters, magically finish the current logistic actions
-       log_finish_handlings              = 44;
-       //! A change equipment state magic action
-       change_equipment_state            = 45;
-       //! A change human state magic action
-       change_human_state                = 46;
-       //! A create dotation magic action
-       change_dotation                   = 47;
-       //! A direct fire order creation magic action
-       create_direct_fire_order          = 48;
-       //! A unit loading magic action
-       load_unit                         = 49;
-       //! A unit unloading magic action
-       unload_unit                       = 50;
+    enum Type {
+        //! A move to magic action
+        move_to                           = 0;
+        //! A surrender to magic action
+        surrender_to                      = 1;
+        //! A cancel surrender magic action
+        cancel_surrender                  = 2;
+        //! A recover transporters magic action
+        recover_transporters              = 3;
+        //! A destroy component magic action
+        destroy_component                 = 4;
+        //! A recover all magic action
+        recover_all                       = 5;
+        //! A recover troops magic action
+        recover_troops                    = 6;
+        //! A recover equiments magic action
+        recover_equipments                = 7;
+        //! A recover resources magic action
+        recover_resources                 = 8;
+        //! A destroy all magic action
+        destroy_all                       = 9;
+        //! A change human factors magic action
+        change_human_factors              = 10;
+        //! A partial recovery magic action
+        partial_recovery                  = 11;
+        //! A unit creation magic action
+        unit_creation                     = 12;
+        //! A create fire order magic action
+        create_fire_order                 = 13;
+        //! A crowd total destruction magic action
+        crowd_total_destruction           = 14;
+        //! A crowd change health state magic action
+        crowd_change_health_state         = 15;
+        //! A crowd change attitude magic action
+        crowd_change_attitude             = 16;
+        //! A crowd change affinities magic action
+        crowd_change_affinities           = 17;
+        //! A crowd change armed individuals magic action
+        crowd_change_armed_individuals    = 18;
+        //! A change knowledge group magic action
+        change_knowledge_group            = 19;
+        //! A change logistic links magic action
+        change_logistic_links             = 20;
+        //! A unit change superior magic action
+        unit_change_superior              = 21;
+        //! A change automate superior magic action
+        change_automat_superior           = 22;
+        //! A change formation superior magic action
+        change_formation_superior         = 23;
+        //! A knowledge group update magic action
+        knowledge_group_update            = 24;
+        //! A log supply push flow magic action
+        log_supply_push_flow              = 25;
+        //! A log supply change quotas magic action
+        log_supply_change_quotas          = 26;
+        //! An automate creation magic action
+        automat_creation                  = 27;
+        //! A formation creation magic action
+        formation_creation                = 28;
+        //! A crowd creation magic action
+        crowd_creation                    = 29;
+        //! A log supply pull flow magic action
+        log_supply_pull_flow              = 30;
+        //! A create wound magic action
+        create_wound                      = 31;
+        //! A change of health state on inhabitant magic action
+        inhabitant_change_health_state    = 32;
+        //! A change of affinities on inhabitant magic action
+        inhabitant_change_affinities      = 33;
+        //! A change of alerted state on inhabitant magic action
+        inhabitant_change_alerted_state   = 34;
+        //! A change of confined state on inhabitant magic action
+        inhabitant_change_confined_state  = 35;
+        //! A change of affinities on unit magic action
+        unit_change_affinities            = 36;
+        //! An extension change magic action
+        change_extension                  = 37;
+        //! Change critical intelligence magic action
+        change_critical_intelligence      = 38;
+        //! An equipment transfer magic action
+        transfer_equipment                = 39;
+        //! A change equipment human size magic action
+        change_equipment_human_size       = 40;
+        //! A create breakdowns magic action
+        create_breakdowns                 = 41;
+        //! A create wounds magic action
+        create_wounds                     = 42;
+        //! A magic action forcing to reload the brain of the entity
+        reload_brain                      = 43;
+        //! No parameters, magically finish the current logistic actions
+        log_finish_handlings              = 44;
+        //! A change equipment state magic action
+        change_equipment_state            = 45;
+        //! A change human state magic action
+        change_human_state                = 46;
+        //! A create dotation magic action
+        change_dotation                   = 47;
+        //! A direct fire order creation magic action
+        create_direct_fire_order          = 48;
+        //! A unit loading magic action
+        load_unit                         = 49;
+        //! A unit unloading magic action
+        unload_unit                       = 50;
     }
     //! The tasker @todo Explain what is a "tasker"
     required Tasker            tasker     = 1;
@@ -196,17 +196,17 @@ message KnowledgeMagicAction {
         @brief The type of magic action.
         @todo Explain what parameters are expected for each type
     */
-   enum Type {
-       //! A enable knowledge magic action
-       enable              = 0;
-       //! A update party knowledge magic action
-       update_party        = 1;
-       //! A update party parent knowledge magic action
-       update_party_parent = 2;
-       //! A update type knowledge magic action
-       update_type         = 3;
-       //! An add knowledge in group magic action
-       add_knowledge       = 4;
+    enum Type {
+        //! A enable knowledge magic action
+        enable              = 0;
+        //! A update party knowledge magic action
+        update_party        = 1;
+        //! A update party parent knowledge magic action
+        update_party_parent = 2;
+        //! A update type knowledge magic action
+        update_type         = 3;
+        //! An add knowledge in group magic action
+        add_knowledge       = 4;
     }
     //! The knowledge group identifier
     required KnowledgeGroupId  knowledge_group = 1;
@@ -300,21 +300,21 @@ message MagicAction {
 
         @todo Explain what parameters are expected for each type
     */
-   enum Type {
-       //! A global weather magic action
-       global_weather                     = 0;
-       //! A local weather magic action
-       local_weather                      = 1;
-       //! A local weather destruction magic action
-       local_weather_destruction          = 2;
-       //! A change diplomacy magic action
-       change_diplomacy                   = 3;
-       //! A create knowledge magic action
-       create_knowledge_group             = 4;
-       //! A change resource network properties magic action
-       change_resource_network_properties = 5;
-       //! A fire order on location magic action
-       create_fire_order_on_location      = 6;
+    enum Type {
+        //! A global weather magic action
+        global_weather                     = 0;
+        //! A local weather magic action
+        local_weather                      = 1;
+        //! A local weather destruction magic action
+        local_weather_destruction          = 2;
+        //! A change diplomacy magic action
+        change_diplomacy                   = 3;
+        //! A create knowledge magic action
+        create_knowledge_group             = 4;
+        //! A change resource network properties magic action
+        change_resource_network_properties = 5;
+        //! A fire order on location magic action
+        create_fire_order_on_location      = 6;
     }
     //! The type of magic action
     required Type              type       = 1;
@@ -329,7 +329,7 @@ message MagicAction {
 */
 message ControlCheckPointSetFrequency {
     //! The frequency of checkpoints in minutes
-   required int32 frequency = 1;
+    required int32 frequency = 1;
 }
 
 /** @struct ControlCheckPointDeleteRequest
@@ -360,7 +360,7 @@ message ControlCheckPointListRequest {
 */
 message ControlEnableVisionCones {
     //! Whether to activate vision cones or not
-   required bool vision_cones = 1;
+    required bool vision_cones = 1;
 }
 
 /** @struct ChangePopulationMagicAction

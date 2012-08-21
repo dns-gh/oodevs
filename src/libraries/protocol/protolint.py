@@ -426,12 +426,18 @@ def cmdstyle(ui, rootdir):
     refixme = re.compile(r'(\${3,}|FIXME)', re.I)
     # Match invalid doxygen comments
     rebadcmt = re.compile(r'//!?\s')
+    respace = re.compile('^(\s+)\S')
     for path in listproto(rootdir):
         fname = os.path.basename(path)
         # Check opening braces are on the definition line
         for i, line in readproto(path):
             if rebrace.search(line):
                 ui.error(fname, i + 1, 'invalid brace style', line)
+            m = respace.search(line)
+            if m:
+                if (len(m.group(1)) % 4) != 0:
+                    ui.error(fname, i + 1, 'indent with 4 spaces blocks', line)
+
         # Check lines are at most 80 characters long
         for i, line in enumerate(file(path)):
             if len(line.rstrip('\n\r')) > 80:
