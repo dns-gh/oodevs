@@ -580,9 +580,9 @@ message ControlProfilingInformation {
     @see ControlEndTick
 */
 message ControlBeginTick {
-    //<! The current tick number
+    //!< The current tick number
    required int32    current_tick = 1;
-   //<! The current date and time @see DateTime
+   //!< The current date and time @see DateTime
    required DateTime date_time    = 2;
 }
 
@@ -591,19 +591,19 @@ message ControlBeginTick {
     @see ControlBeginTick
 */
 message ControlEndTick {
-    //<! The current tick number
+    //!< The current tick number
    required int32 current_tick    = 1;
-   //<! The current tick duration in seconds
+   //!< The current tick duration in seconds
    required int32 tick_duration   = 2;
-   //<! The number of pending long path finding requests @todo explain
-   //<! how and why is a path considered long
+   //!< The number of pending long path finding requests @todo explain
+   //!< how and why is a path considered long
    required int32 long_pathfinds  = 3;
-   //<! The number of pending short path finding requests @todo explain
-   //<! how and why is a path considered short
+   //!< The number of pending short path finding requests @todo explain
+   //!< how and why is a path considered short
    required int32 short_pathfinds = 4;
-   //<! The memory size in use in bytes
+   //!< The memory size in use in bytes
    required int32 memory          = 5;
-   //<! The virtual memory size in use in bytes
+   //!< The virtual memory size in use in bytes
    required int32 virtual_memory  = 6;
 }
 
@@ -619,19 +619,19 @@ message ControlAck {
         @brief Reason for the failure of the control request
     */
     enum ErrorCode {
-        //<! Operation succeeded
+        //!< Operation succeeded
        no_error                  = 0;
-       //<! @deprecated never used
+       //!< @deprecated never used
        error_already_started     = 1;
-       //<! Stop request failed because the simulation is already stopped
+       //!< Stop request failed because the simulation is already stopped
        error_not_started         = 2;
-       //<! Resume request failed because the simulation is running
+       //!< Resume request failed because the simulation is running
        error_not_paused          = 3;
-       //<! Pause request failed because the simulation is already paused
+       //!< Pause request failed because the simulation is already paused
        error_already_paused      = 4;
-       //<! The time factor must be strictly positive
+       //!< The time factor must be strictly positive
        error_invalid_time_factor = 5;
-       //<! The new date/time must be after the current date/time
+       //!< The new date/time must be after the current date/time
        error_invalid_date_time   = 6;
     }
 }

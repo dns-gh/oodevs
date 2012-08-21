@@ -156,7 +156,8 @@ message ProfileUpdate {
     @li When the exercise terminates.
 */
 message ProfileDestruction {
-    optional string login = 1; //!< Login of the destroyed profile
+    //!< Login of the destroyed profile
+    optional string login = 1;
 }
 
 /** @struct ProfileDestructionRequestAck
@@ -244,7 +245,8 @@ message Profile {
     @brief A list of Profile which are connected
 */
 message ConnectedProfileList {
-    repeated Profile elem = 1; // !< The list of profiles
+    //!< The list of profiles
+    repeated Profile elem = 1;
 }
 
 /** @struct ProfileDescriptionList
@@ -252,7 +254,7 @@ message ConnectedProfileList {
     @todo should be integrated to AuthenticationResponse fields
 */
 message ProfileDescriptionList {
-    // !< The list of profile descriptions
+    //!< The list of profile descriptions
     repeated ProfileDescription elem = 1;
 }
 

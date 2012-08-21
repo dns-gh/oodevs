@@ -97,7 +97,8 @@ message PartyIdList {
     @brief Defines a crowd identifier
 */
 message CrowdId {
-    required uint32 id = 1; //!< The identifier
+    //!< The identifier
+    required uint32 id = 1;
 }
 
 /** @struct CrowdElementId
@@ -959,7 +960,7 @@ message Extension {
     @brief A resource network element message
 */
 message ResourceNetworkElement {
-    //! An object identifier
+    //!< An object identifier
     required ObjectId            object   = 1;
     //!< The resource network type
     required ResourceNetworkType resource = 2;
