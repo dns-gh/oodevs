@@ -140,7 +140,8 @@ status_order =
     paused:    1
     replaying: 2
     stopped:   3
-    archived:  4
+    waiting:   4
+    archived:  5
 
 get_replay_root = (collection, data) ->
     id = data.replay.root
@@ -226,6 +227,9 @@ class SessionItemView extends Backbone.View
 
     is_filtered: (item) =>
         status = item.attributes.status
+        if status == "stopped"
+            if item.attributes.replay.root?.length
+                status = "waiting"
         for filter in @filters
             if filter == status
                 return true
@@ -264,7 +268,7 @@ class SessionItemView extends Backbone.View
             data.duration = ms_to_duration duration
         if data.replay.root?.length
             if data.status == "stopped"
-                data.status = "noreplay"
+                data.status = "waiting"
         $(@el).html session_template data
         set_spinner $(@el).find ".session_top_right .spin_btn"
         for it in $(@el).find ".link"

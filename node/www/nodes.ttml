@@ -64,7 +64,7 @@
                 <a title="Delete" class="btn delete"><i class="icon-trash"></i></a>
                 {{/is_option}}
             </div>
-            <span class="well {{{status}}}"></span>
+            <span class="well session {{{status}}}"></span>
             <a class="accordion-toggle" data-toggle="collapse" data-parent="#nodes" href="#collapse_{{{id}}}"><img width="32" height="32" alt="" src="img/tango/32x32/places/network-server.png"/>
                 {{ident}}
             </a>

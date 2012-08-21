@@ -1,17 +1,16 @@
 /* MASA Group Style */
 
-@black:     #000000;
 @run:       #93C47D;
 @pause:     #FFD966;
 @replay:    #6FA8DC;
 @stop:      #E06666;
-@noreplay:  #8E7CC3;
+@archive:   #999;
+@waiting:   #8E7CC3;
 
 @common_padding: 24px;
 @session_margin:  6px;
 @topbar_margin:  20px;
 @button_margin:  10px;
-@session_bottom: 24px;
 
 body
 {
@@ -33,50 +32,57 @@ body
 
 .playing, .running
 {
-    .session;
     background-color:   @run;
 }
 
 .paused
 {
-    .session;
     background-color:   @pause;
 }
 
 .replaying
 {
-    .session;
     background-color:   @replay;
 }
 
-.noreplay
+.waiting
 {
-    .session;
-    background-color:   @noreplay;
+    background-color:   @waiting;
 }
 
 .stopped
 {
-    .session;
     background-color:   @stop;
 }
 
 .archived
 {
-    .session;
+    background-color:   @archive;
 }
 
 .session_row
 {
     position:       relative;
     width:          auto !important;
-    margin-bottom:  @session_bottom;
+    margin-bottom:  @topbar_margin;
+}
+
+#session_filters .legend
+{
+    width:          80px;
+    text-align:     center;
+    display:        inline-block;
+    font-weight:    normal;
+    font-size:      small;
+    color:          #333;
+    text-shadow:    none;
+    padding:        2px;
 }
 
 .sub_session
 {
     margin-left:    20px;
-    margin-top:     4px - @session_bottom;
+    margin-top:     4px - @topbar_margin;
 }
 
 .session_name

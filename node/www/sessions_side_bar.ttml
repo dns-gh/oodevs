@@ -2,16 +2,35 @@
     <ul class="nav nav-list">
         <li class="nav-header">Filters</li>
         <li id="session_filters" class="controls">
-            <label class="checkbox"><input type="checkbox" checked="checked" name="playing"> Playing</label>
-            <label class="checkbox"><input type="checkbox" checked="checked" name="paused"> Paused</label>
-            <label class="checkbox"><input type="checkbox" checked="checked" name="replaying"> Replaying</label>
-            <label class="checkbox"><input type="checkbox" checked="checked" name="stopped"> Stopped</label>
-            <label class="checkbox"><input type="checkbox" name="archived"> Archived</label>
+        <label class="checkbox">
+            <input type="checkbox" checked="checked" name="playing">
+            <span class="label legend playing">Playing</span>
+        </label>
+        <label class="checkbox">
+            <input type="checkbox" checked="checked" name="paused">
+            <span class="label legend paused">Paused</span>
+        </label>
+        <label class="checkbox">
+            <input type="checkbox" checked="checked" name="stopped">
+            <span class="label legend stopped">Stopped</span>
+        </label>
+        <label class="checkbox">
+            <input type="checkbox" checked="checked" name="replaying">
+            <span class="label legend replaying">Replaying</span>
+        </label>
+        <label class="checkbox">
+            <input type="checkbox" checked="checked" name="waiting">
+            <span class="label legend waiting">Waiting</span>
+        </label>
+        <label class="checkbox">
+            <input type="checkbox" name="archived">
+            <span class="label legend">Archived</span>
+        </label>
         </li>
         <li class="nav-header">Order</li>
         <li class="controls">
-            <label class="radio"><input id="session_sort_name" type="radio" name="sorts" value="name" checked="checked"> By Name</label>
-            <label class="radio"><input id="session_sort_status" type="radio" name="sorts" value="status"> By State</label>
+        <label class="radio"><input id="session_sort_name" type="radio" name="sorts" value="name" checked="checked"> By Name</label>
+        <label class="radio"><input id="session_sort_status" type="radio" name="sorts" value="status"> By State</label>
         </li>
     </ul>
 </div>

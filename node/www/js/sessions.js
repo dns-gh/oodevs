@@ -642,7 +642,8 @@
     paused: 1,
     replaying: 2,
     stopped: 3,
-    archived: 4
+    waiting: 4,
+    archived: 5
   };
 
   get_replay_root = function(collection, data) {
@@ -830,11 +831,16 @@
     };
 
     SessionItemView.prototype.is_filtered = function(item) {
-      var filter, status, _i, _len, _ref;
+      var filter, status, _i, _len, _ref, _ref1;
       status = item.attributes.status;
-      _ref = this.filters;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        filter = _ref[_i];
+      if (status === "stopped") {
+        if ((_ref = item.attributes.replay.root) != null ? _ref.length : void 0) {
+          status = "waiting";
+        }
+      }
+      _ref1 = this.filters;
+      for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+        filter = _ref1[_i];
         if (filter === status) {
           return true;
         }
@@ -893,7 +899,7 @@
       }
       if ((_ref1 = data.replay.root) != null ? _ref1.length : void 0) {
         if (data.status === "stopped") {
-          data.status = "noreplay";
+          data.status = "waiting";
         }
       }
       $(this.el).html(session_template(data));
