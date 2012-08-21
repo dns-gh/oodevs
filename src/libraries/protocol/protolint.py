@@ -44,6 +44,7 @@ def readproto(path):
             if incomment:
                 e = line.find('*/', s)
                 if e < 0:
+                    kept.append('\n')
                     break
                 s = e + 2
                 incomment = False
@@ -116,7 +117,7 @@ def parseenum(lines, i, name):
     while True:
         if i >= len(lines):
             raise ParseError('unterminated enum %s' % name, i)
-        line = lines[i]
+        lineno, line = lines[i]
         i += 1
         if reblank.search(line):
             continue
@@ -143,7 +144,7 @@ def parsemessage(lines, i):
         r'\s+(\S+)\s+(\S+)\s*=\s*\d+\s*(\[[^]]+\])?\s*;')
     reenum = re.compile(r'^\s+enum\s+(\S+)\s*{')
 
-    m = remessage.search(lines[i])
+    m = remessage.search(lines[i][1])
     assert m
     name = m.group(2)
     i += 1
@@ -156,7 +157,7 @@ def parsemessage(lines, i):
     while True:
         if i >= len(lines):
             raise ParseError('unterminated message %s' % name, i)
-        line = lines[i]
+        lineno, line = lines[i]
         i += 1
         if reblank.search(line):
             continue
@@ -186,9 +187,6 @@ def parsemessage(lines, i):
 def parsemodule(ui, path):
     """Parse a single protobuf file and return a Module instance."""
     name = os.path.splitext(os.path.basename(path))[0]
-    re_comment = re.compile(r'/\*.*?\*/', re.S)
-    data = file(path).read()
-    data = re_comment.subn('', data)[0]
 
     re_package = re.compile(r'^package\s+(\S+)')
     re_enum = re.compile(r'^enum\s+(\S+)\s*{')
@@ -198,10 +196,10 @@ def parsemodule(ui, path):
     enums = []
     imports = []
     i = 0
-    lines = data.splitlines(True)
+    lines = list(readproto(path))
     errors = []
     while i < len(lines):
-        line = lines[i]
+        lineno, line = lines[i]
         if reblank.search(line) or re_package.search(line):
             i += 1
             continue
