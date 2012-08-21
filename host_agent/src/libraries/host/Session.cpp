@@ -817,6 +817,8 @@ bool Session::Update( const Tree& cfg )
 bool Session::Archive()
 {
     boost::upgrade_lock< boost::shared_mutex > lock( access_ );
+    if( status_ != STATUS_STOPPED )
+        throw web::HttpException( web::FORBIDDEN );
     return ModifyStatus( lock, STATUS_ARCHIVED );
 }
 
@@ -877,6 +879,8 @@ bool Attach( const FileSystem_ABC& system, const Path& path, T& items )
 Session::T_Ptr Session::Replay()
 {
     boost::lock_guard< boost::shared_mutex > read( access_ );
+    if( IsReplay() )
+        throw web::HttpException( web::FORBIDDEN );
     if( first_time_ )
         throw web::HttpException( web::FORBIDDEN );
     web::session::Config cfg = cfg_;

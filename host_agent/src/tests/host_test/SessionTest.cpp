@@ -390,3 +390,18 @@ BOOST_FIXTURE_TEST_CASE( session_cannot_restart_with_replays, Fixture )
     StopSession( *session, process );
     BOOST_CHECK_THROW( session->Start( apps, std::string() ), web::HttpException );
 }
+
+BOOST_FIXTURE_TEST_CASE( session_cannot_archive_if_not_stopped, Fixture )
+{
+    SessionPtr session = MakeSession();
+    ProcessPtr process = StartSession( *session, processPid, processName );
+    BOOST_CHECK_THROW( session->Archive(), web::HttpException );
+}
+
+BOOST_FIXTURE_TEST_CASE( replay_session_cannot_be_replayed, Fixture )
+{
+    SessionPtr session = MakeSession();
+    ProcessPtr process = StartSession( *session, processPid, processName );
+    Session_ABC::T_Ptr replay = ReplaySession( *session );
+    BOOST_CHECK_THROW( replay->Replay(), web::HttpException );
+}
