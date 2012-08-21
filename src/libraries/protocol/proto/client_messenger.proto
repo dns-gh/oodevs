@@ -24,7 +24,7 @@ package sword;
     @see PhaseLineCreation
 */
 message PhaseLineCreationRequest {
-    //!< The phase line data to use for creation @see TacticalLine
+    //! The phase line data to use for creation @see TacticalLine
     required TacticalLine tactical_line = 1;
 }
 
@@ -35,10 +35,10 @@ message PhaseLineCreationRequest {
     @see PhaseLineUpdate
 */
 message PhaseLineUpdateRequest {
-    //!< The identifier of the phase line to update @see TacticalLineId
+    //! The identifier of the phase line to update @see TacticalLineId
     required TacticalLineId id            = 1;
-    //!< Specifies the phase line data to use for update @see
-    //!< TacticalLine @bug should not be optional
+    //! Specifies the phase line data to use for update @see
+    //! TacticalLine @bug should not be optional
     optional TacticalLine   tactical_line = 2;
 }
 
@@ -49,7 +49,7 @@ message PhaseLineUpdateRequest {
     @see PhaseLineDestruction
 */
 message PhaseLineDestructionRequest {
-    //!< The identifier of the phase line to destroy @see TacticalLineId
+    //! The identifier of the phase line to destroy @see TacticalLineId
     required TacticalLineId id = 1;
 }
 
@@ -60,7 +60,7 @@ message PhaseLineDestructionRequest {
     @see LimitCreation
 */
 message LimitCreationRequest {
-    //!< The limit data to use for creation @see TacticalLine
+    //! The limit data to use for creation @see TacticalLine
     required TacticalLine tactical_line = 1;
 }
 
@@ -71,10 +71,10 @@ message LimitCreationRequest {
     @see LimitUpdate
 */
 message LimitUpdateRequest {
-    //!< The identifier of the limit to update @see TacticalLineId
+    //! The identifier of the limit to update @see TacticalLineId
     required TacticalLineId  id            = 1;
-    //!< Specifies the limit data to use for update @see TacticalLine
-    //!< @bug should not be optional
+    //! Specifies the limit data to use for update @see TacticalLine
+    //! @bug should not be optional
     optional TacticalLine    tactical_line = 2;
 }
 
@@ -85,7 +85,7 @@ message LimitUpdateRequest {
     @see LimitDestruction
 */
 message LimitDestructionRequest {
-    //!< The identifier of the limit to destroy @see TacticalLineId
+    //! The identifier of the limit to destroy @see TacticalLineId
     required TacticalLineId id = 1;
 }
 
@@ -97,7 +97,7 @@ message LimitDestructionRequest {
     @todo rename into Drawing/Graphics
 */
 message ShapeCreationRequest {
-    //!< The shape data to use for creation @see Shape
+    //! The shape data to use for creation @see Shape
     required Shape shape = 1;
 }
 
@@ -111,16 +111,16 @@ message ShapeCreationRequest {
     @todo rename into Drawing/Graphics
 */
 message ShapeUpdateRequest {
-    //!< The identifier of the shape to update @see DrawingId @todo
-    //!< should be named "id" instead of "shape" (coherence)
+    //! The identifier of the shape to update @see DrawingId @todo
+    //! should be named "id" instead of "shape" (coherence)
     required DrawingId        shape    = 1;
-    //!< The new category of the shape
+    //! The new category of the shape
     optional string           category = 2;
-    //!< The new color of the shape
+    //! The new color of the shape
     optional RgbColor         color    = 3;
-    //!< The new template of the shape
+    //! The new template of the shape
     optional string           pattern  = 4;
-    //!< The new points of the shape @see CoordLatLongList
+    //! The new points of the shape @see CoordLatLongList
     optional CoordLatLongList points   = 5;
 }
 
@@ -132,7 +132,7 @@ message ShapeUpdateRequest {
     @todo rename into Drawing/Graphics
 */
 message ShapeDestructionRequest {
-    //!< The identifier of the shape to destroy @see DrawingId
+    //! The identifier of the shape to destroy @see DrawingId
     required DrawingId id = 1;
 }
 
@@ -143,7 +143,7 @@ message ShapeDestructionRequest {
     @see MarkerCreation
 */
 message MarkerCreationRequest {
-    //!< The marker data to use for creation @see Marker
+    //! The marker data to use for creation @see Marker
     required Marker marker = 1;
 }
 
@@ -297,50 +297,50 @@ message ClientToMessenger {
                  possible messages.
     */
     message Content {
-        //!< @copybrief LimitCreationRequest @see LimitCreationRequest
+        //! @copybrief LimitCreationRequest @see LimitCreationRequest
         optional LimitCreationRequest        limit_creation_request        = 1;
-        //!< @copybrief LimitDestructionRequest @see
-        //!< LimitDestructionRequest
+        //! @copybrief LimitDestructionRequest @see
+        //! LimitDestructionRequest
         optional LimitDestructionRequest     limit_destruction_request     = 2;
-        //!< @copybrief LimitUpdateRequest @see LimitUpdateRequest
+        //! @copybrief LimitUpdateRequest @see LimitUpdateRequest
         optional LimitUpdateRequest          limit_update_request          = 3;
-        //!< @copybrief PhaseLineCreationRequest @see
-        //!< PhaseLineCreationRequest
+        //! @copybrief PhaseLineCreationRequest @see
+        //! PhaseLineCreationRequest
         optional PhaseLineCreationRequest    phase_line_creation_request   = 4;
-        //!< @copybrief PhaseLineDestructionRequest @see
-        //!< PhaseLineDestructionRequest
+        //! @copybrief PhaseLineDestructionRequest @see
+        //! PhaseLineDestructionRequest
         optional PhaseLineDestructionRequest
             phase_line_destruction_request    = 5;
-        //!< @copybrief PhaseLineUpdateRequest @see PhaseLineUpdateRequest
+        //! @copybrief PhaseLineUpdateRequest @see PhaseLineUpdateRequest
         optional PhaseLineUpdateRequest      phase_line_update_request    = 6;
-        //!< @copybrief ShapeCreationRequest @see ShapeCreationRequest
-        //!< @todo rename into drawings/graphics_creation_request
+        //! @copybrief ShapeCreationRequest @see ShapeCreationRequest
+        //! @todo rename into drawings/graphics_creation_request
         optional ShapeCreationRequest        shape_creation_request       = 10;
-        //!< @copybrief ShapeDestructionRequest @see
-        //!< ShapeDestructionRequest @todo rename into
-        //!< drawings/graphics_destruction_request
+        //! @copybrief ShapeDestructionRequest @see
+        //! ShapeDestructionRequest @todo rename into
+        //! drawings/graphics_destruction_request
         optional ShapeDestructionRequest     shape_destruction_request    = 11;
-        //!< @copybrief ShapeUpdateRequest @see ShapeUpdateRequest @todo
-        //!< rename into drawings/graphics_update_request
+        //! @copybrief ShapeUpdateRequest @see ShapeUpdateRequest @todo
+        //! rename into drawings/graphics_update_request
         optional ShapeUpdateRequest          shape_update_request         = 12;
-        //!< @copybrief TextMessage @see TextMessage
+        //! @copybrief TextMessage @see TextMessage
         optional TextMessage                 text_message                 = 13;
-        //!< @copybrief MarkerCreationRequest @see MarkerCreationRequest
+        //! @copybrief MarkerCreationRequest @see MarkerCreationRequest
         optional MarkerCreationRequest       marker_creation_request      = 14;
-        //!< @copybrief MarkerUpdateRequest @see MarkerUpdateRequest
+        //! @copybrief MarkerUpdateRequest @see MarkerUpdateRequest
         optional MarkerUpdateRequest         marker_update_request        = 15;
-        //!< @copybrief MarkerDestructionRequest @see
-        //!< MarkerDestructionRequest
+        //! @copybrief MarkerDestructionRequest @see
+        //! MarkerDestructionRequest
         optional MarkerDestructionRequest    marker_destruction_request   = 16;
-        //!< @copybrief ClientObjectCreationRequest @see
-        //!< ClientObjectCreationRequest
+        //! @copybrief ClientObjectCreationRequest @see
+        //! ClientObjectCreationRequest
         optional ClientObjectCreationRequest
             client_object_creation_request = 17;
-        //!< @copybrief ClientObjectUpdateRequest @see
-        //!< ClientObjectUpdateRequest
+        //! @copybrief ClientObjectUpdateRequest @see
+        //! ClientObjectUpdateRequest
         optional ClientObjectUpdateRequest   client_object_update_request = 18;
-        //!< @copybrief ClientObjectDestructionRequest @see
-        //!< ClientObjectDestructionRequest
+        //! @copybrief ClientObjectDestructionRequest @see
+        //! ClientObjectDestructionRequest
         optional ClientObjectDestructionRequest
             client_object_destruction_request = 19;
     }

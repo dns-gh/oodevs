@@ -34,32 +34,32 @@ message AuthenticationResponse {
         @brief Reason for the failure of an authentication operation
     */
     enum ErrorCode {
-        //!< Authentication succeeded
+        //! Authentication succeeded
         success                     = 0;
-        //!< Authentication failed because the provided login does not
-        //!< exist (in file "exercise/profiles.xml")
+        //! Authentication failed because the provided login does not
+        //! exist (in file "exercise/profiles.xml")
         invalid_login               = 1;
-        //!< Authentication failed because there are too many
-        //!< connections (depends on licensing)
+        //! Authentication failed because there are too many
+        //! connections (depends on licensing)
         too_many_connections        = 2;
-        //!< Authentication failed because of a mismatched protocol
-        //!< version between client and server
+        //! Authentication failed because of a mismatched protocol
+        //! version between client and server
         mismatched_protocol_version = 4;
     }
-    //!< Reason for the failure of an authentication operation
+    //! Reason for the failure of an authentication operation
     required ErrorCode              error_code        = 1;
-    //!< Contains authenticated profile information when operation is
-    //!< successful
+    //! Contains authenticated profile information when operation is
+    //! successful
     optional Profile                profile           = 2;
-    //!< Contains list of available profiles when authentication has failed
+    //! Contains list of available profiles when authentication has failed
     optional ProfileDescriptionList profiles          = 3;
-    //!< Server protocol version
+    //! Server protocol version
     required ProtocolVersion        server_version    = 4;
-    //!< Date and time of the simulation when restarting on a checkpoint
-    //!< @todo not implemented
+    //! Date and time of the simulation when restarting on a checkpoint
+    //! @todo not implemented
     optional DateTime               restart_date_time = 5;
-    //!< Terrain name used by the simulation (from file
-    //!< "exercise/exercise.xml"). @todo not implemented
+    //! Terrain name used by the simulation (from file
+    //! "exercise/exercise.xml"). @todo not implemented
     optional string                 terrain_name      = 6;
 }
 
@@ -73,7 +73,7 @@ message AuthenticationResponse {
         authorised user (supervisor)
 */
 message ProfileCreation {
-    //!< Information about the created profile
+    //! Information about the created profile
     required Profile profile = 1;
 }
 
@@ -88,19 +88,19 @@ message ProfileCreationRequestAck {
         @brief Reason for the failure of a profile creation operation
     */
     enum ErrorCode {
-        //!< Profile creation succeeded.
+        //! Profile creation succeeded.
         success          = 0;
-        //!< Profile creation failed because of an invalid (empty) login.
+        //! Profile creation failed because of an invalid (empty) login.
         invalid_login    = 1;
-        //!< @deprecated Profile creation failed because of an invalid
-        //!< password.
+        //! @deprecated Profile creation failed because of an invalid
+        //! password.
         invalid_password = 2;
-        //!< Profile creation failed because provided login already exists.
+        //! Profile creation failed because provided login already exists.
         duplicate_login  = 3;
     }
-    //!< Login provided on profile creation request
+    //! Login provided on profile creation request
     required string    login      = 1;
-    //!< Reason for the failure of a profile creation operation
+    //! Reason for the failure of a profile creation operation
     required ErrorCode error_code = 2;
 }
 
@@ -115,22 +115,22 @@ message ProfileUpdateRequestAck {
         @brief Reason for the failure of a profile update operation
     */
     enum ErrorCode {
-        //!< Profile update succeeded
+        //! Profile update succeeded
         success          = 0;
-        //!< Profile update failed because of an invalid profile (non
-        //!< existing)
+        //! Profile update failed because of an invalid profile (non
+        //! existing)
         invalid_profile  = 1;
-        //!< Profile update failed because of an invalid (empty) login
+        //! Profile update failed because of an invalid (empty) login
         invalid_login    = 2;
-        //!< Profile update failed because of an invalid password @deprecated
+        //! Profile update failed because of an invalid password @deprecated
         invalid_password = 3;
-        //!< Profile update failed because the provided new login
-        //!< already exists
+        //! Profile update failed because the provided new login
+        //! already exists
         duplicate_login  = 4;
     }
-    //!< Login provided on profile update request
+    //! Login provided on profile update request
     required string    login      = 1;
-    //!< Reason for the failure of a profile update operation
+    //! Reason for the failure of a profile update operation
     required ErrorCode error_code = 2;
 }
 
@@ -141,9 +141,9 @@ message ProfileUpdateRequestAck {
     authorised user (supervisor).
 */
 message ProfileUpdate {
-    //!< Login of the updated profile
+    //! Login of the updated profile
     required string  login   = 1;
-    //!< Updated profile information
+    //! Updated profile information
     required Profile profile = 2;
 }
 
@@ -156,7 +156,7 @@ message ProfileUpdate {
     @li When the exercise terminates.
 */
 message ProfileDestruction {
-    //!< Login of the destroyed profile
+    //! Login of the destroyed profile
     optional string login = 1;
 }
 
@@ -171,17 +171,17 @@ message ProfileDestructionRequestAck {
         @brief Reason for the failure of a profile destruction operation
     */
     enum ErrorCode {
-        //!< Profile destruction succeeded.
+        //! Profile destruction succeeded.
         success         = 0;
-        //!< Profile destruction failed because the specified profile
-        //!< does not exist.
+        //! Profile destruction failed because the specified profile
+        //! does not exist.
         invalid_profile = 1;
-        //!< @deprecated never used
+        //! @deprecated never used
         failure         = 2;
     }
-    //!< Reason for the failure of a profile destruction operation
+    //! Reason for the failure of a profile destruction operation
     required ErrorCode error_code = 1;
-    //!< Login provided on profile destruction request
+    //! Login provided on profile destruction request
     required string    login      = 2;
 }
 
@@ -191,7 +191,7 @@ message ProfileDestructionRequestAck {
     Profile roles are listed in file "Extensions.xml" (profile-attributes).
 */
 message RoleType {
-    //!< Role type identifier as defined in file "Extensions.xml"
+    //! Role type identifier as defined in file "Extensions.xml"
     required uint32 id = 1;
 }
 
@@ -205,39 +205,39 @@ message RoleType {
         information.
 */
 message Profile {
-    //!< The profile unique identifier
+    //! The profile unique identifier
     required string          login                 = 1;
-    //!< The password is optional and allows the protection of a
-    //!< profile during the authentication process
+    //! The password is optional and allows the protection of a
+    //! profile during the authentication process
     optional string          password              = 2;
-    //!< Profiles with read-only permissions can only see the situation
-    //!< from the specified formations but cannot control them
+    //! Profiles with read-only permissions can only see the situation
+    //! from the specified formations but cannot control them
     optional FormationIdList read_only_formations  = 3;
-    //!< Profiles with read-write permissions can see the situation
-    //!< from the specified formations and control them
+    //! Profiles with read-write permissions can see the situation
+    //! from the specified formations and control them
     optional FormationIdList read_write_formations = 4;
-    //!< Profiles with read-only permissions can only see the situation
-    //!< from the specified automats but cannot control them
+    //! Profiles with read-only permissions can only see the situation
+    //! from the specified automats but cannot control them
     optional AutomatIdList   read_only_automates   = 5;
-    //!< Profiles with read-write permissions can see the situation from
-    //!< the specified automats and control them
+    //! Profiles with read-write permissions can see the situation from
+    //! the specified automats and control them
     optional AutomatIdList   read_write_automates  = 6;
-    //!< Profiles with read-only permissions can only see the situation
-    //!< from the specified parties but cannot control them
+    //! Profiles with read-only permissions can only see the situation
+    //! from the specified parties but cannot control them
     optional PartyIdList     read_only_parties     = 7;
-    //!< Profiles with read-write permissions can see the situation
-    //!< from the specified parties and control them
+    //! Profiles with read-write permissions can see the situation
+    //! from the specified parties and control them
     optional PartyIdList     read_write_parties    = 8;
-    //!< Profiles with read-only permissions can only see the situation
-    //!< from the specified crowds but cannot control them
+    //! Profiles with read-only permissions can only see the situation
+    //! from the specified crowds but cannot control them
     optional CrowdIdList     read_only_crowds      = 9;
-    //!< Profiles with read-write permissions can see the situation from
-    //!< the specified crowds and control them
+    //! Profiles with read-write permissions can see the situation from
+    //! the specified crowds and control them
     optional CrowdIdList     read_write_crowds     = 10;
-    //!< Supervisor access grants a profile the right to execute "magic
-    //!< actions" such as teleporting or recompleting a unit, and also
-    //!< edit profiles and control the simulation (pause, resume, changing
-    //!< speed factor)
+    //! Supervisor access grants a profile the right to execute "magic
+    //! actions" such as teleporting or recompleting a unit, and also
+    //! edit profiles and control the simulation (pause, resume, changing
+    //! speed factor)
     required bool            supervisor            = 11;
 }
 
@@ -245,7 +245,7 @@ message Profile {
     @brief A list of Profile which are connected
 */
 message ConnectedProfileList {
-    //!< The list of profiles
+    //! The list of profiles
     repeated Profile elem = 1;
 }
 
@@ -254,7 +254,7 @@ message ConnectedProfileList {
     @todo should be integrated to AuthenticationResponse fields
 */
 message ProfileDescriptionList {
-    //!< The list of profile descriptions
+    //! The list of profile descriptions
     repeated ProfileDescription elem = 1;
 }
 
@@ -268,14 +268,14 @@ message ProfileDescriptionList {
     @todo should be nested inside AuthenticationResponse
 */
 message ProfileDescription {
-    //!< The profile login
+    //! The profile login
     required string   login      = 1;
-    //!< The profile password
+    //! The profile password
     required bool     password   = 2;
-    //!< Flag to indicate whether the profile has been granted
-    //!< supervisor access
+    //! Flag to indicate whether the profile has been granted
+    //! supervisor access
     required bool     supervisor = 3;
-    //!< The profile role in the context of the exercise
+    //! The profile role in the context of the exercise
     optional RoleType role       = 4;
 }
 
@@ -292,22 +292,22 @@ message AuthenticationToClient {
         possible messages.
     */
     message Content {
-        //!< A response message to an authentication request.
+        //! A response message to an authentication request.
         optional AuthenticationResponse    authentication_response      = 1;
-        //!< A profile creation message.
+        //! A profile creation message.
         optional ProfileCreation           profile_creation             = 2;
-        //!< An acknowledge message to profile creation request.
+        //! An acknowledge message to profile creation request.
         optional ProfileCreationRequestAck profile_creation_request_ack = 3;
-        //!< A profile update message.
+        //! A profile update message.
         optional ProfileUpdate             profile_update               = 4;
-        //!< An acknowledge message to profile update request.
+        //! An acknowledge message to profile update request.
         optional ProfileUpdateRequestAck   profile_update_request_ack   = 5;
-        //!< A profile destruction message.
+        //! A profile destruction message.
         optional ProfileDestruction        profile_destruction          = 6;
-        //!< An acknowledge message to profile destruction request.
+        //! An acknowledge message to profile destruction request.
         optional ProfileDestructionRequestAck
             profile_destruction_request_ack = 7;
-        //!< List of profiles actually connected
+        //! List of profiles actually connected
         optional ConnectedProfileList      connected_profile_list       = 8;
     }
     /** @property context
@@ -324,7 +324,7 @@ message AuthenticationToClient {
         @see ClientToAuthentication
     */
     optional int32   context = 1;
-    //!< A field containing one of the messages to be sent
+    //! A field containing one of the messages to be sent
     required Content message = 2;
 }
 

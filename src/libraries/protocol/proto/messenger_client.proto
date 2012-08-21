@@ -736,91 +736,91 @@ message MessengerToClient {
                  possible messages.
     */
     message Content {
-        //!< @copybrief LimitCreation @see LimitCreation
+        //! @copybrief LimitCreation @see LimitCreation
         optional LimitCreation              limit_creation = 1;
-        //!< @copybrief LimitUpdate @see LimitUpdate
+        //! @copybrief LimitUpdate @see LimitUpdate
         optional LimitUpdate                limit_update  = 2;
-        //!< @copybrief LimitDestruction @see LimitDestruction
+        //! @copybrief LimitDestruction @see LimitDestruction
         optional LimitDestruction           limit_destruction = 3;
-        //!< @copybrief LimitCreationRequestAck @see
-        //!< LimitCreationRequestAck
+        //! @copybrief LimitCreationRequestAck @see
+        //! LimitCreationRequestAck
         optional LimitCreationRequestAck    limit_creation_request_ack = 4;
-        //!< @copybrief LimitDestructionRequestAck @see
-        //!< LimitDestructionRequestAck
+        //! @copybrief LimitDestructionRequestAck @see
+        //! LimitDestructionRequestAck
         optional LimitDestructionRequestAck
             limit_destruction_request_ack = 5;
-        //!< @copybrief LimitUpdateRequestAck @see LimitUpdateRequestAck
+        //! @copybrief LimitUpdateRequestAck @see LimitUpdateRequestAck
         optional LimitUpdateRequestAck      limit_update_request_ack = 6;
-        //!< @copybrief PhaseLineCreation @see PhaseLineCreation @todo
-        //!< rename into phase_line_creation
+        //! @copybrief PhaseLineCreation @see PhaseLineCreation @todo
+        //! rename into phase_line_creation
         optional PhaseLineCreation          phase_line_creation = 7;
-        //!< @copybrief PhaseLineUpdate @see PhaseLineUpdate
+        //! @copybrief PhaseLineUpdate @see PhaseLineUpdate
         optional PhaseLineUpdate            phase_line_update = 8;
-        //!< @copybrief PhaseLineDestruction @see PhaseLineDestruction
+        //! @copybrief PhaseLineDestruction @see PhaseLineDestruction
         optional PhaseLineDestruction       phase_line_destruction = 9;
-        //!< @copybrief PhaseLineCreationAck @see PhaseLineCreationAck
+        //! @copybrief PhaseLineCreationAck @see PhaseLineCreationAck
         optional PhaseLineCreationAck phase_line_creation_request_ack = 10;
-        //!< @copybrief PhaseLineUpdateRequestAck @see
-        //!< PhaseLineUpdateRequestAck
+        //! @copybrief PhaseLineUpdateRequestAck @see
+        //! PhaseLineUpdateRequestAck
         optional PhaseLineDestructionRequestAck
             phase_line_destruction_request_ack   = 11;
-        //!< @copybrief PhaseLineDestructionRequestAck @see
-        //!< PhaseLineDestructionRequestAck
+        //! @copybrief PhaseLineDestructionRequestAck @see
+        //! PhaseLineDestructionRequestAck
         optional PhaseLineUpdateRequestAck  phase_line_update_request_ack = 12;
-        //!< @copybrief ShapeCreation @see ShapeCreation @todo rename
-        //!< into drawing_creation
+        //! @copybrief ShapeCreation @see ShapeCreation @todo rename
+        //! into drawing_creation
         optional ShapeCreation              shape_creation = 19;
-        //!< @copybrief ShapeUpdate @see ShapeUpdate @todo rename into
-        //!< drawing_update
+        //! @copybrief ShapeUpdate @see ShapeUpdate @todo rename into
+        //! drawing_update
         optional ShapeUpdate                shape_update = 20;
-        //!< @copybrief ShapeDestruction @see ShapeDestruction @todo
-        //!< rename into drawing_destruction
+        //! @copybrief ShapeDestruction @see ShapeDestruction @todo
+        //! rename into drawing_destruction
         optional ShapeDestruction           shape_destruction = 21;
-        //!< @copybrief ShapeCreationRequestAck @see
-        //!< ShapeCreationRequestAck @todo rename into
-        //!< drawing_creation_request_ack
+        //! @copybrief ShapeCreationRequestAck @see
+        //! ShapeCreationRequestAck @todo rename into
+        //! drawing_creation_request_ack
         optional ShapeCreationRequestAck    shape_creation_request_ack = 22;
-        //!< @copybrief ShapeDestructionRequestAck @see
-        //!< ShapeDestructionRequestAck @todo rename into
-        //!< drawing_destruction_request_ack
+        //! @copybrief ShapeDestructionRequestAck @see
+        //! ShapeDestructionRequestAck @todo rename into
+        //! drawing_destruction_request_ack
         optional ShapeDestructionRequestAck shape_destruction_request_ack = 23;
-        //!< @copybrief ShapeUpdateRequestAck @see ShapeUpdateRequestAck
-        //!< @todo rename into drawing_update_request_ack
+        //! @copybrief ShapeUpdateRequestAck @see ShapeUpdateRequestAck
+        //! @todo rename into drawing_update_request_ack
         optional ShapeUpdateRequestAck      shape_update_request_ack = 24;
-        //!< @copybrief TextMessage @see TextMessage
+        //! @copybrief TextMessage @see TextMessage
         optional TextMessage                text_message = 25;
-        //!< @copybrief MarkerCreation @see MarkerCreation
+        //! @copybrief MarkerCreation @see MarkerCreation
         optional MarkerCreation             marker_creation = 26;
-        //!< @copybrief MarkerUpdate @see MarkerUpdate
+        //! @copybrief MarkerUpdate @see MarkerUpdate
         optional MarkerUpdate               marker_update = 27;
-        //!< @copybrief MarkerDestruction @see MarkerDestruction
+        //! @copybrief MarkerDestruction @see MarkerDestruction
         optional MarkerDestruction          marker_destruction = 28;
-        //!< @copybrief ClientObjectCreation @see ClientObjectCreation
+        //! @copybrief ClientObjectCreation @see ClientObjectCreation
         optional ClientObjectCreation       client_object_creation = 29;
-        //!< @copybrief ClientObjectUpdate @see ClientObjectUpdate
+        //! @copybrief ClientObjectUpdate @see ClientObjectUpdate
         optional ClientObjectUpdate         client_object_update = 30;
-        //!< @copybrief ClientObjectDestruction @see
-        //!< ClientObjectDestruction
+        //! @copybrief ClientObjectDestruction @see
+        //! ClientObjectDestruction
         optional ClientObjectDestruction    client_object_destruction = 31;
-        //!< @copybrief ClientObjectCreationRequestAck @see
-        //!< ClientObjectCreationRequestAck
+        //! @copybrief ClientObjectCreationRequestAck @see
+        //! ClientObjectCreationRequestAck
         optional ClientObjectCreationRequestAck
             client_object_creation_ack = 32;
-        //!< @copybrief ClientObjectUpdateRequestAck @see
-        //!< ClientObjectUpdateRequestAck
+        //! @copybrief ClientObjectUpdateRequestAck @see
+        //! ClientObjectUpdateRequestAck
         optional ClientObjectUpdateRequestAck client_object_update_ack = 33;
-        //!< @copybrief ClientObjectDestructionRequestAck @see
-        //!< ClientObjectDestructionRequestAck
+        //! @copybrief ClientObjectDestructionRequestAck @see
+        //! ClientObjectDestructionRequestAck
         optional ClientObjectDestructionRequestAck
             client_object_destruction_ack = 34;
-        //!< @copybrief MarkerCreationRequestAck @see
-        //!< MarkerCreationRequestAck
+        //! @copybrief MarkerCreationRequestAck @see
+        //! MarkerCreationRequestAck
         optional MarkerCreationRequestAck   marker_creation_request_ack = 35;
-        //!< @copybrief MarkerUpdateRequestAck @see
-        //!< MarkerUpdateRequestAck
+        //! @copybrief MarkerUpdateRequestAck @see
+        //! MarkerUpdateRequestAck
         optional MarkerUpdateRequestAck     marker_update_request_ack = 36;
-        //!< @copybrief MarkerDestructionRequestAck @see
-        //!< MarkerDestructionRequestAck
+        //! @copybrief MarkerDestructionRequestAck @see
+        //! MarkerDestructionRequestAck
         optional MarkerDestructionRequestAck
             marker_destruction_request_ack = 37;
     }

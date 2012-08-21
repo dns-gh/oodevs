@@ -424,8 +424,8 @@ def cmdstyle(ui, rootdir):
     rebrace = re.compile(r'^\s*(message|enum)\s+\S+[^\{]*$')
     # Fix $$$ or FIXME, etc.
     refixme = re.compile(r'(\${3,}|FIXME)', re.I)
-    # Bad doxygen comment
-    redoxcmt = re.compile(r'//\s*[<!]')
+    # Match invalid doxygen comments
+    rebadcmt = re.compile(r'//!?\s')
     for path in listproto(rootdir):
         fname = os.path.basename(path)
         # Check opening braces are on the definition line
@@ -440,13 +440,15 @@ def cmdstyle(ui, rootdir):
                 ui.error(fname, i + 1, 'convert $$$/FIXME in @todo')
             if '\t' in line:
                 ui.error(fname, i + 1, 'expand tabs to 4 spaces')
-            if redoxcmt.search(line):
-                if '//!<' not in line:
-                    ui.error(fname, i + 1, 'invalid doxygen comment', line)
-                elif not line.lstrip().startswith('//!<'):
-                    # Single line doxygen comments must not be preceded by code
+            if '//' in line and not '://' in line:
+                if not rebadcmt.search(line):
+                    ui.error(fname, i + 1, 'comment must be // or //!', line)
+                lline = line.lstrip()
+                if not lline.startswith('//'):
+                    # Single line comments must not be preceded by code
                     ui.error(fname, i + 1,
-                        'doxygen comments must be on a separate line')
+                        'comments must be on a separate line')
+
     return ui.errors
 
 

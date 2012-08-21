@@ -22,7 +22,7 @@ package sword;
     @brief Defines a request connection to launcher
 */
 message ConnectionRequest {
-    //!< launcher client version, used to check compatibility
+    //! launcher client version, used to check compatibility
     required ProtocolVersion client_version = 1;
 }
 
@@ -35,7 +35,7 @@ message ExerciseListRequest {}
     @brief retrieve session list for an exercise
 */
 message SessionListRequest {
-    //!< exercise from which to list sessions
+    //! exercise from which to list sessions
     required string exercise = 1;
 }
 
@@ -49,23 +49,23 @@ message SessionParameter {
 */
 message SessionStartRequest {
     enum Type {
-        //!< starts a simulation. Starts an embedded dispatcher if
-        //!< specified in session.
+        //! starts a simulation. Starts an embedded dispatcher if
+        //! specified in session.
         simulation = 0;
-        //!< starts a dispatcher.
+        //! starts a dispatcher.
         dispatch   = 1;
-        //!< starts a replayer.
+        //! starts a replayer.
         replay     = 2;
     }
-    //!< exercise to be started
+    //! exercise to be started
     required string exercise               = 1;
-    //!< session name (created with default parameters if it does not exist)
+    //! session name (created with default parameters if it does not exist)
     required string session                = 2 [ default = "default" ];
-    //!< type of exercise session to start
+    //! type of exercise session to start
     required Type   type                   = 3;
-    //!< load the specified checkpoint
+    //! load the specified checkpoint
     optional string checkpoint             = 4;
-    //!< list of overloaded session parameters
+    //! list of overloaded session parameters
     repeated SessionParameter   parameter  = 5;
 }
 
@@ -73,9 +73,9 @@ message SessionStartRequest {
     @brief stop a given running session
 */
 message SessionStopRequest {
-    //!< exercise to stop
+    //! exercise to stop
     required string exercise = 1;
-    //!< session to stop
+    //! session to stop
     required string session  = 2 [ default = "default" ];
 }
 
@@ -83,7 +83,7 @@ message SessionStopRequest {
     @brief retrieve list of profiles for a given exercise
 */
 message ProfileListRequest {
-    //!< exercise to list profiles from
+    //! exercise to list profiles from
     required string exercise = 1;
 }
 
@@ -91,9 +91,9 @@ message ProfileListRequest {
     @brief retrieve list of connected profiles for a given exercise/session
 */
 message ConnectedProfileListRequest {
-    //!< exercise to list connected profiles from
+    //! exercise to list connected profiles from
     required string exercise = 1;
-    //!< session to list connected profiles from
+    //! session to list connected profiles from
     required string session  = 2 [ default = "default" ];
 }
 
@@ -101,13 +101,13 @@ message ConnectedProfileListRequest {
     @brief change session parameters
 */
 message SessionParameterChangeRequest {
-    //!< exercise to change parameter from
+    //! exercise to change parameter from
     required string exercise             = 1;
-    //!< session to change parameter from
+    //! session to change parameter from
     required string session              = 2 [ default = "default" ];
-    //!< if set, change checkpoint frequency
+    //! if set, change checkpoint frequency
     optional uint32 checkpoint_frequency = 3;
-    //!< if set, change acceleration factor
+    //! if set, change acceleration factor
     optional uint32 acceleration_factor  = 4;
 }
 
@@ -115,16 +115,16 @@ message SessionParameterChangeRequest {
     @brief request command execution to running session
 */
 message SessionCommandExecutionRequest {
-    //!< exercise to send command to
+    //! exercise to send command to
     required string     exercise        = 1;
-    //!< session to send command to
+    //! session to send command to
     required string     session         = 2 [ default = "default" ];
-    //!< if set, save a checkpoint with specified name or default (timestamp)
+    //! if set, save a checkpoint with specified name or default (timestamp)
     optional string     save_checkpoint = 3;
-    //!< if set to false, send a pause command; if set to true, set a
-    //!< resume command
+    //! if set to false, send a pause command; if set to true, set a
+    //! resume command
     optional bool       set_running     = 4;
-    //!< if set, change exercise time
+    //! if set, change exercise time
     optional DateTime   time_change     = 5;
 }
 
@@ -132,9 +132,9 @@ message SessionCommandExecutionRequest {
     @brief retrieve list of checkpoints for a given exercise/session
 */
 message CheckpointListRequest {
-    //!< exercise to list checkpoint from
+    //! exercise to list checkpoint from
     required string exercise = 1;
-    //!< session to list checkpoint from
+    //! session to list checkpoint from
     required string session  = 2 [ default = "default" ];
 }
 
@@ -142,11 +142,11 @@ message CheckpointListRequest {
     @brief delete checkpoint for a given exercise/session
 */
 message CheckpointDeleteRequest {
-    //!< exercise to delete checkpoint from
+    //! exercise to delete checkpoint from
     required string exercise   = 1;
-    //!< session to delete checkpoint from
+    //! session to delete checkpoint from
     required string session    = 2 [ default = "default" ];
-    //!< delete all checkpoints if not specified
+    //! delete all checkpoints if not specified
     repeated string checkpoint = 3;
 }
 
@@ -158,11 +158,11 @@ message SessionNotificationRequest {
     message Notification {
         optional DirectoryChange    directory_change = 1;
     }
-    //!< exercise to send notification to
+    //! exercise to send notification to
     required string         exercise      = 1;
-    //!< session to send notification to
+    //! session to send notification to
     required string         session       = 2;
-    //!< notifiaction to send
+    //! notifiaction to send
     required Notification   notification  = 3;
 }
 

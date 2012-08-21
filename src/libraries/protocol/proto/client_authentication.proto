@@ -31,19 +31,19 @@ message ConnectedProfilesRequest {
     @see AuthenticationResponse
 */
 message AuthenticationRequest {
-    //!< The login uniquely identifies a profile loaded from
-    //!< "exercise/profiles.xml" or dynamically created during the game.
-    //!< @note An error message is sent if login does not exist
+    //! The login uniquely identifies a profile loaded from
+    //! "exercise/profiles.xml" or dynamically created during the game.
+    //! @note An error message is sent if login does not exist
     required string          login    = 1;
-    //!< The password is checked the one associated with login in the
-    //!< profile loaded from "exercise/profiles.xml" or dynamically created
-    //!< during the game. @note An error message is sent if password does
-    //!< not match
+    //! The password is checked the one associated with login in the
+    //! profile loaded from "exercise/profiles.xml" or dynamically created
+    //! during the game. @note An error message is sent if password does
+    //! not match
     required string          password = 2;
-    //!< The protocol version used by the client is compared to the
-    //!< server protocol version in order to determine if protocols are
-    //!< compatible. @note An error message is sent if there is a protocol
-    //!< mismatch
+    //! The protocol version used by the client is compared to the
+    //! server protocol version in order to determine if protocols are
+    //! compatible. @note An error message is sent if there is a protocol
+    //! mismatch
     required ProtocolVersion version  = 3;
 }
 
@@ -59,8 +59,8 @@ message AuthenticationRequest {
     @warning This action is only allowed to profiles with supervisor rights.
 */
 message ProfileCreationRequest {
-    //!< Describes the profile to be created. @note An error message is
-    //!< sent if login already exists
+    //! Describes the profile to be created. @note An error message is
+    //! sent if login already exists
     required Profile profile = 1;
 }
 
@@ -76,11 +76,11 @@ message ProfileCreationRequest {
     @warning This action is only allowed to profiles with supervisor rights.
 */
 message ProfileUpdateRequest {
-    //!< Identifies the profile to be updated. @note An error message is
-    //!< sent if login does not exist
+    //! Identifies the profile to be updated. @note An error message is
+    //! sent if login does not exist
     required string  login   = 1;
-    //!< Describes the profile information to be updated. @note An error
-    //!< message is sent if login is changed to an existing one
+    //! Describes the profile information to be updated. @note An error
+    //! message is sent if login is changed to an existing one
     required Profile profile = 2;
 }
 
@@ -96,8 +96,8 @@ message ProfileUpdateRequest {
     @warning This action is only allowed to profiles with supervisor rights.
 */
 message ProfileDestructionRequest {
-    //!< Identifies the profile to be destroyed. @note An error message
-    //!< is sent if login does not exist
+    //! Identifies the profile to be destroyed. @note An error message
+    //! is sent if login does not exist
     required string login = 1;
 }
 
@@ -114,15 +114,15 @@ message ClientToAuthentication {
         i        possible messages.
     */
     message Content {
-        //!< An authentication request message
+        //! An authentication request message
        optional AuthenticationRequest     authentication_request      = 1;
-       //!< A profile creation request message
+       //! A profile creation request message
        optional ProfileCreationRequest    profile_creation_request    = 2;
-       //!< A profile update request message
+       //! A profile update request message
        optional ProfileUpdateRequest      profile_update_request      = 3;
-       //!< A profile destruction request message
+       //! A profile destruction request message
        optional ProfileDestructionRequest profile_destruction_request = 4;
-       //!< Connected profiles request message
+       //! Connected profiles request message
        optional ConnectedProfilesRequest  connected_profiles_request  = 5;
     }
     /** @property context
@@ -135,7 +135,7 @@ message ClientToAuthentication {
         emitted by the client.
     */
     optional int32   context = 1;
-    //!< A field containing one of the messages to be sent
+    //! A field containing one of the messages to be sent
     required Content message = 2;
 }
 

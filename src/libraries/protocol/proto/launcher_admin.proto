@@ -24,14 +24,14 @@ package sword;
 */
 message ConnectionResponse {
     enum ErrorCode {
-        //!< connection successful
+        //! connection successful
         success                       = 0;
-        //!< connection failed because of incompatible protocol version
+        //! connection failed because of incompatible protocol version
         incompatible_protocol_version = 1;
     }
-    //!< operation return code
+    //! operation return code
     required ErrorCode                error_code     = 1 [ default = success ];
-    //!< server protocol version
+    //! server protocol version
     required ProtocolVersion          server_version = 2;
 }
 
@@ -39,7 +39,7 @@ message ConnectionResponse {
     @brief response to exercise list request, returns available exercises
 */
 message ExerciseListResponse {
-    //!< list of exercise names (with subdirectories if any)
+    //! list of exercise names (with subdirectories if any)
     repeated string exercise = 1;
 }
 
@@ -48,16 +48,16 @@ message ExerciseListResponse {
 */
 message SessionListResponse {
     enum ErrorCode {
-        //!< connected profiles successfully listed
+        //! connected profiles successfully listed
         success                 = 0;
-        //!< the specified exercise name could not be found
+        //! the specified exercise name could not be found
         invalid_exercise_name   = 1;
     }
-    //!< operation return code
+    //! operation return code
     required ErrorCode error_code = 1 [ default = success ];
-    //!< exercise from which sessions are listed
+    //! exercise from which sessions are listed
     required string    exercise   = 2;
-    //!< list of session names
+    //! list of session names
     repeated string    session    = 3;
 }
 
@@ -66,33 +66,33 @@ message SessionListResponse {
 */
 message SessionStartResponse {
     enum Type {
-        //!< started a simulation. Started an embedded dispatcher if
-        //!< specified in session.
+        //! started a simulation. Started an embedded dispatcher if
+        //! specified in session.
         simulation = 0;
-        //!< started a dispatcher.
+        //! started a dispatcher.
         dispatch   = 1;
-        //!< started a replayer.
+        //! started a replayer.
         replay     = 2;
     }
     enum ErrorCode {
-        //!< session successfully started
+        //! session successfully started
         success                 = 0;
-        //!< the specified exercise name could not be found
+        //! the specified exercise name could not be found
         invalid_exercise_name   = 1;
-        //!< the specified checkpoint could not be found
+        //! the specified checkpoint could not be found
         invalid_checkpoint      = 2;
-        //!< an exercise is already started using the specified session
+        //! an exercise is already started using the specified session
         session_already_running = 3;
     }
-    //!< operation return code
+    //! operation return code
     required ErrorCode error_code = 1 [ default = success ];
-    //!< started exercise
+    //! started exercise
     required string    exercise   = 2;
-    //!< started session
+    //! started session
     required string    session    = 3;
-    //!< checkpoint started, if any
+    //! checkpoint started, if any
     optional string    checkpoint = 4;
-    //!< type of exercise session started
+    //! type of exercise session started
     required Type      type       = 5;
 }
 
@@ -101,20 +101,20 @@ message SessionStartResponse {
 */
 message SessionStopResponse {
     enum ErrorCode {
-        //!< session successfully stopped
+        //! session successfully stopped
         success               = 0;
-        //!< the specified exercise name could not be found
+        //! the specified exercise name could not be found
         invalid_exercise_name = 1;
-        //!< the specified session name could not be found
+        //! the specified session name could not be found
         invalid_session_name  = 2;
-        //!< the specified session is not running
+        //! the specified session is not running
         session_not_running   = 3;
     }
-    //!< operation return code
+    //! operation return code
     required ErrorCode error_code = 1 [ default = success ];
-    //!< stopped exercise
+    //! stopped exercise
     required string    exercise   = 2;
-    //!< stopped session
+    //! stopped session
     required string    session    = 3;
 }
 
@@ -123,16 +123,16 @@ message SessionStopResponse {
 */
 message ProfileListResponse {
     enum ErrorCode {
-        //!< profiles successfully listed
+        //! profiles successfully listed
         success               = 0;
-        //!< the specified exercise name could not be found
+        //! the specified exercise name could not be found
         invalid_exercise_name = 1;
     }
-    //!< operation return code
+    //! operation return code
     required ErrorCode         error_code = 1 [ default = success ];
-    //!< exercise to list profile for
+    //! exercise to list profile for
     required string            exercise   = 2;
-    //!< list available profiles for specified exercise
+    //! list available profiles for specified exercise
     repeated Profile           profile    = 3;
 }
 
@@ -141,22 +141,22 @@ message ProfileListResponse {
 */
 message ConnectedProfileListResponse {
     enum ErrorCode {
-        //!< connected profiles successfully listed
+        //! connected profiles successfully listed
         success               = 0;
-        //!< the specified exercise name could not be found
+        //! the specified exercise name could not be found
         invalid_exercise_name = 1;
-        //!< the specified session name could not be found
+        //! the specified session name could not be found
         invalid_session_name  = 2;
-        //!< the specified session is not running
+        //! the specified session is not running
         session_not_running   = 3;
     }
-    //!< operation return code
+    //! operation return code
     required ErrorCode         error_code = 1 [ default = success ];
-    //!< exercise to list connected profile for
+    //! exercise to list connected profile for
     required string            exercise   = 2;
-    //!< session to list connected profile for
+    //! session to list connected profile for
     required string            session    = 3;
-    //!< list of connected profiles for specified exercise
+    //! list of connected profiles for specified exercise
     repeated Profile           profile    = 4;
 }
 
@@ -182,24 +182,24 @@ message SessionStatus {
 */
 message SessionParameterChangeResponse {
     enum ErrorCode {
-        //!< connected profiles successfully listed
+        //! connected profiles successfully listed
         success               = 0;
-        //!< the specified exercise name could not be found
+        //! the specified exercise name could not be found
         invalid_exercise_name = 1;
-        //!< the specified session name could not be found
+        //! the specified session name could not be found
         invalid_session_name  = 2;
-        //!< the specified session is not running
+        //! the specified session is not running
         session_not_running   = 3;
     }
-    //!< operation return code
+    //! operation return code
     required ErrorCode error_code           = 1 [ default = success ];
-    //!< exercise to change parameter for
+    //! exercise to change parameter for
     required string    exercise             = 2;
-    //!< session to change parameter for
+    //! session to change parameter for
     required string    session              = 3;
-    //!< if changed, the new checkpoint frequency
+    //! if changed, the new checkpoint frequency
     optional uint32    checkpoint_frequency = 4;
-    //!< if changed, the new acceleration factor
+    //! if changed, the new acceleration factor
     optional uint32    acceleration_factor  = 5;
 }
 
@@ -208,33 +208,33 @@ message SessionParameterChangeResponse {
 */
 message SessionCommandExecutionResponse {
     enum ErrorCode {
-        //!< connected profiles successfully listed
+        //! connected profiles successfully listed
         success                 = 0;
-        //!< the specified exercise name could not be found
+        //! the specified exercise name could not be found
         invalid_exercise_name   = 1;
-        //!< the specified session name could not be found
+        //! the specified session name could not be found
         invalid_session_name    = 2;
-        //!< the specified session is not running
+        //! the specified session is not running
         session_not_running     = 3;
-        //!< the specified checkpoint to be created is not valid
-        //!< (already exists...)
+        //! the specified checkpoint to be created is not valid
+        //! (already exists...)
         invalid_checkpoint      = 4;
-        //!< trying to pause an already paused session
+        //! trying to pause an already paused session
         session_already_paused  = 5;
-        //!< trying to resume an already running session
+        //! trying to resume an already running session
         session_already_running = 6;
-        //!< invalid date time
+        //! invalid date time
         invalid_date_time       = 7;
     }
-    //!< operation return code
+    //! operation return code
     required ErrorCode  error_code       = 1 [ default = success ];
-    //!< exercise the command was sent to
+    //! exercise the command was sent to
     required string     exercise         = 2;
-    //!< session the command was sent to
+    //! session the command was sent to
     required string     session          = 3;
-    //!< if set, contains the name of the saved checkpoint
+    //! if set, contains the name of the saved checkpoint
     optional string     saved_checkpoint = 4;
-    //!< paused/running status
+    //! paused/running status
     optional bool       running          = 5;
 }
 
@@ -243,20 +243,20 @@ message SessionCommandExecutionResponse {
 */
 message CheckpointListResponse {
     enum ErrorCode {
-        //!< checkpoints successfully listed
+        //! checkpoints successfully listed
         success                 = 0;
-        //!< the specified exercise name could not be found
+        //! the specified exercise name could not be found
         invalid_exercise_name   = 1;
-        //!< the kspecified session name could not be found
+        //! the kspecified session name could not be found
         invalid_session_name    = 2;
     }
-    //!< operation return code
+    //! operation return code
     required ErrorCode error_code = 1 [ default = success ];
-    //!< exercise for which checkpoints are listed
+    //! exercise for which checkpoints are listed
     required string    exercise   = 2;
-    //!< session for which checkpoints are listed
+    //! session for which checkpoints are listed
     required string    session    = 3 [ default = "default" ];
-    //!< list of checkpoints for specified session
+    //! list of checkpoints for specified session
     repeated string    checkpoint = 4;
 }
 
@@ -265,20 +265,20 @@ message CheckpointListResponse {
 */
 message CheckpointDeleteResponse {
     enum ErrorCode {
-        //!< checkpoints successfully listed
+        //! checkpoints successfully listed
         success                 = 0;
-        //!< the specified exercise name could not be found
+        //! the specified exercise name could not be found
         invalid_exercise_name   = 1;
-        //!< the specified session name could not be found
+        //! the specified session name could not be found
         invalid_session_name    = 2;
     }
-    //!< operation return code
+    //! operation return code
     required ErrorCode error_code = 1 [ default = success ];
-    //!< exercise for which checkpoints are to be deleted
+    //! exercise for which checkpoints are to be deleted
     required string    exercise   = 2;
-    //!< session for which checkpoints are to be deleted
+    //! session for which checkpoints are to be deleted
     required string    session    = 3;
-    //!< list of deleted checkpoints for specified session
+    //! list of deleted checkpoints for specified session
     repeated string    checkpoint = 4;
 }
 

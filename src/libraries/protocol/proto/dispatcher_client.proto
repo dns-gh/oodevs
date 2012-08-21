@@ -50,9 +50,9 @@ message DispatcherToClient {
                  possible messages.
     */
     message Content {
-        //!< A services description message
+        //! A services description message
         optional ServicesDescription services_description   = 1;
-        //!< A connection to sim lost message
+        //! A connection to sim lost message
         optional ConnectionToSimLost connection_to_sim_lost = 2;
     }
     /** @property message

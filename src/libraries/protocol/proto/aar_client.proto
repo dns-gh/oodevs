@@ -43,13 +43,13 @@ message AarInformation {
     @see PlotRequest
 */
 message PlotResult {
-    //!< An identifier for the request
+    //! An identifier for the request
     required uint32 identifier = 1;
-    //!< The result values
+    //! The result values
     repeated float  values     = 2;
-    //!< The description of an error
+    //! The description of an error
     required string error      = 3;
-    //!< The result values first tick
+    //! The result values first tick
     optional uint32 begin_tick = 4;
 }
 
@@ -72,11 +72,11 @@ message AarToClient {
         messages.
     */
     message Content {
-        //!< An information message
+        //! An information message
         optional AarInformation aar_information = 1;
-        //!< A plot result message
+        //! A plot result message
         optional PlotResult     plot_result     = 2;
-         //!< An indicator message
+         //! An indicator message
         optional Indicator      indicator       = 3;
     }
     /** @property context
@@ -88,7 +88,7 @@ message AarToClient {
         response message matching a specific request emitted by the client.
     */
     optional int32   context = 1;
-    //!< A field containing one of the messages to be sent
+    //! A field containing one of the messages to be sent
     optional Content message = 2;
 }
 

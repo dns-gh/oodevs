@@ -27,16 +27,16 @@ message PlotRequest {
         @brief Defines the request time range.
     */
     message TimeRange {
-        //!< The first tick of the time range request
+        //! The first tick of the time range request
         required uint32 begin_tick = 1;
-        //!< The last tick of the time range request (must be >= begin_tick)
+        //! The last tick of the time range request (must be >= begin_tick)
         required uint32 end_tick   = 2;
     }
-    //!< An identifier for the request
+    //! An identifier for the request
     required uint32    identifier = 1;
-    //!< The request
+    //! The request
     required string    request    = 2;
-    //!< The request time range
+    //! The request time range
     optional TimeRange time_range = 3;
 }
 
@@ -52,7 +52,7 @@ message ClientToAar {
                  possible messages.
     */
     message Content {
-        //!< A plot request message
+        //! A plot request message
         optional PlotRequest plot_request = 1;
     }
     /** @property context
@@ -65,7 +65,7 @@ message ClientToAar {
         emitted by the client.
     */
     optional int32   context = 1;
-    //!< A field containing one of the messages to be sent
+    //! A field containing one of the messages to be sent
     required Content message = 2;
 }
 

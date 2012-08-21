@@ -23,7 +23,7 @@ package sword;
     @see ControlSkipToTickAck
 */
 message ControlSkipToTick {
-    //!< The tick number
+    //! The tick number
    required int32 tick = 1;
 }
 
@@ -37,12 +37,12 @@ message TimeTableRequest {
         @brief A time range
     */
     message TimeRange {
-        //!< The range first tick
+        //! The range first tick
         required int32 begin_tick = 1;
-        //!< The range last tick
+        //! The range last tick
         required int32 end_tick   = 2;
     }
-    //!< The time range
+    //! The time range
     required TimeRange tick_range = 1;
 }
 
@@ -59,17 +59,17 @@ message ClientToReplay {
                  possible messages.
     */
     message Content {
-        //!< A message to skip to a given tick
+        //! A message to skip to a given tick
        optional ControlSkipToTick       control_skip_to_tick       = 1;
-       //!< A message to change the time factor of the replay
+       //! A message to change the time factor of the replay
        optional ControlChangeTimeFactor control_change_time_factor = 2;
-       //!< A message to stop the replay
+       //! A message to stop the replay
        optional ControlStop             control_stop               = 3;
-       //!< A message to pause the replay
+       //! A message to pause the replay
        optional ControlPause            control_pause              = 4;
-       //!< A message to resume the replay
+       //! A message to resume the replay
        optional ControlResume           control_resume             = 5;
-       //!< A message to request datetime information
+       //! A message to request datetime information
        optional TimeTableRequest        time_table_request         = 6;
     }
     /** @property context
@@ -82,7 +82,7 @@ message ClientToReplay {
         emitted by the client.
     */
     optional int32   context = 1;
-    //!< A field containing one of the messages to be sent
+    //! A field containing one of the messages to be sent
     required Content message = 2;
 }
 
