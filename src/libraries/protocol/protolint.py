@@ -82,7 +82,10 @@ class Field:
 
 class Message:
     """A protobuf message."""
-    def __init__(self, name, fields, subenums=None, submessages=None):
+    def __init__(self, fname, lineno, name, fields, subenums=None,
+            submessages=None):
+        self.fname = fname
+        self.lineno = lineno
         self.name = name
         self.fields = fields
         self.messages = dict((m.name, m) for m in (submessages or []))
@@ -130,7 +133,7 @@ def parseenum(lines, i, name):
 reblank = re.compile(r'^\s*(//.*)?$')
 remessage = re.compile(r'^(\s*)message\s+(\S+)\s*\{(\s*\})?')
 
-def parsemessage(lines, i):
+def parsemessage(fname, lines, i):
     """Parse a message definition, recursively.
 
     lines is a list of lines to parse.
@@ -144,12 +147,13 @@ def parsemessage(lines, i):
         r'\s+(\S+)\s+(\S+)\s*=\s*\d+\s*(\[[^]]+\])?\s*;')
     reenum = re.compile(r'^\s+enum\s+(\S+)\s*{')
 
-    m = remessage.search(lines[i][1])
+    srcline, line = lines[i]
+    m = remessage.search(line)
     assert m
     name = m.group(2)
     i += 1
     if m.group(3) is not None:
-        return i, Message(name, [], [], [])
+        return i, Message(fname, srcline, name, [], [], [])
 
     fields = []
     messages = []
@@ -171,22 +175,23 @@ def parsemessage(lines, i):
         m = remessage.search(line)
         if m:
             assert m.group(1), line
-            i, msg = parsemessage(lines, i - 1)
+            i, msg = parsemessage(fname, lines, i - 1)
             messages.append(msg)
             continue
         m = refields.search(line)
         if m:
-            quantity, type, fname = m.group(1, 2, 3)
-            f = Field(quantity, type, fname)
+            quantity, type, fieldname = m.group(1, 2, 3)
+            f = Field(quantity, type, fieldname)
             fields.append(f)
             continue
         raise ParseError('unexpected line %r' % line, i)
 
-    return i, Message(name, fields, enums, messages)
+    return i, Message(fname, srcline, name, fields, enums, messages)
 
 def parsemodule(ui, path):
     """Parse a single protobuf file and return a Module instance."""
-    name = os.path.splitext(os.path.basename(path))[0]
+    fname = os.path.basename(path)
+    name = os.path.splitext(fname)[0]
 
     re_package = re.compile(r'^package\s+(\S+)')
     re_enum = re.compile(r'^enum\s+(\S+)\s*{')
@@ -206,7 +211,7 @@ def parsemodule(ui, path):
         m = remessage.search(line)
         if m:
             assert not m.group(1)
-            i, msg = parsemessage(lines, i)
+            i, msg = parsemessage(fname, lines, i)
             messages.append(msg)
             continue
         m = re_enum.search(line)
@@ -343,7 +348,7 @@ def checkfields(ui, modules, types, roottypes):
                 possibletypes.add('.'.join(parts[:i] + [f.type]))
             usedtypes = set(t for t in possibletypes if t in types)
             unusedtypes -= usedtypes
-            if not usedtypes: 
+            if not usedtypes:
                 ui.writeerr('unknown types: %s\n' % max(possibletypes))
 
     # Root types are not unused, they are just not used in .proto
@@ -441,7 +446,8 @@ def cmdstyle(ui, rootdir):
     for parts, m in itermessages(modules):
         for f in m.fields:
             if not refield.search(f.name):
-                ui.writeerr('%s should be lower case with underscores\n'
+                ui.error(m.fname, m.lineno + 1,
+                        '%s should be lower case with underscores'
                          % '.'.join(parts + [f.name]))
 
 if __name__ == '__main__':
@@ -461,6 +467,6 @@ if __name__ == '__main__':
     for cmd in args:
         if cmd not in cmds:
             parser.writeerr('unknown command %s' % cmd)
-        res += (cmds[cmd](ui, protodir) or 0) 
+        res += (cmds[cmd](ui, protodir) or 0)
     sys.exit(res and 1 or 0)
 

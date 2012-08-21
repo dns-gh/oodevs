@@ -836,7 +836,6 @@ message PullFlowParameters {
 message MissionParameter {
     /** @struct Value
         @brief Wraps the different possible values of a mission parameter
-        @todo clean-up field names
     */
     message Value {
         optional bool                     booleanValue             = 1;  //!< A boolean
@@ -912,7 +911,7 @@ message UnitOrder {
     required MissionType       type           = 2; //!< The mission type
     optional MissionParameters parameters     = 3; //!< The mission parameters
     optional string            label          = 4; //!< The label
-    optional Location          symbolLocation = 5; //!< The symbol location @todo rename to symbol_location
+    optional Location          symbolLocation = 5; //!< The symbol location
     optional DateTime          start_time     = 6; //!< The start date and time
 }
 
@@ -924,7 +923,7 @@ message AutomatOrder {
     required MissionType       type           = 2; //!< The mission type
     optional MissionParameters parameters     = 3; //!< The mission parameters
     optional string            label          = 4; //!< The label
-    optional Location          symbolLocation = 5; //!< The symbol location @todo rename to symbol_location
+    optional Location          symbolLocation = 5; //!< The symbol location
     optional DateTime          start_time     = 6; //!< The start date and time
 }
 
@@ -936,7 +935,7 @@ message CrowdOrder {
     required MissionType       type           = 2; //!< The mission type
     optional MissionParameters parameters     = 3; //!< The mission parameters
     optional string            label          = 4; //!< The label
-    optional Location          symbolLocation = 5; //!< The symbol location @todo rename to symbol_location
+    optional Location          symbolLocation = 5; //!< The symbol location
     optional DateTime          start_time     = 6; //!< The start date and time
 }
 
@@ -948,7 +947,7 @@ message FragOrder {
    required FragOrderType     type           = 2; //!< The mission type
    optional MissionParameters parameters     = 3; //!< The mission parameters
    optional string            label          = 4; //!< The label
-   optional Location          symbolLocation = 5; //!< The symbol location @todo rename to symbol_location
+   optional Location          symbolLocation = 5; //!< The symbol location
    optional DateTime          start_time     = 6; //!< The start date and time
 }
 
