@@ -502,7 +502,7 @@ integration.query.getPositionsToSupport = function( retrogradeWay, friendToSuppo
     if retrogradeWay then
         positions = { integration.getPositionToSupportFriend( friendToSupport ) } 
     else
-        positions = sword.military.queries.tactical.getPositionsToSupport[ "execute" ]({elementsToSupport = { friendToSupport }, dynamic = true})
+        positions = queries.getPositionsToSupport[ "execute" ]( { elementsToSupport = { friendToSupport }, dynamic = true})
     end
     return positions
 end

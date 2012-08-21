@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="company.tasks.Suivre" source-version="1.0.0" knowledge-class="commander.tasks.knowledges.FollowingEffect">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="company.tasks.Suivre" source-version="1.0.0" knowledge-class="company.tasks.knowledges.FollowingEffect">
     <parameters>
         <parameter name="objectives">
             <type>

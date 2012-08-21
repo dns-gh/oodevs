@@ -24,7 +24,7 @@ integration.getPositionToSupportFriend = function( friendToSupport )
         local dir = DEC_GetDirectionDanger( mission )
         local friendPos = friendToSupport:getPosition()
         local positionToSupport = DEC_Geometrie_PositionTranslateDir( friendPos, dir, - rangeDistance )
-        return CreateKnowledge( sword.military.world.Point, positionToSupport )
+        return CreateKnowledge( world.Point, positionToSupport )
     end
     return nil
 end

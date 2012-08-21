@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.tasks.Follow" source-version="1.0.0" knowledge-class="commander.tasks.knowledges.FollowingEffect">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.tasks.Follow" source-version="1.0.0" knowledge-class="commander.tasks.knowledges.Follow">
     <description>For the commander agent to order subordinates to follow a  set of given entities (agents or crowds).</description>
     <parameters>
         <parameter name="objectives">
