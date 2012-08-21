@@ -93,7 +93,7 @@
         </div>
         <div class="modal-body tabbable">
             <form class="form-horizontal">
-
+                {{#is_option status stopped=""}}
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#tab_general" data-toggle="tab"> General </a></li>
                     <li><a href="#tab_checkpoints" data-toggle="tab"> Checkpoints </a></li>
@@ -102,12 +102,15 @@
                     <li><a href="#tab_advanced" data-toggle="tab"> Advanced </a></li>
                 </ul>
                 <div class="tab-content">
+                    {{/is_option}}
                     <div class="tab-pane active" id="tab_general">[[ template "general_session_settings" . ]] </div>
+                    {{#is_option status stopped=""}}
                     <div class="tab-pane" id="tab_checkpoints"> [[ template "checkpoint_session_settings" . ]] </div>
                     <div class="tab-pane" id="tab_time"> [[ template "time_session_settings" . ]] </div>
                     <div class="tab-pane" id="tab_rng">  [[ template "rng_session_settings" . ]] </div>
                     <div class="tab-pane" id="tab_advanced"> [[ template "advanced_session_settings" . ]] </div>
                 </div>
+                {{/is_option}}
             </form>
         </div>
         <div class="modal-footer">
@@ -188,7 +191,7 @@
 [[ end ]]
 <!-- session_edit_btn -->
 [[ define "session_edit_btn" ]]
-{{#is_option status stopped=""}}
+{{#is_option status stopped="" waiting=""}}
 <a title="Settings" class="btn edit"><i class="icon-cog"></i> </a>
 {{/is_option}}
 [[ end ]]

@@ -73,6 +73,9 @@ validate_rng = (data, ui, type) ->
         return false
     return true
 
+has_element = (ui, selector) ->
+    return ui.has(selector).length
+
 validate_settings = (ui) ->
     data = {}
 
@@ -80,28 +83,31 @@ validate_settings = (ui) ->
     return unless check_value ui, name, name.val().length, "tab_general", "Missing"
     data.name = name.val()
 
-    next = data.checkpoints = {}
-    return unless validate_number next, "frequency", ui, "#checkpoints_frequency", 1, 100, "tab_checkpoints", "[1, 100] Only"
-    return unless validate_number next, "keep", ui, "#checkpoints_keep", 1, 100, "tab_checkpoints", "[1, 100] Only"
-    next.enabled = ui.find("#checkpoints_enabled").is ":checked"
+    if has_element ui, "#tab_checkpoints"
+        next = data.checkpoints = {}
+        return unless validate_number next, "frequency", ui, "#checkpoints_frequency", 1, 100, "tab_checkpoints", "[1, 100] Only"
+        return unless validate_number next, "keep", ui, "#checkpoints_keep", 1, 100, "tab_checkpoints", "[1, 100] Only"
+        next.enabled = ui.find("#checkpoints_enabled").is ":checked"
 
-    next = data.time = {}
-    return unless validate_number next, "step", ui, "#time_step", 1, Number.MAX_VALUE, "tab_time", "Invalid"
-    return unless validate_number next, "factor", ui, "#time_factor", 1, Number.MAX_VALUE, "tab_time", "Invalid"
-    return unless validate_number next, "end_tick", ui, "#time_end_tick", 0, Number.MAX_VALUE, "tab_time", "Invalid"
-    next.paused = ui.find("#time_paused").is ":checked"
+    if has_element ui, "#tab_time"
+        next = data.time = {}
+        return unless validate_number next, "step", ui, "#time_step", 1, Number.MAX_VALUE, "tab_time", "Invalid"
+        return unless validate_number next, "factor", ui, "#time_factor", 1, Number.MAX_VALUE, "tab_time", "Invalid"
+        return unless validate_number next, "end_tick", ui, "#time_end_tick", 0, Number.MAX_VALUE, "tab_time", "Invalid"
+        next.paused = ui.find("#time_paused").is ":checked"
 
-    next = data.rng = {}
-    return unless validate_number next, "seed", ui, "#rng_seed", 0, Number.MAX_VALUE, "tab_rng", "Invalid"
-    for it in ["fire", "wound", "perception", "breakdown"]
-        child = next[it] = {}
-        return unless validate_rng child, ui, it
+    if has_element ui, "#tab_rng"
+        next = data.rng = {}
+        return unless validate_number next, "seed", ui, "#rng_seed", 0, Number.MAX_VALUE, "tab_rng", "Invalid"
+        for it in ["fire", "wound", "perception", "breakdown"]
+            child = next[it] = {}
+            return unless validate_rng child, ui, it
 
-    next = data.pathfind = {}
-    return unless validate_number next, "threads", ui, "#pathfind_threads", 0, 8, "tab_advanced", "[0, 8] Only"
-
-    next = data.recorder = {}
-    return unless validate_number next, "frequency", ui, "#recorder_frequency", 1, Number.MAX_VALUE, "Invalid"
+    if has_element ui, "#tab_advanced"
+        next = data.pathfind = {}
+        return unless validate_number next, "threads", ui, "#pathfind_threads", 0, 8, "tab_advanced", "[0, 8] Only"
+        next = data.recorder = {}
+        return unless validate_number next, "frequency", ui, "#recorder_frequency", 1, Number.MAX_VALUE, "Invalid"
 
     return data
 
@@ -332,7 +338,7 @@ class SessionItemView extends Backbone.View
         mod.find(".apply").click =>
             data = validate_settings ui, @model
             return unless data?
-            data.checkpoints.frequency *= 60
+            data.checkpoints?.frequency *= 60
             data.id = @model.id
             mod.modal "hide"
             @model.save data,
