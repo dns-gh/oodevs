@@ -582,13 +582,14 @@ std::string MakeOption( const std::string& option, const T& value )
 bool Session::Start( const Path& apps, const std::string& checkpoint )
 {
     boost::upgrade_lock< boost::shared_mutex > lock( access_ );
-    if( !replays_.empty() )
-        throw web::HttpException( web::FORBIDDEN );
 
     const bool replay = IsReplay();
     const Status next = replay ? STATUS_REPLAYING : STATUS_PLAYING;
     if( process_ )
         return ModifyStatus( lock, next );
+
+    if( !replays_.empty() )
+        throw web::HttpException( web::FORBIDDEN );
 
     Node_ABC::T_Token token;
     if( !replay )
