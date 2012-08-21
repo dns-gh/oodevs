@@ -7,23 +7,37 @@
 //
 // *****************************************************************************
 
-#ifndef __ModalDialog_h_
-#define __ModalDialog_h_
+#ifndef gui_PropertyDialog_h
+#define gui_PropertyDialog_h
 
+#include "ModalDialog.h"
+#include <boost/noncopyable.hpp>
+
+namespace gui
+{
 // =============================================================================
-/** @class  ModalDialog
-    @brief  ModalDialog
+/** @class  PropertyDialog
+    @brief  Property dialog
 */
-// Created: JSR 2012-03-20
+// Created: LGY 2012-08-16
 // =============================================================================
-class ModalDialog : public QDialog
+class PropertyDialog : public QDialog
+                     , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ModalDialog( QWidget *parent, const char *name, Qt::WindowFlags f = 0);
-    virtual ~ModalDialog();
+    explicit PropertyDialog( QWidget* parent );
+    virtual ~PropertyDialog();
+    //@}
+
+private:
+    //! @name Operations
+    //@{
+    virtual void showEvent( QShowEvent* event );
     //@}
 };
 
-#endif // __ModalDialog_h_
+}
+
+#endif // gui_PropertyDialog_h

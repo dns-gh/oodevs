@@ -11,14 +11,14 @@
 
 #include "clients_gui_pch.h"
 #include "PropertiesPanel.h"
-#include "clients_kernel/EditorFactory_ABC.h"
-#include "clients_kernel/Controller.h"
+#include "PropertyTreeView.h"
+#include "PropertyModel.h"
+#include "PropertyDelegate.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/DictionaryUpdated.h"
+#include "PropertyDisplayer.h"
 #include "GlProxy.h"
-#include "PropertiesWidget.h"
-#include "TableItemDisplayer.h"
-#include "Tools.h"
 
 using namespace gui;
 
@@ -26,15 +26,18 @@ using namespace gui;
 // Name: PropertiesPanel constructor
 // Created: SBO 2008-04-08
 // -----------------------------------------------------------------------------
-PropertiesPanel::PropertiesPanel( QWidget* parent, kernel::Controllers& controllers, kernel::EditorFactory_ABC& factory, gui::TableItemDisplayer& displayer, const GlProxy& glProxy )
+PropertiesPanel::PropertiesPanel( QWidget* parent, kernel::Controllers& controllers, kernel::EditorFactory_ABC& factory, PropertyDisplayer& displayer, const GlProxy& glProxy )
     : QScrollArea( parent )
     , controllers_( controllers )
     , glProxy_    ( glProxy )
     , selected_   ( 0 )
-    , displayer_  ( displayer )
+    , view_       ( new PropertyTreeView() )
+    , delegate_   ( new PropertyDelegate( factory ) )
+    , model_      ( new PropertyModel( displayer ) )
 {
-    table_ = new gui::PropertiesWidget( controllers_, this, tools::translate( "gui::PropertiesPanel", "Properties" ), factory, displayer_ );
-    setWidget( table_ );
+    view_->setModel( model_ );
+    view_->setItemDelegate( delegate_ );
+    setWidget( view_ );
     setWidgetResizable( true );
     controllers_.Register( *this );
 }
@@ -67,15 +70,19 @@ void PropertiesPanel::NotifySelected( const kernel::Entity_ABC* element )
 {
     if( !element || selected_ != element )
     {
-        table_->Clear();
+        model_->clear();
         selected_ = element;
-        if( selected_ && isVisible() )
+
+        if( element )
             if( kernel::PropertiesDictionary* dico = const_cast< kernel::Entity_ABC* >( element )->Retrieve< kernel::PropertiesDictionary >() )
-                dico->Display( *table_ );
+            {
+                dico->Display( *model_ );
+                view_->Display();
+            }
     }
-    setWidget( table_ );
+    setWidget( view_ );
     if( element )
-        table_->setEnabled( glProxy_.ShouldEdit( *element ) );
+        view_->setEnabled( glProxy_.ShouldEdit( *element ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,4 +93,13 @@ void PropertiesPanel::NotifyDeleted( const kernel::Entity_ABC& element )
 {
     if( selected_ && selected_->GetId() == element.GetId() )
         NotifySelected( 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropertiesPanel::NotifyUpdated
+// Created: LGY 2012-08-20
+// -----------------------------------------------------------------------------
+void PropertiesPanel::NotifyUpdated( const kernel::DictionaryUpdated& message )
+{
+    model_->Update( message.GetEntry() );
 }

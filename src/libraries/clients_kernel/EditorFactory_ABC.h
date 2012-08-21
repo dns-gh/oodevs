@@ -18,7 +18,6 @@ class QWidget;
 
 namespace kernel
 {
-
 // =============================================================================
 /** @class  EditorFactory_ABC
     @brief  EditorFactory_ABC

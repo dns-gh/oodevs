@@ -35,13 +35,11 @@ QColor DotationsEditor::warningColor_( 200, 200, 200 );
 // Name: DotationsEditor constructor
 // Created: SBO 2006-11-10
 // -----------------------------------------------------------------------------
-DotationsEditor::DotationsEditor( QDialog*& self, QWidget* parent, const ::StaticModel& staticModel )
-    : ModalDialog( parent, "DotationsEditor" )
+DotationsEditor::DotationsEditor( QWidget* parent, const ::StaticModel& staticModel )
+    : gui::PropertyDialog( parent )
     , staticModel_( staticModel )
-    , value_ ( 0 )
-    , self_( self )
+    , value_      ( 0 )
 {
-    self_ = this;
     setCaption( tr( "Resources editor" ) );
     setMinimumSize( 500, 500 );
 
@@ -87,7 +85,6 @@ DotationsEditor::DotationsEditor( QDialog*& self, QWidget* parent, const ::Stati
     connect( ok    , SIGNAL( clicked() ), SLOT( OnAccept() ) );
     connect( cancel, SIGNAL( clicked() ), SLOT( OnReject() ) );
     connect( table_, SIGNAL( valueChanged( int, int ) ), this, SLOT( OnValueChanged( int, int ) ) );
-    show();
     OnLinkActivated( "hide" );
 }
 
@@ -97,7 +94,7 @@ DotationsEditor::DotationsEditor( QDialog*& self, QWidget* parent, const ::Stati
 // -----------------------------------------------------------------------------
 DotationsEditor::~DotationsEditor()
 {
-    self_ = 0;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

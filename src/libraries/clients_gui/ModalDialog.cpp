@@ -28,5 +28,5 @@ ModalDialog::ModalDialog( QWidget *parent, const char *name, Qt::WindowFlags f /
 // -----------------------------------------------------------------------------
 ModalDialog::~ModalDialog()
 {
-        // NOTHING
+    // NOTHING
 }

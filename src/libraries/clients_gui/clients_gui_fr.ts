@@ -1475,13 +1475,6 @@ Voulez-vous le supprimer?</translation>
     </message>
 </context>
 <context>
-    <name>gui::PropertiesPanel</name>
-    <message>
-        <source>Properties</source>
-        <translation>Propriétés</translation>
-    </message>
-</context>
-<context>
     <name>gui::ResourceLinksDialog_ABC</name>
     <message>
         <source>Target</source>

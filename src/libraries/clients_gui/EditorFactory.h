@@ -12,14 +12,11 @@
 
 #include "clients_kernel/EditorFactory_ABC.h"
 
-class AffinityFloat;
-
 namespace gui
 {
-
 // =============================================================================
 /** @class  EditorFactory
-    @brief  EditorFactory
+    @brief  Editor factory
 */
 // Created: SBO 2006-10-18
 // =============================================================================

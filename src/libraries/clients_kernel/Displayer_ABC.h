@@ -72,13 +72,6 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Displayer_ABC( const Displayer_ABC& );            //!< Copy constructor
-    Displayer_ABC& operator=( const Displayer_ABC& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Helpers
     //@{
     template< typename T >

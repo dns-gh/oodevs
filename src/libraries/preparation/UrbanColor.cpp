@@ -104,5 +104,5 @@ void UrbanColor::CreateDictionnary( bool readOnly )
     if( readOnly )
         dico_.Register( object_, tools::translate( "UrbanColor", "Info/Color" ), static_cast< const UrbanColor& >( *this ).current_ );
     else
-        dico_.Register( object_, tools::translate( "UrbanColor", "Info/Color" ), current_ );
+        dico_.Register( object_, tools::translate( "UrbanColor", "Info/Color" ), current_, kernel::eUrbanTemplate );
 }

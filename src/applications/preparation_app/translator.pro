@@ -53,7 +53,7 @@ PositionEditor.cpp \
 ProfileDialog.cpp \
 ProfileEditor.cpp \
 ProfileWizardDialog.cpp \
-PropertiesTableDisplayer.cpp \
+PropertyDisplayer.cpp \
 RemoveBlocksDialog.cpp \
 ScoreDialog.cpp \
 ScoreEditor.cpp \
@@ -77,6 +77,7 @@ TerrainExportDialog.cpp \
 TerrainToolBar.cpp \
 UnitStateDialog.cpp \
 UnitStateTableResource.cpp \
+UrbanColorEditor.cpp \
 UrbanInfosDockWidget.cpp \
 UrbanListView.cpp \
 UsagesDockWidget.cpp \

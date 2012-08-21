@@ -19,7 +19,6 @@
 
 namespace kernel
 {
-    class Automat_ABC;
     class Controllers;
     class Entity_ABC;
     class InfrastructureType;
@@ -40,7 +39,7 @@ class PopulationRepartition;
 
 // =============================================================================
 /** @class  EditorFactory
-    @brief  EditorFactory
+    @brief  Editor factory
 */
 // Created: SBO 2006-10-25
 // =============================================================================
@@ -101,7 +100,6 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifySelected( const kernel::Entity_ABC* element );
-    bool IsUpdating() const;
     //@}
 
 private:
@@ -111,7 +109,6 @@ private:
     Model& model_;
     const StaticModel& staticModel_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
-    QDialog* modalDialog_;
     //@}
 };
 

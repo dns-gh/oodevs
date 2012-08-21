@@ -10,10 +10,9 @@
 #ifndef __DotationsEditor_h_
 #define __DotationsEditor_h_
 
-#include "clients_gui/ModalDialog.h"
+#include "clients_gui/PropertyDialog.h"
 #include "tools/Resolver.h"
 #include "clients_kernel/ValueEditor.h"
-#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -27,20 +26,19 @@ class StaticModel;
 
 // =============================================================================
 /** @class  DotationsEditor
-    @brief  DotationsEditor
+    @brief  Dotations editor
 */
 // Created: SBO 2006-11-10
 // =============================================================================
-class DotationsEditor : public ModalDialog
+class DotationsEditor : public gui::PropertyDialog
                       , public kernel::ValueEditor< DotationsItem* >
-                      , private boost::noncopyable
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             DotationsEditor( QDialog*& self, QWidget* parent, const ::StaticModel& staticModel );
+             DotationsEditor( QWidget* parent, const ::StaticModel& staticModel );
     virtual ~DotationsEditor();
     //@}
 
@@ -144,7 +142,6 @@ private:
     KeyPressEditableTable* table_;
     Q3Table* infosTable_;
     QStringList types_;
-    QDialog*& self_;
     QLabel* infosLabel_;
     static QColor warningColor_;
     //@}

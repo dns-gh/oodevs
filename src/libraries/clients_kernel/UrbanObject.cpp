@@ -138,7 +138,7 @@ void UrbanObject::CreateDictionary( bool readOnly )
     else
     {
         dictionary_.Register( static_cast< const UrbanObject_ABC& >( *this ), tools::translate( "Block", "Info/Name" ), name_ );
-        dictionary_.Register( static_cast< const UrbanObject_ABC& >( *this ), tools::translate( "Block", "Info/Template" ), templateType_, *this, &UrbanObject::ApplyTemplate );
+        dictionary_.Register( static_cast< const UrbanObject_ABC& >( *this ), tools::translate( "Block", "Info/Template" ), templateType_, *this, &UrbanObject::ApplyTemplate, kernel::eUrbanTemplate );
     }
     dictionary_.Register( static_cast< const UrbanObject_ABC& >( *this ), tools::translate( "Block", "Info/Identifier" ), static_cast< const UrbanObject& >( *this ).id_ );
 }

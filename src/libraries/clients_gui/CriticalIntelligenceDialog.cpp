@@ -21,33 +21,9 @@ using namespace gui;
 // Created: ABR 2012-07-06
 // -----------------------------------------------------------------------------
 CriticalIntelligenceDialog::CriticalIntelligenceDialog( QWidget* parent, kernel::Controllers& controllers )
-    : QDialog( parent, "CriticalIntelligenceDialog", true )
-    , self_( 0 )
-    , controllers_( controllers )
+    : gui::PropertyDialog( parent )
+    , controllers_         ( controllers )
     , criticalIntelligence_( 0 )
-{
-    CreateGUI();
-}
-
-// -----------------------------------------------------------------------------
-// Name: CriticalIntelligenceDialog constructor
-// Created: ABR 2012-07-05
-// -----------------------------------------------------------------------------
-CriticalIntelligenceDialog::CriticalIntelligenceDialog( QDialog*& self, QWidget* parent, kernel::Controllers& controllers )
-    : QDialog( parent, "CriticalIntelligenceDialog", true )
-    , self_( &self )
-    , controllers_( controllers )
-    , criticalIntelligence_( 0 )
-{
-    *self_ = this;
-    CreateGUI();
-}
-
-// -----------------------------------------------------------------------------
-// Name: CriticalIntelligenceDialog::CreateGUI
-// Created: ABR 2012-07-06
-// -----------------------------------------------------------------------------
-void CriticalIntelligenceDialog::CreateGUI()
 {
     setCaption( tr( "Change critical intelligence" ) );
     resize( 300, 150 );
@@ -55,7 +31,7 @@ void CriticalIntelligenceDialog::CreateGUI()
     textEdit_ = new QTextEdit();
     QPushButton* okButton = new QPushButton( tr( "Ok" ) );
     QPushButton* cancelButton = new QPushButton( tr( "Cancel" ) );
-    okButton->setDefault( TRUE );
+    okButton->setDefault( true );
     connect( okButton, SIGNAL( clicked() ), SLOT( OnAccept() ) );
     connect( cancelButton, SIGNAL( clicked() ), SLOT( OnReject() ) );
 
@@ -73,8 +49,7 @@ void CriticalIntelligenceDialog::CreateGUI()
 // -----------------------------------------------------------------------------
 CriticalIntelligenceDialog::~CriticalIntelligenceDialog()
 {
-    if( self_ )
-        *self_ = 0;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -116,13 +91,4 @@ void CriticalIntelligenceDialog::OnReject()
 {
     criticalIntelligence_ = 0;
     reject();
-}
-
-// -----------------------------------------------------------------------------
-// Name: CriticalIntelligenceDialog::OnShow
-// Created: ABR 2012-07-05
-// -----------------------------------------------------------------------------
-void CriticalIntelligenceDialog::OnShow()
-{
-    show();
 }

@@ -17,12 +17,10 @@
 // Name: PopulationRepartitionEditor constructor
 // Created: JSR 2011-03-08
 // -----------------------------------------------------------------------------
-PopulationRepartitionEditor::PopulationRepartitionEditor( QDialog*& self, QWidget* parent, kernel::Controller& controller )
-    : ModalDialog( parent, "PopulationRepartitionEditor" )
-    , self_      ( self )
+PopulationRepartitionEditor::PopulationRepartitionEditor( QWidget* parent, kernel::Controller& controller )
+    : gui::PropertyDialog( parent )
     , controller_( controller )
 {
-    self_ = this;
     setCaption( tr( "Repartition Editor" ) );
     QVBoxLayout* pMainLayout = new QVBoxLayout( this );
     pMainLayout->setMargin( 10 );
@@ -64,8 +62,6 @@ PopulationRepartitionEditor::PopulationRepartitionEditor( QDialog*& self, QWidge
 
     connect( okBtn_   , SIGNAL( clicked() ), SLOT( OnAccept() ) );
     connect( cancelBtn, SIGNAL( clicked() ), SLOT( OnReject() ) );
-
-    show();
 }
 
 // -----------------------------------------------------------------------------
@@ -74,7 +70,7 @@ PopulationRepartitionEditor::PopulationRepartitionEditor( QDialog*& self, QWidge
 // -----------------------------------------------------------------------------
 PopulationRepartitionEditor::~PopulationRepartitionEditor()
 {
-    self_ = 0;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

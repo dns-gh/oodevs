@@ -355,9 +355,6 @@
     <ClCompile Include="..\..\src\applications\preparation_app\PositionEditor.cpp">
       <Filter>Source Files\Dialogs\Editors</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\preparation_app\PropertiesTableDisplayer.cpp">
-      <Filter>Source Files\Dialogs\Editors</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\Filter.cpp">
       <Filter>Source Files\Dialogs\Filter</Filter>
     </ClCompile>
@@ -520,6 +517,12 @@
     <ClCompile Include="..\..\src\applications\preparation_app\EntitySymbolEditor.cpp">
       <Filter>Source Files\Dialogs\Editors</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\UrbanColorEditor.cpp">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\PropertyDisplayer.cpp">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\preparation_app\Application.h">
@@ -630,9 +633,6 @@
     <ClInclude Include="..\..\src\applications\preparation_app\PeopleAffinitiesDialog.h">
       <Filter>Source Files\Dialogs\Editors</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\preparation_app\PropertiesTableDisplayer.h">
-      <Filter>Source Files\Dialogs\Editors</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\Filter.h">
       <Filter>Source Files\Dialogs\Filter</Filter>
     </ClInclude>
@@ -710,6 +710,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\ResourceNetworkDialog.h">
       <Filter>Source Files\Dialogs\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\EditorFactory.h">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\PropertyDisplayer.h">
+      <Filter>Source Files\Dialogs\Editors</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -847,9 +853,6 @@
     <CustomBuild Include="..\..\src\applications\preparation_app\DotationsEditor.h">
       <Filter>Source Files\Dialogs\Editors</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\preparation_app\EditorFactory.h">
-      <Filter>Source Files\Dialogs\Editors</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\PopulationRepartitionEditor.h">
       <Filter>Source Files\Dialogs\Editors</Filter>
     </CustomBuild>
@@ -962,6 +965,9 @@
       <Filter>Source Files\Dialogs\Editors</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\SymbolDialog.h">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\UrbanColorEditor.h">
       <Filter>Source Files\Dialogs\Editors</Filter>
     </CustomBuild>
   </ItemGroup>

@@ -21,7 +21,7 @@ namespace kernel
 namespace gui
 {
     class GlProxy;
-    class TableItemDisplayer;
+    class PropertyDisplayer;
 }
 
 class Model;
@@ -46,7 +46,7 @@ protected:
     //! @name Member data
     //@{
     std::auto_ptr< kernel::EditorFactory_ABC > editorFactory_;
-    std::auto_ptr< gui::TableItemDisplayer > tableItemDisplayer_;
+    std::auto_ptr< gui::PropertyDisplayer > propertiesDisplayer_;
     //@}
 };
 

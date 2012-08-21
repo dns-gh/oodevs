@@ -63,9 +63,9 @@ void Usages::UpdateDefault()
         occupations_[ defaultStr_ ].first = static_cast< unsigned int >( occupation * ( accommodation ? accommodation->GetNominalCapacity() : 1 ) );
         occupations_[ defaultStr_ ].second = static_cast< unsigned int >( occupation * ( accommodation ? accommodation->GetMaxCapacity() : 1 ) );
 
-        dictionary_.Register( owner_, defaultString + tools::translate( "Block", "/Percentage" ), static_cast< const unsigned int &>( usages_[ defaultStr_ ] ) );
-        dictionary_.Register( owner_, defaultString + tools::translate( "Block", "/Nominal capacity" ), static_cast< const unsigned int &>( occupations_[ defaultStr_ ].first ) );
-        dictionary_.Register( owner_, defaultString + tools::translate( "Block", "/Maximal capacity" ), static_cast< const unsigned int &>( occupations_[ defaultStr_ ].second ) );
+        dictionary_.Register( owner_, defaultString + tools::translate( "Block", "/Percentage" ), static_cast< const unsigned int &>( usages_[ defaultStr_ ] ), eUrbanTemplate );
+        dictionary_.Register( owner_, defaultString + tools::translate( "Block", "/Nominal capacity" ), static_cast< const unsigned int &>( occupations_[ defaultStr_ ].first ), eUrbanTemplate );
+        dictionary_.Register( owner_, defaultString + tools::translate( "Block", "/Maximal capacity" ), static_cast< const unsigned int &>( occupations_[ defaultStr_ ].second ), eUrbanTemplate );
         controller_.Update( DictionaryUpdated( owner_, defaultString ) );
     }
     else
@@ -93,9 +93,9 @@ void Usages::Add( const std::string& usage, unsigned int proportion )
     occupations_[ usage ].first = static_cast< unsigned int >( occupation * ( accommodation ? accommodation->GetNominalCapacity() : 1 ) );
     occupations_[ usage ].second = static_cast< unsigned int >( occupation * ( accommodation ? accommodation->GetMaxCapacity() : 1 ) );
 
-    dictionary_.Register( owner_, motivationString + tools::translate( "Block", "/Percentage" ), static_cast< const unsigned int &>( usages_[ usage ] ) );
-    dictionary_.Register( owner_, motivationString + tools::translate( "Block", "/Nominal capacity" ), static_cast< const unsigned int &>( occupations_[ usage ].first ) );
-    dictionary_.Register( owner_, motivationString + tools::translate( "Block", "/Maximal capacity" ), static_cast< const unsigned int &>( occupations_[ usage ].second ) );
+    dictionary_.Register( owner_, motivationString + tools::translate( "Block", "/Percentage" ), static_cast< const unsigned int &>( usages_[ usage ] ), eUrbanTemplate );
+    dictionary_.Register( owner_, motivationString + tools::translate( "Block", "/Nominal capacity" ), static_cast< const unsigned int &>( occupations_[ usage ].first ), eUrbanTemplate );
+    dictionary_.Register( owner_, motivationString + tools::translate( "Block", "/Maximal capacity" ), static_cast< const unsigned int &>( occupations_[ usage ].second ), eUrbanTemplate );
 
     controller_.Update( kernel::DictionaryUpdated( owner_, motivationString ) );
 

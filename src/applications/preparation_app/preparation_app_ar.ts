@@ -1762,7 +1762,7 @@ This data can&apos;t be projected.</source>
     </message>
 </context>
 <context>
-    <name>PropertiesTableDisplayer</name>
+    <name>PropertyDisplayer</name>
     <message>
         <source>&lt;Edit Property Group...&gt;</source>
         <translation type="unfinished"></translation>

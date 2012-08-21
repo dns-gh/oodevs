@@ -7,33 +7,32 @@
 //
 // *****************************************************************************
 
-#ifndef __TableItemDisplayer_h_
-#define __TableItemDisplayer_h_
+#ifndef gui_PropertyDisplayer_h_
+#define gui_PropertyDisplayer_h_
 
 #include "NoLinkDisplayer.h"
 
 namespace gui
 {
-
 // =============================================================================
-/** @class  TableItemDisplayer
-    @brief  TableItemDisplayer
+/** @class  PropertyDisplayer
+    @brief  Property displayer
 */
 // Created: SBO 2006-10-18
 // =============================================================================
-class TableItemDisplayer : public NoLinkDisplayer
+class PropertyDisplayer : public NoLinkDisplayer
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             TableItemDisplayer();
-    virtual ~TableItemDisplayer();
+             PropertyDisplayer();
+    virtual ~PropertyDisplayer();
     //@}
 
     //! @name Operations
     //@{
     virtual void Hide() ;
-    void SetItem( Q3TableItem* item );
+    void SetItem( QStandardItem* item );
     //@}
 
 private:
@@ -48,12 +47,12 @@ private:
 protected:
     //! @name Member data
     //@{
-    QString      message_;
-    Q3TableItem* item_;
-    QColor       color_;
+    QString        message_;
+    QStandardItem*   item_;
+    QColor         color_;
     //@}
 };
 
 }
 
-#endif // __TableItemDisplayer_h_
+#endif // gui_PropertyDisplayer_h_

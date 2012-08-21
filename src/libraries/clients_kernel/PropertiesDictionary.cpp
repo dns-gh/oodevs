@@ -60,30 +60,5 @@ bool PropertiesDictionary::HasKey( const QString& name ) const
 void PropertiesDictionary::Display( Displayer_ABC& displayer )
 {
     for( CIT_Properties it = properties_.begin(); it != properties_.end(); ++it )
-        displayer.Display( it->first, it->second );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PropertiesDictionary::Display
-// Created: SBO 2006-10-19
-// -----------------------------------------------------------------------------
-void PropertiesDictionary::Display( const QString& name, Displayer_ABC& displayer )
-{
-    CIT_Properties it = properties_.find( name );
-    if( it != properties_.end() )
-        it->second->Display( displayer );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PropertiesDictionary::DisplaySubPath
-// Created: SBO 2006-11-13
-// -----------------------------------------------------------------------------
-void PropertiesDictionary::DisplaySubPath( const QString& path, Displayer_ABC& displayer )
-{
-    QString search = path.endsWith( "/" ) ? path : path + "/";
-    for( CIT_Properties it = properties_.begin(); it != properties_.end(); ++it )
-    {
-        if( it->first.find( search, 0, false ) != -1 )
-            displayer.Display( it->first, it->second );
-    }
+        displayer.Display( it->second );
 }

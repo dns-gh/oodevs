@@ -1467,13 +1467,6 @@ Do you want to remove it?</source>
     </message>
 </context>
 <context>
-    <name>gui::PropertiesPanel</name>
-    <message>
-        <source>Properties</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>gui::ResourceLinksDialog_ABC</name>
     <message>
         <source>Resource Networks</source>

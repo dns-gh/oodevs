@@ -15,12 +15,10 @@
 // Created: ABR 2011-11-29
 // -----------------------------------------------------------------------------
 template< typename Entity, typename Resolver >
-MultipleResolverEditor< Entity, Resolver >::MultipleResolverEditor( QDialog*& self, QWidget* parent, const Resolver& resolver )
-    : QDialog( parent, "MultipleResolverEditor", true )
-    , self_       ( self )
-    , values_     ( 0 )
+MultipleResolverEditor< Entity, Resolver >::MultipleResolverEditor( QWidget* parent, const Resolver& resolver )
+    : gui::PropertyDialog( parent )
+    , values_( 0 )
 {
-    self_ = this;
     setMinimumSize( 250, 250 );
     QVBoxLayout* mainLayout = new QVBoxLayout( this );
     // List
@@ -44,7 +42,6 @@ MultipleResolverEditor< Entity, Resolver >::MultipleResolverEditor( QDialog*& se
     buttonLayout->addWidget( cancel );
     mainLayout->addWidget( listBox_, 1 );
     mainLayout->addLayout( buttonLayout );
-    show();
 }
 
 // -----------------------------------------------------------------------------
@@ -54,7 +51,7 @@ MultipleResolverEditor< Entity, Resolver >::MultipleResolverEditor( QDialog*& se
 template< typename Entity, typename Resolver >
 MultipleResolverEditor< Entity, Resolver >::~MultipleResolverEditor()
 {
-    self_ = 0;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

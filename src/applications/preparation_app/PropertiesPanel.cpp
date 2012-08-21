@@ -9,7 +9,7 @@
 
 #include "preparation_app_pch.h"
 #include "PropertiesPanel.h"
-#include "PropertiesTableDisplayer.h"
+#include "PropertyDisplayer.h"
 #include "EditorFactory.h"
 #include "preparation/StaticModel.h"
 
@@ -18,8 +18,8 @@
 // Created: SBO 2008-04-08
 // -----------------------------------------------------------------------------
 PropertiesPanelBase::PropertiesPanelBase( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel )
-    : editorFactory_( new EditorFactory( controllers, model, staticModel ) )
-    , tableItemDisplayer_( new PropertiesTableDisplayer( staticModel.coordinateConverter_ ) )
+    : editorFactory_      ( new EditorFactory( controllers, model, staticModel ) )
+    , propertiesDisplayer_( new PropertyDisplayer( staticModel.coordinateConverter_ ) )
 {
     // NOTHING
 }
@@ -39,7 +39,7 @@ PropertiesPanelBase::~PropertiesPanelBase()
 // -----------------------------------------------------------------------------
 PropertiesPanel::PropertiesPanel( QWidget* parent, kernel::Controllers& controllers, Model& model, const StaticModel& staticModel, const gui::GlProxy& glProxy )
     : PropertiesPanelBase( controllers, model, staticModel )
-    , gui::PropertiesPanel( parent, controllers, *editorFactory_, *tableItemDisplayer_, glProxy )
+    , gui::PropertiesPanel( parent, controllers, *editorFactory_, *propertiesDisplayer_, glProxy )
 {
     // NOTHING
 }

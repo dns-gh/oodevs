@@ -74,6 +74,9 @@
     <Filter Include="Source Files\Model\Entities\Urban">
       <UniqueIdentifier>{be79ce9d-0e9f-4bb3-98df-ae385d46baf8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Model\Properties">
+      <UniqueIdentifier>{7f72eb9e-3625-4240-8eee-1c750147cbf0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\clients_kernel\clients_kernel_pch.cpp">
@@ -418,12 +421,6 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\PopulationKnowledge_ABC.cpp">
       <Filter>Source Files\Model\Entities\Population</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_kernel\EditorFactory_ABC.cpp">
-      <Filter>Source Files\Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_kernel\PropertiesDictionary.cpp">
-      <Filter>Source Files\Editor</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_kernel\SymbolHierarchy.cpp">
       <Filter>Source Files\Model\Extensions</Filter>
     </ClCompile>
@@ -495,6 +492,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanTemplateType.cpp">
       <Filter>Source Files\XML model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\EditorFactory_ABC.cpp">
+      <Filter>Source Files\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\PropertiesDictionary.cpp">
+      <Filter>Source Files\Editor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1008,21 +1011,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\PopulationPrototype.h">
       <Filter>Source Files\Model\Entities\Population</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\DictionaryUpdated.h">
-      <Filter>Source Files\Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\EditorFactory_ABC.h">
-      <Filter>Source Files\Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\PropertiesDictionary.h">
-      <Filter>Source Files\Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\Property_ABC.h">
-      <Filter>Source Files\Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\ValueEditor.h">
-      <Filter>Source Files\Editor</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\ScoreFactory_ABC.h">
       <Filter>Source Files\Model\Extensions</Filter>
     </ClInclude>
@@ -1178,6 +1166,21 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\CommandPostAttributes_ABC.h">
       <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ValueEditor.h">
+      <Filter>Source Files\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\DictionaryUpdated.h">
+      <Filter>Source Files\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\EditorFactory_ABC.h">
+      <Filter>Source Files\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\PropertiesDictionary.h">
+      <Filter>Source Files\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Property_ABC.h">
+      <Filter>Source Files\Model\Properties</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

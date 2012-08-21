@@ -15,6 +15,7 @@
 #pragma warning( push, 0 )
 #include <QtCore/qstringlist.h>
 #pragma warning( pop )
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -23,11 +24,12 @@ namespace kernel
 
 // =============================================================================
 /** @class  PropertiesDictionary
-    @brief  PropertiesDictionary
+    @brief  Properties dictionary
 */
 // Created: SBO 2006-10-17
 // =============================================================================
 class PropertiesDictionary : public Extension_ABC
+                           , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -39,48 +41,38 @@ public:
     //! @name Operations
     //@{
     bool HasKey( const QString& name ) const;
+    void Remove( const QString& name );
+    void Display( Displayer_ABC& displayer );
 
     template< typename T, typename Owner, typename Setter >
-    void Register( const Owner& owner, const QString& name, T& value, const Setter& setter )
+    void Register( const Owner& owner, const QString& name, T& value, const Setter& setter, E_Category category = eNothing )
     {
         Property_ABC*& property = properties_[ name ];
         delete property;
-        property = new Property< T, Owner, Setter >( controller_, owner, value, setter );
+        property = new Property< T, Owner, Setter >( controller_, owner, value, setter, name, category );
     }
 
     template< typename T > struct setter;
     template< typename T, typename Owner >
-    void Register( const Owner& owner, const QString& name, T& value )
+    void Register( const Owner& owner, const QString& name, T& value, E_Category category = eNothing )
     {
-        Register( owner, name, value, setter< T >() );
+        Register( owner, name, value, setter< T >(), category );
     }
 
     template< typename O, typename T > struct caller;
-    template< typename T, typename Owner, typename ConcreteOwner  >
-    void Register( const Owner& owner, const QString& name, T& value, ConcreteOwner& c, void (ConcreteOwner::*set)( const T& ) )
+    template< typename T, typename Owner, typename ConcreteOwner >
+    void Register( const Owner& owner, const QString& name, T& value, ConcreteOwner& c, void (ConcreteOwner::*set)( const T& ), E_Category category = eNothing )
     {
-        Register( owner, name, value, caller< ConcreteOwner, T >( c, set ) );
+        Register( owner, name, value, caller< ConcreteOwner, T >( c, set ), category );
     }
-
-    void Remove( const QString& name );
-
-    void Display( Displayer_ABC& displayer );
-    void Display( const QString& name, Displayer_ABC& displayer );
-    void DisplaySubPath( const QString& path, Displayer_ABC& displayer );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    PropertiesDictionary( const PropertiesDictionary& );            //!< Copy constructor
-    PropertiesDictionary& operator=( const PropertiesDictionary& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
-    typedef std::map< QString, Property_ABC* >  T_Properties;
-    typedef T_Properties::iterator             IT_Properties;
-    typedef T_Properties::const_iterator      CIT_Properties;
+    typedef std::map< QString, Property_ABC* > T_Properties;
+    typedef T_Properties::iterator            IT_Properties;
+    typedef T_Properties::const_iterator     CIT_Properties;
     //@}
 
     //! @name Types

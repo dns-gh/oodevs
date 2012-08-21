@@ -112,13 +112,13 @@ void Architecture::CreateDictionnary( bool readOnly )
     }
     else
     {
-        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/trafficability" ), trafficability_, Setter< UnitedValue< float > >( object_, objectTypes_ ) );
-        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/Height" ), height_, Setter< UnitedValue< unsigned int > >( object_, objectTypes_ ) );
-        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/floorNumber" ), floorNumber_, Setter< unsigned int >( object_, objectTypes_ ) );
-        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/parkingFloors" ), parkingFloors_, Setter< unsigned int >( object_, objectTypes_ ) );
-        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/roofShape" ), roofShape_, Setter< RoofShapeType* >( object_, objectTypes_ ) );
-        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/material" ), material_, Setter< MaterialCompositionType* >( object_, objectTypes_ ) );
-        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/occupation" ), occupation_, Setter< UnitedValue< unsigned int > >( object_, objectTypes_ ) );
+        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/trafficability" ), trafficability_, Setter< UnitedValue< float > >( object_, objectTypes_ ), eUrbanTemplate );
+        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/Height" ), height_, Setter< UnitedValue< unsigned int > >( object_, objectTypes_ ), eUrbanTemplate );
+        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/floorNumber" ), floorNumber_, Setter< unsigned int >( object_, objectTypes_ ), eUrbanTemplate );
+        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/parkingFloors" ), parkingFloors_, Setter< unsigned int >( object_, objectTypes_ ), eUrbanTemplate );
+        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/roofShape" ), roofShape_, Setter< RoofShapeType* >( object_, objectTypes_ ), eUrbanTemplate );
+        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/material" ), material_, Setter< MaterialCompositionType* >( object_, objectTypes_ ), eUrbanTemplate );
+        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/occupation" ), occupation_, Setter< UnitedValue< unsigned int > >( object_, objectTypes_ ), eUrbanTemplate );
     }
 }
 

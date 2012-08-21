@@ -8,64 +8,63 @@
 // *****************************************************************************
 
 #include "clients_gui_pch.h"
-#include "TableItemDisplayer.h"
-#include "PropertyTableItem.h"
+#include "PropertyDisplayer.h"
 
 using namespace gui;
 
 // -----------------------------------------------------------------------------
-// Name: TableItemDisplayer constructor
+// Name: PropertyDisplayer constructor
 // Created: SBO 2006-10-18
 // -----------------------------------------------------------------------------
-TableItemDisplayer::TableItemDisplayer()
-    : item_( 0 )
+PropertyDisplayer::PropertyDisplayer()
+    : item_ ( 0 )
     , color_( Qt::white )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: TableItemDisplayer destructor
+// Name: PropertyDisplayer destructor
 // Created: SBO 2006-10-18
 // -----------------------------------------------------------------------------
-TableItemDisplayer::~TableItemDisplayer()
+PropertyDisplayer::~PropertyDisplayer()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: TableItemDisplayer::Hide
+// Name: PropertyDisplayer::Hide
 // Created: SBO 2006-10-18
 // -----------------------------------------------------------------------------
-void TableItemDisplayer::Hide()
+void PropertyDisplayer::Hide()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: TableItemDisplayer::SubItem
+// Name: PropertyDisplayer::SubItem
 // Created: SBO 2006-10-18
 // -----------------------------------------------------------------------------
-kernel::Displayer_ABC& TableItemDisplayer::SubItem( const QString& )
+kernel::Displayer_ABC& PropertyDisplayer::SubItem( const QString& )
 {
     NotToBeCalled( __FUNCTION__ );
     return *this;
 }
 
 // -----------------------------------------------------------------------------
-// Name: TableItemDisplayer::StartDisplay
+// Name: PropertyDisplayer::StartDisplay
 // Created: SBO 2006-10-18
 // -----------------------------------------------------------------------------
-void TableItemDisplayer::StartDisplay()
+void PropertyDisplayer::StartDisplay()
 {
     message_ = "";
 }
 
 // -----------------------------------------------------------------------------
-// Name: TableItemDisplayer::DisplayFormatted
+// Name: PropertyDisplayer::DisplayFormatted
 // Created: SBO 2006-10-18
 // -----------------------------------------------------------------------------
-void TableItemDisplayer::DisplayFormatted( const QString& formatted )
+void PropertyDisplayer::DisplayFormatted( const QString& formatted )
 {
     // $$$$ ABR 2012-06-04: TODO, read color and keep the remaining message
     // $$$$ ABR 2012-06-04: Should be improve, without changing color every time for every item.
@@ -90,26 +89,24 @@ void TableItemDisplayer::DisplayFormatted( const QString& formatted )
 }
 
 // -----------------------------------------------------------------------------
-// Name: TableItemDisplayer::EndDisplay
+// Name: PropertyDisplayer::EndDisplay
 // Created: SBO 2006-10-18
 // -----------------------------------------------------------------------------
-void TableItemDisplayer::EndDisplay()
+void PropertyDisplayer::EndDisplay()
 {
-    if( !item_ || !item_->table() )
+    if( !item_ )
         throw std::runtime_error( __FUNCTION__ );
 
-    static_cast< PropertyTableItem* >( item_ )->SetColor( color_ );
-    QFontMetrics fm( item_->table()->font() );
-    message_ = fm.elidedText( message_, Qt::ElideRight,item_->table()->columnWidth( 1 ) );
-    item_->setText( message_ );
+    item_->setData( message_, Qt::DisplayRole );
+    item_->setBackground( QBrush( color_ ) );
     item_ = 0;
 }
 
 // -----------------------------------------------------------------------------
-// Name: TableItemDisplayer::SetItem
-// Created: SBO 2006-10-18
+// Name: PropertyDisplayer::SetItem
+// Created: LGY 2012-08-13
 // -----------------------------------------------------------------------------
-void TableItemDisplayer::SetItem( Q3TableItem* item )
+void PropertyDisplayer::SetItem( QStandardItem* item )
 {
     item_ = item;
 }

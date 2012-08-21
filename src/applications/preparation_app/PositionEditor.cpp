@@ -13,47 +13,48 @@
 #include "clients_gui/LocationEditorBox.h"
 #include "clients_kernel/Moveable_ABC.h"
 #include "clients_kernel/CoordinateSystems.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: PositionEditor constructor
 // Created: AME 2010-03-08
 // -----------------------------------------------------------------------------
-PositionEditor::PositionEditor( QDialog*& self, QWidget* parent, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter )
-    : ModalDialog( parent, "PositionEditor" )
+PositionEditor::PositionEditor( QWidget* parent, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter )
+    : gui::PropertyDialog( parent )
     , converter_( converter )
-    , value_( 0 )
-    , self_( self )
+    , value_    ( 0 )
 {
-    self_ = this;
     setCaption( tr( "Position Editor" ) );
-    Q3VBoxLayout* pMainLayout = new Q3VBoxLayout( this );
+    QVBoxLayout* pMainLayout = new QVBoxLayout( this );
     pMainLayout->setMargin( 10 );
 
     locBox_ =  new gui::LocationEditorBox( this, controllers, converter );
     locBox_->SelectDefaultParser( converter.GetCoordSystem().defaultCoordinateSystem_ );
     pMainLayout->addWidget( locBox_ );
 
-    Q3HBox* pbuttonBox = new Q3HBox( this );
-    QPushButton* okBtn     = new QPushButton( tr( "Ok" ), pbuttonBox );
-    QPushButton* cancelBtn = new QPushButton( tr( "Cancel" ), pbuttonBox );
+    QHBoxLayout* pbuttonBox = new QHBoxLayout();
+    QPushButton* okBtn     = new QPushButton( tr( "Ok" ) );
+    QPushButton* cancelBtn = new QPushButton( tr( "Cancel" ) );
     okBtn->setDefault( true );
-    okBtn->setMaximumWidth( 60 );
-    cancelBtn->setMaximumWidth( 60 );
+    okBtn->setMaximumWidth( 100 );
+    cancelBtn->setMaximumWidth( 100 );
+    pbuttonBox->addWidget( okBtn );
+    pbuttonBox->addWidget( cancelBtn );
 
-    pMainLayout->addWidget( pbuttonBox, 0, Qt::AlignRight );
+    pMainLayout->addLayout( pbuttonBox );
+
 
     connect( okBtn    , SIGNAL( clicked() ), SLOT( OnAccept() ) );
     connect( cancelBtn, SIGNAL( clicked() ), SLOT( OnReject() ) );
-
-    show();
 }
+
 // -----------------------------------------------------------------------------
 // Name: PositionEditor destructor
 // Created: AME 2010-03-08
 // -----------------------------------------------------------------------------
 PositionEditor::~PositionEditor()
 {
-    self_ = 0;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

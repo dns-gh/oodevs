@@ -10,25 +10,24 @@
 #ifndef __MultipleResolverEditor_h_
 #define __MultipleResolverEditor_h_
 
-#include <boost/noncopyable.hpp>
+#include "clients_gui/PropertyDialog.h"
 #include "clients_kernel/ValueEditor.h"
 
 // =============================================================================
 /** @class  MultipleResolverEditor
-    @brief  MultipleResolverEditor
+    @brief  Multiple resolver editor
 */
 // Created: ABR 2011-11-29
 // =============================================================================
 template< typename Entity, typename Resolver >
-class MultipleResolverEditor : public QDialog
+class MultipleResolverEditor : public gui::PropertyDialog
                              , public kernel::ValueEditor< std::vector< Entity* > >
-                             , private boost::noncopyable
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             MultipleResolverEditor( QDialog*& self, QWidget* parent, const Resolver& resolver );
+             MultipleResolverEditor( QWidget* parent, const Resolver& resolver );
     virtual ~MultipleResolverEditor();
     //@}
 
@@ -49,7 +48,6 @@ protected:
     //@{
     std::vector< const Entity* > entities_;
     std::vector< Entity* >*      values_;
-    QDialog*&                    self_;
     Q3ListBox*                   listBox_;
     //@}
 };

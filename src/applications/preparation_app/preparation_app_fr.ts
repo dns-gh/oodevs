@@ -1765,7 +1765,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
 </context>
 <context>
-    <name>PropertiesTableDisplayer</name>
+    <name>PropertyDisplayer</name>
     <message>
         <source>&lt;Edit Property Group...&gt;</source>
         <translation>&lt;Editer le groupe de propriétés...&gt;</translation>

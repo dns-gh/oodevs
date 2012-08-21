@@ -22,6 +22,13 @@ namespace kernel
 {
     class Displayer_ABC;
 
+    enum E_Category
+    {
+        eNothing,
+        ePopulationRepartition,
+        eUrbanTemplate
+    };
+
 // =============================================================================
 /** @class  Property_ABC
     @brief  Property_ABC
@@ -42,6 +49,8 @@ public:
     virtual QWidget* CreateEditor( QWidget* parent, EditorFactory_ABC& factory ) = 0;
     virtual void SetValueFromEditor( QWidget* editor ) = 0;
     virtual void Display( Displayer_ABC& displayer ) = 0;
+    virtual const QString& GetName() const = 0;
+    virtual E_Category GetCategory() const = 0;
     //@}
 
 private:
@@ -56,14 +65,20 @@ template< typename T, typename Owner, typename Setter >
 class Property : public Property_ABC
 {
 public:
-    Property( Controller& controller, const Owner& owner, T& value, const Setter& setter )
+    Property( Controller& controller, const Owner& owner, T& value, const Setter& setter, const QString& name, E_Category category )
         : controller_( controller )
-        , owner_( owner )
-        , data_( &value )
-        , setter_( setter ) {
-
+        , owner_     ( owner )
+        , data_      ( &value )
+        , setter_    ( setter )
+        , name_      ( name )
+        , category_  ( category )
+    {
+        // NOTHING
     }
-    virtual ~Property() {};
+    virtual ~Property()
+    {
+        // NOTHING
+    }
 
     virtual void Display( Displayer_ABC& displayer )
     {
@@ -85,11 +100,23 @@ public:
         }
     }
 
+    virtual const QString& GetName() const
+    {
+        return name_;
+    }
+
+    virtual E_Category GetCategory() const
+    {
+        return category_;
+    }
+
 private:
     Controller& controller_;
     const Owner& owner_;
     T* data_;
     Setter setter_;
+    const QString name_;
+    E_Category category_;
 };
 
 }

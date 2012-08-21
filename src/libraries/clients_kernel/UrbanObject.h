@@ -89,7 +89,7 @@ public:
     void CreateDictionary( bool readOnly );
     virtual void ApplyTemplate( const UrbanTemplateTypePtr& urbanTemplate );
     virtual void UpdateTemplate( const ObjectTypes& objectTypes );
-    virtual bool IsUpdatingTemplate() const;
+    virtual bool IsUpdatingTemplate() const; // loic boom
     //@}
 
 private:

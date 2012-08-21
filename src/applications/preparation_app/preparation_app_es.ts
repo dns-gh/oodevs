@@ -1762,18 +1762,18 @@ This data can&apos;t be projected.</source>
     </message>
 </context>
 <context>
-    <name>PropertiesTableDisplayer</name>
+    <name>PropertyDisplayer</name>
     <message>
         <source>&lt;Edit Property Group...&gt;</source>
-        <translation>&lt;Editar Grupo de propiedades...&gt;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>not set</source>
-        <translation>no definido</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>invalid</source>
-        <translation>no válido</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&lt;Edit repartition...&gt;</source>

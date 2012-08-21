@@ -10,7 +10,7 @@
 #ifndef __PopulationRepartitionEditor_h_
 #define __PopulationRepartitionEditor_h_
 
-#include "clients_gui/ModalDialog.h"
+#include "clients_gui/PropertyDialog.h"
 #include "clients_kernel/ValueEditor.h"
 
 namespace kernel
@@ -22,11 +22,11 @@ class PopulationRepartition;
 
 // =============================================================================
 /** @class  PopulationRepartitionEditor
-    @brief  PopulationRepartitionEditor
+    @brief  Population repartition editor
 */
 // Created: JSR 2011-03-08
 // =============================================================================
-class PopulationRepartitionEditor : public ModalDialog
+class PopulationRepartitionEditor : public gui::PropertyDialog
                                   , public kernel::ValueEditor< PopulationRepartition* >
 {
     Q_OBJECT
@@ -34,7 +34,7 @@ class PopulationRepartitionEditor : public ModalDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationRepartitionEditor( QDialog*& self, QWidget* parent, kernel::Controller& controller );
+             PopulationRepartitionEditor( QWidget* parent, kernel::Controller& controller );
     virtual ~PopulationRepartitionEditor();
     //@}
 
@@ -53,12 +53,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    PopulationRepartitionEditor( const PopulationRepartitionEditor& );            //!< Copy constructor
-    PopulationRepartitionEditor& operator=( const PopulationRepartitionEditor& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual QSize sizeHint() const;
@@ -67,7 +61,6 @@ private:
 private:
     //! @name Member data
     //@{
-    QDialog*& self_;
     kernel::Controller& controller_;
     PopulationRepartition** value_;
     QLineEdit* male_;

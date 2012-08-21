@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#ifndef __PropertiesTableDisplayer_h_
-#define __PropertiesTableDisplayer_h_
+#ifndef __PropertyDisplayer_h_
+#define __PropertyDisplayer_h_
 
-#include "clients_gui/TableItemDisplayer.h"
+#include "clients_gui/PropertyDisplayer.h"
 #include "preparation/EnumTypes.h"
 
 namespace kernel
@@ -27,31 +27,31 @@ class DotationsItem;
 class PopulationRepartition;
 
 // =============================================================================
-/** @class  PropertiesTableDisplayer
-    @brief  PropertiesTableDisplayer
+/** @class  PropertyDisplayer
+    @brief  Property Displayer
 */
 // Created: SBO 2006-10-27
 // =============================================================================
-class PropertiesTableDisplayer : public gui::TableItemDisplayer
-                               , public tools::Caller< Enum_PopulationAttitude >
-                               , public tools::Caller< Enum_DemolitionTargetType >
-                               , public tools::Caller< Enum_NbcState >
-                               , public tools::Caller< DotationsItem >
-                               , public tools::Caller< geometry::Point2f >
-                               , public tools::Caller< kernel::Moveable_ABC >
-                               , public tools::Caller< PopulationRepartition >
-                               , public tools::Caller< kernel::InfrastructureType >
-                               , public tools::Caller< kernel::UrbanTemplateType >
-                               , public tools::Caller< kernel::MaterialCompositionType >
-                               , public tools::Caller< kernel::RoofShapeType >
-                               , public tools::Caller< kernel::UrbanBlockColor >
-                               , public tools::Caller< kernel::CriticalIntelligence >
+class PropertyDisplayer : public gui::PropertyDisplayer
+                        , public tools::Caller< Enum_PopulationAttitude >
+                        , public tools::Caller< Enum_DemolitionTargetType >
+                        , public tools::Caller< Enum_NbcState >
+                        , public tools::Caller< DotationsItem >
+                        , public tools::Caller< geometry::Point2f >
+                        , public tools::Caller< kernel::Moveable_ABC >
+                        , public tools::Caller< PopulationRepartition >
+                        , public tools::Caller< kernel::InfrastructureType >
+                        , public tools::Caller< kernel::UrbanTemplateType >
+                        , public tools::Caller< kernel::MaterialCompositionType >
+                        , public tools::Caller< kernel::RoofShapeType >
+                        , public tools::Caller< kernel::UrbanBlockColor >
+                        , public tools::Caller< kernel::CriticalIntelligence >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PropertiesTableDisplayer( const kernel::CoordinateConverter_ABC& converter );
-    virtual ~PropertiesTableDisplayer();
+    explicit PropertyDisplayer( const kernel::CoordinateConverter_ABC& converter );
+    virtual ~PropertyDisplayer();
     //@}
 
     //! @name Operations
@@ -78,4 +78,4 @@ private:
     //@}
 };
 
-#endif // __PropertiesTableDisplayer_h_
+#endif // __PropertyDisplayer_h_

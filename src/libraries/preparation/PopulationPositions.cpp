@@ -187,7 +187,7 @@ void PopulationPositions::SerializeAttributes( xml::xostream& xos ) const
 void PopulationPositions::Move( const geometry::Point2f& position )
 {
     center_ = position;
-    controller_.Update( kernel::DictionaryUpdated( owner_, tools::translate( "Crowd", "Info" ) ) );
+    controller_.Update( kernel::DictionaryUpdated( owner_, tools::translate( "Crowd", "Info/Position" ) ) );
 }
 
 // -----------------------------------------------------------------------------

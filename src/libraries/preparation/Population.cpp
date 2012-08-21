@@ -187,10 +187,10 @@ void Population::CreateDictionary( Controller& controller )
     dictionary.Register( constEntity, tools::translate( "Crowd", "Humans/Wounded" ), wounded_ );
     dictionary.Register( constEntity, tools::translate( "Crowd", "Humans/Dead" ), dead_ );
 
-    dictionary.Register( constEntity, tools::translate( "Crowd", "Male\\Female\\Children/Repartition" ), repartition_ );
-    dictionary.Register( constEntity, tools::translate( "Crowd", "Male\\Female\\Children/Male" ), static_cast< const PopulationRepartition& >( *repartition_ ).male_ );
-    dictionary.Register( constEntity, tools::translate( "Crowd", "Male\\Female\\Children/Female" ), static_cast< const PopulationRepartition& >( *repartition_ ).female_ );
-    dictionary.Register( constEntity, tools::translate( "Crowd", "Male\\Female\\Children/Children" ), static_cast< const PopulationRepartition& >( *repartition_ ).children_ );
+    dictionary.Register( constEntity, tools::translate( "Crowd", "Male\\Female\\Children/Repartition" ), repartition_, kernel::ePopulationRepartition );
+    dictionary.Register( constEntity, tools::translate( "Crowd", "Male\\Female\\Children/Male" ), static_cast< const PopulationRepartition& >( *repartition_ ).male_, kernel::ePopulationRepartition );
+    dictionary.Register( constEntity, tools::translate( "Crowd", "Male\\Female\\Children/Female" ), static_cast< const PopulationRepartition& >( *repartition_ ).female_, kernel::ePopulationRepartition );
+    dictionary.Register( constEntity, tools::translate( "Crowd", "Male\\Female\\Children/Children" ), static_cast< const PopulationRepartition& >( *repartition_ ).children_, kernel::ePopulationRepartition );
 }
 
 // -----------------------------------------------------------------------------

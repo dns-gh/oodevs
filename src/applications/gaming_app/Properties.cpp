@@ -10,15 +10,15 @@
 #include "gaming_app_pch.h"
 #include "Properties.h"
 #include "clients_gui/EditorFactory.h"
-#include "clients_gui/TableItemDisplayer.h"
+#include "clients_gui/PropertyDisplayer.h"
 
 // -----------------------------------------------------------------------------
 // Name: PropertiesBase::PropertiesBase
 // Created: SBO 2008-04-08
 // -----------------------------------------------------------------------------
 PropertiesBase::PropertiesBase()
-    : editorFactory_( new gui::EditorFactory() )
-    , tableItemDisplayer_( new gui::TableItemDisplayer() )
+    : editorFactory_    ( new gui::EditorFactory() )
+    , propertyDisplayer_( new gui::PropertyDisplayer() )
 {
     // NOTHING
 }
@@ -37,8 +37,7 @@ PropertiesBase::~PropertiesBase()
 // Created: SBO 2006-10-27
 // -----------------------------------------------------------------------------
 Properties::Properties( QWidget* parent, kernel::Controllers& controllers, const gui::GlProxy& glProxy )
-    : PropertiesBase()
-    , gui::PropertiesPanel( parent, controllers, *editorFactory_, *tableItemDisplayer_, glProxy )
+    : gui::PropertiesPanel( parent, controllers, *editorFactory_, *propertyDisplayer_, glProxy )
 {
     // NOTHING
 }

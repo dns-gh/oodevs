@@ -13,7 +13,6 @@
 #include "LogisticLevelEditor.h"
 #include "LogisticSuperiorEditor.h"
 #include "MultipleResolverEditor.h"
-#include "preparation/LogisticSuperior.h"
 #include "preparation/Model.h"
 #include "preparation/AgentsModel.h"
 #include "preparation/FormationModel.h"
@@ -22,7 +21,6 @@
 #include "preparation/TeamKarmas.h"
 #include "preparation/LogisticLevel.h"
 #include "clients_gui/CriticalIntelligenceDialog.h"
-#include "clients_gui/PropertiesTable.h"
 #include "clients_gui/ValuedComboBox.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/InfrastructureType.h"
@@ -31,18 +29,16 @@
 #include "clients_kernel/NBCAgent.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/KnowledgeGroupType.h"
-#include "clients_kernel/AgentTypes.h"
-#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/CoordinateSystems.h"
 #include "clients_kernel/MaterialCompositionType.h"
 #include "clients_kernel/RoofShapeType.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/UrbanObject_ABC.h"
-#include "clients_kernel/UrbanColor_ABC.h"
 #include "clients_kernel/UrbanTemplateType.h"
 #include "PopulationRepartitionEditor.h"
 #include "PositionEditor.h"
+#include "UrbanColorEditor.h"
 
 // -----------------------------------------------------------------------------
 // Name: EditorFactory constructor
@@ -53,7 +49,6 @@ EditorFactory::EditorFactory( kernel::Controllers& controllers, Model& model, co
     , model_      ( model )
     , staticModel_( staticModel )
     , selected_   ( controllers )
-    , modalDialog_( 0 )
 {
     controllers_.Register( *this );
 }
@@ -64,7 +59,6 @@ EditorFactory::EditorFactory( kernel::Controllers& controllers, Model& model, co
 // -----------------------------------------------------------------------------
 EditorFactory::~EditorFactory()
 {
-    delete modalDialog_;
     controllers_.Unregister( *this );
 }
 
@@ -115,7 +109,6 @@ namespace
         {
             return EditorType( const_cast< Entity* >( gui::ValuedComboBox< const Entity* >::GetValue() ) );
         }
-
     };
 }
 
@@ -245,8 +238,8 @@ namespace
     class NBCAgentEditor : public MultipleResolverEditor< kernel::NBCAgent, T_NBCResolver >
     {
     public:
-        NBCAgentEditor( QDialog*& self, QWidget* parent, const T_NBCResolver& resolver )
-            : MultipleResolverEditor< kernel::NBCAgent, T_NBCResolver >( self, parent, resolver )
+        NBCAgentEditor( QWidget* parent, const T_NBCResolver& resolver )
+            : MultipleResolverEditor< kernel::NBCAgent, T_NBCResolver >( parent, resolver )
         {
             setCaption( tools::translate( "EditorFactory", "NBC agent(s) editor" ) );
         }
@@ -260,13 +253,9 @@ namespace
 // -----------------------------------------------------------------------------
 void EditorFactory::Call( std::vector< kernel::NBCAgent* >* const& value )
 {
-    if( !IsUpdating() && ( !modalDialog_ || !modalDialog_->isActiveWindow() ) )
-    {
-        delete modalDialog_;
-        NBCAgentEditor* editor = new NBCAgentEditor( modalDialog_, parent_, static_cast< T_NBCResolver& >( staticModel_.objectTypes_ ) );
-        editor->SetCurrentItem( *value );
-        result_ = 0;
-    }
+    NBCAgentEditor* editor = new NBCAgentEditor( parent_, static_cast< T_NBCResolver& >( staticModel_.objectTypes_ ) );
+    editor->SetCurrentItem( *value );
+    result_ = editor;
 }
 
 // -----------------------------------------------------------------------------
@@ -275,13 +264,9 @@ void EditorFactory::Call( std::vector< kernel::NBCAgent* >* const& value )
 // -----------------------------------------------------------------------------
 void EditorFactory::Call( DotationsItem** const& value )
 {
-    if( !IsUpdating() && ( !modalDialog_ || !modalDialog_->isActiveWindow() ) )
-    {
-        delete modalDialog_;
-        DotationsEditor* dotationsEditor = new DotationsEditor( modalDialog_, parent_, staticModel_ );
-        dotationsEditor->SetCurrentItem( *value, *selected_ );
-        result_ = 0;
-    }
+    DotationsEditor* dotationsEditor = new DotationsEditor( parent_, staticModel_ );
+    dotationsEditor->SetCurrentItem( *value, *selected_ );
+    result_ = dotationsEditor;
 }
 
 // -----------------------------------------------------------------------------
@@ -290,13 +275,9 @@ void EditorFactory::Call( DotationsItem** const& value )
 // -----------------------------------------------------------------------------
 void EditorFactory::Call( kernel::Moveable_ABC** const& value )
 {
-    if( !IsUpdating() && ( !modalDialog_ || !modalDialog_->isActiveWindow() ) )
-    {
-        delete modalDialog_;
-        PositionEditor* positionEditor = new PositionEditor( modalDialog_, parent_, controllers_, staticModel_.coordinateConverter_ );
-        positionEditor->SetValue( *value );
-        result_ = 0;
-    }
+    PositionEditor* positionEditor = new PositionEditor( parent_, controllers_, staticModel_.coordinateConverter_ );
+    positionEditor->SetValue( *value ); 
+    result_ = positionEditor;
 }
 
 // -----------------------------------------------------------------------------
@@ -305,13 +286,9 @@ void EditorFactory::Call( kernel::Moveable_ABC** const& value )
 // -----------------------------------------------------------------------------
 void EditorFactory::Call( PopulationRepartition** const& value )
 {
-    if( !IsUpdating() && ( !modalDialog_ || !modalDialog_->isActiveWindow() ) )
-    {
-        delete modalDialog_;
-        PopulationRepartitionEditor* populationRepartitionEditor = new PopulationRepartitionEditor( modalDialog_, parent_, controllers_.controller_ );
-        populationRepartitionEditor->SetValue( *value );
-        result_ = 0;
-    }
+    PopulationRepartitionEditor* populationRepartitionEditor = new PopulationRepartitionEditor( parent_, controllers_.controller_ );
+    populationRepartitionEditor->SetValue( *value );
+    result_ = populationRepartitionEditor;
 }
 
 // -----------------------------------------------------------------------------
@@ -370,22 +347,9 @@ void EditorFactory::Call( kernel::RoofShapeType** const& value )
 // -----------------------------------------------------------------------------
 void EditorFactory::Call( kernel::UrbanBlockColor* const& value )
 {
-    kernel::UrbanObject_ABC* object = dynamic_cast< kernel::UrbanObject_ABC* >( selected_.ConstCast() );
-    if( object && object->IsUpdatingTemplate() )
-        return;
-    QColor current( value->red_, value->green_, value->blue_ );
-    current.setAlpha( value->alpha_ );
-    QColor newColor = QColorDialog::getColor( current, 0, tools::translate( "ColorEditor", "Select color" ), QColorDialog::ShowAlphaChannel );
-    if( newColor.isValid() )
-    {
-        value->red_   = newColor.red();
-        value->green_ = newColor.green();
-        value->blue_  = newColor.blue();
-        value->alpha_ = newColor.alpha();
-        if( object )
-            object->UpdateTemplate( staticModel_.objectTypes_ );
-        controllers_.controller_.Update( *value );
-    }
+    UrbanColorEditor* editor = new UrbanColorEditor( parent_ );
+    editor->SetValue( *value );
+    result_ = editor;
 }
 
 // -----------------------------------------------------------------------------
@@ -394,24 +358,7 @@ void EditorFactory::Call( kernel::UrbanBlockColor* const& value )
 // -----------------------------------------------------------------------------
 void EditorFactory::Call( kernel::CriticalIntelligence* const& value )
 {
-    if( !IsUpdating() && ( !modalDialog_ || !modalDialog_->isActiveWindow() ) )
-    {
-        delete modalDialog_;
-        gui::CriticalIntelligenceDialog* intelligenceDialog = new gui::CriticalIntelligenceDialog( modalDialog_, parent_, controllers_ );
-        intelligenceDialog->SetValue( *value );
-        intelligenceDialog->show();
-        result_ = 0;
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: EditorFactory::IsUpdating
-// Created: ABR 2012-07-06
-// -----------------------------------------------------------------------------
-bool EditorFactory::IsUpdating() const
-{
-    if( gui::PropertiesTable* table = dynamic_cast< gui::PropertiesTable* >( parent_ ) )
-        if( table->IsUpdating() )
-            return true;
-    return false;
+    gui::CriticalIntelligenceDialog* intelligenceDialog = new gui::CriticalIntelligenceDialog( parent_, controllers_ );
+    intelligenceDialog->SetValue( *value );
+    result_ = intelligenceDialog;
 }

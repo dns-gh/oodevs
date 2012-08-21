@@ -11,9 +11,9 @@
 #define __gui_CriticalIntelligenceDialog_h_
 
 #include <boost/noncopyable.hpp>
-#include "clients_kernel/ValueEditor.h"
+#include "clients_gui/PropertyDialog.h"
 #include "clients_kernel/SubTypes.h"
-#include "ModalDialog.h"
+#include "clients_kernel/ValueEditor.h"
 
 namespace kernel
 {
@@ -22,16 +22,14 @@ namespace kernel
 
 namespace gui
 {
-
 // =============================================================================
 /** @class  CriticalIntelligenceDialog
-    @brief  CriticalIntelligenceDialog
+    @brief  Critical intelligence dialog
 */
 // Created: ABR 2012-07-05
 // =============================================================================
-class CriticalIntelligenceDialog : public QDialog
+class CriticalIntelligenceDialog : public gui::PropertyDialog
                                  , public kernel::ValueEditor< kernel::CriticalIntelligence >
-                                 , private boost::noncopyable
 {
     Q_OBJECT
 
@@ -39,7 +37,6 @@ public:
     //! @name Constructors/Destructor
     //@{
              CriticalIntelligenceDialog( QWidget* parent, kernel::Controllers& controllers );
-             CriticalIntelligenceDialog( QDialog*& self, QWidget* parent, kernel::Controllers& controllers );
     virtual ~CriticalIntelligenceDialog();
     //@}
 
@@ -54,25 +51,17 @@ protected slots:
     //@{
     virtual void OnAccept();
     virtual void OnReject();
-    virtual void OnShow();
-    //@}
-
-private:
-    //! @name Helper
-    //@{
-    void CreateGUI();
     //@}
 
 protected:
     //! @name Member data
     //@{
-    QDialog**                     self_;
     kernel::Controllers&          controllers_;
     kernel::CriticalIntelligence* criticalIntelligence_;
     QTextEdit*                    textEdit_;
     //@}
 };
 
-} //! namespace gui
+}
 
 #endif // __gui_CriticalIntelligenceDialog_h_

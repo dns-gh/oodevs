@@ -131,9 +131,6 @@
     <Filter Include="Source Files\MVC\Model">
       <UniqueIdentifier>{ec5ab0d7-c292-47a0-8f3f-d2d118974221}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\MVC\Controller">
-      <UniqueIdentifier>{b9647876-b475-4198-a317-a94f20d1ef2f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\MVC\View">
       <UniqueIdentifier>{fc70547b-557f-4096-ad92-7fd43680e4eb}</UniqueIdentifier>
     </Filter>
@@ -257,18 +254,6 @@
       <Filter>Source Files\Tools\Editors</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\PropertiesPanel.cpp">
-      <Filter>Source Files\Tools\Editors</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\PropertiesTable.cpp">
-      <Filter>Source Files\Tools\Editors</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\PropertiesWidget.cpp">
-      <Filter>Source Files\Tools\Editors</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\PropertyTableItem.cpp">
-      <Filter>Source Files\Tools\Editors</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\TableItemDisplayer.cpp">
       <Filter>Source Files\Tools\Editors</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\GQ_Plot.cpp">
@@ -883,6 +868,24 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\HtmlEditor.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\PropertyDelegate.cpp">
+      <Filter>Source Files\MVC\View</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\PropertyModel.cpp">
+      <Filter>Source Files\MVC\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\PropertyItem.cpp">
+      <Filter>Source Files\MVC\View</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\PropertyDialog.cpp">
+      <Filter>Source Files\MVC\View</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\PropertyTreeView.cpp">
+      <Filter>Source Files\MVC\View</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\PropertyDisplayer.cpp">
+      <Filter>Source Files\Tools\Editors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -981,16 +984,7 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\SubItemDisplayer.h">
       <Filter>Source Files\Tools\Displayers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\EditorFactory.h">
-      <Filter>Source Files\Tools\Editors</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\PropertiesPanel.h">
-      <Filter>Source Files\Tools\Editors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\PropertyTableItem.h">
-      <Filter>Source Files\Tools\Editors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\TableItemDisplayer.h">
       <Filter>Source Files\Tools\Editors</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\GQ_PlotDataBBox.h">
@@ -1398,6 +1392,27 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\Application_ABC.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\PropertyDelegate.h">
+      <Filter>Source Files\MVC\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\PropertyItem.h">
+      <Filter>Source Files\MVC\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\PropertyDialog.h">
+      <Filter>Source Files\MVC\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\EditorFactory.h">
+      <Filter>Source Files\Tools\Editors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\PropertyTreeView.h">
+      <Filter>Source Files\MVC\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\PropertyDisplayer.h">
+      <Filter>Source Files\Tools\Editors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\PropertyModel.h">
+      <Filter>Source Files\MVC\Model</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\clients_gui\HierarchyListView.inl">
@@ -1485,12 +1500,6 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\ValuedComboBox.h">
       <Filter>Source Files\Tools</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\PropertiesTable.h">
-      <Filter>Source Files\Tools\Editors</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\PropertiesWidget.h">
-      <Filter>Source Files\Tools\Editors</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\GQ_Plot.h">
       <Filter>Source Files\Tools\Graphs</Filter>

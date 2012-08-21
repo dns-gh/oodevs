@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "preparation_app_pch.h"
-#include "PropertiesTableDisplayer.h"
+#include "PropertyDisplayer.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/CoordinateSystems.h"
 #include "clients_kernel/DotationType.h"
@@ -23,84 +23,84 @@
 #include "preparation/DotationsItem.h"
 
 // -----------------------------------------------------------------------------
-// Name: PropertiesTableDisplayer constructor
+// Name: PropertyDisplayer constructor
 // Created: SBO 2006-10-27
 // -----------------------------------------------------------------------------
-PropertiesTableDisplayer::PropertiesTableDisplayer( const kernel::CoordinateConverter_ABC& converter )
+PropertyDisplayer::PropertyDisplayer( const kernel::CoordinateConverter_ABC& converter )
     : converter_( converter )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: PropertiesTableDisplayer destructor
+// Name: PropertyDisplayer destructor
 // Created: SBO 2006-10-27
 // -----------------------------------------------------------------------------
-PropertiesTableDisplayer::~PropertiesTableDisplayer()
+PropertyDisplayer::~PropertyDisplayer()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: PropertiesTableDisplayer::Call
+// Name: PropertyDisplayer::Call
 // Created: SBO 2006-11-10
 // -----------------------------------------------------------------------------
-void PropertiesTableDisplayer::Call( const Enum_PopulationAttitude& value )
+void PropertyDisplayer::Call( const Enum_PopulationAttitude& value )
 {
     AddToDisplay( value.ToString() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PropertiesTableDisplayer::Call
+// Name: PropertyDisplayer::Call
 // Created: SBO 2006-11-10
 // -----------------------------------------------------------------------------
-void PropertiesTableDisplayer::Call( const Enum_DemolitionTargetType& value )
+void PropertyDisplayer::Call( const Enum_DemolitionTargetType& value )
 {
     AddToDisplay( value.ToString() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PropertiesTableDisplayer::Call
+// Name: PropertyDisplayer::Call
 // Created: ABR 2011-11-29
 // -----------------------------------------------------------------------------
-void PropertiesTableDisplayer::Call( const Enum_NbcState & value )
+void PropertyDisplayer::Call( const Enum_NbcState & value )
 {
     AddToDisplay( value.ToString() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PropertiesTableDisplayer::Call
+// Name: PropertyDisplayer::Call
 // Created: SBO 2006-11-10
 // -----------------------------------------------------------------------------
-void PropertiesTableDisplayer::Call( const DotationsItem& /*value*/ )
+void PropertyDisplayer::Call( const DotationsItem& /*value*/ )
 {
-    AddToDisplay( tools::translate( "PropertiesTableDisplayer", "<Edit Property Group...>" ) );
+    AddToDisplay( tools::translate( "PropertyDisplayer", "<Edit Property Group...>" ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PropertiesTableDisplayer::Call
+// Name: PropertyDisplayer::Call
 // Created: SBO 2008-03-25
 // -----------------------------------------------------------------------------
-void PropertiesTableDisplayer::Call( const geometry::Point2f& value )
+void PropertyDisplayer::Call( const geometry::Point2f& value )
 {
     try
     {
         if( value.IsZero() )
-            AddToDisplay( tools::translate( "PropertiesTableDisplayer", "not set" ) );
+            AddToDisplay( tools::translate( "PropertyDisplayer", "not set" ) );
         else
             AddToDisplay( converter_.ConvertToMgrs( value ) );
     }
     catch( ... )
     {
-        AddToDisplay( tools::translate( "PropertiesTableDisplayer", "invalid" ) );
+        AddToDisplay( tools::translate( "PropertyDisplayer", "invalid" ) );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: PropertiesTableDisplayer::Call
+// Name: PropertyDisplayer::Call
 // Created: SBO 2008-03-25
 // -----------------------------------------------------------------------------
-void PropertiesTableDisplayer::Call( const kernel::Moveable_ABC& value )
+void PropertyDisplayer::Call( const kernel::Moveable_ABC& value )
 {
     try
     {
@@ -108,69 +108,69 @@ void PropertiesTableDisplayer::Call( const kernel::Moveable_ABC& value )
     }
     catch( ... )
     {
-        AddToDisplay( tools::translate( "PropertiesTableDisplayer", "invalid" ) );
+        AddToDisplay( tools::translate( "PropertyDisplayer", "invalid" ) );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: PropertiesTableDisplayer::Call
+// Name: PropertyDisplayer::Call
 // Created: JSR 2011-03-08
 // -----------------------------------------------------------------------------
-void PropertiesTableDisplayer::Call( const PopulationRepartition& /*value*/ )
+void PropertyDisplayer::Call( const PopulationRepartition& /*value*/ )
 {
-    AddToDisplay( tools::translate( "PropertiesTableDisplayer", "<Edit repartition...>" ) );
+    AddToDisplay( tools::translate( "PropertyDisplayer", "<Edit repartition...>" ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PropertiesTableDisplayer::Call
+// Name: PropertyDisplayer::Call
 // Created: ABR 2012-05-30
 // -----------------------------------------------------------------------------
-void PropertiesTableDisplayer::Call( const kernel::InfrastructureType& value )
+void PropertyDisplayer::Call( const kernel::InfrastructureType& value )
 {
     AddToDisplay( value.GetName() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PropertiesTableDisplayer::Call
+// Name: PropertyDisplayer::Call
 // Created: JSR 2012-06-20
 // -----------------------------------------------------------------------------
-void PropertiesTableDisplayer::Call( const kernel::UrbanTemplateType& value )
+void PropertyDisplayer::Call( const kernel::UrbanTemplateType& value )
 {
     AddToDisplay( value.GetName() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PropertiesTableDisplayer::Call
+// Name: PropertyDisplayer::Call
 // Created: ABR 2012-05-31
 // -----------------------------------------------------------------------------
-void PropertiesTableDisplayer::Call( const kernel::MaterialCompositionType& value )
+void PropertyDisplayer::Call( const kernel::MaterialCompositionType& value )
 {
     AddToDisplay( value.GetName() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PropertiesTableDisplayer::Call
+// Name: PropertyDisplayer::Call
 // Created: ABR 2012-05-31
 // -----------------------------------------------------------------------------
-void PropertiesTableDisplayer::Call( const kernel::RoofShapeType& value )
+void PropertyDisplayer::Call( const kernel::RoofShapeType& value )
 {
     AddToDisplay( value.GetName() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PropertiesTableDisplayer::Call
+// Name: PropertyDisplayer::Call
 // Created: ABR 2012-06-04
 // -----------------------------------------------------------------------------
-void PropertiesTableDisplayer::Call( const kernel::UrbanBlockColor& value )
+void PropertyDisplayer::Call( const kernel::UrbanBlockColor& value )
 {
     AddToDisplay( QString( "<color red=\"%1\" green=\"%2\" blue=\"%3\" />" ).arg( value.red_ ).arg( value.green_ ).arg( value.blue_ ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PropertiesTableDisplayer::Call
+// Name: PropertyDisplayer::Call
 // Created: ABR 2012-06-04
 // -----------------------------------------------------------------------------
-void PropertiesTableDisplayer::Call( const kernel::CriticalIntelligence& value )
+void PropertyDisplayer::Call( const kernel::CriticalIntelligence& value )
 {
     AddToDisplay( value() );
 }

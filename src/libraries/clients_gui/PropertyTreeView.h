@@ -7,23 +7,38 @@
 //
 // *****************************************************************************
 
-#ifndef __ModalDialog_h_
-#define __ModalDialog_h_
+#ifndef gui_PropertyTreeView_h
+#define gui_PropertyTreeView_h
 
+namespace gui
+{
 // =============================================================================
-/** @class  ModalDialog
-    @brief  ModalDialog
+/** @class  PropertyTreeView
+    @brief  Property Tree view
 */
-// Created: JSR 2012-03-20
+// Created: LGY 2012-08-09
 // =============================================================================
-class ModalDialog : public QDialog
+class PropertyTreeView : public QTreeView
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ModalDialog( QWidget *parent, const char *name, Qt::WindowFlags f = 0);
-    virtual ~ModalDialog();
+             PropertyTreeView();
+    virtual ~PropertyTreeView();
+    //@}
+
+    //! @name Operations
+    //@{
+    void Display();
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void DisplayHeader( QModelIndex root );
     //@}
 };
 
-#endif // __ModalDialog_h_
+}
+
+#endif // gui_PropertyTreeView_h
