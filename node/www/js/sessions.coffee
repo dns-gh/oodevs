@@ -227,9 +227,6 @@ class SessionItemView extends Backbone.View
 
     is_filtered: (item) =>
         status = item.attributes.status
-        if status == "stopped"
-            if item.attributes.replay.root?.length
-                status = "waiting"
         for filter in @filters
             if filter == status
                 return true
@@ -266,9 +263,6 @@ class SessionItemView extends Backbone.View
             duration = current.getTime() - start.getTime()
             data.start_time = start.toUTCString()
             data.duration = ms_to_duration duration
-        if data.replay.root?.length
-            if data.status == "stopped"
-                data.status = "waiting"
         $(@el).html session_template data
         set_spinner $(@el).find ".session_top_right .spin_btn"
         for it in $(@el).find ".link"

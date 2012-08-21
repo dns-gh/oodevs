@@ -831,16 +831,11 @@
     };
 
     SessionItemView.prototype.is_filtered = function(item) {
-      var filter, status, _i, _len, _ref, _ref1;
+      var filter, status, _i, _len, _ref;
       status = item.attributes.status;
-      if (status === "stopped") {
-        if ((_ref = item.attributes.replay.root) != null ? _ref.length : void 0) {
-          status = "waiting";
-        }
-      }
-      _ref1 = this.filters;
-      for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-        filter = _ref1[_i];
+      _ref = this.filters;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        filter = _ref[_i];
         if (filter === status) {
           return true;
         }
@@ -884,7 +879,7 @@
     };
 
     SessionItemView.prototype.render = function() {
-      var current, data, duration, it, start, _i, _len, _ref, _ref1, _ref2;
+      var current, data, duration, it, start, _i, _len, _ref, _ref1;
       $(this.el).empty();
       if (this.is_skip_render(this.model)) {
         return;
@@ -897,16 +892,11 @@
         data.start_time = start.toUTCString();
         data.duration = ms_to_duration(duration);
       }
-      if ((_ref1 = data.replay.root) != null ? _ref1.length : void 0) {
-        if (data.status === "stopped") {
-          data.status = "waiting";
-        }
-      }
       $(this.el).html(session_template(data));
       set_spinner($(this.el).find(".session_top_right .spin_btn"));
-      _ref2 = $(this.el).find(".link");
-      for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
-        it = _ref2[_i];
+      _ref1 = $(this.el).find(".link");
+      for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+        it = _ref1[_i];
         $(it).attr("href", "sword://" + window.location.hostname + ":" + this.model.get("port") + "/");
       }
     };

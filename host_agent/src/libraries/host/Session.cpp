@@ -60,6 +60,7 @@ std::string ConvertStatus( Session::Status status )
         case Session::STATUS_REPLAYING: return "replaying";
         case Session::STATUS_PAUSED:    return "paused";
         case Session::STATUS_ARCHIVED:  return "archived";
+        case Session::STATUS_WAITING:   return "waiting";
     }
 }
 
@@ -69,6 +70,7 @@ Session::Status ConvertStatus( const std::string& status )
     if( status == "replaying" ) return Session::STATUS_REPLAYING;
     if( status == "paused" )    return Session::STATUS_PAUSED;
     if( status == "archived" )  return Session::STATUS_ARCHIVED;
+    if( status == "waiting" )   return Session::STATUS_WAITING;
     return Session::STATUS_STOPPED;
 }
 
@@ -110,6 +112,11 @@ Session::T_Process GetProcess( const Tree& tree, const runtime::Runtime_ABC& run
     return runtime.GetProcess( *pid );
 }
 
+Session::Status GetIdleStatus( bool replay )
+{
+    return replay ? Session::STATUS_WAITING : Session::STATUS_STOPPED;
+}
+
 Session::T_Process AcquireProcess( const Tree& tree, const runtime::Runtime_ABC& runtime, int expected )
 {
     Session::T_Process ptr = GetProcess( tree, runtime );
@@ -142,13 +149,13 @@ Config ReadConfig( const Tree& src )
     return cfg;
 }
 
-Session::Status AcquireStatus( Session::Status status, bool has_process )
+Session::Status AcquireStatus( Session::Status status, bool has_process, bool replay )
 {
     if( has_process )
         return status;
     if( status == Session::STATUS_ARCHIVED )
         return status;
-    return Session::STATUS_STOPPED;
+    return GetIdleStatus( replay );
 }
 }
 
@@ -173,7 +180,7 @@ Session::Session( const SessionDependencies& deps,
     , replay_      ( replay )
     , running_     ()
     , process_     ()
-    , status_      ( STATUS_STOPPED )
+    , status_      ( GetIdleStatus( !replay_.is_nil() ) )
     , polling_     ( false )
     , counter_     ( 0 )
     , sizing_      ( false )
@@ -207,7 +214,7 @@ Session::Session( const SessionDependencies& deps,
     , replay_      ( Get< Uuid >( tree, "replay.root" ) )
     , process_     ( AcquireProcess( tree, deps_.runtime, port_->Get() ) )
     , running_     ( process_ ? node->StartSession( boost::posix_time::not_a_date_time, true ) : Node_ABC::T_Token() )
-    , status_      ( AcquireStatus( ConvertStatus( Get< std::string >( tree, "status" ) ), process_ ) )
+    , status_      ( AcquireStatus( ConvertStatus( Get< std::string >( tree, "status" ) ), process_, !replay_.is_nil() ) )
     , polling_     ( false )
     , counter_     ( 0 )
     , sizing_      ( false )
@@ -466,7 +473,7 @@ bool Session::StopProcess( boost::upgrade_lock< boost::shared_mutex >& lock )
     Node_ABC::T_Token token;
     {
         boost::upgrade_to_unique_lock< boost::shared_mutex> write( lock );
-        status_ = STATUS_STOPPED;
+        status_ = GetIdleStatus( IsReplay() );
         copy.swap( process_ );
         token.swap( running_ );
         clients_.clear();
@@ -508,16 +515,19 @@ bool Session::Archive( boost::upgrade_lock< boost::shared_mutex >& lock )
 // -----------------------------------------------------------------------------
 bool Session::ModifyStatus( boost::upgrade_lock< boost::shared_mutex >& lock, Session::Status next )
 {
+    const bool replay = IsReplay();
+    const Session::Status idle = GetIdleStatus( replay );
+
     if( process_ && !process_->IsAlive() )
-        next = STATUS_STOPPED;
+        next = idle;
 
     if( next == status_ )
         return false;
 
-    if( next == STATUS_STOPPED )
+    if( next == idle )
         return StopProcess( lock );
 
-    if( IsReplay() )
+    if( replay )
         throw web::HttpException( web::FORBIDDEN );
 
     if( next == STATUS_ARCHIVED )
@@ -553,7 +563,7 @@ bool Session::ModifyStatus( boost::upgrade_lock< boost::shared_mutex >& lock, Se
 bool Session::Stop()
 {
     boost::upgrade_lock< boost::shared_mutex > lock( access_ );
-    return ModifyStatus( lock, STATUS_STOPPED );
+    return ModifyStatus( lock, GetIdleStatus( IsReplay() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -773,8 +783,9 @@ bool Session::Poll()
 void Session::Remove()
 {
     boost::upgrade_lock< boost::shared_mutex > lock( access_ );
-    ModifyStatus( lock, STATUS_STOPPED );
-    if( !IsReplay() )
+    const bool replay = IsReplay();
+    ModifyStatus( lock, GetIdleStatus( replay ) );
+    if( !replay )
         deps_.system.Remove( GetOutput() );
     node_->UnlinkExercise( links_ );
     node_->RemoveSession( id_ );
@@ -788,7 +799,7 @@ void Session::Remove()
 bool Session::Update( const Tree& cfg )
 {
     boost::upgrade_lock< boost::shared_mutex > lock( access_ );
-    if( status_ != STATUS_STOPPED )
+    if( status_ != GetIdleStatus( IsReplay() ) )
         return false;
     web::session::Config next = cfg_;
     bool modified = ReadConfig( next, cfg );

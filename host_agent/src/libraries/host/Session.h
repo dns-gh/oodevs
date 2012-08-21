@@ -178,6 +178,7 @@ public:
         STATUS_REPLAYING,
         STATUS_PAUSED,
         STATUS_ARCHIVED,
+        STATUS_WAITING,
         STATUS_COUNT
     };
     //@}
