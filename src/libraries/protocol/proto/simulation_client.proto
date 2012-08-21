@@ -1000,7 +1000,7 @@ enum EnumHumanState {
     healthy = 0;
     //!< Injured state
     injured = 1;
-    //!< Dead state // $$$$ ABR 2011-07-20: FIXME RENAME
+    //!< Dead state, @todo rename
     deadly  = 2;
 }
 

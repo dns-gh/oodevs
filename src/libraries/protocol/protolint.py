@@ -422,6 +422,8 @@ def cmdtodo(ui, rootdir):
 
 def cmdstyle(ui, rootdir):
     rebrace = re.compile(r'^\s*(message|enum)\s+\S+[^\{]*$')
+    # Fix $$$ or FIXME, etc.
+    refixme = re.compile(r'(\${3,}|FIXME)', re.I)
     for path in listproto(rootdir):
         fname = os.path.basename(path)
         # Check opening braces are on the definition line
@@ -432,6 +434,8 @@ def cmdstyle(ui, rootdir):
         for i, line in enumerate(file(path)):
             if len(line.rstrip('\n\r')) > 80:
                 ui.error(fname, i + 1, 'line is too long')
+            if refixme.search(line):
+                ui.error(fname, i + 1, 'convert $$$/FIXME in @todo')
     return ui.errors
 
 
