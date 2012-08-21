@@ -29,7 +29,7 @@
 <!-- general settings -->
 [[ define "general_session_settings" ]]
 [[ template "input_text" sub "id" "name" "label" "Name" "value" "{{name}}" ]]
-[[ template "uneditable_input_text" sub "id" "exercise" "label" "Exercise" "value" "{{exercise.name}}" ]]
+[[ template "uneditable_input_text" sub "label" "Exercise" "value" "{{exercise.name}}" ]]
 [[ end ]]
 <!-- checkpoint settings -->
 [[ define "checkpoint_session_settings" ]]

@@ -9,9 +9,9 @@
 
 [[ define "uneditable_input_text" ]]
 <div class="control-group">
-    <label class="control-label" for="[[ .id ]]">[[ .label ]]</label>
+    <label class="control-label">[[ .label ]]</label>
     <div class="controls">
-        <span class="uneditable-input read_only" id="[[ .id ]]">[[ .value ]]</span>
+        <span class="uneditable-input read_only">[[ .value ]]</span>
     </div>
 </div>
 [[ end ]]
