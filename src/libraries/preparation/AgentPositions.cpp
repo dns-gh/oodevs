@@ -177,7 +177,7 @@ void AgentPositions::SerializeAttributes( xml::xostream& xos ) const
 void AgentPositions::Move( const geometry::Point2f& position )
 {
     position_ = position;
-    controller_.Update( kernel::DictionaryUpdated( agent_, tools::translate( "AgentPositions", "Info" ) ) );
+    controller_.Update( kernel::DictionaryUpdated( agent_, tools::translate( "AgentPositions", "Info/Position" ) ) );
 }
 
 // -----------------------------------------------------------------------------

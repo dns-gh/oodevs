@@ -42,6 +42,8 @@ class CriticalIntelligenceDialog : public gui::CriticalIntelligenceDialog
                                  , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
                                  , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
 {
+    Q_OBJECT
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -61,7 +63,12 @@ private:
     //@{
     virtual void OnAccept();
     virtual void OnReject();
-    virtual void OnShow();
+    //@}
+
+    private slots:
+    //! @name Slots
+    //@{
+     void OnShow();
     //@}
 
 private:

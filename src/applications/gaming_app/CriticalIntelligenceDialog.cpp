@@ -9,6 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "CriticalIntelligenceDialog.h"
+#include "moc_CriticalIntelligenceDialog.cpp"
 #include "actions/UnitMagicAction.h"
 #include "actions/ActionsModel.h"
 #include "actions/ActionTiming.h"
