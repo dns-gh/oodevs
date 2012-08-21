@@ -465,8 +465,8 @@
 
   Handlebars.registerHelper("can_play", function(data, options) {
     var valid, _ref;
-    valid = data.first_time;
-    valid |= (_ref = data.replay.root) != null ? _ref.length : void 0;
+    valid = convert_to_boolean(data.first_time);
+    valid |= convert_to_boolean((_ref = data.replay.root) != null ? _ref.length : void 0);
     if (valid) {
       return options.fn(this);
     }

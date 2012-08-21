@@ -15,8 +15,8 @@ print_error = (text) ->
     display_error "session_error", session_error_template, text
 
 Handlebars.registerHelper "can_play", (data, options) ->
-    valid  = data.first_time
-    valid |= data.replay.root?.length
+    valid  = convert_to_boolean data.first_time
+    valid |= convert_to_boolean data.replay.root?.length
     if valid
         return options.fn this
     return options.inverse this
