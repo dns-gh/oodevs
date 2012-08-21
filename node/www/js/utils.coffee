@@ -112,17 +112,19 @@ Handlebars.registerHelper "count", (value, options) ->
         return options.fn this
     return options.inverse this
 
-Handlebars.registerHelper "bool", (value, options) ->
-    valid = false
-    unless valid?
-        valid = false
+convert_to_boolean = (value) ->
+    unless value?
+        return false
     else if _.isBoolean value
-        valid = value
+        return value
     else if _.isNumber value
-        valid = value > 0
-    else if _.isString value
-        valid = value == "true" or value == "1"
-    if valid
+        return value > 0
+    else if _.isString
+        return value == "true" or value == "1"
+    return false
+
+Handlebars.registerHelper "bool", (value, options) ->
+    if convert_to_boolean value
         return options.fn this
     return options.inverse this
 
