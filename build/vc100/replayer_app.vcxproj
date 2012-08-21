@@ -108,25 +108,25 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
     <Link>
-      <AdditionalDependencies>dbghelp.lib;winmm.lib;iphlpapi.lib;psapi.lib;spatialcontainer_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>mongoose_d.lib;dbghelp.lib;winmm.lib;iphlpapi.lib;psapi.lib;spatialcontainer_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
     <Link>
-      <AdditionalDependencies>dbghelp.lib;winmm.lib;iphlpapi.lib;psapi.lib;spatialcontainer_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>mongoose_d.lib;dbghelp.lib;winmm.lib;iphlpapi.lib;psapi.lib;spatialcontainer_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
     <Link>
-      <AdditionalDependencies>dbghelp.lib;winmm.lib;psapi.lib;spatialcontainer.lib;iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>mongoose.lib;dbghelp.lib;winmm.lib;psapi.lib;spatialcontainer.lib;iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
     <Link>
-      <AdditionalDependencies>dbghelp.lib;winmm.lib;psapi.lib;spatialcontainer.lib;iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>mongoose.lib;dbghelp.lib;winmm.lib;psapi.lib;spatialcontainer.lib;iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -190,6 +190,9 @@
     </ProjectReference>
     <ProjectReference Include="tools.vcxproj">
       <Project>{c11d1c79-d437-4299-a75a-98dd97036d5b}</Project>
+    </ProjectReference>
+    <ProjectReference Include="web_control_plugin.vcxproj">
+      <Project>{9dad9589-e7c2-46b4-8320-048ab4eea27f}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
