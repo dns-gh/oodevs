@@ -436,6 +436,8 @@ def cmdstyle(ui, rootdir):
                 ui.error(fname, i + 1, 'line is too long')
             if refixme.search(line):
                 ui.error(fname, i + 1, 'convert $$$/FIXME in @todo')
+            if '\t' in line:
+                ui.error(fname, i + 1, 'expand tabs to 4 spaces')
     return ui.errors
 
 

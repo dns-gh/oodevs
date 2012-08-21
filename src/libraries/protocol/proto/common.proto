@@ -1266,11 +1266,11 @@ message ClientObjectProperty {
 */
 message Diffusion {
     //!< The automat identifier
-   optional AutomatId		 automat	     = 1;
+   optional AutomatId        automat         = 1;
    //!< The formation identifier
-   optional FormationId		 formation		 = 2;
+   optional FormationId      formation       = 2;
    //!< The party identifier
-   repeated PartyId			 party           = 3;
+   repeated PartyId          party           = 3;
    //!< The knowledge group identifier
    optional KnowledgeGroupId knowledge_group = 4;
 }
@@ -1298,7 +1298,7 @@ message Shape {
    //!< The pattern
    required string           pattern   = 3;
    //!< The coordinates
-   required CoordLatLongList points	   = 4;
+   required CoordLatLongList points    = 4;
    //!< The Diffusion
    optional Diffusion        diffusion = 5;
 }

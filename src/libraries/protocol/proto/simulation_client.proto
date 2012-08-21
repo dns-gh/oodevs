@@ -3135,7 +3135,7 @@ message KnowledgeGroupCreation {
    //!< Whether the communication of the group is jammed or not
    optional bool             jam             = 5;
    //!< This particular knowledge group's name
-   required string           name			 = 6 [default = ""];
+   required string           name            = 6 [default = ""];
 }
 
 /** @struct KnowledgeGroupUpdate
