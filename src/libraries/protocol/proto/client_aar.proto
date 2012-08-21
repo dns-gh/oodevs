@@ -27,12 +27,17 @@ message PlotRequest {
         @brief Defines the request time range.
     */
     message TimeRange {
-        required uint32 begin_tick = 1; //!< The first tick of the time range request
-        required uint32 end_tick   = 2; //!< The last tick of the time range request (must be >= begin_tick)
+        //!< The first tick of the time range request
+        required uint32 begin_tick = 1;
+        //!< The last tick of the time range request (must be >= begin_tick)
+        required uint32 end_tick   = 2;
     }
-    required uint32    identifier = 1;  //!< An identifier for the request
-    required string    request    = 2;  //!< The request
-    optional TimeRange time_range = 3; //!< The request time range
+    //!< An identifier for the request
+    required uint32    identifier = 1;
+    //!< The request
+    required string    request    = 2;
+    //!< The request time range
+    optional TimeRange time_range = 3;
 }
 
 /** @struct ClientToAar
@@ -43,22 +48,25 @@ message PlotRequest {
 message ClientToAar {
     /** @struct Content
         @brief The possible messages contained in a client to AAR message
-        @warning Each Content message must contain exactly one of the possible messages.
+        @warning Each Content message must contain exactly one of the
+                 possible messages.
     */
     message Content {
-        optional PlotRequest plot_request = 1; //!< A plot request message
+        //!< A plot request message
+        optional PlotRequest plot_request = 1;
     }
     /** @property context
         @brief Identifies the request matching the response.
 
-        This field is used to fill the "context" fields in the response messages.
-
-        This context allows the client application to put an unique identifier
-        (based for instance on MAC address), thus allowing to track response
-        message matching a specific request emitted by the client.
+        This field is used to fill the "context" fields in the response
+        messages. This context allows the client application to put an
+        unique identifier (based for instance on MAC address), thus
+        allowing to track response message matching a specific request
+        emitted by the client.
     */
     optional int32   context = 1;
-    required Content message = 2; //!< A field containing one of the messages to be sent
+    //!< A field containing one of the messages to be sent
+    required Content message = 2;
 }
 
 /** @}*/

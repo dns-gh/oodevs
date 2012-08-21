@@ -24,7 +24,8 @@ package sword;
     @see PhaseLineCreation
 */
 message PhaseLineCreationRequest {
-    required TacticalLine tactical_line = 1; //!< The phase line data to use for creation @see TacticalLine
+    //!< The phase line data to use for creation @see TacticalLine
+    required TacticalLine tactical_line = 1;
 }
 
 /** @struct PhaseLineUpdateRequest
@@ -34,8 +35,11 @@ message PhaseLineCreationRequest {
     @see PhaseLineUpdate
 */
 message PhaseLineUpdateRequest {
-    required TacticalLineId id            = 1; //!< The identifier of the phase line to update @see TacticalLineId
-    optional TacticalLine   tactical_line = 2; //!< Specifies the phase line data to use for update @see TacticalLine @bug should not be optional
+    //!< The identifier of the phase line to update @see TacticalLineId
+    required TacticalLineId id            = 1;
+    //!< Specifies the phase line data to use for update @see
+    //!< TacticalLine @bug should not be optional
+    optional TacticalLine   tactical_line = 2;
 }
 
 /** @struct PhaseLineDestructionRequest
@@ -45,7 +49,8 @@ message PhaseLineUpdateRequest {
     @see PhaseLineDestruction
 */
 message PhaseLineDestructionRequest {
-    required TacticalLineId id = 1; //!< The identifier of the phase line to destroy @see TacticalLineId
+    //!< The identifier of the phase line to destroy @see TacticalLineId
+    required TacticalLineId id = 1;
 }
 
 /** @struct LimitCreationRequest
@@ -55,7 +60,8 @@ message PhaseLineDestructionRequest {
     @see LimitCreation
 */
 message LimitCreationRequest {
-    required TacticalLine tactical_line = 1; //!< The limit data to use for creation @see TacticalLine  
+    //!< The limit data to use for creation @see TacticalLine
+    required TacticalLine tactical_line = 1;
 }
 
 /** @struct LimitUpdateRequest
@@ -65,8 +71,11 @@ message LimitCreationRequest {
     @see LimitUpdate
 */
 message LimitUpdateRequest {
-    required TacticalLineId  id            = 1; //!< The identifier of the limit to update @see TacticalLineId
-    optional TacticalLine    tactical_line = 2; //!< Specifies the limit data to use for update @see TacticalLine @bug should not be optional
+    //!< The identifier of the limit to update @see TacticalLineId
+    required TacticalLineId  id            = 1;
+    //!< Specifies the limit data to use for update @see TacticalLine
+    //!< @bug should not be optional
+    optional TacticalLine    tactical_line = 2;
 }
 
 /** @struct LimitDestructionRequest
@@ -76,7 +85,8 @@ message LimitUpdateRequest {
     @see LimitDestruction
 */
 message LimitDestructionRequest {
-    required TacticalLineId id = 1; //!< The identifier of the limit to destroy @see TacticalLineId
+    //!< The identifier of the limit to destroy @see TacticalLineId
+    required TacticalLineId id = 1;
 }
 
 /** @struct ShapeCreationRequest
@@ -87,7 +97,8 @@ message LimitDestructionRequest {
     @todo rename into Drawing/Graphics
 */
 message ShapeCreationRequest {
-    required Shape shape = 1; //!< The shape data to use for creation @see Shape
+    //!< The shape data to use for creation @see Shape
+    required Shape shape = 1;
 }
 
 /** @struct ShapeUpdateRequest
@@ -100,11 +111,17 @@ message ShapeCreationRequest {
     @todo rename into Drawing/Graphics
 */
 message ShapeUpdateRequest {
-    required DrawingId        shape    = 1; //!< The identifier of the shape to update @see DrawingId @todo should be named "id" instead of "shape" (coherence)
-    optional string           category = 2; //!< The new category of the shape
-    optional RgbColor         color    = 3; //!< The new color of the shape
-    optional string           pattern  = 4; //!< The new template of the shape
-    optional CoordLatLongList points   = 5; //!< The new points of the shape @see CoordLatLongList
+    //!< The identifier of the shape to update @see DrawingId @todo
+    //!< should be named "id" instead of "shape" (coherence)
+    required DrawingId        shape    = 1;
+    //!< The new category of the shape
+    optional string           category = 2;
+    //!< The new color of the shape
+    optional RgbColor         color    = 3;
+    //!< The new template of the shape
+    optional string           pattern  = 4;
+    //!< The new points of the shape @see CoordLatLongList
+    optional CoordLatLongList points   = 5;
 }
 
 /** @struct ShapeDestructionRequest
@@ -115,7 +132,8 @@ message ShapeUpdateRequest {
     @todo rename into Drawing/Graphics
 */
 message ShapeDestructionRequest {
-    required DrawingId id = 1; //!< The identifier of the shape to destroy @see DrawingId
+    //!< The identifier of the shape to destroy @see DrawingId
+    required DrawingId id = 1;
 }
 
 /** @struct MarkerCreationRequest
@@ -125,7 +143,8 @@ message ShapeDestructionRequest {
     @see MarkerCreation
 */
 message MarkerCreationRequest {
-    required Marker marker = 1; //!< The marker data to use for creation @see Marker  
+    //!< The marker data to use for creation @see Marker
+    required Marker marker = 1;
 }
 
 /** @struct MarkerUpdateRequest
@@ -147,7 +166,8 @@ message MarkerUpdateRequest {
     */
     optional string   name        = 2;
     /** @property number
-        @brief The new number of the marker. This is a user defined identifier.
+        @brief The new number of the marker. This is a user defined
+               identifier.
         @note Only needs to be set if data has changed.
         @todo remove/rename/generalize for user defined marker data
     */
@@ -168,8 +188,10 @@ message MarkerUpdateRequest {
     @brief A message to request marker destruction.
 
     This message requests the destruction of an existing marker.
-    @li A MarkerDestructionRequestAck message is sent to acknowledge the marker destruction.
-    @li A MarkerDestruction message is sent to all clients to notify the actual destruction of the marker.
+    @li A MarkerDestructionRequestAck message is sent to acknowledge the
+        marker destruction.
+    @li A MarkerDestruction message is sent to all clients to notify the
+        actual destruction of the marker.
 */
 message MarkerDestructionRequest {
     /** @property marker
@@ -180,9 +202,9 @@ message MarkerDestructionRequest {
     required MarkerId marker     = 1;
     /** @property delete_all
         @brief Flag used to request recursive destruction of any child marker.
-        @todo should be named "cascade" or "recursive" instead of "delete_all"
-              which tends to imply that all markers (not only specified/children)
-              are going to be deleted.
+        @todo should be named "cascade" or "recursive" instead of
+              "delete_all" which tends to imply that all markers (not only
+              specified/children) are going to be deleted.
     */
     required bool     delete_all = 2;
 }
@@ -191,8 +213,10 @@ message MarkerDestructionRequest {
     @brief A message to request client object creation.
 
     This message requests the creation of a client object.
-    @li A ClientObjectCreationRequestAck message is sent to acknowledge the client object creation.
-    @li A ClientObjectCreation message is sent to all clients to notify the actual creation of the client object.
+    @li A ClientObjectCreationRequestAck message is sent to acknowledge
+        the client object creation.
+    @li A ClientObjectCreation message is sent to all clients to notify
+        the actual creation of the client object.
 */
 message ClientObjectCreationRequest {
     /** @property name
@@ -207,7 +231,8 @@ message ClientObjectCreationRequest {
     /** @property persistent
         @brief Flag used to toggle client object persistence.
 
-        If set to "true", this flag enables client object persistence on simulation checkpoints.
+        If set to "true", this flag enables client object persistence on
+        simulation checkpoints.
     */
     optional bool                 persistent = 3;
 }
@@ -216,8 +241,10 @@ message ClientObjectCreationRequest {
     @brief A message to request client object update.
 
     This message requests the update of an existing client object.
-    @li A ClientObjectUpdateRequestAck message is sent to acknowledge the client object update.
-    @li A ClientObjectUpdate message is sent to all clients to notify the actual update of the client object.
+    @li A ClientObjectUpdateRequestAck message is sent to acknowledge
+        the client object update.
+    @li A ClientObjectUpdate message is sent to all clients to notify
+        the actual update of the client object.
 */
 message ClientObjectUpdateRequest {
     /** @property object
@@ -243,8 +270,10 @@ message ClientObjectUpdateRequest {
     @brief A message to request client object destruction.
 
     This message requests the destruction of an existing client object.
-    @li A ClientObjectDestructionRequestAck message is sent to acknowledge the client object destruction.
-    @li A ClientObjectDestruction message is sent to all clients to notify the actual destruction of the client object.
+    @li A ClientObjectDestructionRequestAck message is sent to
+        acknowledge the client object destruction.
+    @li A ClientObjectDestruction message is sent to all clients to
+        notify the actual destruction of the client object.
 */
 message ClientObjectDestructionRequest {
     /** @property object
@@ -262,35 +291,67 @@ message ClientObjectDestructionRequest {
 */
 message ClientToMessenger {
     /** @struct Content
-        @brief The possible messages contained in a client to messenger message.
-        @warning Each Content message must contain exactly one of the possible messages.
+        @brief The possible messages contained in a client to messenger
+               message.
+        @warning Each Content message must contain exactly one of the
+                 possible messages.
     */
     message Content {
-        optional LimitCreationRequest           limit_creation_request            = 1;  //!< @copybrief LimitCreationRequest @see LimitCreationRequest
-        optional LimitDestructionRequest        limit_destruction_request         = 2;  //!< @copybrief LimitDestructionRequest @see LimitDestructionRequest
-        optional LimitUpdateRequest             limit_update_request              = 3;  //!< @copybrief LimitUpdateRequest @see LimitUpdateRequest
-        optional PhaseLineCreationRequest       phase_line_creation_request       = 4;  //!< @copybrief PhaseLineCreationRequest @see PhaseLineCreationRequest
-        optional PhaseLineDestructionRequest    phase_line_destruction_request    = 5;  //!< @copybrief PhaseLineDestructionRequest @see PhaseLineDestructionRequest
-        optional PhaseLineUpdateRequest         phase_line_update_request         = 6;  //!< @copybrief PhaseLineUpdateRequest @see PhaseLineUpdateRequest
-        optional ShapeCreationRequest           shape_creation_request            = 10; //!< @copybrief ShapeCreationRequest @see ShapeCreationRequest @todo rename into drawings/graphics_creation_request
-        optional ShapeDestructionRequest        shape_destruction_request         = 11; //!< @copybrief ShapeDestructionRequest @see ShapeDestructionRequest @todo rename into drawings/graphics_destruction_request
-        optional ShapeUpdateRequest             shape_update_request              = 12; //!< @copybrief ShapeUpdateRequest @see ShapeUpdateRequest @todo rename into drawings/graphics_update_request
-        optional TextMessage                    text_message                      = 13; //!< @copybrief TextMessage @see TextMessage
-        optional MarkerCreationRequest          marker_creation_request           = 14; //!< @copybrief MarkerCreationRequest @see MarkerCreationRequest
-        optional MarkerUpdateRequest            marker_update_request             = 15; //!< @copybrief MarkerUpdateRequest @see MarkerUpdateRequest
-        optional MarkerDestructionRequest       marker_destruction_request        = 16; //!< @copybrief MarkerDestructionRequest @see MarkerDestructionRequest
-        optional ClientObjectCreationRequest    client_object_creation_request    = 17; //!< @copybrief ClientObjectCreationRequest @see ClientObjectCreationRequest
-        optional ClientObjectUpdateRequest      client_object_update_request      = 18; //!< @copybrief ClientObjectUpdateRequest @see ClientObjectUpdateRequest
-        optional ClientObjectDestructionRequest client_object_destruction_request = 19; //!< @copybrief ClientObjectDestructionRequest @see ClientObjectDestructionRequest
+        //!< @copybrief LimitCreationRequest @see LimitCreationRequest
+        optional LimitCreationRequest        limit_creation_request        = 1;
+        //!< @copybrief LimitDestructionRequest @see
+        //!< LimitDestructionRequest
+        optional LimitDestructionRequest     limit_destruction_request     = 2;
+        //!< @copybrief LimitUpdateRequest @see LimitUpdateRequest
+        optional LimitUpdateRequest          limit_update_request          = 3;
+        //!< @copybrief PhaseLineCreationRequest @see
+        //!< PhaseLineCreationRequest
+        optional PhaseLineCreationRequest    phase_line_creation_request   = 4;
+        //!< @copybrief PhaseLineDestructionRequest @see
+        //!< PhaseLineDestructionRequest
+        optional PhaseLineDestructionRequest
+            phase_line_destruction_request    = 5;
+        //!< @copybrief PhaseLineUpdateRequest @see PhaseLineUpdateRequest
+        optional PhaseLineUpdateRequest      phase_line_update_request    = 6;
+        //!< @copybrief ShapeCreationRequest @see ShapeCreationRequest
+        //!< @todo rename into drawings/graphics_creation_request
+        optional ShapeCreationRequest        shape_creation_request       = 10;
+        //!< @copybrief ShapeDestructionRequest @see
+        //!< ShapeDestructionRequest @todo rename into
+        //!< drawings/graphics_destruction_request
+        optional ShapeDestructionRequest     shape_destruction_request    = 11;
+        //!< @copybrief ShapeUpdateRequest @see ShapeUpdateRequest @todo
+        //!< rename into drawings/graphics_update_request
+        optional ShapeUpdateRequest          shape_update_request         = 12;
+        //!< @copybrief TextMessage @see TextMessage
+        optional TextMessage                 text_message                 = 13;
+        //!< @copybrief MarkerCreationRequest @see MarkerCreationRequest
+        optional MarkerCreationRequest       marker_creation_request      = 14;
+        //!< @copybrief MarkerUpdateRequest @see MarkerUpdateRequest
+        optional MarkerUpdateRequest         marker_update_request        = 15;
+        //!< @copybrief MarkerDestructionRequest @see
+        //!< MarkerDestructionRequest
+        optional MarkerDestructionRequest    marker_destruction_request   = 16;
+        //!< @copybrief ClientObjectCreationRequest @see
+        //!< ClientObjectCreationRequest
+        optional ClientObjectCreationRequest
+            client_object_creation_request = 17;
+        //!< @copybrief ClientObjectUpdateRequest @see
+        //!< ClientObjectUpdateRequest
+        optional ClientObjectUpdateRequest   client_object_update_request = 18;
+        //!< @copybrief ClientObjectDestructionRequest @see
+        //!< ClientObjectDestructionRequest
+        optional ClientObjectDestructionRequest
+            client_object_destruction_request = 19;
     }
     /** @property context
         @brief Identifies the request matching the response.
 
-        This field is used to fill the "context" fields in the response message.
-
-        This context allows the client application to put an unique identifier
-        (based for instance on MAC address), thus allowing to track response
-        message matching a specific request emitted by the client.
+        This field is used to fill the "context" fields in the response
+        message. This context allows the client application to put an
+        unique identifier (based for instance on MAC address), thus
+        allowing to track response message matching a specific request
+        emitted by the client.
 
         @see MessengerToClient
     */

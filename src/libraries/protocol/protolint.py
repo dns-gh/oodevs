@@ -421,22 +421,17 @@ def cmdtodo(ui, rootdir):
             ui.write('%s:%d: %s\n' % (fname, i, l.rstrip()))
 
 def cmdstyle(ui, rootdir):
-    """Check braces are written like:
-
-      message FooBar {
-
-    and not:
-
-      message FooBar
-      {
-
-    """
     rebrace = re.compile(r'^\s*(message|enum)\s+\S+[^\{]*$')
     for path in listproto(rootdir):
         fname = os.path.basename(path)
+        # Check opening braces are on the definition line
         for i, line in readproto(path):
             if rebrace.search(line):
                 ui.error(fname, i + 1, 'invalid brace style', line)
+        # Check lines are at most 80 characters long
+        for i, line in enumerate(file(path)):
+            if len(line.rstrip('\n\r')) > 80:
+                ui.error(fname, i + 1, 'line is too long')
     return ui.errors
 
 

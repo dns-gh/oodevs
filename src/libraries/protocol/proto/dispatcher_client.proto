@@ -18,11 +18,10 @@ package sword;
 /** @struct ServicesDescription
     @brief A message sent by the Dispatcher to announce available services.
     
-    This message is sent just after a client connection request. It provides
-    a list of strings identifying the services available on the Dispatcher.
-    
-    Services are optional modules such as indicator computation for
-    After/During Action Review.
+    This message is sent just after a client connection request. It
+    provides a list of strings identifying the services available on the
+    Dispatcher. Services are optional modules such as indicator
+    computation for After/During Action Review.
 */
 message ServicesDescription {
     /** @property services
@@ -32,7 +31,8 @@ message ServicesDescription {
 }
 
 /** @struct ConnectionToSimLost
-    @brief A message sent by the Dispatcher to announce that the connection with the simulation has been lost.
+    @brief A message sent by the Dispatcher to announce that the
+           connection with the simulation has been lost.
 */
 message ConnectionToSimLost {
 }
@@ -44,12 +44,16 @@ message ConnectionToSimLost {
 */
 message DispatcherToClient {
     /** @struct Content
-        @brief The possible messages contained in a Dispatcher to client message.
-        @warning Each Content message must contain exactly one of the possible messages.
+        @brief The possible messages contained in a Dispatcher to client
+               message.
+        @warning Each Content message must contain exactly one of the
+                 possible messages.
     */
     message Content {
-        optional ServicesDescription services_description   = 1; //!< A services description message
-        optional ConnectionToSimLost connection_to_sim_lost = 2; //!< A connection to sim lost message
+        //!< A services description message
+        optional ServicesDescription services_description   = 1;
+        //!< A connection to sim lost message
+        optional ConnectionToSimLost connection_to_sim_lost = 2;
     }
     /** @property message
         @brief A field containing one of the messages to be sent.

@@ -33,19 +33,24 @@ message TacticalLineAck {
         */
         no_error                    = 0;
         /** @brief Operation failed because of an invalid identifier.
-            When updating or destroying a limit/phase line, the client must provide
-            a valid identifier, that is an existing limit/phase line identifier.
+
+            When updating or destroying a limit/phase line, the client
+            must provide a valid identifier, that is an existing
+            limit/phase line identifier.
         */
         error_invalid_id            = 1;
         /** @brief Operation failed because of an invalid geometry.
-            When creating or updating a limit/phase line, the client must provide
-            a valid geometry (list of at least 2 points).
+
+            When creating or updating a limit/phase line, the client
+            must provide a valid geometry (list of at least 2 points).
         */
         error_invalid_geometry      = 2;
         /** @brief Operation failed because of an invalid diffusion.
-            When creating or updating a limit/phase line, the client must provide
-            a valid diffusion, that is an existing automat or formation to act as
-            the container for the limit/phase line.
+
+            When creating or updating a limit/phase line, the client
+            must provide a valid diffusion, that is an existing automat
+            or formation to act as the container for the limit/phase
+            line.
         */
         error_invalid_diffusion     = 3;
     }
@@ -55,7 +60,8 @@ message TacticalLineAck {
     @brief A limit creation message.
 
     This message is sent when a limit is created :
-    @li When connecting to a running exercise; creation of available limits is notified to client
+    @li When connecting to a running exercise; creation of available
+        limits is notified to client
     @li During the game, upon client request
 */
 message LimitCreation {
@@ -74,7 +80,8 @@ message LimitCreation {
 /** @struct LimitUpdate
     @brief A limit update message.
 
-    This message is sent when a limit is updated during the game upon client request.
+    This message is sent when a limit is updated during the game upon
+    client request.
 */
 message LimitUpdate {
     /** @property id
@@ -107,7 +114,8 @@ message LimitDestruction {
 /** @struct LimitCreationRequestAck
     @brief A limit creation request acknowledgement message.
 
-    This message is sent when a limit is created in response to a client request.
+    This message is sent when a limit is created in response to a client
+    request.
 */
 message LimitCreationRequestAck {
     /** @property error_code
@@ -115,13 +123,14 @@ message LimitCreationRequestAck {
                a limit creation operation.
         @see TacticalLineAck.ErrorCode
     */
-    optional TacticalLineAck.ErrorCode error_code = 1;    
+    optional TacticalLineAck.ErrorCode error_code = 1;
 }
 
 /** @struct LimitUpdateRequestAck
     @brief A limit update request acknowledgement message.
 
-    This message is sent when a limit is updated in response to a client request.
+    This message is sent when a limit is updated in response to a client
+    request.
 */
 message LimitUpdateRequestAck {
     /** @property error_code
@@ -135,7 +144,8 @@ message LimitUpdateRequestAck {
 /** @struct LimitDestructionRequestAck
     @brief A limit destruction request acknowledgement message.
 
-    This message is sent when a limit is destroyed in response to a client request.
+    This message is sent when a limit is destroyed in response to a
+    client request.
 */
 message LimitDestructionRequestAck {
     /** @property error_code
@@ -150,7 +160,8 @@ message LimitDestructionRequestAck {
     @brief A phase line creation message.
 
     This message is sent when a phase line is created :
-    @li When connecting to a running exercise available phase lines are notified
+    @li When connecting to a running exercise available phase lines are
+        notified
     @li During the game, upon manual creation of a phase line
 
     @see PhaseLineCreationRequest
@@ -186,7 +197,8 @@ message PhaseLineDestruction {
 /** @struct PhaseLineUpdate
     @brief A phase line update message.
 
-    This message is sent when a phase line is updated during the game upon client request.
+    This message is sent when a phase line is updated during the game
+    upon client request.
 */
 message PhaseLineUpdate {
     /** @property id
@@ -204,7 +216,8 @@ message PhaseLineUpdate {
 /** @struct PhaseLineCreationAck
     @brief A phase line creation request acknowledgement message.
 
-    This message is sent when a phase line is created in response to a client request.
+    This message is sent when a phase line is created in response to a
+    client request.
 */
 message PhaseLineCreationAck {
     /** @property error_code
@@ -212,13 +225,14 @@ message PhaseLineCreationAck {
                a phase line creation operation.
         @see TacticalLineAck.ErrorCode
     */
-    optional TacticalLineAck.ErrorCode error_code = 1;  
+    optional TacticalLineAck.ErrorCode error_code = 1;
 }
 
 /** @struct PhaseLineUpdateRequestAck
     @brief A phase line update request acknowledgement message.
 
-    This message is sent when a phase line is updated in response to a client request.
+    This message is sent when a phase line is updated in response to a
+    client request.
 */
 message PhaseLineUpdateRequestAck {
     /** @property error_code
@@ -232,7 +246,8 @@ message PhaseLineUpdateRequestAck {
 /** @struct PhaseLineDestructionRequestAck
     @brief A phase line destruction request acknowledgement message.
 
-    This message is sent when a phase line is destroyed in response to a client request.
+    This message is sent when a phase line is destroyed in response to a
+    client request.
 */
 message PhaseLineDestructionRequestAck {
     /** @property error_code
@@ -246,7 +261,8 @@ message PhaseLineDestructionRequestAck {
     @brief A shape creation message.
 
     This message is sent when a shape is created. This can occur:
-    @li When connecting to a running exercise; creation of available shape is notified to client
+    @li When connecting to a running exercise; creation of available
+        shape is notified to client
     @li During the game, upon manual creation of a shape
     @todo rename into Drawing/Graphics
 */
@@ -266,7 +282,8 @@ message ShapeCreation {
 /** @struct ShapeUpdate
     @brief A shape update message.
 
-    This message is sent when a shape is updated during the game upon client request.
+    This message is sent when a shape is updated during the game upon
+    client request.
     @todo rename into Drawing/Graphics
 */
 message ShapeUpdate {
@@ -312,14 +329,17 @@ message ShapeRequestAck {
         */
         no_error               = 0;
         /** @brief Operation failed because of an invalid identifier.
+
             When updating or destroying a shape, the client must provide
             a valid identifier, that is an existing shape identifier.
             @todo rename into error_invalid_id
         */
         error_invalid_oid      = 1;
         /** @brief Operation failed because of an invalid geometry.
-            When creating or updating a shape, the client must provide
-            a valid geometry (one or more points depending on the type of drawing).
+
+            When creating or updating a shape, the client must provide a
+            valid geometry (one or more points depending on the type of
+            drawing).
         */
         error_invalid_geometry = 2;
     }
@@ -328,7 +348,8 @@ message ShapeRequestAck {
 /** @struct ShapeCreationRequestAck
     @brief A shape creation request acknowledgement message.
 
-    This message is sent when a shape is created in response to a client request.
+    This message is sent when a shape is created in response to a client
+    request.
 */
 message ShapeCreationRequestAck {
     /** @property error_code
@@ -337,13 +358,14 @@ message ShapeCreationRequestAck {
         @see ShapeRequestAck.ErrorCode
         @bug should not be required
     */
-    required ShapeRequestAck.ErrorCode error_code = 1;  
+    required ShapeRequestAck.ErrorCode error_code = 1;
 }
 
 /** @struct ShapeUpdateRequestAck
     @brief A shape update request acknowledgement message.
 
-    This message is sent when a shape is updated in response to a client request.
+    This message is sent when a shape is updated in response to a client
+    request.
 */
 message ShapeUpdateRequestAck {
     /** @property error_code
@@ -357,7 +379,8 @@ message ShapeUpdateRequestAck {
 /** @struct ShapeDestructionRequestAck
     @brief A shape destruction request acknowledgement message.
 
-    This message is sent when a shape is destroyed in response to a client request.
+    This message is sent when a shape is destroyed in response to a
+    client request.
 */
 message ShapeDestructionRequestAck {
     /** @property error_code
@@ -372,7 +395,8 @@ message ShapeDestructionRequestAck {
     @brief A marker creation message.
 
     This message is sent when a marker is created. This can occur:
-    @li When connecting to a running exercise; creation of available marker is notified to client
+    @li When connecting to a running exercise; creation of available
+        marker is notified to client
     @li During the game, upon manual creation of a marker
 */
 message MarkerCreation {
@@ -398,7 +422,8 @@ message MarkerCreation {
 /** @struct MarkerUpdate
     @brief A marker update message.
 
-    This message is sent when a marker is updated during the game upon client request.
+    This message is sent when a marker is updated during the game upon
+    client request.
 */
 message MarkerUpdate {
     /** @property marker
@@ -430,7 +455,8 @@ message MarkerUpdate {
     */
     optional MarkerId parent      = 5;
     /** @property number
-        @brief The updated number of the marker. This is a user defined identifier.
+        @brief The updated number of the marker. This is a user defined
+               identifier.
         @note Only set if data has changed.
         @todo remove/rename/generalize for user defined marker data
     */
@@ -483,7 +509,8 @@ message MarkerRequestAck {
 /** @struct MarkerCreationRequestAck
     @brief A marker creation request acknowledgement message.
 
-    This message is sent when a marker is created in response to a client request.
+    This message is sent when a marker is created in response to a
+    client request.
 */
 message MarkerCreationRequestAck {
     /** @property error_code
@@ -492,13 +519,14 @@ message MarkerCreationRequestAck {
         @see MarkerRequestAck.ErrorCode
         @bug should not be required
     */
-    required MarkerRequestAck.ErrorCode error_code = 1;   
+    required MarkerRequestAck.ErrorCode error_code = 1;
 }
 
 /** @struct MarkerUpdateRequestAck
     @brief A marker update request acknowledgement message.
 
-    This message is sent when a marker is updated in response to a client request.
+    This message is sent when a marker is updated in response to a
+    client request.
 */
 message MarkerUpdateRequestAck {
     /** @property error_code
@@ -512,7 +540,8 @@ message MarkerUpdateRequestAck {
 /** @struct MarkerDestructionRequestAck
     @brief A marker destruction request acknowledgement message.
 
-    This message is sent when a marker is destroyed in response to a client request.
+    This message is sent when a marker is destroyed in response to a
+    client request.
 */
 message MarkerDestructionRequestAck {
     /** @property error_code
@@ -527,7 +556,8 @@ message MarkerDestructionRequestAck {
     @brief A client object creation message.
 
     This message is sent when a client object is created. This can occur:
-    @li When connecting to a running exercise; creation of available client objects is notified to client
+    @li When connecting to a running exercise; creation of available
+        client objects is notified to client
     @li During the game, upon manual creation of a client object
 */
 message ClientObjectCreation {
@@ -539,7 +569,8 @@ message ClientObjectCreation {
     required ClientObjectId       object     = 1;
     /** @property name
         @brief The name of the client object.
-        @todo should be optional as it is optional in ClientObjectCreationRequest
+        @todo should be optional as it is optional in
+              ClientObjectCreationRequest
     */
     required string               name       = 2;
     /** @property properties
@@ -552,7 +583,8 @@ message ClientObjectCreation {
 /** @struct ClientObjectUpdate
     @brief A client object update message.
 
-    This message is sent when a client object is updated during the game upon client request.
+    This message is sent when a client object is updated during the game
+    upon client request.
 */
 message ClientObjectUpdate {
     /** @property object
@@ -578,7 +610,8 @@ message ClientObjectUpdate {
     @brief A client object destruction message.
 
     This message is sent:
-    @li When a client objec tis destroyed during the game upon client request.
+    @li When a client object is destroyed during the game upon client
+    i   request.
     @li When the exercise terminates.
 */
 message ClientObjectDestruction {
@@ -605,18 +638,24 @@ message ClientObjectAck {
         */
         success                  = 0;
         /** @brief Operation failed because of a duplicated attribute name.
-            When creating or updating a client object, the client must provide
-            a list of attributes, each of which must be identified by a unique name.
+
+            When creating or updating a client object, the client must
+            provide a list of attributes, each of which must be
+            identified by a unique name.
         */
         duplicate_attribute_name = 1;
         /** @brief Operation failed because of an invalid attribute name.
-            When updating or destroying a marker, the client must provide
-            a list of attribute, each of which must be identified by a valid (non-empty) name.
+
+            When updating or destroying a marker, the client must
+            provide a list of attribute, each of which must be
+            identified by a valid (non-empty) name.
         */
         invalid_attribute_name   = 2;
         /** @brief Operation failed because of an invalid identifier.
-            When updating or destroying a client object, the client must provide
-            a valid identifier, that is an existing client object identifier.
+
+            When updating or destroying a client object, the client must
+            provide a valid identifier, that is an existing client
+            object identifier.
         */
         invalid_object_id        = 3;
     }
@@ -625,11 +664,13 @@ message ClientObjectAck {
 /** @struct ClientObjectCreationRequestAck
     @brief A client object creation request acknowledgement message.
 
-    This message is sent when a client object is created in response to a client request.
+    This message is sent when a client object is created in response to
+    a client request.
 */
 message ClientObjectCreationRequestAck {
     /** @property name
-        @brief The name of the client object for which creation has been requested.
+        @brief The name of the client object for which creation has been
+               requested.
     */
     required string                    name       = 1;
     /** @property error_code
@@ -643,11 +684,13 @@ message ClientObjectCreationRequestAck {
 /** @struct ClientObjectUpdateRequestAck
     @brief A client object update request acknowledgement message.
 
-    This message is sent when a client object is updated in response to a client request.
+    This message is sent when a client object is updated in response to
+    a client request.
 */
 message ClientObjectUpdateRequestAck {
     /** @property object
-        @brief Identifier of the client object for which update was requested.
+        @brief Identifier of the client object for which update was
+               requested.
         @see ClientObjectId
     */
     required ClientObjectId            object     = 1;
@@ -662,11 +705,13 @@ message ClientObjectUpdateRequestAck {
 /** @struct ClientObjectDestructionRequestAck
     @brief A client object destruction request acknowledgement message.
 
-    This message is sent when a client object is destroyed in response to a client request.
+    This message is sent when a client object is destroyed in response
+    to a client request.
 */
 message ClientObjectDestructionRequestAck {
     /** @property object
-        @brief Identifier of the client object for which destruction was requested.
+        @brief Identifier of the client object for which destruction was
+               requested.
         @see ClientObjectId
     */
     required ClientObjectId            object     = 1;
@@ -685,50 +730,108 @@ message ClientObjectDestructionRequestAck {
 */
 message MessengerToClient {
     /** @struct Content
-        @brief The possible messages contained in a messenger to client message.
-        @warning Each Content message must contain exactly one of the possible messages.
+        @brief The possible messages contained in a messenger to client
+                message.
+        @warning Each Content message must contain exactly one of the
+                 possible messages.
     */
     message Content {
-        optional LimitCreation                     limit_creation                       = 1;  //!< @copybrief LimitCreation @see LimitCreation
-        optional LimitUpdate                       limit_update                         = 2;  //!< @copybrief LimitUpdate @see LimitUpdate
-        optional LimitDestruction                  limit_destruction                    = 3;  //!< @copybrief LimitDestruction @see LimitDestruction
-        optional LimitCreationRequestAck           limit_creation_request_ack           = 4;  //!< @copybrief LimitCreationRequestAck @see LimitCreationRequestAck
-        optional LimitDestructionRequestAck        limit_destruction_request_ack        = 5;  //!< @copybrief LimitDestructionRequestAck @see LimitDestructionRequestAck
-        optional LimitUpdateRequestAck             limit_update_request_ack             = 6;  //!< @copybrief LimitUpdateRequestAck @see LimitUpdateRequestAck
-        optional PhaseLineCreation                 phase_line_creation                  = 7;  //!< @copybrief PhaseLineCreation @see PhaseLineCreation @todo rename into phase_line_creation
-        optional PhaseLineUpdate                   phase_line_update                    = 8;  //!< @copybrief PhaseLineUpdate @see PhaseLineUpdate
-        optional PhaseLineDestruction              phase_line_destruction               = 9;  //!< @copybrief PhaseLineDestruction @see PhaseLineDestruction
-        optional PhaseLineCreationAck              phase_line_creation_request_ack      = 10; //!< @copybrief PhaseLineCreationAck @see PhaseLineCreationAck
-        optional PhaseLineDestructionRequestAck    phase_line_destruction_request_ack   = 11; //!< @copybrief PhaseLineUpdateRequestAck @see PhaseLineUpdateRequestAck
-        optional PhaseLineUpdateRequestAck         phase_line_update_request_ack        = 12; //!< @copybrief PhaseLineDestructionRequestAck @see PhaseLineDestructionRequestAck
-        optional ShapeCreation                     shape_creation                       = 19; //!< @copybrief ShapeCreation @see ShapeCreation @todo rename into drawing_creation
-        optional ShapeUpdate                       shape_update                         = 20; //!< @copybrief ShapeUpdate @see ShapeUpdate @todo rename into drawing_update
-        optional ShapeDestruction                  shape_destruction                    = 21; //!< @copybrief ShapeDestruction @see ShapeDestruction @todo rename into drawing_destruction
-        optional ShapeCreationRequestAck           shape_creation_request_ack           = 22; //!< @copybrief ShapeCreationRequestAck @see ShapeCreationRequestAck @todo rename into drawing_creation_request_ack
-        optional ShapeDestructionRequestAck        shape_destruction_request_ack        = 23; //!< @copybrief ShapeDestructionRequestAck @see ShapeDestructionRequestAck @todo rename into drawing_destruction_request_ack
-        optional ShapeUpdateRequestAck             shape_update_request_ack             = 24; //!< @copybrief ShapeUpdateRequestAck @see ShapeUpdateRequestAck @todo rename into drawing_update_request_ack
-        optional TextMessage                       text_message                         = 25; //!< @copybrief TextMessage @see TextMessage
-        optional MarkerCreation                    marker_creation                      = 26; //!< @copybrief MarkerCreation @see MarkerCreation
-        optional MarkerUpdate                      marker_update                        = 27; //!< @copybrief MarkerUpdate @see MarkerUpdate
-        optional MarkerDestruction                 marker_destruction                   = 28; //!< @copybrief MarkerDestruction @see MarkerDestruction
-        optional ClientObjectCreation              client_object_creation               = 29; //!< @copybrief ClientObjectCreation @see ClientObjectCreation
-        optional ClientObjectUpdate                client_object_update                 = 30; //!< @copybrief ClientObjectUpdate @see ClientObjectUpdate
-        optional ClientObjectDestruction           client_object_destruction            = 31; //!< @copybrief ClientObjectDestruction @see ClientObjectDestruction
-        optional ClientObjectCreationRequestAck    client_object_creation_ack           = 32; //!< @copybrief ClientObjectCreationRequestAck @see ClientObjectCreationRequestAck
-        optional ClientObjectUpdateRequestAck      client_object_update_ack             = 33; //!< @copybrief ClientObjectUpdateRequestAck @see ClientObjectUpdateRequestAck
-        optional ClientObjectDestructionRequestAck client_object_destruction_ack        = 34; //!< @copybrief ClientObjectDestructionRequestAck @see ClientObjectDestructionRequestAck
-        optional MarkerCreationRequestAck          marker_creation_request_ack          = 35; //!< @copybrief MarkerCreationRequestAck @see MarkerCreationRequestAck
-        optional MarkerUpdateRequestAck            marker_update_request_ack            = 36; //!< @copybrief MarkerUpdateRequestAck @see MarkerUpdateRequestAck
-        optional MarkerDestructionRequestAck       marker_destruction_request_ack       = 37; //!< @copybrief MarkerDestructionRequestAck @see MarkerDestructionRequestAck
+        //!< @copybrief LimitCreation @see LimitCreation
+        optional LimitCreation              limit_creation = 1;
+        //!< @copybrief LimitUpdate @see LimitUpdate
+        optional LimitUpdate                limit_update  = 2;
+        //!< @copybrief LimitDestruction @see LimitDestruction
+        optional LimitDestruction           limit_destruction = 3;
+        //!< @copybrief LimitCreationRequestAck @see
+        //!< LimitCreationRequestAck
+        optional LimitCreationRequestAck    limit_creation_request_ack = 4;
+        //!< @copybrief LimitDestructionRequestAck @see
+        //!< LimitDestructionRequestAck
+        optional LimitDestructionRequestAck
+            limit_destruction_request_ack = 5;
+        //!< @copybrief LimitUpdateRequestAck @see LimitUpdateRequestAck
+        optional LimitUpdateRequestAck      limit_update_request_ack = 6;
+        //!< @copybrief PhaseLineCreation @see PhaseLineCreation @todo
+        //!< rename into phase_line_creation
+        optional PhaseLineCreation          phase_line_creation = 7;
+        //!< @copybrief PhaseLineUpdate @see PhaseLineUpdate
+        optional PhaseLineUpdate            phase_line_update = 8;
+        //!< @copybrief PhaseLineDestruction @see PhaseLineDestruction
+        optional PhaseLineDestruction       phase_line_destruction = 9;
+        //!< @copybrief PhaseLineCreationAck @see PhaseLineCreationAck
+        optional PhaseLineCreationAck phase_line_creation_request_ack = 10;
+        //!< @copybrief PhaseLineUpdateRequestAck @see
+        //!< PhaseLineUpdateRequestAck
+        optional PhaseLineDestructionRequestAck
+            phase_line_destruction_request_ack   = 11;
+        //!< @copybrief PhaseLineDestructionRequestAck @see
+        //!< PhaseLineDestructionRequestAck
+        optional PhaseLineUpdateRequestAck  phase_line_update_request_ack = 12;
+        //!< @copybrief ShapeCreation @see ShapeCreation @todo rename
+        //!< into drawing_creation
+        optional ShapeCreation              shape_creation = 19;
+        //!< @copybrief ShapeUpdate @see ShapeUpdate @todo rename into
+        //!< drawing_update
+        optional ShapeUpdate                shape_update = 20;
+        //!< @copybrief ShapeDestruction @see ShapeDestruction @todo
+        //!< rename into drawing_destruction
+        optional ShapeDestruction           shape_destruction = 21;
+        //!< @copybrief ShapeCreationRequestAck @see
+        //!< ShapeCreationRequestAck @todo rename into
+        //!< drawing_creation_request_ack
+        optional ShapeCreationRequestAck    shape_creation_request_ack = 22;
+        //!< @copybrief ShapeDestructionRequestAck @see
+        //!< ShapeDestructionRequestAck @todo rename into
+        //!< drawing_destruction_request_ack
+        optional ShapeDestructionRequestAck shape_destruction_request_ack = 23;
+        //!< @copybrief ShapeUpdateRequestAck @see ShapeUpdateRequestAck
+        //!< @todo rename into drawing_update_request_ack
+        optional ShapeUpdateRequestAck      shape_update_request_ack = 24;
+        //!< @copybrief TextMessage @see TextMessage
+        optional TextMessage                text_message = 25;
+        //!< @copybrief MarkerCreation @see MarkerCreation
+        optional MarkerCreation             marker_creation = 26;
+        //!< @copybrief MarkerUpdate @see MarkerUpdate
+        optional MarkerUpdate               marker_update = 27;
+        //!< @copybrief MarkerDestruction @see MarkerDestruction
+        optional MarkerDestruction          marker_destruction = 28;
+        //!< @copybrief ClientObjectCreation @see ClientObjectCreation
+        optional ClientObjectCreation       client_object_creation = 29;
+        //!< @copybrief ClientObjectUpdate @see ClientObjectUpdate
+        optional ClientObjectUpdate         client_object_update = 30;
+        //!< @copybrief ClientObjectDestruction @see
+        //!< ClientObjectDestruction
+        optional ClientObjectDestruction    client_object_destruction = 31;
+        //!< @copybrief ClientObjectCreationRequestAck @see
+        //!< ClientObjectCreationRequestAck
+        optional ClientObjectCreationRequestAck
+            client_object_creation_ack = 32;
+        //!< @copybrief ClientObjectUpdateRequestAck @see
+        //!< ClientObjectUpdateRequestAck
+        optional ClientObjectUpdateRequestAck client_object_update_ack = 33;
+        //!< @copybrief ClientObjectDestructionRequestAck @see
+        //!< ClientObjectDestructionRequestAck
+        optional ClientObjectDestructionRequestAck
+            client_object_destruction_ack = 34;
+        //!< @copybrief MarkerCreationRequestAck @see
+        //!< MarkerCreationRequestAck
+        optional MarkerCreationRequestAck   marker_creation_request_ack = 35;
+        //!< @copybrief MarkerUpdateRequestAck @see
+        //!< MarkerUpdateRequestAck
+        optional MarkerUpdateRequestAck     marker_update_request_ack = 36;
+        //!< @copybrief MarkerDestructionRequestAck @see
+        //!< MarkerDestructionRequestAck
+        optional MarkerDestructionRequestAck
+            marker_destruction_request_ack = 37;
     }
     /** @property context
         @brief Identifies the request matching the response.
 
-        This field is filled using the "context" fields provided in the requests.
-
-        This context allows the client application to put an unique identifier
-        (based for instance on MAC address), thus allowing to track response
-        message matching a specific request emitted by the client.
+        This field is filled using the "context" fields provided in the
+        requests. This context allows the client application to put an
+        unique identifier (based for instance on MAC address), thus
+        allowing to track response message matching a specific request
+        emitted by the client.
     */
     optional int32   context = 1;
     required Content message = 2;
