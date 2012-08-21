@@ -9,8 +9,8 @@ class Ui:
 
     def write(self, s):
         sys.stdout.write(s)
-
-    def error(self, s):
+        
+    def writeerr(self, s):
         sys.stderr.write(s)
 
 def listproto(rootdir):
@@ -223,7 +223,7 @@ def parsemodule(ui, path):
     if errors:
         errors = ['\n'.join(e) for e in errors]
         for err in errors:
-            ui.error('%s: unexpected lines found:\n%s\n' % (name, err))
+            ui.writeerr('%s: unexpected lines found:\n%s\n' % (name, err))
         raise ParseError('unexpected lines found, aborting', 0)
     return Module(name, imports, enums, messages)
 
@@ -341,7 +341,7 @@ def checkfields(ui, modules, types, roottypes):
             usedtypes = set(t for t in possibletypes if t in types)
             unusedtypes -= usedtypes
             if not usedtypes: 
-                ui.error('unknown types: %s\n' % max(possibletypes))
+                ui.writeerr('unknown types: %s\n' % max(possibletypes))
 
     # Root types are not unused, they are just not used in .proto
     unusedtypes = set(u for u in unusedtypes if u not in roottypes)
@@ -398,10 +398,10 @@ def cmdcheck(ui, rootdir):
         unused, subtype = checkfields(ui, modules, types, _roottypes)
         if unused:
             for u in sorted(unused):
-                ui.error('unused type: %s\n' % u)
+                ui.writeerr('unused type: %s\n' % u)
         if subtype:
             for u in sorted(subtype):
-                ui.error('unused with used subtype: %s\n' % u)
+                ui.writeerr('unused with used subtype: %s\n' % u)
     except ParseError, e:
         sys.stderr.write('%s(%d): %s\n' % (e.path, e.line, e.args[1]))
         return 1
@@ -429,8 +429,8 @@ def cmdbraces(ui, rootdir):
         fname = os.path.basename(path)
         for i, line in readproto(path):
             if rebrace.search(line):
-                ui.error('%s:%d: invalid brace style\n' % (fname, i + 1))
-                ui.error('  %s\n' % line.rstrip())
+                ui.writeerr('%s:%d: invalid brace style\n' % (fname, i + 1))
+                ui.writeerr('  %s\n' % line.rstrip())
                 ret += 1
     return ret
 
@@ -441,12 +441,12 @@ def cmdstyle(ui, rootdir):
     for parts, m in itermessages(modules):
         for f in m.fields:
             if not refield.search(f.name):
-                ui.error('%s should be lower case with underscores\n'
+                ui.writeerr('%s should be lower case with underscores\n'
                          % '.'.join(parts + [f.name]))
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
-        parser.error('mapproto: at least 2 arguments expected')
+        parser.writeerr('mapproto: at least 2 arguments expected')
 
     args = sys.argv[2:]
     protodir = sys.argv[1]
@@ -460,7 +460,7 @@ if __name__ == '__main__':
     res = 0
     for cmd in args:
         if cmd not in cmds:
-            parser.error('unknown command %s' % cmd)
+            parser.writeerr('unknown command %s' % cmd)
         res += (cmds[cmd](ui, protodir) or 0) 
     sys.exit(res and 1 or 0)
 
