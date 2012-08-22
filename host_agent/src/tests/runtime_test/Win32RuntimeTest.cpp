@@ -131,14 +131,14 @@ BOOST_AUTO_TEST_CASE( runtime_process_starts )
     Runtime runtime( log, api );
 
     // Check the test executable is here
-    const std::string app = BOOST_RESOLVE("res/echowin32.exe");
+    const std::string app = BOOST_RESOLVE( "res/echowin32.exe" );
     boost::system::error_code err;
     if( !boost::filesystem::is_regular_file( app, err ))
     BOOST_FAIL("Cannot find echowin32.exe, please set --data_directory to the project root: "
         + app );
 
     // Call it with random arguments
-    std::string randarg = boost::lexical_cast<std::string>( std::time( NULL ));
+    std::string randarg = boost::lexical_cast< std::string >( std::time( NULL ));
     const std::vector< std::string > args
         = boost::assign::list_of( "hello" )( randarg.c_str() );
     const std::string dir = boost::filesystem::path( runtime.GetModuleFilename() )
@@ -146,13 +146,13 @@ BOOST_AUTO_TEST_CASE( runtime_process_starts )
     const std::string logs =
         (dir / boost::filesystem::path( "runtime_process_starts.log" )).string();
     boost::shared_ptr< Process_ABC > p = runtime.Start( app, args, dir, logs );
-    BOOST_CHECK(p);
-    BOOST_CHECK_GT(p->GetPid(), 0);
-    p->Join(5000);
+    BOOST_CHECK( p );
+    BOOST_CHECK_GT( p->GetPid(), 0 );
+    p->Join( 5000 );
 
     // Check the redirection output
-    std::fstream f(logs, std::ios::in);
+    std::fstream f( logs, std::ios::in );
     std::string line;
-    BOOST_CHECK(std::getline(f, line));
-    BOOST_CHECK_EQUAL(line, "hello" + randarg);
+    BOOST_CHECK( std::getline( f, line ));
+    BOOST_CHECK_EQUAL( line, "hello" + randarg );
 }
