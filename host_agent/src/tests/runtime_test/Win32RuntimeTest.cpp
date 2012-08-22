@@ -133,7 +133,7 @@ BOOST_AUTO_TEST_CASE( runtime_process_starts )
     // Check the test executable is here
     const std::string app = BOOST_RESOLVE("res/echowin32.exe");
     boost::system::error_code err;
-    if( !boost::filesystem::is_regular_file( boost::filesystem::path( app ), err ))
+    if( !boost::filesystem::is_regular_file( app, err ))
     BOOST_FAIL("Cannot find echowin32.exe, please set --data_directory to the project root: "
         + app );
 
