@@ -252,17 +252,17 @@
                 [[ template "session_play_btn" . ]]
                 [[ template "session_pause_btn" . ]]
                 [[/* ugly btn-group fix for rounded borders */]]
-                {{#option status replaying=""}}
+                {{#is_option status replaying=""}}
                 <a title="Loading..." class="btn hide disabled spin_btn"></a>
-                {{/option}}
+                {{/is_option}}
                 [[ template "session_stop_btn" . ]]
                 [[ template "session_replay_btn" . ]]
                 [[ template "session_restore_btn" . ]]
                 [[ template "session_edit_btn" . ]]
-                {{#option status replaying=""}}
+                {{#is_option status replaying=""}}
                 {{else}}
                 <a title="Loading..." class="btn hide disabled spin_btn"></a>
-                {{/option}}
+                {{/is_option}}
                 [[ template "session_clone_btn" . ]]
                 [[ template "session_download_btn" . ]]
                 [[ template "session_archive_btn" . ]]
