@@ -87,7 +87,6 @@ void PropertyModel::EndDisplay()
     // NOTHING
 }
 
-
 namespace
 {
     template< typename T >
@@ -183,22 +182,9 @@ void PropertyModel::Update( QStandardItem* parent, kernel::E_Category category )
 // -----------------------------------------------------------------------------
 void PropertyModel::Update( const QString& category )
 {
-    QStandardItem* parent = invisibleRootItem();
-    QStringList path = QStringList::split( '/', category );
-    for( int i = 0; i < path.size(); ++i )
-    {
-        const QString name = path.at( i );
-        QList< QStandardItem* > items = findItems( name, Qt::MatchRecursive );
-        if( !items.empty() )
-        {
-            QStandardItem* itemName = items.front();
-            if( i == path.size() - 1 && itemName->text() == name )
-                Update( parent, itemName );
-            parent = itemName;
-        }
-        else
-            return;
-    }
+    QStandardItem* item = FindItem( category );
+    if( item )
+        Update( FindParent( item ), item );
 }
 
 // -----------------------------------------------------------------------------
@@ -207,10 +193,56 @@ void PropertyModel::Update( const QString& category )
 // -----------------------------------------------------------------------------
 void PropertyModel::Update( QStandardItem* parent, QStandardItem* property )
 {
-    unsigned int childCount = property->rowCount();
+    int childCount = property->rowCount();
     if( childCount > 0 )
         for( int i = 0; i < childCount; ++i )
             Update( property, property->child( i ) );
     else if( PropertyItem* item = static_cast< PropertyItem* >( parent->child( property->row(), 1 ) ) )
             item->Update();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropertyModel::Delete
+// Created: LGY 2012-08-22
+// -----------------------------------------------------------------------------
+void PropertyModel::Delete( const QString& category )
+{
+    QStandardItem* item = FindItem( category );
+    if( item )
+    {
+        QList< QStandardItem* > rowItems = FindParent( item )->takeRow( item->row() );
+        for( QList< QStandardItem *>::iterator it = rowItems.begin(); it != rowItems.end(); ++it )
+            delete *it;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropertyModel::FindItem
+// Created: LGY 2012-08-22
+// -----------------------------------------------------------------------------
+QStandardItem* PropertyModel::FindItem( const QString& category ) const
+{
+    QStringList path = QStringList::split( '/', category );
+    for( int i = 0; i < path.size(); ++i )
+    {
+        const QString name = path.at( i );
+        QList< QStandardItem* > items = findItems( name, Qt::MatchRecursive );
+        if( !items.empty() )
+        {
+            if( i == path.size() - 1 )
+               return items.front();
+        }
+        else
+            return 0;
+    }
+    return 0 ;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropertyModel::FindParent
+// Created: LGY 2012-08-22
+// -----------------------------------------------------------------------------
+QStandardItem* PropertyModel::FindParent( QStandardItem* item ) const
+{
+    return item->parent() ? item->parent() : invisibleRootItem();
 }

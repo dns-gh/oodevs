@@ -1,3 +1,4 @@
+
 // *****************************************************************************
 //
 // This file is part of a MASA library or program.
@@ -101,5 +102,17 @@ void PropertiesPanel::NotifyDeleted( const kernel::Entity_ABC& element )
 // -----------------------------------------------------------------------------
 void PropertiesPanel::NotifyUpdated( const kernel::DictionaryUpdated& message )
 {
-    model_->Update( message.GetEntry() );
+    if( selected_ && selected_->GetId() == message.GetEntity().GetId() )
+        model_->Update( message.GetEntry() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropertiesPanel::NotifyDeleted
+// Created: LGY 2012-08-22
+// -----------------------------------------------------------------------------
+void PropertiesPanel::NotifyDeleted( const kernel::DictionaryUpdated& message )
+{
+    if( selected_ && selected_->GetId() == message.GetEntity().GetId() )
+        model_->Delete( message.GetEntry() );
+
 }

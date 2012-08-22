@@ -43,6 +43,7 @@ public:
 
     void Update( QWidget* editor, const QModelIndex& index );
     void Update( const QString& category );
+    void Delete( const QString& category );
     //@}
 
 private:
@@ -58,6 +59,8 @@ private:
     //@{
     void Update( QStandardItem* parent, kernel::E_Category category );
     void Update( QStandardItem* parent, QStandardItem* property );
+    QStandardItem* FindItem( const QString& category ) const;
+    QStandardItem* FindParent( QStandardItem* item ) const;
     //@}
 
 private:
