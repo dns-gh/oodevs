@@ -247,6 +247,8 @@ void RolePion_Decision::RegisterFire()
         boost::function< float( const PHY_DotationCategory* ) >( boost::bind( &DEC_FireFunctions::GetMaxRangeToIndirectFireWithoutAmmoCheck, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Tir_PorteeMinTirIndirect_SansTesterEtatMunitions",
         boost::function< float( const PHY_DotationCategory* ) >( boost::bind( &DEC_FireFunctions::GetMinRangeToIndirectFireWithoutAmmoCheck, boost::ref( GetPion() ), _1 ) ) );
+    RegisterFunction( "DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition",
+        boost::bind( &DEC_FireFunctions::GetMaxRangeToIndirectFire, boost::ref( GetPion() ) ) );
     RegisterFunction( "DEC_Tir_LancerFumigeneSurConnaissance", // $$$$ MCO 2012-06-25: should be an action
         boost::function< void( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_FireFunctions::ThrowSmokeOnKnowledgeAgent, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Tir_MunitionPourTirIndirect",

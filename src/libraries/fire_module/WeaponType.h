@@ -12,6 +12,7 @@
 
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
+#include <boost/optional.hpp>
 #include <map>
 
 class MT_Vector2D;
@@ -82,8 +83,8 @@ public:
     double GetMaxRangeToFireOnWithPosture( const wrapper::View& firer, const wrapper::View& target, double rWantedPH ) const;
     double GetMinRangeToFireOnWithPosture( const wrapper::View& firer, const wrapper::View& target, double rWantedPH ) const;
 
-    double GetMaxRangeToIndirectFire( const wrapper::View& firer, const std::string& dotation, bool checkAmmo ) const;
-    double GetMinRangeToIndirectFire( const wrapper::View& firer, const std::string& dotation, bool checkAmmo ) const;
+    double GetMaxRangeToIndirectFire( const wrapper::View& firer, boost::optional< std::string > dotation, bool checkAmmo ) const;
+    double GetMinRangeToIndirectFire( const wrapper::View& firer, boost::optional< std::string > dotation, bool checkAmmo ) const;
     //@}
 
 private:
@@ -98,7 +99,7 @@ private:
     void ReadDirect       ( xml::xistream& xis );
     void ReadIndirect     ( xml::xistream& xis, double tickDuration );
     bool CheckDirectFireDotation( const wrapper::View& firer, bool checkAmmo ) const;
-    bool CheckIndirectFireDotation( const wrapper::View& firer, bool checkAmmo ) const;
+    bool CheckIndirectFireDotation( const wrapper::View& firer, boost::optional< std::string > dotation, bool checkAmmo ) const;
     //@}
 
 private:

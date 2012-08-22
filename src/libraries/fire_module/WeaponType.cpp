@@ -18,7 +18,6 @@
 #include <wrapper/View.h>
 #include <module_api/Log.h>
 #include <xeumeuleu/xml.hpp>
-#include <boost/optional.hpp>
 #include <boost/bind.hpp>
 #include <cassert>
 
@@ -201,9 +200,13 @@ bool WeaponType::CheckDirectFireDotation( const wrapper::View& firer, bool check
 // Name: WeaponType::CheckIndirectFireDotation
 // Created: MCO 2012-06-22
 // -----------------------------------------------------------------------------
-bool WeaponType::CheckIndirectFireDotation( const wrapper::View& firer, bool checkAmmo ) const
+bool WeaponType::CheckIndirectFireDotation( const wrapper::View& firer, boost::optional< std::string > dotation, bool checkAmmo ) const
 {
     if( ! pIndirectFireData_.get() )
+        return false;
+    if( ! dotation )
+        return true;
+    if( DotationCategory::FindDotationCategory( *dotation ) != dotation_ )
         return false;
     if( ! checkAmmo )
         return true;
@@ -277,17 +280,22 @@ DEFINE_HOOK( GetMinRangeToFireOnWithPosture, double, ( const SWORD_Model* firer,
 {
     return GetMin( firer, filter, boost::bind( &WeaponType::GetMinRangeToFireOnWithPosture, _1, firer, target, rWantedPH ) );
 }
+namespace
+{
+    boost::optional< std::string > MakeDotation( const char* dotation )
+    {
+        if( dotation )
+            return dotation;
+        return boost::none;
+    }
+}
 DEFINE_HOOK( GetMaxRangeToIndirectFire, double, ( const SWORD_Model* firer, bool(*filter)( const SWORD_Model* component ), const char* dotation, bool checkAmmo ) )
 {
-    if( dotation )
-        return GetMax( firer, filter, boost::bind( &WeaponType::GetMaxRangeToIndirectFire, _1, firer, dotation, checkAmmo ), -1 );
-    return -1;
+    return GetMax( firer, filter, boost::bind( &WeaponType::GetMaxRangeToIndirectFire, _1, firer, MakeDotation( dotation ), checkAmmo ), -1 );
 }
 DEFINE_HOOK( GetMinRangeToIndirectFire, double, ( const SWORD_Model* firer, bool(*filter)( const SWORD_Model* component ), const char* dotation, bool checkAmmo ) )
 {
-    if( dotation )
-        return GetMin( firer, filter, boost::bind( &WeaponType::GetMinRangeToIndirectFire, _1, firer, dotation, checkAmmo ) );
-    return -1;
+    return GetMin( firer, filter, boost::bind( &WeaponType::GetMinRangeToIndirectFire, _1, firer, MakeDotation( dotation ), checkAmmo ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -403,9 +411,9 @@ double WeaponType::GetMinRangeToFireOnWithPosture( const wrapper::View& firer, c
 // Name: WeaponType::GetMaxRangeToIndirectFire
 // Created: MCO 2012-06-21
 // -----------------------------------------------------------------------------
-double WeaponType::GetMaxRangeToIndirectFire( const wrapper::View& firer, const std::string& dotation, bool checkAmmo ) const
+double WeaponType::GetMaxRangeToIndirectFire( const wrapper::View& firer, boost::optional< std::string > dotation, bool checkAmmo ) const
 {
-    if( DotationCategory::FindDotationCategory( dotation ) == dotation_ && CheckIndirectFireDotation( firer, checkAmmo ) )
+    if( CheckIndirectFireDotation( firer, dotation, checkAmmo ) )
         return pIndirectFireData_->GetMaxRange();
     return -1;
 }
@@ -414,9 +422,9 @@ double WeaponType::GetMaxRangeToIndirectFire( const wrapper::View& firer, const 
 // Name: WeaponType::GetMinRangeToIndirectFire
 // Created: MCO 2012-06-25
 // -----------------------------------------------------------------------------
-double WeaponType::GetMinRangeToIndirectFire( const wrapper::View& firer, const std::string& dotation, bool checkAmmo ) const
+double WeaponType::GetMinRangeToIndirectFire( const wrapper::View& firer, boost::optional< std::string > dotation, bool checkAmmo ) const
 {
-    if( DotationCategory::FindDotationCategory( dotation ) == dotation_ && CheckIndirectFireDotation( firer, checkAmmo ) )
+    if( CheckIndirectFireDotation( firer, dotation, checkAmmo ) )
         return pIndirectFireData_->GetMinRange();
     return std::numeric_limits< double >::max();
 }

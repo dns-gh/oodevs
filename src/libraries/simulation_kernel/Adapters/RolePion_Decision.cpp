@@ -922,6 +922,14 @@ namespace
     {
         return true;
     }
+    double GetMaxRangeToIndirectFireWithoutAmmo( const MIL_Agent_ABC& agent, const core::Model& model )
+    {
+        const core::Model& entity = model[ "entities" ][ agent.GetID() ];
+        const double range = GET_HOOK( GetMaxRangeToIndirectFire )( core::Convert( &entity ), &NullFilter, 0, false );
+        if( range == std::numeric_limits< double >::max() )
+            return -1;
+        return range;
+    }
     double GetTheoricMaxRangeToIndirectFire( const MIL_Agent_ABC& agent, const core::Model& model, const PHY_DotationCategory* dotation )
     {
         if( ! dotation )
@@ -985,6 +993,8 @@ void RolePion_Decision::RegisterFire()
         boost::function< double( const PHY_DotationCategory* ) >( boost::bind( &GetMaxRangeToIndirectFireWithoutAmmoCheck, boost::ref( GetPion() ), boost::ref( model_ ), _1 ) ) );
     RegisterFunction( "DEC_Tir_PorteeMinTirIndirect_SansTesterEtatMunitions",
         boost::function< double( const PHY_DotationCategory* ) >( boost::bind( &GetMinRangeToIndirectFireWithoutAmmoCheck, boost::ref( GetPion() ), boost::ref( model_ ), _1 ) ) );
+    RegisterFunction( "DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition",
+        boost::bind( &GetMaxRangeToIndirectFireWithoutAmmo, boost::ref( GetPion() ), boost::ref( model_ ) ) );
     RegisterFunction( "DEC_Tir_PorteeTheoriqueMaxTirIndirect",
         boost::function< double( const PHY_DotationCategory* ) >( boost::bind( &GetTheoricMaxRangeToIndirectFire, boost::ref( GetPion() ), boost::ref( model_ ), _1 ) ) );
     RegisterFunction( "DEC_Tir_PorteeTheoriqueMinTirIndirect",

@@ -15,24 +15,43 @@ namespace
     const double max = std::numeric_limits< double >::max();
 }
 
-BOOST_FIXTURE_TEST_CASE( min_range_to_indirect_fire_is_minus_one_when_no_ammunition_specified, QueryFixture )
-{
-    BOOST_CHECK_EQUAL( -1, GetMinRangeToIndirectFire( firer, filter, 0, true ) );
-}
-
-BOOST_FIXTURE_TEST_CASE( min_range_to_indirect_fire_is_limit_max_when_firer_has_no_component, QueryFixture )
+BOOST_FIXTURE_TEST_CASE( min_range_to_indirect_fire_is_limit_min_when_firer_has_no_component, QueryFixture )
 {
     BOOST_CHECK_EQUAL( max, GetMinRangeToIndirectFire( firer, filter, ammo_2.c_str(), true ) );
+    BOOST_CHECK_EQUAL( max, GetMinRangeToIndirectFire( firer, filter, ammo_2.c_str(), false ) );
+    BOOST_CHECK_EQUAL( max, GetMinRangeToIndirectFire( firer, filter, 0, true ) );
+    BOOST_CHECK_EQUAL( max, GetMinRangeToIndirectFire( firer, filter, 0, false ) );
 }
 
-BOOST_FIXTURE_TEST_CASE( min_range_to_indirect_fire_is_limit_max_when_component_is_filtered_out, QueryFixture )
+BOOST_FIXTURE_TEST_CASE( min_range_to_indirect_fire_is_limit_max_when_component_with_checked_ammunition_is_filtered_out, QueryFixture )
 {
     core::Model& component_1 = entity[ "components" ].AddElement();
     MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( false );
     BOOST_CHECK_EQUAL( max, GetMinRangeToIndirectFire( firer, filter, ammo_2.c_str(), true ) );
 }
 
-BOOST_FIXTURE_TEST_CASE( min_range_to_indirect_fire_is_limit_max_when_component_has_no_weapons, QueryFixture )
+BOOST_FIXTURE_TEST_CASE( min_range_to_indirect_fire_is_limit_max_when_component_with_unchecked_ammunition_is_filtered_out, QueryFixture )
+{
+    core::Model& component_1 = entity[ "components" ].AddElement();
+    MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( false );
+    BOOST_CHECK_EQUAL( max, GetMinRangeToIndirectFire( firer, filter, ammo_2.c_str(), false ) );
+}
+
+BOOST_FIXTURE_TEST_CASE( min_range_to_indirect_fire_is_limit_max_when_component_without_checked_ammunition_is_filtered_out, QueryFixture )
+{
+    core::Model& component_1 = entity[ "components" ].AddElement();
+    MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( false );
+    BOOST_CHECK_EQUAL( max, GetMinRangeToIndirectFire( firer, filter, 0, true ) );
+}
+
+BOOST_FIXTURE_TEST_CASE( min_range_to_indirect_fire_is_limit_max_when_component_without_unchecked_ammunition_is_filtered_out, QueryFixture )
+{
+    core::Model& component_1 = entity[ "components" ].AddElement();
+    MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( false );
+    BOOST_CHECK_EQUAL( max, GetMinRangeToIndirectFire( firer, filter, 0, false ) );
+}
+
+BOOST_FIXTURE_TEST_CASE( min_range_to_indirect_fire_is_limit_max_when_component_with_checked_ammunition_has_no_weapons, QueryFixture )
 {
     core::Model& component_1 = entity[ "components" ].AddElement();
     component_1[ "weapons" ];
@@ -40,7 +59,31 @@ BOOST_FIXTURE_TEST_CASE( min_range_to_indirect_fire_is_limit_max_when_component_
     BOOST_CHECK_EQUAL( max, GetMinRangeToIndirectFire( firer, filter, ammo_2.c_str(), true ) );
 }
 
-BOOST_FIXTURE_TEST_CASE( min_range_to_indirect_fire_is_limit_max_when_weapon_type_does_not_exist, QueryFixture )
+BOOST_FIXTURE_TEST_CASE( min_range_to_indirect_fire_is_limit_max_when_component_with_unchecked_ammunition_has_no_weapons, QueryFixture )
+{
+    core::Model& component_1 = entity[ "components" ].AddElement();
+    component_1[ "weapons" ];
+    MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
+    BOOST_CHECK_EQUAL( max, GetMinRangeToIndirectFire( firer, filter, ammo_2.c_str(), false ) );
+}
+
+BOOST_FIXTURE_TEST_CASE( min_range_to_indirect_fire_is_limit_max_when_component_without_checked_ammunition_has_no_weapons, QueryFixture )
+{
+    core::Model& component_1 = entity[ "components" ].AddElement();
+    component_1[ "weapons" ];
+    MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
+    BOOST_CHECK_EQUAL( max, GetMinRangeToIndirectFire( firer, filter, 0, true ) );
+}
+
+BOOST_FIXTURE_TEST_CASE( min_range_to_indirect_fire_is_limit_max_when_component_without_unchecked_ammunition_has_no_weapons, QueryFixture )
+{
+    core::Model& component_1 = entity[ "components" ].AddElement();
+    component_1[ "weapons" ];
+    MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
+    BOOST_CHECK_EQUAL( max, GetMinRangeToIndirectFire( firer, filter, 0, false ) );
+}
+
+BOOST_FIXTURE_TEST_CASE( min_range_to_indirect_fire_is_limit_max_when_weapon_type_with_checked_ammunition_does_not_exist, QueryFixture )
 {
     core::Model& component_1 = entity[ "components" ].AddElement();
     component_1[ "weapons" ].AddElement()[ "type" ] = "non existing weapon";
@@ -49,7 +92,34 @@ BOOST_FIXTURE_TEST_CASE( min_range_to_indirect_fire_is_limit_max_when_weapon_typ
     BOOST_CHECK_EQUAL( max, GetMinRangeToIndirectFire( firer, filter, ammo_2.c_str(), true ) );
 }
 
-BOOST_FIXTURE_TEST_CASE( min_range_to_indirect_fire_is_limit_max_when_firer_has_no_specified_ammunition, QueryFixture )
+BOOST_FIXTURE_TEST_CASE( min_range_to_indirect_fire_is_limit_max_when_weapon_type_with_unchecked_ammunition_does_not_exist, QueryFixture )
+{
+    core::Model& component_1 = entity[ "components" ].AddElement();
+    component_1[ "weapons" ].AddElement()[ "type" ] = "non existing weapon";
+    MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
+    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR, std::string( "Unknown weapon type : non existing weapon" ) );
+    BOOST_CHECK_EQUAL( max, GetMinRangeToIndirectFire( firer, filter, ammo_2.c_str(), false ) );
+}
+
+BOOST_FIXTURE_TEST_CASE( min_range_to_indirect_fire_is_limit_max_when_weapon_type_without_checked_ammunition_does_not_exist, QueryFixture )
+{
+    core::Model& component_1 = entity[ "components" ].AddElement();
+    component_1[ "weapons" ].AddElement()[ "type" ] = "non existing weapon";
+    MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
+    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR, std::string( "Unknown weapon type : non existing weapon" ) );
+    BOOST_CHECK_EQUAL( max, GetMinRangeToIndirectFire( firer, filter, 0, true ) );
+}
+
+BOOST_FIXTURE_TEST_CASE( min_range_to_indirect_fire_is_limit_max_when_weapon_type_without_unchecked_ammunition_does_not_exist, QueryFixture )
+{
+    core::Model& component_1 = entity[ "components" ].AddElement();
+    component_1[ "weapons" ].AddElement()[ "type" ] = "non existing weapon";
+    MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
+    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR, std::string( "Unknown weapon type : non existing weapon" ) );
+    BOOST_CHECK_EQUAL( max, GetMinRangeToIndirectFire( firer, filter, 0, false ) );
+}
+
+BOOST_FIXTURE_TEST_CASE( min_range_to_indirect_fire_is_limit_max_when_firer_has_no_specified_checked_ammunition, QueryFixture )
 {
     core::Model& component_1 = entity[ "components" ].AddElement();
     component_1[ "weapons" ].AddElement()[ "type" ] = "launcher_1/ammo_2";
@@ -58,19 +128,27 @@ BOOST_FIXTURE_TEST_CASE( min_range_to_indirect_fire_is_limit_max_when_firer_has_
     BOOST_CHECK_EQUAL( max, GetMinRangeToIndirectFire( firer, filter, ammo_2.c_str(), true ) );
 }
 
-BOOST_FIXTURE_TEST_CASE( min_range_to_indirect_fire_is_not_limit_max_when_firer_has_specified_ammunition, QueryFixture )
+BOOST_FIXTURE_TEST_CASE( min_range_to_indirect_fire_is_positive_when_firer_has_no_specified_checked_ammunition, QueryFixture )
+{
+    core::Model& component_1 = entity[ "components" ].AddElement();
+    component_1[ "weapons" ].AddElement()[ "type" ] = "launcher_1/ammo_2";
+    MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
+    BOOST_CHECK_EQUAL( 100, GetMinRangeToIndirectFire( firer, filter, 0, true ) );
+}
+
+BOOST_FIXTURE_TEST_CASE( min_range_to_indirect_fire_is_positive_when_firer_has_no_specified_unchecked_ammunition, QueryFixture )
+{
+    core::Model& component_1 = entity[ "components" ].AddElement();
+    component_1[ "weapons" ].AddElement()[ "type" ] = "launcher_1/ammo_2";
+    MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
+    BOOST_CHECK_EQUAL( 100, GetMinRangeToIndirectFire( firer, filter, ammo_2.c_str(), false ) );
+}
+
+BOOST_FIXTURE_TEST_CASE( min_range_to_indirect_fire_is_positive_when_firer_has_specified_checked_ammunition, QueryFixture )
 {
     core::Model& component_1 = entity[ "components" ].AddElement();
     component_1[ "weapons" ].AddElement()[ "type" ] = "launcher_1/ammo_2";
     MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
     MOCK_EXPECT( HasDotation ).once().with( firer, ammo_2 ).returns( true );
     BOOST_CHECK_EQUAL( 100, GetMinRangeToIndirectFire( firer, filter, ammo_2.c_str(), true ) );
-}
-
-BOOST_FIXTURE_TEST_CASE( min_range_to_indirect_fire_is_non_limit_max_when_ammunition_is_not_checked, QueryFixture )
-{
-    core::Model& component_1 = entity[ "components" ].AddElement();
-    component_1[ "weapons" ].AddElement()[ "type" ] = "launcher_1/ammo_2";
-    MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
-    BOOST_CHECK_EQUAL( 100, GetMinRangeToIndirectFire( firer, filter, ammo_2.c_str(), false ) );
 }
