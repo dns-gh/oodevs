@@ -72,17 +72,6 @@ void Agent::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& vi
 }
 
 // -----------------------------------------------------------------------------
-// Name: Agent::InitializeSymbol
-// Created: AGE 2006-10-25
-// -----------------------------------------------------------------------------
-//void Agent::InitializeSymbol() const
-//{
-//    const Entity_ABC& team = Get< CommunicationHierarchies >().GetTop();
-//    const Diplomacies_ABC* diplo = team.Retrieve< Diplomacies_ABC >();
-//    kernel::App6Symbol::SetKarma( symbol_, diplo ? diplo->GetKarma() : Karma::unknown_ );
-//}
-
-// -----------------------------------------------------------------------------
 // Name: Agent::GetType
 // Created: SBO 2006-08-03
 // -----------------------------------------------------------------------------
