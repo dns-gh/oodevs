@@ -151,8 +151,7 @@ class NodeItemView extends Backbone.View
                     print_error "Unable to update node " + @model.get "ident"
 
     toggle_load: =>
-        for it in $(@el).find(".session_top_right .btn")
-            $(it).toggle()
+        toggle_spinner $(@el).find ".btn-group"
 
 class NodeListView extends Backbone.View
     el: $( "#nodes" )

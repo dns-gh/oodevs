@@ -247,26 +247,20 @@
                 </div>
             </div>
             {{/is_option}}
-            <div class="btn-group session_top_right">
-                [[ template "session_goto_btn" . ]]
-                [[ template "session_play_btn" . ]]
-                [[ template "session_pause_btn" . ]]
-                [[/* ugly btn-group fix for rounded borders */]]
-                {{#is_option status replaying=""}}
-                <a title="Loading..." class="btn hide disabled spin_btn"></a>
-                {{/is_option}}
-                [[ template "session_stop_btn" . ]]
-                [[ template "session_replay_btn" . ]]
-                [[ template "session_restore_btn" . ]]
-                [[ template "session_edit_btn" . ]]
-                {{#is_option status replaying=""}}
-                {{else}}
-                <a title="Loading..." class="btn hide disabled spin_btn"></a>
-                {{/is_option}}
-                [[ template "session_clone_btn" . ]]
-                [[ template "session_download_btn" . ]]
-                [[ template "session_archive_btn" . ]]
-                [[ template "session_delete_btn" . ]]
+            <div class="session_top_right">
+                <div class="btn-group">
+                    [[ template "session_goto_btn" . ]]
+                    [[ template "session_play_btn" . ]]
+                    [[ template "session_pause_btn" . ]]
+                    [[ template "session_replay_btn" . ]]
+                    [[ template "session_stop_btn" . ]]
+                    [[ template "session_restore_btn" . ]]
+                    [[ template "session_edit_btn" . ]]
+                    [[ template "session_clone_btn" . ]]
+                    [[ template "session_download_btn" . ]]
+                    [[ template "session_archive_btn" . ]]
+                    [[ template "session_delete_btn" . ]]
+                </div>
             </div>
         </div>
     </div>

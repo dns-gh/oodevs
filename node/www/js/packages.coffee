@@ -32,18 +32,21 @@ class PackageView extends Backbone.View
         @model.fetch()
         setTimeout @delta, 5000
 
-    switch: (next, reset) =>
+    toggle_load: (next, group) =>
         @enabled = next
-        if reset? and !next
-            $(@el).empty()
+        if group?
+            toggle_spinner $ group
 
     delete_items: (list) =>
-        ajax "/api/delete_install", id: uuid, items: list.join ',',
+        next = []
+        for it in list
+            next.push $(it).parent().attr "data-rel"
+        ajax "/api/delete_install", id: uuid, items: next.join ',',
             (item) =>
-                @switch true
-                @update item, true
+                @toggle_load true, $ list
+                @model.set item
             () =>
-                @switch true
+                @toggle_load true, $ list
                 print_error "Unable to delete package(s)"
 
     render: =>
@@ -57,8 +60,8 @@ class PackageView extends Backbone.View
             $(it).click =>
                 items = []
                 for btn in $(@el).find ".action .delete"
-                    @switch false
-                    items.push $(btn).parent().attr "data-rel"
+                    @toggle_load false, btn
+                    items.push btn
                 @delete_items items if items.length
 
         for it in $(@el).find ".action .more"
@@ -70,27 +73,16 @@ class PackageView extends Backbone.View
 
         for it in $(@el).find ".action .delete"
             $(it).click it, (e) =>
-                @switch false
-                id = transform_to_spinner e.data, true
-                @delete_items [id]
+                @toggle_load false, it
+                @delete_items [it]
         return
-
-    update: (data, buttons) =>
-        if buttons?
-            for it in $(@el).find ".btn"
-                if $(it).hasClass "spin_btn"
-                    $(it).remove()
-                else
-                    $(it).show()
-                    $(it).removeClass "active"
-        @model.set data
 
     delta: =>
         list = new Package
         list.fetch
             success: =>
                 if list.attributes.items?
-                    @update list.attributes
+                    @model.set list.attributes
                 else
                     @model.clear()
                 setTimeout @delta, 5000

@@ -144,17 +144,17 @@ text_compare = (lhs, rhs) ->
         return -1
     return 0
 
-transform_to_spinner = (btn, append) ->
-    id = $(btn).parent().attr "data-rel"
-    spin = $ "<a class='btn disabled spin_btn'></a>"
-    set_spinner spin
-    ctl = $(btn).parent()
-    if append?
-        spin.appendTo ctl
+toggle_spinner = (group) ->
+    spin = group.next ".spin_btn"
+    if spin?.length
+        spin.remove()
+        group.show()
     else
-        spin.prependTo ctl
-    $(btn).hide()
-    return id
+        group.hide()
+        next = $ "<a class='btn disabled spin_btn'></a>"
+        set_spinner next
+        group.first().after next
+    return
 
 parse_parameters = ->
     a = /\+/g

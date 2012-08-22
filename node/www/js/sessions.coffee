@@ -270,7 +270,6 @@ class SessionItemView extends Backbone.View
             data.start_time = start.toUTCString()
             data.duration = ms_to_duration duration
         $(@el).html session_template data
-        set_spinner $(@el).find ".session_top_right .spin_btn"
         for it in $(@el).find ".link"
             $(it).attr "href", "sword://" + window.location.hostname + ":" + @model.get("port") + "/"
         return
@@ -323,8 +322,7 @@ class SessionItemView extends Backbone.View
         @render()
 
     toggle_load: =>
-        for it in $(@el).find(".session_top_right .btn")
-            $(it).toggle()
+        toggle_spinner $(@el).find ".session_top_right .btn-group"
 
     set_search: (item) =>
         @search = item

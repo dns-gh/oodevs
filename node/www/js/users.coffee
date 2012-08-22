@@ -110,10 +110,6 @@ class UserItemView extends Backbone.View
         $(@el).empty()
         $(@el).attr "id", "id_" + @model.id
         $(@el).html user_template @model.attributes
-        spin = $ "<a class='btn disabled spin_btn'></a>"
-        set_spinner spin
-        $(@el).find(".delete")?.after spin
-        spin.hide()
 
     delete: (evt) =>
         return if is_disabled evt
@@ -147,8 +143,7 @@ class UserItemView extends Backbone.View
                     print_error "Unable to update user " + @model.get "username"
 
     toggle_load: =>
-        for it in $(@el).find ".btn"
-            $(it).toggle()
+        toggle_spinner $(@el).find ".btn"
 
 class UserListView extends Backbone.View
     el: $ "#users"

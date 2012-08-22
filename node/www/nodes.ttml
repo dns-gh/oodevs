@@ -48,21 +48,22 @@
 <script type="text/template" id="node_template">
     <div id="id_{{{id}}}" class="node_row">
         <div class="node_header accordion-heading">
-            <div class="btn-group node_buttons">
-                {{#is_option status running=""}}
-                <a target="{{{ident}}}" href="/{{{ident}}}/" title="Go..." class="btn"><i class="icon-share"></i></a>
-                {{/is_option}}
-                {{#is_option status stopped=""}}
-                <a title="Play" class="btn play"><i class="icon-play"></i></a>
-                {{/is_option}}
-                <a title="Loading..." class="btn hide disabled spin_btn"></a>
-                <a title="Settings..." class="btn edit"><i class="icon-cog"></i></a>
-                {{#is_option status running=""}}
-                <a title="Stop" class="btn stop"><i class="icon-stop"></i></a>
-                {{/is_option}}
-                {{#is_option status stopped=""}}
-                <a title="Delete" class="btn delete"><i class="icon-trash"></i></a>
-                {{/is_option}}
+            <div class="node_buttons">
+                <div class="btn-group">
+                    {{#is_option status running=""}}
+                    <a target="{{{ident}}}" href="/{{{ident}}}/" title="Go..." class="btn"><i class="icon-share"></i></a>
+                    {{/is_option}}
+                    {{#is_option status stopped=""}}
+                    <a title="Play" class="btn play"><i class="icon-play"></i></a>
+                    {{/is_option}}
+                    <a title="Settings..." class="btn edit"><i class="icon-cog"></i></a>
+                    {{#is_option status running=""}}
+                    <a title="Stop" class="btn stop"><i class="icon-stop"></i></a>
+                    {{/is_option}}
+                    {{#is_option status stopped=""}}
+                    <a title="Delete" class="btn delete"><i class="icon-trash"></i></a>
+                    {{/is_option}}
+                </div>
             </div>
             <span class="well session {{{status}}}"></span>
             <a class="accordion-toggle" data-toggle="collapse" data-parent="#nodes" href="#collapse_{{{id}}}"><img width="32" height="32" alt="" src="img/tango/32x32/places/network-server.png"/>
