@@ -116,6 +116,7 @@ body
 
 .session_top_right .dropdown-toggle
 {
+    margin-right:              -1px;
     border-top-right-radius:    0;
     border-bottom-right-radius: 0;
 }
@@ -164,9 +165,10 @@ body
     left:       8px;
 }
 
-.node_row
+#nodes .accordion-group
 {
-    position:   relative;
+    position:       relative;
+    margin-bottom:  @button_margin;
 }
 
 .node_buttons
@@ -186,9 +188,11 @@ body
 
 .read_only
 {
-    cursor:     text;
-    border:     0;
-    margin-top: 1px;
+    color:              inherit !important;
+    background-color:   inherit;
+    cursor:             text;
+    border:             0;
+    margin-top:         1px;
 }
 
 .footer
@@ -196,10 +200,25 @@ body
     text-align: center;
 }
 
+.navbar .brand
+{
+    cursor: default;
+}
+
+.navbar .brand:hover
+{
+    color: inherit;
+}
+
+select
+{
+    width:  224px;
+}
+
 .pull-right .label
 {
     float:      left;
-    margin-top: 10px;
+    margin-top: 11px;
 }
 
 .sub_header td
@@ -303,7 +322,8 @@ body
 
 .package_description
 {
-    position:   relative;
+    position:       relative;
+    margin-bottom:  @button_margin;
 }
 
 .toggle
@@ -367,7 +387,7 @@ body
 
 .sign_in_action a
 {
-    width: 250px;
+    width: 254px;
 }
 
 .update_login_header

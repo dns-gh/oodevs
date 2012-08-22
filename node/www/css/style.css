@@ -14,7 +14,7 @@ body{padding-top:60px;padding-bottom:40px;}
 .session_name,.package_name{font-size:large;font-weight:bold;}
 .shift_right{padding-left:24px;}
 .session_top_right{position:absolute;top:10px;right:10px;}
-.session_top_right .dropdown-toggle{border-top-right-radius:0;border-bottom-right-radius:0;}
+.session_top_right .dropdown-toggle{margin-right:-1px;border-top-right-radius:0;border-bottom-right-radius:0;}
 .session_bottom_right{position:absolute;right:6px;bottom:6px;}
 .create_form{margin-bottom:20px;}
 .session_search{float:right;margin-bottom:20px;position:relative;}
@@ -22,13 +22,16 @@ body{padding-top:60px;padding-bottom:40px;}
 .session_search input{padding-left:24px;}
 .spin_btn{width:14px;height:18px;}
 .spin_btn .spinner{position:relative;top:9px;left:8px;}
-.node_row{position:relative;}
+#nodes .accordion-group{position:relative;margin-bottom:10px;}
 .node_buttons{position:absolute;top:10px;right:10px;}
 .node_header{position:relative;}
 .node_header a{margin-left:24px;}
-.read_only{cursor:text;border:0;margin-top:1px;}
+.read_only{color:inherit !important;background-color:inherit;cursor:text;border:0;margin-top:1px;}
 .footer{text-align:center;}
-.pull-right .label{float:left;margin-top:10px;}
+.navbar .brand{cursor:default;}
+.navbar .brand:hover{color:inherit;}
+select{width:224px;}
+.pull-right .label{float:left;margin-top:11px;}
 .sub_header td{padding-top:24px;font-weight:bold;border-top:0;}
 .ufirst{text-transform:capitalize;}
 .package_name:first-letter,.package_description:first-letter{text-transform:uppercase;}
@@ -47,7 +50,7 @@ body{padding-top:60px;padding-bottom:40px;}
 .item_label{font-style:oblique;float:left;width:64px;}
 .package_row .error{position:relative;top:-1px;}
 .action{white-space:nowrap;text-align:right !important;}
-.package_description{position:relative;}
+.package_description{position:relative;margin-bottom:10px;}
 .toggle{float:right;margin-top:-3px;margin-right:-6px;}
 .emu_btn{cursor:pointer;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:-moz-none;-o-user-select:none;user-select:none;}
 .btn{cursor:pointer;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:-moz-none;-o-user-select:none;user-select:none;}
@@ -58,7 +61,7 @@ body{padding-top:60px;padding-bottom:40px;}
 .masa_header{text-align:center;}
 .sign_in,form.update_login{margin-left:180px;}
 .sign_in_action,.update_login_action{margin-left:160px;}
-.sign_in_action a{width:250px;}
+.sign_in_action a{width:254px;}
 .update_login_header{text-align:center;margin-bottom:24px;font-weight:bold;}
 .update_login_action .cancel{width:95px;}
 .checkbox_addon label.add-on{margin-left:0;margin-bottom:0;width:22px;}
