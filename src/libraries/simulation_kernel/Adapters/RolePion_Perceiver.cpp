@@ -114,14 +114,15 @@ namespace
         }
         virtual void Visit( const std::string& key, const core::Visitable_ABC& /*child*/ )
         {
-            if( identifiers_.find( key ) == identifiers_.end() )
+            boost::shared_ptr< ListenerHelper >& helper = identifiers_[ key ];
+            if( ! helper )
             {
                 const core::Model& node = operator[]( key ); // $$$$ SLI: not that great...
                 const unsigned int id = enable_( node );
-                identifiers_[ key ].reset( new ListenerHelper( node, ListenerHelper::T_Callback(), boost::bind( &IdentifiedToggleListener::Disable, this, key, id ) ) );
+                helper.reset( new ListenerHelper( node, ListenerHelper::T_Callback(), boost::bind( &IdentifiedToggleListener::Disable, this, key, id ) ) );
             }
         }
-        void Disable( std::string key, unsigned int identifier )
+        void Disable( const std::string& key, unsigned int identifier )
         {
             identifiers_.erase( key );
             disable_( identifier );
@@ -252,7 +253,7 @@ RolePion_Perceiver::RolePion_Perceiver( const Sink& sink, MIL_Agent_ABC& pion, c
     , pPerceptionRecoObjects_        ( 0 )
     , pPerceptionFlyingShell_        ( 0 )
 {
-    static unsigned int nNbr = 0;
+    static unsigned int nNbr = 0; // $$$$ MCO 2012-08-14: size_t ?
     nNextPeriphericalVisionStep_ = ++nNbr % nNbrStepsBetweenPeriphericalVision_;
     entity[ "perceptions/peripherical-vision/next-tick" ] = nNextPeriphericalVisionStep_;
     entity[ "perceptions/max-agent-perception-distance" ] = 0;
