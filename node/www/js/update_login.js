@@ -454,10 +454,15 @@
   });
 
   $("a.update_login").click(function() {
-    var bis, cur, err, pwd;
+    var bis, cur, err, it, pwd, _i, _len, _ref;
     cur = $("#current");
     pwd = $("#password");
     bis = $("#password_bis");
+    _ref = $("input");
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      it = _ref[_i];
+      it.blur();
+    }
     err = false;
     if (!cur.val().length) {
       toggle_input_error(cur, "Missing");

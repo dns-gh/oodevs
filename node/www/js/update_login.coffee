@@ -14,6 +14,8 @@ $("a.update_login").click ->
     cur = $("#current")
     pwd = $("#password")
     bis = $("#password_bis")
+    for it in $("input")
+        it.blur()
 
     err = false
     if !cur.val().length

@@ -450,9 +450,14 @@
   };
 
   $(".log_in").click(function() {
-    var err, pwd, usr;
+    var err, it, pwd, usr, _i, _len, _ref;
     usr = $("#username");
     pwd = $("#password");
+    _ref = $("input");
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      it = _ref[_i];
+      it.blur();
+    }
     err = false;
     if (usr.val().length === 0) {
       toggle_input_error(usr, "Missing");
