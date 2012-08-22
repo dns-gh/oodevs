@@ -121,7 +121,8 @@ set_target_folder( runtime_test tests )
 target_link_libraries( runtime_test
     runtime
 )
-add_test_target( runtime_test runtime )
+add_test_target( runtime_test runtime
+    "--data_directory=${root_dir}/src/tests/runtime_test")
 
 ################################################################################
 # host_test

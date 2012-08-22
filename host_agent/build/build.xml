@@ -73,7 +73,8 @@
     </target>
 
     <target name="tests">
-        <poney-test name="runtime_test" dir="${out.dir}/RelWithDebInfo" data="" />
+        <poney-test name="runtime_test" dir="${out.dir}/RelWithDebInfo"
+            data="${src.dir}/tests/runtime_test" />
         <poney-test name="host_test" dir="${out.dir}/RelWithDebInfo" data="" />
         <poney-test name="web_test" dir="${out.dir}/RelWithDebInfo" data="" />
     </target>

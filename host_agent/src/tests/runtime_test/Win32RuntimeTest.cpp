@@ -11,7 +11,7 @@
 #include "Win32MockApi.h"
 
 #include <runtime/Utf8.h>
-#include <runtime/win32/Api_ABC.h>
+#include <runtime/win32/Api.h>
 #include <runtime/win32/Process.h>
 #include <runtime/win32/Runtime.h>
 #include <cpplog/cpplog.hpp>
@@ -20,6 +20,10 @@
 #include <boost/assign/list_of.hpp>
 #include <boost/bind.hpp>
 #include <boost/algorithm/string/join.hpp>
+#include <boost/filesystem.hpp>
+#include <boost/filesystem/path.hpp>
+#include <iostream>
+#include <ctime>
 
 using namespace runtime;
 using test::MockApi;
@@ -119,24 +123,36 @@ BOOST_AUTO_TEST_CASE( runtime_process_gets )
     CheckProcess( *ptr, pid, dummy );
 }
 
+
 BOOST_AUTO_TEST_CASE( runtime_process_starts )
 {
     StdoutLogger log;
-    MockApi api;
+    Api api( log );
     Runtime runtime( log, api );
-    const std::string app = "e:/my_app.exe";
-    const std::vector< std::string > args = boost::assign::list_of( "--root_dir=../../data" )
-                                                                  ( "--exercise=worldwide/Egypt" )
-                                                                  ( "--session=default" );
-    const std::string dir = "e:/dev/lib/vc100";
-    const std::string logs = "e:/log.log";
-    MOCK_EXPECT( api.MakeProcess ).once().with(
-        boost::bind( &StringCompare, _1, app ),
-        boost::bind( &StringCompare, _1, " " + boost::algorithm::join( args, " " ) ),
-        boost::bind( &StringCompare, _1, dir ),
-        boost::bind( &StringCompare, _1, logs )
-        ).returns( ProcessDescriptor( dummy, 1337 ) );
-    MOCK_EXPECT( api.CloseHandle ).once().with( dummy ).returns( true );
-    MOCK_EXPECT( api.GetProcessName ).once().with( dummy, mock::any, mock::any ).returns( 0 );
-    runtime.Start( app, args, dir, logs );
+
+    // Check the test executable is here
+    const std::string app = BOOST_RESOLVE("res/echowin32.exe");
+    boost::system::error_code err;
+    if( !boost::filesystem::is_regular_file( boost::filesystem::path( app ), err ))
+    BOOST_FAIL("Cannot find echowin32.exe, please set --data_directory to the project root: "
+    	    + app );
+
+    // Call it with random arguments
+    std::string randarg = boost::lexical_cast<std::string>( std::time( NULL ));
+    const std::vector< std::string > args
+        = boost::assign::list_of( "hello" )( randarg.c_str() );
+    const std::string dir = boost::filesystem::path( runtime.GetModuleFilename() )
+        .parent_path().string();
+    const std::string logs =
+        (dir / boost::filesystem::path( "runtime_process_starts.log" )).string();
+    boost::shared_ptr< Process_ABC > p = runtime.Start( app, args, dir, logs );
+    BOOST_CHECK(p);
+    BOOST_CHECK_GT(p->GetPid(), 0);
+    p->Join(5000);
+
+    // Check the redirection output
+    std::fstream f(logs, std::ios::in);
+    std::string line;
+    BOOST_CHECK(std::getline(f, line));
+    BOOST_CHECK_EQUAL(line, "hello" + randarg);
 }
