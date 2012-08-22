@@ -47,8 +47,8 @@ void FloodPrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
     {
-        PropertiesDictionary& dico = creation_->Get< PropertiesDictionary >();
-        FloodAttribute* attribute = new FloodAttribute( dico, detection_, creation_->Get< Positions>(), controllers_ );
+        PropertiesDictionary& dictionary = creation_->Get< PropertiesDictionary >();
+        FloodAttribute* attribute = new FloodAttribute( dictionary, detection_, creation_->Get< Positions>(), controllers_ );
         attribute->SetValues( depth_->value(), refDist_->value() );
         creation_->Attach( *attribute );
     }

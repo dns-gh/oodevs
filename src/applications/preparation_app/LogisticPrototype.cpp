@@ -45,8 +45,8 @@ void LogisticPrototype::Commit( const kernel::Team_ABC& team )
 {
     if( creation_ && selected_ != 0 && CheckValidity( team ) )
     {
-        PropertiesDictionary& dico = creation_->Get< PropertiesDictionary >();
-        LogisticAttribute* attribute = new LogisticAttribute( dico, controllers_, *creation_ );
+        PropertiesDictionary& dictionary = creation_->Get< PropertiesDictionary >();
+        LogisticAttribute* attribute = new LogisticAttribute( dictionary, controllers_, *creation_ );
         attribute->SetLogisticBase( *selected_ );
         creation_->Attach( *attribute );
     }

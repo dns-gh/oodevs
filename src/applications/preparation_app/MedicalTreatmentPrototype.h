@@ -16,11 +16,8 @@ namespace kernel
 {
     class Object_ABC;
     class ObjectType;
-    // class ShapeObject;
-    // class ShapeObjectLoader_ABC;
     class Team_ABC;
 }
-// class TeamsModel;
 
 // =============================================================================
 /** @class  MedicalTreatmentPrototype
@@ -40,11 +37,6 @@ public:
     //! @name Operations
     //@{
     virtual void Commit( const kernel::Team_ABC& );
-/*  JCR: TODO $$$$: to be activated
-    virtual bool CanLoad();
-    virtual void CommitShapeObject( const kernel::ShapeObject& importObject );
-    virtual kernel::ShapeObjectLoader_ABC* LoadObjects( const std::string& filename, const kernel::CoordinateConverter_ABC& coordinatesConverter );
-*/
     //@}
 
 private:

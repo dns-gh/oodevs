@@ -49,8 +49,8 @@ void NBCPrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
     {
-        PropertiesDictionary& dico = creation_->Get< PropertiesDictionary >();
-        NBCAttribute* attribute = new NBCAttribute( dico );
+        PropertiesDictionary& dictionary = creation_->Get< PropertiesDictionary >();
+        NBCAttribute* attribute = new NBCAttribute( dictionary );
         {
             attribute->SetState( nbcStates_->GetValue() );
             for( Q3ListViewItem* item = nbcAgents_->firstChild(); item != 0; item = item->nextSibling() )

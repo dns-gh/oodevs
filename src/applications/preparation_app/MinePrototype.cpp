@@ -46,8 +46,8 @@ void MinePrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
     {
-        PropertiesDictionary& dico = creation_->Get< PropertiesDictionary >();
-        MineAttribute* attribute = new MineAttribute( dico );
+        PropertiesDictionary& dictionary = creation_->Get< PropertiesDictionary >();
+        MineAttribute* attribute = new MineAttribute( dictionary );
         attribute->SetDensity( static_cast< float >( density_->value() ) );
         creation_->Attach( *attribute );
     }

@@ -41,8 +41,8 @@ void LodgingPrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
     {
-        kernel::PropertiesDictionary& dico = creation_->Get< kernel::PropertiesDictionary >();
-        LodgingAttribute* attribute = new LodgingAttribute( dico );
+        kernel::PropertiesDictionary& dictionary = creation_->Get< kernel::PropertiesDictionary >();
+        LodgingAttribute* attribute = new LodgingAttribute( dictionary );
         attribute->SetLodgingCapacity( lodgingCapacity_->value() );
         creation_->Attach( *attribute );
     }

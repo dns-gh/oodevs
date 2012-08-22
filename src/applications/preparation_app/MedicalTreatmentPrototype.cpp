@@ -50,8 +50,8 @@ void MedicalTreatmentPrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
     {
-        PropertiesDictionary& dico = creation_->Get< PropertiesDictionary >();
-        MedicalTreatmentAttribute* attribute = new MedicalTreatmentAttribute( resolver_, dico );
+        PropertiesDictionary& dictionary = creation_->Get< PropertiesDictionary >();
+        MedicalTreatmentAttribute* attribute = new MedicalTreatmentAttribute( resolver_, dictionary );
         attribute->SetDoctors( doctors_->value() );
         attribute->SetReferenceID( std::string( referenceID_->text().toAscii().constData() ) );
         for( CIT_Capacities it = capacities_.begin(); it != capacities_.end(); ++it )
@@ -62,44 +62,3 @@ void MedicalTreatmentPrototype::Commit( const kernel::Team_ABC& )
         creation_->Attach( *attribute );
     }
 }
-
-/*
-
-// -----------------------------------------------------------------------------
-// Name: MedicalTreatmentPrototype::CanImport
-// Created: AME 2010-06-28
-// -----------------------------------------------------------------------------
-bool MedicalTreatmentPrototype::CanLoad()
-{
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MedicalTreatmentPrototype::Import
-// Created: AME 2010-06-29
-// -----------------------------------------------------------------------------
-void MedicalTreatmentPrototype::CommitShapeObject( const kernel::ShapeObject& importObject )
-{
-    if( creation_ )
-    {
-        PropertiesDictionary& dico = creation_->Get< PropertiesDictionary >();
-        MedicalTreatmentAttribute* attribute = new MedicalTreatmentAttribute( resolver_ );
-        attribute->SetDoctors( 0 );
-        attribute->SetReferenceID( importObject.GetAttributeValue( "reference" ) ) ;
-        for( CIT_Capacities itcap = capacities_.begin(); itcap != capacities_.end(); ++itcap )
-          attribute->UpdateTreatmentCapacity( std::string( itcap->name_ ), 0 );
-
-        attribute->CreateDictionary( dico );
-        creation_->Attach( *attribute );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: kernel::ShapeObjectLoader_ABC* MedicalTreatmentPrototype::ObjectAttributePrototypeContainer::LoadObjects
-// Created: AME 2010-06-29
-// -----------------------------------------------------------------------------
-kernel::ShapeObjectLoader_ABC* MedicalTreatmentPrototype::LoadObjects( const std::string& filename, const kernel::CoordinateConverter_ABC& coordinatesConverter )
-{
-    return new MedicalShapeLoader( filename, coordinatesConverter );
-}
-*/

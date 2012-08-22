@@ -11,7 +11,6 @@
 #include "ResourceNetworkPrototype.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Positions.h"
-#include "clients_kernel/PropertiesDictionary.h"
 #include "preparation/ResourceNetworkAttribute.h"
 
 using namespace kernel;

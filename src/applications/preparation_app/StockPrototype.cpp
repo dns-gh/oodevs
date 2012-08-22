@@ -45,8 +45,8 @@ void StockPrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
     {
-        PropertiesDictionary& dico = creation_->Get< PropertiesDictionary >();
-        StockAttribute* attribute = new StockAttribute( dico );
+        PropertiesDictionary& dictionary = creation_->Get< PropertiesDictionary >();
+        StockAttribute* attribute = new StockAttribute( dictionary );
         BOOST_FOREACH( DotationWidget* dotationWidget, dotationWidgets_ )
             attribute->SetDotation( *dotationWidget->dotationType_->GetValue(), dotationWidget->stock_->value(), dotationWidget->maxStock_->value() );
         creation_->Attach( *attribute );

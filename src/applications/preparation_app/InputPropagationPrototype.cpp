@@ -43,8 +43,8 @@ void InputPropagationPrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
     {
-        PropertiesDictionary& dico = creation_->Get< PropertiesDictionary >();
-        InputToxicCloudAttribute* attribute = new InputToxicCloudAttribute( dico );
+        PropertiesDictionary& dictionary = creation_->Get< PropertiesDictionary >();
+        InputToxicCloudAttribute* attribute = new InputToxicCloudAttribute( dictionary );
         attribute->SetSource( propagationFiles_->currentText().toAscii().constData(), dataField_->GetValue() );
         attribute->SetExportData( exportData_->isChecked() );
         creation_->Attach( *attribute );

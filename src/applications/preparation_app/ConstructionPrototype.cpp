@@ -42,8 +42,8 @@ void ConstructionPrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
     {
-        kernel::PropertiesDictionary& dico = creation_->Get< kernel::PropertiesDictionary >();
-        ConstructionAttribute* attribute = new ConstructionAttribute( dico );
+        kernel::PropertiesDictionary& dictionary = creation_->Get< kernel::PropertiesDictionary >();
+        ConstructionAttribute* attribute = new ConstructionAttribute( dictionary );
         attribute->SetCompletion( completion_->value() );
         creation_->Attach( *attribute );
     }

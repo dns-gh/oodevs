@@ -45,8 +45,8 @@ void ObstaclePrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
     {
-        PropertiesDictionary& dico = creation_->Get< PropertiesDictionary >();
-        ObstacleAttribute* attribute = new ObstacleAttribute( dico, types_->GetValue() );
+        PropertiesDictionary& dictionary = creation_->Get< PropertiesDictionary >();
+        ObstacleAttribute* attribute = new ObstacleAttribute( dictionary, types_->GetValue() );
         unsigned int activationTime = GetActivationTime();
         attribute->SetActivationTime( activationTime );
         attribute->SetActivityTime( GetActivityTime() );
