@@ -29,12 +29,12 @@ namespace
     void* const dummy = reinterpret_cast< void* >( 0xCAFEBABE );
     const std::wstring wname = L"Zebulon";
 
-    MOCK_BASE_CLASS( MockLog, cpplog::BaseLogger )
+    class StdoutLogger: public cpplog::BaseLogger
     {
-        MOCK_METHOD( sendLogMessage, 1 );
-        MockLog()
+        virtual bool sendLogMessage( cpplog::LogData* logData )
         {
-            MOCK_EXPECT( sendLogMessage ).returns( true );
+            std::cout << logData->stream.str() << std::flush;
+            return true;
         }
     };
 
@@ -95,7 +95,7 @@ namespace
 
 BOOST_AUTO_TEST_CASE( runtime_process_lists )
 {
-    MockLog log;
+    StdoutLogger log;
     MockApi api;
     Runtime runtime( log, api );
     int size = 64;
@@ -110,7 +110,7 @@ BOOST_AUTO_TEST_CASE( runtime_process_lists )
 
 BOOST_AUTO_TEST_CASE( runtime_process_gets )
 {
-    MockLog log;
+    StdoutLogger log;
     MockApi api;
     Runtime runtime( log, api );
     const int pid = 1337;
@@ -121,7 +121,7 @@ BOOST_AUTO_TEST_CASE( runtime_process_gets )
 
 BOOST_AUTO_TEST_CASE( runtime_process_starts )
 {
-    MockLog log;
+    StdoutLogger log;
     MockApi api;
     Runtime runtime( log, api );
     const std::string app = "e:/my_app.exe";
