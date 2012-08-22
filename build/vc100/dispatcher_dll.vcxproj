@@ -117,7 +117,7 @@
       </PrecompiledHeaderOutputFile>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>psapi.lib;Wldap32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>masalloc_d.lib;psapi.lib;Wldap32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <ImportLibrary>$(OutDir)$(ProjectName)-$(CurrentPlatform)-mt-gd.lib</ImportLibrary>
     </Link>
@@ -133,7 +133,7 @@
       </PrecompiledHeaderOutputFile>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>psapi.lib;Wldap32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>masalloc_d.lib;psapi.lib;Wldap32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <ImportLibrary>$(OutDir)$(ProjectName)-$(CurrentPlatform)-mt-gd.lib</ImportLibrary>
     </Link>
@@ -149,7 +149,7 @@
       </PrecompiledHeaderOutputFile>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>psapi.lib;Wldap32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>masalloc.lib;psapi.lib;Wldap32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <ImportLibrary>$(OutDir)$(TargetName).lib</ImportLibrary>
     </Link>
@@ -165,7 +165,7 @@
       </PrecompiledHeaderOutputFile>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>psapi.lib;Wldap32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>masalloc.lib;psapi.lib;Wldap32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <ImportLibrary>$(OutDir)$(TargetName).lib</ImportLibrary>
     </Link>
