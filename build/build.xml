@@ -164,8 +164,7 @@
 
     <target name="library.bml_plugin_dll" depends="library.bml_plugin" description="build bml_plugin dynamic library">
         <build-lib name="bml_plugin_dll" outtype="shared" depends="boost,qt4,terrain,xalan,xerces,protobuf" pattern="bml_plugin-${platform}-mt@{suffix}" suffix="-gd"
-            libs="Qt3Support4,
-                  lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
+            libs="lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
                   lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
@@ -182,8 +181,7 @@
 
     <target name="library.edxlhave_plugin_dll" depends="library.dispatcher" description="build edxlhave_plugin_dll dynamic library">
         <build-lib name="edxlhave_plugin_dll" outtype="shared" depends="boost,qt4,terrain,xalan,xerces,protobuf" pattern="edxlhave_plugin-${platform}-mt@{suffix}" suffix="-gd"
-            libs="Qt3Support4,
-                  lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
+            libs="lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
                   lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
@@ -205,7 +203,7 @@
 
     <target name="library.crossbow_plugin_dll" depends="library.crossbow_plugin" description="build crossbow_plugin dynamic library">
         <build-lib name="crossbow_plugin_dll" outtype="shared" depends="boost,qt4,terrain,xalan,xerces,protobuf" pattern="crossbow_plugin-${platform}-mt@{suffix}" suffix="-gd"
-            libs="gdal_i,Qt3Support4,
+            libs="gdal_i,
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
@@ -235,7 +233,6 @@
     <target name="library.hla_plugin_dll" depends="library.hla_plugin" description="build hla_plugin dynamic library">
         <build-lib name="hla_plugin_dll" outtype="shared" depends="boost,qt4,terrain,xalan,xerces,protobuf" pattern="hla_plugin-${platform}-mt@{suffix}" suffix="-gd"
             libs="HLA,
-                  Qt3Support4,
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
                   lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
@@ -288,7 +285,6 @@
     <target name="library.vrforces_plugin_dll" depends="library.dispatcher,library.vrforces_plugin" description="build vrforces_plugin dynamic library" if="is-vc80">
         <build-lib name="vrforces_plugin_dll" outtype="shared" depends="boost,qt4,terrain,xalan,xerces,protobuf" pattern="vrforces_plugin-${platform}-mt@{suffix}" suffix="-gd"
             libs="libFedtime1516,
-                  Qt3Support4,
                   matrixRT,mtlRT,vlHLA1516RT,vlRT,vlutilRT,vrfcontrolHLA1516,
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
@@ -420,8 +416,7 @@
 
     <target name="library.timeline_plugin_dll" depends="library.timeline_plugin" description="build timeline_plugin dynamic library">
         <build-lib name="timeline_plugin_dll" outtype="shared" depends="boost,qt4,terrain,xalan,xerces,protobuf,openssl" pattern="timeline_plugin-${platform}-mt@{suffix}" suffix="-gd"
-            libs="Qt3Support4,
-                  lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
+            libs="lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
                   lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
                   lib${ant.project.name}_dispatcher-${platform}-mt@{suffix},
@@ -580,9 +575,8 @@
             depends="application.selftraining_app,application.launcher_app,application.package_app"/>
 
     <target name="application.launcher_dll" depends="library.client_proxy,library.clients_gui,library.frontend,library.protocol,library.shield" description="build Sword launcher dll">
-        <build-lib name="launcher_dll" outtype="shared" mode="release" depends="boost,qt4,xerces,xalan,protobuf" pattern="launcher-${platform}-mt"
+        <build-lib name="launcher_dll" outtype="shared" depends="boost,qt4,xerces,xalan,protobuf" pattern="launcher-${platform}-mt"
             libs="zipstream,zlib1,tools,
-                  Qt3Support4,
                   lib${ant.project.name}_clients_gui-${platform}-mt@{suffix},
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
                   lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
@@ -600,10 +594,9 @@
     </target>
 
     <target name="application.dispatcher_dll" depends="library.dispatcher,library.actions,library.clients_kernel,library.ENT,library.plugins,library.shield" description="build Sword Dispatcher dll">
-        <build-lib name="dispatcher_dll" outtype="shared" mode="release" depends="boost,terrain,qt4,xerces,xalan,protobuf" pattern="dispatcher-${platform}-mt"
-            libs="masalloc,tools,
-                  Qt3Support4,
-                  directia-${platform}-mt-4_6,
+        <build-lib name="dispatcher_dll" outtype="shared" depends="boost,terrain,qt4,xerces,xalan,protobuf" pattern="dispatcher-${platform}-mt@{suffix}" suffix="-gd"
+            libs="masalloc,
+                  directia-${platform}-mt@{suffix}-4_6,
                   lib${ant.project.name}_actions-${platform}-mt@{suffix},
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
@@ -621,7 +614,7 @@
                   lib${ant.project.name}_score_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_dispatcher-${platform}-mt@{suffix},
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
-                  lib${ant.project.name}_indicators-${platform}-mt,
+                  lib${ant.project.name}_indicators-${platform}-mt@{suffix},
                   lib${ant.project.name}_meteo-${platform}-mt@{suffix},
                   lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_rpr-${platform}-mt@{suffix},
@@ -634,9 +627,8 @@
     </target>
 
     <target name="application.dispatcher_app" depends="application.dispatcher_dll" description="build Sword Dispatcher executable">
-        <build-app name="dispatcher_app" mode="release" depends="boost,terrain,flexlm,qt4,xerces,xalan"
+        <build-app name="dispatcher_app" depends="boost,terrain,flexlm,qt4,xerces,xalan"
             libs="masalloc,tools,
-                  Qt3Support4,
                   dispatcher-${platform}-mt@{suffix},
                   lib${ant.project.name}_tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_license_gui-${platform}-mt@{suffix},
@@ -662,7 +654,7 @@
                   lib${ant.project.name}_simulation_terrain-${platform}-mt@{suffix},
                   lib${ant.project.name}_simulation_kernel-${platform}-mt@{suffix},
                   lib${ant.project.name}_license_gui-${platform}-mt@{suffix},
-                  core@{suffix}">
+                  core">
             <syslibset libs="dbghelp,psapi,shell32,iphlpapi,advapi32,gdi32"/>
             <includepath path="${libraries.dir}/simulation_kernel"/>
             <defineset>
@@ -677,7 +669,6 @@
     <target name="application.replayer_app" depends="application.dispatcher_dll,library.dispatcher,library.3a,library.score_plugin,library.web_control_plugin" description="build Sword replayer executable">
         <build-app name="replayer_app" depends="terrain,boost,flexlm,qt4,xerces,xalan,protobuf" pattern="replayer_app"
             libs="tools,directia-${platform}-mt-4_6,
-                  Qt3Support4,
                   mongoose@{suffix},
                   dispatcher-${platform}-mt@{suffix},
                   lib${ant.project.name}_tools-${platform}-mt,
@@ -706,7 +697,6 @@
     <target name="application.adaptation_app" depends="library.ENT,library.clients_gui" description="build Sword Adaptation executable">
         <build-app name="adaptation_app" depends="qt4,xerces,xalan,boost,flexlm" excludes="**/XmlResources.cpp"
                    libs="svgl,zipstream,bugtrap,excel@{suffix},
-                         Qt3Support4,
                          lib${ant.project.name}_ENT-${platform}-mt,
                          lib${ant.project.name}_clients_gui-${platform}-mt,
                          lib${ant.project.name}_clients_kernel-${platform}-mt,
@@ -721,7 +711,6 @@
     <target name="application.gaming_app" depends="library.gaming" description="build Sword Gaming executable">
         <build-app name="gaming_app" depends="terrain,xerces,xalan,qt4,boost,flexlm,protobuf"
                    libs="gdal_i,gdal_ogr,log4cxx,svgl,zipstream,zlib1,bugtrap,
-                         Qt3Support4,
                          lib${ant.project.name}_actions-${platform}-mt,
                          lib${ant.project.name}_actions_gui-${platform}-mt,
                          lib${ant.project.name}_clients_gui-${platform}-mt,
@@ -744,7 +733,6 @@
     <target name="application.loadtester_app" depends="library.protocol,library.tools" description="build Sword load testing executable">
         <build-app name="loadtester_app" subsystem="console" depends="boost,protobuf"
                    libs="lib${ant.project.name}_protocol-${platform}-mt,
-                         Qt3Support4,
                          lib${ant.project.name}_MT_Tools-${platform}-mt,
                          lib${ant.project.name}_tools-${platform}-mt">
             <syslibset libs="gdi32,psapi,dbghelp,htmlhelp,advapi32"/>
@@ -755,7 +743,7 @@
     <target name="application.preparation_app" depends="library.preparation,library.frontend" description="build Sword Gaming executable">
         <build-app name="preparation_app" excludes="**/**_Gen.*" depends="terrain,xerces,xalan,qt4,boost,flexlm,protobuf"
                    libs="gdal_i,gdal_ogr,log4cxx,svgl,zipstream,zlib1,bugtrap,
-                         Qt3Support4,geodata,geos_i,spatialite,proj_i,libiconv,
+                         geodata,geos_i,spatialite,proj_i,libiconv,
                          lib${ant.project.name}_actions-${platform}-mt,
                          lib${ant.project.name}_actions_gui-${platform}-mt,
                          lib${ant.project.name}_clients_gui-${platform}-mt,
@@ -778,17 +766,16 @@
 
     <target name="application.selftraining_app" depends="library.frontend,application.launcher_dll" description="build Sword Self-training executable">
         <build-app name="selftraining_app" depends="qt4,boost,xerces,xalan,flexlm,protobuf"
-            libs="bugtrap,zipstream,zlib1,tools
-                    Qt3Support4,
-                    launcher-${platform}-mt@{suffix},
-                    lib${ant.project.name}_ENT-${platform}-mt,
-                    lib${ant.project.name}_frontend-${platform}-mt,
-                    lib${ant.project.name}_clients_gui-${platform}-mt,
-                    lib${ant.project.name}_clients_kernel-${platform}-mt,
-                    lib${ant.project.name}_MT_Tools-${platform}-mt,
-                    lib${ant.project.name}_protocol-${platform}-mt,
-                    lib${ant.project.name}_tools-${platform}-mt,
-                    lib${ant.project.name}_license_gui-${platform}-mt@{suffix}">
+                   libs="bugtrap,zipstream,zlib1,tools
+                         launcher-${platform}-mt@{suffix},
+                         lib${ant.project.name}_ENT-${platform}-mt,
+                         lib${ant.project.name}_frontend-${platform}-mt,
+                         lib${ant.project.name}_clients_gui-${platform}-mt,
+                         lib${ant.project.name}_clients_kernel-${platform}-mt,
+                         lib${ant.project.name}_MT_Tools-${platform}-mt,
+                         lib${ant.project.name}_protocol-${platform}-mt,
+                         lib${ant.project.name}_tools-${platform}-mt,
+                         lib${ant.project.name}_license_gui-${platform}-mt@{suffix}">
             <syslibset libs="gdi32,shell32,htmlhelp,advapi32"/>
             <defineset define="QT3_SUPPORT"/>
         </build-app>
@@ -811,9 +798,8 @@
     </target>
 
     <target name="application.wise_driver_dll" depends="library.client_proxy" description="build Sword WISE driver dll" if="is-vc80">
-        <build-lib name="wise_driver_dll" outtype="shared" mode="release" depends="boost,protobuf" suffix="-gd" pattern="MASAGroup.Sword@{suffix}"
+        <build-lib name="wise_driver_dll" outtype="shared" depends="boost,protobuf" suffix="-gd" pattern="MASAGroup.Sword@{suffix}"
             libs="Common,DriverBase,
-                  Qt3Support4,
                   lib${ant.project.name}_client_proxy-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
                   lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
@@ -828,7 +814,6 @@
     <target name="application.mission_tester_app" depends="library.mission_tester" description="build Sword mission tester executable">
         <build-app name="mission_tester_app" depends="boost,protobuf,qt4,terrain,xalan,xerces"
             libs="lib${ant.project.name}_mission_tester-${platform}-mt@{suffix},
-                  Qt3Support4,
                   lib${ant.project.name}_actions-${platform}-mt@{suffix},
                   lib${ant.project.name}_client_proxy-${platform}-mt@{suffix},
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
@@ -850,7 +835,6 @@
     <target name="application.launcher_test_app" depends="library.protocol,library.frontend,library.shield" description="build application">
         <build-app name="launcher_test_app" subsystem="console" depends="qt4,boost,xerces,protobuf"
             libs="lib${ant.project.name}_protocol-${platform}-mt@{suffix},
-                  Qt3Support4,
                   lib${ant.project.name}_frontend-${platform}-mt,
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
@@ -1005,7 +989,6 @@
     <target name="plugins_test" depends="library.hla_plugin,library.tic,library.script_plugin,library.bml_plugin,library.crossbow_plugin,library.timeline_plugin,web_control_plugin_test">
         <build-test name="plugins" depends="xerces,terrain,boost,openssl,protobuf,qt4"
             libs="directia-${platform}-mt-4_6,gdal_i,
-                  Qt3Support4,
                   lib${ant.project.name}_tools-${platform}-mt,
                   lib${ant.project.name}_ENT-${platform}-mt,
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
@@ -1024,7 +1007,6 @@
     <target name="hla_plugin_test" depends="library.hla_plugin" if="is-vc80">
         <build-test name="hla_plugin" depends="boost,qt4,terrain,xerces,xalan,protobuf"
             libs="HLA,
-                  Qt3Support4,
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
                   lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
@@ -1058,7 +1040,7 @@
 
     <target name="clients_test" depends="library.indicators,library.preparation">
         <build-test name="clients" depends="terrain,boost,qt4,xerces,xalan,protobuf"
-            libs="gdal_i,gdal_ogr,svgl,zipstream,zlib1,Qt3Support4,geodata,geos_i,spatialite,proj_i,libiconv,
+            libs="gdal_i,gdal_ogr,svgl,zipstream,zlib1,geodata,geos_i,spatialite,proj_i,libiconv,
                   lib${ant.project.name}_tools-${platform}-mt,
                   lib${ant.project.name}_ENT-${platform}-mt,
                   lib${ant.project.name}_indicators-${platform}-mt,
@@ -1077,8 +1059,7 @@
 
     <target name="actions_test" depends="library.actions">
         <build-test name="actions" depends="terrain,boost,qt4,xerces,xalan,protobuf"
-            libs="Qt3Support4,
-                  lib${ant.project.name}_tools-${platform}-mt,
+            libs="lib${ant.project.name}_tools-${platform}-mt,
                   lib${ant.project.name}_ENT-${platform}-mt,
                   lib${ant.project.name}_actions-${platform}-mt,
                   lib${ant.project.name}_clients_kernel-${platform}-mt,
@@ -1090,8 +1071,7 @@
 
     <target name="dispatcher_test" depends="library.dispatcher,library.messenger_plugin">
         <build-test name="dispatcher" depends="boost,qt4,xerces,xalan,terrain,protobuf"
-            libs="Qt3Support4,
-                  lib${ant.project.name}_clients_kernel-${platform}-mt,
+            libs="lib${ant.project.name}_clients_kernel-${platform}-mt,
                   lib${ant.project.name}_MT_Tools-${platform}-mt,
                   lib${ant.project.name}_messenger_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
@@ -1104,8 +1084,7 @@
 
     <target name="launcher_test" depends="application.launcher_dll,library.frontend">
         <build-test name="launcher" depends="boost,qt4,xerces,protobuf"
-            libs="Qt3Support4,
-                  launcher-${platform}-mt@{suffix},tools,
+            libs="launcher-${platform}-mt@{suffix},tools,
                   lib${ant.project.name}_frontend-${platform}-mt,
                   lib${ant.project.name}_clients_kernel-${platform}-mt,
                   lib${ant.project.name}_MT_Tools-${platform}-mt,
