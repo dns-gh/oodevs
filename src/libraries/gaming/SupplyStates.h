@@ -47,7 +47,10 @@ class SupplyStates : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             SupplyStates( kernel::Controller& controller, const tools::Resolver_ABC< kernel::EquipmentType >& resolver, const tools::Resolver_ABC< kernel::DotationType >& dotationResolver, kernel::PropertiesDictionary& dico );
+             SupplyStates( kernel::Entity_ABC& entity, kernel::Controller& controller,
+                           const tools::Resolver_ABC< kernel::EquipmentType >& resolver,
+                           const tools::Resolver_ABC< kernel::DotationType >& dotationResolver,
+                           kernel::PropertiesDictionary& dico );
     virtual ~SupplyStates();
     //@}
 
@@ -72,13 +75,14 @@ private:
 public:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
+    kernel::Entity_ABC&                                 entity_;
+    kernel::Controller&                                 controller_;
     const tools::Resolver_ABC< kernel::EquipmentType >& resolver_;
-    const tools::Resolver_ABC< kernel::DotationType >& dotationResolver_;
-    std::auto_ptr< Dotation > resourceNetworkStock_;
-
-    bool             bChainEnabled_;
-    T_Availabilities dispoTransporters_;
+    const tools::Resolver_ABC< kernel::DotationType >&  dotationResolver_;
+    std::auto_ptr< Dotation >                           resourceNetworkStock_;
+    bool                                                bChainEnabled_;
+    T_Availabilities                                    dispoTransporters_;
+    const QString                                       property_;
     //@}
 };
 

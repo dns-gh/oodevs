@@ -18,6 +18,7 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/DictionaryUpdated.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/Protocol.h"
 #include <boost/foreach.hpp>
@@ -39,7 +40,7 @@ LogisticLinks::LogisticLinks( Controller& controller,
                               const tools::Resolver_ABC< kernel::DotationType >& dotationResolver,
                               const kernel::LogisticLevel& currentLevel,
                               PropertiesDictionary& dictionary,
-                              const kernel::Entity_ABC& entity )
+                              kernel::Entity_ABC& entity )
     : controller_       ( controller )
     , dictionary_       ( dictionary )
     , automatResolver_  ( automatResolver )
@@ -47,6 +48,7 @@ LogisticLinks::LogisticLinks( Controller& controller,
     , dotationResolver_ ( dotationResolver )
     , currentLevel_     ( currentLevel )
     , entity_           ( entity )
+    , property_         ( tools::translate( "Logistic", "Logistic links/Superiors" ) )
 {
     CreateDictionary( dictionary );
 }
@@ -66,7 +68,7 @@ LogisticLinks::~LogisticLinks()
 // -----------------------------------------------------------------------------
 void LogisticLinks::CreateDictionary( kernel::PropertiesDictionary& /*dico*/ ) const
 {
-    dictionary_.Register( *this, tools::translate( "Logistic", "Logistic links/Superiors" ), superiors_ );
+    dictionary_.Register( *this, property_, superiors_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -107,6 +109,7 @@ void LogisticLinks::DoUpdate( const sword::LogSupplyQuotas& message )
     LogisticLink* link = FindLogisticLink( *supplier );
     if( link )
         link->Update( message.quotas(), dotationResolver_ );
+    controller_.Update( kernel::DictionaryUpdated( entity_, property_ ) );
     controller_.Update( *this );
 }
 
@@ -125,6 +128,7 @@ void LogisticLinks::DoUpdate( const sword::ChangeLogisticLinks& message )
         superiorLinks_.push_back( boost::shared_ptr< LogisticLink >( new LogisticLink( *superior ) ) );
         superiors_.push_back( superior );
     }
+    controller_.Update( kernel::DictionaryUpdated( entity_, property_ ) );
     controller_.Update( *this );
 }
 
@@ -135,7 +139,6 @@ void LogisticLinks::DoUpdate( const sword::ChangeLogisticLinks& message )
 bool LogisticLinks::HasSuperior( const kernel::Entity_ABC& entity ) const
 {
     return FindLogisticLink( entity ) != 0;
-    //return currentSuperior_ == &entity || nominalSuperior_ == &entity;
 }
 
 // -----------------------------------------------------------------------------

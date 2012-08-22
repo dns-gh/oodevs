@@ -867,6 +867,10 @@
         <source>Tactical priorities</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Medical system</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MedicalTreatment</name>

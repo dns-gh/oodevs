@@ -77,7 +77,7 @@ void Logistics::DoUpdate( const sword::LogSupplyState& message )
 {
     if( ! holder_.Retrieve< SupplyStates >() )
     {
-        SupplyStates* ext = new SupplyStates( controller_, static_.objectTypes_, static_.objectTypes_, dico_);
+        SupplyStates* ext = new SupplyStates( holder_, controller_, static_.objectTypes_, static_.objectTypes_, dico_);
         holder_.Attach( *ext );
         ext->DoUpdate( message );
     }

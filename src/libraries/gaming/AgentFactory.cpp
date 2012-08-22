@@ -131,8 +131,8 @@ kernel::Automat_ABC* AgentFactory::Create( const sword::AutomatCreation& message
     result->Attach( *new LogSupplyConsigns( controllers_.controller_ ) );
     result->Attach( *new LogFuneralConsigns( controllers_.controller_ ) );
     result->Attach( *new Reports( *result, controllers_.controller_, static_.reportFactory_ ) );
-    result->Attach<kernel::Dotations_ABC>( *new Dotations( controllers_.controller_, static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
-    result->Attach( *new Equipments( controllers_.controller_, static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
+    result->Attach<kernel::Dotations_ABC>( *new Dotations( *result,controllers_.controller_, static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
+    result->Attach( *new Equipments( *result,controllers_.controller_, static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new Troops( controllers_.controller_, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new TroopsCompatibilityVersion( controllers_.controller_, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new MissionParameters( controllers_.controller_, model_.actionFactory_ ) );
@@ -175,8 +175,8 @@ kernel::Agent_ABC* AgentFactory::Create( const sword::UnitCreation& message )
 
     result->Attach< kernel::HumanFactors_ABC >( *new HumanFactors( *result, controllers_.controller_, dico ) );
     result->Attach( *new Reinforcements( *result, controllers_.controller_, model_.agents_, dico ) );
-    result->Attach<kernel::Dotations_ABC>( *new Dotations( controllers_.controller_, static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
-    result->Attach( *new Equipments( controllers_.controller_, static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
+    result->Attach<kernel::Dotations_ABC>( *new Dotations( *result,controllers_.controller_, static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
+    result->Attach( *new Equipments( *result,controllers_.controller_, static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new Lendings( controllers_.controller_, model_.agents_, static_.objectTypes_ ) );
     result->Attach( *new Borrowings( controllers_.controller_, model_.agents_, static_.objectTypes_ ) );
     result->Attach( *new Transports( *result, controllers_.controller_, model_.agents_, dico ) );

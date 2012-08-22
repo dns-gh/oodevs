@@ -867,6 +867,10 @@
         <source>Tactical priorities</source>
         <translation>Priorités tactiques</translation>
     </message>
+    <message>
+        <source>Medical system</source>
+        <translation>Chaîne médicale</translation>
+    </message>
 </context>
 <context>
     <name>MedicalTreatment</name>

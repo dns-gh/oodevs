@@ -57,9 +57,9 @@ Automat::~Automat()
 // -----------------------------------------------------------------------------
 void Automat::CreateDictionary( kernel::PropertiesDictionary& dico ) const
 {
-    dico.Register( *this, tools::translate( "Automat", "Info/Identifier" ), id_ );
-    dico.Register( *this, tools::translate( "Automat", "Info/Name" ), name_ );
-    dico.Register( *this, tools::translate( "Automat", "Info/Type" ), type_ );
+    dico.Register( *this, tools::translate( "Automat", "Info/Identifier" ), id_, true );
+    dico.Register( *this, tools::translate( "Automat", "Info/Name" ), name_, true);
+    dico.Register( *this, tools::translate( "Automat", "Info/Type" ), type_, true );
     if( type_.IsTC2() ) //$$$ NAZE
         dico.Register( *this, tools::translate( "Automat", "Info/LogisticLevel" ), *logisticLevel_ );
 }

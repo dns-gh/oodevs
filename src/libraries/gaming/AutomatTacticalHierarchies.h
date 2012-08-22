@@ -20,7 +20,6 @@ namespace sword
 
 namespace kernel
 {
-    class PropertiesDictionary;
     class Automat_ABC;
     class Formation_ABC;
 }

@@ -61,7 +61,7 @@ public:
                             const tools::Resolver_ABC< kernel::DotationType >& dotationResolver,
                             const kernel::LogisticLevel& currentLevel,
                             kernel::PropertiesDictionary& dictionary,
-                            const kernel::Entity_ABC& entity );
+                            kernel::Entity_ABC& entity );
     virtual ~LogisticLinks();
     //@}
 
@@ -106,7 +106,8 @@ private:
     const tools::Resolver_ABC< kernel::DotationType >& dotationResolver_;
     T_SuperiorLinks superiorLinks_;
     std::vector< const kernel::Entity_ABC* > superiors_;
-    const kernel::Entity_ABC& entity_;
+    kernel::Entity_ABC& entity_;
+    const QString property_;
     //@}
 };
 

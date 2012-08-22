@@ -13,6 +13,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/DictionaryUpdated.h"
 #include "clients_kernel/Tools.h"
 #include "ENT/ENT_Enums_Gen.h"
 #include "protocol/Protocol.h"
@@ -23,14 +24,16 @@ using namespace kernel;
 // Name: Equipments constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Equipments::Equipments( Controller& controller, const tools::Resolver_ABC< kernel::EquipmentType >& resolver, PropertiesDictionary& dico
+Equipments::Equipments( kernel::Entity_ABC& entity, Controller& controller, const tools::Resolver_ABC< kernel::EquipmentType >& resolver, PropertiesDictionary& dico
                        , const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver
                        , const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver
                        , const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver )
     : HierarchicExtension_ABC( automatResolver, formationResolver, teamResolver )
+    , entity_    ( entity )
     , controller_( controller )
-    , resolver_( resolver )
-    , dico_( dico )
+    , resolver_  ( resolver )
+    , dico_      ( dico )
+    , property_  ( tools::translate( "Equipments", "Equipments" ) )
 {
     // NOTHING
 }
@@ -93,6 +96,7 @@ void Equipments::Update( const std::vector< Equipment >& differences )
     if( const kernel::Entity_ABC* superior = GetSuperior() )
         if( Equipments* equipments = const_cast< Equipments* >( superior->Retrieve< Equipments >() ) )
             equipments->Update( differences );
+    controller_.Update( kernel::DictionaryUpdated( entity_, property_ ) );
     controller_.Update( *this );
 }
 
@@ -123,7 +127,7 @@ void Equipments::SetSuperior( const kernel::Entity_ABC& automat )
 // -----------------------------------------------------------------------------
 void Equipments::AddToDictionary( const Equipment& equipment )
 {
-    const QString baseName = tools::translate( "Equipments", "Equipments" ) + "/" + equipment.GetName() + "/";
+    const QString baseName = property_ + "/" + equipment.GetName() + "/";
 
     dico_.Register( *this, baseName + tools::translate( "Equipments", "Available" ), equipment.available_ );
     dico_.Register( *this, baseName + tools::translate( "Equipments", "Unavailable" ), equipment.unavailable_ );

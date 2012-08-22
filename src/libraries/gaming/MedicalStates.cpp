@@ -90,7 +90,7 @@ void MedicalStates::DoUpdate( const sword::LogMedicalState& message )
             dispoDoctors_[i] = kernel::Availability( resolver_, message.doctors().elem( i ) );
     }
     if( message.has_chain() || message.has_priorities() || message.has_tactical_priorities() )
-        controller_.Update( kernel::DictionaryUpdated( entity_, tools::translate( "Reinforcements", "Reinforcements" ) ) );
+        controller_.Update( kernel::DictionaryUpdated( entity_, tools::translate( "MedicalStates", "Medical system" ) ) );
 
     controller_.Update( *this );
 }

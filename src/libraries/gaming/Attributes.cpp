@@ -66,7 +66,7 @@ Attributes::Attributes( kernel::Entity_ABC& entity, Controller& controller, cons
     , bUnderground_                     ( false )
     , bRefugeesManaged_                 ( false )
     , aggregated_                       ( false )
-    , isPC_( false )
+    , isPC_                             ( false )
     , surrenderedTo_                    ( 0 )
     , fLodgingSatisfactionPercent_      ( 0.0f )
     , fSecuritySatisfactionPercent_     ( 0.0f )
@@ -129,10 +129,10 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
 {
     std::set< std::string > updated;
 
-    UPDATE_SUBPROPERTY( message, nDirection_, direction, heading, "Info", updated );
-    UPDATE_PROPERTY( message, nRawOpState_, raw_operational_state, "Info", updated );
-    UPDATE_PROPERTY( message, nSpeed_, speed, "Info", updated );
-    UPDATE_PROPERTY( message, bUnderground_, underground, "Info", updated );
+    UPDATE_SUBPROPERTY( message, nDirection_, direction, heading, "Info/Heading", updated );
+    UPDATE_PROPERTY( message, nRawOpState_, raw_operational_state, "Info/Operational state", updated );
+    UPDATE_PROPERTY( message, nSpeed_, speed, "Info/Speed", updated );
+    UPDATE_PROPERTY( message, bUnderground_, underground, "Info/Underground", updated );
 
     if( message.has_neutralized() )
     {
@@ -140,13 +140,13 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
         if( bNeutralized != bNeutralized_ )
         {
             bNeutralized_ = bNeutralized;
-            updated.insert( "Info" );
+            updated.insert( "Info/Neutralized" );
             UpdateHierarchies();
         }
     }
 
-    UPDATE_PROPERTY( message, nCurrentPosture_, new_posture, "Stances", updated );
-    UPDATE_PROPERTY( message, nInstallationState_, installation, "Stances", updated );
+    UPDATE_PROPERTY( message, nCurrentPosture_, new_posture, "Stances/Current stance", updated );
+    UPDATE_PROPERTY( message, nInstallationState_, installation, "Stances/Setup state", updated );
 
     if( message.has_communications() && message.communications().has_jammed() )
     {
@@ -154,12 +154,12 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
         if( bCommJammed != bCommJammed_ )
         {
             bCommJammed_ = bCommJammed;
-            updated.insert( "Communications" );
+            updated.insert( "Communications/Jammed" );
         }
     }
 
-    UPDATE_PROPERTY( message, bRadioEmitterSilence_, radio_emitter_disabled, "Communications", updated );
-    UPDATE_PROPERTY( message, bRadioReceiverSilence_, radio_receiver_disabled, "Communications", updated );
+    UPDATE_PROPERTY( message, bRadioEmitterSilence_, radio_emitter_disabled, "Communications/Radio Emitter silence", updated );
+    UPDATE_PROPERTY( message, bRadioReceiverSilence_, radio_receiver_disabled, "Communications/Radio Receiver silence", updated );
 
     if( message.has_operational_state() )
     {
@@ -167,15 +167,15 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
         if( nOpState != nOpState_ )
         {
             nOpState_ = nOpState;
-            updated.insert( "Decisional state" );
+            updated.insert( "Decisional state/Operational state" );
             UpdateHierarchies();
         }
     }
 
-    UPDATE_PROPERTY( message, nRulesOfEngagementState_, roe, "Decisional state", updated );
-    UPDATE_PROPERTY( message, nCloseCombatState_, meeting_engagement, "Decisional state", updated );
-    UPDATE_PROPERTY( message, nFightRateState_, force_ratio, "Decisional state", updated );
-    UPDATE_PROPERTY( message, bPrisoner_, prisoner, "Military state", updated );
+    UPDATE_PROPERTY( message, nRulesOfEngagementState_, roe, "Decisional state/Rules of engagement", updated );
+    UPDATE_PROPERTY( message, nCloseCombatState_, meeting_engagement, "Decisional state/Intention", updated );
+    UPDATE_PROPERTY( message, nFightRateState_, force_ratio, "Decisional state/Force ratio", updated );
+    UPDATE_PROPERTY( message, bPrisoner_, prisoner, "Military state/Prisoner", updated );
 
     if( message.has_surrendered_unit() )
     {
@@ -184,11 +184,11 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
         if( surrenderedTo != surrenderedTo_ )
         {
             surrenderedTo_ = surrenderedTo;
-            updated.insert( "Military state" );
+            updated.insert( "Military state/Surrender" );
         }
     }
 
-    UPDATE_PROPERTY( message, bRefugeesManaged_, refugees_managed, "Military state", updated );
+    UPDATE_PROPERTY( message, bRefugeesManaged_, refugees_managed, "Military state/Refugees picked up", updated );
 
     if( message.has_satisfaction() )
     {
@@ -198,7 +198,7 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
             if( fLodgingSatisfactionPercent_ != fLodgingSatisfactionPercent )
             {
                 fLodgingSatisfactionPercent_ = fLodgingSatisfactionPercent;
-                updated.insert( "Satisfaction" );
+                updated.insert( "Satisfaction/Lodging" );
             }
         }
         if( message.satisfaction().has_safety() )
@@ -207,7 +207,7 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
             if( fSecuritySatisfactionPercent_ != fSecuritySatisfactionPercent )
             {
                 fSecuritySatisfactionPercent_ = fSecuritySatisfactionPercent;
-                updated.insert( "Satisfaction" );
+                updated.insert( "Satisfaction/Security" );
             }
         }
         if( message.satisfaction().has_access_to_health_care() )
@@ -216,7 +216,7 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
             if( fHealthSatisfactionPercent_ != fHealthSatisfactionPercent )
             {
                 fHealthSatisfactionPercent_ = fHealthSatisfactionPercent;
-                updated.insert( "Satisfaction" );
+                updated.insert( "Satisfaction/Health" );
             }
         }
     }

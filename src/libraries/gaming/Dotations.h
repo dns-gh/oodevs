@@ -46,7 +46,7 @@ class Dotations : public kernel::Dotations_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Dotations( kernel::Controller& controller, const tools::Resolver_ABC< kernel::DotationType >& resolver, kernel::PropertiesDictionary& dico
+             Dotations( kernel::Entity_ABC& entity, kernel::Controller& controller, const tools::Resolver_ABC< kernel::DotationType >& resolver, kernel::PropertiesDictionary& dico
                       , const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver, const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver, const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver );
     virtual ~Dotations();
     //@}
@@ -75,10 +75,12 @@ private:
 public:
     //! @name Member data
     //@{
+    kernel::Entity_ABC& entity_;
     kernel::Controller& controller_;
     const tools::Resolver_ABC< kernel::DotationType >& resolver_;
     kernel::PropertiesDictionary& dictionary_;
     bool bEmptyGasTank_;
+    const QString property_;
     //@}
 };
 

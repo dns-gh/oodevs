@@ -94,17 +94,16 @@ void Inhabitant::CreateDictionary()
 {
     PropertiesDictionary& dictionary = *new PropertiesDictionary( controller_ );
     Attach( dictionary );
-    const Inhabitant& self = *this;
     const Entity_ABC& selfEntity = static_cast< const Entity_ABC& >( *this );
-    dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Info/Identifier" ), self.id_ );
-    dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Info/Name" ), self.name_ );
-    dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Info/Type" ), self.type_ );
-    dictionary.Register( selfEntity, tools::translate( "Inhabitant", "M\\F\\C Repartition/Male" ), self.male_ );
-    dictionary.Register( selfEntity, tools::translate( "Inhabitant", "M\\F\\C Repartition/Female" ), self.female_ );
-    dictionary.Register( selfEntity, tools::translate( "Inhabitant", "M\\F\\C Repartition/Children" ), self.children_ );
-    dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Satisfactions/Health" ), self.healthSatisfaction_ );
-    dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Satisfactions/Safety" ), self.safetySatisfaction_ );
-    dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Satisfactions/Lodging" ), self.lodgingSatisfaction_ );
+    dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Info/Identifier" ), id_, true );
+    dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Info/Name" ), name_, true );
+    dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Info/Type" ), type_, true );
+    dictionary.Register( selfEntity, tools::translate( "Inhabitant", "M\\F\\C Repartition/Male" ), male_, true );
+    dictionary.Register( selfEntity, tools::translate( "Inhabitant", "M\\F\\C Repartition/Female" ), female_, true );
+    dictionary.Register( selfEntity, tools::translate( "Inhabitant", "M\\F\\C Repartition/Children" ), children_, true );
+    dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Satisfactions/Health" ), healthSatisfaction_, true );
+    dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Satisfactions/Safety" ), safetySatisfaction_, true );
+    dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Satisfactions/Lodging" ), lodgingSatisfaction_, true );
     UpdateUrbanObjectsDictionnary();
 }
 

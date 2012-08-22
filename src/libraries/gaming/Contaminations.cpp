@@ -18,6 +18,7 @@
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include "statusicons.h"
+#include <boost/foreach.hpp>
 
 using namespace kernel;
 
@@ -65,8 +66,8 @@ void Contaminations::DoUpdate( const sword::UnitAttributes& message )
 {
     std::set< std::string > updated;
 
-    UPDATE_SUBPROPERTY( message, nContamination_, contamination_state, percentage, "NBC", updated );
-    UPDATE_SUBPROPERTY( message, quantity_, contamination_state, quantity, "NBC", updated );
+    UPDATE_SUBPROPERTY( message, nContamination_, contamination_state, percentage, "NBC/Contamination level", updated );
+    UPDATE_SUBPROPERTY( message, quantity_, contamination_state, quantity, "NBC/Contamination quantity", updated );
 
     if( nContamination_ == 0 )
         contaminatingNbcAgents_.clear();
@@ -77,12 +78,13 @@ void Contaminations::DoUpdate( const sword::UnitAttributes& message )
         contaminatingNbcAgents_.reserve( message.contamination_agents().elem_size() );
         for( int i = 0; i < message.contamination_agents().elem_size(); ++i )
             contaminatingNbcAgents_.push_back( &resolver_.Get( message.contamination_agents().elem( i ).id() ) );
+        updated.insert( "NBC/Contaminating agents" );
     }
 
-   UPDATE_PROPERTY( message, bNbcProtectionSuitWorn_, protective_suits, "NBC", updated );
+   UPDATE_PROPERTY( message, bNbcProtectionSuitWorn_, protective_suits, "NBC/NBC suit", updated );
 
-    if( !updated.empty() )
-        controller_.Update( kernel::DictionaryUpdated( entity_, tools::translate( "NBC", "NBC" ) ) );
+   BOOST_FOREACH( const std::string& content, updated )
+       controller_.Update( kernel::DictionaryUpdated( entity_, tools::translate( "NBC", content.c_str() ) ) );
 
     controller_.Update( *this );
 }

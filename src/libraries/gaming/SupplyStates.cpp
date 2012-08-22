@@ -12,6 +12,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/DictionaryUpdated.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/Protocol.h"
 
@@ -21,10 +22,12 @@ using namespace kernel;
 // Name: SupplyStates constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-SupplyStates::SupplyStates( Controller& controller, const tools::Resolver_ABC< kernel::EquipmentType >& resolver, const tools::Resolver_ABC< DotationType >& dotationResolver, PropertiesDictionary& dico )
-    : controller_( controller )
-    , resolver_( resolver )
+SupplyStates::SupplyStates( kernel::Entity_ABC& entity, Controller& controller, const tools::Resolver_ABC< kernel::EquipmentType >& resolver, const tools::Resolver_ABC< DotationType >& dotationResolver, PropertiesDictionary& dico )
+    : entity_          ( entity )
+    , controller_      ( controller )
+    , resolver_        ( resolver )
     , dotationResolver_( dotationResolver )
+    , property_        ( tools::translate( "SupplyStates", "Supply system/System enabled" ) )
 {
     CreateDictionary( dico );
 }
@@ -44,7 +47,7 @@ SupplyStates::~SupplyStates()
 // -----------------------------------------------------------------------------
 void SupplyStates::CreateDictionary( kernel::PropertiesDictionary& dico ) const
 {
-    dico.Register( *this, tools::translate( "SupplyStates", "Supply system/System enabled" ), bChainEnabled_ );
+    dico.Register( entity_, property_, bChainEnabled_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,6 +86,9 @@ void SupplyStates::DoUpdate( const sword::LogSupplyState& message )
             resourceNetworkStock_.reset( new Dotation( dotationResolver_.Get( id ), message.network_stock().quantity() ) );
     }
 
+    if( message.has_chain() )
+        controller_.Update( kernel::DictionaryUpdated( entity_, property_ ) );
+        
     controller_.Update( *this );
 }
 

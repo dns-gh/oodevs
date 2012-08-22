@@ -63,10 +63,10 @@ void HumanFactors::CreateDictionary( kernel::PropertiesDictionary& dictionary ) 
 void HumanFactors::DoUpdate( const sword::UnitAttributes& message )
 {
     std::set< std::string > updated;
-    UPDATE_PROPERTY( message, morale_, morale, "Human factors", updated );
-    UPDATE_PROPERTY( message, experience_, experience, "Human factors", updated );
-    UPDATE_PROPERTY( message, tiredness_, tiredness, "Human factors", updated );
-    UPDATE_PROPERTY( message, stress_, stress, "Human factors", updated );
+    UPDATE_PROPERTY( message, morale_, morale, "Human factors/Moral", updated );
+    UPDATE_PROPERTY( message, experience_, experience, "Human factors/Experience", updated );
+    UPDATE_PROPERTY( message, tiredness_, tiredness, "Human factors/Tiredness", updated );
+    UPDATE_PROPERTY( message, stress_, stress, "Human factors/Stress", updated );
     BOOST_FOREACH( const std::string& content, updated )
         controller_.Update( kernel::DictionaryUpdated( entity_, tools::translate( "Attributes", content.c_str() ) ) );
     controller_.Update( *(HumanFactors_ABC*)this );

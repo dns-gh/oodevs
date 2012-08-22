@@ -15,6 +15,7 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/DictionaryUpdated.h"
 #include "clients_kernel/Tools.h"
 #include "statusicons.h"
 #include "protocol/SimulationSenders.h"
@@ -25,13 +26,15 @@ using namespace kernel;
 // Name: Dotations constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Dotations::Dotations( Controller& controller, const tools::Resolver_ABC< DotationType >& resolver, PropertiesDictionary& dico
+Dotations::Dotations( kernel::Entity_ABC& entity, Controller& controller, const tools::Resolver_ABC< DotationType >& resolver, PropertiesDictionary& dico
                     , const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver, const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver, const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver )
     : HierarchicExtension_ABC( automatResolver, formationResolver, teamResolver )
-    , controller_( controller )
-    , resolver_( resolver )
-    , dictionary_( dico )
+    , entity_       ( entity )
+    , controller_   ( controller )
+    , resolver_     ( resolver )
+    , dictionary_   ( dico )
     , bEmptyGasTank_( false )
+    , property_     ( tools::translate( "Dotations", "Resources" ) )
 {
     CreateDictionary( dico );
 }
@@ -92,7 +95,7 @@ void Dotations::Update( const std::vector< Dotation >& differences )
         {
             dotation = new Dotation( *it );
             Register( it->type_->GetId(), *dotation );
-            dictionary_.Register( *this, tools::translate( "Dotations", "Resources" ) + "/" + it->type_->GetName().c_str(), ( ( const Dotation& ) *dotation ).quantity_ ); // $$$$ AGE 2006-06-22:
+            dictionary_.Register( *this, property_ + "/" + it->type_->GetName().c_str(), ( ( const Dotation& ) *dotation ).quantity_ ); // $$$$ AGE 2006-06-22:
         }
         else
             *dotation = *dotation + *it;
@@ -102,6 +105,8 @@ void Dotations::Update( const std::vector< Dotation >& differences )
     if( kernel::Entity_ABC* superior = const_cast< kernel::Entity_ABC* >( GetSuperior() ) )
         if( Dotations* dotations = dynamic_cast< Dotations* >( superior->Retrieve< Dotations_ABC >() ) )
             dotations->Update( differences );
+    controller_.Update( kernel::DictionaryUpdated( entity_, property_ ) );
+
     controller_.Update( *(Dotations_ABC*)this );
 }
 
