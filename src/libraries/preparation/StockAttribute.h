@@ -38,8 +38,8 @@ class StockAttribute : public kernel::StockAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit StockAttribute( kernel::PropertiesDictionary& dico );
-    StockAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver, kernel::PropertiesDictionary& dico );
+    explicit StockAttribute( kernel::PropertiesDictionary& dictionary );
+             StockAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver, kernel::PropertiesDictionary& dictionary );
     virtual ~StockAttribute();
     //@}
 
@@ -57,7 +57,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dico );
+    void CreateDictionary( kernel::PropertiesDictionary& dictionary );
     void ReadResource( xml::xistream& xis, const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver );
     //@}
 };

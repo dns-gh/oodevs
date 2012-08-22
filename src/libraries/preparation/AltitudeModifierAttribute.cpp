@@ -62,14 +62,15 @@ private:
 // Name: AltitudeModifierAttribute constructor
 // Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
-AltitudeModifierAttribute::AltitudeModifierAttribute( kernel::PropertiesDictionary& dico, kernel::DetectionMap& detection, const kernel::Object_ABC& object, kernel::Controllers& controllers )
+AltitudeModifierAttribute::AltitudeModifierAttribute( kernel::PropertiesDictionary& dictionary, kernel::DetectionMap& detection,
+                                                      const kernel::Object_ABC& object, kernel::Controllers& controllers )
     : detection_  ( detection )
     , object_     ( object )
     , controllers_( controllers )
     , height_     ( 0, Units::meters )
     , oldHeight_  ( 0 )
 {
-    CreateDictionary( dico );
+    CreateDictionary( dictionary );
     controllers_.Register( *this );
 }
 
@@ -77,14 +78,15 @@ AltitudeModifierAttribute::AltitudeModifierAttribute( kernel::PropertiesDictiona
 // Name: AltitudeModifierAttribute constructor
 // Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
-AltitudeModifierAttribute::AltitudeModifierAttribute( xml::xistream& xis, kernel::DetectionMap& detection, const kernel::Object_ABC& object, kernel::PropertiesDictionary& dico, kernel::Controllers& controllers )
+AltitudeModifierAttribute::AltitudeModifierAttribute( xml::xistream& xis, kernel::DetectionMap& detection, const kernel::Object_ABC& object,
+                                                      kernel::PropertiesDictionary& dictionary, kernel::Controllers& controllers )
     : detection_  ( detection )
     , object_     ( object )
     , controllers_( controllers )
     , height_     ( 0, Units::meters )
     , oldHeight_  ( 0 )
 {
-    CreateDictionary( dico );
+    CreateDictionary( dictionary );
     controllers_.Register( *this );
     SetHeight( xis.attribute< unsigned int >( "height" ) );
 }
@@ -187,9 +189,9 @@ void AltitudeModifierAttribute::EndDrag() const
 // Name: AltitudeModifierAttribute::CreateDictionary
 // Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
-void AltitudeModifierAttribute::CreateDictionary( PropertiesDictionary& dico )
+void AltitudeModifierAttribute::CreateDictionary( PropertiesDictionary& dictionary )
 {
-    dico.Register( *this, tools::translate( "AltitudeModifierAttribute", "Info/Altitude modifier/Height" ), height_ );
+    dictionary.Register( *this, tools::translate( "AltitudeModifierAttribute", "Info/Altitude modifier/Height" ), height_ );
 }
 
 // -----------------------------------------------------------------------------

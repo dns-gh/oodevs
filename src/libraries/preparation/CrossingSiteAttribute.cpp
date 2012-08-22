@@ -20,30 +20,30 @@ using namespace kernel;
 // Name: CrossingSiteAttribute constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-CrossingSiteAttribute::CrossingSiteAttribute( kernel::PropertiesDictionary& dico )
-    : width_( 0, Units::meters )
-    , depth_( 0, Units::meters )
-    , speed_( 0, Units::metersPerSecond )
+CrossingSiteAttribute::CrossingSiteAttribute( kernel::PropertiesDictionary& dictionary )
+    : width_            ( 0, Units::meters )
+    , depth_            ( 0, Units::meters )
+    , speed_            ( 0, Units::metersPerSecond )
     , needsConstruction_( false )
 {
-    CreateDictionary( dico );
+    CreateDictionary( dictionary );
 }
 
 // -----------------------------------------------------------------------------
 // Name: CrossingSiteAttribute constructor
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-CrossingSiteAttribute::CrossingSiteAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dico )
-    : width_( 0, Units::meters )
-    , depth_( 0, Units::meters )
-    , speed_( 0, Units::metersPerSecond )
+CrossingSiteAttribute::CrossingSiteAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary )
+    : width_            ( 0, Units::meters )
+    , depth_            ( 0, Units::meters )
+    , speed_            ( 0, Units::metersPerSecond )
     , needsConstruction_( false )
 {
     xis >> xml::content( "width", (int&)(width_.value_) )
         >> xml::content( "depth", (int&)(depth_.value_) )
         >> xml::content( "speed", (int&)(speed_.value_) )
         >> xml::content( "construction-needed", needsConstruction_ );
-    CreateDictionary( dico );
+    CreateDictionary( dictionary );
 }
 
 // -----------------------------------------------------------------------------
@@ -122,10 +122,10 @@ void CrossingSiteAttribute::SerializeAttributes( xml::xostream& xos ) const
 // Name: CrossingSiteAttribute::CreateDictionary
 // Created: SBO 2006-10-30
 // -----------------------------------------------------------------------------
-void CrossingSiteAttribute::CreateDictionary( kernel::PropertiesDictionary& dico )
+void CrossingSiteAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary )
 {
-    dico.Register( *this, tools::translate( "CrossingSiteAttribute", "Info/Crossing site attributes/Width" ), width_ );
-    dico.Register( *this, tools::translate( "CrossingSiteAttribute", "Info/Crossing site attributes/Depth" ), depth_ );
-    dico.Register( *this, tools::translate( "CrossingSiteAttribute", "Info/Crossing site attributes/Speed" ), speed_ );
-    dico.Register( *this, tools::translate( "CrossingSiteAttribute", "Info/Crossing site attributes/Build river banks" ), needsConstruction_ );
+    dictionary.Register( *this, tools::translate( "CrossingSiteAttribute", "Info/Crossing site attributes/Width" ), width_ );
+    dictionary.Register( *this, tools::translate( "CrossingSiteAttribute", "Info/Crossing site attributes/Depth" ), depth_ );
+    dictionary.Register( *this, tools::translate( "CrossingSiteAttribute", "Info/Crossing site attributes/Speed" ), speed_ );
+    dictionary.Register( *this, tools::translate( "CrossingSiteAttribute", "Info/Crossing site attributes/Build river banks" ), needsConstruction_ );
 }

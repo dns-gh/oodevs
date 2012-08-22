@@ -21,18 +21,18 @@ using namespace kernel;
 // Name: FireAttribute constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-FireAttribute::FireAttribute( kernel::PropertiesDictionary& dico )
-    : fireClass_( 0 )
+FireAttribute::FireAttribute( kernel::PropertiesDictionary& dictionary )
+    : fireClass_          ( 0 )
     , maxCombustionEnergy_( 0 )
 {
-    CreateDictionary( dico );
+    CreateDictionary( dictionary );
 }
 
 // -----------------------------------------------------------------------------
 // Name: FireAttribute constructor
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-FireAttribute::FireAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::FireClass, std::string >& FireClasses, kernel::PropertiesDictionary& dico )
+FireAttribute::FireAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::FireClass, std::string >& FireClasses, kernel::PropertiesDictionary& dictionary )
 {
     std::string className;
     xis >> xml::attribute( "class", className )
@@ -40,7 +40,7 @@ FireAttribute::FireAttribute( xml::xistream& xis, const tools::Resolver_ABC< ker
     fireClass_ = FireClasses.Find( className );
     if( !fireClass_ )
         xis.error( "Unknown 'Fire class' '" + className + "' for fire object attribute" );
-    CreateDictionary( dico );
+    CreateDictionary( dictionary );
 }
 
 // -----------------------------------------------------------------------------
@@ -97,8 +97,8 @@ void FireAttribute::SerializeAttributes( xml::xostream& xos ) const
 // Name: FireAttribute::CreateDictionary
 // Created: SBO 2006-10-30
 // -----------------------------------------------------------------------------
-void FireAttribute::CreateDictionary( kernel::PropertiesDictionary& dico )
+void FireAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary )
 {
-    dico.Register( *this, tools::translate( "FireAttribute", "Info/Fire attributes/Fire class" ), fireClass_ );
-    dico.Register( *this, tools::translate( "FireAttribute", "Info/Fire attributes/Max combustion energy" ), maxCombustionEnergy_ );
+    dictionary.Register( *this, tools::translate( "FireAttribute", "Info/Fire attributes/Fire class" ), fireClass_ );
+    dictionary.Register( *this, tools::translate( "FireAttribute", "Info/Fire attributes/Max combustion energy" ), maxCombustionEnergy_ );
 }

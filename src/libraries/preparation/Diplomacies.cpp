@@ -24,27 +24,29 @@ using namespace kernel;
 // Name: Diplomacies constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-Diplomacies::Diplomacies( Controller& controller, const tools::Resolver_ABC< Team_ABC >& resolver, const Team_ABC& team, PropertiesDictionary& dico, TeamKarmas& karmas )
+Diplomacies::Diplomacies( Controller& controller, const tools::Resolver_ABC< Team_ABC >& resolver,
+                          const Team_ABC& team, PropertiesDictionary& dictionary, TeamKarmas& karmas )
     : controller_( controller )
     , resolver_  ( resolver )
     , team_      ( team )
     , karma_     ( &karmas.GetDefault() )
 {
-    CreateDictionary( dico );
+    CreateDictionary( dictionary );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Diplomacies constructor
 // Created: SBO 2008-12-10
 // -----------------------------------------------------------------------------
-Diplomacies::Diplomacies( xml::xistream& xis, Controller& controller, const tools::Resolver_ABC< Team_ABC >& resolver, const Team_ABC& team, PropertiesDictionary& dico, TeamKarmas& karmas )
+Diplomacies::Diplomacies( xml::xistream& xis, Controller& controller, const tools::Resolver_ABC< Team_ABC >& resolver,
+                          const Team_ABC& team, PropertiesDictionary& dictionary, TeamKarmas& karmas )
     : controller_( controller )
     , resolver_  ( resolver )
     , team_      ( team )
     , karma_     ( 0 )
 {
     karma_ = &karmas.Get( xis.attribute< std::string >( "type" ).c_str() );
-    CreateDictionary( dico );
+    CreateDictionary( dictionary );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,9 +62,9 @@ Diplomacies::~Diplomacies()
 // Name: Diplomacies::CreateDictionary
 // Created: SBO 2008-12-10
 // -----------------------------------------------------------------------------
-void Diplomacies::CreateDictionary( PropertiesDictionary& dico )
+void Diplomacies::CreateDictionary( PropertiesDictionary& dictionary )
 {
-    dico.Register( static_cast< const Entity_ABC& >( team_ ), tools::translate( "preparation::Team", "Info/Karma" ), karma_, *this, &Diplomacies::SetKarma );
+    dictionary.Register( static_cast< const Entity_ABC& >( team_ ), tools::translate( "preparation::Team", "Info/Karma" ), karma_, *this, &Diplomacies::SetKarma );
 }
 
 // -----------------------------------------------------------------------------

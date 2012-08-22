@@ -42,7 +42,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
+    void CreateDictionary( kernel::PropertiesDictionary& dictionary ) const;
 
     virtual void DoUpdate( const sword::UrbanUpdate& message );
     virtual void DoUpdate( const sword::UrbanCreation& message );
@@ -57,6 +57,7 @@ private:
     kernel::Entity_ABC& entity_;
     kernel::Controller& controller_;
     unsigned int structuralState_;
+    const QString property_;
     //@}
 };
 

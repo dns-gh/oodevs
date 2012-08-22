@@ -122,11 +122,10 @@ void Object::SerializePositions( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void Object::CreateDictionary( Controller& controller )
 {
-    PropertiesDictionary& dico = *new PropertiesDictionary( controller );
-    Attach( dico );
-    const Object& constSelf = *this;
+    PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
+    Attach( dictionary );
     const Entity_ABC* constEntity = static_cast< const Entity_ABC* >( this );
-    dico.Register( *constEntity, tools::translate( "Object", "Info/Identifier" ), constSelf.id_ );
-    dico.Register( *constEntity, tools::translate( "Object", "Info/Name" ), name_ );
-    dico.Register( *constEntity, tools::translate( "Object", "Info/Type" ), type_.GetName() );
+    dictionary.Register( *constEntity, tools::translate( "Object", "Info/Identifier" ), id_, true );
+    dictionary.Register( *constEntity, tools::translate( "Object", "Info/Name" ), name_ );
+    dictionary.Register( *constEntity, tools::translate( "Object", "Info/Type" ), type_.GetName(), true );
 }

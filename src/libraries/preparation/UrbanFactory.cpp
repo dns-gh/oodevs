@@ -9,7 +9,6 @@
 
 #include "preparation_pch.h"
 #include "UrbanFactory.h"
-#include "Architecture.h"
 #include "InfrastructureAttribute.h"
 #include "MedicalTreatmentAttribute.h"
 #include "PhysicalAttribute.h"
@@ -20,23 +19,15 @@
 #include "UrbanHierarchies.h"
 #include "UrbanObject.h"
 #include "UrbanPositions.h"
-#include "Usages.h"
 #include "clients_kernel/ActionController.h"
-#include "clients_kernel/Architecture.h"
-#include "clients_kernel/Controllers.h"
-#include "clients_kernel/UrbanExtensions.h"
 #include "clients_kernel/UrbanColor_ABC.h"
 #include "clients_kernel/UrbanObject.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/ObjectType.h"
-#include "clients_kernel/Usages_ABC.h"
-#include "clients_kernel/Architecture_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Infrastructure_ABC.h"
 #include "clients_kernel/ResourceNetwork_ABC.h"
-#include "clients_kernel/Usages.h"
-#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: UrbanFactory constructor
@@ -44,12 +35,12 @@
 // -----------------------------------------------------------------------------
 UrbanFactory::UrbanFactory( kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::UrbanObject_ABC >& urbanObjects, const StaticModel& staticModel,
                             IdManager& idManager, const tools::Resolver< kernel::Object_ABC >& objects, kernel::UrbanDisplayOptions& options )
-    : controllers_   ( controllers )
-    , urbanObjects_  ( urbanObjects )
-    , staticModel_   ( staticModel )
-    , idManager_     ( idManager )
-    , objects_       ( objects )
-    , options_       ( options )
+    : controllers_ ( controllers )
+    , urbanObjects_( urbanObjects )
+    , staticModel_ ( staticModel )
+    , idManager_   ( idManager )
+    , objects_     ( objects )
+    , options_     ( options )
 {
     // NOTHING
 }

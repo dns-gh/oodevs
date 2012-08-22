@@ -37,8 +37,8 @@ class UndergroundAttribute : public kernel::UndergroundAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit UndergroundAttribute( kernel::PropertiesDictionary& dico, kernel::Controller& controller );
-             UndergroundAttribute( xml::xistream& xis, kernel::Controller& controller, kernel::PropertiesDictionary& dico );
+    explicit UndergroundAttribute( kernel::PropertiesDictionary& dictionary, kernel::Controller& controller );
+             UndergroundAttribute( xml::xistream& xis, kernel::Controller& controller, kernel::PropertiesDictionary& dictionary );
     virtual ~UndergroundAttribute();
     //@}
 
@@ -60,7 +60,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dico );
+    void CreateDictionary( kernel::PropertiesDictionary& dictionary );
     //@}
 
 private:

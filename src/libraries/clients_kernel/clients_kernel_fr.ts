@@ -151,10 +151,6 @@
         <translation>Info/Patron</translation>
     </message>
     <message>
-        <source>Info</source>
-        <translation>Info</translation>
-    </message>
-    <message>
         <source>PhysicalFeatures/Architecture</source>
         <translation>Eléments physiques/Architecture</translation>
     </message>

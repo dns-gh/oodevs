@@ -9,11 +9,11 @@
 
 #include "clients_kernel_pch.h"
 #include "Team.h"
-#include "clients_kernel/CommunicationHierarchies.h"
-#include "clients_kernel/Controllers.h"
-#include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/TacticalHierarchies.h"
-#include "clients_kernel/Tools.h"
+#include "CommunicationHierarchies.h"
+#include "Controllers.h"
+#include "PropertiesDictionary.h"
+#include "TacticalHierarchies.h"
+#include "Tools.h"
 
 using namespace kernel;
 
@@ -25,7 +25,7 @@ Team::Team( Controllers& controllers, unsigned long id, const QString& name )
     : EntityImplementation< Team_ABC >( controllers.controller_, id, name )
     , controllers_( controllers )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -34,7 +34,7 @@ Team::Team( Controllers& controllers, unsigned long id, const QString& name )
 // -----------------------------------------------------------------------------
 Team::~Team()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -60,8 +60,7 @@ void Team::CreateDictionary( kernel::Controller& controller )
 {
     PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
     Attach( dictionary );
-    const Team& self = *this;
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Team", "Info/Identifier" ), self.id_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Team", "Info/Identifier" ), id_, true );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Team", "Info/Name" ), name_, *this, &Team::Rename );
 }
 

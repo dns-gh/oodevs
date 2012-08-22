@@ -38,8 +38,8 @@ class MineAttribute : public kernel::MineAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MineAttribute( kernel::PropertiesDictionary& dico );
-             MineAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dico );
+    explicit MineAttribute( kernel::PropertiesDictionary& dictionary );
+             MineAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary );
     virtual ~MineAttribute();
     //@}
 
@@ -63,13 +63,13 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dico );
+    void CreateDictionary( kernel::PropertiesDictionary& dictionary );
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::UnitedValue< double >       density_;
+    kernel::UnitedValue< double > density_;
     //@}
 };
 

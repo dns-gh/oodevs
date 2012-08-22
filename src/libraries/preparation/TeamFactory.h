@@ -15,13 +15,11 @@
 namespace kernel
 {
     class Controllers;
-    class PropertiesDictionary;
 }
 
 class Model;
 class StaticModel;
 class IdManager;
-class ObjectAttributeFactory_ABC;
 
 // =============================================================================
 /** @class  TeamFactory

@@ -47,7 +47,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit NBCAttribute( kernel::PropertiesDictionary& dico );
+    explicit NBCAttribute( kernel::PropertiesDictionary& dictionary );
              NBCAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::NBCAgent, std::string >& nbcAgents, kernel::PropertiesDictionary& dico );
     virtual ~NBCAttribute();
     //@}
@@ -68,7 +68,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dico );
+    void CreateDictionary( kernel::PropertiesDictionary& dictionary );
     void ReadNbcAgent( xml::xistream& xis, const tools::Resolver_ABC< kernel::NBCAgent, std::string >& nbcAgents );
     //@}
 

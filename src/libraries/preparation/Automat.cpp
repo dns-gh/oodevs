@@ -119,10 +119,9 @@ void Automat::CreateDictionary( kernel::Controller& controller )
 {
     PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
     Attach( dictionary );
-    const Automat& constSelf = *this;
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Automat", "Info/Identifier" ), constSelf.id_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Automat", "Info/Identifier" ), id_, true );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Automat", "Info/Name" ), name_, *this, &Automat::Rename );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Automat", "Info/Type" ), constSelf.type_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Automat", "Info/Type" ), type_, true );
 }
 
 // -----------------------------------------------------------------------------

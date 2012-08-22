@@ -38,8 +38,8 @@ class InputToxicCloudAttribute : public kernel::ToxicCloudAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit InputToxicCloudAttribute( kernel::PropertiesDictionary& dico );
-             InputToxicCloudAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dico );
+    explicit InputToxicCloudAttribute( kernel::PropertiesDictionary& dictionary );
+             InputToxicCloudAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary );
     virtual ~InputToxicCloudAttribute();
     //@}
 
@@ -63,7 +63,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dico );
+    void CreateDictionary( kernel::PropertiesDictionary& dictionary );
     //@}
 
 public:

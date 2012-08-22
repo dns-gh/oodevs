@@ -272,14 +272,14 @@ void InhabitantPositions::UpdateDictionary()
     }
 
     livingUrbanObjects_ = static_cast< unsigned int >( livingUrbanObject_.size() );
-    dictionary_.Register( inhabitant_, tools::translate( "Population", "Living Area/Urban blocks number" ), static_cast< const unsigned int& >( livingUrbanObjects_ ) );
-    dictionary_.Register( inhabitant_, tools::translate( "Population", "Living Area/Total capacity" ), static_cast< const unsigned int& >( nominalCapacity_ ) );
-    dictionary_.Register( inhabitant_, tools::translate( "Population", "Living Area/Medical infrastructures" ), static_cast< const unsigned int& >( medicalInfrastructures_ ) );
-    dictionary_.Register( inhabitant_, tools::translate( "Population", "Living Area/Non medical infrastructures" ), static_cast< const unsigned int& >( infrastructures_ ) );
+    dictionary_.Register( inhabitant_, tools::translate( "Population", "Living Area/Urban blocks number" ), livingUrbanObjects_, true );
+    dictionary_.Register( inhabitant_, tools::translate( "Population", "Living Area/Total capacity" ),  nominalCapacity_, true );
+    dictionary_.Register( inhabitant_, tools::translate( "Population", "Living Area/Medical infrastructures" ), medicalInfrastructures_, true );
+    dictionary_.Register( inhabitant_, tools::translate( "Population", "Living Area/Non medical infrastructures" ), infrastructures_, true );
     for( QMap< QString, unsigned int >::const_iterator it = accomodationCapacties_.constBegin(); it != accomodationCapacties_.constEnd(); ++it )
-        dictionary_.Register( inhabitant_, tools::translate( "Population", "Living Area/Capacities/%1" ).arg( it.key() ), it.value() );
+        dictionary_.Register( inhabitant_, tools::translate( "Population", "Living Area/Capacities/%1" ).arg( it.key() ), it.value(), true );
     for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
-        dictionary_.Register( inhabitant_, tools::translate( "Population", "Living Area/Urban blocks/%1" ).arg( ( *it ).get< 0 >() ), ( *it ).get< 1 >() );
+        dictionary_.Register( inhabitant_, tools::translate( "Population", "Living Area/Urban blocks/%1" ).arg( ( *it ).get< 0 >() ), ( *it ).get< 1 >(), true );
 }
 
 // -----------------------------------------------------------------------------

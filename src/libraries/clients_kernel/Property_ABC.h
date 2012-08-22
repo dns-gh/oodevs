@@ -65,13 +65,15 @@ template< typename T, typename Owner, typename Setter >
 class Property : public Property_ABC
 {
 public:
-    Property( Controller& controller, const Owner& owner, T& value, const Setter& setter, const QString& name, E_Category category )
+    Property( Controller& controller, const Owner& owner, T& value, const Setter& setter,
+              const QString& name, bool readOnly, E_Category category )
         : controller_( controller )
         , owner_     ( owner )
         , data_      ( &value )
         , setter_    ( setter )
         , name_      ( name )
         , category_  ( category )
+        , readOnly_  ( readOnly )
     {
         // NOTHING
     }
@@ -87,6 +89,8 @@ public:
 
     virtual QWidget* CreateEditor( QWidget* parent, EditorFactory_ABC& factory )
     {
+        if( readOnly_ )
+            return 0;
         return factory.CreateEditor( parent, data_ );
     }
 
@@ -115,6 +119,7 @@ private:
     const Owner& owner_;
     T* data_;
     Setter setter_;
+    bool readOnly_;
     const QString name_;
     E_Category category_;
 };

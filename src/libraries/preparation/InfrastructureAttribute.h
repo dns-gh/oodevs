@@ -47,8 +47,10 @@ class InfrastructureAttribute : public kernel::Infrastructure_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             InfrastructureAttribute( kernel::Controllers& controllers, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dico );
-             InfrastructureAttribute( xml::xistream& xis, kernel::Controllers& controllers, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dico, const kernel::ObjectTypes& objectTypes );
+             InfrastructureAttribute( kernel::Controllers& controllers, kernel::UrbanObject_ABC& object,
+                                      kernel::PropertiesDictionary& dictionary );
+             InfrastructureAttribute( xml::xistream& xis, kernel::Controllers& controllers, kernel::UrbanObject_ABC& object,
+                                      kernel::PropertiesDictionary& dictionary, const kernel::ObjectTypes& objectTypes );
     virtual ~InfrastructureAttribute();
     //@}
 
@@ -90,7 +92,7 @@ public:
     //! @name Member data
     //@{
     kernel::Controllers&          controllers_;
-    kernel::PropertiesDictionary& dico_;
+    kernel::PropertiesDictionary& dictionary_;
     kernel::InfrastructureType*   type_;
     kernel::UrbanObject_ABC&      object_;
     bool                          enabled_;

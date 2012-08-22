@@ -80,11 +80,10 @@ void Inhabitant::CreateDictionary( kernel::Controller& controller )
 {
     kernel::PropertiesDictionary& dictionary = *new kernel::PropertiesDictionary( controller );
     Attach( dictionary );
-    const Inhabitant& constSelf = *this;
     const Entity_ABC& constEntity = *static_cast< const Entity_ABC* >( this );
-    dictionary.Register( constEntity, tools::translate( "Population", "Info/Identifier" ), constSelf.id_ );
+    dictionary.Register( constEntity, tools::translate( "Population", "Info/Identifier" ), id_, true );
     dictionary.Register( constEntity, tools::translate( "Population", "Info/Name" ), name_ );
-    dictionary.Register( constEntity, tools::translate( "Population", "Info/Type" ), constSelf.type_ );
+    dictionary.Register( constEntity, tools::translate( "Population", "Info/Type" ), type_, true );
     dictionary.Register( constEntity, tools::translate( "Population", "Info/Info" ), text_ );
     dictionary.Register( constEntity, tools::translate( "Population", "Human/Alive" ), healthy_ );
     dictionary.Register( constEntity, tools::translate( "Population", "Human/Wounded" ), wounded_ );

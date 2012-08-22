@@ -17,7 +17,6 @@
 #include "Tools.h"
 #include "AccommodationType.h"
 #include "AccommodationTypes.h"
-#include "ActionController.h"
 #include "Architecture_ABC.h"
 #include "DictionaryUpdated.h"
 #include "PhysicalAttribute_ABC.h"
@@ -130,17 +129,9 @@ QString UrbanObject::GetName() const
 // -----------------------------------------------------------------------------
 void UrbanObject::CreateDictionary( bool readOnly )
 {
-    if( readOnly )
-    {
-        dictionary_.Register( static_cast< const UrbanObject_ABC& >( *this ), tools::translate( "Block", "Info/Name" ), static_cast< const UrbanObject& >( *this ).name_ );
-        dictionary_.Register( static_cast< const UrbanObject_ABC& >( *this ), tools::translate( "Block", "Info/Template" ), static_cast< const UrbanObject& >( *this ).templateType_ );
-    }
-    else
-    {
-        dictionary_.Register( static_cast< const UrbanObject_ABC& >( *this ), tools::translate( "Block", "Info/Name" ), name_ );
-        dictionary_.Register( static_cast< const UrbanObject_ABC& >( *this ), tools::translate( "Block", "Info/Template" ), templateType_, *this, &UrbanObject::ApplyTemplate, kernel::eUrbanTemplate );
-    }
-    dictionary_.Register( static_cast< const UrbanObject_ABC& >( *this ), tools::translate( "Block", "Info/Identifier" ), static_cast< const UrbanObject& >( *this ).id_ );
+    dictionary_.Register( static_cast< const UrbanObject_ABC& >( *this ), tools::translate( "Block", "Info/Name" ), name_, readOnly );
+    dictionary_.Register( static_cast< const UrbanObject_ABC& >( *this ), tools::translate( "Block", "Info/Template" ), templateType_, *this, &UrbanObject::ApplyTemplate, readOnly, kernel::eUrbanTemplate );
+    dictionary_.Register( static_cast< const UrbanObject_ABC& >( *this ), tools::translate( "Block", "Info/Identifier" ), id_, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -184,7 +175,7 @@ void UrbanObject::UpdateTemplate( const ObjectTypes& objectTypes )
     if( templateType_ != old )
     {
         controllers_.controller_.Update( static_cast< const UrbanObject_ABC& >( *this ) );
-        controllers_.controller_.Update( DictionaryUpdated( *this, tools::translate( "Block", "Info" ) ) );
+        controllers_.controller_.Update( DictionaryUpdated( *this, tools::translate( "Block", "Info/Template" ) ) );
     }
     updatingTemplate_ = false;
 }
@@ -215,9 +206,9 @@ namespace
     template< typename T >
     void RegisterValue( UrbanObject_ABC& object, const QString& key, const T& value )
     {
-        PropertiesDictionary& dico = object.Get< PropertiesDictionary >();
-        if( !dico.HasKey( key ) )
-            dico.Register( static_cast< const Entity_ABC& >( object ), key, value );
+        PropertiesDictionary& dictionary = object.Get< PropertiesDictionary >();
+        if( !dictionary.HasKey( key ) )
+            dictionary.Register( static_cast< const Entity_ABC& >( object ), key, value, true );
     }
 }
 

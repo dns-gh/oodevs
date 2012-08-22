@@ -20,22 +20,22 @@ using namespace kernel;
 // Name: UndergroundAttribute constructor
 // Created: JSR 2011-07-07
 // -----------------------------------------------------------------------------
-UndergroundAttribute::UndergroundAttribute( PropertiesDictionary& dico, kernel::Controller& controller )
+UndergroundAttribute::UndergroundAttribute( PropertiesDictionary& dictionary, kernel::Controller& controller )
     : controller_( controller )
 {
-    CreateDictionary( dico );
+    CreateDictionary( dictionary );
 }
 
 // -----------------------------------------------------------------------------
 // Name: UndergroundAttribute constructor
 // Created: JSR 2011-07-07
 // -----------------------------------------------------------------------------
-UndergroundAttribute::UndergroundAttribute( xml::xistream& xis, kernel::Controller& controller, PropertiesDictionary& dico )
+UndergroundAttribute::UndergroundAttribute( xml::xistream& xis, kernel::Controller& controller, PropertiesDictionary& dictionary )
     : controller_( controller )
 {
     xis >> xml::attribute( "network", network_ );
     controller_.Update( *static_cast< UndergroundAttribute_ABC* >( this ) );
-    CreateDictionary( dico );
+    CreateDictionary( dictionary );
 }
 
 // -----------------------------------------------------------------------------
@@ -100,7 +100,7 @@ void UndergroundAttribute::SetNetwork( const std::string& network )
 // Name: UndergroundAttribute::CreateDictionary
 // Created: JSR 2011-07-07
 // -----------------------------------------------------------------------------
-void UndergroundAttribute::CreateDictionary( PropertiesDictionary& dico )
+void UndergroundAttribute::CreateDictionary( PropertiesDictionary& dictionary )
 {
-    dico.Register( *this, tools::translate( "UndergroundAttribute", "Info/Underground/Network" ), network_ );
+    dictionary.Register( *this, tools::translate( "UndergroundAttribute", "Info/Underground/Network" ), network_ );
 }

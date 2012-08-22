@@ -37,8 +37,8 @@ class OccupantAttribute : public kernel::OccupantAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit OccupantAttribute( kernel::PropertiesDictionary& dico );
-             OccupantAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dico );
+    explicit OccupantAttribute( kernel::PropertiesDictionary& dictionary );
+             OccupantAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary );
     virtual ~OccupantAttribute();
     //@}
 
@@ -63,7 +63,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dico );
+    void CreateDictionary( kernel::PropertiesDictionary& dictionary );
     //@}
 
 private:

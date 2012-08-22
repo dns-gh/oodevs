@@ -20,33 +20,33 @@ using namespace kernel;
 // Name: SupplyRouteAttribute constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-SupplyRouteAttribute::SupplyRouteAttribute( kernel::PropertiesDictionary& dico )
-    : flow_( 0, Units::vehiclesPerHour )
-    , width_( 0, Units::meters )
-    , length_( 0, Units::meters )
+SupplyRouteAttribute::SupplyRouteAttribute( kernel::PropertiesDictionary& dictionary )
+    : flow_     ( 0, Units::vehiclesPerHour )
+    , width_    ( 0, Units::meters )
+    , length_   ( 0, Units::meters )
     , maxWeight_( 0, Units::tons )
-    , equipped_( false )
+    , equipped_ ( false )
 {
-    CreateDictionary( dico );
+    CreateDictionary( dictionary );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SupplyRouteAttribute constructor
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-SupplyRouteAttribute::SupplyRouteAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dico )
-    : flow_( 0, Units::vehiclesPerHour )
-    , width_( 0, Units::meters )
-    , length_( 0, Units::meters )
+SupplyRouteAttribute::SupplyRouteAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary )
+    : flow_     ( 0, Units::vehiclesPerHour )
+    , width_    ( 0, Units::meters )
+    , length_   ( 0, Units::meters )
     , maxWeight_( 0, Units::tons )
-    , equipped_( false )
+    , equipped_ ( false )
 {
     xis >> xml::content( "flow", (int&)(flow_.value_) )
         >> xml::content( "width", (int&)(width_.value_) )
         >> xml::content( "length", (int&)(length_.value_) )
         >> xml::content( "max-weight", (int&)(maxWeight_.value_) )
         >> xml::content( "equipped", equipped_ );
-    CreateDictionary( dico );
+    CreateDictionary( dictionary );
 }
 
 // -----------------------------------------------------------------------------
@@ -136,11 +136,11 @@ void SupplyRouteAttribute::SerializeAttributes( xml::xostream& xos ) const
 // Name: SupplyRouteAttribute::CreateDictionary
 // Created: SBO 2006-10-30
 // -----------------------------------------------------------------------------
-void SupplyRouteAttribute::CreateDictionary( kernel::PropertiesDictionary& dico )
+void SupplyRouteAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary )
 {
-    dico.Register( *this, tools::translate( "SupplyRouteAttribute", "Info/Logistic route attributes/Flow" ), flow_ );
-    dico.Register( *this, tools::translate( "SupplyRouteAttribute", "Info/Logistic route attributes/Width" ), width_ );
-    dico.Register( *this, tools::translate( "SupplyRouteAttribute", "Info/Logistic route attributes/Length" ), length_ );
-    dico.Register( *this, tools::translate( "SupplyRouteAttribute", "Info/Logistic route attributes/Maximum weight" ), maxWeight_ );
-    dico.Register( *this, tools::translate( "SupplyRouteAttribute", "Info/Logistic route attributes/Equipped" ), equipped_ );
+    dictionary.Register( *this, tools::translate( "SupplyRouteAttribute", "Info/Logistic route attributes/Flow" ), flow_ );
+    dictionary.Register( *this, tools::translate( "SupplyRouteAttribute", "Info/Logistic route attributes/Width" ), width_ );
+    dictionary.Register( *this, tools::translate( "SupplyRouteAttribute", "Info/Logistic route attributes/Length" ), length_ );
+    dictionary.Register( *this, tools::translate( "SupplyRouteAttribute", "Info/Logistic route attributes/Maximum weight" ), maxWeight_ );
+    dictionary.Register( *this, tools::translate( "SupplyRouteAttribute", "Info/Logistic route attributes/Equipped" ), equipped_ );
 }

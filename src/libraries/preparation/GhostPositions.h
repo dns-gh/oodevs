@@ -45,8 +45,10 @@ class GhostPositions : public kernel::Moveable_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             GhostPositions( const kernel::Ghost_ABC& ghost, const kernel::CoordinateConverter_ABC& converter, kernel::Controller& controller, const geometry::Point2f& position, kernel::PropertiesDictionary& dico );
-             GhostPositions( xml::xistream& xis, const kernel::Ghost_ABC& ghost, const kernel::CoordinateConverter_ABC& converter, kernel::Controller& controller, kernel::PropertiesDictionary& dico );
+             GhostPositions( const kernel::Ghost_ABC& ghost, const kernel::CoordinateConverter_ABC& converter, kernel::Controller& controller,
+                             const geometry::Point2f& position, kernel::PropertiesDictionary& dictionary );
+             GhostPositions( xml::xistream& xis, const kernel::Ghost_ABC& ghost, const kernel::CoordinateConverter_ABC& converter,
+                             kernel::Controller& controller, kernel::PropertiesDictionary& dictionary );
     virtual ~GhostPositions();
     //@}
 
@@ -72,7 +74,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void CreateDictionary( kernel::PropertiesDictionary& dico );
+    virtual void CreateDictionary( kernel::PropertiesDictionary& dictionary );
     virtual void Aggregate( const bool& );
     //@}
 

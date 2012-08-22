@@ -99,27 +99,13 @@ struct Setter
 // -----------------------------------------------------------------------------
 void Architecture::CreateDictionnary( bool readOnly )
 {
-    if( readOnly )
-    {
-        const Architecture& architecture = *this;
-        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/trafficability" ), architecture.trafficability_ );
-        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/Height" ), architecture.height_ );
-        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/floorNumber" ), architecture.floorNumber_ );
-        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/parkingFloors" ), architecture.parkingFloors_ );
-        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/roofShape" ), architecture.roofShape_->GetName() );
-        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/material" ), architecture.material_->GetName() );
-        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/occupation" ), architecture.occupation_ );
-    }
-    else
-    {
-        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/trafficability" ), trafficability_, Setter< UnitedValue< float > >( object_, objectTypes_ ), eUrbanTemplate );
-        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/Height" ), height_, Setter< UnitedValue< unsigned int > >( object_, objectTypes_ ), eUrbanTemplate );
-        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/floorNumber" ), floorNumber_, Setter< unsigned int >( object_, objectTypes_ ), eUrbanTemplate );
-        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/parkingFloors" ), parkingFloors_, Setter< unsigned int >( object_, objectTypes_ ), eUrbanTemplate );
-        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/roofShape" ), roofShape_, Setter< RoofShapeType* >( object_, objectTypes_ ), eUrbanTemplate );
-        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/material" ), material_, Setter< MaterialCompositionType* >( object_, objectTypes_ ), eUrbanTemplate );
-        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/occupation" ), occupation_, Setter< UnitedValue< unsigned int > >( object_, objectTypes_ ), eUrbanTemplate );
-    }
+    dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/trafficability" ), trafficability_, Setter< UnitedValue< float > >( object_, objectTypes_ ), readOnly, eUrbanTemplate );
+    dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/Height" ), height_, Setter< UnitedValue< unsigned int > >( object_, objectTypes_ ), readOnly, eUrbanTemplate );
+    dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/floorNumber" ), floorNumber_, Setter< unsigned int >( object_, objectTypes_ ), readOnly, eUrbanTemplate );
+    dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/parkingFloors" ), parkingFloors_, Setter< unsigned int >( object_, objectTypes_ ), readOnly, eUrbanTemplate );
+    dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/roofShape" ), roofShape_, Setter< RoofShapeType* >( object_, objectTypes_ ), readOnly, eUrbanTemplate );
+    dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/material" ), material_, Setter< MaterialCompositionType* >( object_, objectTypes_ ), readOnly, eUrbanTemplate );
+    dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/occupation" ), occupation_, Setter< UnitedValue< unsigned int > >( object_, objectTypes_ ), readOnly, eUrbanTemplate );
 }
 
 // -----------------------------------------------------------------------------

@@ -53,11 +53,11 @@ InfrastructureAttribute::~InfrastructureAttribute()
 // Name: InfrastructureAttribute::CreateDictionary
 // Created: SLG 2011-01-14
 // -----------------------------------------------------------------------------
-void InfrastructureAttribute::CreateDictionary( PropertiesDictionary& dico ) const
+void InfrastructureAttribute::CreateDictionary( PropertiesDictionary& dictionary ) const
 {
-    dico.Register( object_, tools::translate( "Block", "Infrastructure/Enable" ), enabled_ );
-    dico.Register( object_, tools::translate( "Block", "Infrastructure/Threshold" ), threshold_ );
-    dico.Register( object_, tools::translate( "Block", "Infrastructure/Role" ), role_ );
+    dictionary.Register( object_, tools::translate( "Block", "Infrastructure/Enable" ), enabled_ );
+    dictionary.Register( object_, tools::translate( "Block", "Infrastructure/Threshold" ), threshold_ );
+    dictionary.Register( object_, tools::translate( "Block", "Infrastructure/Role" ), role_ );
 }
 
 // -----------------------------------------------------------------------------

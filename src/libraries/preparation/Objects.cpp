@@ -10,7 +10,6 @@
 #include "preparation_pch.h"
 #include "Objects.h"
 #include "Object.h"
-#include "ObjectPositions.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------

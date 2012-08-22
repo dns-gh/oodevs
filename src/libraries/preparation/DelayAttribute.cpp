@@ -20,21 +20,21 @@ using namespace kernel;
 // Name: DelayAttribute constructor
 // Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
-DelayAttribute::DelayAttribute( PropertiesDictionary& dico )
+DelayAttribute::DelayAttribute( PropertiesDictionary& dictionary )
     : delay_( 0, Units::hours )
 {
-    CreateDictionary( dico );
+    CreateDictionary( dictionary );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DelayAttribute constructor
 // Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
-DelayAttribute::DelayAttribute( xml::xistream& xis, PropertiesDictionary& dico )
+DelayAttribute::DelayAttribute( xml::xistream& xis, PropertiesDictionary& dictionary )
     : delay_( 0, Units::hours )
 {
     xis >> xml::attribute( "value", delay_.value_ );
-    CreateDictionary( dico );
+    CreateDictionary( dictionary );
 }
 
 // -----------------------------------------------------------------------------
@@ -80,7 +80,7 @@ void DelayAttribute::SetDelay( unsigned int time )
 // Name: DelayAttribute::CreateDictionary
 // Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
-void DelayAttribute::CreateDictionary( PropertiesDictionary& dico )
+void DelayAttribute::CreateDictionary( PropertiesDictionary& dictionary )
 {
-    dico.Register( *this, tools::translate( "DelayAttribute", "Info/Delay parameters/Delay" ), delay_ );
+    dictionary.Register( *this, tools::translate( "DelayAttribute", "Info/Delay parameters/Delay" ), delay_ );
 }

@@ -91,10 +91,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Info</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Density:</source>
         <translation type="unfinished"></translation>
     </message>

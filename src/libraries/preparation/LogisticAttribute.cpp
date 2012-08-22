@@ -24,7 +24,7 @@
 // Name: LogisticAttribute constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-LogisticAttribute::LogisticAttribute( kernel::PropertiesDictionary& dico, kernel::Controllers& controllers, const kernel::Object_ABC& object )
+LogisticAttribute::LogisticAttribute( kernel::PropertiesDictionary& dictionary, kernel::Controllers& controllers, const kernel::Object_ABC& object )
     : controllers_( controllers )
     , logisticBase_( 0 )
     , object_      ( object )
@@ -32,7 +32,7 @@ LogisticAttribute::LogisticAttribute( kernel::PropertiesDictionary& dico, kernel
     , pAutomats_   ( 0 )
     , pFormations_ ( 0 )
 {
-    CreateDictionary( dico );
+    CreateDictionary( dictionary );
     controllers_.Register( *this );
 }
 
@@ -41,7 +41,7 @@ LogisticAttribute::LogisticAttribute( kernel::PropertiesDictionary& dico, kernel
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
 LogisticAttribute::LogisticAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::Automat_ABC >& automats,
-                                      const tools::Resolver_ABC< kernel::Formation_ABC >& formations, kernel::PropertiesDictionary& dico,
+                                      const tools::Resolver_ABC< kernel::Formation_ABC >& formations, kernel::PropertiesDictionary& dictionary,
                                       kernel::Controllers& controllers, const kernel::Object_ABC& object )
     : controllers_( controllers )
     , logisticBase_( 0 )
@@ -50,7 +50,7 @@ LogisticAttribute::LogisticAttribute( xml::xistream& xis, const tools::Resolver_
     , pAutomats_   ( &automats )
     , pFormations_ ( &formations )
 {
-    CreateDictionary( dico );
+    CreateDictionary( dictionary );
     controllers_.Register( *this );
 }
 
@@ -150,7 +150,7 @@ void LogisticAttribute::SerializeAttributes( xml::xostream& xos ) const
 // Name: LogisticAttribute::CreateDictionary
 // Created: SBO 2006-10-30
 // -----------------------------------------------------------------------------
-void LogisticAttribute::CreateDictionary( kernel::PropertiesDictionary& dico )
+void LogisticAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary )
 {
-    dico.Register( *this, tools::translate( "LogisticAttribute", "Info/Camp attributes/Logistic base" ), logisticBase_ );
+    dictionary.Register( *this, tools::translate( "LogisticAttribute", "Info/Camp attributes/Logistic base" ), logisticBase_ );
 }

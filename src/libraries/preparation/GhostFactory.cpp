@@ -68,22 +68,22 @@ GhostFactory::~GhostFactory()
 kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, const kernel::GhostPrototype& prototype, const geometry::Point2f& position )
 {
     Ghost* result = new Ghost( controllers_.controller_, model_, idManager_, staticModel_.coordinateConverter_, prototype );
-    kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
-    result->Attach< kernel::Positions >( *new GhostPositions( *result, staticModel_.coordinateConverter_, controllers_.controller_, position, dico ) );
+    kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
+    result->Attach< kernel::Positions >( *new GhostPositions( *result, staticModel_.coordinateConverter_, controllers_.controller_, position, dictionary ) );
     result->Attach< kernel::Color_ABC >( *new Color( parent ) );
     result->Attach< kernel::TacticalHierarchies >( *new GhostHierarchies( controllers_.controller_, *result, result->GetLevelSymbol(), result->GetSymbol(), &parent ) );
 
     if( prototype.ghostType_ == eGhostType_Agent )
     {
-        result->Attach< kernel::CommandPostAttributes_ABC >( *new GhostCommandPostAttributes( *result, false, controllers_.controller_, dico ) );
+        result->Attach< kernel::CommandPostAttributes_ABC >( *new GhostCommandPostAttributes( *result, false, controllers_.controller_, dictionary ) );
     }
     else
     {
         assert( prototype.ghostType_ == eGhostType_Automat );
         kernel::Entity_ABC* kg = AgentFactory::FindorCreateKnowledgeGroup( parent, knowledgeGroupFactory_ );
         result->Attach< kernel::CommunicationHierarchies >( *new AutomatCommunications( controllers_.controller_, *result, kg ) );
-        result->Attach( *new LogisticLevelAttritube( controllers_.controller_, *result, dico ) );
-        result->Attach< LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_.controller_, *result, staticModel_.objectTypes_, dico, false ) );
+        result->Attach( *new LogisticLevelAttritube( controllers_.controller_, *result, dictionary ) );
+        result->Attach< LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_.controller_, *result, staticModel_.objectTypes_, dictionary, false ) );
     }
     result->Polish();
     return result;
@@ -96,21 +96,21 @@ kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, const kerne
 kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, xml::xistream& xis )
 {
     Ghost* result = new Ghost( controllers_.controller_, model_, idManager_, staticModel_.coordinateConverter_, xis, symbolsFactory_ );
-    kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
-    result->Attach< kernel::Positions >( *new GhostPositions( xis, *result, staticModel_.coordinateConverter_, controllers_.controller_, dico ) );
+    kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
+    result->Attach< kernel::Positions >( *new GhostPositions( xis, *result, staticModel_.coordinateConverter_, controllers_.controller_, dictionary ) );
     result->Attach< kernel::Color_ABC >( *new Color( xis ) );
     result->Attach< kernel::TacticalHierarchies >( *new GhostHierarchies( controllers_.controller_, *result, result->GetLevelSymbol(), result->GetSymbol(), &parent ) );
 
     if( result->GetGhostType() == eGhostType_Agent )
     {
-        result->Attach< kernel::CommandPostAttributes_ABC >( *new GhostCommandPostAttributes( *result, xis, controllers_.controller_, dico ) );
+        result->Attach< kernel::CommandPostAttributes_ABC >( *new GhostCommandPostAttributes( *result, xis, controllers_.controller_, dictionary ) );
     }
     else
     {
         assert( result->GetGhostType() == eGhostType_Automat );
         result->Attach< kernel::CommunicationHierarchies >( *new AutomatCommunications( xis, controllers_.controller_, *result, model_.knowledgeGroups_ ) );
-        result->Attach( *new LogisticLevelAttritube( controllers_.controller_, xis, *result, true, dico ) );
-        result->Attach< LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_.controller_, *result, staticModel_.objectTypes_, dico, result->GetLogisticLevel() != kernel::LogisticLevel::none_ ) );
+        result->Attach( *new LogisticLevelAttritube( controllers_.controller_, xis, *result, true, dictionary ) );
+        result->Attach< LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_.controller_, *result, staticModel_.objectTypes_, dictionary, result->GetLogisticLevel() != kernel::LogisticLevel::none_ ) );
     }
     result->Polish();
     return result;
@@ -123,24 +123,24 @@ kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, xml::xistre
 kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, xml::xistream& xis, E_GhostType ghostType )
 {
     Ghost* result = new Ghost( controllers_.controller_, model_, idManager_, staticModel_.coordinateConverter_, xis, parent, ghostType );
-    kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
+    kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
 
     result->Attach< kernel::Color_ABC >( *new Color( xis ) );
     result->Attach< kernel::TacticalHierarchies >( *new GhostHierarchies( controllers_.controller_, *result, result->GetLevelSymbol(), result->GetSymbol(), &parent ) );
 
     if( result->GetGhostType() == eGhostType_Agent )
     {
-        result->Attach< kernel::Positions >( *new GhostPositions( xis, *result, staticModel_.coordinateConverter_, controllers_.controller_, dico ) );
-        result->Attach< kernel::CommandPostAttributes_ABC >( *new GhostCommandPostAttributes( *result, xis, controllers_.controller_, dico ) );
+        result->Attach< kernel::Positions >( *new GhostPositions( xis, *result, staticModel_.coordinateConverter_, controllers_.controller_, dictionary ) );
+        result->Attach< kernel::CommandPostAttributes_ABC >( *new GhostCommandPostAttributes( *result, xis, controllers_.controller_, dictionary ) );
     }
     else
     {
         assert( result->GetGhostType() == eGhostType_Automat );
         const geometry::Point2f position = ComputeAutomatPosition( xis );
-        result->Attach< kernel::Positions >( *new GhostPositions( *result, staticModel_.coordinateConverter_, controllers_.controller_, position, dico ) );
+        result->Attach< kernel::Positions >( *new GhostPositions( *result, staticModel_.coordinateConverter_, controllers_.controller_, position, dictionary ) );
         result->Attach< kernel::CommunicationHierarchies >( *new AutomatCommunications( xis, controllers_.controller_, *result, model_.knowledgeGroups_ ) );
-        result->Attach( *new LogisticLevelAttritube( controllers_.controller_, xis, *result, true, dico ) );
-        result->Attach< LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_.controller_, *result, staticModel_.objectTypes_, dico, result->GetLogisticLevel() != kernel::LogisticLevel::none_ ) );
+        result->Attach( *new LogisticLevelAttritube( controllers_.controller_, xis, *result, true, dictionary ) );
+        result->Attach< LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_.controller_, *result, staticModel_.objectTypes_, dictionary, result->GetLogisticLevel() != kernel::LogisticLevel::none_ ) );
     }
     result->Polish();
     return result;

@@ -13,7 +13,6 @@
 #include "clients_kernel/CoordinateSystems.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/InfrastructureType.h"
-#include "clients_kernel/MaterialCompositionType.h"
 #include "clients_kernel/Moveable_ABC.h"
 #include "clients_kernel/RoofShapeType.h"
 #include "clients_kernel/UrbanColor_ABC.h"
@@ -139,23 +138,6 @@ void PropertyDisplayer::Call( const kernel::UrbanTemplateType& value )
     AddToDisplay( value.GetName() );
 }
 
-// -----------------------------------------------------------------------------
-// Name: PropertyDisplayer::Call
-// Created: ABR 2012-05-31
-// -----------------------------------------------------------------------------
-void PropertyDisplayer::Call( const kernel::MaterialCompositionType& value )
-{
-    AddToDisplay( value.GetName() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PropertyDisplayer::Call
-// Created: ABR 2012-05-31
-// -----------------------------------------------------------------------------
-void PropertyDisplayer::Call( const kernel::RoofShapeType& value )
-{
-    AddToDisplay( value.GetName() );
-}
 
 // -----------------------------------------------------------------------------
 // Name: PropertyDisplayer::Call

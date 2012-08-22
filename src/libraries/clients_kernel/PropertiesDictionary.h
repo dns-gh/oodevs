@@ -45,25 +45,25 @@ public:
     void Display( Displayer_ABC& displayer );
 
     template< typename T, typename Owner, typename Setter >
-    void Register( const Owner& owner, const QString& name, T& value, const Setter& setter, E_Category category = eNothing )
+    void Register( const Owner& owner, const QString& name, T& value, const Setter& setter, bool readOnly = false, E_Category category = eNothing )
     {
         Property_ABC*& property = properties_[ name ];
         delete property;
-        property = new Property< T, Owner, Setter >( controller_, owner, value, setter, name, category );
+        property = new Property< T, Owner, Setter >( controller_, owner, value, setter, name, readOnly, category );
     }
 
     template< typename T > struct setter;
     template< typename T, typename Owner >
-    void Register( const Owner& owner, const QString& name, T& value, E_Category category = eNothing )
+    void Register( const Owner& owner, const QString& name, T& value, bool readOnly = false, E_Category category = eNothing )
     {
-        Register( owner, name, value, setter< T >(), category );
+        Register( owner, name, value, setter< T >(), readOnly, category );
     }
 
     template< typename O, typename T > struct caller;
     template< typename T, typename Owner, typename ConcreteOwner >
-    void Register( const Owner& owner, const QString& name, T& value, ConcreteOwner& c, void (ConcreteOwner::*set)( const T& ), E_Category category = eNothing )
+    void Register( const Owner& owner, const QString& name, T& value, ConcreteOwner& c, void (ConcreteOwner::*set)( const T& ), bool readOnly = false, E_Category category = eNothing )
     {
-        Register( owner, name, value, caller< ConcreteOwner, T >( c, set ), category );
+        Register( owner, name, value, caller< ConcreteOwner, T >( c, set ), readOnly, category );
     }
     //@}
 

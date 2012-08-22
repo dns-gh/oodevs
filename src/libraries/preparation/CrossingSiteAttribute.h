@@ -37,8 +37,8 @@ class CrossingSiteAttribute : public kernel::CrossingSiteAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit CrossingSiteAttribute( kernel::PropertiesDictionary& dico );
-             CrossingSiteAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dico );
+    explicit CrossingSiteAttribute( kernel::PropertiesDictionary& dictionary );
+             CrossingSiteAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary );
     virtual ~CrossingSiteAttribute();
     //@}
 
@@ -65,7 +65,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dico );
+    void CreateDictionary( kernel::PropertiesDictionary& dictionary );
     //@}
 
 public:

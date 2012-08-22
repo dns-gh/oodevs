@@ -47,8 +47,10 @@ class MedicalTreatmentAttribute : public kernel::MedicalTreatmentAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MedicalTreatmentAttribute( const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& treatmentTypes, kernel::PropertiesDictionary& dico, kernel::Controllers* controllers = 0, const kernel::Entity_ABC* owner = 0 );
-             MedicalTreatmentAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& treatmentTypes, kernel::PropertiesDictionary& dico );
+             MedicalTreatmentAttribute( const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& treatmentTypes,
+                                        kernel::PropertiesDictionary& dictionary, kernel::Controllers* controllers = 0, const kernel::Entity_ABC* owner = 0 );
+             MedicalTreatmentAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& treatmentTypes,
+                                        kernel::PropertiesDictionary& dictionary );
     virtual ~MedicalTreatmentAttribute();
     //@}
 
@@ -98,7 +100,7 @@ public:
     //@{
     const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& resolver_;
     const kernel::Controllers*      controllers_;
-    kernel::PropertiesDictionary&   dico_;
+    kernel::PropertiesDictionary&   dictionary_;
     const kernel::Entity_ABC*       owner_;
     int                             serializableModes_;
     int                             doctors_;

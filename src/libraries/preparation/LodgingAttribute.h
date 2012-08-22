@@ -37,8 +37,8 @@ class LodgingAttribute : public kernel::ObjectExtension
 public:
     //! @name Constructors/Destructor
     //@{
-             LodgingAttribute( kernel::PropertiesDictionary& dico );
-             LodgingAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dico );
+             LodgingAttribute( kernel::PropertiesDictionary& dictionary );
+             LodgingAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary );
 
     virtual ~LodgingAttribute();
     //@}
@@ -63,7 +63,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dico );
+    void CreateDictionary( kernel::PropertiesDictionary& dictionary );
     //@}
 
 private:

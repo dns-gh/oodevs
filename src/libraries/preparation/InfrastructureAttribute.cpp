@@ -42,9 +42,10 @@ namespace
 // Name: InfrastructureAttribute constructor
 // Created: ABR 2012-06-04
 // -----------------------------------------------------------------------------
-InfrastructureAttribute::InfrastructureAttribute( kernel::Controllers& controllers, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dico )
+InfrastructureAttribute::InfrastructureAttribute( kernel::Controllers& controllers, kernel::UrbanObject_ABC& object,
+                                                  kernel::PropertiesDictionary& dictionary )
     : controllers_( controllers )
-    , dico_       ( dico )
+    , dictionary_ ( dictionary )
     , type_       ( 0 )
     , object_     ( object )
     , enabled_    ( true )
@@ -60,9 +61,11 @@ InfrastructureAttribute::InfrastructureAttribute( kernel::Controllers& controlle
 // Name: InfrastructureAttribute constructor
 // Created: SLG 2011-01-11
 // -----------------------------------------------------------------------------
-InfrastructureAttribute::InfrastructureAttribute( xml::xistream& xis, kernel::Controllers& controllers, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dico, const kernel::ObjectTypes& objectTypes )
+InfrastructureAttribute::InfrastructureAttribute( xml::xistream& xis, kernel::Controllers& controllers,
+                                                  kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary,
+                                                  const kernel::ObjectTypes& objectTypes )
     : controllers_( controllers )
-    , dico_       ( dico )
+    , dictionary_ ( dictionary )
     , type_       ( 0 )
     , object_     ( object )
     , enabled_    ( true )
@@ -251,19 +254,17 @@ void InfrastructureAttribute::UpdateDictionnary()
     {
         if( type_ )
         {
-            dico_.Register( object_, tools::translate( "Infrastructure", "Info/Infrastructure/Type" ), static_cast< const InfrastructureAttribute& >( *this ).type_ );
-            dico_.Register( object_, tools::translate( "Infrastructure", "Info/Infrastructure/Enable" ), enabled_ );
-            dico_.Register( object_, tools::translate( "Infrastructure", "Info/Infrastructure/Threshold" ), threshold_, ThresholdSetter() );
+            dictionary_.Register( object_, tools::translate( "Infrastructure", "Info/Infrastructure/Type" ), type_, true );
+            dictionary_.Register( object_, tools::translate( "Infrastructure", "Info/Infrastructure/Enable" ), enabled_ );
+            dictionary_.Register( object_, tools::translate( "Infrastructure", "Info/Infrastructure/Threshold" ), threshold_, ThresholdSetter() );
         }
         else
-        {
-            dico_.Remove( tools::translate( "Infrastructure", "Info/Infrastructure/Type" ) );
-        }
+            dictionary_.Remove( tools::translate( "Infrastructure", "Info/Infrastructure/Type" ) );
     }
     else if( GetCurrentMode() == ePreparationMode_Terrain )
     {
-        dico_.Remove( tools::translate( "Infrastructure", "Info/Infrastructure/Enable" ) );
-        dico_.Remove( tools::translate( "Infrastructure", "Info/Infrastructure/Threshold" ) );
-        dico_.Register( object_, tools::translate( "Infrastructure", "Info/Infrastructure/Type" ), type_ );
+        dictionary_.Remove( tools::translate( "Infrastructure", "Info/Infrastructure/Enable" ) );
+        dictionary_.Remove( tools::translate( "Infrastructure", "Info/Infrastructure/Threshold" ) );
+        dictionary_.Register( object_, tools::translate( "Infrastructure", "Info/Infrastructure/Type" ), type_ );
     }
 }

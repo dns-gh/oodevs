@@ -21,17 +21,17 @@ using namespace kernel;
 // Name: InputToxicCloudAttribute constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-InputToxicCloudAttribute::InputToxicCloudAttribute( kernel::PropertiesDictionary& dico )
+InputToxicCloudAttribute::InputToxicCloudAttribute( kernel::PropertiesDictionary& dictionary )
     : bExport_( true )
 {
-    CreateDictionary( dico );
+    CreateDictionary( dictionary );
 }
 
 // -----------------------------------------------------------------------------
 // Name: InputToxicCloudAttribute constructor
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-InputToxicCloudAttribute::InputToxicCloudAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dico )
+InputToxicCloudAttribute::InputToxicCloudAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary )
     : bExport_( true )
 {
     std::string source, dataField;
@@ -42,7 +42,7 @@ InputToxicCloudAttribute::InputToxicCloudAttribute( xml::xistream& xis, kernel::
     source_ = source.c_str();
     dataField_ = dataField.c_str();
 
-    CreateDictionary( dico );
+    CreateDictionary( dictionary );
 }
 
 // -----------------------------------------------------------------------------
@@ -100,10 +100,10 @@ namespace
 // Name: InputToxicCloudAttribute::CreateDictionary
 // Created: SBO 2006-10-30
 // -----------------------------------------------------------------------------
-void InputToxicCloudAttribute::CreateDictionary( kernel::PropertiesDictionary& dico )
+void InputToxicCloudAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary )
 {
 //    dico.Register( *this, tools::translate( "ToxicCloudAttribute", "Info/Cloud parameters" ), "Input cloud model" );
-    dico.Register( *this, tools::translate( "ToxicCloudAttribute", "Info/Cloud parameters/Data source" ), source_ );
-    dico.Register( *this, tools::translate( "ToxicCloudAttribute", "Info/Cloud parameters/Data field" ), dataField_ );
-    dico.Register( *this, tools::translate( "ToxicCloudAttribute", "Info/Cloud parameters/Data export" ), bExport_ );
+    dictionary.Register( *this, tools::translate( "ToxicCloudAttribute", "Info/Cloud parameters/Data source" ), source_ );
+    dictionary.Register( *this, tools::translate( "ToxicCloudAttribute", "Info/Cloud parameters/Data field" ), dataField_ );
+    dictionary.Register( *this, tools::translate( "ToxicCloudAttribute", "Info/Cloud parameters/Data export" ), bExport_ );
 }

@@ -38,7 +38,8 @@ namespace
 // Name: GhostPositions constructor
 // Created: ABR 2011-10-19
 // -----------------------------------------------------------------------------
-GhostPositions::GhostPositions( const kernel::Ghost_ABC& ghost, const kernel::CoordinateConverter_ABC& converter, kernel::Controller& controller, const geometry::Point2f& position, kernel::PropertiesDictionary& dico )
+GhostPositions::GhostPositions( const kernel::Ghost_ABC& ghost, const kernel::CoordinateConverter_ABC& converter, kernel::Controller& controller,
+                                const geometry::Point2f& position, kernel::PropertiesDictionary& dictionary )
     : ghost_     ( ghost )
     , converter_ ( converter )
     , controller_( controller )
@@ -47,7 +48,7 @@ GhostPositions::GhostPositions( const kernel::Ghost_ABC& ghost, const kernel::Co
     , height_    ( 0 )
     , aggregated_( false )
 {
-    CreateDictionary( dico );
+    CreateDictionary( dictionary );
 }
 
 // -----------------------------------------------------------------------------

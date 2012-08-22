@@ -19,11 +19,11 @@
 // Name: StructuralStateAttribute constructor
 // Created: JSR 2010-09-01
 // -----------------------------------------------------------------------------
-StructuralStateAttribute::StructuralStateAttribute( kernel::Controllers& controllers, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dico )
+StructuralStateAttribute::StructuralStateAttribute( kernel::Controllers& controllers, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary )
     : structuralState_( 100 )
     , controllers_    ( controllers )
     , object_         ( object )
-    , dico_           ( dico )
+    , dictionary_     ( dictionary )
 {
     assert( controllers_.modes_ );
     controllers_.modes_->Register( *this );
@@ -88,9 +88,9 @@ void StructuralStateAttribute::NotifyModeChanged( int newMode )
 {
     kernel::ModesObserver_ABC::NotifyModeChanged( newMode );
     if( newMode == ePreparationMode_Exercise )
-        dico_.Register( object_, tools::translate( "StructuralStateAttribute", "Info/StructuralState" ), structuralState_, StructuralSetter() );
+        dictionary_.Register( object_, tools::translate( "StructuralStateAttribute", "Info/StructuralState" ), structuralState_, StructuralSetter() );
     else if( newMode == ePreparationMode_Terrain )
-        dico_.Remove( tools::translate( "StructuralStateAttribute", "Info/StructuralState" ) );
+        dictionary_.Remove( tools::translate( "StructuralStateAttribute", "Info/StructuralState" ) );
 }
 
 // -----------------------------------------------------------------------------

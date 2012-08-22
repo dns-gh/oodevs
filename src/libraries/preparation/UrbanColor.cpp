@@ -21,10 +21,11 @@
 // Name: UrbanColor constructor
 // Created: ABR 2012-06-04
 // -----------------------------------------------------------------------------
-UrbanColor::UrbanColor( const kernel::Entity_ABC* parent, kernel::Controllers& controllers, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dico )
+UrbanColor::UrbanColor( const kernel::Entity_ABC* parent, kernel::Controllers& controllers,
+                        kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary )
     : controllers_( controllers )
     , object_     ( object )
-    , dico_       ( dico )
+    , dictionary_ ( dictionary )
 {
     if( parent )
     {
@@ -41,10 +42,10 @@ UrbanColor::UrbanColor( const kernel::Entity_ABC* parent, kernel::Controllers& c
 // Name: UrbanColor constructor
 // Created: LGY 2011-04-19
 // -----------------------------------------------------------------------------
-UrbanColor::UrbanColor( xml::xistream& xis, kernel::Controllers& controllers, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dico )
+UrbanColor::UrbanColor( xml::xistream& xis, kernel::Controllers& controllers, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary )
     : controllers_( controllers )
     , object_     ( object )
-    , dico_       ( dico )
+    , dictionary_ ( dictionary )
 {
     if( xis.has_child( "color" ) )
     {
@@ -101,8 +102,5 @@ void UrbanColor::NotifyModeChanged( int newMode )
 // -----------------------------------------------------------------------------
 void UrbanColor::CreateDictionnary( bool readOnly )
 {
-    if( readOnly )
-        dico_.Register( object_, tools::translate( "UrbanColor", "Info/Color" ), static_cast< const UrbanColor& >( *this ).current_ );
-    else
-        dico_.Register( object_, tools::translate( "UrbanColor", "Info/Color" ), current_, kernel::eUrbanTemplate );
+    dictionary_.Register( object_, tools::translate( "UrbanColor", "Info/Color" ), current_, readOnly, kernel::eUrbanTemplate );
 }

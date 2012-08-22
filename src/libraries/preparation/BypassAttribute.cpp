@@ -10,7 +10,6 @@
 #include "preparation_pch.h"
 #include "BypassAttribute.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -20,21 +19,20 @@ using namespace kernel;
 // Name: BypassAttribute constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-BypassAttribute::BypassAttribute( kernel::PropertiesDictionary& dico )
-    : rBypassConstructionPercentage_ ( 0., Units::percentage )
+BypassAttribute::BypassAttribute( kernel::PropertiesDictionary& /*dictionary*/ )
+    : rBypassConstructionPercentage_( 0., Units::percentage )
 {
-    CreateDictionary( dico );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: BypassAttribute constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-BypassAttribute::BypassAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dico )
+BypassAttribute::BypassAttribute( xml::xistream& xis, kernel::PropertiesDictionary& /*dictionary*/ )
     : rBypassConstructionPercentage_ ( 0., Units::percentage )
 {
     xis >> xml::attribute( "value", rBypassConstructionPercentage_.value_ );
-    CreateDictionary( dico );
 }
 
 // -----------------------------------------------------------------------------
@@ -74,13 +72,4 @@ void BypassAttribute::SerializeAttributes( xml::xostream& xos ) const
     xos << xml::start( "bypass" )
             << xml::attribute( "value", rBypassConstructionPercentage_.value_ )
         << xml::end;
-}
-
-// -----------------------------------------------------------------------------
-// Name: BypassAttribute::CreateDictionary
-// Created: SBO 2007-02-08
-// -----------------------------------------------------------------------------
-void BypassAttribute::CreateDictionary( kernel::PropertiesDictionary& /*dico*/ )
-{
-    // NOTHING
 }

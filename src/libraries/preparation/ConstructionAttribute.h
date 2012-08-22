@@ -39,8 +39,8 @@ class ConstructionAttribute : public kernel::ConstructionAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ConstructionAttribute( kernel::PropertiesDictionary& dico );
-             ConstructionAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dico );
+    explicit ConstructionAttribute( kernel::PropertiesDictionary& dictionary );
+             ConstructionAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary );
     virtual ~ConstructionAttribute();
     //@}
 
@@ -65,7 +65,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dico );
+    void CreateDictionary( kernel::PropertiesDictionary& dictionary );
     //@}
 
 private:

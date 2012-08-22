@@ -18,19 +18,19 @@
 // Name: LodgingAttribute constructor
 // Created: MMC 2011-05-02
 // -----------------------------------------------------------------------------
-LodgingAttribute::LodgingAttribute( kernel::PropertiesDictionary& dico )
+LodgingAttribute::LodgingAttribute( kernel::PropertiesDictionary& dictionary )
 {
-    CreateDictionary( dico );
+    CreateDictionary( dictionary );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LodgingAttribute constructor
 // Created: MMC 2011-05-02
 // -----------------------------------------------------------------------------
-LodgingAttribute::LodgingAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dico )
+LodgingAttribute::LodgingAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary )
 {
     xis >> xml::attribute( "capacity", lodgingCapacity_ );
-    CreateDictionary( dico );
+    CreateDictionary( dictionary );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,7 +75,7 @@ void LodgingAttribute::SetLodgingCapacity( unsigned int capacity )
 // Name: LodgingAttribute::CreateDictionary
 // Created: MMC 2011-05-02
 // -----------------------------------------------------------------------------
-void LodgingAttribute::CreateDictionary( kernel::PropertiesDictionary& dico )
+void LodgingAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary )
 {
-    dico.Register( *this, tools::translate( "LodgingAttribute", "Info/Lodging attributes/Capacity" ), lodgingCapacity_ );
+    dictionary.Register( *this, tools::translate( "LodgingAttribute", "Info/Lodging attributes/Capacity" ), lodgingCapacity_ );
 }

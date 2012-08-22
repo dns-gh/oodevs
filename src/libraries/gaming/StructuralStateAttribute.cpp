@@ -27,6 +27,7 @@ StructuralStateAttribute::StructuralStateAttribute( kernel::Entity_ABC& entity, 
     : entity_         ( entity )
     , controller_     ( controller )
     , structuralState_( 100 )
+    , property_       ( tools::translate( "Block", "Info/StructuralState" ) )
 {
     CreateDictionary( dictionary );
 }
@@ -53,9 +54,9 @@ unsigned int StructuralStateAttribute::GetValue() const
 // Name: StructuralStateAttribute::CreateDictionary
 // Created: JSR 2010-09-01
 // -----------------------------------------------------------------------------
-void StructuralStateAttribute::CreateDictionary( kernel::PropertiesDictionary& dico ) const
+void StructuralStateAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary ) const
 {
-    dico.Register( *this, tools::translate( "Block", "Info/StructuralState" ), structuralState_ );
+    dictionary.Register( *this, property_, structuralState_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -87,7 +88,7 @@ void StructuralStateAttribute::UpdateData( const T& message )
     UPDATE_SUBPROPERTY( message, structuralState_, structure, state, "Info", updated );
     if( !updated.empty() )
     {
-        controller_.Update( kernel::DictionaryUpdated( entity_, tools::translate( "Block", "Info" ) ) );
+        controller_.Update( kernel::DictionaryUpdated( entity_, property_ ) );
         controller_.Update( static_cast< kernel::StructuralStateAttribute_ABC& >( *this ) );
     }
 }

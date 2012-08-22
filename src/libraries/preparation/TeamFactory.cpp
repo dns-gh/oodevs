@@ -25,7 +25,6 @@
 #include "clients_kernel/DictionaryExtensions.h"
 #include "clients_kernel/Color_ABC.h"
 #include "clients_kernel/Karma.h"
-#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: TeamFactory constructor

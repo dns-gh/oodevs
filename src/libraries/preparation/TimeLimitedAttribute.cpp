@@ -20,22 +20,22 @@ using namespace kernel;
 // Name: TimeLimitedAttribute constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-TimeLimitedAttribute::TimeLimitedAttribute( PropertiesDictionary& dico )
+TimeLimitedAttribute::TimeLimitedAttribute( PropertiesDictionary& dictionary )
     : activityTime_( 0, 0 )
 {
-    CreateDictionary( dico );
+    CreateDictionary( dictionary );
 }
 
 // -----------------------------------------------------------------------------
 // Name: TimeLimitedAttribute constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-TimeLimitedAttribute::TimeLimitedAttribute( xml::xistream& xis, PropertiesDictionary& dico )
+TimeLimitedAttribute::TimeLimitedAttribute( xml::xistream& xis, PropertiesDictionary& dictionary )
     : activityTime_( 0, 0 )
 {
     QTime activityTime;
     activityTime_ = activityTime.addSecs( xis.attribute< unsigned int >( "value" ) );
-    CreateDictionary( dico );
+    CreateDictionary( dictionary );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,7 +83,7 @@ void TimeLimitedAttribute::SetActivityTime( unsigned int time )
 // Name: TimeLimitedAttribute::CreateDictionary
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void TimeLimitedAttribute::CreateDictionary( PropertiesDictionary& dico )
+void TimeLimitedAttribute::CreateDictionary( PropertiesDictionary& dictionary )
 {
-    dico.Register( *this, tools::translate( "TimeLimitedAttribute", "Info/Mine parameters/Activity time" ), activityTime_ );
+    dictionary.Register( *this, tools::translate( "TimeLimitedAttribute", "Info/Mine parameters/Activity time" ), activityTime_ );
 }

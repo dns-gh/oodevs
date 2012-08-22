@@ -38,8 +38,8 @@ class FireAttribute : public kernel::FireAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit FireAttribute( kernel::PropertiesDictionary& dico );
-             FireAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::FireClass, std::string >& FireClasses, kernel::PropertiesDictionary& dico );
+    explicit FireAttribute( kernel::PropertiesDictionary& dictionary );
+             FireAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::FireClass, std::string >& FireClasses, kernel::PropertiesDictionary& dictionary );
     virtual ~FireAttribute();
     //@}
 
@@ -64,7 +64,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dico );
+    void CreateDictionary( kernel::PropertiesDictionary& dictionary );
     //@}
 
 public:

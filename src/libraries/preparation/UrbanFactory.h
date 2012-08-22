@@ -50,12 +50,12 @@ public:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers&                                    controllers_;
-    const tools::Resolver_ABC< kernel::UrbanObject_ABC >&   urbanObjects_;
-    const StaticModel&                                      staticModel_;
-    IdManager&                                              idManager_;
-    const tools::Resolver< kernel::Object_ABC >&            objects_;
-    kernel::UrbanDisplayOptions&                            options_;
+    kernel::Controllers&                                  controllers_;
+    const tools::Resolver_ABC< kernel::UrbanObject_ABC >& urbanObjects_;
+    const StaticModel&                                    staticModel_;
+    IdManager&                                            idManager_;
+    const tools::Resolver< kernel::Object_ABC >&          objects_;
+    kernel::UrbanDisplayOptions&                          options_;
     //@}
 };
 

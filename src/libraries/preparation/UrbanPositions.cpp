@@ -41,35 +41,35 @@ namespace
 // Name: UrbanPositions constructor for city or district from list view context menu
 // Created: ABR 2012-06-04
 // -----------------------------------------------------------------------------
-UrbanPositions::UrbanPositions( kernel::PropertiesDictionary& dico, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter )
+UrbanPositions::UrbanPositions( kernel::PropertiesDictionary& dictionary, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter )
     : kernel::UrbanPositions( level, object )
     , converter_( converter )
 {
     assert( level_ == eUrbanLevelCity || level_ == eUrbanLevelDistrict );
-    dico.Register( *this, tools::translate( "UrbanPositions", "Info/Area" ), static_cast< const UrbanPositions& >( *this ).area_ );
+    dictionary.Register( object, tools::translate( "UrbanPositions", "Info/Area" ), area_, true );
 }
 
 // -----------------------------------------------------------------------------
 // Name: UrbanPositions constructor for urban blocs from buttons
 // Created: ABR 2012-06-04
 // -----------------------------------------------------------------------------
-UrbanPositions::UrbanPositions( const geometry::Polygon2f& location, kernel::PropertiesDictionary& dico, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter )
+UrbanPositions::UrbanPositions( const geometry::Polygon2f& location, kernel::PropertiesDictionary& dictionary, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter )
     : kernel::UrbanPositions( level, object, location.Vertices() )
     , converter_( converter )
 {
     assert( level_ == eUrbanLevelBlock );
-    dico.Register( *this, tools::translate( "UrbanPositions", "Info/Area" ), static_cast< const UrbanPositions& >( *this ).area_ );
+    dictionary.Register( object, tools::translate( "UrbanPositions", "Info/Area" ), area_, true );
 }
 
 // -----------------------------------------------------------------------------
 // Name: UrbanPositions constructor for any urban object from xis
 // Created: JSR 2010-09-06
 // -----------------------------------------------------------------------------
-UrbanPositions::UrbanPositions( xml::xistream& xis, kernel::PropertiesDictionary& dico, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter )
+UrbanPositions::UrbanPositions( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter )
     : kernel::UrbanPositions( level, object, Convert( xis, level, converter ) )
     , converter_( converter )
 {
-    dico.Register( *this, tools::translate( "UrbanPositions", "Info/Area" ), static_cast< const UrbanPositions& >( *this ).area_ );
+    dictionary.Register( *this, tools::translate( "UrbanPositions", "Info/Area" ), area_, true );
 }
 
 // -----------------------------------------------------------------------------

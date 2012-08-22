@@ -38,9 +38,9 @@ class UrbanPositions : public kernel::UrbanPositions
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanPositions( kernel::PropertiesDictionary& dico, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter );
-             UrbanPositions( const geometry::Polygon2f& location, kernel::PropertiesDictionary& dico, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter );
-             UrbanPositions( xml::xistream& xis, kernel::PropertiesDictionary& dico, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter );
+             UrbanPositions( kernel::PropertiesDictionary& dictionary, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter );
+             UrbanPositions( const geometry::Polygon2f& location, kernel::PropertiesDictionary& dictionary, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter );
+             UrbanPositions( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter );
     virtual ~UrbanPositions();
     //@}
 

@@ -19,24 +19,24 @@
 // Name: ConstructionAttribute constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-ConstructionAttribute::ConstructionAttribute( kernel::PropertiesDictionary& dico )
-    : completion_( 0, kernel::Units::percentageGTzero )
-    , dotationType_( 0 )
+ConstructionAttribute::ConstructionAttribute( kernel::PropertiesDictionary& dictionary )
+    : completion_   ( 0, kernel::Units::percentageGTzero )
+    , dotationType_ ( 0 )
     , dotationCount_( 0 )
 {
-    CreateDictionary( dico );
+    CreateDictionary( dictionary );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ConstructionAttribute constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-ConstructionAttribute::ConstructionAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dico )
-    : completion_( unsigned int( xis.attribute< float >( "completion", 1.f ) * 100 ), kernel::Units::percentageGTzero )
-    , dotationType_( 0 )
+ConstructionAttribute::ConstructionAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary )
+    : completion_   ( unsigned int( xis.attribute< float >( "completion", 1.f ) * 100 ), kernel::Units::percentageGTzero )
+    , dotationType_ ( 0 )
     , dotationCount_( 0 )
 {
-    CreateDictionary( dico );
+    CreateDictionary( dictionary );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,11 +89,11 @@ void ConstructionAttribute::SerializeAttributes( xml::xostream& xos ) const
 // Name: ConstructionAttribute::CreateDictionary
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void ConstructionAttribute::CreateDictionary( kernel::PropertiesDictionary& dico )
+void ConstructionAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary )
 {
-    dico.Register( *this, tools::translate( "Object", "Info/Construction/Completion" ), completion_ );
-    dico.Register( *this, tools::translate( "Object", "Info/Construction/Resource/Type" ), dotationType_ );
-    dico.Register( *this, tools::translate( "Object", "Info/Construction/Resource/Count" ), dotationCount_ );
+    dictionary.Register( *this, tools::translate( "Object", "Info/Construction/Completion" ), completion_ );
+    dictionary.Register( *this, tools::translate( "Object", "Info/Construction/Resource/Type" ), dotationType_ );
+    dictionary.Register( *this, tools::translate( "Object", "Info/Construction/Resource/Count" ), dotationCount_ );
 }
 
 // -----------------------------------------------------------------------------

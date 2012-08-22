@@ -20,20 +20,20 @@ using namespace kernel;
 // Name: MineAttribute constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-MineAttribute::MineAttribute( kernel::PropertiesDictionary& dico )
+MineAttribute::MineAttribute( kernel::PropertiesDictionary& dictionary )
     : density_( 0, Units::percentage )
 {
-    CreateDictionary( dico );
+    CreateDictionary( dictionary );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MineAttribute constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-MineAttribute::MineAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dico )
-    : density_     ( xis.attribute< float >( "density", 0. ) * 100., Units::percentage )
+MineAttribute::MineAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary )
+    : density_( xis.attribute< float >( "density", 0. ) * 100., Units::percentage )
 {
-    CreateDictionary( dico );
+    CreateDictionary( dictionary );
 }
 
 // -----------------------------------------------------------------------------
@@ -76,7 +76,7 @@ void MineAttribute::SetDensity( float density )
 // Name: MineAttribute::CreateDictionary
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void MineAttribute::CreateDictionary( kernel::PropertiesDictionary& dico )
+void MineAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary )
 {
-    dico.Register( *this, tools::translate( "MineAttribute", "Info/Improvable/Value" ), density_ );
+    dictionary.Register( *this, tools::translate( "MineAttribute", "Info/Improvable/Value" ), density_ );
 }

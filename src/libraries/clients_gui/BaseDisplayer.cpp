@@ -21,7 +21,6 @@
 #include "clients_kernel/Inhabitant_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/PopulationConcentration_ABC.h"
-#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/NBCAgent.h"
 #include "clients_kernel/FireClass.h"
 #include "clients_kernel/MedicalTreatmentType.h"
@@ -40,6 +39,8 @@
 #include "clients_kernel/AgentKnowledge_ABC.h"
 #include "clients_kernel/ObjectKnowledge_ABC.h"
 #include "clients_kernel/LogisticLevel.h"
+#include "clients_kernel/MaterialCompositionType.h"
+#include "clients_kernel/RoofShapeType.h"
 #include "clients_kernel/Ghost_ABC.h"
 #include "Tools.h"
 
@@ -380,4 +381,22 @@ void BaseDisplayer::Call( const kernel::LogisticLevel& value )
 void BaseDisplayer::Call( const kernel::Ghost_ABC& value )
 {
     AddToDisplay( InternalLinks::CreateLink( value, value.GetName() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BaseDisplayer::Call
+// Created: LGY 2012-08-22
+// -----------------------------------------------------------------------------
+void BaseDisplayer::Call( const kernel::MaterialCompositionType& value )
+{
+    AddToDisplay( value.GetName() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BaseDisplayer::Call
+// Created: LGY 2012-08-22
+// -----------------------------------------------------------------------------
+void BaseDisplayer::Call( const kernel::RoofShapeType& value )
+{
+    AddToDisplay( value.GetName() );
 }

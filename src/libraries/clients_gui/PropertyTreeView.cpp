@@ -37,8 +37,12 @@ PropertyTreeView::~PropertyTreeView()
 void PropertyTreeView::Display()
 {
     DisplayHeader( rootIndex() );
-    header()->setResizeMode( 0, QHeaderView::Stretch );
-    header()->setResizeMode( 1, QHeaderView::ResizeToContents );
+    QHeaderView* headerView = header();
+    if( headerView->count() > 1 )
+    {
+        headerView->setResizeMode( 0, QHeaderView::Stretch );
+        headerView->setResizeMode( 1, QHeaderView::ResizeToContents );
+    }
     sortByColumn( 0, Qt::AscendingOrder );
     expandAll();
 }

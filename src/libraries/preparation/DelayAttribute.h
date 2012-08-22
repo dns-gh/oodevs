@@ -37,8 +37,8 @@ class DelayAttribute : public kernel::DelayAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DelayAttribute( kernel::PropertiesDictionary& dico );
-             DelayAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dico );
+    explicit DelayAttribute( kernel::PropertiesDictionary& dictionary );
+             DelayAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary );
     virtual ~DelayAttribute();
     //@}
 
@@ -62,7 +62,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dico );
+    void CreateDictionary( kernel::PropertiesDictionary& dictionary );
     //@}
 
 private:

@@ -42,8 +42,8 @@ class UrbanColor : public kernel::UrbanColor_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanColor( const kernel::Entity_ABC* parent, kernel::Controllers& controllers, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dico );
-             UrbanColor( xml::xistream& xis, kernel::Controllers& controllers, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dico );
+             UrbanColor( const kernel::Entity_ABC* parent, kernel::Controllers& controllers, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary );
+             UrbanColor( xml::xistream& xis, kernel::Controllers& controllers, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary );
     virtual ~UrbanColor();
     //@}
 
@@ -68,7 +68,7 @@ private:
     //@{
     kernel::Controllers&          controllers_;
     kernel::UrbanObject_ABC&      object_;
-    kernel::PropertiesDictionary& dico_;
+    kernel::PropertiesDictionary& dictionary_;
     //@}
 };
 

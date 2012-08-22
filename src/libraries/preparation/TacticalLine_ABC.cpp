@@ -81,6 +81,6 @@ void TacticalLine_ABC::CreateDictionary( kernel::Controller& controller )
 {
     kernel::PropertiesDictionary& dictionary = *new kernel::PropertiesDictionary( controller );
     Attach( dictionary );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "TacticalLine_ABC", "Info/Identifier" ), (const unsigned long)id_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "TacticalLine_ABC", "Info/Identifier" ), id_, true );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "TacticalLine_ABC", "Info/Name" ), name_ );
 }

@@ -38,8 +38,8 @@ class BypassAttribute : public kernel::BypassAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit BypassAttribute( kernel::PropertiesDictionary& dico );
-             BypassAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dico );
+    explicit BypassAttribute( kernel::PropertiesDictionary& dictionary );
+             BypassAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary );
     virtual ~BypassAttribute();
     //@}
 
@@ -61,11 +61,6 @@ private:
     //@{
     BypassAttribute( const BypassAttribute& );            //!< Copy constructor
     BypassAttribute& operator=( const BypassAttribute& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dico );
     //@}
 
 private:

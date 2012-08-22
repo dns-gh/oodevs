@@ -292,10 +292,6 @@
         <source>Infrastructure</source>
         <translation>Infrastructure</translation>
     </message>
-    <message>
-        <source>Info</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>Crowd</name>

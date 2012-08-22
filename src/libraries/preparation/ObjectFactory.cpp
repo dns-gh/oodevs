@@ -9,8 +9,6 @@
 
 #include "preparation_pch.h"
 #include "ObjectFactory.h"
-#include "AgentsModel.h"
-#include "TeamsModel.h"
 #include "Model.h"
 #include "Object.h"
 #include "Objects.h"
@@ -19,7 +17,6 @@
 #include "ObjectsModel.h"
 #include "ObjectPositions.h"
 #include "StaticModel.h"
-#include "FormationModel.h"
 #include "Team.h"
 #include "UrbanModel.h"
 #include "TimeLimitedAttribute.h"

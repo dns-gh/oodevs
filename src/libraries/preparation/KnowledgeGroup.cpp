@@ -83,10 +83,10 @@ void KnowledgeGroup::CreateDictionary( Controller& controller )
     PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
     Attach( dictionary );
     const Entity_ABC& constSelf = static_cast< const Entity_ABC& >( *this );
-    dictionary.Register( constSelf, tools::translate( "KnowledgeGroup", "Info/Identifier" ), static_cast< const unsigned long >( id_ ) );
+    dictionary.Register( constSelf, tools::translate( "KnowledgeGroup", "Info/Identifier" ), id_, true );
     dictionary.Register( constSelf, tools::translate( "KnowledgeGroup", "Info/Name" ), name_, *this, &KnowledgeGroup::Rename );
     dictionary.Register( constSelf, tools::translate( "KnowledgeGroup", "Type/Name" ), type_, *this, &KnowledgeGroup::SetType );
-    dictionary.Register( constSelf, tools::translate( "KnowledgeGroup", "Type/Delay" ), static_cast< const KnowledgeGroup* >( this )->communicationDelay_ ); // LTO
+    dictionary.Register( constSelf, tools::translate( "KnowledgeGroup", "Type/Delay" ), communicationDelay_, true ); // LTO
 }
 
 // -----------------------------------------------------------------------------

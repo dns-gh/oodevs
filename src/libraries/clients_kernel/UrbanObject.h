@@ -34,11 +34,8 @@ namespace kernel
     class Controllers;
     class UrbanDisplayOptions;
     class AccommodationTypes;
-    class Controller;
-    class Displayer_ABC;
     class ObjectType;
     class PropertiesDictionary;
-    class UrbanTemplateType;
 
 // =============================================================================
 /** @class  UrbanObject

@@ -37,8 +37,8 @@ class TimeLimitedAttribute : public kernel::TimeLimitedAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit TimeLimitedAttribute( kernel::PropertiesDictionary& dico );
-             TimeLimitedAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dico );
+    explicit TimeLimitedAttribute( kernel::PropertiesDictionary& dictionary );
+             TimeLimitedAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary );
     virtual ~TimeLimitedAttribute();
     //@}
 
@@ -62,7 +62,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dico );
+    void CreateDictionary( kernel::PropertiesDictionary& dictionary );
     //@}
 
 private:

@@ -47,14 +47,15 @@ namespace kernel
     class KnowledgeGroup_ABC;
     class LogisticLevel;
     class Ghost_ABC;
+    class MaterialCompositionType;
+    class RoofShapeType;
 }
 
 namespace gui
 {
-
 // =============================================================================
 /** @class  BaseDisplayer
-    @brief  BaseDisplayer
+    @brief  Base displayer
 */
 // Created: AGE 2006-02-09
 // =============================================================================
@@ -93,6 +94,8 @@ class BaseDisplayer : public kernel::Displayer_ABC
                     , public tools::Caller< kernel::KnowledgeGroup_ABC >
                     , public tools::Caller< kernel::LogisticLevel >
                     , public tools::Caller< kernel::Ghost_ABC >
+                    , public tools::Caller< kernel::MaterialCompositionType >
+                    , public tools::Caller< kernel::RoofShapeType >
 {
 public:
     //! @name Constructors/Destructor
@@ -143,6 +146,8 @@ private:
     virtual void Call( const kernel::KnowledgeGroup_ABC& value );
     virtual void Call( const kernel::LogisticLevel& value );
     virtual void Call( const kernel::Ghost_ABC& value );
+    virtual void Call( const kernel::MaterialCompositionType& value );
+    virtual void Call( const kernel::RoofShapeType& value );
     //@}
 };
 

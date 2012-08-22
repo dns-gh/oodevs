@@ -55,7 +55,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
+    void CreateDictionary( kernel::PropertiesDictionary& dictionary ) const;
 
     virtual void DoUpdate( const sword::UrbanUpdate& message );
     virtual void DoUpdate( const sword::UrbanCreation& message );

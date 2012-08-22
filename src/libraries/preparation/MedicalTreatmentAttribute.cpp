@@ -26,9 +26,10 @@ using namespace kernel;
 // Name: MedicalTreatmentAttribute constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-MedicalTreatmentAttribute::MedicalTreatmentAttribute( const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& treatmentTypes, kernel::PropertiesDictionary& dico, kernel::Controllers* controllers /* = 0 */, const kernel::Entity_ABC* owner /* = 0 */ )
+MedicalTreatmentAttribute::MedicalTreatmentAttribute( const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& treatmentTypes,
+                                                      kernel::PropertiesDictionary& dictionary, kernel::Controllers* controllers /* = 0 */, const kernel::Entity_ABC* owner /* = 0 */ )
     : controllers_( controllers )
-    , dico_       ( dico )
+    , dictionary_ ( dictionary )
     , owner_      ( owner )
     , doctors_    ( 0 )
     , resolver_   ( treatmentTypes )
@@ -43,9 +44,10 @@ MedicalTreatmentAttribute::MedicalTreatmentAttribute( const tools::Resolver_ABC<
 // Name: MedicalTreatmentAttribute constructor
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-MedicalTreatmentAttribute::MedicalTreatmentAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& treatmentTypes, kernel::PropertiesDictionary& dico )
+MedicalTreatmentAttribute::MedicalTreatmentAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& treatmentTypes,
+                                                      kernel::PropertiesDictionary& dictionary )
     : controllers_( 0 )
-    , dico_       ( dico )
+    , dictionary_ ( dictionary )
     , owner_      ( 0 )
     , doctors_    ( 0 )
     , resolver_   ( treatmentTypes )
@@ -201,17 +203,17 @@ void MedicalTreatmentAttribute::CreateDictionary()
 {
     if( owner_ )
     {
-        dico_.Register( *owner_, tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Doctors" ), doctors_ );
-        dico_.Register( *owner_, tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Hospital ID" ), referenceID_ );
+        dictionary_.Register( *owner_, tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Doctors" ), doctors_ );
+        dictionary_.Register( *owner_, tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Hospital ID" ), referenceID_ );
         for( T_TreatmentCapacities::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )
-            dico_.Register( *owner_, tools::translate( "MedicalTreatmentAttribute", std::string( "Info/Medical Treatment attributes/" + it->first ).c_str() ), it->second );
+            dictionary_.Register( *owner_, tools::translate( "MedicalTreatmentAttribute", std::string( "Info/Medical Treatment attributes/" + it->first ).c_str() ), it->second );
     }
     else
     {
-        dico_.Register( *this, tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Doctors" ), doctors_ );
-        dico_.Register( *this, tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Hospital ID" ), referenceID_ );
+        dictionary_.Register( *this, tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Doctors" ), doctors_ );
+        dictionary_.Register( *this, tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Hospital ID" ), referenceID_ );
         for( T_TreatmentCapacities::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )
-            dico_.Register( *this, tools::translate( "MedicalTreatmentAttribute", std::string( "Info/Medical Treatment attributes/" + it->first ).c_str() ), it->second );
+            dictionary_.Register( *this, tools::translate( "MedicalTreatmentAttribute", std::string( "Info/Medical Treatment attributes/" + it->first ).c_str() ), it->second );
     }
 }
 
@@ -235,9 +237,9 @@ void MedicalTreatmentAttribute::NotifyModeChanged( int newMode )
         CreateDictionary();
     else
     {
-        dico_.Remove( tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Doctors" ) );
-        dico_.Remove( tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Hospital ID" ) );
+        dictionary_.Remove( tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Doctors" ) );
+        dictionary_.Remove( tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Hospital ID" ) );
         for( T_TreatmentCapacities::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )
-            dico_.Remove( tools::translate( "MedicalTreatmentAttribute", std::string( "Info/Medical Treatment attributes/" + it->first ).c_str() ) );
+            dictionary_.Remove( tools::translate( "MedicalTreatmentAttribute", std::string( "Info/Medical Treatment attributes/" + it->first ).c_str() ) );
     }
 }

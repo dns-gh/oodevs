@@ -151,10 +151,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Info</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>PhysicalFeatures/Architecture</source>
         <translation type="unfinished"></translation>
     </message>

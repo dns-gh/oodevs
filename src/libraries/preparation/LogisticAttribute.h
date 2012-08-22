@@ -51,9 +51,9 @@ class LogisticAttribute : public kernel::LogisticAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticAttribute( kernel::PropertiesDictionary& dico, kernel::Controllers& controllers, const kernel::Object_ABC& object );
+             LogisticAttribute( kernel::PropertiesDictionary& dictionary, kernel::Controllers& controllers, const kernel::Object_ABC& object );
              LogisticAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::Automat_ABC >& automats,
-                                const tools::Resolver_ABC< kernel::Formation_ABC >& formations, kernel::PropertiesDictionary& dico,
+                                const tools::Resolver_ABC< kernel::Formation_ABC >& formations, kernel::PropertiesDictionary& dictionary,
                                 kernel::Controllers& controllers, const kernel::Object_ABC& object );
     virtual ~LogisticAttribute();
     //@}
@@ -77,7 +77,7 @@ private:
     //@{
     virtual void NotifyDeleted( const kernel::Automat_ABC& entity );
     virtual void NotifyDeleted( const kernel::Formation_ABC& entity );
-    void CreateDictionary( kernel::PropertiesDictionary& dico );
+    void CreateDictionary( kernel::PropertiesDictionary& dictionary );
     //@}
 
 private:

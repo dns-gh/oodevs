@@ -43,7 +43,7 @@ class StructuralStateAttribute : public kernel::StructuralStateAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             StructuralStateAttribute( kernel::Controllers& controllers, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dico );
+             StructuralStateAttribute( kernel::Controllers& controllers, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary );
     virtual ~StructuralStateAttribute();
     //@}
 
@@ -70,7 +70,7 @@ private:
     kernel::Controllers&          controllers_;
     kernel::UrbanObject_ABC&      object_;
     unsigned int                  structuralState_;
-    kernel::PropertiesDictionary& dico_;
+    kernel::PropertiesDictionary& dictionary_;
     //@}
 };
 

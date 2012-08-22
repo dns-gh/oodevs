@@ -42,8 +42,10 @@ class Diplomacies : public kernel::Diplomacies_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Diplomacies( kernel::Controller& controller, const tools::Resolver_ABC< kernel::Team_ABC >& resolver, const kernel::Team_ABC& team, kernel::PropertiesDictionary& dico, TeamKarmas& karmas );
-             Diplomacies( xml::xistream& xis, kernel::Controller& controller, const tools::Resolver_ABC< kernel::Team_ABC >& resolver, const kernel::Team_ABC& team, kernel::PropertiesDictionary& dico, TeamKarmas& karmas );
+             Diplomacies( kernel::Controller& controller, const tools::Resolver_ABC< kernel::Team_ABC >& resolver,
+                          const kernel::Team_ABC& team, kernel::PropertiesDictionary& dictionary, TeamKarmas& karmas );
+             Diplomacies( xml::xistream& xis, kernel::Controller& controller, const tools::Resolver_ABC< kernel::Team_ABC >& resolver,
+                          const kernel::Team_ABC& team, kernel::PropertiesDictionary& dictionary, TeamKarmas& karmas );
     virtual ~Diplomacies();
     //@}
 
@@ -65,7 +67,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dico );
+    void CreateDictionary( kernel::PropertiesDictionary& dictionary );
     void ReadRelationship( xml::xistream& xis );
     void SetKarma( const kernel::TeamKarma& karma );
     virtual void SerializeAttributes( xml::xostream& ) const;

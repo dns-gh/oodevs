@@ -32,13 +32,13 @@ namespace xml
 // Created: AGE 2006-02-14
 // =============================================================================
 class SupplyRouteAttribute : public kernel::SupplyRouteAttribute_ABC
-                              , public kernel::Serializable_ABC
+                           , public kernel::Serializable_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit SupplyRouteAttribute( kernel::PropertiesDictionary& dico );
-             SupplyRouteAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dico );
+    explicit SupplyRouteAttribute( kernel::PropertiesDictionary& dictionary );
+             SupplyRouteAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary );
     virtual ~SupplyRouteAttribute();
     //@}
 
@@ -66,7 +66,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dico );
+    void CreateDictionary( kernel::PropertiesDictionary& dictionary );
     //@}
 
 public:

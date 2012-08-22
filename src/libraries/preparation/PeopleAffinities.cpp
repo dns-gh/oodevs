@@ -113,5 +113,5 @@ void PeopleAffinities::AddTeam( const kernel::Team_ABC& team )
         affinities_[ team.GetId() ] = 0.f;
     teams_[ team.GetId() ] = team.GetName();
     CIT_Affinities it = affinities_.find( team.GetId() );
-    dictionary_.Register( *this, tools::translate( "Affinities", "Affinities/%1" ).arg( team.GetName() ), it->second );
+    dictionary_.Register( *this, tools::translate( "Affinities", "Affinities/%1" ).arg( team.GetName() ), it->second, true );
 }

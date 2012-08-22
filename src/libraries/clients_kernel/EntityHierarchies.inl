@@ -209,9 +209,9 @@ Interface* EntityHierarchies< Interface >::SuperiorHierarchy()
 // Created: SBO 2006-10-19
 // -----------------------------------------------------------------------------
 template< typename Interface >
-void EntityHierarchies< Interface >::CreateDictionary( PropertiesDictionary& dico ) const
+void EntityHierarchies< Interface >::CreateDictionary( PropertiesDictionary& dictionary ) const
 {
-    dico.Register( *(const Interface*)this, tools::translate( "EntityHierarchies", "Hierarchies/Superior" ), superior_ );
+    dictionary.Register( *(const Interface*)this, tools::translate( "EntityHierarchies", "Hierarchies/Superior" ), superior_ );
 }
 
 }
