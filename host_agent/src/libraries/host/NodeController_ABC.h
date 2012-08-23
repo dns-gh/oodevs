@@ -71,34 +71,34 @@ struct NodeController_ABC : public boost::noncopyable
     //! @name Methods
     //@{
     virtual void    Reload() = 0;
-    virtual T_Nodes List( int offset, int limit ) const = 0;
-    virtual size_t  Count() const = 0;
-    virtual bool    Has( const Uuid& id ) const = 0;
-    virtual T_Node  Get( const Uuid& id ) const = 0;
+    virtual T_Nodes List  ( int offset, int limit ) const = 0;
+    virtual size_t  Count () const = 0;
+    virtual bool    Has   ( const Uuid& id ) const = 0;
+    virtual T_Node  Get   ( const Uuid& id ) const = 0;
     virtual T_Node  Create( const std::string& ident, const web::node::Config& cfg ) = 0;
     virtual T_Node  Delete( const Uuid& id ) = 0;
-    virtual T_Node  Start( const Uuid& id ) const = 0;
-    virtual T_Node  Stop( const Uuid& id ) const = 0;
+    virtual T_Node  Start ( const Uuid& id ) const = 0;
+    virtual T_Node  Stop  ( const Uuid& id ) const = 0;
     virtual T_Node  Update( const Uuid& id, const Tree& cfg ) = 0;
     //@}
 
     //! @name Install Methods
     //@{
-    virtual Tree    GetInstall( const Uuid& id ) const = 0;
+    virtual Tree    GetInstall   ( const Uuid& id ) const = 0;
     virtual Tree    DeleteInstall( const Uuid& id, const std::vector< size_t >& list ) = 0;
     //@}
 
     //! @name Cache Methods
     //@{
-    virtual Tree    UploadCache( const Uuid& id, std::istream& src ) const = 0;
-    virtual Tree    GetCache( const Uuid& id ) const = 0;
-    virtual Tree    DeleteCache( const Uuid& id ) = 0;
+    virtual Tree    UploadCache     ( const Uuid& id, std::istream& src ) const = 0;
+    virtual Tree    GetCache        ( const Uuid& id ) const = 0;
+    virtual Tree    DeleteCache     ( const Uuid& id ) = 0;
     virtual Tree    InstallFromCache( const Uuid& id, const std::vector< size_t >& list ) = 0;
     //@}
 
     //! @name Exercise Methods
     //@{
-    virtual T_Exercises GetExercises( const Uuid& id, int offset, int limit ) const = 0;
+    virtual T_Exercises GetExercises  ( const Uuid& id, int offset, int limit ) const = 0;
     virtual size_t      CountExercises( const Uuid& id ) const = 0;
     //@}
 

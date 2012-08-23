@@ -68,34 +68,34 @@ public:
     //! @name Methods
     //@{
     virtual void    Reload();
-    virtual T_Nodes List( int offset, int limit ) const;
-    virtual size_t  Count() const;
-    virtual bool    Has( const Uuid& id ) const;
-    virtual T_Node  Get( const Uuid& id ) const;
+    virtual T_Nodes List  ( int offset, int limit ) const;
+    virtual size_t  Count () const;
+    virtual bool    Has   ( const Uuid& id ) const;
+    virtual T_Node  Get   ( const Uuid& id ) const;
     virtual T_Node  Create( const std::string& ident, const web::node::Config& cfg );
     virtual T_Node  Delete( const Uuid& id );
-    virtual T_Node  Start( const Uuid& id ) const;
-    virtual T_Node  Stop( const Uuid& id ) const;
+    virtual T_Node  Start ( const Uuid& id ) const;
+    virtual T_Node  Stop  ( const Uuid& id ) const;
     virtual T_Node  Update( const Uuid& id, const Tree& cfg );
     //@}
 
     //! @name Install Methods
     //@{
-    virtual Tree    GetInstall( const Uuid& id ) const;
+    virtual Tree    GetInstall   ( const Uuid& id ) const;
     virtual Tree    DeleteInstall( const Uuid& id, const std::vector< size_t >& list );
     //@}
 
     //! @name Cache Methods
     //@{
-    virtual Tree    UploadCache( const Uuid& id, std::istream& src ) const;
-    virtual Tree    GetCache( const Uuid& id ) const;
-    virtual Tree    DeleteCache( const Uuid& id );
+    virtual Tree    UploadCache     ( const Uuid& id, std::istream& src ) const;
+    virtual Tree    GetCache        ( const Uuid& id ) const;
+    virtual Tree    DeleteCache     ( const Uuid& id );
     virtual Tree    InstallFromCache( const Uuid& id, const std::vector< size_t >& list );
     //@}
 
     //! @name Exercise Methods
     //@{
-    virtual T_Exercises GetExercises( const Uuid& id, int offset, int limit ) const;
+    virtual T_Exercises GetExercises  ( const Uuid& id, int offset, int limit ) const;
     virtual size_t      CountExercises( const Uuid& id ) const;
     //@}
 
@@ -112,14 +112,14 @@ public:
 private:
     //! @name Private methods
     //@{
-    void ReloadNode( const Path& path );
-    bool ReloadDirectory( runtime::Async& reload, const Path& dir );
-    void Refresh();
-    void Save( const Node_ABC& node ) const;
-    void Create( Node_ABC& node, bool reload );
-    T_Process StartWith( const Node_ABC& node ) const;
-    void Start( Node_ABC& node, bool force, bool weak ) const;
-    void Stop( Node_ABC& node, bool skip, bool weak ) const;
+    void      ReloadNode     ( const Path& path );
+    bool      ReloadDirectory( runtime::Async& reload, const Path& dir );
+    void      Refresh        ();
+    void      Save           ( const Node_ABC& node ) const;
+    void      Create         ( Node_ABC& node, bool reload );
+    T_Process StartWith      ( const Node_ABC& node ) const;
+    void      Start          ( Node_ABC& node, bool force, bool weak ) const;
+    void      Stop           ( Node_ABC& node, bool skip, bool weak ) const;
     //@}
 
 private:
