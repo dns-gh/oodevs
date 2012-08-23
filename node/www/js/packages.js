@@ -511,10 +511,13 @@
     };
 
     PackageView.prototype.toggle_load = function(next, group) {
-      this.enabled = next;
-      if (group != null) {
-        return toggle_spinner($(group));
+      if (!enabled) {
+        this.enabled = next;
       }
+      if (group != null) {
+        toggle_spinner($(group));
+      }
+      return this.enabled = next;
     };
 
     PackageView.prototype.delete_items = function(list) {

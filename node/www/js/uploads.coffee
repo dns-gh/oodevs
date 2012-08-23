@@ -37,11 +37,12 @@ class PackageView extends Backbone.View
         $(@el).empty()
 
     toggle_load: (enabled, disable, load) =>
-        @enabled = enabled
+        @enabled = enabled unless enabled
         for it in disable
             it.toggleClass "disabled"
         if load?
             toggle_spinner load
+        @enabled = enabled
 
     render: =>
         return unless @enabled

@@ -517,14 +517,17 @@
 
     PackageView.prototype.toggle_load = function(enabled, disable, load) {
       var it, _i, _len;
-      this.enabled = enabled;
+      if (!enabled) {
+        this.enabled = enabled;
+      }
       for (_i = 0, _len = disable.length; _i < _len; _i++) {
         it = disable[_i];
         it.toggleClass("disabled");
       }
       if (load != null) {
-        return toggle_spinner(load);
+        toggle_spinner(load);
       }
+      return this.enabled = enabled;
     };
 
     PackageView.prototype.render = function() {

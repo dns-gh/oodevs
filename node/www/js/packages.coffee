@@ -33,9 +33,10 @@ class PackageView extends Backbone.View
         setTimeout @delta, 5000
 
     toggle_load: (next, group) =>
-        @enabled = next
+        @enabled = next unless enabled
         if group?
             toggle_spinner $ group
+        @enabled = next
 
     delete_items: (list) =>
         next = []
