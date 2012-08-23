@@ -127,6 +127,7 @@ private:
     T_Process StartWith      ( const Node_ABC& node ) const;
     void      Start          ( Node_ABC& node, bool force, bool weak ) const;
     void      Stop           ( Node_ABC& node, bool skip, bool weak ) const;
+    bool      IsValid        ( const web::node::Config& config ) const;
     //@}
 
 private:

@@ -263,6 +263,7 @@ BOOST_FIXTURE_TEST_CASE( controller_create_node, Fixture )
         ( "sessions_reset", cfg.sessions.reset ? "true" : "false" )
     );
     const std::string expected = "{\"dummy\":\"ymmud\"}";
+    MOCK_EXPECT( request.GetParameters ).once().returns( std::vector< std::string >() );
     MOCK_EXPECT( agent.CreateNode ).once().with( cfg.name, boost::bind( &Equal, cfg, _1 ) ).returns( FromJson( expected ) );
     ExpectReply( reply, web::OK, expected );
     controller.DoGet( reply, request );

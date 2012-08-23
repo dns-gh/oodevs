@@ -11,7 +11,9 @@
 #include "Request_ABC.h"
 #include "runtime/PropertyTree.h"
 
+#include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/xpressive/xpressive.hpp>
 
 using namespace web;
 using namespace property_tree;
@@ -263,6 +265,11 @@ node::Config web::node::GetConfig( const Request_ABC& request )
     return cfg;
 }
 
+namespace
+{
+const boost::xpressive::sregex pluginRegex = boost::xpressive::sregex::compile( "^plugins_(.+)$" );
+}
+
 // -----------------------------------------------------------------------------
 // Name: ConvertConfig
 // Created: BAX 2012-08-09
@@ -274,7 +281,31 @@ Tree web::node::ConvertConfig( const Request_ABC& request )
     TryPut( dst, request, "sessions.max_play", "sessions_max_play" );
     TryPut( dst, request, "sessions.max_parallel", "sessions_max_parallel" );
     TryPut( dst, request, "sessions.reset", "sessions_reset" );
+    const std::vector< std::string > keys = request.GetParameters();
+    Tree& plugins = dst.put_child( "plugins", Tree() );
+    boost::xpressive::smatch what;
+    BOOST_FOREACH( const std::string& key, keys )
+       if( boost::xpressive::regex_match( key, what, pluginRegex ) )
+           plugins.push_back( std::make_pair( std::string(), what[1] ) );
     return dst;
+}
+
+namespace
+{
+template< typename T >
+bool TryReadSet( T& dst, const Tree& src, const std::string& key )
+{
+    Tree::const_assoc_iterator sub = src.find( key );
+    if( sub == src.not_found() )
+        return false;
+    T next;
+    for( Tree::const_iterator it = sub->second.begin(); it != sub->second.end(); ++it )
+        next.insert( it->second.get_value( std::string() ) );
+    if( next.empty() || next == dst )
+        return false;
+    dst = next;
+    return true;
+}
 }
 
 // -----------------------------------------------------------------------------
@@ -288,6 +319,7 @@ bool web::node::ReadConfig( node::Config& dst, const Tree& src )
     modified |= TryRead( dst.sessions.max_play, src, "sessions.max_play" );
     modified |= TryRead( dst.sessions.max_parallel, src, "sessions.max_parallel" );
     modified |= TryRead( dst.sessions.reset, src, "sessions.reset" );
+    modified |= TryReadSet( dst.plugins, src, "plugins" );
     return modified;
 }
 
@@ -301,4 +333,5 @@ void web::node::WriteConfig( Tree& dst, const node::Config& cfg )
     dst.put( "sessions.max_play", cfg.sessions.max_play );
     dst.put( "sessions.max_parallel", cfg.sessions.max_parallel );
     dst.put( "sessions.reset", cfg.sessions.reset );
+    PutList( dst, "plugins", cfg.plugins );
 }

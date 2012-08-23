@@ -15,8 +15,10 @@
 #include "runtime/FileSystem_ABC.h"
 #include "runtime/PropertyTree.h"
 #include "runtime/Utf8.h"
+#include "web/Configs.h"
 
 #include <boost/algorithm/string.hpp>
+#include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
@@ -250,11 +252,26 @@ void NodeController::Create( Node_ABC& node, bool reload )
 }
 
 // -----------------------------------------------------------------------------
+// Name: NodeController::IsValid
+// Created: BAX 2012-08-23
+// -----------------------------------------------------------------------------
+bool NodeController::IsValid( const web::node::Config& cfg ) const
+{
+    BOOST_FOREACH( const std::string& plugin, cfg.plugins )
+        if( std::find( plugins_.begin(), plugins_.end(), plugin ) == plugins_.end() )
+            return false;
+    return true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: NodeController::Create
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
 NodeController::T_Node NodeController::Create( const std::string& ident, const web::node::Config& cfg )
 {
+    if( !IsValid( cfg ) )
+        return T_Node();
+
     const Path output = system_.MakeAnyPath( root_ );
     T_Node node = factory_.Make( output, ident, cfg );
     bool valid = nodes_.AttachUnless( node, boost::bind( &HasSameIdent, ident, _1 ) );

@@ -11,6 +11,7 @@
 #define CONFIGS_H
 
 #include <boost/property_tree/ptree_fwd.hpp>
+#include <set>
 #include <string>
 
 namespace web
@@ -107,6 +108,7 @@ struct Config
         size_t              max_parallel;
         bool                reset;
     }                       sessions;
+    std::set< std::string > plugins;
 };
 
 Config GetConfig    ( const Request_ABC& request );
