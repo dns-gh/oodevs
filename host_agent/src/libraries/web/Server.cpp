@@ -125,6 +125,14 @@ public:
         return uri_.path();
     }
 
+    virtual std::vector< std::string > GetParameters() const
+    {
+        std::vector< std::string > list;
+        BOOST_FOREACH( const T_Parameters::value_type& v, parameters_ )
+            list.push_back( v.first );
+        return list;
+    }
+
     virtual boost::optional< std::string > GetParameter( const std::string& name ) const
     {
         return FindFrom( parameters_, name );

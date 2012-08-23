@@ -100,6 +100,7 @@ namespace
     MOCK_BASE_CLASS( MockRequest, Request_ABC )
     {
         MOCK_METHOD( GetUri, 0 );
+        MOCK_METHOD( GetParameters, 0 );
         MOCK_METHOD( GetParameter, 1 );
         MOCK_METHOD( GetHeader, 1 );
         MOCK_METHOD( RegisterMime, 2 );

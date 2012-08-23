@@ -34,6 +34,7 @@ struct Request_ABC : public boost::noncopyable
     //! @name Operations
     //@{
     virtual std::string GetUri() const = 0;
+    virtual std::vector< std::string > GetParameters() const = 0;
     virtual boost::optional< std::string > GetParameter( const std::string& name ) const = 0;
     virtual boost::optional< std::string > GetHeader( const std::string& name ) const = 0;
     virtual std::string GetRemoteIp() const = 0;
