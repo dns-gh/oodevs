@@ -1013,23 +1013,6 @@ void RolePion_Decision::RegisterFire()
 
 namespace
 {
-    double rMaxDangerosityDegradationByRelevance_        = 0.2; // 20% // $$$$ MCO 2012-06-12: see DEC_Workspace::LoadDecisional for init // $$$$ MCO 2012-06-29: TODO
-    double rMaxDangerosityDegradationByOpState_          = 0.2; // 20%
-    double rMaxDangerosityDegradationByNeutralizedState_ = 0.8; // 80%
-    void DegradeDangerosity( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, double& dangerosity ) // $$$$ MCO 2012-06-12: ^c^v DEC_Knowledge_Agent::DegradeDangerosity
-    {
-        // Pertinence
-        dangerosity *= ( 1 - ( (-rMaxDangerosityDegradationByRelevance_ * pKnowledge->GetRelevance() ) + rMaxDangerosityDegradationByRelevance_ ) );
-        // Operational state
-        const double rOpState = pKnowledge->GetOperationalState();
-        if( rOpState == 0. ) // Unit is dead
-            dangerosity = 0;
-        else
-            dangerosity *= ( 1 - ( (-rMaxDangerosityDegradationByOpState_ * rOpState ) + rMaxDangerosityDegradationByOpState_) );
-        // Source is neutralized
-        if( pKnowledge->GetAgentKnown().IsNeutralized() )
-            dangerosity *= 1 - rMaxDangerosityDegradationByNeutralizedState_;
-    }
     double ComputeDangerosity( const MIL_AgentPion& agent, const core::Model& model, const DEC_Knowledge_Agent& target, double distance, bool checkAmmo )
     {
         const core::Model& firer = model[ "entities" ][ agent.GetID() ];
@@ -1085,7 +1068,7 @@ namespace
         // Target is dead ....
         const double distance = ComputeDistance( pKnowledge, target );
         double dangerosity = ComputeDangerosity( pKnowledge, model, target, distance, false );
-        DegradeDangerosity( pKnowledge, dangerosity );
+        pKnowledge->DegradeDangerosity( dangerosity );
         return 1 + dangerosity;
     }
     double GetDangerosityOnPion( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, const core::Model& model, const DEC_Decision_ABC* pTarget )

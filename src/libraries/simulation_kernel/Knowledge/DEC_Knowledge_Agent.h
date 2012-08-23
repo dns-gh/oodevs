@@ -125,6 +125,7 @@ public:
     bool IsPerceptionDistanceHacked() const;
     bool IsTransported() const;
     const T_KnowledgeComposanteVector& GetComposantes() const;
+    void DegradeDangerosity( double& rDangerosity ) const;
     //@}
 
     //! @name Perception
@@ -180,7 +181,6 @@ private:
     //! @name Tools
     //@{
     double GetDangerosity( const MT_Vector3D& vTargetPosition, const PHY_ComposanteType_ABC& targetMajorComposante, bool bUseAmmo ) const;
-    void DegradeDangerosity( double& rDangerosity ) const;
     void ChangeRelevance( double rNewRelevance );
     //@}
 
