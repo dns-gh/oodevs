@@ -141,18 +141,6 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoPoint::Compute( const MIL_Agent_ABC
 // Name: PHY_PerceptionRecoPoint::Compute
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionRecoPoint::Compute( const MIL_Object_ABC& object ) const
-{
-    for ( CIT_RecoVector it = recos_.begin(); it != recos_.end(); ++it )
-        if( object.Intersect2DWithCircle( (*it)->vCenter_, (*it)->rCurrentSize_ ) )
-            return PHY_PerceptionLevel::recognized_;
-    return PHY_PerceptionLevel::notSeen_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_PerceptionRecoPoint::Compute
-// Created: JVT 2004-10-21
-// -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& PHY_PerceptionRecoPoint::Compute( const DEC_Knowledge_Object& knowledge ) const
 {
     for ( CIT_RecoVector it = recos_.begin(); it != recos_.end(); ++it )

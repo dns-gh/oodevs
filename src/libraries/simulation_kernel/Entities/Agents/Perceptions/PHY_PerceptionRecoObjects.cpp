@@ -137,18 +137,6 @@ void PHY_PerceptionRecoObjects::Update()
 // Name: PHY_PerceptionRecoObjects::Compute
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionRecoObjects::Compute( const MIL_Object_ABC& object ) const
-{
-    for ( CIT_RecoVector it = recos_.begin(); it != recos_.end(); ++it )
-        if( (*it)->IsInside( object.GetLocalisation() ) )
-            return PHY_PerceptionLevel::recognized_;
-    return PHY_PerceptionLevel::notSeen_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_PerceptionRecoObjects::Compute
-// Created: JVT 2004-10-21
-// -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& PHY_PerceptionRecoObjects::Compute( const DEC_Knowledge_Object& knowledge ) const
 {
     for ( CIT_RecoVector it = recos_.begin(); it != recos_.end(); ++it )

@@ -92,15 +92,6 @@ const PHY_PerceptionLevel& PHY_Perception_ABC::Compute( const DEC_Knowledge_Obje
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Perception_ABC::Compute
-// Created: NLD 2005-10-11
-// -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_Perception_ABC::Compute( const MIL_Object_ABC& /*object*/ ) const
-{
-    return PHY_PerceptionLevel::notSeen_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_Perception_ABC::Execute
 // Created: NLD 2005-10-11
 // -----------------------------------------------------------------------------

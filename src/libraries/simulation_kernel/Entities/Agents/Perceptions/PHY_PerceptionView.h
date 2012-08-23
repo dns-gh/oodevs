@@ -33,7 +33,6 @@ public:
 
     virtual void                       Execute( const TER_Object_ABC::T_ObjectVector& perceivableObjects );
     virtual const PHY_PerceptionLevel& Compute( const DEC_Knowledge_Object& knowledge ) const;
-    virtual const PHY_PerceptionLevel& Compute( const MIL_Object_ABC&   object    ) const;
 
     virtual void                       Execute( const TER_PopulationFlow_ABC::T_ConstPopulationFlowVector& perceivableFlows );
     virtual const PHY_PerceptionLevel& Compute( const MIL_PopulationFlow& flow, T_PointVector& shape ) const;
@@ -49,6 +48,7 @@ private:
     //@{
     void FinalizeSurfaceAgents();
     void TransfertPerception();
+    const PHY_PerceptionLevel& Compute( const MIL_Object_ABC& object ) const;
     //@}
 
     //! @name Types
