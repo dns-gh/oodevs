@@ -35,12 +35,16 @@ namespace perception
 class RolePion_Perceiver : private boost::noncopyable
 {
 public:
-    //! @name Operations
+    //! @name Command operations
+    //@{
+    void ExecutePerceptions( const wrapper::View& model, const wrapper::View& entity ) const;
+    //@}
+
+    //! @name Hook operations
     //@{
     bool HasRadar( const wrapper::View& entity, size_t radarType ) const;
     const PerceptionLevel& ComputePerception( const wrapper::View& model, const wrapper::View& entity, const MT_Vector2D& vPoint ) const;
     const PerceptionLevel& ComputePerception( const wrapper::View& model, const wrapper::View& entity, const DEC_Knowledge_Object& object ) const;
-    void ExecutePerceptions( const wrapper::View& model, const wrapper::View& entity ) const;
     //@}
 
 private:

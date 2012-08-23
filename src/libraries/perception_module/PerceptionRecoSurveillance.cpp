@@ -116,7 +116,7 @@ void PerceptionRecoSurveillance::AddLocalisation( const std::string& /*key*/, co
 // -----------------------------------------------------------------------------
 const PerceptionLevel& PerceptionRecoSurveillance::Compute( const wrapper::View& /*perceiver*/, const SurfacesAgent_ABC& /*surfaces*/, const MT_Vector2D& vPoint ) const
 {
-    for ( T_RecoVector::const_iterator itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
+    for( T_RecoVector::const_iterator itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
         if( (*itReco)->IsInside( vPoint ) )
             return PerceptionLevel::recognized_;
     return PerceptionLevel::notSeen_;
@@ -129,12 +129,10 @@ const PerceptionLevel& PerceptionRecoSurveillance::Compute( const wrapper::View&
 void PerceptionRecoSurveillance::Execute( const wrapper::View& model, const wrapper::View& perceiver, const SurfacesAgent_ABC& /*surfaces*/, const T_AgentPtrVector& /*perceivableAgents*/ )
 {
     Perception_ABC::T_AgentPtrVector perceivableAgents;
-
-    for ( T_RecoVector::const_iterator itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
+    for( T_RecoVector::const_iterator itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
     {
         (*itReco)->GetAgentsInside( model, perceivableAgents );
-
-        for ( Perception_ABC::T_AgentPtrVector::const_iterator it = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
+        for( Perception_ABC::T_AgentPtrVector::const_iterator it = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
         {
             const wrapper::View& agent = *it;
             if( GET_HOOK( CanBeSeen )( perceiver, agent ) )
