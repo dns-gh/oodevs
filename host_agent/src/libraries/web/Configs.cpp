@@ -14,8 +14,8 @@
 #include <boost/lexical_cast.hpp>
 
 using namespace web;
+using namespace property_tree;
 using session::RngDistribution;
-using property_tree::TryRead;
 
 // -----------------------------------------------------------------------------
 // Name: RngConfig::RngConfig
@@ -34,7 +34,6 @@ session::RngConfig::RngConfig()
 // Created: BAX 2012-08-02
 // -----------------------------------------------------------------------------
 session::Config::Config()
-    : name()
 {
     checkpoints.enabled = true;
     checkpoints.frequency = 3600;
@@ -247,7 +246,6 @@ void web::session::WriteConfig( Tree& dst, const session::Config& cfg )
 // Created: BAX 2012-08-09
 // -----------------------------------------------------------------------------
 node::Config::Config()
-    : name()
 {
     sessions.max_play = 0;
     sessions.max_parallel = 0;

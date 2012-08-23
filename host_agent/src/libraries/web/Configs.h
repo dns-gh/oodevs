@@ -100,13 +100,13 @@ namespace node
 struct Config
 {
     Config();
-    std::string     name;
+    std::string             name;
     struct
     {
-        size_t      max_play;
-        size_t      max_parallel;
-        bool        reset;
-    }               sessions;
+        size_t              max_play;
+        size_t              max_parallel;
+        bool                reset;
+    }                       sessions;
 };
 
 Config GetConfig    ( const Request_ABC& request );
