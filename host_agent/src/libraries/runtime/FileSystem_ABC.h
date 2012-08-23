@@ -101,8 +101,8 @@ struct FileSystem_ABC : public boost::noncopyable
     virtual bool Rename( const Path& src, const Path& dst ) const = 0;
     virtual bool WriteFile( const Path& path, const std::string& content ) const = 0;
     virtual std::string ReadFile( const Path& path ) const = 0;
-    virtual void Glob( const Path& path, const Path& name, const T_Predicate& operand ) const = 0;
-    virtual void Walk( const Path& path, bool recurse, const T_Predicate& operand ) const = 0;
+    virtual void Glob( const Path& path, const Path& name, const T_Predicate& predicate ) const = 0;
+    virtual void Walk( const Path& path, bool recurse, const T_Predicate& predicate ) const = 0;
     virtual T_Unpacker Unpack( const Path& output, std::istream& src ) const = 0;
     virtual T_Packer Pack( std::ostream& dst ) const = 0;
     virtual std::string Checksum( const Path& root, const T_Predicate& predicate, size_t& read ) const = 0;

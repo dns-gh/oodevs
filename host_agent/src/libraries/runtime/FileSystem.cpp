@@ -304,7 +304,7 @@ std::string FileSystem::ReadFile( const Path& path ) const
 // Name: FileSystem::Glob
 // Created: BAX 2012-03-21
 // -----------------------------------------------------------------------------
-void FileSystem::Glob( const Path& path, const Path& name, const T_Predicate& operand ) const
+void FileSystem::Glob( const Path& path, const Path& name, const T_Predicate& predicate ) const
 {
     if( !IsDirectory( path ) )
         return;
@@ -314,18 +314,20 @@ void FileSystem::Glob( const Path& path, const Path& name, const T_Predicate& op
             continue;
         const Path& path = it->path();
         if( path.filename() == name )
-            operand( path );
+            if( !predicate( path ) )
+                return;
     }
 }
 
 namespace
 {
 template< typename T, typename U >
-void Iterate( const Path& path, const U& operand )
+void Iterate( const Path& path, const U& predicate )
 {
     if( boost::filesystem::is_directory( path ) )
         for( T it( path), end; it != end; ++it )
-            operand( it->path() );
+            if( !predicate( it->path() ) )
+                return;
 }
 }
 
@@ -333,12 +335,12 @@ void Iterate( const Path& path, const U& operand )
 // Name: FileSystem::Walk
 // Created: BAX 2012-05-14
 // -----------------------------------------------------------------------------
-void FileSystem::Walk( const Path& path, bool recurse, const T_Predicate& operand ) const
+void FileSystem::Walk( const Path& path, bool recurse, const T_Predicate& predicate ) const
 {
     if( recurse )
-        Iterate< boost::filesystem::recursive_directory_iterator >( path, operand );
+        Iterate< boost::filesystem::recursive_directory_iterator >( path, predicate );
     else
-        Iterate< boost::filesystem::directory_iterator >( path, operand );
+        Iterate< boost::filesystem::directory_iterator >( path, predicate );
 }
 
 namespace
