@@ -2646,6 +2646,9 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\UrbanResourceNetworkAttribute.cpp">
       <Filter>Source Files\Urban</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\PerceptionCallbackEventListener.cpp">
+      <Filter>Source Files\Adapters\EventListeners</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractWithSideCapacity.cpp">
@@ -5398,6 +5401,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\FloodModelFactory_ABC.h">
       <Filter>Source Files\Adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\PerceptionCallbackEventListener.h">
+      <Filter>Source Files\Adapters\EventListeners</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

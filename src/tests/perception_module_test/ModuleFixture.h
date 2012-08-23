@@ -119,7 +119,10 @@ class TER_Localisation;
     APPLY( GetTransporter, 2, const SWORD_Model*, ( const SWORD_Model* model, const SWORD_Model* agent ) ) \
     APPLY( GetVisionObjectsInSurface, 4, void, ( const TER_Localisation* localisation, unsigned int& emptySurface, unsigned int& forestSurface, unsigned int& urbanSurface ) ) \
     APPLY( GetVisionObject, 1, unsigned char, ( const MT_Vector2D* point ) ) \
-    APPLY( IsPointInsideLocalisation, 2, bool, ( const TER_Localisation* localisation, const MT_Vector2D* point ) )
+    APPLY( IsPointInsideLocalisation, 2, bool, ( const TER_Localisation* localisation, const MT_Vector2D* point ) ) \
+    APPLY( IsLocalizationInsideCircle, 3, bool, ( const TER_Localisation* localization, const MT_Vector2D* center, double radius ) ) \
+    APPLY( IsKnowledgeObjectInsidePerception, 4, bool, ( const TER_Localisation* localization, const MT_Vector2D* center, double radius, const DEC_Knowledge_Object* object ) ) \
+    APPLY( IsObjectIntersectingLocalization, 2, bool, ( const TER_Localisation* localization, const MIL_Object_ABC* object ) )
 
 #define REGISTERED_AND_USED_HOOKS( APPLY ) \
     APPLY( IsUsingActiveRadar, 1, bool, ( const SWORD_Model* entity ) ) \

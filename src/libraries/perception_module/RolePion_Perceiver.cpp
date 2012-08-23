@@ -25,6 +25,7 @@
 #include "PerceptionObserver.h"
 #include "PerceptionSurfaceAgent.h"
 #include "PerceptionSurfaceObject.h"
+#include "PerceptionRecoObjects.h"
 #include "ListInCircleVisitor.h"
 #include "wrapper/View.h"
 #include "wrapper/Hook.h"
@@ -444,12 +445,6 @@ namespace
             effect[ "y" ] = vMainPerceptionDirection.rY_;
             effect.Post();
         }
-        //    if( pPerceptionRecoPoint_ )
-        //        pPerceptionRecoPoint_->Update();
-        //   if( pPerceptionRecoLocalisation_ )
-        //        pPerceptionRecoLocalisation_->Update();
-        //    if( pPerceptionRecoObjects_ )
-        //        pPerceptionRecoObjects_->Update();
     }
 
     typedef boost::shared_ptr< Perception_ABC > T_Perception;
@@ -476,6 +471,7 @@ namespace
         AddActivePerception< PerceptionCoupDeSonde >( "scan", activePerceptions, model, entity, observer );
         AddActiveListPerception< PerceptionAlat >( "alat/reco", activePerceptions, model, entity, observer );
         AddActiveListPerception< PerceptionRecoSurveillance >( "alat/monitoring", activePerceptions, model, entity, observer );
+        AddActiveListPerception< PerceptionRecoObjects >( "object-detection", activePerceptions, model, entity, observer );
         return activePerceptions;
     }
 }

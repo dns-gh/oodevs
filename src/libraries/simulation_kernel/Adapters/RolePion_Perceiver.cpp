@@ -166,12 +166,6 @@ namespace
         const MT_Vector2D center( node[ "center/x" ], node[ "center/y" ] );
         return perceiver.EnableRecoPoint( center, node[ "size" ], node[ "growth-speed" ], decision );
     }
-    int EnableObjectDetection( PHY_RoleInterface_Perceiver& perceiver, DEC_Decision_ABC& decision, const core::Model& node )
-    {
-        const TER_Localisation& localization = node[ "localization" ].GetUserData< TER_Localisation >();
-        const MT_Vector2D center( node[ "center/x" ], node[ "center/y" ] );
-        return perceiver.EnableRecoObjects( localization, center, node[ "speed" ], decision );
-    }
     typedef boost::function< void( DEC_KS_Perception& ) > T_Notification;
     template< typename Target, typename Result >
     void NotifyPerception( const core::Model& effect, std::vector< T_Notification >& notifications )
@@ -250,7 +244,6 @@ RolePion_Perceiver::RolePion_Perceiver( const Sink& sink, MIL_Agent_ABC& pion, c
     , pPerceptionRecoLocalisation_   ( 0 )
     , pPerceptionRecoUrbanBlock_     ( 0 )
     , pPerceptionRadar_              ( 0 )
-    , pPerceptionRecoObjects_        ( 0 )
     , pPerceptionFlyingShell_        ( 0 )
 {
     static unsigned int nNbr = 0; // $$$$ MCO 2012-08-14: size_t ?
@@ -269,7 +262,6 @@ RolePion_Perceiver::RolePion_Perceiver( const Sink& sink, MIL_Agent_ABC& pion, c
     AddListener< IdentifiedToggleListener >( "perceptions/urban", boost::bind( &EnableUrbanBlock, boost::ref( *this ), _1 ), boost::bind( &RolePion_Perceiver::DisableRecoUrbanBlock, this, _1 ) );
     AddListener< IdentifiedToggleListener >( "perceptions/reco", boost::bind( &EnableReco, boost::ref( *this ), boost::ref( pion.GetRole< DEC_Decision_ABC >() ), _1 ), boost::bind( &RolePion_Perceiver::DisableRecoLocalisation, this, _1 ) );
     AddListener< IdentifiedToggleListener >( "perceptions/recognition-point", boost::bind( &EnableRecognitionPoint, boost::ref( *this ), boost::ref( pion.GetRole< DEC_Decision_ABC >() ), _1 ), boost::bind( &RolePion_Perceiver::DisableRecoPoint, this, _1 ) );
-    AddListener< IdentifiedToggleListener >( "perceptions/object-detection", boost::bind( &EnableObjectDetection, boost::ref( *this ), boost::ref( pion.GetRole< DEC_Decision_ABC >() ), _1 ), boost::bind( &RolePion_Perceiver::DisableRecoObjects, this, _1 ) );
     listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/agents" ] ), boost::bind( &::NotifyPerception< MIL_Agent_ABC, bool >, _1, boost::ref( notifications_ ) ) ) );
     listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/agents-in-zone" ] ), boost::bind( &::NotifyPerception< MIL_Agent_ABC, bool >, _1, boost::ref( notifications_ ) ) ) );
     listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/objects" ] ), boost::bind( &::NotifyPerception< MIL_Object_ABC, void >, _1, boost::ref( notifications_ ) ) ) );
@@ -494,31 +486,18 @@ void RolePion_Perceiver::DisableRecoPoint( int id )
 // Name: RolePion_Perceiver::EnableRecoObjects
 // Created: JVT 2005-01-19
 // -----------------------------------------------------------------------------
-int RolePion_Perceiver::EnableRecoObjects( const TER_Localisation& localisation, const MT_Vector2D& vCenter, double rSpeed, DEC_Decision_ABC& callerAgent )
+int RolePion_Perceiver::EnableRecoObjects( const TER_Localisation& /*localisation*/, const MT_Vector2D& /*vCenter*/, double /*rSpeed*/, DEC_Decision_ABC& /*callerAgent*/ )
 {
-    if( !pPerceptionRecoObjects_ )
-    {
-        pPerceptionRecoObjects_ = new PHY_PerceptionRecoObjects( *this );
-        activePerceptions_.push_back( pPerceptionRecoObjects_ );
-    }
-    return  pPerceptionRecoObjects_->AddLocalisation( localisation, vCenter, rSpeed, callerAgent );
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RolePion_Perceiver::DisableRecoObjects
 // Created: JVT 2005-01-19
 // -----------------------------------------------------------------------------
-void RolePion_Perceiver::DisableRecoObjects( int id )
+void RolePion_Perceiver::DisableRecoObjects( int /*id*/ )
 {
-    if( !pPerceptionRecoObjects_ )
-        return;
-    pPerceptionRecoObjects_->RemoveLocalisation( id );
-    if( !pPerceptionRecoObjects_->HasLocalisationToHandle() )
-    {
-        activePerceptions_.erase( std::find( activePerceptions_.begin(), activePerceptions_.end(), pPerceptionRecoObjects_ ) );
-        delete pPerceptionRecoObjects_;
-        pPerceptionRecoObjects_ = 0;
-    }
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
@@ -776,7 +755,6 @@ void RolePion_Perceiver::DisableAllPerceptions()
     Reset( pPerceptionRecoPoint_ );
     Reset( pPerceptionRecoLocalisation_ );
     Reset( pPerceptionRecoUrbanBlock_ );
-    Reset( pPerceptionRecoObjects_ );
     Reset( pPerceptionRadar_ );
     Reset( pPerceptionFlyingShell_ );
 }
@@ -820,8 +798,6 @@ void RolePion_Perceiver::Update( bool /*bIsDead*/ )
         pPerceptionRecoPoint_->Update();
    if( pPerceptionRecoLocalisation_ )
         pPerceptionRecoLocalisation_->Update();
-    if( pPerceptionRecoObjects_ )
-        pPerceptionRecoObjects_->Update();
     if( HasChanged() )
     {
         if( HasRadarStateChanged() )

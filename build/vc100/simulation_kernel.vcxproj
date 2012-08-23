@@ -124,6 +124,7 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\MovementReportNameEventListener.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\PathAdapter.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\PathPointAdapter.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\PerceptionCallbackEventListener.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\PerceptionHooks.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\ReportEventListener.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\RoleAction_Moving.cpp" />
@@ -887,6 +888,7 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\MovementReportNameEventListener.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\PathAdapter.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\PathPointAdapter.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\PerceptionCallbackEventListener.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\PerceptionHooks.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\ReportEventListener.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\RoleAction_Moving.h" />

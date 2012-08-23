@@ -29,7 +29,7 @@
 #include "ExternalPerceptionEventListener.h"
 #include "MovementReportEventListener.h"
 #include "MovementCallbackEventListener.h"
-#include "MovementCallbackEventListener.h"
+#include "PerceptionCallbackEventListener.h"
 #include "MovementEventListener.h"
 #include "AlatMonitoringEventListener.h"
 #include "Entities/Agents/Roles/Deployment/PHY_RoleInterface_Deployment.h"
@@ -164,6 +164,7 @@ Sink::Sink( AgentFactory_ABC& factory, unsigned int gcPause, unsigned int gcMult
     listeners_.push_back( new ReportEventListener( *model_, *facade_ ) );
     listeners_.push_back( new MovementReportNameEventListener( *model_, *facade_ ) );
     listeners_.push_back( new MovementCallbackEventListener( *model_, *facade_ ) );
+    listeners_.push_back( new PerceptionCallbackEventListener( *model_, *facade_ ) );
     listeners_.push_back( new MovementEventListener( *model_, *facade_ ) );
     listeners_.push_back( new MovementReportEventListener( *model_, *facade_ ) );
     listeners_.push_back( new DirectFirePionEventListener( *model_, *facade_, factory ) );

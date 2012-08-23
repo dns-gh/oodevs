@@ -56,6 +56,7 @@ namespace perception
             entity[ "perceptions/scan/activated" ] = false;
             entity[ "perceptions/alat/reco" ];
             entity[ "perceptions/alat/monitoring" ];
+            entity[ "perceptions/object-detection" ];
             entity[ "perceptions/record-mode/activated" ] = false;
             core::Model& component = entity[ "components"].AddElement();
             component[ "type/sensor-rotation-angle" ] = 3;

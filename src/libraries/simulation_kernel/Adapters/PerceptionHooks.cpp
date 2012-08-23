@@ -553,6 +553,25 @@ namespace
     {
         return localisation->IsInside( *point );
     }
+    DEFINE_HOOK( IsLocalizationInsideCircle, bool, ( const TER_Localisation* localization, const MT_Vector2D* center, double radius ) )
+    {
+        const TER_Localisation circle( *center, radius );
+        const T_PointVector& pointLocalisationFinale = localization->GetPoints();
+        bool result = true;
+        for( CIT_PointVector it = pointLocalisationFinale.begin(); result && it != pointLocalisationFinale.end(); ++it )
+            result = circle.IsInside( *it );
+        return result;
+    }
+    DEFINE_HOOK( IsKnowledgeObjectInsidePerception, bool, ( const TER_Localisation* localization, const MT_Vector2D* center, double radius, const DEC_Knowledge_Object* object ) )
+    {
+        const TER_Localisation& knowledgeLocalization = object->GetLocalisation();
+        const TER_Localisation circle( *center, radius );
+        return localization->IsIntersecting( knowledgeLocalization ) && circle.IsIntersecting( knowledgeLocalization );
+    }
+    DEFINE_HOOK( IsObjectIntersectingLocalization, bool, ( const TER_Localisation* localization, const MIL_Object_ABC* object ) )
+    {
+        return localization->IsIntersecting( object->GetLocalisation() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -631,5 +650,8 @@ void PerceptionHooks::Initialize( core::Facade& facade )
     REGISTER_HOOK( GetVisionObjectsInSurface, facade );
     REGISTER_HOOK( GetVisionObject, facade );
     REGISTER_HOOK( IsPointInsideLocalisation, facade );
+    REGISTER_HOOK( IsLocalizationInsideCircle, facade );
+    REGISTER_HOOK( IsKnowledgeObjectInsidePerception, facade );
+    REGISTER_HOOK( IsObjectIntersectingLocalization, facade );
     RolePion_Perceiver::Initialize( facade );
 }

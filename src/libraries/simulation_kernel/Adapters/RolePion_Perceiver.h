@@ -23,7 +23,6 @@ class DEC_KS_Perception;
 class PHY_Perception_ABC;
 class PHY_PerceptionRecoPoint;
 class PHY_PerceptionRecoLocalisation;
-class PHY_PerceptionRecoObjects;
 class PHY_PerceptionRecoUrbanBlock;
 class PHY_PerceptionRadar;
 class PHY_PerceptionFlyingShell;
@@ -237,7 +236,6 @@ private:
     PHY_PerceptionRecoPoint*        pPerceptionRecoPoint_;
     PHY_PerceptionRecoLocalisation* pPerceptionRecoLocalisation_;
     PHY_PerceptionRecoUrbanBlock*   pPerceptionRecoUrbanBlock_;
-    PHY_PerceptionRecoObjects*      pPerceptionRecoObjects_;
     PHY_PerceptionRadar*            pPerceptionRadar_;
     PHY_PerceptionFlyingShell*      pPerceptionFlyingShell_;
     T_PerceptionVector              activePerceptions_;
