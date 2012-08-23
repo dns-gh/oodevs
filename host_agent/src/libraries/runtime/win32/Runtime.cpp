@@ -23,32 +23,6 @@
 
 using namespace runtime;
 
-namespace
-{
-template< typename T >
-bool Enumerate( cpplog::BaseLogger& log, const Api_ABC& api, Runtime::T_Processes& list, std::vector< T >& pids )
-{
-    unsigned long size = 0;
-    bool done = api.EnumProcesses( &pids[0], static_cast< int >( pids.size() * sizeof(T) ), &size );
-    if( !done )
-        return true;
-    if( static_cast< size_t >( size ) == pids.size() * sizeof(T) )
-        return false;
-    pids.resize( static_cast< size_t >( size ) / sizeof size );
-    BOOST_FOREACH( const T& id, pids )
-        try
-        {
-            list.push_back( boost::make_shared< Process >( api, id ) );
-        }
-        catch( const std::exception& err )
-        {
-            LOG_WARN( log ) << "[runtime] Unable to load process " << id << ", " << err.what();
-            continue;
-        }
-    return true;
-}
-}
-
 // -----------------------------------------------------------------------------
 // Name: Runtime::Runtime
 // Created: BAX 2012-03-08
@@ -67,19 +41,6 @@ Runtime::Runtime( cpplog::BaseLogger& log, const Api_ABC& api )
 Runtime::~Runtime()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Runtime::Processes
-// Created: BAX 2012-03-07
-// -----------------------------------------------------------------------------
-Runtime::T_Processes Runtime::GetProcesses() const
-{
-    T_Processes list;
-    std::vector< unsigned long > pids( 128, 0 );
-    while( !Enumerate( log_, api_, list, pids ) )
-        pids.resize( pids.size() * 2 );
-    return list;
 }
 
 // -----------------------------------------------------------------------------

@@ -35,7 +35,6 @@ public:
     //! @name Operations
     //@{
     virtual std::string       GetLastError         () const;
-    virtual bool              EnumProcesses        ( unsigned long* ids, int cb, unsigned long* pBytesReturned ) const;
     virtual bool              CloseHandle          ( void* hObject ) const;
     virtual void*             OpenProcess          ( int dwDesiredAccess, bool bInheritHandle, int dwProcessId ) const;
     virtual int               GetProcessName       ( void* hProcess, wchar_t* lpImageFileName, int nSize ) const;

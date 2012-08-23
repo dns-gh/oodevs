@@ -40,14 +40,8 @@ struct Runtime_ABC : public boost::noncopyable
     virtual ~Runtime_ABC() {}
     //@}
 
-    //! @name Typedef helpers
-    //@{
-    typedef std::vector< boost::shared_ptr< Process_ABC > > T_Processes;
-    //@}
-
     //! @name Operations
     //@{
-    virtual T_Processes GetProcesses() const = 0;
     virtual boost::shared_ptr< Process_ABC > GetProcess( int pid ) const = 0;
     virtual boost::shared_ptr< Process_ABC > Start( const std::string& cmd,
                                                     const std::vector< std::string >& args,

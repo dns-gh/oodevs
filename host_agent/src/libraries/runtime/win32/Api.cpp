@@ -68,18 +68,6 @@ std::string Api::GetLastError() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Api::EnumProcesses
-// Created: BAX 2012-03-08
-// -----------------------------------------------------------------------------
-bool Api::EnumProcesses( unsigned long* ids, int cb, unsigned long* pBytesReturned ) const
-{
-    bool reply = !!::EnumProcesses( ids, cb, pBytesReturned );
-    LOG_IF_NOT( ERROR, log_, reply ) << "[win32] " << GetLastError();
-    LOG_IF_NOT( ERROR, log_, reply ) << "[win32] Unable to list processes";
-    return reply;
-}
-
-// -----------------------------------------------------------------------------
 // Name: Api::CloseHandle
 // Created: BAX 2012-03-08
 // -----------------------------------------------------------------------------

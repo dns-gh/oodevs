@@ -16,7 +16,6 @@ namespace mocks
 {
     MOCK_BASE_CLASS( MockRuntime, runtime::Runtime_ABC )
     {
-        MOCK_METHOD( GetProcesses, 0 );
         MOCK_METHOD( GetProcess, 1 );
         MOCK_METHOD( Start, 4 );
         MOCK_METHOD( GetModuleFilename, 0 );
