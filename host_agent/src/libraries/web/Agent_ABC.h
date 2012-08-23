@@ -111,6 +111,12 @@ struct Agent_ABC : public boost::noncopyable
     virtual std::vector< Path > ListExercises ( const Uuid& id, int offset, int limit ) const = 0;
     virtual size_t              CountExercises( const Uuid& id ) const = 0;
     //@}
+
+    //! @name Plugin Methods
+    //@{
+    virtual std::vector< Path > ListPlugins ( int offset, int limit ) const = 0;
+    virtual size_t              CountPlugins() const = 0;
+    //@}
 };
 }
 

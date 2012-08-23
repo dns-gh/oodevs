@@ -40,6 +40,8 @@ namespace mocks
         MOCK_METHOD( GetExercises, 3 );
         MOCK_METHOD( CountExercises, 1 );
         MOCK_METHOD( Notify, 1 );
+        MOCK_METHOD( GetPlugins, 2 );
+        MOCK_METHOD( CountPlugins, 0 );
     };
 };
 

@@ -115,6 +115,12 @@ private:
     void CountExercises( Reply_ABC& reply, const Request_ABC& request );
     //@}
 
+    //! @name Plugin Methods
+    //@{
+    void ListPlugins ( Reply_ABC& reply, const Request_ABC& request );
+    void CountPlugins( Reply_ABC& reply, const Request_ABC& request );
+    //@}
+
     //! @name User Methods
     //@{
     void UserLogin          ( Reply_ABC& reply, Request_ABC& request );

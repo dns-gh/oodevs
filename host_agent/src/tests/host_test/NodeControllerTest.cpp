@@ -34,6 +34,16 @@ using namespace property_tree;
 
 namespace
 {
+    bool EndWith( Path suffix, Path path )
+    {
+        for( ; !suffix.empty(); suffix.remove_filename(), path.remove_filename() )
+            if( path.empty() )
+                return false;
+            else if( suffix.filename() != path.filename() )
+                return false;
+        return true;
+    }
+
     struct SubFixture
     {
         SubFixture( const Path& app, const Path& web )
@@ -45,6 +55,7 @@ namespace
             MOCK_EXPECT( system.IsDirectory ).with( web ).returns( true );
             MOCK_EXPECT( proxy.GetPort ).returns( 8080 );
             MOCK_EXPECT( system.MakeAnyPath ).calls( boost::bind( &SubFixture::MakePath, this, _1 ) );
+            MOCK_EXPECT( system.Walk ).once().with( boost::bind( &EndWith, "plugins", _1 ), false, mock::any );
         };
 
         Path MakePath( const Path& root )
@@ -89,15 +100,17 @@ namespace
             : root   ( "e:/root" )
             , app    ( "e:/bin/node.exe" )
             , web    ( "e:/zomg/www" )
+            , plugins( "plugins" )
             , type   ( isCluster ? "cluster" : "node" )
             , sub    ( app, web )
-            , control( sub.log, sub.runtime, sub.system, sub.nodes, root, app, web, type, 0, sub.pool, sub.proxy )
+            , control( sub.log, sub.runtime, sub.system, sub.nodes, root, app, web, plugins, type, 0, sub.pool, sub.proxy )
         {
             // NOTHING
         }
         const Path root;
         const Path app;
         const Path web;
+        const Path plugins;
         const std::string type;
         SubFixture sub;
         NodeController control;

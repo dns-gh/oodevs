@@ -425,3 +425,21 @@ size_t Agent::CountExercises( const Uuid& node ) const
 {
     return nodes_.CountExercises( node );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Agent::ListPlugins
+// Created: BAX 2012-08-23
+// -----------------------------------------------------------------------------
+std::vector< Path > Agent::ListPlugins( int offset, int limit ) const
+{
+    return nodes_.GetPlugins( offset, limit );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::CountPlugins
+// Created: BAX 2012-08-23
+// -----------------------------------------------------------------------------
+size_t Agent::CountPlugins() const
+{
+    return nodes_.CountPlugins();
+}

@@ -305,9 +305,10 @@ int Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const F
     PackageFactory packages( pool, system );
     NodeFactory fnodes( packages, system, runtime, uuids, ports, cfg.node.min_play_seconds, pool );
     const Port host = ports.Create();
-    NodeController nodes( log, runtime, system, fnodes, cfg.root, cfg.node.app, cfg.node.root, "node", host->Get(), pool, proxy );
+    const Path plugins = cfg.session.apps / "plugins";
+    NodeController nodes( log, runtime, system, fnodes, cfg.root, cfg.node.app, cfg.node.root, plugins, "node", host->Get(), pool, proxy );
     fnodes.observer = &nodes;
-    NodeController cluster( log, runtime, system, fnodes, cfg.root, cfg.node.app, cfg.node.root, "cluster", host->Get(), pool, proxy );
+    NodeController cluster( log, runtime, system, fnodes, cfg.root, cfg.node.app, cfg.node.root, plugins, "cluster", host->Get(), pool, proxy );
     SessionFactory fsessions( system, runtime, uuids, nodes, ports, client, pool );
     SessionController sessions( log, runtime, system, fsessions, nodes, cfg.root, cfg.session.apps, pool );
     Agent agent( log, cfg.cluster.enabled ? &cluster : 0, nodes, sessions );

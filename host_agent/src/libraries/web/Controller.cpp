@@ -276,6 +276,9 @@ void Controller::DoGet( Reply_ABC& rpy, Request_ABC& request )
         // exercises
         if( uri == "/list_exercises")      return ListExercises ( rpy, request );
         if( uri == "/count_exercises" )    return CountExercises( rpy, request );
+        // plugins
+        if( uri == "/list_plugins")         return ListPlugins ( rpy, request );
+        if( uri == "/count_plugins" )       return CountPlugins( rpy, request );
         // users
         if( uri == "/logout" )             return UserLogout         ( rpy, request );
         if( uri == "/is_authenticated" )   return UserIsAuthenticated( rpy, request );
@@ -758,6 +761,28 @@ void Controller::CountExercises( Reply_ABC& rpy, const Request_ABC& request )
     if( node.is_nil() )
         throw HttpException( web::BAD_REQUEST );
     WriteHttpReply( rpy, agent_.CountExercises( node ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controller::ListPlugins
+// Created: BAX 2012-08-22
+// -----------------------------------------------------------------------------
+void Controller::ListPlugins( Reply_ABC& rpy, const Request_ABC& request )
+{
+    Authenticate( request, USER_TYPE_ADMINISTRATOR );
+    const int offset = GetParameter( "offset", request, 0 );
+    const int limit  = GetParameter( "limit",  request, 100 );
+    WriteHttpReply( rpy, agent_.ListPlugins( offset, limit ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controller::CountPlugins
+// Created: BAX 2012-08-22
+// -----------------------------------------------------------------------------
+void Controller::CountPlugins( Reply_ABC& rpy, const Request_ABC& request )
+{
+    Authenticate( request, USER_TYPE_ADMINISTRATOR );
+    WriteHttpReply( rpy, agent_.CountPlugins() );
 }
 
 namespace

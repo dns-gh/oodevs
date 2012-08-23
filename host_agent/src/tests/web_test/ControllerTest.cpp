@@ -92,6 +92,9 @@ namespace
         // exercises
         MOCK_METHOD( ListExercises, 3 );
         MOCK_METHOD( CountExercises, 1 );
+        // plugins
+        MOCK_METHOD( ListPlugins, 2 );
+        MOCK_METHOD( CountPlugins, 0 );
     };
 
     MOCK_BASE_CLASS( MockRequest, Request_ABC )

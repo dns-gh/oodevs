@@ -16,6 +16,7 @@
 #include "runtime/PropertyTree.h"
 #include "runtime/Utf8.h"
 
+#include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
@@ -25,6 +26,63 @@ using runtime::Utf8Convert;
 using runtime::Async;
 using runtime::FileSystem_ABC;
 using runtime::Pool_ABC;
+
+namespace
+{
+// -----------------------------------------------------------------------------
+// Name: MatchLibrary
+// Created: BAX 2012-08-23
+// -----------------------------------------------------------------------------
+bool MatchLibrary( boost::optional< Path >& reply, const Path& name, const Path& candidate )
+{
+    const std::wstring filename = candidate.filename().wstring();
+    if( boost::algorithm::starts_with( filename, name.wstring() + L"_plugin" ) )
+        if( boost::algorithm::ends_with( filename, L".dll" ) )
+            reply = candidate.filename();
+    // iterate until we get a candidate
+    return reply == boost::none;
+}
+
+// -----------------------------------------------------------------------------
+// Name: FindLibrary
+// Created: BAX 2012-08-23
+// -----------------------------------------------------------------------------
+boost::optional< Path > FindLibrary( const FileSystem_ABC& fs, const Path& root, const Path& name )
+{
+    boost::optional< Path > reply;
+    fs.Walk( root, false, boost::bind( &MatchLibrary, boost::ref( reply ), boost::cref( name ), _1 ) );
+    return reply;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReadPluginDirectory
+// Created: BAX 2012-08-23
+// -----------------------------------------------------------------------------
+bool ReadPluginDirectory( NodeController::T_Plugins& list, const FileSystem_ABC& fs, const Path& dir )
+{
+    if( !fs.IsFile( dir / "plugin.xml" ) )
+        return true;
+
+    const Path name = dir.filename();
+    const boost::optional< Path > library = FindLibrary( fs, dir, name );
+    if( library == boost::none )
+        return true;
+
+    list.push_back( name );
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReadPlugins
+// Created: BAX 2012-08-23
+// -----------------------------------------------------------------------------
+NodeController::T_Plugins ReadPlugins( const FileSystem_ABC& fs, const Path& root )
+{
+    NodeController::T_Plugins list;
+    fs.Walk( root, false, boost::bind( &ReadPluginDirectory, boost::ref( list ), boost::cref( fs ), _1 ) );
+    return list;
+}
+}
 
 // -----------------------------------------------------------------------------
 // Name: NodeController::NodeController
@@ -37,6 +95,7 @@ NodeController::NodeController( cpplog::BaseLogger& log,
                                 const Path& root,
                                 const Path& app,
                                 const Path& web,
+                                const Path& plugins,
                                 const std::string& type,
                                 int host,
                                 Pool_ABC& pool,
@@ -50,6 +109,7 @@ NodeController::NodeController( cpplog::BaseLogger& log,
     , web_     ( web )
     , type_    ( type )
     , host_    ( host )
+    , plugins_ ( ReadPlugins( system, plugins ) )
     , proxy_   ( proxy )
     , async_   ( pool )
 {
@@ -404,4 +464,28 @@ size_t NodeController::CountExercises( const Uuid& id ) const
 void NodeController::Notify( const Node_ABC& node ) const
 {
     Save( node );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NodeController::GetPlugins
+// Created: BAX 2012-08-23
+// -----------------------------------------------------------------------------
+NodeController_ABC::T_Plugins NodeController::GetPlugins( int offset, int limit ) const
+{
+    T_Plugins reply;
+    T_Plugins::const_iterator it = plugins_.begin();
+    size_t off = offset > 0 ? size_t( offset ) : 0;
+    std::advance( it, std::min( off, plugins_.size() ) );
+    for( ; it != plugins_.end() && limit > 0; ++it, --limit )
+        reply.push_back( *it );
+    return reply;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NodeController::CountPlugins
+// Created: BAX 2012-08-23
+// -----------------------------------------------------------------------------
+size_t NodeController::CountPlugins() const
+{
+    return plugins_.size();
 }

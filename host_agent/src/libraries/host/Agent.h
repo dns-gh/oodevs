@@ -107,6 +107,12 @@ public:
     virtual size_t              CountExercises( const Uuid& id ) const;
     //@}
 
+    //! @name Plugin Methods
+    //@{
+    virtual std::vector< Path > ListPlugins ( int offset, int limit ) const;
+    virtual size_t              CountPlugins() const;
+    //@}
+
 private:
     //! @name Member data
     //@{

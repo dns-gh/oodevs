@@ -66,6 +66,7 @@ struct NodeController_ABC : public boost::noncopyable
     typedef boost::shared_ptr< T_Base > T_Node;
     typedef std::vector< T_Node > T_Nodes;
     typedef std::vector< Path > T_Exercises;
+    typedef std::vector< Path > T_Plugins;
     //@}
 
     //! @name Methods
@@ -100,6 +101,12 @@ struct NodeController_ABC : public boost::noncopyable
     //@{
     virtual T_Exercises GetExercises  ( const Uuid& id, int offset, int limit ) const = 0;
     virtual size_t      CountExercises( const Uuid& id ) const = 0;
+    //@}
+
+    //! @name Plugin Methods
+    //@{
+    virtual T_Plugins GetPlugins  ( int offset, int limit ) const = 0;
+    virtual size_t    CountPlugins() const = 0;
     //@}
 
     //! @name NodeObserver_ABC Methods

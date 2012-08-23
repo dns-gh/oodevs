@@ -58,6 +58,7 @@ public:
                              const Path& root,
                              const Path& app,
                              const Path& web,
+                             const Path& plugins,
                              const std::string& type,
                              int host,
                              runtime::Pool_ABC& pool,
@@ -99,6 +100,12 @@ public:
     virtual size_t      CountExercises( const Uuid& id ) const;
     //@}
 
+    //! @name Exercise Methods
+    //@{
+    virtual T_Plugins GetPlugins  ( int offset, int limit ) const;
+    virtual size_t    CountPlugins() const;
+    //@}
+
     //! @name NodeObserver_ABC Methods
     //@{
     void Notify( const Node_ABC& node ) const;
@@ -134,6 +141,7 @@ private:
     const Path web_;
     const std::string type_;
     const int host_;
+    const T_Plugins plugins_;
     Proxy_ABC& proxy_;
     Container< Node_ABC > nodes_;
     runtime::Timer timer_;
