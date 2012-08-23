@@ -30,14 +30,12 @@
             <a class="close" data-dismiss="modal">&times;</a>
             <h3>{{ident}} Node Settings</h3>
         </div>
-        <div class="modal-body">
-            <form class="form-horizontal">
-                [[ template "input_text" sub "id" "name" "label" "Name" "value" "{{name}}" ]]
-                [[ template "input_number" sub "id" "sessions_max_play" "label" "Max" "prepend" 1 "prepend_value" "{{#is_positive sessions.max_play}} checked=\"checked\"{{/is_positive}}" "value" "{{sessions.max_play}}" "append" "Sessions" ]]
-                [[ template "input_number" sub "id" "sessions_max_parallel" "label" "Parallel" "prepend" 1 "prepend_value" "{{#is_positive sessions.max_parallel}} checked=\"checked\"{{/is_positive}}" "value" "{{sessions.max_parallel}}" "append" "Sessions" ]]
-                [[ template "input_checkbox" sub "id" "sessions_reset" "label" "Allow Session Reset" "value" "{{#bool sessions.reset }} checked=\"checked\"{{/bool}}" ]]
-            </form>
-        </div>
+        <form class="modal-body form-horizontal">
+            [[ template "input_text" sub "id" "name" "label" "Name" "value" "{{name}}" ]]
+            [[ template "input_number" sub "id" "sessions_max_play" "label" "Max" "prepend" 1 "prepend_value" "{{#is_positive sessions.max_play}} checked=\"checked\"{{/is_positive}}" "value" "{{sessions.max_play}}" "append" "Sessions" ]]
+            [[ template "input_number" sub "id" "sessions_max_parallel" "label" "Parallel" "prepend" 1 "prepend_value" "{{#is_positive sessions.max_parallel}} checked=\"checked\"{{/is_positive}}" "value" "{{sessions.max_parallel}}" "append" "Sessions" ]]
+            [[ template "input_checkbox" sub "id" "sessions_reset" "label" "Allow Session Reset" "value" "{{#bool sessions.reset }} checked=\"checked\"{{/bool}}" ]]
+        </form>
         <div class="modal-footer">
             <a class="btn btn-inverse apply">Apply</a>
             <a class="btn btn-inverse" data-dismiss="modal">Discard</a>
