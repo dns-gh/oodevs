@@ -583,8 +583,8 @@
       for (_l = 0, _len3 = _ref3.length; _l < _len3; _l++) {
         it = _ref3[_l];
         $(it).click(it, function(e) {
-          _this.toggle_load(false, it);
-          return _this.delete_items([it]);
+          _this.toggle_load(false, e.data);
+          return _this.delete_items([e.data]);
         });
       }
     };

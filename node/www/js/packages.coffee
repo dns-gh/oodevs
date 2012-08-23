@@ -73,8 +73,8 @@ class PackageView extends Backbone.View
 
         for it in $(@el).find ".action .delete"
             $(it).click it, (e) =>
-                @toggle_load false, it
-                @delete_items [it]
+                @toggle_load false, e.data
+                @delete_items [e.data]
         return
 
     delta: =>
