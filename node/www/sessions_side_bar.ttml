@@ -1,4 +1,4 @@
-<div class="well sidebar-nav">
+<div class="well">
     <ul class="nav nav-list">
         <li class="nav-header">Filters</li>
         <li id="session_filters" class="controls">
