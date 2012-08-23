@@ -46,7 +46,6 @@ public:
 
     virtual void                   Execute( const wrapper::View& perceiver, const SurfacesObject_ABC& surfaces, const T_ObjectVector& perceivableObjects );
     virtual const PerceptionLevel& Compute( const wrapper::View& perceiver, const SurfacesObject_ABC& surfaces, const DEC_Knowledge_Object& knowledge ) const;
-    virtual const PerceptionLevel& Compute( const wrapper::View& perceiver, const SurfacesObject_ABC& surfaces, const MIL_Object_ABC& object ) const;
 
     virtual void                   Execute( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const T_ConstPopulationFlowVector& perceivableFlows );
     virtual const PerceptionLevel& Compute( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const MIL_PopulationFlow& flow, T_PointVector& shape ) const;
@@ -63,6 +62,7 @@ private:
     void FinalizeSurfaceAgents();
     void TransferPerception( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces ) const;
     bool IsEnabled( const wrapper::View& perceiver ) const;
+    const PerceptionLevel& Compute( const wrapper::View& perceiver, const SurfacesObject_ABC& surfaces, const MIL_Object_ABC& object ) const;
     //@}
 
     //! @name Types

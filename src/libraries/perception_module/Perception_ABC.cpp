@@ -59,15 +59,6 @@ const sword::perception::PerceptionLevel& Perception_ABC::Compute( const wrapper
 }
 
 // -----------------------------------------------------------------------------
-// Name: Perception_ABC::Compute
-// Created: NLD 2005-10-11
-// -----------------------------------------------------------------------------
-const sword::perception::PerceptionLevel& Perception_ABC::Compute( const wrapper::View& /*perceiver*/, const SurfacesObject_ABC& /*surfaces*/, const MIL_Object_ABC& /*object*/ ) const
-{
-    return PerceptionLevel::notSeen_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: Perception_ABC::Execute
 // Created: NLD 2005-10-11
 // -----------------------------------------------------------------------------
