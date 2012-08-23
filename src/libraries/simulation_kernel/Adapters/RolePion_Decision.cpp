@@ -684,7 +684,7 @@ namespace
         parameters[ "perception-id" ] = perceptionId;
         parameters[ "center/x" ] = center->rX_;
         parameters[ "center/y" ] = center->rY_;
-        parameters[ "speed" ] = speed;
+        parameters[ "growth-speed" ] = speed;
         parameters[ "localization" ].SetUserData( localisation );
         facade.PostCommand( "toggle object detection", parameters );
         return perceptionId;

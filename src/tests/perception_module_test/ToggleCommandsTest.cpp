@@ -207,7 +207,10 @@ BOOST_FIXTURE_TEST_CASE( activating_object_detection_forwards_localization_and_s
     const double speed = 13;
     core::Model& object = model[ "entities" ][ identifier ][ "perceptions/object-detection" ];
     ExpectEffect( object, sword::test::MakeModel( perceptionId,
-                                                    sword::test::MakeModel( "speed", speed )
+                                                    sword::test::MakeModel( "growth-speed", speed )
+                                                                          ( "radius", 0 )
+                                                                          ( "max-radius-reached", false )
+                                                                          ( "identifier", perceptionId )
                                                                           ( "center/x", 1 )
                                                                           ( "center/y", 2 )
                                                                           ( "localization", sword::test::MakeUserData( &localization ) ) ) );
@@ -215,7 +218,7 @@ BOOST_FIXTURE_TEST_CASE( activating_object_detection_forwards_localization_and_s
         core::MakeModel( "identifier", identifier )
                        ( "activated", true )
                        ( "perception-id", perceptionId )
-                       ( "speed", speed )
+                       ( "growth-speed", speed )
                        ( "center/x", 1 )
                        ( "center/y", 2 )
                        ( "localization", sword::test::MakeUserData( &localization ) ) );

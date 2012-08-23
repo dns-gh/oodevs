@@ -21,7 +21,7 @@ using namespace sword::perception;
 ToggleObjectDetectionCommand::ToggleObjectDetectionCommand( ModuleFacade& /*module*/, const wrapper::View& parameters, const wrapper::View& /*model*/, size_t /*identifier*/ )
     : identifier_  ( parameters[ "identifier" ] )
     , isActivated_ ( parameters[ "activated" ] )
-    , speed_       ( isActivated_ ? parameters[ "speed" ] : 0. )
+    , speed_       ( isActivated_ ? parameters[ "growth-speed" ] : 0. )
     , centerX_     ( isActivated_ ? parameters[ "center/x" ] : 0. )
     , centerY_     ( isActivated_ ? parameters[ "center/y" ] : 0. )
     , perceptionId_( parameters[ "perception-id" ] )
@@ -49,9 +49,12 @@ void ToggleObjectDetectionCommand::Execute( const wrapper::View& model ) const
     wrapper::Effect effect( radar );
     if( isActivated_ )
     {
-        effect[ perceptionId_ ][ "speed" ] = speed_;
+        effect[ perceptionId_ ][ "growth-speed" ] = speed_;
         effect[ perceptionId_ ][ "center/x" ] = centerX_;
         effect[ perceptionId_ ][ "center/y" ] = centerY_;
+        effect[ perceptionId_ ][ "radius" ] = 0;
+        effect[ perceptionId_ ][ "max-radius-reached" ] = false;
+        effect[ perceptionId_ ][ "identifier" ] = perceptionId_;
         effect[ perceptionId_ ][ "localization" ].SetUserData( localization_ );
     }
     else
