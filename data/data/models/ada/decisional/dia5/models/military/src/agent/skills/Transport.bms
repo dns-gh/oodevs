@@ -67,7 +67,7 @@ rootnode
         -- If units can be transported, the skill failed.
         if not next( self.loadableUnits ) then
             meKnowledge:RC( eRC_TransportImpossiblePasDeMoyens )
-            Feedback( self.feedbacks.failed )
+            Feedback( self.feedbacks.done ) -- done but failed actually...
         end
         -- local initializations
         self.position           = self.params.loadingPoint -- start to move to loading position

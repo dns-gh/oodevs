@@ -71,8 +71,8 @@
             <unit command-post="false" id="502" name="MILITARY.Engineer platoon" position="29TNF3520457463" type="MILITARY.Engineer platoon"/>
             <unit command-post="true" id="503" name="MILITARY.Company command post" position="29TNF3530057433" type="MILITARY.Company command post"/>
           </automat>
-          <automat engaged="true" id="504" knowledge-group="321" name="MILITARY.Infantry company" symbol="symbols/sfgpucim" type="MILITARY.Infantry company">
-            <unit command-post="false" id="505" name="MILITARY.Infantry platoon" position="29TNF3609658113" type="MILITARY.Infantry platoon"/>
+          <automat engaged="false" id="504" knowledge-group="321" name="MILITARY.Infantry company" symbol="symbols/sfgpucim" type="MILITARY.Infantry company">
+            <unit command-post="false" id="505" name="MILITARY.Infantry platoon" position="29TNF3613558080" type="MILITARY.Infantry platoon"/>
             <unit command-post="false" id="506" name="MILITARY.Infantry platoon" position="29TNF3619258045" type="MILITARY.Infantry platoon"/>
             <unit command-post="false" id="507" name="MILITARY.Infantry platoon" position="29TNF3615657933" type="MILITARY.Infantry platoon"/>
             <unit command-post="false" id="508" name="MILITARY.Infantry platoon" position="29TNF3603857932" type="MILITARY.Infantry platoon"/>
@@ -94,6 +94,34 @@
             <unit command-post="false" id="558" name="MILITARY.Infantry platoon" position="29TNF3535562468" type="MILITARY.Infantry platoon"/>
             <unit command-post="false" id="559" name="MILITARY.Engineer platoon" position="29TNF3531862579" type="MILITARY.Engineer platoon"/>
             <unit command-post="true" id="560" name="MILITARY.Company command post" position="29TNF3541362549" type="MILITARY.Company command post"/>
+          </automat>
+          <automat engaged="false" id="655" knowledge-group="321" name="LOG.Supply logistic area  (corps)" symbol="symbols/sfgpust" type="LOG.Supply logistic area  (corps)">
+            <unit command-post="true" id="656" name="LOG.Supply CP (division)" position="29TNF3738158183" type="LOG.Supply CP (division)"/>
+            <unit command-post="false" id="657" name="LOG.Water supply group" position="29TNF3738058283" type="LOG.Water supply group"/>
+            <unit command-post="false" id="658" name="LOG.Ammo supply group" position="29TNF3743158270" type="LOG.Ammo supply group"/>
+            <unit command-post="false" id="659" name="LOG.Ammo supply group" position="29TNF3746758234" type="LOG.Ammo supply group"/>
+            <unit command-post="false" id="660" name="LOG.Ammo supply group" position="29TNF3748158184" type="LOG.Ammo supply group"/>
+            <unit command-post="false" id="661" name="LOG.Ammo supply group" position="29TNF3746858134" type="LOG.Ammo supply group"/>
+            <unit command-post="false" id="662" name="LOG.Supply Transportation platoon (PT)" position="29TNF3743158097" type="LOG.Supply Transportation platoon (PT)"/>
+            <unit command-post="false" id="663" name="LOG.Supply platoon (PR)" position="29TNF3738158084" type="LOG.Supply platoon (PR)"/>
+            <unit command-post="false" id="664" name="LOG.Supply group 60m3" position="29TNF3733158097" type="LOG.Supply group 60m3"/>
+            <unit command-post="false" id="665" name="LOG.Magazin section CAP" position="29TNF3729458133" type="LOG.Magazin section CAP"/>
+            <unit command-post="false" id="666" name="LOG.Supply Transportation platoon" position="29TNF3728158183" type="LOG.Supply Transportation platoon"/>
+            <unit command-post="false" id="667" name="LOG.Supply group 35m3" position="29TNF3729458233" type="LOG.Supply group 35m3"/>
+            <unit command-post="false" id="668" name="LOG.Supply group180m3" position="29TNF3733058269" type="LOG.Supply group180m3"/>
+          </automat>
+          <automat engaged="true" id="697" knowledge-group="321" name="MILITARY.Transportation company" symbol="symbols/sfgpust" type="MILITARY.Transportation company">
+            <unit command-post="true" id="698" name="MILITARY.Transporter platoon" position="29TNF3607457293" type="MILITARY.Transporter platoon"/>
+            <unit command-post="false" id="699" name="MILITARY.Transporter platoon" position="29TNF3602057295" type="MILITARY.Transporter platoon"/>
+            <unit command-post="false" id="700" name="MILITARY.Transporter platoon" position="29TNF3605257239" type="MILITARY.Transporter platoon"/>
+            <unit command-post="false" id="701" name="MILITARY.Transporter platoon" position="29TNF3614657294" type="MILITARY.Transporter platoon"/>
+          </automat>
+          <automat engaged="false" id="730" knowledge-group="321" name="MILITARY.Infantry dismounted company" symbol="symbols/sfgpucim" type="MILITARY.Infantry dismounted company">
+            <unit command-post="true" id="731" name="MILITARY.Company command post" position="29TNF3631657555" type="MILITARY.Company command post"/>
+            <unit command-post="false" id="732" name="MILITARY.Infantry dismounted platoon" position="29TNF3637057404" type="MILITARY.Infantry dismounted platoon"/>
+            <unit command-post="false" id="733" name="MILITARY.Infantry dismounted platoon" position="29TNF3631657455" type="MILITARY.Infantry dismounted platoon"/>
+            <unit command-post="false" id="734" name="MILITARY.Infantry dismounted platoon" position="29TNF3625757463" type="MILITARY.Infantry dismounted platoon"/>
+            <unit command-post="false" id="735" name="MILITARY.Infantry dismounted platoon" position="29TNF3630757440" type="MILITARY.Infantry dismounted platoon"/>
           </automat>
           <lima name="Phase line 372">
             <point>29TNF3257758436</point>
@@ -225,7 +253,16 @@
         </population>
       </populations>
       <inhabitants/>
-      <logistics/>
+      <logistics>
+        <logistic-base id="455">
+          <subordinate id="389"/>
+          <subordinate id="475"/>
+          <subordinate id="497"/>
+          <subordinate id="504"/>
+          <subordinate id="554"/>
+          <subordinate id="655"/>
+        </logistic-base>
+      </logistics>
     </party>
     <party id="317" name="Army 317" type="enemy">
       <objects/>
@@ -414,4 +451,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="3655715036" -->
+<!-- signature="3893348880" -->
