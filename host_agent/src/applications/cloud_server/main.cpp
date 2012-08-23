@@ -49,6 +49,21 @@ using namespace runtime;
 using namespace property_tree;
 typedef runtime::Daemon::T_Waiter Waiter;
 
+#ifdef _WIN32
+#define main main_
+int main( int argc, const char* argv[] );
+int wmain( int argc, wchar_t* argv[], wchar_t* /*env*/ )
+{
+    std::vector< std::string > args;
+    for( int i = 0; i < argc; ++i )
+        args.push_back( Utf8Convert( std::wstring( argv[i] ) ) );
+    std::vector< const char* > ptrs;
+    for( int i = 0; i < argc; ++i )
+        ptrs.push_back( args.at( i ).c_str() );
+    main( argc, &ptrs[0] );
+}
+#endif
+
 namespace
 {
 typedef boost::filesystem::path Path;
