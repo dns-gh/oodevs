@@ -245,3 +245,8 @@ ProcessDescriptor Api::MakeProcess( const wchar_t* app, wchar_t* args, const wch
     }
     return proc;
 }
+
+unsigned long Api::GetCurrentProcessIdentifier() const
+{
+    return ::GetCurrentProcessId();
+}

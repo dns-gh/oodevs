@@ -24,6 +24,7 @@ namespace test
         MOCK_METHOD( WaitForSingleObjectEx, 3 );
         MOCK_METHOD( TerminateProcess, 2 );
         MOCK_METHOD( GetModuleFilename, 0 );
+        MOCK_METHOD( GetCurrentProcessIdentifier, 0 );
     };
 }
 

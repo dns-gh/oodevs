@@ -115,12 +115,13 @@ BOOST_AUTO_TEST_CASE( runtime_process_lists )
 BOOST_AUTO_TEST_CASE( runtime_process_gets )
 {
     StdoutLogger log;
-    MockApi api;
+    Api api( log );
     Runtime runtime( log, api );
-    const int pid = 1337;
-    ExpectOpenProcess( api, dummy, pid );
+    // Check itself
+    unsigned long pid = api.GetCurrentProcessIdentifier();
     boost::shared_ptr< Process_ABC > ptr = runtime.GetProcess( pid );
-    CheckProcess( *ptr, pid, dummy );
+    BOOST_CHECK_EQUAL( ptr->GetPid(), pid );
+    BOOST_CHECK(ptr->GetName().find("runtime_test") != std::string::npos );
 }
 
 
