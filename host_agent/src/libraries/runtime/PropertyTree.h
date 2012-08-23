@@ -37,6 +37,14 @@ namespace property_tree
         dst = *data;
         return true;
     }
+
+    template< typename T >
+    void PutList( T_Tree& dst, const std::string& name, const T& list )
+    {
+        T_Tree& sub = dst.put_child( name, T_Tree() );
+        for( typename T::const_iterator it = list.begin(); it != list.end(); ++it )
+            sub.push_back( std::make_pair( std::string(), boost::lexical_cast< std::string >( *it ) ) );
+    }
 }
 
 #endif // PROPERTY_TREE_H

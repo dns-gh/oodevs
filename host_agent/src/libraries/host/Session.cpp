@@ -348,18 +348,6 @@ Tree Session::GetProperties( bool save ) const
     return tree;
 }
 
-namespace
-{
-template< typename T >
-void PutList( Tree& dst, const std::string& name, const T& list )
-{
-    Tree& sub = dst.put_child( name, Tree() );
-    typedef typename T::value_type Value;
-    BOOST_FOREACH( const Value& value, list )
-        sub.push_back( std::make_pair( "", boost::lexical_cast< std::string >( value ) ) );
-}
-}
-
 // -----------------------------------------------------------------------------
 // Name: Session::GetProperties
 // Created: BAX 2012-04-19

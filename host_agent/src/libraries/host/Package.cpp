@@ -636,7 +636,7 @@ Tree Package::GetProperties() const
     Tree& items = tree.put_child( "items", Tree() );
     BOOST_FOREACH( const T_Items::value_type& item, items_ )
         if( item->IsInstalled() )
-            items.push_back( std::make_pair( "", item->GetProperties() ) );
+            items.push_back( std::make_pair( std::string(), item->GetProperties() ) );
     return tree;
 }
 
