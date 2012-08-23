@@ -10,8 +10,7 @@
 $(".log_in").click ->
     usr = $("#username")
     pwd = $("#password")
-    for it in $("input")
-        it.blur()
+    $("input").blur()
 
     err = false
     if usr.val().length == 0

@@ -608,14 +608,7 @@
         });
       });
       $(".toggle a").click(function() {
-        var _k, _len2, _ref2, _results;
-        _ref2 = $(".action .add, .action .update");
-        _results = [];
-        for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
-          it = _ref2[_k];
-          _results.push($(it).button("toggle"));
-        }
-        return _results;
+        return $(".action .add, .action .update").button("toggle");
       });
     };
 
