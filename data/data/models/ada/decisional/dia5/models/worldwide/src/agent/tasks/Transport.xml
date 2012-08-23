@@ -40,6 +40,9 @@ Default value is 100 meters.</description>
             </default>
         </parameter>
     </parameters>
+    <goal>
+        <description>To perform the carriage of personnel and/or cargo (components of units)  to a destination.</description>
+    </goal>
     <stages>
         <stage label="move to embarkation position">
             <description>The agent moves to the embarkation position, loads the units and start round trips between the position and the final destination.</description>

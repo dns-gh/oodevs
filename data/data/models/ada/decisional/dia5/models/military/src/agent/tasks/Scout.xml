@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.tasks.Scout" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.ReconnoiterRoute">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.tasks.Scout" source-version="1.0.0">
     <description>Mission de reconnaissance des entité de combat. Cette mission n'a explicitement pas de caractère offensif. Dans cette mission, l'agent ne décidera jamais d'engager un ennemi.</description>
     <parameters>
         <parameter name="objectives">

@@ -8,13 +8,13 @@ local result =
         end
         return { objectives = paramsPositions, fuseau = fuseau }
     end,
-    
+
     getPionEfficiency = function( self )
         return ePionEfficiencyRecon
     end,
 }
 
 local t = initTaskKnowledge( result )
-taskKnowledge["agent.tasks.knowledges.ReconnoiterRoute"] = t
+taskKnowledge[ "agent.tasks.knowledges.Reconnoiter" ] = t
 
 return result

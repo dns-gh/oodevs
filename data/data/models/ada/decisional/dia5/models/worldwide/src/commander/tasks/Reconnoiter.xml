@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="company.tasks.Eclairer" source-version="1.0.0" knowledge-class="company.tasks.knowledges.ReconnoiterEffect">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.tasks.Reconnoiter" source-version="1.0.0" knowledge-class="commander.tasks.knowledges.Reconnoiter">
     <parameters>
         <parameter name="objectives">
             <type>
@@ -10,32 +10,32 @@
         </parameter>
     </parameters>
     <stages>
-        <stage label="reconnaissance des objectifs" disable-when-done="true">
+        <stage label="moving to reconnoiter the objectives" disable-when-done="true">
             <skills>
                 <skill name="commander.skills.Lead" main="true">
                     <parameter name="companyTask">
                         <value>
-                            <string>company.tasks.Eclairer</string>
+                            <string>commander.tasks.Reconnoiter</string>
                         </value>
                     </parameter>
                     <parameter name="mainTasks">
                         <value>
-                            <string>platoon.combat.tasks.Eclairer</string>
+                            <string>agent.tasks.Reconnoiter</string>
                         </value>
                     </parameter>
                     <parameter name="supportTasks">
                         <value>
-                            <string>platoon.tasks.Appuyer;platoon.combat.support.engineer.tasks.AppuiMobilite</string>
-                        </value>
-                    </parameter>
-                    <parameter name="defaultTask">
-                        <value>
-                            <string>platoon.tasks.Suivre</string>
+                            <string>agent.tasks.CombatSupport;agent.tasks.MobilitySupport</string>
                         </value>
                     </parameter>
                     <parameter name="taskForSupporting">
                         <value>
-                            <string>platoon.tasks.Appuyer</string>
+                            <string>agent.tasks.CombatSupport</string>
+                        </value>
+                    </parameter>
+                    <parameter name="defaultTask">
+                        <value>
+                            <string>agent.tasks.Follow</string>
                         </value>
                     </parameter>
                 </skill>

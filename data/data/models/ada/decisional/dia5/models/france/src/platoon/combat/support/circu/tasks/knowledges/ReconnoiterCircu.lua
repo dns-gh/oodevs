@@ -15,6 +15,6 @@ local result =
 }
 
 local t = initTaskKnowledge( result )
-taskKnowledge["agent.tasks.knowledges.Reconnoiter"] = t
+taskKnowledge["platoon.combat.support.circu.tasks.knowledges.ReconnoiterCircu"] = t
 
 return result
