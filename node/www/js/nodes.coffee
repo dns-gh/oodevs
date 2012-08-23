@@ -11,10 +11,40 @@ node_settings = Handlebars.compile $("#node_settings_template").html()
 node_template = Handlebars.compile $("#node_template").html()
 node_error_template = Handlebars.compile $("#node_error_template").html()
 
+Handlebars.registerHelper "each_pair", (list, options) ->
+    ret = ""
+    while list?.length > 1
+        ret += options.fn list: [list[0], list[1]]
+        list = list[2..]
+    if list?.length
+        ret += options.fn item: list[0]
+    return ret
+
 print_error = (text) ->
     display_error "node_error", node_error_template, text
 
+plugin_list = []
+ajax "/api/list_plugins", null,
+    (data) ->
+        plugin_list = data
+    ->
+        print_error "Unable to list plugins"
+
+set_plugins = (data) ->
+    plugins = []
+    for it in plugin_list
+        next = {}
+        next.id = it
+        next.name = it.charAt(0).toUpperCase() + it[1..]
+        included  = _.isArray(data.plugins)  and it in data.plugins
+        included |= _.isObject(data.plugins) and it of data.plugins
+        next.checked = "checked=\"checked\"" if included
+        plugins.push next
+    data.plugins = plugins
+    return data
+
 pop_settings = (ui, data) ->
+    data = set_plugins $.extend {}, data
     ui.html node_settings data
     num = $ "#sessions_max_play"
     force_input_regexp /\d/, num
@@ -43,6 +73,9 @@ validate_settings = (ui) ->
     return unless validate_number next, "max_play",     ui, "sessions_max_play",     0, Number.MAX_VALUE, "Invalid"
     return unless validate_number next, "max_parallel", ui, "sessions_max_parallel", 0, Number.MAX_VALUE, "Invalid"
     next.reset = ui.find("#sessions_reset").is ":checked"
+    next = data.plugins = {}
+    for it in ui.find "#tab_plugins input[type=checkbox]:checked"
+        next[it.id] = true
     return data
 
 class NodeItem extends Backbone.Model
@@ -50,12 +83,13 @@ class NodeItem extends Backbone.Model
 
     defaults:
         sessions:
-            max_play: 0,
-            max_parallel: 0,
+            max_play: 0
+            max_parallel: 0
             reset: true
+            plugins: {}
 
     sync: (method, model, options) =>
-        data = select_attributes model.attributes, ["name", "sessions"]
+        data = select_attributes model.attributes, ["name", "sessions", "plugins"]
         data = flatten_item data
 
         if method == "create"

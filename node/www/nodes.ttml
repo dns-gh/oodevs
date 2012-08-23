@@ -30,11 +30,30 @@
             <a class="close" data-dismiss="modal">&times;</a>
             <h3>{{ident}} Node Settings</h3>
         </div>
-        <form class="modal-body form-horizontal">
-            [[ template "input_text" sub "id" "name" "label" "Name" "value" "{{name}}" ]]
-            [[ template "input_number" sub "id" "sessions_max_play" "label" "Max" "prepend" 1 "prepend_value" "{{#is_positive sessions.max_play}} checked=\"checked\"{{/is_positive}}" "value" "{{sessions.max_play}}" "append" "Sessions" ]]
-            [[ template "input_number" sub "id" "sessions_max_parallel" "label" "Parallel" "prepend" 1 "prepend_value" "{{#is_positive sessions.max_parallel}} checked=\"checked\"{{/is_positive}}" "value" "{{sessions.max_parallel}}" "append" "Sessions" ]]
-            [[ template "input_checkbox" sub "id" "sessions_reset" "label" "Allow Session Reset" "value" "{{#bool sessions.reset }} checked=\"checked\"{{/bool}}" ]]
+        <form class="modal-body tabbable form-horizontal">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#tab_general" data-toggle="tab"> General </a></li>
+                <li><a href="#tab_plugins" data-toggle="tab"> Plugins </a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab_general">
+                    [[ template "input_text" sub "id" "name" "label" "Name" "value" "{{name}}" ]]
+                    [[ template "input_number" sub "id" "sessions_max_play" "label" "Max" "prepend" 1 "prepend_value" "{{#is_positive sessions.max_play}} checked=\"checked\"{{/is_positive}}" "value" "{{sessions.max_play}}" "append" "Sessions" ]]
+                    [[ template "input_number" sub "id" "sessions_max_parallel" "label" "Parallel" "prepend" 1 "prepend_value" "{{#is_positive sessions.max_parallel}} checked=\"checked\"{{/is_positive}}" "value" "{{sessions.max_parallel}}" "append" "Sessions" ]]
+                    [[ template "input_checkbox" sub "id" "sessions_reset" "label" "Allow Session Reset" "value" "{{#bool sessions.reset }} checked=\"checked\"{{/bool}}" ]]
+                </div>
+                <div class="tab-pane" id="tab_plugins">
+                    <div>
+                        {{#each_pair plugins}}
+                        {{#if list}}
+                        [[ template "input_checkbox" sub "id" "{{list.0.id}}" "label" "{{list.0.name}}" "value" "{{list.0.checked}}" "pair" 1 "id2" "{{list.1.id}}" "label2" "{{list.1.name}}" "value2" "{{list.1.checked}}" ]]
+                        {{else}}
+                        [[ template "input_checkbox" sub "id" "{{item.id}}" "label" "{{item.name}}" "value" "{{item.checked}}" ]]
+                        {{/if}}
+                        {{/each_pair}}
+                    </div>
+                </div>
+            </div>
         </form>
         <div class="modal-footer">
             <a class="btn btn-inverse apply">Apply</a>

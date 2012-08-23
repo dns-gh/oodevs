@@ -32,10 +32,16 @@
 [[ define "input_checkbox" ]]
 <div class="control-group">
     <div class="controls">
-        <label class="checkbox">
+        <label class="checkbox[[ if .pair ]] inline input-small[[ end ]]">
             <input type="checkbox" id="[[ .id ]]"[[ if .value ]][[ .value ]][[ end ]]/>
             [[ .label ]]
         </label>
+        [[ if .pair ]]
+        <label class="checkbox inline">
+            <input type="checkbox" id="[[ .id2 ]]"[[ if .value2 ]][[ .value2 ]][[ end ]]/>
+            [[ .label2 ]]
+        </label>
+        [[ end ]]
     </div>
 </div>
 [[ end ]]
