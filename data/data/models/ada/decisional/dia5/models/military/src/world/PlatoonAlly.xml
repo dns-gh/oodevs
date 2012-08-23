@@ -1092,25 +1092,6 @@ que pourrait subir l'agent dans son efficacité à résoudre la tâche de groupe
                 </type>
             </return>
         </method>
-        <method name="addToTransport" abstract="false">
-            <description>Ajout de l'unite dans la file pour le transport.</description>
-        </method>
-        <method name="readyForBeingTransported" abstract="false">
-            <description>Retourne vrai si l'unite est prête à se faire transporter. L'implémentation de cette méthode retourne vrai si l'agent a reçu la mission se faire transporter (et que ce dernier est proche du point de RDV pour le transport).</description>
-            <return>
-                <type>
-                    <simple name="boolean"/>
-                </type>
-            </return>
-        </method>
-        <method name="canTransportIt" abstract="false">
-            <description>Retourne vrai si il est physiquement possible de transporter l'element.</description>
-            <return>
-                <type>
-                    <simple name="boolean"/>
-                </type>
-            </return>
-        </method>
         <method name="orientateSensor" abstract="false">
             <description>INTEGRATION de l'action d'observation spécifique à un platoon</description>
             <argument name="entity">
@@ -1459,6 +1440,39 @@ que pourrait subir l'agent dans son efficacité à résoudre la tâche de groupe
                     <simple name="string"/>
                 </type>
             </argument>
+        </method>
+        <method name="addToTransport" abstract="false">
+            <description>Notify the simulation the 'unit' must be transported. </description>
+        </method>
+        <method name="canTransportIt" abstract="false">
+            <description>Returns 'true' if this element can transported, depending on its physical capabilities, 'false' otherwise.</description>
+            <argument name="onlyLoadable">
+                <description>Define if the transport is made on loadable components (components that are defined as &quot;loadable&quot; within the authoring tool, as 'soldiers' are loadable in their 'armored vehicles') or on other components (as &quot;vehicles&quot;). To simulate troops transportation, this element should be set to 'true', else it should be set to 'false' (helitrasnport for instance).</description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="readyForBeingTransported" abstract="false">
+            <description>Returns 'true' if  the agent is ready to be transported, 'false' otherwise.&#xD;
+&#xD;
+This implementation returns 'true' if the units to transport has the &quot;getTransported' mission and if its distance to the agent is smaller than the 'minDistance' parameter.</description>
+            <argument name="distanceMin">
+                <description>The minimum distance (in meters) underneath which this element is considered as being ready to get transported by the agent.</description>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
         </method>
     </methods>
     <predicates>

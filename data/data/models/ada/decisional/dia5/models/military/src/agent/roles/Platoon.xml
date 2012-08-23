@@ -93,6 +93,7 @@
         <skill name="agent.skills.UnloadTransportedUnits"/>
         <skill name="agent.skills.Settle"/>
         <skill name="agent.skills.GetTransported"/>
+        <skill name="agent.skills.Transport"/>
     </skills>
     <resources>
         <resource name="agent.resources.EngageCapacity"/>
@@ -107,6 +108,7 @@
         <resource name="agent.resources.RadarCapacity"/>
         <resource name="agent.resources.BuildCapacity"/>
         <resource name="agent.resources.ActivationCapacity"/>
+        <resource name="agent.resources.TransportationCapacity"/>
     </resources>
     <default-task label="Prise en compte des ordres de conduite et de la sauvegarde." permanent="true">
         <description>Gestion par défaut des ordres de conduite et de la sauvegarde.</description>

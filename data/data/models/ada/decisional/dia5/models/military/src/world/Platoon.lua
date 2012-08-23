@@ -353,8 +353,8 @@ return
     addToTransport = function( self, onlyLoadable )
         integration.addKnowledgeInQueue( self, onlyLoadable )
     end,
-    readyForBeingTransported = function( self )
-        return integration.knowledgeReadyForLoad( self )
+    readyForBeingTransported = function( self,distanceMin )
+        return integration.knowledgeReadyForLoad( self, distanceMin )
     end,
     canTransportIt = function( self, onlyLodable )
         return integration.canTransportKnowledge( self, onlyLodable )

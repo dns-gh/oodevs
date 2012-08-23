@@ -840,8 +840,8 @@ return
     addToTransport = function( self, onlyLoadable )
         integration.addPlatoonInQueue( self, onlyLoadable )
     end,
-    readyForBeingTransported = function( self )
-        return integration.readyForLoad( self )
+    readyForBeingTransported = function( self, distanceMin )
+        return integration.readyForLoad( self, distanceMin )
     end,
     isTransportFinished = function( self )
         return integration.isTransportFinished()
