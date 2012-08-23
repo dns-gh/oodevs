@@ -1026,6 +1026,12 @@ namespace
         const MT_Vector3D vDataPosition( pKnowledge->GetPosition().rX_, pKnowledge->GetPosition().rY_, pKnowledge->GetAltitude() );
         return vTargetPosition.Distance( vDataPosition );
     }
+    double ComputeDistance( boost::shared_ptr< DEC_Knowledge_Agent > pTargetKnowledge, boost::shared_ptr< DEC_Knowledge_Agent > pSourceKnowledge )
+    {
+        const MT_Vector3D sourcePosition( pSourceKnowledge->GetPosition().rX_, pSourceKnowledge->GetPosition().rY_, pSourceKnowledge->GetAltitude() );
+        const MT_Vector3D targetPosition( pTargetKnowledge->GetPosition().rX_, pTargetKnowledge->GetPosition().rY_, pTargetKnowledge->GetAltitude() );
+        return sourcePosition.Distance( targetPosition );
+    }
     const core::Model& GetKnowledge( const core::Model& model, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
     {
         return model[ "knowledges" ][ pKnowledge->GetGroupID() ][ pKnowledge->GetID() ];
@@ -1066,6 +1072,18 @@ namespace
             throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
         return GetDangerosity( pTarget->GetPion(), model, pKnowledge );
     }
+    double GetDangerosityOnKnowledge( boost::shared_ptr< DEC_Knowledge_Agent > pSource, const core::Model& model, boost::shared_ptr< DEC_Knowledge_Agent > pTarget )
+    {
+        if( ! pSource || ! pSource->IsValid()|| ! pTarget || ! pTarget->IsValid() )
+            return 0;
+        if( pSource->GetMaxPerceptionLevel() < PHY_PerceptionLevel::recognized_ )
+            return 0;
+        const double distance = ComputeDistance( pSource, pTarget );
+        const core::Model& firer = GetKnowledge( model, pSource );
+        const core::Model& enemy = GetKnowledge( model, pTarget );
+        // For DIA, the dangerosity value is 1 <= dangerosity <= 2 // $$$$ MCO 2012-08-22: right...
+        return 1 + GET_HOOK( GetDangerosity )( core::Convert( &firer ), core::Convert( &enemy ), &CanMajorFire, distance, false );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -1081,7 +1099,7 @@ void RolePion_Decision::RegisterKnowledge()
     RegisterFunction( "DEC_ConnaissanceAgent_DangerositeSurPion",
         boost::function< double( boost::shared_ptr< DEC_Knowledge_Agent >, const DEC_Decision_ABC* ) >( boost::bind( &GetDangerosityOnPion, _1, boost::cref( model_ ), _2 ) ) );
     RegisterFunction( "DEC_ConnaissanceAgent_DangerositeSurConnaissance",
-        &DEC_KnowledgeAgentFunctions::GetDangerosityOnKnowledge ); // $$$$ MCO 2012-06-29: TODO
+        boost::function< double( boost::shared_ptr< DEC_Knowledge_Agent >, boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &GetDangerosityOnKnowledge, _1, boost::cref( model_ ), _2 ) ) );
     RegisterFunction( "DEC_ConnaissanceBlocUrbain_RapForLocal",
         boost::function< float( UrbanObjectWrapper* ) >( boost::bind( &DEC_UrbanObjectFunctions::GetRapForLocal, boost::cref( GetPion() ), _1 ) ) ); // $$$$ MCO 2012-06-29: TODO
 }

@@ -104,6 +104,7 @@ public:
     bool IsDead() const;
     bool IsInCrowd() const;
     unsigned int GetID() const;
+    unsigned int GetGroupID() const;
     double GetAltitude() const;
     const MT_Vector2D& GetPosition() const;
     const MT_Vector2D& GetDirection() const;

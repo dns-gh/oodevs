@@ -1153,3 +1153,13 @@ bool DEC_Knowledge_Agent::IsTransported() const
 {
     return pAgentKnown_->GetRole< transport::PHY_RoleInterface_Transported >().IsTransported();
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::GetGroupID
+// Created: MCO 2012-08-22
+// -----------------------------------------------------------------------------
+unsigned int DEC_Knowledge_Agent::GetGroupID() const
+{
+    assert( pKnowledgeGroup_ );
+    return pKnowledgeGroup_->GetId();
+}
