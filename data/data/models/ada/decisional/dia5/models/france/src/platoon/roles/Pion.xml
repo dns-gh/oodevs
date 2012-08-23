@@ -64,7 +64,6 @@
         <skill name="platoon.combat.support.rens.skills.primitives.ActivateRadarTirIndirect"/>
     </skills>
     <resources>
-        <resource name="platoon.resources.CapaciteEmbarquement"/>
         <resource name="agent.resources.RadarCapacity"/>
     </resources>
 </role>

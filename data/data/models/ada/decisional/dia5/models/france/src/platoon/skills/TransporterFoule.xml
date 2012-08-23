@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="platoon.skills.TransporterFoule" source-version="1.0.0">
-  <parameters>
-    <parameter name="crowd">
-      <description>Foule a transporter.</description>
-      <type>
-        <class name="properties.Transportable"/>
-      </type>
-    </parameter>
-    <parameter name="loadingPoint">
-      <description>Position d'embarquement.</description>
-      <type>
-        <class name="properties.Loading"/>
-      </type>
-    </parameter>
-    <parameter name="destination">
-      <description>Position ou transporter les unites</description>
-      <type>
-        <class name="properties.Loading"/>
-      </type>
-    </parameter>
-  </parameters>
-  <body-type>
-    <class name="world.PlatoonAlly"/>
-  </body-type>
-  <links>
-    <link name="moveToward" skill="platoon.skills.MoveAlong"/>
-  </links>
-  <resources>
-    <resource name="platoon.resources.CapaciteEmbarquement" variable="loadcapacity"/>
-  </resources>
+    <parameters>
+        <parameter name="crowd">
+            <description>Foule a transporter.</description>
+            <type>
+                <class name="properties.Transportable"/>
+            </type>
+        </parameter>
+        <parameter name="loadingPoint">
+            <description>Position d'embarquement.</description>
+            <type>
+                <class name="properties.Loading"/>
+            </type>
+        </parameter>
+        <parameter name="destination">
+            <description>Position ou transporter les unites</description>
+            <type>
+                <class name="properties.Loading"/>
+            </type>
+        </parameter>
+    </parameters>
+    <body-type>
+        <class name="world.PlatoonAlly"/>
+    </body-type>
+    <links>
+        <link name="moveToward" skill="platoon.skills.MoveAlong"/>
+    </links>
+    <resources>
+        <resource name="agent.resources.TransportationCapacity" variable="loadcapacity"/>
+    </resources>
 </skill>
