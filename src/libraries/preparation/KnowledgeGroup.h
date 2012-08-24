@@ -56,7 +56,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::Controller& controller );
+    void CreateDictionary();
     void UpdateCommunicationDelay();
     kernel::KnowledgeGroupType* ResolveType( const std::string& typeName, tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types );
     //@}

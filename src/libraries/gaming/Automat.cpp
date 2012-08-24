@@ -37,9 +37,7 @@ Automat::Automat( const sword::AutomatCreation& message, Controller& controller,
     if( name_.isEmpty() )
         name_ = QString( "%1 %L2" ).arg( type_.GetName().c_str() ).arg( message.automat().id() );
     RegisterSelf( *this );
-    PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
-    Attach( dictionary );
-    CreateDictionary( dictionary );
+    CreateDictionary();
 }
 
 // -----------------------------------------------------------------------------
@@ -55,13 +53,14 @@ Automat::~Automat()
 // Name: Automat::CreateDictionary
 // Created: SBO 2006-10-19
 // -----------------------------------------------------------------------------
-void Automat::CreateDictionary( kernel::PropertiesDictionary& dico ) const
+void Automat::CreateDictionary()
 {
-    dico.Register( *this, tools::translate( "Automat", "Info/Identifier" ), id_, true );
-    dico.Register( *this, tools::translate( "Automat", "Info/Name" ), name_, true);
-    dico.Register( *this, tools::translate( "Automat", "Info/Type" ), type_, true );
+    PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
+    dictionary.Register( *this, tools::translate( "Automat", "Info/Identifier" ), id_, true );
+    dictionary.Register( *this, tools::translate( "Automat", "Info/Name" ), name_, true );
+    dictionary.Register( *this, tools::translate( "Automat", "Info/Type" ), type_, true );
     if( type_.IsTC2() ) //$$$ NAZE
-        dico.Register( *this, tools::translate( "Automat", "Info/LogisticLevel" ), *logisticLevel_ );
+        dictionary.Register( *this, tools::translate( "Automat", "Info/LogisticLevel" ), *logisticLevel_ );
 }
 
 // -----------------------------------------------------------------------------

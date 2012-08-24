@@ -43,7 +43,7 @@ Agent::Agent( const AgentType& type, Controller& controller, IdManager& idManage
     , nature_              ( type.GetNature().GetNature() )
 {
     RegisterSelf( *this );
-    CreateDictionary( controller );
+    CreateDictionary();
 }
 
 namespace
@@ -86,7 +86,7 @@ Agent::Agent( xml::xistream& xis, Controller& controller, IdManager& idManager, 
     criticalIntelligence_ = criticalIntelligence.c_str();
     idManager.Lock( id_ );
     RegisterSelf( *this );
-    CreateDictionary( controller );
+    CreateDictionary();
 }
 
 // -----------------------------------------------------------------------------
@@ -152,10 +152,9 @@ void Agent::Rename( const QString& name )
 // Name: Agent::CreateDictionary
 // Created: AGE 2006-06-27
 // -----------------------------------------------------------------------------
-void Agent::CreateDictionary( kernel::Controller& controller )
+void Agent::CreateDictionary()
 {
-    PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
-    Attach( dictionary );
+    PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Identifier" ), id_, true );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Name" ), name_, *this, &Agent::Rename );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Type" ), type_, true );

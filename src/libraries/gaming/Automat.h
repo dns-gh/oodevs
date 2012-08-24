@@ -60,7 +60,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
+    void CreateDictionary();
     void InitializeSymbol() const;
     //@}
 

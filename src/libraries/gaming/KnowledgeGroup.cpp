@@ -37,7 +37,7 @@ KnowledgeGroup::KnowledgeGroup( unsigned long nId, const std::string& name, kern
     RegisterSelf( *this );
     kernel::KnowledgeGroupType* pType = types.Find( type_ );
     delay_ = pType ? pType->ShowCommunicationDelay() : "0m0s";
-    CreateDictionary( controller );
+    CreateDictionary();
 }
 
 // -----------------------------------------------------------------------------
@@ -90,12 +90,11 @@ void KnowledgeGroup::DoUpdate( const sword::KnowledgeGroupUpdate& message )
 // Name: KnowledgeGroup::CreateDictionary
 // Created: FHD 2009-12-21
 // -----------------------------------------------------------------------------
-void KnowledgeGroup::CreateDictionary( kernel::Controller& controller )
+void KnowledgeGroup::CreateDictionary()
 {
-    kernel::PropertiesDictionary* dictionary = new kernel::PropertiesDictionary( controller );
-    Attach( *dictionary );
-    dictionary->Register( *this, tools::translate( "KnowledgeGroup", "Info/Identifier" ), id_ );
-    dictionary->Register( *this, tools::translate( "KnowledgeGroup", "Info/Name" ), name_ );
-    dictionary->Register( *this, tools::translate( "KnowledgeGroup", "Type/Name" ), type_ );
-    dictionary->Register( *this, tools::translate( "KnowledgeGroup", "Type/Delay" ), delay_ ); // LTO
+    kernel::PropertiesDictionary& dictionary = Get< kernel::PropertiesDictionary >();
+    dictionary.Register( *this, tools::translate( "KnowledgeGroup", "Info/Identifier" ), id_ );
+    dictionary.Register( *this, tools::translate( "KnowledgeGroup", "Info/Name" ), name_ );
+    dictionary.Register( *this, tools::translate( "KnowledgeGroup", "Type/Name" ), type_ );
+    dictionary.Register( *this, tools::translate( "KnowledgeGroup", "Type/Delay" ), delay_ ); // LTO
 }

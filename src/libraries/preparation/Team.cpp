@@ -24,7 +24,7 @@ Team::Team( kernel::Controllers& controllers, IdManager& idManager )
 {
     name_ = tools::translate( "Preparation", "Army %L1" ).arg( id_ );
     RegisterSelf( *this );
-    CreateDictionary( controllers.controller_ );
+    CreateDictionary();
     controllers_.Register( *this );
 }
 
@@ -37,7 +37,7 @@ Team::Team( xml::xistream& xis, kernel::Controllers& controllers, IdManager& idM
 {
     RegisterSelf( *this );
     idManager.Lock( id_ );
-    CreateDictionary( controllers.controller_ );
+    CreateDictionary();
     controllers_.Register( *this );
 }
 

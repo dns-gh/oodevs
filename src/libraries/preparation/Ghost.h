@@ -104,7 +104,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::Controller& controller );
+    void CreateDictionary();
     void ReadChildren( xml::xistream& xis );
     void ReadGhostSubordinate( xml::xistream& xis );
     void ReadGhostProfiles( xml::xistream& xis );

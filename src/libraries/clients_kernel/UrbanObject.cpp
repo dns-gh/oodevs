@@ -42,7 +42,6 @@ using namespace kernel;
 UrbanObject::UrbanObject( Controllers& controllers, const std::string& name, unsigned int id, const ObjectType& type
     , const AccommodationTypes& accommodations, UrbanDisplayOptions& options )
     : EntityImplementation< UrbanObject_ABC >( controllers.controller_, id, name.c_str() )
-    , dictionary_      ( *new PropertiesDictionary( controllers.controller_ ) )
     , density_         ( 0 )
     , type_            ( type )
     , templateType_    ( 0 )
@@ -55,7 +54,6 @@ UrbanObject::UrbanObject( Controllers& controllers, const std::string& name, uns
     , options_        ( options )
 {
     RegisterSelf( *this );
-    EntityImplementation< UrbanObject_ABC >::Attach( dictionary_ );
     UpdateColor();
     controllers_.Register( *this );
     CreateDictionary( true );
@@ -72,7 +70,6 @@ UrbanObject::UrbanObject( xml::xistream& xis, Controllers& controllers, const Ob
                                                ( xis.attribute< std::string >( "name" ).empty() )
                                                ? tools::translate( "Urban", "Urban block[%L1]" ).arg( xis.attribute< unsigned int >( "id" ) )
                                                : xis.attribute< std::string >( "name" ).c_str() )
-    , dictionary_      ( *new PropertiesDictionary( controllers.controller_ ) )
     , density_         ( 0 )
     , type_            ( type )
     , templateType_    ( 0 )
@@ -85,7 +82,6 @@ UrbanObject::UrbanObject( xml::xistream& xis, Controllers& controllers, const Ob
     , options_         ( options )
 {
     RegisterSelf( *this );
-    EntityImplementation< UrbanObject_ABC >::Attach( dictionary_ );
     UpdateColor();
     controllers_.Register( *this );
     CreateDictionary( true );
@@ -129,9 +125,10 @@ QString UrbanObject::GetName() const
 // -----------------------------------------------------------------------------
 void UrbanObject::CreateDictionary( bool readOnly )
 {
-    dictionary_.Register( static_cast< const UrbanObject_ABC& >( *this ), tools::translate( "Block", "Info/Name" ), name_, readOnly );
-    dictionary_.Register( static_cast< const UrbanObject_ABC& >( *this ), tools::translate( "Block", "Info/Template" ), templateType_, *this, &UrbanObject::ApplyTemplate, readOnly, kernel::eUrbanTemplate );
-    dictionary_.Register( static_cast< const UrbanObject_ABC& >( *this ), tools::translate( "Block", "Info/Identifier" ), id_, true );
+    PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
+    dictionary.Register( static_cast< const UrbanObject_ABC& >( *this ), tools::translate( "Block", "Info/Name" ), name_, readOnly );
+    dictionary.Register( static_cast< const UrbanObject_ABC& >( *this ), tools::translate( "Block", "Info/Template" ), templateType_, *this, &UrbanObject::ApplyTemplate, readOnly, kernel::eUrbanTemplate );
+    dictionary.Register( static_cast< const UrbanObject_ABC& >( *this ), tools::translate( "Block", "Info/Identifier" ), id_, true );
 }
 
 // -----------------------------------------------------------------------------

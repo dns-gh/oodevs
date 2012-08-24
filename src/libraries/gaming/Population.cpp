@@ -46,7 +46,7 @@ Population::Population( const sword::CrowdCreation& message, Controllers& contro
     if( name_.isEmpty() )
         name_ = QString( "%1 %L2" ).arg( type_.GetName().c_str() ).arg( message.crowd().id() );
     RegisterSelf( *this );
-    CreateDictionary( controllers_.controller_ );
+    CreateDictionary();
     controllers_.Register( *this );
 }
 
@@ -413,10 +413,9 @@ kernel::CriticalIntelligence& Population::GetCriticalIntelligence()
 // Name: Population::CreateDictionary
 // Created: JSR 2011-03-18
 // -----------------------------------------------------------------------------
-void Population::CreateDictionary( kernel::Controller& controller )
+void Population::CreateDictionary()
 {
-    PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
-    Attach( dictionary );
+    PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
     const Entity_ABC& selfEntity = static_cast< const Entity_ABC& >( *this );
     dictionary.Register( selfEntity, tools::translate( "Crowd", "Info/Identifier" ), id_, true );
     dictionary.Register( selfEntity, tools::translate( "Crowd", "Info/Name" ), name_, true );

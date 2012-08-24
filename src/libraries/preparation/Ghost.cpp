@@ -63,7 +63,7 @@ Ghost::Ghost( kernel::Controller& controller, const Model& model, IdManager& idM
     , logisticSuperiorID_( -1 )
 {
     RegisterSelf( *this );
-    CreateDictionary( controller );
+    CreateDictionary();
 }
 
 // -----------------------------------------------------------------------------
@@ -95,7 +95,7 @@ Ghost::Ghost( kernel::Controller& controller, const Model& model, IdManager& idM
     symbol_ = symbolsFactory.CreateSymbol( nature_ );
     idManager.Lock( id_ );
     RegisterSelf( *this );
-    CreateDictionary( controller );
+    CreateDictionary();
 }
 
 // -----------------------------------------------------------------------------
@@ -139,7 +139,7 @@ Ghost::Ghost( Controller& controller, const Model& model, IdManager& idManager, 
 
     idManager.Lock( id_ );
     RegisterSelf( *this );
-    CreateDictionary( controller );
+    CreateDictionary();
 }
 
 // -----------------------------------------------------------------------------
@@ -178,11 +178,9 @@ void Ghost::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& vi
 // Name: Ghost::CreateDictionary
 // Created: ABR 2011-10-18
 // -----------------------------------------------------------------------------
-void Ghost::CreateDictionary( kernel::Controller& controller )
+void Ghost::CreateDictionary()
 {
-    PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
-    Attach( dictionary );
-
+    PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Ghost", "Info/Identifier" ), id_, true );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Ghost", "Info/Phantom type" ), ENT_Tr::ConvertFromGhostType( ghostType_, ENT_Tr::eToTr ) );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Ghost", "Info/Name" ), name_, *this, &Ghost::Rename );

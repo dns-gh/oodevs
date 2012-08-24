@@ -60,7 +60,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::Controller& controller );
+    void CreateDictionary();
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     //@}
 

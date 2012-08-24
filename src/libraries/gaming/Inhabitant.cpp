@@ -92,8 +92,7 @@ Inhabitant::~Inhabitant()
 // -----------------------------------------------------------------------------
 void Inhabitant::CreateDictionary()
 {
-    PropertiesDictionary& dictionary = *new PropertiesDictionary( controller_ );
-    Attach( dictionary );
+    PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
     const Entity_ABC& selfEntity = static_cast< const Entity_ABC& >( *this );
     dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Info/Identifier" ), id_, true );
     dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Info/Name" ), name_, true );

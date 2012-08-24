@@ -37,7 +37,7 @@ Automat::Automat( const AutomatType& type, Controller& controller, IdManager& id
 {
     name_ = name.isEmpty() ? type.GetName().c_str() : name;
     RegisterSelf( *this );
-    CreateDictionary( controller );
+    CreateDictionary();
 }
 
 // -----------------------------------------------------------------------------
@@ -49,7 +49,7 @@ Automat::Automat( xml::xistream& xis, Controller& controller, IdManager& idManag
     , type_( type )
 {
     RegisterSelf( *this );
-    CreateDictionary( controller );
+    CreateDictionary();
     idManager.Lock( id_ );
 }
 
@@ -115,10 +115,9 @@ void Automat::InitializeSymbol() const
 // Name: Automat::CreateDictionary
 // Created: SBO 2006-10-09
 // -----------------------------------------------------------------------------
-void Automat::CreateDictionary( kernel::Controller& controller )
+void Automat::CreateDictionary()
 {
-    PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
-    Attach( dictionary );
+    PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Automat", "Info/Identifier" ), id_, true );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Automat", "Info/Name" ), name_, *this, &Automat::Rename );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Automat", "Info/Type" ), type_, true );

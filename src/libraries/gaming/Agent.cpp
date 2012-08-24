@@ -39,7 +39,7 @@ Agent::Agent( const sword::UnitCreation& message, Controller& controller, const 
     symbol_ = ( message.has_app6symbol() ) ? "symbols/" + message.app6symbol() : type_.GetSymbol();
 
     RegisterSelf( *this );
-    CreateDictionary( controller );
+    CreateDictionary();
 }
 
 // -----------------------------------------------------------------------------
@@ -95,10 +95,9 @@ void Agent::DisplayInTooltip( Displayer_ABC& displayer ) const
 // Name: Agent::CreateDictionary
 // Created: AGE 2006-06-27
 // -----------------------------------------------------------------------------
-void Agent::CreateDictionary( kernel::Controller& controller )
+void Agent::CreateDictionary()
 {
-    PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
-    Attach( dictionary );
+    PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Identifier" ), id_, true );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Name" ), name_, true );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Type" ), type_, true );

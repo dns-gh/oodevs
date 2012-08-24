@@ -102,7 +102,7 @@ private:
     void DoUpdate( const sword::CrowdConcentrationCreation& message );
     void DoUpdate( const sword::CrowdConcentrationUpdate& message );
     void DoUpdate( const sword::CrowdConcentrationDestruction& message );
-    void CreateDictionary( kernel::Controller& controller );
+    void CreateDictionary();
     void ComputeCenter();
     //@}
 

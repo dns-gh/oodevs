@@ -104,7 +104,6 @@ private:
 private:
     //! @name Member data
     //@{
-    PropertiesDictionary& dictionary_;
     float density_;
     T_Humans humans_;
     T_BlockOccupation motivations_;

@@ -38,7 +38,7 @@ Formation::Formation( const sword::FormationCreation& message, Controller& contr
     if( name_.isEmpty() )
         name_ = QString( "%1 %L2" ).arg( ENT_Tr::ConvertFromNatureLevel( level_ ).c_str() ).arg( message.formation().id() );
     RegisterSelf( *this );
-    CreateDictionary( controller );
+    CreateDictionary();
 }
 
 // -----------------------------------------------------------------------------
@@ -63,10 +63,9 @@ E_NatureLevel Formation::GetLevel() const
 // Name: Formation::CreateDictionary
 // Created: SBO 2007-04-11
 // -----------------------------------------------------------------------------
-void Formation::CreateDictionary( kernel::Controller& controller )
+void Formation::CreateDictionary()
 {
-    PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
-    Attach( dictionary );
+    PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Formation", "Info/Identifier" ), id_, true );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Formation", "Info/Name" ), name_, true );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Formation", "Info/LogisticLevel" ), *logisticLevel_ );

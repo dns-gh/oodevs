@@ -9,10 +9,10 @@
 
 #include "Controller.h"
 #include "InstanciationComplete.h"
+#include "PropertiesDictionary.h"
 
 namespace kernel
 {
-
 // -----------------------------------------------------------------------------
 // Name: EntityImplementation constructor
 // Created: AGE 2006-10-12
@@ -23,7 +23,7 @@ EntityImplementation< I >::EntityImplementation( Controller& controller, unsigne
     , id_        ( id )
     , name_      ( name )
 {
-    // NOTHING
+    Attach( *new PropertiesDictionary( controller ) );
 }
 
 // -----------------------------------------------------------------------------

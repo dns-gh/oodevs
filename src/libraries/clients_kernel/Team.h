@@ -39,7 +39,7 @@ public:
     //! @name Operations
     //@{
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
-    virtual void CreateDictionary( kernel::Controller& controller );
+    virtual void CreateDictionary();
     virtual void Rename( const QString& name );
     //@}
 

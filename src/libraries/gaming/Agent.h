@@ -65,7 +65,7 @@ private:
     //! @name Helpers
     //@{
     void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
-    void CreateDictionary( kernel::Controller& controller );
+    void CreateDictionary();
     //@}
 
 private:

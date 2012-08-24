@@ -25,7 +25,7 @@ TacticalLine_ABC::TacticalLine_ABC( kernel::Controller& controller, const QStrin
 {
     RegisterSelf( *this );
     name_ = ( baseName + " %L1" ).arg( id_ );
-    CreateDictionary( controller );
+    CreateDictionary();
 }
 
 // -----------------------------------------------------------------------------
@@ -39,7 +39,7 @@ TacticalLine_ABC::TacticalLine_ABC( kernel::Controller& controller, xml::xistrea
     std::string name;
     xis >> xml::attribute( "name", name );
     name_ = name.c_str();
-    CreateDictionary( controller );
+    CreateDictionary();
 }
 
 // -----------------------------------------------------------------------------
@@ -77,10 +77,9 @@ void TacticalLine_ABC::SerializeAttributes( xml::xostream& xos ) const
 // Name: TacticalLine_ABC::CreateDictionary
 // Created: SBO 2006-11-17
 // -----------------------------------------------------------------------------
-void TacticalLine_ABC::CreateDictionary( kernel::Controller& controller )
+void TacticalLine_ABC::CreateDictionary()
 {
-    kernel::PropertiesDictionary& dictionary = *new kernel::PropertiesDictionary( controller );
-    Attach( dictionary );
+    kernel::PropertiesDictionary& dictionary = Get< kernel::PropertiesDictionary >();
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "TacticalLine_ABC", "Info/Identifier" ), id_, true );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "TacticalLine_ABC", "Info/Name" ), name_ );
 }

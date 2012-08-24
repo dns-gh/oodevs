@@ -28,7 +28,7 @@ KnowledgeGroup::KnowledgeGroup( Controller& controller, IdManager& idManager, to
     UpdateCommunicationDelay();
     name_ = tools::translate( "KnowledgeGroup", "Knowledge group [%L1]" ).arg( id_ );
     RegisterSelf( *this );
-    CreateDictionary( controller );
+    CreateDictionary();
 }
 
 // -----------------------------------------------------------------------------
@@ -45,7 +45,7 @@ KnowledgeGroup::KnowledgeGroup( xml::xistream& xis, Controller& controller, IdMa
     UpdateCommunicationDelay(); // LTO
     idManager.Lock( id_ );
     RegisterSelf( *this );
-    CreateDictionary( controller );
+    CreateDictionary();
 }
 
 // -----------------------------------------------------------------------------
@@ -78,10 +78,9 @@ KnowledgeGroupType* KnowledgeGroup::ResolveType( const std::string& typeName, to
 // Name: KnowledgeGroup::CreateDictionary
 // Created: SBO 2006-10-27
 // -----------------------------------------------------------------------------
-void KnowledgeGroup::CreateDictionary( Controller& controller )
+void KnowledgeGroup::CreateDictionary()
 {
-    PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
-    Attach( dictionary );
+    PropertiesDictionary& dictionary = Get< PropertiesDictionary>();
     const Entity_ABC& constSelf = static_cast< const Entity_ABC& >( *this );
     dictionary.Register( constSelf, tools::translate( "KnowledgeGroup", "Info/Identifier" ), id_, true );
     dictionary.Register( constSelf, tools::translate( "KnowledgeGroup", "Info/Name" ), name_, *this, &KnowledgeGroup::Rename );

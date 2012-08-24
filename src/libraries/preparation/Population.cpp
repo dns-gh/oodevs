@@ -39,7 +39,7 @@ Population::Population( const PopulationType& type, int number, Controller& cont
     repartition_->children_ = static_cast< unsigned int >( type.GetChildren() * 100 );
     RegisterSelf( *this );
     name_ = ( type.GetName().c_str() + QString( " [%L1]" ) ).arg( id_ );
-    CreateDictionary( controller );
+    CreateDictionary();
 }
 
 // -----------------------------------------------------------------------------
@@ -82,7 +82,7 @@ Population::Population( xml::xistream& xis, const kernel::PopulationType& type, 
     criticalIntelligence_ = criticalIntelligence.c_str();
     RegisterSelf( *this );
     idManager.Lock( id_ );
-    CreateDictionary( controller );
+    CreateDictionary();
 }
 
 // -----------------------------------------------------------------------------
@@ -169,10 +169,9 @@ void Population::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
 // Name: Population::CreateDictionary
 // Created: SBO 2006-11-08
 // -----------------------------------------------------------------------------
-void Population::CreateDictionary( Controller& controller )
+void Population::CreateDictionary()
 {
-    PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
-    Attach( dictionary );
+    PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
     const Entity_ABC& constEntity = *static_cast< const Entity_ABC* >( this );
     dictionary.Register( constEntity, tools::translate( "Crowd", "Info/Identifier" ), id_, true );
     dictionary.Register( constEntity, tools::translate( "Crowd", "Info/Name" ), name_ );

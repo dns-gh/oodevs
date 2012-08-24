@@ -32,7 +32,7 @@ Inhabitant::Inhabitant( const kernel::InhabitantType& type, int number, const QS
         healthNeed_ = static_cast< float >( number ) / healthPeopleNumber;
     RegisterSelf( *this );
     name_ = name.isEmpty() ? tools::translate( "Population", "%1 [%L2]" ).arg( type.GetName().c_str() ).arg( id_ ) : name;
-    CreateDictionary( controller );
+    CreateDictionary();
 }
 
 // -----------------------------------------------------------------------------
@@ -60,7 +60,7 @@ Inhabitant::Inhabitant( xml::xistream& xis, const kernel::InhabitantType& type, 
     text_ = text.c_str();
     RegisterSelf( *this );
     idManager.Lock( id_ );
-    CreateDictionary( controller );
+    CreateDictionary();
 }
 
 // -----------------------------------------------------------------------------
@@ -76,10 +76,9 @@ Inhabitant::~Inhabitant()
 // Name: Inhabitant::CreateDictionary
 // Created: SLG 2010-11-23
 // -----------------------------------------------------------------------------
-void Inhabitant::CreateDictionary( kernel::Controller& controller )
+void Inhabitant::CreateDictionary()
 {
-    kernel::PropertiesDictionary& dictionary = *new kernel::PropertiesDictionary( controller );
-    Attach( dictionary );
+    kernel::PropertiesDictionary& dictionary = Get< kernel::PropertiesDictionary >();
     const Entity_ABC& constEntity = *static_cast< const Entity_ABC* >( this );
     dictionary.Register( constEntity, tools::translate( "Population", "Info/Identifier" ), id_, true );
     dictionary.Register( constEntity, tools::translate( "Population", "Info/Name" ), name_ );

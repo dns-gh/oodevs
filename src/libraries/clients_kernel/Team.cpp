@@ -56,10 +56,9 @@ void Team::OptionChanged( const std::string& name, const kernel::OptionVariant& 
 // Name: Team::CreateDictionary
 // Created: LDC 2012-05-07
 // -----------------------------------------------------------------------------
-void Team::CreateDictionary( kernel::Controller& controller )
+void Team::CreateDictionary()
 {
-    PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
-    Attach( dictionary );
+    PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Team", "Info/Identifier" ), id_, true );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Team", "Info/Name" ), name_, *this, &Team::Rename );
 }

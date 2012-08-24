@@ -34,7 +34,7 @@ Object::Object( Controller& controller, const CoordinateConverter_ABC& converter
         idManager.GetNextId(); // we need to skip one ID for dynamic created object.
     RegisterSelf( *this );
     name_ = name.isEmpty() ? tools::translate( "Object", "%1 [%L2]" ).arg( type.GetName().c_str() ).arg( id_ ) : name;
-    CreateDictionary( controller );
+    CreateDictionary();
 }
 
 // -----------------------------------------------------------------------------
@@ -51,7 +51,7 @@ Object::Object( xml::xistream& xis, Controller& controller, const CoordinateConv
     else
         idManager.Lock( id_ );
     RegisterSelf( *this );
-    CreateDictionary( controller );
+    CreateDictionary();
 }
 
 // -----------------------------------------------------------------------------
@@ -120,10 +120,9 @@ void Object::SerializePositions( xml::xostream& xos ) const
 // Name: Object::CreateDictionary
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-void Object::CreateDictionary( Controller& controller )
+void Object::CreateDictionary()
 {
-    PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
-    Attach( dictionary );
+    PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
     const Entity_ABC* constEntity = static_cast< const Entity_ABC* >( this );
     dictionary.Register( *constEntity, tools::translate( "Object", "Info/Identifier" ), id_, true );
     dictionary.Register( *constEntity, tools::translate( "Object", "Info/Name" ), name_ );

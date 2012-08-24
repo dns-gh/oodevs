@@ -71,7 +71,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::Controller& controller );
+    void CreateDictionary();
     //@}
 
 public:
