@@ -43,7 +43,6 @@ PositionEditor::PositionEditor( QWidget* parent, kernel::Controllers& controller
 
     pMainLayout->addLayout( pbuttonBox );
 
-
     connect( okBtn    , SIGNAL( clicked() ), SLOT( OnAccept() ) );
     connect( cancelBtn, SIGNAL( clicked() ), SLOT( OnReject() ) );
 }

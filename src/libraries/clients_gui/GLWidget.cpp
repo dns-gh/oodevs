@@ -633,7 +633,7 @@ void GlWidget::DrawConvexDecoratedPolygon( const geometry::Polygon2f& polygon, c
         glPopAttrib();
     }
     // TODO!!!
-    // voir pour calculer la taille du texte en fonction de la hierarchie (dans urban/UrbanDrawer.cpp) 
+    // voir pour calculer la taille du texte en fonction de la hierarchie (dans urban/UrbanDrawer.cpp)
     if( !name.empty() )
         const_cast< GlWidget* >( this )->DrawTextLabel( name, polygon.BoundingBoxCenter(), fontHeight );
 }

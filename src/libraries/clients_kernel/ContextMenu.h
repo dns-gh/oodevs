@@ -14,7 +14,7 @@
 
 #pragma warning( push, 0 )
 #include <Qt3Support/q3popupmenu.h>
-//#include <QtGui/qmenu.h> 
+//#include <QtGui/qmenu.h>
 // $$$$ ABR 2011-12-30: TODO: migrate menu to Qt4, improve memory management, and simplify usage with QAction manipulation, and add QIcon parameter to Insert methodes
 #pragma warning( pop )
 

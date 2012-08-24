@@ -512,7 +512,7 @@ void ADN_Missions_Data::Mission::ReadMissionSheet( E_EntityType type )
     if( bfs::is_directory( path ) && bfs::is_regular_file( fileName ) )
     {
         std::ifstream file( fileName.c_str() );
-        std::stringstream buffer; 
+        std::stringstream buffer;
         buffer << file.rdbuf();
         missionSheetContent_ = std::string( buffer.str() );
         file.close();
@@ -711,7 +711,7 @@ void ADN_Missions_Data::FragOrder::ReadMissionSheet()
     if( bfs::is_directory( path ) && bfs::is_regular_file( fileName ) )
     {
         std::ifstream file( fileName.c_str() );
-        std::stringstream buffer; 
+        std::stringstream buffer;
         buffer << file.rdbuf();
         missionSheetContent_ = std::string( buffer.str() );
         file.close();

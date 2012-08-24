@@ -276,7 +276,7 @@ void EditorFactory::Call( DotationsItem** const& value )
 void EditorFactory::Call( kernel::Moveable_ABC** const& value )
 {
     PositionEditor* positionEditor = new PositionEditor( parent_, controllers_, staticModel_.coordinateConverter_ );
-    positionEditor->SetValue( *value ); 
+    positionEditor->SetValue( *value );
     result_ = positionEditor;
 }
 

@@ -13,7 +13,6 @@
 #include "clients_gui/HtmlEditor.h"
 #include "ADN_Gfx_ABC.h"
 
-
 // =============================================================================
 /** @class  ADN_HtmlEditor
     @brief  ADN_HtmlEditor

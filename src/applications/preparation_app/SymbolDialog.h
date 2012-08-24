@@ -32,7 +32,6 @@ namespace gui
 
 class EntitySymbolEditor;
 
-
 // =============================================================================
 /** @class  SymbolDialog
     @brief  SymbolDialog

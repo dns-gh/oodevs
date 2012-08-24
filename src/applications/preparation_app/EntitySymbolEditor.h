@@ -10,7 +10,6 @@
 #ifndef __EntitySymbolEditor_h_
 #define __EntitySymbolEditor_h_
 
-
 #include "clients_kernel/SymbolVisitor_ABC.h"
 #include "ENT/ENT_Enums_Gen.h"
 #include <boost/noncopyable.hpp>

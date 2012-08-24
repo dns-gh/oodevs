@@ -264,12 +264,12 @@ void HtmlEditor::CreateActions()
         connect( alignmentGroup_, SIGNAL( triggered( QAction* ) ), this, SLOT( TextAlign( QAction* ) ) );
 
         // Make sure the alignLeft  is always left of the alignRight
-        if ( QApplication::isLeftToRight() ) {
+        if( QApplication::isLeftToRight() ) {
             actionAlignLeft_ = new QAction( QIcon::fromTheme( "format-justify-left", QIcon( srcPath_ + "/textleft.png" ) ), tr( "Left" ), alignmentGroup_ );
             actionAlignCenter_ = new QAction( QIcon::fromTheme( "format-justify-center", QIcon( srcPath_ + "/textcenter.png" ) ), tr( "Center" ), alignmentGroup_ );
             actionAlignRight_ = new QAction( QIcon::fromTheme( "format-justify-right", QIcon( srcPath_ + "/textright.png" ) ), tr( "Right"), alignmentGroup_ );
-        } 
-        else 
+        }
+        else
         {
             actionAlignRight_ = new QAction( QIcon::fromTheme( "format-justify-right", QIcon( srcPath_ + "/textright.png" ) ), tr( "Right" ), alignmentGroup_ );
             actionAlignCenter_ = new QAction( QIcon::fromTheme( "format-justify-center", QIcon( srcPath_ + "/textcenter.png" ) ), tr("Center"  ), alignmentGroup_ );
@@ -322,7 +322,7 @@ void HtmlEditor::CreateActions()
         connect( actionTextHighlight_, SIGNAL( triggered() ), this, SLOT( TextHighlight() ) );
         actionTextHighlight_->setCheckable( true );
     }
-} 
+}
 
 // -----------------------------------------------------------------------------
 // Name: HtmlEditor::Load
@@ -363,7 +363,7 @@ bool HtmlEditor::MaybeSave()
         return true;
     QMessageBox::StandardButton ret;
     ret = QMessageBox::warning( this,
-                                tr( "Warning" ), 
+                                tr( "Warning" ),
                                 tr( "The document has been modified.\nDo you want to save your changes?" ),
                                 QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel );
     if( ret == QMessageBox::Save )
@@ -383,7 +383,7 @@ void HtmlEditor::SetCurrentFileName( const QString &fileName )
     textEdit_->document()->setModified( false );
 
     QString shownName;
-    if ( fileName.isEmpty() )
+    if( fileName.isEmpty() )
         shownName = "untitled.txt";
     else
         shownName = QFileInfo( fileName ).fileName();
@@ -398,7 +398,7 @@ void HtmlEditor::SetCurrentFileName( const QString &fileName )
 // -----------------------------------------------------------------------------
 void HtmlEditor::FileNew()
 {
-    if ( MaybeSave() )
+    if( MaybeSave() )
     {
         textEdit_->clear();
         SetCurrentFileName( QString() );
@@ -412,7 +412,7 @@ void HtmlEditor::FileNew()
 void HtmlEditor::FileOpen()
 {
     QString fn = QFileDialog::getOpenFileName( this, tr( "Open File..." ), QString(), tr( "HTML-Files (*.htm *.html);;All Files (*)" ) );
-    if ( !fn.isEmpty() )
+    if( !fn.isEmpty() )
         Load( fn );
 }
 
@@ -422,12 +422,12 @@ void HtmlEditor::FileOpen()
 // -----------------------------------------------------------------------------
 bool HtmlEditor::FileSave()
 {
-    if ( fileName_.isEmpty() )
+    if( fileName_.isEmpty() )
         return FileSaveAs();
 
     QTextDocumentWriter writer( fileName_ );
     bool success = writer.write( textEdit_->document() );
-    if ( success )
+    if( success )
         textEdit_->document()->setModified( false );
     return success;
 }
@@ -440,9 +440,9 @@ bool HtmlEditor::FileSaveAs()
 {
     QString fn = QFileDialog::getSaveFileName( this, tr( "Save as..." ),
         QString(), tr( "ODF files (*.odt);;HTML-Files (*.htm *.html);;All Files (*)" ) );
-    if ( fn.isEmpty() )
+    if( fn.isEmpty() )
         return false;
-    if ( ! (fn.endsWith( ".odt", Qt::CaseInsensitive ) || fn.endsWith( ".htm", Qt::CaseInsensitive ) || fn.endsWith( ".html", Qt::CaseInsensitive ) ) )
+    if( ! (fn.endsWith( ".odt", Qt::CaseInsensitive ) || fn.endsWith( ".htm", Qt::CaseInsensitive ) || fn.endsWith( ".html", Qt::CaseInsensitive ) ) )
         fn += ".odt"; // default
     SetCurrentFileName( fn );
     return FileSave();
@@ -575,14 +575,14 @@ void HtmlEditor::TextStyle( int styleIndex )
         QTextListFormat listFmt;
 
         if( cursor.currentList() )
-            listFmt = cursor.currentList()->format(); 
+            listFmt = cursor.currentList()->format();
         else
         {
             listFmt.setIndent( blockFmt.indent() + 1 );
             blockFmt.setIndent( 0 );
             cursor.setBlockFormat( blockFmt );
         }
-        listFmt.setStyle( bulletStyle_ ); 
+        listFmt.setStyle( bulletStyle_ );
         cursor.createList( listFmt );
         cursor.endEditBlock();
     }
@@ -615,13 +615,13 @@ void HtmlEditor::TextColor()
 // -----------------------------------------------------------------------------
 void HtmlEditor::TextAlign( QAction* action )
 {
-    if ( action == actionAlignLeft_ )
+    if( action == actionAlignLeft_ )
         textEdit_->setAlignment( Qt::AlignLeft | Qt::AlignAbsolute );
-    else if ( action == actionAlignCenter_ )
+    else if( action == actionAlignCenter_ )
         textEdit_->setAlignment( Qt::AlignHCenter);
-    else if ( action == actionAlignRight_ )
+    else if( action == actionAlignRight_ )
         textEdit_->setAlignment( Qt::AlignRight | Qt::AlignAbsolute );
-    else if ( action == actionAlignJustify_ )
+    else if( action == actionAlignJustify_ )
         textEdit_->setAlignment( Qt::AlignJustify );
 }
 

@@ -138,7 +138,6 @@ void PropertyDisplayer::Call( const kernel::UrbanTemplateType& value )
     AddToDisplay( value.GetName() );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PropertyDisplayer::Call
 // Created: ABR 2012-06-04

@@ -19,7 +19,6 @@ QT_FORWARD_DECLARE_CLASS( QTextEdit )
 QT_FORWARD_DECLARE_CLASS( QTextCharFormat )
 QT_FORWARD_DECLARE_CLASS( QMenu )
 
-
 namespace gui
 {
 // =============================================================================
@@ -75,7 +74,6 @@ public:
     QString GetText() const;
     void SetText( const QString text );
     //@}
-
 
 private:
     //! @name Helpers
