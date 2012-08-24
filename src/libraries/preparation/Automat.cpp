@@ -72,16 +72,6 @@ const AutomatType& Automat::GetType() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Automat::Rename
-// Created: SBO 2006-10-10
-// -----------------------------------------------------------------------------
-void Automat::Rename( const QString& name )
-{
-    name_ = name;
-    Touch();
-}
-
-// -----------------------------------------------------------------------------
 // Name: Automat::Draw
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
@@ -118,8 +108,6 @@ void Automat::InitializeSymbol() const
 void Automat::CreateDictionary()
 {
     PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Automat", "Info/Identifier" ), id_, true );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Automat", "Info/Name" ), name_, *this, &Automat::Rename );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Automat", "Info/Type" ), type_, true );
 }
 
@@ -129,9 +117,8 @@ void Automat::CreateDictionary()
 // -----------------------------------------------------------------------------
 void Automat::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << xml::attribute( "id", id_ )
-        << xml::attribute( "name", name_.toAscii().constData() )
-        << xml::attribute( "type", type_.GetName() );
+    kernel::EntityImplementation< kernel::Automat_ABC >::SerializeAttributes( xos );
+    xos << xml::attribute( "type", type_.GetName() );
 }
 
 // -----------------------------------------------------------------------------

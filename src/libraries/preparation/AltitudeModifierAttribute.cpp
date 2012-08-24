@@ -111,10 +111,10 @@ void AltitudeModifierAttribute::Display( Displayer_ABC& displayer ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: AltitudeModifierAttribute::SerializeAttributes
+// Name: AltitudeModifierAttribute::SerializeObjectAttributes
 // Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
-void AltitudeModifierAttribute::SerializeAttributes( xml::xostream& xos ) const
+void AltitudeModifierAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "altitude-modifier" )
             << xml::attribute( "height", height_.value_ )

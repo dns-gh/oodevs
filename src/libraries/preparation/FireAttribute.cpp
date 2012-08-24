@@ -82,10 +82,10 @@ void FireAttribute::SetMaxCombustionEnergy( int m )
 }
 
 // -----------------------------------------------------------------------------
-// Name: FireAttribute::SerializeAttributes
+// Name: FireAttribute::SerializeObjectAttributes
 // Created: SBO 2006-09-15
 // -----------------------------------------------------------------------------
-void FireAttribute::SerializeAttributes( xml::xostream& xos ) const
+void FireAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "fire" )
             << xml::attribute( "class", fireClass_->GetName() )

@@ -52,10 +52,10 @@ void LodgingAttribute::DisplayInTooltip( kernel::Displayer_ABC& displayer ) cons
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticAttribute::SerializeAttributes
+// Name: LogisticAttribute::SerializeObjectAttributes
 // Created: MMC 2011-05-02
 // -----------------------------------------------------------------------------
-void LodgingAttribute::SerializeAttributes( xml::xostream& xos ) const
+void LodgingAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "lodging" )
         << xml::attribute( "capacity", lodgingCapacity_ )

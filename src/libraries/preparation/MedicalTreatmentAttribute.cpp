@@ -175,10 +175,10 @@ bool MedicalTreatmentAttribute::IsSet() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MedicalTreatmentAttribute::SerializeAttributes
+// Name: MedicalTreatmentAttribute::SerializeObjectAttributes
 // Created: SBO 2006-09-15
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::SerializeAttributes( xml::xostream& xos ) const
+void MedicalTreatmentAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 {
     if( !IsSet() )
         return;

@@ -173,8 +173,6 @@ void Population::CreateDictionary()
 {
     PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
     const Entity_ABC& constEntity = *static_cast< const Entity_ABC* >( this );
-    dictionary.Register( constEntity, tools::translate( "Crowd", "Info/Identifier" ), id_, true );
-    dictionary.Register( constEntity, tools::translate( "Crowd", "Info/Name" ), name_ );
     dictionary.Register( constEntity, tools::translate( "Crowd", "Info/Type" ), type_, true );
     dictionary.Register( constEntity, tools::translate( "Crowd", "Info/Mood" ), attitude_ );
     dictionary.Register( constEntity, tools::translate( "Crowd", "Info/Armed-Individuals" ), armedIndividuals_ );
@@ -197,9 +195,8 @@ void Population::CreateDictionary()
 // -----------------------------------------------------------------------------
 void Population::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << xml::attribute( "id", static_cast< long >( id_ ) )
-        << xml::attribute( "name", name_.toAscii().constData() )
-        << xml::attribute( "type", type_.GetName() )
+    kernel::EntityImplementation< kernel::Population_ABC >::SerializeAttributes( xos );
+    xos << xml::attribute( "type", type_.GetName() )
         << xml::attribute( "attitude", attitude_.ToXml() )
         << xml::start( "composition" )
             << xml::attribute( "healthy", healthy_ )

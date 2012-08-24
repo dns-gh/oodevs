@@ -173,10 +173,10 @@ void ResourceNetworkAttribute::CleanLinksToDeletedUrbanBlocks()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourceNetworkAttribute::SerializeAttributes
+// Name: ResourceNetworkAttribute::SerializeObjectAttributes
 // Created: JSR 2010-09-08
 // -----------------------------------------------------------------------------
-void ResourceNetworkAttribute::SerializeAttributes( xml::xostream& xos ) const
+void ResourceNetworkAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 {
     const_cast< ResourceNetworkAttribute* >( this )->invalidResources_.clear();
     if( controllers_.modes_->GetCurrentMode() == ePreparationMode_Terrain && !resourceNodes_.empty() || IsOverriden() )

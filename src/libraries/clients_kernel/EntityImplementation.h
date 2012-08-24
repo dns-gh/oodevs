@@ -7,9 +7,10 @@
 //
 // *****************************************************************************
 
-#ifndef __EntityImplementation_h_
-#define __EntityImplementation_h_
+#ifndef __kernel_EntityImplementation_h
+#define __kernel_EntityImplementation_h
 
+#include "Serializable_ABC.h"
 #pragma warning( push, 0 )
 #include <QtCore/qstring.h>
 #pragma warning( pop )
@@ -18,6 +19,7 @@
 namespace kernel
 {
     class Controller;
+    class PropertiesDictionary;
 
 // =============================================================================
 /** @class  EntityImplementation
@@ -27,12 +29,13 @@ namespace kernel
 // =============================================================================
 template< typename I >
 class EntityImplementation : public I
+                           , public Serializable_ABC
                            , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityImplementation( Controller& controller, unsigned long id, const QString& name );
+             EntityImplementation( Controller& controller, unsigned long id, const QString& name, bool readOnly = false );
     virtual ~EntityImplementation();
     //@}
 
@@ -40,6 +43,7 @@ public:
     //@{
     virtual QString GetName() const;
     virtual unsigned long GetId() const;
+    virtual void Rename( const QString& name );
 
     void Polish();
     //@}
@@ -47,8 +51,13 @@ public:
 protected:
     //! @name Modifiers
     //@{
-    void Touch();
     void Destroy();
+    void Touch();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void SerializeAttributes( xml::xostream& xos ) const;
     //@}
 
 private:
@@ -57,10 +66,16 @@ private:
     I& This();
     //@}
 
+private:
     //! @name Member data
     //@{
     Controller& controller_;
+    PropertiesDictionary* dictionary_;
+    //@}
+
 protected:
+    //! @name Member data
+    //@{
     const unsigned long id_;
     QString name_;
     //@}
@@ -70,4 +85,4 @@ protected:
 
 #include "EntityImplementation.inl"
 
-#endif // __EntityImplementation_h_
+#endif // __kernel_EntityImplementation_h

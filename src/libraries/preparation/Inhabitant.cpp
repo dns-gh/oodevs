@@ -80,8 +80,6 @@ void Inhabitant::CreateDictionary()
 {
     kernel::PropertiesDictionary& dictionary = Get< kernel::PropertiesDictionary >();
     const Entity_ABC& constEntity = *static_cast< const Entity_ABC* >( this );
-    dictionary.Register( constEntity, tools::translate( "Population", "Info/Identifier" ), id_, true );
-    dictionary.Register( constEntity, tools::translate( "Population", "Info/Name" ), name_ );
     dictionary.Register( constEntity, tools::translate( "Population", "Info/Type" ), type_, true );
     dictionary.Register( constEntity, tools::translate( "Population", "Info/Info" ), text_ );
     dictionary.Register( constEntity, tools::translate( "Population", "Human/Alive" ), healthy_ );
@@ -96,9 +94,8 @@ void Inhabitant::CreateDictionary()
 // -----------------------------------------------------------------------------
 void Inhabitant::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << xml::attribute( "id", id_ )
-        << xml::attribute( "name", name_.toAscii().constData() )
-        << xml::attribute( "type", type_.GetName() )
+    kernel::EntityImplementation< kernel::Inhabitant_ABC >::SerializeAttributes( xos );
+    xos << xml::attribute( "type", type_.GetName() )
         << xml::start( "composition" )
             << xml::attribute( "healthy", healthy_ )
             << xml::attribute( "wounded", wounded_ )

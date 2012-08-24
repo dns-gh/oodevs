@@ -35,7 +35,6 @@ class IdManager;
 // Created: ABR 2012-05-23
 // =============================================================================
 class UrbanObject : public kernel::UrbanObject
-                  , public kernel::Serializable_ABC
                   , public kernel::ModesObserver_ABC
 {
 
@@ -47,11 +46,6 @@ public:
              UrbanObject( xml::xistream& xis, kernel::Controllers& controllers, IdManager& idManager, const kernel::ObjectType& type,
                           const kernel::AccommodationTypes& accommodations, kernel::UrbanDisplayOptions& options );
     virtual ~UrbanObject();
-    //@}
-
-    //! @name Serializable_ABC
-    //@{
-    virtual void SerializeAttributes( xml::xostream& ) const;
     //@}
 
     //! @name ModesObserver_ABC

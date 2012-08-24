@@ -82,8 +82,6 @@ void KnowledgeGroup::CreateDictionary()
 {
     PropertiesDictionary& dictionary = Get< PropertiesDictionary>();
     const Entity_ABC& constSelf = static_cast< const Entity_ABC& >( *this );
-    dictionary.Register( constSelf, tools::translate( "KnowledgeGroup", "Info/Identifier" ), id_, true );
-    dictionary.Register( constSelf, tools::translate( "KnowledgeGroup", "Info/Name" ), name_, *this, &KnowledgeGroup::Rename );
     dictionary.Register( constSelf, tools::translate( "KnowledgeGroup", "Type/Name" ), type_, *this, &KnowledgeGroup::SetType );
     dictionary.Register( constSelf, tools::translate( "KnowledgeGroup", "Type/Delay" ), communicationDelay_, true ); // LTO
 }
@@ -130,9 +128,8 @@ void KnowledgeGroup::SetType( KnowledgeGroupType* const& type )
 // -----------------------------------------------------------------------------
 void KnowledgeGroup::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << xml::attribute( "id", id_ )
-        << xml::attribute( "type", type_->GetName() ) // type_ cannot be null (else, exception thrown in constructor)
-        << xml::attribute( "name", name_ );
+    kernel::EntityImplementation< kernel::KnowledgeGroup_ABC >::SerializeAttributes( xos );
+    xos << xml::attribute( "type", type_->GetName() ); // type_ cannot be null (else, exception thrown in constructor)
 }
 
 // -----------------------------------------------------------------------------

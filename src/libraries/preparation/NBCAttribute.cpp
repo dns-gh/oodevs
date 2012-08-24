@@ -102,10 +102,10 @@ void NBCAttribute::SetDanger( const unsigned int value )
 }
 
 // -----------------------------------------------------------------------------
-// Name: NBCAttribute::SerializeAttributes
+// Name: NBCAttribute::SerializeObjectAttributes
 // Created: SBO 2006-09-15
 // -----------------------------------------------------------------------------
-void NBCAttribute::SerializeAttributes( xml::xostream& xos ) const
+void NBCAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "nbc-agents" );
     xos << xml::attribute( "state", state_.ToXml() );

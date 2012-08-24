@@ -48,16 +48,6 @@ UrbanObject::~UrbanObject()
 }
 
 // -----------------------------------------------------------------------------
-// Name: UrbanObject::SerializeAttributes
-// Created: ABR 2012-05-23
-// -----------------------------------------------------------------------------
-void UrbanObject::SerializeAttributes( xml::xostream& xos ) const
-{
-    xos << xml::attribute( "id", GetId() )
-        << xml::attribute( "name", GetName() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: UrbanObject::NotifyModeChanged
 // Created: ABR 2012-05-31
 // -----------------------------------------------------------------------------

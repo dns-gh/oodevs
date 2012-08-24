@@ -39,7 +39,6 @@ class IdManager;
 class TacticalLine_ABC : public kernel::EntityImplementation< kernel::TacticalLine_ABC >
                        , public kernel::Extension_ABC
                        , public kernel::Drawable_ABC
-                       , public kernel::Serializable_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -60,7 +59,6 @@ private:
     //@{
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void SerializeAttributes( xml::xostream& xos ) const;
-    void CreateDictionary();
     //@}
 };
 

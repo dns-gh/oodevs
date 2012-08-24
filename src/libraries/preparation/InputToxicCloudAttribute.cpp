@@ -74,10 +74,10 @@ void InputToxicCloudAttribute::SetSource( const std::string& source, const std::
 }
 
 // -----------------------------------------------------------------------------
-// Name: InputToxicCloudAttribute::SerializeAttributes
+// Name: InputToxicCloudAttribute::SerializeObjectAttributes
 // Created: SBO 2006-09-15
 // -----------------------------------------------------------------------------
-void InputToxicCloudAttribute::SerializeAttributes( xml::xostream& xos ) const
+void InputToxicCloudAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "input-toxic-cloud" )
             << xml::attribute( "source", source_ )
@@ -85,15 +85,6 @@ void InputToxicCloudAttribute::SerializeAttributes( xml::xostream& xos ) const
     if( ! bExport_ )
         xos << xml::attribute( "export", bExport_ );
     xos << xml::end;
-}
-
-namespace
-{
-//    new QLabel( tools::translate( "InputPropagationPrototype_ABC", "Lookup data:" ), this );
-//    dataField_ = new ValuedComboBox< std::string >( this );
-//    // TODO : %TMP%
-//    dataField_->AddItem( std::string( "Mesure C" ), std::string( "nom_var_shp_mesure_C" ) );
-//    dataField_->AddItem( std::string( "Mesure Ct" ), std::string( "nom_var_shp_mesure_Ct" ) );
 }
 
 // -----------------------------------------------------------------------------

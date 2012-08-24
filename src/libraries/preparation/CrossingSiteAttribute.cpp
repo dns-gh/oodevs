@@ -105,10 +105,10 @@ void CrossingSiteAttribute::SetConstruction( bool need )
 }
 
 // -----------------------------------------------------------------------------
-// Name: CrossingSiteAttribute::SerializeAttributes
+// Name: CrossingSiteAttribute::SerializeObjectAttributes
 // Created: SBO 2006-09-15
 // -----------------------------------------------------------------------------
-void CrossingSiteAttribute::SerializeAttributes( xml::xostream& xos ) const
+void CrossingSiteAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "crossing-site" )
             << xml::content( "width", int( width_.value_ ) )

@@ -76,10 +76,10 @@ void UndergroundAttribute::Display( Displayer_ABC& displayer ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: UndergroundAttribute::SerializeAttributes
+// Name: UndergroundAttribute::SerializeObjectAttributes
 // Created: JSR 2011-07-07
 // -----------------------------------------------------------------------------
-void UndergroundAttribute::SerializeAttributes( xml::xostream& xos ) const
+void UndergroundAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "underground" )
             << xml::attribute( "network", network_ )

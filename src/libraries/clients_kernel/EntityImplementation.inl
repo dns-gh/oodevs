@@ -10,20 +10,25 @@
 #include "Controller.h"
 #include "InstanciationComplete.h"
 #include "PropertiesDictionary.h"
+#include "Tools.h"
 
 namespace kernel
 {
+
 // -----------------------------------------------------------------------------
 // Name: EntityImplementation constructor
 // Created: AGE 2006-10-12
 // -----------------------------------------------------------------------------
 template< typename I >
-EntityImplementation< I >::EntityImplementation( Controller& controller, unsigned long id, const QString& name )
+EntityImplementation< I >::EntityImplementation( Controller& controller, unsigned long id, const QString& name, bool readOnly = false )
     : controller_( controller )
     , id_        ( id )
     , name_      ( name )
+    , dictionary_( new PropertiesDictionary( controller ) )
 {
-    Attach( *new PropertiesDictionary( controller ) );
+    Attach( *dictionary_ );
+    dictionary_->Register( *this, tools::translate( "EntityImplementation", "Info/Identifier" ), id_ );
+    dictionary_->Register( *this, tools::translate( "EntityImplementation", "Info/Name" ), name_, *this, &EntityImplementation::Rename, readOnly );
 }
 
 // -----------------------------------------------------------------------------
@@ -99,6 +104,28 @@ template< typename I >
 I& EntityImplementation< I >::This()
 {
     return *this;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityImplementation::Rename
+// Created: LGY 2012-08-24
+// -----------------------------------------------------------------------------
+template< typename I >
+void EntityImplementation< I >::Rename( const QString& name )
+{
+    name_ = name;
+    Touch();
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityImplementation::SerializeAttributes
+// Created: LGY 2012-08-24
+// -----------------------------------------------------------------------------
+template< typename I >
+void EntityImplementation< I >::SerializeAttributes( xml::xostream& xos ) const
+{
+    xos << xml::attribute( "id", static_cast< long >( id_ ) )
+        << xml::attribute( "name", name_.toAscii().constData() );
 }
 
 }

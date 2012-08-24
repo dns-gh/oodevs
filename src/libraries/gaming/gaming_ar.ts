@@ -11,14 +11,6 @@
 <context>
     <name>Agent</name>
     <message>
-        <source>Info/Identifier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Info/Type</source>
         <translation type="unfinished"></translation>
     </message>
@@ -247,14 +239,6 @@
 <context>
     <name>Automat</name>
     <message>
-        <source>Info/Identifier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Info/Type</source>
         <translation type="unfinished"></translation>
     </message>
@@ -295,14 +279,6 @@
 </context>
 <context>
     <name>Crowd</name>
-    <message>
-        <source>Info/Identifier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Info/Type</source>
         <translation type="unfinished"></translation>
@@ -492,14 +468,6 @@
 <context>
     <name>Formation</name>
     <message>
-        <source>Info/Identifier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Info/LogisticLevel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -545,14 +513,6 @@
 </context>
 <context>
     <name>Inhabitant</name>
-    <message>
-        <source>Info/Identifier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Info/Type</source>
         <translation type="unfinished"></translation>
@@ -646,14 +606,6 @@
     <name>KnowledgeGroup</name>
     <message>
         <source>Group %L1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Identifier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

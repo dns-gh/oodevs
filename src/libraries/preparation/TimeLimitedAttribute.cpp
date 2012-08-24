@@ -58,10 +58,10 @@ void TimeLimitedAttribute::Display( Displayer_ABC& displayer ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimeLimitedAttribute::SerializeAttributes
+// Name: TimeLimitedAttribute::SerializeObjectAttributes
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void TimeLimitedAttribute::SerializeAttributes( xml::xostream& xos ) const
+void TimeLimitedAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 {
     unsigned int time = activityTime_.hour() * 3600 + activityTime_.minute() * 60 + activityTime_.second();
     xos << xml::start( "activity-time" )

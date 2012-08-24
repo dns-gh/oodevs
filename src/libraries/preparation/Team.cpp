@@ -24,7 +24,6 @@ Team::Team( kernel::Controllers& controllers, IdManager& idManager )
 {
     name_ = tools::translate( "Preparation", "Army %L1" ).arg( id_ );
     RegisterSelf( *this );
-    CreateDictionary();
     controllers_.Register( *this );
 }
 
@@ -37,7 +36,6 @@ Team::Team( xml::xistream& xis, kernel::Controllers& controllers, IdManager& idM
 {
     RegisterSelf( *this );
     idManager.Lock( id_ );
-    CreateDictionary();
     controllers_.Register( *this );
 }
 
@@ -50,24 +48,3 @@ Team::~Team()
     Destroy();
     controllers_.Unregister( *this );
 }
-
-// -----------------------------------------------------------------------------
-// Name: Team::Rename
-// Created: SBO 2006-08-30
-// -----------------------------------------------------------------------------
-void Team::Rename( const QString& name )
-{
-    name_ = name;
-    Touch();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Team::SerializeAttributes
-// Created: SBO 2006-09-06
-// -----------------------------------------------------------------------------
-void Team::SerializeAttributes( xml::xostream& xos ) const
-{
-    xos << xml::attribute( "id", id_ )
-        << xml::attribute( "name", name_.toAscii().constData() );
-}
-

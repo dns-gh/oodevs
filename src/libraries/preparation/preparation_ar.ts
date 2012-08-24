@@ -15,14 +15,6 @@
 <context>
     <name>Agent</name>
     <message>
-        <source>Info/Identifier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Info/Type</source>
         <translation type="unfinished"></translation>
     </message>
@@ -58,14 +50,6 @@
 </context>
 <context>
     <name>Automat</name>
-    <message>
-        <source>Info/Identifier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Info/Type</source>
         <translation type="unfinished"></translation>
@@ -110,14 +94,6 @@
     </message>
     <message>
         <source>Dead:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Identifier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -204,27 +180,11 @@
         <source>Formation [%L1]</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Info/Identifier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>Ghost</name>
     <message>
-        <source>Info/Identifier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Info/Phantom type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -274,14 +234,6 @@
     <name>KnowledgeGroup</name>
     <message>
         <source>Knowledge group [%L1]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Identifier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -533,14 +485,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Info/Identifier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Info/Type</source>
         <translation type="unfinished"></translation>
     </message>
@@ -629,14 +573,6 @@
     <name>Population</name>
     <message>
         <source>%1 [%L2]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Identifier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -741,17 +677,6 @@ Reason: %1.</source>
     </message>
     <message>
         <source>Info/Logistic route attributes/Equipped</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>TacticalLine_ABC</name>
-    <message>
-        <source>Info/Identifier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -41,7 +41,6 @@ Formation::Formation( kernel::Controller& controller, E_NatureLevel level, IdMan
 {
     RegisterSelf( *this );
     name_ = tools::translate( "Formation", "Formation [%L1]" ).arg( id_ );
-    CreateDictionary();
 }
 
 // -----------------------------------------------------------------------------
@@ -60,7 +59,6 @@ Formation::Formation( xml::xistream& xis, Controller& controller, IdManager& idM
 
     idManager.Lock( id_ );
     RegisterSelf( *this );
-    CreateDictionary();
 }
 
 // -----------------------------------------------------------------------------
@@ -163,20 +161,8 @@ void Formation::SetLevel( E_NatureLevel level )
 // -----------------------------------------------------------------------------
 void Formation::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << xml::attribute( "id", long( id_ ) )
-        << xml::attribute( "name", name_.toAscii().constData() )
-        << xml::attribute( "level", ENT_Tr::ConvertFromNatureLevel( level_ ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Formation::CreateDictionary
-// Created: SBO 2006-11-17
-// -----------------------------------------------------------------------------
-void Formation::CreateDictionary()
-{
-    PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Formation", "Info/Identifier" ), id_, true );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Formation", "Info/Name" ), name_, *this, &Formation::Rename );
+    kernel::EntityImplementation< kernel::Formation_ABC >::SerializeAttributes( xos );
+    xos << xml::attribute( "level", ENT_Tr::ConvertFromNatureLevel( level_ ) );
 }
 
 // -----------------------------------------------------------------------------

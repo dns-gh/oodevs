@@ -15,14 +15,6 @@
 <context>
     <name>Agent</name>
     <message>
-        <source>Info/Identifier</source>
-        <translation>Info/Identificador</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation>Info/Nombre</translation>
-    </message>
-    <message>
         <source>Info/Critical intelligence</source>
         <translation type="unfinished"></translation>
     </message>
@@ -59,14 +51,6 @@
 <context>
     <name>Automat</name>
     <message>
-        <source>Info/Identifier</source>
-        <translation>Info/Identificador</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation>Info/Nombre</translation>
-    </message>
-    <message>
         <source>Info/Type</source>
         <translation type="unfinished">Info/Tipo</translation>
     </message>
@@ -92,14 +76,6 @@
 </context>
 <context>
     <name>Crowd</name>
-    <message>
-        <source>Info/Identifier</source>
-        <translation type="unfinished">Info/Identificador</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation type="unfinished">Info/Nombre</translation>
-    </message>
     <message>
         <source>Info/Type</source>
         <translation type="unfinished">Info/Tipo</translation>
@@ -201,14 +177,6 @@
 <context>
     <name>Formation</name>
     <message>
-        <source>Info/Identifier</source>
-        <translation>Info/Identificador</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation>Info/Nombre</translation>
-    </message>
-    <message>
         <source>Formation [%L1]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -216,16 +184,8 @@
 <context>
     <name>Ghost</name>
     <message>
-        <source>Info/Identifier</source>
-        <translation type="unfinished">Info/Identificador</translation>
-    </message>
-    <message>
         <source>Info/Phantom type</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation type="unfinished">Info/Nombre</translation>
     </message>
     <message>
         <source>Info/Type</source>
@@ -272,14 +232,6 @@
 </context>
 <context>
     <name>KnowledgeGroup</name>
-    <message>
-        <source>Info/Identifier</source>
-        <translation>Info/Identificador</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation>Info/Nombre</translation>
-    </message>
     <message>
         <source>Type/Name</source>
         <translation>Tipo/Nombre</translation>
@@ -501,14 +453,6 @@
         <translation>Paso :</translation>
     </message>
     <message>
-        <source>Info/Identifier</source>
-        <translation>Info/Identificador</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation>Info/Nombre</translation>
-    </message>
-    <message>
         <source>Info/Type</source>
         <translation>Info/Tipo</translation>
     </message>
@@ -632,14 +576,6 @@
 <context>
     <name>Population</name>
     <message>
-        <source>Info/Identifier</source>
-        <translation type="unfinished">Info/Identificador</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation type="unfinished">Info/Nombre</translation>
-    </message>
-    <message>
         <source>Info/Type</source>
         <translation type="unfinished">Info/Tipo</translation>
     </message>
@@ -747,17 +683,6 @@ Detalle: %1.</translation>
     <message>
         <source>Info/Logistic route attributes/Equipped</source>
         <translation>Info/Atributos de ruta logística/Equipado</translation>
-    </message>
-</context>
-<context>
-    <name>TacticalLine_ABC</name>
-    <message>
-        <source>Info/Identifier</source>
-        <translation>Info/Identificador</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation>Info/Nombre</translation>
     </message>
 </context>
 <context>

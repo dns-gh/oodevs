@@ -118,10 +118,10 @@ void SupplyRouteAttribute::SetEquipped( bool value )
 }
 
 // -----------------------------------------------------------------------------
-// Name: SupplyRouteAttribute::SerializeAttributes
+// Name: SupplyRouteAttribute::SerializeObjectAttributes
 // Created: SBO 2006-09-15
 // -----------------------------------------------------------------------------
-void SupplyRouteAttribute::SerializeAttributes( xml::xostream& xos ) const
+void SupplyRouteAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "supply-route" )
             << xml::content( "flow", int( flow_.value_ ) )

@@ -35,7 +35,6 @@ class IdManager;
 // =============================================================================
 class KnowledgeGroup : public kernel::EntityImplementation< kernel::KnowledgeGroup_ABC >
                      , public kernel::Extension_ABC
-                     , public kernel::Serializable_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -47,7 +46,7 @@ public:
 
     //! @name Operations
     //@{
-    void Rename( const QString& name );
+    virtual void Rename( const QString& name );
     void SetType( kernel::KnowledgeGroupType* const& );
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     virtual bool IsActivated() const;

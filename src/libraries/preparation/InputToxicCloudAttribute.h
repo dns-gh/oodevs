@@ -45,7 +45,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void SerializeAttributes( xml::xostream& xos ) const;
+    virtual void SerializeObjectAttributes( xml::xostream& xos ) const;
     //@}
 
     //! @name Modifiers

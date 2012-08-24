@@ -35,7 +35,6 @@ class IdManager;
 // =============================================================================
 class Inhabitant : public kernel::EntityImplementation< kernel::Inhabitant_ABC >
                  , public kernel::Extension_ABC
-                 , public kernel::Serializable_ABC
 {
 public:
     //! @name Constructors/Destructor

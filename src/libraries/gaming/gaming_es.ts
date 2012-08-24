@@ -11,14 +11,6 @@
 <context>
     <name>Agent</name>
     <message>
-        <source>Info/Identifier</source>
-        <translation>Info/Identificador</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation>Info/Nombre</translation>
-    </message>
-    <message>
         <source>Info/Type</source>
         <translation type="unfinished"></translation>
     </message>
@@ -247,14 +239,6 @@
 <context>
     <name>Automat</name>
     <message>
-        <source>Info/Identifier</source>
-        <translation>Info/Identificador</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation>Info/Nombre</translation>
-    </message>
-    <message>
         <source>Info/LogisticLevel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -400,14 +384,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Info/Identifier</source>
-        <translation type="unfinished">Info/Identificador</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation type="unfinished">Info/Nombre</translation>
-    </message>
-    <message>
         <source>Info/Critical intelligence</source>
         <translation type="unfinished"></translation>
     </message>
@@ -492,14 +468,6 @@
 <context>
     <name>Formation</name>
     <message>
-        <source>Info/Identifier</source>
-        <translation>Info/Identificador</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation>Info/Nombre</translation>
-    </message>
-    <message>
         <source>Info/LogisticLevel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -545,14 +513,6 @@
 </context>
 <context>
     <name>Inhabitant</name>
-    <message>
-        <source>Info/Identifier</source>
-        <translation type="unfinished">Info/Identificador</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation type="unfinished">Info/Nombre</translation>
-    </message>
     <message>
         <source>Alive:</source>
         <translation type="unfinished">Vivos:</translation>
@@ -644,14 +604,6 @@
 </context>
 <context>
     <name>KnowledgeGroup</name>
-    <message>
-        <source>Info/Identifier</source>
-        <translation>Info/Identificador</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation>Info/Nombre</translation>
-    </message>
     <message>
         <source>Type/Name</source>
         <translation>Tipo/Nombre</translation>

@@ -28,7 +28,7 @@ using namespace kernel;
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
 Agent::Agent( const sword::UnitCreation& message, Controller& controller, const tools::Resolver_ABC< AgentType >& resolver )
-    : EntityImplementation< Agent_ABC >( controller, message.unit().id(), QString( message.name().c_str() ) )
+    : EntityImplementation< Agent_ABC >( controller, message.unit().id(), QString( message.name().c_str() ), true )
     , type_       ( resolver.Get( message.type().id() ) )
     , initialized_( false )
 {
@@ -98,7 +98,5 @@ void Agent::DisplayInTooltip( Displayer_ABC& displayer ) const
 void Agent::CreateDictionary()
 {
     PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Identifier" ), id_, true );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Name" ), name_, true );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Type" ), type_, true );
 }

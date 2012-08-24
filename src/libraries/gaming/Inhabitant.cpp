@@ -43,7 +43,7 @@ namespace
 // -----------------------------------------------------------------------------
 Inhabitant::Inhabitant( const sword::PopulationCreation& message, Controller& controller, const UrbanModel& model, const kernel::InhabitantType& type,
                         const tools::Resolver_ABC< DotationType >& dotationResolver )
-    : EntityImplementation< Inhabitant_ABC >( controller, message.id().id(), QString( message.name().c_str() ) )
+    : EntityImplementation< Inhabitant_ABC >( controller, message.id().id(), QString( message.name().c_str() ), true )
     , controller_      ( controller )
     , type_            ( type )
     , male_            ( ToInt( type_.GetMalePercentage() ) )
@@ -94,8 +94,6 @@ void Inhabitant::CreateDictionary()
 {
     PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
     const Entity_ABC& selfEntity = static_cast< const Entity_ABC& >( *this );
-    dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Info/Identifier" ), id_, true );
-    dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Info/Name" ), name_, true );
     dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Info/Type" ), type_, true );
     dictionary.Register( selfEntity, tools::translate( "Inhabitant", "M\\F\\C Repartition/Male" ), male_, true );
     dictionary.Register( selfEntity, tools::translate( "Inhabitant", "M\\F\\C Repartition/Female" ), female_, true );

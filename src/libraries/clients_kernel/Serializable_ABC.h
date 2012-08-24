@@ -35,8 +35,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void SerializeAttributes    ( xml::xostream& ) const {};
-    virtual void SerializeLogistics     ( xml::xostream& ) const {};
+    virtual void SerializeAttributes      ( xml::xostream& ) const {};
+    virtual void SerializeObjectAttributes( xml::xostream& ) const {};
+    virtual void SerializeLogistics       ( xml::xostream& ) const {};
     //@}
 };
 

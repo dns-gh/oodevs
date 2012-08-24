@@ -64,10 +64,10 @@ void BypassAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: BypassAttribute::SerializeAttributes
+// Name: BypassAttribute::SerializeObjectAttributes
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void BypassAttribute::SerializeAttributes( xml::xostream& xos ) const
+void BypassAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "bypass" )
             << xml::attribute( "value", rBypassConstructionPercentage_.value_ )

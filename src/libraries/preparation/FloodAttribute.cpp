@@ -83,10 +83,10 @@ void FloodAttribute::Display( Displayer_ABC& displayer ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: FloodAttribute::SerializeAttributes
+// Name: FloodAttribute::SerializeObjectAttributes
 // Created: JSR 2010-12-07
 // -----------------------------------------------------------------------------
-void FloodAttribute::SerializeAttributes( xml::xostream& xos ) const
+void FloodAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "flood" )
             << xml::attribute( "depth", depth_.value_ )

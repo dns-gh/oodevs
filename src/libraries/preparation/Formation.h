@@ -39,7 +39,6 @@ class IdManager;
 class Formation : public kernel::EntityImplementation< kernel::Formation_ABC >
                 , public kernel::Extension_ABC
                 , public kernel::Drawable_ABC
-                , public kernel::Serializable_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -73,7 +72,6 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary();
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     void InitializeSymbol() const;
     bool IsAggregated( const kernel::Entity_ABC& entity ) const;

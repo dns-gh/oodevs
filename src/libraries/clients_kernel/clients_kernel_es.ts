@@ -47,14 +47,6 @@
 <context>
     <name>Block</name>
     <message>
-        <source>Info/Identifier</source>
-        <translation type="unfinished">Info/Identificador</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation type="unfinished">Info/Nombre</translation>
-    </message>
-    <message>
         <source>Density:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -434,17 +426,6 @@
     <message>
         <source>Stock resource attribute</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Team</name>
-    <message>
-        <source>Info/Identifier</source>
-        <translation>Info/Identificador</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation>Info/Nombre</translation>
     </message>
 </context>
 <context>

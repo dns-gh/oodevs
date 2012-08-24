@@ -134,10 +134,10 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObstacleAttribute::SerializeAttributes
+// Name: ObstacleAttribute::SerializeObjectAttributes
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void ObstacleAttribute::SerializeAttributes( xml::xostream& xos ) const
+void ObstacleAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "obstacle" )
         << xml::attribute( "type", type_.ToXml() )

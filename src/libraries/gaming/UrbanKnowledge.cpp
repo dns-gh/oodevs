@@ -21,7 +21,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 UrbanKnowledge::UrbanKnowledge( const Team_ABC& owner, const sword::UrbanKnowledgeCreation& message, Controller& controller,
                                 const tools::Resolver< kernel::UrbanObject_ABC >& terrainObjectResolver )
-    : EntityImplementation< UrbanKnowledge_ABC >( controller, message.knowledge().id(), "" )
+    : EntityImplementation< UrbanKnowledge_ABC >( controller, message.knowledge().id(), "", true )
     , terrainObjectResolver_( terrainObjectResolver )
     , owner_                ( owner )
     , pRealUrban_           ( terrainObjectResolver_.Find( message.object().id() ) )

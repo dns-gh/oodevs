@@ -55,7 +55,7 @@ public:
     //! @name Operations
     //@{
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
-    virtual void SerializeAttributes( xml::xostream& xos ) const;
+    virtual void SerializeObjectAttributes( xml::xostream& xos ) const;
     virtual void NotifyUpdated( const AltitudeModifierAttribute& attribute );
     virtual void NotifyDeleted( const kernel::Object_ABC& object );
     //@}

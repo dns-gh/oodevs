@@ -136,10 +136,10 @@ bool LogisticAttribute::HasValidLogisticBase() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticAttribute::SerializeAttributes
+// Name: LogisticAttribute::SerializeObjectAttributes
 // Created: SBO 2006-09-15
 // -----------------------------------------------------------------------------
-void LogisticAttribute::SerializeAttributes( xml::xostream& xos ) const
+void LogisticAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "logistic-base" )
             << xml::attribute( "id", logisticBase_ ? logisticBase_->GetId() : 0 )

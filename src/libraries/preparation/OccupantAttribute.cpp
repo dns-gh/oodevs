@@ -65,10 +65,10 @@ void OccupantAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: OccupantAttribute::SerializeAttributes
+// Name: OccupantAttribute::SerializeObjectAttributes
 // Created: MGD 2010-02-18
 // -----------------------------------------------------------------------------
-void OccupantAttribute::SerializeAttributes( xml::xostream& xos ) const
+void OccupantAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "max-size" )
             << xml::attribute( "max-size", iMaxSize_ )

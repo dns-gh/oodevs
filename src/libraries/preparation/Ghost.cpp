@@ -181,9 +181,7 @@ void Ghost::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& vi
 void Ghost::CreateDictionary()
 {
     PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Ghost", "Info/Identifier" ), id_, true );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Ghost", "Info/Phantom type" ), ENT_Tr::ConvertFromGhostType( ghostType_, ENT_Tr::eToTr ) );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Ghost", "Info/Name" ), name_, *this, &Ghost::Rename );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Ghost", "Info/Type" ), type_ );
 }
 
@@ -206,11 +204,10 @@ void Ghost::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void Ghost::SerializeAttributes( xml::xostream& xos ) const
 {
+    kernel::EntityImplementation< kernel::Ghost_ABC >::SerializeAttributes( xos );
     assert( ghostType_ != eGhostType_Invalid );
-    xos << xml::attribute( "id", long( id_ ) )
-        << xml::attribute( "ghost-type", ENT_Tr::ConvertFromGhostType( ghostType_, ENT_Tr::eToSim ) )
+    xos << xml::attribute( "ghost-type", ENT_Tr::ConvertFromGhostType( ghostType_, ENT_Tr::eToSim ) )
         << xml::attribute( "type", type_.toAscii().constData() )
-        << xml::attribute( "name", name_.toAscii().constData() )
         << xml::attribute( "nature", nature_ )
         << xml::attribute( "level", level_ );
     for( CIT_Children it = children_.begin(); it != children_.end(); ++it )
@@ -405,16 +402,6 @@ void Ghost::SerializeGhostAttributes( xml::xostream& xos ) const
                 << xml::end; //! profile
         xos << xml::end; //! profiles
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: Ghost::Rename
-// Created: ABR 2011-10-19
-// -----------------------------------------------------------------------------
-void Ghost::Rename( const QString& name )
-{
-    name_ = name;
-    Touch();
 }
 
 // -----------------------------------------------------------------------------

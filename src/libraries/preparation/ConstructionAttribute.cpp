@@ -68,10 +68,10 @@ void ConstructionAttribute::DisplayInTooltip( kernel::Displayer_ABC& displayer )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ConstructionAttribute::SerializeAttributes
+// Name: ConstructionAttribute::SerializeObjectAttributes
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void ConstructionAttribute::SerializeAttributes( xml::xostream& xos ) const
+void ConstructionAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "construction" )
             << xml::attribute( "completion", float( completion_.value_ ) / 100.f );

@@ -51,10 +51,10 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: StructuralStateAttribute::SerializeAttributes
+// Name: StructuralStateAttribute::SerializeObjectAttributes
 // Created: JSR 2010-09-07
 // -----------------------------------------------------------------------------
-void StructuralStateAttribute::SerializeAttributes( xml::xostream& xos ) const
+void StructuralStateAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 {
     if( GetCurrentMode() == ePreparationMode_Exercise )
         xos << xml::start( "structural-state" )

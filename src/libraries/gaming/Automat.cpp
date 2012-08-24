@@ -30,7 +30,7 @@ using namespace kernel;
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
 Automat::Automat( const sword::AutomatCreation& message, Controller& controller, const tools::Resolver_ABC< kernel::AutomatType >& resolver )
-    : EntityImplementation< Automat_ABC >( controller, message.automat().id(), QString( message.name().c_str() ) )
+    : EntityImplementation< Automat_ABC >( controller, message.automat().id(), QString( message.name().c_str() ), true )
     , type_( resolver.Get( message.type().id() ) )
     , logisticLevel_ ( &kernel::LogisticLevel::Resolve( message.logistic_level() ) )
 {
@@ -56,8 +56,6 @@ Automat::~Automat()
 void Automat::CreateDictionary()
 {
     PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
-    dictionary.Register( *this, tools::translate( "Automat", "Info/Identifier" ), id_, true );
-    dictionary.Register( *this, tools::translate( "Automat", "Info/Name" ), name_, true );
     dictionary.Register( *this, tools::translate( "Automat", "Info/Type" ), type_, true );
     if( type_.IsTC2() ) //$$$ NAZE
         dictionary.Register( *this, tools::translate( "Automat", "Info/LogisticLevel" ), *logisticLevel_ );

@@ -75,15 +75,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Info/Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Info/Template</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Identifier</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -433,17 +425,6 @@
     <name>Stock</name>
     <message>
         <source>Stock resource attribute</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Team</name>
-    <message>
-        <source>Info/Identifier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

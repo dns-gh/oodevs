@@ -41,7 +41,6 @@ Team::Team( const sword::PartyCreation& message, kernel::Controllers& controller
     : kernel::Team( controllers, message.party().id(), QString( message.name().c_str() ) )
     , karma_      ( MakeKarma( message.type() ) )
 {
-    CreateDictionary();
     controllers_.Register( *this );
 }
 

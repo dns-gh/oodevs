@@ -47,10 +47,10 @@ StockAttribute::~StockAttribute()
 }
 
 // -----------------------------------------------------------------------------
-// Name: StockAttribute::SerializeAttributes
+// Name: StockAttribute::SerializeObjectAttributes
 // Created: BCI 2011-02-04
 // -----------------------------------------------------------------------------
-void StockAttribute::SerializeAttributes( xml::xostream& xos ) const
+void StockAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "stock" );
     for( StockDotations::const_iterator it = stockDotations_.begin(); it != stockDotations_.end(); ++it )

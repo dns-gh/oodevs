@@ -126,9 +126,7 @@ QString UrbanObject::GetName() const
 void UrbanObject::CreateDictionary( bool readOnly )
 {
     PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
-    dictionary.Register( static_cast< const UrbanObject_ABC& >( *this ), tools::translate( "Block", "Info/Name" ), name_, readOnly );
     dictionary.Register( static_cast< const UrbanObject_ABC& >( *this ), tools::translate( "Block", "Info/Template" ), templateType_, *this, &UrbanObject::ApplyTemplate, readOnly, kernel::eUrbanTemplate );
-    dictionary.Register( static_cast< const UrbanObject_ABC& >( *this ), tools::translate( "Block", "Info/Identifier" ), id_, true );
 }
 
 // -----------------------------------------------------------------------------

@@ -11,6 +11,7 @@
 #include "Agent.h"
 #include "IdManager.h"
 #include "AgentHierarchies.h"
+#include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/AgentNature.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/App6Symbol.h"
@@ -139,24 +140,12 @@ const AgentType& Agent::GetType() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Agent::Rename
-// Created: SBO 2006-10-10
-// -----------------------------------------------------------------------------
-void Agent::Rename( const QString& name )
-{
-    name_ = name;
-    Touch();
-}
-
-// -----------------------------------------------------------------------------
 // Name: Agent::CreateDictionary
 // Created: AGE 2006-06-27
 // -----------------------------------------------------------------------------
 void Agent::CreateDictionary()
 {
     PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Identifier" ), id_, true );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Name" ), name_, *this, &Agent::Rename );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Type" ), type_, true );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Critical intelligence" ), criticalIntelligence_ );
 }
@@ -167,9 +156,8 @@ void Agent::CreateDictionary()
 // -----------------------------------------------------------------------------
 void Agent::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << xml::attribute( "id", long( id_ ) )
-        << xml::attribute( "type", type_.GetName() )
-        << xml::attribute( "name", name_.toAscii().constData() );
+    kernel::EntityImplementation< kernel::Agent_ABC >::SerializeAttributes( xos );
+    xos << xml::attribute( "type", type_.GetName() );
     if( level_ != ENT_Tr::ConvertToNatureLevel( type_.GetNature().GetLevel() ) )
         xos << xml::attribute( "level", ENT_Tr::ConvertFromNatureLevel( level_ ) );
     if( overridenSymbol_ )

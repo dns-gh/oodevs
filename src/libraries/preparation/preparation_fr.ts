@@ -15,14 +15,6 @@
 <context>
     <name>Agent</name>
     <message>
-        <source>Info/Identifier</source>
-        <translation>Info/Identifiant</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation>Info/Nom</translation>
-    </message>
-    <message>
         <source>Info/Critical intelligence</source>
         <translation>Info/Renseignement critique</translation>
     </message>
@@ -59,14 +51,6 @@
 <context>
     <name>Automat</name>
     <message>
-        <source>Info/Identifier</source>
-        <translation>Info/Identifiant</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation>Info/Nom</translation>
-    </message>
-    <message>
         <source>Info/Type</source>
         <translation>Info/Type</translation>
     </message>
@@ -92,14 +76,6 @@
 </context>
 <context>
     <name>Crowd</name>
-    <message>
-        <source>Info/Identifier</source>
-        <translation>Info/Identifiant</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation>Info/Nom</translation>
-    </message>
     <message>
         <source>Info/Type</source>
         <translation>Info/Type</translation>
@@ -201,14 +177,6 @@
 <context>
     <name>Formation</name>
     <message>
-        <source>Info/Identifier</source>
-        <translation>Info/Identifiant</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation>Info/Nom</translation>
-    </message>
-    <message>
         <source>Formation [%L1]</source>
         <translation>Formation [%L1]</translation>
     </message>
@@ -216,16 +184,8 @@
 <context>
     <name>Ghost</name>
     <message>
-        <source>Info/Identifier</source>
-        <translation>Info/Identifiant</translation>
-    </message>
-    <message>
         <source>Info/Phantom type</source>
         <translation>Info/Type de fantôme</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation>Info/Nom</translation>
     </message>
     <message>
         <source>Info/Type</source>
@@ -272,14 +232,6 @@
 </context>
 <context>
     <name>KnowledgeGroup</name>
-    <message>
-        <source>Info/Identifier</source>
-        <translation>Info/Identifiant</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation>Info/Nom</translation>
-    </message>
     <message>
         <source>Knowledge group [%L1]</source>
         <translation>Groupe de connaissance [%L1]</translation>
@@ -505,14 +457,6 @@
         <translation>Contournement :</translation>
     </message>
     <message>
-        <source>Info/Identifier</source>
-        <translation>Info/Identifiant</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation>Info/Nom</translation>
-    </message>
-    <message>
         <source>Info/Type</source>
         <translation>Info/Type</translation>
     </message>
@@ -632,14 +576,6 @@
 <context>
     <name>Population</name>
     <message>
-        <source>Info/Identifier</source>
-        <translation>Info/Identifiant</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation>Info/Nom</translation>
-    </message>
-    <message>
         <source>Info/Type</source>
         <translation>Info/Type</translation>
     </message>
@@ -747,17 +683,6 @@ Détail: %1.</translation>
     <message>
         <source>Info/Logistic route attributes/Equipped</source>
         <translation>Info/Attributs de l&apos;itinéraire logistique/Equipé</translation>
-    </message>
-</context>
-<context>
-    <name>TacticalLine_ABC</name>
-    <message>
-        <source>Info/Identifier</source>
-        <translation>Info/Identifiant</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation>Info/Nom</translation>
     </message>
 </context>
 <context>

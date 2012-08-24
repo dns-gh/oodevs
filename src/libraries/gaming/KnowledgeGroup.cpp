@@ -93,8 +93,6 @@ void KnowledgeGroup::DoUpdate( const sword::KnowledgeGroupUpdate& message )
 void KnowledgeGroup::CreateDictionary()
 {
     kernel::PropertiesDictionary& dictionary = Get< kernel::PropertiesDictionary >();
-    dictionary.Register( *this, tools::translate( "KnowledgeGroup", "Info/Identifier" ), id_ );
-    dictionary.Register( *this, tools::translate( "KnowledgeGroup", "Info/Name" ), name_ );
     dictionary.Register( *this, tools::translate( "KnowledgeGroup", "Type/Name" ), type_ );
     dictionary.Register( *this, tools::translate( "KnowledgeGroup", "Type/Delay" ), delay_ ); // LTO
 }

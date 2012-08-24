@@ -47,7 +47,6 @@ class StaticModel;
 class Ghost : public kernel::EntityImplementation< kernel::Ghost_ABC >
             , public kernel::Extension_ABC
             , public kernel::Drawable_ABC
-            , public kernel::Serializable_ABC
             , public kernel::Displayable_ABC
 {
 public:
@@ -84,7 +83,6 @@ public:
     //! @name Operations
     //@{
     void InitializeSymbol() const;
-    void Rename( const QString& name );
     //@}
 
     //! @name Accessors

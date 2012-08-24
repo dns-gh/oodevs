@@ -56,10 +56,10 @@ void TrafficabilityAttribute::Display( kernel::Displayer_ABC& displayer ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: TrafficabilityAttribute::SerializeAttributes
+// Name: TrafficabilityAttribute::SerializeObjectAttributes
 // Created: LGY 2011-08-23
 // -----------------------------------------------------------------------------
-void TrafficabilityAttribute::SerializeAttributes( xml::xostream& xos ) const
+void TrafficabilityAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "trafficability" )
             << xml::attribute( "max", double( max_.value_ ) )

@@ -32,7 +32,7 @@ Object::Object( Controller& controller, const CoordinateConverter_ABC& converter
 {
     if( type.HasSpawn() )
         idManager.GetNextId(); // we need to skip one ID for dynamic created object.
-    RegisterSelf( *this );
+//    RegisterSelf( *this );
     name_ = name.isEmpty() ? tools::translate( "Object", "%1 [%L2]" ).arg( type.GetName().c_str() ).arg( id_ ) : name;
     CreateDictionary();
 }
@@ -101,9 +101,8 @@ void Object::DisplayInTooltip( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void Object::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << xml::attribute( "id", static_cast< long >( id_ ) )
-        << xml::attribute( "type", type_.GetType() )
-        << xml::attribute( "name", name_ );
+    kernel::EntityImplementation< kernel::Object_ABC >::SerializeAttributes( xos );
+    xos << xml::attribute( "type", type_.GetType() );
 }
 
 // -----------------------------------------------------------------------------
@@ -124,7 +123,5 @@ void Object::CreateDictionary()
 {
     PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
     const Entity_ABC* constEntity = static_cast< const Entity_ABC* >( this );
-    dictionary.Register( *constEntity, tools::translate( "Object", "Info/Identifier" ), id_, true );
-    dictionary.Register( *constEntity, tools::translate( "Object", "Info/Name" ), name_ );
     dictionary.Register( *constEntity, tools::translate( "Object", "Info/Type" ), type_.GetName(), true );
 }

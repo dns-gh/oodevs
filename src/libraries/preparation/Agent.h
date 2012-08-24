@@ -43,7 +43,6 @@ class IdManager;
 class Agent : public kernel::EntityImplementation< kernel::Agent_ABC >
             , public kernel::Extension_ABC
             , public kernel::Drawable_ABC
-            , public kernel::Serializable_ABC
             , public kernel::Displayable_ABC
 {
 public:
@@ -66,8 +65,6 @@ public:
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void DisplayInTooltip( kernel::Displayer_ABC& ) const;
-
-    void Rename( const QString& name );
     //@}
 
 private:

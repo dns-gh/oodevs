@@ -56,7 +56,7 @@ public:
 
     //! @name Serializable_ABC
     //@{
-    virtual void SerializeAttributes( xml::xostream& ) const;
+    virtual void SerializeObjectAttributes( xml::xostream& ) const;
     //@}
 
     //! @name ModesObserver_ABC

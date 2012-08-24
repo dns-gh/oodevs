@@ -69,7 +69,7 @@ private:
     bool          firstChangeToSavedMode_;
     //@}
 };
-
+ 
 #include "ModeController.inl"
 
 } //! namespace kernel

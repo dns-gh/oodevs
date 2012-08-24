@@ -40,7 +40,6 @@ class IdManager;
 class Automat : public kernel::EntityImplementation< kernel::Automat_ABC >
               , public kernel::Extension_ABC
               , public kernel::Drawable_ABC
-              , public kernel::Serializable_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -54,7 +53,6 @@ public:
     //@{
     virtual const kernel::AutomatType& GetType() const;
     virtual const kernel::LogisticLevel& GetLogisticLevel() const;
-    void Rename( const QString& name );
     //@}
 
     //! @name Extensions

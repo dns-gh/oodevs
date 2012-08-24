@@ -32,7 +32,7 @@ using namespace kernel;
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
 Population::Population( const sword::CrowdCreation& message, Controllers& controllers, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< PopulationType >& typeResolver )
-    : EntityImplementation< Population_ABC >( controllers.controller_, message.crowd().id(), QString( message.name().c_str() ) )
+    : EntityImplementation< Population_ABC >( controllers.controller_, message.crowd().id(), QString( message.name().c_str() ), true )
     , controllers_         ( controllers )
     , converter_           ( converter )
     , type_                ( typeResolver.Get( message.type().id() ) )
@@ -417,8 +417,6 @@ void Population::CreateDictionary()
 {
     PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
     const Entity_ABC& selfEntity = static_cast< const Entity_ABC& >( *this );
-    dictionary.Register( selfEntity, tools::translate( "Crowd", "Info/Identifier" ), id_, true );
-    dictionary.Register( selfEntity, tools::translate( "Crowd", "Info/Name" ), name_, true );
     dictionary.Register( selfEntity, tools::translate( "Crowd", "Info/Type" ), type_, true );
     dictionary.Register( selfEntity, tools::translate( "Crowd", "Info/Critical intelligence" ), criticalIntelligence_, true );
     dictionary.Register( selfEntity, tools::translate( "Crowd", "Info/Domination" ), nDomination_, true );

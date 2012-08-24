@@ -11,14 +11,6 @@
 <context>
     <name>Agent</name>
     <message>
-        <source>Info/Identifier</source>
-        <translation>Info/Identifiant</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation>Info/Nom</translation>
-    </message>
-    <message>
         <source>Info/Type</source>
         <translation>Info/Type</translation>
     </message>
@@ -247,14 +239,6 @@
 <context>
     <name>Automat</name>
     <message>
-        <source>Info/Identifier</source>
-        <translation>Info/Identifiant</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation>Info/Nom</translation>
-    </message>
-    <message>
         <source>Info/LogisticLevel</source>
         <translation>Info/NiveauLogistique</translation>
     </message>
@@ -400,14 +384,6 @@
         <translation>Individus armés:</translation>
     </message>
     <message>
-        <source>Info/Identifier</source>
-        <translation>Info/Identifiant</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation>Info/Nom</translation>
-    </message>
-    <message>
         <source>Info/Critical intelligence</source>
         <translation>Info/Renseignement critique</translation>
     </message>
@@ -492,14 +468,6 @@
 <context>
     <name>Formation</name>
     <message>
-        <source>Info/Identifier</source>
-        <translation>Info/Identifiant</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation>Info/Nom</translation>
-    </message>
-    <message>
         <source>Info/LogisticLevel</source>
         <translation>Info/NiveauLogistique</translation>
     </message>
@@ -545,14 +513,6 @@
 </context>
 <context>
     <name>Inhabitant</name>
-    <message>
-        <source>Info/Identifier</source>
-        <translation>Info/Identifiant</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation>Info/Nom</translation>
-    </message>
     <message>
         <source>Alive:</source>
         <translation>Vivants:</translation>
@@ -647,14 +607,6 @@
     <message>
         <source>Group %L1</source>
         <translation>Groupe %L1</translation>
-    </message>
-    <message>
-        <source>Info/Identifier</source>
-        <translation>Info/Identifiant</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation>Info/Nom</translation>
     </message>
     <message>
         <source>Type/Name</source>

@@ -30,7 +30,7 @@ using namespace kernel;
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
 Formation::Formation( const sword::FormationCreation& message, Controller& controller )
-    : EntityImplementation< Formation_ABC >( controller, message.formation().id(), QString( message.name().c_str() ) )
+    : EntityImplementation< Formation_ABC >( controller, message.formation().id(), QString( message.name().c_str() ), true )
     , controller_   ( controller )
     , level_        ( static_cast< E_NatureLevel >( message.level() ) )
     , logisticLevel_( &kernel::LogisticLevel::Resolve( message.logistic_level() ) )
@@ -66,8 +66,6 @@ E_NatureLevel Formation::GetLevel() const
 void Formation::CreateDictionary()
 {
     PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Formation", "Info/Identifier" ), id_, true );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Formation", "Info/Name" ), name_, true );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Formation", "Info/LogisticLevel" ), *logisticLevel_ );
 }
 

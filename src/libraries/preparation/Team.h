@@ -35,7 +35,6 @@ class IdManager;
 // =============================================================================
 class Team : public kernel::Team
            , public kernel::Extension_ABC
-           , public kernel::Serializable_ABC
            , public tools::Observer_ABC
 {
 public:
@@ -44,12 +43,6 @@ public:
              Team( kernel::Controllers& controllers, IdManager& idManager );
              Team( xml::xistream& xis, kernel::Controllers& controllers, IdManager& idManager );
     virtual ~Team();
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void SerializeAttributes( xml::xostream& xos ) const;
-    virtual void Rename( const QString& name );
     //@}
 };
 

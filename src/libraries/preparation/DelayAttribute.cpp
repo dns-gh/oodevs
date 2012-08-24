@@ -57,10 +57,10 @@ void DelayAttribute::Display( Displayer_ABC& displayer ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DelayAttribute::SerializeAttributes
+// Name: DelayAttribute::SerializeObjectAttributes
 // Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
-void DelayAttribute::SerializeAttributes( xml::xostream& xos ) const
+void DelayAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "delay" )
             << xml::attribute( "value", delay_.value_ )
