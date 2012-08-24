@@ -19,22 +19,30 @@
     <goal>
         <description>Construire les objets.</description>
     </goal>
-    <stages/>
-    <next-task name="agent.tasks.Build">
-        <parameter name="entities">
-            <value>
-                <parameter>entities</parameter>
-            </value>
-        </parameter>
-        <parameter name="meetingPoint">
-            <value>
-                <parameter>meetingPoint</parameter>
-            </value>
-        </parameter>
-        <parameter name="withImprovement">
-            <value>
-                <boolean>false</boolean>
-            </value>
-        </parameter>
-    </next-task>
+    <stages>
+        <stage label="deplacement le lieu de contruction">
+            <skills>
+                <skill name="agent.skills.BuildWithReinforcement" main="true">
+                    <parameter name="entities">
+                        <value>
+                            <parameter>entities</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+        <stage label="deplacement vers la position de repli" disable-when-done="true">
+            <skills>
+                <skill name="agent.skills.MoveToward" main="true">
+                    <parameter name="entities">
+                        <value>
+                            <list>
+                                <parameter>meetingPoint</parameter>
+                            </list>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
 </task>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.tasks.Build" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.Build">
-    <description>Construire un object tactique</description>
+    <description>To construct something (any of the sword objects) </description>
     <parameters>
         <parameter name="entities">
-            <description>Les objets à construire</description>
+            <description>The objects to build.</description>
             <type>
                 <list>
                     <class name="properties.Buildable"/>
@@ -11,12 +11,13 @@
             </type>
         </parameter>
         <parameter name="meetingPoint" nullable="true">
+            <description>The position to reach once all objects have been built.</description>
             <type>
                 <class name="properties.Reachable"/>
             </type>
         </parameter>
         <parameter name="withImprovement" nullable="true">
-            <description>Si la valeur est vraie, on continue la construction en valorisant l'objectif.</description>
+            <description>Define if the object can be improved with mines. If the mission is used to erect obstacles (engineer units), the agents can improve the objects (barricade for instance) with mines. By default, the value is 'false'.</description>
             <type>
                 <simple name="boolean"/>
             </type>
@@ -26,14 +27,10 @@
         </parameter>
     </parameters>
     <goal>
-        <description>Construire les objets.</description>
+        <description>To build a set of sword objects.</description>
     </goal>
     <stages>
-        <stage label="Construction">
-            <description>Construction des objets</description>
-            <goal>
-                <description>Construire les objets</description>
-            </goal>
+        <stage label="moving to build objects">
             <skills>
                 <skill name="agent.skills.BuildWithReinforcement" main="true">
                     <parameter name="entities">
@@ -49,8 +46,7 @@
                 </skill>
             </skills>
         </stage>
-        <stage label="Déplacement vers le point de regroupement" disable-when-done="true">
-            <description>Se déplace vers le position de regroupement afin de s'éloigner de l'obstacle.</description>
+        <stage label="moving to meeting position" disable-when-done="true">
             <skills>
                 <skill name="agent.skills.MoveToward" main="true">
                     <parameter name="entities">

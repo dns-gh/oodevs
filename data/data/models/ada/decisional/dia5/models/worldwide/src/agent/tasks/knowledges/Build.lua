@@ -9,7 +9,7 @@ local result =
         end
         return nil
     end,
-    
+
     getObstaclesParameter = function( self, companyTask, params )
         return companyTask:getObstaclesParameter( params )
     end,
@@ -20,11 +20,12 @@ local result =
 
     canDoIt = function( self, entity, obstacle )
         local localisation = obstacle:getLocalisation()
-        return DEC_Agent_AgentPeutConstruireObjetEmbarqueAvecLocalisation( entity.source, tostring(obstacle:getType()), localisation )
+        return DEC_Agent_AgentPeutConstruireObjetEmbarqueAvecLocalisation( 
+                    entity.source, tostring(obstacle:getType()), localisation )
     end,
 }
 
 local t = initTaskKnowledge( result )
-taskKnowledge["agent.tasks.knowledges.Build"] = t
+taskKnowledge[ "agent.tasks.knowledges.Build" ] = t
 
 return result

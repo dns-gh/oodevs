@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="platoon.combat.support.engineer.tasks.Construire" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.Build">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="platoon.combat.support.engineer.tasks.Construire" source-version="1.0.0" knowledge-class="platoon.combat.support.engineer.tasks.knowledges.Build">
     <description>Construire un object tactique</description>
     <parameters>
         <parameter name="entities">
@@ -29,22 +29,35 @@
     <goal>
         <description>Construire les objets.</description>
     </goal>
-    <stages/>
-    <next-task name="agent.tasks.Build">
-        <parameter name="meetingPoint">
-            <value>
-                <parameter>meetingPoint</parameter>
-            </value>
-        </parameter>
-        <parameter name="entities">
-            <value>
-                <parameter>entities</parameter>
-            </value>
-        </parameter>
-        <parameter name="withImprovement">
-            <value>
-                <parameter>withImprovement</parameter>
-            </value>
-        </parameter>
-    </next-task>
+    <stages>
+        <stage label="debut de la construction">
+            <skills>
+                <skill name="agent.skills.BuildWithReinforcement" main="true">
+                    <parameter name="entities">
+                        <value>
+                            <parameter>entities</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="withImprovement">
+                        <value>
+                            <parameter>withImprovement</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+        <stage label="deplacement vers la position de repli" disable-when-done="true">
+            <skills>
+                <skill name="agent.skills.MoveToward" main="true">
+                    <parameter name="entities">
+                        <value>
+                            <list>
+                                <parameter>meetingPoint</parameter>
+                            </list>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
 </task>

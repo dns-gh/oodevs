@@ -1,34 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.skills.BuildWithReinforcement" source-version="1.0.0">
-	<description>Dégager un ensemble d'objets tactique en attendant les renforcements en cas d'absence de capacité</description>
-	<parameters>
-		<parameter name="entities" nullable="true">
-			<description>les elements a construire</description>
-			<type>
-				<list>
-					<class name="properties.Buildable"/>
-				</list>
-			</type>
-			<default>
-				<nil/>
-			</default>
-		</parameter>
-		<parameter name="withImprovement" nullable="true">
-			<description>Si la valeur est vraie, on continue la construction en valorisant l'objectif.</description>
-			<type>
-				<simple name="boolean"/>
-			</type>
-			<default>
-				<boolean>false</boolean>
-			</default>
-		</parameter>
-	</parameters>
-	<goal>
-		<description>Construire les éléments.</description>
-	</goal>
-	<modifiers/>
-	<links>
-		<link name="build" skill="agent.skills.primitives.Build"/>
-		<link name="improve" skill="agent.skills.primitives.Improve"/>
-	</links>
+    <description>To build a set of sword objects. The agent moves to each of the issued planned objects and build them. The objects are built in the order of the list (defined by user).&#xD;
+&#xD;
+This skill can receive an empty list of objects to build. In that case, it returns the feeback 'done'.</description>
+    <parameters>
+        <parameter name="entities" nullable="true">
+            <description>The elements to build.</description>
+            <type>
+                <list>
+                    <class name="properties.Buildable"/>
+                </list>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
+        <parameter name="withImprovement" nullable="true">
+            <description>Define if the object can be improved with mines. If the mission is used to erect obstacles (engineer units), the agents can improve the objects (barricade for instance) with mines. By default, the value is 'false'.</description>
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>false</boolean>
+            </default>
+        </parameter>
+    </parameters>
+    <goal>
+        <description>To build a set of sword objects.</description>
+    </goal>
+    <links>
+        <link name="build" skill="agent.skills.primitives.Build"/>
+        <link name="improve" skill="agent.skills.primitives.Improve"/>
+    </links>
 </skill>
