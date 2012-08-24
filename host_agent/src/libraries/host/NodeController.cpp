@@ -440,5 +440,5 @@ NodeController_ABC::T_Plugins NodeController::GetPlugins( int offset, int limit 
 // -----------------------------------------------------------------------------
 size_t NodeController::CountPlugins() const
 {
-        return plugins_.Count();
+    return plugins_.Count();
 }
