@@ -15,7 +15,6 @@
 #include "wrapper/Hook.h"
 #include "wrapper/Effect.h"
 #include "wrapper/Event.h"
-#include "MT_Tools/MT_Vector2D.h"
 #include <boost/bind.hpp>
 
 using namespace sword;
