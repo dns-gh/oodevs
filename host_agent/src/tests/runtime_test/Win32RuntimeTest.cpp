@@ -24,21 +24,9 @@
 
 using namespace runtime;
 
-namespace
-{
-    class StdoutLogger: public cpplog::BaseLogger
-    {
-        virtual bool sendLogMessage( cpplog::LogData* logData )
-        {
-            std::cout << logData->stream.str() << std::flush;
-            return true;
-        }
-    };
-}
-
 BOOST_AUTO_TEST_CASE( runtime_process_gets )
 {
-    StdoutLogger log;
+    cpplog::OstreamLogger log( std::cout );
     Api api( log );
     Runtime runtime( log, api );
     // Check itself
@@ -50,7 +38,7 @@ BOOST_AUTO_TEST_CASE( runtime_process_gets )
 
 BOOST_AUTO_TEST_CASE( runtime_process_starts )
 {
-    StdoutLogger log;
+    cpplog::OstreamLogger log( std::cout );
     Api api( log );
     Runtime runtime( log, api );
 
