@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.tasks.knowledges.Reconnoiter" source-version="1.0.0" extends="commander.tasks.knowledges.CompanyTask">
-    <description>Interface des connaissances de mission de niveau compagnie</description>
+    <description>The knowledge of the 'Reconnoiter' mission. This knowledge is used by the commander agent to perform this mission.</description>
     <methods>
         <method name="getObjectives">
+            <description>Returns the objectives to reconnoiter.</description>
             <return>
                 <type>
                     <list>
@@ -12,6 +13,7 @@
             </return>
         </method>
         <method name="getObstacles">
+            <description>Returns the encountered obstacles while performing the mission.</description>
             <return>
                 <type>
                     <list>
@@ -21,6 +23,7 @@
             </return>
         </method>
         <method name="getReachable">
+            <description>Returns the meeting position of the mission. If no meeting position is issued, the method returns an empty table.</description>
             <return>
                 <type>
                     <list>
@@ -30,6 +33,7 @@
             </return>
         </method>
         <method name="getNbrFront">
+            <description>Returns the number of first line units. The returned value is the one defined by the user when he issues the mission. If no value is defined, it returns a value of '2'. </description>
             <return>
                 <type>
                     <simple name="numeric"/>
@@ -37,6 +41,7 @@
             </return>
         </method>
         <method name="getTotalRecce">
+            <description>This implementation returns 'false'.</description>
             <return>
                 <type>
                     <simple name="boolean"/>
@@ -44,6 +49,7 @@
             </return>
         </method>
         <method name="getAOR">
+            <description>Returns the area of responsabilities for each of the subordinate units.</description>
             <return>
                 <type>
                     <list>
@@ -53,6 +59,7 @@
             </return>
         </method>
         <method name="getPeiObjectives">
+            <description>Returns the sub-objectives for the scouting platoons.</description>
             <return>
                 <type>
                     <list>
@@ -62,6 +69,7 @@
             </return>
         </method>
         <method name="getPeiAOR">
+            <description>Returns the area of responsability for the scouting platoons.</description>
             <return>
                 <type>
                     <list>
@@ -70,8 +78,6 @@
                 </type>
             </return>
         </method>
-        <method name="init" abstract="false">
-            <description>Methode d'initialisation appelée une seule fois</description>
-        </method>
+        <method name="init" abstract="false"/>
     </methods>
 </class>

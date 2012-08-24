@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.tasks.Reconnoiter" source-version="1.0.0" knowledge-class="commander.tasks.knowledges.Reconnoiter">
+    <description>For the commander agent, to order subordinates to reconnoiter a set of issued objectives. </description>
     <parameters>
         <parameter name="objectives">
+            <description>The set of objectives to be reconnoitered.</description>
             <type>
                 <list>
                     <class name="properties.Reconnoitrable"/>
