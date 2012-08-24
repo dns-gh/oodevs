@@ -14,6 +14,7 @@
 #include "NodeObserver_ABC.h"
 
 #include "Container.h"
+#include "PluginDirectory.h"
 #include "runtime/Async.h"
 #include "runtime/Timer_ABC.h"
 #include <boost/filesystem/path.hpp>
@@ -142,7 +143,7 @@ private:
     const Path web_;
     const std::string type_;
     const int host_;
-    const T_Plugins plugins_;
+    const PluginDirectory plugins_;
     Proxy_ABC& proxy_;
     Container< Node_ABC > nodes_;
     runtime::Timer timer_;
