@@ -122,7 +122,7 @@ target_link_libraries( runtime_test
     runtime
 )
 add_test_target( runtime_test runtime
-    "--data_directory=${root_dir}/src/tests/runtime_test")
+    "--data_directory=${root_dir}/src/tests/runtime_test" )
 
 ################################################################################
 # host_test
@@ -133,13 +133,18 @@ file( GLOB files
 )
 add_executable_target( host_test ${files} )
 set_target_folder( host_test tests )
-add_target_external_library( host_test bcrypt-${platform}_d bcrypt-${platform} )
+if( MSVC )
+    add_target_external_library( host_test bcrypt-${platform}_d bcrypt-${platform} )
+    add_target_external_library( host_test archive_static_d archive_static )
+    add_target_external_library( host_test zlibd zlib )
+endif()
 target_link_libraries( host_test
     host
     runtime
     web
 )
-add_test_target( host_test host )
+add_test_target( host_test host
+   "--data_directory=${root_dir}/src/tests/host_test" )
 
 ################################################################################
 # web_test
