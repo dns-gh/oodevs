@@ -240,7 +240,6 @@ RolePion_Perceiver::RolePion_Perceiver( const Sink& sink, MIL_Agent_ABC& pion, c
     , bExternalCanPerceive_          ( true )
     , bExternalMustUpdateVisionCones_( false )
     , bRadarStateHasChanged_         ( true )
-    , pPerceptionRecoPoint_          ( 0 )
     , pPerceptionRecoLocalisation_   ( 0 )
     , pPerceptionRecoUrbanBlock_     ( 0 )
     , pPerceptionRadar_              ( 0 )
@@ -261,7 +260,6 @@ RolePion_Perceiver::RolePion_Perceiver( const Sink& sink, MIL_Agent_ABC& pion, c
     AddListener< IdentifiedToggleListener >( "perceptions/flying-shell", boost::bind( &EnableFlyingShell, boost::ref( *this ), _1 ), boost::bind( &RolePion_Perceiver::DisableFlyingShellDetection, this, _1 ) );
     AddListener< IdentifiedToggleListener >( "perceptions/urban", boost::bind( &EnableUrbanBlock, boost::ref( *this ), _1 ), boost::bind( &RolePion_Perceiver::DisableRecoUrbanBlock, this, _1 ) );
     AddListener< IdentifiedToggleListener >( "perceptions/reco", boost::bind( &EnableReco, boost::ref( *this ), boost::ref( pion.GetRole< DEC_Decision_ABC >() ), _1 ), boost::bind( &RolePion_Perceiver::DisableRecoLocalisation, this, _1 ) );
-    AddListener< IdentifiedToggleListener >( "perceptions/recognition-point", boost::bind( &EnableRecognitionPoint, boost::ref( *this ), boost::ref( pion.GetRole< DEC_Decision_ABC >() ), _1 ), boost::bind( &RolePion_Perceiver::DisableRecoPoint, this, _1 ) );
     listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/agents" ] ), boost::bind( &::NotifyPerception< MIL_Agent_ABC, bool >, _1, boost::ref( notifications_ ) ) ) );
     listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/agents-in-zone" ] ), boost::bind( &::NotifyPerception< MIL_Agent_ABC, bool >, _1, boost::ref( notifications_ ) ) ) );
     listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/objects" ] ), boost::bind( &::NotifyPerception< MIL_Object_ABC, void >, _1, boost::ref( notifications_ ) ) ) );
@@ -455,31 +453,18 @@ void RolePion_Perceiver::DisableSurveillanceLocalisation( int /*id*/ )
 // Name: RolePion_Perceiver::EnableRecoPoint
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-int RolePion_Perceiver::EnableRecoPoint( const MT_Vector2D& center, double rSize, double rSpeed, DEC_Decision_ABC& callerAgent )
+int RolePion_Perceiver::EnableRecoPoint( const MT_Vector2D& /*center*/, double /*rSize*/, double /*rSpeed*/, DEC_Decision_ABC& /*callerAgent*/ )
 {
-    if( !pPerceptionRecoPoint_ )
-    {
-        pPerceptionRecoPoint_ = new PHY_PerceptionRecoPoint( *this );
-        activePerceptions_.push_back( pPerceptionRecoPoint_ );
-    }
-    return pPerceptionRecoPoint_->AddPoint( center, rSize, rSpeed, callerAgent );
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RolePion_Perceiver::DisableRecoPoint
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-void RolePion_Perceiver::DisableRecoPoint( int id )
+void RolePion_Perceiver::DisableRecoPoint( int /*id*/ )
 {
-    if( !pPerceptionRecoPoint_ )
-        return;
-    pPerceptionRecoPoint_->RemovePoint( id );
-    if( !pPerceptionRecoPoint_->HasPointToHandle() )
-    {
-        activePerceptions_.erase( std::find( activePerceptions_.begin(), activePerceptions_.end(), pPerceptionRecoPoint_ ) );
-        delete pPerceptionRecoPoint_;
-        pPerceptionRecoPoint_ = 0;
-    }
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
@@ -752,7 +737,6 @@ namespace
 void RolePion_Perceiver::DisableAllPerceptions()
 {
     activePerceptions_.clear();
-    Reset( pPerceptionRecoPoint_ );
     Reset( pPerceptionRecoLocalisation_ );
     Reset( pPerceptionRecoUrbanBlock_ );
     Reset( pPerceptionRadar_ );
@@ -794,8 +778,6 @@ const PHY_PerceptionLevel& RolePion_Perceiver::ComputePerception( const MT_Vecto
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::Update( bool /*bIsDead*/ )
 {
-    if( pPerceptionRecoPoint_ )
-        pPerceptionRecoPoint_->Update();
    if( pPerceptionRecoLocalisation_ )
         pPerceptionRecoLocalisation_->Update();
     if( HasChanged() )

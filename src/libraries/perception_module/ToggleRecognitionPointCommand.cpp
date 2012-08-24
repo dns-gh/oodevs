@@ -21,7 +21,7 @@ using namespace sword::perception;
 ToggleRecognitionPointCommand::ToggleRecognitionPointCommand( ModuleFacade& /*module*/, const wrapper::View& parameters, const wrapper::View& /*model*/, size_t /*identifier*/ )
     : identifier_  ( parameters[ "identifier" ] )
     , isActivated_ ( parameters[ "activated" ] )
-    , size_        ( isActivated_ ? parameters[ "size" ] : 0. )
+    , size_        ( isActivated_ ? parameters[ "max-radius" ] : 0. )
     , speed_       ( isActivated_ ? parameters[ "growth-speed" ] : 0. )
     , centerX_     ( isActivated_ ? parameters[ "center/x" ] : 0. )
     , centerY_     ( isActivated_ ? parameters[ "center/y" ] : 0. )
@@ -49,10 +49,13 @@ void ToggleRecognitionPointCommand::Execute( const wrapper::View& model ) const
     wrapper::Effect effect( point );
     if( isActivated_ )
     {
-        effect[ perceptionId_ ][ "size" ] = size_;
+        effect[ perceptionId_ ][ "max-radius" ] = size_;
+        effect[ perceptionId_ ][ "radius" ] = 0.;
         effect[ perceptionId_ ][ "growth-speed" ] = speed_;
+        effect[ perceptionId_ ][ "max-radius-reached" ] = false;
         effect[ perceptionId_ ][ "center/x" ] = centerX_;
         effect[ perceptionId_ ][ "center/y" ] = centerY_;
+        effect[ perceptionId_ ][ "identifier" ] = perceptionId_;
     }
     else
         effect[ perceptionId_ ].MarkForRemove();

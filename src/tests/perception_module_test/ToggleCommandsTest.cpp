@@ -247,7 +247,10 @@ BOOST_FIXTURE_TEST_CASE( activating_recognition_point_forwards_center_and_speed_
     core::Model& point = model[ "entities" ][ identifier ][ "perceptions/recognition-point" ];
     ExpectEffect( point, sword::test::MakeModel( perceptionId,
                             sword::test::MakeModel( "growth-speed", growthSpeed )
-                                                  ( "size", size )
+                                                  ( "radius", 0. )
+                                                  ( "identifier", perceptionId )
+                                                  ( "max-radius", size )
+                                                  ( "max-radius-reached", false )
                                                   ( "center/x", 1 )
                                                   ( "center/y", 2 ) ) );
     commands.Start( "toggle recognition point",
@@ -255,7 +258,7 @@ BOOST_FIXTURE_TEST_CASE( activating_recognition_point_forwards_center_and_speed_
                        ( "activated", true )
                        ( "perception-id", perceptionId )
                        ( "growth-speed", growthSpeed )
-                       ( "size", size )
+                       ( "max-radius", size )
                        ( "center/x", 1 )
                        ( "center/y", 2 ) );
     commands.Execute();

@@ -170,6 +170,7 @@ RoleAdapter::RoleAdapter( MIL_AgentPion& pion, core::Model& entity )
     entity_[ "perceptions/localized-radars/tapping" ];
     entity_[ "perceptions/localized-radars/tapping-radar" ];
     entity_[ "perceptions/object-detection" ];
+    entity_[ "perceptions/recognition-point" ];
     entity_[ "perceptions/alat/reco" ];
     entity_[ "perceptions/alat/monitoring" ];
     entity_[ "perceptions/fire-observer/activated" ] = false;

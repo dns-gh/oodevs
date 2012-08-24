@@ -33,6 +33,7 @@
     <ClInclude Include="..\..\src\libraries\perception_module\PerceptionObserver.h" />
     <ClInclude Include="..\..\src\libraries\perception_module\PerceptionObserver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\perception_module\PerceptionRecoObjects.h" />
+    <ClInclude Include="..\..\src\libraries\perception_module\PerceptionRecoPoint.h" />
     <ClInclude Include="..\..\src\libraries\perception_module\PerceptionRecoSurveillance.h" />
     <ClInclude Include="..\..\src\libraries\perception_module\PerceptionSurfaceAgent.h" />
     <ClInclude Include="..\..\src\libraries\perception_module\PerceptionSurfaceObject.h" />
@@ -76,6 +77,7 @@
     <ClCompile Include="..\..\src\libraries\perception_module\PerceptionLocalisation.cpp" />
     <ClCompile Include="..\..\src\libraries\perception_module\PerceptionObserver.cpp" />
     <ClCompile Include="..\..\src\libraries\perception_module\PerceptionRecoObjects.cpp" />
+    <ClCompile Include="..\..\src\libraries\perception_module\PerceptionRecoPoint.cpp" />
     <ClCompile Include="..\..\src\libraries\perception_module\PerceptionRecoSurveillance.cpp" />
     <ClCompile Include="..\..\src\libraries\perception_module\PerceptionSurfaceAgent.cpp" />
     <ClCompile Include="..\..\src\libraries\perception_module\PerceptionSurfaceObject.cpp" />

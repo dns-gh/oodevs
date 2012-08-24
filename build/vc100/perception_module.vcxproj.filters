@@ -155,6 +155,9 @@
     <ClInclude Include="..\..\src\libraries\perception_module\PerceptionRecoObjects.h">
       <Filter>Source Files\Perceptions</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\perception_module\PerceptionRecoPoint.h">
+      <Filter>Source Files\Perceptions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\perception_module\PerceptionCommand.cpp">
@@ -257,6 +260,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\perception_module\PerceptionRecoObjects.cpp">
+      <Filter>Source Files\Perceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\perception_module\PerceptionRecoPoint.cpp">
       <Filter>Source Files\Perceptions</Filter>
     </ClCompile>
   </ItemGroup>

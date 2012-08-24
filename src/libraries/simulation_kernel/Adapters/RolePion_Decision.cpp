@@ -701,7 +701,7 @@ namespace
         parameters[ "center/x" ] = center->rX_;
         parameters[ "center/y" ] = center->rY_;
         parameters[ "growth-speed" ] = MIL_Tools::ConvertSpeedMosToSim( growthSpeed );
-        parameters[ "size" ] = size;
+        parameters[ "max-radius" ] = size;
         facade.PostCommand( "toggle recognition point", parameters );
         return perceptionId;
     }

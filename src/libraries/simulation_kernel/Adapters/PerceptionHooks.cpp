@@ -572,6 +572,10 @@ namespace
     {
         return localization->IsIntersecting( object->GetLocalisation() );
     }
+    DEFINE_HOOK( IsKnowledgeObjectIntersectingWithCircle, bool, ( const MT_Vector2D* center, double radius, const DEC_Knowledge_Object* object ) )
+    {
+        return object->GetLocalisation().Intersect2DWithCircle( *center, radius );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -653,5 +657,6 @@ void PerceptionHooks::Initialize( core::Facade& facade )
     REGISTER_HOOK( IsLocalizationInsideCircle, facade );
     REGISTER_HOOK( IsKnowledgeObjectInsidePerception, facade );
     REGISTER_HOOK( IsObjectIntersectingLocalization, facade );
+    REGISTER_HOOK( IsKnowledgeObjectIntersectingWithCircle, facade );
     RolePion_Perceiver::Initialize( facade );
 }

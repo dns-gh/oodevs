@@ -149,6 +149,7 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\..\src\tests\perception_module_test\PointRecoSensorTest.cpp" />
     <ClCompile Include="..\..\src\tests\perception_module_test\ScanSensorTest.cpp" />
     <ClCompile Include="..\..\src\tests\perception_module_test\ToggleCommandsTest.cpp" />
     <ClCompile Include="..\..\src\tests\perception_module_test\VisionCommandTest.cpp" />

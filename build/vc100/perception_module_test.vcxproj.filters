@@ -67,5 +67,8 @@
     <ClCompile Include="..\..\src\tests\perception_module_test\ObjectRecoSensorTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\tests\perception_module_test\PointRecoSensorTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
