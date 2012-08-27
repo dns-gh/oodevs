@@ -18,17 +18,24 @@
     <goal>
         <description>Obtenir du renseignement</description>
     </goal>
-    <stages/>
-    <next-task name="agent.tasks.Monitor">
-        <parameter name="objective">
-            <value>
-                <parameter>objective</parameter>
-            </value>
-        </parameter>
-        <parameter name="positions">
-            <value>
-                <parameter>positions</parameter>
-            </value>
-        </parameter>
-    </next-task>
+      <stages>
+        <stage label="observation" permanent="true">
+            <skills>
+                <skill name="agent.skills.primitives.ObserveToward">
+                    <parameter name="entities">
+                        <value>
+                            <list>
+                                <parameter>objective</parameter>
+                            </list>
+                        </value>
+                    </parameter>
+                    <parameter name="positions">
+                        <value>
+                            <parameter>positions</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
 </task>

@@ -86,6 +86,8 @@
             <unit command-post="false" id="515" name="MILITARY.Infantry platoon" position="29TNF3498258286" type="MILITARY.Infantry platoon"/>
             <unit command-post="false" id="516" name="MILITARY.Engineer platoon" position="29TNF3494558397" type="MILITARY.Engineer platoon"/>
             <unit command-post="true" id="517" name="MILITARY.Company command post" position="29TNF3504158366" type="MILITARY.Company command post"/>
+            <unit command-post="false" id="764" name="MILITARY.Scouting platoon" position="29TNF3503358472" type="MILITARY.Scouting platoon"/>
+            <unit command-post="false" id="765" name="MILITARY.Scouting platoon" position="29TNF3520358459" type="MILITARY.Scouting platoon"/>
           </automat>
           <automat engaged="true" id="554" knowledge-group="321" name="MILITARY.Infantry company" symbol="symbols/sfgpucim" type="MILITARY.Infantry company">
             <unit command-post="false" id="555" name="MILITARY.Infantry platoon" position="29TNF3541362648" type="MILITARY.Infantry platoon"/>
@@ -451,4 +453,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="3893348880" -->
+<!-- signature="0513611213" -->

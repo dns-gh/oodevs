@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="platoon.tasks.Surveiller" source-version="1.0.0" knowledge-class="platoon.tasks.knowledges.Surveiller">
-    <description>Soutien dynamique. Appuyer par le mouvement.</description>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.tasks.Monitor" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.Monitor">
+    <description>For the agent, to occupy a set of positions in order to observe an objective (a direction, a urban block, a position etc.).</description>
     <parameters>
         <parameter name="objective">
+            <description>The objective to observe.</description>
             <type>
                 <class name="properties.Observable"/>
             </type>
         </parameter>
         <parameter name="positions">
+            <description>The position from which to observe the objective.</description>
             <type>
                 <list>
                     <class name="properties.Observing"/>
@@ -15,8 +17,11 @@
             </type>
         </parameter>
     </parameters>
-      <stages>
-        <stage label="observation" permanent="true">
+    <goal>
+        <description>To observe an objective from positions.</description>
+    </goal>
+    <stages>
+        <stage label="moving toward position" permanent="true">
             <skills>
                 <skill name="agent.skills.primitives.ObserveToward">
                     <parameter name="entities">

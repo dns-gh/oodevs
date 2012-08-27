@@ -13,7 +13,7 @@
             </return>
         </method>
         <method name="getFinalMeetingPoint">
-            <description>Returns a random position around the 'meetingPoint' parameter (in a circle with a radius of 100 meters ). This position is used by the command post.</description>
+            <description>Returns a random position around the 'meetingPoint' parameter (in a circle with a radius of 100 meters ). This position is reached by engineer units once they have finished their obstacles.</description>
             <return>
                 <type>
                     <class name="directia.core.Object"/>
