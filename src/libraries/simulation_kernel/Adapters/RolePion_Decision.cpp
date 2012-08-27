@@ -18,7 +18,6 @@
 #include "Decision/DEC_AgentFunctions.h"
 #include "Decision/DEC_FireFunctions.h"
 #include "Decision/DEC_PathFind_Manager.h"
-#include "Decision/DEC_KnowledgeAgentFunctions.h" // $$$$ MCO 2012-06-29: TMP
 #include "Decision/DEC_UrbanObjectFunctions.h" // $$$$ MCO 2012-06-29: TMP
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_InterfaceMoving.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
