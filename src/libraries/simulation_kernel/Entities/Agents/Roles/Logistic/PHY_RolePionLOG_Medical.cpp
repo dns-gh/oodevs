@@ -235,15 +235,17 @@ namespace boost
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Medical::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
+    T_MedicalPriorityVector priorities;
     file >> boost::serialization::base_object< PHY_RoleInterface_Medical >( *this )
          >> bSystemEnabled_
          >> bSortingFunctionEnabled_
          >> bHealingFunctionEnabled_
-         >> priorities_
+         >> priorities
          >> tacticalPriorities_
          >> evacuationAmbulances_
          >> collectionAmbulances_
          >> reservations_;
+    priorities_ = priorities;
 
     std::size_t nNbr;
     file >> nNbr;
