@@ -58,7 +58,7 @@ Symbol::~Symbol()
 void Symbol::SerializeAttributes( xml::xostream& xos ) const
 {
     std::string nature = GetValue();
-    if ( nature.find( "symbols/" ) == 0 )
+    if ( nature.find( "symbols/" ) != std::string::npos )
         nature = nature.substr( 8, nature.length() - 8 );
     xos << xml::attribute( "nature", nature );
     if( IsOverriden() )
