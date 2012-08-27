@@ -42,7 +42,7 @@ UnitStateTableEquipment::~UnitStateTableEquipment()
 // Name: UnitStateTableEquipment::IsReadOnlyForType
 // Created: JSR 2012-03-22
 // -----------------------------------------------------------------------------
-bool UnitStateTableEquipment::IsReadOnlyForType( QString typeName ) const
+bool UnitStateTableEquipment::IsReadOnlyForType( const QString& typeName ) const
 {
     return typeName != kernel::Agent_ABC::typeName_;
 }

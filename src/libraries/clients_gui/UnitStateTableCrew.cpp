@@ -50,7 +50,7 @@ UnitStateTableCrew::~UnitStateTableCrew()
 // Name: UnitStateTableCrew::IsReadOnlyForType
 // Created: JSR 2012-03-22
 // -----------------------------------------------------------------------------
-bool UnitStateTableCrew::IsReadOnlyForType( QString typeName ) const
+bool UnitStateTableCrew::IsReadOnlyForType( const QString& typeName ) const
 {
     return typeName != kernel::Agent_ABC::typeName_;
 }

@@ -34,7 +34,7 @@ public:
 public:
     //! @name Operations
     //@{
-    virtual bool IsReadOnlyForType( QString typeName ) const;
+    virtual bool IsReadOnlyForType( const QString& typeName ) const;
     //@}
 
 protected:
