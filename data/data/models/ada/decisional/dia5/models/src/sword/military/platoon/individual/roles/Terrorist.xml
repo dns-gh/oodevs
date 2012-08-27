@@ -10,6 +10,8 @@
         <skill name="sword.military.platoon.skills.DischargeIn"/>
         <skill name="sword.military.platoon.skills.primitives.Unload"/>
         <skill name="sword.military.platoon.skills.DropUnit"/>
+        <skill name="sword.military.platoon.coercition.skills.SwitchToSafety"/>
+        <skill name="sword.military.platoon.coercition.skills.SwitchToSpeed"/>
     </skills>
     <default-task label="Prise en compte des ordres de conduite et autres actions par defaut." permanent="true">
         <description>Gestion par défaut des ordres de conduite</description>
