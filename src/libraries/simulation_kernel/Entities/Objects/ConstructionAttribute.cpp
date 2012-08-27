@@ -81,12 +81,11 @@ ConstructionAttribute::~ConstructionAttribute()
 // Name: ConstructionAttribute::SetDotations
 // Created: ABR 2012-03-20
 // -----------------------------------------------------------------------------
-void ConstructionAttribute::SetDotations( const PHY_DotationCategory& category, unsigned int nFullNbrDotation, float density /*= 1.0f*/ )
+void ConstructionAttribute::SetDotations( const PHY_DotationCategory& category, unsigned int nFullNbrDotation )
 {
     nFullNbrDotation_    = nFullNbrDotation;
     nCurrentNbrDotation_ = nFullNbrDotation;
     dotation_            = &category;
-    density_             = density;
 }
 
 // -----------------------------------------------------------------------------
@@ -373,10 +372,10 @@ void ConstructionAttribute::NotifyStopBuildByGen()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ConstructionAttribute::GetPercentage
-// Created: MMC 2011-11-18
+// Name: ConstructionAttribute::SetDensity
+// Created: LGY 2012-08-27
 // -----------------------------------------------------------------------------
-double ConstructionAttribute::GetDensity() const
+void ConstructionAttribute::SetDensity( double density )
 {
-    return density_;
+    density_ = static_cast< float >( density );
 }

@@ -19,6 +19,7 @@
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
 #include "Entities/Objects/AvoidanceCapacity.h"
+#include "Entities/Objects/ConstructionAttribute.h"
 #include "Network/NET_ASN_Tools.h"
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
@@ -138,6 +139,9 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const std::string& name, const s
         BuildableCapacity* capacity = object->Retrieve< BuildableCapacity >();
         if( capacity )
             capacity->SetDensity( density );
+        ConstructionAttribute* attribute = object->RetrieveAttribute< ConstructionAttribute >();
+        if( attribute )
+            attribute->SetDensity( density );
     }
     object->Finalize();
     return object;
