@@ -32,6 +32,7 @@
 #include "tools/SchemaWriter_ABC.h"
 #include "tools/ExerciseConfig.h"
 #include <boost/filesystem.hpp>
+#include <boost/filesystem/operations.hpp>
 #include <QtGui/qmessagebox.h>
 #include <QtGui/qprogressdialog.h>
 #include <xeumeuleu/xml.hpp>
@@ -329,6 +330,19 @@ void UrbanModel::SerializeExercise( const std::string& filename, const tools::Sc
 // -----------------------------------------------------------------------------
 void UrbanModel::SerializeTerrain( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const
 {
+    bfs::path directory( filename, bfs::native );
+    directory = directory.parent_path();
+    try
+    {
+        if( !bfs::exists( directory ) )
+        {
+            bfs::create_directories( directory );
+        }
+    }
+    catch( bfs::filesystem_error& e )
+    {
+        bfs::create_directories( directory );
+    }
     xml::xofstream xos( filename, xml::encoding( "UTF-8" ) );
     xos << xml::start( "urban" );
     schemaWriter.WriteSchema( xos, "terrain", "urban" );
