@@ -86,7 +86,7 @@
     <Link />
     <PostBuildEvent />
     <Link>
-      <AdditionalDependencies>libboost_chrono-vc100-mt-gd-1_50.lib;$(libGeocoord);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(libGeocoord);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
@@ -94,7 +94,7 @@
     <Link />
     <PostBuildEvent />
     <Link>
-      <AdditionalDependencies>libboost_chrono-vc100-mt-gd-1_50.lib;$(libGeocoord);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(libGeocoord);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
@@ -102,7 +102,7 @@
     <Link />
     <PostBuildEvent />
     <Link>
-      <AdditionalDependencies>libboost_chrono-vc100-mt-1_50.lib;$(libGeocoord);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(libGeocoord);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
@@ -110,7 +110,7 @@
     <Link />
     <PostBuildEvent />
     <Link>
-      <AdditionalDependencies>libboost_chrono-vc100-mt-1_50.lib;$(libGeocoord);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(libGeocoord);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
