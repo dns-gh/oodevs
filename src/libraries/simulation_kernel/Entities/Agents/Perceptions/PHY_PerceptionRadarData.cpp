@@ -139,4 +139,3 @@ void PHY_PerceptionRadarData::Acquire( PHY_RoleInterface_Perceiver& perceiver, c
 
     Update( perceiver );
 }
-

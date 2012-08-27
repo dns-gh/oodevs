@@ -11,6 +11,7 @@
 #include "PerceptionHooks.h"
 #include "Hook.h"
 #include "RolePion_Perceiver.h"
+#include "simulation_kernel/Entities/MIL_Army_ABC.h"
 #include "simulation_kernel/Entities/Agents/MIL_AgentPion.h"
 #include "simulation_kernel/Meteo/RawVisionData/PHY_RawVisionDataIterator.h"
 #include "simulation_kernel/Meteo/PHY_MeteoDataManager.h"
@@ -44,8 +45,11 @@
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/MIL_Random.h"
 #include "simulation_kernel/Knowledge/MIL_KnowledgeGroup.h"
+#include "simulation_kernel/Knowledge/DEC_Knowledge_Urban.h"
 #include "simulation_kernel/Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "simulation_kernel/Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
+#include "simulation_kernel/Knowledge/DEC_KnowledgeBlackBoard_Army.h"
+#include "simulation_kernel/Knowledge/DEC_BlackBoard_CanContainKnowledgeUrban.h"
 #include "simulation_kernel/Knowledge/DEC_BlackBoard_CanContainKnowledgeAgentPerception.h"
 #include "simulation_kernel/Knowledge/DEC_BlackBoard_CanContainKnowledgePopulationPerception.h"
 #include "simulation_kernel/Tools/MIL_Geometry.h"
@@ -379,6 +383,17 @@ namespace
     {
         return urbanObject->HasArchitecture();
     }
+    DEFINE_HOOK( CanUrbanBlockBeSeen, bool, ( const SWORD_Model* perceiver, const UrbanObjectWrapper* urbanBlock ) )
+    {
+        boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge = GET_PION( perceiver ).GetArmy().GetKnowledge().GetKnowledgeUrbanContainer().GetKnowledgeUrban( *urbanBlock );
+        if( pKnowledge )
+            return pKnowledge->GetCurrentRecceProgress() >= ( 1. - MIL_Random::rand_ii( MIL_Random::ePerception ) );
+        return false;
+    }
+    DEFINE_HOOK( GetUrbanBlockLocalization, const TER_Localisation*, ( const UrbanObjectWrapper* urbanBlock ) )
+    {
+        return &urbanBlock->GetLocalisation();
+    }
     DEFINE_HOOK( IsPostureStationed, bool, ( const SWORD_Model* entity ) )
     {
         const PHY_Posture& currentPerceiverPosture = GET_ROLE( entity, PHY_RoleInterface_Posture ).GetCurrentPosture();
@@ -620,6 +635,8 @@ void PerceptionHooks::Initialize( core::Facade& facade )
     REGISTER_HOOK( GetUrbanObjectOccupation, facade );
     REGISTER_HOOK( GetUrbanObjectStructuralState, facade );
     REGISTER_HOOK( HasUrbanObjectArchitecture, facade );
+    REGISTER_HOOK( CanUrbanBlockBeSeen, facade );
+    REGISTER_HOOK( GetUrbanBlockLocalization, facade );
     REGISTER_HOOK( IsPostureStationed, facade );
     REGISTER_HOOK( AppendAddedKnowledge, facade );
     REGISTER_HOOK( IsInCity, facade );

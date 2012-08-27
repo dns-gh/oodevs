@@ -114,6 +114,8 @@ class TER_Localisation;
     APPLY( GetUrbanObjectOccupation, 1, double, ( const UrbanObjectWrapper* urbanObject ) ) \
     APPLY( GetUrbanObjectStructuralState, 1, double, ( const UrbanObjectWrapper* urbanObject ) ) \
     APPLY( HasUrbanObjectArchitecture, 1, bool, ( const UrbanObjectWrapper* urbanObject ) ) \
+    APPLY( CanUrbanBlockBeSeen, 2, bool, ( const SWORD_Model* perceiver, const UrbanObjectWrapper* urbanBlock ) ) \
+    APPLY( GetUrbanBlockLocalization, 1, const TER_Localisation*, ( const UrbanObjectWrapper* urbanBlock ) ) \
     APPLY( IsPostureStationed, 1, bool, ( const SWORD_Model* entity ) ) \
     APPLY( CanComponentPerceive, 2, bool, ( const SWORD_Model* entity, const SWORD_Model* component ) ) \
     APPLY( GetTransporter, 2, const SWORD_Model*, ( const SWORD_Model* model, const SWORD_Model* agent ) ) \

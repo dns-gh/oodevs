@@ -1,0 +1,35 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2012 MASA Group
+//
+// *****************************************************************************
+
+#include "perception_module_test_pch.h"
+#include "PerceptionCommandFixture.h"
+
+using namespace sword::perception;
+
+BOOST_FIXTURE_TEST_CASE( perception_reco_urban_sensor_recognizes_all_agents_in_urban_block_localization, PerceptionCommandFixture )
+{
+    entity[ "perceptions/sensor/activated" ] = false;
+    const UrbanObjectWrapper* urbanBlock = reinterpret_cast< const UrbanObjectWrapper* >( 1337 );
+    entity[ "perceptions/urban/42/localization" ].SetUserData( urbanBlock );
+    const SWORD_Model* other = core::Convert( &model[ "entities/other" ] );
+    const SWORD_Model* perceiver = core::Convert( &entity );
+    model[ "entities/other" ] = core::MakeModel( "pion", core::MakeUserData( reinterpret_cast< MIL_Agent_ABC* >( 43 ) ) )
+                                               ( "identifier", "other" );
+    MOCK_EXPECT( GetUrbanBlockLocalization ).once().returns( reinterpret_cast< const TER_Localisation* >( 13337 ) );
+    MOCK_EXPECT( GetAgentListWithinLocalisation ).once().calls( boost::bind( boost::apply< void >(), _3, other, _4 ) );
+    MOCK_EXPECT( CanBeSeen ).once().with( perceiver, other ).returns( true );
+    MOCK_EXPECT( CanUrbanBlockBeSeen ).once().returns( true );
+    ExpectNotifications( "agents", sword::test::MakeModel()
+                                    [ sword::test::MakeModel( "target", 43 )
+                                                            ( "level", 2 ) // recognized
+                                                            ( "recorded", false ) ]
+                                    [ sword::test::MakeModel( mock::any ) ] );
+    commands.Post( "perception", core::MakeModel( "identifier", identifier ) );
+    commands.Execute();
+}

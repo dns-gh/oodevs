@@ -152,6 +152,7 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
     <ClCompile Include="..\..\src\tests\perception_module_test\PointRecoSensorTest.cpp" />
     <ClCompile Include="..\..\src\tests\perception_module_test\ScanSensorTest.cpp" />
     <ClCompile Include="..\..\src\tests\perception_module_test\ToggleCommandsTest.cpp" />
+    <ClCompile Include="..\..\src\tests\perception_module_test\UrbanRecoSensorTest.cpp" />
     <ClCompile Include="..\..\src\tests\perception_module_test\VisionCommandTest.cpp" />
   </ItemGroup>
   <ItemGroup>

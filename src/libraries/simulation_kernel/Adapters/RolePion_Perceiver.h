@@ -22,7 +22,6 @@
 class DEC_KS_Perception;
 class PHY_Perception_ABC;
 class PHY_PerceptionRecoLocalisation;
-class PHY_PerceptionRecoUrbanBlock;
 class PHY_PerceptionRadar;
 class PHY_PerceptionFlyingShell;
 class TER_Agent_ABC;
@@ -233,7 +232,6 @@ private:
     T_SurfaceObjectMap surfacesObject_;
 
     PHY_PerceptionRecoLocalisation* pPerceptionRecoLocalisation_;
-    PHY_PerceptionRecoUrbanBlock*   pPerceptionRecoUrbanBlock_;
     PHY_PerceptionRadar*            pPerceptionRadar_;
     PHY_PerceptionFlyingShell*      pPerceptionFlyingShell_;
     T_PerceptionVector              activePerceptions_;
