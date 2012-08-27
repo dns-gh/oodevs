@@ -1371,8 +1371,7 @@
 
     <target name="protocol_test" description="build protocol test application" depends="library.protocol,library.tools">
         <build-test name="protocol" depends="boost,protobuf"
-            libs="masalloc,
-                  lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
+            libs="lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix}"/>
     </target>
