@@ -84,11 +84,14 @@ public:
     double GetMaxSpeed( const TerrainData& environment ) const;
     double GetMaxSlope() const;
     double GetMaxSpeedWithReinforcement() const;
-    double GetTheoricMaxSpeed( bool loaded ) const;
+    double GetTheoricMaxSpeedWithReinforcement();
+    double GetTheoricMaxSpeed( bool loaded );
     void SetSpeedModificator( double rFactor );
     void SetMaxSpeedModificator( double rFactor );
     double GetMaxSpeedModificator();
     void ApplyTrafficModifier();
+    /** Whether to use theoric speed (for pathfinding) or actual speed (to compute real speed when moving) */
+    void SetTheoricSpeed( bool ) const;
     //@}
 
     //! @name Network
@@ -159,6 +162,7 @@ private:
     bool bCurrentPathHasChanged_;
     bool bEnvironmentHasChanged_;
     bool bHasMove_;
+    mutable bool bTheoricMaxSpeed_;
     //@}
 };
 

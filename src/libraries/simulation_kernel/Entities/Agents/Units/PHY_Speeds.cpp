@@ -44,7 +44,7 @@ PHY_Speeds::PHY_Speeds( xml::xistream& xis, unsigned int timeStepDuration )
 // Created: AGE 2005-02-03
 // -----------------------------------------------------------------------------
 PHY_Speeds::PHY_Speeds( const moving::PHY_RoleAction_Moving& role )
-    : rMaxSpeed_               ( role.GetMaxSpeedWithReinforcement() )
+    : rMaxSpeed_               ( const_cast< moving::PHY_RoleAction_Moving& >( role ).GetTheoricMaxSpeedWithReinforcement() )
     , rBaseSpeed_              ( role.GetSpeedWithReinforcement( TerrainData() ) )
     , nLinearPassabilityMask_  ( 0 )
     , nAreaPassabilityMask_    ( 0 )
@@ -52,7 +52,9 @@ PHY_Speeds::PHY_Speeds( const moving::PHY_RoleAction_Moving& role )
     , nBorderImpassabilityMask_( 0 )
     , nLinearImpassabilityMask_( 0 )
 {
+    role.SetTheoricSpeed( true );
     Initialize( role );
+    role.SetTheoricSpeed( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,7 +62,7 @@ PHY_Speeds::PHY_Speeds( const moving::PHY_RoleAction_Moving& role )
 // Created: LMT 2010-05-04
 // -----------------------------------------------------------------------------
 PHY_Speeds::PHY_Speeds( const moving::PHY_RoleAction_Moving& role, bool loaded )
-    : rMaxSpeed_               ( role.GetTheoricMaxSpeed( loaded ) )
+    : rMaxSpeed_               ( const_cast< moving::PHY_RoleAction_Moving& >( role ).GetTheoricMaxSpeed( loaded ) )
     , rBaseSpeed_              ( role.GetSpeedWithReinforcement( TerrainData() ) )
     , nLinearPassabilityMask_  ( 0 )
     , nAreaPassabilityMask_    ( 0 )

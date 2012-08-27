@@ -68,6 +68,7 @@ PHY_RoleAction_Moving::PHY_RoleAction_Moving( MIL_AgentPion& pion )
     , bCurrentPathHasChanged_( true )
     , bEnvironmentHasChanged_( true )
     , bHasMove_              ( false )
+    , bTheoricMaxSpeed_      ( false )
 {
     // NOTHING
 }
@@ -117,8 +118,21 @@ double PHY_RoleAction_Moving::ApplySpeedModificators( double rSpeed ) const
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Moving::Execute( moving::SpeedComputer_ABC& algorithm ) const
 {
-    algorithm.AddModifier( rMaxSpeedModificator_ * rTrafficModificator_, true );
+    if( !bTheoricMaxSpeed_ )
+        algorithm.AddModifier( rMaxSpeedModificator_ * rTrafficModificator_, true );
     algorithm.AddModifier( rSpeedModificator_, false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Moving::SetTheoricSpeed
+// Created: LDC 2012-08-22
+// Set to true when speedcomputers must NOT take into account decisional or
+// traffic limitations, typically when computing a path. Must be set back to true
+// when computing speed for actual movement.
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Moving::SetTheoricSpeed( bool value ) const
+{
+    bTheoricMaxSpeed_ = value;
 }
 
 // -----------------------------------------------------------------------------
@@ -187,13 +201,16 @@ double PHY_RoleAction_Moving::GetMaxSpeedWithReinforcement() const
 // Name: PHY_RoleAction_Moving::GetTheoricMaxSpeed
 // Created: LMT 2010-05-04
 // -----------------------------------------------------------------------------
-double PHY_RoleAction_Moving::GetTheoricMaxSpeed( bool loaded ) const
+double PHY_RoleAction_Moving::GetTheoricMaxSpeed( bool loaded )
 {
+    SetTheoricSpeed( true );
     SpeedComputerStrategy strategy( true, false, 0 );
     std::auto_ptr< SpeedComputer_ABC > computer;
     computer = pion_.GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy, loaded );
     pion_.Execute( *computer );
-    return computer->GetSpeed();
+    double result = computer->GetSpeed();
+    SetTheoricSpeed( false );
+    return result;
 }
 
 
@@ -209,6 +226,14 @@ double PHY_RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& envi
     double rSpeed = computer->GetSpeed();
     rSpeed = std::min( rSpeed, GetMaxSpeedWithReinforcement() );
     return rSpeed;
+}
+
+double PHY_RoleAction_Moving::GetTheoricMaxSpeedWithReinforcement()
+{
+    SetTheoricSpeed( true );
+    double result = GetMaxSpeedWithReinforcement();
+    SetTheoricSpeed( false );
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -442,6 +467,7 @@ void PHY_RoleAction_Moving::Clean()
     bCurrentPathHasChanged_ = false;
     bEnvironmentHasChanged_ = false;
     bHasMove_               = false;
+    bTheoricMaxSpeed_       = false;
     rTrafficModificator_    = 1.;
 }
 
