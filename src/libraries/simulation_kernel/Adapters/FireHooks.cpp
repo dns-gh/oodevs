@@ -44,6 +44,9 @@
 
 using namespace sword;
 
+#define GET_ROLE( node, role ) (*core::Convert( node ))[ "roles/" #role ].GetUserData< role >()
+#define GET_PION( node ) (*core::Convert( node ))[ "pion" ].GetUserData< MIL_AgentPion >()
+
 namespace
 {
     const PHY_DotationCategory* GetDotationCategory( const char* dotation )
@@ -54,8 +57,7 @@ namespace
     }
     DEFINE_HOOK( IsTemporarilyBlockable, bool, ( const SWORD_Model* entity ) )
     {
-        MIL_AgentPion& pion = (*core::Convert( entity ) )[ "pion" ].GetUserData< MIL_AgentPion >();
-        return pion.GetRole< PHY_RoleInterface_UrbanLocation >().IsInCity();
+        return GET_ROLE( entity, PHY_RoleInterface_UrbanLocation ).IsInCity();
     }
     DEFINE_HOOK( GetFireRandomInteger, size_t, ( size_t min, size_t max ) )
     {
@@ -67,28 +69,28 @@ namespace
     }
     DEFINE_HOOK( HasDotation, bool, ( const SWORD_Model* entity, const char* dotation ) )
     {
-        MIL_AgentPion& pion = (*core::Convert( entity ) )[ "pion" ].GetUserData< MIL_AgentPion >();
-        std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( pion.GetAlgorithms().dotationComputerFactory_->Create() );
-        pion.Execute( *dotationComputer );
         const PHY_DotationCategory* category = GetDotationCategory( dotation );
         if( ! category )
         {
             MT_LOG_ERROR_MSG( "Unknown dotation category in HasDotation hook implementation : " << dotation );
             return false;
         }
+        MIL_AgentPion& pion = GET_PION( entity );
+        std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( pion.GetAlgorithms().dotationComputerFactory_->Create() );
+        pion.Execute( *dotationComputer );
         return dotationComputer->HasDotation( *category );
     }
     DEFINE_HOOK( GetDotationValue, double, ( const SWORD_Model* entity, const char* dotation ) )
     {
-        MIL_AgentPion& pion = (*core::Convert( entity ) )[ "pion" ].GetUserData< MIL_AgentPion >();
-        std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( pion.GetAlgorithms().dotationComputerFactory_->Create() );
-        pion.Execute( *dotationComputer );
         const PHY_DotationCategory* category = GetDotationCategory( dotation );
         if( ! category )
         {
             MT_LOG_ERROR_MSG( "Unknown dotation category in HasDotation hook implementation : " << dotation );
             return false;
         }
+        MIL_AgentPion& pion = GET_PION( entity );
+        std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( pion.GetAlgorithms().dotationComputerFactory_->Create() );
+        pion.Execute( *dotationComputer );
         return dotationComputer->GetDotationValue( *category );
     }
     DEFINE_HOOK( CanFire, bool, ( const SWORD_Model* component, const char* dotation, int nComposanteFiringType, int ammoDotationClass ) )
@@ -123,21 +125,20 @@ namespace
     }
     DEFINE_HOOK( GetWeaponReloadingDuration, double, ( const SWORD_Model* firer, double rDuration ) )
     {
-        MIL_AgentPion& pion = (*core::Convert( firer ) )[ "pion" ].GetUserData< MIL_AgentPion >();
+        MIL_AgentPion& pion = GET_PION( firer );
         std::auto_ptr< firing::WeaponReloadingComputer_ABC > computer( pion.GetAlgorithms().weaponReloadingComputerFactory_->Create( rDuration ) );
         pion.Execute( *computer );
         return computer->GetDuration();
     }
     DEFINE_HOOK( ReserveAmmunition, unsigned int, ( const SWORD_Model* firer, const char* dotation, double nNbrAmmoToFire ) )
     {
-        MIL_AgentPion& pion = (*core::Convert( firer ) )[ "pion" ].GetUserData< MIL_AgentPion >();
         const PHY_DotationCategory* category = GetDotationCategory( dotation );
         if( ! category )
         {
             MT_LOG_ERROR_MSG( "Unknown dotation category in ReserveAmmunition hook implementation : " << dotation );
             return 0;
         }
-        return (unsigned int)pion.GetRole< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( *category, nNbrAmmoToFire );
+        return (unsigned int)GET_ROLE( firer, dotation::PHY_RoleInterface_Dotations ).AddFireReservation( *category, nNbrAmmoToFire );
     }
     DEFINE_HOOK( GetVolumeId, unsigned int, ( const char* type ) )
     {
@@ -148,22 +149,21 @@ namespace
     }
     DEFINE_HOOK( GetDistance, double, ( const SWORD_Model* firer, const SWORD_Model* target ) )
     {
-        const MIL_AgentPion& pion = (*core::Convert( firer ))[ "pion" ].GetUserData< MIL_AgentPion >();
+        const MIL_AgentPion& pion = GET_PION( firer );
         const MIL_Agent_ABC& knowledge = (*core::Convert( target ))[ "agent" ].GetUserData< boost::shared_ptr< DEC_Knowledge_Agent > >()->GetAgentKnown();
         return pion.Distance( knowledge );
     }
     DEFINE_HOOK( ModifyPh, double, ( const SWORD_Model* firer, const SWORD_Model* target, const char* dotation, double rPh ) )
     {
-        const MIL_AgentPion& pion = (*core::Convert( firer ))[ "pion" ].GetUserData< MIL_AgentPion >();
-        const MIL_Agent_ABC& enemy = (*core::Convert( target ))[ "agent" ].GetUserData< boost::shared_ptr< DEC_Knowledge_Agent > >()->GetAgentKnown();
         const PHY_DotationCategory* category = GetDotationCategory( dotation );
         if( ! category )
         {
             MT_LOG_ERROR_MSG( "Unknown dotation category in ModifyPh hook implementation : " << dotation );
             return false;
         }
+        const MIL_Agent_ABC& enemy = (*core::Convert( target ))[ "agent" ].GetUserData< boost::shared_ptr< DEC_Knowledge_Agent > >()->GetAgentKnown();
         const double protection = enemy.GetRole< PHY_RoleInterface_ActiveProtection >().GetPHModifier( *category );
-        return pion.GetRole< PHY_RoleInterface_HumanFactors >().ModifyPH( rPh * protection );
+        return GET_ROLE( firer, PHY_RoleInterface_HumanFactors ).ModifyPH( rPh * protection );
     }
     DEFINE_HOOK( GetPhModificator, double, ( const SWORD_Model* firer, const SWORD_Model* target, const char* launcher ) )
     {
@@ -173,9 +173,8 @@ namespace
             MT_LOG_ERROR_MSG( "Unknown launcher type in GetPhModificator hook implementation : " << launcher );
             return 0;
         }
-        const MIL_AgentPion& pion = (*core::Convert( firer ))[ "pion" ].GetUserData< MIL_AgentPion >();
         const MIL_Agent_ABC& enemy = (*core::Convert( target ))[ "agent" ].GetUserData< boost::shared_ptr< DEC_Knowledge_Agent > >()->GetAgentKnown();
-        const PHY_RoleInterface_Posture& firerPosture  = pion.GetRole< PHY_RoleInterface_Posture >();
+        const PHY_RoleInterface_Posture& firerPosture  = GET_ROLE( firer, PHY_RoleInterface_Posture );
         const PHY_RoleInterface_Posture& targetPosture = enemy.GetRole< PHY_RoleInterface_Posture >();
         return type->GetPHModificator( firerPosture, targetPosture ) * firerPosture.GetElongationFactor();
     }
@@ -201,7 +200,7 @@ namespace
     }
     DEFINE_HOOK( EvaluateDangerosity, double, ( const SWORD_Model* agent, const SWORD_Model* target ) )
     {
-        const MIL_AgentPion& pion = (*core::Convert( target ))[ "pion" ].GetUserData< MIL_AgentPion >();
+        const MIL_AgentPion& pion = GET_PION( target );
         boost::shared_ptr< DEC_Knowledge_Agent > knowledge = (*core::Convert( agent ))[ "agent" ].GetUserData< boost::shared_ptr< DEC_Knowledge_Agent > >();
         return knowledge->GetDangerosity( pion, false ) * knowledge->GetOperationalState(); // $$$$ MCO 2012-05-16: use fire module GetDangerosity
     }
