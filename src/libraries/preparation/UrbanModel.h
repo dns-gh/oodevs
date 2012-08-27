@@ -78,6 +78,7 @@ public:
     void Serialize( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const;
     void CreateCityOrDistrict( kernel::Entity_ABC* parent );
     void CreateUrbanBlocks( const kernel::Location_ABC& location, kernel::UrbanObject_ABC& parent, bool isAuto );
+    kernel::UrbanObject_ABC* Create( const geometry::Polygon2f& location, kernel::Entity_ABC* parent );
     void DeleteBlocks( const std::vector< const kernel::UrbanObject_ABC* >& urbanObjects );
     void DeleteBlock( const kernel::UrbanObject_ABC& urbanObject );
     void ExportShapeFile( const std::string exportDirectory, const tools::ExerciseConfig& config, QProgressDialog& progressDialog ) const;
@@ -86,7 +87,6 @@ public:
 
     //! @name Accessors
     //@{
-    UrbanFactory_ABC& GetFactory() const;
     const kernel::UrbanObject_ABC* FindBlock( const geometry::Point2f& center ) const;
     void GetListWithinCircle( const geometry::Point2f& center, float radius, std::vector< const kernel::UrbanObject_ABC* >& result ) const;
     //@}

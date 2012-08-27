@@ -166,13 +166,15 @@ UrbanModel::~UrbanModel()
 }
 
 // -----------------------------------------------------------------------------
-// Name: UrbanModel::GetFactory
-// Created: ABR 2012-06-01
+// Name: UrbanModel::Create
+// Created: LGY 2012-08-27
 // -----------------------------------------------------------------------------
-UrbanFactory_ABC& UrbanModel::GetFactory() const
+kernel::UrbanObject_ABC* UrbanModel::Create( const geometry::Polygon2f& location, kernel::Entity_ABC* parent )
 {
-    assert( factory_.get() );
-    return *factory_;
+    kernel::UrbanObject_ABC* ptr = factory_->Create( location, parent );
+    if( ptr )
+        Register( ptr->GetId(), *ptr );
+    return ptr;
 }
 
 // -----------------------------------------------------------------------------
@@ -427,7 +429,7 @@ void UrbanModel::CreateUrbanBlocks( const kernel::Location_ABC& location, kernel
     if( !isAuto )
     {
         if( geostore_->BlockAutoProcess( polygon ) )
-            factory_->Create( polygon, &parent );
+            Create( polygon, &parent );
     }
     else
         geostore_->CreateUrbanBlocksOnCities( polygon, parent );
