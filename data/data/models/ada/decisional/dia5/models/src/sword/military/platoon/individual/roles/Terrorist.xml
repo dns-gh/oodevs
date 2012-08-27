@@ -6,6 +6,10 @@
         <skill name="sword.military.platoon.individual.skills.Assassinate"/>
         <skill name="sword.military.platoon.individual.skills.Snipe"/>
         <skill name="sword.military.platoon.individual.skills.CommitTerrorist"/>
+        <skill name="sword.military.platoon.skills.primitives.Load"/>
+        <skill name="sword.military.platoon.skills.DischargeIn"/>
+        <skill name="sword.military.platoon.skills.primitives.Unload"/>
+        <skill name="sword.military.platoon.skills.DropUnit"/>
     </skills>
     <default-task label="Prise en compte des ordres de conduite et autres actions par defaut." permanent="true">
         <description>Gestion par défaut des ordres de conduite</description>

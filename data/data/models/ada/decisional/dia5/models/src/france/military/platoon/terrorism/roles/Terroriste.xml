@@ -10,5 +10,6 @@
         <skill name="france.military.platoon.terrorism.skills.SeDissimuler"/>
         <skill name="france.military.platoon.skills.MoveAlong"/>
         <skill name="france.military.platoon.terrorism.skills.Renseigner"/>
+        <skill name="france.military.platoon.skills.LibererEmbarques"/>
     </skills>
 </role>
