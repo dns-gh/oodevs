@@ -74,7 +74,7 @@ public:
 //    void     ThrowSmoke         ( MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmo, PHY_FireResults_ABC& fireResult ) const;
 
     double GetDangerosity     ( const wrapper::View& firer, const wrapper::View& target, const wrapper::View& compTarget, bool bUsePH, bool checkAmmo ) const;
-    double GetDangerosity     ( const wrapper::View& firer, const wrapper::View& target, double rDistBtwFirerAndTarget, bool checkAmmo ) const;
+    double GetDangerosity     ( const wrapper::View& firer, const wrapper::View& target, double distance, bool checkAmmo ) const;
 
     double GetMaxRangeToFireOn( const wrapper::View& firer, const wrapper::View& target, double rWantedPH, const char* dotation ) const;
     double GetMinRangeToFireOn( const wrapper::View& firer, const wrapper::View& target, double rWantedPH ) const;

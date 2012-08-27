@@ -48,7 +48,7 @@ public:
     //! @name Operations
     //@{
     double GetDangerosity                ( const wrapper::View& firer, const wrapper::View& target, const wrapper::View& compTarget, bool bUsePH ) const;
-    double GetDangerosity                ( const wrapper::View& compTarget, double rDistBtwFirerAndTarget ) const;
+    double GetDangerosity                ( const wrapper::View& compTarget, double distance ) const;
     double GetMaxRangeToFireOn           ( const wrapper::View& compTarget, double rWantedPH ) const;
     double GetMinRangeToFireOn           ( const wrapper::View& compTarget, double rWantedPH ) const;
     double GetMaxRangeToFire             ( double rWantedPH ) const;

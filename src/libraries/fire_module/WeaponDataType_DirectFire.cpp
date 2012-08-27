@@ -240,9 +240,9 @@ double WeaponDataType_DirectFire::GetDangerosity( const wrapper::View& firer, co
 // Name: WeaponDataType_DirectFire::GetDangerosity
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-double WeaponDataType_DirectFire::GetDangerosity( const wrapper::View& compTarget, double rDistBtwFirerAndTarget ) const
+double WeaponDataType_DirectFire::GetDangerosity( const wrapper::View& compTarget, double distance ) const
 {
-    return GetPH( compTarget[ "volume" ], rDistBtwFirerAndTarget ) * dotation_.ModifyDangerosity( compTarget );
+    return GetPH( compTarget[ "volume" ], distance ) * dotation_.ModifyDangerosity( compTarget );
 }
 
 // -----------------------------------------------------------------------------

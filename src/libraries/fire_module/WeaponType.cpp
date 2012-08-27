@@ -333,11 +333,11 @@ namespace
 // Name: WeaponType::GetDangerosity
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-double WeaponType::GetDangerosity( const wrapper::View& firer, const wrapper::View& target, double rDistBtwFirerAndTarget, bool checkAmmo ) const
+double WeaponType::GetDangerosity( const wrapper::View& firer, const wrapper::View& target, double distance, bool checkAmmo ) const
 {
     boost::optional< wrapper::View > component = GetMajorComponent( target[ "components" ] );
     if( component && CheckDirectFireDotation( firer, checkAmmo ) )
-        return pDirectFireData_->GetDangerosity( *component, rDistBtwFirerAndTarget );
+        return pDirectFireData_->GetDangerosity( *component, distance );
     return 0;
 }
 
