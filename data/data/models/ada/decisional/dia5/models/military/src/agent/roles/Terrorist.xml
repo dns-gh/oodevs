@@ -6,6 +6,11 @@
     <skill name="agent.skills.Assassinate"/>
     <skill name="agent.skills.Snipe"/>
     <skill name="agent.skills.CommitTerrorist"/>
+    <skill name="agent.skills.UnloadTransportedUnits"/>
+    <skill name="agent.skills.primitives.Load"/>
+    <skill name="agent.skills.DischargeIn"/>
+    <skill name="agent.skills.primitives.Unload"/>
+    <skill name="agent.skills.DropUnit"/>
   </skills>
   <default-task label="Prise en compte des ordres de conduite et autres actions par defaut." permanent="true">
     <description>Gestion par défaut des ordres de conduite</description>
