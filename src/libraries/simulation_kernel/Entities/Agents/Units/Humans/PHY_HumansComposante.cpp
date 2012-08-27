@@ -535,7 +535,10 @@ void PHY_HumansComposante::ChangeHumanSize( unsigned int newHumanSize )
     if( humans_.size() > newHumanSize )
         while( humans_.size() > newHumanSize )
         {
-            delete humans_.back();
+            Human_ABC* human = humans_.back();
+            if( human )
+                human->CancelLogisticRequests();
+            delete human;
             humans_.pop_back();
         }
     else
