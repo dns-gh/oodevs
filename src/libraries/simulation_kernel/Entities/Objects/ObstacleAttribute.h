@@ -84,11 +84,6 @@ public:
     //@}
 
 private:
-    //! @name Operations
-    //@{
-    void CheckTimeValidity();
-    //@}
-
     //! @name Member data
     //@{
     sword::ObstacleType_DemolitionTargetType obstacle_;
