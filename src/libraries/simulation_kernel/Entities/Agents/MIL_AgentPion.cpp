@@ -561,6 +561,7 @@ void MIL_AgentPion::UpdateNetwork()
             if( bHasChanged_ )
                 msg().set_headquarters( IsPC() );
             msg.Send( NET_Publisher_ABC::Publisher() );
+            bHasChanged_ = false;
         }
     }
     catch( std::exception & e )
