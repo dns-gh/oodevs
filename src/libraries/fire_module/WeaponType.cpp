@@ -481,9 +481,9 @@ double WeaponType::GetReloadingDuration() const
 // Name: WeaponType::CanDirectFire
 // Created: MCO 2012-06-21
 // -----------------------------------------------------------------------------
-bool WeaponType::CanDirectFire( const wrapper::View& entity, const wrapper::View& component, int nComposanteFiringType, int ammoDotationClass ) const
+bool WeaponType::CanDirectFire( const wrapper::View& component, int nComposanteFiringType, int ammoDotationClass ) const
 {
-    return pDirectFireData_.get() && dotation_->CanFire( entity, component, nComposanteFiringType, ammoDotationClass );
+    return pDirectFireData_.get() && dotation_->CanFire( component, nComposanteFiringType, ammoDotationClass );
 }
 
 // -----------------------------------------------------------------------------
@@ -492,7 +492,7 @@ bool WeaponType::CanDirectFire( const wrapper::View& entity, const wrapper::View
 // -----------------------------------------------------------------------------
 bool WeaponType::CanIndirectFire( const wrapper::View& entity, const wrapper::View& component, const std::string& type, const MT_Vector2D* target ) const
 {
-    if( ! pIndirectFireData_.get() || ! dotation_->CanFire( entity, component, type ) )
+    if( ! pIndirectFireData_.get() || ! dotation_->CanFire( component, type ) )
         return false;
     if( ! target )
         return true;

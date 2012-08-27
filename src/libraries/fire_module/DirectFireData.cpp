@@ -150,7 +150,7 @@ bool DirectFireData::CanFire( const wrapper::View& firer )
 void DirectFireData::ApplyOnWeapon( const wrapper::View& model, const wrapper::View& component, const wrapper::View& weapon )
 {
     const Weapon w( model, weapon );
-    if( ! w.CanDirectFire( firer_, component, nComposanteFiringType_, ammoDotationClass_ ) )
+    if( ! w.CanDirectFire( component, nComposanteFiringType_, ammoDotationClass_ ) )
         return;
     if( ! w.HasDotation( firer_ ) )
         bHasWeaponsAndNoAmmo_ = true;

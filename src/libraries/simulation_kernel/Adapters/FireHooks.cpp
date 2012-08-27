@@ -91,11 +91,8 @@ namespace
         }
         return dotationComputer->GetDotationValue( *category );
     }
-    DEFINE_HOOK( CanFire, bool, ( const SWORD_Model* entity, const SWORD_Model* component, const char* dotation, int nComposanteFiringType, int ammoDotationClass ) )
+    DEFINE_HOOK( CanFire, bool, ( const SWORD_Model* component, const char* dotation, int nComposanteFiringType, int ammoDotationClass ) )
     {
-        MIL_AgentPion& pion = (*core::Convert( entity ) )[ "pion" ].GetUserData< MIL_AgentPion >();
-        if( pion.GetRole< PHY_RoleInterface_UrbanLocation >().IsInCity() ) // $$$$ MCO 2012-06-27: no, no, no ! only to test prior to temporarily disable firing, see DirectFireData::bTemporarilyBlocked_
-            return false;
         const PHY_ComposantePion& compFirer = (*core::Convert( component ))[ "component" ].GetUserData< PHY_ComposantePion >();
         if( !compFirer.CanFire() )
             return false;
@@ -116,9 +113,8 @@ namespace
             return false;
         return true;
     }
-    DEFINE_HOOK( CanComponentFire, bool, ( const SWORD_Model* entity, const SWORD_Model* component ) )
+    DEFINE_HOOK( CanComponentFire, bool, ( const SWORD_Model* component ) )
     {
-        SWORD_UNUSED( entity );
         return (*core::Convert( component ))[ "component" ].GetUserData< PHY_ComposantePion >().CanFire();
     }
     DEFINE_HOOK( CanComponentBeFiredAt, bool, ( const SWORD_Model* component ) )

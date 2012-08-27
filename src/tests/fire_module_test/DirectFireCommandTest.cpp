@@ -121,7 +121,7 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_no_capacity_if_firer_cannot_fire, WeaponFixture )
 {
-    MOCK_EXPECT( CanFire ).with( firer, mock::any, mock::any, 0, 0 ).returns( false );
+    MOCK_EXPECT( CanFire ).with( mock::any, mock::any, 0, 0 ).returns( false );
     ExpectCallback( 2 );
     commands.Execute();
 }

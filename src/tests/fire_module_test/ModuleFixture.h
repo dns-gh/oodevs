@@ -34,8 +34,8 @@
 #define USED_HOOKS( APPLY ) \
     APPLY( HasDotation, 2, bool, ( const SWORD_Model* entity, const char* dotation ) ) \
     APPLY( GetDotationValue, 2, double, ( const SWORD_Model* entity, const char* dotation ) ) \
-    APPLY( CanFire, 5, bool, ( const SWORD_Model* entity, const SWORD_Model* component, const char* dotation, int nComposanteFiringType, int ammoDotationClass ) ) \
-    APPLY( CanComponentFire, 2, bool, ( const SWORD_Model* entity, const SWORD_Model* component ) ) \
+    APPLY( CanFire, 4, bool, ( const SWORD_Model* component, const char* dotation, int nComposanteFiringType, int ammoDotationClass ) ) \
+    APPLY( CanComponentFire, 1, bool, ( const SWORD_Model* component ) ) \
     APPLY( GetWeaponReloadingDuration, 2, double, ( const SWORD_Model* firer, double rDuration ) ) \
     APPLY( ReserveAmmunition, 3, unsigned int, ( const SWORD_Model* firer, const char* dotation, double nNbrAmmoToFire ) ) \
     APPLY( GetDistance, 2, double, ( const SWORD_Model* firer, const SWORD_Model* target ) ) \

@@ -18,7 +18,7 @@
 DECLARE_HOOK( ModifyPh, double, ( const SWORD_Model* firer, const SWORD_Model* target, const char* dotation, double rPh ) )
 DECLARE_HOOK( ModifyDangerosity, double, ( const SWORD_Model* compTarget, const char* dotation ) )
 DECLARE_HOOK( HasDotation, bool, ( const SWORD_Model* entity, const char* dotation ) )
-DECLARE_HOOK( CanFire, bool, ( const SWORD_Model* entity, const SWORD_Model* component, const char* dotation, int nComposanteFiringType, int ammoDotationClass ) )
+DECLARE_HOOK( CanFire, bool, ( const SWORD_Model* component, const char* dotation, int nComposanteFiringType, int ammoDotationClass ) )
 DECLARE_HOOK( ReserveAmmunition, unsigned int, ( const SWORD_Model* firer, const char* dotation, double nNbrAmmoToFire ) )
 DECLARE_HOOK( GetDotationValue, double, ( const SWORD_Model* entity, const char* dotation ) )
 
@@ -171,23 +171,22 @@ bool DotationCategory::HasDotation( const wrapper::View& firer ) const
 // Name: DotationCategory::CanFire
 // Created: MCO 2012-06-21
 // -----------------------------------------------------------------------------
-bool DotationCategory::CanFire( const wrapper::View& entity, const wrapper::View& component, int nComposanteFiringType, int ammoDotationClass ) const
+bool DotationCategory::CanFire( const wrapper::View& component, int nComposanteFiringType, int ammoDotationClass ) const
 {
-    return GET_HOOK( ::CanFire )( entity, component, strName_.c_str(), nComposanteFiringType, ammoDotationClass );
+    return GET_HOOK( ::CanFire )( component, strName_.c_str(), nComposanteFiringType, ammoDotationClass );
 }
 
-DECLARE_HOOK( CanComponentFire, bool, ( const SWORD_Model* entity, const SWORD_Model* component ) )
-    //return compFirer.CanFire()
+DECLARE_HOOK( CanComponentFire, bool, ( const SWORD_Model* component ) )
 
 // -----------------------------------------------------------------------------
 // Name: DotationCategory::CanFire
 // Created: MCO 2012-06-27
 // -----------------------------------------------------------------------------
-bool DotationCategory::CanFire( const wrapper::View& entity, const wrapper::View& component, const std::string& type ) const
+bool DotationCategory::CanFire( const wrapper::View& component, const std::string& type ) const
 {
     if( indirectTypes_.find( type ) == indirectTypes_.end() )
         return false;
-    return GET_HOOK( CanComponentFire )( entity, component );
+    return GET_HOOK( CanComponentFire )( component );
 }
 
 // -----------------------------------------------------------------------------

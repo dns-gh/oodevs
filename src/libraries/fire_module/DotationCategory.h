@@ -60,8 +60,8 @@ public:
     bool CanBeUsedForIndirectFire() const;
     bool HasDotation( const wrapper::View& firer ) const;
     const std::string& GetName() const;
-    bool CanFire( const wrapper::View& entity, const wrapper::View& component, int nComposanteFiringType, int ammoDotationClass ) const;
-    bool CanFire( const wrapper::View& entity, const wrapper::View& component, const std::string& type ) const;
+    bool CanFire( const wrapper::View& component, int nComposanteFiringType, int ammoDotationClass ) const;
+    bool CanFire( const wrapper::View& component, const std::string& type ) const;
 
     double GetValue( const wrapper::View& entity ) const;
     //@}
