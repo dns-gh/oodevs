@@ -876,7 +876,7 @@ bool PHY_ComposantePion::CanRepair() const
 // -----------------------------------------------------------------------------
 bool PHY_ComposantePion::CanBeLent() const
 {
-    return pState_->IsUsable() && CanBeUsed();
+    return pState_->IsUsable() && CanBeUsed( true );
 }
 
 // -----------------------------------------------------------------------------
