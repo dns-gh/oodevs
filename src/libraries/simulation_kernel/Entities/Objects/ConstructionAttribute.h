@@ -85,7 +85,8 @@ public:
     void NotifyBuildByGen();
     void NotifyStopBuildByGen();
     void Set( double percentage );
-    void SetDotations( const PHY_DotationCategory& category, unsigned int nFullNbrDotation, float density = 1.0f );
+    void SetDotations( const PHY_DotationCategory& category, unsigned int nFullNbrDotation );
+    void SetDensity( double density );
     //@}
 
     //! @name Accessors
@@ -97,7 +98,6 @@ public:
     bool NeedDestruction() const;
     unsigned int GetMaxDotation() const;
     bool IsConstructed() const;
-    double GetDensity() const;
     //@}
 
     //! @name Copy
