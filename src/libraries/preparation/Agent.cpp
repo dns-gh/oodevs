@@ -79,7 +79,10 @@ Agent::Agent( xml::xistream& xis, Controller& controller, IdManager& idManager, 
     if( overridenSymbol_ && xis.has_attribute( "nature" ) )
     {
         xis >> xml::attribute( "nature", nature_ );
-        symbolPath_ = "symbols/" + nature_;
+        if ( nature_.find( "symbols/" ) == std::string::npos )
+            symbolPath_ = "symbols/" + nature_;
+        else
+            symbolPath_ = nature_;
         nature_ = symbolFactory.GetNatureFromSymbol( nature_ );
     }
 
@@ -163,7 +166,7 @@ void Agent::SerializeAttributes( xml::xostream& xos ) const
     if( overridenSymbol_ )
     {
         std::string symbol = symbolPath_;
-        symbol.erase( 0, 8 );
+        symbol = symbol.substr( 8, symbol.length() - 8 );
         xos << xml::attribute( "overridden-symbol", true )
             << xml::attribute( "nature", symbol );
     }
@@ -234,8 +237,11 @@ void Agent::SetSymbol( const std::string& symbol )
 {
     AgentHierarchies& pAgentHierachies = static_cast< AgentHierarchies& >( Get< kernel::TacticalHierarchies >() );
     overridenSymbol_ = true;
-    symbolPath_ = "symbols/" + symbol;
-    pAgentHierachies.SetSymbol( symbol );
+    std::string newSymbol = symbol;
+    if ( newSymbol.find( "symbols/" ) == std::string::npos )
+        newSymbol = "symbols/" + newSymbol;
+    symbolPath_ = newSymbol;
+    pAgentHierachies.SetSymbol( newSymbol );
 }
 
 // -----------------------------------------------------------------------------

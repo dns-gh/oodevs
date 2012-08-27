@@ -208,7 +208,11 @@ void Ghost::SerializeAttributes( xml::xostream& xos ) const
     assert( ghostType_ != eGhostType_Invalid );
     xos << xml::attribute( "ghost-type", ENT_Tr::ConvertFromGhostType( ghostType_, ENT_Tr::eToSim ) )
         << xml::attribute( "type", type_.toAscii().constData() )
-        << xml::attribute( "nature", nature_ )
+        << xml::attribute( "name", name_.toAscii().constData() );
+    std::string nature = nature_;
+    if ( nature.find( "symbols/" ) != std::string::npos )
+        nature = nature.substr( 8, nature.length() - 8 );
+    xos << xml::attribute( "nature", nature )
         << xml::attribute( "level", level_ );
     for( CIT_Children it = children_.begin(); it != children_.end(); ++it )
         xos << xml::start( "phantom" )
