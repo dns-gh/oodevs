@@ -25,8 +25,6 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPassThrough< Obs
 
 namespace
 {
-    const int defaultActivityTime = 21600; // $$$$ _RC_ LGY 2011-08-31: default 6h
-
     sword::ObstacleType_DemolitionTargetType GetDemolitionTargetType( bool reserved )
     {
         return reserved ? sword::ObstacleType_DemolitionTargetType_reserved : sword::ObstacleType_DemolitionTargetType_preliminary;
@@ -90,7 +88,6 @@ ObstacleAttribute::ObstacleAttribute( xml::xistream& xis )
         >> xml::start( "activity-time" )
             >> xml::attribute( "value", activityTime_ )
         >> xml::end;
-    CheckTimeValidity();
 }
 
 // -----------------------------------------------------------------------------
@@ -104,7 +101,7 @@ ObstacleAttribute::ObstacleAttribute( const sword::MissionParameter_Value& attri
     , activityTime_  ( attributes.list( 4 ).quantity() )
     , creationTime_  ( MIL_Singletons::GetTime().GetRealTime() )
 {
-    CheckTimeValidity();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -146,7 +143,6 @@ void ObstacleAttribute::SetType( bool reserved )
 void ObstacleAttribute::SetActivityTime( unsigned int activityTime )
 {
     activityTime_ = activityTime;
-    CheckTimeValidity();
 }
 
 // -----------------------------------------------------------------------------
@@ -156,7 +152,6 @@ void ObstacleAttribute::SetActivityTime( unsigned int activityTime )
 void ObstacleAttribute::SetActivationTime( unsigned int activationTime )
 {
     activationTime_ = activationTime;
-    CheckTimeValidity();
 }
 
 // -----------------------------------------------------------------------------
@@ -372,14 +367,4 @@ bool ObstacleAttribute::Update( const ObstacleAttribute& rhs )
         creationTime_ = rhs.creationTime_;
     }
     return NeedUpdate( eOnUpdate );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObstacleAttribute::CheckTimeValidity
-// Created: MMC 2012-07-25
-// -----------------------------------------------------------------------------
-void ObstacleAttribute::CheckTimeValidity()
-{
-    if( activationTime_ > 0 && activityTime_ == 0 )
-        activityTime_ = defaultActivityTime;
 }
