@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.tasks.Defend" source-version="1.0.0" knowledge-class="commander.tasks.knowledges.DefendEffect">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.tasks.Defend" source-version="1.0.0" knowledge-class="commander.tasks.knowledges.Defend">
     <parameters>
         <parameter name="objectives">
             <type>
@@ -28,60 +28,22 @@
                 <nil/>
             </default>
         </parameter>
-        <parameter name="companyTask">
+        <parameter name="withImprovement">
             <type>
-                <simple name="string"/>
-            </type>
-        </parameter>
-        <parameter name="mainTasks">
-            <type>
-                <simple name="string"/>
-            </type>
-        </parameter>
-        <parameter name="supportTasks">
-            <type>
-                <simple name="string"/>
-            </type>
-        </parameter>
-        <parameter name="pcTasks">
-            <type>
-                <simple name="string"/>
-            </type>
-        </parameter>
-        <parameter name="peiTasks">
-            <type>
-                <simple name="string"/>
-            </type>
-        </parameter>
-        <parameter name="engineerTask" nullable="true">
-            <description>La mission que l'on donne spécifiquement aux pions GEN.</description>
-            <type>
-                <simple name="string"/>
+                <simple name="boolean"/>
             </type>
             <default>
-                <nil/>
+                <boolean>false</boolean>
             </default>
-        </parameter>
-        <parameter name="defaultTask">
-            <description>La mission que l'on donne par défaut aux pions.</description>
-            <type>
-                <simple name="string"/>
-            </type>
-        </parameter>
-        <parameter name="taskForSupporting">
-            <description>La mission que l'on donne aux pions de SE pour aider un pion de PE en difficulté.</description>
-            <type>
-                <simple name="string"/>
-            </type>
         </parameter>
     </parameters>
     <stages>
-        <stage label="Defense d'une zone">
+        <stage label="advancing toward the objective">
             <skills>
                 <skill name="commander.skills.Lead" main="true">
                     <parameter name="companyTask">
                         <value>
-                            <parameter>companyTask</parameter>
+                            <string>commander.tasks.Defend</string>
                         </value>
                     </parameter>
                     <parameter name="noCoordination">
@@ -91,17 +53,17 @@
                     </parameter>
                     <parameter name="mainTasks">
                         <value>
-                            <parameter>mainTasks</parameter>
+                            <string>agent.tasks.Defend</string>
                         </value>
                     </parameter>
                     <parameter name="supportTasks">
                         <value>
-                            <parameter>supportTasks</parameter>
+                            <string>agent.tasks.CombatSupport;agent.tasks.Build</string>
                         </value>
                     </parameter>
                     <parameter name="pcTasks">
                         <value>
-                            <parameter>pcTasks</parameter>
+                            <string>agent.tasks.MoveAlong</string>
                         </value>
                     </parameter>
                     <parameter name="pcObjective">
@@ -111,22 +73,22 @@
                     </parameter>
                     <parameter name="peiTasks">
                         <value>
-                            <parameter>peiTasks</parameter>
+                            <string>agent.tasks.Monitor</string>
                         </value>
                     </parameter>
                     <parameter name="taskForSupporting">
                         <value>
-                            <parameter>taskForSupporting</parameter>
+                            <string>agent.tasks.CombatSupport</string>
                         </value>
                     </parameter>
                     <parameter name="defaultTask">
                         <value>
-                            <parameter>defaultTask</parameter>
+                            <string>agent.tasks.Follow</string>
                         </value>
                     </parameter>
                     <parameter name="engineerTask">
                         <value>
-                            <parameter>engineerTask</parameter>
+                            <string>agent.tasks.Build</string>
                         </value>
                     </parameter>
                 </skill>

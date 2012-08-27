@@ -90,6 +90,8 @@ rootnode
     -- --------------------------------------------------------------------------------
     activate = function( self )
         local Activate = Activate
+
+        -- No work to errect: send a feedback done
         if self.params.entities == NIL or self.params.entities == nil then
             Feedback( self.feedbacks.done ) -- no obstacles to build
             return

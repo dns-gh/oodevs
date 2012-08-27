@@ -30,7 +30,7 @@
           </parameter>
           <parameter name="mainTasks">
             <value>
-              <string>platoon.combat.support.rens.tasks.RASIT_RenseignerSur;.platoon.combat.support.rens.tasks.RADINT_RenseignerSur;.platoon.combat.support.rens.tasks.ROEM_RenseignerSur;.platoon.combat.support.rens.tasks.ROHUM_RenseignerSur;.platoon.combat.support.rens.tasks.ROIM_RenseignerSur</string>
+              <string>platoon.combat.support.rens.tasks.RASIT_RenseignerSur;platoon.combat.support.rens.tasks.RADINT_RenseignerSur;platoon.combat.support.rens.tasks.ROEM_RenseignerSur;platoon.combat.support.rens.tasks.ROHUM_RenseignerSur;platoon.combat.support.rens.tasks.ROIM_RenseignerSur</string>
             </value>
           </parameter>
           <parameter name="supportTasks">

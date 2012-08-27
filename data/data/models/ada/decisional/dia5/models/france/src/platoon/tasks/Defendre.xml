@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="platoon.tasks.Defendre" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.Defend">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="platoon.tasks.Defendre" source-version="1.0.0" knowledge-class="platoon.tasks.knowledges.Defend">
     <description>Tenir un bloc urbain à partir d'une position.</description>
     <parameters>
         <parameter name="objectives">
@@ -29,21 +29,64 @@
             </default>
         </parameter>
     </parameters>
-    <next-task name="agent.tasks.Defend">
-        <parameter name="objectives">
-            <value>
-                <parameter>objectives</parameter>
-            </value>
-        </parameter>
-        <parameter name="obstacles">
-            <value>
-                <parameter>obstacles</parameter>
-            </value>
-        </parameter>
-        <parameter name="withImprovement">
-            <value>
-                <parameter>withImprovement</parameter>
-            </value>
-        </parameter>
-    </next-task>
+    <let name="enemiesAround">
+        <value>
+            <call method="queries.getEnemiesInRange">
+                <parameter name="probabilityToHit">
+                    <value>
+                        <number>0.5</number>
+                    </value>
+                </parameter>
+            </call>
+        </value>
+    </let>
+    <stages>
+        <stage label="construction du plan d'obstacles">
+            <description>This is a preliminary stage to the main effect of the mission. The agent moves to planned obstacles locations to improve terrain in order to make the defense more efficient. If no obstacles is issued by user, an empty list is issued to the skill that returns &quot;done&quot; in order to switch to the next stage.</description>
+            <goal>
+                <description>Improving the terrain by errecting obstacles.</description>
+            </goal>
+            <skills>
+                <skill name="agent.skills.BuildWithoutReinforcement" main="true">
+                    <parameter name="entities">
+                        <value>
+                            <parameter>obstacles</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="withImprovement">
+                        <value>
+                            <parameter>withImprovement</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+        <stage label="defense des objectifs" permanent="true" disable-when-done="false">
+            <description>Defense of the objectives.</description>
+            <goal>
+                <description>Occupying the objectives in order to engage approaching enemies.</description>
+            </goal>
+            <skills>
+                <skill name="agent.skills.MoveToward" priority="0.9">
+                    <parameter name="entities">
+                        <value>
+                            <parameter>objectives</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+                <skill name="agent.skills.Engage" priority="0.1">
+                    <parameter name="entities">
+                        <value>
+                            <parameter>enemiesAround</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="positions">
+                        <value>
+                            <parameter>objectives</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
 </task>

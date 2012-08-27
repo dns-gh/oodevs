@@ -24,12 +24,12 @@
 		</parameter>
 		<parameter name="mainTasks">
 			<value>
-				<string>platoon.tasks.SeDeployer;.platoon.combat.support.log.tasks.TraiterBlesses;.platoon.combat.support.log.tasks.PrendreEnCompteReactionsMentales;.platoon.combat.support.log.tasks.TrierEtTraiterBlesses;platoon.combat.support.log.tasks.Reparer;platoon.combat.support.log.tasks.DecontaminerBlesses;platoon.combat.support.log.tasks.Convoyer</string>
+				<string>platoon.tasks.SeDeployer;platoon.combat.support.log.tasks.TraiterBlesses;platoon.combat.support.log.tasks.PrendreEnCompteReactionsMentales;platoon.combat.support.log.tasks.TrierEtTraiterBlesses;platoon.combat.support.log.tasks.Reparer;platoon.combat.support.log.tasks.DecontaminerBlesses;platoon.combat.support.log.tasks.Convoyer</string>
 			</value>
 		</parameter>
 		<parameter name="supportTasks">
 			<value>
-				<string>platoon.tasks.SeDeployer;.platoon.combat.support.log.tasks.TraiterBlesses;.platoon.combat.support.log.tasks.PrendreEnCompteReactionsMentales;.platoon.combat.support.log.tasks.TrierEtTraiterBlesses;platoon.combat.support.log.tasks.Reparer;platoon.combat.support.log.tasks.DecontaminerBlesses;platoon.combat.support.log.tasks.Convoyer</string>
+				<string>platoon.tasks.SeDeployer;platoon.combat.support.log.tasks.TraiterBlesses;platoon.combat.support.log.tasks.PrendreEnCompteReactionsMentales;platoon.combat.support.log.tasks.TrierEtTraiterBlesses;platoon.combat.support.log.tasks.Reparer;platoon.combat.support.log.tasks.DecontaminerBlesses;platoon.combat.support.log.tasks.Convoyer</string>
 			</value>
 		</parameter>
 		<parameter name="defaultTask">

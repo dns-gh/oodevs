@@ -71,7 +71,7 @@
         </parameter>
         <parameter name="supportTasks">
             <value>
-                <string>platoon.tasks.Appuyer;.platoon.combat.support.engineer.tasks.Construire</string>
+                <string>platoon.tasks.Appuyer;platoon.combat.support.engineer.tasks.Construire</string>
             </value>
         </parameter>
         <parameter name="objective">

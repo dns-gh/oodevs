@@ -23,7 +23,7 @@
         </parameter>
         <parameter name="supportTasks">
             <value>
-                <string>platoon.tasks.Appuyer;.platoon.combat.support.engineer.tasks.AppuiMobilite</string>
+                <string>platoon.tasks.Appuyer;platoon.combat.support.engineer.tasks.AppuiMobilite</string>
             </value>
         </parameter>
         <parameter name="objectives">

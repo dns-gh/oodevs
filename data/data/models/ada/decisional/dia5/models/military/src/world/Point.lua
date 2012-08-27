@@ -30,7 +30,7 @@ return
         -- $$$ MIA TODO: et si le point est dans un BU, récupérer la protection du BU?
     end,
     destructionEfficiency = function( self, objective )
-         return self:proximityLevel() / 100
+         return ( self:proximityLevel()/ 100 + self:getProximity( objective ) ) / 100
     end,
     neutralizationEfficiency = function( self, objective )
          return self:proximityLevel() / 100

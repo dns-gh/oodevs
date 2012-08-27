@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="company.combat.tasks.Defendre" source-version="1.0.0" knowledge-class="commander.tasks.knowledges.DefendEffect">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="company.combat.tasks.Defendre" source-version="1.0.0" knowledge-class="company.combat.tasks.knowledges.DefendEffect">
     <parameters>
         <parameter name="objectives">
             <type>
@@ -38,61 +38,62 @@
             </default>
         </parameter>
     </parameters>
-    <next-task name="commander.tasks.Defend">
-        <parameter name="companyTask">
-            <value>
-                <string>company.combat.tasks.Defendre</string>
-            </value>
-        </parameter>
-        <parameter name="mainTasks">
-            <value>
-                <string>platoon.tasks.Defendre;.platoon.tasks.Tenir</string>
-            </value>
-        </parameter>
-        <parameter name="supportTasks">
-            <value>
-                <string>platoon.tasks.Appuyer;.platoon.combat.support.engineer.tasks.Construire</string>
-            </value>
-        </parameter>
-        <parameter name="objectives">
-            <value>
-                <parameter>objectives</parameter>
-            </value>
-        </parameter>
-        <parameter name="obstacles">
-            <value>
-                <parameter>obstacles</parameter>
-            </value>
-        </parameter>
-        <parameter name="meetingPoint">
-            <value>
-                <parameter>meetingPoint</parameter>
-            </value>
-        </parameter>
-        <parameter name="pcTasks">
-            <value>
-                <string>platoon.tasks.FaireMouvement</string>
-            </value>
-        </parameter>
-        <parameter name="peiTasks">
-            <value>
-                <string>platoon.tasks.Surveiller</string>
-            </value>
-        </parameter>
-        <parameter name="engineerTask">
-            <value>
-                <string>platoon.combat.support.engineer.tasks.Construire</string>
-            </value>
-        </parameter>
-        <parameter name="defaultTask">
-            <value>
-                <string>platoon.tasks.Suivre</string>
-            </value>
-        </parameter>
-        <parameter name="taskForSupporting">
-            <value>
-                <string>platoon.tasks.Appuyer</string>
-            </value>
-        </parameter>
-    </next-task>
+    <stages>
+        <stage label="defendre" permanent="true">
+            <skills>
+                <skill name="commander.skills.Lead">
+                    <parameter name="companyTask">
+                        <value>
+                            <string>company.combat.tasks.Defendre</string>
+                        </value>
+                    </parameter>
+                    <parameter name="mainTasks">
+                        <value>
+                            <string>platoon.tasks.Defendre;platoon.tasks.Tenir</string>
+                        </value>
+                    </parameter>
+                    <parameter name="supportTasks">
+                        <value>
+                            <string>platoon.tasks.Appuyer;platoon.combat.support.engineer.tasks.Construire</string>
+                        </value>
+                    </parameter>
+                    <parameter name="pcTasks">
+                        <value>
+                            <string>platoon.tasks.FaireMouvement</string>
+                        </value>
+                    </parameter>
+                    <parameter name="pcObjective">
+                        <value>
+                            <parameter>meetingPoint</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="peiTasks">
+                        <value>
+                            <string>platoon.tasks.Surveiller</string>
+                        </value>
+                    </parameter>
+                    <parameter name="engineerTask">
+                        <value>
+                            <string>platoon.combat.support.engineer.tasks.Construire</string>
+                        </value>
+                    </parameter>
+                    <parameter name="defaultTask">
+                        <value>
+                            <string>platoon.tasks.Suivre</string>
+                        </value>
+                    </parameter>
+                    <parameter name="taskForSupporting">
+                        <value>
+                            <string>platoon.tasks.Appuyer</string>
+                        </value>
+                    </parameter>
+                    <parameter name="noCoordination">
+                        <value>
+                            <boolean>true</boolean>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
 </task>

@@ -17,6 +17,6 @@ local result =
 }
 
 local t = initTaskKnowledge( result )
-taskKnowledge["agent.tasks.knowledges.Defend"] = t
+taskKnowledge[ "platoon.tasks.knowledges.Defend" ] = t
 
 return result

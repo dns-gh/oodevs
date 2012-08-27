@@ -26,7 +26,7 @@
           </parameter>
           <parameter name="supportTasks">
             <value>
-              <string>platoon.combat.support.rens.tasks.ROIMMettreEnOeuvre;.platoon.tasks.Suivre</string>
+              <string>platoon.combat.support.rens.tasks.ROIMMettreEnOeuvre;platoon.tasks.Suivre</string>
             </value>
           </parameter>
           <parameter name="defaultTask">

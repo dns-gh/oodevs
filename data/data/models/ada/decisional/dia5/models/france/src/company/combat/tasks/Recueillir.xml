@@ -41,7 +41,7 @@
                     </parameter>
                     <parameter name="mainTasks">
                         <value>
-                            <string>platoon.tasks.Defendre;.platoon.tasks.Tenir</string>
+                            <string>platoon.tasks.Defendre;platoon.tasks.Tenir</string>
                         </value>
                     </parameter>
                     <parameter name="supportTasks">

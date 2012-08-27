@@ -21,7 +21,7 @@
     </parameter>
     <parameter name="supportTasks">
       <value>
-        <string>platoon.stabilisation.tasks.Boucler;.platoon.combat.support.engineer.tasks.AppuiMobilite</string>
+        <string>platoon.stabilisation.tasks.Boucler;platoon.combat.support.engineer.tasks.AppuiMobilite</string>
       </value>
     </parameter>
     <parameter name="objective">
