@@ -20,6 +20,7 @@ namespace sword
 namespace dispatcher
 {
     class Config;
+    class ClientPublisher_ABC;
     class MessageHandler_ABC;
     class MessageLoader;
     class ReplayModel_ABC;
@@ -35,7 +36,7 @@ class Loader : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             Loader( ReplayModel_ABC& model, MessageHandler_ABC& handler, const Config& config );
+             Loader( ReplayModel_ABC& model, MessageHandler_ABC& handler, const Config& config, ClientPublisher_ABC* clients );
     virtual ~Loader();
     //@}
 

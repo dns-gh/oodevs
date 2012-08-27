@@ -26,6 +26,7 @@ namespace sword
 namespace dispatcher
 {
     class Config;
+    class ClientPublisher_ABC;
     class MessageHandler_ABC;
     struct Buffer;
 
@@ -40,7 +41,7 @@ class MessageLoader : public MessageLoader_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MessageLoader( const Config& config, bool threaded );
+             MessageLoader( const Config& config, bool threaded, ClientPublisher_ABC* clients = 0 );
     virtual ~MessageLoader();
     //@}
 
@@ -99,6 +100,7 @@ private:
     //! @name Member data
     //@{
     const Config& config_;
+    ClientPublisher_ABC* clients_;
     unsigned int firstTick_;
     unsigned int tickCount_;
     bool initReady_;

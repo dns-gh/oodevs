@@ -13,7 +13,9 @@
 #include "MessageHandler_ABC.h"
 #include "Config.h"
 #include "tools/InputBinaryStream.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "protocol/Protocol.h"
+#include "protocol/ReplaySenders.h"
 #include <boost/filesystem/operations.hpp>
 #include <boost/thread/thread.hpp>
 #include <boost/bind.hpp>
@@ -32,8 +34,9 @@ boost::mutex MessageLoader::filesAccessMutex_;
 // Name: MessageLoader constructor
 // Created: AGE 2007-07-09
 // -----------------------------------------------------------------------------
-MessageLoader::MessageLoader( const Config& config, bool threaded )
+MessageLoader::MessageLoader( const Config& config, bool threaded, ClientPublisher_ABC* clients )
     : config_   ( config )
+    , clients_  ( clients )
     , firstTick_( std::numeric_limits< unsigned int >::max() )
     , tickCount_( 0 )
     , initReady_( false )
@@ -271,6 +274,12 @@ void MessageLoader::AddFolder( const std::string& folderName )
     fragmentsInfos_[ folderName ] = std::make_pair< unsigned int, unsigned int >( start, end );
     tickCount_ = std::max( tickCount_, end );
     firstTick_ = std::min( firstTick_, start );
+    if( clients_ )
+    {
+        replay::NewDataChunkNotification msg;
+        msg().set_last_tick( tickCount_ );
+        msg.Send( *clients_ );
+    }
 }
 
 // -----------------------------------------------------------------------------

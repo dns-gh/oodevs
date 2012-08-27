@@ -20,10 +20,10 @@ using namespace dispatcher;
 // Name: Loader constructor
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-Loader::Loader( ReplayModel_ABC& model, MessageHandler_ABC& handler, const Config& config )
+Loader::Loader( ReplayModel_ABC& model, MessageHandler_ABC& handler, const Config& config, ClientPublisher_ABC* clients )
     : model_          ( model )
     , handler_        ( handler )
-    , loader_         ( new MessageLoader( config, false ) )
+    , loader_         ( new MessageLoader( config, false, clients ) )
     , currentFrame_   ( 0 )
     , currentKeyFrame_( 0 )
 {
