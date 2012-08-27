@@ -147,13 +147,15 @@ namespace
     class IsUrbanDeleted
     {
     public:
-        IsUrbanDeleted( const ResourceNetworkAttribute::T_Urbans& urbans ) : urbans_( urbans ) {}
+        IsUrbanDeleted( const ResourceNetworkAttribute::T_Urbans& urbans )
+            : urbans_( &urbans )
+        {}
         bool operator() ( const kernel::ResourceNetwork_ABC::ResourceLink& link )
         {
-            return ( link.urban_ && !urbans_.Find( link.id_ ) );
+            return link.urban_ && urbans_->Find( link.id_ );
         }
     private:
-        const ResourceNetworkAttribute::T_Urbans& urbans_;
+        const ResourceNetworkAttribute::T_Urbans* urbans_;
     };
 }
 
@@ -166,8 +168,7 @@ void ResourceNetworkAttribute::CleanLinksToDeletedUrbanBlocks()
     for( IT_ResourceNodes node = resourceNodes_.begin(); node != resourceNodes_.end(); ++node )
     {
         T_ResourceLinks& links = node->second.links_;
-        IsUrbanDeleted isUrbanDeleted( urbans_ );
-        std::remove_if( links.begin(), links.end(), isUrbanDeleted );
+        links.erase( std::remove_if( links.begin(), links.end(), IsUrbanDeleted( urbans_ ) ), links.end() );
     }
 }
 
