@@ -36,6 +36,9 @@ public:
     //! @name Accessors
     //@{
     const T_KnowledgeAgents& GetDangerousEnemies( const wrapper::View& model, const wrapper::View& entity );
+
+    std::pair< double, double > GetRapForLocal( const wrapper::View& model, const wrapper::View& entity,
+        T_KnowledgeAgents& dangerousEnemies, bool(*filter)( const SWORD_Model* knowledge, void* userData ), void* userData ) const;
     //@}
 
 private:

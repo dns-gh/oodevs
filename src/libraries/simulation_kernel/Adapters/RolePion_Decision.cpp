@@ -18,11 +18,12 @@
 #include "Decision/DEC_AgentFunctions.h"
 #include "Decision/DEC_FireFunctions.h"
 #include "Decision/DEC_PathFind_Manager.h"
-#include "Decision/DEC_UrbanObjectFunctions.h" // $$$$ MCO 2012-06-29: TMP
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_InterfaceMoving.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
+#include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
+#include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
@@ -30,6 +31,7 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
 #include "Entities/MIL_Army_ABC.h"
+#include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_Knowledge_AgentComposante.h"
@@ -109,6 +111,7 @@ DECLARE_HOOK( GetMaxRangeToIndirectFire, double, ( const SWORD_Model* firer, boo
 DECLARE_HOOK( GetMinRangeToIndirectFire, double, ( const SWORD_Model* firer, bool(*filter)( const SWORD_Model* component ), const char* dotation, bool checkAmmo ) )
 DECLARE_HOOK( GetForceRatio, double, ( const SWORD_Model* model, const SWORD_Model* entity ) )
 DECLARE_HOOK( GetDangerousEnemies, void, ( const SWORD_Model* model, const SWORD_Model* entity, void(*visitor)( const SWORD_Model* knowledge, void* userData ), void* userData ) )
+DECLARE_HOOK( ComputeForceRatio, double, ( const SWORD_Model* model, const SWORD_Model* entity, bool(*filter)( const SWORD_Model* knowledge, void* userData ), void* userData ) )
 DECLARE_HOOK( GetAmmunitionForIndirectFire, const char*, ( const SWORD_Model* model, const SWORD_Model* firer, const char* type, const MT_Vector2D* target ) )
 
 // -----------------------------------------------------------------------------
@@ -137,6 +140,7 @@ void RolePion_Decision::Initialize( core::Facade& facade )
     USE_HOOK( GetMinRangeToIndirectFire, facade );
     USE_HOOK( GetForceRatio, facade );
     USE_HOOK( GetDangerousEnemies, facade );
+    USE_HOOK( ComputeForceRatio, facade );
     USE_HOOK( GetAmmunitionForIndirectFire, facade );
 }
 
@@ -1083,6 +1087,23 @@ namespace
         // For DIA, the dangerosity value is 1 <= dangerosity <= 2 // $$$$ MCO 2012-08-22: right...
         return 1 + GET_HOOK( GetDangerosity )( core::Convert( &firer ), core::Convert( &enemy ), &CanMajorFire, distance, false );
     }
+    bool IsInUrbanBlock( const SWORD_Model* knowledge, void* userData )
+    {
+        boost::shared_ptr< DEC_Knowledge_Agent > agent = (*core::Convert( knowledge ))[ "agent" ].GetUserData< boost::shared_ptr< DEC_Knowledge_Agent > >();
+        UrbanObjectWrapper* pUrbanObject = static_cast< UrbanObjectWrapper* >( userData );
+        return pUrbanObject && agent->IsInUrbanBlock( *pUrbanObject );
+    }
+    double GetUrbanRapForLocal( const MIL_AgentPion& agent, const core::Model& model, UrbanObjectWrapper* pUrbanObject )
+    {
+        const core::Model& entity = model[ "entities" ][ agent.GetID() ];
+        double rRapForValue = GET_HOOK( ComputeForceRatio )( core::Convert( &model ), core::Convert( &entity ), &IsInUrbanBlock, pUrbanObject );
+        // Add bonus if the pion is posted in this urbanbloc // $$$$ MCO 2012-08-27: use a callback or a hook
+        const UrbanObjectWrapper* urbanBlock = agent.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
+        if( pUrbanObject && urbanBlock && pUrbanObject == urbanBlock && agent.GetRole< PHY_RoleInterface_Posture >().IsInstalled() ) // $$$$ _RC_ LGY 2011-02-24: == sur les ID
+            rRapForValue *= 1.2;
+        rRapForValue = std::max( 0.2, std::min( 5., rRapForValue ) ); // $$$$ MCO 2012-08-27: hard-coded min and max actually equal to the ones in Knowledge_RapFor_ABC.cpp in fire module
+        return rRapForValue;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -1100,7 +1121,7 @@ void RolePion_Decision::RegisterKnowledge()
     RegisterFunction( "DEC_ConnaissanceAgent_DangerositeSurConnaissance",
         boost::function< double( boost::shared_ptr< DEC_Knowledge_Agent >, boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &GetDangerosityOnKnowledge, _1, boost::cref( model_ ), _2 ) ) );
     RegisterFunction( "DEC_ConnaissanceBlocUrbain_RapForLocal",
-        boost::function< float( UrbanObjectWrapper* ) >( boost::bind( &DEC_UrbanObjectFunctions::GetRapForLocal, boost::cref( GetPion() ), _1 ) ) ); // $$$$ MCO 2012-06-29: TODO
+        boost::function< double( UrbanObjectWrapper* ) >( boost::bind( &GetUrbanRapForLocal, boost::cref( GetPion() ), boost::cref( model_ ), _1 ) ) );
 }
 
 namespace
