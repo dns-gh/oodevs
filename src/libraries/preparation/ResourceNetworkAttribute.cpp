@@ -168,7 +168,7 @@ void ResourceNetworkAttribute::CleanLinksToDeletedUrbanBlocks()
     for( IT_ResourceNodes node = resourceNodes_.begin(); node != resourceNodes_.end(); ++node )
     {
         T_ResourceLinks& links = node->second.links_;
-        std::remove_if( links.begin(), links.end(), IsUrbanDeleted( urbans_ ) );
+        links.erase( std::remove_if( links.begin(), links.end(), IsUrbanDeleted( urbans_ ) ), links.end() );
     }
 }
 
