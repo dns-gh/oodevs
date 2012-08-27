@@ -194,7 +194,7 @@ void CreateBlockAutoProcess::UpdateUrbanModel( UrbanModel& model, kernel::UrbanO
                 points.push_back( geometry::Point2f( static_cast< float >( outPoint.X() ), static_cast< float >( outPoint.Y() ) ) );
             }
             const geometry::Polygon2f polygon( points );
-            kernel::UrbanObject_ABC* newBlock = model.GetFactory().Create( polygon, &parent );
+            kernel::UrbanObject_ABC* newBlock = model.Create( polygon, &parent );
             if( newBlock )
                 ++count;
         }
