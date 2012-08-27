@@ -219,6 +219,7 @@ namespace
 // -----------------------------------------------------------------------------
 void FireHooks::Initialize( core::Facade& facade )
 {
+    REGISTER_HOOK( IsTemporarilyBlockable, facade );
     REGISTER_HOOK( GetFireRandomInteger, facade );
     REGISTER_HOOK( GetFireRandomNumber, facade );
     REGISTER_HOOK( HasDotation, facade );
