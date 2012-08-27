@@ -15,21 +15,7 @@
 namespace kernel
 {
 
-// -----------------------------------------------------------------------------
-// Name: EntityImplementation constructor
-// Created: AGE 2006-10-12
-// -----------------------------------------------------------------------------
-template< typename I >
-EntityImplementation< I >::EntityImplementation( Controller& controller, unsigned long id, const QString& name, bool readOnly = false )
-    : controller_( controller )
-    , id_        ( id )
-    , name_      ( name )
-    , dictionary_( new PropertiesDictionary( controller ) )
-{
-    Attach( *dictionary_ );
-    dictionary_->Register( *this, tools::translate( "EntityImplementation", "Info/Identifier" ), id_ );
-    dictionary_->Register( *this, tools::translate( "EntityImplementation", "Info/Name" ), name_, *this, &EntityImplementation::Rename, readOnly );
-}
+
 
 // -----------------------------------------------------------------------------
 // Name: EntityImplementation destructor

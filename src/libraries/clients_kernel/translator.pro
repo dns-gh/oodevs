@@ -1,11 +1,10 @@
-HEADERS = 
+HEADERS = EntityImplementation.h \
 
 SOURCES = AtlasNatures.cpp \
 Architecture.cpp \
 Circle.cpp \
 CoordinateSystems.cpp \
 EntityHierarchies.inl \
-EntityImplementation.inl \
 Formatter.cpp \
 FourStateOption.cpp \
 Karma.cpp \
