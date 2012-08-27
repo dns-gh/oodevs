@@ -40,10 +40,14 @@ public:
 
     virtual double GetMaxSpeedWithReinforcement() const = 0;
     virtual double GetTheoricMaxSpeed( bool loaded ) const = 0;
+    virtual double GetTheoricMaxSpeedWithReinforcement() = 0;
     virtual double GetMaxSpeedModificator() const = 0;
     virtual double GetMaxSpeed() const = 0;
     virtual double GetMaxSpeed( const TerrainData& environment ) const = 0;
     virtual double GetMaxSlope() const = 0;
+    
+    /** Whether to use theoric speed (for pathfinding) or actual speed (to compute real speed when moving) */
+    virtual void SetTheoricSpeed( bool ) const = 0;
 
     virtual void SetSpeedModificator( double rFactor ) = 0;
     virtual void SetMaxSpeedModificator( double rFactor ) = 0;

@@ -47,6 +47,7 @@ RoleAction_Moving::RoleAction_Moving( MIL_AgentPion& pion )
     , bCurrentPathHasChanged_( true )
     , bEnvironmentHasChanged_( true )
     , bHasMove_              ( false )
+    , bTheoricMaxSpeed_      ( false )
 {
     // NOTHING
 }
@@ -96,7 +97,8 @@ double RoleAction_Moving::ApplySpeedModificators( double rSpeed ) const
 // -----------------------------------------------------------------------------
 void RoleAction_Moving::Execute( moving::SpeedComputer_ABC& algorithm ) const
 {
-    algorithm.AddModifier( rMaxSpeedModificator_, true );
+    if( !bTheoricMaxSpeed_ )
+        algorithm.AddModifier( rMaxSpeedModificator_, true );
     algorithm.AddModifier( rSpeedModificator_, false );
 }
 
@@ -163,16 +165,40 @@ double RoleAction_Moving::GetMaxSpeedWithReinforcement() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: RoleAction_Moving::GetTheoricMaxSpeedWithReinforcement
+// Created: LDC 2012-08-27
+// -----------------------------------------------------------------------------
+double RoleAction_Moving::GetTheoricMaxSpeedWithReinforcement()
+{
+    SetTheoricSpeed( true );
+    double result = GetMaxSpeedWithReinforcement();
+    SetTheoricSpeed( false );
+    return result;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: RoleAction_Moving::SetTheoricSpeed
+// Created: LDC 2012-08-27
+// -----------------------------------------------------------------------------
+void RoleAction_Moving::SetTheoricSpeed( bool value ) const
+{
+    bTheoricMaxSpeed_ = value;
+}
+
+// -----------------------------------------------------------------------------
 // Name: RoleAction_Moving::GetTheoricMaxSpeed
 // Created: LMT 2010-05-04
 // -----------------------------------------------------------------------------
 double RoleAction_Moving::GetTheoricMaxSpeed( bool loaded ) const
 {
+    SetTheoricSpeed( true );
     moving::SpeedComputerStrategy strategy( true, false, 0 );
     std::auto_ptr< moving::SpeedComputer_ABC > computer;
     computer = owner_.GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy, loaded );
     owner_.Execute( *computer );
-    return computer->GetSpeed();
+    double result = computer->GetSpeed();
+    SetTheoricSpeed( false );
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -420,6 +446,7 @@ void RoleAction_Moving::Clean()
     bCurrentPathHasChanged_ = false;
     bEnvironmentHasChanged_ = false;
     bHasMove_               = false;
+    bTheoricMaxSpeed_       = false;
 }
 
 // -----------------------------------------------------------------------------

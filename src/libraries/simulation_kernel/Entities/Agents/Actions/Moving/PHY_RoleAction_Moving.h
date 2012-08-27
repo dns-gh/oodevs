@@ -77,6 +77,7 @@ public:
     virtual double GetMaxSpeed( const TerrainData& environment ) const;
     virtual double GetMaxSlope() const;
     virtual double GetTheoricMaxSpeed( bool loaded ) const;
+    virtual double GetTheoricMaxSpeedWithReinforcement();
     virtual void SetSpeedModificator( double rFactor );
     virtual void SetMaxSpeedModificator( double rFactor );
     virtual double GetMaxSpeedModificator() const;
@@ -85,6 +86,8 @@ public:
 
     virtual const MT_Vector2D& GetPosition () const;
     virtual const MT_Vector2D& GetDirection() const;
+    /** Whether to use theoric speed (for pathfinding) or actual speed (to compute real speed when moving) */
+    virtual void SetTheoricSpeed( bool ) const;
     //@}
 
     //! @name Network
@@ -141,6 +144,7 @@ private:
     bool                        bCurrentPathHasChanged_;
     bool                        bEnvironmentHasChanged_;
     bool                        bHasMove_;
+    mutable bool bTheoricMaxSpeed_;
     //@}
 };
 
