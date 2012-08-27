@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.tasks.knowledges.Build" source-version="1.0.0" extends="agent.tasks.knowledges.PlatoonTask">
+    <description>The knowledge of the 'Build' mission. This knowledge is used by the company commander to perform its own tasks.</description>
     <methods>
         <method name="fillParameters">
             <argument name="companyTask">
-                <description>La t��che automate</description>
+                <description>The string name of the company task.</description>
                 <type>
                     <class name="properties.Commandable"/>
                 </type>
@@ -25,7 +26,7 @@
             </return>
         </method>
         <method name="getObstaclesParameter">
-            <description>Retourne la liste d'obstacle de l'automate.</description>
+            <description>Returns the list of obstacles to errect.</description>
             <return name="obstacles">
                 <type>
                     <list>
@@ -35,7 +36,19 @@
             </return>
         </method>
         <method name="canDoIt">
-            <description>Retourne vrai si le pion peut effectuer sa tache sur l'obstacle.</description>
+            <description>Returns 'true' is the issued subordinate unit can build the obstacle.</description>
+            <argument name="obstacle">
+                <description>The obstacle to build.</description>
+                <type>
+                    <class name="world.EngineerObject"/>
+                </type>
+            </argument>
+            <argument name="entity">
+                <description>The subordinate unit to build the obstacle.</description>
+                <type>
+                    <class name="directia.core.Object"/>
+                </type>
+            </argument>
             <return name="hasRessource">
                 <type>
                     <simple name="boolean"/>
@@ -43,7 +56,19 @@
             </return>
         </method>
         <method name="hasDotation">
-            <description>Retourne vrai si le pion a les dotations pour effectuer sa tache sur l'obstacle.</description>
+            <description>Returns 'true' if the issued subodinate unit ('entity')has enough dotation to perform the 'obstacle' construction.</description>
+            <argument name="obstacle">
+                <description>The obstacle to build.</description>
+                <type>
+                    <class name="world.EngineerObject"/>
+                </type>
+            </argument>
+            <argument name="entity">
+                <description>The subordinate unit to build the obstacle.</description>
+                <type>
+                    <class name="directia.core.Object"/>
+                </type>
+            </argument>
             <return name="hasDotation">
                 <type>
                     <simple name="boolean"/>
