@@ -568,6 +568,7 @@ void MIL_AgentPion::UpdateNetwork()
             if( bHasChanged_ )
                 msg().set_headquarters( IsPC() );
             msg.Send( NET_Publisher_ABC::Publisher() );
+            bHasChanged_ = false;
         }
     }
     catch( std::exception & e )
@@ -1303,16 +1304,21 @@ void MIL_AgentPion::InteractWithTraffic( const std::vector< TER_Agent_ABC* >& ag
     double speedModifier = pType_->GetUnitType().GetSpeedModifier();
     if( speedModifier < 1. && CanInteractWithTraffic() )
     {
+        MT_Vector2D position = GetRole< PHY_RoleInterface_Location >().GetPosition();
+        MT_Vector2D direction = GetRole< PHY_RoleInterface_Location >().GetDirection();
         for( std::vector< TER_Agent_ABC* >::const_iterator itAgent = agents.begin(); itAgent != agents.end(); ++itAgent )
         {
             MIL_Agent_ABC& agent = static_cast< PHY_RoleInterface_Location& >( **itAgent ).GetAgent();
             if( &agent != this && agent.CanInteractWithTraffic() )
             {
-                MT_Vector2D position = GetRole< PHY_RoleInterface_Location >().GetPosition();
                 MT_Vector2D positionAgent = ( *itAgent )->GetPosition();
                 unsigned int distance = pType_->GetUnitType().GetFootprintRadius() + agent.GetType().GetUnitType().GetFootprintRadius();
                 if( position.SquareDistance( positionAgent ) < distance * distance )
-                    GetRole< moving::PHY_RoleAction_Moving >().ApplyTrafficModifier();
+                {
+                    MT_Vector2D directionAgent = positionAgent - position;
+                    if( directionAgent * direction > 0 )
+                        GetRole< moving::PHY_RoleAction_Moving >().ApplyTrafficModifier();
+                }
             }
         }
     }
