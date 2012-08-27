@@ -44,9 +44,10 @@ namespace
     }
 }
 
+DECLARE_HOOK( IsTemporarilyBlockable, bool, ( const SWORD_Model* entity ) )
 DECLARE_HOOK( GetFireRandomInteger, size_t, ( size_t min, size_t max ) )
 
-unsigned int DirectFireData::nUrbanCoefficient_ = 100;
+std::size_t DirectFireData::nUrbanCoefficient_ = 100;
 
 // -----------------------------------------------------------------------------
 // Name: DirectFireData::sComposanteWeapons::sComposanteWeapons
@@ -131,6 +132,18 @@ unsigned int DirectFireData::GetNbrWeaponsUsable() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DirectFireData::CanFire
+// Created: LDC 2011-03-09
+// -----------------------------------------------------------------------------
+bool DirectFireData::CanFire( const wrapper::View& firer )
+{
+    if( ! GET_HOOK( IsTemporarilyBlockable )( firer ) )
+        return true;
+    bTemporarilyBlocked_ = GET_HOOK( GetFireRandomInteger )( 0u, 100u ) >= DirectFireData::nUrbanCoefficient_;
+    return ! bTemporarilyBlocked_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DirectFireData::ApplyOnWeapon
 // Created: NLD 2006-08-08
 // -----------------------------------------------------------------------------
@@ -138,9 +151,6 @@ void DirectFireData::ApplyOnWeapon( const wrapper::View& model, const wrapper::V
 {
     const Weapon w( model, weapon );
     if( ! w.CanDirectFire( firer_, component, nComposanteFiringType_, ammoDotationClass_ ) )
-        return;
-    bTemporarilyBlocked_ = GET_HOOK( GetFireRandomInteger )( 0u, 100u ) >= DirectFireData::nUrbanCoefficient_; // $$$$ MCO 2012-06-27: only if IsInCity() !
-    if( bTemporarilyBlocked_ )
         return;
     if( ! w.HasDotation( firer_ ) )
         bHasWeaponsAndNoAmmo_ = true;

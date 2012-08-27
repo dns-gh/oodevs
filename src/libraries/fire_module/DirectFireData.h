@@ -71,6 +71,8 @@ public:
     void ChooseBestWeapon    ( const wrapper::View& target, const wrapper::View& compTarget, const SWORD_Model*& pBestFirer, const Weapon*& pBestWeapon ) const;
     bool GetUnusedFirerWeapon( const SWORD_Model*& pUnusedFirer, const Weapon*& pUnusedFirerWeapon ) const;
     void ReleaseWeapon       ( const SWORD_Model* firer, const Weapon& weapon );
+
+    bool CanFire( const wrapper::View& firer );
     //@}
 
     //! @name Accessors
@@ -136,7 +138,7 @@ private:
 
 public:
     // Factor applied to number of components that can fire in urban areas.
-    static unsigned int nUrbanCoefficient_;
+    static size_t nUrbanCoefficient_;
 };
 
 }

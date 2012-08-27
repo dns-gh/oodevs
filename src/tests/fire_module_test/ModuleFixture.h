@@ -41,6 +41,7 @@
     APPLY( GetDistance, 2, double, ( const SWORD_Model* firer, const SWORD_Model* target ) ) \
     APPLY( ModifyPh, 4, double, ( const SWORD_Model* firer, const SWORD_Model* target, const char* dotation, double rPh ) ) \
     APPLY( ModifyDangerosity, 2, double, ( const SWORD_Model* compTarget, const char* dotation ) ) \
+    APPLY( IsTemporarilyBlockable, 1, bool, ( const SWORD_Model* entity ) ) \
     APPLY( GetFireRandomInteger, 2, size_t, ( size_t min, size_t max ) ) \
     APPLY( GetFireRandomNumber, 2, double, ( double min, double max ) ) \
     APPLY( GetVolumeId, 1, unsigned int, ( const char* type ) ) \

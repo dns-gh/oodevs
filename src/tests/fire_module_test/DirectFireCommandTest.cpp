@@ -52,8 +52,41 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_enemy_destroyed_if_target_i
     commands.Execute();
 }
 
+BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_temporary_blocked_when_blocked_with_default_coefficient, FireFixture )
+{
+    MOCK_EXPECT( IsTemporarilyBlockable ).once().with( firer ).returns( true );
+    MOCK_EXPECT( GetFireRandomInteger ).returns( 100u );
+    ExpectCallback( 6 );
+    commands.Execute();
+}
+
+BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_temporary_blocked_when_blocked_with_custom_coefficient, FireFixture )
+{
+    InitializeDecisional( "<decisional>"
+                          "  <urban-combat hit-factor='42'/>"
+                          "  <force-ratio default-feedback-time='600s'/>"
+                          "</decisional>", 10 );
+    MOCK_EXPECT( IsTemporarilyBlockable ).once().with( firer ).returns( true );
+    MOCK_EXPECT( GetFireRandomInteger ).returns( 42u );
+    ExpectCallback( 6 );
+    commands.Execute();
+}
+
+BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_no_capacity_if_target_has_no_component_when_not_blockable, FireFixture )
+{
+    InitializeDecisional( "<decisional>"
+                          "  <urban-combat hit-factor='42'/>"
+                          "  <force-ratio default-feedback-time='600s'/>"
+                          "</decisional>", 10 );
+    MOCK_EXPECT( IsTemporarilyBlockable ).once().with( firer ).returns( true );
+    MOCK_EXPECT( GetFireRandomInteger ).returns( 41u );
+    ExpectCallback( 2 );
+    commands.Execute();
+}
+
 BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_no_capacity_if_target_has_no_component, FireFixture )
 {
+    MOCK_EXPECT( IsTemporarilyBlockable ).once().with( firer ).returns( false );
     ExpectCallback( 2 );
     commands.Execute();
 }
@@ -61,6 +94,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_no_capacity_if_target_has_n
 BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_no_capacity_if_firer_has_no_weapon, FireFixture )
 {
     entity[ "components" ].AddElement()[ "weapons" ];
+    MOCK_EXPECT( IsTemporarilyBlockable ).once().with( firer ).returns( false );
     ExpectCallback( 2 );
     commands.Execute();
 }
@@ -78,6 +112,7 @@ namespace
             weapon[ "type" ] = "launcher_1/ammo_1";
             weapon[ "fired-ammo" ] = 0;
             weapon[ "next-time" ] = 0;
+            MOCK_EXPECT( IsTemporarilyBlockable ).once().with( firer ).returns( false );
         }
         core::Model& component_2;
         core::Model& weapon;
@@ -91,31 +126,10 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_no_capacity_if_firer_cannot
     commands.Execute();
 }
 
-BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_temporary_blocked_when_blocked_by_urban, WeaponFixture ) // $$$$ MCO 2012-04-27: should be handled by CanFire
-{
-    MOCK_EXPECT( CanFire ).returns( true );
-    MOCK_EXPECT( GetFireRandomInteger ).returns( 100u );
-    ExpectCallback( 6 );
-    commands.Execute();
-}
-
-BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_temporary_blocked_when_blocked_by_urban_with_custom_coefficient, WeaponFixture ) // $$$$ MCO 2012-04-27: should be handled by CanFire
-{
-    InitializeDecisional( "<decisional>"
-                          "  <urban-combat hit-factor='42'/>"
-                          "  <force-ratio default-feedback-time='600s'/>"
-                          "</decisional>", 10 );
-    MOCK_EXPECT( CanFire ).returns( true );
-    MOCK_EXPECT( GetFireRandomInteger ).returns( 42u );
-    ExpectCallback( 6 );
-    commands.Execute();
-}
-
 BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_no_ammunition_when_out_of_dotation, WeaponFixture )
 {
     MOCK_EXPECT( CanFire ).returns( true );
     MOCK_EXPECT( HasDotation ).once().with( firer, ammo_1 ).returns( false );
-    MOCK_EXPECT( GetFireRandomInteger ).returns( 0u );
     ExpectCallback( 3 );
     commands.Execute();
 }
@@ -128,7 +142,6 @@ namespace
         {
             MOCK_EXPECT( CanFire ).returns( true );
             MOCK_EXPECT( HasDotation ).returns( true );
-            MOCK_EXPECT( GetFireRandomInteger ).returns( 0u );
             model[ "tick" ] = 0;
         }
     };

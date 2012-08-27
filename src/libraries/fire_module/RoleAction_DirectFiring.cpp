@@ -142,13 +142,16 @@ int RoleAction_DirectFiring::FirePion( const wrapper::View& model, const wrapper
         return eEnemyDestroyed;
     // Firers
     DirectFireData data( entity, nComposanteFiringType, nFiringMode, rPercentageComposantesToUse, ammoDotationClass );
-    const wrapper::View& components = entity[ "components" ];
-    for( std::size_t c = 0; c < components.GetSize(); ++c )
+    if( data.CanFire( entity ) )
     {
-        const wrapper::View& component = components.GetElement( c );
-        const wrapper::View& weapons = component[ "weapons" ];
-        for( std::size_t w = 0; w < weapons.GetSize(); ++w )
-            data.ApplyOnWeapon( model, component, weapons.GetElement( w ) );
+        const wrapper::View& components = entity[ "components" ];
+        for( std::size_t c = 0; c < components.GetSize(); ++c )
+        {
+            const wrapper::View& component = components.GetElement( c );
+            const wrapper::View& weapons = component[ "weapons" ];
+            for( std::size_t w = 0; w < weapons.GetSize(); ++w )
+                data.ApplyOnWeapon( model, component, weapons.GetElement( w ) );
+        }
     }
     const unsigned int nNbrWeaponsUsable = data.GetNbrWeaponsUsable();
     if( nNbrWeaponsUsable == 0 )

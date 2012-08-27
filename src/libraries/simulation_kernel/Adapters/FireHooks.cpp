@@ -31,6 +31,7 @@
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/Roles/Protection/PHY_RoleInterface_ActiveProtection.h"
 #include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
+#include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
@@ -50,6 +51,11 @@ namespace
         if( ! dotation )
             return 0;
         return PHY_DotationType::FindDotationCategory( dotation );
+    }
+    DEFINE_HOOK( IsTemporarilyBlockable, bool, ( const SWORD_Model* entity ) )
+    {
+        MIL_AgentPion& pion = (*core::Convert( entity ) )[ "pion" ].GetUserData< MIL_AgentPion >();
+        return pion.GetRole< PHY_RoleInterface_UrbanLocation >().IsInCity();
     }
     DEFINE_HOOK( GetFireRandomInteger, size_t, ( size_t min, size_t max ) )
     {
