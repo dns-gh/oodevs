@@ -224,7 +224,7 @@
             <span class="well session {{{status}}}"></span>
             <div class="session_name">
                 {{name}}
-                <span style="color:#999;font-size:x-small"> {{status}} </span>
+                <span> {{status}} </span>
             </div>
             {{#is_option status replaying="" waiting=""}}
             {{else}}
