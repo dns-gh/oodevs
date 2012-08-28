@@ -25,11 +25,7 @@
 #include "Config.h"
 #include "LauncherService.h"
 #include "TimeMessageHandler.h"
-#include "NotificationMessageHandler.h"
-#include "ControlInformationMessageHandler.h"
-#include "ControlEndTickMessageHandler.h"
 #include "ConnectedProfilesMessageHandler.h"
-#include "SessionStatusMessageHandler.h"
 #include "protocol/SimulationSenders.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/MessengerSenders.h"
@@ -96,11 +92,7 @@ void ProcessService::CreatePermanentHandlers( const std::string& endpoint )
             facade->SetEndpoint( endpoint );
             const std::string& exercise = it->first.first;
             const std::string& session  = it->first.second;
-            facade->ClearPermanentMessageHandler();
-            facade->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new NotificationMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
-            facade->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new ControlInformationMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
-            facade->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new ControlEndTickMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
-            facade->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new SessionStatusMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
+            facade->CreatePermanentMessageHandler( exercise, session );
         }
     }
 }
@@ -243,23 +235,24 @@ sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const std::
     }
 
     bool isDispatcher = ( message.type() == sword::SessionStartRequest::dispatch );
+    frontend::CreateSession action( config_, exercise, session );
+    action.SetDefaultValues();
+    for( int i = 0; i < message.parameter().size() ; ++i )
     {
-        frontend::CreateSession action( config_, exercise, session );
-        action.SetDefaultValues();
-        for( int i = 0; i < message.parameter().size() ; ++i )
+        const sword::SessionParameter& parameter = message.parameter( i );
+        if( parameter.key() == "session/config/dispatcher/saver/@enable" && parameter.value() == "false" )
+            action.RemoveOption( "session/config/dispatcher/plugins/recorder" );
+        else
         {
-            const sword::SessionParameter& parameter = message.parameter( i );
-            if( parameter.key() == "session/config/dispatcher/saver/@enable" && parameter.value() == "false" )
-                action.RemoveOption( "session/config/dispatcher/plugins/recorder" );
-            else
-            {
-                action.SetOption( parameter.key(), parameter.value() );
-                if( message.type() == sword::SessionStartRequest::simulation && parameter.key() == "session/config/simulation/dispatcher/@embedded" && parameter.value() == "true")
-                    isDispatcher = true;
-            }
+            action.SetOption( parameter.key(), parameter.value() );
+            if( message.type() == sword::SessionStartRequest::simulation && parameter.key() == "session/config/simulation/dispatcher/@embedded" && parameter.value() == "true")
+                isDispatcher = true;
         }
-        action.Commit();
     }
+    action.Commit();
+
+    unsigned int timeFactor = action.HasOption( "session/config/simulation/time/@factor" ) ? 
+                              action.GetOption< int >( "session/config/simulation/time/@factor" ) : 10u;
 
     boost::shared_ptr< frontend::SpawnCommand > command;
     if( message.type() == sword::SessionStartRequest::simulation )
@@ -272,17 +265,13 @@ sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const std::
     SupervisorProfileCollector profileCollector;
     frontend::Profile::VisitProfiles( config_, fileLoader_, exercise, profileCollector );
 
-    boost::shared_ptr< SwordFacade > wrapper( new SwordFacade( server_, endpoint, isDispatcher ) );
+    boost::shared_ptr< SwordFacade > wrapper( new SwordFacade( server_, endpoint, isDispatcher, timeFactor ) );
     {
         boost::recursive_mutex::scoped_lock locker( mutex_ );
         processes_[ std::make_pair( exercise, session ) ] = wrapper;
     }
     wrapper->Start( *this, command, profileCollector.supervisorProfile_, profileCollector.supervisorPassword_, config_ );
-    wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new NotificationMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
-    wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new ControlInformationMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
-    wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new ControlEndTickMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
-    wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new SessionStatusMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
-
+    wrapper->CreatePermanentMessageHandler( exercise, session );
     try
     {
         std::ofstream file( GetSessionTmpFilename().c_str() );

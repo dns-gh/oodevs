@@ -61,7 +61,8 @@ class SwordFacade : public SwordConnectionHandler_ABC
 public:
     //! @name Constructor/destructor
     //@{
-    explicit SwordFacade( const LauncherService& server, std::string endpoint, bool isDispatcher = false );
+    explicit SwordFacade( const LauncherService& server, std::string endpoint,
+                          bool isDispatcher = false, unsigned int timeFactor = 10u );
     virtual ~SwordFacade();
     //@}
 
@@ -90,8 +91,7 @@ public:
     virtual void OnReceiveMessage( const sword::DispatcherToClient& message );
     //
     void RegisterMessageHandler( int context, std::auto_ptr< MessageHandler_ABC > handler );
-    void ClearPermanentMessageHandler();
-    void AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC > handler );
+    void CreatePermanentMessageHandler( const std::string& exercise, const std::string& session );
 
     void Send( const sword::ClientToSim& message ) const;
     void Send( const sword::ClientToAuthentication& message ) const;
@@ -130,6 +130,7 @@ private:
     const LauncherService& server_;
     std::string endpoint_;
     unsigned int msTimeOut_;
+    unsigned int timeFactor_;
     mutable bool checkTime_;
     boost::posix_time::ptime creationTime_;
     //@}

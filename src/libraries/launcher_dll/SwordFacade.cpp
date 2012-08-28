@@ -12,6 +12,10 @@
 #include "Config.h"
 #include "LauncherPublisher.h"
 #include "LauncherService.h"
+#include "ControlInformationMessageHandler.h"
+#include "ControlEndTickMessageHandler.h"
+#include "SessionStatusMessageHandler.h"
+#include "NotificationMessageHandler.h"
 #include "client_proxy/SwordProxy.h"
 #include "frontend/ProcessWrapper.h"
 #include "protocol/ClientSenders.h"
@@ -27,13 +31,15 @@ using namespace launcher;
 // Name: SwordFacade constructor
 // Created: AHC 2011-05-16
 // -----------------------------------------------------------------------------
-SwordFacade::SwordFacade( const LauncherService& server, std::string endpoint, bool isDispatcher )
+SwordFacade::SwordFacade( const LauncherService& server, std::string endpoint,
+                          bool isDispatcher, unsigned int timeFactor )
     : isDispatcher_   ( isDispatcher )
     , isConnected_    ( false )
     , isAuthenticated_( false )
     , server_         ( server )
     , msTimeOut_      ( 0 )
     , endpoint_       ( endpoint )
+    , timeFactor_     ( timeFactor )
     , checkTime_      ( false )
 {
     // NOTHING
@@ -175,22 +181,18 @@ void SwordFacade::RegisterMessageHandler( int context, std::auto_ptr< MessageHan
 }
 
 // -----------------------------------------------------------------------------
-// Name: SwordFacade::ClearPermanentMessageHandler
-// Created: JSR 2011-12-12
+// Name: SwordFacade::CreatePermanentMessageHandler
+// Created: LGY 2012-08-28
 // -----------------------------------------------------------------------------
-void SwordFacade::ClearPermanentMessageHandler()
+void SwordFacade::CreatePermanentMessageHandler( const std::string& exercise, const std::string& session )
 {
     permanentHandler_.clear();
+    permanentHandler_.push_back( boost::shared_ptr< MessageHandler_ABC >( new NotificationMessageHandler( server_.ResolveClient( endpoint_ ), exercise, session ) ) );
+    permanentHandler_.push_back( boost::shared_ptr< MessageHandler_ABC >( new ControlInformationMessageHandler( server_.ResolveClient( endpoint_ ), exercise, session ) ) );
+    permanentHandler_.push_back( boost::shared_ptr< MessageHandler_ABC >( new ControlEndTickMessageHandler( server_.ResolveClient( endpoint_ ), exercise, session, timeFactor_ ) ) );
+    permanentHandler_.push_back( boost::shared_ptr< MessageHandler_ABC >( new SessionStatusMessageHandler( server_.ResolveClient( endpoint_ ), exercise, session ) ) );
 }
 
-// -----------------------------------------------------------------------------
-// Name: SwordFacade::AddPermanentMessageHandler
-// Created: AHC 2011-05-16
-// -----------------------------------------------------------------------------
-void SwordFacade::AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC > handler )
-{
-    permanentHandler_.push_back( T_Handler( handler.release() ) );
-}
 // -----------------------------------------------------------------------------
 // Name: SwordFacade::Send
 // Created: AHC 2011-05-16
@@ -227,6 +229,8 @@ void SwordFacade::Send( const sword::ClientToMessenger& message ) const
 // -----------------------------------------------------------------------------
 void SwordFacade::OnReceiveMessage( const sword::SimToClient& message )
 {
+    if( message.message().has_control_information() )
+        timeFactor_ = message.message().control_information().time_factor();
     Update( message );
 }
 

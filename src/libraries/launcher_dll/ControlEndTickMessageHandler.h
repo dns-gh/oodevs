@@ -27,7 +27,8 @@ class ControlEndTickMessageHandler : public ClientMessageHandlerBase
 public:
     //! @name Constructors/Destructor
     //@{
-             ControlEndTickMessageHandler( boost::shared_ptr< LauncherPublisher > publisher, const std::string& exercise, const std::string& session );
+             ControlEndTickMessageHandler( boost::shared_ptr< LauncherPublisher > publisher, const std::string& exercise,
+                                           const std::string& session, unsigned int timeFactor );
     virtual ~ControlEndTickMessageHandler();
     //@}
 

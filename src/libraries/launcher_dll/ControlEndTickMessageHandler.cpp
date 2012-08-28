@@ -16,9 +16,11 @@ using namespace launcher;
 // Name: ControlEndTickMessageHandler constructor
 // Created: LGY 2011-09-07
 // -----------------------------------------------------------------------------
-ControlEndTickMessageHandler::ControlEndTickMessageHandler( boost::shared_ptr< LauncherPublisher > publisher, const std::string& exercise, const std::string& session )
+ControlEndTickMessageHandler::ControlEndTickMessageHandler( boost::shared_ptr< LauncherPublisher > publisher,
+                                                            const std::string& exercise, const std::string& session,
+                                                            unsigned int timeFactor )
     : ClientMessageHandlerBase( publisher, exercise, session )
-    , timeFactor_( 0 )
+    , timeFactor_( timeFactor )
     , checkpoint_( 0 )
     , tick_      ( 0 )
 {
