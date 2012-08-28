@@ -31,6 +31,8 @@
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/DictionaryUpdated.h"
+#include "clients_kernel/UrbanObject.h"
 #include "tools/GeneralConfig.h"
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
@@ -74,7 +76,9 @@ ModelBuilder::ModelBuilder( kernel::Controllers& controllers, Model& model )
     , selectedFormation_( controllers )
     , selectedGhost_( controllers )
     , toDelete_( controllers )
+    , selectedUrbanObject_( controllers )
     , confirmation_( new ConfirmationBox( tr( "Confirmation" ), boost::bind( &ModelBuilder::OnConfirmDeletion, this, _1 ) ) )
+    , property_    ( tr( "Info/Name" ) )
 {
     controllers_.Register( *this );
 }
@@ -365,6 +369,7 @@ void ModelBuilder::ClearSelection()
     selectedAutomat_ = 0;
     selectedFormation_ = 0;
     selectedGhost_ = 0;
+    selectedUrbanObject_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -427,6 +432,16 @@ void ModelBuilder::Select( const kernel::Formation_ABC& element )
 
 // -----------------------------------------------------------------------------
 // Name: ModelBuilder::Select
+// Created: LGY 2012-08-28
+// -----------------------------------------------------------------------------
+void ModelBuilder::Select( const kernel::UrbanObject_ABC& element )
+{
+    ClearSelection();
+    selectedUrbanObject_ = &element;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelBuilder::Select
 // Created: AGE 2006-10-10
 // -----------------------------------------------------------------------------
 void ModelBuilder::Select( const kernel::Automat_ABC& element )
@@ -448,10 +463,13 @@ void ModelBuilder::Select( const kernel::Ghost_ABC& element )
 namespace
 {
     template< typename Concrete, typename T >
-    void Rename( T& entity, const QString& text )
+    void Rename( T& entity, const QString& text, kernel::Controllers& controllers, const QString& property )
     {
         if( Concrete* concrete = dynamic_cast< Concrete* >( entity.ConstCast() ) )
+        {
             concrete->Rename( text );
+            controllers.controller_.Update( kernel::DictionaryUpdated( *concrete, property ) );
+        }
     }
 }
 
@@ -462,15 +480,18 @@ namespace
 void ModelBuilder::OnRename( Q3ListViewItem*, int, const QString& text )
 {
     if( selectedTeam_ )
-        Rename< Team >( selectedTeam_, text );
+        Rename< Team >( selectedTeam_, text, controllers_, property_ );
     else if( selectedAgent_ )
-        Rename< Agent >( selectedAgent_, text );
+        Rename< Agent >( selectedAgent_, text, controllers_, property_ );
     else if( selectedAutomat_ )
-        Rename< Automat >( selectedAutomat_, text );
+        Rename< Automat >( selectedAutomat_, text, controllers_, property_ );
     else if( selectedFormation_ )
-        Rename< Formation >( selectedFormation_, text );
+        Rename< Formation >( selectedFormation_, text, controllers_, property_ );
     else if( selectedGroup_ )
-        Rename< KnowledgeGroup >( selectedGroup_, text );
+        Rename< KnowledgeGroup >( selectedGroup_, text, controllers_, property_ );
     else if( selectedGhost_ )
-        Rename< Ghost >( selectedGhost_, text );
+        Rename< Ghost >( selectedGhost_, text, controllers_, property_ );
+    else if( selectedUrbanObject_ )
+        Rename< kernel::UrbanObject >( selectedUrbanObject_, text, controllers_, property_ );
+
 }

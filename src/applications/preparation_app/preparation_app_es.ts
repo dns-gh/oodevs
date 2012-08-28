@@ -1263,6 +1263,10 @@ This data can&apos;t be projected.</source>
         <source>Unable to delete the knowledge group. At least one knowledge group must exists for each side.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Info/Name</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ModelConsistencyDialog</name>
@@ -2682,6 +2686,10 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Resource network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

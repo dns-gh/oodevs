@@ -14,9 +14,6 @@
 
 namespace kernel
 {
-
-
-
 // -----------------------------------------------------------------------------
 // Name: EntityImplementation destructor
 // Created: AGE 2006-10-12

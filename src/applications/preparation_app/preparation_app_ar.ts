@@ -1263,6 +1263,10 @@ This data can&apos;t be projected.</source>
         <source>Delete &apos;%1&apos;?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Info/Name</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ModelConsistencyDialog</name>
@@ -2682,6 +2686,10 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
