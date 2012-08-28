@@ -40,6 +40,7 @@ namespace runtime
 namespace web
 {
     struct Client_ABC;
+    class Plugins;
 }
 
 namespace host
@@ -65,12 +66,14 @@ struct SessionDependencies
 {
     SessionDependencies( const runtime::FileSystem_ABC& system,
                          const runtime::Runtime_ABC& runtime,
+                         const web::Plugins& plugins,
                          const UuidFactory_ABC& uuids,
                          web::Client_ABC& client,
                          runtime::Pool_ABC& pool,
                          PortFactory_ABC& ports )
         : system ( system )
         , runtime( runtime )
+        , plugins( plugins )
         , uuids  ( uuids )
         , client ( client )
         , pool   ( pool )
@@ -80,6 +83,7 @@ struct SessionDependencies
     }
     const runtime::FileSystem_ABC& system;
     const runtime::Runtime_ABC& runtime;
+    const web::Plugins& plugins;
     const UuidFactory_ABC& uuids;
     web::Client_ABC& client;
     runtime::Pool_ABC& pool;

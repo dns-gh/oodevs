@@ -142,10 +142,10 @@ int GetPid( T& process )
 // Name: ReadConfig
 // Created: BAX 2012-08-02
 // -----------------------------------------------------------------------------
-Config ReadConfig( const Tree& src )
+Config ReadConfig( const web::Plugins& plugins, const Tree& src )
 {
     Config cfg;
-    ReadConfig( cfg, src );
+    ReadConfig( cfg, plugins, src );
     return cfg;
 }
 
@@ -208,7 +208,7 @@ Session::Session( const SessionDependencies& deps,
     , node_        ( node )
     , id_          ( Get< Uuid >( tree, "id" ) )
     , paths_       ( paths )
-    , cfg_         ( ReadConfig( tree ) )
+    , cfg_         ( ReadConfig( deps.plugins, tree ) )
     , links_       ( node->LinkExercise( tree.get_child( "links" ) ) )
     , port_        ( AcquirePort( Get< int >( tree, "port" ), deps.ports ) )
     , replay_      ( Get< Uuid >( tree, "replay.root" ) )
@@ -382,6 +382,21 @@ Tree Session::Save() const
 
 namespace
 {
+std::string ConvertFromXpath( std::string xpath )
+{
+    boost::algorithm::replace_all( xpath, "/", "." );
+    boost::algorithm::replace_all( xpath, "@", "<xmlattr>." );
+    return xpath;
+}
+
+void WritePlugin( Tree& tree, const std::string& prefix, const web::session::PluginConfig& cfg )
+{
+    if( !cfg.enabled )
+        return;
+    BOOST_FOREACH( const web::session::PluginConfig::T_Parameters::value_type& value, cfg.parameters )
+        tree.put( prefix + ConvertFromXpath( value.first ), value.second );
+}
+
 void WriteDispatcherConfiguration( Tree& tree, int base, const Config& cfg )
 {
     const std::string prefix = "session.config.dispatcher.";
@@ -390,6 +405,8 @@ void WriteDispatcherConfiguration( Tree& tree, int base, const Config& cfg )
     tree.put( prefix + "plugins.web_control.<xmlattr>.server", base + WEB_CONTROL_PORT );
     tree.put( prefix + "plugins.web_control.<xmlattr>.library", "web_control_plugin" );
     tree.put( prefix + "plugins.recorder.<xmlattr>.fragmentfreq", cfg.recorder.frequency );
+    BOOST_FOREACH( const Config::T_Plugins::value_type& value, cfg.plugins )
+        WritePlugin( tree, prefix + value.first + ".", value.second );
 }
 
 void WriteRngConfiguration( Tree& tree, const std::string& prefix, const RngConfig& cfg )
@@ -790,7 +807,7 @@ bool Session::Update( const Tree& cfg )
     if( status_ != GetIdleStatus( IsReplay() ) )
         return false;
     web::session::Config next = cfg_;
-    bool modified = ReadConfig( next, cfg );
+    bool modified = ReadConfig( next, deps_.plugins, cfg );
     if( !modified )
         return false;
     boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );

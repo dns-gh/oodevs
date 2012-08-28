@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "PluginDirectory.h"
+#include "Plugins.h"
 
 #include "runtime/FileSystem_ABC.h"
 #include "runtime/PropertyTree.h"
@@ -17,7 +17,7 @@
 #include <boost/foreach.hpp>
 #include <boost/optional.hpp>
 
-using namespace host;
+using namespace web;
 using runtime::FileSystem_ABC;
 typedef property_tree::T_Tree Tree;
 
@@ -75,7 +75,7 @@ T_Defaults LoadDefaults( const FileSystem_ABC& fs, const Path& cfg )
 }
 }
 
-struct host::Plugin
+struct web::Plugin
 {
     Plugin( const FileSystem_ABC& fs, const Path& library, const Path& cfg )
         : library_ ( library )
@@ -121,10 +121,10 @@ boost::optional< Path > FindLibrary( const FileSystem_ABC& fs, const Path& root,
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParsePluginDirectory
+// Name: ParsePlugins
 // Created: BAX 2012-08-23
 // -----------------------------------------------------------------------------
-bool ParsePluginDirectory( PluginDirectory::T_Plugins& data, const FileSystem_ABC& fs, const Path& dir )
+bool ParsePlugins( Plugins::T_Plugins& data, const FileSystem_ABC& fs, const Path& dir )
 {
     if( !fs.IsFile( dir / "plugin.xml" ) )
         return true;
@@ -142,47 +142,47 @@ bool ParsePluginDirectory( PluginDirectory::T_Plugins& data, const FileSystem_AB
 // Name: ParsePlugins
 // Created: BAX 2012-08-23
 // -----------------------------------------------------------------------------
-PluginDirectory::T_Plugins ParsePlugins( const FileSystem_ABC& fs, const Path& root )
+Plugins::T_Plugins ParsePlugins( const FileSystem_ABC& fs, const Path& root )
 {
-    PluginDirectory::T_Plugins reply;
-    fs.Walk( root, false, boost::bind( &ParsePluginDirectory, boost::ref( reply ), boost::cref( fs ), _1 ) );
+    Plugins::T_Plugins reply;
+    fs.Walk( root, false, boost::bind( &ParsePlugins, boost::ref( reply ), boost::cref( fs ), _1 ) );
     return reply;
 }
 }
 
 // -----------------------------------------------------------------------------
-// Name: PluginDirectory::PluginDirectory
+// Name: Plugins::Plugins
 // Created: BAX 2012-08-24
 // -----------------------------------------------------------------------------
-PluginDirectory::PluginDirectory( const FileSystem_ABC& fs, const Path& root )
+Plugins::Plugins( const FileSystem_ABC& fs, const Path& root )
     : plugins_( ParsePlugins( fs, root ) )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: PluginDirectory::~PluginDirectory
+// Name: Plugins::~Plugins
 // Created: BAX 2012-08-24
 // -----------------------------------------------------------------------------
-PluginDirectory::~PluginDirectory()
+Plugins::~Plugins()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: PluginDirectory::Count
+// Name: Plugins::Count
 // Created: BAX 2012-08-24
 // -----------------------------------------------------------------------------
-size_t PluginDirectory::Count() const
+size_t Plugins::Count() const
 {
     return plugins_.size();
 }
 
 // -----------------------------------------------------------------------------
-// Name: PluginDirectory::GetPluginNames
+// Name: Plugins::GetPluginNames
 // Created: BAX 2012-08-24
 // -----------------------------------------------------------------------------
-PluginDirectory::T_Names PluginDirectory::GetNames( int offset, int limit ) const
+Plugins::T_Names Plugins::GetNames( int offset, int limit ) const
 {
     T_Names names;
     T_Plugins::const_iterator it = plugins_.begin();
@@ -194,10 +194,22 @@ PluginDirectory::T_Names PluginDirectory::GetNames( int offset, int limit ) cons
 }
 
 // -----------------------------------------------------------------------------
-// Name: PluginDirectory::Has
+// Name: Plugins::Has
 // Created: BAX 2012-08-24
 // -----------------------------------------------------------------------------
-bool PluginDirectory::Has( const std::string& name ) const
+bool Plugins::Has( const std::string& name ) const
 {
     return plugins_.find( name ) != plugins_.end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Plugins::GetDefaults
+// Created: BAX 2012-08-28
+// -----------------------------------------------------------------------------
+Plugins::T_Defaults Plugins::GetDefaults( const Path& plugin ) const
+{
+    T_Plugins::const_iterator it = plugins_.find( plugin );
+    if( it == plugins_.end() )
+        return T_Defaults();
+    return it->second.defaults_;
 }

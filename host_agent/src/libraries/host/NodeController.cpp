@@ -16,6 +16,7 @@
 #include "runtime/PropertyTree.h"
 #include "runtime/Utf8.h"
 #include "web/Configs.h"
+#include "web/Plugins.h"
 
 #include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
@@ -35,11 +36,11 @@ using runtime::Pool_ABC;
 NodeController::NodeController( cpplog::BaseLogger& log,
                                 const runtime::Runtime_ABC& runtime,
                                 const FileSystem_ABC& system,
+                                const web::Plugins& plugins,
                                 const NodeFactory_ABC& nodes,
                                 const Path& root,
                                 const Path& app,
                                 const Path& web,
-                                const Path& plugins,
                                 const std::string& type,
                                 int host,
                                 Pool_ABC& pool,
@@ -47,13 +48,13 @@ NodeController::NodeController( cpplog::BaseLogger& log,
     : log_     ( log )
     , runtime_ ( runtime )
     , system_  ( system )
+    , plugins_ ( plugins )
     , factory_ ( nodes )
     , root_    ( root / ( type == "cluster" ? type : "nodes" ) )
     , app_     ( app )
     , web_     ( web )
     , type_    ( type )
     , host_    ( host )
-    , plugins_ ( system, plugins )
     , proxy_   ( proxy )
     , async_   ( pool )
 {

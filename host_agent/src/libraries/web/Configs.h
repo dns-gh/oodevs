@@ -11,12 +11,23 @@
 #define CONFIGS_H
 
 #include <boost/property_tree/ptree_fwd.hpp>
+#include <map>
 #include <set>
 #include <string>
 
+namespace boost
+{
+namespace filesystem
+{
+    class path;
+}
+}
+
 namespace web
 {
+    class  Plugins;
     struct Request_ABC;
+    typedef boost::filesystem::path Path;
     typedef boost::property_tree::ptree Tree;
 }
 
@@ -48,13 +59,27 @@ struct RngConfig
 };
 
 // -----------------------------------------------------------------------------
+// Name: session::PluginConfig
+// Created: BAX 2012-08-28
+// -----------------------------------------------------------------------------
+struct PluginConfig
+{
+    PluginConfig( const Plugins& plugins, const Path& path );
+    typedef std::map< std::string, std::string > T_Parameters;
+    bool         enabled;
+    T_Parameters parameters;
+};
+
+// -----------------------------------------------------------------------------
 // Name: session::Config
 // Created: BAX 2012-08-02
 // -----------------------------------------------------------------------------
 struct Config
 {
     Config();
+    typedef std::map< std::string, PluginConfig > T_Plugins;
     std::string     name;
+    T_Plugins       plugins;
     struct
     {
         bool        paused;
@@ -86,10 +111,8 @@ struct Config
     }               recorder;
 };
 
-Config GetConfig    ( const Request_ABC& request );
-Tree   ConvertConfig( const Request_ABC& request );
-bool   ReadConfig   ( Config& dst, const Tree& src );
-void   WriteConfig  ( Tree& dst, const Config& cfg );
+bool ReadConfig ( Config& dst, const Plugins& plugins, const Tree& src );
+void WriteConfig( Tree& dst, const Config& cfg );
 }
 
 namespace node
@@ -111,10 +134,8 @@ struct Config
     std::set< std::string > plugins;
 };
 
-Config GetConfig    ( const Request_ABC& request );
-Tree   ConvertConfig( const Request_ABC& request );
-bool   ReadConfig   ( Config& dst, const Tree& src );
-void   WriteConfig  ( Tree& dst, const Config& cfg );
+bool   ReadConfig ( Config& dst, const Tree& src );
+void   WriteConfig( Tree& dst, const Config& cfg );
 }
 }
 

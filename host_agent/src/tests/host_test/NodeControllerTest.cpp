@@ -12,6 +12,7 @@
 #include "host/NodeController.h"
 #include "runtime/PropertyTree.h"
 #include "web/Configs.h"
+#include "web/Plugins.h"
 
 #include <boost/assign/list_of.hpp>
 #include <boost/filesystem/path.hpp>
@@ -100,19 +101,19 @@ namespace
             : root   ( "e:/root" )
             , app    ( "e:/bin/node.exe" )
             , web    ( "e:/zomg/www" )
-            , plugins( "plugins" )
             , type   ( isCluster ? "cluster" : "node" )
             , sub    ( app, web )
-            , control( sub.log, sub.runtime, sub.system, sub.nodes, root, app, web, plugins, type, 0, sub.pool, sub.proxy )
+            , plugins( sub.system, "plugins" )
+            , control( sub.log, sub.runtime, sub.system, plugins, sub.nodes, root, app, web, type, 0, sub.pool, sub.proxy )
         {
             // NOTHING
         }
         const Path root;
         const Path app;
         const Path web;
-        const Path plugins;
         const std::string type;
         SubFixture sub;
+        web::Plugins plugins;
         NodeController control;
         boost::shared_ptr< MockNode > active;
         boost::shared_ptr< MockNode > idle;

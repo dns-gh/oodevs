@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef PLUGIN_DIRECTORY_H
-#define PLUGIN_DIRECTORY_H
+#ifndef PLUGINS_H__
+#define PLUGINS_H__
 
 #include <boost/filesystem/path.hpp>
 #include <map>
@@ -19,41 +19,42 @@ namespace runtime
     struct FileSystem_ABC;
 }
 
-namespace host
+namespace web
 {
     struct Plugin;
     typedef boost::filesystem::path Path;
 }
 
-namespace host
+namespace web
 {
 // =============================================================================
-/** @class  PluginDirectory
-    @brief  PluginDirectory class
+/** @class  Plugins
+    @brief  Plugins class
 */
 // Created: BAX 2012-08-24
 // =============================================================================
-class PluginDirectory
+class Plugins
 {
 public:
     //! @name Constructors/Destructor
     //@{
-     PluginDirectory( const runtime::FileSystem_ABC& fs,
-                      const Path& root );
-    ~PluginDirectory();
+     Plugins( const runtime::FileSystem_ABC& fs, const Path& root );
+    ~Plugins();
     //@}
 
     //! @name Typedef helpers
     //@{
-    typedef std::vector< Path >      T_Names;
-    typedef std::map< Path, Plugin > T_Plugins;
+    typedef std::vector< Path >                  T_Names;
+    typedef std::map< Path, Plugin >             T_Plugins;
+    typedef std::map< std::string, std::string > T_Defaults;
     //@}
 
     //! @name Methods
     //@{
-    size_t  Count   () const;
-    T_Names GetNames( int offset, int limit ) const;
-    bool    Has     ( const std::string& name ) const;
+    size_t     Count      () const;
+    T_Names    GetNames   ( int offset, int limit ) const;
+    bool       Has        ( const std::string& name ) const;
+    T_Defaults GetDefaults( const Path& plugin ) const;
     //@}
 
 private:
@@ -61,4 +62,4 @@ private:
 };
 }
 
-#endif // PLUGIN_DIRECTORY_H
+#endif // PLUGINS_H__

@@ -14,7 +14,6 @@
 #include "NodeObserver_ABC.h"
 
 #include "Container.h"
-#include "PluginDirectory.h"
 #include "runtime/Async.h"
 #include "runtime/Timer_ABC.h"
 #include <boost/filesystem/path.hpp>
@@ -30,7 +29,12 @@ namespace runtime
     struct Pool_ABC;
     struct Process_ABC;
     struct Runtime_ABC;
-};
+}
+
+namespace web
+{
+    class Plugins;
+}
 
 namespace host
 {
@@ -55,11 +59,11 @@ public:
              NodeController( cpplog::BaseLogger& log,
                              const runtime::Runtime_ABC& runtime,
                              const runtime::FileSystem_ABC& system,
+                             const web::Plugins& plugins,
                              const NodeFactory_ABC& nodes,
                              const Path& root,
                              const Path& app,
                              const Path& web,
-                             const Path& plugins,
                              const std::string& type,
                              int host,
                              runtime::Pool_ABC& pool,
@@ -137,13 +141,13 @@ private:
     cpplog::BaseLogger& log_;
     const runtime::Runtime_ABC& runtime_;
     const runtime::FileSystem_ABC& system_;
+    const web::Plugins& plugins_;
     const NodeFactory_ABC& factory_;
     const Path root_;
     const Path app_;
     const Path web_;
     const std::string type_;
     const int host_;
-    const PluginDirectory plugins_;
     Proxy_ABC& proxy_;
     Container< Node_ABC > nodes_;
     runtime::Timer timer_;

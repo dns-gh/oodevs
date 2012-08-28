@@ -30,6 +30,7 @@ namespace cpplog
 namespace web
 {
     struct Agent_ABC;
+    class  Plugins;
     struct Request_ABC;
     struct UserController_ABC;
     typedef boost::uuids::uuid Uuid;
@@ -48,7 +49,7 @@ class Controller : public Observer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Controller( cpplog::BaseLogger& log, Agent_ABC& host, UserController_ABC& users, bool secure );
+             Controller( const Plugins& plugins, cpplog::BaseLogger& log, Agent_ABC& host, UserController_ABC& users, bool secure );
     virtual ~Controller();
     //@}
 
@@ -144,6 +145,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const Plugins& plugins_;
     cpplog::BaseLogger& log_;
     Agent_ABC& agent_;
     UserController_ABC& users_;

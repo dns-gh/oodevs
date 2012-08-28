@@ -8,8 +8,10 @@
 // *****************************************************************************
 
 #include "Configs.h"
+#include "Plugins.h"
 #include "Request_ABC.h"
 #include "runtime/PropertyTree.h"
+#include "runtime/Utf8.h"
 
 #include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
@@ -17,6 +19,7 @@
 
 using namespace web;
 using namespace property_tree;
+using runtime::Utf8Convert;
 using session::RngDistribution;
 
 // -----------------------------------------------------------------------------
@@ -27,6 +30,17 @@ session::RngConfig::RngConfig()
     : distribution( RNG_DISTRIBUTION_LINEAR )
     , deviation   ( 0.5 )
     , mean        ( 0.5 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PluginConfig::PluginConfig
+// Created: BAX 2012-08-28
+// -----------------------------------------------------------------------------
+session::PluginConfig::PluginConfig( const Plugins& plugins, const Path& path )
+    : enabled   ( false )
+    , parameters( plugins.GetDefaults( path ) )
 {
     // NOTHING
 }
@@ -88,82 +102,32 @@ bool TryRead( T& dst, const Request_ABC& request, const std::string& key )
 }
 
 // -----------------------------------------------------------------------------
-// Name: GetRngConfig
+// Name: TryRead
 // Created: BAX 2012-08-02
 // -----------------------------------------------------------------------------
-session::RngConfig GetRngConfig( const Request_ABC& request, const std::string& prefix )
+template< typename T >
+bool TryReadSet( T& dst, const Tree& src, const std::string& key )
 {
-    session::RngConfig cfg;
-    std::string dist;
-    bool valid = TryRead( dist, request, prefix + "distribution" );
-    if( valid )
-        cfg.distribution = ConvertRngDistribution( dist );
-    TryRead( cfg.deviation, request, prefix + "deviation" );
-    TryRead( cfg.mean, request, prefix + "mean" );
-    return cfg;
-}
+    Tree::const_assoc_iterator sub = src.find( key );
+    if( sub == src.not_found() )
+        return false;
+    T next;
+    for( Tree::const_iterator it = sub->second.begin(); it != sub->second.end(); ++it )
+        next.insert( it->second.get_value( std::string() ) );
+    if( next.empty() || next == dst )
+        return false;
+    dst = next;
+    return true;
 }
 
-// -----------------------------------------------------------------------------
-// Name: ReadConfiguration
-// Created: BAX 2012-08-02
-// -----------------------------------------------------------------------------
-session::Config web::session::GetConfig( const Request_ABC& request )
+template< typename T >
+bool TryReadMap( T& dst, const Tree& src, const std::string& prefix )
 {
-    session::Config cfg;
-    session::ReadConfig( cfg, session::ConvertConfig( request ) );
-    return cfg;
+    bool modified = false;
+    BOOST_FOREACH( T::value_type& value, dst )
+        modified |= property_tree::TryRead( value.second, src, prefix + value.first );
+    return modified;
 }
-
-namespace
-{
-// -----------------------------------------------------------------------------
-// Name: TryPut
-// Created: BAX 2012-08-02
-// -----------------------------------------------------------------------------
-void TryPut( Tree& dst, const Request_ABC& request, const std::string& out, const std::string& in )
-{
-    const boost::optional< std::string > opt = request.GetParameter( in );
-    if( opt == boost::none )
-        return;
-    dst.put( out, *opt );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConvertRngConfig
-// Created: BAX 2012-08-02
-// -----------------------------------------------------------------------------
-void ConvertRngConfig( Tree& dst, const Request_ABC& request, const std::string& out, const std::string& in )
-{
-    TryPut( dst, request, out + "distribution", in + "distribution" );
-    TryPut( dst, request, out + "deviation", in + "deviation" );
-    TryPut( dst, request, out + "mean", in + "mean" );
-}
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConvertConfig
-// Created: BAX 2012-08-02
-// -----------------------------------------------------------------------------
-Tree web::session::ConvertConfig( const Request_ABC& request )
-{
-    Tree dst;
-    TryPut( dst, request, "name", "name" );
-    TryPut( dst, request, "checkpoints.enabled", "checkpoints_enabled" );
-    TryPut( dst, request, "checkpoints.frequency", "checkpoints_frequency" );
-    TryPut( dst, request, "checkpoints.keep", "checkpoints_keep" );
-    TryPut( dst, request, "time.end_tick", "time_end_tick" );
-    TryPut( dst, request, "time.factor", "time_factor" );
-    TryPut( dst, request, "time.paused", "time_paused" );
-    TryPut( dst, request, "time.step", "time_step" );
-    TryPut( dst, request, "pathfind.threads", "pathfind_threads" );
-    TryPut( dst, request, "recorder.frequency", "recorder_frequency" );
-    TryPut( dst, request, "rng.seed", "rng_seed" );
-    ConvertRngConfig( dst, request, "rng.breakdown.", "rng_breakdown_" );
-    ConvertRngConfig( dst, request, "rng.fire.", "rng_fire_" );
-    ConvertRngConfig( dst, request, "rng.perception.", "rng_perception_" );
-    ConvertRngConfig( dst, request, "rng.wound.", "rng_wound_" );
-    return dst;
 }
 
 namespace
@@ -193,13 +157,53 @@ void WriteRngConfig( Tree& dst, const std::string& prefix, const session::RngCon
     dst.put( prefix + "deviation", cfg.deviation );
     dst.put( prefix + "mean", cfg.mean );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ReadPluginConfig
+// Created: BAX 2012-08-28
+// -----------------------------------------------------------------------------
+bool ReadPluginConfig( session::PluginConfig& dst, const Tree& src, const std::string& prefix )
+{
+    bool modified = ::TryRead( dst.enabled, src, prefix + "enabled" );
+    modified |= TryReadMap( dst.parameters, src, prefix );
+    return modified;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReadPlugins
+// Created: BAX 2012-08-28
+// -----------------------------------------------------------------------------
+bool ReadPlugins( session::Config::T_Plugins& dst, const Plugins& plugins, const Tree& src )
+{
+    bool modified = false;
+    BOOST_FOREACH( const Path& path, plugins.GetNames( 0, INT_MAX ) )
+    {
+        const std::string name = Utf8Convert( path );
+        session::Config::T_Plugins::iterator it = dst.find( name );
+        if( it == dst.end() )
+            it = dst.insert( std::make_pair( name, session::PluginConfig( plugins, path ) ) ).first;
+        modified |= ReadPluginConfig( it->second, src, "plugins." + name + "." );
+    }
+    return modified;
+}
+
+// -----------------------------------------------------------------------------
+// Name: WritePluginConfig
+// Created: BAX 2012-08-28
+// -----------------------------------------------------------------------------
+void WritePluginConfig( Tree& dst, const std::string& prefix, const session::PluginConfig cfg )
+{
+    dst.put( prefix + "enabled", cfg.enabled );
+    BOOST_FOREACH( const session::PluginConfig::T_Parameters::value_type& value, cfg.parameters )
+        dst.put( prefix + value.first, value.second );
+}
 }
 
 // -----------------------------------------------------------------------------
 // Name: ReadConfig
 // Created: BAX 2012-08-02
 // -----------------------------------------------------------------------------
-bool web::session::ReadConfig( session::Config& dst, const Tree& src )
+bool web::session::ReadConfig( session::Config& dst, const Plugins& plugins, const Tree& src )
 {
     bool modified = false;
     modified |= TryRead( dst.name, src, "name" );
@@ -217,6 +221,7 @@ bool web::session::ReadConfig( session::Config& dst, const Tree& src )
     modified |= ReadRngConfig( dst.rng.fire, src, "rng.fire." );
     modified |= ReadRngConfig( dst.rng.perception, src, "rng.perception." );
     modified |= ReadRngConfig( dst.rng.wound, src, "rng.wound." );
+    modified |= ReadPlugins( dst.plugins, plugins, src );
     return modified;
 }
 
@@ -241,6 +246,8 @@ void web::session::WriteConfig( Tree& dst, const session::Config& cfg )
     WriteRngConfig( dst, "rng.fire.", cfg.rng.fire );
     WriteRngConfig( dst, "rng.perception.", cfg.rng.perception );
     WriteRngConfig( dst, "rng.wound.", cfg.rng.wound );
+    BOOST_FOREACH( const session::Config::T_Plugins::value_type& value, cfg.plugins )
+        WritePluginConfig( dst, "plugins." + value.first + ".", value.second );
 }
 
 // -----------------------------------------------------------------------------
@@ -252,60 +259,6 @@ node::Config::Config()
     sessions.max_play = 0;
     sessions.max_parallel = 0;
     sessions.reset = true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ReadConfiguration
-// Created: BAX 2012-08-09
-// -----------------------------------------------------------------------------
-node::Config web::node::GetConfig( const Request_ABC& request )
-{
-    node::Config cfg;
-    node::ReadConfig( cfg, node::ConvertConfig( request ) );
-    return cfg;
-}
-
-namespace
-{
-const boost::xpressive::sregex pluginRegex = boost::xpressive::sregex::compile( "^plugins_(.+)$" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConvertConfig
-// Created: BAX 2012-08-09
-// -----------------------------------------------------------------------------
-Tree web::node::ConvertConfig( const Request_ABC& request )
-{
-    Tree dst;
-    TryPut( dst, request, "name", "name" );
-    TryPut( dst, request, "sessions.max_play", "sessions_max_play" );
-    TryPut( dst, request, "sessions.max_parallel", "sessions_max_parallel" );
-    TryPut( dst, request, "sessions.reset", "sessions_reset" );
-    const std::vector< std::string > keys = request.GetParameters();
-    Tree& plugins = dst.put_child( "plugins", Tree() );
-    boost::xpressive::smatch what;
-    BOOST_FOREACH( const std::string& key, keys )
-       if( boost::xpressive::regex_match( key, what, pluginRegex ) )
-           plugins.push_back( std::make_pair( std::string(), what[1] ) );
-    return dst;
-}
-
-namespace
-{
-template< typename T >
-bool TryReadSet( T& dst, const Tree& src, const std::string& key )
-{
-    Tree::const_assoc_iterator sub = src.find( key );
-    if( sub == src.not_found() )
-        return false;
-    T next;
-    for( Tree::const_iterator it = sub->second.begin(); it != sub->second.end(); ++it )
-        next.insert( it->second.get_value( std::string() ) );
-    if( next.empty() || next == dst )
-        return false;
-    dst = next;
-    return true;
-}
 }
 
 // -----------------------------------------------------------------------------

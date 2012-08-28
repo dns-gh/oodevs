@@ -30,6 +30,7 @@
 #include <runtime/Utf8.h>
 #include <web/Client.h>
 #include <web/Controller.h>
+#include <web/Plugins.h>
 #include <web/Server.h>
 
 #define  CPPLOG_THREADING
@@ -252,14 +253,15 @@ struct PackageFactory : public PackageFactory_ABC
 struct SessionFactory : public SessionFactory_ABC
 {
     SessionFactory( const FileSystem_ABC& system,
-                    const runtime::Runtime_ABC& runtime,
+                    const Runtime_ABC& runtime,
+                    const web::Plugins& plugins,
                     const UuidFactory_ABC& uuids,
                     const NodeController_ABC& nodes,
                     PortFactory_ABC& ports,
                     web::Client_ABC& client,
                     Pool_ABC& pool )
         : nodes  ( nodes )
-        , deps   ( system, runtime, uuids, client, pool, ports )
+        , deps   ( system, runtime, plugins, uuids, client, pool, ports )
     {
         // NOTHING
     }
@@ -305,17 +307,17 @@ int Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const F
     PackageFactory packages( pool, system );
     NodeFactory fnodes( packages, system, runtime, uuids, ports, cfg.node.min_play_seconds, pool );
     const Port host = ports.Create();
-    const Path plugins = cfg.session.apps / "plugins";
-    NodeController nodes( log, runtime, system, fnodes, cfg.root, cfg.node.app, cfg.node.root, plugins, "node", host->Get(), pool, proxy );
+    web::Plugins plugins( system, cfg.session.apps / "plugins" );
+    NodeController nodes( log, runtime, system, plugins, fnodes, cfg.root, cfg.node.app, cfg.node.root, "node", host->Get(), pool, proxy );
     fnodes.observer = &nodes;
-    NodeController cluster( log, runtime, system, fnodes, cfg.root, cfg.node.app, cfg.node.root, plugins, "cluster", host->Get(), pool, proxy );
-    SessionFactory fsessions( system, runtime, uuids, nodes, ports, client, pool );
+    NodeController cluster( log, runtime, system, plugins, fnodes, cfg.root, cfg.node.app, cfg.node.root, "cluster", host->Get(), pool, proxy );
+    SessionFactory fsessions( system, runtime, plugins, uuids, nodes, ports, client, pool );
     SessionController sessions( log, runtime, system, fsessions, nodes, cfg.root, cfg.session.apps, pool );
     Agent agent( log, cfg.cluster.enabled ? &cluster : 0, nodes, sessions );
     Crypt crypt;
     Sql db( cfg.root / "host" / "host_agent.db" );
     UserController users( log, crypt, uuids, db );
-    web::Controller controller( log, agent, users, true );
+    web::Controller controller( plugins, log, agent, users, true );
     web::Server server( log, pool, controller, host->Get() );
     server.Listen();
     proxy.Register( "api", "localhost", host->Get() );

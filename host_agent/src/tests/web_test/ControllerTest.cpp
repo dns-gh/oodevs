@@ -10,12 +10,14 @@
 #include "web_test.h"
 
 #include "cpplog/cpplog.hpp"
+#include "runtime/FileSystem.h"
 #include "runtime/PropertyTree.h"
 #include "runtime/Utf8.h"
 #include "web/Agent_ABC.h"
 #include "web/Configs.h"
 #include "web/Controller.h"
 #include "web/Observer_ABC.h"
+#include "web/Plugins.h"
 #include "web/HttpException.h"
 #include "web/Request_ABC.h"
 #include "web/Reply_ABC.h"
@@ -159,7 +161,9 @@ namespace
     struct Fixture
     {
         Fixture()
-            : controller( log, agent, users, false )
+            : fs        ( log )
+            , plugins   ( fs, BOOST_RESOLVE( "plugins" ) )
+            , controller( plugins, log, agent, users, false )
         {
             // NOTHING
         }
@@ -171,6 +175,8 @@ namespace
                 MOCK_EXPECT( request.GetParameter ).once().with( pair.first ).returns( pair.second );
         }
         MockLog log;
+        runtime::FileSystem fs;
+        web::Plugins plugins;
         MockRequest request;
         MockResponse reply;
         MockAgent agent;

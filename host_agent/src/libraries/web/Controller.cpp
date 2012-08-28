@@ -46,11 +46,12 @@ using namespace property_tree;
 // Name: Controller::Controller
 // Created: BAX 2012-03-07
 // -----------------------------------------------------------------------------
-Controller::Controller( cpplog::BaseLogger& log, Agent_ABC& agent, UserController_ABC& users, bool secure )
-    : log_   ( log )
-    , agent_ ( agent )
-    , users_ ( users )
-    , secure_( secure )
+Controller::Controller( const Plugins& plugins, cpplog::BaseLogger& log, Agent_ABC& agent, UserController_ABC& users, bool secure )
+    : plugins_( plugins )
+    , log_    ( log )
+    , agent_  ( agent )
+    , users_  ( users )
+    , secure_ ( secure )
 {
     // NOTHING
 }
@@ -601,7 +602,7 @@ void Controller::CreateSession( Reply_ABC& rpy, Request_ABC& request )
     const Tree tree = request.ParseBodyAsJson();
     const std::string exercise = RequireParameter< std::string >( "exercise", tree );
     session::Config cfg;
-    session::ReadConfig( cfg, tree );
+    session::ReadConfig( cfg, plugins_, tree );
     LOG_INFO( log_ ) << "[web] /create_session node: " << node << " name: " << cfg.name << " exercise: " << exercise;
     WriteHttpReply( rpy, agent_.CreateSession( node, cfg, exercise ) );
 }

@@ -16,6 +16,7 @@
 #include "runtime/PropertyTree.h"
 #include "web/Configs.h"
 #include "web/HttpException.h"
+#include "web/Plugins.h"
 
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
@@ -117,7 +118,8 @@ namespace
             web::session::Config cfg;
             cfg.name = defaultName;
             SessionPaths paths( "a", "b" );
-            SessionDependencies deps( system, runtime, uuids, client, pool, ports );
+            web::Plugins plugins( system, "" );
+            SessionDependencies deps( system, runtime, plugins, uuids, client, pool, ports );
             return boost::make_shared< Session >( deps, node, paths, cfg, defaultExercise, boost::uuids::nil_uuid() );
         }
 
@@ -131,7 +133,8 @@ namespace
             const Tree data = FromJson( links );
             MOCK_EXPECT( node->LinkExerciseTree ).once().with( data ).returns( data );
             SessionPaths paths( "a", "b" );
-            SessionDependencies deps( system, runtime, uuids, client, pool, ports );
+            web::Plugins plugins( system, "" );
+            SessionDependencies deps( system, runtime, plugins, uuids, client, pool, ports );
             return boost::make_shared< Session >( deps, node, paths, tree );
         }
 
