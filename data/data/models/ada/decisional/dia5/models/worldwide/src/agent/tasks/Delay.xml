@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.tasks.Delay" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.Delay">
-    <description>Se déplacer sur des positions en engageant l'ennemi pour le ralentir, face à des objectifs.</description>
+    <description>For the agent, to delay encountered enemies, by engaging them from one destroying position to another. The agent occupies the issued positions in the order of the 'positions' list. The agent goes to a next position once the force ratio is weak or if an explicit order is issued.</description>
     <parameters>
         <parameter name="positions">
-            <description>Positions à sur lesquelles se déplacer.</description>
+            <description>The destroying positions to occupy.</description>
             <type>
                 <list>
                     <class name="properties.Destroying"/>
@@ -12,16 +12,12 @@
         </parameter>
     </parameters>
     <goal>
-        <description>Se déplacer en observant et engageant les ennemis à partir des positions.</description>
+        <description>To delay encountered enemies.</description>
     </goal>
     <stages>
-        <stage label="Coup d'arret" permanent="false" disable-when-done="true">
-            <description>Se déplacer en observant l'objectif et engageant les ennemis à partir des positions.</description>
-            <goal>
-                <description>Occuper les positions de freinage.</description>
-            </goal>
+        <stage label="moving to destroying positions" disable-when-done="true">
             <skills>
-                <skill name="agent.skills.Delay" main="true" priority="0.7">
+                <skill name="agent.skills.Delay" main="true">
                     <parameter name="positions">
                         <value>
                             <parameter>positions</parameter>

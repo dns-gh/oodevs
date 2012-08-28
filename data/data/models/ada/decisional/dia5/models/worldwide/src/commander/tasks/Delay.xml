@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="company.tasks.Freiner" source-version="1.0.0" knowledge-class="company.tasks.knowledges.DelayEffect">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.tasks.Delay" source-version="1.0.0" knowledge-class="commander.tasks.knowledges.Delay">
+    <description>For the commander agent, to order subordinates units to delay encountered enemies along positions. Here, positions are defined by fire coordination lines issued by users.&#xD;
+Forward echelon units will receive the main task (the 'Delay' mission), other units (rear echelon) support the forward echelon units.&#xD;
+Engineer units perform the &quot;Build&quot; mission in case of obstacles to errect. Scouting patrol receive the &quot;Screen&quot; mission with the 'positions' as parameter.</description>
     <parameters>
         <parameter name="obstacles" nullable="true">
+            <description>The planned obstacles to errect.</description>
             <type>
                 <list>
                     <class name="properties.Buildable"/>
@@ -12,13 +16,13 @@
             </default>
         </parameter>
         <parameter name="meetingPoint">
+            <description>The meeting position to reach at the end of mission.</description>
             <type>
-                <class name="properties.Approachable"/>
                 <class name="properties.Positionable"/>
             </type>
         </parameter>
         <parameter name="withImprovement">
-            <description>Si la valeur est vraie, on continue la construction en valorisant l'objectif.</description>
+            <description>Define if the obstacles to errect require mines improvement.</description>
             <type>
                 <simple name="boolean"/>
             </type>
@@ -28,27 +32,32 @@
         </parameter>
     </parameters>
     <stages>
-        <stage label="freinage" disable-when-done="true">
+        <stage label="deployment on positions">
             <skills>
                 <skill name="commander.skills.LeadDelay" main="true">
                     <parameter name="companyTask">
                         <value>
-                            <string>company.tasks.Freiner</string>
+                            <string>commander.tasks.Delay</string>
                         </value>
                     </parameter>
                     <parameter name="mainTasks">
                         <value>
-                            <string>platoon.combat.tasks.Freiner</string>
+                            <string>agent.tasks.Delay</string>
                         </value>
                     </parameter>
                     <parameter name="supportTasks">
                         <value>
-                            <string>platoon.tasks.Appuyer</string>
+                            <string>agent.tasks.CombatSupport</string>
                         </value>
                     </parameter>
                     <parameter name="pcTasks">
                         <value>
-                            <string>platoon.tasks.Decrocher</string>
+                            <string>agent.tasks.Disengage</string>
+                        </value>
+                    </parameter>
+                    <parameter name="peiTasks">
+                        <value>
+                            <string>agent.tasks.Disengage</string>
                         </value>
                     </parameter>
                     <parameter name="pcObjective">
@@ -56,29 +65,24 @@
                             <parameter>meetingPoint</parameter>
                         </value>
                     </parameter>
-                    <parameter name="peiTasks">
-                        <value>
-                            <string>platoon.combat.tasks.Jalonner</string>
-                        </value>
-                    </parameter>
                     <parameter name="mainTasksInit">
                         <value>
-                            <string>platoon.tasks.FaireMouvement</string>
+                            <string>agent.tasks.MoveAlong</string>
                         </value>
                     </parameter>
                     <parameter name="engineerTask">
                         <value>
-                            <string>platoon.combat.support.engineer.tasks.Construire</string>
+                            <string>agent.tasks.Build</string>
                         </value>
                     </parameter>
                     <parameter name="defaultTask">
                         <value>
-                            <string>platoon.tasks.Decrocher</string>
+                            <string>agent.tasks.Disengage</string>
                         </value>
                     </parameter>
                     <parameter name="taskForSupporting">
                         <value>
-                            <string>platoon.tasks.Appuyer</string>
+                            <string>agent.tasks.CombatSupport</string>
                         </value>
                     </parameter>
                 </skill>

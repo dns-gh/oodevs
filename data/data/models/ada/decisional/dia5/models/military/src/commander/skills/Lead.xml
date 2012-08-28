@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.skills.Lead" source-version="1.0.0">
-    <description>For the company commander, to perform a mission by issuing sub-tasks to subordinates.</description>
+    <description>For the company commander, to perform a mission by issuing sub-tasks to subordinates.&#xD;
+This skill may be used for defensive and offensive missions.</description>
     <parameters>
         <parameter name="companyTask">
             <description>The company task to perform.</description>
@@ -9,14 +10,14 @@
             </type>
         </parameter>
         <parameter name="mainTasks">
-            <description>The main task to be performed by first echelon units.</description>
+            <description>The main task to be performed by forward echelon units.</description>
             <type>
                 <simple name="string"/>
             </type>
         </parameter>
         <parameter name="supportTasks">
-            <description>The task to be performed by second echelon units, a the begining of the company mission ('agent.tasks.Follow' for instance). &#xD;
-This mission is issued to second echelon units ready to support the fist echelon units.</description>
+            <description>The task to be performed by rear echelon units, a the begining of the company mission ('agent.tasks.Follow' for instance). &#xD;
+This mission is issued to rear echelon units ready to support the forward echelon units.</description>
             <type>
                 <simple name="string"/>
             </type>

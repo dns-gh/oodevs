@@ -8,17 +8,16 @@ rootnode
     connections = { skill.links.moveToward, skill.nodes.Shoot },
 
     -- -------------------------------------------------------------------------------- 
-    -- Feedbacks
+    -- Feedbacks and slots
     -- --------------------------------------------------------------------------------
     -- Engagement is started on current firing position
     shot = function( self )
         self.fireStarted = true
     end,
+
     -- Movement toward firing position is done
     done = function( self )
-    
         local fragorderReceived = integration.query.getFirstFragOrderFromType( "Rep_OrderConduite_Decrocher" )
-
         if DEC_Agent_AutomateEstEmbraye() then 
             if  not self.arrived  then
               self.arrived = true
@@ -31,7 +30,7 @@ rootnode
         else
             if self.fireStarted or fragorderReceived or meKnowledge:hasBadForceRatio() then
                 self.nextTargetIndex = self.nextTargetIndex + 1
-                self.arrived = false    
+                self.arrived = false
             end
         end
         if self.nextTargetIndex > #self.params.positions then
@@ -66,8 +65,7 @@ rootnode
         local hostileElements = integration.query.getNearbyPlatoons()
         for _,  element in pairs( hostileElements ) do
             if element:canDestroyIt() then
-                Activate( skill.nodes.Shoot,
-                  element:destructionPriority(), { entity = element } ) 
+                Activate( skill.nodes.Shoot, element:destructionPriority(), { entity = element } ) 
             end
         end    
     end,
@@ -83,7 +81,6 @@ rootnode
 
 -- **************************************************************************** 
 -- Shoot action on the destroyable element
--- $$$ MIA cas particulier utitlisation de destroy pour faire une tire de ???
 -- ****************************************************************************
 node "Shoot"
 {

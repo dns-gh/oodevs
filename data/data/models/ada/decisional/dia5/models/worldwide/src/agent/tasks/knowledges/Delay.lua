@@ -1,4 +1,4 @@
-local result = 
+local result =
 {
     getPionEfficiency = function( self )
         return ePionEfficiencyCombat
@@ -14,6 +14,6 @@ local result =
 }
 
 local t = initTaskKnowledge( result )
-taskKnowledge["agent.tasks.knowledges.Delay"] = t
+taskKnowledge[ "agent.tasks.knowledges.Delay" ] = t
 
 return result
