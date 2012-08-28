@@ -18,6 +18,7 @@ namespace property_tree
 
     std::string ToJson( const T_Tree& T_Tree, bool isPretty = false );
     T_Tree FromJson( const std::string& data );
+    T_Tree FromJson( std::istream& stream );
     std::string ToXml( const T_Tree& tree );
     T_Tree FromXml( const std::string& data );
 

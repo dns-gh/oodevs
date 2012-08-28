@@ -82,16 +82,21 @@ namespace json_parser
 namespace
 {
 template< typename T >
-Tree Read( const std::string& data, const T& functor )
+Tree Read( std::istream& data, const T& functor )
 {
     Tree tree;
-    if( !data.empty() )
+    if( data.peek() != std::iostream::traits_type::eof() )
         try
         {
-            std::istringstream input( data );
-            functor( input, tree );
+            functor( data, tree );
         } catch( ... ) {}
     return tree;
+}
+
+template< typename T >
+Tree Read( const std::string& data, const T& functor )
+{
+    return Read( std::istringstream( data ), functor );
 }
 
 template< typename T >
@@ -123,6 +128,15 @@ std::string property_tree::ToJson( const Tree& tree, bool isPretty )
 Tree property_tree::FromJson( const std::string& data )
 {
     return Read( data, boost::bind( &boost::property_tree::read_json< Tree >, _1, _2 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FromJson
+// Created: BAX 2012-08-27
+// -----------------------------------------------------------------------------
+Tree property_tree::FromJson( std::istream& stream )
+{
+    return Read( stream, boost::bind( &boost::property_tree::read_json< Tree >, _1, _2 ) );
 }
 
 // -----------------------------------------------------------------------------
