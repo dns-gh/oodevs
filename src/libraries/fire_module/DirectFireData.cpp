@@ -44,7 +44,7 @@ namespace
     }
 }
 
-DECLARE_HOOK( IsTemporarilyBlockable, bool, ( const SWORD_Model* entity ) )
+DECLARE_HOOK( IsTemporarilyBlocked, bool, ( const SWORD_Model* entity, std::size_t nUrbanCoefficient ) )
 DECLARE_HOOK( GetFireRandomInteger, size_t, ( size_t min, size_t max ) )
 
 std::size_t DirectFireData::nUrbanCoefficient_ = 100;
@@ -137,9 +137,7 @@ unsigned int DirectFireData::GetNbrWeaponsUsable() const
 // -----------------------------------------------------------------------------
 bool DirectFireData::CanFire( const wrapper::View& firer )
 {
-    if( ! GET_HOOK( IsTemporarilyBlockable )( firer ) )
-        return true;
-    bTemporarilyBlocked_ = GET_HOOK( GetFireRandomInteger )( 0u, 100u ) >= DirectFireData::nUrbanCoefficient_;
+    bTemporarilyBlocked_ = GET_HOOK( ::IsTemporarilyBlocked )( firer, DirectFireData::nUrbanCoefficient_ );
     return ! bTemporarilyBlocked_;
 }
 

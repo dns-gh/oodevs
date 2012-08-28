@@ -47,26 +47,8 @@ double Weapon::GetDangerosity( const wrapper::View& firer, const wrapper::View& 
 bool Weapon::IsReady() const
 {
     const std::size_t tick = model_[ "tick" ];
-    return weapon_[ "next-time" ] <= tick;
+    return weapon_[ "next-time" ] <= tick; // $$$$ MCO 2012-08-28: this is buggy because next-time should be changed synchronously when firing
 }
-
-//// -----------------------------------------------------------------------------
-//// Name: Weapon::GetMaxRangeToIndirectFire
-//// Created: JVT 2005-05-02
-//// -----------------------------------------------------------------------------
-//double Weapon::GetMaxRangeToIndirectFire() const
-//{
-//    return type_->GetMaxRangeToIndirectFire();
-//}
-//
-//// -----------------------------------------------------------------------------
-//// Name: phy_weapon::GetMinRangeToIndirectFire
-//// Created: JVT 2005-05-02
-//// -----------------------------------------------------------------------------
-//double Weapon::GetMinRangeToIndirectFire() const
-//{
-//    return type_->GetMinRangeToIndirectFire();
-//}
 
 // -----------------------------------------------------------------------------
 // Name: Weapon::ModifyReloadingDuration
@@ -84,33 +66,25 @@ double Weapon::ModifyReloadingDuration( const wrapper::View& firer, double rDura
 bool Weapon::DirectFire( const wrapper::View& firer, const wrapper::View& target, const wrapper::View& compTarget, bool bUsePH ) const
 {
     assert( IsReady() );
-
-          bool bHasFired        = false;
+    bool bHasFired = false;
     const unsigned int nCurrentTimeStep = model_[ "tick" ];
-    const unsigned int nNextTimeStep    = nCurrentTimeStep + 1;
-    double rNextTimeStepToFire = weapon_[ "next-time" ];
+    const unsigned int nNextTimeStep = nCurrentTimeStep + 1;
+    double rNextTimeStepToFire = weapon_[ "next-time" ]; // $$$$ MCO 2012-08-28: this is buggy because next-time should be changed synchronously when firing
     if( rNextTimeStepToFire < (float)nCurrentTimeStep )
         rNextTimeStepToFire = nCurrentTimeStep;
-
-    unsigned int nNbrAmmoFiredFromLoader = weapon_[ "fired-ammo" ];
+    unsigned int nNbrAmmoFiredFromLoader = weapon_[ "fired-ammo" ]; // $$$$ MCO 2012-08-28: this is buggy because fired-ammo should be changed synchronously when firing
     while( (unsigned int)rNextTimeStepToFire < nNextTimeStep )
     {
         unsigned int nNbrAmmoToFire = type_->GetNbrAmmoPerBurst();
-
         if( type_->GetNbrAmmoPerLoader() != 0 )
             nNbrAmmoToFire = std::min( nNbrAmmoToFire, type_->GetNbrAmmoPerLoader() - nNbrAmmoFiredFromLoader );
-
         assert( nNbrAmmoToFire > 0 );
-
         unsigned int nNbrAmmoReserved = type_->ReserveAmmunition( firer, nNbrAmmoToFire );
-
         if( nNbrAmmoReserved )
         {
             nNbrAmmoFiredFromLoader += nNbrAmmoReserved;
-
             type_->DirectFire( firer, target, compTarget, bUsePH );
             bHasFired = true;
-
             rNextTimeStepToFire += type_->GetBurstDuration();
             if( nNbrAmmoFiredFromLoader == type_->GetNbrAmmoPerLoader() )
             {
@@ -118,18 +92,17 @@ bool Weapon::DirectFire( const wrapper::View& firer, const wrapper::View& target
                 nNbrAmmoFiredFromLoader  = 0;
             }
         }
-
         if( nNbrAmmoReserved < nNbrAmmoToFire ) // Soutes vide
             break;
     }
     {
         wrapper::Effect effect( weapon_ );
-        effect[ "fired-ammo" ] = nNbrAmmoFiredFromLoader;
+        effect[ "fired-ammo" ] = nNbrAmmoFiredFromLoader; // $$$$ MCO 2012-08-28: this is buggy because fired-ammo should be changed synchronously when firing
         effect.Post();
     }
     {
         wrapper::Effect effect( weapon_ );
-        effect[ "next-time" ] = rNextTimeStepToFire;
+        effect[ "next-time" ] = rNextTimeStepToFire; // $$$$ MCO 2012-08-28: this is buggy because next-time should be changed synchronously when firing
         effect.Post();
     }
     return bHasFired;

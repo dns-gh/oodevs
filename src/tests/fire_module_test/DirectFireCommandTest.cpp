@@ -54,8 +54,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_enemy_destroyed_if_target_i
 
 BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_temporary_blocked_when_blocked_with_default_coefficient, FireFixture )
 {
-    MOCK_EXPECT( IsTemporarilyBlockable ).once().with( firer ).returns( true );
-    MOCK_EXPECT( GetFireRandomInteger ).returns( 100u );
+    MOCK_EXPECT( IsTemporarilyBlocked ).once().with( firer, 100u ).returns( true );
     ExpectCallback( 6 );
     commands.Execute();
 }
@@ -66,27 +65,21 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_temporary_blocked_when_bloc
                           "  <urban-combat hit-factor='42'/>"
                           "  <force-ratio default-feedback-time='600s'/>"
                           "</decisional>", 10 );
-    MOCK_EXPECT( IsTemporarilyBlockable ).once().with( firer ).returns( true );
-    MOCK_EXPECT( GetFireRandomInteger ).returns( 42u );
+    MOCK_EXPECT( IsTemporarilyBlocked ).once().with( firer, 42u ).returns( true );
     ExpectCallback( 6 );
     commands.Execute();
 }
 
 BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_no_capacity_if_target_has_no_component_when_not_blockable, FireFixture )
 {
-    InitializeDecisional( "<decisional>"
-                          "  <urban-combat hit-factor='42'/>"
-                          "  <force-ratio default-feedback-time='600s'/>"
-                          "</decisional>", 10 );
-    MOCK_EXPECT( IsTemporarilyBlockable ).once().with( firer ).returns( true );
-    MOCK_EXPECT( GetFireRandomInteger ).returns( 41u );
+    MOCK_EXPECT( IsTemporarilyBlocked ).once().returns( false );
     ExpectCallback( 2 );
     commands.Execute();
 }
 
 BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_no_capacity_if_target_has_no_component, FireFixture )
 {
-    MOCK_EXPECT( IsTemporarilyBlockable ).once().with( firer ).returns( false );
+    MOCK_EXPECT( IsTemporarilyBlocked ).once().returns( false );
     ExpectCallback( 2 );
     commands.Execute();
 }
@@ -94,7 +87,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_no_capacity_if_target_has_n
 BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_no_capacity_if_firer_has_no_weapon, FireFixture )
 {
     entity[ "components" ].AddElement()[ "weapons" ];
-    MOCK_EXPECT( IsTemporarilyBlockable ).once().with( firer ).returns( false );
+    MOCK_EXPECT( IsTemporarilyBlocked ).once().returns( false );
     ExpectCallback( 2 );
     commands.Execute();
 }
@@ -112,7 +105,7 @@ namespace
             weapon[ "type" ] = "launcher_1/ammo_1";
             weapon[ "fired-ammo" ] = 0;
             weapon[ "next-time" ] = 0;
-            MOCK_EXPECT( IsTemporarilyBlockable ).once().with( firer ).returns( false );
+            MOCK_EXPECT( IsTemporarilyBlocked ).once().returns( false );
         }
         core::Model& component_2;
         core::Model& weapon;

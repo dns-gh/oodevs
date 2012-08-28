@@ -55,13 +55,15 @@ namespace
             return 0;
         return PHY_DotationType::FindDotationCategory( dotation );
     }
-    DEFINE_HOOK( IsTemporarilyBlockable, bool, ( const SWORD_Model* entity ) )
-    {
-        return GET_ROLE( entity, PHY_RoleInterface_UrbanLocation ).IsInCity();
-    }
     DEFINE_HOOK( GetFireRandomInteger, size_t, ( size_t min, size_t max ) )
     {
         return MIL_Random::rand32_io( min, max, MIL_Random::eFire );
+    }
+    DEFINE_HOOK( IsTemporarilyBlocked, bool, ( const SWORD_Model* entity, std::size_t nUrbanCoefficient ) )
+    {
+        if( ! GET_ROLE( entity, PHY_RoleInterface_UrbanLocation ).IsInCity() )
+            return false;
+        return GET_HOOK( GetFireRandomInteger )( 0u, 100u ) >= nUrbanCoefficient; // $$$$ MCO 2012-08-28: move nUrbanCoefficient out of fire module and into model
     }
     DEFINE_HOOK( GetFireRandomNumber, double, ( double min, double max ) )
     {
@@ -218,7 +220,7 @@ namespace
 // -----------------------------------------------------------------------------
 void FireHooks::Initialize( core::Facade& facade )
 {
-    REGISTER_HOOK( IsTemporarilyBlockable, facade );
+    REGISTER_HOOK( IsTemporarilyBlocked, facade );
     REGISTER_HOOK( GetFireRandomInteger, facade );
     REGISTER_HOOK( GetFireRandomNumber, facade );
     REGISTER_HOOK( HasDotation, facade );

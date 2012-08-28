@@ -138,7 +138,7 @@ private:
 
 public:
     // Factor applied to number of components that can fire in urban areas.
-    static size_t nUrbanCoefficient_;
+    static std::size_t nUrbanCoefficient_; // $$$$ MCO 2012-08-28: should not be handled by the module
 };
 
 }
