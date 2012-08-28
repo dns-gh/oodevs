@@ -322,7 +322,6 @@ node "ACT_ROE_Automate_PasserEnArmesLetalesAutorisees"
             do
                 self._namedParams.pion:SetStateVariable( "VE_EmploiForceInterdit", 1 )
                 self._namedParams.pion:SetStateVariable( "VE_MaintienADistanceParMoyensNonLetaux", 0 )
-                self._namedParams.pion:SetStateVariable( "VE_DispersionParMoyensDeDefenseActifs", 0 )
                 self._namedParams.pion:SetStateVariable( "VE_ArmesLetalesAutorisees", 0 )
             end
         end
@@ -351,7 +350,6 @@ node "ACT_ROE_Automate_PasserEnArmesLetalesAutorisees"
             do
                 self._namedParams.pion:SetStateVariable( "VE_EmploiForceInterdit", 0 )
                 self._namedParams.pion:SetStateVariable( "VE_MaintienADistanceParMoyensNonLetaux", 1 )
-                self._namedParams.pion:SetStateVariable( "VE_DispersionParMoyensDeDefenseActifs", 0 )
                 self._namedParams.pion:SetStateVariable( "VE_ArmesLetalesAutorisees", 0 )
             end
         end
@@ -380,7 +378,6 @@ node "ACT_ROE_Automate_PasserEnArmesLetalesAutorisees"
             do
                 self._namedParams.pion:SetStateVariable( "VE_EmploiForceInterdit", 0 )
                 self._namedParams.pion:SetStateVariable( "VE_MaintienADistanceParMoyensNonLetaux", 0 )
-                self._namedParams.pion:SetStateVariable( "VE_DispersionParMoyensDeDefenseActifs", 1 )
                 self._namedParams.pion:SetStateVariable( "VE_ArmesLetalesAutorisees", 0 )
             end
         end
@@ -409,7 +406,6 @@ node "ACT_ROE_Automate_PasserEnArmesLetalesAutorisees"
             do
                 self._namedParams.pion:SetStateVariable( "VE_EmploiForceInterdit", 0 )
                 self._namedParams.pion:SetStateVariable( "VE_MaintienADistanceParMoyensNonLetaux", 0 )
-                self._namedParams.pion:SetStateVariable( "VE_DispersionParMoyensDeDefenseActifs", 0 )
                 self._namedParams.pion:SetStateVariable( "VE_ArmesLetalesAutorisees", 1 )
             end
         end
