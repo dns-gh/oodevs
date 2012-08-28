@@ -106,7 +106,6 @@
 #include "Urban/PHY_AccomodationType.h"
 #include "Urban/PHY_ResourceNetworkType.h"
 #include "Urban/PHY_RoofShapeType.h"
-#include "Urban/UrbanGeometryAttribute.h"
 #include "Urban/UrbanPhysicalAttribute.h"
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push, 0 )

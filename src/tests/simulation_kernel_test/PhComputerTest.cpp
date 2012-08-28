@@ -22,7 +22,6 @@
 #include "Entities/Objects/MIL_ObjectLoader.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Urban/MIL_UrbanObject.h"
-#include "Urban/UrbanGeometryAttribute.h"
 #include "Fixture.h"
 #include "MockMIL_Time_ABC.h"
 #include "MockAgent.h"

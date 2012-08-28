@@ -106,6 +106,8 @@ public:
 private:
     //!@name Helpers
     //@{
+    void ReadLocalisation( xml::xistream& xis );
+    void ReadPoint( xml::xistream& xis, T_PointVector& vector );
     void InitializeAttributes();
     template < typename T >
     void SendCapacity( sword::UrbanAttributes& msg ) const;

@@ -10,7 +10,6 @@
 #include "MT_Tools/MT_Logger.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
-#include "Urban/UrbanGeometryAttribute.h"
 #include "Urban/UrbanPhysicalAttribute.h"
 
 namespace
@@ -204,12 +203,12 @@ void MIL_UrbanCache::CreateQuadTree( std::vector< const MIL_UrbanObject_ABC* >& 
         ( *it )->GetUrbanObjectLeaves( objects );
     for( std::vector< const MIL_UrbanObject_ABC* >::const_iterator it = objects.begin(); it != objects.end(); ++it )
     {
-        const UrbanGeometryAttribute* pAttribute = static_cast< const tools::Extendable< UrbanExtension_ABC >* >( *it )->Retrieve< UrbanGeometryAttribute >();
-        if( pAttribute )
+
+        const MT_Rect& boundingBox = ( *it )->GetLocalisation().GetBoundingBox();
+        if( boundingBox.GetWidth() != 0 && boundingBox.GetHeight() != 0 )
         {
             quadTree_->Insert( *it );
-            geometry::Rectangle2f boundingBox = pAttribute->BoundingBox();
-            float size = 1.1f * std::max( boundingBox.Width(), boundingBox.Height() );
+            double size = 1.1 * std::max( boundingBox.GetWidth(), boundingBox.GetHeight() );
             if( maxElementSize_ < size )
                 maxElementSize_ = size;
         }

@@ -2634,9 +2634,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\UrbanColorAttribute.cpp">
       <Filter>Source Files\Urban</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\UrbanGeometryAttribute.cpp">
-      <Filter>Source Files\Urban</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\UrbanPhysicalAttribute.cpp">
       <Filter>Source Files\Urban</Filter>
     </ClCompile>
@@ -5379,9 +5376,6 @@
       <Filter>Source Files\Urban</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\UrbanColorAttribute.h">
-      <Filter>Source Files\Urban</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\UrbanGeometryAttribute.h">
       <Filter>Source Files\Urban</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\UrbanPhysicalAttribute.h">

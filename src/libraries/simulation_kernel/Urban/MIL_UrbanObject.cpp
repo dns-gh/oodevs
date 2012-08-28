@@ -10,7 +10,6 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_UrbanObject.h"
 #include "UrbanColorAttribute.h"
-#include "UrbanGeometryAttribute.h"
 #include "UrbanPhysicalAttribute.h"
 #include "UrbanResourceNetworkAttribute.h"
 #include "PHY_InfrastructureType.h"
@@ -25,6 +24,7 @@
 #include "Entities/Objects/MIL_ObjectBuilder_ABC.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
+#include "simulation_terrain/TER_World.h"
 #include "protocol/ClientSenders.h"
 #include <boost/lexical_cast.hpp>
 
@@ -42,7 +42,6 @@
 #include "Urban/MIL_UrbanObject_ABC.h"
 #include "Urban/MIL_UrbanMotivationsVisitor_ABC.h"
 #include "Urban/UrbanColorAttribute.h"
-#include "Urban/UrbanGeometryAttribute.h"
 #include "Urban/UrbanPhysicalAttribute.h"
 #include "Urban/UrbanResourceNetworkAttribute.h"
 #include <boost/serialization/vector.hpp>
@@ -66,10 +65,11 @@ MIL_UrbanObject::MIL_UrbanObject( xml::xistream& xis, const MIL_ObjectBuilder_AB
     if( name_.empty() )
         name_ = boost::lexical_cast< std::string >( nUrbanId_ );
 
+    ReadLocalisation( xis );
+
     // TEMP
     // TODO refaire au propre quand on n'aura plus les attributs dans urban et qu'on aura viré le wrapper
     // Passer par l'attribute factory? 
-    tools::Extendable< UrbanExtension_ABC >::Attach( *new UrbanGeometryAttribute( xis ) );
     tools::Extendable< UrbanExtension_ABC >::Attach( *new UrbanColorAttribute( xis ) );
     if( xis.has_child( "physical" ) || ( parent && parent->GetParent() ) )
         tools::Extendable< UrbanExtension_ABC >::Attach( *new UrbanPhysicalAttribute( xis ) );
@@ -147,14 +147,14 @@ void MIL_UrbanObject::Accept( MIL_UrbanMotivationsVisitor_ABC& visitor ) const
 namespace
 {
     template< typename IT >
-    bool FindOuterPoint( IT begin, IT end, const geometry::Point2f& from, const geometry::Vector2f& direction, geometry::Point2f& worst )
+    bool FindOuterPoint( IT begin, IT end, const MT_Vector2D& from, const MT_Vector2D& direction, MT_Vector2D& worst )
     {
         bool bFound = false;
-        float rMaxProjection = 0;
+        double rMaxProjection = 0;
         for( IT it = begin; it != end; ++it )
         {
-            const geometry::Vector2f v( from, *it );
-            const float rProjection = direction.CrossProduct( v );
+            const MT_Vector2D v( *it - from );
+            const double rProjection = CrossProduct( direction, v );
             if( rProjection < -1.f ) // epsilon
             {
                 bFound = true;
@@ -168,18 +168,18 @@ namespace
         return bFound;
     }
     
-    void ComputeHull( const std::vector< geometry::Point2f >& vertices, std::vector< geometry::Point2f >& hull )
+    void ComputeHull( const T_PointVector& vertices, T_PointVector& hull )
     {
         if( !vertices.empty() )
         {
-            geometry::Point2f maxLeft = *vertices.begin();
-            geometry::Point2f maxRight = maxLeft;
+            MT_Vector2D maxLeft = *vertices.begin();
+            MT_Vector2D maxRight = maxLeft;
 
-            for( std::vector< geometry::Point2f >::const_iterator it = vertices.begin(); it != vertices.end(); ++it )
+            for( T_PointVector::const_iterator it = vertices.begin(); it != vertices.end(); ++it )
             {
-                if( it->X() < maxLeft.X() )
+                if( it->rX_ < maxLeft.rX_ )
                     maxLeft = *it;
-                if( it->X() > maxRight.X() )
+                if( it->rX_ > maxRight.rX_ )
                     maxRight = *it;
             }
             hull.push_back( maxLeft );
@@ -188,9 +188,9 @@ namespace
             while( nPoint != hull.size() )
             {
                 unsigned int nFollowingPoint = ( nPoint + 1 ) % hull.size();
-                geometry::Vector2f direction( hull[ nPoint ], hull[ nFollowingPoint ] );
+                MT_Vector2D direction( hull[ nFollowingPoint ] -  hull[ nPoint ] );
                 direction.Normalize();
-                geometry::Point2f worst;
+                MT_Vector2D worst;
                 if( FindOuterPoint( vertices.begin(), vertices.end(), hull[ nPoint ], direction, worst ) )
                 {
                     hull.insert( hull.begin() + nFollowingPoint, worst );
@@ -209,20 +209,17 @@ namespace
 // -----------------------------------------------------------------------------
 void MIL_UrbanObject::ComputeConvexHull()
 {
-    std::vector< geometry::Point2f > vertices;
+    T_PointVector vertices;
     tools::Iterator< const MIL_UrbanObject_ABC& > it = CreateIterator();
     while( it.HasMoreElements() )
     {
-        const MIL_UrbanObject_ABC& object = it.NextElement();
-        if( const UrbanGeometryAttribute* attribute = static_cast< const tools::Extendable< UrbanExtension_ABC >& >( object ).Retrieve< UrbanGeometryAttribute >() )
-        {
-            const std::vector< geometry::Point2f >& objectVertices = attribute->Vertices();
-            vertices.insert( vertices.end(), objectVertices.begin(), objectVertices.end() );
-        }
+        const T_PointVector& objectVertices = it.NextElement().GetLocalisation().GetPoints();
+        vertices.insert( vertices.end(), objectVertices.begin(), objectVertices.end() );
     }
-    std::vector< geometry::Point2f > hull;
+    T_PointVector hull;
     ComputeHull( vertices, hull );
-    tools::Extendable< UrbanExtension_ABC >::Get< UrbanGeometryAttribute >().SetGeometry( hull );
+    if( !hull.empty() )
+        Initialize( TER_Localisation( TER_Localisation::ePolygon , hull ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -254,13 +251,9 @@ bool MIL_UrbanObject::HasChild() const
 // -----------------------------------------------------------------------------
 float MIL_UrbanObject::GetLivingSpace() const
 {
-    if( const UrbanGeometryAttribute* geometry = tools::Extendable< UrbanExtension_ABC >::Retrieve< UrbanGeometryAttribute>() )
-    {
-        const UrbanPhysicalAttribute* physical = tools::Extendable< UrbanExtension_ABC >::Retrieve< UrbanPhysicalAttribute >();
-        double factor = physical ? ( physical->GetArchitecture().floorNumber_ + 1 ) * physical->GetArchitecture().occupation_ : 1.;
-        return geometry->ComputeArea() * static_cast< float >( factor );
-    }
-    return 0;
+    const UrbanPhysicalAttribute* physical = tools::Extendable< UrbanExtension_ABC >::Retrieve< UrbanPhysicalAttribute >();
+    double factor = physical ? ( physical->GetArchitecture().floorNumber_ + 1 ) * physical->GetArchitecture().occupation_ : 1.;
+    return static_cast< float >( GetLocalisation().GetArea() * factor );
 }
 
 // -----------------------------------------------------------------------------
@@ -270,8 +263,8 @@ float MIL_UrbanObject::GetLivingSpace() const
 float MIL_UrbanObject::ComputeComplexity() const
 {
     // $$$$ _RC_ JSR 2010-09-16: A refaire (voir PHY_RolePion_UrbanLocation::Execute dans la sim)
-    const UrbanGeometryAttribute* geometry = tools::Extendable< UrbanExtension_ABC >::Retrieve< UrbanGeometryAttribute>();
-    double complexity = geometry ? geometry->ComputeArea() * 0.1f : 1.f;
+    double area = GetLocalisation().GetArea();
+    double complexity = area ? area * 0.1f : 1.f;
     const UrbanPhysicalAttribute* physical = tools::Extendable< UrbanExtension_ABC >::Retrieve< UrbanPhysicalAttribute >();
     if( physical )
         complexity *= ( ( 1 + physical->GetArchitecture().floorNumber_ ) * physical->GetArchitecture().occupation_ );
@@ -288,21 +281,37 @@ const std::string& MIL_UrbanObject::GetInfrastructure() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_UrbanObject::ReadLocalisation
+// Created: JSR 2012-08-28
+// -----------------------------------------------------------------------------
+void MIL_UrbanObject::ReadLocalisation( xml::xistream& xis )
+{
+    T_PointVector pointVector;
+    xis >> xml::optional >> xml::start( "footprint" )
+            >> xml::list( "point", *this, &MIL_UrbanObject::ReadPoint, pointVector )
+        >> xml::end;
+    if( !pointVector.empty() )
+        Initialize( TER_Localisation( TER_Localisation::ePolygon , pointVector ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_UrbanObject::ReadPoint
+// Created: JSR 2012-08-28
+// -----------------------------------------------------------------------------
+void MIL_UrbanObject::ReadPoint( xml::xistream& xis, T_PointVector& vector )
+{
+    std::string strPoint = xis.attribute< std::string >( "location" );
+    MT_Vector2D vPoint;
+    TER_World::GetWorld().MosToSimMgrsCoord( strPoint, vPoint );
+    vector.push_back( vPoint );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_UrbanObject::InitializeAttributes
 // Created: JSR 2010-09-17
 // -----------------------------------------------------------------------------
 void MIL_UrbanObject::InitializeAttributes()
 {
-    // Position
-    std::vector< MT_Vector2D > vector;
-    const UrbanGeometryAttribute* geometry = static_cast< tools::Extendable< UrbanExtension_ABC >* >( this )->Retrieve< UrbanGeometryAttribute >();
-    if( geometry )
-    {
-        geometry::Polygon2f::T_Vertices vertices = geometry->Vertices();
-        for( geometry::Polygon2f::CIT_Vertices it = vertices.begin(); it != vertices.end(); ++it )
-            vector.push_back( MT_Vector2D( it->X(), it->Y() ) );
-    }
-    Initialize( TER_Localisation( TER_Localisation::ePolygon , vector ) );
     // resource network
     if( const UrbanResourceNetworkAttribute* resource = static_cast< tools::Extendable< UrbanExtension_ABC >* >( this )->Retrieve< UrbanResourceNetworkAttribute >() )
     {

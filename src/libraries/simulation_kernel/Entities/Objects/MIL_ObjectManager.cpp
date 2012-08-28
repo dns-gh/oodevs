@@ -27,6 +27,7 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_ScipioException.h"
+#include "MT_Tools/MT_FormatString.h"
 #include "protocol/ClientSenders.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
 #include <xeumeuleu/xml.hpp>
@@ -309,24 +310,25 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC* army, const MIL_O
 MIL_Object_ABC* MIL_ObjectManager::CreateUrbanObject( xml::xistream& xis, MIL_UrbanObject_ABC* parent )
 {
     MIL_UrbanObject_ABC* pObject = builder_->BuildUrbanObject( xis, parent );
+    if( pObject->IsBlock() )
+    {
+        // TODO vérification
+        /*
+        const UrbanPhysicalAttribute* pPhysical = static_cast< const tools::Extendable< UrbanExtension_ABC >& >( object ).Retrieve< UrbanPhysicalAttribute >();
+        if( pPhysical && ( !PHY_MaterialCompositionType::Find( pPhysical->GetArchitecture().material_ ) || !PHY_RoofShapeType::Find( pPhysical->GetArchitecture().roofShape_ ) ) )
+        {
+            MT_LOG_INFO_MSG( MT_FormatString( "The architecture of the urban bloc '%d' ('%s') is not consistent with the architecture described in the urban file", object.GetUrbanId(), object.GetName().c_str() ) );
+        }*/
+        if( pObject->GetLocalisation().GetPoints().empty() )
+        {
+            MT_LOG_ERROR_MSG( MT_FormatString( "Urban block %d ignored for lack of geometry", pObject->GetUrbanId() ) );
+            delete pObject;
+            return 0;
+        }
+        urbanBlocks_.push_back( pObject );
+    }
     RegisterObject( pObject );
 
-    // TODO vérification
-    /*
-    const UrbanPhysicalAttribute* pPhysical = static_cast< const tools::Extendable< UrbanExtension_ABC >& >( object ).Retrieve< UrbanPhysicalAttribute >();
-    if( pPhysical && ( !PHY_MaterialCompositionType::Find( pPhysical->GetArchitecture().material_ ) || !PHY_RoofShapeType::Find( pPhysical->GetArchitecture().roofShape_ ) ) )
-    {
-        MT_LOG_INFO_MSG( MT_FormatString( "The architecture of the urban bloc '%d' ('%s') is not consistent with the architecture described in the urban file", object.GetUrbanId(), object.GetName().c_str() ) );
-    }
-    const UrbanGeometryAttribute* geometry = static_cast< const tools::Extendable< UrbanExtension_ABC >& >( object ).Retrieve< UrbanGeometryAttribute >();
-    if( !geometry || geometry->Vertices().empty() )
-    {
-        MT_LOG_ERROR_MSG( MT_FormatString( "Urban block %d ignored for lack of geometry", object.GetUrbanId() ) );
-        return;
-    }
-    */
-    if( pObject->IsBlock() )
-        urbanBlocks_.push_back( pObject );
     return pObject;
 }
 
