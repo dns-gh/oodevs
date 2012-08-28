@@ -15,10 +15,6 @@
 <context>
     <name>Agent</name>
     <message>
-        <source>Info/Critical intelligence</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Info/Type</source>
         <translation type="unfinished">Info/Tipo</translation>
     </message>
@@ -102,10 +98,6 @@
     </message>
     <message>
         <source>Info/Armed-Individuals</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Critical Intelligence</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

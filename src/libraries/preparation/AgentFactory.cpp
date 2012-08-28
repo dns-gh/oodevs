@@ -60,6 +60,7 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/SymbolFactory.h"
 #include "clients_kernel/SymbolHierarchy_ABC.h"
+#include "clients_kernel/CriticalIntelligence.h"
 #include "clients_kernel/Color_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -98,6 +99,7 @@ kernel::Agent_ABC* AgentFactory::Create( kernel::Automat_ABC& parent, const kern
         result->Rename( name );
     kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
     result->Attach< kernel::Positions >( *new AgentPositions( *result, static_.coordinateConverter_, controllers_.controller_, position, dictionary ) );
+    result->Attach< kernel::CriticalIntelligence >( *new kernel::CriticalIntelligence( *result, controllers_.controller_, dictionary ) );
     result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent, symbolsFactory_ ) );
     result->Attach( *new InitialState( static_, result->GetType().GetId() ) );
     result->Attach< Affinities >( *new AgentAffinities( *result, controllers_, model_, dictionary, tools::translate( "Affinities", "Affinities" ) ) );
@@ -150,6 +152,7 @@ kernel::Population_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const 
         top = const_cast< kernel::Entity_ABC* >( &parent.Get< kernel::CommunicationHierarchies >().GetTop() );
     Population* result = new Population( type, number, controllers_.controller_, idManager_ );
     kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
+    result->Attach< kernel::CriticalIntelligence >( *new kernel::CriticalIntelligence( *result, controllers_.controller_, dictionary ) );
     result->Attach< kernel::Positions >( *new PopulationPositions( *result, controllers_.controller_, static_.coordinateConverter_, position, dictionary ) );
     result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, top ) );
     result->Attach< Affinities >( *new PeopleAffinities( controllers_, model_, dictionary ) );
@@ -226,6 +229,7 @@ kernel::Agent_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Automat_ABC
         return 0;
     Agent* result = new Agent( xis, controllers_.controller_, idManager_, *type, symbolsFactory_ );
     kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
+    result->Attach< kernel::CriticalIntelligence >( *new kernel::CriticalIntelligence( xis, controllers_.controller_, *result, dictionary ) );
     result->Attach< kernel::Positions >( *new AgentPositions( xis, *result, static_.coordinateConverter_, controllers_.controller_, dictionary ) );
     result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent, symbolsFactory_ ) );
     result->Attach( *new InitialState( xis, static_, result->GetType().GetId() ) );
@@ -275,6 +279,7 @@ kernel::Population_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Team_A
 {
     Population* result = new Population( xis, type, controllers_.controller_, idManager_ );
     kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
+    result->Attach< kernel::CriticalIntelligence >( *new kernel::CriticalIntelligence( xis, controllers_.controller_, *result, dictionary ) );
     result->Attach< kernel::Positions >( *new PopulationPositions( xis, *result, controllers_.controller_, static_.coordinateConverter_, dictionary ) );
     result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, &parent ) );
     result->Attach< Affinities >( *new PeopleAffinities( xis, controllers_, model_, dictionary ) );
@@ -314,6 +319,7 @@ kernel::Agent_ABC* AgentFactory::Create( kernel::Ghost_ABC& ghost, const kernel:
     result->Rename( ghost.GetName() );
     kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
     result->Attach< kernel::Positions >( *new AgentPositions( *result, static_.coordinateConverter_, controllers_.controller_, position, dictionary ) );
+    result->Attach< kernel::CriticalIntelligence >( *new kernel::CriticalIntelligence( *result, controllers_.controller_, dictionary ) );
     // Hierarchies
     {
         const kernel::TacticalHierarchies* ghostHierarchy = ghost.Retrieve< kernel::TacticalHierarchies >();

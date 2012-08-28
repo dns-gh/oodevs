@@ -97,7 +97,6 @@ void Attributes::CreateDictionary( PropertiesDictionary& dictionary ) const
     dictionary.Register( *this, tools::translate( "Attributes", "Info/Neutralized" ),                     bNeutralized_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Info/Speed" ),                           nSpeed_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Info/Heading" ),                         nDirection_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Info/Critical intelligence" ),           criticalIntelligence_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Info/Underground" ),                     bUnderground_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Info/Neutralized" ),                     bNeutralized_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Info/Troops on board" ),                 bLoadingState_ );
@@ -259,12 +258,6 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
 
     if( message.has_transported_crowd() )
         crowdTransported_ = message.transported_crowd();
-
-    if( message.has_critical_intelligence() )
-    {
-        criticalIntelligence_ = message.critical_intelligence().c_str();
-        updated.insert( "Info" );
-    }
 
     BOOST_FOREACH( const std::string& content, updated )
         controller_.Update( kernel::DictionaryUpdated( entity_, tools::translate( "Attributes", content.c_str() ) ) );

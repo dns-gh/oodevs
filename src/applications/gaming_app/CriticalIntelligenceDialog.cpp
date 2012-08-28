@@ -22,6 +22,7 @@
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/MagicActionType.h"
+#include "clients_kernel/CriticalIntelligence.h"
 #include "gaming/Attributes.h"
 #include "gaming/Population.h"
 #include "gaming/StaticModel.h"
@@ -118,13 +119,7 @@ void CriticalIntelligenceDialog::OnShow()
 {
     if( !selected_ )
         return;
-    if( selected_->GetTypeName() == kernel::Agent_ABC::typeName_ )
-    {
-        Attributes& attributes = static_cast< Attributes& >( selected_.ConstCast()->Get< kernel::Attributes_ABC >() );
-        SetValue( attributes.criticalIntelligence_ );
-    }
-    else if( selected_->GetTypeName() == kernel::Population_ABC::typeName_ )
-        SetValue( static_cast< Population* >( selected_.ConstCast() )->GetCriticalIntelligence() );
-
+    if( kernel::CriticalIntelligence* attribute = selected_.ConstCast()->Retrieve< kernel::CriticalIntelligence >() )
+        SetValue( attribute->GetType() );
     show();
 }

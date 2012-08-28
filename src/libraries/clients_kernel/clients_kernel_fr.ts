@@ -167,6 +167,13 @@
     </message>
 </context>
 <context>
+    <name>CriticalIntelligence</name>
+    <message>
+        <source>Info/Critical intelligence</source>
+        <translation>Info/Renseignement critique</translation>
+    </message>
+</context>
+<context>
     <name>E_FuncLimaType</name>
     <message>
         <source>LD</source>

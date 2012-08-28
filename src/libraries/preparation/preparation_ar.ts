@@ -19,10 +19,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Info/Critical intelligence</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Info/Command post</source>
         <translation type="unfinished"></translation>
     </message>
@@ -106,10 +102,6 @@
     </message>
     <message>
         <source>Info/Armed-Individuals</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Critical Intelligence</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

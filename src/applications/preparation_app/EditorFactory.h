@@ -64,7 +64,7 @@ class EditorFactory : public gui::EditorFactory
                     , public tools::Caller< kernel::MaterialCompositionType** >
                     , public tools::Caller< kernel::RoofShapeType** >
                     , public tools::Caller< kernel::UrbanBlockColor* >
-                    , public tools::Caller< kernel::CriticalIntelligence* >
+                    , public tools::Caller< kernel::CriticalIntelligenceType* >
 {
 public:
     //! @name Constructors/Destructor
@@ -93,7 +93,7 @@ public:
     virtual void Call( kernel::MaterialCompositionType** const& value );
     virtual void Call( kernel::RoofShapeType** const& value );
     virtual void Call( kernel::UrbanBlockColor* const& value );
-    virtual void Call( kernel::CriticalIntelligence* const& value );
+    virtual void Call( kernel::CriticalIntelligenceType* const& value );
     //@}
 
 private:

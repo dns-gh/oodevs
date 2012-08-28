@@ -38,7 +38,6 @@ Agent::Agent( const AgentType& type, Controller& controller, IdManager& idManage
     : EntityImplementation< Agent_ABC >( controller, idManager.GetNextId(), type.GetName().c_str() )
     , type_                ( type )
     , symbolPath_          ( type_.GetSymbol() )
-    , criticalIntelligence_( "" )
     , level_               ( ENT_Tr::ConvertToNatureLevel( type.GetNature().GetLevel() ) )
     , overridenSymbol_     ( false )
     , nature_              ( type.GetNature().GetNature() )
@@ -68,13 +67,8 @@ Agent::Agent( xml::xistream& xis, Controller& controller, IdManager& idManager, 
     , overridenSymbol_( xis.attribute< bool >( "overridden-symbol", false ) )
     , nature_         ( type.GetNature().GetNature() )
 {
-    std::string criticalIntelligence = "";
     std::string level = "";
     xis >> xml::optional
-            >> xml::start( "critical-intelligence" )
-                >> xml::attribute( "content", criticalIntelligence )
-            >> xml::end
-        >> xml::optional
             >> xml::attribute( "level", level );
     if( overridenSymbol_ && xis.has_attribute( "nature" ) )
     {
@@ -87,7 +81,6 @@ Agent::Agent( xml::xistream& xis, Controller& controller, IdManager& idManager, 
     }
 
     level_ = ENT_Tr::ConvertToNatureLevel( ( level.empty() ) ? type.GetNature().GetLevel() : level );
-    criticalIntelligence_ = criticalIntelligence.c_str();
     idManager.Lock( id_ );
     RegisterSelf( *this );
     CreateDictionary();
@@ -150,7 +143,6 @@ void Agent::CreateDictionary()
 {
     PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Type" ), type_, true );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Critical intelligence" ), criticalIntelligence_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -169,12 +161,6 @@ void Agent::SerializeAttributes( xml::xostream& xos ) const
         symbol = symbol.substr( 8, symbol.length() - 8 );
         xos << xml::attribute( "overridden-symbol", true )
             << xml::attribute( "nature", symbol );
-    }
-    if( criticalIntelligence_() != "" )
-    {
-        xos << xml::start( "critical-intelligence" )
-                << xml::attribute( "content", criticalIntelligence_().toAscii().constData() )
-            << xml::end;
     }
 }
 

@@ -4,6 +4,7 @@ SOURCES = AtlasNatures.cpp \
 Architecture.cpp \
 Circle.cpp \
 CoordinateSystems.cpp \
+CriticalIntelligence.cpp \
 EntityHierarchies.inl \
 Formatter.cpp \
 FourStateOption.cpp \

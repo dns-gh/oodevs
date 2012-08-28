@@ -356,7 +356,7 @@ void EditorFactory::Call( kernel::UrbanBlockColor* const& value )
 // Name: EditorFactory::Call
 // Created: ABR 2012-07-04
 // -----------------------------------------------------------------------------
-void EditorFactory::Call( kernel::CriticalIntelligence* const& value )
+void EditorFactory::Call( kernel::CriticalIntelligenceType* const& value )
 {
     gui::CriticalIntelligenceDialog* intelligenceDialog = new gui::CriticalIntelligenceDialog( parent_, controllers_ );
     intelligenceDialog->SetValue( *value );

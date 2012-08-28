@@ -122,7 +122,6 @@ public:
     const kernel::Team_ABC* surrenderedTo_;
     unsigned int knowledgeGroupJammed_;
     std::map< std::string, std::string > extensions_;
-    kernel::CriticalIntelligence criticalIntelligence_;
     float fLodgingSatisfactionPercent_;
     float fSecuritySatisfactionPercent_;
     float fHealthSatisfactionPercent_;

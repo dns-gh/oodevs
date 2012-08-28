@@ -79,6 +79,7 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Color_ABC.h"
 #include "clients_kernel/SymbolHierarchy.h"
+#include "clients_kernel/CriticalIntelligence.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentFactory constructor
@@ -155,17 +156,17 @@ kernel::Automat_ABC* AgentFactory::Create( const sword::AutomatCreation& message
 kernel::Agent_ABC* AgentFactory::Create( const sword::UnitCreation& message )
 {
     Agent* result = new Agent( message, controllers_.controller_, static_.types_ );
-    kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
-
+    kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
+    result->Attach< kernel::CriticalIntelligence >( *new kernel::CriticalIntelligence( *result, controllers_.controller_, dictionary ) );
     result->Attach< Lives_ABC >( *new Lives( controllers_.controller_ ) );
     result->Attach< kernel::CommandPostAttributes_ABC >( *new CommandPostAttributes( *result, message, static_.types_ ) ); // $$$$ LDC Warning: Must be before new Attributes because Attributes uses it without knowing it to paint the headquarters symbol...
-    result->Attach< kernel::Attributes_ABC >( *new Attributes( *result, controllers_.controller_, static_.coordinateConverter_, dico, model_.teams_ ) );
+    result->Attach< kernel::Attributes_ABC >( *new Attributes( *result, controllers_.controller_, static_.coordinateConverter_, dictionary, model_.teams_ ) );
     result->Attach( *new Decisions( controllers_.controller_, *result, static_.types_.unitModels_ ) );
     result->Attach< kernel::Positions >( *new AgentPositions( controllers_.controller_, *result, static_.coordinateConverter_ ) );
     result->Attach( *new VisionCones( *result, model_.surfaceFactory_, workers_ ) );
     result->Attach( *new AgentDetections( controllers_.controller_, model_.agents_, *result ) );
     result->Attach( *new MagicOrders( *result ) );
-    result->Attach( *new Logistics( *result, controllers_.controller_, model_, static_, dico ) );
+    result->Attach( *new Logistics( *result, controllers_.controller_, model_, static_, dictionary ) );
     result->Attach( *new LogMaintenanceConsigns( controllers_.controller_ ) );
     result->Attach( *new LogMedicalConsigns( controllers_.controller_ ) );
     result->Attach( *new LogSupplyConsigns( controllers_.controller_ ) );
@@ -173,21 +174,21 @@ kernel::Agent_ABC* AgentFactory::Create( const sword::UnitCreation& message )
     result->Attach< kernel::CommunicationHierarchies >( *new AgentHierarchiesCommunication( controllers_.controller_, *result, model_.agents_, model_.knowledgeGroups_ ) );
     result->Attach< kernel::TacticalHierarchies >     ( *new AgentHierarchies< kernel::TacticalHierarchies >     ( controllers_.controller_, *result, model_.agents_ ) );
 
-    result->Attach< kernel::HumanFactors_ABC >( *new HumanFactors( *result, controllers_.controller_, dico ) );
-    result->Attach( *new Reinforcements( *result, controllers_.controller_, model_.agents_, dico ) );
-    result->Attach<kernel::Dotations_ABC>( *new Dotations( *result,controllers_.controller_, static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
-    result->Attach( *new Equipments( *result,controllers_.controller_, static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
+    result->Attach< kernel::HumanFactors_ABC >( *new HumanFactors( *result, controllers_.controller_, dictionary ) );
+    result->Attach( *new Reinforcements( *result, controllers_.controller_, model_.agents_, dictionary ) );
+    result->Attach<kernel::Dotations_ABC>( *new Dotations( *result,controllers_.controller_, static_.objectTypes_, dictionary, model_.agents_, model_.teams_, model_.teams_ ) );
+    result->Attach( *new Equipments( *result,controllers_.controller_, static_.objectTypes_, dictionary, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new Lendings( controllers_.controller_, model_.agents_, static_.objectTypes_ ) );
     result->Attach( *new Borrowings( controllers_.controller_, model_.agents_, static_.objectTypes_ ) );
-    result->Attach( *new Transports( *result, controllers_.controller_, model_.agents_, dico ) );
+    result->Attach( *new Transports( *result, controllers_.controller_, model_.agents_, dictionary ) );
     result->Attach( *new Troops( controllers_.controller_, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new TroopsCompatibilityVersion( controllers_.controller_, model_.agents_, model_.teams_, model_.teams_ ) );
-    result->Attach( *new Contaminations( controllers_.controller_, *result, static_.objectTypes_, dico ) );
+    result->Attach( *new Contaminations( controllers_.controller_, *result, static_.objectTypes_, dictionary ) );
     result->Attach< ConvexHulls >( *new AgentConvexHulls( *result, static_.coordinateConverter_ ) );
     result->Attach( *new DecisionalStates() );
     result->Attach( *new Speeds( static_.coordinateConverter_ ) );
     result->Attach( *new Weapons( controllers_, static_.objectTypes_, static_.objectTypes_ ) );
-    result->Attach( *new Affinities( *result,controllers_.controller_, model_.teams_, dico ) );
+    result->Attach( *new Affinities( *result,controllers_.controller_, model_.teams_, dictionary ) );
     if( message.has_color() )
         result->Attach< kernel::Color_ABC >( *new Color( message.color() ) );
     result->Attach< kernel::DictionaryExtensions >( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
@@ -206,12 +207,13 @@ kernel::Agent_ABC* AgentFactory::Create( const sword::UnitCreation& message )
 kernel::Population_ABC* AgentFactory::Create( const sword::CrowdCreation& message )
 {
     Population* result = new Population( message, controllers_, static_.coordinateConverter_, static_.types_ );
-    kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
+    kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
+    result->Attach< kernel::CriticalIntelligence >( *new kernel::CriticalIntelligence( *result, controllers_.controller_, dictionary ) );
     result->Attach< kernel::Positions >( *new PopulationPositions( *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, model_.teams_.GetTeam( message.party().id() ) ) );
     result->Attach( *new PopulationDecisions( controllers_.controller_, *result ) );
     result->Attach( *new DecisionalStates() );
-    result->Attach( *new Affinities( *result, controllers_.controller_, model_.teams_, dico ) );
+    result->Attach( *new Affinities( *result, controllers_.controller_, model_.teams_, dictionary ) );
     result->Attach< kernel::DictionaryExtensions >( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     AttachExtensions( *result );
     result->Polish();

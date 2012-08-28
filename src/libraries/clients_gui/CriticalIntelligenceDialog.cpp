@@ -56,7 +56,7 @@ CriticalIntelligenceDialog::~CriticalIntelligenceDialog()
 // Name: CriticalIntelligenceDialog::SetValue
 // Created: ABR 2012-07-05
 // -----------------------------------------------------------------------------
-void CriticalIntelligenceDialog::SetValue( kernel::CriticalIntelligence& value )
+void CriticalIntelligenceDialog::SetValue( kernel::CriticalIntelligenceType& value )
 {
     criticalIntelligence_ = &value;
     textEdit_->setText( value() );
@@ -66,7 +66,7 @@ void CriticalIntelligenceDialog::SetValue( kernel::CriticalIntelligence& value )
 // Name: CriticalIntelligenceDialog::GetValue
 // Created: ABR 2012-07-05
 // -----------------------------------------------------------------------------
-kernel::CriticalIntelligence CriticalIntelligenceDialog::GetValue()
+kernel::CriticalIntelligenceType CriticalIntelligenceDialog::GetValue()
 {
     return textEdit_->text();
 }

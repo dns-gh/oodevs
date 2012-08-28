@@ -71,15 +71,11 @@ Population::Population( xml::xistream& xis, const kernel::PopulationType& type, 
         >> xml::end
         >> xml::optional >> xml::start( "armed-individuals" )
             >> xml::attribute( "value", armedIndividuals )
-        >> xml::end
-        >> xml::optional >> xml::start( "critical-intelligence" )
-            >> xml::attribute( "content", criticalIntelligence )
         >> xml::end;
     repartition_->male_ = static_cast< unsigned int >( ( male + 0.005f ) * 100 );
     repartition_->female_ = static_cast< unsigned int >( ( female + 0.005f ) * 100 );
     repartition_->children_ = static_cast< unsigned int >( ( children + 0.005f ) * 100 );
     armedIndividuals_.value_ = static_cast< unsigned int >( ( armedIndividuals + 0.005f ) * 100 );
-    criticalIntelligence_ = criticalIntelligence.c_str();
     RegisterSelf( *this );
     idManager.Lock( id_ );
     CreateDictionary();
@@ -176,7 +172,6 @@ void Population::CreateDictionary()
     dictionary.Register( constEntity, tools::translate( "Crowd", "Info/Type" ), type_, true );
     dictionary.Register( constEntity, tools::translate( "Crowd", "Info/Mood" ), attitude_ );
     dictionary.Register( constEntity, tools::translate( "Crowd", "Info/Armed-Individuals" ), armedIndividuals_ );
-    dictionary.Register( constEntity, tools::translate( "Crowd", "Info/Critical Intelligence" ), criticalIntelligence_ );
 
     dictionary.Register( constEntity, tools::translate( "Crowd", "Humans/Healthy" ), healthy_ );
     dictionary.Register( constEntity, tools::translate( "Crowd", "Humans/Contaminated" ), contaminated_ );
@@ -208,10 +203,6 @@ void Population::SerializeAttributes( xml::xostream& xos ) const
         xos << xml::start( "armed-individuals" )
                 << xml::attribute( "value", armedIndividuals_.value_ / 100.f )
             << xml::end;
-    if( !criticalIntelligence_.isEmpty() )
-        xos << xml::start( "critical-intelligence" )
-                << xml::attribute( "content", criticalIntelligence_.toAscii().constData() )
-        << xml::end;
     if( repartition_->male_ != 100 )
         xos << xml::start( "repartition" )
                 << xml::attribute( "male", repartition_->male_ / 100.f )

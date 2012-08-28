@@ -15,10 +15,6 @@
 <context>
     <name>Agent</name>
     <message>
-        <source>Info/Critical intelligence</source>
-        <translation>Info/Renseignement critique</translation>
-    </message>
-    <message>
         <source>Info/Type</source>
         <translation>Info/Type</translation>
     </message>
@@ -107,10 +103,6 @@
     <message>
         <source>Male\Female\Children/Repartition</source>
         <translation>Répartition H\F\E/Répartition</translation>
-    </message>
-    <message>
-        <source>Info/Critical Intelligence</source>
-        <translation>Info/Renseignement critique</translation>
     </message>
     <message>
         <source>Type:</source>

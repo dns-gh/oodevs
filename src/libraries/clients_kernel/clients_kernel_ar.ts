@@ -167,6 +167,13 @@
     </message>
 </context>
 <context>
+    <name>CriticalIntelligence</name>
+    <message>
+        <source>Info/Critical intelligence</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>E_FuncLimaType</name>
     <message>
         <source>Line of departure (LD)</source>

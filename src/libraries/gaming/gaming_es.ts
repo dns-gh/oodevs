@@ -188,10 +188,6 @@
         <translation>Comunicaciones/Silencio de radio receptor</translation>
     </message>
     <message>
-        <source>Info/Critical intelligence</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Satisfaction/Lodging</source>
         <translation type="unfinished"></translation>
     </message>
@@ -381,10 +377,6 @@
     </message>
     <message>
         <source>Armed individuals:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Critical intelligence</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -29,7 +29,7 @@ namespace gui
 // Created: ABR 2012-07-05
 // =============================================================================
 class CriticalIntelligenceDialog : public gui::PropertyDialog
-                                 , public kernel::ValueEditor< kernel::CriticalIntelligence >
+                                 , public kernel::ValueEditor< kernel::CriticalIntelligenceType >
 {
     Q_OBJECT
 
@@ -42,8 +42,8 @@ public:
 
     //! @name Operations
     //@{
-    void SetValue( kernel::CriticalIntelligence& value );
-    virtual kernel::CriticalIntelligence GetValue();
+    void SetValue( kernel::CriticalIntelligenceType& value );
+    virtual kernel::CriticalIntelligenceType GetValue();
     //@}
 
 protected slots:
@@ -56,9 +56,9 @@ protected slots:
 protected:
     //! @name Member data
     //@{
-    kernel::Controllers&          controllers_;
-    kernel::CriticalIntelligence* criticalIntelligence_;
-    QTextEdit*                    textEdit_;
+    kernel::Controllers&              controllers_;
+    kernel::CriticalIntelligenceType* criticalIntelligence_;
+    QTextEdit*                        textEdit_;
     //@}
 };
 

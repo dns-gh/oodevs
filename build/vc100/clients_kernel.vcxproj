@@ -100,6 +100,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_kernel\Color.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\CriticalIntelligence.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Drawing_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Ghost_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Gradient.cpp" />
@@ -242,6 +243,7 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\clients_kernel_pch.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Color.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\CommandPostAttributes_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\CriticalIntelligence.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Filter_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\ConsistencyChecker_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\DisplayableModesObserver_ABC.h" />

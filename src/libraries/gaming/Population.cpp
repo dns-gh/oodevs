@@ -40,7 +40,6 @@ Population::Population( const sword::CrowdCreation& message, Controllers& contro
     , female_              ( static_cast< unsigned int >( 100 * message.repartition().female() + 0.5f ) )
     , children_            ( static_cast< unsigned int >( 100 * message.repartition().children() + 0.5f ) )
     , nDomination_         ( 0, false )
-    , criticalIntelligence_( "" )
     , armedIndividuals_    ( 0, false )
 {
     if( name_.isEmpty() )
@@ -230,12 +229,6 @@ void Population::DoUpdate( const sword::CrowdUpdate& message )
 
     UPDATE_PROPERTY( message, nDomination_, domination, "Info", updated );
 
-    if( message.has_critical_intelligence() )
-    {
-        criticalIntelligence_ = message.critical_intelligence().c_str();
-        updated.insert( "Info" );
-    }
-
     if( message.has_armed_individuals() )
     {
         unsigned int armedIndividuals = armedIndividuals_;
@@ -401,15 +394,6 @@ const PopulationType& Population::GetType() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Population::GetCriticalIntelligence
-// Created: ABR 2012-07-05
-// -----------------------------------------------------------------------------
-kernel::CriticalIntelligence& Population::GetCriticalIntelligence()
-{
-    return criticalIntelligence_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: Population::CreateDictionary
 // Created: JSR 2011-03-18
 // -----------------------------------------------------------------------------
@@ -418,7 +402,6 @@ void Population::CreateDictionary()
     PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
     const Entity_ABC& selfEntity = static_cast< const Entity_ABC& >( *this );
     dictionary.Register( selfEntity, tools::translate( "Crowd", "Info/Type" ), type_, true );
-    dictionary.Register( selfEntity, tools::translate( "Crowd", "Info/Critical intelligence" ), criticalIntelligence_, true );
     dictionary.Register( selfEntity, tools::translate( "Crowd", "Info/Domination" ), nDomination_, true );
     dictionary.Register( selfEntity, tools::translate( "Crowd", "Info/Armed individuals" ), armedIndividuals_, true );
     dictionary.Register( selfEntity, tools::translate( "Crowd", "M\\F\\C Repartition/Male" ), male_, true );
@@ -441,7 +424,6 @@ void Population::DisplayInTooltip( Displayer_ABC& displayer ) const
     displayer.Display( tools::translate( "Crowd", "Female:" ), female_ );
     displayer.Display( tools::translate( "Crowd", "Children:" ), children_ );
     displayer.Display( tools::translate( "Crowd", "Domination:" ), nDomination_ );
-    displayer.Display( tools::translate( "Crowd", "Critical intelligence:" ), criticalIntelligence_ );
     displayer.Display( tools::translate( "Crowd", "Armed individuals:" ), armedIndividuals_ );
 }
 

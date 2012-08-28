@@ -188,10 +188,6 @@
         <translation>Communications/Silence radio réception</translation>
     </message>
     <message>
-        <source>Info/Critical intelligence</source>
-        <translation>Info/Renseignement critique</translation>
-    </message>
-    <message>
         <source>Satisfaction/Lodging</source>
         <translation>Satisfaction/Hébergement</translation>
     </message>
@@ -382,10 +378,6 @@
     <message>
         <source>Armed individuals:</source>
         <translation>Individus armés:</translation>
-    </message>
-    <message>
-        <source>Info/Critical intelligence</source>
-        <translation>Info/Renseignement critique</translation>
     </message>
     <message>
         <source>Info/Domination</source>

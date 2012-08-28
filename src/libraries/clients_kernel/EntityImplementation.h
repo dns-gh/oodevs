@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __kernel_EntityImplementation_h
-#define __kernel_EntityImplementation_h
+#ifndef kernel_EntityImplementation_h
+#define kernel_EntityImplementation_h
 
 #include "Serializable_ABC.h"
 #pragma warning( push, 0 )
@@ -101,4 +101,4 @@ EntityImplementation< I >::EntityImplementation( Controller& controller, unsigne
 
 #include "EntityImplementation.inl"
 
-#endif // __kernel_EntityImplementation_h
+#endif // kernel_EntityImplementation_h

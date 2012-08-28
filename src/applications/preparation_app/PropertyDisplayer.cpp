@@ -151,7 +151,8 @@ void PropertyDisplayer::Call( const kernel::UrbanBlockColor& value )
 // Name: PropertyDisplayer::Call
 // Created: ABR 2012-06-04
 // -----------------------------------------------------------------------------
-void PropertyDisplayer::Call( const kernel::CriticalIntelligence& value )
+void PropertyDisplayer::Call( const kernel::CriticalIntelligenceType& value )
 {
-    AddToDisplay( value() );
+    QString text = value();
+    AddToDisplay( text.isEmpty() ? "-" : text );
 }

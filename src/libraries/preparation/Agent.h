@@ -83,13 +83,12 @@ private:
 private:
     //! @name Member data
     //@{
-    E_NatureLevel                   level_;
-    const kernel::AgentType&        type_;
-    mutable std::string             symbolPath_;
-    mutable std::string             levelPath_;
-    std::string                     nature_;
-    bool                            overridenSymbol_;
-    kernel::CriticalIntelligence    criticalIntelligence_;
+    E_NatureLevel            level_;
+    const kernel::AgentType& type_;
+    mutable std::string      symbolPath_;
+    mutable std::string      levelPath_;
+    std::string              nature_;
+    bool                     overridenSymbol_;
     //@}
 };
 

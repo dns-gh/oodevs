@@ -79,7 +79,6 @@ private:
     kernel::UnitedValue< unsigned int > armedIndividuals_;
     PopulationRepartition* repartition_;
     Enum_PopulationAttitude attitude_;
-    QString criticalIntelligence_;
     //@}
 };
 

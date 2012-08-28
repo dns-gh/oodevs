@@ -77,6 +77,9 @@
     <Filter Include="Source Files\Model\Properties">
       <UniqueIdentifier>{7f72eb9e-3625-4240-8eee-1c750147cbf0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Model\Entities\Properties">
+      <UniqueIdentifier>{450f5794-88f3-48c2-b928-3634428956db}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\clients_kernel\clients_kernel_pch.cpp">
@@ -498,6 +501,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_kernel\PropertiesDictionary.cpp">
       <Filter>Source Files\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\CriticalIntelligence.cpp">
+      <Filter>Source Files\Model\Entities\Properties</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -963,9 +969,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\Entity_ABC.h">
       <Filter>Source Files\Model\Entities</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\EntityImplementation.h">
-      <Filter>Source Files\Model\Entities</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\Formation_ABC.h">
       <Filter>Source Files\Model\Entities</Filter>
     </ClInclude>
@@ -1182,6 +1185,12 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\Property_ABC.h">
       <Filter>Source Files\Model\Properties</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\EntityImplementation.h">
+      <Filter>Source Files\Model\Entities\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\CriticalIntelligence.h">
+      <Filter>Source Files\Model\Entities\Properties</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\clients_kernel\ApproximativeMap.inl">
@@ -1202,9 +1211,6 @@
     <None Include="..\..\src\libraries\clients_kernel\SimpleHierarchies.inl">
       <Filter>Source Files\Model\Extensions</Filter>
     </None>
-    <None Include="..\..\src\libraries\clients_kernel\EntityImplementation.inl">
-      <Filter>Source Files\Model\Entities</Filter>
-    </None>
     <None Include="..\..\src\libraries\clients_kernel\clients_kernel_es.ts">
       <Filter>Translations</Filter>
     </None>
@@ -1216,6 +1222,9 @@
     </None>
     <None Include="..\..\src\libraries\clients_kernel\clients_kernel_ar.ts">
       <Filter>Translations</Filter>
+    </None>
+    <None Include="..\..\src\libraries\clients_kernel\EntityImplementation.inl">
+      <Filter>Source Files\Model\Entities\Properties</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
