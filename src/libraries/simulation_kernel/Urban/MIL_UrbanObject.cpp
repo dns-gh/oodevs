@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_UrbanObject.h"
-#include "UrbanColorAttribute.h"
 #include "UrbanPhysicalAttribute.h"
 #include "UrbanResourceNetworkAttribute.h"
 #include "PHY_InfrastructureType.h"
@@ -41,7 +40,6 @@
 #include "Urban/PHY_MaterialCompositionType.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
 #include "Urban/MIL_UrbanMotivationsVisitor_ABC.h"
-#include "Urban/UrbanColorAttribute.h"
 #include "Urban/UrbanPhysicalAttribute.h"
 #include "Urban/UrbanResourceNetworkAttribute.h"
 #include <boost/serialization/vector.hpp>
@@ -66,11 +64,11 @@ MIL_UrbanObject::MIL_UrbanObject( xml::xistream& xis, const MIL_ObjectBuilder_AB
         name_ = boost::lexical_cast< std::string >( nUrbanId_ );
 
     ReadLocalisation( xis );
+    ReadColor( xis );
 
     // TEMP
     // TODO refaire au propre quand on n'aura plus les attributs dans urban et qu'on aura viré le wrapper
     // Passer par l'attribute factory? 
-    tools::Extendable< UrbanExtension_ABC >::Attach( *new UrbanColorAttribute( xis ) );
     if( xis.has_child( "physical" ) || ( parent && parent->GetParent() ) )
         tools::Extendable< UrbanExtension_ABC >::Attach( *new UrbanPhysicalAttribute( xis ) );
 
@@ -295,6 +293,20 @@ void MIL_UrbanObject::ReadLocalisation( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_UrbanObject::ReadColor
+// Created: JSR 2012-08-28
+// -----------------------------------------------------------------------------
+void MIL_UrbanObject::ReadColor( xml::xistream& xis )
+{
+    xis >> xml::optional >> xml::start( "color" )
+            >> xml::optional >> xml::attribute( "red", color_.red_ )
+            >> xml::optional >> xml::attribute( "green", color_.green_ )
+            >> xml::optional >> xml::attribute( "blue", color_.blue_ )
+            >> xml::optional >> xml::attribute( "alpha", color_.alpha_ )
+        >> xml::end;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_UrbanObject::ReadPoint
 // Created: JSR 2012-08-28
 // -----------------------------------------------------------------------------
@@ -344,6 +356,10 @@ void MIL_UrbanObject::load( MIL_CheckPointInArchive& file, const unsigned int )
     file >> nUrbanId_
          >> name_
          >> parent_
+         >> color_.red_
+         >> color_.green_
+         >> color_.blue_
+         >> color_.alpha_
          >> infrastructure_
          >> inhabitants_
          >> livingAreas_;
@@ -361,6 +377,10 @@ void MIL_UrbanObject::save( MIL_CheckPointOutArchive& file, const unsigned int )
     file << nUrbanId_
          << name_
          << parent_
+         << color_.red_
+         << color_.green_
+         << color_.blue_
+         << color_.alpha_
          << infrastructure_
          << inhabitants_
          << livingAreas_;
@@ -448,14 +468,11 @@ void MIL_UrbanObject::SendCreation() const
     message().mutable_object()->set_id( GetID() );
     message().set_name( GetName() );
     NET_ASN_Tools::WriteLocation( GetLocalisation(), *message().mutable_location() );
-    if( const UrbanColorAttribute* color = tools::Extendable< UrbanExtension_ABC >::Retrieve< UrbanColorAttribute >() )
-    {
-        sword::RgbaColor* msg = message().mutable_attributes()->mutable_color();
-        msg->set_red( color->Red() );
-        msg->set_green( color->Green() );
-        msg->set_blue( color->Blue() );
-        msg->set_alpha( color->Alpha() );
-    }
+    sword::RgbaColor* msgColor = message().mutable_attributes()->mutable_color();
+    msgColor->set_red( color_.red_ );
+    msgColor->set_green( color_.green_ );
+    msgColor->set_blue( color_.blue_ );
+    msgColor->set_alpha( color_.alpha_ );
     if( const UrbanPhysicalAttribute* pPhysical = tools::Extendable< UrbanExtension_ABC >::Retrieve< UrbanPhysicalAttribute >() )
     {
         // architecture

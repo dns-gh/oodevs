@@ -107,6 +107,7 @@ private:
     //!@name Helpers
     //@{
     void ReadLocalisation( xml::xistream& xis );
+    void ReadColor( xml::xistream& xis );
     void ReadPoint( xml::xistream& xis, T_PointVector& vector );
     void InitializeAttributes();
     template < typename T >
@@ -118,7 +119,7 @@ private:
     void OnReceiveSetEvacuated( const sword::MissionParameter_Value& attribute );
     //@}
 
-    private:
+private:
     //! @name Types
     //@{
     typedef std::vector< MIL_LivingArea* > T_LivingAreas;
@@ -130,14 +131,24 @@ private:
 
     typedef std::map< MIL_LivingArea*, T_Motivations > T_Inhabitants;
     typedef T_Inhabitants::const_iterator            CIT_Inhabitants;
+
+    struct UrbanColor
+    {
+        UrbanColor() : red_( 200 ), green_( 200 ), blue_( 200 ), alpha_( 0.7f ) {}
+        unsigned short red_;
+        unsigned short green_;
+        unsigned short blue_;
+        float alpha_;
+    };
     //@}
 
-    private:
+private:
     //! @name Member data
     //@{
     unsigned long nUrbanId_;
     std::string name_;
     MIL_UrbanObject_ABC* parent_;
+    UrbanColor color_;
     std::string infrastructure_;
     T_Inhabitants inhabitants_;
     T_LivingAreas livingAreas_;

@@ -348,7 +348,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\PHY_MaterialCompositionType.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\PHY_ResourceNetworkType.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\PHY_RoofShapeType.cpp" />
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\UrbanColorAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\UrbanPhysicalAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\UrbanResourceNetworkAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\WeaponAvailabilityComputerFactory.cpp" />
@@ -1128,7 +1127,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\PHY_MaterialCompositionType.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\PHY_ResourceNetworkType.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\PHY_RoofShapeType.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\UrbanColorAttribute.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\UrbanExtension_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\UrbanPhysicalAttribute.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\UrbanResourceNetworkAttribute.h" />
