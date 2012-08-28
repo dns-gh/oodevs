@@ -76,15 +76,6 @@ void ResourceNetworkCapacity::Update( xml::xistream& xis, const MIL_Object_ABC& 
 
 // -----------------------------------------------------------------------------
 // Name: ResourceNetworkCapacity::Update
-// Created: JSR 2011-02-23
-// -----------------------------------------------------------------------------
-void ResourceNetworkCapacity::Initialize( const UrbanResourceNetworkAttribute& urbanAttribute )
-{
-    nodeProperties_->Initialize( urbanAttribute );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ResourceNetworkCapacity::Update
 // Created: JSR 2010-08-26
 // -----------------------------------------------------------------------------
 void ResourceNetworkCapacity::Update( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& list )

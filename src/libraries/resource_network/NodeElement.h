@@ -11,7 +11,6 @@
 #define __NodeElement_h_
 
 #include "ResourceLink.h"
-#include "simulation_kernel/Urban/UrbanResourceNetworkAttribute.h"
 #include <boost/serialization/split_member.hpp>
 #include <vector>
 #include <map>
@@ -46,7 +45,6 @@ public:
              NodeElement();
              NodeElement( unsigned long resourceId, const std::string& resourceName );
              NodeElement( xml::xistream& xis, unsigned long resourceId, const std::string& resourceName );
-             NodeElement( const UrbanResourceNetworkAttribute::ResourceNode& node, unsigned long resourceId );
              NodeElement( const NodeElement& from );
     virtual ~NodeElement();
     //@}

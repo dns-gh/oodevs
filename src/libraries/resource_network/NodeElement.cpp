@@ -101,35 +101,6 @@ NodeElement::NodeElement( xml::xistream& xis, unsigned long resourceId, const st
 
 // -----------------------------------------------------------------------------
 // Name: NodeElement constructor
-// Created: JSR 2010-09-17
-// -----------------------------------------------------------------------------
-NodeElement::NodeElement( const UrbanResourceNetworkAttribute::ResourceNode& node, unsigned long resourceId )
-    : resourceId_         ( resourceId )
-    , resourceName_       ( node.resource_ )
-    , productionCapacity_ ( node.production_ )
-    , stockCapacity_      ( 0 )
-    , stockMaxCapacity_   ( node.maxStock_ )
-    , immediateStock_     ( 0 )
-    , receivedQuantity_   ( 0 )
-    , consumptionAmount_  ( node.consumption_ )
-    , externalConsumption_( 0 )
-    , maxConsumption_     ( 0 )
-    , currentConsumption_ ( 0 )
-    , modifier_           ( 1. )
-    , functionalState_    ( 0 )
-    , oldFunctionalState_ ( 0 )
-    , consumptionState_   ( 0 )
-    , isActivated_        ( node.isEnabled_ )
-    , consumptionCritical_( node.critical_ )
-    , needUpdate_         ( true )
-    , magicChanged_       ( false )
-{
-    for( std::vector< UrbanResourceNetworkAttribute::ResourceLink >::const_iterator it = node.links_.begin(); it != node.links_.end(); ++it )
-        links_.push_back( new ResourceLink( it->id_, ResourceLink::eTargetKindUrban, it->capacity_ ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: NodeElement constructor
 // Created: JSR 2010-08-13
 // -----------------------------------------------------------------------------
 NodeElement::NodeElement( const NodeElement& from )

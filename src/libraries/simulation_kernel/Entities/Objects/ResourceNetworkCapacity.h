@@ -17,7 +17,6 @@
 #include <boost/serialization/export.hpp>
 
 class PHY_DotationCategory;
-class UrbanResourceNetworkAttribute;
 
 namespace google
 {
@@ -71,7 +70,6 @@ public:
     //! @name Operations
     //@{
     void Update( xml::xistream& xis, const MIL_Object_ABC& object );
-    void Initialize( const UrbanResourceNetworkAttribute& urbanAttribute );
     void Update( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& list );
 
     bool ContainsType( const std::string& type ) const;

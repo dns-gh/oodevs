@@ -11,7 +11,6 @@
 #include "ResourceNetworkModel.h"
 #include "ResourceTools_ABC.h"
 #include "protocol/Protocol.h"
-#include "simulation_kernel/Urban/UrbanResourceNetworkAttribute.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -77,20 +76,6 @@ NodeProperties::NodeProperties( const NodeProperties& from )
 NodeProperties::~NodeProperties()
 {
     DeleteAll();
-}
-
-// -----------------------------------------------------------------------------
-// Name: NodeProperties::Initialize
-// Created: JSR 2011-02-23
-// -----------------------------------------------------------------------------
-void NodeProperties::Initialize( const UrbanResourceNetworkAttribute& urbanAttribute )
-{
-    const UrbanResourceNetworkAttribute::T_ResourceNodes& nodes = urbanAttribute.GetResourceNodes();
-    for( UrbanResourceNetworkAttribute::CIT_ResourceNodes it = nodes.begin(); it != nodes.end(); ++it )
-    {
-        unsigned long resourceId = tools_->GetResourceId( it->second.resource_ );
-        Register( resourceId, *new NodeElement( it->second, resourceId ) );
-    }
 }
 
 // -----------------------------------------------------------------------------

@@ -10,7 +10,6 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_UrbanObject.h"
 #include "UrbanPhysicalAttribute.h"
-#include "UrbanResourceNetworkAttribute.h"
 #include "PHY_InfrastructureType.h"
 #include "PHY_MaterialCompositionType.h"
 #include "MIL_UrbanMotivationsVisitor_ABC.h"
@@ -41,7 +40,6 @@
 #include "Urban/MIL_UrbanObject_ABC.h"
 #include "Urban/MIL_UrbanMotivationsVisitor_ABC.h"
 #include "Urban/UrbanPhysicalAttribute.h"
-#include "Urban/UrbanResourceNetworkAttribute.h"
 #include <boost/serialization/vector.hpp>
 #include <boost/foreach.hpp>
 */
@@ -77,9 +75,17 @@ MIL_UrbanObject::MIL_UrbanObject( xml::xistream& xis, const MIL_ObjectBuilder_AB
                 >> xml::attribute( "type", infrastructure_ )
             >>xml::end
         >>xml::end;
-    if( xis.has_child( "resources") )
-        tools::Extendable< UrbanExtension_ABC >::Attach( *new UrbanResourceNetworkAttribute( xis ) );
     builder.Build( *this );
+    if( xis.has_child( "resources") )
+    {
+        ResourceNetworkCapacity* capacity = Retrieve< ResourceNetworkCapacity >();
+        if( capacity )
+        {
+            xis >> xml::start( "resources" );
+            capacity->Update( xis, *this );
+            xis >> xml::end;
+        }
+    }
     InitializeAttributes();
 }
 
@@ -324,13 +330,6 @@ void MIL_UrbanObject::ReadPoint( xml::xistream& xis, T_PointVector& vector )
 // -----------------------------------------------------------------------------
 void MIL_UrbanObject::InitializeAttributes()
 {
-    // resource network
-    if( const UrbanResourceNetworkAttribute* resource = static_cast< tools::Extendable< UrbanExtension_ABC >* >( this )->Retrieve< UrbanResourceNetworkAttribute >() )
-    {
-        ResourceNetworkCapacity* capacity = Retrieve< ResourceNetworkCapacity >();
-        if( capacity )
-            capacity->Initialize( *resource );
-    }
     if( const PHY_InfrastructureType* infraType = PHY_InfrastructureType::Find( GetInfrastructure() ) )
     {
         InfrastructureCapacity* capacity = new InfrastructureCapacity( *infraType );
