@@ -70,6 +70,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "plugins_test", "plugins_test.vcxproj", "{68081D48-9B4E-457A-B414-315A4BAC109D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "replayer_app", "replayer_app.vcxproj", "{90075E95-6468-4E63-B36E-6EF2BC2993C0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E907053A-8F48-4029-B778-3B8435282539} = {E907053A-8F48-4029-B778-3B8435282539}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "score_plugin", "score_plugin.vcxproj", "{C2FF4137-154D-4807-8276-D655FCE7396F}"
 EndProject
