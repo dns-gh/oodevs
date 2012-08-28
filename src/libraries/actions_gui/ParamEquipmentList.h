@@ -67,7 +67,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const tools::Resolver< kernel::EquipmentType >& resolver_;
+    const tools::Resolver_ABC< kernel::EquipmentType, unsigned long >& resolver_;
     const InterfaceBuilder_ABC& builder_;
     Q3ListView* baseList_;
     Q3ListView* list_;

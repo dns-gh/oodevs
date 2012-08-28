@@ -244,6 +244,8 @@ void MIL_Formation::WriteODB( xml::xostream& xos ) const
             << xml::attribute( "id", nID_ )
             << xml::attribute( "level", pLevel_->GetName() )
             << xml::attribute( "name", GetName() );
+    if( pBrainLogistic_.get() )
+        xos << xml::attribute( "logistic-level", pBrainLogistic_->GetLogisticLevel().GetName() );
     if( !symbol_.empty() )
         xos << xml::attribute( "symbol", symbol_ );
     pColor_->WriteODB( xos );

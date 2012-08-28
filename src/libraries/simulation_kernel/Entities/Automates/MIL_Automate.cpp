@@ -427,10 +427,12 @@ void MIL_Automate::WriteODB( xml::xostream& xos ) const
     assert( pKnowledgeGroup_ );
     xos << xml::start( "automat" );
     MIL_Entity_ABC::WriteODB( xos ) ;
-    xos << xml::attribute( "id", nID_ )
-        << xml::attribute( "engaged", bEngaged_ )
-        << xml::attribute( "knowledge-group", pKnowledgeGroup_->GetId() )
-        << xml::attribute( "type", pType_->GetName() );
+    xos     << xml::attribute( "id", nID_ )
+            << xml::attribute( "engaged", bEngaged_ )
+            << xml::attribute( "knowledge-group", pKnowledgeGroup_->GetId() );
+    if( pBrainLogistic_.get() )
+        xos << xml::attribute( "logistic-level", pBrainLogistic_->GetLogisticLevel().GetName() );
+    xos << xml::attribute( "type", pType_->GetName() );
     if( !symbol_.empty() )
         xos << xml::attribute( "symbol", symbol_ );
     pColor_->WriteODB( xos );
