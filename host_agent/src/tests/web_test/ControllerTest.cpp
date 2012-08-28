@@ -255,18 +255,15 @@ BOOST_FIXTURE_TEST_CASE( controller_create_node, Fixture )
     cfg.name = "some_name";
     cfg.sessions.max_play = 16;
     cfg.sessions.max_parallel = 8;
-    ExpectRequest( "GET", "/create_node", boost::assign::map_list_of
-        ( "ident", cfg.name )
-        ( "name", cfg.name )
-        ( "sessions_max_play", boost::lexical_cast< std::string >( cfg.sessions.max_play ) )
-        ( "sessions_max_parallel", boost::lexical_cast< std::string >( cfg.sessions.max_parallel ) )
-        ( "sessions_reset", cfg.sessions.reset ? "true" : "false" )
-    );
+    Tree dst;
+    node::WriteConfig( dst, cfg );
+    dst.put( "ident", cfg.name );
+    ExpectRequest( "GET", "/create_node" );
+    MOCK_EXPECT( request.ParseBodyAsJson ).once().returns( dst );
     const std::string expected = "{\"dummy\":\"ymmud\"}";
-    MOCK_EXPECT( request.GetParameters ).once().returns( std::vector< std::string >() );
     MOCK_EXPECT( agent.CreateNode ).once().with( cfg.name, boost::bind( &Equal, cfg, _1 ) ).returns( FromJson( expected ) );
     ExpectReply( reply, web::OK, expected );
-    controller.DoGet( reply, request );
+    controller.DoPost( reply, request );
 }
 
 BOOST_FIXTURE_TEST_CASE( controller_delete_node, Fixture )
@@ -343,18 +340,19 @@ BOOST_FIXTURE_TEST_CASE( controller_get_session, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( controller_create_session, Fixture )
 {
-    const std::string exercise = "exercise_name";
     const std::string name = "session_name";
+    const std::string exercise = "exercise_name";
+    Tree dst;
+    dst.put( "name", name );
+    dst.put( "exercise", exercise );
     ExpectRequest( "GET", "/create_session", boost::assign::map_list_of
         ( "node", defaultIdString )
-        ( "exercise", exercise )
-        ( "name", name )
     );
-    MOCK_EXPECT( request.GetParameter ).with( mock::any ).returns( boost::none );
+    MOCK_EXPECT( request.ParseBodyAsJson ).once().returns( dst );
     const std::string expected = "{\"dummy\":\"ymmud\"}";
     MOCK_EXPECT( agent.CreateSession ).once().with( defaultId, mock::any, exercise ).returns( FromJson( expected ) );
     ExpectReply( reply, web::OK, expected );
-    controller.DoGet( reply, request );
+    controller.DoPost( reply, request );
 }
 
 BOOST_FIXTURE_TEST_CASE( controller_create_session_without_node_parameter_returns_bad_request, Fixture )
@@ -362,7 +360,7 @@ BOOST_FIXTURE_TEST_CASE( controller_create_session_without_node_parameter_return
     MOCK_EXPECT( request.GetUri ).once().returns( "/create_session" );
     MOCK_EXPECT( request.GetParameter ).once().with( "node" ).returns( boost::none );
     ExpectReply( reply, web::BAD_REQUEST, std::string() );
-    controller.DoGet( reply, request );
+    controller.DoPost( reply, request );
 }
 
 BOOST_FIXTURE_TEST_CASE( controller_delete_session, Fixture )
@@ -487,13 +485,19 @@ BOOST_FIXTURE_TEST_CASE( controller_delete_cache, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( controller_create_node_rejects_invalid_idents, Fixture )
 {
-    ExpectRequest( "GET", "/create_node", boost::assign::map_list_of( "ident", "" ) );
+    Tree dst;
+    MOCK_EXPECT( request.ParseBodyAsJson ).once().returns( dst );
+    ExpectRequest( "GET", "/create_node" );
     ExpectReply( reply, web::BAD_REQUEST, std::string() );
-    controller.DoGet( reply, request );
-    ExpectRequest( "GET", "/create_node", boost::assign::map_list_of( "ident", "A" ) );
+    controller.DoPost( reply, request );
+    dst.put( "ident", "A" );
+    MOCK_EXPECT( request.ParseBodyAsJson ).once().returns( dst );
+    ExpectRequest( "GET", "/create_node" );
     ExpectReply( reply, web::BAD_REQUEST, std::string() );
-    controller.DoGet( reply, request );
-    ExpectRequest( "GET", "/create_node", boost::assign::map_list_of( "ident", "% s+*" ) );
+    controller.DoPost( reply, request );
+    dst.put( "ident", "% s+*" );
+    MOCK_EXPECT( request.ParseBodyAsJson ).once().returns( dst );
+    ExpectRequest( "GET", "/create_node" );
     ExpectReply( reply, web::BAD_REQUEST, std::string() );
-    controller.DoGet( reply, request );
+    controller.DoPost( reply, request );
 }

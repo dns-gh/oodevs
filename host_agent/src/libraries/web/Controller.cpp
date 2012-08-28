@@ -261,11 +261,9 @@ void Controller::DoGet( Reply_ABC& rpy, Request_ABC& request )
         if( uri == "/list_nodes" )         return ListNodes ( rpy, request );
         if( uri == "/count_nodes" )        return CountNodes( rpy, request );
         if( uri == "/get_node" )           return GetNode   ( rpy, request );
-        if( uri == "/create_node" )        return CreateNode( rpy, request );
         if( uri == "/delete_node" )        return DeleteNode( rpy, request );
         if( uri == "/start_node" )         return StartNode ( rpy, request );
         if( uri == "/stop_node" )          return StopNode  ( rpy, request );
-        if( uri == "/update_node" )        return UpdateNode( rpy, request );
         // install
         if( uri == "/get_install" )        return GetInstall   ( rpy, request );
         if( uri == "/delete_install" )     return DeleteInstall( rpy, request );
@@ -277,12 +275,10 @@ void Controller::DoGet( Reply_ABC& rpy, Request_ABC& request )
         if( uri == "/list_sessions" )      return ListSessions   ( rpy, request );
         if( uri == "/count_sessions" )     return CountSessions  ( rpy, request );
         if( uri == "/get_session" )        return GetSession     ( rpy, request );
-        if( uri == "/create_session" )     return CreateSession  ( rpy, request );
         if( uri == "/delete_session" )     return DeleteSession  ( rpy, request );
         if( uri == "/start_session" )      return StartSession   ( rpy, request );
         if( uri == "/stop_session" )       return StopSession    ( rpy, request );
         if( uri == "/pause_session" )      return PauseSession   ( rpy, request );
-        if( uri == "/update_session" )     return UpdateSession  ( rpy, request );
         if( uri == "/archive_session" )    return ArchiveSession ( rpy, request );
         if( uri == "/restore_session" )    return RestoreSession ( rpy, request );
         if( uri == "/download_session" )   return DownloadSession( rpy, request );
@@ -329,10 +325,14 @@ void Controller::DoPost( Reply_ABC& rpy, Request_ABC& request )
     const std::string& uri = request.GetUri();
     try
     {
-        if( uri == "/upload_cache" ) return UploadCache    ( rpy, request );
-        if( uri == "/login" )        return UserLogin      ( rpy, request );
-        if( uri == "/update_login" ) return UserUpdateLogin( rpy, request );
-        if( uri == "/create_user" )  return CreateUser     ( rpy, request );
+        if( uri == "/create_node" )     return CreateNode     ( rpy, request );
+        if( uri == "/update_node" )     return UpdateNode     ( rpy, request );
+        if( uri == "/create_session" )  return CreateSession  ( rpy, request );
+        if( uri == "/update_session" )  return UpdateSession  ( rpy, request );
+        if( uri == "/upload_cache" )    return UploadCache    ( rpy, request );
+        if( uri == "/login" )           return UserLogin      ( rpy, request );
+        if( uri == "/update_login" )    return UserUpdateLogin( rpy, request );
+        if( uri == "/create_user" )     return CreateUser     ( rpy, request );
     }
     catch( const HttpException& err )
     {
@@ -425,13 +425,15 @@ const boost::xpressive::sregex identRegex = boost::xpressive::sregex::compile( "
 // Name: Controller::CreateNode
 // Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
-void Controller::CreateNode( Reply_ABC& rpy, const Request_ABC& request )
+void Controller::CreateNode( Reply_ABC& rpy, Request_ABC& request )
 {
     Authenticate( request, USER_TYPE_ADMINISTRATOR );
-    const std::string ident = RequireParameter< std::string >( "ident", request );
+    const Tree tree = request.ParseBodyAsJson();
+    const std::string ident = RequireParameter< std::string >( "ident", tree );
     if( !boost::xpressive::regex_match( ident, identRegex ) )
         throw HttpException( BAD_REQUEST );
-    node::Config cfg = node::GetConfig( request );
+    node::Config cfg;
+    node::ReadConfig( cfg, tree );
     if( cfg.name.empty() )
         cfg.name = ident;
     LOG_INFO( log_ ) << "[web] /create_node ident: " << ident;
@@ -474,12 +476,12 @@ void Controller::StopNode( Reply_ABC& rpy, const Request_ABC& request )
 // Name: Controller::UpdateNode
 // Created: BAX 2012-07-17
 // -----------------------------------------------------------------------------
-void Controller::UpdateNode( Reply_ABC& rpy, const Request_ABC& request )
+void Controller::UpdateNode( Reply_ABC& rpy, Request_ABC& request )
 {
     Authenticate( request, USER_TYPE_ADMINISTRATOR );
-    const Uuid id = GetId( request );
-    const Tree cfg = node::ConvertConfig( request );
-    WriteHttpReply( rpy, agent_.UpdateNode( id, cfg ) );
+    const Tree tree = request.ParseBodyAsJson();
+    const Uuid id = RequireParameter< Uuid >( "id", tree );
+    WriteHttpReply( rpy, agent_.UpdateNode( id, tree ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -591,13 +593,15 @@ void Controller::GetSession( Reply_ABC& rpy, const Request_ABC& request )
 // Name: Controller::CreateSession
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
-void Controller::CreateSession( Reply_ABC& rpy, const Request_ABC& request )
+void Controller::CreateSession( Reply_ABC& rpy, Request_ABC& request )
 {
     const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
     if( node.is_nil() )
         throw HttpException( web::BAD_REQUEST );
-    const std::string exercise = RequireParameter< std::string >( "exercise", request );
-    session::Config cfg = session::GetConfig( request );
+    const Tree tree = request.ParseBodyAsJson();
+    const std::string exercise = RequireParameter< std::string >( "exercise", tree );
+    session::Config cfg;
+    session::ReadConfig( cfg, tree );
     LOG_INFO( log_ ) << "[web] /create_session node: " << node << " name: " << cfg.name << " exercise: " << exercise;
     WriteHttpReply( rpy, agent_.CreateSession( node, cfg, exercise ) );
 }
@@ -649,11 +653,12 @@ void Controller::PauseSession( Reply_ABC& rpy, const Request_ABC& request )
 // Name: Controller::UpdateSession
 // Created: BAX 2012-08-02
 // -----------------------------------------------------------------------------
-void Controller::UpdateSession( Reply_ABC& rpy, const Request_ABC& request )
+void Controller::UpdateSession( Reply_ABC& rpy, Request_ABC& request )
 {
     const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
-    const Tree cfg = session::ConvertConfig( request );
-    WriteHttpReply( rpy, agent_.UpdateSession( node, GetId( request ), cfg ) );
+    const Tree tree = request.ParseBodyAsJson();
+    const Uuid id = RequireParameter< Uuid >( "id", tree );
+    WriteHttpReply( rpy, agent_.UpdateSession( node, id, tree ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -119,10 +119,9 @@ class SessionItem extends Backbone.Model
 
         if method == "create"
             data = select_attributes model.attributes, cfg_attributes
-            data = flatten_item data
-            data.node = uuid
             data.exercise = model.attributes.exercise
-            return ajax "/api/create_session", data, options.success, options.error
+            return pajax "/api/create_session", node: uuid,
+                data, options.success, options.error
 
         if method == "read"
             return ajax "/api/get_session", id: model.id,
@@ -130,10 +129,9 @@ class SessionItem extends Backbone.Model
 
         if method == "update"
             data = select_attributes model.attributes, cfg_attributes
-            data = flatten_item data
             data.id = model.id
-            return ajax "/api/update_session", data,
-                options.success, options.error
+            return pajax "/api/update_session", {},
+                data, options.success, options.error
 
         if method == "delete"
             return ajax "/api/delete_session", id: model.id,

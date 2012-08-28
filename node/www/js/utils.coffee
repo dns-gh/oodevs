@@ -282,19 +282,6 @@ attach_checkbox_and_input = (input, cbox) ->
         else
             input.val 0
 
-flatten_item_attributes = (data, prefix, item) ->
-    for k, v of item
-        if _.isObject v
-            flatten_item_attributes data, prefix + k + "_", v
-        else
-            data[prefix+k] = v
-    return
-
-flatten_item = (item) ->
-    data = {}
-    flatten_item_attributes data, "", item
-    return data
-
 select_attributes = (item, list) ->
     data = {}
     for it in list

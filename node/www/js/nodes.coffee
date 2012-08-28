@@ -36,9 +36,7 @@ set_plugins = (data) ->
         next = {}
         next.id = it
         next.name = it.charAt(0).toUpperCase() + it[1..]
-        included  = _.isArray(data.plugins)  and it in data.plugins
-        included |= _.isObject(data.plugins) and it of data.plugins
-        next.checked = "checked=\"checked\"" if included
+        next.checked = "checked=\"checked\"" if it in data.plugins
         plugins.push next
     data.plugins = plugins
     return data
@@ -73,9 +71,9 @@ validate_settings = (ui) ->
     return unless validate_number next, "max_play",     ui, "sessions_max_play",     0, Number.MAX_VALUE, "Invalid"
     return unless validate_number next, "max_parallel", ui, "sessions_max_parallel", 0, Number.MAX_VALUE, "Invalid"
     next.reset = ui.find("#sessions_reset").is ":checked"
-    next = data.plugins = {}
+    next = data.plugins = []
     for it in ui.find "#tab_plugins input[type=checkbox]:checked"
-        next[it.id] = true
+        next.push it.id
     return data
 
 class NodeItem extends Backbone.Model
@@ -86,15 +84,14 @@ class NodeItem extends Backbone.Model
             max_play: 0
             max_parallel: 0
             reset: true
-            plugins: {}
+        plugins: []
 
     sync: (method, model, options) =>
         data = select_attributes model.attributes, ["name", "sessions", "plugins"]
-        data = flatten_item data
 
         if method == "create"
             data.ident = model.get "ident"
-            return ajax "/api/create_node", data, options.success, options.error
+            return pajax "/api/create_node", {}, data, options.success, options.error
 
         if method == "read"
             return ajax "/api/get_node", id: model.id,
@@ -102,7 +99,7 @@ class NodeItem extends Backbone.Model
 
         if method == "update"
             data.id = model.id
-            return ajax "/api/update_node", data, options.success, options.error
+            return pajax "/api/update_node", {}, data, options.success, options.error
 
         if method == "delete"
             return ajax "/api/delete_node", id: model.id,
