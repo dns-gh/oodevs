@@ -394,7 +394,7 @@ void LogisticStockEditor::ComputeRequirements( const kernel::Agent_ABC& agent, c
     while( agentCompositionIterator.HasMoreElements() )
     {
         const kernel::AgentComposition& agentComposition = agentCompositionIterator.NextElement();
-        const kernel::EquipmentType& equipmentType = staticModel_.objectTypes_.tools::Resolver< kernel::EquipmentType >::Get( agentComposition.GetType().GetId() );
+        const kernel::EquipmentType& equipmentType = staticModel_.objectTypes_.Resolver2< kernel::EquipmentType >::Get( agentComposition.GetType().GetId() );
         tools::Iterator< const kernel::DotationCapacityType& > resourcesIterator = equipmentType.CreateResourcesIterator();
         while( resourcesIterator.HasMoreElements() )
         {
@@ -419,7 +419,7 @@ void LogisticStockEditor::ComputeAvailableCapacity( const kernel::Agent_ABC& ent
     {
         const kernel::AgentComposition& agentComposition = itComposition.NextElement();
         const kernel::ComponentType& equipment = agentComposition.GetType();
-        const kernel::EquipmentType& equipmentType = staticModel_.objectTypes_.Resolver< kernel::EquipmentType >::Get( equipment.GetId() );
+        const kernel::EquipmentType& equipmentType = staticModel_.objectTypes_.Resolver2< kernel::EquipmentType >::Get( equipment.GetId() );
         if( const kernel::EquipmentType::CarryingSupplyFunction* carrying = equipmentType.GetLogSupplyFunctionCarrying() )
             if( carrying->stockNature_ == dotationType.GetNature() )
             {

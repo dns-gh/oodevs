@@ -93,7 +93,7 @@ std::pair< unsigned int, double > UnitStateTableResource::GetCapacityAndConsumpt
     {
         const kernel::AgentComposition& agentComposition = agentCompositionIterator.NextElement();
         const std::string& agentName = agentComposition.GetType().GetName();
-        tools::Iterator< const kernel::EquipmentType& > equipmentTypeIterator = staticModel_.objectTypes_.tools::Resolver< kernel::EquipmentType >::CreateIterator();
+        tools::Iterator< const kernel::EquipmentType& > equipmentTypeIterator = staticModel_.objectTypes_.Resolver2< kernel::EquipmentType >::CreateIterator();
         while( equipmentTypeIterator.HasMoreElements() )
         {
             const kernel::EquipmentType& equipmentType = equipmentTypeIterator.NextElement();

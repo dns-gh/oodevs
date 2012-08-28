@@ -325,10 +325,6 @@ void MIL_Army::WriteODB( xml::xostream& xos ) const
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::WriteODB, _1, boost::ref(xos) ) );
     xos << xml::end;
 
-    xos << xml::start( "logistics" );
-    tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::WriteLogisticLinksODB, _1, boost::ref(xos) ) );
-    xos << xml::end;
-
     xos << xml::start( "objects" );
     tools::Resolver< MIL_Object_ABC >::Apply( boost::bind( &MIL_Object_ABC::WriteODB, _1, boost::ref(xos) ) );
     xos << xml::end;

@@ -51,7 +51,7 @@ class ObjectTypes
     : public tools::StringResolver< ObjectType >
     , public Resolver2< DotationType > // $$$$ AGE 2006-04-05: pas du tout des objets...
     , public tools::Resolver< WeaponSystemType, std::string >
-    , public tools::Resolver< EquipmentType >
+    , public Resolver2< EquipmentType >
     , public Resolver2< NBCAgent >
     , public tools::StringResolver< FireClass >
     , public Resolver2< MedicalTreatmentType >

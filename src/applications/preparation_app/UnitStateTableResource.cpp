@@ -160,7 +160,7 @@ void UnitStateTableResource::AddItem( int id )
         while( agentCompositionIterator.HasMoreElements() )
         {
             const kernel::AgentComposition& agentComposition = agentCompositionIterator.NextElement();
-            const kernel::EquipmentType& equipmentType = staticModel_.objectTypes_.tools::Resolver< kernel::EquipmentType >::Get( agentComposition.GetType().GetId() );
+            const kernel::EquipmentType& equipmentType = staticModel_.objectTypes_.Resolver2< kernel::EquipmentType >::Get( agentComposition.GetType().GetId() );
             tools::Iterator< const kernel::DotationCapacityType& > dotationIterator = equipmentType.CreateResourcesIterator();
             while( dotationIterator.HasMoreElements() )
             {

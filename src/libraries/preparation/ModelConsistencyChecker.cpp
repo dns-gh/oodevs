@@ -320,7 +320,7 @@ namespace
                         while( agentCompositionIterator.HasMoreElements() ) // for each equipment in this agent
                         {
                             const kernel::AgentComposition& agentComposition = agentCompositionIterator.NextElement();
-                            const kernel::EquipmentType& equipmentType = staticModel.objectTypes_.tools::Resolver< kernel::EquipmentType >::Get( agentComposition.GetType().GetId() );
+                            const kernel::EquipmentType& equipmentType = staticModel.objectTypes_.Resolver2< kernel::EquipmentType >::Get( agentComposition.GetType().GetId() );
                             tools::Iterator< const kernel::DotationCapacityType& > resourcesIterator = equipmentType.CreateResourcesIterator();
                             while( resourcesIterator.HasMoreElements() ) // for each resource in this equipment
                             {
@@ -404,7 +404,7 @@ void ModelConsistencyChecker::CheckMaxStockExceeded()
             {
                 const AgentComposition& agentComposition = itComposition.NextElement();
                 const ComponentType& equipment = agentComposition.GetType();
-                const EquipmentType& equipmentType = staticModel_.objectTypes_.Resolver< EquipmentType >::Get( equipment.GetId() );
+                const EquipmentType& equipmentType = staticModel_.objectTypes_.Resolver2< EquipmentType >::Get( equipment.GetId() );
                 if( const EquipmentType::CarryingSupplyFunction* carrying = equipmentType.GetLogSupplyFunctionCarrying() )
                 {
                     double nEquipments = static_cast< double >( agentComposition.GetCount() );

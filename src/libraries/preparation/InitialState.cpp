@@ -85,12 +85,28 @@ InitialState::~InitialState()
 void InitialState::ReadEquipment( xml::xistream& xis )
 {
     InitialStateEquipment equipment = InitialStateEquipment( xis );
+    bool found = false;
     for( CIT_Equipments it = originalEquipments_.begin(); it != originalEquipments_.end(); ++it )
         if( it->name_ == equipment.name_ )
         {
             equipment.breakdowns_ = it->breakdowns_;
+            found = true;
             break;
         }
+    if( !found )
+    {
+        const kernel::EquipmentType& equipmentType = staticModel_.objectTypes_.Resolver2< kernel::EquipmentType >::Get( equipment.name_.toAscii().constData() );
+        tools::Iterator< const kernel::BreakdownOriginType& > breakdownIterator = equipmentType.CreateBreakdownsIterator();
+        QStringList breakdowns;
+        while( breakdownIterator.HasMoreElements() )
+        {
+            const kernel::BreakdownOriginType& breakdown = breakdownIterator.NextElement();
+            if( breakdowns.find( breakdown.GetName().c_str() ) == breakdowns.end() )
+                breakdowns << breakdown.GetName().c_str();
+        }
+        equipment.breakdowns_ = breakdowns;
+    }
+
     if( equipment.state_ == eEquipmentState_RepairableWithEvacuation )
     {
         const std::string breakdown = xis.attribute( "breakdown", "" );
@@ -158,6 +174,8 @@ void InitialState::SerializeAttributes( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 bool InitialState::IsEquipmentsSaveNeeded() const
 {
+    if( originalEquipments_.size() != equipments_.size() )
+        return true;
     for( unsigned int i = 0; i < equipments_.size(); ++i )
         if( originalEquipments_[ i ] != equipments_[ i ] )
             return true;
@@ -215,7 +233,7 @@ void InitialState::Initialize()
     {
         const kernel::AgentComposition& agentComposition = agentCompositionIterator.NextElement();
         const std::string& agentName = agentComposition.GetType().GetName();
-        const kernel::EquipmentType& equipmentType = staticModel_.objectTypes_.tools::Resolver< kernel::EquipmentType >::Get( agentComposition.GetType().GetId() );
+        const kernel::EquipmentType& equipmentType = staticModel_.objectTypes_.Resolver2< kernel::EquipmentType >::Get( agentComposition.GetType().GetId() );
         tools::Iterator< const kernel::BreakdownOriginType& > breakdownIterator = equipmentType.CreateBreakdownsIterator();
         QStringList breakdowns;
         while( breakdownIterator.HasMoreElements() )
@@ -280,7 +298,7 @@ double InitialState::RetrieveNormalizedConsumption( const QString& resourceName 
     while( agentCompositionIterator.HasMoreElements() )
     {
         const kernel::AgentComposition& agentComposition = agentCompositionIterator.NextElement();
-        const kernel::EquipmentType& equipmentType = staticModel_.objectTypes_.tools::Resolver< kernel::EquipmentType >::Get( agentComposition.GetType().GetId() );
+        const kernel::EquipmentType& equipmentType = staticModel_.objectTypes_.Resolver2< kernel::EquipmentType >::Get( agentComposition.GetType().GetId() );
         tools::Iterator< const kernel::DotationCapacityType& > dotationIterator = equipmentType.CreateResourcesIterator();
         while( dotationIterator.HasMoreElements() )
         {

@@ -81,7 +81,7 @@ void ObjectTypes::Purge()
 {
     Resolver2< BreakdownType >::DeleteAll();
     Resolver2< NBCAgent >::DeleteAll();
-    tools::Resolver< EquipmentType >::DeleteAll();
+    Resolver2< EquipmentType >::DeleteAll();
     tools::Resolver< WeaponSystemType, std::string >::DeleteAll();
     Resolver2< DotationType >::DeleteAll();
     tools::StringResolver< ObjectType >::DeleteAll();
@@ -179,7 +179,7 @@ void ObjectTypes::ReadEquipments( xml::xistream& xis )
 void ObjectTypes::ReadEquipment( xml::xistream& xis )
 {
     EquipmentType* equipment = new EquipmentType( xis, *this );
-    tools::Resolver< EquipmentType >::Register( equipment->GetId(), *equipment );
+    Resolver2< EquipmentType >::Register( equipment->GetId(), equipment->GetName() , *equipment );
 }
 
 // -----------------------------------------------------------------------------
