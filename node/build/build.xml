@@ -2,9 +2,12 @@
     <property environment="env"/>
     <property name="env.PONEY_HOME" value="//install/masa/common/dev/common/poney"/>
     <import file="${env.PONEY_HOME}/poney.xml"/>
+    <var name="repositories" value="${repositories},${sword.repository}"/>
+    <property name="branch" value="trunk" />
 
     <target name="configure">
         <update name="golang"/>
+        <update name="sword" version="Defense/releases/internal/${branch}" package="SWORD_binaries_${platform}_${branch}"/>
     </target>
 
     <target name="build">

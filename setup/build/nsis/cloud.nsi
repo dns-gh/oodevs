@@ -10,7 +10,8 @@
 !define HOST_AGENT "..\..\..\host_agent"
 !define PROXY "..\..\..\proxy"
 !define NODE "..\..\..\node"
-!define SWORD "..\..\out\${PLATFORM}"
+!define SWORD "${NODE}\out\${PLATFORM}"
+!define OUT "..\..\out\${PLATFORM}"
 !define EXTERNAL "..\..\external"
 
 !if ${PLATFORM} == "vc100_x64"
@@ -121,7 +122,7 @@ Section $(^Name)
 
     ; VCRedist
     SetOutPath $TEMP
-    File "${SWORD}\vcredist_${PLATFORM}.exe"
+    File "${OUT}\vcredist_${PLATFORM}.exe"
     nsExec::Exec '"vcredist_${PLATFORM}.exe" /S /NCRC'
     Delete "vcredist_${PLATFORM}.exe"
 
