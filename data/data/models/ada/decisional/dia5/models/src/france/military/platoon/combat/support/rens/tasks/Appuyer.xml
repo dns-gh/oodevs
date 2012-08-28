@@ -13,12 +13,6 @@
                 <class name="sword.military.knowledge.decisional.Reachable"/>
             </type>
         </parameter>
-        <parameter name="jammingTime">
-            <description>Temps pendant lequel la zone de brouillage sera activée.</description>
-            <type>
-                <simple name="numeric"/>
-            </type>
-        </parameter>
     </parameters>
     <stages>
         <stage label="Brouillage" disable-when-done="true">
@@ -32,11 +26,6 @@
                     <parameter name="meetingPoint">
                         <value>
                             <parameter>meetingPoint</parameter>
-                        </value>
-                    </parameter>
-                    <parameter name="jammingTime">
-                        <value>
-                            <parameter>jammingTime</parameter>
                         </value>
                     </parameter>
                 </skill>

@@ -1656,7 +1656,6 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objective" name="Zone de brouillage" optional="false" type="Polygon"/>
       <parameter dia-name="meetingPoint" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="jammingTime" max-value="240" min-value="0" name="Délais de brouillage" optional="false" type="Integer"/>
     </mission>
     <mission dia-behavior="france.military.platoon.tasks.SeFaireTransporter" dia-type="france.military.platoon.tasks.HLADemandeTransport" id="28789" name="HLA Faire Une Requete de Transport">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3180,7 +3179,6 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="objective" name="Zone de brouillage" optional="false" type="Polygon"/>
       <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
-      <parameter dia-name="jammingTime" max-value="240" min-value="1" name="Délais de brouillage" optional="false" type="Integer"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.combat.support.rens.tasks.Orienter" dia-type="france.military.company.combat.support.rens.tasks.Orienter" id="28783" mrt-dia-behavior="france.military.company.combat.support.rens.tasks.Orienter" name="AUTOMATE RENS Orienter" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3515,4 +3513,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ROEM_ArreterSilenceRadar" id="28801" name="ROEM Arreter Silence Radar"/>
   </fragorders>
 </missions>
-<!-- signature="3008786946" -->
+<!-- signature="1478708772" -->
