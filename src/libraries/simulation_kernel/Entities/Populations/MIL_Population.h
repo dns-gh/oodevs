@@ -46,7 +46,7 @@ class MIL_PopulationAttitude;
 class PHY_Volume;
 class PHY_FireResults_Population;
 class TER_Localisation;
-class UrbanObjectWrapper;
+class MIL_UrbanObject_ABC;
 
 // =============================================================================
 // Created: NLD 2005-09-28
@@ -93,7 +93,7 @@ public:
     const std::string& GetCriticalIntelligence() const;
     float GetAffinity( unsigned long teamID ) const;
 
-    bool HasReachedBlockBorder          ( const UrbanObjectWrapper* pUrbanKnowledge ) const;
+    bool HasReachedBlockBorder          ( const MIL_UrbanObject_ABC* pUrbanKnowledge ) const;
     bool HasReachedDestination          ( const MT_Vector2D& destination ) const;
     bool HasReachedDestinationCompletely( const MT_Vector2D& destination ) const;
     //@}
@@ -152,7 +152,7 @@ public:
     double GetUrbanBlockAngriness() const;
     void SetUrbanBlockAngriness( double );
     void ChangeComposition( unsigned int healthy, unsigned int wounded, unsigned int contaminated, unsigned int dead );
-    double ComputeUrbanBlocDestruction( UrbanObjectWrapper* pUrbanObjet );
+    double ComputeUrbanBlocDestruction( MIL_UrbanObject_ABC* pUrbanObjet );
     //@}
 
     //! @name Tools

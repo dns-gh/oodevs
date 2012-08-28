@@ -13,7 +13,7 @@
 
 class DEC_Knowledge_Urban;
 class MIL_Army_ABC;
-class UrbanObjectWrapper;
+class MIL_UrbanObject_ABC;
 
 // =============================================================================
 // @class  DEC_BlackBoard_CanContainKnowledgeUrban
@@ -47,13 +47,13 @@ public:
     //! @name Operations
     //@{
     void Finalize();
-    boost::shared_ptr< DEC_Knowledge_Urban > CreateKnowledgeUrban( const MIL_Army_ABC& army, const UrbanObjectWrapper& object );
+    boost::shared_ptr< DEC_Knowledge_Urban > CreateKnowledgeUrban( const MIL_Army_ABC& army, const MIL_UrbanObject_ABC& object );
     void DestroyKnowledgeUrban( DEC_Knowledge_Urban& knowledge );
     //@}
 
     //! @name Queries
     //@{
-    boost::shared_ptr< DEC_Knowledge_Urban > GetKnowledgeUrban( const UrbanObjectWrapper& object ) const;
+    boost::shared_ptr< DEC_Knowledge_Urban > GetKnowledgeUrban( const MIL_UrbanObject_ABC& object ) const;
 
     template < class UnaryFunction >
     void ApplyOnKnowledgesUrban( UnaryFunction& fct ) const

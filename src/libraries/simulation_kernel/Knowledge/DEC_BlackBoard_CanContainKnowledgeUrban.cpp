@@ -12,7 +12,7 @@
 #include "DEC_Knowledge_Urban.h"
 #include "MIL_AgentServer.h"
 #include "Checkpoints/SerializationTools.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "MT_Tools/MT_ScipioException.h"
@@ -62,7 +62,7 @@ void DEC_BlackBoard_CanContainKnowledgeUrban::save( MIL_CheckPointOutArchive& fi
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeUrban::Finalize()
 {
-    const std::vector< const UrbanObjectWrapper* >& blocks = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanBlocks();
+    const std::vector< const MIL_UrbanObject_ABC* >& blocks = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanBlocks();
     for( std::size_t i = 0; i < blocks.size(); ++i )
         urbanMapFromConcrete_[ blocks[ i ]->GetID() ].reset( new DEC_Knowledge_Urban( army_, *blocks[ i ] ) );
 }
@@ -71,7 +71,7 @@ void DEC_BlackBoard_CanContainKnowledgeUrban::Finalize()
 // Name: DEC_BlackBoard_CanContainKnowledgeUrban::CreateKnowledgeUrban
 // Created: MGD 2009-12-04
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Urban > DEC_BlackBoard_CanContainKnowledgeUrban::CreateKnowledgeUrban( const MIL_Army_ABC& army, const UrbanObjectWrapper& object )
+boost::shared_ptr< DEC_Knowledge_Urban > DEC_BlackBoard_CanContainKnowledgeUrban::CreateKnowledgeUrban( const MIL_Army_ABC& army, const MIL_UrbanObject_ABC& object )
 {
     boost::shared_ptr< DEC_Knowledge_Urban > knowledge ( new DEC_Knowledge_Urban( army, object ) );
     if( !urbanMapFromConcrete_.insert( std::make_pair( object.GetID(), knowledge ) ).second )
@@ -93,7 +93,7 @@ void DEC_BlackBoard_CanContainKnowledgeUrban::DestroyKnowledgeUrban( DEC_Knowled
 // Name: DEC_BlackBoard_CanContainKnowledgeUrban::GetKnowledgeUrban
 // Created: NLD 2004-03-16
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Urban > DEC_BlackBoard_CanContainKnowledgeUrban::GetKnowledgeUrban( const UrbanObjectWrapper& object ) const
+boost::shared_ptr< DEC_Knowledge_Urban > DEC_BlackBoard_CanContainKnowledgeUrban::GetKnowledgeUrban( const MIL_UrbanObject_ABC& object ) const
 {
     CIT_KnowledgeUrbanMap it = urbanMapFromConcrete_.find( object.GetID() );
     if( it == urbanMapFromConcrete_.end() )

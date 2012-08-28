@@ -13,7 +13,7 @@
 #include <boost/noncopyable.hpp>
 #include <vector>
 
-class UrbanObjectWrapper;
+class MIL_UrbanObject_ABC;
 class MIL_Object_ABC;
 class MIL_PopulationFlow;
 class MIL_PopulationConcentration;
@@ -46,7 +46,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyPerceptionUrban( const UrbanObjectWrapper* urbanBlock, const PerceptionLevel& level ) = 0;
+    virtual void NotifyPerceptionUrban( const MIL_UrbanObject_ABC* urbanBlock, const PerceptionLevel& level ) = 0;
     virtual void NotifyPerception( const wrapper::View& agent, const PerceptionLevel& level ) = 0;
     virtual void NotifyPerception( const wrapper::View& agent, const PerceptionLevel& level, bool perceptionRecorded ) = 0;
     virtual void NotifyPerception( const MIL_Object_ABC* object, const PerceptionLevel& level ) = 0;

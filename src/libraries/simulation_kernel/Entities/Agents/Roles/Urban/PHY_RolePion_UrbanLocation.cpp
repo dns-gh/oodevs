@@ -22,7 +22,7 @@
 #include "Entities/Agents/Actions/Flying/PHY_RoleAction_InterfaceFlying.h"
 #include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_World.h"
 #include <boost/serialization/set.hpp>
@@ -60,7 +60,7 @@ PHY_RolePion_UrbanLocation::~PHY_RolePion_UrbanLocation()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_UrbanLocation::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    UrbanObjectWrapper* wrapper;
+    MIL_UrbanObject_ABC* wrapper;
     file >> wrapper
          >> isInCity_
          >> isFlying_
@@ -95,7 +95,7 @@ void PHY_RolePion_UrbanLocation::MagicMove( MT_Vector2D vPosition )
     TER_World::GetWorld().GetObjectManager().GetListAt( vPosition, objects );
     for( std::vector< TER_Object_ABC* >::const_iterator it = objects.begin(); it != objects.end(); ++it )
     {
-        const UrbanObjectWrapper* urbanObject = dynamic_cast< const UrbanObjectWrapper* >( *it );
+        const MIL_UrbanObject_ABC* urbanObject = dynamic_cast< const MIL_UrbanObject_ABC* >( *it );
         if( urbanObject )
         {
             isInCity_ = true;
@@ -116,7 +116,7 @@ void PHY_RolePion_UrbanLocation::MagicMove( MT_Vector2D vPosition )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_UrbanLocation::NotifyMovingInsideObject( MIL_Object_ABC& object )
 {
-    if( const UrbanObjectWrapper* urbanObject = dynamic_cast< UrbanObjectWrapper* >( &object ) )
+    if( const MIL_UrbanObject_ABC* urbanObject = dynamic_cast< MIL_UrbanObject_ABC* >( &object ) )
     {
         if( !urbanObject->HasChild() )
         {
@@ -134,7 +134,7 @@ void PHY_RolePion_UrbanLocation::NotifyMovingInsideObject( MIL_Object_ABC& objec
 // -----------------------------------------------------------------------------
 void PHY_RolePion_UrbanLocation::NotifyMovingOutsideObject( MIL_Object_ABC& object )
 {
-    if( const UrbanObjectWrapper* urbanObject = dynamic_cast< UrbanObjectWrapper* >( &object ) )
+    if( const MIL_UrbanObject_ABC* urbanObject = dynamic_cast< MIL_UrbanObject_ABC* >( &object ) )
     {
         if( !urbanObject->HasParent() )
             isInCity_ = false;
@@ -150,7 +150,7 @@ void PHY_RolePion_UrbanLocation::NotifyMovingOutsideObject( MIL_Object_ABC& obje
 // Name: PHY_RolePion_UrbanLocation::GetCurrentUrbanBlock
 // Created: SLG 2010-04-08
 // -----------------------------------------------------------------------------
-const UrbanObjectWrapper* PHY_RolePion_UrbanLocation::GetCurrentUrbanBlock() const
+const MIL_UrbanObject_ABC* PHY_RolePion_UrbanLocation::GetCurrentUrbanBlock() const
 {
     return urbanObject_;
 }

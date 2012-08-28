@@ -15,7 +15,7 @@
 #include "MIL_ObjectManipulator_ABC.h"
 #include "Object.h"
 #include "ObjectPrototype.h"
-#include "UrbanObjectWrapper.h"
+#include "Urban/MIL_UrbanObject.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
 #include "Entities/Objects/AvoidanceCapacity.h"
@@ -223,14 +223,14 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const MIL_ObjectBuilder_ABC& bui
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectLoader::CreateUrbanObject
-// Created: SLG 2010-06-23
+// Created: JSR 2012-08-03
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectLoader::CreateUrbanObject( const MIL_UrbanObject_ABC& object ) const
+MIL_UrbanObject_ABC* MIL_ObjectLoader::CreateUrbanObject( xml::xistream& xis, MIL_UrbanObject_ABC* parent ) const
 {
     CIT_Prototypes it = prototypes_.find( "urban block" );
     if( it == prototypes_.end() )
         return 0;
-    UrbanObjectWrapper* pObject = new UrbanObjectWrapper( *it->second, object );
+    MIL_UrbanObject_ABC* pObject = new MIL_UrbanObject( xis, *it->second, parent );
     pObject->Finalize();
     return pObject;
 }

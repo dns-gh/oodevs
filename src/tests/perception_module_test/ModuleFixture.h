@@ -17,7 +17,7 @@
 // module dependencies
 #include "MT_Tools/MT_Vector2D.h"
 
-class UrbanObjectWrapper;
+class MIL_UrbanObject_ABC;
 class MIL_Object_ABC;
 class MIL_PopulationConcentration;
 class MIL_PopulationFlow;
@@ -39,8 +39,8 @@ class TER_Localisation;
     APPLY( GetObjectListWithinCircle, 4, void, ( const MT_Vector2D& vCenter, double rRadius, void (*callback)( MIL_Object_ABC* object, void* userData ), void* userData ) ) \
     APPLY( GetConcentrationListWithinCircle, 4, void, ( const MT_Vector2D& vCenter, double rRadius, void (*callback)( const MIL_PopulationConcentration* concentration, void* userData ), void* userData ) ) \
     APPLY( GetFlowListWithinCircle, 4, void, ( const MT_Vector2D& vCenter, double rRadius, void (*callback)( const MIL_PopulationFlow* flow, void* userData ), void* userData ) ) \
-    APPLY( GetUrbanObjectListWithinCircle, 4, void, ( const MT_Vector2D& center, float radius, void (*callback)( const UrbanObjectWrapper* urbanObjectWrapper, void* userData ), void* userData ) ) \
-    APPLY( GetUrbanBlocksListWithinSegment, 4, void, ( MT_Vector2D first, MT_Vector2D second, void (*callback)( const UrbanObjectWrapper* urbanObjectWrapper, void* userData ), void* userData ) ) \
+    APPLY( GetUrbanObjectListWithinCircle, 4, void, ( const MT_Vector2D& center, float radius, void (*callback)( const MIL_UrbanObject_ABC* urbanObjectWrapper, void* userData ), void* userData ) ) \
+    APPLY( GetUrbanBlocksListWithinSegment, 4, void, ( MT_Vector2D first, MT_Vector2D second, void (*callback)( const MIL_UrbanObject_ABC* urbanObjectWrapper, void* userData ), void* userData ) ) \
     APPLY( AppendAddedKnowledge, 7, void, ( const SWORD_Model* root, const SWORD_Model* entity, \
                                             void (*agentCallback)( const SWORD_Model* agent, void* userData ), \
                                             void (*objectCallback)( MIL_Object_ABC* object, void* userData ), \
@@ -97,7 +97,7 @@ class TER_Localisation;
     APPLY( GetVolumeSize, 0, size_t, () ) \
     APPLY( PopulationFlowIntersectWithCircle, 5, bool, ( const MIL_PopulationFlow& flow, MT_Vector2D circleCenter, double radius, void(*AddShapePoint)( MT_Vector2D point, void* userData ), void* userData ) ) \
     APPLY( PopulationConcentrationIntersectWithCircle, 3, bool, ( const MIL_PopulationConcentration& concentration, MT_Vector2D circleCenter, double radius ) ) \
-    APPLY( GetUrbanBlockFactor, 2, double, ( const UrbanObjectWrapper& block, const double* urbanBlockFactors ) ) \
+    APPLY( GetUrbanBlockFactor, 2, double, ( const MIL_UrbanObject_ABC& block, const double* urbanBlockFactors ) ) \
     APPLY( IsMaterialType, 1, bool, ( const char* material ) ) \
     APPLY( GetPrecipitationSize, 0, size_t, () ) \
     APPLY( GetLightingSize, 0, size_t, () ) \
@@ -109,13 +109,13 @@ class TER_Localisation;
     APPLY( GetPerceptionRandom, 0, double, () ) \
     APPLY( IsKnown, 2, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) ) \
     APPLY( ComputeAgentRatioInsidePerceptionPolygon, 4, double, ( const SWORD_Model* perceiver, const SWORD_Model* target, double distance, double roll ) ) \
-    APPLY( GetCurrentUrbanBlock, 1, const UrbanObjectWrapper*, ( const SWORD_Model* entity ) ) \
-    APPLY( GetUrbanObjectStructuralHeight, 1, double, ( const UrbanObjectWrapper* urbanObject ) ) \
-    APPLY( GetUrbanObjectOccupation, 1, double, ( const UrbanObjectWrapper* urbanObject ) ) \
-    APPLY( GetUrbanObjectStructuralState, 1, double, ( const UrbanObjectWrapper* urbanObject ) ) \
-    APPLY( HasUrbanObjectArchitecture, 1, bool, ( const UrbanObjectWrapper* urbanObject ) ) \
-    APPLY( CanUrbanBlockBeSeen, 2, bool, ( const SWORD_Model* perceiver, const UrbanObjectWrapper* urbanBlock ) ) \
-    APPLY( GetUrbanBlockLocalization, 1, const TER_Localisation*, ( const UrbanObjectWrapper* urbanBlock ) ) \
+    APPLY( GetCurrentUrbanBlock, 1, const MIL_UrbanObject_ABC*, ( const SWORD_Model* entity ) ) \
+    APPLY( GetUrbanObjectStructuralHeight, 1, double, ( const MIL_UrbanObject_ABC* urbanObject ) ) \
+    APPLY( GetUrbanObjectOccupation, 1, double, ( const MIL_UrbanObject_ABC* urbanObject ) ) \
+    APPLY( GetUrbanObjectStructuralState, 1, double, ( const MIL_UrbanObject_ABC* urbanObject ) ) \
+    APPLY( HasUrbanObjectArchitecture, 1, bool, ( const MIL_UrbanObject_ABC* urbanObject ) ) \
+    APPLY( CanUrbanBlockBeSeen, 2, bool, ( const SWORD_Model* perceiver, const MIL_UrbanObject_ABC* urbanBlock ) ) \
+    APPLY( GetUrbanBlockLocalization, 1, const TER_Localisation*, ( const MIL_UrbanObject_ABC* urbanBlock ) ) \
     APPLY( IsPostureStationed, 1, bool, ( const SWORD_Model* entity ) ) \
     APPLY( CanComponentPerceive, 2, bool, ( const SWORD_Model* entity, const SWORD_Model* component ) ) \
     APPLY( GetTransporter, 2, const SWORD_Model*, ( const SWORD_Model* model, const SWORD_Model* agent ) ) \

@@ -59,7 +59,7 @@ MIL_Population& PopulationFactory::Create( xml::xistream& xis, MIL_Army_ABC& arm
 // Name: PopulationFactory::Create
 // Created: LDC 2010-10-22
 // -----------------------------------------------------------------------------
-MIL_Population& PopulationFactory::Create( const std::string& type, const MT_Vector2D& point, int number, const std::string& name, MIL_Army_ABC& army, UrbanObjectWrapper* pUrbanObject, unsigned int context )
+MIL_Population& PopulationFactory::Create( const std::string& type, const MT_Vector2D& point, int number, const std::string& name, MIL_Army_ABC& army, MIL_UrbanObject_ABC* pUrbanObject, unsigned int context )
 {
     const MIL_PopulationType* pType = MIL_PopulationType::Find( type );
     if( !pType )

@@ -41,7 +41,7 @@ class MIL_ObjectType_ABC;
 class MIL_ObjectBuilder_ABC;
 class MIL_ObjectFactory;
 class MIL_UrbanObject_ABC;
-class UrbanObjectWrapper;
+class MIL_UrbanObject_ABC;
 
 // =============================================================================
 // @class  MIL_ObjectManager
@@ -74,16 +74,14 @@ public:
     MIL_Object_ABC* CreateObject( MIL_Army_ABC* army, const std::string& type, const TER_Localisation* pLocalisation,
                                   sword::ObstacleType_DemolitionTargetType obstacleType, unsigned int externalIdentifier, const std::string& name, double density );
     MIL_Object_ABC* CreateObject( MIL_Army_ABC* army, const MIL_ObjectBuilder_ABC& builder );
-    MIL_Object_ABC* CreateUrbanObject( const MIL_UrbanObject_ABC& object );
+    MIL_Object_ABC* CreateUrbanObject( xml::xistream& xis, MIL_UrbanObject_ABC* parent );
 
     void WriteODB( xml::xostream& xos ) const;
     void ReadUrbanState( xml::xistream& xis );
     MIL_Object_ABC* Find( unsigned int nID ) const;
     const MIL_ObjectType_ABC& FindType( const std::string& type ) const;
-    UrbanObjectWrapper& GetUrbanObjectWrapper( const MIL_UrbanObject_ABC& object );
-    unsigned int ConvertUrbanIdToSimId( unsigned int urbanId );
     const std::set< MIL_Object_ABC* >& GetUniversalObjects() const;
-    const std::vector< const UrbanObjectWrapper* >& GetUrbanBlocks() const;
+    const std::vector< const MIL_UrbanObject_ABC* >& GetUrbanBlocks() const;
     //@}
 
     //! @name Network
@@ -104,11 +102,7 @@ private:
 
     typedef std::set< MIL_Object_ABC* > T_ObjectSet;
 
-    typedef std::map< const MIL_UrbanObject_ABC*, UrbanObjectWrapper* > T_UrbanObjectMap;
-    typedef T_UrbanObjectMap::iterator                                 IT_UrbanObjectMap;
-    typedef T_UrbanObjectMap::const_iterator                          CIT_UrbanObjectMap;
-
-    typedef std::vector< const UrbanObjectWrapper* >    T_UrbanBlocksVector;
+    typedef std::vector< const MIL_UrbanObject_ABC* >    T_UrbanBlocksVector;
     typedef T_UrbanBlocksVector::iterator              IT_UrbanBlocksVector;
     typedef T_UrbanBlocksVector::const_iterator       CIT_UrbanBlocksVector;
     //@}
@@ -132,8 +126,8 @@ private:
     const flood::FloodModel_ABC* pFloodModel_;
     T_ObjectMap objects_;
     T_ObjectSet universalObjects_;
-    T_UrbanObjectMap urbanObjects_;
     T_UrbanBlocksVector urbanBlocks_;
+    unsigned int nbObjects_;
     std::auto_ptr< MIL_ObjectFactory > builder_;
     //@}
 };

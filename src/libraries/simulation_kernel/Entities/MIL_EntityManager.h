@@ -79,7 +79,7 @@ class MissionController_ABC;
 class InhabitantFactory_ABC;
 class PopulationFactory_ABC;
 class TER_Localisation;
-class UrbanObjectWrapper;
+class MIL_UrbanObject_ABC;
 class KnowledgesVisitor_ABC;
 
 // =============================================================================
@@ -102,13 +102,12 @@ public:
     MIL_AgentPion& CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, unsigned int nCtx );
     MIL_AgentPion& CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name, unsigned int nCtx );
     void CreateObject( xml::xistream& xis, MIL_Army_ABC* army );
-    void CreateUrbanObject( const MIL_UrbanObject_ABC& object );
     MIL_Object_ABC* CreateObject( MIL_Army_ABC* army, const std::string& type, const TER_Localisation* pLocalisation, sword::ObstacleType_DemolitionTargetType obstacleType, unsigned int externalIdentifier = 0u, const std::string& name = std::string(), double density = 0. );
     MIL_Object_ABC* CreateObject( const std::string& type, MIL_Army_ABC* army, const TER_Localisation& localisation );
     MIL_Object_ABC* CreateObject( const std::string& type, MIL_Army_ABC* army, const TER_Localisation& localisation, unsigned int id );
     MIL_Object_ABC* CreateObject( MIL_Army_ABC* army, const MIL_ObjectBuilder_ABC& builder );
     MIL_Object_ABC* CreateObject( const std::string& type, MIL_Army_ABC* army, const TER_Localisation& localisation, const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass );
-    MIL_Population* CreateCrowd( const std::string& type, const MT_Vector2D& point, int number, const std::string& name, MIL_Army_ABC& army, UrbanObjectWrapper* pUrbanObject = 0 );
+    MIL_Population* CreateCrowd( const std::string& type, const MT_Vector2D& point, int number, const std::string& name, MIL_Army_ABC& army, MIL_UrbanObject_ABC* pUrbanObject = 0 );
     //@}
 
     //! @name Accessors
@@ -126,11 +125,10 @@ public:
     virtual MIL_Object_ABC*     FindObject        ( unsigned int nID ) const;
     virtual const MIL_ObjectType_ABC& FindObjectType( const std::string& type ) const;
     virtual const std::set< MIL_Object_ABC* >& GetUniversalObjects() const;
-    const std::vector< const UrbanObjectWrapper* >& GetUrbanBlocks() const;
+    const std::vector< const MIL_UrbanObject_ABC* >& GetUrbanBlocks() const;
 
-    MIL_Population* FindPopulation( UrbanObjectWrapper* urbanObject ) const;
+    MIL_Population* FindPopulation( MIL_UrbanObject_ABC* urbanObject ) const;
     const tools::Resolver< MIL_Army_ABC >& MIL_EntityManager::GetArmies() const;
-    UrbanObjectWrapper& GetUrbanObjectWrapper( const MIL_UrbanObject_ABC& object );
     unsigned int ConvertUrbanIdToSimId( unsigned int urbanId );
     void Accept( KnowledgesVisitor_ABC& visitor ) const;
     //@}
@@ -159,7 +157,6 @@ public:
     void Update();
     void Clean();
     void Finalize();
-    static const MIL_UrbanObject_ABC* GetTerrainObject( int urbanId ); //temporaire
     void CreateQuadTreeForCheckpoint(); //temporaire
     //@}
 
@@ -251,8 +248,6 @@ private:
     //@{
     void ReadUrbanStates( xml::xistream& xis );
     void NotifyPionsInsideUrbanObject();
-    void RecursiveCreateWrappers( const MIL_UrbanObject_ABC& object, unsigned int& counter );
-    void DoCreateUrbanWrapper( const MIL_UrbanObject_ABC& object, unsigned int& counter, bool isCity );
     //@}
 
     //! @name Update
@@ -270,7 +265,7 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::vector< const UrbanObjectWrapper* > T_Cities;
+    typedef std::vector< const MIL_UrbanObject_ABC* > T_Cities;
     typedef T_Cities::iterator                      IT_Cities;
     typedef T_Cities::const_iterator               CIT_Cities;
     //@}
@@ -281,8 +276,6 @@ private:
     const MIL_Time_ABC& time_;
     MIL_EffectManager& effectManager_;
     T_Cities cities_;
-
-    static std::vector< const MIL_UrbanObject_ABC* > urbanblocks_; // temporaire
 
     // Profiling
     MIL_ProfilerMgr& profilerManager_;

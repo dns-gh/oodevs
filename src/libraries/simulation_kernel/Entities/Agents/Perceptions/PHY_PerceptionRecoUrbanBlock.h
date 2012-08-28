@@ -14,13 +14,13 @@
 #include "PHY_PerceptionLocalisation.h"
 #include <boost/shared_ptr.hpp>
 
-class UrbanObjectWrapper;
+class MIL_UrbanObject_ABC;
 class DEC_Knowledge_Urban;
 
 class PHY_PerceptionRecoUrbanBlockReco : public PHY_PerceptionLocalisation
 {
 public:
-    PHY_PerceptionRecoUrbanBlockReco( const UrbanObjectWrapper* pUrbanBlock, const boost::shared_ptr< DEC_Knowledge_Urban > pKnowledgeUrbanBlock );
+    PHY_PerceptionRecoUrbanBlockReco( const MIL_UrbanObject_ABC* pUrbanBlock, const boost::shared_ptr< DEC_Knowledge_Urban > pKnowledgeUrbanBlock );
 
     bool IsInside( const PHY_RoleInterface_Perceiver& perceiver, const MT_Vector2D& vPoint ) const;
     void GetAgentsInside( const PHY_RoleInterface_Perceiver& perceiver, TER_Agent_ABC::T_AgentPtrVector& ) const;
@@ -30,7 +30,7 @@ private:
     PHY_PerceptionRecoUrbanBlockReco& operator = ( const PHY_PerceptionRecoUrbanBlockReco& );
 
 private:
-    const UrbanObjectWrapper* pUrbanBlock_;
+    const MIL_UrbanObject_ABC* pUrbanBlock_;
     const boost::shared_ptr< DEC_Knowledge_Urban > pKnowledgeUrbanBlock_;
     TER_Localisation localisation_;
 };
@@ -47,7 +47,7 @@ public:
 
     //! @name Add/Remove Points
     //@{
-    int AddUrbanBlock( const UrbanObjectWrapper* urbanBlock );
+    int AddUrbanBlock( const MIL_UrbanObject_ABC* urbanBlock );
     void RemoveUrbanBlock( int );
 
     bool HasLocalisationToHandle() const;

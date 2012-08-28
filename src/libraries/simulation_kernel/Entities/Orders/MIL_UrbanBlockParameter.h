@@ -13,7 +13,7 @@
 #include "MIL_BaseParameter.h"
 
 class MIL_EntityManager_ABC;
-class UrbanObjectWrapper;
+class MIL_UrbanObject_ABC;
 class MIL_CheckPointInArchive;
 class MIL_CheckPointOutArchive;
 
@@ -35,7 +35,7 @@ public:
     //@{
              MIL_UrbanBlockParameter();
              MIL_UrbanBlockParameter( const sword::UrbanObjectKnowledgeId& asn, const MIL_EntityManager_ABC& entityManager );
-    explicit MIL_UrbanBlockParameter( UrbanObjectWrapper* pUrbanBlock );
+    explicit MIL_UrbanBlockParameter( MIL_UrbanObject_ABC* pUrbanBlock );
     virtual ~MIL_UrbanBlockParameter();
     //@}
 
@@ -46,7 +46,7 @@ public:
 
     //! @name Conversions
     //@{
-    virtual bool ToUrbanBlock( UrbanObjectWrapper*& ) const;
+    virtual bool ToUrbanBlock( MIL_UrbanObject_ABC*& ) const;
     virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
     //@}
 
@@ -60,7 +60,7 @@ public:
 private:
     //! @name Member data
     //@{
-    UrbanObjectWrapper* pUrbanBlock_;
+    MIL_UrbanObject_ABC* pUrbanBlock_;
     //@}
 };
 

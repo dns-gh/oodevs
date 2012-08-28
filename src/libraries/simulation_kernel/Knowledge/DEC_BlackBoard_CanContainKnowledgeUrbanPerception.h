@@ -15,7 +15,7 @@
 
 class DEC_Knowledge_UrbanPerception;
 class MIL_Agent_ABC;
-class UrbanObjectWrapper;
+class MIL_UrbanObject_ABC;
 
 // =============================================================================
 // @class  DEC_BlackBoard_CanContainKnowledgeUrban
@@ -48,13 +48,13 @@ public:
 
     //! @name Operations
     //@{
-    boost::shared_ptr< DEC_Knowledge_UrbanPerception > CreateKnowledgeUrbanPerception ( const MIL_Agent_ABC& agentPerceiving, const UrbanObjectWrapper& objectPerceived );
+    boost::shared_ptr< DEC_Knowledge_UrbanPerception > CreateKnowledgeUrbanPerception ( const MIL_Agent_ABC& agentPerceiving, const MIL_UrbanObject_ABC& objectPerceived );
     void DestroyKnowledgeUrbanPerception( DEC_Knowledge_UrbanPerception& knowledge );
     //@}
 
     //! @name Queries
     //@{
-    boost::shared_ptr< DEC_Knowledge_UrbanPerception > GetKnowledgeUrbanPerception( const UrbanObjectWrapper& associatedUrban ) const;
+    boost::shared_ptr< DEC_Knowledge_UrbanPerception > GetKnowledgeUrbanPerception( const MIL_UrbanObject_ABC& associatedUrban ) const;
 
     template < class UnaryFunction >
     void ApplyOnKnowledgesUrbanPerception( UnaryFunction& fct ) const

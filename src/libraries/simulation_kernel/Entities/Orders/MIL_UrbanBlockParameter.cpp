@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_UrbanBlockParameter.h"
 #include "Entities/MIL_EntityManager_ABC.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 #include "Network/NET_AsnException.h"
 #include "protocol/Protocol.h"
 
@@ -34,7 +34,7 @@ MIL_UrbanBlockParameter::MIL_UrbanBlockParameter( const sword::UrbanObjectKnowle
 {
     MIL_Object_ABC* pObject = entityManager.FindObject( asn.id() );
     if( pObject )
-        pUrbanBlock_ = dynamic_cast< UrbanObjectWrapper* >( pObject );
+        pUrbanBlock_ = dynamic_cast< MIL_UrbanObject_ABC* >( pObject );
     if( !pUrbanBlock_ )
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
 }
@@ -43,7 +43,7 @@ MIL_UrbanBlockParameter::MIL_UrbanBlockParameter( const sword::UrbanObjectKnowle
 // Name: MIL_UrbanBlockParameter constructor
 // Created: MGD 2010-01-15
 // -----------------------------------------------------------------------------
-MIL_UrbanBlockParameter::MIL_UrbanBlockParameter( UrbanObjectWrapper* pUrbanBlock )
+MIL_UrbanBlockParameter::MIL_UrbanBlockParameter( MIL_UrbanObject_ABC* pUrbanBlock )
     : pUrbanBlock_( pUrbanBlock )
 {
     // NOTHING
@@ -72,7 +72,7 @@ bool MIL_UrbanBlockParameter::IsOfType( MIL_ParameterType_ABC::E_Type type ) con
 // Name: MIL_UrbanBlockParameter::ToUrbanBlock
 // Created: MGD 2009-11-02
 // -----------------------------------------------------------------------------
-bool MIL_UrbanBlockParameter::ToUrbanBlock( UrbanObjectWrapper*& value ) const
+bool MIL_UrbanBlockParameter::ToUrbanBlock( MIL_UrbanObject_ABC*& value ) const
 {
     value = pUrbanBlock_;
     return true;

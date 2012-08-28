@@ -13,8 +13,9 @@
 #include "MIL_Object_ABC.h"
 #include "CapacityFactory.h"
 #include "protocol/Protocol.h"
-#include "simulation_kernel/Entities/MIL_Army_ABC.h"
+#include "Entities/MIL_Army_ABC.h"
 #include "MT_Tools/MT_ScipioException.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectFactory constructor
@@ -109,11 +110,11 @@ MIL_Object_ABC* MIL_ObjectFactory::BuildObject( const MIL_ObjectBuilder_ABC& bui
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectFactory::BuildUrbanObject
-// Created: SLG 2010-06-23
+// Created: JSR 2012-08-03
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectFactory::BuildUrbanObject( const MIL_UrbanObject_ABC& object )
+MIL_UrbanObject_ABC* MIL_ObjectFactory::BuildUrbanObject( xml::xistream& xis, MIL_UrbanObject_ABC* parent )
 {
-    return MIL_ObjectLoader::GetLoader().CreateUrbanObject( object );
+    return MIL_ObjectLoader::GetLoader().CreateUrbanObject( xis, parent );
 }
 
 // -----------------------------------------------------------------------------

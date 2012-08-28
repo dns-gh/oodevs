@@ -47,7 +47,7 @@
 using namespace sword;
 using namespace sword::perception;
 
-class UrbanObjectWrapper;
+class MIL_UrbanObject_ABC;
 
 DECLARE_HOOK( CanComponentPerceive, bool, ( const SWORD_Model* entity, const SWORD_Model* component ) )
 DECLARE_HOOK( ComputePerceptionDistanceFactor, double, ( const SWORD_Model* entity ) );
@@ -55,14 +55,14 @@ DECLARE_HOOK( GetAgentListWithinCircle, void, ( const SWORD_Model* root, const M
 DECLARE_HOOK( GetObjectListWithinCircle, void, ( const MT_Vector2D& vCenter, double rRadius, void (*callback)( MIL_Object_ABC* object, void* userData ), void* userData ) )
 DECLARE_HOOK( GetConcentrationListWithinCircle, void, ( const MT_Vector2D& vCenter, double rRadius, void (*callback)( const MIL_PopulationConcentration* concentration, void* userData ), void* userData ) )
 DECLARE_HOOK( GetFlowListWithinCircle, void, ( const MT_Vector2D& vCenter, double rRadius, void (*callback)( const MIL_PopulationFlow* flow, void* userData ), void* userData ) )
-DECLARE_HOOK( GetUrbanObjectListWithinCircle, void, ( const MT_Vector2D& center, float radius, void (*callback)( const UrbanObjectWrapper* urbanObjectWrapper, void* userData ), void* userData ) )
+DECLARE_HOOK( GetUrbanObjectListWithinCircle, void, ( const MT_Vector2D& center, float radius, void (*callback)( const MIL_UrbanObject_ABC* urbanObjectWrapper, void* userData ), void* userData ) )
 DECLARE_HOOK( AppendAddedKnowledge, void, ( const SWORD_Model* root, const SWORD_Model* entity,
                                             void (*agentCallback)( const SWORD_Model* agent, void* userData ),
                                             void (*objectCallback)( MIL_Object_ABC* object, void* userData ),
                                             void (*concentrationCallback)( const MIL_PopulationConcentration* concentration, void* userData ),
                                             void (*flowCallback)( const MIL_PopulationFlow* flow, void* userData ),
                                             void* userData ) )
-DECLARE_HOOK( GetUrbanObjectOccupation, double, ( const UrbanObjectWrapper* urbanObject ) )
+DECLARE_HOOK( GetUrbanObjectOccupation, double, ( const MIL_UrbanObject_ABC* urbanObject ) )
 DECLARE_HOOK( GetTransporter, const SWORD_Model*, ( const SWORD_Model* model, const SWORD_Model* agent ) )
 
 namespace
@@ -330,11 +330,11 @@ namespace
             , occupation_           ( 0 )
             , count_                ( 0 )
         {}
-        static void NotifyUrbanObject( const UrbanObjectWrapper* urbanObjectWrapper, void* userData )
+        static void NotifyUrbanObject( const MIL_UrbanObject_ABC* urbanObjectWrapper, void* userData )
         {
             static_cast< UrbanObjectVisitor* >( userData )->NotifyPerception( urbanObjectWrapper );
         }
-        void NotifyPerception( const UrbanObjectWrapper* urbanObjectWrapper )
+        void NotifyPerception( const MIL_UrbanObject_ABC* urbanObjectWrapper )
         {
             count_++;
             perceiver_.NotifyPerceptionUrban( urbanObjectWrapper, sword::perception::PerceptionLevel::identified_ );
@@ -548,7 +548,7 @@ namespace
 {
     struct NullObserver : public PerceptionObserver_ABC
     {
-        virtual void NotifyPerceptionUrban( const UrbanObjectWrapper*, const PerceptionLevel& ) {}
+        virtual void NotifyPerceptionUrban( const MIL_UrbanObject_ABC*, const PerceptionLevel& ) {}
         virtual void NotifyPerception( const wrapper::View&, const PerceptionLevel& ) {}
         virtual void NotifyPerception( const wrapper::View&, const PerceptionLevel&, bool ) {}
         virtual void NotifyPerception( const MIL_Object_ABC*, const PerceptionLevel& ) {}

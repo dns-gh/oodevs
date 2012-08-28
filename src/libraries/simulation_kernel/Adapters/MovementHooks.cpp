@@ -117,18 +117,18 @@ namespace
         BOOST_FOREACH( const TER_PopulationFlow_ABC* flow, perceivableFlows )
             callback( static_cast< const MIL_PopulationFlow* >( flow ), userData );
     }
-    DEFINE_HOOK( GetUrbanObjectListWithinCircle, void, ( const MT_Vector2D& center, float radius, void (*callback)( const UrbanObjectWrapper* urbanObjectWrapper, void* userData ), void* userData ) )
+    DEFINE_HOOK( GetUrbanObjectListWithinCircle, void, ( const MT_Vector2D& center, float radius, void (*callback)( const MIL_UrbanObject_ABC* urbanObjectWrapper, void* userData ), void* userData ) )
     {
-        std::vector< const UrbanObjectWrapper* > perceivableUrbanBlock;
+        std::vector< const MIL_UrbanObject_ABC* > perceivableUrbanBlock;
         MIL_AgentServer::GetWorkspace().GetUrbanCache().GetListWithinCircle( center, radius, perceivableUrbanBlock );
-        BOOST_FOREACH( const UrbanObjectWrapper* urbanBlock, perceivableUrbanBlock )
+        BOOST_FOREACH( const MIL_UrbanObject_ABC* urbanBlock, perceivableUrbanBlock )
             callback( urbanBlock, userData );
     }
-    DEFINE_HOOK( GetUrbanBlocksListWithinSegment, void, ( MT_Vector2D first, MT_Vector2D second, void (*callback)( const UrbanObjectWrapper* urbanObjectWrapper, void* userData ), void* userData ) )
+    DEFINE_HOOK( GetUrbanBlocksListWithinSegment, void, ( MT_Vector2D first, MT_Vector2D second, void (*callback)( const MIL_UrbanObject_ABC* urbanObjectWrapper, void* userData ), void* userData ) )
     {
-        std::vector< const UrbanObjectWrapper* > list;
+        std::vector< const MIL_UrbanObject_ABC* > list;
         MIL_AgentServer::GetWorkspace().GetUrbanCache().GetUrbanBlocksWithinSegment( first, second, list );
-        BOOST_FOREACH( const UrbanObjectWrapper* urbanBlock, list )
+        BOOST_FOREACH( const MIL_UrbanObject_ABC* urbanBlock, list )
             callback( urbanBlock, userData );
     }
     DEFINE_HOOK( EntityManagerFindObject, MIL_Object_ABC*, ( unsigned int nID ) )

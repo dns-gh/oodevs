@@ -27,7 +27,7 @@
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "Tools/MIL_Tools.h"
 
@@ -190,7 +190,7 @@ int DEC_PerceptionFunctions::EnableRecognitionLocalisation( MIL_Agent_ABC& calle
 // Name: DEC_PerceptionFunctions::EnableRecognitionLocalisation
 // Created: MGD 2010-02-11
 // -----------------------------------------------------------------------------
-int DEC_PerceptionFunctions::EnableRecognitionUrbanBlock( MIL_Agent_ABC& callerAgent, UrbanObjectWrapper* pUrbanBlock )
+int DEC_PerceptionFunctions::EnableRecognitionUrbanBlock( MIL_Agent_ABC& callerAgent, MIL_UrbanObject_ABC* pUrbanBlock )
 {
     return callerAgent.GetRole< PHY_RoleInterface_Perceiver >().EnableRecoUrbanBlock( pUrbanBlock );
 }

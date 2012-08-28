@@ -17,7 +17,7 @@
 #include "Entities/Objects/MedicalCapacity.h"
 #include "Entities/Objects/InfrastructureCapacity.h"
 #include "Entities/Objects/StructuralCapacity.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "Urban/PHY_AccomodationType.h"
 #include <boost/foreach.hpp>
@@ -60,11 +60,11 @@ void MIL_LivingArea::Finalize()
         const unsigned int simId = MIL_AgentServer::GetWorkspace().GetEntityManager().ConvertUrbanIdToSimId( *it );
         if( simId != 0)
         {
-            UrbanObjectWrapper* object = dynamic_cast< UrbanObjectWrapper* >( MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( simId ) );
+            MIL_UrbanObject_ABC* object = dynamic_cast< MIL_UrbanObject_ABC* >( MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( simId ) );
             if( !object )
                 throw std::runtime_error( "Error in loading living urban block of population" );
             blocks_.push_back( new MIL_LivingAreaBlock( *object ) );
-            object->Register( *pInhabitant_ );
+            object->MIL_Object::Register( *pInhabitant_ );
             object->AddLivingArea( *this );
         }
     }
@@ -83,7 +83,7 @@ MIL_LivingArea::~MIL_LivingArea()
 
 namespace
 {
-    float GetStructuralState( const UrbanObjectWrapper& object )
+    float GetStructuralState( const MIL_UrbanObject_ABC& object )
     {
         const StructuralCapacity* structural = object.Retrieve< StructuralCapacity >();
         return structural ? structural->GetStructuralState() : 1.f;
@@ -183,9 +183,9 @@ void MIL_LivingArea::WriteODB( xml::xostream& xos ) const
     xos << xml::start( "living-area" );
     BOOST_FOREACH( const MIL_LivingAreaBlock* block, blocks_ )
     {
-        xos << xml::start( "urban-block" );
-            block->GetObject().WriteUrbanIdAttribute( xos );
-        xos << xml::end;
+        xos << xml::start( "urban-block" )
+                << xml::attribute( "id", block->GetObject().GetUrbanId() )
+            << xml::end;
     }
     xos << xml::end;
 }
@@ -453,7 +453,7 @@ bool MIL_LivingArea::IsAlerted( const TER_Localisation& localisation ) const
 // Name: MIL_LivingArea::SetAlerted
 // Created: BCI 2011-02-03
 // -----------------------------------------------------------------------------
-void MIL_LivingArea::SetAlerted( bool alerted, UrbanObjectWrapper* pUrbanObject /*= 0*/ )
+void MIL_LivingArea::SetAlerted( bool alerted, MIL_UrbanObject_ABC* pUrbanObject /*= 0*/ )
 {
     bool hasBeenAlerted = false;
     BOOST_FOREACH( MIL_LivingAreaBlock* block, blocks_ )
@@ -471,7 +471,7 @@ void MIL_LivingArea::SetAlerted( bool alerted, UrbanObjectWrapper* pUrbanObject 
 // Name: MIL_LivingArea::SetConfined
 // Created: BCI 2011-02-22
 // -----------------------------------------------------------------------------
-void MIL_LivingArea::SetConfined( bool confined, UrbanObjectWrapper* pUrbanObject /*= 0*/ )
+void MIL_LivingArea::SetConfined( bool confined, MIL_UrbanObject_ABC* pUrbanObject /*= 0*/ )
 {
     bool hasBeenConfined = false;
     BOOST_FOREACH( MIL_LivingAreaBlock* block, blocks_ )
@@ -537,7 +537,7 @@ void MIL_LivingArea::Evacuate( const TER_Localisation& localisation, bool status
 // Name: MIL_LivingArea::SetEvacuated
 // Created: ABR 2011-03-23
 // -----------------------------------------------------------------------------
-void MIL_LivingArea::SetEvacuated( bool evacuated, UrbanObjectWrapper* pUrbanObject /*= 0*/ )
+void MIL_LivingArea::SetEvacuated( bool evacuated, MIL_UrbanObject_ABC* pUrbanObject /*= 0*/ )
 {
     bool hasBeenEvacuated = false;
     BOOST_FOREACH( MIL_LivingAreaBlock* block, blocks_ )

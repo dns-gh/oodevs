@@ -45,7 +45,7 @@ BOOST_FIXTURE_TEST_CASE( perception_command_identifies_its_transporter, Percepti
 
 BOOST_FIXTURE_TEST_CASE( perception_command_identifies_urban_objects_in_list, PerceptionCommandFixture )
 {
-    UrbanObjectWrapper* urbanObject = reinterpret_cast< UrbanObjectWrapper* >( 42 );
+    MIL_UrbanObject_ABC* urbanObject = reinterpret_cast< MIL_UrbanObject_ABC* >( 42 );
     MOCK_RESET( GetUrbanObjectListWithinCircle );
     MOCK_EXPECT( GetUrbanObjectListWithinCircle ).once().calls( boost::bind( boost::apply< void >(), _3, urbanObject, _4 ) );
     MOCK_EXPECT( GetUrbanObjectOccupation ).once().with( urbanObject ).returns( 1 );

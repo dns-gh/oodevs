@@ -19,7 +19,7 @@ namespace xml
 }
 
 class MIL_Army_ABC;
-class UrbanObjectWrapper;
+class MIL_UrbanObject_ABC;
 
 // =============================================================================
 /** @class  PopulationFactory_ABC
@@ -42,8 +42,8 @@ public:
     //! @name Operations
     //@{
     virtual MIL_Population& Create( xml::xistream& xis, MIL_Army_ABC& army ) = 0;
-    virtual MIL_Population& Create( const std::string& type, const MT_Vector2D& point, int number, const std::string& name, MIL_Army_ABC& formation, UrbanObjectWrapper* pUrbanObject, unsigned int context ) = 0;
-    MIL_Population* FindByUrbanObject( UrbanObjectWrapper* urbanObject ) const;
+    virtual MIL_Population& Create( const std::string& type, const MT_Vector2D& point, int number, const std::string& name, MIL_Army_ABC& formation, MIL_UrbanObject_ABC* pUrbanObject, unsigned int context ) = 0;
+    MIL_Population* FindByUrbanObject( MIL_UrbanObject_ABC* urbanObject ) const;
     //@}
 
     //! @name CheckPoint
@@ -60,7 +60,7 @@ protected:
     }
 
     // $$$$ _RC_ JSR 2011-03-23: A nettoyer, trouver un meilleur moyen pour faire ça
-    tools::Resolver< MIL_Population, UrbanObjectWrapper* > populationFromUrbanObjectResolver_;
+    tools::Resolver< MIL_Population, MIL_UrbanObject_ABC* > populationFromUrbanObjectResolver_;
     //@}
 };
 
@@ -79,7 +79,7 @@ void PopulationFactory_ABC::serialize( Archive& file, const unsigned int )
 // Created: BCI 2011-03-17
 // -----------------------------------------------------------------------------
 inline
-MIL_Population* PopulationFactory_ABC::FindByUrbanObject( UrbanObjectWrapper* urbanObject ) const
+MIL_Population* PopulationFactory_ABC::FindByUrbanObject( MIL_UrbanObject_ABC* urbanObject ) const
 {
     return populationFromUrbanObjectResolver_.Find( urbanObject );
 }

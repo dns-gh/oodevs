@@ -92,7 +92,7 @@ public:
 
     //! @name Accessors
     //@{
-    virtual const UrbanObjectWrapper* GetCurrentUrbanBlock() const;
+    virtual const MIL_UrbanObject_ABC* GetCurrentUrbanBlock() const;
     virtual bool IsInCity() const;
     virtual bool HasInhabitantCollision() const;
     //@}
@@ -106,7 +106,7 @@ private:
     //! @name Member data
     //@{
     MIL_Agent_ABC&                          owner_;
-    const UrbanObjectWrapper*               urbanObject_;
+    const MIL_UrbanObject_ABC*               urbanObject_;
     std::auto_ptr< UrbanBlockPosition_ABC > delegate_;
     bool                                    isInCity_;
     bool                                    isFlying_;

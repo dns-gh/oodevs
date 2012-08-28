@@ -23,7 +23,7 @@ class MIL_LivingArea;
 class PHY_AccomodationType;
 class PHY_ResourceNetworkType;
 class TER_Localisation;
-class UrbanObjectWrapper;
+class MIL_UrbanObject_ABC;
 
 // =============================================================================
 /** @class  MIL_LivingAreaBlock
@@ -37,7 +37,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_LivingAreaBlock();
-    explicit MIL_LivingAreaBlock( UrbanObjectWrapper& urbanObject );
+    explicit MIL_LivingAreaBlock( MIL_UrbanObject_ABC& urbanObject );
     virtual ~MIL_LivingAreaBlock();
     //@}
 
@@ -54,7 +54,7 @@ public:
 
     //! @name Operations
     //@{
-    const UrbanObjectWrapper& GetObject() const;
+    const MIL_UrbanObject_ABC& GetObject() const;
     unsigned int GetTotalNumberOfPersons() const;
     unsigned int GetPersonsForAccomodation( const std::string& accomodation ) const;
     unsigned int GetNominalOccupation( const std::string& motivation ) const;
@@ -96,7 +96,7 @@ private:
     //! @name Member data
     //@{
     static const std::string defaultAccomodation_;
-    UrbanObjectWrapper* urbanObject_;
+    MIL_UrbanObject_ABC* urbanObject_;
     T_Persons persons_;
     float angriness_;
     bool alerted_;

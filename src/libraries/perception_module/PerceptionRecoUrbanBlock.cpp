@@ -22,8 +22,8 @@ using namespace sword;
 using namespace sword::perception;
 
 DECLARE_HOOK( CanBeSeen, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) )
-DECLARE_HOOK( CanUrbanBlockBeSeen, bool, ( const SWORD_Model* perceiver, const UrbanObjectWrapper* urbanBlock ) )
-DECLARE_HOOK( GetUrbanBlockLocalization, const TER_Localisation*, ( const UrbanObjectWrapper* urbanBlock ) )
+DECLARE_HOOK( CanUrbanBlockBeSeen, bool, ( const SWORD_Model* perceiver, const MIL_UrbanObject_ABC* urbanBlock ) )
+DECLARE_HOOK( GetUrbanBlockLocalization, const TER_Localisation*, ( const MIL_UrbanObject_ABC* urbanBlock ) )
 DECLARE_HOOK( IsPointInsideLocalisation, bool, ( const TER_Localisation* localisation, const MT_Vector2D* point ) )
 DECLARE_HOOK( GetAgentListWithinLocalisation, void, ( const SWORD_Model* root, const TER_Localisation* localization,
                                                       void (*callback)( const SWORD_Model* agent, void* userData ), void* userData ) )
@@ -33,7 +33,7 @@ DECLARE_HOOK( GetAgentListWithinLocalisation, void, ( const SWORD_Model* root, c
 // Created: MGD 2010-02-11
 // -----------------------------------------------------------------------------
 PerceptionRecoUrbanBlockReco::PerceptionRecoUrbanBlockReco( const wrapper::View& perception )
-    : pUrbanBlock_ ( static_cast< const UrbanObjectWrapper* >( perception[ "localization" ].GetUserData() ) )
+    : pUrbanBlock_ ( static_cast< const MIL_UrbanObject_ABC* >( perception[ "localization" ].GetUserData() ) )
     , localisation_( GET_HOOK( GetUrbanBlockLocalization )( pUrbanBlock_ ) )
 {
     // NOTHING

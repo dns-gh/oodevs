@@ -15,7 +15,7 @@ using namespace sword::perception;
 BOOST_FIXTURE_TEST_CASE( perception_reco_urban_sensor_recognizes_all_agents_in_urban_block_localization, PerceptionCommandFixture )
 {
     entity[ "perceptions/sensor/activated" ] = false;
-    const UrbanObjectWrapper* urbanBlock = reinterpret_cast< const UrbanObjectWrapper* >( 1337 );
+    const MIL_UrbanObject_ABC* urbanBlock = reinterpret_cast< const MIL_UrbanObject_ABC* >( 1337 );
     entity[ "perceptions/urban/42/localization" ].SetUserData( urbanBlock );
     const SWORD_Model* other = core::Convert( &model[ "entities/other" ] );
     const SWORD_Model* perceiver = core::Convert( &entity );

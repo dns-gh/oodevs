@@ -17,7 +17,6 @@
 #include "simulation_kernel/Meteo/PHY_MeteoDataManager.h"
 #include "simulation_kernel/Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "simulation_kernel/Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
-#include "simulation_kernel/Entities/Objects/UrbanObjectWrapper.h"
 #include "simulation_kernel/Entities/Objects/MIL_Object_ABC.h"
 #include "simulation_kernel/Entities/Objects/MIL_ObjectType_ABC.h"
 #include "simulation_kernel/Entities/Objects/MIL_ObjectManipulator_ABC.h"
@@ -53,6 +52,7 @@
 #include "simulation_kernel/Knowledge/DEC_BlackBoard_CanContainKnowledgeAgentPerception.h"
 #include "simulation_kernel/Knowledge/DEC_BlackBoard_CanContainKnowledgePopulationPerception.h"
 #include "simulation_kernel/Tools/MIL_Geometry.h"
+#include "simulation_kernel/Urban/MIL_UrbanObject_ABC.h"
 #include "simulation_kernel/MIL_AgentServer.h"
 #include "simulation_kernel/OnComponentFunctor_ABC.h"
 #include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
@@ -111,14 +111,14 @@ namespace
     {
         bool bIsAroundBU = false;
 
-        std::vector< const UrbanObjectWrapper* > list;
+        std::vector< const MIL_UrbanObject_ABC* > list;
         MIL_AgentServer::GetWorkspace().GetUrbanCache().GetUrbanBlocksWithinSegment( vSource, vTarget, list );
 
         if( !list.empty() )
         {
-            for( std::vector< const UrbanObjectWrapper* >::const_iterator it = list.begin(); it != list.end() && rVisionNRJ > 0; it++ )
+            for( std::vector< const MIL_UrbanObject_ABC* >::const_iterator it = list.begin(); it != list.end() && rVisionNRJ > 0; it++ )
             {
-                const UrbanObjectWrapper& object = **it;
+                const MIL_UrbanObject_ABC& object = **it;
                 if( !object.HasArchitecture() )
                     continue;
                 const PHY_MaterialCompositionType* materialCompositionType = PHY_MaterialCompositionType::Find( object.GetMaterial() );
@@ -218,7 +218,7 @@ namespace
     {
         return concentration.Intersect2DWithCircle( circleCenter, radius );
     }
-    DEFINE_HOOK( GetUrbanBlockFactor, double, ( const UrbanObjectWrapper& block, const double* urbanBlockFactors ) )
+    DEFINE_HOOK( GetUrbanBlockFactor, double, ( const MIL_UrbanObject_ABC& block, const double* urbanBlockFactors ) )
     {
         const std::string material = block.GetMaterial();
         if( !material.empty() )
@@ -346,7 +346,7 @@ namespace
     DEFINE_HOOK( ComputeAgentRatioInsidePerceptionPolygon, double, ( const SWORD_Model* perceiver, const SWORD_Model* target, double distance, double roll ) )
     {
         const PHY_Posture& currentPerceiverPosture = GET_ROLE( perceiver, PHY_RoleInterface_Posture ).GetCurrentPosture();
-        const UrbanObjectWrapper* perceiverUrbanBlock = GET_ROLE( perceiver, PHY_RoleInterface_UrbanLocation ).GetCurrentUrbanBlock();
+        const MIL_UrbanObject_ABC* perceiverUrbanBlock = GET_ROLE( perceiver, PHY_RoleInterface_UrbanLocation ).GetCurrentUrbanBlock();
         TER_Polygon polygon;
         if( perceiverUrbanBlock && ( &currentPerceiverPosture == &PHY_Posture::poste_ || &currentPerceiverPosture == &PHY_Posture::posteAmenage_ ) )
             MIL_Geometry::Scale( polygon, perceiverUrbanBlock->GetLocalisation().GetPoints(), distance );
@@ -363,34 +363,34 @@ namespace
         }
         return GET_ROLE( target, PHY_RoleInterface_UrbanLocation ).ComputeRatioPionInside( polygon, roll );
     }
-    DEFINE_HOOK( GetCurrentUrbanBlock, const UrbanObjectWrapper*, ( const SWORD_Model* entity ) )
+    DEFINE_HOOK( GetCurrentUrbanBlock, const MIL_UrbanObject_ABC*, ( const SWORD_Model* entity ) )
     {
         return GET_ROLE( entity, PHY_RoleInterface_UrbanLocation ).GetCurrentUrbanBlock();
     }
-    DEFINE_HOOK( GetUrbanObjectStructuralHeight, double, ( const UrbanObjectWrapper* urbanObject ) )
+    DEFINE_HOOK( GetUrbanObjectStructuralHeight, double, ( const MIL_UrbanObject_ABC* urbanObject ) )
     {
         return urbanObject->GetStructuralHeight();
     }
-    DEFINE_HOOK( GetUrbanObjectOccupation, double, ( const UrbanObjectWrapper* urbanObject ) )
+    DEFINE_HOOK( GetUrbanObjectOccupation, double, ( const MIL_UrbanObject_ABC* urbanObject ) )
     {
         return urbanObject->GetOccupation();
     }
-    DEFINE_HOOK( GetUrbanObjectStructuralState, double, ( const UrbanObjectWrapper* urbanObject ) )
+    DEFINE_HOOK( GetUrbanObjectStructuralState, double, ( const MIL_UrbanObject_ABC* urbanObject ) )
     {
         return urbanObject->GetStructuralState();
     }
-    DEFINE_HOOK( HasUrbanObjectArchitecture, bool, ( const UrbanObjectWrapper* urbanObject ) )
+    DEFINE_HOOK( HasUrbanObjectArchitecture, bool, ( const MIL_UrbanObject_ABC* urbanObject ) )
     {
         return urbanObject->HasArchitecture();
     }
-    DEFINE_HOOK( CanUrbanBlockBeSeen, bool, ( const SWORD_Model* perceiver, const UrbanObjectWrapper* urbanBlock ) )
+    DEFINE_HOOK( CanUrbanBlockBeSeen, bool, ( const SWORD_Model* perceiver, const MIL_UrbanObject_ABC* urbanBlock ) )
     {
         boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge = GET_PION( perceiver ).GetArmy().GetKnowledge().GetKnowledgeUrbanContainer().GetKnowledgeUrban( *urbanBlock );
         if( pKnowledge )
             return pKnowledge->GetCurrentRecceProgress() >= ( 1. - MIL_Random::rand_ii( MIL_Random::ePerception ) );
         return false;
     }
-    DEFINE_HOOK( GetUrbanBlockLocalization, const TER_Localisation*, ( const UrbanObjectWrapper* urbanBlock ) )
+    DEFINE_HOOK( GetUrbanBlockLocalization, const TER_Localisation*, ( const MIL_UrbanObject_ABC* urbanBlock ) )
     {
         return &urbanBlock->GetLocalisation();
     }

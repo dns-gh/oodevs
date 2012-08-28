@@ -10,14 +10,14 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_ActionResumeWorkUrbanBlock.h"
 #include "PHY_RoleAction_Objects.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionResumeWorkUrbanBlock constructor
 // Created: LGY 2011-03-23
 // -----------------------------------------------------------------------------
-PHY_ActionResumeWorkUrbanBlock::PHY_ActionResumeWorkUrbanBlock( MIL_AgentPion& pion, UrbanObjectWrapper* pUrbanBlock )
+PHY_ActionResumeWorkUrbanBlock::PHY_ActionResumeWorkUrbanBlock( MIL_AgentPion& pion, MIL_UrbanObject_ABC* pUrbanBlock )
     : PHY_DecisionCallbackAction_ABC( pion )
     , role_         ( pion.GetRole< PHY_RoleAction_Objects >() )
     , pUrbanBlock_  ( pUrbanBlock )

@@ -22,7 +22,7 @@ namespace xml
 
 class MIL_PopulationConcentration;
 class MIL_PopulationFlow;
-class UrbanObjectWrapper;
+class MIL_UrbanObject_ABC;
 class MT_Vector2D;
 
 namespace sword
@@ -56,7 +56,7 @@ public:
           double       GetMaxDistance            () const;
           double       GetAngle                  () const;
           double       GetFactor                 ( size_t identifier ) const;
-          double       GetUrbanBlockFactor( const UrbanObjectWrapper& target ) const;
+          double       GetUrbanBlockFactor( const MIL_UrbanObject_ABC& target ) const;
           bool         CanScan                   () const;
           bool         CanDetectFirer            ( double distance ) const;
     const SensorType&  GetType                   () const;

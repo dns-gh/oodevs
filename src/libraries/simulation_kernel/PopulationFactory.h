@@ -32,7 +32,7 @@ public:
     //! @name Operations
     //@{
     virtual MIL_Population& Create( xml::xistream& xis, MIL_Army_ABC& army );
-    virtual MIL_Population& Create( const std::string& type, const MT_Vector2D& point, int number, const std::string& name, MIL_Army_ABC& army, UrbanObjectWrapper* pUrbanObject, unsigned int context );
+    virtual MIL_Population& Create( const std::string& type, const MT_Vector2D& point, int number, const std::string& name, MIL_Army_ABC& army, MIL_UrbanObject_ABC* pUrbanObject, unsigned int context );
     //@}
 
     //! @name CheckPoint

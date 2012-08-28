@@ -45,7 +45,6 @@
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeObject.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
@@ -58,6 +57,7 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "Urban/MIL_UrbanCache.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 #include "simulation_terrain/TER_Agent_ABC.h"
 #include "simulation_terrain/TER_AgentManager.h"
 #include "simulation_terrain/TER_AgentVisitor_ABC.h"
@@ -429,7 +429,7 @@ int PHY_RolePion_Perceiver::EnableRecoLocalisation( const TER_Localisation& loca
 // Name: PHY_RolePion_Perceiver::EnableRecoLocalisation
 // Created: MGD 2010-02-11
 // -----------------------------------------------------------------------------
-int PHY_RolePion_Perceiver::EnableRecoUrbanBlock( UrbanObjectWrapper* pUrbanBlock )
+int PHY_RolePion_Perceiver::EnableRecoUrbanBlock( MIL_UrbanObject_ABC* pUrbanBlock )
 {
     if( !pPerceptionRecoUrbanBlock_ )
     {
@@ -881,7 +881,7 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
 
         double maxPerceptionDistance = GetMaxAgentPerceptionDistance();
 
-        std::vector< const UrbanObjectWrapper* > perceivableUrbanBlock;
+        std::vector< const MIL_UrbanObject_ABC* > perceivableUrbanBlock;
         const MT_Vector2D& position = owner_.GetRole< PHY_RoleInterface_Location >().GetPosition();
         MIL_AgentServer::GetWorkspace().GetUrbanCache().GetListWithinCircle( position, maxBlockPerceptionDistance, perceivableUrbanBlock );
         if( !perceivableUrbanBlock.empty() )
@@ -1073,7 +1073,7 @@ bool PHY_RolePion_Perceiver::IsIdentified( const MIL_PopulationConcentration& co
 // Name: PHY_RolePion_Perceiver::IsIdentified
 // Created: MGD 2009-11-25
 // -----------------------------------------------------------------------------
-bool PHY_RolePion_Perceiver::IsIdentified( const UrbanObjectWrapper& object ) const
+bool PHY_RolePion_Perceiver::IsIdentified( const MIL_UrbanObject_ABC& object ) const
 {
     return owner_.GetKnowledge().IsIdentified( object );
 }
@@ -1136,7 +1136,7 @@ bool PHY_RolePion_Perceiver::NotifyPerception( MIL_PopulationFlow& flow, const P
 // Name: PHY_RolePion_Perceiver::NotifyPerception
 // Created: MGD 2009-11-20
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Perceiver::NotifyPerceptionUrban( const UrbanObjectWrapper& object, const PHY_PerceptionLevel& level ) const
+void PHY_RolePion_Perceiver::NotifyPerceptionUrban( const MIL_UrbanObject_ABC& object, const PHY_PerceptionLevel& level ) const
 {
     owner_.GetKnowledge().GetKsPerception().NotifyPerception( object, level );
 }

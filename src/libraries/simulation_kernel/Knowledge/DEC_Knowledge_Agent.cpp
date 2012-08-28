@@ -27,7 +27,7 @@
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Objects/MaterialAttribute.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 #include "Entities/MIL_Army.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
@@ -692,7 +692,7 @@ const DEC_Knowledge_AgentComposante* DEC_Knowledge_Agent::GetMajorComposante() c
 // Name: DEC_Knowledge_Agent::GetMaterialComposantesAttritionLevel
 // Created: DDA 2010-04-23
 // -----------------------------------------------------------------------------
-double DEC_Knowledge_Agent::GetMaterialComposantesAttritionLevel( UrbanObjectWrapper* pUrbanBlock ) const
+double DEC_Knowledge_Agent::GetMaterialComposantesAttritionLevel( MIL_UrbanObject_ABC* pUrbanBlock ) const
 {
     if( pUrbanBlock )
         if( const MaterialAttribute* attribute = pUrbanBlock->RetrieveAttribute< MaterialAttribute >() )

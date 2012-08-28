@@ -494,7 +494,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\Object.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ObjectPrototype.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ResourceTools.cpp" />
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\UrbanObjectWrapper.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ActivableCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\AltitudeModifierCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\AttitudeModifierCapacity.cpp" />
@@ -1345,7 +1344,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ObjectComponentRegistry_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ObjectPrototype.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ResourceTools.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\UrbanObjectWrapper.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ActivableCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\AltitudeModifierCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\AttitudeModifierCapacity.h" />

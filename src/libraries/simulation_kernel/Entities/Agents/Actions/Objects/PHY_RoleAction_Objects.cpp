@@ -41,7 +41,7 @@
 #include "Entities/Objects/ExtinguishableCapacity.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Objects/ResourceNetworkCapacity.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_KS_ObjectInteraction.h"
@@ -492,7 +492,7 @@ int PHY_RoleAction_Objects::ResumeWork( boost::shared_ptr< DEC_Knowledge_Object 
 // Name: PHY_RoleAction_Objects::ResumeWork
 // Created: LGY 2011-03-23
 // -----------------------------------------------------------------------------
-int PHY_RoleAction_Objects::ResumeWork( UrbanObjectWrapper* pUrbanBlock )
+int PHY_RoleAction_Objects::ResumeWork( MIL_UrbanObject_ABC* pUrbanBlock )
 {
     MIL_Object_ABC* pObject = pUrbanBlock;
     if( !pObject )

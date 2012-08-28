@@ -14,13 +14,13 @@
 #include "Entities/Populations/MIL_Population.h"
 #include "Decision/DEC_Tools.h"
 #include "Entities/Objects/StructuralCapacity.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Population_ActionUrbanDestruction constructor
 // Bypassd: MMC 2011-03-31
 // -----------------------------------------------------------------------------
-PHY_Population_ActionUrbanDestruction::PHY_Population_ActionUrbanDestruction( MIL_Population& population, UrbanObjectWrapper* pUrbanObjet )
+PHY_Population_ActionUrbanDestruction::PHY_Population_ActionUrbanDestruction( MIL_Population& population, MIL_UrbanObject_ABC* pUrbanObjet )
     : population_ ( population )
     , pUrbanObjet_ ( pUrbanObjet )
 {

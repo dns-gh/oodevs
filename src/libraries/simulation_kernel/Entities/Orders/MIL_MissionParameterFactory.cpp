@@ -305,7 +305,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateL
 // Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateUrbanBlock
 // Created: MGD 2010-01-15
 // -----------------------------------------------------------------------------
-boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateUrbanBlock( UrbanObjectWrapper* pUrbanblock )
+boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateUrbanBlock( MIL_UrbanObject_ABC* pUrbanblock )
 {
     boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_UrbanBlockParameter( pUrbanblock ) );
     return result;
@@ -543,7 +543,7 @@ void MIL_MissionParameterFactory::SetGenObjectParameter( boost::shared_ptr< MIL_
 // Name: MIL_MissionParameterFactory::SetUrbanBlockParameter
 // Created: MGD 2010-01-15
 // -----------------------------------------------------------------------------
-void MIL_MissionParameterFactory::SetUrbanBlockParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, UrbanObjectWrapper* pUrbanblock )
+void MIL_MissionParameterFactory::SetUrbanBlockParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, MIL_UrbanObject_ABC* pUrbanblock )
 {
     if( !pMission.get() )
         throw std::runtime_error( "Invalid mission" );

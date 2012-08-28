@@ -18,7 +18,7 @@ class DEC_Knowledge_UrbanPerception;
 class MIL_Army_ABC;
 class MIL_Agent_ABC;
 class MIL_Automate;
-class UrbanObjectWrapper;
+class MIL_UrbanObject_ABC;
 
 namespace sword
 {
@@ -36,7 +36,7 @@ class DEC_Knowledge_Urban : public DEC_Knowledge_Object
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Knowledge_Urban( const MIL_Army_ABC& army, const UrbanObjectWrapper& wrapper );
+             DEC_Knowledge_Urban( const MIL_Army_ABC& army, const MIL_UrbanObject_ABC& wrapper );
              DEC_Knowledge_Urban();
     virtual ~DEC_Knowledge_Urban();
     //@}

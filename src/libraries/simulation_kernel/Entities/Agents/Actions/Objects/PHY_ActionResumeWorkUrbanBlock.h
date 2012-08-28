@@ -14,7 +14,7 @@
 
 class PHY_RoleAction_Objects;
 class MIL_AgentPion;
-class UrbanObjectWrapper;
+class MIL_UrbanObject_ABC;
 
 // =============================================================================
 /** @class  PHY_ActionResumeWorkUrbanBlock
@@ -33,7 +33,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_ActionResumeWorkUrbanBlock( MIL_AgentPion& pion, UrbanObjectWrapper* pUrbanBlock );
+             PHY_ActionResumeWorkUrbanBlock( MIL_AgentPion& pion, MIL_UrbanObject_ABC* pUrbanBlock );
     virtual ~PHY_ActionResumeWorkUrbanBlock();
     //@}
 
@@ -55,7 +55,7 @@ private:
     //! @name Member data
     //@{
     PHY_RoleAction_Objects& role_;
-    UrbanObjectWrapper* pUrbanBlock_;
+    MIL_UrbanObject_ABC* pUrbanBlock_;
     //@}
 };
 

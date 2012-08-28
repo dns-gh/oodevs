@@ -37,7 +37,7 @@ class MIL_Object_ABC;
 class MIL_PopulationConcentration;
 class MIL_Population;
 class TER_Localisation;
-class UrbanObjectWrapper;
+class MIL_UrbanObject_ABC;
 
 // =============================================================================
 /** @class  DEC_KnowledgeBlackBoard_AgentPion
@@ -126,7 +126,7 @@ public:
     bool IsPopulationAttacking( const DEC_Knowledge_Population& knowledge ) const;
 
     //Urban
-    bool IsIdentified( const UrbanObjectWrapper& object ) const;
+    bool IsIdentified( const MIL_UrbanObject_ABC& object ) const;
     //@}
 
 private:

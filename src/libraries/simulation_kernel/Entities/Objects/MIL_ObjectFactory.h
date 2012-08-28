@@ -58,7 +58,7 @@ public:
     MIL_Object_ABC* BuildObject( const std::string& name, const std::string& type, MIL_Army_ABC* army, const TER_Localisation& localisation,
                                  sword::ObstacleType_DemolitionTargetType obstacleType, unsigned int externalIdentifier, unsigned int forcedId = 0u, double density = 0 );
     MIL_Object_ABC* BuildObject( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC* army );
-    MIL_Object_ABC* BuildUrbanObject( const MIL_UrbanObject_ABC& object );
+    MIL_UrbanObject_ABC* BuildUrbanObject( xml::xistream& xis, MIL_UrbanObject_ABC* parent );
 
     void Update( const std::string& capacity, xml::xistream& xis, MIL_Object_ABC& object ) const;
     //@}

@@ -18,7 +18,7 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 #include "Entities/Objects/StructuralCapacity.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
@@ -32,7 +32,7 @@
 // Name: DEC_UrbanObjectFunctions::GetCurrentPerceptionLevel
 // Created: SLG 2010-02-01
 // -----------------------------------------------------------------------------
-float DEC_UrbanObjectFunctions::GetCurrentRecceProgress( const MIL_AgentPion& pion, UrbanObjectWrapper* pUrbanObject )
+float DEC_UrbanObjectFunctions::GetCurrentRecceProgress( const MIL_AgentPion& pion, MIL_UrbanObject_ABC* pUrbanObject )
 {
     if( pUrbanObject )
     {
@@ -47,7 +47,7 @@ float DEC_UrbanObjectFunctions::GetCurrentRecceProgress( const MIL_AgentPion& pi
 // Name: DEC_UrbanObjectFunctions::GetLivingEnemiesInBU
 // Created: GGE 2010-08-16
 // -----------------------------------------------------------------------------
-T_ConstKnowledgeAgentVector DEC_UrbanObjectFunctions::GetLivingEnemiesInBU( const MIL_AgentPion& callerAgent, UrbanObjectWrapper* pUrbanObject )
+T_ConstKnowledgeAgentVector DEC_UrbanObjectFunctions::GetLivingEnemiesInBU( const MIL_AgentPion& callerAgent, MIL_UrbanObject_ABC* pUrbanObject )
 {
     T_ConstKnowledgeAgentVector knowledges;
     const T_KnowledgeAgentVector& enemies = callerAgent.GetKnowledgeGroup().GetKnowledge().GetEnemies();
@@ -65,7 +65,7 @@ T_ConstKnowledgeAgentVector DEC_UrbanObjectFunctions::GetLivingEnemiesInBU( cons
 // Name: DEC_UrbanObjectFunctions::GetCurrentBarycenter
 // Created: MGD 2010-02-19
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MT_Vector2D > DEC_UrbanObjectFunctions::GetCurrentBarycenter( UrbanObjectWrapper* pUrbanObject )
+boost::shared_ptr< MT_Vector2D > DEC_UrbanObjectFunctions::GetCurrentBarycenter( MIL_UrbanObject_ABC* pUrbanObject )
 {
     if( pUrbanObject )
         return boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( pUrbanObject->GetLocalisation().ComputeBarycenter() ) );
@@ -76,7 +76,7 @@ boost::shared_ptr< MT_Vector2D > DEC_UrbanObjectFunctions::GetCurrentBarycenter(
 // Name: DEC_UrbanObjectFunctions::GetBarycenter
 // Created: LGY 2011-11-17
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MT_Vector2D > DEC_UrbanObjectFunctions::GetBarycenter( UrbanObjectWrapper* pUrbanObject )
+boost::shared_ptr< MT_Vector2D > DEC_UrbanObjectFunctions::GetBarycenter( MIL_UrbanObject_ABC* pUrbanObject )
 {
     if( pUrbanObject )
     {
@@ -105,7 +105,7 @@ boost::shared_ptr< MT_Vector2D > DEC_UrbanObjectFunctions::GetBarycenter( UrbanO
 // Name: DEC_UrbanObjectFunctions::GetBoundingBox
 // Created: LGY 2010-10-11
 // -----------------------------------------------------------------------------
-std::vector< boost::shared_ptr< MT_Vector2D > > DEC_UrbanObjectFunctions::GetBoundingBox( UrbanObjectWrapper* pUrbanObject )
+std::vector< boost::shared_ptr< MT_Vector2D > > DEC_UrbanObjectFunctions::GetBoundingBox( MIL_UrbanObject_ABC* pUrbanObject )
 {
     std::vector< boost::shared_ptr< MT_Vector2D > > result;
     if( pUrbanObject )
@@ -123,7 +123,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_UrbanObjectFunctions::GetBou
 // Name: DEC_UrbanObjectFunctions::GetPathfindCost
 // Created: MGD 2010-03-18
 // -----------------------------------------------------------------------------
-double DEC_UrbanObjectFunctions::GetPathfindCost( const MIL_AgentPion& callerAgent, UrbanObjectWrapper* pUrbanObject )
+double DEC_UrbanObjectFunctions::GetPathfindCost( const MIL_AgentPion& callerAgent, MIL_UrbanObject_ABC* pUrbanObject )
 {
     if( pUrbanObject )
     {
@@ -138,7 +138,7 @@ double DEC_UrbanObjectFunctions::GetPathfindCost( const MIL_AgentPion& callerAge
 // Name: DEC_UrbanObjectFunctions::GetRapForLocal
 // Created: MGD 2010-05-05
 // -----------------------------------------------------------------------------
-float DEC_UrbanObjectFunctions::GetRapForLocal( const MIL_AgentPion& callerAgent, UrbanObjectWrapper* pUrbanObject )
+float DEC_UrbanObjectFunctions::GetRapForLocal( const MIL_AgentPion& callerAgent, MIL_UrbanObject_ABC* pUrbanObject )
 {
     //@TODO MGD Add a rapFor computer, common with DEC_Knowledge_RapForLocal
     T_KnowledgeAgentVector dangerousEnemies_;
@@ -180,7 +180,7 @@ float DEC_UrbanObjectFunctions::GetRapForLocal( const MIL_AgentPion& callerAgent
         rRapForValue = rTotalFightScoreFriend / rTotalFightScoreEnemy;
 
     // Add bonus if the pion is posted in this urbanbloc
-    const UrbanObjectWrapper* urbanBlock = callerAgent.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
+    const MIL_UrbanObject_ABC* urbanBlock = callerAgent.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
     if( pUrbanObject && urbanBlock && pUrbanObject == urbanBlock && callerAgent.GetRole< PHY_RoleInterface_Posture >().IsInstalled() )  // $$$$ _RC_ LGY 2011-02-24: == sur les ID
         rRapForValue *= 1.2;
     rRapForValue = std::max( 0.2, std::min( 5., rRapForValue ) );
@@ -191,7 +191,7 @@ float DEC_UrbanObjectFunctions::GetRapForLocal( const MIL_AgentPion& callerAgent
 // Name: DEC_UrbanObjectFunctions::GetStateUrbanBlock
 // Created: DDA 2011-03-30
 // -----------------------------------------------------------------------------
-float DEC_UrbanObjectFunctions::GetStateUrbanBlock( UrbanObjectWrapper* pUrbanObject )
+float DEC_UrbanObjectFunctions::GetStateUrbanBlock( MIL_UrbanObject_ABC* pUrbanObject )
 {
     if( pUrbanObject )
     {
@@ -206,7 +206,7 @@ float DEC_UrbanObjectFunctions::GetStateUrbanBlock( UrbanObjectWrapper* pUrbanOb
 // Name: DEC_UrbanObjectFunctions::GetPolygonFromUrbanBlock
 // Created: EVH 2011-03-25
 // -----------------------------------------------------------------------------
-boost::shared_ptr< TER_Localisation > DEC_UrbanObjectFunctions::GetPolygonFromUrbanBlock( const UrbanObjectWrapper* pUrbanObject )
+boost::shared_ptr< TER_Localisation > DEC_UrbanObjectFunctions::GetPolygonFromUrbanBlock( const MIL_UrbanObject_ABC* pUrbanObject )
 {
     if( !pUrbanObject )
         throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
@@ -218,7 +218,7 @@ boost::shared_ptr< TER_Localisation > DEC_UrbanObjectFunctions::GetPolygonFromUr
 // Name: DEC_UrbanObjectFunctions::DestroyUrbanBlock
 // Created: EVH 2011-04-04
 // -----------------------------------------------------------------------------
-void DEC_UrbanObjectFunctions::DestroyUrbanBlock(  MIL_AgentPion& callerAgent, UrbanObjectWrapper* pUrbanObject, const PHY_DotationCategory* category )
+void DEC_UrbanObjectFunctions::DestroyUrbanBlock(  MIL_AgentPion& callerAgent, MIL_UrbanObject_ABC* pUrbanObject, const PHY_DotationCategory* category )
 {
     if( !pUrbanObject )
         throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
@@ -241,7 +241,7 @@ void DEC_UrbanObjectFunctions::DestroyUrbanBlock(  MIL_AgentPion& callerAgent, U
 // Name: DEC_UrbanObjectFunctions::GetType
 // Created: LMT 2011-04-05
 // -----------------------------------------------------------------------------
-std::string DEC_UrbanObjectFunctions::GetType( const UrbanObjectWrapper* pUrbanObject )
+std::string DEC_UrbanObjectFunctions::GetType( const MIL_UrbanObject_ABC* pUrbanObject )
 {
     if( !pUrbanObject )
         throw std::runtime_error( __FUNCTION__ ": invalid parameter." );

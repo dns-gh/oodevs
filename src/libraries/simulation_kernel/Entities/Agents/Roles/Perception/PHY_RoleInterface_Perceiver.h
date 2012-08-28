@@ -31,7 +31,7 @@ class MIL_Effect_IndirectFire;
 class MIL_Agent_ABC;
 class MIL_KnowledgeGroup;
 class TER_Localisation;
-class UrbanObjectWrapper;
+class MIL_UrbanObject_ABC;
 
 // =============================================================================
 // @class  PHY_RoleInterface_Perceiver
@@ -79,7 +79,7 @@ public:
     virtual bool NotifyPerception( MIL_PopulationConcentration& concentration, const PHY_PerceptionLevel& level ) = 0;
     virtual bool NotifyPerception( MIL_PopulationFlow& flow, const PHY_PerceptionLevel& level, const T_PointVector& shape ) = 0;
     virtual void NotifyPerception( const MIL_Effect_IndirectFire& flyingShell ) const = 0;
-    virtual void NotifyPerceptionUrban( const UrbanObjectWrapper& block, const PHY_PerceptionLevel& level ) const = 0;
+    virtual void NotifyPerceptionUrban( const MIL_UrbanObject_ABC& block, const PHY_PerceptionLevel& level ) const = 0;
     //@}
 
     //! @name Operations
@@ -110,7 +110,7 @@ public:
     virtual void DisableRecoPoint( int ) = 0;
     virtual int EnableRecoLocalisation( const TER_Localisation& localisation, float rGrowthSpeed, DEC_Decision_ABC& callerAgent ) = 0;
     virtual int EnableRecoLocalisation( const TER_Localisation& localisation, DEC_Decision_ABC& callerAgent ) = 0;
-    virtual int EnableRecoUrbanBlock( UrbanObjectWrapper* pUrbanBlock ) = 0;
+    virtual int EnableRecoUrbanBlock( MIL_UrbanObject_ABC* pUrbanBlock ) = 0;
     virtual void DisableRecoUrbanBlock( int ) = 0;
     virtual int EnableControlLocalisation( const TER_Localisation& localisation, DEC_Decision_ABC& callerAgent ) = 0;
     virtual void DisableRecoLocalisation( int ) = 0;
@@ -158,7 +158,7 @@ public:
     virtual bool IsKnown( const MIL_Object_ABC& object ) const = 0;
     virtual bool IsIdentified( const MIL_Object_ABC& object ) const = 0;
     virtual bool IsIdentified( const MIL_PopulationConcentration& concentration ) const = 0;
-    virtual bool IsIdentified( const UrbanObjectWrapper& object ) const = 0;
+    virtual bool IsIdentified( const MIL_UrbanObject_ABC& object ) const = 0;
     virtual bool IsFireObserver() const = 0;
     //@}
 

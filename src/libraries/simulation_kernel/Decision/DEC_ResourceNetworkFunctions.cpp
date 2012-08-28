@@ -20,7 +20,7 @@
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/ResourceNetworkCapacity.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Urban/PHY_ResourceNetworkType.h"
@@ -185,7 +185,7 @@ bool DEC_ResourceNetworkFunctions::CreateResourceNetworkLinkFromObject( boost::s
 // Name: DEC_ResourceNetworkFunctions::CreateResourceNetworkLinkFromUrbanBlock
 // Created: JSR 2012-01-18
 // -----------------------------------------------------------------------------
-bool DEC_ResourceNetworkFunctions::CreateResourceNetworkLinkFromUrbanBlock( UrbanObjectWrapper* source, boost::shared_ptr< DEC_ResourceNetwork > target )
+bool DEC_ResourceNetworkFunctions::CreateResourceNetworkLinkFromUrbanBlock( MIL_UrbanObject_ABC* source, boost::shared_ptr< DEC_ResourceNetwork > target )
 {
     if( !source )
         return false;

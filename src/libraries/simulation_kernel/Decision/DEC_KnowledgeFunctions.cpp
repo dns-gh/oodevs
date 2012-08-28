@@ -15,7 +15,7 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 #include "Entities/Orders/MIL_Fuseau.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
@@ -279,7 +279,7 @@ T_UrbanObjectVector DEC_KnowledgeFunctions::GetUrbanBlockInCircle( boost::shared
 // Name: DEC_KnowledgeFunctions::GetUrbanBlockForPosition
 // Created: DDA 2011-06-20
 // -----------------------------------------------------------------------------
-const UrbanObjectWrapper* DEC_KnowledgeFunctions::GetUrbanBlockForPosition( const MIL_AgentPion& pion, boost::shared_ptr< MT_Vector2D >& point )
+const MIL_UrbanObject_ABC* DEC_KnowledgeFunctions::GetUrbanBlockForPosition( const MIL_AgentPion& pion, boost::shared_ptr< MT_Vector2D >& point )
 {
     if( !point )
         throw std::runtime_error( __FUNCTION__ ": invalid parameter." );

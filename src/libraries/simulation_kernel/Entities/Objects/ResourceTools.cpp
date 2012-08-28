@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "ResourceTools.h"
 #include "MIL_AgentServer.h"
-#include "UrbanObjectWrapper.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Urban/PHY_ResourceNetworkType.h"
 #include <boost/lexical_cast.hpp>

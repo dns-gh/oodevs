@@ -26,7 +26,7 @@
 #include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/MIL_EntityManager.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 #include "Tools/MIL_Geometry.h"
 #include "Urban/MIL_UrbanCache.h"
 
@@ -88,7 +88,7 @@ const PHY_PerceptionLevel& PHY_ZURBPerceptionComputer::ComputePerception( const 
 void PHY_ZURBPerceptionComputer::ComputePerceptionPolygon( double distance, TER_Polygon& polygon ) const
 {
     const PHY_Posture& currentPerceiverPosture = perceiver_.GetRole< PHY_RoleInterface_Posture >().GetCurrentPosture();
-    const UrbanObjectWrapper* perceiverUrbanBlock = perceiver_.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
+    const MIL_UrbanObject_ABC* perceiverUrbanBlock = perceiver_.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
     if( perceiverUrbanBlock && ( &currentPerceiverPosture == &PHY_Posture::poste_ || &currentPerceiverPosture == &PHY_Posture::posteAmenage_ ) )
         MIL_Geometry::Scale( polygon, perceiverUrbanBlock->GetLocalisation().GetPoints(), distance );
     else
@@ -165,9 +165,9 @@ bool PHY_ZURBPerceptionComputer::ComputeParametersPerception( const MIL_Agent_AB
     MT_Vector2D targetPosition = target.GetRole< PHY_RoleInterface_Location >().GetPosition();
     MT_Vector2D perceiverPosition = perceiver_.GetRole< PHY_RoleInterface_Location >().GetPosition();
 
-    std::vector< const UrbanObjectWrapper* > list;
+    std::vector< const MIL_UrbanObject_ABC* > list;
     MIL_AgentServer::GetWorkspace().GetUrbanCache().GetUrbanBlocksWithinSegment( perceiverPosition, targetPosition, list );
-    const UrbanObjectWrapper* perceiverUrbanBlock = perceiver_.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
+    const MIL_UrbanObject_ABC* perceiverUrbanBlock = perceiver_.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
     const PHY_Posture& currentPerceiverPosture = perceiver_.GetRole< PHY_RoleInterface_Posture >().GetCurrentPosture();
 
     CollateSensorComponentFunctor dataFunctor( perceiver_ );
@@ -185,10 +185,10 @@ bool PHY_ZURBPerceptionComputer::ComputeParametersPerception( const MIL_Agent_AB
     for( std::set< const PHY_SensorTypeAgent* >::const_iterator itSensor = dataFunctor.sensors_.begin(); itSensor != dataFunctor.sensors_.end(); ++itSensor )
     {
         double worstFactor = 1.;
-        for( std::vector< const UrbanObjectWrapper* >::const_iterator it = list.begin(); it != list.end() && worstFactor > 0.; ++it )
+        for( std::vector< const MIL_UrbanObject_ABC* >::const_iterator it = list.begin(); it != list.end() && worstFactor > 0.; ++it )
             if( perceiverUrbanBlock == 0 || !( perceiverUrbanBlock == *it && ( &currentPerceiverPosture == &PHY_Posture::poste_ || &currentPerceiverPosture == &PHY_Posture::posteAmenage_ ) ) )
             {
-                const UrbanObjectWrapper& object = **it;
+                const MIL_UrbanObject_ABC& object = **it;
                 double objectHeight = sensorHeight;
                 double occupation = 1.;
                 double structuralState = 1.;

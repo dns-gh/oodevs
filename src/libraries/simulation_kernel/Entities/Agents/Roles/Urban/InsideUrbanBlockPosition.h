@@ -12,7 +12,7 @@
 
 #include "UrbanBlockPosition_ABC.h"
 
-class UrbanObjectWrapper;
+class MIL_UrbanObject_ABC;
 
 // =============================================================================
 /** @class  InsideUrbanBlockPosition
@@ -25,7 +25,7 @@ class InsideUrbanBlockPosition : public UrbanBlockPosition_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit InsideUrbanBlockPosition( const UrbanObjectWrapper& urbanObject );
+    explicit InsideUrbanBlockPosition( const MIL_UrbanObject_ABC& urbanObject );
     virtual ~InsideUrbanBlockPosition();
     //@}
 
@@ -41,7 +41,7 @@ public:
 private:
     //! @name Member data
     //@{
-    const UrbanObjectWrapper& urbanObject_;
+    const MIL_UrbanObject_ABC& urbanObject_;
     //@}
 };
 

@@ -13,7 +13,7 @@
 #include "MIL_Object_ABC.h"
 #include "MIL_AgentServer.h"
 #include "StructuralCapacity.h"
-#include "UrbanObjectWrapper.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 #include "Checkpoints/SerializationTools.h"
 #include "Decision/DEC_ResourceNetwork.h"
 #include "protocol/Protocol.h"
@@ -144,7 +144,7 @@ void ResourceNetworkCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
     ResourceNetworkCapacity* capacity = new ResourceNetworkCapacity( *this );
     object.AddCapacity( capacity );
-    if( dynamic_cast< UrbanObjectWrapper* >( &object ) == 0 )
+    if( dynamic_cast< MIL_UrbanObject_ABC* >( &object ) == 0 )
         object.GetAttribute< ResourceNetworkAttribute >() = ResourceNetworkAttribute( object );
     object.Register( *static_cast< MIL_StructuralStateNotifier_ABC *>( capacity ) );
     capacity->RegisterNode( object.GetID() );

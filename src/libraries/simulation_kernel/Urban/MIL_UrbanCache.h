@@ -13,7 +13,7 @@
 #include <map> // ??
 #include <spatialcontainer/SpatialContainer.h>
 
-class UrbanObjectWrapper;
+class MIL_UrbanObject_ABC;
 class MT_Vector2D;
 
 // =============================================================================
@@ -28,7 +28,7 @@ public:
     //! @name Types
     //@{
     struct QuadTreeTraits;
-    typedef spatialcontainer::SpatialContainer< const UrbanObjectWrapper*, QuadTreeTraits, double > T_QuadTree;
+    typedef spatialcontainer::SpatialContainer< const MIL_UrbanObject_ABC*, QuadTreeTraits, double > T_QuadTree;
     //@}
 
 public:
@@ -41,11 +41,11 @@ public:
 public:
     //! @name Operations
     //@{
-    void CreateQuadTree( std::vector< const UrbanObjectWrapper* >& cities, const geometry::Rectangle2d& rect );
-    void GetUrbanBlocksWithinSegment( const MT_Vector2D& vSourcePoint, const MT_Vector2D& vTargetPoint, std::vector< const UrbanObjectWrapper* >& list );
-    void GetListWithinCircle( const MT_Vector2D& center, float radius, std::vector< const UrbanObjectWrapper* >& result ) const;
-    const UrbanObjectWrapper* FindBlock( const MT_Vector2D& point ) const;
-    const std::vector< const UrbanObjectWrapper* >& GetCities() const;
+    void CreateQuadTree( std::vector< const MIL_UrbanObject_ABC* >& cities, const geometry::Rectangle2d& rect );
+    void GetUrbanBlocksWithinSegment( const MT_Vector2D& vSourcePoint, const MT_Vector2D& vTargetPoint, std::vector< const MIL_UrbanObject_ABC* >& list );
+    void GetListWithinCircle( const MT_Vector2D& center, float radius, std::vector< const MIL_UrbanObject_ABC* >& result ) const;
+    const MIL_UrbanObject_ABC* FindBlock( const MT_Vector2D& point ) const;
+    const std::vector< const MIL_UrbanObject_ABC* >& GetCities() const;
     double GetUrbanBlockCost( float weight, const MT_Vector2D& from, const MT_Vector2D& to ) const;
     void Clear();
     //@}
@@ -53,7 +53,7 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::map< MT_Vector2D, std::vector< const UrbanObjectWrapper* > > T_InnerCache;
+    typedef std::map< MT_Vector2D, std::vector< const MIL_UrbanObject_ABC* > > T_InnerCache;
     typedef std::map< MT_Vector2D, T_InnerCache > T_Cache;
     //@}
 
@@ -64,7 +64,7 @@ private:
     std::auto_ptr< T_QuadTree > quadTree_;
     double precision_;
     double maxElementSize_;
-    std::vector< const UrbanObjectWrapper* > cities_;
+    std::vector< const MIL_UrbanObject_ABC* > cities_;
     //@}
 };
 

@@ -17,7 +17,7 @@
 #include "Entities/MIL_Army_ABC.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeUrban.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 #include "DetectionComputer_ABC.h"
 #include "DetectionComputerFactory_ABC.h"
 #include "MIL_Random.h"
@@ -28,7 +28,7 @@
 // Name: PHY_PerceptionRecoUrbanBlockReco constructor
 // Created: MGD 2010-02-11
 // -----------------------------------------------------------------------------
-PHY_PerceptionRecoUrbanBlockReco::PHY_PerceptionRecoUrbanBlockReco( const UrbanObjectWrapper* pUrbanBlock, const boost::shared_ptr< DEC_Knowledge_Urban > pKnowledgeUrbanBlock )
+PHY_PerceptionRecoUrbanBlockReco::PHY_PerceptionRecoUrbanBlockReco( const MIL_UrbanObject_ABC* pUrbanBlock, const boost::shared_ptr< DEC_Knowledge_Urban > pKnowledgeUrbanBlock )
     : pUrbanBlock_         ( pUrbanBlock )
     , pKnowledgeUrbanBlock_( pKnowledgeUrbanBlock )
 {
@@ -92,7 +92,7 @@ PHY_PerceptionRecoUrbanBlock::~PHY_PerceptionRecoUrbanBlock()
 // Name: PHY_PerceptionRecoUrbanBlock::AddUrbanBlock
 // Created: MGD 2010-02-11
 // -----------------------------------------------------------------------------
-int PHY_PerceptionRecoUrbanBlock::AddUrbanBlock( const UrbanObjectWrapper* pUrbanBlock )
+int PHY_PerceptionRecoUrbanBlock::AddUrbanBlock( const MIL_UrbanObject_ABC* pUrbanBlock )
 {
     boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge = perceiver_.GetPion().GetArmy().GetKnowledge().GetKnowledgeUrbanContainer().GetKnowledgeUrban( *pUrbanBlock );
     return Add( new PHY_PerceptionRecoUrbanBlockReco( pUrbanBlock, pKnowledge ) );

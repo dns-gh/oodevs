@@ -37,7 +37,7 @@ DECLARE_HOOK( GetSignificantVolume, const PHY_Volume*, ( const SWORD_Model* enti
 DECLARE_HOOK( GetVolumeIdentifierFromInstance, size_t, ( const PHY_Volume* volume ) )
 DECLARE_HOOK( PopulationFlowIntersectWithCircle, bool, ( const MIL_PopulationFlow& flow, MT_Vector2D circleCenter, double radius, void(*AddShapePoint)( MT_Vector2D point, void* userData ), void* userData ) )
 DECLARE_HOOK( PopulationConcentrationIntersectWithCircle, bool, ( const MIL_PopulationConcentration& concentration, MT_Vector2D circleCenter, double radius ) )
-DECLARE_HOOK( GetUrbanBlockFactor, double, ( const UrbanObjectWrapper& block, const double* urbanBlockFactors ) )
+DECLARE_HOOK( GetUrbanBlockFactor, double, ( const MIL_UrbanObject_ABC& block, const double* urbanBlockFactors ) )
 DECLARE_HOOK( IsMaterialType, bool, ( const char* material ) )
 DECLARE_HOOK( GetPostureSize, size_t, () )
 DECLARE_HOOK( GetVolumeSize, size_t, () )
@@ -646,7 +646,7 @@ double SensorTypeAgent::GetFactor( size_t identifier ) const
 // Name: SensorTypeAgent::GetUrbanFactor
 // Created: SLG 2010-04-30
 // -----------------------------------------------------------------------------
-double SensorTypeAgent::GetUrbanBlockFactor( const UrbanObjectWrapper& block ) const
+double SensorTypeAgent::GetUrbanBlockFactor( const MIL_UrbanObject_ABC& block ) const
 {
     return GET_HOOK( ::GetUrbanBlockFactor )( block, &urbanBlockFactors_[0] );
 }

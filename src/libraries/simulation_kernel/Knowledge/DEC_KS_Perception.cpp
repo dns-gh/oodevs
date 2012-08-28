@@ -286,7 +286,7 @@ bool DEC_KS_Perception::NotifyPerception( MIL_PopulationFlow& flowPerceived, con
 // Name: DEC_KS_Perception::NotifyPerception
 // Created: MGD 2009-11-30
 // -----------------------------------------------------------------------------
-void DEC_KS_Perception::NotifyPerception( const UrbanObjectWrapper& object, const PHY_PerceptionLevel& level )
+void DEC_KS_Perception::NotifyPerception( const MIL_UrbanObject_ABC& object, const PHY_PerceptionLevel& level )
 {
     if( level == PHY_PerceptionLevel::notSeen_ )
         return;

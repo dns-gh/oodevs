@@ -18,7 +18,7 @@ class MIL_AgentPion;
 class MIL_Entity_ABC;
 class MIL_Mission_ABC;
 class MT_Vector2D;
-class UrbanObjectWrapper;
+class MIL_UrbanObject_ABC;
 
 // =============================================================================
 // Created: NLD 2004-03-31
@@ -60,7 +60,7 @@ public:
     static void  UnitDecisionalState                    ( const DEC_Knowledge_Agent& callerAgent, const std::string& key, const std::string& value );
     static void  DisableCrowdEffect                     ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, bool disable );
 
-    static double            GetMaterialComposantesProtectionLevel( boost::shared_ptr< DEC_Knowledge_Agent > pTarget, UrbanObjectWrapper* pUrbanBlock );
+    static double            GetMaterialComposantesProtectionLevel( boost::shared_ptr< DEC_Knowledge_Agent > pTarget, MIL_UrbanObject_ABC* pUrbanBlock );
     static const std::string GetCriticalIntelligence              ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
 
     static bool  IsIlluminated                          ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );

@@ -31,7 +31,6 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
 #include "Entities/MIL_Army_ABC.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_Knowledge_AgentComposante.h"
@@ -39,6 +38,7 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_KS_Perception.h"
 #include "Tools/MIL_Tools.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 #include <core/Facade.h>
 #include <core/Model.h>
 #include <core/UserData.h>
@@ -774,7 +774,7 @@ void RolePion_Decision::RegisterPerception()
     RegisterCommand< int( const TER_Localisation* ) >              ( "DEC_Perception_ActiverReconnaissanceLocalisation", &EnableRecoOnLocation, _1, boost::optional< float >() );
     RegisterCommand< int( const TER_Localisation*, float ) >       ( "DEC_Perception_ActivateLocationProgressiveRecce", &EnableRecoOnLocation, _1, _2 );
     RegisterCommand< void( int ) >                                 ( "DEC_Perception_DesactiverReconnaissanceLocalisation", &DisableIdentifiedCommand, "toggle reco", _1 );
-    RegisterCommand< int( UrbanObjectWrapper* ) >                  ( "DEC_Perception_ActiverReconnaissanceDansBlocUrbain", &EnableLocalizedDetection< UrbanObjectWrapper* >, "urban", _1 );
+    RegisterCommand< int( MIL_UrbanObject_ABC* ) >                  ( "DEC_Perception_ActiverReconnaissanceDansBlocUrbain", &EnableLocalizedDetection< MIL_UrbanObject_ABC* >, "urban", _1 );
     RegisterCommand< void( int ) >                                 ( "DEC_Perception_DesactiverReconnaissanceDansBlocUrbain", &DisableLocalizedDetection, "urban", _1 );
     RegisterCommand< int( const TER_Localisation*,
                           const MT_Vector2D*, double ) >           ( "DEC_Perception_ActiverDetectionObjetLocalisation", &EnableObjectDetection, _1, _2, _3 );
@@ -1090,15 +1090,15 @@ namespace
     bool IsInUrbanBlock( const SWORD_Model* knowledge, void* userData )
     {
         boost::shared_ptr< DEC_Knowledge_Agent > agent = (*core::Convert( knowledge ))[ "agent" ].GetUserData< boost::shared_ptr< DEC_Knowledge_Agent > >();
-        UrbanObjectWrapper* pUrbanObject = static_cast< UrbanObjectWrapper* >( userData );
+        MIL_UrbanObject_ABC* pUrbanObject = static_cast< MIL_UrbanObject_ABC* >( userData );
         return pUrbanObject && agent->IsInUrbanBlock( *pUrbanObject );
     }
-    double GetUrbanRapForLocal( const MIL_AgentPion& agent, const core::Model& model, UrbanObjectWrapper* pUrbanObject )
+    double GetUrbanRapForLocal( const MIL_AgentPion& agent, const core::Model& model, MIL_UrbanObject_ABC* pUrbanObject )
     {
         const core::Model& entity = model[ "entities" ][ agent.GetID() ];
         double rRapForValue = GET_HOOK( ComputeForceRatio )( core::Convert( &model ), core::Convert( &entity ), &IsInUrbanBlock, pUrbanObject );
         // Add bonus if the pion is posted in this urbanbloc // $$$$ MCO 2012-08-27: use a callback or a hook
-        const UrbanObjectWrapper* urbanBlock = agent.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
+        const MIL_UrbanObject_ABC* urbanBlock = agent.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
         if( pUrbanObject && urbanBlock && pUrbanObject == urbanBlock && agent.GetRole< PHY_RoleInterface_Posture >().IsInstalled() ) // $$$$ _RC_ LGY 2011-02-24: == sur les ID
             rRapForValue *= 1.2;
         rRapForValue = std::max( 0.2, std::min( 5., rRapForValue ) ); // $$$$ MCO 2012-08-27: hard-coded min and max actually equal to the ones in Knowledge_RapFor_ABC.cpp in fire module
@@ -1121,7 +1121,7 @@ void RolePion_Decision::RegisterKnowledge()
     RegisterFunction( "DEC_ConnaissanceAgent_DangerositeSurConnaissance",
         boost::function< double( boost::shared_ptr< DEC_Knowledge_Agent >, boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &GetDangerosityOnKnowledge, _1, boost::cref( model_ ), _2 ) ) );
     RegisterFunction( "DEC_ConnaissanceBlocUrbain_RapForLocal",
-        boost::function< double( UrbanObjectWrapper* ) >( boost::bind( &GetUrbanRapForLocal, boost::cref( GetPion() ), boost::cref( model_ ), _1 ) ) );
+        boost::function< double( MIL_UrbanObject_ABC* ) >( boost::bind( &GetUrbanRapForLocal, boost::cref( GetPion() ), boost::cref( model_ ), _1 ) ) );
 }
 
 namespace

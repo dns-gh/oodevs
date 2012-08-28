@@ -21,7 +21,7 @@
 #include "Entities/Agents/Roles/Terrain/PHY_RolePion_TerrainAnalysis.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 #include "Entities/Orders/MIL_AutomateOrderManager.h"
 #include "Entities/Orders/MIL_Fuseau.h"
 #include "Entities/Orders/MIL_LimaFunction.h"
@@ -996,7 +996,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeLocalisationBaryc
 // Name: DEC_GeometryFunctions::ComputeUrbanBlockLocalisations
 // Created: LMT 2010-10-13
 // -----------------------------------------------------------------------------
-std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeUrbanBlockLocalisations( UrbanObjectWrapper* pUrbanObject )
+std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeUrbanBlockLocalisations( MIL_UrbanObject_ABC* pUrbanObject )
 {
     typedef std::vector< boost::shared_ptr< MT_Vector2D > > T_Vectors;
     T_Vectors result;
@@ -1023,7 +1023,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeTrafficableLocali
     boost::shared_ptr< MT_Vector2D > pBarycenter( new MT_Vector2D( MT_ComputeBarycenter( pLocalisation->GetPoints() ) ) );
     if( pBarycenter.get() )
     {
-        const UrbanObjectWrapper* object = MIL_AgentServer::GetWorkspace().GetUrbanCache().FindBlock( *pBarycenter );
+        const MIL_UrbanObject_ABC* object = MIL_AgentServer::GetWorkspace().GetUrbanCache().FindBlock( *pBarycenter );
         if( object )
         {
             const double myWeight = pion.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight();
@@ -1054,7 +1054,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeTrafficableLocali
 // -----------------------------------------------------------------------------
 std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeTrafficableLocalisation( const MT_Vector2D& point )
 {
-    if( const UrbanObjectWrapper* wrapper = MIL_AgentServer::GetWorkspace().GetUrbanCache().FindBlock( point ) )
+    if( const MIL_UrbanObject_ABC* wrapper = MIL_AgentServer::GetWorkspace().GetUrbanCache().FindBlock( point ) )
     {
         const std::vector< boost::shared_ptr< MT_Vector2D > > points = wrapper->ComputeLocalisationsInsideBlock();
         std::vector< boost::shared_ptr< MT_Vector2D > > trafficablePoints;
@@ -1082,7 +1082,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeTr
 // -----------------------------------------------------------------------------
 bool DEC_GeometryFunctions::IsUrbanBlockTrafficable( const MT_Vector2D& point, double weight )
 {
-    if( const UrbanObjectWrapper* object = MIL_AgentServer::GetWorkspace().GetUrbanCache().FindBlock( point ) )
+    if( const MIL_UrbanObject_ABC* object = MIL_AgentServer::GetWorkspace().GetUrbanCache().FindBlock( point ) )
         return object->GetTrafficability() > weight;
     return true;
 }
@@ -1091,7 +1091,7 @@ bool DEC_GeometryFunctions::IsUrbanBlockTrafficable( const MT_Vector2D& point, d
 // Name: DEC_GeometryFunctions::IsPointInUrbanBlock
 // Created: LMT 2011-03-09
 // -----------------------------------------------------------------------------
-bool DEC_GeometryFunctions::IsPointInUrbanBlock( const MT_Vector2D& point, const UrbanObjectWrapper* pUrbanBlock )
+bool DEC_GeometryFunctions::IsPointInUrbanBlock( const MT_Vector2D& point, const MIL_UrbanObject_ABC* pUrbanBlock )
 {
     return pUrbanBlock && pUrbanBlock->GetLocalisation().IsInside( point );
 }
@@ -1120,8 +1120,8 @@ bool DEC_GeometryFunctions::IsPointInUrbanBlockTrafficableForPlatoon( DEC_Decisi
 // -----------------------------------------------------------------------------
 bool DEC_GeometryFunctions::IsPointInCity( const MT_Vector2D& point )
 {
-    const std::vector< const UrbanObjectWrapper* >& cities = MIL_AgentServer::GetWorkspace().GetUrbanCache().GetCities();
-    for( std::vector< const UrbanObjectWrapper* >::const_iterator it = cities.begin(); it != cities.end(); ++it )
+    const std::vector< const MIL_UrbanObject_ABC* >& cities = MIL_AgentServer::GetWorkspace().GetUrbanCache().GetCities();
+    for( std::vector< const MIL_UrbanObject_ABC* >::const_iterator it = cities.begin(); it != cities.end(); ++it )
     {
         if( !(*it) )
         {

@@ -191,7 +191,7 @@ void RolePion_Decision::RegisterPerception()
     RegisterFunction( "DEC_Perception_ActiverReconnaissanceLocalisation", boost::function< int( const TER_Localisation* ) >( boost::bind( &DEC_PerceptionFunctions::EnableRecognitionLocalisation, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Perception_ActivateLocationProgressiveRecce", boost::function< int( const TER_Localisation*, float ) >( boost::bind( &DEC_PerceptionFunctions::EnableRecognitionLocalisation, boost::ref( GetPion() ), _1, _2 ) ) );
     RegisterFunction( "DEC_Perception_DesactiverReconnaissanceLocalisation", boost::function< void( int ) >( boost::bind( &DEC_PerceptionFunctions::DisableRecognitionLocalisation, boost::ref( GetPion() ), _1 ) ) );
-    RegisterFunction( "DEC_Perception_ActiverReconnaissanceDansBlocUrbain", boost::function< int( UrbanObjectWrapper* ) >( boost::bind( &DEC_PerceptionFunctions::EnableRecognitionUrbanBlock, boost::ref( GetPion() ), _1 ) ) );
+    RegisterFunction( "DEC_Perception_ActiverReconnaissanceDansBlocUrbain", boost::function< int( MIL_UrbanObject_ABC* ) >( boost::bind( &DEC_PerceptionFunctions::EnableRecognitionUrbanBlock, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Perception_DesactiverReconnaissanceDansBlocUrbain", boost::function< void( int ) >( boost::bind( &DEC_PerceptionFunctions::DisableRecognitionUrbanBlock, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Perception_ActiverDetectionObjetLocalisation", boost::function< int( const TER_Localisation*, const MT_Vector2D*, double ) >( boost::bind( &DEC_PerceptionFunctions::EnableObjectRecognitionLocalisation, boost::ref( *(DEC_Decision_ABC*)this ), _1, _2, _3 ) ) );
     RegisterFunction( "DEC_Perception_DesactiverDetectionObjetLocalisation", boost::function< void( int ) >( boost::bind( &DEC_PerceptionFunctions::DisableObjectRecognitionLocalisation, boost::ref( GetPion() ), _1 ) ) );
@@ -289,7 +289,7 @@ void RolePion_Decision::RegisterAgentKnowledgeFunctions()
     RegisterFunction( "DEC_RapportDeForceLocal", boost::bind( &DEC_KnowledgeFunctions::GetRapForLocal, boost::ref( GetPion() ) ) );
     RegisterFunction( "DEC_Connaissances_UnitesEnnemiesDangereuses", boost::bind( &DEC_KnowledgeFunctions::GetDangerousEnemies, boost::ref( GetPion() ) ) );
     RegisterFunction( "DEC_ConnaissanceBlocUrbain_RapForLocal",
-        boost::function< float( UrbanObjectWrapper* ) >( boost::bind( &DEC_UrbanObjectFunctions::GetRapForLocal, boost::cref( GetPion() ), _1 ) ) );
+        boost::function< float( MIL_UrbanObject_ABC* ) >( boost::bind( &DEC_UrbanObjectFunctions::GetRapForLocal, boost::cref( GetPion() ), _1 ) ) );
 }
 
 // -----------------------------------------------------------------------------

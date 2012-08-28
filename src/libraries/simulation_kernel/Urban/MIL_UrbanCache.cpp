@@ -8,7 +8,7 @@
 #include "Entities/MIL_EntityManager.h"
 #include "MT_Tools/MT_Rect.h"
 #include "MT_Tools/MT_Logger.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
 #include "Urban/UrbanGeometryAttribute.h"
 #include "Urban/UrbanPhysicalAttribute.h"
@@ -24,12 +24,12 @@ namespace
 
 struct MIL_UrbanCache::QuadTreeTraits
 {
-    int CompareOnX( double value, const UrbanObjectWrapper* key ) const
+    int CompareOnX( double value, const MIL_UrbanObject_ABC* key ) const
     {
         return Intersector( key->GetLocalisation().GetBoundingBox() ).CompareOnX( value );
     }
 
-    int CompareOnY( double value, const UrbanObjectWrapper* key ) const
+    int CompareOnY( double value, const MIL_UrbanObject_ABC* key ) const
     {
         return Intersector( key->GetLocalisation().GetBoundingBox() ).CompareOnY( value );
     }
@@ -66,7 +66,7 @@ namespace
             // NOTHING
         }
 
-        bool operator()( const UrbanObjectWrapper* key )
+        bool operator()( const MIL_UrbanObject_ABC* key )
         {
             if( key && wrapper_.Check( key->GetLocalisation() ) )
             {
@@ -76,7 +76,7 @@ namespace
             return true;
         }
 
-        std::vector< const UrbanObjectWrapper* > data_;
+        std::vector< const MIL_UrbanObject_ABC* > data_;
         const CollisionChecker wrapper_;
     };
 
@@ -159,12 +159,12 @@ namespace
             // NOTHING
         }
 
-        bool operator()( const UrbanObjectWrapper* key )
+        bool operator()( const MIL_UrbanObject_ABC* key )
         {
             if( key && wrapper_.Check( key->GetLocalisation() ) )
             {
                 double tempCost = 0.;
-                const UrbanPhysicalAttribute* pPhysical = key->GetObject().Retrieve< UrbanPhysicalAttribute >();
+                const UrbanPhysicalAttribute* pPhysical = static_cast< const tools::Extendable< UrbanExtension_ABC >* >( key )->Retrieve< UrbanPhysicalAttribute >();
                 if( pPhysical )
                     tempCost = pPhysical->GetPathfindCost( weight_ );
                 if( tempCost == -1. )
@@ -189,7 +189,7 @@ namespace
 // Name: MIL_UrbanCache::CreateQuadTree
 // Created: JSR 2012-08-03
 // -----------------------------------------------------------------------------
-void MIL_UrbanCache::CreateQuadTree( std::vector< const UrbanObjectWrapper* >& cities, const geometry::Rectangle2d& rect )
+void MIL_UrbanCache::CreateQuadTree( std::vector< const MIL_UrbanObject_ABC* >& cities, const geometry::Rectangle2d& rect )
 {
     cities_ = cities;
     if( cities.empty() )
@@ -200,14 +200,14 @@ void MIL_UrbanCache::CreateQuadTree( std::vector< const UrbanObjectWrapper* >& c
     maxElementSize_ = 0;
     // $$$$ _RC_ JSR 2010-09-17: TODO Optimiser le quadtree en utilisant aussi les villes et quartiers pour accélérer la recherche
     std::vector< const MIL_UrbanObject_ABC* > objects;
-    for( std::vector< const UrbanObjectWrapper* >::const_iterator it = cities.begin(); it != cities.end(); ++it )
-        ( *it )->GetObject().GetUrbanObjectLeaves( objects );
+    for( std::vector< const MIL_UrbanObject_ABC* >::const_iterator it = cities.begin(); it != cities.end(); ++it )
+        ( *it )->GetUrbanObjectLeaves( objects );
     for( std::vector< const MIL_UrbanObject_ABC* >::const_iterator it = objects.begin(); it != objects.end(); ++it )
     {
-        const UrbanGeometryAttribute* pAttribute = ( *it )->Retrieve< UrbanGeometryAttribute >();
+        const UrbanGeometryAttribute* pAttribute = static_cast< const tools::Extendable< UrbanExtension_ABC >* >( *it )->Retrieve< UrbanGeometryAttribute >();
         if( pAttribute )
         {
-            quadTree_->Insert( &MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( **it ) );
+            quadTree_->Insert( *it );
             geometry::Rectangle2f boundingBox = pAttribute->BoundingBox();
             float size = 1.1f * std::max( boundingBox.Width(), boundingBox.Height() );
             if( maxElementSize_ < size )
@@ -220,7 +220,7 @@ void MIL_UrbanCache::CreateQuadTree( std::vector< const UrbanObjectWrapper* >& c
 // Name: MIL_UrbanCache::GetUrbanBlocksWithinSegment
 // Created: LDC 2011-12-28
 // -----------------------------------------------------------------------------
-void MIL_UrbanCache::GetUrbanBlocksWithinSegment( const MT_Vector2D& vSourcePoint, const MT_Vector2D& vTargetPoint, std::vector< const UrbanObjectWrapper* >& list )
+void MIL_UrbanCache::GetUrbanBlocksWithinSegment( const MT_Vector2D& vSourcePoint, const MT_Vector2D& vTargetPoint, std::vector< const MIL_UrbanObject_ABC* >& list )
 {
     MT_Vector2D start;
     MT_Vector2D end;
@@ -273,7 +273,7 @@ void MIL_UrbanCache::Clear()
 // Name: MIL_UrbanCache::GetListWithinCircle
 // Created: LDC 2011-12-30
 // -----------------------------------------------------------------------------
-void MIL_UrbanCache::GetListWithinCircle( const MT_Vector2D& center, float radius, std::vector< const UrbanObjectWrapper* >& result ) const
+void MIL_UrbanCache::GetListWithinCircle( const MT_Vector2D& center, float radius, std::vector< const MIL_UrbanObject_ABC* >& result ) const
 {
     std::vector< const MIL_UrbanObject_ABC* > tmpList;
     if( quadTree_.get() )
@@ -291,7 +291,7 @@ void MIL_UrbanCache::GetListWithinCircle( const MT_Vector2D& center, float radiu
 // Name: MIL_UrbanCache::FindBlock
 // Created: JSR 2012-04-20
 // -----------------------------------------------------------------------------
-const UrbanObjectWrapper* MIL_UrbanCache::FindBlock( const MT_Vector2D& point ) const
+const MIL_UrbanObject_ABC* MIL_UrbanCache::FindBlock( const MT_Vector2D& point ) const
 {
     if( quadTree_.get() )
     {
@@ -309,7 +309,7 @@ const UrbanObjectWrapper* MIL_UrbanCache::FindBlock( const MT_Vector2D& point ) 
 // Name: MIL_UrbanCache::GetCities
 // Created: JSR 2012-04-20
 // -----------------------------------------------------------------------------
-const std::vector< const UrbanObjectWrapper* >& MIL_UrbanCache::GetCities() const
+const std::vector< const MIL_UrbanObject_ABC* >& MIL_UrbanCache::GetCities() const
 {
     return cities_;
 }

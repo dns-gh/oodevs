@@ -21,7 +21,7 @@ class MIL_Mission_ABC;
 class PHY_DotationCategory;
 class TER_Localisation;
 class MT_Vector2D;
-class UrbanObjectWrapper;
+class MIL_UrbanObject_ABC;
 class DEC_Gen_Object;
 class MIL_Object_ABC;
 
@@ -215,7 +215,7 @@ public:
     static void ConfineInhabitants( const TER_Localisation* location ); // $$$$ BCI 2011-02-01: je ne sais pas trop comment nommer ou classer cette méthode : le terme "population" fait parfois référence aux foules, parfois aux populations...
     static void UndoConfineInhabitants( const TER_Localisation* location );
     static bool IsInhabitantsConfined( const TER_Localisation* location );
-    static bool UrbanBlockIsPopulated( const UrbanObjectWrapper* pUrbanBlock );
+    static bool UrbanBlockIsPopulated( const MIL_UrbanObject_ABC* pUrbanBlock );
     static void EvacuateInhabitants( const TER_Localisation* location );
     static void UndoEvacuateInhabitants( const TER_Localisation* location );
     static bool IsInhabitantsEvacuated( const TER_Localisation* location );

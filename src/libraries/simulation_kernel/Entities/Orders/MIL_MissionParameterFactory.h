@@ -36,7 +36,7 @@ class PHY_DotationCategory;
 class PHY_ComposanteTypePion;
 class PHY_ResourceNetworkType;
 class TER_Localisation;
-class UrbanObjectWrapper;
+class MIL_UrbanObject_ABC;
 
 // =============================================================================
 /** @class  MIL_MissionParameterFactory
@@ -65,7 +65,7 @@ public:
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreateTir( int id );
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreatePoint( const MT_Vector2D& point );
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreateLocation( boost::shared_ptr< TER_Localisation > pLocation );
-    static boost::shared_ptr<MIL_MissionParameter_ABC> CreateUrbanBlock( UrbanObjectWrapper* pUrbanblock );
+    static boost::shared_ptr<MIL_MissionParameter_ABC> CreateUrbanBlock( MIL_UrbanObject_ABC* pUrbanblock );
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreatePathConst( const std::vector< boost::shared_ptr< MT_Vector2D > >& pointList );
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreatePath( boost::shared_ptr< MT_Vector2D > point );
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreateDirection( boost::shared_ptr< MT_Vector2D > direction );
@@ -88,7 +88,7 @@ public:
     static void SetLocationParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, boost::shared_ptr< TER_Localisation > pLocation );
     static void SetPointParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, MT_Vector2D& point );
     static void SetGenObjectParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, boost::shared_ptr< DEC_Gen_Object > object );
-    static void SetUrbanBlockParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, UrbanObjectWrapper* pUrbanblock );
+    static void SetUrbanBlockParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, MIL_UrbanObject_ABC* pUrbanblock );
     static void SetDirectionParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, boost::shared_ptr< MT_Vector2D > direction );
     static void SetDotationTypeParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const PHY_DotationCategory* type );
     static void SetNumericTypeParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, float value );

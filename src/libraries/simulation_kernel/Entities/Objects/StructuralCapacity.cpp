@@ -19,7 +19,7 @@
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Objects/MineAttribute.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Tools/MIL_Geometry.h"
 #include "protocol/ClientSenders.h"
@@ -131,7 +131,7 @@ void StructuralCapacity::ApplyIndirectFire( MIL_Object_ABC& object, const TER_Lo
     }
     else
         // $$$$ JSR 2011-02-17: temporary hack -> Do not destroy districts or cities (UrbanObject without material attribute)
-        if( !dynamic_cast< UrbanObjectWrapper* >( &object ) )
+        if( !dynamic_cast< MIL_UrbanObject_ABC* >( &object ) )
         // $$$$ JSR 2010-07-23: if material attribute is not present, just destroy object?
             object().Destroy();
 }
@@ -147,7 +147,7 @@ void StructuralCapacity::ApplyDestruction( MIL_Object_ABC& object, const TER_Loc
         ApplyDestruction( object, attritionSurface, attrition.GetScore( materialAttribute->GetMaterial() ) );
     else
         // $$$$ JSR 2011-02-17: temporary hack -> Do not destroy districts or cities (UrbanObject without material attribute)
-        if( !dynamic_cast< UrbanObjectWrapper* >( &object ) )
+        if( !dynamic_cast< MIL_UrbanObject_ABC* >( &object ) )
         // $$$$ JSR 2010-07-23: if material attribute is not present, just destroy object?
             object().Destroy();
 }

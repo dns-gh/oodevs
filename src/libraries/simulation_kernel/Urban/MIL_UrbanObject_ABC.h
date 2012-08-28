@@ -10,13 +10,15 @@
 #ifndef __MIL_UrbanObject_ABC_h_
 #define __MIL_UrbanObject_ABC_h_
 
+#include "Entities/Objects/MIL_Object.h"
 #include "UrbanExtension_ABC.h"
 #include <tools/Extendable.h>
 #include <tools/Resolver.h>
 
 class MIL_UrbanMotivationsVisitor_ABC;
+class MIL_LivingArea;
 
-// TODO virer UrbanObjectWrapper à terme et ne garder que cette classe là
+// TODO virer MIL_UrbanObject_ABC à terme et ne garder que MIL_UrbanObject ?
 
 // =============================================================================
 /** @class  MIL_UrbanObject_ABC
@@ -24,15 +26,24 @@ class MIL_UrbanMotivationsVisitor_ABC;
 */
 // Created: JSR 2012-07-31
 // =============================================================================
-class MIL_UrbanObject_ABC : public tools::Extendable< UrbanExtension_ABC >
+class MIL_UrbanObject_ABC : public MIL_Object
+                          , public tools::Extendable< UrbanExtension_ABC > // temporaire
                           , public tools::Resolver< MIL_UrbanObject_ABC >
-                          , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
+             MIL_UrbanObject_ABC( const MIL_ObjectType_ABC& type ) : MIL_Object( 0, type, false ) {}
              MIL_UrbanObject_ABC() {}
     virtual ~MIL_UrbanObject_ABC() {}
+    //@}
+
+    //! @name Serialization
+    //@{
+    template< typename Archive > void serialize( Archive& ar, const unsigned int )
+    {
+        ar & boost::serialization::base_object< MIL_Object >( *this );
+    }
     //@}
 
     //! @name Operations
@@ -47,6 +58,22 @@ public:
     virtual float GetLivingSpace() const = 0;
     virtual float ComputeComplexity() const = 0;
     virtual const std::string& GetInfrastructure() const = 0;
+
+    virtual bool HasArchitecture() const = 0;
+    virtual float GetStructuralHeight() const = 0;
+    virtual float GetStructuralState() const = 0;
+    virtual const std::string& GetMaterial() const = 0;
+    virtual float GetHeight() const = 0;
+    virtual double GetOccupation() const = 0;
+    virtual unsigned int GetTotalInhabitants() const = 0;
+    virtual const std::vector< boost::shared_ptr< MT_Vector2D > >& ComputeLocalisationsInsideBlock() const = 0;
+    virtual double GetTrafficability() const = 0;
+    virtual bool IsBlock() const = 0;
+    virtual bool HasParent() const = 0;
+
+    virtual void AddLivingArea( MIL_LivingArea& livingArea ) = 0;
+    virtual unsigned int GetTotalInhabitantsForMotivation( const std::string& motivation ) const = 0;
+    virtual void UpdateInhabitants( MIL_LivingArea& livingArea, const std::string& motivation, unsigned int number ) = 0;
     //@}
 };
 

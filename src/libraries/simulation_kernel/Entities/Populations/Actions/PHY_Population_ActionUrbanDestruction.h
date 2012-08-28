@@ -15,7 +15,7 @@
 #include "Entities/Actions/PHY_Action_ABC.h"
 
 class MIL_Population;
-class UrbanObjectWrapper;
+class MIL_UrbanObject_ABC;
 
 // =============================================================================
 // @class  PHY_Population_ActionUrbanDestruction
@@ -27,7 +27,7 @@ public:
     typedef MIL_Population ActorType;
 
 public:
-    PHY_Population_ActionUrbanDestruction( MIL_Population& population, UrbanObjectWrapper* pUrbanObjet );
+    PHY_Population_ActionUrbanDestruction( MIL_Population& population, MIL_UrbanObject_ABC* pUrbanObjet );
     virtual ~PHY_Population_ActionUrbanDestruction();
 
     //! @name Operations
@@ -39,7 +39,7 @@ public:
 
 private:
     MIL_Population& population_;
-    UrbanObjectWrapper* pUrbanObjet_;
+    MIL_UrbanObject_ABC* pUrbanObjet_;
 };
 
 #endif // __PHY_Population_ActionUrbanDestruction_h_

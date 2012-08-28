@@ -169,7 +169,7 @@ public:
     { throw; }
     virtual bool ToUrbanBlock( sword::UrbanObjectId& ) const
     { throw; }
-    virtual bool ToUrbanBlock( UrbanObjectWrapper*& ) const
+    virtual bool ToUrbanBlock( MIL_UrbanObject_ABC*& ) const
     { throw; }
     virtual bool ToList( ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& ) const
     { throw; }

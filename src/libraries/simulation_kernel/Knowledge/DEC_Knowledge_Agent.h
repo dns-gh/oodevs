@@ -36,7 +36,7 @@ class PHY_SensorTypeAgent_ABC;
 class DEC_Knowledge_AgentPerception;
 class PHY_NatureAtlas;
 class PHY_ComposanteType_ABC;
-class UrbanObjectWrapper;
+class MIL_UrbanObject_ABC;
 
 // =============================================================================
 /** @class  DEC_Knowledge_Agent
@@ -144,7 +144,7 @@ public:
     double GetDangerosity( const DEC_Knowledge_Agent& target, bool bUseAmmo ) const;
     double GetDangerosity( const MIL_Agent_ABC& target, bool bUseAmmo ) const;
     double GetMaxRangeToFireOn( const MIL_Agent_ABC& target, double rWantedPH ) const;
-    double GetMaterialComposantesAttritionLevel( UrbanObjectWrapper* pUrbanBlock ) const;
+    double GetMaterialComposantesAttritionLevel( MIL_UrbanObject_ABC* pUrbanBlock ) const;
     void Lock();
     void Unlock();
     void KillOfficers();

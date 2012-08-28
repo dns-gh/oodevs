@@ -14,7 +14,7 @@
 #include "Entities/Inhabitants/MIL_InhabitantType.h"
 #include "Entities/Objects/ResourceNetworkCapacity.h"
 #include "Entities/Objects/StructuralCapacity.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 #include "Entities/Orders/MIL_PopulationMissionType.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationType.h"
@@ -47,7 +47,7 @@ MIL_LivingAreaBlock::MIL_LivingAreaBlock()
 // Name: MIL_LivingAreaBlock constructor
 // Created: JSR 2011-03-23
 // -----------------------------------------------------------------------------
-MIL_LivingAreaBlock::MIL_LivingAreaBlock( UrbanObjectWrapper& urbanObject )
+MIL_LivingAreaBlock::MIL_LivingAreaBlock( MIL_UrbanObject_ABC& urbanObject )
     : urbanObject_ ( &urbanObject )
     , angriness_   ( 0.f )
     , alerted_     ( false )
@@ -105,7 +105,7 @@ void MIL_LivingAreaBlock::UpdateNetwork( client::PopulationUpdate& msg ) const
 // Name: MIL_LivingAreaBlock::GetObject
 // Created: JSR 2011-03-23
 // -----------------------------------------------------------------------------
-const UrbanObjectWrapper& MIL_LivingAreaBlock::GetObject() const
+const MIL_UrbanObject_ABC& MIL_LivingAreaBlock::GetObject() const
 {
     return *urbanObject_;
 }
@@ -229,7 +229,7 @@ unsigned int MIL_LivingAreaBlock::GetTotalNumberOfPersons() const
 
 namespace
 {
-    float GetStructuralState( const UrbanObjectWrapper& object )
+    float GetStructuralState( const MIL_UrbanObject_ABC& object )
     {
         const StructuralCapacity* structural = object.Retrieve< StructuralCapacity >();
         return structural ? structural->GetStructuralState() : 1.f;

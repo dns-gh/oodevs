@@ -12,7 +12,7 @@
 
 #include "MT_Tools/Role_ABC.h"
 
-class UrbanObjectWrapper;
+class MIL_UrbanObject_ABC;
 class PHY_DotationCategory;
 class MIL_Agent_ABC;
 class MT_Ellipse;
@@ -51,7 +51,7 @@ public:
 
     //! @name Accessors
     //@{
-    virtual const UrbanObjectWrapper* GetCurrentUrbanBlock() const = 0;
+    virtual const MIL_UrbanObject_ABC* GetCurrentUrbanBlock() const = 0;
     virtual bool IsInCity() const = 0;
     virtual bool CanMount() const = 0;
     virtual bool HasInhabitantCollision() const = 0;

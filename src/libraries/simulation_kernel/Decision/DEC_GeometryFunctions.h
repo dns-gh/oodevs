@@ -22,7 +22,7 @@ class MIL_Fuseau;
 class MIL_LimaOrder;
 class MT_Vector2D;
 class TER_Localisation;
-class UrbanObjectWrapper;
+class MIL_UrbanObject_ABC;
 
 // =============================================================================
 // Created: NLD 2003-08-20
@@ -65,7 +65,7 @@ public:
     static boost::shared_ptr< MT_Vector2D > ComputeLocalisationBarycenter( TER_Localisation* pLocalisation );
     static std::vector< boost::shared_ptr< MT_Vector2D > > ListLocalisationPoints( TER_Localisation* pLocalisation );
 
-    static std::vector< boost::shared_ptr< MT_Vector2D > > ComputeUrbanBlockLocalisations( UrbanObjectWrapper* pUrbanObject );
+    static std::vector< boost::shared_ptr< MT_Vector2D > > ComputeUrbanBlockLocalisations( MIL_UrbanObject_ABC* pUrbanObject );
 
     static boost::shared_ptr< MT_Vector2D > ComputeTrafficableLocalisationBarycenter( MIL_AgentPion& pion, TER_Localisation* pLocalisation );
     static std::vector< boost::shared_ptr< MT_Vector2D > > ComputeTrafficableLocalisation( const MT_Vector2D& point );
@@ -90,7 +90,7 @@ public:
     template< typename T > static boost::shared_ptr< MT_Vector2D > GetLeavingAreaPosition( const T& caller, TER_Localisation* pLocalisation );
     static boost::shared_ptr< MT_Vector2D > ComputeNearestBorder( const MT_Vector2D* position, TER_Localisation* pLocalisation );
     static double ComputeAreaDiameter( TER_Localisation* pLocalisation );
-    static bool IsPointInUrbanBlock( const MT_Vector2D& point, const UrbanObjectWrapper* pUrbanBlock );
+    static bool IsPointInUrbanBlock( const MT_Vector2D& point, const MIL_UrbanObject_ABC* pUrbanBlock );
     static bool IsPointInUrbanBlockTrafficable( MIL_AgentPion& pion, const MT_Vector2D& point );
     static bool IsPointInUrbanBlockTrafficableForPlatoon( DEC_Decision_ABC* pion, const MT_Vector2D& point );
     static bool IsPointInCity( const MT_Vector2D& point );

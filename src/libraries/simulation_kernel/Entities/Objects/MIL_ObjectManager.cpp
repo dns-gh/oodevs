@@ -19,8 +19,9 @@
 #include "MIL_ObjectFactory.h"
 #include "MIL_Object_ABC.h"
 #include "MIL_ObjectManipulator_ABC.h"
-#include "UrbanObjectWrapper.h"
+#include "MIL_AgentServer.h"
 #include "Entities/MIL_Army_ABC.h"
+#include "Entities/MIL_EntityManager.h"
 #include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Network/NET_Publisher_ABC.h"
@@ -42,6 +43,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_ObjectManager )
 MIL_ObjectManager::MIL_ObjectManager()
     : pFloodModel_( 0 )
     , builder_    ( 0 )
+    , nbObjects_  ( 0 )
 {
     // NOTHING
 }
@@ -53,6 +55,7 @@ MIL_ObjectManager::MIL_ObjectManager()
 MIL_ObjectManager::MIL_ObjectManager( const flood::FloodModel_ABC& floodModel )
     : pFloodModel_( &floodModel )
     , builder_    ( new MIL_ObjectFactory() )
+    , nbObjects_  ( 0 )
 {
     // NOTHING
 }
@@ -78,12 +81,13 @@ void MIL_ObjectManager::load( MIL_CheckPointInArchive& file, const unsigned int 
     builder_.reset( new MIL_ObjectFactory() );
     for( CIT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
     {
-        if( UrbanObjectWrapper* wrapper = dynamic_cast< UrbanObjectWrapper* >( it->second ) )
+        if( MIL_UrbanObject_ABC* urbanObject = dynamic_cast< MIL_UrbanObject_ABC* >( it->second ) )
         {
-            urbanObjects_.insert( std::make_pair( &wrapper->GetObject(), wrapper ) );
-            if( wrapper->IsBlock() )
-                urbanBlocks_.push_back( wrapper );
+            if( urbanObject->IsBlock() )
+                urbanBlocks_.push_back( urbanObject );
         }
+        else
+            ++nbObjects_;
         if( it->second->IsUniversal() )
             universalObjects_.insert( it->second );
     }
@@ -141,18 +145,19 @@ void MIL_ObjectManager::UpdateStates()
                                 flood->GenerateFlood( *pFloodModel_ );
                 }
                 object.SendDestruction();
-                if( UrbanObjectWrapper* wrapper = dynamic_cast< UrbanObjectWrapper* >( &object ) )
-                {
-                    urbanObjects_.erase( &wrapper->GetObject() );
-                    IT_UrbanBlocksVector it = std::find( urbanBlocks_.begin(), urbanBlocks_.end(), wrapper );
-                    if( it != urbanBlocks_.end() )
-                        urbanBlocks_.erase( it );
-                }
             }
             catch( std::exception& e )
             {
                 MT_LOG_ERROR_MSG( "Error updating object " << object.GetID() << " before destruction : " << e.what() );
             }
+            if( MIL_UrbanObject_ABC* urbanObject = dynamic_cast< MIL_UrbanObject_ABC* >( &object ) )
+            {
+                IT_UrbanBlocksVector it = std::find( urbanBlocks_.begin(), urbanBlocks_.end(), urbanObject );
+                if( it != urbanBlocks_.end() )
+                    urbanBlocks_.erase( it );
+            }
+            else
+                --nbObjects_;
             universalObjects_.erase( &object );
             delete &object;
             it = objects_.erase( it );
@@ -175,6 +180,7 @@ void MIL_ObjectManager::RegisterObject( MIL_Object_ABC* pObject )
         return;
     if( !objects_.insert( std::make_pair( pObject->GetID(), pObject ) ).second )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
+    ++nbObjects_;
     if( pObject->IsUniversal() )
         universalObjects_.insert( pObject );
     pObject->SendCreation();
@@ -188,7 +194,7 @@ void MIL_ObjectManager::RegisterObject( MIL_Object_ABC* pObject )
 // -----------------------------------------------------------------------------
 unsigned long MIL_ObjectManager::Count() const
 {
-    return static_cast< unsigned long >( objects_.size() - urbanObjects_.size() );
+    return nbObjects_;
 }
 
 // -----------------------------------------------------------------------------
@@ -198,30 +204,6 @@ unsigned long MIL_ObjectManager::Count() const
 const MIL_ObjectType_ABC& MIL_ObjectManager::FindType( const std::string& type ) const
 {
     return builder_->FindType( type );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ObjectManager::GetUrbanObjectWrapper
-// Created: JSR 2011-01-18
-// -----------------------------------------------------------------------------
-UrbanObjectWrapper& MIL_ObjectManager::GetUrbanObjectWrapper( const MIL_UrbanObject_ABC& object )
-{
-    CIT_UrbanObjectMap it = urbanObjects_.find( &object );
-    if( it == urbanObjects_.end() )
-        throw std::exception( "Unable to get UrbanObjectWrapper from TerrainObject" );
-    return *( it->second );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ObjectManager::ConvertUrbanIdToSimId
-// Created: JSR 2011-01-18
-// -----------------------------------------------------------------------------
-unsigned int MIL_ObjectManager::ConvertUrbanIdToSimId( unsigned int urbanId )
-{
-    for( CIT_UrbanObjectMap it = urbanObjects_.begin(); it != urbanObjects_.end(); ++it )
-        if( it->first->GetUrbanId() == urbanId )
-            return it->second->GetID();
-    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -322,16 +304,29 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC* army, const MIL_O
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectManager::CreateUrbanObject
-// Created: SLG 2010-06-23
+// Created: JSR 2012-08-03
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectManager::CreateUrbanObject( const MIL_UrbanObject_ABC& object )
+MIL_Object_ABC* MIL_ObjectManager::CreateUrbanObject( xml::xistream& xis, MIL_UrbanObject_ABC* parent )
 {
-    MIL_Object_ABC* pObject = builder_->BuildUrbanObject( object );
+    MIL_UrbanObject_ABC* pObject = builder_->BuildUrbanObject( xis, parent );
     RegisterObject( pObject );
-    UrbanObjectWrapper* wrapper = static_cast< UrbanObjectWrapper* >( pObject );
-    urbanObjects_.insert( std::make_pair( &object, wrapper ) );
-    if( wrapper->IsBlock() )
-        urbanBlocks_.push_back( wrapper );
+
+    // TODO vérification
+    /*
+    const UrbanPhysicalAttribute* pPhysical = static_cast< const tools::Extendable< UrbanExtension_ABC >& >( object ).Retrieve< UrbanPhysicalAttribute >();
+    if( pPhysical && ( !PHY_MaterialCompositionType::Find( pPhysical->GetArchitecture().material_ ) || !PHY_RoofShapeType::Find( pPhysical->GetArchitecture().roofShape_ ) ) )
+    {
+        MT_LOG_INFO_MSG( MT_FormatString( "The architecture of the urban bloc '%d' ('%s') is not consistent with the architecture described in the urban file", object.GetUrbanId(), object.GetName().c_str() ) );
+    }
+    const UrbanGeometryAttribute* geometry = static_cast< const tools::Extendable< UrbanExtension_ABC >& >( object ).Retrieve< UrbanGeometryAttribute >();
+    if( !geometry || geometry->Vertices().empty() )
+    {
+        MT_LOG_ERROR_MSG( MT_FormatString( "Urban block %d ignored for lack of geometry", object.GetUrbanId() ) );
+        return;
+    }
+    */
+    if( pObject->IsBlock() )
+        urbanBlocks_.push_back( pObject );
     return pObject;
 }
 
@@ -354,7 +349,7 @@ void MIL_ObjectManager::WriteODB( xml::xostream& xos ) const
     for( CIT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
     {
         MIL_Object_ABC* obj = it->second;
-        if( obj && dynamic_cast< UrbanObjectWrapper* >( obj ) == 0 && obj->GetArmy() == 0  )
+        if( obj && dynamic_cast< MIL_UrbanObject_ABC* >( obj ) == 0 && obj->GetArmy() == 0  )
         {
             if( !noSideObjectsFound )
             {
@@ -378,7 +373,7 @@ void MIL_ObjectManager::ReadUrbanState( xml::xistream& xis )
 {
     try
     {
-        MIL_Object_ABC* urbanObject = Find( ConvertUrbanIdToSimId( xis.attribute< unsigned int >( "id" ) ) );
+        MIL_Object_ABC* urbanObject = Find( MIL_AgentServer::GetWorkspace().GetEntityManager().ConvertUrbanIdToSimId( xis.attribute< unsigned int >( "id" ) ) );
         if( urbanObject )
             xis >> xml::list( *this, &MIL_ObjectManager::UpdateCapacity, *urbanObject );
     }

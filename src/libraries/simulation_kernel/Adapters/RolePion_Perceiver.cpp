@@ -196,9 +196,9 @@ namespace
         for( std::size_t i = 0; i < effect.GetSize(); ++i )
         {
             const core::Model& notification = effect.GetElement( i );
-            const UrbanObjectWrapper& object = *reinterpret_cast< const UrbanObjectWrapper* >( static_cast< size_t >( notification[ "target" ] ) );
+            const MIL_UrbanObject_ABC& object = *reinterpret_cast< const MIL_UrbanObject_ABC* >( static_cast< size_t >( notification[ "target" ] ) );
             const PHY_PerceptionLevel& level = PHY_PerceptionLevel::FindPerceptionLevel( notification[ "level" ] );
-            T_Notification notifier = boost::bind( static_cast< void(DEC_KS_Perception::*)( const UrbanObjectWrapper&, const PHY_PerceptionLevel& ) >(&DEC_KS_Perception::NotifyPerception), _1, boost::ref( object ), boost::ref( level ) );
+            T_Notification notifier = boost::bind( static_cast< void(DEC_KS_Perception::*)( const MIL_UrbanObject_ABC&, const PHY_PerceptionLevel& ) >(&DEC_KS_Perception::NotifyPerception), _1, boost::ref( object ), boost::ref( level ) );
             notifications.push_back( notifier );
         }
     }
@@ -515,7 +515,7 @@ int RolePion_Perceiver::EnableRecoLocalisation( const TER_Localisation& localisa
 // Name: RolePion_Perceiver::EnableRecoLocalisation
 // Created: MGD 2010-02-11
 // -----------------------------------------------------------------------------
-int RolePion_Perceiver::EnableRecoUrbanBlock( UrbanObjectWrapper* /*pUrbanBlock*/ )
+int RolePion_Perceiver::EnableRecoUrbanBlock( MIL_UrbanObject_ABC* /*pUrbanBlock*/ )
 {
     throw std::runtime_error( __FUNCTION__ );
 }
@@ -836,7 +836,7 @@ bool RolePion_Perceiver::IsIdentified( const MIL_PopulationConcentration& concen
 // Name: RolePion_Perceiver::IsIdentified
 // Created: MGD 2009-11-25
 // -----------------------------------------------------------------------------
-bool RolePion_Perceiver::IsIdentified( const UrbanObjectWrapper& object ) const
+bool RolePion_Perceiver::IsIdentified( const MIL_UrbanObject_ABC& object ) const
 {
     return owner_.GetKnowledge().IsIdentified( object );
 }
@@ -899,7 +899,7 @@ bool RolePion_Perceiver::NotifyPerception( MIL_PopulationFlow& /*flow*/, const P
 // Name: RolePion_Perceiver::NotifyPerceptionUrban
 // Created: MGD 2009-11-20
 // -----------------------------------------------------------------------------
-void RolePion_Perceiver::NotifyPerceptionUrban( const UrbanObjectWrapper& /*object*/, const PHY_PerceptionLevel& /*level*/ ) const
+void RolePion_Perceiver::NotifyPerceptionUrban( const MIL_UrbanObject_ABC& /*object*/, const PHY_PerceptionLevel& /*level*/ ) const
 {
     throw std::runtime_error( __FUNCTION__ );
 }

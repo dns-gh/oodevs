@@ -27,7 +27,7 @@
 #include "Entities/Objects/InteractWithSideCapacity.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/ResourceNetworkCapacity.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
 #include "protocol/Protocol.h"
 
@@ -771,7 +771,7 @@ namespace
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeBlackBoard_Army::GetResourceNetworksInZone( T_ResourceNetworkVector& container, const TER_Localisation& zone, const std::string type /*= ""*/ )
 {
-    const std::vector< const UrbanObjectWrapper* >& blocks = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanBlocks();
+    const std::vector< const MIL_UrbanObject_ABC* >& blocks = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanBlocks();
     for( std::size_t i = 0; i < blocks.size(); ++i )
         FindResourceNetworks( *blocks[ i ], zone, type, container );
     sResourceNetworkInserter functor( container, zone, type );

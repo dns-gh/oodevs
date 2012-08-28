@@ -15,7 +15,7 @@
 class DEC_KnowledgeBlackBoard_Army;
 class DEC_Knowledge_UrbanPerception;
 class DEC_Knowledge_Urban;
-class UrbanObjectWrapper;
+class MIL_UrbanObject_ABC;
 
 // =============================================================================
 /** @class  DEC_Knowledge_Urban
@@ -49,7 +49,7 @@ private:
     //! @name Update
     //@{
     void UpdateKnowledgesFromUrbanPerception( const DEC_Knowledge_UrbanPerception& perception );
-    boost::shared_ptr< DEC_Knowledge_Urban > GetKnowledgeToUpdate( const UrbanObjectWrapper& objectKnown ) const;
+    boost::shared_ptr< DEC_Knowledge_Urban > GetKnowledgeToUpdate( const MIL_UrbanObject_ABC& objectKnown ) const;
     void UpdateKnowledgeRelevance( boost::shared_ptr< DEC_Knowledge_Urban >& knowledge );
     void CleanKnowledgeUrban( boost::shared_ptr< DEC_Knowledge_Urban >& knowledge );
     //@}

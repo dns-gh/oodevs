@@ -728,7 +728,7 @@ DEC_BlackBoard_CanContainKnowledgeUrbanPerception& DEC_KnowledgeBlackBoard_Agent
 // Name: DEC_KnowledgeBlackBoard_AgentPion::IsIdentified
 // Created: MGD 2009-11-26
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeBlackBoard_AgentPion::IsIdentified( const UrbanObjectWrapper& object ) const
+bool DEC_KnowledgeBlackBoard_AgentPion::IsIdentified( const MIL_UrbanObject_ABC& object ) const
 {
     assert( pKnowledgeUrbanPerceptionContainer_ );
 

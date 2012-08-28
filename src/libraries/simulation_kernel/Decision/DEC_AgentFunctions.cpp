@@ -50,7 +50,7 @@
 #include "Entities/Objects/ActivableCapacity.h"
 #include "Entities/Objects/BypassAttribute.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Specialisations/NBC/MIL_AgentTypePionNBC.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
@@ -954,7 +954,7 @@ bool DEC_AgentFunctions::IsInhabitantsConfined( const TER_Localisation* location
 // Name: DEC_AgentFunctions::UrbanBlockIsPopulated
 // Created: CCD 2012-01-11
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::UrbanBlockIsPopulated( const UrbanObjectWrapper* pUrbanBlock )
+bool DEC_AgentFunctions::UrbanBlockIsPopulated( const MIL_UrbanObject_ABC* pUrbanBlock )
 {
      assert( pUrbanBlock );
      if ( pUrbanBlock )

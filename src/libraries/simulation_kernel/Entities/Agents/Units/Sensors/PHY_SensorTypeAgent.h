@@ -29,7 +29,7 @@ class MIL_AgentPion;
 class MIL_Agent_ABC;
 class MIL_PopulationConcentration;
 class MIL_PopulationFlow;
-class UrbanObjectWrapper;
+class MIL_UrbanObject_ABC;
 class PHY_SensorType;
 
 // =============================================================================
@@ -49,7 +49,7 @@ public:
           double        GetMaxDistance            () const;
           double        GetAngle                  () const;
     virtual double      GetFactor                 ( const PHY_Volume& volume ) const;
-          double        GetUrbanBlockFactor( const UrbanObjectWrapper& target ) const;
+          double        GetUrbanBlockFactor( const MIL_UrbanObject_ABC& target ) const;
           bool            CanScan                   () const;
           bool            CanDetectFirer            ( double distance ) const;
     const PHY_SensorType& GetType                   () const;

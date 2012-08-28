@@ -22,7 +22,7 @@ class MIL_AgentPion;
 class MIL_Agent_ABC;
 class PHY_DotationCategory;
 class TER_Localisation;
-class UrbanObjectWrapper;
+class MIL_UrbanObject_ABC;
 class DEC_Gen_Object;
 
 // =============================================================================
@@ -63,7 +63,7 @@ public:
     int Construct( MIL_Object_ABC* pObject, boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge, bool instantaneous );
     int ResumeWork( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
     int ResumeWork( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge, bool valorizeIt );
-    int ResumeWork( UrbanObjectWrapper* pUrbanBlock );
+    int ResumeWork( MIL_UrbanObject_ABC* pUrbanBlock );
     int Destroy( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
     int Mine( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
     int Demine( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );

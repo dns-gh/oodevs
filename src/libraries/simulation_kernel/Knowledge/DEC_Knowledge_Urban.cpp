@@ -15,7 +15,7 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 #include "Knowledge/DEC_Knowledge_UrbanPerception.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "protocol/ClientSenders.h"
@@ -28,8 +28,8 @@ MIL_IDManager DEC_Knowledge_Urban::idManager_;
 // Name: DEC_Knowledge_Urban constructor
 // Created: MGD 2009-11-26
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Urban::DEC_Knowledge_Urban( const MIL_Army_ABC& army, const UrbanObjectWrapper& wrapper )
-    : DEC_Knowledge_Object( army, const_cast< UrbanObjectWrapper& >( wrapper ), false )
+DEC_Knowledge_Urban::DEC_Knowledge_Urban( const MIL_Army_ABC& army, const MIL_UrbanObject_ABC& wrapper )
+    : DEC_Knowledge_Object( army, const_cast< MIL_UrbanObject_ABC& >( wrapper ), false )
     , armyId_                 ( army.GetID() )
     , objectId_               ( wrapper.GetID() )
     , rProgressPercent_       ( 0. )
@@ -133,14 +133,14 @@ void DEC_Knowledge_Urban::Update( const DEC_Knowledge_UrbanPerception& perceptio
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Urban::ComputeProgress( const MIL_Agent_ABC& agent )
 {
-    UrbanObjectWrapper* object = 0;
+    MIL_UrbanObject_ABC* object = 0;
     if( MIL_AgentServer::IsInitialized() )
-        object = static_cast< UrbanObjectWrapper* >( MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( objectId_ ) );
+        object = static_cast< MIL_UrbanObject_ABC* >( MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( objectId_ ) );
     float complexity = object ? object->ComputeComplexity() : 0; // $$$$ ALGO TEMPORAIRE
     float progress = 0.f;
     if( complexity != 0.f )
         progress = 10 / complexity;// $$$$ @TODO MGD Add true physical configuration in ADN
-    const UrbanObjectWrapper* urbanBlock = agent.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
+    const MIL_UrbanObject_ABC* urbanBlock = agent.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
     float maxRecce = ( urbanBlock && object == urbanBlock ) ? 1.0f : 0.25f;
     maxRecce = std::max( maxRecce, rProgressPercent_ );
     SetProgress( std::min( std::max( rProgressPercent_ + progress, rProgressPercent_ + 0.001f ), maxRecce ) );

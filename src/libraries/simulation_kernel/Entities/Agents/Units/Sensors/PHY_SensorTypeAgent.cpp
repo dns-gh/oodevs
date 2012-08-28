@@ -26,7 +26,7 @@
 #include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "meteo/PHY_Lighting.h"
@@ -479,14 +479,14 @@ bool PHY_SensorTypeAgent::ComputeUrbanExtinction( const MT_Vector2D& vSource, co
 {
     bool bIsAroundBU = false;
 
-    std::vector< const UrbanObjectWrapper* > list;
+    std::vector< const MIL_UrbanObject_ABC* > list;
     MIL_AgentServer::GetWorkspace().GetUrbanCache().GetUrbanBlocksWithinSegment( vSource, vTarget, list );
 
     if( !list.empty() )
     {
-        for( std::vector< const UrbanObjectWrapper* >::const_iterator it = list.begin(); it != list.end() && rVisionNRJ > 0; it++ )
+        for( std::vector< const MIL_UrbanObject_ABC* >::const_iterator it = list.begin(); it != list.end() && rVisionNRJ > 0; it++ )
         {
-            const UrbanObjectWrapper& object = **it;
+            const MIL_UrbanObject_ABC& object = **it;
             if( !object.HasArchitecture() )
                 continue;
             const PHY_MaterialCompositionType* materialCompositionType = PHY_MaterialCompositionType::Find( object.GetMaterial() );
@@ -774,7 +774,7 @@ double PHY_SensorTypeAgent::GetFactor( const PHY_Volume& volume ) const
 // Name: PHY_SensorTypeAgent::GetUrbanFactor
 // Created: SLG 2010-04-30
 // -----------------------------------------------------------------------------
-double PHY_SensorTypeAgent::GetUrbanBlockFactor( const UrbanObjectWrapper& block ) const
+double PHY_SensorTypeAgent::GetUrbanBlockFactor( const MIL_UrbanObject_ABC& block ) const
 {
     const std::string material = block.GetMaterial();
     if( !material.empty() )

@@ -26,7 +26,7 @@
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
 #include "Entities/Agents/Units/Sensors/PHY_Sensor.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 #include "Entities/Objects/StructuralCapacity.h"
 #include "MT_Tools/MT_Logger.h"
 #include <core/Facade.h>
@@ -89,7 +89,7 @@ namespace
 {
     void UrbanObjectApplyDirectFire( const MIL_Agent_ABC& target, const PHY_DotationCategory& category, bool missed )
     {
-        const UrbanObjectWrapper* urbanObject = target.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
+        const MIL_UrbanObject_ABC* urbanObject = target.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
         if( urbanObject )
         {
             urbanObject->ApplyDirectFire();

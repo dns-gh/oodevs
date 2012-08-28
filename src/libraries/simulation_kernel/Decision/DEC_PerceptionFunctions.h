@@ -13,7 +13,7 @@
 #define __DEC_PerceptionFunctions_h_
 
 class DEC_Decision_ABC;
-class UrbanObjectWrapper;
+class MIL_UrbanObject_ABC;
 class MIL_Agent_ABC;
 class TER_Localisation;
 class MT_Vector2D;
@@ -43,7 +43,7 @@ public:
     static void DisableObjectRecognitionLocalisation( MIL_Agent_ABC& callerAgent, int id );
     static int EnableRecognitionLocalisation( MIL_Agent_ABC& callerAgent, const TER_Localisation* pLocalisation );
     static int EnableRecognitionLocalisation( MIL_Agent_ABC& callerAgent, const TER_Localisation* pLocalisation, float rGrowthSpeed );
-    static int EnableRecognitionUrbanBlock( MIL_Agent_ABC& callerAgent, UrbanObjectWrapper* pUrbanBlock );
+    static int EnableRecognitionUrbanBlock( MIL_Agent_ABC& callerAgent, MIL_UrbanObject_ABC* pUrbanBlock );
     static void DisableRecognitionLocalisation( MIL_Agent_ABC& callerAgent, int id );
     static void DisableRecognitionUrbanBlock( MIL_Agent_ABC& callerAgent, int id );
     static int EnableRecognitionPoint( DEC_Decision_ABC& callerAgent, MT_Vector2D* pCenter, double rSize, double rGrowthSpeed );

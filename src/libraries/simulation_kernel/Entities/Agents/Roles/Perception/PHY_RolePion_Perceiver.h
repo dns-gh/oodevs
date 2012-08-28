@@ -19,6 +19,7 @@
 #include "simulation_kernel/TransportChangeNotificationHandler_ABC.h"
 #include "simulation_kernel/LoadingChangeNotificationHandler_ABC.h"
 
+class MIL_UrbanObject_ABC;
 class PHY_Perception_ABC;
 class PHY_PerceptionView;
 class PHY_PerceptionCoupDeSonde;
@@ -98,7 +99,7 @@ public:
     virtual bool NotifyPerception( MIL_PopulationConcentration& concentration, const PHY_PerceptionLevel& level );
     virtual bool NotifyPerception( MIL_PopulationFlow& flow, const PHY_PerceptionLevel& level, const T_PointVector& shape );
     virtual void NotifyPerception( const MIL_Effect_IndirectFire& flyingShell ) const;
-    virtual void NotifyPerceptionUrban( const UrbanObjectWrapper& block, const PHY_PerceptionLevel& level ) const;
+    virtual void NotifyPerceptionUrban( const MIL_UrbanObject_ABC& block, const PHY_PerceptionLevel& level ) const;
     //@}
 
     //! @name Operations
@@ -143,7 +144,7 @@ public:
     virtual void  DisableRecoPoint               ( int );
     virtual int   EnableRecoLocalisation         ( const TER_Localisation& localisation, float rGrowthSpeed, DEC_Decision_ABC& callerAgent );
     virtual int   EnableRecoLocalisation         ( const TER_Localisation& localisation, DEC_Decision_ABC& callerAgent );
-    virtual int   EnableRecoUrbanBlock           ( UrbanObjectWrapper* pUrbanBlock );
+    virtual int   EnableRecoUrbanBlock           ( MIL_UrbanObject_ABC* pUrbanBlock );
     virtual void  DisableRecoUrbanBlock          ( int );
     virtual int   EnableControlLocalisation      ( const TER_Localisation& localisation, DEC_Decision_ABC& callerAgent );
     virtual void  DisableRecoLocalisation        ( int );
@@ -191,7 +192,7 @@ public:
     virtual bool IsKnown( const MIL_Object_ABC& object ) const;
     virtual bool IsIdentified( const MIL_Object_ABC& object ) const;
     virtual bool IsIdentified( const MIL_PopulationConcentration& concentration ) const;
-    virtual bool IsIdentified( const UrbanObjectWrapper& object ) const;
+    virtual bool IsIdentified( const MIL_UrbanObject_ABC& object ) const;
     virtual bool IsFireObserver() const;
     //@}
 

@@ -43,11 +43,6 @@ BOOST_FIXTURE_TEST_CASE( PkComputerUrbanProtectionTest, TestPK )
         "   </physical>"
         "</urban-object>" );
 
-    MockAgent firer;
-    xisModel >> xml::start( "urban-object" );
-    std::auto_ptr< MIL_UrbanObject > urbanBlock;
-    urbanBlock.reset( new MIL_UrbanObject( xisModel ) );
-    xisModel >> xml::end;
     MIL_ObjectLoader loader;
     {
         xml::xistringstream xis(
@@ -56,14 +51,18 @@ BOOST_FIXTURE_TEST_CASE( PkComputerUrbanProtectionTest, TestPK )
             "</objects>" );
         BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
     }
-    std::auto_ptr< MIL_Object_ABC > pObject( loader.CreateUrbanObject( *urbanBlock ) );
+    MockAgent firer;
+    xisModel >> xml::start( "urban-object" );
+    std::auto_ptr< MIL_UrbanObject_ABC > urbanBlock;
+    urbanBlock.reset( loader.CreateUrbanObject( xisModel, 0 ) );
+    xisModel >> xml::end;
     PHY_RolePion_UrbanLocation* urbanRole = new PHY_RolePion_UrbanLocation( firer );
 
-    urbanRole->NotifyMovingInsideObject( *pObject );
+    urbanRole->NotifyMovingInsideObject( *urbanBlock );
     firer.RegisterRole< PHY_RolePion_UrbanLocation >( *urbanRole );
 
     BOOST_CHECK_CLOSE( 0.48, urbanRole->ComputeUrbanProtection( *pCategory ), 1. );
 
-    pObject.reset();
+    urbanBlock.reset();
     TER_World::DestroyWorld();
 }

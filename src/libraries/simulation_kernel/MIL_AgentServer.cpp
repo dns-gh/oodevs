@@ -79,7 +79,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     // TODO tester les checkpoints
     if( config_.HasCheckpoint() )
     {
-        pEntityManager_->LoadUrbanModel( config_, true ); // TODO a supprimer quand les urbanobjectwrapper seront virés
+        //pEntityManager_->LoadUrbanModel( config_, true ); // TODO a supprimer quand les urbanobjectwrapper seront virés
         MIL_CheckPointManager::LoadCheckPoint( config_ );
         // TODO créer le quadtree, et associer les villes a l'urbancache
         SendControlInformation();
@@ -92,7 +92,6 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
         pCheckPointManager_ = new MIL_CheckPointManager( config_ );
         pEntityManager_->ReadODB( config_ );
         pEntityManager_->LoadUrbanModel( config_ );
-
         pEntityManager_->Finalize();
         Resume( nextPause_ );
     }

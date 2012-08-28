@@ -21,7 +21,7 @@
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Effects/MIL_Effect_Explosion.h"
 #include "Entities/Effects/MIL_EffectManager.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 #include "Entities/Objects/FireForbiddenCapacity.h"
 #include "Entities/Objects/InfrastructureCapacity.h"
 #include "Entities/Objects/StructuralCapacity.h"
@@ -144,13 +144,13 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
 
         if( !allTargets.empty() )
         {
-            std::vector< const UrbanObjectWrapper* > urbanList;
+            std::vector< const MIL_UrbanObject_ABC* > urbanList;
             if( MIL_AgentServer::IsInitialized() )
                 MIL_AgentServer::GetWorkspace().GetUrbanCache().GetListWithinCircle( vTargetPosition, static_cast< float >( rInterventionTypeFired * rDispersionX_ ), urbanList );
             for( TER_Agent_ABC::CIT_AgentPtrVector itAllTarget = allTargets.begin(); itAllTarget != allTargets.end(); ++itAllTarget )
             {
                 MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **itAllTarget ).GetAgent();
-                if( UrbanObjectWrapper* wrapper = const_cast< UrbanObjectWrapper* >( target.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock() ) )
+                if( MIL_UrbanObject_ABC* wrapper = const_cast< MIL_UrbanObject_ABC* >( target.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock() ) )
                     if( std::find( targets.begin(), targets.end(), *itAllTarget ) == targets.end() || std::find( urbanList.begin(), urbanList.end(), wrapper ) != urbanList.end() )
                         targets.push_back( *itAllTarget );
             }
@@ -178,7 +178,7 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
         for( std::vector< TER_Object_ABC* >::iterator it = objects.begin(); it != objects.end(); ++it )
         {
             MIL_Object_ABC& obj = *static_cast< MIL_Object_ABC* >( *it );
-            UrbanObjectWrapper* wrapper = dynamic_cast< UrbanObjectWrapper* >( &obj );
+            MIL_UrbanObject_ABC* wrapper = dynamic_cast< MIL_UrbanObject_ABC* >( &obj );
             float state = 0;
             if( wrapper )
                if( StructuralCapacity* structural = wrapper->Retrieve< StructuralCapacity>() )

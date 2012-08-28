@@ -12,7 +12,7 @@
 #include "DEC_KnowledgeSource_ABC.h"
 #include "DEC_Knowledge_UrbanPerception.h"
 #include "Checkpoints/SerializationTools.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 #include "MT_Tools/MT_ScipioException.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_BlackBoard_CanContainKnowledgeUrbanPerception )
@@ -58,7 +58,7 @@ void DEC_BlackBoard_CanContainKnowledgeUrbanPerception::save( MIL_CheckPointOutA
 // Name: DEC_BlackBoard_CanContainKnowledgeUrbanPerception::CreateKnowledgeUrbanPerception
 // Created: MGD 2009-12-07
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_UrbanPerception > DEC_BlackBoard_CanContainKnowledgeUrbanPerception::CreateKnowledgeUrbanPerception( const MIL_Agent_ABC& agentPerceiving, const UrbanObjectWrapper& objectPerceived )
+boost::shared_ptr< DEC_Knowledge_UrbanPerception > DEC_BlackBoard_CanContainKnowledgeUrbanPerception::CreateKnowledgeUrbanPerception( const MIL_Agent_ABC& agentPerceiving, const MIL_UrbanObject_ABC& objectPerceived )
 {
     boost::shared_ptr< DEC_Knowledge_UrbanPerception > knowledge ( new DEC_Knowledge_UrbanPerception( agentPerceiving, objectPerceived.GetID() ) );
     if( ! knowledgeUrbanPerceptionMap_.insert( std::make_pair( objectPerceived.GetID(), knowledge ) ).second )
@@ -81,7 +81,7 @@ void DEC_BlackBoard_CanContainKnowledgeUrbanPerception::DestroyKnowledgeUrbanPer
 // Name: DEC_BlackBoard_CanContainKnowledgeUrbanPerception::GetKnowledgesUrbanPerception
 // Created: MGD 2009-12-07
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_UrbanPerception > DEC_BlackBoard_CanContainKnowledgeUrbanPerception::GetKnowledgeUrbanPerception( const UrbanObjectWrapper& associatedUrban ) const
+boost::shared_ptr< DEC_Knowledge_UrbanPerception > DEC_BlackBoard_CanContainKnowledgeUrbanPerception::GetKnowledgeUrbanPerception( const MIL_UrbanObject_ABC& associatedUrban ) const
 {
     CIT_KnowledgeUrbanPerceptionMap itKnowledge = knowledgeUrbanPerceptionMap_.find( associatedUrban.GetID() );
     if( itKnowledge != knowledgeUrbanPerceptionMap_.end() )

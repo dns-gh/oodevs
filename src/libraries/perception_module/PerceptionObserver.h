@@ -40,7 +40,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyPerceptionUrban( const UrbanObjectWrapper* urbanBlock, const PerceptionLevel& level );
+    virtual void NotifyPerceptionUrban( const MIL_UrbanObject_ABC* urbanBlock, const PerceptionLevel& level );
     virtual void NotifyPerception( const wrapper::View& agent, const PerceptionLevel& level );
     virtual void NotifyPerception( const wrapper::View& agent, const PerceptionLevel& level, bool perceptionRecorded );
     virtual void NotifyPerception( const MIL_Object_ABC* object, const PerceptionLevel& level );

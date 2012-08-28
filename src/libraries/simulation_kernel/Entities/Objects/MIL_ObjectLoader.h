@@ -59,7 +59,7 @@ public:
     MIL_Object_ABC* CreateObject( const std::string& name, const std::string& type, MIL_Army_ABC* army, const TER_Localisation& location,
                                   bool reserved, unsigned int externalIdentifier, unsigned int forcedId, double density ) const;
     MIL_Object_ABC* CreateObject( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC* army ) const;
-    MIL_Object_ABC* CreateUrbanObject( const MIL_UrbanObject_ABC& object ) const;
+    MIL_UrbanObject_ABC* CreateUrbanObject( xml::xistream& xis, MIL_UrbanObject_ABC* parent ) const;
     //@}
 
     //! @name Accessors

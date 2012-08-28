@@ -212,7 +212,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_StartReprendreTravauxObjet" ] =
         boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Object >, bool ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionResumeWorkObject, boost::shared_ptr< DEC_Knowledge_Object>, bool >, boost::ref( GetPion() ), _1, _2 ) );
     brain[ "DEC_ReparerBlocUrbain" ] =
-        boost::function< unsigned int( UrbanObjectWrapper* ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionResumeWorkUrbanBlock, UrbanObjectWrapper* >, boost::ref( GetPion() ), _1 ) );
+        boost::function< unsigned int( MIL_UrbanObject_ABC* ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionResumeWorkUrbanBlock, MIL_UrbanObject_ABC* >, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC__StartAnimerObjet" ] =
         boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionAnimateObject, boost::shared_ptr< DEC_Knowledge_Object > >, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_StartDistributionObjet" ] =
@@ -499,14 +499,14 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_Connaissances_BlocUrbain" ] =
         boost::function< void( const directia::tools::binders::ScriptRef& ) >( boost::bind( &DEC_KnowledgeFunctions::GetUrbanBlock, boost::ref( brain ), boost::ref( GetPion() ), initQueryFunction, _1 ) );
     brain[ "DEC_Connaissances_BlocUrbainPourPosition" ] =
-        boost::function< const UrbanObjectWrapper*( boost::shared_ptr< MT_Vector2D > ) >( boost::bind( &DEC_KnowledgeFunctions::GetUrbanBlockForPosition, boost::ref( GetPion() ), _1 ) );
+        boost::function< const MIL_UrbanObject_ABC*( boost::shared_ptr< MT_Vector2D > ) >( boost::bind( &DEC_KnowledgeFunctions::GetUrbanBlockForPosition, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_Connaissances_BlocUrbainDansZone" ] =
         boost::function< T_UrbanObjectVector( TER_Localisation* )>( boost::bind( &DEC_KnowledgeFunctions::GetUrbanBlockInZone, boost::ref( GetPion() ), _1 ) );
-    brain[ "DEC_ConnaissanceUrbanBlock_NiveauDeReconnaissanceCourant" ] = boost::function< float( UrbanObjectWrapper* )>( boost::bind( &DEC_UrbanObjectFunctions::GetCurrentRecceProgress, boost::ref( GetPion() ), _1 ) );
+    brain[ "DEC_ConnaissanceUrbanBlock_NiveauDeReconnaissanceCourant" ] = boost::function< float( MIL_UrbanObject_ABC* )>( boost::bind( &DEC_UrbanObjectFunctions::GetCurrentRecceProgress, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_ConnaissanceBlocUrbain_Traficabilite" ] =
-        boost::function< double( UrbanObjectWrapper* ) >( boost::bind( &DEC_UrbanObjectFunctions::GetPathfindCost, boost::cref( GetPion() ), _1 ) );
+        boost::function< double( MIL_UrbanObject_ABC* ) >( boost::bind( &DEC_UrbanObjectFunctions::GetPathfindCost, boost::cref( GetPion() ), _1 ) );
     brain[ "DEC_DetruireBlocUrbain" ] =
-        boost::function< void( UrbanObjectWrapper*, const PHY_DotationCategory* )>( boost::bind( &DEC_UrbanObjectFunctions::DestroyUrbanBlock, boost::ref( GetPion() ), _1, _2 ) );
+        boost::function< void( MIL_UrbanObject_ABC*, const PHY_DotationCategory* )>( boost::bind( &DEC_UrbanObjectFunctions::DestroyUrbanBlock, boost::ref( GetPion() ), _1, _2 ) );
 
     // Global knowledge
     brain[ "DEC_Connaissances_UnitesDetecteesDansFuseau" ] = boost::bind( &DEC_KnowledgeFunctions::GetDetectedAgentsInFuseau, boost::ref( GetPion() ) );
@@ -529,7 +529,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_Connaissances_UnitesEnnemiesVivantesDansCercle" ] =
         boost::function< T_ConstKnowledgeAgentVector( const MT_Vector2D*, float ) >( boost::bind( &DEC_KnowledgeFunctions::GetLivingEnemiesInCircle, boost::ref( GetPion() ), _1, _2 ) );
     brain[ "DEC_Connaissances_UnitesEnnemiesVivantesDansBlocUrbain" ] =
-        boost::function< T_ConstKnowledgeAgentVector( UrbanObjectWrapper* ) >( boost::bind( &DEC_UrbanObjectFunctions::GetLivingEnemiesInBU, boost::ref( GetPion() ), _1 ) );
+        boost::function< T_ConstKnowledgeAgentVector( MIL_UrbanObject_ABC* ) >( boost::bind( &DEC_UrbanObjectFunctions::GetLivingEnemiesInBU, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_Connaissances_RefugiesAProximite" ] =
         boost::function< T_ConstKnowledgeAgentVector( double ) > ( boost::bind( &DEC_KnowledgeFunctions::GetNearbyRefugees, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_Connaissances_TerroristsAProximite" ] =

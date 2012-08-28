@@ -11,7 +11,6 @@
 #include "simulation_kernel/Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "simulation_kernel/Knowledge/DEC_Knowledge_UrbanPerception.h"
 #include "simulation_kernel/Entities/Objects/MIL_ObjectLoader.h"
-#include "simulation_kernel/Entities/Objects/UrbanObjectWrapper.h"
 #include "simulation_kernel/Urban/MIL_UrbanObject.h"
 #include "Fixture.h"
 #include "MockMIL_Time_ABC.h"
@@ -41,26 +40,25 @@ namespace
 BOOST_AUTO_TEST_CASE( Knowledge_UrbanPerceptionTest_Update )
 {
     WorldInitialize( "worldwide/Paris" );
-    MIL_ObjectLoader loader;
     {
-        xml::xistringstream xis( "<objects>"
-            "    <object type='urban block'/>"
-            "</objects>" );
-        BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
-    }
-    MIL_EffectManager effectManager;
-    FixturePion pion( effectManager );
-    flux >> xml::start( "urban-object" );
-    const MIL_UrbanObject_ABC* object = new MIL_UrbanObject( flux );
-    UrbanObjectWrapper* pObject = static_cast< UrbanObjectWrapper* >( loader.CreateUrbanObject( *object ) );
-    flux >> xml::end;
+        MIL_ObjectLoader loader;
+        {
+            xml::xistringstream xis( "<objects>"
+                "    <object type='urban block'/>"
+                "</objects>" );
+            BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
+        }
+        MIL_EffectManager effectManager;
+        FixturePion pion( effectManager );
+        flux >> xml::start( "urban-object" );
+        std::auto_ptr< MIL_UrbanObject_ABC > pObject( loader.CreateUrbanObject( flux, 0 ) );
+        flux >> xml::end;
 
-    {
-        MockMIL_Time_ABC time;
-        MOCK_EXPECT( time.GetCurrentTick ).returns( 1u );
-        DEC_Knowledge_UrbanPerception kn( *pion.pPion_, pObject->GetID() );
+        {
+            MockMIL_Time_ABC time;
+            MOCK_EXPECT( time.GetCurrentTick ).returns( 1u );
+            DEC_Knowledge_UrbanPerception kn( *pion.pPion_, pObject->GetID() );
+        }
     }
-    delete object;
-    delete pObject;
     TER_World::DestroyWorld();
 }

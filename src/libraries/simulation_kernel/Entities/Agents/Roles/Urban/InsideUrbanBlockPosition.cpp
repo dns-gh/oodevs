@@ -15,7 +15,7 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Objects/MaterialAttribute.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 #include "Tools/MIL_Geometry.h"
 #include "MT_Tools/MT_Ellipse.h"
 #include "Urban/PHY_MaterialCompositionType.h"
@@ -33,7 +33,7 @@ using namespace urbanLocation;
 // Name: InsideUrbanBlockPosition constructor
 // Created: SLG 2010-04-27
 // -----------------------------------------------------------------------------
-InsideUrbanBlockPosition::InsideUrbanBlockPosition( const UrbanObjectWrapper& urbanObject )
+InsideUrbanBlockPosition::InsideUrbanBlockPosition( const MIL_UrbanObject_ABC& urbanObject )
     : urbanObject_( urbanObject )
 {
     // NOTHING

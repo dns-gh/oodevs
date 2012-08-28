@@ -22,7 +22,7 @@
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"
 #include "Entities/Populations/DEC_PopulationDecision.h"
@@ -344,7 +344,7 @@ bool DEC_PopulationFunctions::HasReachedDestination( const MIL_Population& calle
 // Name: DEC_PopulationFunctions::HasReachedBlockBorder
 // Created: DDA 2011-04-04
 // -----------------------------------------------------------------------------
-bool DEC_PopulationFunctions::HasReachedBlockBorder( const MIL_Population& callerPopulation, const UrbanObjectWrapper* pUrbanKnowledge )
+bool DEC_PopulationFunctions::HasReachedBlockBorder( const MIL_Population& callerPopulation, const MIL_UrbanObject_ABC* pUrbanKnowledge )
 {
     if( !pUrbanKnowledge )
         throw std::runtime_error( __FUNCTION__ ": invalid parameter." );

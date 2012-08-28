@@ -21,7 +21,7 @@
 #include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Automates/MIL_Automate.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Network/NET_AsnException.h"
 #include "Network/NET_Publisher_ABC.h"
@@ -35,7 +35,7 @@
 #include <boost/serialization/vector.hpp>
 #include <boost/foreach.hpp>
 #include "Tools/MIL_Geometry.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Population )
 
@@ -1270,7 +1270,7 @@ void MIL_Population::ChangeComposition( unsigned int healthy, unsigned int wound
 // Name: MIL_Population::ComputeUrbanBlocDestruction
 // Created: MMC 2011-03-31
 // -----------------------------------------------------------------------------
-double MIL_Population::ComputeUrbanBlocDestruction( UrbanObjectWrapper* pUrbanObjet )
+double MIL_Population::ComputeUrbanBlocDestruction( MIL_UrbanObject_ABC* pUrbanObjet )
 {
     double densityRef = pType_->GetUrbanDestructionDensity( GetAttitude() );
     double timeRef = pType_->GetUrbanDestructionTime( GetAttitude() ) ;
@@ -1652,7 +1652,7 @@ bool MIL_Population::HasReachedDestination( const MT_Vector2D& destination ) con
 // Name: MIL_Population::HasReachedBlockBorder
 // Created: DDA 2011-04-04
 // -----------------------------------------------------------------------------
-bool MIL_Population::HasReachedBlockBorder( const UrbanObjectWrapper* pUrbanKnowledge ) const
+bool MIL_Population::HasReachedBlockBorder( const MIL_UrbanObject_ABC* pUrbanKnowledge ) const
 {
     const TER_Localisation& localisation = pUrbanKnowledge->GetLocalisation();
     for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
