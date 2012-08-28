@@ -69,6 +69,7 @@ UrbanListView::UrbanListView( QWidget* pParent, kernel::Controllers& controllers
     viewport()->setAcceptDrops( true );
     controllers_.Register( *this );
     connect( timer_, SIGNAL( timeout() ), this, SLOT( Update() ) );
+    connect( this, SIGNAL( itemRenamed( Q3ListViewItem*, int, const QString& ) ), &modelBuilder_, SLOT( OnRename( Q3ListViewItem*, int, const QString& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -119,6 +120,7 @@ void UrbanListView::NotifyCreated( const kernel::UrbanObject_ABC& object )
     if( item )
     {
         item->SetNamed( static_cast< const kernel::Entity_ABC& >( object ) );
+        item->setRenameEnabled( 0, true );
         UpdatePixmap( object, item );
         item->SetToolTip( QString( "%1 [%L2]" ).arg( object.GetName() ).arg( object.GetId() ) );
         if( superior )
@@ -529,4 +531,23 @@ void UrbanListView::CreateFilters( gui::SearchListView_ABC& searchListView )
     searchListView.AddResolverFilter< kernel::MaterialCompositionType >( tr( "Material" ), staticModel_.objectTypes_, boost::bind( &::MaterialExtractor, _1, _2, _3 ), &kernel::MaterialCompositionType::GetName );
     searchListView.AddResolverFilter< kernel::RoofShapeType >( tr( "RoofShape" ), staticModel_.objectTypes_, boost::bind( &::RoofShapeExtractor, _1, _2, _3 ), &kernel::RoofShapeType::GetName );
     searchListView.AddNumericFilter< double, gui::RichDoubleSpinBox >( tr( "Area" ), boost::bind( &::AreaExtractor, _1, _2 ), 0, 10000000 ); // $$$$ ABR 2012-06-20: 10 million seems enought for urban blocs area...
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanListView::NotifyContextMenu
+// Created: LGY 2012-08-28
+// -----------------------------------------------------------------------------
+void UrbanListView::NotifyContextMenu( const kernel::UrbanObject_ABC& element, kernel::ContextMenu& menu )
+{
+    menu.InsertItem( "Command", tr( "Rename" ), this, SLOT( OnRename() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanListView::OnRename
+// Created: LGY 2012-08-28
+// -----------------------------------------------------------------------------
+void UrbanListView::OnRename()
+{
+    if( selectedItem() )
+        selectedItem()->startRename( 0 );
 }

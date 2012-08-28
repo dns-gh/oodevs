@@ -2742,10 +2742,6 @@ Ces données ne peuvent pas être projetées.</translation>
 <context>
     <name>UrbanListView</name>
     <message>
-        <source>Urban</source>
-        <translation>Zone urbaine</translation>
-    </message>
-    <message>
         <source>Create city</source>
         <translation>Créer une ville</translation>
     </message>
@@ -2776,6 +2772,14 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Resource network</source>
         <translation>Réseaux de ressource</translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translation>Renommer</translation>
+    </message>
+    <message>
+        <source>Urban</source>
+        <translation>Zone urbaine</translation>
     </message>
 </context>
 <context>

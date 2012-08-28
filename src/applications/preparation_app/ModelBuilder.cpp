@@ -31,6 +31,7 @@
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/UrbanObject.h"
 #include "tools/GeneralConfig.h"
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
@@ -76,6 +77,7 @@ ModelBuilder::ModelBuilder( Controllers& controllers, Model& model )
     , selectedFormation_( controllers )
     , selectedGhost_( controllers )
     , toDelete_( controllers )
+    , selectedUrbanObject_( controllers )
     , confirmation_( new ConfirmationBox( tr( "Confirmation" ), boost::bind( &ModelBuilder::OnConfirmDeletion, this, _1 ) ) )
 {
     controllers_.Register( *this );
@@ -358,6 +360,7 @@ void ModelBuilder::ClearSelection()
     selectedAutomat_ = 0;
     selectedFormation_ = 0;
     selectedGhost_ = 0;
+    selectedUrbanObject_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -420,6 +423,16 @@ void ModelBuilder::Select( const Formation_ABC& element )
 
 // -----------------------------------------------------------------------------
 // Name: ModelBuilder::Select
+// Created: LGY 2012-08-28
+// -----------------------------------------------------------------------------
+void ModelBuilder::Select( const kernel::UrbanObject_ABC& element )
+{
+    ClearSelection();
+    selectedUrbanObject_ = &element;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelBuilder::Select
 // Created: AGE 2006-10-10
 // -----------------------------------------------------------------------------
 void ModelBuilder::Select( const Automat_ABC& element )
@@ -466,4 +479,6 @@ void ModelBuilder::OnRename( Q3ListViewItem*, int, const QString& text )
         Rename< KnowledgeGroup >( selectedGroup_, text );
     else if( selectedGhost_ )
         Rename< Ghost >( selectedGhost_, text );
+    else if( selectedUrbanObject_ )
+        Rename< kernel::UrbanObject >( selectedUrbanObject_, text );
 }

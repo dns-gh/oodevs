@@ -41,6 +41,7 @@ class UrbanModel;
 // =============================================================================
 class UrbanListView : public gui::EntityListView
                     , public tools::ElementObserver_ABC< kernel::UrbanObject_ABC >
+                    , public kernel::ContextMenuObserver_ABC< kernel::UrbanObject_ABC >
 {
     Q_OBJECT
 
@@ -60,6 +61,7 @@ protected:
     virtual void NotifyCreated( const kernel::UrbanObject_ABC& object );
     virtual void NotifyUpdated( const kernel::UrbanObject_ABC& object );
     virtual void NotifyDeleted( const kernel::UrbanObject_ABC& object );
+    virtual void NotifyContextMenu( const kernel::UrbanObject_ABC& element, kernel::ContextMenu& menu );
     virtual bool IsTypeRejected( const kernel::Entity_ABC& entity ) const;
     virtual void NotifyModeChanged( int newMode );
     virtual void OnContextMenuRequested( Q3ListViewItem* i, const QPoint& pos, int );
@@ -78,6 +80,7 @@ private slots:
     //@{
     void OnCreateCity();
     void Update();
+    void OnRename();
     //@}
 
 private:

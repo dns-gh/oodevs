@@ -2737,10 +2737,6 @@ This data can&apos;t be projected.</source>
 <context>
     <name>UrbanListView</name>
     <message>
-        <source>Urban</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Create city</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2770,6 +2766,14 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Resource network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Urban</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

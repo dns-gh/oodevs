@@ -87,6 +87,7 @@ public:
     virtual void ApplyTemplate( const UrbanTemplateTypePtr& urbanTemplate );
     virtual void UpdateTemplate( const ObjectTypes& objectTypes );
     virtual bool IsUpdatingTemplate() const;
+    void Rename( const QString& name );
     //@}
 
 private:
