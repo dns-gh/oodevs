@@ -77,7 +77,8 @@
             data="${src.dir}/tests/runtime_test" />
         <poney-test name="host_test" dir="${out.dir}/RelWithDebInfo"
             data="${src.dir}/tests/host_test" />
-        <poney-test name="web_test" dir="${out.dir}/RelWithDebInfo" data="" />
+        <poney-test name="web_test" dir="${out.dir}/RelWithDebInfo"
+            data="${src.dir}/tests/web_test" />
     </target>
 
     <target name="reports" description="generate reports">
