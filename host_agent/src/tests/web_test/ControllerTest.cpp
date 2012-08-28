@@ -104,9 +104,9 @@ namespace
         MOCK_METHOD( GetParameter, 1 );
         MOCK_METHOD( GetHeader, 1 );
         MOCK_METHOD( RegisterMime, 2 );
-        MOCK_METHOD( ParseMime, 0 );
-        MOCK_METHOD( ParseForm, 0 );
-        MOCK_METHOD( ParseJson, 0 );
+        MOCK_METHOD( ParseBodyAsMime, 0 );
+        MOCK_METHOD( ParseBodyAsForm, 0 );
+        MOCK_METHOD( ParseBodyAsJson, 0 );
         MOCK_METHOD( GetRemoteIp, 0 );
         MOCK_METHOD( GetSid, 0 );
     };
@@ -461,7 +461,7 @@ BOOST_FIXTURE_TEST_CASE( controller_upload_cache, Fixture )
     MOCK_EXPECT( request.RegisterMime ).once().with( "cache", boost::bind( &RegisterMime, boost::ref( handler ), _1 ) );
     const std::string dummy = "{\"dummy\":\"ymmud\"}";
     std::stringstream stream( dummy );
-    MOCK_EXPECT( request.ParseMime ).once().calls( boost::bind( boost::apply< void >(), boost::cref( handler ), boost::ref( stream ) ) );
+    MOCK_EXPECT( request.ParseBodyAsMime ).once().calls( boost::bind( boost::apply< void >(), boost::cref( handler ), boost::ref( stream ) ) );
     const std::string expected = "{\"dummy\":\"ymmud\"}";
     MOCK_EXPECT( agent.UploadCache ).once().with( defaultId, boost::ref( stream ) ).returns( FromJson( expected ) );
     ExpectReply( reply, web::OK, expected );

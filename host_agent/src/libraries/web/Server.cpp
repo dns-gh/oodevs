@@ -149,17 +149,17 @@ public:
         throw std::runtime_error( "unsupported action" );
     }
 
-    virtual void ParseMime()
+    virtual void ParseBodyAsMime()
     {
         throw std::runtime_error( "unsupported action" );
     }
 
-    virtual void ParseForm()
+    virtual void ParseBodyAsForm()
     {
         throw std::runtime_error( "unsupported action" );
     }
 
-    virtual Tree ParseJson()
+    virtual Tree ParseBodyAsJson()
     {
         throw std::runtime_error( "unsupported action" );
     }
@@ -223,10 +223,10 @@ void ReadBody( HttpServer::connection_ptr link, size_t left, AsyncStream& async,
     }
 }
 
-class MimeWebRequest : public WebRequest
+class BodyWebRequest : public WebRequest
 {
 public:
-    MimeWebRequest( Pool_ABC& pool, HttpServer& server, const HttpServer::request& request, HttpServer::connection_ptr link )
+    BodyWebRequest( Pool_ABC& pool, HttpServer& server, const HttpServer::request& request, HttpServer::connection_ptr link )
         : WebRequest( request )
         , pool_     ( pool )
         , link_     ( link )
@@ -239,7 +239,7 @@ public:
             size_ = boost::lexical_cast< size_t >( *opt );
     }
 
-    ~MimeWebRequest()
+    ~BodyWebRequest()
     {
         // NOTHING
     }
@@ -267,14 +267,14 @@ public:
         stream_.Read( handler );
     }
 
-    virtual void ParseMime()
+    virtual void ParseBodyAsMime()
     {
         ParseBody( boost::bind( &MimeReader::Parse, reader_, boost::ref( pool_ ), _1 ) );
     }
 
-    virtual void ParseForm()
+    virtual void ParseBodyAsForm()
     {
-        ParseBody( boost::bind( &MimeWebRequest::ParseFormParameters, this, _1 ) );
+        ParseBody( boost::bind( &BodyWebRequest::ParseFormParameters, this, _1 ) );
     }
 
     void ParseFormParameters( std::istream& stream )
@@ -286,10 +286,10 @@ public:
         form_ = ParseParameters( full.str() );
     }
 
-    virtual Tree ParseJson()
+    virtual Tree ParseBodyAsJson()
     {
         Tree dst;
-        ParseBody( boost::bind( &MimeWebRequest::ParseJsonStream, this, boost::ref( dst ), _1 ) );
+        ParseBody( boost::bind( &BodyWebRequest::ParseJsonStream, this, boost::ref( dst ), _1 ) );
         return dst;
     }
 
@@ -432,7 +432,7 @@ private:
 
     void Post( const HttpServer::request& request, HttpServer::connection_ptr link )
     {
-        MimeWebRequest req( async_.GetPool(), *server_, request, link );
+        BodyWebRequest req( async_.GetPool(), *server_, request, link );
         Reply rpy( link );
         return observer_.DoPost( rpy, req );
     }

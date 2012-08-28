@@ -805,7 +805,7 @@ void Controller::UploadCache( Reply_ABC& rpy, Request_ABC& request )
     LOG_INFO( log_ ) << "[web] /upload_cache id: " << node;
     boost::optional< Tree > reply;
     request.RegisterMime( "cache", boost::bind( &OnUploadCache, boost::ref( reply ), boost::ref( agent_ ), node, _1 ) );
-    request.ParseMime();
+    request.ParseBodyAsMime();
     if( reply == boost::none )
         return WriteHttpReply( rpy, NOT_FOUND );
     WriteHttpReply( rpy, *reply );
@@ -841,7 +841,7 @@ void Controller::UserIsAuthenticated( Reply_ABC& rpy, const Request_ABC& request
 // -----------------------------------------------------------------------------
 void Controller::UserLogin( Reply_ABC& rpy, Request_ABC& request )
 {
-    request.ParseForm();
+    request.ParseBodyAsForm();
     const std::string username = RequireParameter< std::string >( "username", request );
     const std::string password = RequireParameter< std::string >( "password", request );
     WriteHttpReply( rpy, users_.Login( username, password, GetSource( request ) ) );
@@ -863,7 +863,7 @@ void Controller::UserLogout( Reply_ABC& rpy, const Request_ABC& request )
 // -----------------------------------------------------------------------------
 void Controller::UserUpdateLogin( Reply_ABC& rpy, Request_ABC& request )
 {
-    request.ParseForm();
+    request.ParseBodyAsForm();
     const std::string username = RequireParameter< std::string >( "username", request );
     const std::string current  = RequireParameter< std::string >( "current" , request );
     const std::string password = RequireParameter< std::string >( "password", request );
@@ -919,7 +919,7 @@ bool ToBool( const std::string& value )
 // -----------------------------------------------------------------------------
 void Controller::CreateUser( Reply_ABC& rpy, Request_ABC& request )
 {
-    request.ParseForm();
+    request.ParseBodyAsForm();
     const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "node" );
     const std::string username = RequireParameter< std::string >( "username", request );
     const std::string name = RequireParameter< std::string >( "name", request );
