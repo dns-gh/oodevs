@@ -22,8 +22,13 @@
     return raw_ajax(url, data, success, error, "GET");
   };
 
-  pajax = function(url, data, success, error) {
-    return raw_ajax(url, data, success, error, "POST");
+  pajax = function(url, params, body, success, error) {
+    var suffix;
+    suffix = $.param(params);
+    if (suffix != null ? suffix.length : void 0) {
+      url = url + "?" + suffix;
+    }
+    return raw_ajax(url, JSON.stringify(body), success, error, "POST");
   };
 
   diff_models = function(prev, next) {
@@ -480,7 +485,7 @@
       toggle_input_error(bis, "Invalid", true);
       return;
     }
-    return pajax("/api/update_login", {
+    return pajax("/api/update_login", {}, {
       username: user.username,
       current: cur.val(),
       password: pwd.val()

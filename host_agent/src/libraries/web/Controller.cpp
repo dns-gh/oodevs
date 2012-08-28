@@ -207,6 +207,20 @@ T RequireParameter( const std::string& name, const Request_ABC& request )
 }
 
 // -----------------------------------------------------------------------------
+// Name: RequireParameter
+// Created: BAX 2012-08-27
+// -----------------------------------------------------------------------------
+template< typename T >
+T RequireParameter( const std::string& name, const Tree& src )
+{
+    T dst;
+    const bool found = TryRead( dst, src, name );
+    if( !found )
+        throw HttpException( BAD_REQUEST );
+    return dst;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Convert
 // Created: BAX 2012-07-19
 // -----------------------------------------------------------------------------
@@ -841,9 +855,9 @@ void Controller::UserIsAuthenticated( Reply_ABC& rpy, const Request_ABC& request
 // -----------------------------------------------------------------------------
 void Controller::UserLogin( Reply_ABC& rpy, Request_ABC& request )
 {
-    request.ParseBodyAsForm();
-    const std::string username = RequireParameter< std::string >( "username", request );
-    const std::string password = RequireParameter< std::string >( "password", request );
+    const Tree tree = request.ParseBodyAsJson();
+    const std::string username = RequireParameter< std::string >( "username", tree );
+    const std::string password = RequireParameter< std::string >( "password", tree );
     WriteHttpReply( rpy, users_.Login( username, password, GetSource( request ) ) );
 }
 
@@ -863,10 +877,10 @@ void Controller::UserLogout( Reply_ABC& rpy, const Request_ABC& request )
 // -----------------------------------------------------------------------------
 void Controller::UserUpdateLogin( Reply_ABC& rpy, Request_ABC& request )
 {
-    request.ParseBodyAsForm();
-    const std::string username = RequireParameter< std::string >( "username", request );
-    const std::string current  = RequireParameter< std::string >( "current" , request );
-    const std::string password = RequireParameter< std::string >( "password", request );
+    const Tree tree = request.ParseBodyAsJson();
+    const std::string username = RequireParameter< std::string >( "username", tree );
+    const std::string current  = RequireParameter< std::string >( "current" , tree );
+    const std::string password = RequireParameter< std::string >( "password", tree );
     if( password.empty() || username.empty() )
         return WriteHttpReply( rpy, BAD_REQUEST );
     WriteHttpReply( rpy, users_.UpdateLogin( username, current, password, GetSource( request ) ) );
@@ -919,13 +933,13 @@ bool ToBool( const std::string& value )
 // -----------------------------------------------------------------------------
 void Controller::CreateUser( Reply_ABC& rpy, Request_ABC& request )
 {
-    request.ParseBodyAsForm();
     const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "node" );
-    const std::string username = RequireParameter< std::string >( "username", request );
-    const std::string name = RequireParameter< std::string >( "name", request );
-    const std::string password = RequireParameter< std::string >( "password", request );
-    const std::string temporary = RequireParameter< std::string >( "temporary", request );
-    const UserType type = ConvertUserType( RequireParameter< std::string >( "type", request ) );
+    const Tree tree = request.ParseBodyAsJson();
+    const std::string username = RequireParameter< std::string >( "username", tree );
+    const std::string name = RequireParameter< std::string >( "name", tree );
+    const std::string password = RequireParameter< std::string >( "password", tree );
+    const std::string temporary = RequireParameter< std::string >( "temporary", tree );
+    const UserType type = ConvertUserType( RequireParameter< std::string >( "type", tree ) );
     if( type == USER_TYPE_COUNT )
         throw HttpException( BAD_REQUEST );
     if( secure_ )

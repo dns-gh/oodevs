@@ -59,6 +59,7 @@ validate_settings = (ui, add) ->
     return data
 
 scope = (model) ->
+    model = {} unless model
     if uuid?
         model.node = uuid
     return model
@@ -68,7 +69,7 @@ class UserItem extends Backbone.Model
 
     sync: (method, model, options) =>
         if method == "create"
-            return pajax "/api/create_user", scope( model.attributes ),
+            return pajax "/api/create_user", scope(), model.attributes,
                 options.success, options.error
         if method == "read"
             return ajax "/api/get_user", scope( id: model.id ),

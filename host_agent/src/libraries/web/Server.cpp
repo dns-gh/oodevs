@@ -154,11 +154,6 @@ public:
         throw std::runtime_error( "unsupported action" );
     }
 
-    virtual void ParseBodyAsForm()
-    {
-        throw std::runtime_error( "unsupported action" );
-    }
-
     virtual Tree ParseBodyAsJson()
     {
         throw std::runtime_error( "unsupported action" );
@@ -270,20 +265,6 @@ public:
     virtual void ParseBodyAsMime()
     {
         ParseBody( boost::bind( &MimeReader::Parse, reader_, boost::ref( pool_ ), _1 ) );
-    }
-
-    virtual void ParseBodyAsForm()
-    {
-        ParseBody( boost::bind( &BodyWebRequest::ParseFormParameters, this, _1 ) );
-    }
-
-    void ParseFormParameters( std::istream& stream )
-    {
-        std::stringstream full;
-        std::copy( std::istreambuf_iterator< char >( stream ),
-                   std::istreambuf_iterator< char >(),
-                   std::ostreambuf_iterator< char >( full ) );
-        form_ = ParseParameters( full.str() );
     }
 
     virtual Tree ParseBodyAsJson()

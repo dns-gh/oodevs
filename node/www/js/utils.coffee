@@ -23,8 +23,10 @@ raw_ajax = (url, data, success, error, type) ->
 ajax = (url, data, success, error) ->
     raw_ajax url, data, success, error, "GET"
 
-pajax = (url, data, success, error) ->
-    raw_ajax url, data, success, error, "POST"
+pajax = (url, params, body, success, error) ->
+    suffix = $.param params
+    url = url + "?" + suffix if suffix?.length
+    raw_ajax url,JSON.stringify(body), success, error, "POST"
 
 diff_models = (prev, next) ->
     not_found = []

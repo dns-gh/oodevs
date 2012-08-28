@@ -33,7 +33,7 @@ $("a.update_login").click ->
         toggle_input_error bis, "Invalid", true
         return
 
-    pajax "/api/update_login",
+    pajax "/api/update_login", {},
         username: user.username
         current:  cur.val()
         password: pwd.val()

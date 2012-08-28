@@ -25,8 +25,13 @@
     return raw_ajax(url, data, success, error, "GET");
   };
 
-  pajax = function(url, data, success, error) {
-    return raw_ajax(url, data, success, error, "POST");
+  pajax = function(url, params, body, success, error) {
+    var suffix;
+    suffix = $.param(params);
+    if (suffix != null ? suffix.length : void 0) {
+      url = url + "?" + suffix;
+    }
+    return raw_ajax(url, JSON.stringify(body), success, error, "POST");
   };
 
   diff_models = function(prev, next) {
@@ -523,6 +528,9 @@
   };
 
   scope = function(model) {
+    if (!model) {
+      model = {};
+    }
     if (typeof uuid !== "undefined" && uuid !== null) {
       model.node = uuid;
     }
@@ -542,7 +550,7 @@
 
     UserItem.prototype.sync = function(method, model, options) {
       if (method === "create") {
-        return pajax("/api/create_user", scope(model.attributes), options.success, options.error);
+        return pajax("/api/create_user", scope(), model.attributes, options.success, options.error);
       }
       if (method === "read") {
         return ajax("/api/get_user", scope({
