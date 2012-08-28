@@ -6,6 +6,6 @@ local result =
 }
 
 local t = initTaskKnowledge( result )
-taskKnowledge["agent.tasks.knowledges.MobilitySupport"] = t
+taskKnowledge["platoon.combat.support.engineer.tasks.knowledges.MobilitySupport"] = t
 
 return result

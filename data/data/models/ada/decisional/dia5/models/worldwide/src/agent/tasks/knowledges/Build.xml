@@ -10,7 +10,7 @@
                 </type>
             </argument>
             <argument name="params">
-                <description>Les param��tres de la t��che automate</description>
+                <description>The parameters of the company task.</description>
                 <type>
                     <list>
                         <class name="directia.core.Object"/>
