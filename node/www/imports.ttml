@@ -7,6 +7,7 @@
 <script src="js/handlebars-1.0.0.beta.6.js"></script>
 <script src="js/spin.js"></script>
 <script src="js/jquery.cookie.js"></script>
+<script src="js/json2.js"></script>
 [[ else ]]
 <script src="js/externals.js"></script>
 [[ end ]]

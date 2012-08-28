@@ -7,4 +7,5 @@ cat jquery-1.7.2.js ^
     handlebars-1.0.0.beta.6.js ^
     spin.js ^
     jquery.cookie.js ^
+    json2.js ^
   | uglifyjs -nc -o externals.js
