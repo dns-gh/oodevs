@@ -56,6 +56,17 @@ BOOST_AUTO_TEST_CASE( plugin_directory_parses )
         BOOST_CHECK( std::find( names.begin(), names.end(), valid_plugins[i] ) != names.end() );
 }
 
+namespace
+{
+template< typename T >
+void CheckDefault( const T& actual, const typename T::value_type& expected )
+{
+    typename T::const_iterator it = actual.find( expected.first );
+    BOOST_REQUIRE( it != actual.end() );
+    BOOST_CHECK_EQUAL( it->second, expected.second );
+}
+}
+
 BOOST_AUTO_TEST_CASE( plugin_parse_bml )
 {
     cpplog::OstreamLogger log( std::cout );
@@ -73,7 +84,7 @@ BOOST_AUTO_TEST_CASE( plugin_parse_bml )
     const Plugins::T_Defaults actual = plugins.GetDefaults( "bml" );
     BOOST_CHECK_EQUAL( expected.size(), actual.size() );
     BOOST_FOREACH( const Plugins::T_Defaults::value_type& value, expected )
-        BOOST_CHECK_EQUAL( actual.find( value.first )->second, value.second );
+        CheckDefault( actual, value );
     web::Tree tree;
     BOOST_FOREACH( const Plugins::T_Defaults::value_type& value, expected )
         if( value.first != "server/@log" )
@@ -84,6 +95,6 @@ BOOST_AUTO_TEST_CASE( plugin_parse_bml )
     const session::PluginConfig& plugin = cfg.plugins.find( "bml" )->second;
     BOOST_CHECK_EQUAL( expected.size(), plugin.parameters.size() );
     BOOST_FOREACH( const Plugins::T_Defaults::value_type& value, expected )
-        BOOST_CHECK_EQUAL( plugin.parameters.find( value.first )->second,
-                           value.first == "server/@log" ? "junk_data" : value.second );
+        CheckDefault( plugin.parameters, std::make_pair( value.first,
+                      value.first == "server/@log" ? "junk_data" : value.second ) );
 }
