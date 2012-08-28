@@ -49,6 +49,10 @@ if( MSVC )
 endif()
 add_static_library( runtime ${files} )
 set_target_folder( runtime libraries )
+if( MSVC )
+    add_target_external_library( runtime archive_static_d archive_static )
+    add_target_external_library( runtime zlibd zlib )
+endif()
 
 ################################################################################
 # web_server
@@ -59,6 +63,11 @@ glob_dir( files src
 )
 add_static_library( web ${files} )
 set_target_folder( web libraries )
+if( MSVC )
+    add_target_external_library( web cpp-netlib_client-${platform}-mt_d cpp-netlib_client-${platform}-mt )
+    add_target_external_library( web cpp-netlib_server-${platform}-mt_d cpp-netlib_server-${platform}-mt )
+    add_target_external_library( web cpp-netlib_uri-${platform}-mt_d cpp-netlib_uri-${platform}-mt )
+endif()
 
 ################################################################################
 # host
@@ -69,6 +78,10 @@ glob_dir( files src
 )
 add_static_library( host ${files} )
 set_target_folder( host libraries )
+if( MSVC )
+    add_target_external_library( host bcrypt-${platform}_d bcrypt-${platform} )
+    add_target_external_library( host libsqlite3-${platform}_d libsqlite3-${platform} )
+endif()
 
 ################################################################################
 # cloud_server
@@ -78,15 +91,6 @@ glob_dir( files src
 )
 add_executable_target( cloud_server ${files} )
 set_target_folder( cloud_server applications )
-if( MSVC )
-    add_target_external_library( cloud_server archive_static_d archive_static )
-    add_target_external_library( cloud_server bcrypt-${platform}_d bcrypt-${platform} )
-    add_target_external_library( cloud_server cpp-netlib_client-${platform}-mt_d cpp-netlib_client-${platform}-mt )
-    add_target_external_library( cloud_server cpp-netlib_server-${platform}-mt_d cpp-netlib_server-${platform}-mt )
-    add_target_external_library( cloud_server cpp-netlib_uri-${platform}-mt_d cpp-netlib_uri-${platform}-mt )
-    add_target_external_library( cloud_server libsqlite3-${platform}_d libsqlite3-${platform} )
-    add_target_external_library( cloud_server zlibd zlib )
-endif()
 target_link_libraries( cloud_server
     host
     runtime
@@ -105,15 +109,15 @@ endif()
 # runtime_test
 ################################################################################
 glob_dir( files src
-    "${root_dir}/src/tests/runtime_test/runtime_test.cpp"
-    "${root_dir}/src/tests/runtime_test/runtime_test.h"
-    "${root_dir}/src/tests/runtime_test/Utf8Test.cpp"
+    "${root_dir}/src/tests/runtime_test/*.cpp"
+    "${root_dir}/src/tests/runtime_test/*.h"
 )
 if( WIN32 )
     glob_dir( win32_files win32
         "${root_dir}/src/tests/runtime_test/Win32*.cpp"
         "${root_dir}/src/tests/runtime_test/Win32*.h"
     )
+    list( REMOVE_ITEM files ${win32_files} )
     list( APPEND files ${win32_files} )
 endif()
 add_executable_target( runtime_test ${files} )
@@ -133,11 +137,6 @@ glob_dir( files src
 )
 add_executable_target( host_test ${files} )
 set_target_folder( host_test tests )
-if( MSVC )
-    add_target_external_library( host_test bcrypt-${platform}_d bcrypt-${platform} )
-    add_target_external_library( host_test archive_static_d archive_static )
-    add_target_external_library( host_test zlibd zlib )
-endif()
 target_link_libraries( host_test
     host
     runtime
