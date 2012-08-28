@@ -10,6 +10,7 @@
 #include "PluginDirectory.h"
 
 #include "runtime/FileSystem_ABC.h"
+#include "runtime/PropertyTree.h"
 
 #include <boost/algorithm/string.hpp>
 #include <boost/bind.hpp>
@@ -18,11 +19,67 @@
 
 using namespace host;
 using runtime::FileSystem_ABC;
+typedef property_tree::T_Tree Tree;
+
+namespace
+{
+typedef std::map< std::string, std::string > T_Defaults;
+
+void AddSetting( T_Defaults& dst, const Tree& src )
+{
+    const boost::optional< std::string > display = src.get_optional< std::string >( "<xmlattr>.display" );
+    if( display != boost::none )
+        return;
+    const boost::optional< std::string > name = src.get_optional< std::string >( "<xmlattr>.attribute" );
+    if( name == boost::none )
+        return;
+    boost::optional< std::string > value = src.get_optional< std::string >( "<xmlattr>.default" );
+    if( value == boost::none )
+        return;
+    if( src.get< std::string >( "<xmlattr>.type" ) == "enumeration" )
+    {
+        std::vector< std::string > tokens;
+        boost::algorithm::split( tokens, *value, boost::is_any_of( ";" ) );
+        value = tokens.front();
+    }
+    dst.insert( std::make_pair( *name, *value ) );
+}
+
+template< typename T, typename U >
+void Walk( const Tree& src, const T& begin, const T& end, const U& operand )
+{
+    std::pair< Tree::const_assoc_iterator, Tree::const_assoc_iterator > range = src.equal_range( *begin );
+    if( std::distance( begin, end ) > 1 )
+        for( Tree::const_assoc_iterator it = range.first; it != range.second; ++it )
+            Walk( it->second, begin + 1, end, operand );
+    else
+        for( Tree::const_assoc_iterator it = range.first; it != range.second; ++it )
+            operand( it->second );
+}
+
+void AddSettings( T_Defaults& dst, const Tree& src, const std::string& key )
+{
+    std::vector< std::string > tokens;
+    boost::algorithm::split( tokens, key, boost::is_any_of( "." ) );
+    Walk( src, tokens.begin(), tokens.end(), boost::bind( &AddSetting, boost::ref( dst ), _1 ) );
+}
+
+T_Defaults LoadDefaults( const FileSystem_ABC& fs, const Path& cfg )
+{
+    const Tree meta = property_tree::FromXml( fs.ReadFile( cfg ) );
+    T_Defaults dst;
+    AddSettings( dst, meta, "plugin.settings.setting" );
+    AddSettings( dst, meta, "plugin.settings.group.settings.setting" );
+    AddSettings( dst, meta, "plugin.settings.group.settings.group.settings.setting" );
+    return dst;
+}
+}
 
 struct host::Plugin
 {
-    Plugin( const Path& library )
-        : library_( library )
+    Plugin( const FileSystem_ABC& fs, const Path& library, const Path& cfg )
+        : library_ ( library )
+        , defaults_( LoadDefaults( fs, cfg ) )
     {
         // NOTHING
     }
@@ -32,7 +89,8 @@ struct host::Plugin
         // NOTHING
     }
 
-    Path library_;
+    Path       library_;
+    T_Defaults defaults_;
 };
 
 namespace
@@ -76,7 +134,7 @@ bool ParsePluginDirectory( PluginDirectory::T_Plugins& data, const FileSystem_AB
     if( library == boost::none )
         return true;
 
-    data.insert( std::make_pair( name, Plugin( *library ) ) );
+    data.insert( std::make_pair( name, Plugin( fs, *library, dir / "plugin.xml" ) ) );
     return true;
 }
 
