@@ -106,6 +106,7 @@ namespace
         MOCK_METHOD( RegisterMime, 2 );
         MOCK_METHOD( ParseMime, 0 );
         MOCK_METHOD( ParseForm, 0 );
+        MOCK_METHOD( ParseJson, 0 );
         MOCK_METHOD( GetRemoteIp, 0 );
         MOCK_METHOD( GetSid, 0 );
     };

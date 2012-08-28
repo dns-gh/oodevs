@@ -18,6 +18,7 @@
 #include "Reply_ABC.h"
 #include "runtime/Async.h"
 #include "runtime/Pool_ABC.h"
+#include "runtime/PropertyTree.h"
 
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
@@ -158,6 +159,11 @@ public:
         throw std::runtime_error( "unsupported action" );
     }
 
+    virtual Tree ParseJson()
+    {
+        throw std::runtime_error( "unsupported action" );
+    }
+
     virtual std::string GetRemoteIp() const
     {
         return source_;
@@ -278,6 +284,18 @@ public:
                    std::istreambuf_iterator< char >(),
                    std::ostreambuf_iterator< char >( full ) );
         form_ = ParseParameters( full.str() );
+    }
+
+    virtual Tree ParseJson()
+    {
+        Tree dst;
+        ParseBody( boost::bind( &MimeWebRequest::ParseJsonStream, this, boost::ref( dst ), _1 ) );
+        return dst;
+    }
+
+    void ParseJsonStream( Tree& dst, std::istream& src )
+    {
+        dst = property_tree::FromJson( src );
     }
 
     virtual boost::optional< std::string > GetParameter( const std::string& name ) const

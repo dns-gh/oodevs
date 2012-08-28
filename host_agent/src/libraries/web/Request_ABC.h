@@ -13,8 +13,14 @@
 #include <boost/noncopyable.hpp>
 #include <boost/optional.hpp>
 #include <boost/ref.hpp>
+#include <boost/property_tree/ptree_fwd.hpp>
 #include <string>
 #include <vector>
+
+namespace web
+{
+    typedef boost::property_tree::ptree Tree;
+}
 
 namespace web
 {
@@ -47,6 +53,7 @@ struct Request_ABC : public boost::noncopyable
     virtual void RegisterMime( const std::string& name, const MimeHandler& handler ) = 0;
     virtual void ParseMime() = 0;
     virtual void ParseForm() = 0;
+    virtual Tree ParseJson() = 0;
     //@}
 };
 }
