@@ -36,12 +36,12 @@ find_package( ZLIB REQUIRED )
 ################################################################################
 # runtime
 ################################################################################
-file( GLOB files
+glob_dir( files src
     "${root_dir}/src/libraries/runtime/*.h"
     "${root_dir}/src/libraries/runtime/*.cpp"
 )
 if( MSVC )
-    file( GLOB win32_files
+    glob_dir( win32_files win32
         "${root_dir}/src/libraries/runtime/win32/*.cpp"
         "${root_dir}/src/libraries/runtime/win32/*.h"
     )
@@ -53,7 +53,7 @@ set_target_folder( runtime libraries )
 ################################################################################
 # web_server
 ################################################################################
-file( GLOB files
+glob_dir( files src
     "${root_dir}/src/libraries/web/*.h"
     "${root_dir}/src/libraries/web/*.cpp"
 )
@@ -63,7 +63,7 @@ set_target_folder( web libraries )
 ################################################################################
 # host
 ################################################################################
-file( GLOB files
+glob_dir( files src
     "${root_dir}/src/libraries/host/*.h"
     "${root_dir}/src/libraries/host/*.cpp"
 )
@@ -73,7 +73,7 @@ set_target_folder( host libraries )
 ################################################################################
 # cloud_server
 ################################################################################
-file( GLOB files
+glob_dir( files src
     "${root_dir}/src/applications/cloud_server/*.cpp"
 )
 add_executable_target( cloud_server ${files} )
@@ -104,13 +104,13 @@ endif()
 ################################################################################
 # runtime_test
 ################################################################################
-file( GLOB files
+glob_dir( files src
     "${root_dir}/src/tests/runtime_test/runtime_test.cpp"
     "${root_dir}/src/tests/runtime_test/runtime_test.h"
     "${root_dir}/src/tests/runtime_test/Utf8Test.cpp"
 )
 if( WIN32 )
-    file( GLOB win32_files
+    glob_dir( win32_files win32
         "${root_dir}/src/tests/runtime_test/Win32*.cpp"
         "${root_dir}/src/tests/runtime_test/Win32*.h"
     )
@@ -127,7 +127,7 @@ add_test_target( runtime_test runtime
 ################################################################################
 # host_test
 ################################################################################
-file( GLOB files
+glob_dir( files src
     "${root_dir}/src/tests/host_test/*.cpp"
     "${root_dir}/src/tests/host_test/*.h"
 )
@@ -149,7 +149,7 @@ add_test_target( host_test host
 ################################################################################
 # web_test
 ################################################################################
-file( GLOB files
+glob_dir( files src
     "${root_dir}/src/tests/web_test/*.cpp"
     "${root_dir}/src/tests/web_test/*.h"
 )

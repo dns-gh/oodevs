@@ -53,6 +53,11 @@ macro( add_target_compile_flag target flag )
     endif()
 endmacro()
 
+macro( glob_dir var group )
+    file( GLOB ${var} ${ARGN} )
+    source_group( ${group} FILES ${${var}} )
+endmacro()
+
 macro( set_target_folder target folder )
     set_property( TARGET ${target} PROPERTY FOLDER ${folder} )
 endmacro()
