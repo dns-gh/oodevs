@@ -6431,8 +6431,6 @@
         <mission name="AUTOMATE ALAT Escorter"/>
         <mission name="AUTOMATE ALAT Recueillir"/>
         <mission name="AUTOMATE Stationner"/>
-        <mission name="AUTOMATE Orienter Refugies"/>
-        <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
         <mission name="AUTOMATE Se Faire Transporter"/>
         <mission name="AUTOMATE ALAT Aller Se Recompleter"/>
         <mission name="AUTOMATE Decrocher"/>
@@ -6475,8 +6473,6 @@
         <mission name="AUTOMATE ALAT Escorter"/>
         <mission name="AUTOMATE ALAT Recueillir"/>
         <mission name="AUTOMATE Stationner"/>
-        <mission name="AUTOMATE Orienter Refugies"/>
-        <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
         <mission name="AUTOMATE Se Faire Transporter"/>
         <mission name="AUTOMATE ALAT Aller Se Recompleter"/>
         <mission name="AUTOMATE Decrocher"/>
@@ -6509,8 +6505,6 @@
         <mission name="AUTOMATE Se Faire Decontaminer"/>
         <mission name="AUTOMATE Se Recompleter"/>
         <mission name="AUTOMATE Stationner"/>
-        <mission name="AUTOMATE Orienter Refugies"/>
-        <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
         <mission name="AUTOMATE Se Faire Transporter"/>
         <mission name="AUTOMATE ALAT Aller Se Recompleter"/>
         <mission name="AUTOMATE Decrocher"/>
@@ -6542,8 +6536,6 @@
         <mission name="AUTOMATE Decrocher"/>
         <mission name="AUTOMATE RENS RADINT Renseigner Sur"/>
         <mission name="AUTOMATE Se Recompleter"/>
-        <mission name="AUTOMATE Orienter Refugies"/>
-        <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
         <mission name="AUTOMATE Se Faire Decontaminer"/>
       </missions>
       <fragorders>
@@ -6575,8 +6567,6 @@
         <mission name="AUTOMATE Stationner"/>
         <mission name="AUTOMATE Se Faire Transporter"/>
         <mission name="AUTOMATE ALAT Aller Se Recompleter"/>
-        <mission name="AUTOMATE Orienter Refugies"/>
-        <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
       </missions>
       <fragorders>
         <fragorder name="Passer En NBC4"/>
@@ -6618,8 +6608,6 @@
         <mission name="AUTOMATE Stationner"/>
         <mission name="AUTOMATE Se Faire Transporter"/>
         <mission name="AUTOMATE ALAT Aller Se Recompleter"/>
-        <mission name="AUTOMATE Orienter Refugies"/>
-        <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
       </missions>
       <fragorders>
         <fragorder name="Passer En NBC4"/>
@@ -7510,4 +7498,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3255971506" -->
+<!-- signature="1264549099" -->
