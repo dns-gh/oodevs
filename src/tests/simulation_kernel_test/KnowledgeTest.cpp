@@ -108,6 +108,7 @@ BOOST_AUTO_TEST_CASE( TestPropagationInKnowledgeGroups )
     MIL_KnowledgeGroup groupJammed1( *group1, jammedAgent, 0 );
     MockAgentWithPerceiver mockAgent;
     MOCK_EXPECT( mockAgent.BelongsTo ).with( boost::cref( *group1 ) ).returns( true );
+    MOCK_EXPECT( mockAgent.GetKnowledgeGroup ).returns( boost::ref( *group1 ) );
     MOCK_EXPECT( mockAgent.GetType );
     //{
         // TestAgentKnowledgeIsCreated
@@ -122,6 +123,7 @@ BOOST_AUTO_TEST_CASE( TestPropagationInKnowledgeGroups )
     //}
     MockAgentWithPerceiver mockAgentJammed1;
     MOCK_EXPECT( mockAgentJammed1.BelongsTo ).with( boost::cref( groupJammed1 ) ).returns( true );
+    MOCK_EXPECT( mockAgentJammed1.GetKnowledgeGroup ).returns( boost::ref( groupJammed1 ) );
     MOCK_EXPECT( mockAgentJammed1.GetType );
     //{
         // TestJammedUnitHasItsOwnKnowledgeGroup
@@ -234,6 +236,7 @@ BOOST_AUTO_TEST_CASE( TestLatentRelevance )
     MOCK_EXPECT( army.GetKnowledge ).returns( boost::ref( blackboard ) );
     MockAgentWithPerceiver mockAgent;
     MOCK_EXPECT( mockAgent.BelongsTo ).with( mock::same( *knowledgeGroup ) ).returns( true );
+    MOCK_EXPECT( mockAgent.GetKnowledgeGroup ).returns( boost::ref( *knowledgeGroup ) );
     MOCK_EXPECT( mockAgent.GetType );
     //{
         // TestAgentKnowledgeIsCreatedWithRelevanceMax

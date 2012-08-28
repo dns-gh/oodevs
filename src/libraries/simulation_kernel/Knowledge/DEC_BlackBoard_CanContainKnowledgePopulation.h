@@ -13,6 +13,7 @@
 #define __DEC_BlackBoard_CanContainKnowledgePopulation_h_
 
 #include "MIL.h"
+#include <boost/shared_ptr.hpp>
 
 class DEC_Knowledge_Population;
 class MIL_KnowledgeGroup;
@@ -28,7 +29,7 @@ class DEC_BlackBoard_CanContainKnowledgePopulation : private boost::noncopyable
 private:
     //! @name Types
     //@{
-    typedef std::map< const MIL_Population*, DEC_Knowledge_Population* > T_KnowledgePopulationMap;
+    typedef std::map< const MIL_Population*, boost::shared_ptr< DEC_Knowledge_Population > > T_KnowledgePopulationMap;
     typedef T_KnowledgePopulationMap::iterator                          IT_KnowledgePopulationMap;
     typedef T_KnowledgePopulationMap::const_iterator                   CIT_KnowledgePopulationMap;
     //@}
@@ -58,8 +59,8 @@ public:
 
     //! @name Queries
     //@{
-    DEC_Knowledge_Population* GetKnowledgePopulation( const MIL_Population& associatedPopulation ) const;
-    DEC_Knowledge_Population* GetKnowledgePopulationFromID( unsigned int nID ) const;
+    boost::shared_ptr< DEC_Knowledge_Population > GetKnowledgePopulation( const MIL_Population& associatedPopulation ) const;
+    boost::shared_ptr< DEC_Knowledge_Population > GetKnowledgePopulationFromID( unsigned int nID ) const;
 
     template < class UnaryFunction >
     void ApplyOnKnowledgesPopulation( UnaryFunction& fct ) const

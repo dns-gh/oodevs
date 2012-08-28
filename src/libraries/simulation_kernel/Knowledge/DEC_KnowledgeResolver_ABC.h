@@ -52,9 +52,9 @@ public:
     virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( unsigned int nID ) const = 0;
     virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObjectByObjectID( unsigned int nID ) const = 0;
 
-    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const sword::CrowdKnowledgeId& asn ) const = 0;
-    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const MIL_Population& population ) const = 0;
-    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( unsigned int nID ) const = 0;
+    virtual boost::shared_ptr< DEC_Knowledge_Population > ResolveKnowledgePopulation( const sword::CrowdKnowledgeId& asn ) const = 0;
+    virtual boost::shared_ptr< DEC_Knowledge_Population > ResolveKnowledgePopulation( const MIL_Population& population ) const = 0;
+    virtual boost::shared_ptr< DEC_Knowledge_Population > ResolveKnowledgePopulation( unsigned int nID ) const = 0;
     //@}
 };
 

@@ -28,7 +28,7 @@ PHY_ActionUnloadCrowd::PHY_ActionUnloadCrowd( MIL_AgentPion& pion, int knowledge
 {
     if( !position )
         throw std::runtime_error( __FUNCTION__ " Invalid position" );
-    DEC_Knowledge_Population* pKnowledge = pion.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( knowledgeId );
+    boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = pion.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( knowledgeId );
     if( !pKnowledge )
         throw std::runtime_error( __FUNCTION__ " Unknown crowd knowledge" );
     crowd_ = &pKnowledge->GetPopulationKnown();

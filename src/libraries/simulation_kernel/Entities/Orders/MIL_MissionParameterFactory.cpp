@@ -253,7 +253,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateP
 // Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreatePopulationKnowledge
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
-boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreatePopulationKnowledge( DEC_Knowledge_Population* populationKnowledge )
+boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreatePopulationKnowledge( boost::shared_ptr< DEC_Knowledge_Population > populationKnowledge )
 {
     boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_PopulationKnowledgeParameter( populationKnowledge ) );
     return result;
@@ -591,7 +591,7 @@ void MIL_MissionParameterFactory::SetCrowdKnowledgeParameter( DEC_Decision_ABC* 
 {
     if( !pMission.get() )
         throw std::runtime_error( "Invalid mission" );
-    DEC_Knowledge_Population* pKnowledge = caller->GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( knowledgeId );
+    boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = caller->GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( knowledgeId );
     pMission->SetParameter( parameter, CreatePopulationKnowledge( pKnowledge ) );
 }
 

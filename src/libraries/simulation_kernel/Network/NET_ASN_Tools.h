@@ -140,7 +140,7 @@ public:
     static DEC_Decision_ABC*            ReadAgent              ( const sword::UnitId&               asn );
     static DEC_Decision_ABC*            ReadAutomate           ( const sword::UnitId&               asn );
     static boost::shared_ptr< DEC_Knowledge_Agent > ReadAgentKnowledge     ( const sword::UnitKnowledgeId&      asn, const DEC_KnowledgeResolver_ABC& resolver );
-    static DEC_Knowledge_Population*    ReadPopulationKnowledge( const sword::CrowdKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver );
+    static boost::shared_ptr< DEC_Knowledge_Population > ReadPopulationKnowledge( const sword::CrowdKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver );
 
     static boost::shared_ptr< DEC_Knowledge_Object > ReadObjectKnowledge    ( const sword::ObjectKnowledgeId&     asn, const DEC_KnowledgeResolver_ABC& resolver );
     static bool                         ReadObjectKnowledgeList( const sword::ObjectKnowledgeIdList& asn, T_KnowledgeObjectDiaIDVector& knowledgeList, const DEC_KnowledgeResolver_ABC& resolver );

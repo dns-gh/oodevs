@@ -242,7 +242,7 @@ bool MIL_BaseParameter::ToObjectKnowledgeList( std::vector< boost::shared_ptr< D
 // Name: MIL_BaseParameter::ToPopulationKnowledge
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToPopulationKnowledge( DEC_Knowledge_Population*& ) const
+bool MIL_BaseParameter::ToPopulationKnowledge( boost::shared_ptr< DEC_Knowledge_Population >& ) const
 {
     return false;
 }

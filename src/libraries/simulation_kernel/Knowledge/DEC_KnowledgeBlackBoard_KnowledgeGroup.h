@@ -95,9 +95,9 @@ public:
     virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( unsigned int nID ) const;
     virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObjectByObjectID( unsigned int nID ) const;
 
-    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const sword::CrowdKnowledgeId& asn ) const;
-    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const MIL_Population& population ) const;
-    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( unsigned int nID ) const;
+    virtual boost::shared_ptr< DEC_Knowledge_Population > ResolveKnowledgePopulation( const sword::CrowdKnowledgeId& asn ) const;
+    virtual boost::shared_ptr< DEC_Knowledge_Population > ResolveKnowledgePopulation( const MIL_Population& population ) const;
+    virtual boost::shared_ptr< DEC_Knowledge_Population > ResolveKnowledgePopulation( unsigned int nID ) const;
     //@}
 
     //! @name Queries
@@ -126,10 +126,10 @@ public:
     void GetSurrenderedAgentsInCircle( T_ConstKnowledgeAgentVector& container, const MT_Vector2D& center, double rRadius ) const;
 
     // Knowledge populations
-    DEC_Knowledge_Population* GetKnowledgePopulation( const DEC_Knowledge_PopulationCollision& collision ) const;
-    DEC_Knowledge_Population* GetKnowledgePopulation( const DEC_Knowledge_PopulationPerception& perception ) const;
-    DEC_Knowledge_Population* GetKnowledgePopulation( const MIL_Population& population ) const;
-    DEC_Knowledge_Population* GetKnowledgePopulationFromID( unsigned int nID ) const;
+    boost::shared_ptr< DEC_Knowledge_Population > GetKnowledgePopulation( const DEC_Knowledge_PopulationCollision& collision ) const;
+    boost::shared_ptr< DEC_Knowledge_Population > GetKnowledgePopulation( const DEC_Knowledge_PopulationPerception& perception ) const;
+    boost::shared_ptr< DEC_Knowledge_Population > GetKnowledgePopulation( const MIL_Population& population ) const;
+    boost::shared_ptr< DEC_Knowledge_Population > GetKnowledgePopulationFromID( unsigned int nID ) const;
     void GetPopulations( T_KnowledgePopulationDiaIDVector& container ) const;
     void GetPopulations( T_KnowledgePopulationVector& container ) const;
      //@}

@@ -128,7 +128,7 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Automate::Reso
 // Name: DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgePopulation
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgePopulation( const sword::CrowdKnowledgeId& asn ) const
+boost::shared_ptr< DEC_Knowledge_Population > DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgePopulation( const sword::CrowdKnowledgeId& asn ) const
 {
     return pAutomate_->GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( asn.id() );
 }
@@ -137,7 +137,7 @@ DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgePopu
 // Name: DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgePopulation
 // Created: LGY 2011-07-11
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgePopulation( const MIL_Population& population ) const
+boost::shared_ptr< DEC_Knowledge_Population > DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgePopulation( const MIL_Population& population ) const
 {
     return pAutomate_->GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulation( population );
 }
@@ -146,7 +146,7 @@ DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgePopu
 // Name: DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgePopulation
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgePopulation( unsigned int nID ) const
+boost::shared_ptr< DEC_Knowledge_Population > DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgePopulation( unsigned int nID ) const
 {
     return pAutomate_->GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( nID );
 }

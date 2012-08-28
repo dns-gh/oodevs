@@ -286,7 +286,7 @@ bool NET_ASN_Tools::ReadObjectKnowledgeList( const ObjectKnowledgeIdList& asnLis
 // Name: NET_ASN_Tools::ReadPopulationKnowledge
 // Created: HME 05-12-22
 //-----------------------------------------------------------------------------
-DEC_Knowledge_Population* NET_ASN_Tools::ReadPopulationKnowledge( const CrowdKnowledgeId& asnPopulation, const DEC_KnowledgeResolver_ABC& resolver )
+boost::shared_ptr< DEC_Knowledge_Population > NET_ASN_Tools::ReadPopulationKnowledge( const CrowdKnowledgeId& asnPopulation, const DEC_KnowledgeResolver_ABC& resolver )
 {
     return resolver.ResolveKnowledgePopulation( asnPopulation );
 }

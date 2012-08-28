@@ -399,7 +399,7 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetSurrenderedAgentsInCircle( T_Con
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgePopulationFromID
 // Created: NLD 2005-11-03
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgePopulationFromID( unsigned int nID ) const
+boost::shared_ptr< DEC_Knowledge_Population > DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgePopulationFromID( unsigned int nID ) const
 {
     assert( pKnowledgePopulationContainer_ );
     return pKnowledgePopulationContainer_->GetKnowledgePopulationFromID( nID );
@@ -409,7 +409,7 @@ DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgePo
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgePopulation
 // Created: LGY 2011-07-11
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgePopulation( const MIL_Population& population ) const
+boost::shared_ptr< DEC_Knowledge_Population > DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgePopulation( const MIL_Population& population ) const
 {
     assert( pKnowledgePopulationContainer_ );
     return pKnowledgePopulationContainer_->GetKnowledgePopulation( population );
@@ -419,7 +419,7 @@ DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgePo
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgePopulation
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgePopulation( const DEC_Knowledge_PopulationCollision& collision ) const
+boost::shared_ptr< DEC_Knowledge_Population > DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgePopulation( const DEC_Knowledge_PopulationCollision& collision ) const
 {
     assert( pKnowledgePopulationContainer_ );
     return pKnowledgePopulationContainer_->GetKnowledgePopulation( collision.GetPopulation() );
@@ -429,7 +429,7 @@ DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgePo
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgePopulation
 // Created: NLD 2005-11-10
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgePopulation( const DEC_Knowledge_PopulationPerception& perception ) const
+boost::shared_ptr< DEC_Knowledge_Population > DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgePopulation( const DEC_Knowledge_PopulationPerception& perception ) const
 {
     assert( pKnowledgePopulationContainer_ );
     return pKnowledgePopulationContainer_->GetKnowledgePopulation( perception.GetPopulationPerceived() );
@@ -585,7 +585,7 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_KnowledgeGroup
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgePopulation
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgePopulation( const sword::CrowdKnowledgeId& asn ) const
+boost::shared_ptr< DEC_Knowledge_Population > DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgePopulation( const sword::CrowdKnowledgeId& asn ) const
 {
     return GetKnowledgePopulationFromID( asn.id() );
 }
@@ -594,7 +594,7 @@ DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowled
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgePopulation
 // Created: LGY 2011-07-11
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgePopulation( const MIL_Population& population ) const
+boost::shared_ptr< DEC_Knowledge_Population > DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgePopulation( const MIL_Population& population ) const
 {
     assert( pKnowledgePopulationContainer_ );
     return pKnowledgePopulationContainer_->GetKnowledgePopulation( population );
@@ -604,7 +604,7 @@ DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowled
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgePopulation
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgePopulation( unsigned int nID ) const
+boost::shared_ptr< DEC_Knowledge_Population > DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgePopulation( unsigned int nID ) const
 {
     return GetKnowledgePopulationFromID( nID );
 }

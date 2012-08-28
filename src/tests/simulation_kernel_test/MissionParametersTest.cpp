@@ -191,8 +191,8 @@ BOOST_FIXTURE_TEST_CASE( TestMIL_PopulationKnowledgeParameter, KnowledgeFixture 
     StubMIL_Population population( type, army );
     MOCK_EXPECT( manager.FindPopulation ).once().returns( &population );
     MIL_KnowledgeGroup groupArmy( *MIL_KnowledgeGroupType::FindType( "Standard" ), 30, army );
-    DEC_Knowledge_Population knowledge( groupArmy, population );
-    MOCK_EXPECT( resolver.ResolveKnowledgePopulation ).once().returns( &knowledge );
+    boost::shared_ptr< DEC_Knowledge_Population > knowledge( new DEC_Knowledge_Population( groupArmy, population ) );
+    MOCK_EXPECT( resolver.ResolveKnowledgePopulation ).once().returns( knowledge );
 
     MIL_PopulationKnowledgeParameter param( in, resolver, manager );
     MissionParameter_Value out;

@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_PopulationKnowledgeParameter.h"
+#include "Checkpoints/SerializationTools.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Knowledge/DEC_KnowledgeResolver_ABC.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
@@ -32,7 +33,7 @@ MIL_PopulationKnowledgeParameter::MIL_PopulationKnowledgeParameter()
 // Name: MIL_PopulationKnowledgeParameter constructor
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
-MIL_PopulationKnowledgeParameter::MIL_PopulationKnowledgeParameter( DEC_Knowledge_Population* pKnowledge )
+MIL_PopulationKnowledgeParameter::MIL_PopulationKnowledgeParameter( boost::shared_ptr< DEC_Knowledge_Population >& pKnowledge )
     : pKnowledgePopulation_( pKnowledge )
 {
     // NOTHING
@@ -44,7 +45,6 @@ MIL_PopulationKnowledgeParameter::MIL_PopulationKnowledgeParameter( DEC_Knowledg
 // -----------------------------------------------------------------------------
 MIL_PopulationKnowledgeParameter::MIL_PopulationKnowledgeParameter( const sword::CrowdKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver,
                                                                     const MIL_EntityManager_ABC& entityManager )
-    : pKnowledgePopulation_( 0 )
 {
     MIL_Population* pPopulation = entityManager.FindPopulation( asn.id() );
     if( !pPopulation )
@@ -77,7 +77,7 @@ bool MIL_PopulationKnowledgeParameter::IsOfType( MIL_ParameterType_ABC::E_Type t
 // Name: MIL_PopulationKnowledgeParameter::ToPopulationKnowledge
 // Created: LDC 2009-06-04
 // -----------------------------------------------------------------------------
-bool MIL_PopulationKnowledgeParameter::ToPopulationKnowledge( DEC_Knowledge_Population*& value ) const
+bool MIL_PopulationKnowledgeParameter::ToPopulationKnowledge( boost::shared_ptr< DEC_Knowledge_Population >& value ) const
 {
     value = pKnowledgePopulation_;
     return true;
