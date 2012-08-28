@@ -187,9 +187,11 @@ private:
 private:
     //! @name Member data
     //@{
-    const MIL_KnowledgeGroup* pKnowledgeGroup_;
+    const MIL_Army_ABC* pArmyKnowing_;
+    const MIL_KnowledgeGroupType* groupType_;
     MIL_Agent_ABC* pAgentKnown_;
     const unsigned int nID_;
+    const unsigned int knowledgeGroupId_;
     DEC_Knowledge_AgentDataDetection dataDetection_;
     DEC_Knowledge_AgentDataRecognition dataRecognition_;
     DEC_Knowledge_AgentDataIdentification dataIdentification_;

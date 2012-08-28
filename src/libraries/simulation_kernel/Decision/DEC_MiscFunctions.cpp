@@ -473,7 +473,7 @@ void DEC_MiscFunctions::ReportPopulationKnowledge( DEC_Decision_ABC& caller, int
     if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
     {
         std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > params;
-        DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID(populationKnowledge);
+        boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID(populationKnowledge);
         boost::shared_ptr<MIL_MissionParameter_ABC> missionParam( MIL_MissionParameterFactory::CreatePopulationKnowledge( pKnowledge ) );
         params.push_back( missionParam );
         pReport->Send( caller, MIL_Report::E_Type( type ), params );

@@ -976,7 +976,7 @@ bool ObjectKnowledgeListFunctionBM( directia::brain::Brain& brain, directia::too
 }
 bool PopulationKnowledgeFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
-    DEC_Knowledge_Population* value = 0;//@TODO MGD why not shared_ptr
+    boost::shared_ptr< DEC_Knowledge_Population > value;
     if( element.ToPopulationKnowledge( value ) && value )
     {
         refMission[ name ] = value->GetID();
@@ -986,7 +986,7 @@ bool PopulationKnowledgeFunction( const directia::tools::binders::ScriptRef& ref
 }
 bool PopulationKnowledgeFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
-    DEC_Knowledge_Population* value = 0;
+    boost::shared_ptr< DEC_Knowledge_Population > value;
     if( element.ToPopulationKnowledge( value ) && value )
     {
         knowledgeCreateFunction( refMission, brain[ "integration.ontology.types.population" ], name, value->GetID(), false );//@TODO MGD Add CompositeReachable for Population?

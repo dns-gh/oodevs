@@ -239,7 +239,7 @@ void DEC_Knowledge_PopulationConcentration::UpdateRelevance()
     if( pConcentrationKnown_ && pConcentrationKnown_->GetPopulation().HasDoneMagicMove() )
         ChangeRelevance( 0. );
     // Degradation : effacement au bout de X minutes
-    const double rTimeRelevanceDegradation = ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() - nTimeLastUpdate_ ) / pPopulationKnowledge_->GetKnowledgeGroup().GetType().GetKnowledgePopulationMaxLifeTime();
+    const double rTimeRelevanceDegradation = ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() - nTimeLastUpdate_ ) / pPopulationKnowledge_->GetKnowledgeGroupType().GetKnowledgePopulationMaxLifeTime();
     const double rRelevance = std::max( 0., rRelevance_ - rTimeRelevanceDegradation );
     ChangeRelevance( rRelevance );
     nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
@@ -261,7 +261,7 @@ void DEC_Knowledge_PopulationConcentration::SendMsgCreation() const
     client::CrowdConcentrationKnowledgeCreation asnMsg;
     asnMsg().mutable_knowledge()->set_id( nID_ );
     asnMsg().mutable_crowd()->set_id( pPopulationKnowledge_->GetID() );
-    asnMsg().mutable_knowledge_group()->set_id( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
+    asnMsg().mutable_knowledge_group()->set_id( pPopulationKnowledge_->GetKnowledgeGroupId() );
     asnMsg().mutable_concentration()->set_id( pConcentrationKnown_ ? pConcentrationKnown_->GetID() : 0 );
     NET_ASN_Tools::WritePoint( position_, *asnMsg().mutable_position() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
@@ -277,7 +277,7 @@ void DEC_Knowledge_PopulationConcentration::SendMsgDestruction() const
     client::CrowdConcentrationKnowledgeDestruction asnMsg;
     asnMsg().mutable_knowledge()->set_id( nID_ );
     asnMsg().mutable_crowd()->set_id( pPopulationKnowledge_->GetID() );
-    asnMsg().mutable_knowledge_group()->set_id( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
+    asnMsg().mutable_knowledge_group()->set_id( pPopulationKnowledge_->GetKnowledgeGroupId() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -291,7 +291,7 @@ void DEC_Knowledge_PopulationConcentration::SendFullState()
     client::CrowdConcentrationKnowledgeUpdate asnMsg;
     asnMsg().mutable_knowledge()->set_id( nID_ );
     asnMsg().mutable_crowd()->set_id( pPopulationKnowledge_->GetID() );
-    asnMsg().mutable_knowledge_group()->set_id( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
+    asnMsg().mutable_knowledge_group()->set_id( pPopulationKnowledge_->GetKnowledgeGroupId() );
     asnMsg().set_perceived( ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
     asnMsg().mutable_concentration()->set_id( pConcentrationKnown_ ? pConcentrationKnown_->GetID() : 0 );
     asnMsg().set_pertinence( static_cast< unsigned int >( rRelevance_ * 100. ) );
@@ -319,7 +319,7 @@ void DEC_Knowledge_PopulationConcentration::UpdateOnNetwork()
     client::CrowdConcentrationKnowledgeUpdate asnMsg;
     asnMsg().mutable_knowledge()->set_id( nID_ );
     asnMsg().mutable_crowd()->set_id( pPopulationKnowledge_->GetID() );
-    asnMsg().mutable_knowledge_group()->set_id( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
+    asnMsg().mutable_knowledge_group()->set_id( pPopulationKnowledge_->GetKnowledgeGroupId() );
 
     if( *pPreviousPerceptionLevel_ != *pCurrentPerceptionLevel_ )
         asnMsg().set_perceived( ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );

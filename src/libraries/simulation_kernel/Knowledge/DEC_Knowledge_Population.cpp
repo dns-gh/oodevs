@@ -37,12 +37,13 @@ MIL_IDManager DEC_Knowledge_Population::idManager_;
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Population::DEC_Knowledge_Population( const MIL_KnowledgeGroup& knowledgeGroup, MIL_Population& populationKnown )
     : DEC_Knowledge_ABC()
-    , nID_                         ( idManager_.GetFreeId() )
-    , pKnowledgeGroup_             ( &knowledgeGroup )
     , pPopulationKnown_            ( &populationKnown )
     , pHackedPerceptionLevel_      ( &PHY_PerceptionLevel::notSeen_ )
-    , rDominationState_            ( 0. )
     , criticalIntelligence_        ( "" )
+    , nID_                         ( idManager_.GetFreeId() )
+    , knowledgeGroupId_            ( knowledgeGroup.GetId() )
+    , groupType_                   ( &knowledgeGroup.GetType() )
+    , rDominationState_            ( 0. )
     , bIsRecon_                    ( false )
     , bReconAttributesValid_       ( false )
     , bDecStateUpdated_            ( false )
@@ -57,12 +58,13 @@ DEC_Knowledge_Population::DEC_Knowledge_Population( const MIL_KnowledgeGroup& kn
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Population::DEC_Knowledge_Population()
     : DEC_Knowledge_ABC()
-    , nID_                         ( 0 )
-    , pKnowledgeGroup_             ( 0 )
     , pPopulationKnown_            ( 0 )
     , pHackedPerceptionLevel_      ( &PHY_PerceptionLevel::notSeen_ )
-    , rDominationState_            ( 0. )
     , criticalIntelligence_        ( "" )
+    , nID_                         ( 0 )
+    , knowledgeGroupId_            ( 0 )
+    , groupType_                   ( 0 )
+    , rDominationState_            ( 0. )
     , bIsRecon_                    ( false )
     , bReconAttributesValid_       ( false )
     , bDecStateUpdated_            ( false )
@@ -87,10 +89,13 @@ DEC_Knowledge_Population::~DEC_Knowledge_Population()
 void DEC_Knowledge_Population::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
-         >> const_cast< MIL_KnowledgeGroup*& >( pKnowledgeGroup_ )
          >> pPopulationKnown_
          >> const_cast< unsigned int& >( nID_ )
-         >> concentrations_
+         >> const_cast< unsigned int& >( knowledgeGroupId_ );
+    unsigned int typeId;
+    file >> typeId;
+    groupType_ = MIL_KnowledgeGroupType::FindType( typeId );
+    file >> concentrations_
          >> flows_
          >> bIsRecon_
          >> bReconAttributesValid_
@@ -106,10 +111,12 @@ void DEC_Knowledge_Population::load( MIL_CheckPointInArchive& file, const unsign
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Population::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
+    unsigned int type = groupType_->GetID();
     file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
-         << pKnowledgeGroup_
          << pPopulationKnown_
          << nID_
+         << knowledgeGroupId_
+         << type
          << concentrations_
          << flows_
          << bIsRecon_
@@ -370,11 +377,10 @@ MT_Vector2D DEC_Knowledge_Population::GetSafetyPosition( const MIL_AgentPion& ag
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Population::SendMsgCreation() const
 {
-    assert( pKnowledgeGroup_ );
     assert( pPopulationKnown_ );
     client::CrowdKnowledgeCreation asnMsg;
     asnMsg().mutable_knowledge()->set_id( nID_ );
-    asnMsg().mutable_knowledge_group()->set_id( pKnowledgeGroup_ ->GetId() );
+    asnMsg().mutable_knowledge_group()->set_id( knowledgeGroupId_ );
     asnMsg().mutable_crowd()->set_id( pPopulationKnown_->GetID() );
     asnMsg().mutable_party()->set_id( GetArmy().GetID() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
@@ -386,13 +392,10 @@ void DEC_Knowledge_Population::SendMsgCreation() const
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Population::SendMsgDestruction() const
 {
-    if( pKnowledgeGroup_ )
-    {
-        client::CrowdKnowledgeDestruction asnMsg;
-        asnMsg().mutable_knowledge()->set_id( nID_ );
-        asnMsg().mutable_knowledge_group()->set_id( pKnowledgeGroup_ ->GetId() );
-        asnMsg.Send( NET_Publisher_ABC::Publisher() );
-    }
+    client::CrowdKnowledgeDestruction asnMsg;
+    asnMsg().mutable_knowledge()->set_id( nID_ );
+    asnMsg().mutable_knowledge_group()->set_id( knowledgeGroupId_ );
+    asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -405,7 +408,7 @@ void DEC_Knowledge_Population::UpdateOnNetwork() const
     {
         client::CrowdKnowledgeUpdate asnMsg;
         asnMsg().mutable_knowledge()->set_id( nID_ );
-        asnMsg().mutable_knowledge_group()->set_id( pKnowledgeGroup_ ->GetId() );
+        asnMsg().mutable_knowledge_group()->set_id( knowledgeGroupId_ );
         if( bDecStateUpdated_ )
             asnMsg().set_domination( static_cast< unsigned int >( rDominationState_ * 100. ) );
         if( bCriticalIntelligenceUpdated_ )
@@ -429,7 +432,7 @@ void DEC_Knowledge_Population::SendStateToNewClient() const
     {
         client::CrowdKnowledgeUpdate asnMsg;
         asnMsg().mutable_knowledge()->set_id( nID_ );
-        asnMsg().mutable_knowledge_group()->set_id( pKnowledgeGroup_ ->GetId() );
+        asnMsg().mutable_knowledge_group()->set_id( knowledgeGroupId_ );
         asnMsg().set_domination( static_cast< unsigned int>( rDominationState_ * 100. ) );
         asnMsg().set_critical_intelligence( criticalIntelligence_ );
         asnMsg.Send( NET_Publisher_ABC::Publisher() );
@@ -459,13 +462,21 @@ unsigned int DEC_Knowledge_Population::GetID() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_Population::GetKnowledgeGroup
-// Created: NLD 2005-10-13
+// Name: DEC_Knowledge_Population::GetKnowledgeGroupType
+// Created: LDC 2012-08-28
 // -----------------------------------------------------------------------------
-const MIL_KnowledgeGroup& DEC_Knowledge_Population::GetKnowledgeGroup() const
+const MIL_KnowledgeGroupType& DEC_Knowledge_Population::GetKnowledgeGroupType() const
 {
-    assert( pKnowledgeGroup_ );
-    return *pKnowledgeGroup_;
+    return *groupType_;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population::GetKnowledgeGroupId
+// Created: LDC 2012-08-28
+// -----------------------------------------------------------------------------
+const unsigned int DEC_Knowledge_Population::GetKnowledgeGroupId() const
+{
+    return knowledgeGroupId_;
 }
 
 // -----------------------------------------------------------------------------

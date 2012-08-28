@@ -30,7 +30,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_PopulationKnowledgeParameter();
-    explicit MIL_PopulationKnowledgeParameter( DEC_Knowledge_Population* pKnowledge );
+    explicit MIL_PopulationKnowledgeParameter( boost::shared_ptr< DEC_Knowledge_Population >& pKnowledge );
              MIL_PopulationKnowledgeParameter( const sword::CrowdKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver,
                                                const MIL_EntityManager_ABC& entityManager );
     virtual ~MIL_PopulationKnowledgeParameter();
@@ -43,7 +43,7 @@ public:
 
     //! @name Conversions
     //@{
-    virtual bool ToPopulationKnowledge( DEC_Knowledge_Population*& ) const;
+    virtual bool ToPopulationKnowledge( boost::shared_ptr< DEC_Knowledge_Population >& ) const;
     virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
     //@}
 
@@ -57,7 +57,7 @@ public:
 private:
     //! @name Member data
     //@{
-    DEC_Knowledge_Population* pKnowledgePopulation_;
+    boost::shared_ptr< DEC_Knowledge_Population > pKnowledgePopulation_;
     //@}
 };
 

@@ -25,9 +25,9 @@ public:
     virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( unsigned int /*nID*/ ) const{ throw; }
     virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObjectByObjectID( unsigned int /*nID*/ ) const{ throw; }
 
-    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const sword::CrowdKnowledgeId& /*asn*/ ) const{ throw; }
-    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const MIL_Population& /*population*/ ) const{ throw; }
-    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( unsigned int /*nID*/ ) const{ throw; }
+    virtual boost::shared_ptr< DEC_Knowledge_Population > ResolveKnowledgePopulation( const sword::CrowdKnowledgeId& /*asn*/ ) const{ throw; }
+    virtual boost::shared_ptr< DEC_Knowledge_Population > ResolveKnowledgePopulation( const MIL_Population& /*population*/ ) const{ throw; }
+    virtual boost::shared_ptr< DEC_Knowledge_Population > ResolveKnowledgePopulation( unsigned int /*nID*/ ) const{ throw; }
 };
 
 #endif // __StubDEC_KnowledgeResolver_ABC_h_

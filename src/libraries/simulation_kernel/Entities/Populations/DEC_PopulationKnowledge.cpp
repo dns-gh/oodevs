@@ -225,27 +225,27 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_PopulationKnowledge::ResolveKnowle
 // Name: DEC_PopulationKnowledge::ResolveKnowledgePopulation
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Population* DEC_PopulationKnowledge::ResolveKnowledgePopulation( const sword::CrowdKnowledgeId& /*asn*/ ) const
+boost::shared_ptr< DEC_Knowledge_Population > DEC_PopulationKnowledge::ResolveKnowledgePopulation( const sword::CrowdKnowledgeId& /*asn*/ ) const
 {
-    return 0;
+    return boost::shared_ptr< DEC_Knowledge_Population >();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationKnowledge::ResolveKnowledgePopulation
 // Created: LGY 2011-07-11
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Population* DEC_PopulationKnowledge::ResolveKnowledgePopulation( const MIL_Population& /*population*/ ) const
+boost::shared_ptr< DEC_Knowledge_Population > DEC_PopulationKnowledge::ResolveKnowledgePopulation( const MIL_Population& /*population*/ ) const
 {
-    return 0;
+    return boost::shared_ptr< DEC_Knowledge_Population >();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationKnowledge::ResolveKnowledgePopulation
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Population* DEC_PopulationKnowledge::ResolveKnowledgePopulation( unsigned int /*nID*/ ) const
+boost::shared_ptr< DEC_Knowledge_Population > DEC_PopulationKnowledge::ResolveKnowledgePopulation( unsigned int /*nID*/ ) const
 {
-    return 0;
+    return boost::shared_ptr< DEC_Knowledge_Population >();
 }
 
 // -----------------------------------------------------------------------------

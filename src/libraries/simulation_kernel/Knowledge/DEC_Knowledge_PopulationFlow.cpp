@@ -238,7 +238,7 @@ void DEC_Knowledge_PopulationFlow::Update( const DEC_Knowledge_PopulationCollisi
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationFlow::UpdateRelevance()
 {
-    double rMaxLifeTime = pPopulationKnowledge_->GetKnowledgeGroup().GetType().GetKnowledgePopulationMaxLifeTime();
+    double rMaxLifeTime = pPopulationKnowledge_->GetKnowledgeGroupType().GetKnowledgePopulationMaxLifeTime();
     if( pFlowKnown_ && pFlowKnown_->GetPopulation().HasDoneMagicMove() )
         rMaxLifeTime = 0.;
     if( flowParts_.UpdateRelevance( rMaxLifeTime ) )
@@ -276,7 +276,7 @@ void DEC_Knowledge_PopulationFlow::SendFullState() const
     client::CrowdFlowKnowledgeUpdate asnMsg;
     asnMsg().mutable_knowledge()->set_id( nID_ );
     asnMsg().mutable_crowd()->set_id( pPopulationKnowledge_->GetID() );
-    asnMsg().mutable_knowledge_group()->set_id( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
+    asnMsg().mutable_knowledge_group()->set_id( pPopulationKnowledge_->GetKnowledgeGroupId() );
     asnMsg().set_perceived( ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
     asnMsg().mutable_flow()->set_id( pFlowKnown_ ? pFlowKnown_->GetID() : 0 );
     asnMsg().set_speed( static_cast< int >( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) ) );
@@ -305,7 +305,7 @@ void DEC_Knowledge_PopulationFlow::UpdateOnNetwork() const
     client::CrowdFlowKnowledgeUpdate asnMsg;
     asnMsg().mutable_knowledge()->set_id( nID_ );
     asnMsg().mutable_crowd()->set_id( pPopulationKnowledge_->GetID() );
-    asnMsg().mutable_knowledge_group()->set_id( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
+    asnMsg().mutable_knowledge_group()->set_id( pPopulationKnowledge_->GetKnowledgeGroupId() );
     if( *pPreviousPerceptionLevel_ != *pCurrentPerceptionLevel_ )
         asnMsg().set_perceived( ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
     if( bRealFlowUpdated_ )
@@ -349,7 +349,7 @@ void DEC_Knowledge_PopulationFlow::SendMsgCreation() const
     client::CrowdFlowKnowledgeCreation asnMsg;
     asnMsg().mutable_knowledge()->set_id( nID_ );
     asnMsg().mutable_crowd()->set_id( pPopulationKnowledge_->GetID() );
-    asnMsg().mutable_knowledge_group()->set_id( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
+    asnMsg().mutable_knowledge_group()->set_id( pPopulationKnowledge_->GetKnowledgeGroupId() );
     asnMsg().mutable_flow()->set_id( pFlowKnown_ ? pFlowKnown_->GetID() : 0 );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -364,7 +364,7 @@ void DEC_Knowledge_PopulationFlow::SendMsgDestruction() const
     client::CrowdFlowKnowledgeDestruction asnMsg;
     asnMsg().mutable_knowledge()->set_id( nID_ );
     asnMsg().mutable_crowd()->set_id( pPopulationKnowledge_->GetID() );
-    asnMsg().mutable_knowledge_group()->set_id( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
+    asnMsg().mutable_knowledge_group()->set_id( pPopulationKnowledge_->GetKnowledgeGroupId() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 

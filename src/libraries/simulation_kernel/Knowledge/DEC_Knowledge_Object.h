@@ -193,11 +193,11 @@ private:
     //! @name Data Members
     //@{
     const MIL_Army_ABC* pArmyKnowing_;
-    const MIL_KnowledgeGroup* pGroupKnowing_;
     MIL_Object_ABC* pObjectKnown_; // Objet réel (peut ne plus exister...)
     const unsigned int objectId_;
     const MIL_ObjectType_ABC* pObjectType_;
-    const unsigned int  nID_;
+    const unsigned int nID_;
+    const unsigned int groupId_;
     std::string name_;
     int nAttributesUpdated_;
     // Attributes

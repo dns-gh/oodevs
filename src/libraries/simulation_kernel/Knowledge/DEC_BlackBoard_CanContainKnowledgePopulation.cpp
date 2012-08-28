@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_BlackBoard_CanContainKnowledgePopulation.h"
 #include "DEC_Knowledge_Population.h"
+#include "Checkpoints/SerializationTools.h"
 #include "KnowledgesVisitor_ABC.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "MT_Tools/MT_ScipioException.h"
@@ -63,8 +64,10 @@ void DEC_BlackBoard_CanContainKnowledgePopulation::save( MIL_CheckPointOutArchiv
     const std::size_t size = knowledgePopulationMap_.size();
     file << size;
     for ( CIT_KnowledgePopulationMap it = knowledgePopulationMap_.begin(); it != knowledgePopulationMap_.end(); ++it )
-        file << it->first
-             << it->second;
+    {
+        file << it->first;
+        file << it->second;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -73,7 +76,7 @@ void DEC_BlackBoard_CanContainKnowledgePopulation::save( MIL_CheckPointOutArchiv
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Population& DEC_BlackBoard_CanContainKnowledgePopulation::CreateKnowledgePopulation( const MIL_KnowledgeGroup& knowledgeGroup, MIL_Population& populationPerceived )
 {
-    DEC_Knowledge_Population* pKnowledge = new DEC_Knowledge_Population( knowledgeGroup, populationPerceived );
+    boost::shared_ptr< DEC_Knowledge_Population > pKnowledge( new DEC_Knowledge_Population( knowledgeGroup, populationPerceived ) );
     if( ! knowledgePopulationMap_.insert( std::make_pair( &populationPerceived, pKnowledge ) ).second )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
     return *pKnowledge;
@@ -87,34 +90,33 @@ void DEC_BlackBoard_CanContainKnowledgePopulation::DestroyKnowledgePopulation( D
 {
     if( knowledgePopulationMap_.erase( &knowledge.GetPopulationKnown() ) != 1 )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
-    delete &knowledge;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgePopulation::GetKnowledgePopulationFromID
 // Created: NLD 2004-03-24
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Population* DEC_BlackBoard_CanContainKnowledgePopulation::GetKnowledgePopulationFromID( unsigned int nID ) const
+boost::shared_ptr< DEC_Knowledge_Population > DEC_BlackBoard_CanContainKnowledgePopulation::GetKnowledgePopulationFromID( unsigned int nID ) const
 {
     for( CIT_KnowledgePopulationMap it = knowledgePopulationMap_.begin(); it != knowledgePopulationMap_.end(); ++it )
     {
-        DEC_Knowledge_Population& knowledge = *it->second;
-        if( knowledge.GetID() == nID )
-            return &knowledge;
+        const boost::shared_ptr< DEC_Knowledge_Population >& knowledge = it->second;
+        if( knowledge->GetID() == nID )
+            return knowledge;
     }
-    return 0;
+    return boost::shared_ptr< DEC_Knowledge_Population >();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgePopulation::GetKnowledgesPopulation
 // Created: NLD 2004-03-23
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Population* DEC_BlackBoard_CanContainKnowledgePopulation::GetKnowledgePopulation( const MIL_Population& associatedPopulation ) const
+boost::shared_ptr< DEC_Knowledge_Population > DEC_BlackBoard_CanContainKnowledgePopulation::GetKnowledgePopulation( const MIL_Population& associatedPopulation ) const
 {
     CIT_KnowledgePopulationMap itKnowledge = knowledgePopulationMap_.find( &associatedPopulation );
     if( itKnowledge != knowledgePopulationMap_.end() )
         return itKnowledge->second;
-    return 0;
+    return boost::shared_ptr< DEC_Knowledge_Population >();
 }
 
 // -----------------------------------------------------------------------------

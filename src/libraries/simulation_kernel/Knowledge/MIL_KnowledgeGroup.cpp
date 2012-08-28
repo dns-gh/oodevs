@@ -406,7 +406,7 @@ bool MIL_KnowledgeGroup::IsPerceptionDistanceHacked( MIL_Object_ABC& objectKnown
 // -----------------------------------------------------------------------------
 bool MIL_KnowledgeGroup::IsPerceptionDistanceHacked( MIL_Population& populationKnown ) const
 {
-    DEC_Knowledge_Population* pKnowledge = GetKnowledge().GetKnowledgePopulationContainer().GetKnowledgePopulation( populationKnown );
+    boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = GetKnowledge().GetKnowledgePopulationContainer().GetKnowledgePopulation( populationKnown );
     if( !pKnowledge )
         return false;
 
@@ -446,7 +446,7 @@ const PHY_PerceptionLevel& MIL_KnowledgeGroup::GetPerceptionLevel( MIL_Object_AB
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& MIL_KnowledgeGroup::GetPerceptionLevel( MIL_Population& populationKnown ) const
 {
-    DEC_Knowledge_Population* pKnowledge = GetKnowledge().GetKnowledgePopulationContainer().GetKnowledgePopulation( populationKnown );
+    boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = GetKnowledge().GetKnowledgePopulationContainer().GetKnowledgePopulation( populationKnown );
     if( !pKnowledge)
         return PHY_PerceptionLevel::notSeen_;
 
@@ -1133,7 +1133,7 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Population& MIL_KnowledgeGroup::GetPopulationKnowledgeToUpdate( MIL_Population& populationKnown )
 {
-    DEC_Knowledge_Population* pKnowledge = GetKnowledge().GetKnowledgePopulationContainer().GetKnowledgePopulation( populationKnown );
+    boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = GetKnowledge().GetKnowledgePopulationContainer().GetKnowledgePopulation( populationKnown );
     if( pKnowledge )
         return *pKnowledge;
     return CreateKnowledgePopulation( populationKnown );

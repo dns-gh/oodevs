@@ -147,7 +147,7 @@ public:
     { throw; }
     virtual bool ToObjectKnowledgeList( std::vector< boost::shared_ptr< DEC_Knowledge_Object > >& ) const
     { throw; }
-    virtual bool ToPopulationKnowledge( DEC_Knowledge_Population*& ) const
+    virtual bool ToPopulationKnowledge( boost::shared_ptr< DEC_Knowledge_Population >& ) const
     { throw; }
     virtual bool ToDotationType( const PHY_DotationCategory*& ) const
     { throw; }

@@ -20,6 +20,7 @@ class MIL_Agent_ABC;
 class MIL_AgentPion;
 class MIL_Army_ABC;
 class MIL_KnowledgeGroup;
+class MIL_KnowledgeGroupType;
 class MIL_Population;
 class MIL_PopulationConcentration;
 class MIL_PopulationFlow;
@@ -79,7 +80,8 @@ public:
     //@{
     unsigned int GetID() const;
     const MIL_Army_ABC& GetArmy() const;
-    const MIL_KnowledgeGroup& GetKnowledgeGroup() const;
+    const MIL_KnowledgeGroupType& GetKnowledgeGroupType() const;
+    const unsigned int GetKnowledgeGroupId() const;
     MIL_Population& GetPopulationKnown() const;
     double GetDangerosity( const MIL_AgentPion& target ) const;
     bool IsRecon() const;
@@ -128,11 +130,12 @@ private:
     //! @name Data Members
     //@{
     static MIL_IDManager idManager_;
-    const MIL_KnowledgeGroup* pKnowledgeGroup_;
     MIL_Population* pPopulationKnown_;
     const PHY_PerceptionLevel* pHackedPerceptionLevel_;
     std::string criticalIntelligence_;
     const unsigned int nID_;
+    const unsigned int knowledgeGroupId_;
+    const MIL_KnowledgeGroupType* groupType_;
     T_ConcentrationMap concentrations_;
     T_FlowMap flows_;
     double rDominationState_;

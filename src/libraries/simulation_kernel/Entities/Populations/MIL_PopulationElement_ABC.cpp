@@ -657,11 +657,11 @@ void MIL_PopulationElement_ABC::UpdateCollidingAttackingAgents( MIL_Agent_ABC& t
         return;
 
     collidingAttackingAgents_.push_back( &target );
-    DEC_Knowledge_Population* pKnPopulation = target.GetKnowledge().ResolveKnowledgePopulation( *pPopulation_ );
+    boost::shared_ptr< DEC_Knowledge_Population > pKnPopulation = target.GetKnowledge().ResolveKnowledgePopulation( *pPopulation_ );
     if( !pKnPopulation )
         return;
 
-    MIL_Report::PostEvent( target, MIL_Report::eReport_SetUponByPopulation, *pKnPopulation );
+    MIL_Report::PostEvent( target, MIL_Report::eReport_SetUponByPopulation, pKnPopulation );
 }
 
 namespace
