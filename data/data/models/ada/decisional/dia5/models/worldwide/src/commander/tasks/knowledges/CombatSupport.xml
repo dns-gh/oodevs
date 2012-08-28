@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.tasks.knowledges.CombatSupportEffect" source-version="1.0.0" extends="commander.tasks.knowledges.CompanyTask">
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.tasks.knowledges.CombatSupport" source-version="1.0.0" extends="commander.tasks.knowledges.CompanyTask">
     <description>The knowledge of the 'Support' effect. This knowledge is used by the commander agent to perform support missions. </description>
     <methods>
         <method name="getEntitiesToSupport">

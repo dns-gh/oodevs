@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.tasks.knowledges.Defend" source-version="1.0.0" extends="commander.tasks.knowledges.CompanyTask">
-    <description>The knowledge of the 'Defend' mission. This knowledge is used by the commander agent to perform this mission. </description>
+    <description>The knowledge of the 'Defend' mission. This knowledge is used by the commander agent to perform this mission.</description>
     <methods>
         <method name="getMeetingPoint">
             <description>Returns the 'meetingPoint' parameter.</description>

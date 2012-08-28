@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="company.combat.tasks.Surveiller" source-version="1.0.0" knowledge-class="commander.tasks.knowledges.MonitorEffect">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="company.combat.tasks.Surveiller" source-version="1.0.0" knowledge-class="company.combat.tasks.knowledges.MonitorEffect">
     <parameters>
         <parameter name="objective">
             <type>
@@ -14,47 +14,42 @@
             </type>
         </parameter>
     </parameters>
-    <stages/>
-    <next-task name="commander.tasks.Monitor">
-        <parameter name="objective">
-            <value>
-                <parameter>objective</parameter>
-            </value>
-        </parameter>
-        <parameter name="positions">
-            <value>
-                <parameter>positions</parameter>
-            </value>
-        </parameter>
-        <parameter name="companyTask">
-            <value>
-                <string>company.combat.tasks.Surveiller</string>
-            </value>
-        </parameter>
-        <parameter name="mainTasks">
-            <value>
-                <string>platoon.tasks.Surveiller</string>
-            </value>
-        </parameter>
-        <parameter name="supportTasks">
-            <value>
-                <string>platoon.tasks.Appuyer;platoon.combat.support.engineer.tasks.AppuiMobilite</string>
-            </value>
-        </parameter>
-        <parameter name="peiTasks">
-            <value>
-                <string>platoon.combat.tasks.Eclairer</string>
-            </value>
-        </parameter>
-        <parameter name="defaultTask">
-            <value>
-                <string>platoon.tasks.Suivre</string>
-            </value>
-        </parameter>
-        <parameter name="taskForSupporting">
-            <value>
-                <string>platoon.tasks.Appuyer</string>
-            </value>
-        </parameter>
-    </next-task>
+    <stages>
+        <stage label="surveillance" permanent="true">
+            <skills>
+                <skill name="commander.skills.Lead">
+                    <parameter name="companyTask">
+                        <value>
+                            <string>company.combat.tasks.Surveiller</string>
+                        </value>
+                    </parameter>
+                    <parameter name="mainTasks">
+                        <value>
+                            <string>platoon.tasks.Surveiller</string>
+                        </value>
+                    </parameter>
+                    <parameter name="supportTasks">
+                        <value>
+                            <string>platoon.tasks.Appuyer;platoon.combat.support.engineer.tasks.AppuiMobilite</string>
+                        </value>
+                    </parameter>
+                    <parameter name="peiTasks">
+                        <value>
+                            <string>platoon.combat.tasks.Eclairer</string>
+                        </value>
+                    </parameter>
+                    <parameter name="defaultTask">
+                        <value>
+                            <string>platoon.tasks.Suivre</string>
+                        </value>
+                    </parameter>
+                    <parameter name="taskForSupporting">
+                        <value>
+                            <string>platoon.tasks.Appuyer</string>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
 </task>
