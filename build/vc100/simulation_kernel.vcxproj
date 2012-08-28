@@ -349,7 +349,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\PHY_ResourceNetworkType.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\PHY_RoofShapeType.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\UrbanPhysicalAttribute.cpp" />
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\UrbanResourceNetworkAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\WeaponAvailabilityComputerFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\WeaponReloadingComputerFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Firing\DirectFiring\PHY_ActionDirectFirePion.cpp" />
@@ -1129,7 +1128,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\PHY_RoofShapeType.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\UrbanExtension_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\UrbanPhysicalAttribute.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\UrbanResourceNetworkAttribute.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\WeaponAvailabilityComputer_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\WeaponAvailabilityComputerFactory.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\WeaponAvailabilityComputerFactory_ABC.h" />

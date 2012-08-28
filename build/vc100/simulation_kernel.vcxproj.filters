@@ -2634,9 +2634,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\UrbanPhysicalAttribute.cpp">
       <Filter>Source Files\Urban</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\UrbanResourceNetworkAttribute.cpp">
-      <Filter>Source Files\Urban</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\PerceptionCallbackEventListener.cpp">
       <Filter>Source Files\Adapters\EventListeners</Filter>
     </ClCompile>
@@ -5373,9 +5370,6 @@
       <Filter>Source Files\Urban</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\UrbanPhysicalAttribute.h">
-      <Filter>Source Files\Urban</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\UrbanResourceNetworkAttribute.h">
       <Filter>Source Files\Urban</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\UrbanExtension_ABC.h">
