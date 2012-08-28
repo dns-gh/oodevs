@@ -18,8 +18,11 @@
 // Created: NLD 2005-01-19
 // -----------------------------------------------------------------------------
 template< typename T > 
-void DEC_ObjectFunctions::MagicCreateObject( const T& caller, const std::string& type, const TER_Localisation* pLocalisation )
+int DEC_ObjectFunctions::MagicCreateObject( const T& caller, const std::string& type, const TER_Localisation* pLocalisation )
 {
     //$$$ A réencapsuler    
-    MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( caller.GetArmy(), type, pLocalisation, sword::ObstacleType_DemolitionTargetType_preliminary );
+    MIL_Object_ABC* object = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( caller.GetArmy(), type, pLocalisation, sword::ObstacleType_DemolitionTargetType_preliminary );
+    if( !object )
+        return 0;
+    return object->GetID();
 }
