@@ -130,7 +130,7 @@ namespace
 // -----------------------------------------------------------------------------
 bool ReadRngConfig( session::RngConfig& dst, const Tree& src, const std::string& prefix )
 {
-    std::string dist;
+    std::string dist = ConvertRngDistribution( dst.distribution );
     bool modified = ::TryRead( dist, src, prefix + "distribution" );
     if( modified )
         dst.distribution = ConvertRngDistribution( dist );
