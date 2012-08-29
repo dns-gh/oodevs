@@ -192,7 +192,7 @@ Session::Session( const SessionDependencies& deps,
     , first_time_  ( true )
     , replays_     ()
 {
-    // NOTHING
+    node->FilterConfig( cfg_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -226,6 +226,7 @@ Session::Session( const SessionDependencies& deps,
     , first_time_  ( Get< bool >( tree, "first_time" ) )
     , replays_     ()
 {
+    node->FilterConfig( cfg_ );
     node_->UpdateSessionSize( id_, size_ );
     if( !process_ && !IsReplay() )
         ParseCheckpoints();

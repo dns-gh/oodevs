@@ -41,6 +41,10 @@ namespace node
 {
     struct Config;
 }
+namespace session
+{
+    struct Config;
+}
 }
 
 namespace host
@@ -120,6 +124,7 @@ struct Node_ABC : public boost::noncopyable
     virtual T_Token StartSession( const boost::posix_time::ptime& start, bool first_time ) = 0;
     virtual void UpdateSessionSize( const Uuid& id, size_t size ) = 0;
     virtual void RemoveSession( const Uuid& id ) = 0;
+    virtual void FilterConfig( web::session::Config& cfg ) const = 0;
     //@}
 };
 

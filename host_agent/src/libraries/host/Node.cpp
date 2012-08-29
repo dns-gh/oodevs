@@ -628,3 +628,17 @@ void Node::UpdateSessionSize( const Uuid& id, size_t size )
     it.first->second = size;
     sessions_size_ = accumulate( sessions_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Node::FilterConfig
+// Created: BAX 2012-08-29
+// ----------------------------------------------------------------------------
+void Node::FilterConfig( web::session::Config& cfg ) const
+{
+    std::set< std::string > bad;
+    BOOST_FOREACH( const web::session::Config::T_Plugins::value_type& value, cfg.plugins )
+        if( !cfg_.plugins.count( value.first ) )
+            bad.insert( value.first );
+    BOOST_FOREACH( const std::string& id, bad )
+        cfg.plugins.erase( id );
+}

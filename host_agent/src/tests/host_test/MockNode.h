@@ -49,6 +49,7 @@ namespace mocks
         MOCK_METHOD( StartSession, 2 );
         MOCK_METHOD( RemoveSession, 1 );
         MOCK_METHOD( UpdateSessionSize, 2 );
+        MOCK_METHOD( FilterConfig, 1 );
     };
 
     MOCK_BASE_CLASS( MockNodeFactory, host::NodeFactory_ABC )

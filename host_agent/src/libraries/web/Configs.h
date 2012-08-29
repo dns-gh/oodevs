@@ -124,14 +124,15 @@ namespace node
 struct Config
 {
     Config();
-    std::string             name;
+    typedef std::set< std::string > T_Plugins;
+    std::string name;
     struct
     {
-        size_t              max_play;
-        size_t              max_parallel;
-        bool                reset;
-    }                       sessions;
-    std::set< std::string > plugins;
+        size_t  max_play;
+        size_t  max_parallel;
+        bool    reset;
+    }           sessions;
+    T_Plugins   plugins;
 };
 
 bool   ReadConfig ( Config& dst, const Tree& src );

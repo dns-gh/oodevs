@@ -108,6 +108,7 @@ namespace
             MOCK_EXPECT( system.Rename ).returns( true );
             MOCK_EXPECT( system.Remove ).returns( true );
             MOCK_EXPECT( node->UpdateSessionSize );
+            MOCK_EXPECT( node->FilterConfig );
         }
 
         SessionPtr MakeSession()
