@@ -9,8 +9,9 @@
 
 #include "hla_plugin_pch.h"
 #include "TacticalObjectProxy.h"
-#include "EventListener_ABC.h"
+#include "TacticalObjectEventListener_ABC.h"
 #include "dispatcher/Object_ABC.h"
+#include "dispatcher/Localisation.h"
 
 using namespace plugins::hla;
 
@@ -37,18 +38,18 @@ TacticalObjectProxy::~TacticalObjectProxy()
 // Name: TacticalObjectProxy::Register
 // Created: AHC 2012-08-08
 // -----------------------------------------------------------------------------
-void TacticalObjectProxy::Register( EventListener_ABC& listener )
+void TacticalObjectProxy::Register( TacticalObjectEventListener_ABC& listener )
 {
     listeners_.Register( listener );
-    //listener.SpatialChanged( object_.GetPosition().X(), object_.GetPosition().Y(),
-    //        object_.GetAltitude(), object_.GetSpeed(), object_.GetDirection() );
+    const dispatcher::Localisation::T_PositionVector& points( object_.GetLocalisation().GetPoints() );
+    listener.SpatialChanged( points );
 }
 
 // -----------------------------------------------------------------------------
 // Name: TacticalObjectProxy::Unregister
 // Created: AHC 2012-08-08
 // -----------------------------------------------------------------------------
-void TacticalObjectProxy::Unregister( EventListener_ABC& listener )
+void TacticalObjectProxy::Unregister( TacticalObjectEventListener_ABC& listener )
 {
     listeners_.Unregister( listener );
 }

@@ -42,6 +42,7 @@ MOCK_BASE_CLASS( MockObject, dispatcher::Object_ABC )
 
     // dispatcher::Object_ABC
     MOCK_METHOD( GetTeam, 0 );
+    MOCK_METHOD( GetLocalisation, 0 );
 };
 
 #endif // __MockObject_h_

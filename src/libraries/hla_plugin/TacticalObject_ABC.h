@@ -16,7 +16,7 @@ namespace plugins
 {
 namespace hla
 {
-    class EventListener_ABC;
+    class TacticalObjectEventListener_ABC;
 
 // =============================================================================
 /** @class  TacticalObject_ABC
@@ -35,8 +35,8 @@ public:
 
     //! @name Registration
     //@{
-    virtual void Register( EventListener_ABC& listener ) = 0;
-    virtual void Unregister( EventListener_ABC& listener ) = 0;
+    virtual void Register( TacticalObjectEventListener_ABC& listener ) = 0;
+    virtual void Unregister( TacticalObjectEventListener_ABC& listener ) = 0;
     //@}
 };
 

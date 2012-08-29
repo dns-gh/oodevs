@@ -43,32 +43,32 @@
     <Import Project="Property sheets\base_win32.props" />
     <Import Project="Property sheets\library_static_release.props" />
     <Import Project="Property sheets\precompiled_header.props" />
-    <Import Project="Property sheets\include_out_directory.props" />
     <Import Project="Property sheets\include_qt.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="Property sheets\base_x64.props" />
     <Import Project="Property sheets\library_static_release.props" />
     <Import Project="Property sheets\precompiled_header.props" />
-    <Import Project="Property sheets\include_out_directory.props" />
     <Import Project="Property sheets\include_qt.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="Property sheets\base_win32.props" />
     <Import Project="Property sheets\library_static_debug.props" />
     <Import Project="Property sheets\precompiled_header.props" />
-    <Import Project="Property sheets\include_out_directory.props" />
     <Import Project="Property sheets\include_qt.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="Property sheets\base_x64.props" />
     <Import Project="Property sheets\library_static_debug.props" />
     <Import Project="Property sheets\precompiled_header.props" />
-    <Import Project="Property sheets\include_out_directory.props" />
     <Import Project="Property sheets\include_qt.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -153,6 +153,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\Subordinates.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\SurfaceVessel.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\TacticalObjectController.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\TacticalObjectEventListenerComposite.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\TacticalObjectProxy.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\Transportation.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\TransportationFacade.cpp" />
@@ -271,6 +272,8 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\Subordinates_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\SurfaceVessel.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\TacticalObjectController.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\TacticalObjectEventListenerComposite.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\TacticalObjectEventListener_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\TacticalObjectListener_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\TacticalObjectProxy.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\TacticalObjectSubject_ABC.h" />

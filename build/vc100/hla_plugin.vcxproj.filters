@@ -292,6 +292,9 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\TacticalObjectProxy.cpp">
       <Filter>Source Files\Dispatcher</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\TacticalObjectEventListenerComposite.cpp">
+      <Filter>Source Files\Resolvers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h">
@@ -686,6 +689,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\TacticalObjectProxy.h">
       <Filter>Source Files\Dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\TacticalObjectEventListener_ABC.h">
+      <Filter>Source Files\Resolvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\TacticalObjectEventListenerComposite.h">
+      <Filter>Source Files\Resolvers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

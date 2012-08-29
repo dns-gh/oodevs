@@ -102,3 +102,12 @@ std::string Localisation::GetTypeName() const
         return "";
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: Localisation::GetPoints
+// Created: AHC 2012-08-10
+// -----------------------------------------------------------------------------
+const Localisation::T_PositionVector& Localisation::GetPoints() const
+{
+    return points_;
+}

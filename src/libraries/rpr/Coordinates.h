@@ -156,6 +156,47 @@ private:
     //@}
 };
 
+// =============================================================================
+/** @class  PerimeterPoint
+    @brief  PerimeterPoint
+*/
+// Created: AHC 2012-08-10
+// =============================================================================
+class PerimeterPoint
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+    PerimeterPoint();
+    PerimeterPoint( float x, float y );
+    virtual ~PerimeterPoint();
+
+     //! @name Operations
+     //@{
+     template< typename Archive >
+     void Serialize( Archive& archive ) const
+     {
+         archive << x_ << y_;
+     }
+     template< typename Archive >
+     void Deserialize( Archive& archive )
+     {
+         archive >> x_ >> y_;
+     }
+     //@}
+     //! @name Accessors
+     //@{
+     double X() const   { return x_; };
+     double Y() const { return y_; };
+     //@}
+
+private:
+    //! @name Member data
+    //@{
+    float x_, y_;
+    //@}
+};
+
 }
 
 #endif // __rpr_Coordinates_h_

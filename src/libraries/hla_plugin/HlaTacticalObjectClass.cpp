@@ -63,7 +63,7 @@ HlaObject_ABC& HlaTacticalObjectClass::Create ( const ::hla::ObjectIdentifier& o
 // Name: HlaTacticalObjectClass::Destroy
 // Created: AHC 2012-08-07
 // -----------------------------------------------------------------------------
-void HlaTacticalObjectClass::Destroy( HlaObject_ABC& object )
+void HlaTacticalObjectClass::Destroy( HlaObject_ABC& /*object*/ )
 {
     // TODO
 }
@@ -72,7 +72,7 @@ void HlaTacticalObjectClass::Destroy( HlaObject_ABC& object )
 // Name: HlaTacticalObjectClass::Reflected
 // Created: AHC 2012-08-07
 // -----------------------------------------------------------------------------
-void HlaTacticalObjectClass::Reflected( HlaObject_ABC& object )
+void HlaTacticalObjectClass::Reflected( HlaObject_ABC& /*object*/ )
 {
     // TODO
 }
@@ -81,7 +81,7 @@ void HlaTacticalObjectClass::Reflected( HlaObject_ABC& object )
 // Name: HlaTacticalObjectClass::RequestConfirmDivestiture
 // Created: AHC 2012-08-07
 // -----------------------------------------------------------------------------
-bool HlaTacticalObjectClass::RequestConfirmDivestiture( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const ::hla::T_AttributeIdentifiers& attributes )
+bool HlaTacticalObjectClass::RequestConfirmDivestiture( const ::hla::ObjectIdentifier& /*objectID*/, const HlaObject_ABC& /*object*/, const ::hla::T_AttributeIdentifiers& /*attributes*/ )
 {
     return false;
 }
@@ -90,7 +90,7 @@ bool HlaTacticalObjectClass::RequestConfirmDivestiture( const ::hla::ObjectIdent
 // Name: HlaTacticalObjectClass::OwnershipAcquisitionNotification
 // Created: AHC 2012-08-07
 // -----------------------------------------------------------------------------
-void HlaTacticalObjectClass::OwnershipAcquisitionNotification( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const ::hla::T_AttributeIdentifiers& attributes )
+void HlaTacticalObjectClass::OwnershipAcquisitionNotification( const ::hla::ObjectIdentifier& /*objectID*/, const HlaObject_ABC& /*object*/, const ::hla::T_AttributeIdentifiers& /*attributes*/ )
 {
     // NOTHING
 }
@@ -99,7 +99,7 @@ void HlaTacticalObjectClass::OwnershipAcquisitionNotification( const ::hla::Obje
 // Name: HlaTacticalObjectClass::RequestOwnershipAssumption
 // Created: AHC 2012-08-07
 // -----------------------------------------------------------------------------
-bool HlaTacticalObjectClass::RequestOwnershipAssumption( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const ::hla::T_AttributeIdentifiers& attributes )
+bool HlaTacticalObjectClass::RequestOwnershipAssumption( const ::hla::ObjectIdentifier& /*objectID*/, const HlaObject_ABC& /*object*/, const ::hla::T_AttributeIdentifiers& /*attributes*/ )
 {
     return false;
 }

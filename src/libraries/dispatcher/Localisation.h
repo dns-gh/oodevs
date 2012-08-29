@@ -31,6 +31,11 @@ namespace dispatcher
 class Localisation
 {
 public:
+    //! @name Types
+    //@{
+    typedef std::vector< sword::CoordLatLong > T_PositionVector;
+    //@}
+
     //! @name Constructors/Destructor
     //@{
              Localisation();
@@ -44,12 +49,7 @@ public:
     void Send( sword::Location& msg ) const;
     bool IsEmpty() const;
     std::string GetTypeName() const;
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef std::vector< sword::CoordLatLong > T_PositionVector;
+    const T_PositionVector& GetPoints() const;
     //@}
 
 private:

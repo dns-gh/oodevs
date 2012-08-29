@@ -268,3 +268,34 @@ Orientation::~Orientation()
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: PerimeterPoint::PerimeterPoint
+// Created: AHC 2012-08-10
+// -----------------------------------------------------------------------------
+PerimeterPoint::PerimeterPoint()
+    : x_( 0.f )
+    , y_( 0.f )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PerimeterPoint::PerimeterPoint
+// Created: AHC 2012-08-10
+// -----------------------------------------------------------------------------
+PerimeterPoint::PerimeterPoint( float x, float y )
+    : x_( x )
+    , y_( y )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PerimeterPoint::PerimeterPoint
+// Created: AHC 2012-08-10
+// -----------------------------------------------------------------------------
+PerimeterPoint::~PerimeterPoint()
+{
+    // NOTHING
+}

@@ -96,7 +96,7 @@ namespace hla
         {}
         virtual std::auto_ptr< HlaObject_ABC > Create( TacticalObject_ABC& object, const std::string& name, unsigned int identifier, rpr::ForceIdentifier force, const rpr::EntityType& type ) const
         {
-            return std::auto_ptr< HlaObject_ABC >( new T( identifier, name, force, type, siteID_, applicationID_ ) );
+            return std::auto_ptr< HlaObject_ABC >( new T( object, identifier, name, force, type, siteID_, applicationID_ ) );
         }
     private:
         unsigned short siteID_;

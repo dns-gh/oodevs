@@ -37,7 +37,7 @@ public:
     //! @name Operations
     //@{
     virtual const dispatcher::Team_ABC& GetTeam() const = 0;
-    //virtual const Localisation& GetLocalisation() const = 0;
+    virtual const Localisation& GetLocalisation() const = 0;
     //@}
 };
 

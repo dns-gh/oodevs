@@ -12,12 +12,18 @@
 #include "AttributesUpdater.h"
 #include "ObjectListenerComposite.h"
 #include "SerializationTools.h"
+#include "TacticalObject_ABC.h"
+
+#include "protocol/proto/common.pb.h"
 
 #include <hla/Deserializer_ABC.h>
 #include <hla/Serializer_ABC.h>
 #include <hla/AttributeIdentifier.h>
 
 #include <boost/bind.hpp>
+
+#include <algorithm>
+#include <numeric>
 
 using namespace plugins::hla;
 
@@ -44,15 +50,21 @@ void ReadNothing( ::hla::Deserializer_ABC& /*deserializer*/, const std::string& 
 {
     // NOTHING
 }
+void ReadWorldLocation( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, rpr::WorldLocation& loc )
+{
+    loc.Deserialize( deserializer );
+    listener.Moved( identifier, loc.Latitude(), loc.Longitude() );
+}
 }
 
 // -----------------------------------------------------------------------------
 // Name: Minefield constructor
 // Created: AHC 2012-08-07
 // -----------------------------------------------------------------------------
-Minefield::Minefield( unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type,
+Minefield::Minefield( TacticalObject_ABC& object, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type,
         unsigned short siteID, unsigned short applicationID )
-    : listeners_ ( new ObjectListenerComposite() )
+    : object_( &object )
+    , listeners_ ( new ObjectListenerComposite() )
     , identifier_( name )
     , attributes_( new AttributesUpdater( identifier_, *listeners_ ) )
     , type_( type )
@@ -60,6 +72,7 @@ Minefield::Minefield( unsigned int identifier, const std::string& name, rpr::For
     , force_( force )
 {
 	RegisterAttributes();
+	object_->Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,7 +80,8 @@ Minefield::Minefield( unsigned int identifier, const std::string& name, rpr::For
 // Created: AHC 2012-08-07
 // -----------------------------------------------------------------------------
 Minefield::Minefield( const std::string& identifier )
-    : listeners_ ( new ObjectListenerComposite() )
+    : object_( 0 )
+    , listeners_ ( new ObjectListenerComposite() )
     , identifier_( identifier )
 {
 	RegisterAttributes();
@@ -79,7 +93,8 @@ Minefield::Minefield( const std::string& identifier )
 // -----------------------------------------------------------------------------
 Minefield::~Minefield()
 {
-    // TODO
+    if( object_ )
+        object_->Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -147,11 +162,47 @@ void Minefield::RegisterAttributes()
     attributes_->Register( "MinefieldType", boost::bind( &ReadEntityType, _1, _2, _3, boost::ref( type_ ) ), type_ );
     attributes_->Register( "MinefieldIdentifier", boost::bind( &ReadEntityIdentifier, _1, _2, _3, boost::ref( entityIdentifier_ ) ), entityIdentifier_ );
     attributes_->Register( "ForceIdentifier", boost::bind( &ReadForceIdentifier, _1, _2, _3, boost::ref( force_ ) ), Wrapper< int8 >( static_cast< int8 >( force_ ) ) );
-    //attributes_->Register( "MinefieldLocation" );
+    attributes_->Register( "MinefieldLocation", boost::bind( &ReadWorldLocation, _1, _2, _3, boost::ref( center_ ) ), center_);
     //attributes_->Register( "MinefieldOrientation" );
     attributes_->Register( "MineTypes", boost::bind( &ReadNothing, _1, _2, _3 ), Wrapper< std::vector< rpr::EntityType > >( mineTypes_ ) );
-    //attributes_->Register( "PerimeterPointCoordinates");
+    attributes_->Register( "PerimeterPointCoordinates", boost::bind( &ReadNothing, _1, _2, _3 ), Wrapper< std::vector< rpr::PerimeterPoint > >( perimeter_ ) );
     attributes_->Register( "ProtocolMode", boost::bind( &ReadNothing, _1, _2, _3 ), Wrapper< uint8 >( 0 ) ); // HearbeatMode
-    attributes_->Register( "State", boost::bind( &ReadNothing, _1, _2, _3 ), Wrapper< bool >( true ) ); // FIXME AHC
+    attributes_->Register( "State", boost::bind( &ReadNothing, _1, _2, _3 ), Wrapper< bool >( false ) ); // FIXME AHC
 	attributes_->Register( "ActiveStatus", boost::bind( &ReadNothing, _1, _2, _3 ), Wrapper< bool >( true ) ); // FIXME AHC
+}
+
+namespace
+{
+    double addLat( double v, const sword::CoordLatLong& l )
+    {
+        return v + l.latitude();
+    }
+    double addLong( double v, const sword::CoordLatLong& l )
+    {
+        return v + l.longitude();
+    }
+    rpr::PerimeterPoint computePerimeter( const sword::CoordLatLong& v, double cx, double cy )
+    {
+        rpr::WorldLocation loc( v.latitude(), v.longitude(), 0 );
+        return rpr::PerimeterPoint( static_cast< float >( loc.X() - cx ), static_cast< float >( loc.Y() - cy ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Minefield::SpatialChanged
+// Created: AHC 2012-08-10
+// -----------------------------------------------------------------------------
+void Minefield::SpatialChanged( const TacticalObjectEventListener_ABC::T_PositionVector& pos )
+{
+    if( pos.size() == 0 )
+        return;
+
+    double centerLat = std::accumulate( pos.begin(), pos.end(), 0., addLat );
+    double centerLong = std::accumulate( pos.begin(), pos.end(), 0., addLong );
+    center_ = rpr::WorldLocation( centerLat/pos.size(), centerLong/pos.size(), 0 );
+    attributes_->Update( "MinefieldLocation", center_ );
+
+    perimeter_.resize( pos.size() );
+    std::transform( pos.begin(), pos.end(), perimeter_.begin(), boost::bind( &computePerimeter, _1, center_.X(), center_.Y() ) );
+    attributes_->Update( "PerimeterPointCoordinates", Wrapper< std::vector< rpr::PerimeterPoint > >( perimeter_ ) );
 }

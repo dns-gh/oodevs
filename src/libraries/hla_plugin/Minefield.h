@@ -11,10 +11,12 @@
 #define plugins_hla_MINEFIELD_H_
 
 #include "HlaObject_ABC.h"
+#include "TacticalObjectEventListener_ABC.h"
 
 #include "rpr/ForceIdentifier.h"
 #include "rpr/EntityType.h"
 #include "rpr/EntityIdentifier.h"
+#include "rpr/Coordinates.h"
 
 namespace hla
 {
@@ -34,6 +36,7 @@ namespace hla
 {
     class AttributesUpdater;
     class ObjectListenerComposite;
+    class TacticalObject_ABC;
 
 /// =============================================================================
 /// @class Minefield
@@ -43,11 +46,12 @@ namespace hla
 /// Created: ahc  7 août 2012
 /// =============================================================================
 class Minefield : public HlaObject_ABC
+    , private TacticalObjectEventListener_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    Minefield( unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type,
+    Minefield( TacticalObject_ABC& object, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type,
             unsigned short siteID, unsigned short applicationID );
     Minefield( const std::string& identifier );
     virtual  ~Minefield();
@@ -66,17 +70,21 @@ public:
 private:
     //! @name Operations
     //@{
+    virtual void SpatialChanged( const TacticalObjectEventListener_ABC::T_PositionVector& pos );
     void RegisterAttributes();
     //@}
     //! @name Attributes
     //@{
     std::auto_ptr< ObjectListenerComposite > listeners_;
+    TacticalObject_ABC* object_;
     std::string identifier_;
     std::auto_ptr< AttributesUpdater > attributes_;
     rpr::EntityType type_;
     rpr::EntityIdentifier entityIdentifier_;
     rpr::ForceIdentifier force_;
     std::vector< rpr::EntityType > mineTypes_;
+    rpr::WorldLocation center_;
+    std::vector< rpr::PerimeterPoint > perimeter_;
     //@}
 };
 

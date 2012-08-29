@@ -11,7 +11,7 @@
 #define plugins_hla_TACTICALOBJECTPROXY_H_
 
 #include "TacticalObject_ABC.h"
-#include "EventListenerComposite.h"
+#include "TacticalObjectEventListenerComposite.h"
 
 namespace dispatcher
 {
@@ -41,15 +41,15 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Register( EventListener_ABC& listener );
-    virtual void Unregister( EventListener_ABC& listener );
+    virtual void Register( TacticalObjectEventListener_ABC& listener );
+    virtual void Unregister( TacticalObjectEventListener_ABC& listener );
     //@}
 
 private:
     //! @name Attributes
     //@{
     dispatcher::Object_ABC& object_;
-    EventListenerComposite listeners_;
+    TacticalObjectEventListenerComposite listeners_;
     //@}
 };
 
