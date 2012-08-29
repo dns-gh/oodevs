@@ -374,7 +374,7 @@ consists of three main steps:
 [mscgen]
 ----------------------------------------
 msc {
-    hscale = "1.5", arcgradient="5";
+    width = "550", arcgradient="5";
     C [label="Client"],S [label="Dispatcher"];
     --- [label="Network connection",textcolor="#ff0000"];
     C  -> S [label="Connect(host, port)"];
@@ -485,7 +485,7 @@ diplomacies relationships and subordinate units.
 [mscgen]
 ------------------------
 msc {
-    hscale = "1.5", arcgradient="5";
+    width = "550", arcgradient="5";
     C [label="Client"],S [label="Dispatcher"];
     --- [label="Situation initialization",textcolor="#ff0000"];
     C  <- S [label="Begin current state", URL="\ref sword::ControlSendCurrentStateBegin"];
@@ -507,7 +507,7 @@ updated diplomacy is sent to all connected clients.
 [mscgen]
 ------------------------
 msc {
-    hscale = "1.5", arcgradient="5";
+    width = "550", arcgradient="5";
     A [label="All clients"],C [label="Requesting client"],S [label="Dispatcher"];
     C  -> S [label="Request diplomacy change", URL="\ref sword::MagicAction"];
     C <<= S [label="Acknowledge", URL="\ref sword::ChangeDiplomacyAck"];
@@ -532,7 +532,7 @@ to all clients connected after its subordinates.
 [mscgen]
 ---------------------------
 msc {
-    hscale = "1.5", arcgradient="5";
+    width = "550", arcgradient="5";
     C [label="Client"],S [label="Dispatcher"];
     --- [label="Situation initialization",textcolor="#ff0000"];
     C  <- S [label="Begin current state", URL="\ref sword::ControlSendCurrentStateBegin"];
@@ -558,7 +558,7 @@ formation creation is sent to all connected clients.
 [mscgen]
 ----------------------------
 msc {
-    hscale = "1.5", arcgradient="5";
+    width = "550", arcgradient="5";
     A [label="All clients"],C [label="Requesting client"],S [label="Dispatcher"];
     C  -> S [label="Request formation creation", URL="\ref sword::MagicAction"];
     C <<= S [label="Acknowledge", URL="\ref sword::MagicActionAck"];
@@ -585,7 +585,7 @@ have been notified.
 [mscgen]
 ----------------------------
 msc {
-    hscale = "1.5", arcgradient="5";
+    width = "550", arcgradient="5";
     C [label="Client"],S [label="Dispatcher"];
     --- [label="Situation initialization",textcolor="#ff0000"];
     C  <- S [label="Begin current state", URL="\ref sword::ControlSendCurrentStateBegin"];
@@ -611,7 +611,7 @@ is sent to all connected clients.
 [mscgen]
 ----------------------------
 msc {
-    hscale = "1.5", arcgradient="5";
+    width = "550", arcgradient="5";
     A [label="All clients"],C [label="Requesting client"],S [label="Dispatcher"];
     C  -> S [label="Request automat creation", URL="\ref sword::MagicAction"];
     C <<= S [label="Acknowledge", URL="\ref sword::MagicActionAck"];
@@ -633,7 +633,7 @@ connected clients.
 [mscgen]
 ----------------------------
 msc {
-    hscale = "1.5", arcgradient="5";
+    width = "550", arcgradient="5";
     A [label="All clients"],C [label="Requesting client"],S [label="Dispatcher"];
     C  -> S [label="Request automat parent change", URL="\ref sword::MagicAction"];
     C <<= S [label="Acknowledge", URL="\ref sword::AutomatChangeSuperiorAck"];
@@ -653,7 +653,7 @@ success, the new automat superior is sent to all connected clients.
 [mscgen]
 ----------------------------
 msc {
-    hscale = "1.5", arcgradient="5";
+    width = "550", arcgradient="5";
     A [label="All clients"],C [label="Requesting client"],S [label="Dispatcher"];
     C  -> S [label="Request automat parent change creation", URL="\ref sword::MagicAction"];
     C <<= S [label="Acknowledge", URL="\ref sword::AutomatChangeSuperiorAck"];
@@ -678,7 +678,7 @@ shutdown), a destruction notification message is sent to all clients connected.
 [mscgen]
 ----------------------------
 msc {
-    hscale = "1.5", arcgradient="5";
+    width = "550", arcgradient="5";
     C [label="Client"],S [label="Dispatcher"];
     --- [label="Situation initialization",textcolor="#ff0000"];
     C  <- S [label="Begin current state", URL="\ref sword::ControlSendCurrentStateBegin"];
@@ -703,7 +703,7 @@ connected clients.
 [mscgen]
 ----------------------------
 msc {
-    hscale = "1.5", arcgradient="5";
+    width = "550", arcgradient="5";
     A [label="All clients"],C [label="Requesting client"],S [label="Dispatcher"];
     C  -> S [label="Request agent creation", URL="\ref sword::MagicAction"];
     C <<= S [label="Acknowledge", URL="\ref sword::MagicActionAck"];
@@ -725,7 +725,7 @@ state is notified to all connected clients.
 [mscgen]
 ----------------------
 msc {
-    hscale = "1.5", arcgradient="5";
+    width = "550", arcgradient="5";
     A [label="All clients"],C [label="Requesting client"],S [label="Dispatcher"];
     --- [label="Pausing...",textcolor="#ff0000"];
     C  -> S [label="Request pause", URL="\ref sword::ControlPause"];
@@ -749,7 +749,7 @@ simulation acceleration factor is notified to all connected clients.
 [mscgen]
 ----------------------
 msc {
-    hscale = "1.5", arcgradient="5";
+    width = "550", arcgradient="5";
     A [label="All clients"],C [label="Requesting client"],S [label="Dispatcher"];
     --- [label="Changing acceleration factor...",textcolor="#ff0000"];
     C  -> S [label="Request acceleration factor change", URL="\ref sword::ControlChangeTimeFactor"];
@@ -775,7 +775,7 @@ connected clients.
 [mscgen]
 ----------------------
 msc {
-    hscale = "1.5", arcgradient="5";
+    width = "550", arcgradient="5";
     A [label="All clients"],C [label="Requesting client"],S [label="Dispatcher"];
     --- [label="Saving checkpoint...",textcolor="#ff0000"];
     C  -> S [label="Request checkpoint saving", URL="\ref sword::ControlCheckPointSaveNow"];
@@ -877,7 +877,7 @@ subordinates automatically.
 [mscgen]
 ----------------------
 msc {
-    hscale = "1.5", arcgradient="5";
+    width = "550", arcgradient="5";
     A [label="All clients"],C [label="Requesting client"],S [label="Dispatcher"];
     --- [label="Mission order creation",textcolor="#ff0000"];
     C  -> S [label="Automat Mission Request", URL="\ref sword::AutomatOrder"];
@@ -895,7 +895,7 @@ msc {
 [mscgen]
 -----------------------
 msc {
-    hscale = "1.5", arcgradient="5";
+    width = "550", arcgradient="5";
     A [label="All clients"],C [label="Requesting client"],S [label="Dispatcher"];
     --- [label="Mission order creation",textcolor="#ff0000"];
     C  -> S [label="Unit Mission Request", URL="\ref sword::UnitOrder"];
@@ -911,7 +911,7 @@ msc {
 [mscgen]
 -----------------------
 msc {
-    hscale = "1.5", arcgradient="5";
+    width = "550", arcgradient="5";
     A [label="All clients"],C [label="Requesting client"],S [label="Dispatcher"];
     --- [label="Mission order creation",textcolor="#ff0000"];
     C  -> S [label="Crowd Mission Request", URL="\ref sword::CrowdOrder"];
@@ -927,7 +927,7 @@ msc {
 [mscgen]
 -----------------------
 msc {
-    hscale = "1.5", arcgradient="5";
+    width = "550", arcgradient="5";
     A [label="All clients"],C [label="Requesting client"],S [label="Dispatcher"];
     --- [label="Magic action creation",textcolor="#ff0000"];
     C  -> S [label="Magic Request", URL="\ref sword::UnitMagicAction"];
