@@ -22,6 +22,7 @@
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Population/PHY_RoleInterface_Population.h"
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
+#include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Decision/DEC_Decision_ABC.h"
@@ -146,6 +147,7 @@ RoleAdapter::RoleAdapter( MIL_AgentPion& pion, core::Model& entity )
     entity_[ "roles/PHY_RoleInterface_Population" ].SetUserData( &pion.GetRole< PHY_RoleInterface_Population >() );
     entity_[ "roles/PHY_RoleAction_Loading" ].SetUserData( &pion.GetRole< transport::PHY_RoleAction_Loading >() );
     entity_[ "roles/PHY_RoleInterface_Transported" ].SetUserData( &pion.GetRole< transport::PHY_RoleInterface_Transported >() );
+    entity_[ "roles/PHY_RoleInterface_HumanFactors" ].SetUserData( &pion.GetRole< PHY_RoleInterface_HumanFactors >() );
     entity_[ "movement/speed" ] = 0;
     entity_[ "movement/direction/x" ] = 0;
     entity_[ "movement/direction/y" ] = 1;
