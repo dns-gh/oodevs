@@ -23,9 +23,8 @@ in software development and networking.
 
 The following definitions are used throughout the document.
 
-[width="80%",cols="1,4"]
+[options="autowidth"]
 |=======================================
-
 | SWORD      | 
 Simulation Wargaming for Operational Research on Doctrine: the system used to
 simulate the training environment
@@ -87,14 +86,14 @@ for connections from client applications (such as Gaming).
 Messages sent over the network contain 3 fields which are formatted in the
 following format :
 
-[width="50%",cols="1,1,6"]
+[options="autowidth"]
 |=====================
 |SIZE | TAG | CONTENT
 |=====================
 
 Whereas:
 
-[width="90%"]
+[options="autowidth"]
 |======================
 | Field | Size | Description
 
@@ -263,6 +262,7 @@ defined for each exercise session into the session.xml file:
 </session>
 --------------------
 
+[options="autowidth"]
 |========================
 | Attribute | Description
 
