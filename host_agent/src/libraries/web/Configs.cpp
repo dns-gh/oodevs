@@ -13,6 +13,7 @@
 #include "runtime/PropertyTree.h"
 #include "runtime/Utf8.h"
 
+#include <boost/algorithm/string.hpp>
 #include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/xpressive/xpressive.hpp>
@@ -119,15 +120,6 @@ bool TryReadSet( T& dst, const Tree& src, const std::string& key )
     dst = next;
     return true;
 }
-
-template< typename T >
-bool TryReadMap( T& dst, const Tree& src, const std::string& prefix )
-{
-    bool modified = false;
-    BOOST_FOREACH( T::value_type& value, dst )
-        modified |= property_tree::TryRead( value.second, src, prefix + value.first );
-    return modified;
-}
 }
 
 namespace
@@ -159,13 +151,37 @@ void WriteRngConfig( Tree& dst, const std::string& prefix, const session::RngCon
 }
 
 // -----------------------------------------------------------------------------
+// Name: XpathToJson
+// Created: BAX 2012-08-29
+// -----------------------------------------------------------------------------
+std::string XpathToJson( std::string value )
+{
+    boost::algorithm::replace_all( value, "/", "." );
+    boost::algorithm::replace_all( value, "@", "" );
+    return value;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TryReadPluginParameters
+// Created: BAX 2012-08-29
+// -----------------------------------------------------------------------------
+template< typename T >
+bool TryReadPluginParameters( T& dst, const Tree& src, const std::string& prefix )
+{
+    bool modified = false;
+    BOOST_FOREACH( T::value_type& value, dst )
+        modified |= property_tree::TryRead( value.second, src, prefix + XpathToJson( value.first ) );
+    return modified;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ReadPluginConfig
 // Created: BAX 2012-08-28
 // -----------------------------------------------------------------------------
 bool ReadPluginConfig( session::PluginConfig& dst, const Tree& src, const std::string& prefix )
 {
     bool modified = ::TryRead( dst.enabled, src, prefix + "enabled" );
-    modified |= TryReadMap( dst.parameters, src, prefix );
+    modified |= TryReadPluginParameters( dst.parameters, src, prefix );
     return modified;
 }
 
@@ -195,7 +211,7 @@ void WritePluginConfig( Tree& dst, const std::string& prefix, const session::Plu
 {
     dst.put( prefix + "enabled", cfg.enabled );
     BOOST_FOREACH( const session::PluginConfig::T_Parameters::value_type& value, cfg.parameters )
-        dst.put( prefix + value.first, value.second );
+        dst.put( prefix + XpathToJson( value.first ), value.second );
 }
 }
 

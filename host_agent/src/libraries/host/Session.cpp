@@ -382,7 +382,7 @@ Tree Session::Save() const
 
 namespace
 {
-std::string ConvertFromXpath( std::string xpath )
+std::string XpathToXml( std::string xpath )
 {
     boost::algorithm::replace_all( xpath, "/", "." );
     boost::algorithm::replace_all( xpath, "@", "<xmlattr>." );
@@ -394,7 +394,7 @@ void WritePlugin( Tree& tree, const std::string& prefix, const web::session::Plu
     if( !cfg.enabled )
         return;
     BOOST_FOREACH( const web::session::PluginConfig::T_Parameters::value_type& value, cfg.parameters )
-        tree.put( prefix + ConvertFromXpath( value.first ), value.second );
+        tree.put( prefix + XpathToXml( value.first ), value.second );
 }
 
 void WriteDispatcherConfiguration( Tree& tree, int base, const Config& cfg )

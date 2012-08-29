@@ -89,7 +89,7 @@ BOOST_AUTO_TEST_CASE( plugin_parse_bml )
     BOOST_FOREACH( const Plugins::T_Defaults::value_type& value, expected )
         if( value.first != "server/@log" )
             tree.put( "plugins.bml." + value.first, value.second );
-    tree.put( "plugins.bml.server/@log", "junk_data" );
+    tree.put( "plugins.bml.server.log", "junk_data" );
     session::Config cfg;
     session::ReadConfig( cfg, plugins, tree );
     const session::PluginConfig& plugin = cfg.plugins.find( "bml" )->second;
