@@ -56,7 +56,7 @@ UrbanObject::UrbanObject( Controllers& controllers, const std::string& name, uns
     RegisterSelf( *this );
     UpdateColor();
     controllers_.Register( *this );
-    CreateDictionary( true );
+    CreateDictionary( false );
 }
 
 // -----------------------------------------------------------------------------
