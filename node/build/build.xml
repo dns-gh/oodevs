@@ -2,6 +2,7 @@
     <property environment="env"/>
     <property name="env.PONEY_HOME" value="//install/masa/common/dev/common/poney"/>
     <import file="${env.PONEY_HOME}/poney.xml"/>
+    <import file="${extensions.dir}/generate.xml"/>
     <var name="repositories" value="${repositories},${sword.repository}"/>
     <property name="branch" value="trunk" />
 
@@ -14,24 +15,26 @@
         <attribute name="src"/>
         <attribute name="dst"/>
         <sequential>
-            <apply taskname="json" executable="python" failonerror="true">
-                <fileset id="input" dir="@{src}" includes="*.json" />
-                <mapper type="glob" from="*.json" to="@{dst}/*.json"/>
-                <arg value="-m"/>
-                <arg value="json.tool"/>
-                <srcfile/>
-                <targetfile/>
-            </apply>
+            <echo file="@{dst}/plugins.ttml">{"_":0</echo>
+            <generate input="@{src}" extension="json" target="@{dst}/.PHONY">
+                <exec taskname="json" executable="python" failonerror="true" >
+                    <arg value="-m"/>
+                    <arg value="json.tool"/>
+                    <arg value="@{file}"/>
+                    <arg value="@{dst}/@{basename}.ttml"/>
+                </exec>
+                <echo taskname="json" message="@{basename}"/>
+                <echo file="@{dst}/plugins.ttml" append="true">,"@{basename}":[[ template "@{basename}.ttml" . ]]</echo>
+            </generate>
+            <echo file="@{dst}/plugins.ttml" append="true">}</echo>
         </sequential>
     </macrodef>
 
     <target name="plugins">
-        <xslt
-            basedir="../out/${platform}/plugins"
-            includes="**/plugin.xml"
-            destdir="../out/${platform}/json"
-            style="../src/plugin.xsl"
-            >
+        <xslt basedir="../out/${platform}/plugins"
+              includes="**/plugin.xml"
+              destdir="../out/${platform}/json"
+              style="../src/plugin.xsl" >
             <regexpmapper from="(\w+)[\\\/]+plugin.xml$" to="\1.json" />
         </xslt>
         <pretty_json src="../out/${platform}/json" dst="../www" />

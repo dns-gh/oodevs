@@ -218,6 +218,9 @@
 {{/is_option}}
 [[ end ]]
 <!-- Session Template -->
+<script type="text/template" id="session_plugins">
+    [[ template "plugins.ttml" . ]]
+</script>
 <script type="text/template" id="session_template">
     <div id="{{{id}}}" class="span9">
         <div class="row-fluid well session_row{{#is_option status replaying="" waiting=""}} sub_session{{/is_option}}">

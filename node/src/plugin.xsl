@@ -12,8 +12,6 @@
     </xsl:template>
     <xsl:template match="/">
         {
-        "<xsl:value-of select="plugin/@name"/>" :
-        {
         "name" : "<xsl:value-of select="plugin/descriptions/description[@lang='en']/@name"/>",
         "description" : "<xsl:value-of select="plugin/descriptions/description[@lang='en']/."/>",
         "groups" :
@@ -37,7 +35,6 @@
             </xsl:for-each>
             }
         </xsl:for-each>
-        }
         }
         }
     </xsl:template>
