@@ -11,6 +11,15 @@ session_template = Handlebars.compile $("#session_template").html()
 session_error_template = Handlebars.compile $("#session_error_template").html()
 session_settings_template = Handlebars.compile $("#session_settings_template").html()
 
+
+session_plugins = {}
+init_plugins = ->
+    text = $("#session_plugins").html()
+    json = JSON.parse text
+    delete json._
+    session_plugins = json
+init_plugins()
+
 print_error = (text) ->
     display_error "session_error", session_error_template, text
 
@@ -21,7 +30,19 @@ Handlebars.registerHelper "can_play", (data, options) ->
         return options.fn this
     return options.inverse this
 
+set_ui_plugins = (data) ->
+    for k, v of data.plugins
+        continue unless k of session_plugins
+        data.ui_plugins = [] unless data.ui_plugins?
+        next = {}
+        next.id = k
+        next.checked = " checked=\"checked\"" if convert_to_boolean v.enabled
+        next.label = session_plugins[k].name
+        data.ui_plugins.push next
+    return
+
 pop_settings = (ui, data) ->
+    set_ui_plugins data
     ui.html session_settings_template data
     n = [ "#checkpoints_frequency", "#checkpoints_keep",
           "#time_step", "#time_factor", "#time_end_tick",
@@ -73,6 +94,17 @@ validate_rng = (data, ui, type) ->
         return false
     return true
 
+validate_plugins = (data) ->
+    tab = $ "#tab_plugins"
+    for it in tab.find "input[type='checkbox']"
+        it = $ it
+        id = it.attr "id"
+        continue unless id of session_plugins
+        data.plugins = {} unless data.plugins?
+        next = data.plugins[id] = {} unless data.plugins[id]?
+        data.plugins[id].enabled = it.is ":checked"
+    return
+
 has_element = (ui, selector) ->
     return ui.has(selector).length
 
@@ -109,13 +141,16 @@ validate_settings = (ui) ->
         next = data.recorder = {}
         return unless validate_number next, "frequency", ui, "#recorder_frequency", 1, Number.MAX_VALUE, "Invalid"
 
+    if has_element ui, "#tab_plugins"
+        validate_plugins data
+
     return data
 
 class SessionItem extends Backbone.Model
     view: SessionItemView
 
     sync: (method, model, options) =>
-        cfg_attributes = ["name", "time", "rng", "checkpoints", "pathfind", "recorder"]
+        cfg_attributes = ["name", "time", "rng", "checkpoints", "pathfind", "recorder", "plugins"]
 
         if method == "create"
             data = select_attributes model.attributes, cfg_attributes

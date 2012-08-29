@@ -99,6 +99,9 @@
                 <li><a href="#tab_time" data-toggle="tab"> Time </a></li>
                 <li><a href="#tab_rng" data-toggle="tab"> Random </a></li>
                 <li><a href="#tab_advanced" data-toggle="tab"> Advanced </a></li>
+                {{#if ui_plugins}}
+                <li><a href="#tab_plugins" data-toggle="tab"> Plugins </a></li>
+                {{/if}}
             </ul>
             <div class="tab-content">
                 {{/is_option}}
@@ -108,6 +111,17 @@
                 <div class="tab-pane" id="tab_time"> [[ template "time_session_settings" . ]] </div>
                 <div class="tab-pane" id="tab_rng">  [[ template "rng_session_settings" . ]] </div>
                 <div class="tab-pane" id="tab_advanced"> [[ template "advanced_session_settings" . ]] </div>
+                {{#if ui_plugins}}
+                <div class="tab-pane" id="tab_plugins">
+                    {{#iterate_pair ui_plugins}}
+                    {{#if list}}
+                    [[ template "input_checkbox" sub "id" "{{list.0.id}}" "label" "{{list.0.label}}" "value" "{{list.0.checked}}" "pair" 1 "id2" "{{list.1.id}}" "label2" "{{list.1.label}}" "value2" "{{list.1.checked}}" ]]
+                    {{else}}
+                    [[ template "input_checkbox" sub "id" "{{item.id}}" "label" "{{item.label}}" "value" "{{item.checked}}" ]]
+                    {{/if}}
+                    {{/iterate_pair}}
+                </div>
+                {{/if}}
             </div>
             {{/is_option}}
         </form>
