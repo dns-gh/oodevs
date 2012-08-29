@@ -1550,7 +1550,7 @@
     package
     ============================================================================
     -->
-    <target name="package" depends="package.app,package.debug,package.otpacks,package.wise-driver,package.ts,package.plugins,package.binaries" description="package the installers and packs"/>
+    <target name="package" depends="package.app,package.debug,package.otpacks,package.wise-driver,package.ts,package.plugins,package.binaries,package.sdk" description="package the installers and packs"/>
 
     <!-- Package plugins -->
     <target name="package.plugins" depends="package.plugin.vrforces,package.plugin.hla,package.plugin.bml,package.plugin.dis,package.plugin.timeline,package.plugin.crossbow,package.plugin.edxlhave" description="package plugin individual installers"/>
@@ -1669,6 +1669,21 @@
             <arg value="/DAPP_VERSION_MINOR=${version.version}"/>
             <arg value="/X!include sword-defense.nsh"/>
         </nsis>
+    </target>
+
+    <!-- Package documentation/SDK -->
+    <target name="package.sdk" description="package sdk documentation">
+        <delete dir="${dist.dir}/sdk" />
+        <copy file="${out.dir}/sdk/doc/sdk.pdf"
+            todir="${dist.dir}/sdk" />
+        <copy todir="${dist.dir}/sdk/html">
+            <fileset dir="${out.dir}/sdk/doc/html" />
+        </copy>
+        <copy todir="${dist.dir}/sdk/proto">
+            <fileset dir="${src.dir}/libraries/protocol/proto">
+                <include name="*.proto" />
+            </fileset>
+        </copy>
     </target>
 
     <!-- Package packs -->
