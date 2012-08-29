@@ -35,8 +35,10 @@ namespace property_tree
         const boost::optional< T > data = tree.get_optional< T >( key );
         if( data == boost::none )
             return false;
-        dst = *data;
-        return true;
+        const bool modified = dst != *data;
+        if( modified )
+            dst = *data;
+        return modified;
     }
 
     template< typename T >
