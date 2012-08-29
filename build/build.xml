@@ -1413,44 +1413,9 @@
     documentation
     ============================================================================
     -->
-    <target name="proto-api-documentation" description="generate SWORD SDK documentation">
-        <doxygen-report name="sword" input="${src.dir}/libraries/protocol/proto" outdir="${out.dir}/sdk/proto">
-            <property name="PROJECT_NAME" value="SWORD - API Reference"/>
-            <property name="PROJECT_NUMBER" value="${version.project}"/>
-            <property name="FILE_PATTERNS" value='"*.proto *.dox"'/>
-            <property name="EXCLUDE_PATTERNS" value='"*launcher* *dispatcher_simulation*"'/>
-            <property name="FILTER_PATTERNS" value="*.proto=protofilter.py"/>
-            <property name="COLLABORATION_GRAPH" value="NO"/>
-            <property name="EXTRACT_ALL" value="NO"/>
-            <property name="DISABLE_INDEX" value="NO"/>
-            <!--
-            <property name="GENERATE_DEPRECATEDLIST" value="NO"/>
-            <property name="GENERATE_TODOLIST" value="NO"/>
-            <property name="GENERATE_BUGLIST" value="NO"/>
-            -->
-            <property name="SHOW_USED_FILES" value="NO"/>
-            <property name="SHOW_FILES" value="NO"/>
-            <property name="SHOW_NAMESPACES" value="NO"/>
-            <property name="BRIEF_MEMBER_DESC" value="NO"/>
-            <property name="ENUM_VALUES_PER_LINE" value="1"/>
-            <property name="WARNINGS" value="YES"/>
-            <property name="ALIASES" value='""rule=@par Rule:\n" "index=@par Index:\n" "default=@par Default value:\n""'/>
-            <property name="WARN_LOGFILE" value="${reports.dir}/doxygen_proto.log"/>
-            <property name="GENERATE_HTMLHELP" value="YES"/>
-            <property name="CHM_FILE" value="${dist.dir}/SWORD-API_Reference_${version.project}.chm"/>
-            <property name="EXAMPLE_PATH" value="${data.dir}\app-data\resources\schemas\${version.major}"/>
-            <property name="EXAMPLE_RECURSIVE" value="YES"/>
-            <property name="EXAMPLE_PATTERN" value="*.h *.cpp *.xsd"/>
-        </doxygen-report>
-        <fail message="documentation contains errors, see ${reports.dir}/doxygen_proto.log">
-            <condition>
-                <length file="${reports.dir}/doxygen_proto.log" when="greater" length="0"/>
-            </condition>
-        </fail>
-        <htmlhelp input="${out.dir}/sdk/proto" outdir="${dist.dir}"/>
-    </target>
 
-    <target name="proto-api-doc" description="generate SDK documentation">
+    <target name="proto-api-documentation"
+        description="generate SDK documentation">
         <mkdir dir="${out.dir}/sdk/doc/html"/>
         <exec executable="python" failonerror="true">
             <arg value="${bin.dir}/asciidoc/asciidoc/asciidoc.py" />
@@ -1543,7 +1508,7 @@
         <htmlhelp input="${out.dir}/sdk/dec" outdir="${dist.dir}"/>
     </target>
     
-    <target name="documentation" depends="proto-api-documentation, proto-api-doc, prepare-dec-api-files, dec-api-documentation"/>
+    <target name="documentation" depends="proto-api-documentation, prepare-dec-api-files, dec-api-documentation"/>
     
     <!--
     ============================================================================
