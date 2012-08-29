@@ -17,6 +17,6 @@ local result =
 }
 
 local t = initTaskKnowledge( result )
-taskKnowledge["agent.tasks.knowledges.CombatSupport"] = t
+taskKnowledge[ "agent.tasks.knowledges.CombatSupport" ] = t
 
 return result

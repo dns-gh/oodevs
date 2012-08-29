@@ -30,13 +30,5 @@
                 </type>
             </return>
         </method>
-        <method name="getDirection">
-            <description>Returns the main threat direction.</description>
-            <return>
-                <type>
-                    <class name="properties.Observable"/>
-                </type>
-            </return>
-        </method>
     </methods>
 </class>

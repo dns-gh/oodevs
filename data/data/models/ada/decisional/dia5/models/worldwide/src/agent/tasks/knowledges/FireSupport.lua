@@ -14,7 +14,7 @@ local result =
             local objective = companyTask:getDirection( params )
             return { position = position, unitsToSupport = unitsToSupport, objective = objective }
         else
-            return {objectives = params}
+            return { objectives = params }
         end
     end,
 
@@ -24,6 +24,6 @@ local result =
 }
 
 local t = initTaskKnowledge( result )
-taskKnowledge["agent.tasks.knowledges.FireSupport"] = t
+taskKnowledge[ "agent.tasks.knowledges.FireSupport" ] = t
 
 return result

@@ -1,36 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.tasks.FireSupport" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.FireSupport">
-    <description>Appuyer par le feu à partir d'une position.</description>
+    <description>For the agent, to support friend entities from a given position, with DIRECT fires.</description>
     <parameters>
-        <parameter name="objectives">
-            <description>Zone de provenance de la menace.</description>
+        <parameter name="position">
             <type>
-                <list>
-                    <class name="properties.Observable"/>
-                </list>
+                <class name="properties.Destroying"/>
+                <class name="properties.Neutralizing"/>
+                <class name="properties.Observing"/>
             </type>
         </parameter>
-        <parameter name="positions">
-            <description>Les positions d'appui.</description>
-            <type>
-                <list>
-                    <class name="properties.Observing"/>
-                    <class name="properties.Destroying"/>
-                    <class name="properties.Neutralizing"/>
-                </list>
-            </type>
-        </parameter>
-        <parameter name="entities">
-            <description>Les unités à appuyer.</description>
+        <parameter name="unitsToSupport">
             <type>
                 <list>
                     <class name="properties.Supportable"/>
                 </list>
             </type>
         </parameter>
+        <parameter name="objective">
+            <type>
+                <class name="properties.Observable"/>
+            </type>
+        </parameter>
     </parameters>
     <goal>
-        <description>Occuper les positions d'appui et engager les objectifs.</description>
+        <description>To observe the objective and engage approaching enemies in order to protect issued friend units.</description>
     </goal>
     <let name="enemisApproaching">
         <value>
@@ -53,7 +46,9 @@
                 <skill name="agent.skills.MoveToward" main="true" priority="1.0">
                     <parameter name="entities">
                         <value>
-                            <parameter>positions</parameter>
+                            <list>
+                                <parameter>position</parameter>
+                            </list>
                         </value>
                     </parameter>
                 </skill>
@@ -73,23 +68,28 @@
                     </parameter>
                     <parameter name="positions">
                         <value>
-                            <parameter>positions</parameter>
+                            <list>
+                                <parameter>position</parameter>
+                            </list>
                         </value>
                     </parameter>
                 </skill>
-                <skill name="agent.skills.primitives.ObserveToward" priority="0.8">
+                <skill name="agent.skills.primitives.ObserveToward" priority="0.9">
                     <parameter name="entities">
                         <value>
-                            <parameter>objectives</parameter>
+                            <list>
+                                <parameter>objective</parameter>
+                            </list>
                         </value>
                     </parameter>
                     <parameter name="positions">
                         <value>
-                            <parameter>positions</parameter>
+                            <list>
+                                <parameter>position</parameter>
+                            </list>
                         </value>
                     </parameter>
                 </skill>
-                <skill name="agent.skills.actions.ApplyMortarFires" priority="0.1"/>
             </skills>
         </stage>
     </stages>
