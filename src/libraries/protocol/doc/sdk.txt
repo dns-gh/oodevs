@@ -468,7 +468,7 @@ The simulation model of SWORD if constituted of different kind of entities:
 Parties are organizational units used to gather entities. Alliances matrix are
 specified at party level and allows the definition of friendly, enemy and
 neutral relationships.
-A party can contain @ref formations, @ref obstacles and @ref knowledge_groups.
+A party can contain xref:formations[formations], obstacles and knowledge groups.
 
 [NOTE]
 ===============
@@ -498,11 +498,13 @@ msc {
 
 ==== Diplomacies modifications ====
 
-Party diplomacies can be changed by a client using a sword::MagicAction message of type sword::MagicAction::change_diplomacy (see @ref magic "Magic actions").
-The client requires supervision rights to be allowed to change the diplomacies
-of a party. The client requesting the diplomacy change receives an acknowledge
-indicating the success or failure of the operation. In case of success, the
-updated diplomacy is sent to all connected clients.
+Party diplomacies can be changed by a client using a sword::MagicAction
+message of type sword::MagicAction::change_diplomacy (see
+xref:magicorders["Magic Orders"]). The client requires supervision rights to be
+allowed to change the diplomacies of a party. The client requesting the
+diplomacy change receives an acknowledge indicating the success or
+failure of the operation. In case of success, the updated diplomacy is
+sent to all connected clients.
 
 [mscgen]
 ------------------------
@@ -515,10 +517,11 @@ msc {
 }
 ------------------------
 
+[[formations]]
 === Formations ===
 
-Formations are organizational units used to gather @ref formations and @ref
-automats.
+Formations are organizational units used to gather formations and
+xref:automats[automats].
 
 ==== Initialization ====
 
@@ -548,12 +551,13 @@ msc {
 
 ==== Dynamic creation ====
 
-Formations can be created during the game using a sword::UnitMagicAction of
-type sword::UnitMagicAction::formation_creation (see @ref magic "Magic
-actions"). The client requires supervision rights to be allowed to create a
-formation. The client requesting the formation creation receives an acknowledge
-indicating the success or failure of the operation. In case of success, the
-formation creation is sent to all connected clients.
+Formations can be created during the game using a sword::UnitMagicAction
+of type sword::UnitMagicAction::formation_creation (see
+xref:magicorders["Magic Orders"]). The client requires supervision
+rights to be allowed to create a formation. The client requesting the
+formation creation receives an acknowledge indicating the success or
+failure of the operation. In case of success, the formation creation is
+sent to all connected clients.
 
 [mscgen]
 ----------------------------
@@ -566,11 +570,12 @@ msc {
 }
 ----------------------------
 
+[[automats]]
 === Automats ===
 
-Automats represent company level units containing @ref agents. They are driven
-by a decisional model allowing the automated control of their subordinate
-units.
+Automats represent company level units containing xref:agents[agents].
+They are driven by a decisional model allowing the automated control of
+their subordinate units.
 
 ==== Initialization ====
 
@@ -602,7 +607,7 @@ msc {
 ==== Dynamic creation ====
 
 Automats can be created during the game using a sword::UnitMagicAction of type
-sword::UnitMagicAction::automat_creation (see @ref magic "Magic actions"). The
+sword::UnitMagicAction::automat_creation (see xref:magicorders["Magic Orders"]). The
 client requires supervision rights to be allowed to create a automat. The
 client requesting the automat creation receives an acknowledge indicating the
 success or failure of the operation. In case of success, the automat creation
@@ -621,14 +626,16 @@ msc {
 
 ==== Changing parent unit ====
 
-The parent unit (@ref automats "automat" or @ref formations "formation") of an
-automat can be changed using a message sword::UnitMagicAction of type
+The parent unit (xref:automats["automat"] or
+xref:formations["formation"]) of an automat can be changed using a
+message sword::UnitMagicAction of type
 sword::UnitMagicAction::change_automat_superior or type
-sword::UnitMagicAction::change_formation_superior (see @ref magic "Magic
-actions"), depending on the kind of parent entity. The client requesting the
-automat parent change receives an acknowledge indicating the success or failure
-of the operation. In case of success, the new automat superior is sent to all
-connected clients.
+sword::UnitMagicAction::change_formation_superior (see
+xref:magicorders["Magic Orders"] "Magic actions"), depending on the kind
+of parent entity. The client requesting the automat parent change
+receives an acknowledge indicating the success or failure of the
+operation. In case of success, the new automat superior is sent to all
+connected clients.  
 
 [mscgen]
 ----------------------------
@@ -643,12 +650,13 @@ msc {
 
 ==== Changing parent knowledge group ====
 
-The parent @ref knowledge_groups "knowledge group" of an automat can be changed
-using a message sword::UnitMagicAction of type
-sword::UnitMagicAction::change_knowledge_group (see @ref magic "Magic
-actions"). The client requesting the automat parent change receives an
-acknowledge indicating the success or failure of the operation. In case of
-success, the new automat superior is sent to all connected clients.
+The parent "knowledge group" of an automat can be
+changed using a message sword::UnitMagicAction of type
+sword::UnitMagicAction::change_knowledge_group (see
+xref:magicorders["Magic Orders"]). The client requesting the automat
+parent change receives an acknowledge indicating the success or failure
+of the operation. In case of success, the new automat superior is sent
+to all connected clients.
 
 [mscgen]
 ----------------------------
@@ -661,6 +669,7 @@ msc {
 }
 ----------------------------
 
+[[agents]]
 === Agents ===
 
 Agents represent platoon level units. They are driven by a decisional model
@@ -801,7 +810,7 @@ Orders are requests sent to either units or commanding units (automats) to influ
 [NOTE]
 ==============
 The information used to implement order messages must strictly follow the
-parameter definition (@ref missions_xsd).
+parameter definition (missions_xsd).
 ==============
 
 For instance, given the following order definition:
@@ -922,7 +931,8 @@ msc {
 -----------------------
 
 
-=== Magic orders ===
+[[magicorders]]
+=== Magic Orders ===
 
 [mscgen]
 -----------------------
