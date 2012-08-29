@@ -1640,8 +1640,8 @@
     <target name="package.sdk" description="package sdk documentation">
         <delete dir="${dist.dir}/sdk" />
         <copy file="${out.dir}/sdk/doc/sdk.pdf"
-            todir="${dist.dir}/sdk" />
-        <copy todir="${dist.dir}/sdk/html">
+            tofile="${dist.dir}/sdk/SWORD_API_Reference_${version.project}.pdf" />
+        <copy todir="${dist.dir}/sdk/SWORD_API_Reference_${version.project}-html">
             <fileset dir="${out.dir}/sdk/doc/html" />
         </copy>
         <copy todir="${dist.dir}/sdk/proto">
