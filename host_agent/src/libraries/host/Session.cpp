@@ -811,6 +811,7 @@ bool Session::Update( const Tree& cfg )
     bool modified = ReadConfig( next, deps_.plugins, cfg );
     if( !modified )
         return false;
+    node_->FilterConfig( next );
     boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );
     cfg_ = next;
     return true;
