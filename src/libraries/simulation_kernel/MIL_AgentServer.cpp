@@ -79,7 +79,6 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     // TODO tester les checkpoints
     if( config_.HasCheckpoint() )
     {
-        //pEntityManager_->LoadUrbanModel( config_, true ); // TODO a supprimer quand les urbanobjectwrapper seront virés
         MIL_CheckPointManager::LoadCheckPoint( config_ );
         // TODO créer le quadtree, et associer les villes a l'urbancache
         SendControlInformation();
@@ -382,7 +381,6 @@ void MIL_AgentServer::load( MIL_CheckPointInArchive& file )
          >> nInitialRealTime_
          >> nRealTime_
          >> localTime_;
-    pEntityManager_->CreateQuadTreeForCheckpoint(); // temporaire
     pBurningCells_->load( file );
     pBurningCells_->finalizeLoad( GetEntityManager() );
     MT_LOG_INFO_MSG( MT_FormatString( "Simulation acceleration factor : %d", nTimeFactor_ ) );

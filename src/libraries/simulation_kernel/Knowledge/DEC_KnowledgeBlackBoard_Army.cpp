@@ -22,12 +22,12 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/MIL_Army_ABC.h"
-#include "Entities/MIL_EntityManager.h"
 #include "Entities/Objects/CapacityRetriever.h"
 #include "Entities/Objects/InteractWithSideCapacity.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/ResourceNetworkCapacity.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
+#include "Urban/MIL_UrbanCache.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
 #include "protocol/Protocol.h"
 
@@ -694,7 +694,7 @@ DEC_BlackBoard_CanContainKnowledgeUrban& DEC_KnowledgeBlackBoard_Army::GetKnowle
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeBlackBoard_Army::GetUrbanObjects( T_UrbanObjectVector& container ) const
 {
-    container = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanBlocks();
+    container = MIL_AgentServer::GetWorkspace().GetUrbanCache().GetUrbanBlocks();
 }
 
 // -----------------------------------------------------------------------------
@@ -771,7 +771,7 @@ namespace
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeBlackBoard_Army::GetResourceNetworksInZone( T_ResourceNetworkVector& container, const TER_Localisation& zone, const std::string type /*= ""*/ )
 {
-    const std::vector< const MIL_UrbanObject_ABC* >& blocks = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanBlocks();
+    const std::vector< const MIL_UrbanObject_ABC* >& blocks = MIL_AgentServer::GetWorkspace().GetUrbanCache().GetUrbanBlocks();
     for( std::size_t i = 0; i < blocks.size(); ++i )
         FindResourceNetworks( *blocks[ i ], zone, type, container );
     sResourceNetworkInserter functor( container, zone, type );

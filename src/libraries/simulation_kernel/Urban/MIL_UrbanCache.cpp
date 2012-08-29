@@ -198,12 +198,10 @@ void MIL_UrbanCache::CreateQuadTree( std::vector< const MIL_UrbanObject_ABC* >& 
     precision_ = sqrt( ( rect.Right() - rect.Left() ) * ( rect.Top() - rect.Bottom() ) * 1e-16f );
     maxElementSize_ = 0;
     // $$$$ _RC_ JSR 2010-09-17: TODO Optimiser le quadtree en utilisant aussi les villes et quartiers pour accélérer la recherche
-    std::vector< const MIL_UrbanObject_ABC* > objects;
     for( std::vector< const MIL_UrbanObject_ABC* >::const_iterator it = cities.begin(); it != cities.end(); ++it )
-        ( *it )->GetUrbanObjectLeaves( objects );
-    for( std::vector< const MIL_UrbanObject_ABC* >::const_iterator it = objects.begin(); it != objects.end(); ++it )
+        ( *it )->GetUrbanBlocks( urbanBlocks_ );
+    for( std::vector< const MIL_UrbanObject_ABC* >::const_iterator it = urbanBlocks_.begin(); it != urbanBlocks_.end(); ++it )
     {
-
         const MT_Rect& boundingBox = ( *it )->GetLocalisation().GetBoundingBox();
         if( boundingBox.GetWidth() != 0 && boundingBox.GetHeight() != 0 )
         {
@@ -311,6 +309,15 @@ const MIL_UrbanObject_ABC* MIL_UrbanCache::FindBlock( const MT_Vector2D& point )
 const std::vector< const MIL_UrbanObject_ABC* >& MIL_UrbanCache::GetCities() const
 {
     return cities_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: std::vector< const MIL_UrbanObject_ABC* >& MIL_UrbanCache::GetUrbanBlocks
+// Created: JSR 2012-08-29
+// -----------------------------------------------------------------------------
+const std::vector< const MIL_UrbanObject_ABC* >& MIL_UrbanCache::GetUrbanBlocks() const
+{
+    return urbanBlocks_;
 }
 
 // -----------------------------------------------------------------------------

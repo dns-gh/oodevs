@@ -14,7 +14,7 @@
 #include "Checkpoints/SerializationTools.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
 #include "Entities/MIL_Army_ABC.h"
-#include "Entities/MIL_EntityManager.h"
+#include "Urban/MIL_UrbanCache.h"
 #include "MT_Tools/MT_ScipioException.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_BlackBoard_CanContainKnowledgeUrban )
@@ -62,7 +62,7 @@ void DEC_BlackBoard_CanContainKnowledgeUrban::save( MIL_CheckPointOutArchive& fi
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeUrban::Finalize()
 {
-    const std::vector< const MIL_UrbanObject_ABC* >& blocks = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanBlocks();
+    const std::vector< const MIL_UrbanObject_ABC* >& blocks = MIL_AgentServer::GetWorkspace().GetUrbanCache().GetUrbanBlocks();
     for( std::size_t i = 0; i < blocks.size(); ++i )
         urbanMapFromConcrete_[ blocks[ i ]->GetID() ].reset( new DEC_Knowledge_Urban( army_, *blocks[ i ] ) );
 }

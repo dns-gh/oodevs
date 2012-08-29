@@ -46,6 +46,7 @@ public:
     void GetListWithinCircle( const MT_Vector2D& center, float radius, std::vector< const MIL_UrbanObject_ABC* >& result ) const;
     const MIL_UrbanObject_ABC* FindBlock( const MT_Vector2D& point ) const;
     const std::vector< const MIL_UrbanObject_ABC* >& GetCities() const;
+    const std::vector< const MIL_UrbanObject_ABC* >& GetUrbanBlocks() const;
     double GetUrbanBlockCost( float weight, const MT_Vector2D& from, const MT_Vector2D& to ) const;
     void Clear();
     //@}
@@ -65,6 +66,7 @@ private:
     double precision_;
     double maxElementSize_;
     std::vector< const MIL_UrbanObject_ABC* > cities_;
+    std::vector< const MIL_UrbanObject_ABC* > urbanBlocks_;
     //@}
 };
 

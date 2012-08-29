@@ -47,7 +47,7 @@ public:
     virtual MIL_UrbanObject_ABC* GetParent() const;
     virtual void Accept( MIL_UrbanMotivationsVisitor_ABC& visitor ) const;
     virtual void ComputeConvexHull();
-    virtual void GetUrbanObjectLeaves( std::vector< const MIL_UrbanObject_ABC* >& leaves ) const;
+    virtual void GetUrbanBlocks( std::vector< const MIL_UrbanObject_ABC* >& blocks ) const;
     virtual bool HasChild() const;
     virtual float GetLivingSpace() const;
     virtual float ComputeComplexity() const;

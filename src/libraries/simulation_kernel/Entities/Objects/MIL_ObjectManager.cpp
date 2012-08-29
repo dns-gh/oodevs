@@ -82,12 +82,7 @@ void MIL_ObjectManager::load( MIL_CheckPointInArchive& file, const unsigned int 
     builder_.reset( new MIL_ObjectFactory() );
     for( CIT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
     {
-        if( MIL_UrbanObject_ABC* urbanObject = dynamic_cast< MIL_UrbanObject_ABC* >( it->second ) )
-        {
-            if( urbanObject->IsBlock() )
-                urbanBlocks_.push_back( urbanObject );
-        }
-        else
+        if( dynamic_cast< MIL_UrbanObject_ABC* >( it->second ) == 0 )
             ++nbObjects_;
         if( it->second->IsUniversal() )
             universalObjects_.insert( it->second );
@@ -151,13 +146,7 @@ void MIL_ObjectManager::UpdateStates()
             {
                 MT_LOG_ERROR_MSG( "Error updating object " << object.GetID() << " before destruction : " << e.what() );
             }
-            if( MIL_UrbanObject_ABC* urbanObject = dynamic_cast< MIL_UrbanObject_ABC* >( &object ) )
-            {
-                IT_UrbanBlocksVector it = std::find( urbanBlocks_.begin(), urbanBlocks_.end(), urbanObject );
-                if( it != urbanBlocks_.end() )
-                    urbanBlocks_.erase( it );
-            }
-            else
+            if( dynamic_cast< MIL_UrbanObject_ABC* >( &object ) == 0 )
                 --nbObjects_;
             universalObjects_.erase( &object );
             delete &object;
@@ -325,7 +314,6 @@ MIL_Object_ABC* MIL_ObjectManager::CreateUrbanObject( xml::xistream& xis, MIL_Ur
             delete pObject;
             return 0;
         }
-        urbanBlocks_.push_back( pObject );
     }
     RegisterObject( pObject );
 
@@ -493,13 +481,4 @@ void MIL_ObjectManager::OnReceiveChangeResourceLinks( const sword::MagicAction& 
 const std::set< MIL_Object_ABC* >& MIL_ObjectManager::GetUniversalObjects() const
 {
     return universalObjects_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ObjectManager::GetUrbanBlocks
-// Created: JSR 2012-04-27
-// -----------------------------------------------------------------------------
-const MIL_ObjectManager::T_UrbanBlocksVector& MIL_ObjectManager::GetUrbanBlocks() const
-{
-    return urbanBlocks_;
 }

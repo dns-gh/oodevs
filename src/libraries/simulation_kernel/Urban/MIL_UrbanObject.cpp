@@ -227,17 +227,19 @@ void MIL_UrbanObject::ComputeConvexHull()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_UrbanObject::GetUrbanObjectLeaves
+// Name: MIL_UrbanObject::GetUrbanBlocks
 // Created: JSR 2012-08-01
 // -----------------------------------------------------------------------------
-void MIL_UrbanObject::GetUrbanObjectLeaves( std::vector< const MIL_UrbanObject_ABC* >& leaves ) const
+void MIL_UrbanObject::GetUrbanBlocks( std::vector< const MIL_UrbanObject_ABC* >& blocks ) const
 {
-    tools::Iterator< const MIL_UrbanObject_ABC& > it = CreateIterator();
-    if( !it.HasMoreElements() )
-        leaves.push_back( this );
+    if( IsBlock() )
+        blocks.push_back( this );
     else
+    {
+        tools::Iterator< const MIL_UrbanObject_ABC& > it = CreateIterator();
         while( it.HasMoreElements() )
-            it.NextElement().GetUrbanObjectLeaves( leaves );
+            it.NextElement().GetUrbanBlocks( blocks );
+    }
 }
 
 // -----------------------------------------------------------------------------

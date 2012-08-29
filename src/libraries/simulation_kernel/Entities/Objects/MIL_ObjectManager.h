@@ -81,7 +81,6 @@ public:
     MIL_Object_ABC* Find( unsigned int nID ) const;
     const MIL_ObjectType_ABC& FindType( const std::string& type ) const;
     const std::set< MIL_Object_ABC* >& GetUniversalObjects() const;
-    const std::vector< const MIL_UrbanObject_ABC* >& GetUrbanBlocks() const;
     //@}
 
     //! @name Network
@@ -101,10 +100,6 @@ private:
     typedef T_ObjectMap::const_iterator             CIT_ObjectMap;
 
     typedef std::set< MIL_Object_ABC* > T_ObjectSet;
-
-    typedef std::vector< const MIL_UrbanObject_ABC* >    T_UrbanBlocksVector;
-    typedef T_UrbanBlocksVector::iterator              IT_UrbanBlocksVector;
-    typedef T_UrbanBlocksVector::const_iterator       CIT_UrbanBlocksVector;
     //@}
 
 private:
@@ -126,7 +121,6 @@ private:
     const flood::FloodModel_ABC* pFloodModel_;
     T_ObjectMap objects_;
     T_ObjectSet universalObjects_;
-    T_UrbanBlocksVector urbanBlocks_;
     unsigned int nbObjects_;
     std::auto_ptr< MIL_ObjectFactory > builder_;
     //@}

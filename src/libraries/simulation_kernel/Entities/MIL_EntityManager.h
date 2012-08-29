@@ -125,7 +125,6 @@ public:
     virtual MIL_Object_ABC*     FindObject        ( unsigned int nID ) const;
     virtual const MIL_ObjectType_ABC& FindObjectType( const std::string& type ) const;
     virtual const std::set< MIL_Object_ABC* >& GetUniversalObjects() const;
-    const std::vector< const MIL_UrbanObject_ABC* >& GetUrbanBlocks() const;
 
     MIL_Population* FindPopulation( MIL_UrbanObject_ABC* urbanObject ) const;
     const tools::Resolver< MIL_Army_ABC >& MIL_EntityManager::GetArmies() const;
@@ -152,7 +151,7 @@ public:
     //! @name Operations
     //@{
     void ReadODB( const MIL_Config& config );
-    void LoadUrbanModel( const MIL_Config& config, bool checkpoint = false ); // checkpoint temporaire avant la fusion urban object wrapper
+    void LoadUrbanModel( const MIL_Config& config );
     void SendStateToNewClient() const;
     void Update();
     void Clean();
