@@ -23,6 +23,7 @@ namespace
     {
         return resolver.Get( id ).GetDecisionalModel();
     }
+    std::string automatString( "automat" );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,16 +71,16 @@ const kernel::LogisticLevel& Automat::GetLogisticLevel() const
 // -----------------------------------------------------------------------------
 bool Automat::Matches( const Filter_ABC& filter ) const
 {
-    return filter.Accepts( "automat" );
+    return filter.Accepts( automatString );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Automat::GetTypeName
 // Created: PHC 2011-05-17
 // -----------------------------------------------------------------------------
-QString Automat::GetTypeName() const
+const std::string& Automat::GetTypeName() const
 {
-    return "automat";
+    return automatString;
 }
 
 // -----------------------------------------------------------------------------

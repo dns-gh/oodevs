@@ -12,7 +12,7 @@
 
 using namespace kernel;
 
-const QString TacticalLine_ABC::typeName_ = "tacticalLine";
+const std::string TacticalLine_ABC::typeName_ = "tacticalLine";
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLine_ABC constructor
@@ -36,7 +36,7 @@ TacticalLine_ABC::~TacticalLine_ABC()
 // Name: TacticalLine_ABC::GetTypeName
 // Created: AGE 2008-07-16
 // -----------------------------------------------------------------------------
-QString TacticalLine_ABC::GetTypeName() const
+const std::string& TacticalLine_ABC::GetTypeName() const
 {
     return typeName_;
 }

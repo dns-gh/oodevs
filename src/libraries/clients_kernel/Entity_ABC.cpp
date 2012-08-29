@@ -37,9 +37,10 @@ Entity_ABC::~Entity_ABC()
 // Name: Entity_ABC::GetTypeName
 // Created: SBO 2006-10-12
 // -----------------------------------------------------------------------------
-QString Entity_ABC::GetTypeName() const
+const std::string& Entity_ABC::GetTypeName() const
 {
-    return "entity";
+    static std::string entity( "entity" );
+    return entity;
 }
 
 // -----------------------------------------------------------------------------
@@ -57,8 +58,17 @@ void Entity_ABC::RegisterSelf( Extension_ABC& ext )
 // -----------------------------------------------------------------------------
 void Entity_ABC::AddExtension( Extension_ABC& ext )
 {
-    tools::SortedInterfaceContainer< Extension_ABC >::Register( ext );
+    EntityBase_ABC::AddExtension( ext );
     drawer_->Register( ext );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityBase_ABC::AddExtension
+// Created: LDC 2012-08-20
+// -----------------------------------------------------------------------------
+void EntityBase_ABC::AddExtension( Extension_ABC& ext )
+{
+    tools::SortedInterfaceContainer< Extension_ABC >::Register( ext );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,18 +87,6 @@ void Entity_ABC::Draw( const geometry::Point2f& where, const Viewport_ABC& viewp
 tools::SortedInterfaceContainer< Extension_ABC >& Entity_ABC::Interface() const
 {
     return *const_cast< Entity_ABC* >( this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Entity_ABC::CheckUpdate
-// Created: AGE 2006-10-12
-// -----------------------------------------------------------------------------
-void Entity_ABC::CheckUpdate( const type_info& /*type*/ )
-{
-    /*
-    throw std::runtime_error( "Nothing in " + std::string( typeid( *this ).name() )
-                            + " could be updated with message type " + type );
-    */
 }
 
 // -----------------------------------------------------------------------------

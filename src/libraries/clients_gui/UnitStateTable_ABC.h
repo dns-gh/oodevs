@@ -52,7 +52,7 @@ public:
     //! @name Operations
     //@{
     virtual void Purge();
-    virtual bool IsReadOnlyForType( const QString& typeName ) const = 0;
+    virtual bool IsReadOnlyForType( const std::string& typeName ) const = 0;
     void RecursiveLoad( kernel::Entity_ABC& entity, bool isSelectedEntity );
     void SetReadOnly( bool readOnly );
     void Serialize( const boost::filesystem::path& path ) const;

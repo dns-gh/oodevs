@@ -66,7 +66,7 @@ public:
     bool StartFragOrder( Exercise& exercise );
     //bool Recomplete( Exercise& exercise );
 
-    virtual QString GetTypeName() const;
+    virtual const std::string& GetTypeName() const;
     //@}
 
 private:

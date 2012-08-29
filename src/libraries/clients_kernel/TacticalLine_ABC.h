@@ -26,7 +26,7 @@ class TacticalLine_ABC : public Entity_ABC
 public:
     //! @name Static
     //@{
-    static const QString typeName_;
+    static const std::string typeName_;
     //@}
 
 public:
@@ -39,7 +39,7 @@ public:
     //! @name Operations
     //@{
     virtual bool IsLimit() const = 0;
-    virtual QString GetTypeName() const;
+    virtual const std::string& GetTypeName() const;
     //@}
 
 private:

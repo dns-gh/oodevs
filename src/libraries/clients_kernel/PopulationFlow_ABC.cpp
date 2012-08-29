@@ -13,7 +13,7 @@
 
 using namespace kernel;
 
-const QString PopulationFlow_ABC::typeName_ = "populationFlow";
+const std::string PopulationFlow_ABC::typeName_ = "populationFlow";
 
 // -----------------------------------------------------------------------------
 // Name: PopulationFlow_ABC constructor
@@ -37,7 +37,7 @@ PopulationFlow_ABC::~PopulationFlow_ABC()
 // Name: PopulationFlow_ABC::GetTypeName
 // Created: AGE 2008-07-16
 // -----------------------------------------------------------------------------
-QString PopulationFlow_ABC::GetTypeName() const
+const std::string& PopulationFlow_ABC::GetTypeName() const
 {
     return typeName_;
 }

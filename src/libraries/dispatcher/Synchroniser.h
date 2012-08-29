@@ -12,7 +12,7 @@
 
 namespace kernel
 {
-    class Entity_ABC;
+    class EntityBase_ABC;
 }
 
 namespace dispatcher
@@ -37,9 +37,9 @@ public:
 
     //! @name Operations
     //@{
-    void FlagForCreation     ( kernel::Entity_ABC& entity );
-    void FlagForUpdate       ( kernel::Entity_ABC& entity );
-    void FlagForDestruction  ( kernel::Entity_ABC& entity );
+    void FlagForCreation     ( kernel::EntityBase_ABC& entity );
+    void FlagForUpdate       ( kernel::EntityBase_ABC& entity );
+    void FlagForDestruction  ( kernel::EntityBase_ABC& entity );
 
     void Commit( ClientPublisher_ABC& publisher, Model& model );
     //@}
@@ -53,8 +53,8 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< kernel::Entity_ABC* >   T_Entities;
-    typedef T_Entities::const_iterator         CIT_Entities;
+    typedef std::vector< kernel::EntityBase_ABC* > T_Entities;
+    typedef T_Entities::const_iterator           CIT_Entities;
     //@}
 
 private:

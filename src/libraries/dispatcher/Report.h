@@ -10,7 +10,7 @@
 #ifndef __Report_h_
 #define __Report_h_
 
-#include "SimpleEntity.h"
+#include "clients_kernel/Entity_ABC.h"
 
 namespace kernel
 {
@@ -33,7 +33,7 @@ namespace dispatcher
 */
 // Created: AGE 2007-10-19
 // =============================================================================
-class Report : public SimpleEntity< >
+class Report : public kernel::EntityBase_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -48,7 +48,8 @@ public:
     void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
     void Accept( kernel::ModelVisitor_ABC& visitor ) const;
-    //@}
+    unsigned long GetId() const;
+//@}
 
 private:
     //! @name Copy/Assignment

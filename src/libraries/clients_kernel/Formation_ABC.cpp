@@ -13,7 +13,7 @@
 
 using namespace kernel;
 
-const QString Formation_ABC::typeName_ = "formation";
+const std::string Formation_ABC::typeName_ = "formation";
 
 // -----------------------------------------------------------------------------
 // Name: Formation_ABC constructor
@@ -37,7 +37,7 @@ Formation_ABC::~Formation_ABC()
 // Name: Formation_ABC::GetTypeName
 // Created: AGE 2008-07-16
 // -----------------------------------------------------------------------------
-QString Formation_ABC::GetTypeName() const
+const std::string& Formation_ABC::GetTypeName() const
 {
     return typeName_;
 }

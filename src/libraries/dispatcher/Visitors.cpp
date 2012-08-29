@@ -29,9 +29,9 @@ FullUpdateVisitor::FullUpdateVisitor( ClientPublisher_ABC& publisher )
 // Name: FullUpdateVisitor::Visit
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void FullUpdateVisitor::Visit( const kernel::Entity_ABC& entity )
+void FullUpdateVisitor::Visit( const kernel::EntityBase_ABC& entity )
 {
-    const_cast< kernel::Entity_ABC& >( entity ).Apply( &EntityPublisher_ABC::SendFullUpdate, *publisher_ );
+    const_cast< kernel::EntityBase_ABC& >( entity ).Apply( &EntityPublisher_ABC::SendFullUpdate, *publisher_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -48,8 +48,8 @@ CreationVisitor::CreationVisitor( ClientPublisher_ABC& publisher )
 // Name: CreationVisitor::Visit
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void CreationVisitor::Visit( const kernel::Entity_ABC& entity )
+void CreationVisitor::Visit( const kernel::EntityBase_ABC& entity )
 {
     if( entities_.insert( &entity ).second )
-        const_cast< kernel::Entity_ABC& >( entity ).Apply( &EntityPublisher_ABC::SendCreation, *publisher_ );
+        const_cast< kernel::EntityBase_ABC& >( entity ).Apply( &EntityPublisher_ABC::SendCreation, *publisher_ );
 }

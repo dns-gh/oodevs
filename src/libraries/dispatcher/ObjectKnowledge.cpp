@@ -207,15 +207,6 @@ const kernel::Team_ABC& ObjectKnowledge::GetOwner() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectKnowledge::GetTypeName
-// Created: PHC 2010-07-20
-// -----------------------------------------------------------------------------
-QString ObjectKnowledge::GetTypeName() const
-{
-    return typename_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ObjectKnowledge::Display
 // Created: PHC 2010-07-21
 // -----------------------------------------------------------------------------

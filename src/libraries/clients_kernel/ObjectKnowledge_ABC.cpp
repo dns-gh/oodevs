@@ -13,7 +13,7 @@
 
 using namespace kernel;
 
-const QString ObjectKnowledge_ABC::typeName_ = "objectKnowledge";
+const std::string ObjectKnowledge_ABC::typeName_ = "objectKnowledge";
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledge_ABC constructor
@@ -37,7 +37,7 @@ ObjectKnowledge_ABC::~ObjectKnowledge_ABC()
 // Name: ObjectKnowledge_ABC::GetTypeName
 // Created: AGE 2006-10-16
 // -----------------------------------------------------------------------------
-QString ObjectKnowledge_ABC::GetTypeName() const
+const std::string& ObjectKnowledge_ABC::GetTypeName() const
 {
     return typeName_;
 }

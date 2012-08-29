@@ -161,7 +161,7 @@ void ProfilesGenerator::GenerateLowLevelFormations( const Entity_ABC& entity, co
     while( subIt.HasMoreElements() )
     {
         const Entity_ABC& subEntity = subIt.NextElement();
-        QString typeName = subEntity.GetTypeName();
+        const std::string& typeName = subEntity.GetTypeName();
         if( typeName == Automat_ABC::typeName_ )
             automats.push_back( &subEntity );
         else if( typeName == Formation_ABC::typeName_ )

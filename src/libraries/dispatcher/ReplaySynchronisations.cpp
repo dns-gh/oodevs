@@ -19,7 +19,7 @@ using namespace dispatcher;
 // Name: ReplaySynchronisations constructor
 // Created: SBO 2008-02-14
 // -----------------------------------------------------------------------------
-ReplaySynchronisations::ReplaySynchronisations( const ReplayModel_ABC& model, kernel::Entity_ABC& holder )
+ReplaySynchronisations::ReplaySynchronisations( const ReplayModel_ABC& model, kernel::EntityBase_ABC& holder )
     : model_   ( model )
     , holder_  ( holder )
     , created_ ( false )
@@ -65,16 +65,6 @@ void ReplaySynchronisations::EndSynchronisation( Synchroniser& synch ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ReplaySynchronisations::StartSynchronisation
-// Created: SBO 2008-02-14
-// -----------------------------------------------------------------------------
-void ReplaySynchronisations::StartSynchronisation( kernel::Entity_ABC& next, bool create )
-{
-    if( synching_ )
-        next.Get< ReplaySynchronisations >().StartSynchronisation( create );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ReplaySynchronisations::FlagUpdate
 // Created: SBO 2008-02-14
 // -----------------------------------------------------------------------------
@@ -116,7 +106,11 @@ DO_UPDATE( sword::LogMedicalHandlingCreation );
 DO_UPDATE( sword::LogSupplyHandlingCreation );
 DO_UPDATE( sword::ObjectCreation );
 DO_UPDATE( sword::ObjectKnowledgeCreation );
-DO_UPDATE( sword::PartyCreation );
+//DO_UPDATE( sword::PartyCreation )
+void ReplaySynchronisations::DoUpdate( const sword::PartyCreation& msg )
+{
+    DoUpdate();
+}
 DO_UPDATE( sword::PhaseLineCreation );
 DO_UPDATE( sword::PopulationCreation );
 DO_UPDATE( sword::Report );

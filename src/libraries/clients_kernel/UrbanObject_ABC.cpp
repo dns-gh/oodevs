@@ -13,7 +13,7 @@
 
 using namespace kernel;
 
-const QString UrbanObject_ABC::typeName_ = "urbanObject";
+const std::string UrbanObject_ABC::typeName_ = "urbanObject";
 
 // -----------------------------------------------------------------------------
 // Name: UrbanObject_ABC constructor
@@ -37,7 +37,7 @@ UrbanObject_ABC::~UrbanObject_ABC()
 // Name: UrbanObject_ABC::GetTypeName
 // Created: ABR 2011-02-18
 // -----------------------------------------------------------------------------
-QString UrbanObject_ABC::GetTypeName() const
+const std::string& UrbanObject_ABC::GetTypeName() const
 {
     return typeName_;
 }

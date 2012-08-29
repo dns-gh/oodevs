@@ -78,7 +78,7 @@ void UnitStateTable_ABC::RecursiveLoad( kernel::Entity_ABC& entity, bool isSelec
 {
     if( isSelectedEntity )
         selected_ = &entity;
-    QString typeName = entity.GetTypeName();
+    const std::string& typeName = entity.GetTypeName();
     if( typeName == kernel::Agent_ABC::typeName_ )
         Load( entity );
     else

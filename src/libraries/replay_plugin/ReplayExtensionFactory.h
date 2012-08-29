@@ -14,7 +14,7 @@
 
 namespace kernel
 {
-    class Entity_ABC;
+    class EntityBase_ABC;
 }
 
 namespace dispatcher
@@ -32,7 +32,7 @@ namespace replay
 */
 // Created: SBO 2008-02-14
 // =============================================================================
-class ReplayExtensionFactory : public dispatcher::ExtensionFactory_ABC< kernel::Entity_ABC >
+class ReplayExtensionFactory : public dispatcher::ExtensionFactory_ABC< kernel::EntityBase_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -43,7 +43,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Create( kernel::Entity_ABC& entity );
+    virtual void Create( kernel::EntityBase_ABC& entity );
     //@}
 
 private:

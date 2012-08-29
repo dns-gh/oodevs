@@ -206,7 +206,7 @@ bool Entity::Matches( const Filter_ABC& /*filter*/ ) const
 // Name: Entity::GetTypeName
 // Created: PHC 2011-05-17
 // -----------------------------------------------------------------------------
-QString Entity::GetTypeName() const
+const std::string& Entity::GetTypeName() const
 {
     return kernel::Entity_ABC::GetTypeName();
 }

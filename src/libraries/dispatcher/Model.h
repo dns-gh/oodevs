@@ -25,6 +25,7 @@ namespace kernel
     class StaticModel;
     class ExtensionTypes;
     class Entity_ABC;
+    class EntityBase_ABC;
 }
 
 namespace dispatcher
@@ -137,7 +138,15 @@ private:
         // $$$$ AGE 2008-06-20:
         entity.Attach< EntityPublisher_ABC >( *new EntityPublisher< T >( entity ) );
         compositeFactory_->Apply( &ExtensionFactory_ABC< T >::Create, entity );
-        compositeFactory_->Apply( &ExtensionFactory_ABC< kernel::Entity_ABC >::Create, entity );
+        compositeFactory_->Apply( &ExtensionFactory_ABC< kernel::EntityBase_ABC >::Create, entity );
+    }
+    template< typename T >
+    void AddExtensions( T& entity, kernel::EntityBase_ABC* )
+    {
+        // $$$$ AGE 2008-06-20:
+        entity.Attach< EntityPublisher_ABC >( *new EntityPublisher< T >( entity ) );
+        compositeFactory_->Apply( &ExtensionFactory_ABC< T >::Create, entity );
+        compositeFactory_->Apply( &ExtensionFactory_ABC< kernel::EntityBase_ABC >::Create, entity );
     }
     template< typename T >
     void AddExtensions( T& , void* ) {}

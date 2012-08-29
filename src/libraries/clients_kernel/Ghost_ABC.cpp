@@ -13,7 +13,7 @@
 
 using namespace kernel;
 
-const QString Ghost_ABC::typeName_ = "ghost";
+const std::string Ghost_ABC::typeName_ = "ghost";
 
 // -----------------------------------------------------------------------------
 // Name: Ghost_ABC constructor
@@ -37,7 +37,7 @@ Ghost_ABC::~Ghost_ABC()
 // Name: Ghost_ABC::GetTypeName
 // Created: ABR 2011-10-14
 // -----------------------------------------------------------------------------
-QString Ghost_ABC::GetTypeName() const
+const std::string& Ghost_ABC::GetTypeName() const
 {
     return typeName_;
 }

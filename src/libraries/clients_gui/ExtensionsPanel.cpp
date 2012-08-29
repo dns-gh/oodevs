@@ -92,7 +92,7 @@ void ExtensionsPanel::NotifySelected( const Entity_ABC* element )
     {
         if( selected_ )
         {
-            QString typeName = selected_->GetTypeName();
+            const std::string& typeName = selected_->GetTypeName();
             ExtensionType::T_AttributesTypes attributes;
             if( typeName == Agent_ABC::typeName_ )
                 type->GetAttributeTypes( "unit", attributes );

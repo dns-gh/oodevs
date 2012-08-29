@@ -48,7 +48,7 @@ UnitStateTableResource::~UnitStateTableResource()
 // Name: UnitStateTableResource::IsReadOnlyForType
 // Created: JSR 2012-03-22
 // -----------------------------------------------------------------------------
-bool UnitStateTableResource::IsReadOnlyForType( const QString& /*typeName*/ ) const
+bool UnitStateTableResource::IsReadOnlyForType( const std::string& /*typeName*/ ) const
 {
     return false;
 }

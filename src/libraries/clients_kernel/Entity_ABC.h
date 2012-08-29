@@ -39,8 +39,30 @@ namespace kernel
 */
 // Created: AGE 2006-02-07
 // =============================================================================
-class Entity_ABC : public tools::Extendable< Extension_ABC >
+    
+class EntityBase_ABC : public tools::Extendable< Extension_ABC >
                  , public tools::SortedInterfaceContainer< Extension_ABC >
+{
+public:
+             EntityBase_ABC() {};
+    virtual ~EntityBase_ABC() {};
+
+    template< typename T >
+    void Update( const T& updateMessage )
+    {
+        Apply( & Updatable_ABC< T >::DoUpdate, updateMessage );
+    }
+    template< typename T >
+    void Attach( T& extension )
+    {
+        tools::Extendable< Extension_ABC >::Attach( extension );
+        AddExtension( extension );
+    }
+    virtual void AddExtension( Extension_ABC& );
+
+};
+
+class Entity_ABC : public EntityBase_ABC
                  , public Selectable_ABC
 {
 public:
@@ -54,28 +76,14 @@ public:
     //@{
     virtual QString GetName() const = 0;
     virtual unsigned long GetId() const = 0;
-    virtual QString GetTypeName() const;
+    virtual const std::string& GetTypeName() const;
     //@}
 
     //! @name Operations
     //@{
-    template< typename T >
-    void Attach( T& extension )
-    {
-        tools::Extendable< Extension_ABC >::Attach( extension );
-        AddExtension( extension );
-    }
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const = 0;
     virtual void Activate( ActionController& controller ) const = 0;
     virtual void OverFly( ActionController& controller ) const; // $$$$ ABR 2011-10-28: Not abstract cause not yet needed for all entities
-
-    template< typename T >
-    void Update( const T& updateMessage )
-    {
-        const std::size_t applied = Apply( & Updatable_ABC< T >::DoUpdate, updateMessage );
-        if( ! applied )
-            CheckUpdate( typeid( updateMessage ) );
-    }
 
     void Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const;
 
@@ -85,7 +93,6 @@ public:
 protected:
     //! @name Helpers
     //@{
-    void CheckUpdate( const type_info& type );
     void RegisterSelf( Extension_ABC& ext );
     //@}
 
@@ -98,7 +105,7 @@ public:
 
     //! @name Helpers
     //@{
-    void AddExtension( Extension_ABC& ext );
+    virtual void AddExtension( Extension_ABC& ext );
     //@}
 
 private:

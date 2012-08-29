@@ -52,7 +52,7 @@ public:
     virtual const kernel::LogisticLevel& GetLogisticLevel() const;
 
     virtual bool Matches( const Filter_ABC& filter ) const;
-    virtual QString GetTypeName() const;
+    virtual const std::string& GetTypeName() const;
     //@}
 
     //! @name Entity_ABC
