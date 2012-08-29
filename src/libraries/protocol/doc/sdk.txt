@@ -58,20 +58,6 @@ Moreover messages are grouped according to their role:
 
 == Interfacing with the Simulation ==
 
-=== System overview ===
-
-==== Components overview ====
-
-==== Directories layout ====
-
-=== Data model ===
-
-==== Terrain ====
-
-==== Physical model ====
-
-==== Exercise model ====
-
 === Communication protocol ===
 
 ==== Network protocol ====
