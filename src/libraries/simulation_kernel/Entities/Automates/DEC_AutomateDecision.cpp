@@ -170,6 +170,7 @@ void DEC_AutomateDecision::RegisterUserArchetypeFunctions ( directia::brain::Bra
 
     // Objects
     brain[ "DEC_DetruireObjetSansDelais" ] = &DEC_ObjectFunctions::MagicDestroyObject;
+    brain[ "DEC_DetruireObjetIdSansDelais" ] = &DEC_ObjectFunctions::MagicDestroyObjectId;
 
     // Former szName_, mission_, automate_:
     brain[ "DEC_GetSzName" ] = &DEC_MiscFunctions::GetName;
@@ -354,7 +355,7 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::brain::Brain& brain 
 
     // Objects
     brain[ "DEC_CreerObjetSansDelais" ] =
-        boost::function< void( const std::string&, const TER_Localisation* ) > (boost::bind( &DEC_ObjectFunctions::MagicCreateObject < MIL_Automate >, boost::ref( GetAutomate() ), _1, _2 ) );
+        boost::function< int( const std::string&, const TER_Localisation* ) > (boost::bind( &DEC_ObjectFunctions::MagicCreateObject < MIL_Automate >, boost::ref( GetAutomate() ), _1, _2 ) );
 
     // Populations
     brain[ "DEC_KnowledgePopulation_Domination" ] =

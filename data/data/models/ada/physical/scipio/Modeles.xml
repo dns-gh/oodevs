@@ -7091,7 +7091,6 @@
     </automat>
     <automat dia-type="company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.RENS.ELGE">
       <missions>
-        <mission name="AUTOMATE RENS ROEM Appuyer"/>
         <mission name="AUTOMATE RENS ROEM Renseigner Sur">
           <fragorder name="ROEM Passer En Silence Radar"/>
           <fragorder name="ROEM Arreter Silence Radar"/>
@@ -7103,6 +7102,7 @@
         <mission name="AUTOMATE COMMUNES Se Recompleter"/>
         <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE RENS Reconnaitre"/>
+        <mission name="AUTOMATE RENS ROEM Brouiller"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -7128,7 +7128,6 @@
         <mission name="AUTOMATE COMMUNES Se Faire Decontaminer"/>
         <mission name="AUTOMATE COMMUNES Se Recompleter"/>
         <mission name="AUTOMATE COMMUNES Stationner"/>
-        <mission name="AUTOMATE RENS ROEM Appuyer"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -7395,7 +7394,6 @@
         <mission name="AUTOMATE COMMUNES Se Recompleter"/>
         <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE RENS MultiCapteurs Reconnaitre"/>
-        <mission name="AUTOMATE RENS ROEM Appuyer"/>
         <mission name="AUTOMATE RENS ROEM Brouiller"/>
       </missions>
       <fragorders>
@@ -7450,4 +7448,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0442514100" -->
+<!-- signature="4220535468" -->

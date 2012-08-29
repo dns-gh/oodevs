@@ -11,8 +11,10 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_ObjectFunctions.h"
+#include "MIL_Singletons.h"
 #include "Decision/DEC_Gen_Object.h"
 #include "Entities/MIL_Army_ABC.h"
+#include "Entities/MIL_EntityManager_ABC.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Objects/ObstacleAttribute.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
@@ -149,6 +151,20 @@ void DEC_ObjectFunctions::MagicDestroyObject( boost::shared_ptr< DEC_Knowledge_O
                 army->GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( pKnowledge );
             ( *pObject )().Destroy();
         }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ObjectFunctions::MagicDestroyObjectId
+// Created: LDC 2012-08-27
+// -----------------------------------------------------------------------------
+void DEC_ObjectFunctions::MagicDestroyObjectId( int objectId )
+{
+    MIL_EntityManager_ABC& entityManager = MIL_Singletons::GetEntityManager();
+    MIL_Object_ABC* pObject = entityManager.FindObject( objectId );
+    if( pObject && ( *pObject )().CanBeDestroyed() )
+    {
+        ( *pObject )().Destroy();
     }
 }
 

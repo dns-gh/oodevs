@@ -13,12 +13,6 @@
                 <class name="properties.Reachable"/>
             </type>
         </parameter>
-        <parameter name="jammingTime">
-            <description>Temps pendant lequel la zone de brouillage sera activée.</description>
-            <type>
-                <simple name="numeric"/>
-            </type>
-        </parameter>
     </parameters>
     <links>
         <link name="moveToward" skill="agent.skills.MoveToward"/>

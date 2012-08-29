@@ -12,6 +12,7 @@
 #ifndef __DEC_ObjectFunctions_h_
 #define __DEC_ObjectFunctions_h_
 
+#include "Entities/Objects/MIL_Object_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "protocol/Protocol.h"
 
@@ -29,8 +30,9 @@ public:
 
     //! @name Functions
     //@{
-    template< typename T > static void MagicCreateObject( const T& caller, const std::string& type, const TER_Localisation* pLocalisation );
+    template< typename T > static int MagicCreateObject( const T& caller, const std::string& type, const TER_Localisation* pLocalisation );
     static void MagicDestroyObject( boost::shared_ptr< DEC_Knowledge_Object > knowledgeId );
+    static void MagicDestroyObjectId( int objectId );
     static bool ActivateObject( boost::shared_ptr< DEC_Knowledge_Object > knowledgeId );
     static const TER_Localisation& GetGenObjectLocalisation( boost::shared_ptr< DEC_Gen_Object > knowledgeId );
     static const TER_Localisation& GetObjectKnowledgeLocalisation( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );

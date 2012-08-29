@@ -2112,9 +2112,8 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="objective" name="Zone de deploiement" optional="false" type="Polygon"/>
+      <parameter dia-name="objective" name="Zone de brouillage" optional="false" type="Polygon"/>
       <parameter dia-name="meetingPoint" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="jammingTime" max-value="240" min-value="0" name="Délais de brouillage" optional="false" type="Integer"/>
     </mission>
     <mission dia-behavior="platoon.tasks.SeFaireTransporter" dia-type="platoon.tasks.HLADemandeTransport" id="28789" name="AUTOMATE HLA Faire Une Requete de Transport">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -4246,15 +4245,6 @@
       </parameter>
       <parameter dia-name="angle" max-value="360" min-value="1" name="Angle" optional="true" type="Integer"/>
     </mission>
-    <mission cdt-dia-behavior="company.combat.support.rens.tasks.Appuyer" dia-type="company.combat.support.rens.tasks.Appuyer" id="28772" mrt-dia-behavior="company.combat.support.rens.tasks.Appuyer" name="AUTOMATE RENS ROEM Appuyer">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="objective" name="Zone de déploiement" optional="false" type="Polygon"/>
-      <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
-      <parameter dia-name="jammingTime" max-value="240" min-value="1" name="Délais de brouillage" optional="false" type="Integer"/>
-    </mission>
     <mission cdt-dia-behavior="company.combat.support.rens.tasks.ROHUM_RenseignerSur" dia-type="company.combat.support.rens.tasks.ROHUM_RenseignerSur" id="28773" mrt-dia-behavior="company.combat.support.rens.tasks.ROHUM_RenseignerSur" name="AUTOMATE RENS ROHUM Renseigner Sur">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -4335,14 +4325,13 @@
       </parameter>
       <parameter dia-name="byNight" name="de nuit" optional="true" type="Boolean"/>
     </mission>
-    <mission cdt-dia-behavior="company.combat.support.rens.tasks.Appuyer" dia-type="company.combat.support.rens.tasks.Appuyer2" id="28782" mrt-dia-behavior="company.combat.support.rens.tasks.Appuyer" name="AUTOMATE RENS ROEM Brouiller">
+    <mission cdt-dia-behavior="company.combat.support.rens.tasks.Appuyer" dia-type="company.combat.support.rens.tasks.Appuyer" id="28782" mrt-dia-behavior="company.combat.support.rens.tasks.Appuyer" name="AUTOMATE RENS ROEM Brouiller">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="objective" name="Zone de déploiement" optional="false" type="Polygon"/>
+      <parameter dia-name="objective" name="Zone de brouillage" optional="false" type="Polygon"/>
       <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
-      <parameter dia-name="jammingTime" max-value="240" min-value="1" name="Délais de brouillage" optional="false" type="Integer"/>
     </mission>
     <mission cdt-dia-behavior="company.combat.support.rens.tasks.Orienter" dia-type="company.combat.support.rens.tasks.Orienter" id="28783" mrt-dia-behavior="company.combat.support.rens.tasks.Orienter" name="AUTOMATE RENS Orienter" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -4671,4 +4660,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ROEM_ArreterSilenceRadar" id="28801" name="ROEM Arreter Silence Radar"/>
   </fragorders>
 </missions>
-<!-- signature="1373090072" -->
+<!-- signature="1356012449" -->

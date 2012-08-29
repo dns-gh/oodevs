@@ -326,25 +326,20 @@ integration.buildInstantlyObjectOn = function( typeObject, position )  -- A appe
     else
         localisation = DEC_Geometrie_ConvertirPointEnLocalisation( position.source )
     end
-    local object = integration.obtenirObjetProcheDe( localisation, S_TypeObject_ToString( typeObject ), 10 )
-    if object == nil then -- need to create a object
-        DEC_CreerObjetSansDelais( S_TypeObject_ToString( typeObject ), localisation )
-    end
+    local object = object
+	object = integration.obtenirObjetProcheDe( localisation, S_TypeObject_ToString( typeObject ), 10 )
+    if object ~= nil then -- rebuild the already existing object
+        DEC_DetruireObjetSansDelais( object )
+	end
+		position.id = DEC_CreerObjetSansDelais( S_TypeObject_ToString( typeObject ), localisation )
 end
 -- -------------------------------------------------------------------------------- 
 -- Destroy object on position
 -- --------------------------------------------------------------------------------
 integration.destroyInstantlyObjectOn = function( typeObject, position )
-    local localisation
-    if masalife.brain.core.class.isOfType( position, world.Area) then
-        localisation = position.source
-    else
-        localisation = DEC_Geometrie_ConvertirPointEnLocalisation( position.source )
-    end
-    local object = integration.obtenirObjetProcheDe( localisation, S_TypeObject_ToString( typeObject ), 10 )
-    if object  then
-        DEC_DetruireObjetSansDelais( object ) -- destroy it
-    end
+	if position.id ~= nil then
+		DEC_DetruireObjetIdSansDelais( position.id ) -- destroy it
+	end
 end
 
 -- -------------------------------------------------------------------------------- 

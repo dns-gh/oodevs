@@ -7,8 +7,4 @@ return
     getMeetingPoint = function( self, params )
         return myself.taskParams.meetingPoint
     end,
-    
-    getJammingTime = function( self, params )
-        return myself.taskParams.jammingTime
-    end,
 }

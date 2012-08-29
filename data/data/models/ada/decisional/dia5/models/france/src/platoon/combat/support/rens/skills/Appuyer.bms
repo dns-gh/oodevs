@@ -13,39 +13,26 @@ rootnode
     
     create = function( self )
         self.isPosted = false
-        self.timeOut = false
     end,
-    
-    timeOutJamming = function( self , params, additionnalParams )
-        self.timeOut = true
-    end,
-        
+            
     activate = function( self )
-       if self.timeOut then
-           Activate( skill.links.moveToward, 1, { entities = { self.params.meetingPoint } } )
-       else
-          if self.isPosted then
-             Activate( skill.nodes.JammingActivation, 1, { position = self.params.objective, jammingTime = self.params.jammingTime } )
-          end
-       
-          Activate( skill.links.moveToward, 1, { entities = { self.params.objective } } )
-       end
+	     Activate( skill.links.moveToward, 1, { entities = { self.params.objective } } )
+        if self.isPosted then
+            if self.params.objective:isReached() then
+                Activate( skill.nodes.JammingActivation, 1, { position = self.params.objective } )
+            end
+         end
     end,
 }
 
 
 node "JammingActivation"
 {
-    feedbacks = { "timeOutJamming" },
-
     create = function( self )
         meKnowledge:RC( eRC_ActivationBrouillage )
     end,
     
     select = function( self )
           meKnowledge:buildObjectOnPosition( eTypeObjectZoneBrouillage, self.params.position )
-          if waitInMin( self, self.params.jammingTime ) then
-              Feedback( self.feedbacks.timeOutJamming )
-        end
     end,
 }

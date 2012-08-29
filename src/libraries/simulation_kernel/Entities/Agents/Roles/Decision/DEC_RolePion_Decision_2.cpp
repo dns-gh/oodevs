@@ -75,6 +75,7 @@ void DEC_RolePion_Decision::RegisterUserArchetypeFunctions ( directia::brain::Br
 {
     brain[ "DEC_ActiverObjet" ] = &DEC_ObjectFunctions::ActivateObject;
     brain[ "DEC_DetruireObjetSansDelais" ] = &DEC_ObjectFunctions::MagicDestroyObject;
+    brain[ "DEC_DetruireObjetIdSansDelais" ] = &DEC_ObjectFunctions::MagicDestroyObjectId;
     brain[ "DEC_CreateDynamicGenObject" ] = &DEC_ObjectFunctions::CreateDynamicGenObject;
     brain[ "DEC_CreateDynamicGenObjectFromSharedLocalisation" ] = &DEC_ObjectFunctions::CreateDynamicGenObjectFromSharedLocalisation;
 
@@ -263,7 +264,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
 
     // Objects
     brain[ "DEC_CreerObjetSansDelais" ] =
-        boost::function< void( const std::string&, const TER_Localisation* ) > (boost::bind( &DEC_ObjectFunctions::MagicCreateObject < MIL_AgentPion >, boost::ref( GetPion() ), _1, _2 ) );
+        boost::function< int( const std::string&, const TER_Localisation* ) > (boost::bind( &DEC_ObjectFunctions::MagicCreateObject < MIL_AgentPion >, boost::ref( GetPion() ), _1, _2 ) );
     brain[ "DEC_GenObject_CreateInstantaneously" ] = &DEC_AgentFunctions::CreateInstantaneously;
 
     // Perception
