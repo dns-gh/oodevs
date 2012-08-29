@@ -1,4 +1,6 @@
 = MASA Sword Network API Documentation =
+:toc:
+:numbered:
 
 == Introduction ==
 
