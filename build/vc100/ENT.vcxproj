@@ -96,7 +96,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\Ent\ENT_es.ts" />
-    <None Include="..\..\src\libraries\Ent\ENT_fr.ts" />
+    <None Include="..\..\src\libraries\Ent\ENT_fr.ts">
+      <SubType>Designer</SubType>
+    </None>
     <CustomBuild Include="..\..\src\libraries\Ent\translator.pro">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">lupdate -noobsolete -verbose %(FullPath)
 lrelease -verbose %(FullPath)

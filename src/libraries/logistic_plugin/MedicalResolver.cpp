@@ -8,46 +8,106 @@
 // *****************************************************************************
 
 #include "MedicalResolver.h"
-#include "protocol/Protocol.h"
+#include <boost/lexical_cast.hpp>
+#include "clients_kernel/Tools.h"
 
 using namespace plugins::logistic;
-
-// -----------------------------------------------------------------------------
-// Name: MedicalConsignData constructor
-// Created: MMC 2012-08-06
-// -----------------------------------------------------------------------------
-MedicalConsignData::MedicalConsignData() 
-    : tick_( noValue_ ), unitId_( noValue_ ), providerId_( noValue_ ), nbc_( noValue_ ), mental_( noValue_ ), stateId_( noValue_ ) 
-    , simTime_( noField_ ), unit_( noField_ ), provider_( noField_ ), rank_( noField_ ), wound_( noField_ ), state_( noField_ )
-{
-    // NOTHING
-}
 
 // -----------------------------------------------------------------------------
 // Name: MedicalConsignData::Write
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-void MedicalConsignData::Write( std::ofstream& output )
+void MedicalConsignData::operator>>( std::stringstream& output ) const
 {
-    //format: tick , GDH, unit , provider , rank , wound , nbc , mental , state
-    //example: 1 , 20120312T240000 , 12, 1.1.4.BRB23 , 28, 1.2.BLT , officer , U2 , 0 , 0 , 3, en traitement
-    output  << tick_         << separator_
-            << simTime_      << separator_
-            << unitId_       << subSeparator_    << unit_     << separator_
-            << providerId_   << subSeparator_    << provider_ << separator_
-            << rank_         << separator_
-            << wound_        << separator_
-            << nbc_          << separator_
-            << mental_       << separator_
-            << stateId_      << subSeparator_    << state_    << subSeparator_ << std::endl;
+    static std::string separator = ConsignData_ABC::GetSeparator();
+    output  << requestId_    << separator
+            << tick_         << separator
+            << simTime_      << separator   // << creationTick_ << separator << unitId_ << separator
+            << unit_         << separator   // << providerId_   << separator
+            << provider_     << separator
+            << rank_         << separator
+            << wound_        << separator
+            << nbc_          << separator
+            << mental_       << separator   // << stateId_      << separator
+            << state_        << separator
+            << stateEndTick_ << std::endl;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MedicalConsignData::Write
+// Created: MMC 2012-08-21
+// -----------------------------------------------------------------------------
+const ConsignData_ABC& MedicalConsignData::ManageMessage( const ::sword::LogMedicalHandlingCreation& msg, ConsignResolver_ABC& resolver )
+{
+    resolver.GetSimTime( simTime_, tick_ );
+    if( msg.has_tick() )
+        creationTick_ = boost::lexical_cast< std::string >( msg.tick() );
+    if( msg.has_unit() )
+    {
+        unitId_ = boost::lexical_cast< std::string >( msg.unit().id() );
+        resolver.GetAgentName( msg.unit().id(), unit_ );
+    }
+    if( msg.has_rank() )
+        resolver.GetRankName( msg.rank(), rank_ );
+    if( msg.has_wound() )
+        resolver.GetWoundName( msg.wound(), wound_ );
+    std::string strYes = tools::translate( "logistic", "yes" ).toAscii().constData();
+    std::string strNo = tools::translate( "logistic", "no" ).toAscii().constData();
+    if( msg.has_mental_wound() )
+        mental_ = msg.mental_wound() ? strYes : strNo;
+    if( msg.has_nbc_contaminated() )
+        nbc_ = msg.nbc_contaminated() ? strYes : strNo;
+    resolver.AddToLineIndex( 1 );
+    return *this;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MedicalConsignData::Write
+// Created: MMC 2012-08-21
+// -----------------------------------------------------------------------------
+const ConsignData_ABC& MedicalConsignData::ManageMessage( const ::sword::LogMedicalHandlingUpdate& msg, ConsignResolver_ABC& resolver )
+{
+    resolver.GetSimTime( simTime_, tick_ );
+    if( msg.has_current_state_end_tick() )
+    {
+        int entTick = msg.current_state_end_tick();
+        if( entTick > 0 )
+            stateEndTick_ = boost::lexical_cast< std::string >( entTick );
+    }
+    if( msg.has_unit() )
+    {
+        unitId_ = boost::lexical_cast< std::string >( msg.unit().id() );
+        resolver.GetAgentName( msg.unit().id(), unit_ );
+    }
+    if( msg.has_provider() )
+    {
+        providerId_ = boost::lexical_cast< std::string >( msg.provider().id() );
+        resolver.GetAgentName( msg.provider().id(), provider_ );
+    }
+    if( msg.has_state() )
+    {
+        sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus eState = msg.state();
+        resolver.GetMedicalName( eState, state_ );
+        stateId_ = boost::lexical_cast< std::string >( static_cast< int >( eState ) );
+    }
+    std::string strYes = tools::translate( "logistic", "yes" ).toAscii().constData();
+    std::string strNo = tools::translate( "logistic", "no" ).toAscii().constData();
+    if( msg.has_wound() )
+        resolver.GetWoundName( msg.wound(), wound_ );
+    if( msg.has_mental_wound() )
+        mental_ = msg.mental_wound() ? strYes : strNo;
+    if( msg.has_nbc_contaminated() )
+        nbc_ = msg.nbc_contaminated() ? strYes : strNo;
+    resolver.AddToLineIndex( 1 );
+    return *this;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MedicalResolver constructor
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-MedicalResolver::MedicalResolver( const std::string& name, const dispatcher::Model_ABC& model ) 
-    : ConsignResolver_ABC( name, "tick , GDH, unit , provider , rank , wound , nbc , mental , state", model )
+MedicalResolver::MedicalResolver( const std::string& name, const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel ) 
+    : ConsignResolver_ABC( name, model, staticModel )
 {
     // NOTHING
 }
@@ -71,81 +131,6 @@ bool MedicalResolver::IsManageable( const sword::SimToClient& message )
             ||  message.message().has_log_medical_handling_update();
 }
 
-namespace 
-{
-    void GetRankName( sword::EnumHumanRank eRank, std::string& name )
-    {
-        if( sword::officer == eRank )
-            name = "officer";
-        else if( sword::sub_officer == eRank )
-            name = "sub_officer";
-        else if( sword::trooper == eRank )
-            name = "trooper";
-    }
-
-    void GetWoundName( sword::EnumHumanWound eWound, std::string& name )
-    {
-        if( sword::unwounded == eWound )
-            name = "healthy";
-        else if( sword::dead == eWound )
-            name = "dead";
-        else if( sword::wounded_urgency_1 == eWound )
-            name = "u1";
-        else if( sword::wounded_urgency_2 == eWound )
-            name = "u2";
-        else if( sword::wounded_urgency_3 == eWound )
-            name = "u3";
-        else if( sword:: wounded_extreme_urgency == eWound )
-            name = "ue";
-    }
-
-    void GetMedicalName( sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus eMedical, std::string name )
-    {
-        if( sword::LogMedicalHandlingUpdate::waiting_for_evacuation == eMedical )
-            name = "waiting_for_evacuation";
-        else if( sword::LogMedicalHandlingUpdate::evacuation_ambulance_moving_in == eMedical )
-            name = "evacuation_ambulance_moving_in";
-        else if( sword::LogMedicalHandlingUpdate::evacuation_ambulance_loading == eMedical )
-            name = "evacuation_ambulance_loading";
-        else if( sword::LogMedicalHandlingUpdate::waiting_for_evacuation_loading_completion == eMedical )
-            name = "waiting_for_evacuation_loading_completion";
-        else if( sword::LogMedicalHandlingUpdate::evacuation_ambulance_moving_out == eMedical )
-            name = "evacuation_ambulance_moving_out";
-        else if( sword::LogMedicalHandlingUpdate::evacuation_ambulance_unloading == eMedical )
-            name = "evacuation_ambulance_unloading";
-        else if( sword::LogMedicalHandlingUpdate::waiting_for_diagnostic == eMedical )
-            name = "waiting_for_diagnostic";
-        else if( sword::LogMedicalHandlingUpdate::diagnosing == eMedical )
-            name = "diagnosing";
-        else if( sword::LogMedicalHandlingUpdate::looking_for_triage == eMedical )
-            name = "looking_for_triage";
-        else if( sword::LogMedicalHandlingUpdate::waiting_for_triage == eMedical )
-            name = "waiting_for_triage";
-        else if( sword::LogMedicalHandlingUpdate::triaging == eMedical )
-            name = "triaging";
-        else if( sword::LogMedicalHandlingUpdate::looking_for_medical_attention == eMedical )
-            name = "looking_for_medical_attention";
-        else if( sword::LogMedicalHandlingUpdate::waiting_for_medical_attention == eMedical )
-            name = "waiting_for_medical_attention";
-        else if( sword::LogMedicalHandlingUpdate::receiving_medical_attention == eMedical )
-            name = "receiving_medical_attention";
-        else if( sword::LogMedicalHandlingUpdate::resting == eMedical )
-            name = "resting";
-        if( sword::LogMedicalHandlingUpdate::waiting_for_collection == eMedical )
-            name = "waiting_for_collection";
-        else if( sword::LogMedicalHandlingUpdate::collection_ambulance_loading == eMedical )
-            name = "collection_ambulance_loading";
-        else if( sword::LogMedicalHandlingUpdate::waiting_for_collection_loading_completion == eMedical )
-            name = "waiting_for_collection_loading_completion";
-        else if( sword::LogMedicalHandlingUpdate::collection_ambulance_moving_in == eMedical )
-            name = "collection_ambulance_moving_in";
-        else if( sword::LogMedicalHandlingUpdate::collection_ambulance_unloading == eMedical )
-            name = "collection_ambulance_unloading";
-        else if( sword::LogMedicalHandlingUpdate::finished == eMedical )
-            name = "finished";
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: MedicalResolver::ManageMessage
 // Created: MMC 2012-08-06
@@ -153,62 +138,31 @@ namespace
 void MedicalResolver::ManageMessage( const sword::SimToClient& message )
 {
     if( message.message().has_log_medical_handling_creation() )
-    {
-        const ::sword::LogMedicalHandlingCreation& msg = message.message().log_medical_handling_creation();
-        if( msg.has_request() )
-        {
-            MedicalConsignData* pConsignData = GetConsign< MedicalConsignData >( static_cast< int >( msg.request().id() ) );
-            pConsignData->simTime_ = simTime_;
-            if( msg.has_unit() )
-            {
-                pConsignData->unitId_ = msg.unit().id();
-                GetAgentName( pConsignData->unitId_, pConsignData->unit_ );
-            }
-            if( msg.has_tick() )
-                pConsignData->tick_ = msg.tick();
-            if( msg.has_rank() )
-                GetRankName( msg.rank(), pConsignData->rank_ );
-            if( msg.has_wound() )
-                GetWoundName( msg.wound(), pConsignData->wound_ );
-            if( msg.has_mental_wound() )
-                msg.mental_wound() ? 1 : 0;
-            if( msg.has_nbc_contaminated() )
-                msg.nbc_contaminated() ? 1 : 0;
-            pConsignData->Write( output_ );
-        }
-    }
+        TraceConsign< ::sword::LogMedicalHandlingCreation, MedicalConsignData >( message.message().log_medical_handling_creation(), output_ );
     if( message.message().has_log_medical_handling_update() )
-    {
-        const ::sword::LogMedicalHandlingUpdate& msg = message.message().log_medical_handling_update();
-        if( msg.has_request() )
-        {
-            MedicalConsignData* pConsignData = GetConsign< MedicalConsignData >( static_cast< int >( msg.request().id() ) );
-            pConsignData->simTime_ = simTime_;
-            if( msg.has_current_state_end_tick() )
-                pConsignData->tick_ = msg.current_state_end_tick();
-            if( msg.has_unit() )
-            {
-                pConsignData->unitId_ = msg.unit().id();
-                GetAgentName( pConsignData->unitId_, pConsignData->unit_ );
-            }
-            if( msg.has_provider() )
-            {
-                pConsignData->providerId_ = msg.provider().id();
-                GetAgentName( pConsignData->providerId_, pConsignData->provider_ );
-            }
-            if( msg.has_state() )
-            {
-                sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus eState = msg.state();
-                GetMedicalName( eState, pConsignData->state_ );
-                pConsignData->stateId_ = eState;
-            }
-            if( msg.has_wound() )
-                GetWoundName( msg.wound(), pConsignData->wound_ );
-            if( msg.has_mental_wound() )
-                pConsignData->mental_ = msg.mental_wound() ? 1 : 0;
-            if( msg.has_nbc_contaminated() )
-                pConsignData->nbc_ = msg.nbc_contaminated() ? 1 : 0;
-            pConsignData->Write( output_ );
-        }
-    }
+        TraceConsign< ::sword::LogMedicalHandlingUpdate, MedicalConsignData >( message.message().log_medical_handling_update(), output_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MedicalResolver::InitHeader
+// Created: MMC 2012-08-24
+// -----------------------------------------------------------------------------
+void MedicalResolver::InitHeader()
+{
+    MedicalConsignData consign( tools::translate( "logistic", "request id" ).toAscii().constData() );
+    consign.tick_           = tools::translate( "logistic", "tick" ).toAscii().constData();
+    consign.creationTick_   = tools::translate( "logistic", "creation tick" ).toAscii().constData();
+    consign.stateEndTick_   = tools::translate( "logistic", "state end tick" ).toAscii().constData();
+    consign.simTime_        = tools::translate( "logistic", "GDH" ).toAscii().constData();
+    consign.unitId_         = tools::translate( "logistic", "unit id" ).toAscii().constData();
+    consign.providerId_     = tools::translate( "logistic", "provider id" ).toAscii().constData();
+    consign.stateId_        = tools::translate( "logistic", "state id" ).toAscii().constData();
+    consign.rank_           = tools::translate( "logistic", "rank" ).toAscii().constData();
+    consign.wound_          = tools::translate( "logistic", "wound" ).toAscii().constData();
+    consign.nbc_            = tools::translate( "logistic", "nbc" ).toAscii().constData();
+    consign.mental_         = tools::translate( "logistic", "mental" ).toAscii().constData();
+    consign.unit_           = tools::translate( "logistic", "unit" ).toAscii().constData();
+    consign.provider_       = tools::translate( "logistic", "provider" ).toAscii().constData();
+    consign.state_          = tools::translate( "logistic", "state" ).toAscii().constData();
+    SetHeader( consign );
 }

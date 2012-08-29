@@ -16,7 +16,6 @@
 #include "ConsignData_ABC.h"
 #include "ConsignResolver_ABC.h"
 
-
 namespace plugins
 {
 namespace logistic
@@ -32,13 +31,15 @@ class SupplyConsignData : public ConsignData_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-        SupplyConsignData();
+        SupplyConsignData( const std::string& requestId ) : ConsignData_ABC( requestId ) {}
         virtual ~SupplyConsignData() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void Write( std::ofstream& output );
+    virtual void operator>>( std::stringstream& output ) const;
+    virtual const ConsignData_ABC& ManageMessage( const ::sword::LogSupplyHandlingCreation& msg, ConsignResolver_ABC& resolver );
+    virtual const ConsignData_ABC& ManageMessage( const ::sword::LogSupplyHandlingUpdate& msg, ConsignResolver_ABC& resolver );
     //@}
 
 public:
@@ -47,33 +48,38 @@ public:
     //@{
     struct Resource
     {
-        Resource() : id_( 0 ), requested_( 0 ), granted_( 0 ), conveyed_( 0 ) {}
+        Resource() : recipientAutomatId_( 0 ) {}
         virtual ~Resource() {}
 
+        int recipientAutomatId_;
+        std::string recipientId_;
         std::string type_;
-        int id_;
-        int requested_;
-        int granted_;
-        int conveyed_;
+        std::string id_;
+        std::string requested_;
+        std::string granted_;
+        std::string conveyed_;
     };
     //@}
 
 public:
     //! @name Member data
     //@{
-    int tick_;
-    int automatId_;
-    int providerId_;
-    int transportProviderId_;
-    int conveyorId_;
-    int stateId_;
+    std::string tick_;
+    std::string creationTick_;
+    std::string stateEndTick_;
+    std::map< int, std::string > recipientAutomats_;
+    std::string recipientAutomatId_;
+    std::string providerId_;
+    std::string transportProviderId_;
+    std::string conveyorId_;
+    std::string stateId_;
     std::string simTime_;
-    std::string automat_;
+    std::string recipientAutomat_;
     std::string provider_;
     std::string transportProvider_;
     std::string conveyor_;
     std::string state_;
-    std::vector< Resource > resources_;
+    std::map< int, Resource > resources_;
     //@}
 };
 
@@ -88,8 +94,13 @@ class SupplyResolver : public ConsignResolver_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             SupplyResolver( const std::string& name, const dispatcher::Model_ABC& model );
+             SupplyResolver( const std::string& name, const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel );
     virtual ~SupplyResolver();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void InitHeader();
     //@}
 
 protected:

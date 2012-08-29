@@ -5,6 +5,9 @@
       <UniqueIdentifier>{39ffd5ed-54a1-4327-adcf-49d52ff7fb45}</UniqueIdentifier>
       <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
+    <Filter Include="Translations">
+      <UniqueIdentifier>{72114458-d9fd-4bc3-8d84-f90981115380}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\logistic_plugin\LogisticPlugin.cpp">
@@ -42,11 +45,19 @@
     <ClInclude Include="..\..\src\libraries\logistic_plugin\MaintenanceResolver.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\logistic_plugin\MedicalResolver.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\logistic_plugin\SupplyResolver.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\logistic_plugin\MedicalResolver.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\src\libraries\logistic_plugin\logistic_plugin_fr.ts">
+      <Filter>Translations</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\logistic_plugin\logistic_plugin_es.ts">
+      <Filter>Translations</Filter>
+    </CustomBuild>
   </ItemGroup>
 </Project>

@@ -11,6 +11,8 @@
 #define __ConsignData_ABC_h_
 
 #include <fstream>
+#include <sstream>
+
 
 namespace plugins
 {
@@ -28,14 +30,15 @@ class ConsignData_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-            ConsignData_ABC() : separator_( " , " ), subSeparator_( ", " )
-                              , noValue_( -1 ), noField_( "_" ) {}
+            ConsignData_ABC( const std::string& requestId ) : requestId_( requestId ) {}
     virtual ~ConsignData_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void Write( std::ofstream& output ) = 0;
+    virtual void operator>>( std::stringstream& output ) const = 0;
+    virtual void operator>>( std::ofstream& output ) const { std::stringstream line; *this >> line; output << line.str(); }
+    inline static std::string GetSeparator() { return " ; "; }
     //@}
 
 private:
@@ -48,10 +51,7 @@ private:
 protected:
     //! @name Member data
     //@{
-    const std::string separator_;
-    const std::string subSeparator_;
-    const std::string noField_;
-    const int noValue_;
+    const std::string requestId_;
     //@}
 };
 }

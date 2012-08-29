@@ -8,56 +8,169 @@
 // *****************************************************************************
 
 #include "SupplyResolver.h"
-#include "protocol/Protocol.h"
+#include <boost/lexical_cast.hpp>
+#include "clients_kernel/Tools.h"
 
 using namespace plugins::logistic;
-
-// -----------------------------------------------------------------------------
-// Name: SupplyConsignData constructor
-// Created: MMC 2012-08-06
-// -----------------------------------------------------------------------------
-SupplyConsignData::SupplyConsignData() 
-    : tick_( noValue_ ), automatId_( noValue_ ), providerId_( noValue_ ), transportProviderId_( noValue_ ), conveyorId_( noValue_ ), stateId_( noValue_ )
-    , simTime_( noField_ ), automat_( noField_ ), provider_( noField_ ), transportProvider_( noField_ ), conveyor_( noField_ ), state_( noField_ )
-{
-    // NOTHING
-}
 
 // -----------------------------------------------------------------------------
 // Name: SupplyConsignData::Write
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-void SupplyConsignData::Write( std::ofstream& output )
+void SupplyConsignData::operator>>( std::stringstream& output ) const
 {
-    //format: tick , GDH, automat , provider , transport_provider , convoyeur , state , (resourcetype , requested, granted, conveyed)*
-    //example: 1 , 20120312T240000 , 12, 1.1.4.BRB23 , 28, 1.2.BLT , 18, 1.2.TR323, 22, 1.2.TR323.TR1, 3, en attente transporteurs , 4, F63, 12, 12, 0 , 5, F65, 3, 3, 0
-    output  << tick_                 <<  separator_
-            << simTime_              <<  separator_
-            << automatId_            <<  subSeparator_   << automat_            << separator_
-            << providerId_           <<  subSeparator_   << provider_           << separator_
-            << transportProviderId_  <<  subSeparator_   << transportProvider_  << separator_
-            << conveyorId_           <<  subSeparator_   << conveyor_           << separator_
-            << stateId_              <<  subSeparator_   << state_;
-
-    for( int i=0; i < resources_.size(); ++i )
+    static const std::string separator = ConsignData_ABC::GetSeparator();
+    if( recipientAutomats_.empty() )
     {
-        Resource& resource = resources_[ i ];
-        output  << separator_
-                << resource.id_         << subSeparator_
-                << resource.type_       << subSeparator_
-                << resource.requested_  << subSeparator_
-                << resource.granted_    << subSeparator_
-                << resource.conveyed_   << subSeparator_;
+        output << requestId_         << separator
+            << tick_                 << separator
+            << simTime_              << separator   // << creationTick_         << separator    << recipientId_       << separator
+            << recipientAutomat_     << separator   // << providerId_           << separator
+            << provider_             << separator   // << transportProviderId_  << separator
+            << transportProvider_    << separator   // << conveyorId_           << separator
+            << conveyor_             << separator   // << stateId_              << separator
+            << state_                << separator
+            << stateEndTick_;
+        output  << std::endl;
     }
-    output  << std::endl;
+    else if( !resources_.empty() )
+        for( std::map< int, std::string >::const_iterator it = recipientAutomats_.begin(); it != recipientAutomats_.end(); ++it )
+        {
+            int recipientAutomatId = it->first;
+            output << requestId_         << separator
+                << tick_                 << separator
+                << simTime_              << separator   // << creationTick_         <<  separator   << recipientId_    <<  separator
+                << it->second            << separator   // << providerId_           <<  separator
+                << provider_             << separator   // << transportProviderId_  <<  separator
+                << transportProvider_    << separator   // << conveyorId_           <<  separator
+                << conveyor_             << separator   // << stateId_              <<  separator
+                << state_                << separator
+                << stateEndTick_;
+
+            for( std::map< int, Resource >::const_iterator itRes = resources_.begin(); itRes != resources_.end(); ++itRes )
+            {
+                const Resource& resource = itRes->second;
+                if( resource.recipientAutomatId_ == recipientAutomatId )
+                {
+                    output << separator      // << resource.id_ << separator
+                        << resource.type_       << separator
+                        << resource.requested_  << separator
+                        << resource.granted_    << separator
+                        << resource.conveyed_;
+                }
+            }
+            output  << std::endl;
+        }
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyConsignData::ManageMessage
+// Created: MMC 2012-08-21
+// -----------------------------------------------------------------------------
+const ConsignData_ABC& SupplyConsignData::ManageMessage( const ::sword::LogSupplyHandlingCreation& msg, ConsignResolver_ABC& resolver )
+{
+    resolver.GetSimTime( simTime_, tick_ );
+    if( msg.has_tick() )
+        creationTick_ = boost::lexical_cast< std::string >( msg.tick() );
+    if( msg.has_supplier() )
+    {
+        if( msg.supplier().has_automat() )
+        {
+            int supplierId = static_cast< int >( msg.supplier().automat().id() );
+            providerId_ = boost::lexical_cast< std::string >( supplierId );
+            resolver.GetAutomatName( supplierId, provider_ );
+        }
+        else if( msg.supplier().has_formation() )
+        {
+            int supplierId = static_cast< int >( msg.supplier().formation().id() );
+            providerId_ = boost::lexical_cast< std::string >( supplierId );
+            resolver.GetFormationName( msg.supplier().formation().id(), provider_ );
+        }
+    }
+    if( msg.has_transporters_provider() )
+    {
+        if( msg.transporters_provider().has_automat() )
+        {
+            int transportId = static_cast< int >( msg.transporters_provider().automat().id() );
+            transportProviderId_ = boost::lexical_cast< std::string >( transportId );
+            resolver.GetAutomatName( transportId, transportProvider_ );
+        }
+        else if( msg.transporters_provider().has_formation() )
+        {
+            int transportId = static_cast< int >( msg.transporters_provider().formation().id() );
+            transportProviderId_ = boost::lexical_cast< std::string >( transportId );
+            resolver.GetFormationName( transportId, transportProvider_ );
+        }
+    }
+    resolver.AddToLineIndex( 1 );
+    return *this;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyConsignData::ManageMessage
+// Created: MMC 2012-08-21
+// -----------------------------------------------------------------------------
+const ConsignData_ABC& SupplyConsignData::ManageMessage( const ::sword::LogSupplyHandlingUpdate& msg, ConsignResolver_ABC& resolver )
+{
+    resolver.GetSimTime( simTime_, tick_ );
+    if( msg.has_current_state_end_tick() )
+    {
+        int entTick = msg.current_state_end_tick();
+        if( entTick > 0 )
+            stateEndTick_ = boost::lexical_cast< std::string >( entTick );
+    }
+    if( msg.has_convoyer() )
+    {
+        int conveyorId = msg.convoyer().id();
+        if( conveyorId > 0 )
+        {
+            conveyorId_ = boost::lexical_cast< std::string >( msg.convoyer().id() );
+            resolver.GetAgentName( conveyorId, conveyor_ );
+        }
+    }
+    if( msg.has_state() )
+    {
+        sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus eSupply = msg.state();
+        resolver.GetSupplykName( eSupply, state_ );
+        stateId_ = boost::lexical_cast< std::string >( static_cast< int >( eSupply ) );
+    }
+    if( msg.has_requests() )
+    {
+        const ::sword::SupplyRecipientResourceRequests& requests = msg.requests();
+        for( int req = 0; req < requests.requests().size(); ++req )
+        {
+            const sword::SupplyRecipientResourcesRequest& request = requests.requests( req );
+            int recipientId = request.recipient().id();
+            resolver.GetAutomatName( recipientId, recipientAutomats_[ recipientId ] );
+            for ( int res = 0; res < request.resources().size(); ++res )
+            {
+                const sword::SupplyResourceRequest& resourceMsg = request.resources( res );
+                SupplyConsignData::Resource resource;
+                if( resourceMsg.has_resource() )
+                {
+                    resolver.GetResourceName( resourceMsg.resource(), resource.type_ );
+                    int resourceId = resourceMsg.resource().id();
+                    resource.recipientAutomatId_ = recipientId;
+                    resource.recipientId_   = boost::lexical_cast< std::string >( recipientId );
+                    resource.id_            = boost::lexical_cast< std::string >( resourceId );
+                    resource.requested_     = boost::lexical_cast< std::string >( resourceMsg.requested() );
+                    resource.granted_       = boost::lexical_cast< std::string >( resourceMsg.granted() );
+                    resource.conveyed_      = boost::lexical_cast< std::string >( resourceMsg.convoyed() );
+                    resources_[ resourceId ] = resource;
+                }
+            }
+        }
+    }
+    resolver.AddToLineIndex( recipientAutomats_.empty()? 1 : static_cast< int >( recipientAutomats_.size() ) );
+    return *this;
 }
 
 // -----------------------------------------------------------------------------
 // Name: SupplyResolver constructor
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-SupplyResolver::SupplyResolver( const std::string& name, const dispatcher::Model_ABC& model )
-    : ConsignResolver_ABC( name, "tick , GDH, automat , provider , transport_provider , convoyeur , state , (resourcetype , requested, granted, conveyed)*", model )
+SupplyResolver::SupplyResolver( const std::string& name, const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel )
+    : ConsignResolver_ABC( name, model, staticModel )
 {
     // NOTHING
 }
@@ -81,29 +194,6 @@ bool SupplyResolver::IsManageable( const sword::SimToClient& message )
             ||  message.message().has_log_supply_handling_update();
 }
 
-namespace 
-{
-    void GetSupplykName( sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus eSupply, std::string& name )
-    {
-        if( sword::LogSupplyHandlingUpdate::convoy_waiting_for_transporters == eSupply )
-            name = "convoy_waiting_for_transporters";
-        else if( sword::LogSupplyHandlingUpdate::convoy_setup == eSupply )
-            name = "convoy_setup";
-        else if( sword::LogSupplyHandlingUpdate::convoy_moving_to_loading_point == eSupply )
-            name = "convoy_moving_to_loading_point";
-        else if( sword::LogSupplyHandlingUpdate::convoy_loading == eSupply )
-            name = "convoy_loading";
-        else if( sword::LogSupplyHandlingUpdate::convoy_moving_to_unloading_point == eSupply )
-            name = "convoy_moving_to_unloading_point";
-        else if( sword::LogSupplyHandlingUpdate::convoy_unloading == eSupply )
-            name = "convoy_unloading";
-        else if( sword::LogSupplyHandlingUpdate::convoy_moving_back_to_loading_point == eSupply )
-            name = "convoy_moving_back_to_loading_point";
-        else if( sword::LogSupplyHandlingUpdate::convoy_finished == eSupply )
-            name = "convoy_finished";
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: SupplyResolver::ManageMessage
 // Created: MMC 2012-08-06
@@ -111,86 +201,44 @@ namespace
 void SupplyResolver::ManageMessage( const sword::SimToClient& message )
 {
     if( message.message().has_log_supply_handling_creation() )
-    {
-        const ::sword::LogSupplyHandlingCreation& msg = message.message().log_supply_handling_creation();
-        if( msg.has_request() )
-        {
-            SupplyConsignData* pConsignData = GetConsign< SupplyConsignData >( static_cast< int >( msg.request().id() ) );
-            pConsignData->simTime_ = simTime_;
-            if( msg.has_tick() )
-                pConsignData->tick_ = msg.tick();
-            if( msg.has_supplier() )
-            {
-                if( msg.supplier().has_automat() )
-                {
-                    pConsignData->providerId_ = static_cast< int >( msg.supplier().automat().id() );
-                    GetAgentName( pConsignData->providerId_, pConsignData->provider_ );
-                }
-                else if( msg.supplier().has_formation() )
-                {
-                    pConsignData->providerId_ = static_cast< int >( msg.supplier().formation().id() );
-                    GetFormationName( pConsignData->providerId_, pConsignData->provider_ );
-                }
-            }
-            if( msg.has_transporters_provider() )
-            {
-                if( msg.transporters_provider().has_automat() )
-                {
-                    pConsignData->transportProviderId_ = static_cast< int >( msg.transporters_provider().automat().id() );
-                    GetAutomatName( pConsignData->transportProviderId_, pConsignData->transportProvider_ );
-                }
-                else if( msg.transporters_provider().has_formation() )
-                {
-                    pConsignData->transportProviderId_ = static_cast< int >( msg.transporters_provider().formation().id() );
-                    GetFormationName( pConsignData->transportProviderId_, pConsignData->transportProvider_ );
-                }
-            }
-            pConsignData->Write( output_ );
-        }
-    }
+        TraceConsign< ::sword::LogSupplyHandlingCreation, SupplyConsignData >( message.message().log_supply_handling_creation(), output_ );
     if( message.message().has_log_supply_handling_update() )
+        TraceConsign< ::sword::LogSupplyHandlingUpdate, SupplyConsignData >( message.message().log_supply_handling_update(), output_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyResolver::InitHeader
+// Created: MMC 2012-08-24
+// -----------------------------------------------------------------------------
+void SupplyResolver::InitHeader()
+{
+    SupplyConsignData consign( tools::translate( "logistic", "request id" ).toAscii().constData() );
+    consign.tick_               = tools::translate( "logistic", "tick" ).toAscii().constData();
+    consign.creationTick_       = tools::translate( "logistic", "creation tick" ).toAscii().constData();
+    consign.stateEndTick_       = tools::translate( "logistic", "state end tick" ).toAscii().constData();
+    consign.simTime_            = tools::translate( "logistic", "GDH" ).toAscii().constData();
+    consign.recipientAutomatId_ = tools::translate( "logistic", "recipient id" ).toAscii().constData();
+    consign.providerId_         = tools::translate( "logistic", "provider id" ).toAscii().constData();
+    consign.transportProviderId_= tools::translate( "logistic", "transport provider id" ).toAscii().constData();
+    consign.conveyorId_         = tools::translate( "logistic", "conveyor id" ).toAscii().constData();
+    consign.stateId_            = tools::translate( "logistic", "state id" ).toAscii().constData();
+    consign.recipientAutomat_   = tools::translate( "logistic", "recipient" ).toAscii().constData();
+    consign.provider_           = tools::translate( "logistic", "provider" ).toAscii().constData();
+    consign.transportProvider_  = tools::translate( "logistic", "transport provider" ).toAscii().constData();
+    consign.conveyor_           = tools::translate( "logistic", "conveyor" ).toAscii().constData();
+    consign.state_              = tools::translate( "logistic", "state" ).toAscii().constData();
+    consign.recipientAutomats_[ 0 ] = consign.recipientAutomat_;
+    for( int i = 0; i < 15; ++i )
     {
-        const ::sword::LogSupplyHandlingUpdate& msg = message.message().log_supply_handling_update();
-        if( msg.has_request() )
-        {
-            SupplyConsignData* pConsignData = GetConsign< SupplyConsignData >( static_cast< int >( msg.request().id() ) );
-            pConsignData->simTime_ = simTime_;
-            if( msg.has_convoyer() )
-            {
-                pConsignData->conveyorId_ = msg.convoyer().id();
-                GetAgentName( pConsignData->conveyorId_, pConsignData->conveyor_ );
-            }
-            if( msg.has_state() )
-            {
-                sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus eSupply = msg.state();
-                GetSupplykName( eSupply, pConsignData->state_ );
-                pConsignData->stateId_ = eSupply;
-            }
-            if( msg.has_current_state_end_tick() )
-                pConsignData->tick_ = msg.current_state_end_tick();
-            if( msg.has_requests() )
-            {
-                pConsignData->resources_.clear();
-                const ::sword::SupplyRecipientResourceRequests& requests = msg.requests();
-                for( int req = 0; req < requests.requests().size(); ++req )
-                {
-                    const sword::SupplyRecipientResourcesRequest& request = requests.requests( req );
-                    for ( int res = 0; res < request.resources().size(); ++res )
-                    {
-                        const sword::SupplyResourceRequest& resourceMsg = request.resources( res );
-                        SupplyConsignData::Resource resource;
-                        if( resourceMsg.has_resource() )
-                        {
-                            resource.id_ = resourceMsg.resource().id();
-                            resource.requested_ = resourceMsg.requested();
-                            resource.granted_ = resourceMsg.granted();
-                            resource.conveyed_ = resourceMsg.convoyed();
-                            pConsignData->resources_.push_back( resource );
-                        }
-                    }
-                }
-            }
-            pConsignData->Write( output_ );
-        }
+        SupplyConsignData::Resource resource;
+        resource.recipientAutomatId_ = 0;
+        resource.recipientId_ = consign.recipientAutomatId_;
+        resource.id_        = tools::translate( "logistic", "resource type id" ).toAscii().constData();
+        resource.type_      = tools::translate( "logistic", "resource type" ).toAscii().constData();
+        resource.requested_ = tools::translate( "logistic", "requested" ).toAscii().constData();
+        resource.granted_   = tools::translate( "logistic", "granted" ).toAscii().constData();
+        resource.conveyed_  = tools::translate( "logistic", "conveyed" ).toAscii().constData();
+        consign.resources_[ i ] = resource;
     }
+    SetHeader( consign );
 }

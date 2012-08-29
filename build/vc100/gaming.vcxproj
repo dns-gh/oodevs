@@ -559,7 +559,9 @@
   <ItemGroup>
     <None Include="..\..\src\libraries\gaming\Sector.inl" />
     <None Include="..\..\src\libraries\gaming\LogisticConsigns.inl" />
-    <None Include="..\..\src\libraries\gaming\gaming_es.ts" />
+    <None Include="..\..\src\libraries\gaming\gaming_es.ts">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="..\..\src\libraries\gaming\gaming_fr.ts">
       <SubType>Designer</SubType>
     </None>

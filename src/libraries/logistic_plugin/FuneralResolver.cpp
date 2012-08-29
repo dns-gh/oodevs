@@ -8,46 +8,108 @@
 // *****************************************************************************
 
 #include "FuneralResolver.h"
-#include "protocol/Protocol.h"
+#include "clients_kernel/Tools.h"
 
 using namespace plugins::logistic;
 
 // -----------------------------------------------------------------------------
-// Name: FuneralConsignData constructor
+// Name: FuneralConsignData::operator>>
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-FuneralConsignData::FuneralConsignData() 
-    : tick_( noValue_ ), unitId_( noValue_ ), handlingUnitId_( noValue_ ), conveyingUnitId_( noValue_ ), stateId_( noValue_ )
-    , simTime_( noField_ ), unit_( noField_ ), handlingUnit_( noField_ ), conveyingUnit_( noField_ ), rank_( noField_ )
-    , packagingResource_( noField_ ), state_( noField_ )
+void FuneralConsignData::operator>>( std::stringstream& output ) const
 {
-    // NOTHING
+    static const std::string separator = ConsignData_ABC::GetSeparator();
+    output  << requestId_            << separator
+            << tick_                 << separator
+            << simTime_              << separator   // << creationTick_         << separator    << unitId_  << separator
+            << unit_                 << separator   // << handlingUnitId_       << separator
+            << handlingUnit_         << separator   // << conveyingUnitId_      << separator
+            << conveyingUnit_        << separator   
+            << rank_                 << separator   // << packagingResourceId_  << separator
+            << packagingResource_    << separator   // << stateId_              << separator
+            << state_                << separator
+            << stateEndTick_         << std::endl;
 }
 
 // -----------------------------------------------------------------------------
-// Name: FuneralConsignData::Write
-// Created: MMC 2012-08-06
+// Name: FuneralConsignData::ManageMessage
+// Created: MMC 2012-08-21
 // -----------------------------------------------------------------------------
-void FuneralConsignData::Write( std::ofstream& output )
+const ConsignData_ABC& FuneralConsignData::ManageMessage( const ::sword::LogFuneralHandlingCreation& msg, ConsignResolver_ABC& resolver )
 {
-    //format: tick , GDH, unit , handling_unit , conveying_unit , rank , packaging_resource, state
-    //example: 1 , 20120312T240000 , 12, 1.1.4.BRB23 , 28, 1.2.BLT , 22, 1.2.TR323.TR1, officer , 3, conteneur mortuaire, 5, en attente transporteurs
-    output  << tick_                 << separator_ 
-            << simTime_              << separator_
-            << unitId_               << subSeparator_    << unit_                << separator_
-            << handlingUnitId_       << subSeparator_    << handlingUnit_        << separator_
-            << conveyingUnitId_      << subSeparator_    << conveyingUnit_       << separator_
-            << rank_                 << separator_
-            << packagingResourceId_  << subSeparator_    << packagingResource_   << separator_
-            << stateId_              << subSeparator_    << state_               << std::endl;
+    resolver.GetSimTime( simTime_, tick_ );
+    if( msg.has_tick() )
+        creationTick_ = boost::lexical_cast< std::string >( msg.tick() );
+    if( msg.has_unit() )
+    {
+        int unitId = msg.unit().id();
+        unitId_ = boost::lexical_cast< std::string >( unitId );
+        resolver.GetAgentName( unitId, unit_ );
+    }
+    if( msg.has_rank() )
+        resolver.GetRankName( msg.rank(), rank_ );
+    resolver.AddToLineIndex( 1 );
+    return *this;
+}
+
+// -----------------------------------------------------------------------------
+// Name: FuneralConsignData::ManageMessage
+// Created: MMC 2012-08-21
+// -----------------------------------------------------------------------------
+const ConsignData_ABC& FuneralConsignData::ManageMessage( const ::sword::LogFuneralHandlingUpdate& msg, ConsignResolver_ABC& resolver )
+{
+    resolver.GetSimTime( simTime_, tick_ );
+    if( msg.has_current_state_end_tick() )
+    {
+        int entTick = msg.current_state_end_tick();
+        if( entTick > 0 )
+            stateEndTick_ = boost::lexical_cast< std::string >( entTick );
+    }
+    if( msg.has_handling_unit() )
+    {
+        if( msg.handling_unit().has_automat() )
+        {
+            int automatId = static_cast< int >( msg.handling_unit().automat().id() );
+            handlingUnitId_ = boost::lexical_cast< std::string >( automatId );
+            resolver.GetAutomatName( automatId, handlingUnit_ );
+        }
+        else if( msg.handling_unit().has_formation() )
+        {
+            int formationId = static_cast< int >( msg.handling_unit().formation().id() );
+            handlingUnitId_ = boost::lexical_cast< std::string >( formationId );
+            resolver.GetFormationName( formationId, handlingUnit_ );
+        }
+    }
+    if( msg.has_convoying_unit() )
+    {
+        int unitId = msg.convoying_unit().id();
+        if( unitId > 0 )
+        {
+            conveyingUnitId_ = boost::lexical_cast< std::string >( unitId );
+            resolver.GetAgentName( unitId, conveyingUnit_ );
+        }
+    }
+    if( msg.has_packaging_resource() )
+    {
+        packagingResourceId_ = boost::lexical_cast< std::string >( msg.packaging_resource().id() );
+        resolver.GetResourceName( msg.packaging_resource(), packagingResource_ );
+    }
+    if( msg.has_state() )
+    {
+        sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus eState = msg.state();
+        resolver.GetFuneralName( eState, state_ );
+        stateId_ = boost::lexical_cast< std::string >( static_cast< int >( eState ) );
+    }
+    resolver.AddToLineIndex( 1 );
+    return *this;
 }
 
 // -----------------------------------------------------------------------------
 // Name: FuneralResolver constructor
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-FuneralResolver::FuneralResolver( const std::string& name, const dispatcher::Model_ABC& model ) 
-    : ConsignResolver_ABC( name, "tick , GDH, unit , handling_unit , conveying_unit , rank , packaging_resource, state", model )
+FuneralResolver::FuneralResolver( const std::string& name, const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel ) 
+    : ConsignResolver_ABC( name, model, staticModel )
 {
     // NOTHING
 }
@@ -71,37 +133,6 @@ bool FuneralResolver::IsManageable( const sword::SimToClient& message )
             || message.message().has_log_funeral_handling_update();
 }
 
-namespace
-{
-    void GetRankName( sword::EnumHumanRank eRank, std::string& name )
-    {
-        if( sword::officer == eRank )
-            name = "officer";
-        else if( sword::sub_officer == eRank )
-            name = "sub_officer";
-        else if( sword::trooper == eRank )
-            name = "trooper";
-    }
-
-    void GetFuneralName( sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus eFuneral, std::string name )
-    {
-        if( sword::LogFuneralHandlingUpdate::waiting_for_handling == eFuneral )
-            name = "waiting_for_handling";
-        else if( sword::LogFuneralHandlingUpdate::transporting_unpackaged == eFuneral )
-            name = "transporting_unpackaged";
-        else if( sword::LogFuneralHandlingUpdate::waiting_for_packaging == eFuneral )
-            name = "waiting_for_packaging";
-        else if( sword::LogFuneralHandlingUpdate::packaging == eFuneral )
-            name = "packaging";
-        else if( sword::LogFuneralHandlingUpdate::waiting_for_transporter == eFuneral )
-            name = "waiting_for_transporter";
-        else if( sword::LogFuneralHandlingUpdate::transporting_packaged == eFuneral )
-            name = "transporting_packaged";
-        else if( sword::LogFuneralHandlingUpdate::finished == eFuneral )
-            name = "finished";
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: FuneralResolver::ManageMessage
 // Created: MMC 2012-08-06
@@ -109,58 +140,32 @@ namespace
 void FuneralResolver::ManageMessage( const sword::SimToClient& message )
 {
     if( message.message().has_log_funeral_handling_creation() )
-    {
-        const ::sword::LogFuneralHandlingCreation& msg = message.message().log_funeral_handling_creation();
-        if( msg.has_request() )
-        {
-            FuneralConsignData* pConsignData = GetConsign< FuneralConsignData >( msg.request().id() );
-            pConsignData->simTime_ = simTime_;
-            if( msg.has_unit() )
-            {
-                pConsignData->unitId_ = msg.unit().id();
-                GetAgentName( pConsignData->unitId_, pConsignData->unit_ );
-            }
-            if( msg.has_tick() )
-                pConsignData->tick_ = msg.tick();
-            if( msg.has_rank() )
-                GetRankName( msg.rank(), pConsignData->rank_ );
-            pConsignData->Write( output_ );
-        }
-    }
+        TraceConsign< ::sword::LogFuneralHandlingCreation, FuneralConsignData >( message.message().log_funeral_handling_creation(), output_ );
     if( message.message().has_log_funeral_handling_update() )
-    {
-        const ::sword::LogFuneralHandlingUpdate& msg = message.message().log_funeral_handling_update();
-        if( msg.has_request() )
-        {
-            FuneralConsignData* pConsignData = GetConsign< FuneralConsignData >( msg.request().id() );
-            pConsignData->simTime_ = simTime_;
-            if( msg.has_handling_unit() )
-            {
-                if( msg.handling_unit().has_automat() )
-                {
-                    pConsignData->handlingUnitId_ = static_cast< int >( msg.handling_unit().automat().id() );
-                    GetAutomatName( pConsignData->handlingUnitId_, pConsignData->handlingUnit_ );
-                }
-                else if( msg.handling_unit().has_formation() )
-                {
-                    pConsignData->handlingUnitId_ = static_cast< int >( msg.handling_unit().formation().id() );
-                    GetFormationName( pConsignData->handlingUnitId_, pConsignData->handlingUnit_ );
-                }
-            }
-            if( msg.has_convoying_unit() )
-            {
-                pConsignData->conveyingUnitId_ = msg.convoying_unit().id();
-                GetAgentName( pConsignData->conveyingUnitId_, pConsignData->conveyingUnit_ );
-            }
-            if( msg.has_packaging_resource() )
-                pConsignData->packagingResourceId_ = msg.packaging_resource().id();
-            if( msg.has_state() )
-            {
-                sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus eState = msg.state();
-                GetFuneralName( eState, pConsignData->state_ );
-                pConsignData->stateId_ = eState;
-            }
-            pConsignData->Write( output_ );
-        }
-    }
+        TraceConsign< ::sword::LogFuneralHandlingUpdate, FuneralConsignData >( message.message().log_funeral_handling_update(), output_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FuneralResolver::InitHeader
+// Created: MMC 2012-08-24
+// -----------------------------------------------------------------------------
+void FuneralResolver::InitHeader()
+{
+    FuneralConsignData consign( tools::translate( "logistic", "request id" ).toAscii().constData() );
+    consign.tick_                   = tools::translate( "logistic", "tick" ).toAscii().constData();
+    consign.creationTick_           = tools::translate( "logistic", "creation tick" ).toAscii().constData();
+    consign.stateEndTick_           = tools::translate( "logistic", "state end tick" ).toAscii().constData();
+    consign.simTime_                = tools::translate( "logistic", "GDH" ).toAscii().constData();
+    consign.unitId_                 = tools::translate( "logistic", "unit id" ).toAscii().constData();
+    consign.handlingUnitId_         = tools::translate( "logistic", "handling unit id" ).toAscii().constData();
+    consign.conveyingUnitId_        = tools::translate( "logistic", "conveying unit id" ).toAscii().constData();
+    consign.packagingResourceId_    = tools::translate( "logistic", "packaging resource id" ).toAscii().constData();
+    consign.stateId_                = tools::translate( "logistic", "state id" ).toAscii().constData();
+    consign.unit_                   = tools::translate( "logistic", "unit" ).toAscii().constData();
+    consign.handlingUnit_           = tools::translate( "logistic", "handling unit" ).toAscii().constData();
+    consign.conveyingUnit_          = tools::translate( "logistic", "conveying unit" ).toAscii().constData();
+    consign.rank_                   = tools::translate( "logistic", "rank" ).toAscii().constData();
+    consign.packagingResource_      = tools::translate( "logistic", "packaging resource" ).toAscii().constData();
+    consign.state_                  = tools::translate( "logistic", "state" ).toAscii().constData();
+    SetHeader( consign );
 }

@@ -13,7 +13,6 @@
 #include "ConsignData_ABC.h"
 #include "ConsignResolver_ABC.h"
 
-
 namespace plugins
 {
 namespace logistic
@@ -29,24 +28,28 @@ class FuneralConsignData : public ConsignData_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             FuneralConsignData();
+             FuneralConsignData( const std::string& requestId ) : ConsignData_ABC( requestId ) {}
     virtual ~FuneralConsignData() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void Write( std::ofstream& output );
+    virtual void operator>>( std::stringstream& output ) const;
+    virtual const ConsignData_ABC& ManageMessage( const ::sword::LogFuneralHandlingCreation& msg, ConsignResolver_ABC& resolver );
+    virtual const ConsignData_ABC& ManageMessage( const ::sword::LogFuneralHandlingUpdate& msg, ConsignResolver_ABC& resolver );
     //@}
 
 public:
     //! @name Member data
     //@{
-    int tick_;
-    int unitId_;
-    int handlingUnitId_;
-    int conveyingUnitId_;
-    int packagingResourceId_;
-    int stateId_;
+    std::string tick_;
+    std::string creationTick_;
+    std::string stateEndTick_;
+    std::string unitId_;
+    std::string handlingUnitId_;
+    std::string conveyingUnitId_;
+    std::string packagingResourceId_;
+    std::string stateId_;
     std::string simTime_;
     std::string unit_;
     std::string handlingUnit_;
@@ -68,8 +71,13 @@ class FuneralResolver : public ConsignResolver_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             FuneralResolver( const std::string& name, const dispatcher::Model_ABC& model );
+             FuneralResolver( const std::string& name, const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel );
     virtual ~FuneralResolver();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void InitHeader();
     //@}
 
 protected:

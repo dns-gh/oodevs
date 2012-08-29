@@ -29,24 +29,28 @@ class MedicalConsignData : public ConsignData_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MedicalConsignData();
+             MedicalConsignData( const std::string& requestId ) : ConsignData_ABC( requestId ) {}
     virtual ~MedicalConsignData() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void Write( std::ofstream& output );
+    virtual void operator>>( std::stringstream& output ) const;
+    virtual const ConsignData_ABC& ManageMessage( const ::sword::LogMedicalHandlingCreation& msg, ConsignResolver_ABC& resolver );
+    virtual const ConsignData_ABC& ManageMessage( const ::sword::LogMedicalHandlingUpdate& msg, ConsignResolver_ABC& resolver );
     //@}
 
 public:
     //! @name Member data
     //@{
-    int tick_;
-    int unitId_;
-    int providerId_;
-    int nbc_;
-    int mental_;
-    int stateId_;
+    std::string tick_;
+    std::string creationTick_;
+    std::string stateEndTick_;
+    std::string unitId_;
+    std::string providerId_;
+    std::string nbc_;
+    std::string mental_;
+    std::string stateId_;
     std::string simTime_;
     std::string unit_;
     std::string provider_;
@@ -67,8 +71,13 @@ class MedicalResolver : public ConsignResolver_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MedicalResolver( const std::string& name, const dispatcher::Model_ABC& model );
+             MedicalResolver( const std::string& name, const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel );
     virtual ~MedicalResolver();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void InitHeader();
     //@}
 
 protected:

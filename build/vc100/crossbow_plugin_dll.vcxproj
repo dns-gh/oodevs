@@ -97,6 +97,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='debug|x64'">crossbow_plugin-$(CurrentPlatform)-mt-gd</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='release|x64'">crossbow_plugin-$(CurrentPlatform)-mt</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
     <ClCompile>

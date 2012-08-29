@@ -13,9 +13,15 @@
 #include "dispatcher/Plugin_ABC.h"
 #include "ConsignResolver_ABC.h"
 
+
 namespace tools
 {
     class SessionConfig;
+}
+
+namespace xml
+{
+    class xistream;
 }
 
 namespace dispatcher
@@ -45,7 +51,7 @@ class LogisticPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticPlugin( const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, const tools::SessionConfig& config );
+             LogisticPlugin( const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, const tools::SessionConfig& config, xml::xistream& xis );
     virtual ~LogisticPlugin();
     //@}
 

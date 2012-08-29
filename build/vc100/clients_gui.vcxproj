@@ -2474,6 +2474,7 @@
 </Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">./translator;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">./translator;%(Outputs)</Outputs>
+      <SubType>Designer</SubType>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\clients_gui_sword_es.ts">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">lrelease -verbose "%(FullPath)"
