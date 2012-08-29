@@ -311,7 +311,7 @@ void ADN_Sensors_GUI::BuildSpecificParamsGui( QTabWidget* pParent )
     // Alat parameters
     Q3GroupBox* pAlatGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Survey durations for army aviation" ) );
     for( int n = 1; n < eNbrVisionObjects; ++n )
-        builder.AddField< ADN_TimeField >( pAlatGroup, ADN_Tr::ConvertFromVisionObject( static_cast< E_VisionObject >( n ) ).c_str(), data_.GetAlatInfos().surveyTimes_[ n - 1 ], tr( "/ha" ) );
+        builder.AddField< ADN_TimeField >( pAlatGroup, ADN_Tr::ConvertFromVisionObject( static_cast< E_VisionObject >( n ), ENT_Tr_ABC::eToTr ).c_str(), data_.GetAlatInfos().surveyTimes_[ n - 1 ], tr( "/ha" ) );
 
     // Cobra parameters
     Q3GroupBox* pCobraGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Counter battery radar" ) );
