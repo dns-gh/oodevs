@@ -53,6 +53,29 @@ namespace
 // Name: LogisticPlugin constructor
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
+LogisticPlugin::LogisticPlugin( const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, const tools::SessionConfig& config )
+    : sessionConfig_( config )
+    , staticModel_ ( staticModel )
+    , currentTick_( 0 )
+    , maintenanceResolver_  ( new MaintenanceResolver( config.BuildSessionChildFile( "LogMaintenance" ), model, staticModel ) )
+    , supplyResolver_       ( new SupplyResolver( config.BuildSessionChildFile( "LogAppro" ), model, staticModel ) )
+    , funeralResolver_      ( new FuneralResolver( config.BuildSessionChildFile( "LogFuneraire" ), model, staticModel ) )
+    , medicalResolver_      ( new MedicalResolver( config.BuildSessionChildFile( "LogMedical" ), model, staticModel ) )
+{
+    QString lang = ReadLang();
+    InitTranslator( "ENT", lang );
+    InitTranslator( "logistic_plugin", lang );
+    ENT_Tr::InitTranslations();
+    maintenanceResolver_->InitHeader();
+    supplyResolver_->InitHeader();
+    funeralResolver_->InitHeader();
+    medicalResolver_->InitHeader();
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticPlugin constructor
+// Created: MMC 2012-08-06
+// -----------------------------------------------------------------------------
 LogisticPlugin::LogisticPlugin( const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, const tools::SessionConfig& config, xml::xistream& xis )
     : sessionConfig_( config )
     , staticModel_ ( staticModel )
