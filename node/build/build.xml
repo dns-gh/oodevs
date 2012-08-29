@@ -10,9 +10,36 @@
         <update name="sword" version="Defense/releases/internal/${branch}" package="SWORD_binaries_${platform}_${branch}"/>
     </target>
 
+    <macrodef name="pretty_json">
+        <attribute name="src"/>
+        <attribute name="dst"/>
+        <sequential>
+            <apply taskname="json" executable="python" failonerror="true">
+                <fileset id="input" dir="@{src}" includes="*.json" />
+                <mapper type="glob" from="*.json" to="@{dst}/*.json"/>
+                <arg value="-m"/>
+                <arg value="json.tool"/>
+                <srcfile/>
+                <targetfile/>
+            </apply>
+        </sequential>
+    </macrodef>
+
+    <target name="plugins">
+        <xslt
+            basedir="../out/${platform}/plugins"
+            includes="**/plugin.xml"
+            destdir="../out/${platform}/json"
+            style="../src/plugin.xsl"
+            >
+            <regexpmapper from="(\w+)[\\\/]+plugin.xml$" to="\1.json" />
+        </xslt>
+        <pretty_json src="../out/${platform}/json" dst="../www" />
+    </target>
+
     <target name="build">
         <go module="node"/>
     </target>
 
-    <target name="all" depends="configure,build" />
+    <target name="all" depends="configure,plugins,build" />
 </project>
