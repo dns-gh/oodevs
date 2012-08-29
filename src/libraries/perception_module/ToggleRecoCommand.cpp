@@ -49,6 +49,9 @@ void ToggleRecoCommand::Execute( const wrapper::View& model ) const
     {
         effect[ perceptionId_ ][ "has-growth-speed" ] = static_cast< bool >( growthSpeed_ );
         effect[ perceptionId_ ][ "growth-speed" ] = growthSpeed_ ? *growthSpeed_ : 0;
+        effect[ perceptionId_ ][ "radius" ] = 0;
+        effect[ perceptionId_ ][ "max-radius-reached" ] = false;
+        effect[ perceptionId_ ][ "identifier" ] = perceptionId_;
         effect[ perceptionId_ ][ "localization" ].SetUserData( localization_ );
     }
     else

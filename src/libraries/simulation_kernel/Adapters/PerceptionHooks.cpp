@@ -591,6 +591,11 @@ namespace
     {
         return object->GetLocalisation().Intersect2DWithCircle( *center, radius );
     }
+    DEFINE_HOOK( GetLocalizationRadius, double, ( const TER_Localisation* localization ) )
+    {
+        const MT_Rect& boundingBox = localization->GetBoundingBox();
+        return boundingBox.GetCenter().Distance( boundingBox.GetPointUpLeft() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -675,5 +680,6 @@ void PerceptionHooks::Initialize( core::Facade& facade )
     REGISTER_HOOK( IsKnowledgeObjectInsidePerception, facade );
     REGISTER_HOOK( IsObjectIntersectingLocalization, facade );
     REGISTER_HOOK( IsKnowledgeObjectIntersectingWithCircle, facade );
+    REGISTER_HOOK( GetLocalizationRadius, facade );
     RolePion_Perceiver::Initialize( facade );
 }

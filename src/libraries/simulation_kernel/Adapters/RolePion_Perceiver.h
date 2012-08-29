@@ -21,7 +21,6 @@
 
 class DEC_KS_Perception;
 class PHY_Perception_ABC;
-class PHY_PerceptionRecoLocalisation;
 class PHY_PerceptionRadar;
 class PHY_PerceptionFlyingShell;
 class TER_Agent_ABC;
@@ -203,7 +202,6 @@ private:
     //@{
     bool HasChanged() const;
     bool HasRadarStateChanged() const;
-    void EnsurePerceptionRecoLocalisation();
     void AppendHackedAgents( std::vector< TER_Agent_ABC* >& perceivableAgents ) const;
     void AppendHackedPopulationConcentrations( std::vector< TER_PopulationConcentration_ABC* >& perceivableAgents ) const;
     void AppendHackedPopulationFlows( std::vector< TER_PopulationFlow_ABC* >& perceivableAgents ) const;
@@ -231,7 +229,6 @@ private:
     T_SurfaceAgentMap surfacesAgent_;
     T_SurfaceObjectMap surfacesObject_;
 
-    PHY_PerceptionRecoLocalisation* pPerceptionRecoLocalisation_;
     PHY_PerceptionRadar*            pPerceptionRadar_;
     PHY_PerceptionFlyingShell*      pPerceptionFlyingShell_;
     T_PerceptionVector              activePerceptions_;

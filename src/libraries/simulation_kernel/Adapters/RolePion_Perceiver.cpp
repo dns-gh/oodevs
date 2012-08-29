@@ -16,10 +16,6 @@
 #include "Entities/MIL_Army.h"
 #include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
-#include "Entities/Agents/Perceptions/PHY_PerceptionRecoPoint.h"
-#include "Entities/Agents/Perceptions/PHY_PerceptionRecoLocalisation.h"
-#include "Entities/Agents/Perceptions/PHY_PerceptionRecoObjects.h"
-#include "Entities/Agents/Perceptions/PHY_PerceptionRecoUrbanBlock.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionRadar.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionFlyingShell.h"
 #include "Entities/Agents/Units/Radars/PHY_RadarClass.h"
@@ -149,18 +145,6 @@ namespace
         const TER_Localisation& localization = node[ "localization" ].GetUserData< TER_Localisation >();
         return perceiver.EnableFlyingShellDetection( localization );
     }
-    int EnableReco( PHY_RoleInterface_Perceiver& perceiver, DEC_Decision_ABC& decision, const core::Model& node )
-    {
-        const TER_Localisation& localization = node[ "localization" ].GetUserData< TER_Localisation >();
-        return node[ "has-growth-speed" ] ? // $$$$ _RC_ SLI 2012-03-30: add child existence test?
-               perceiver.EnableRecoLocalisation( localization, node[ "growth-speed" ], decision )
-             : perceiver.EnableRecoLocalisation( localization, decision );
-    }
-    int EnableRecognitionPoint( PHY_RoleInterface_Perceiver& perceiver, DEC_Decision_ABC& decision, const core::Model& node )
-    {
-        const MT_Vector2D center( node[ "center/x" ], node[ "center/y" ] );
-        return perceiver.EnableRecoPoint( center, node[ "size" ], node[ "growth-speed" ], decision );
-    }
     typedef boost::function< void( DEC_KS_Perception& ) > T_Notification;
     template< typename Target, typename Result >
     void NotifyPerception( const core::Model& effect, std::vector< T_Notification >& notifications )
@@ -207,6 +191,7 @@ namespace
 DECLARE_HOOK( IsUsingActiveRadar, bool, ( const SWORD_Model* entity ) )
 DECLARE_HOOK( IsUsingSpecializedActiveRadar, bool, ( const SWORD_Model* entity, const char* radarType ) )
 DECLARE_HOOK( ComputeKnowledgeObjectPerception, size_t, ( const SWORD_Model* model, const SWORD_Model* entity, const DEC_Knowledge_Object* object ) )
+DECLARE_HOOK( GetPerceptionId, int, () )
 
 // -----------------------------------------------------------------------------
 // Name: RolePion_Perceiver::Initialize
@@ -217,6 +202,7 @@ void RolePion_Perceiver::Initialize( core::Facade& facade )
     USE_HOOK( IsUsingActiveRadar, facade );
     USE_HOOK( IsUsingSpecializedActiveRadar, facade );
     USE_HOOK( ComputeKnowledgeObjectPerception, facade );
+    USE_HOOK( GetPerceptionId, facade );
 }
 
 // -----------------------------------------------------------------------------
@@ -235,7 +221,6 @@ RolePion_Perceiver::RolePion_Perceiver( const Sink& sink, MIL_Agent_ABC& pion, c
     , bExternalCanPerceive_          ( true )
     , bExternalMustUpdateVisionCones_( false )
     , bRadarStateHasChanged_         ( true )
-    , pPerceptionRecoLocalisation_   ( 0 )
     , pPerceptionRadar_              ( 0 )
     , pPerceptionFlyingShell_        ( 0 )
 {
@@ -252,7 +237,6 @@ RolePion_Perceiver::RolePion_Perceiver( const Sink& sink, MIL_Agent_ABC& pion, c
     AddListener< IdentifiedToggleListener >( "perceptions/localized-radars/tapping", boost::bind( &EnableLocalizedRadar, boost::ref( *this ), boost::cref( PHY_RadarClass::tapping_ ), _1 ), boost::bind( &RolePion_Perceiver::DisableRadarOnLocalisation, this, boost::ref( PHY_RadarClass::tapping_ ), _1 ) );
     AddListener< IdentifiedToggleListener >( "perceptions/localized-radars/tapping-radar", boost::bind( &EnableLocalizedRadar, boost::ref( *this ), boost::cref( PHY_RadarClass::tappingRadar_ ), _1 ), boost::bind( &RolePion_Perceiver::DisableRadarOnLocalisation, this, boost::ref( PHY_RadarClass::tappingRadar_ ), _1 ) );
     AddListener< IdentifiedToggleListener >( "perceptions/flying-shell", boost::bind( &EnableFlyingShell, boost::ref( *this ), _1 ), boost::bind( &RolePion_Perceiver::DisableFlyingShellDetection, this, _1 ) );
-    AddListener< IdentifiedToggleListener >( "perceptions/reco", boost::bind( &EnableReco, boost::ref( *this ), boost::ref( pion.GetRole< DEC_Decision_ABC >() ), _1 ), boost::bind( &RolePion_Perceiver::DisableRecoLocalisation, this, _1 ) );
     listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/agents" ] ), boost::bind( &::NotifyPerception< MIL_Agent_ABC, bool >, _1, boost::ref( notifications_ ) ) ) );
     listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/agents-in-zone" ] ), boost::bind( &::NotifyPerception< MIL_Agent_ABC, bool >, _1, boost::ref( notifications_ ) ) ) );
     listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/objects" ] ), boost::bind( &::NotifyPerception< MIL_Object_ABC, void >, _1, boost::ref( notifications_ ) ) ) );
@@ -479,36 +463,28 @@ void RolePion_Perceiver::DisableRecoObjects( int /*id*/ )
 }
 
 // -----------------------------------------------------------------------------
-// Name: RolePion_Perceiver::EnsurePerceptionRecoLocalisation
-// Created: LDC 2009-12-04
+// Name: RolePion_Perceiver::EnableRecoLocalisation
+// Created: JVT 2004-10-22
 // -----------------------------------------------------------------------------
-void RolePion_Perceiver::EnsurePerceptionRecoLocalisation()
+int RolePion_Perceiver::EnableRecoLocalisation( const TER_Localisation& /*localisation*/, DEC_Decision_ABC& /*callerAgent*/ )
 {
-    if( !pPerceptionRecoLocalisation_ )
-    {
-        pPerceptionRecoLocalisation_ = new PHY_PerceptionRecoLocalisation( *this );
-        activePerceptions_.push_back( pPerceptionRecoLocalisation_ );
-    }
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RolePion_Perceiver::EnableRecoLocalisation
 // Created: JVT 2004-10-22
 // -----------------------------------------------------------------------------
-int RolePion_Perceiver::EnableRecoLocalisation( const TER_Localisation& localisation, float rGrowthSpeed, DEC_Decision_ABC& callerAgent )
+int RolePion_Perceiver::EnableRecoLocalisation( const TER_Localisation& localisation, float rGrowthSpeed, DEC_Decision_ABC& /*callerAgent*/ )  // $$$$ _RC_ SLI 2012-08-28: Remove this, only for PHY_ActionControlZone
 {
-    EnsurePerceptionRecoLocalisation();
-    return pPerceptionRecoLocalisation_->AddLocalisationWithGrowthSpeed( localisation, rGrowthSpeed, callerAgent );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RolePion_Perceiver::EnableRecoLocalisation
-// Created: JVT 2004-10-22
-// -----------------------------------------------------------------------------
-int RolePion_Perceiver::EnableRecoLocalisation( const TER_Localisation& localisation, DEC_Decision_ABC& callerAgent )
-{
-    EnsurePerceptionRecoLocalisation();
-    return pPerceptionRecoLocalisation_->AddLocalisationWithDefaultGrowthSpeed( localisation, callerAgent );
+    const int perceptionId = GET_HOOK( GetPerceptionId )();
+    facade_.PostCommand( "toggle reco", core::MakeModel( "identifier", owner_.GetID() )
+                                                       ( "activated", true )
+                                                       ( "perception-id", perceptionId )
+                                                       ( "has-growth-speed", true )
+                                                       ( "growth-speed", rGrowthSpeed )
+                                                       ( "localization", core::MakeUserData( localisation ) ) );
+    return perceptionId;
 }
 
 // -----------------------------------------------------------------------------
@@ -524,27 +500,26 @@ int RolePion_Perceiver::EnableRecoUrbanBlock( MIL_UrbanObject_ABC* /*pUrbanBlock
 // Name: RolePion_Perceiver::EnableControlLocalisation
 // Created: JVT 2004-10-28
 // -----------------------------------------------------------------------------
-int RolePion_Perceiver::EnableControlLocalisation( const TER_Localisation& localisation, DEC_Decision_ABC& callerAgent )
+int RolePion_Perceiver::EnableControlLocalisation( const TER_Localisation& localisation, DEC_Decision_ABC& /*callerAgent*/ ) // $$$$ _RC_ SLI 2012-08-28: Remove this, only for PHY_ActionControlZone
 {
-    EnsurePerceptionRecoLocalisation();
-    return pPerceptionRecoLocalisation_->AddLocalisationWithDefaultGrowthSpeed( localisation, callerAgent );
+    const int perceptionId = GET_HOOK( GetPerceptionId )();
+    facade_.PostCommand( "toggle reco", core::MakeModel( "identifier", owner_.GetID() )
+                                                       ( "activated", true )
+                                                       ( "perception-id", perceptionId )
+                                                       ( "has-growth-speed", false )
+                                                       ( "localization", core::MakeUserData( localisation ) ) );
+    return perceptionId;
 }
 
 // -----------------------------------------------------------------------------
 // Name: RolePion_Perceiver::DisableRecoLocalisation
 // Created: JVT 2004-10-22
 // -----------------------------------------------------------------------------
-void RolePion_Perceiver::DisableRecoLocalisation( int id )
+void RolePion_Perceiver::DisableRecoLocalisation( int id ) // $$$$ _RC_ SLI 2012-08-28: Remove this, only for PHY_ActionControlZone
 {
-    if( !pPerceptionRecoLocalisation_ )
-        return;
-    pPerceptionRecoLocalisation_->RemoveLocalisation( id );
-    if( !pPerceptionRecoLocalisation_->HasLocalisationToHandle() )
-    {
-        activePerceptions_.erase( std::find( activePerceptions_.begin(), activePerceptions_.end(), pPerceptionRecoLocalisation_ ) );
-        delete pPerceptionRecoLocalisation_;
-        pPerceptionRecoLocalisation_ = 0;
-    }
+    facade_.PostCommand( "toggle reco", core::MakeModel( "identifier", owner_.GetID() )
+                                                       ( "activated", false )
+                                                       ( "perception-id", id ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -717,7 +692,6 @@ namespace
 void RolePion_Perceiver::DisableAllPerceptions()
 {
     activePerceptions_.clear();
-    Reset( pPerceptionRecoLocalisation_ );
     Reset( pPerceptionRadar_ );
     Reset( pPerceptionFlyingShell_ );
 }
@@ -757,8 +731,6 @@ const PHY_PerceptionLevel& RolePion_Perceiver::ComputePerception( const MT_Vecto
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::Update( bool /*bIsDead*/ )
 {
-   if( pPerceptionRecoLocalisation_ )
-        pPerceptionRecoLocalisation_->Update();
     if( HasChanged() )
     {
         if( HasRadarStateChanged() )

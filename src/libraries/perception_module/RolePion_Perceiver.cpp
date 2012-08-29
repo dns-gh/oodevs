@@ -27,6 +27,7 @@
 #include "PerceptionSurfaceObject.h"
 #include "PerceptionRecoObjects.h"
 #include "PerceptionRecoPoint.h"
+#include "PerceptionRecoLocalisation.h"
 #include "PerceptionRecoUrbanBlock.h"
 #include "ListInCircleVisitor.h"
 #include "wrapper/View.h"
@@ -475,6 +476,7 @@ namespace
         AddActiveListPerception< PerceptionRecoSurveillance >( "alat/monitoring", activePerceptions, model, entity, observer );
         AddActiveListPerception< PerceptionRecoObjects >( "object-detection", activePerceptions, model, entity, observer );
         AddActiveListPerception< PerceptionRecoPoint >( "recognition-point", activePerceptions, model, entity, observer );
+        AddActiveListPerception< PerceptionRecoLocalisation >( "reco", activePerceptions, model, entity, observer );
         AddActiveListPerception< PerceptionRecoUrbanBlock >( "urban", activePerceptions, model, entity, observer );
         return activePerceptions;
     }

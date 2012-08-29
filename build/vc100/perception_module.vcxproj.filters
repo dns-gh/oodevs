@@ -161,6 +161,9 @@
     <ClInclude Include="..\..\src\libraries\perception_module\PerceptionRecoUrbanBlock.h">
       <Filter>Source Files\Perceptions</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\perception_module\PerceptionRecoLocalisation.h">
+      <Filter>Source Files\Perceptions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\perception_module\PerceptionCommand.cpp">
@@ -269,6 +272,9 @@
       <Filter>Source Files\Perceptions</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\perception_module\PerceptionRecoUrbanBlock.cpp">
+      <Filter>Source Files\Perceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\perception_module\PerceptionRecoLocalisation.cpp">
       <Filter>Source Files\Perceptions</Filter>
     </ClCompile>
   </ItemGroup>

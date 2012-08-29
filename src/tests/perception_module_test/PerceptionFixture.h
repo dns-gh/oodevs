@@ -58,6 +58,7 @@ namespace perception
             entity[ "perceptions/alat/monitoring" ];
             entity[ "perceptions/object-detection" ];
             entity[ "perceptions/urban" ];
+            entity[ "perceptions/reco" ];
             entity[ "perceptions/recognition-point" ];
             entity[ "perceptions/record-mode/activated" ] = false;
             core::Model& component = entity[ "components"].AddElement();

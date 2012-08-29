@@ -175,6 +175,9 @@ BOOST_FIXTURE_TEST_CASE( activating_reco_forwards_localization_and_growth_speed_
     core::Model& reco = model[ "entities" ][ identifier ][ "perceptions/reco" ];
     ExpectEffect( reco, sword::test::MakeModel( perceptionId, sword::test::MakeModel( "has-growth-speed", true )
                                                                                     ( "growth-speed", 31 )
+                                                                                    ( "radius", 0 )
+                                                                                    ( "max-radius-reached", false )
+                                                                                    ( "identifier", perceptionId )
                                                                                     ( "localization", sword::test::MakeUserData( &localization ) ) ) );
     commands.Start( "toggle reco",
         core::MakeModel( "identifier", identifier )
