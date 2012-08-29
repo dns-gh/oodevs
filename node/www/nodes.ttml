@@ -43,15 +43,13 @@
                     [[ template "input_checkbox" sub "id" "sessions_reset" "label" "Allow Session Reset" "value" "{{#bool sessions.reset }} checked=\"checked\"{{/bool}}" ]]
                 </div>
                 <div class="tab-pane" id="tab_plugins">
-                    <div>
-                        {{#iterate_pair plugins}}
-                        {{#if list}}
-                        [[ template "input_checkbox" sub "id" "{{list.0.id}}" "label" "{{list.0.name}}" "value" "{{list.0.checked}}" "pair" 1 "id2" "{{list.1.id}}" "label2" "{{list.1.name}}" "value2" "{{list.1.checked}}" ]]
-                        {{else}}
-                        [[ template "input_checkbox" sub "id" "{{item.id}}" "label" "{{item.name}}" "value" "{{item.checked}}" ]]
-                        {{/if}}
-                        {{/iterate_pair}}
-                    </div>
+                    {{#iterate_pair plugins}}
+                    {{#if list}}
+                    [[ template "input_checkbox" sub "id" "{{list.0.id}}" "label" "{{list.0.name}}" "value" "{{list.0.checked}}" "pair" 1 "id2" "{{list.1.id}}" "label2" "{{list.1.name}}" "value2" "{{list.1.checked}}" ]]
+                    {{else}}
+                    [[ template "input_checkbox" sub "id" "{{item.id}}" "label" "{{item.name}}" "value" "{{item.checked}}" ]]
+                    {{/if}}
+                    {{/iterate_pair}}
                 </div>
             </div>
         </form>
