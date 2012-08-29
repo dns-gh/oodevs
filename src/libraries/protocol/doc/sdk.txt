@@ -115,19 +115,24 @@ The TAG field in messages indicates the type of message contained into the
 CONTENT field. This tag is a constant which can take the following values:
 
 
+[options="autowidth"]
 |====================================
 | Message                | Tag
-| SimToClient            | 3540368649
+| AarToClient            | 3335378374
+| AdminToLauncher        | 487143762
 | AuthenticationToClient | 468259588
-| ReplayToClient         | 2824568610 
-| AarToClient            | 3335378374 
-| MessengerToClient      | 4281023046
-| DispatcherToClient     | 3012412245
+| ClientToAar            | 496354747
 | ClientToAuthentication | 3393095543
-| ClientToSim            | 496449857
 | ClientToMessenger      | 2651046712
+| ClientToReplay         | 745507513
+| ClientToSim            | 496449857
+| DispatcherToClient     | 3012412245
+| DispatcherToSim        | 4036107609
+| LauncherToAdmin        | 1796776068
+| MessengerToClient      | 4281023046
+| ReplayToClient         | 2824568610
+| SimToClient            | 3540368649
 |====================================
-
 
 ==== Code generation ====
 
