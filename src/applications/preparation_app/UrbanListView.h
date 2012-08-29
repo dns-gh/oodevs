@@ -41,7 +41,7 @@ class UrbanModel;
 // =============================================================================
 class UrbanListView : public gui::EntityListView
                     , public tools::ElementObserver_ABC< kernel::UrbanObject_ABC >
-                    , public kernel::ContextMenuObserver_ABC< kernel::UrbanObject_ABC >
+                    , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
 {
     Q_OBJECT
 
@@ -61,7 +61,8 @@ protected:
     virtual void NotifyCreated( const kernel::UrbanObject_ABC& object );
     virtual void NotifyUpdated( const kernel::UrbanObject_ABC& object );
     virtual void NotifyDeleted( const kernel::UrbanObject_ABC& object );
-    virtual void NotifyContextMenu( const kernel::UrbanObject_ABC& element, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Entity_ABC& element, kernel::ContextMenu& menu );
+    virtual void NotifySelectionChanged( const std::vector< const kernel::Entity_ABC* >& elements );
     virtual bool IsTypeRejected( const kernel::Entity_ABC& entity ) const;
     virtual void NotifyModeChanged( int newMode );
     virtual void OnContextMenuRequested( Q3ListViewItem* i, const QPoint& pos, int );
@@ -101,14 +102,15 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers&                controllers_;
-    ModelBuilder&                       modelBuilder_;
-    gui::SymbolIcons&                   symbols_;
-    const StaticModel&                  staticModel_;
-    std::vector< kernel::Entity_ABC* >  dragged_;
-    T_InfrastructurePixmaps             infrastructures_;
-    QTimer*                             timer_;
-    UrbanModel&                         urbanModel_;
+    kernel::Controllers&                      controllers_;
+    ModelBuilder&                             modelBuilder_;
+    gui::SymbolIcons&                         symbols_;
+    const StaticModel&                        staticModel_;
+    std::vector< kernel::Entity_ABC* >        dragged_;
+    T_InfrastructurePixmaps                   infrastructures_;
+    QTimer*                                   timer_;
+    UrbanModel&                               urbanModel_;
+    kernel::SafePointer< kernel::Entity_ABC > entitySelected_;
     //@}
 };
 

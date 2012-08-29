@@ -32,6 +32,7 @@
 #include "clients_gui/ListItemToolTip.h"
 #include "clients_gui/SearchListView.h"
 #include "clients_gui/SymbolIcon.h"
+#include "clients_gui/ValuedListItem.h"
 #include "clients_gui/SymbolIcons.h"
 #include "clients_gui/ValuedDragObject.h"
 #include "preparation/StaticModel.h"
@@ -49,11 +50,12 @@
 // -----------------------------------------------------------------------------
 UrbanListView::UrbanListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ModelBuilder& modelBuilder, gui::SymbolIcons& symbols, const StaticModel& staticModel, UrbanModel& urbanModel )
     : EntityListView( pParent, controllers, factory, PreparationProfile::GetProfile() )
-    , controllers_ ( controllers )
-    , modelBuilder_( modelBuilder )
-    , symbols_     ( symbols )
-    , staticModel_ ( staticModel )
-    , urbanModel_  ( urbanModel )
+    , controllers_   ( controllers )
+    , modelBuilder_  ( modelBuilder )
+    , symbols_       ( symbols )
+    , staticModel_   ( staticModel )
+    , urbanModel_    ( urbanModel )
+    , entitySelected_( controllers )
 {
     viewport()->installEventFilter( new ListItemToolTip( viewport(), *this ) );
 
@@ -537,9 +539,10 @@ void UrbanListView::CreateFilters( gui::SearchListView_ABC& searchListView )
 // Name: UrbanListView::NotifyContextMenu
 // Created: LGY 2012-08-28
 // -----------------------------------------------------------------------------
-void UrbanListView::NotifyContextMenu( const kernel::UrbanObject_ABC& element, kernel::ContextMenu& menu )
+void UrbanListView::NotifyContextMenu( const kernel::Entity_ABC& /*element*/, kernel::ContextMenu& menu )
 {
-    menu.InsertItem( "Command", tr( "Rename" ), this, SLOT( OnRename() ) );
+    if( entitySelected_ || !isMultiSelection() )
+        menu.InsertItem( "Command", tr( "Rename" ), this, SLOT( OnRename() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -548,6 +551,19 @@ void UrbanListView::NotifyContextMenu( const kernel::UrbanObject_ABC& element, k
 // -----------------------------------------------------------------------------
 void UrbanListView::OnRename()
 {
-    if( selectedItem() )
+    if( !isMultiSelection() && selectedItem() )
         selectedItem()->startRename( 0 );
+    if( isMultiSelection() && entitySelected_ )
+         if( gui::ValuedListItem* item = gui::FindItem( entitySelected_, firstChild() ) )
+             item->startRename( 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanListView::NotifySelectionChanged
+// Created: LGY 2012-08-29
+// -----------------------------------------------------------------------------
+void UrbanListView::NotifySelectionChanged( const std::vector< const kernel::Entity_ABC* >& elements )
+{
+    EntityListView::NotifySelectionChanged( elements );
+    entitySelected_ = elements.size() == 1 ? elements.front() : 0;
 }
