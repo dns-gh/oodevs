@@ -1450,6 +1450,27 @@
         <htmlhelp input="${out.dir}/sdk/proto" outdir="${dist.dir}"/>
     </target>
 
+    <target name="proto-api-doc" description="generate SDK documentation">
+        <mkdir dir="${out.dir}/sdk/doc/html"/>
+        <exec executable="python" failonerror="true">
+            <arg value="${bin.dir}/asciidoc/asciidoc/asciidoc.py" />
+            <arg value="--out-file=${out.dir}/sdk/doc/html/index.html" />
+            <arg value="${src.dir}/libraries/protocol/doc/sdk.txt" />
+        </exec>
+        <exec executable="python" failonerror="true">
+            <arg value="${bin.dir}/asciidoc/asciidoc/a2x.py" />
+            <arg value="--format=pdf" />
+            <arg value="--fop" />
+            <!-- Linting needs the DTD, DTD are usually resolved relatively to
+                 the input file location, this is a pain to deal with, just
+                 forget it, asciidoc should generate valid docbook anyway. -->
+            <arg value="--no-xmllint" />
+            <arg value="--xsltproc-opts=-nonet" />
+            <arg value="--destination-dir=${out.dir}/sdk/doc" />
+            <arg value="${src.dir}/libraries/protocol/doc/sdk.txt" />
+        </exec>
+    </target>
+
     <target name="prepare-dec-api-files" description="Prepare resources to generate the documentation">
         <mkdir dir="${reports.dir}"/>
 		<pathconvert targetos="unix" property="src.dir.unix"> 
@@ -1522,7 +1543,7 @@
         <htmlhelp input="${out.dir}/sdk/dec" outdir="${dist.dir}"/>
     </target>
     
-    <target name="documentation" depends="proto-api-documentation, prepare-dec-api-files, dec-api-documentation"/>
+    <target name="documentation" depends="proto-api-documentation, proto-api-doc, prepare-dec-api-files, dec-api-documentation"/>
     
     <!--
     ============================================================================
@@ -1856,6 +1877,7 @@
         <update name="geos"/>
         <update name="iconv"/>
         <update name="proj4"/>
+        <update name="asciidoc" version="8.6.8" />
         <antcall target="deploy-application-data"/>
         <antcall target="generate-database-france"/> <!--compile all military models-->
         <antcall target="generate-database-worldwide"/>
