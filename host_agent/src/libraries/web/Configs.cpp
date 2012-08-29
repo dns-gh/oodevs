@@ -115,7 +115,7 @@ bool TryReadSet( T& dst, const Tree& src, const std::string& key )
     T next;
     for( Tree::const_iterator it = sub->second.begin(); it != sub->second.end(); ++it )
         next.insert( it->second.get_value( std::string() ) );
-    if( next.empty() || next == dst )
+    if( next == dst )
         return false;
     dst = next;
     return true;
