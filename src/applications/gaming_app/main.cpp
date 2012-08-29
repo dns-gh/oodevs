@@ -22,14 +22,20 @@ int main( int argc, char** argv )
     }
     catch( std::runtime_error& e )
     {
+        // An application is needed to display the error message
+        QApplication temp( argc, argv );
         QMessageBox::critical( 0, tools::translate( "Application", "Unhandled error" ), e.what() );
     }
     catch( std::exception& e )
     {
+        // An application is needed to display the error message
+        QApplication temp( argc, argv );
         QMessageBox::critical( 0, tools::translate( "Application", "Error" ), e.what() );
     }
     catch( ... )
     {
+        // An application is needed to display the error message
+        QApplication temp( argc, argv );
         QMessageBox::critical( 0, tools::translate( "Application", "Error" ), tools::translate( "Application", "Unhandled error" ) );
     }
     return nResultCode;
