@@ -58,7 +58,7 @@ LogisticPlugin::LogisticPlugin( const dispatcher::Model_ABC& model, const kernel
     , staticModel_ ( staticModel )
     , currentTick_( 0 )
     , maintenanceResolver_  ( new MaintenanceResolver( config.BuildSessionChildFile( "LogMaintenance" ), model, staticModel ) )
-    , supplyResolver_       ( new SupplyResolver( config.BuildSessionChildFile( "LogAppro" ), model, staticModel ) )
+    , supplyResolver_       ( new SupplyResolver( config.BuildSessionChildFile( "LogRavitaillement" ), model, staticModel ) )
     , funeralResolver_      ( new FuneralResolver( config.BuildSessionChildFile( "LogFuneraire" ), model, staticModel ) )
     , medicalResolver_      ( new MedicalResolver( config.BuildSessionChildFile( "LogMedical" ), model, staticModel ) )
 {
@@ -81,7 +81,7 @@ LogisticPlugin::LogisticPlugin( const dispatcher::Model_ABC& model, const kernel
     , staticModel_ ( staticModel )
     , currentTick_( 0 )
     , maintenanceResolver_  ( new MaintenanceResolver( config.BuildSessionChildFile( xis.attribute( "maintenancefile", "LogMaintenance" ) ), model, staticModel ) )
-    , supplyResolver_       ( new SupplyResolver( config.BuildSessionChildFile( xis.attribute( "supplyfile", "LogAppro" ) ), model, staticModel ) )
+    , supplyResolver_       ( new SupplyResolver( config.BuildSessionChildFile( xis.attribute( "supplyfile", "LogRavitaillement" ) ), model, staticModel ) )
     , funeralResolver_      ( new FuneralResolver( config.BuildSessionChildFile( xis.attribute( "funeralfile", "LogFuneraire" ) ), model, staticModel ) )
     , medicalResolver_      ( new MedicalResolver( config.BuildSessionChildFile( xis.attribute( "medicalfile", "LogMedical" ) ), model, staticModel ) )
 {
