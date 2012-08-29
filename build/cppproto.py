@@ -3,6 +3,13 @@
 import os, sys, subprocess, tempfile, shutil
 
 class Ui:
+    def __init__(self, verbose=False):
+        self.verbose = verbose
+
+    def info(self, s):
+        if self.verbose:
+            self.write(s)
+
     def write(self, s):
         sys.stdout.write(s)
 
@@ -42,7 +49,7 @@ def copyifchanged(ui, src, dst):
             os.makedirs(dstdir)
         shutil.copyfile(src, dst)
     else:
-        ui.write('skipping unchanged %s\n' % srcname)
+        ui.info('skipping unchanged %s\n' % srcname)
 
 def usage(ui):
     w = ui.write
@@ -54,13 +61,24 @@ BUILDDIR, then copy the generated files into OUTDIR if new or changed.
 """
     w(s)
 
+
+import optparse
+
+helpstring = """\
+cppproto calls protoc on PROTOFILE and output in a temporary subdirectory of
+BUILDDIR, then copy the generated files into OUTDIR if new or changed.
+"""
+parser = optparse.OptionParser(
+        usage='cppproto.py PROTOFILE BUILDDIR OUTDIR',
+        description=helpstring)
+parser.add_option("-v", "--verbose", action='store_true',
+                  help="more verbose output")
+
 if __name__ == '__main__':
-    ui = Ui()
-    args = sys.argv[1:]
+    opts, args = parser.parse_args()
+    ui = Ui(verbose=opts.verbose)
     if len(args) != 3:
-        ui.error('cppproto: 3 arguments expected\n\n')
-        usage(ui)
-        sys.exit(1)
+        parse.error('cppproto: 3 arguments expected\n\n')
 
     protopath, builddir, outdir = args
     if not os.path.exists(builddir):
