@@ -59,7 +59,7 @@ UrbanObject::UrbanObject( Controllers& controllers, const std::string& name, uns
     EntityImplementation< UrbanObject_ABC >::Attach( dictionary_ );
     UpdateColor();
     controllers_.Register( *this );
-    CreateDictionary( true );
+    CreateDictionary( false );
 }
 
 // -----------------------------------------------------------------------------
