@@ -192,7 +192,7 @@ Session::Session( const SessionDependencies& deps,
     , first_time_  ( true )
     , replays_     ()
 {
-    node->FilterConfig( cfg_ );
+    NotifyNode();
 }
 
 // -----------------------------------------------------------------------------
@@ -226,7 +226,7 @@ Session::Session( const SessionDependencies& deps,
     , first_time_  ( Get< bool >( tree, "first_time" ) )
     , replays_     ()
 {
-    node->FilterConfig( cfg_ );
+    NotifyNode();
     node_->UpdateSessionSize( id_, size_ );
     if( !process_ && !IsReplay() )
         ParseCheckpoints();
@@ -917,6 +917,7 @@ void Session::DetachReplay( const Session_ABC& replay )
     boost::lock_guard< boost::shared_mutex > lock( access_ );
     replays_.erase( replay.GetId() );
 }
+
 // -----------------------------------------------------------------------------
 // Name: Session::ParseCheckpoints
 // Created: BAX 2012-08-08
@@ -925,4 +926,13 @@ void Session::ParseCheckpoints()
 {
     deps_.system.Walk( GetOutput() / "checkpoints", false, boost::bind( &Attach< T_Checkpoints >,
                   boost::cref( deps_.system ), _1, boost::ref( checkpoints_ ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Session::NotifyNode
+// Created: BAX 2012-08-29
+// -----------------------------------------------------------------------------
+void Session::NotifyNode()
+{
+    node_->FilterConfig( cfg_ );
 }

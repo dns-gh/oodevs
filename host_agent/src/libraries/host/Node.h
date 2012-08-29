@@ -33,6 +33,11 @@ namespace runtime
     struct Runtime_ABC;
 }
 
+namespace web
+{
+    class Plugins;
+}
+
 namespace host
 {
     struct NodeObserver_ABC;
@@ -57,6 +62,7 @@ struct NodeDependencies
                       const UuidFactory_ABC& uuids,
                       const NodeObserver_ABC& observer,
                       const runtime::Runtime_ABC& runtime,
+                      const web::Plugins& plugins,
                       runtime::Pool_ABC& pool,
                       PortFactory_ABC& ports )
         : packages( packages )
@@ -64,6 +70,7 @@ struct NodeDependencies
         , uuids   ( uuids )
         , observer( observer )
         , runtime ( runtime )
+        , plugins ( plugins )
         , pool    ( pool )
         , ports   ( ports )
     {
@@ -74,6 +81,7 @@ struct NodeDependencies
     const UuidFactory_ABC& uuids;
     const NodeObserver_ABC& observer;
     const runtime::Runtime_ABC& runtime;
+    const web::Plugins& plugins;
     runtime::Pool_ABC& pool;
     PortFactory_ABC& ports;
 };

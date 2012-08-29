@@ -34,6 +34,7 @@ namespace mocks
         MOCK_METHOD( Restore, 2 );
         MOCK_METHOD( Download, 3 );
         MOCK_METHOD( Replay, 2 );
+        MOCK_METHOD( NotifyNode, 1 );
     };
 };
 

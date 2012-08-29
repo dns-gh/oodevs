@@ -19,6 +19,7 @@
 #include "runtime/Runtime_ABC.h"
 #include "runtime/Utf8.h"
 #include "web/HttpException.h"
+#include "web/Plugins.h"
 
 #include <boost/assign/list_of.hpp>
 #include <boost/foreach.hpp>
@@ -641,4 +642,7 @@ void Node::FilterConfig( web::session::Config& cfg ) const
             bad.insert( value.first );
     BOOST_FOREACH( const std::string& id, bad )
         cfg.plugins.erase( id );
+    BOOST_FOREACH( const web::node::Config::T_Plugins::value_type& value, cfg_.plugins )
+        if( !cfg.plugins.count( value ) )
+            cfg.plugins.insert( std::make_pair( value, web::session::PluginConfig( deps_.plugins, value ) ) );
 }

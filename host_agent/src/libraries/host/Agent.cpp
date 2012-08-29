@@ -227,6 +227,7 @@ Tree Agent::UpdateNode( const Uuid& id, const Tree& cfg )
     NodeController_ABC::T_Node ptr = nodes_.Update( id, cfg );
     if( !ptr )
         throw HttpException( web::NOT_FOUND );
+    sessions_.NotifyNode( id );
     return Tree( ptr->GetProperties() );
 }
 
@@ -403,7 +404,7 @@ void Agent::DownloadSession( const Uuid& node, const Uuid& id, std::ostream& dst
 // Name: Agent::ReplaySession
 // Created: BAX 2012-08-10
 // -----------------------------------------------------------------------------
-Tree Agent::ReplaySession  ( const Uuid& node, const Uuid& id ) const
+Tree Agent::ReplaySession( const Uuid& node, const Uuid& id ) const
 {
     return Dispatch( sessions_, boost::bind( &SessionController_ABC::Replay, _1, node, id ) );
 }

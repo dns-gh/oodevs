@@ -93,6 +93,7 @@ struct Session_ABC : public boost::noncopyable
     virtual T_Ptr Replay() = 0;
     virtual void  AttachReplay( const Session_ABC& replay ) = 0;
     virtual void  DetachReplay( const Session_ABC& replay ) = 0;
+    virtual void  NotifyNode() = 0;
     //@}
 };
 

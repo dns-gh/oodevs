@@ -57,6 +57,7 @@ namespace mocks
         MOCK_METHOD( HasReplays, 0 );
         MOCK_METHOD( AttachReplay, 1 );
         MOCK_METHOD( DetachReplay, 1 );
+        MOCK_METHOD( NotifyNode, 0 );
     };
 
     MOCK_BASE_CLASS( MockSessionFactory, host::SessionFactory_ABC )

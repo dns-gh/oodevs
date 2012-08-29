@@ -382,3 +382,20 @@ SessionController::T_Session SessionController::Replay( const Uuid& node, const 
     Apply( next, boost::bind( &Session_ABC::Start, _1, boost::cref( apps_ ), std::string() ) );
     return next;
 }
+
+namespace
+{
+bool IsSameNode( const Uuid& node, const Session_ABC& session )
+{
+    return node == session.GetNode();
+}
+}
+
+// -----------------------------------------------------------------------------
+// Name: SessionController::NotifyNode
+// Created: BAX 2012-08-29
+// -----------------------------------------------------------------------------
+void SessionController::NotifyNode( const Uuid& node )
+{
+    sessions_.ForeachRef( boost::bind( &Session_ABC::NotifyNode, _1 ), boost::bind( &IsSameNode, boost::cref( node ), _1 ) );
+}

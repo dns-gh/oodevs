@@ -12,6 +12,7 @@
 #include "TreeHelpers.h"
 #include "host/Node.h"
 #include "runtime/PropertyTree.h"
+#include "web/Plugins.h"
 
 #include <boost/foreach.hpp>
 #include <boost/make_shared.hpp>
@@ -69,7 +70,9 @@ namespace
             MOCK_EXPECT( packages.Make ).once().with( mock::any, true ).returns( installed );
             MOCK_EXPECT( uuids.Create ).once().returns( defaultId );
             MOCK_EXPECT( ports.Create0 ).once().returns( new MockPort( defaultPort ) );
-            host::NodeDependencies deps( packages, system, uuids, observer, runtime, pool, ports );
+            MOCK_EXPECT( system.Walk ).once().with( "plugins", mock::any, mock::any );
+            web::Plugins plugins( system, "plugins" );
+            host::NodeDependencies deps( packages, system, uuids, observer, runtime, plugins, pool, ports );
             web::node::Config cfg;
             cfg.name = defaultName;
             return boost::make_shared< Node >( deps, defaultRoot, 5*60, cfg.name, cfg );
@@ -85,7 +88,9 @@ namespace
             MOCK_EXPECT( ports.Create1 ).once().with( defaultPort ).returns( new MockPort( defaultPort ) );
             if( process )
                 MOCK_EXPECT( runtime.GetProcess ).once().with( process->GetPid() ).returns( process );
-            host::NodeDependencies deps( packages, system, uuids, observer, runtime, pool, ports );
+            MOCK_EXPECT( system.Walk ).once().with( "plugins", mock::any, mock::any );
+            web::Plugins plugins( system, "plugins" );
+            host::NodeDependencies deps( packages, system, uuids, observer, runtime, plugins, pool, ports );
             return boost::make_shared< Node >( deps, defaultRoot, 5*60, tree );
         }
 

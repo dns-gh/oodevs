@@ -192,8 +192,9 @@ struct NodeFactory : public NodeFactory_ABC
 {
     NodeFactory( const PackageFactory_ABC& packages,
                  const FileSystem_ABC& system,
-                 const runtime::Runtime_ABC& runtime,
+                 const Runtime_ABC& runtime,
                  const UuidFactory_ABC& uuids,
+                 const web::Plugins& plugins,
                  PortFactory_ABC& ports,
                  int min_play,
                  Pool_ABC& pool )
@@ -201,6 +202,7 @@ struct NodeFactory : public NodeFactory_ABC
         , system  ( system )
         , runtime ( runtime )
         , uuids   ( uuids )
+        , plugins ( plugins )
         , ports   ( ports )
         , pool    ( pool )
         , min_play( min_play )
@@ -211,21 +213,22 @@ struct NodeFactory : public NodeFactory_ABC
 
     Ptr Make( const Path& root, const std::string& ident, const web::node::Config& cfg ) const
     {
-        NodeDependencies deps( packages, system, uuids, *observer, runtime, pool, ports );
+        NodeDependencies deps( packages, system, uuids, *observer, runtime, plugins, pool, ports );
         return boost::make_shared< Node >( deps, root, min_play, ident, cfg );
     }
 
     Ptr Make( const Path& tag ) const
     {
-        NodeDependencies deps( packages, system, uuids, *observer, runtime, pool, ports );
+        NodeDependencies deps( packages, system, uuids, *observer, runtime, plugins, pool, ports );
         return boost::make_shared< Node >( deps, Path( tag ).remove_filename(), min_play,
                                            FromJson( deps.system.ReadFile( tag ) ) );
     }
 
     const PackageFactory_ABC& packages;
     const FileSystem_ABC& system;
-    const runtime::Runtime_ABC& runtime;
+    const Runtime_ABC& runtime;
     const UuidFactory_ABC& uuids;
+    const web::Plugins& plugins;
     const int min_play;
     PortFactory_ABC& ports;
     Pool_ABC& pool;
@@ -305,9 +308,9 @@ int Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const F
     Proxy proxy( log, runtime, system, proxyConfig, client, pool );
     PortFactory ports( cfg.ports.period, cfg.ports.min, cfg.ports.max );
     PackageFactory packages( pool, system );
-    NodeFactory fnodes( packages, system, runtime, uuids, ports, cfg.node.min_play_seconds, pool );
-    const Port host = ports.Create();
     web::Plugins plugins( system, cfg.session.apps / "plugins" );
+    NodeFactory fnodes( packages, system, runtime, uuids, plugins, ports, cfg.node.min_play_seconds, pool );
+    const Port host = ports.Create();
     NodeController nodes( log, runtime, system, plugins, fnodes, cfg.root, cfg.node.app, cfg.node.root, "node", host->Get(), pool, proxy );
     fnodes.observer = &nodes;
     NodeController cluster( log, runtime, system, plugins, fnodes, cfg.root, cfg.node.app, cfg.node.root, "cluster", host->Get(), pool, proxy );

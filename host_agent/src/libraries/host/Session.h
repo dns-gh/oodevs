@@ -163,6 +163,7 @@ public:
     virtual T_Ptr Replay();
     virtual void  AttachReplay( const Session_ABC& replay );
     virtual void  DetachReplay( const Session_ABC& replay );
+    virtual void  NotifyNode();
     //@}
 
     //! @name Typedef helpers
