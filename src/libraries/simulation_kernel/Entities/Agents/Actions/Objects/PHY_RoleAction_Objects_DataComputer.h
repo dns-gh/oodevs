@@ -49,8 +49,6 @@ private:
     //! @name Tools
     //@{
     void CollectData( MIL_Agent_ABC& pion );
-    void FilterData();
-
     void ReserveConsumptions();
     void RollbackConsumptionsReservations();
     //@}

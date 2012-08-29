@@ -113,21 +113,6 @@ void PHY_RoleAction_Objects_DataComputerPionData::operator() ( const PHY_Composa
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Objects_DataComputerPionData::RemoveSlowComposantes
-// Created: NLD 2007-02-12
-// -----------------------------------------------------------------------------
-void PHY_RoleAction_Objects_DataComputerPionData::RemoveSlowComposantes( double rMinOperationTime )
-{
-    for( IT_ComposanteDataVector it = workingComposantes_.begin(); it != workingComposantes_.end(); )
-    {
-        if( it->second > rMinOperationTime )
-            it = workingComposantes_.erase( it );
-        else
-            ++it;
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Objects_DataComputerPionData::ReserveConsumptions
 // Created: NLD 2007-02-12
 // -----------------------------------------------------------------------------
@@ -193,25 +178,10 @@ unsigned int PHY_RoleAction_Objects_DataComputerPionData::RecoverDotations( cons
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Objects_DataComputerPionData::GetMinOperationTime
-// Created: NLD 2007-02-13
-// -----------------------------------------------------------------------------
-double PHY_RoleAction_Objects_DataComputerPionData::GetMinOperationTime() const
-{
-    double rMinOperationTime = std::numeric_limits< double >::max();
-    if( !bConsumptionReserved_ )
-        return rMinOperationTime;
-
-    for( CIT_ComposanteDataVector it = workingComposantes_.begin(); it != workingComposantes_.end(); ++it )
-        rMinOperationTime = std::min( rMinOperationTime, it->second );
-    return rMinOperationTime;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Objects_DataComputerPionData::GetOperationTime
 // Created: NLD 2007-02-13
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Objects_DataComputerPionData::GetTotalOperationTime( double& rOperationTime, unsigned int& nNbrComposantes ) const
+void PHY_RoleAction_Objects_DataComputerPionData::GetTotalOperationSpeed( double& rOperationTime, unsigned int& nNbrComposantes ) const
 {
     rOperationTime  = 0.;
     nNbrComposantes = 0;
@@ -220,7 +190,7 @@ void PHY_RoleAction_Objects_DataComputerPionData::GetTotalOperationTime( double&
 
     for( CIT_ComposanteDataVector it = workingComposantes_.begin(); it != workingComposantes_.end(); ++it )
     {
-        rOperationTime += it->second;
+        rOperationTime += ( 1.0 / it->second );
         ++ nNbrComposantes;
     }
 }

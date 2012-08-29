@@ -36,8 +36,6 @@ public:
     //! @name Operations
     //@{
     void operator() ( const PHY_ComposantePion& composante );
-    void RemoveSlowComposantes( double rMinOperationTime );
-    double GetMinOperationTime() const;
 
     void ReserveConsumptions();
     void RollbackConsumptionsReservations();
@@ -45,13 +43,13 @@ public:
     unsigned int GetDotationValue( const PHY_DotationCategory& category ) const;
     void ConsumeDotations( const PHY_DotationCategory& category, double& nNbr );
     unsigned int RecoverDotations( const PHY_DotationCategory& category, unsigned int nNbr );
-    void GetTotalOperationTime( double& rOperationTime, unsigned int& nNbrComposantes ) const;
+    void GetTotalOperationSpeed( double& rOperationTime, unsigned int& nNbrComposantes ) const;
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::vector< std::pair< const PHY_ComposantePion*, double > > T_ComposanteDataVector;
+    typedef std::vector< std::pair< const PHY_ComposantePion*, double > >   T_ComposanteDataVector;
     typedef T_ComposanteDataVector::iterator                               IT_ComposanteDataVector;
     typedef T_ComposanteDataVector::const_iterator                        CIT_ComposanteDataVector;
     //@}
