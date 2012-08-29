@@ -164,6 +164,23 @@
     return options.inverse(this);
   });
 
+  Handlebars.registerHelper("iterate_pair", function(list, options) {
+    var ret;
+    ret = "";
+    while ((list != null ? list.length : void 0) > 1) {
+      ret += options.fn({
+        list: [list[0], list[1]]
+      });
+      list = list.slice(2);
+    }
+    if (list != null ? list.length : void 0) {
+      ret += options.fn({
+        item: list[0]
+      });
+    }
+    return ret;
+  });
+
   convert_to_boolean = function(value) {
     if (value == null) {
       return false;

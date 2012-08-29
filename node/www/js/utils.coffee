@@ -114,6 +114,15 @@ Handlebars.registerHelper "count", (value, options) ->
         return options.fn this
     return options.inverse this
 
+Handlebars.registerHelper "iterate_pair", (list, options) ->
+    ret = ""
+    while list?.length > 1
+        ret += options.fn list: [list[0], list[1]]
+        list = list[2..]
+    if list?.length
+        ret += options.fn item: list[0]
+    return ret
+
 convert_to_boolean = (value) ->
     unless value?
         return false

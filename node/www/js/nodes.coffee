@@ -11,15 +11,6 @@ node_settings = Handlebars.compile $("#node_settings_template").html()
 node_template = Handlebars.compile $("#node_template").html()
 node_error_template = Handlebars.compile $("#node_error_template").html()
 
-Handlebars.registerHelper "each_pair", (list, options) ->
-    ret = ""
-    while list?.length > 1
-        ret += options.fn list: [list[0], list[1]]
-        list = list[2..]
-    if list?.length
-        ret += options.fn item: list[0]
-    return ret
-
 print_error = (text) ->
     display_error "node_error", node_error_template, text
 
