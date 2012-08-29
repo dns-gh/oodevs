@@ -14,6 +14,7 @@
 #include "OnComponentComputer_ABC.h"
 #include "OnComponentFunctorComputerFactory_ABC.h"
 #include "OnComponentFunctor_ABC.h"
+#include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
@@ -25,10 +26,11 @@
 #include "Entities/Agents/Units/Sensors/PHY_Sensor.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
-#include "Entities/MIL_EntityManager.h"
-#include "Urban/MIL_UrbanObject_ABC.h"
-#include "Tools/MIL_Geometry.h"
+#include "Entities/Objects/StructuralCapacity.h"
 #include "Urban/MIL_UrbanCache.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
+#include "Urban/UrbanPhysicalCapacity.h"
+#include "Tools/MIL_Geometry.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ZURBPerceptionComputer constructor
@@ -176,7 +178,11 @@ bool PHY_ZURBPerceptionComputer::ComputeParametersPerception( const MIL_Agent_AB
 
     double perceiverUrbanBlockHeight = sensorHeight;
     if( perceiverUrbanBlock )
-        perceiverUrbanBlockHeight += perceiverUrbanBlock->GetStructuralHeight();
+    {
+        if( const UrbanPhysicalCapacity* physical = perceiverUrbanBlock->Retrieve< UrbanPhysicalCapacity >() )
+            if( const StructuralCapacity* structuralCapacity = perceiverUrbanBlock->Retrieve< StructuralCapacity >() )
+                perceiverUrbanBlockHeight += structuralCapacity->GetStructuralState() * physical->GetHeight();
+    }
     if( perceiverUrbanBlockHeight < sensorHeight)
         perceiverUrbanBlockHeight = sensorHeight;
     assert( perceiverUrbanBlockHeight );
@@ -192,11 +198,12 @@ bool PHY_ZURBPerceptionComputer::ComputeParametersPerception( const MIL_Agent_AB
                 double objectHeight = sensorHeight;
                 double occupation = 1.;
                 double structuralState = 1.;
-                if( object.HasArchitecture() )
+                if( const UrbanPhysicalCapacity* physical = object.Retrieve< UrbanPhysicalCapacity >() )
                 {
-                    objectHeight += object.GetStructuralHeight();
-                    structuralState = object.GetStructuralState();
-                    occupation = object.GetOccupation();
+                    const StructuralCapacity* structuralCapacity = object.Retrieve< StructuralCapacity >();
+                    structuralState = structuralCapacity ? structuralCapacity->GetStructuralState() : 0;
+                    objectHeight += structuralState * physical->GetHeight();
+                    occupation = physical->GetOccupation();
                 }
                 if( occupation > 0 )
                 {

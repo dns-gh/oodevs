@@ -58,6 +58,7 @@
 #include "protocol/ClientSenders.h"
 #include "Urban/MIL_UrbanCache.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
+#include "Urban/UrbanPhysicalCapacity.h"
 #include "simulation_terrain/TER_Agent_ABC.h"
 #include "simulation_terrain/TER_AgentManager.h"
 #include "simulation_terrain/TER_AgentVisitor_ABC.h"
@@ -890,7 +891,8 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
             for( std::size_t i = 0; i < perceivableUrbanBlock.size(); ++i )
             {
                 NotifyPerceptionUrban( *perceivableUrbanBlock[ i ], PHY_PerceptionLevel::identified_ );
-                occupation += perceivableUrbanBlock[ i ]->GetOccupation();
+                if( const UrbanPhysicalCapacity* physical = perceivableUrbanBlock[ i ]->Retrieve< UrbanPhysicalCapacity >() )
+                    occupation += physical->GetOccupation();
             }
             occupation /= perceivableUrbanBlock.size();
             maxPerceptionDistance *= ( 1 - 9*occupation/10 );

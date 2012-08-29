@@ -21,7 +21,7 @@
 #include "protocol/ClientSenders.h"
 #include "Urban/PHY_AccomodationType.h"
 #include "Urban/PHY_ResourceNetworkType.h"
-#include "Urban/MIL_UrbanMotivationsVisitor_ABC.h"
+#include "Urban/UrbanPhysicalCapacity.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_LivingAreaBlock )
 
@@ -316,33 +316,16 @@ float MIL_LivingAreaBlock::ComputeOccupationFactor() const
     return static_cast< float >( std::min( static_cast< int >( totalPerson ), std::max( 0, blockOccupation - totalPopulation ) ) );
 }
 
-namespace
-{
-    class MotivationsVisitor : public MIL_UrbanMotivationsVisitor_ABC
-    {
-    public:
-        explicit MotivationsVisitor( std::map< std::string, float >& motivations )
-            : motivations_( motivations )
-        {
-            // NOTHING
-        }
-        virtual void Visit( const std::string& motivation, float proportion )
-        {
-            motivations_[ motivation ] = proportion;
-        }
-        std::map< std::string, float >& motivations_;
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_LivingAreaBlock::GetProportion
 // Created: JSR 2011-03-23
 // -----------------------------------------------------------------------------
 float MIL_LivingAreaBlock::GetProportion( const std::string& motivation ) const
 {
-    std::map< std::string, float > motivations;
-    MotivationsVisitor visitor( motivations );
-    urbanObject_->Accept( visitor );
+    const UrbanPhysicalCapacity* pPhysical = urbanObject_->Retrieve< UrbanPhysicalCapacity >();
+    if( !pPhysical )
+        return 0;
+    const std::map< std::string, float >& motivations = pPhysical->GetMotivations();
     if( motivation == defaultAccomodation_ )
     {
         float sum = 0;

@@ -23,6 +23,7 @@
 #include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
+#include "Urban/UrbanPhysicalCapacity.h"
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_World.h"
 #include <boost/serialization/set.hpp>
@@ -99,7 +100,7 @@ void PHY_RolePion_UrbanLocation::MagicMove( MT_Vector2D vPosition )
         if( urbanObject )
         {
             isInCity_ = true;
-            if( !urbanObject->HasChild() )
+            if( urbanObject->IsBlock() )
             {
                 urbanObject_ = urbanObject;
                 delegate_.reset( new InsideUrbanBlockPosition( *urbanObject_ ) );
@@ -118,7 +119,7 @@ void PHY_RolePion_UrbanLocation::NotifyMovingInsideObject( MIL_Object_ABC& objec
 {
     if( const MIL_UrbanObject_ABC* urbanObject = dynamic_cast< MIL_UrbanObject_ABC* >( &object ) )
     {
-        if( !urbanObject->HasChild() )
+        if( urbanObject->IsBlock() )
         {
             urbanObject_ = urbanObject;
             if( !isFlying_ )
@@ -136,9 +137,9 @@ void PHY_RolePion_UrbanLocation::NotifyMovingOutsideObject( MIL_Object_ABC& obje
 {
     if( const MIL_UrbanObject_ABC* urbanObject = dynamic_cast< MIL_UrbanObject_ABC* >( &object ) )
     {
-        if( !urbanObject->HasParent() )
+        if( urbanObject->GetParent() == 0 )
             isInCity_ = false;
-        if( !urbanObject->HasChild() )
+        if( urbanObject->IsBlock() )
         {
             urbanObject_ = 0;
             delegate_.reset( new OutsideUrbanBlockPosition() );
@@ -258,7 +259,8 @@ void PHY_RolePion_UrbanLocation::Execute( posture::PostureComputer_ABC& /*algori
 void PHY_RolePion_UrbanLocation::Execute( moving::SpeedComputer_ABC& algorithm ) const
 {
     if( urbanObject_ && !isFlying_ && !owner_.Get< PHY_RoleAction_MovingUnderground >().PreparingToHide() )
-        algorithm.AddModifier( 1. - urbanObject_->GetOccupation(), true );
+        if( const UrbanPhysicalCapacity* physical = urbanObject_->Retrieve< UrbanPhysicalCapacity >() )
+            algorithm.AddModifier( 1. - physical->GetOccupation(), true );
 }
 
 // -----------------------------------------------------------------------------
@@ -268,7 +270,8 @@ void PHY_RolePion_UrbanLocation::Execute( moving::SpeedComputer_ABC& algorithm )
 bool PHY_RolePion_UrbanLocation::CanMount() const
 {
     if( urbanObject_ )
-        return urbanObject_->GetTrafficability() >= owner_.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight( true );
+        if( const UrbanPhysicalCapacity* physical = urbanObject_->Retrieve< UrbanPhysicalCapacity >() )
+            return physical->GetTrafficability() >= owner_.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight( true );
     return true;
 }
 
@@ -279,7 +282,8 @@ bool PHY_RolePion_UrbanLocation::CanMount() const
 void PHY_RolePion_UrbanLocation::Execute( location::LocationComputer_ABC& algorithm ) const
 {
     if( urbanObject_ )
-        algorithm.IncreaseHeight( urbanObject_->GetHeight() );
+        if( const UrbanPhysicalCapacity* physical = urbanObject_->Retrieve< UrbanPhysicalCapacity >() )
+            algorithm.IncreaseHeight( physical->GetHeight() );
 }
 
 // -----------------------------------------------------------------------------

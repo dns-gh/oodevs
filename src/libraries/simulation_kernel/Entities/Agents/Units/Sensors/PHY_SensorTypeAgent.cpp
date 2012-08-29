@@ -37,6 +37,7 @@
 #include "tools/Resolver.h"
 #include "Urban/MIL_UrbanCache.h"
 #include "Urban/PHY_MaterialCompositionType.h"
+#include "Urban/UrbanPhysicalCapacity.h"
 #include <xeumeuleu/xml.hpp>
 
 namespace
@@ -487,9 +488,10 @@ bool PHY_SensorTypeAgent::ComputeUrbanExtinction( const MT_Vector2D& vSource, co
         for( std::vector< const MIL_UrbanObject_ABC* >::const_iterator it = list.begin(); it != list.end() && rVisionNRJ > 0; it++ )
         {
             const MIL_UrbanObject_ABC& object = **it;
-            if( !object.HasArchitecture() )
+            const UrbanPhysicalCapacity* pPhysical = object.Retrieve< UrbanPhysicalCapacity >();
+            if( pPhysical == 0 )
                 continue;
-            const PHY_MaterialCompositionType* materialCompositionType = PHY_MaterialCompositionType::Find( object.GetMaterial() );
+            const PHY_MaterialCompositionType* materialCompositionType = PHY_MaterialCompositionType::Find( pPhysical->GetMaterial() );
             if( !materialCompositionType )
                 continue;
 
@@ -514,7 +516,7 @@ bool PHY_SensorTypeAgent::ComputeUrbanExtinction( const MT_Vector2D& vSource, co
                     intersectionDistance = ( *intersectPoints.begin() ).Distance( *intersectPoints.rbegin() );
 
                 double rDistanceModificator = urbanBlockFactors_[ materialCompositionType->GetId() ];
-                double occupationFactor = std::sqrt( object.GetOccupation() );
+                double occupationFactor = std::sqrt( pPhysical->GetOccupation() );
                 if( occupationFactor == 1. && rDistanceModificator <= epsilon )
                     rVisionNRJ = -1 ;
                 else
@@ -776,9 +778,8 @@ double PHY_SensorTypeAgent::GetFactor( const PHY_Volume& volume ) const
 // -----------------------------------------------------------------------------
 double PHY_SensorTypeAgent::GetUrbanBlockFactor( const MIL_UrbanObject_ABC& block ) const
 {
-    const std::string material = block.GetMaterial();
-    if( !material.empty() )
-        if( const PHY_MaterialCompositionType* materialCompositionType = PHY_MaterialCompositionType::Find( material ) )
+    if( const UrbanPhysicalCapacity* pPhysical = block.Retrieve< UrbanPhysicalCapacity >() )
+        if( const PHY_MaterialCompositionType* materialCompositionType = PHY_MaterialCompositionType::Find( pPhysical->GetMaterial() ) )
             return urbanBlockFactors_[ materialCompositionType->GetId() ];
     return 1.f;
 }

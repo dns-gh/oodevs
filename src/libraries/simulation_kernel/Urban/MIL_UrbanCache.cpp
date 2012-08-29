@@ -9,8 +9,7 @@
 #include "MT_Tools/MT_Rect.h"
 #include "MT_Tools/MT_Logger.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
-#include "Urban/MIL_UrbanObject_ABC.h"
-#include "Urban/UrbanPhysicalAttribute.h"
+#include "Urban/UrbanPhysicalCapacity.h"
 
 namespace
 {
@@ -163,9 +162,13 @@ namespace
             if( key && wrapper_.Check( key->GetLocalisation() ) )
             {
                 double tempCost = 0.;
-                const UrbanPhysicalAttribute* pPhysical = static_cast< const tools::Extendable< UrbanExtension_ABC >* >( key )->Retrieve< UrbanPhysicalAttribute >();
+                const UrbanPhysicalCapacity* pPhysical = key->Retrieve< UrbanPhysicalCapacity >();
                 if( pPhysical )
-                    tempCost = pPhysical->GetPathfindCost( weight_ );
+                {
+                    if( weight_ > pPhysical->GetTrafficability() )
+                        tempCost = -1.f;
+                    tempCost =  pPhysical->GetOccupation();
+                }
                 if( tempCost == -1. )
                 {
                     cost_ = tempCost;

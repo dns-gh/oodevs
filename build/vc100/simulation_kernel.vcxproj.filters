@@ -2631,11 +2631,11 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\MIL_UrbanObject.cpp">
       <Filter>Source Files\Urban</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\UrbanPhysicalAttribute.cpp">
-      <Filter>Source Files\Urban</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\PerceptionCallbackEventListener.cpp">
       <Filter>Source Files\Adapters\EventListeners</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\UrbanPhysicalCapacity.cpp">
+      <Filter>Source Files\Urban</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -5366,20 +5366,14 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\MIL_UrbanObject_ABC.h">
       <Filter>Source Files\Urban</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\MIL_UrbanMotivationsVisitor_ABC.h">
-      <Filter>Source Files\Urban</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\UrbanPhysicalAttribute.h">
-      <Filter>Source Files\Urban</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\UrbanExtension_ABC.h">
-      <Filter>Source Files\Urban</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\FloodModelFactory_ABC.h">
       <Filter>Source Files\Adapters</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\PerceptionCallbackEventListener.h">
       <Filter>Source Files\Adapters\EventListeners</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\UrbanPhysicalCapacity.h">
+      <Filter>Source Files\Urban</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

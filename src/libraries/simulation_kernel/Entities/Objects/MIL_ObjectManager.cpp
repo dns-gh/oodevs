@@ -30,6 +30,9 @@
 #include "MT_Tools/MT_FormatString.h"
 #include "protocol/ClientSenders.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
+#include "Urban/UrbanPhysicalCapacity.h"
+#include "Urban/PHY_MaterialCompositionType.h"
+#include "Urban/PHY_RoofShapeType.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/serialization/export.hpp>
@@ -301,13 +304,11 @@ MIL_Object_ABC* MIL_ObjectManager::CreateUrbanObject( xml::xistream& xis, MIL_Ur
     MIL_UrbanObject_ABC* pObject = builder_->BuildUrbanObject( xis, parent );
     if( pObject->IsBlock() )
     {
-        // TODO vérification
-        /*
-        const UrbanPhysicalAttribute* pPhysical = static_cast< const tools::Extendable< UrbanExtension_ABC >& >( object ).Retrieve< UrbanPhysicalAttribute >();
-        if( pPhysical && ( !PHY_MaterialCompositionType::Find( pPhysical->GetArchitecture().material_ ) || !PHY_RoofShapeType::Find( pPhysical->GetArchitecture().roofShape_ ) ) )
+        const UrbanPhysicalCapacity* pPhysical = pObject->Retrieve< UrbanPhysicalCapacity >();
+        if( pPhysical && ( !PHY_MaterialCompositionType::Find( pPhysical->GetMaterial() ) || !PHY_RoofShapeType::Find( pPhysical->GetRoofShape() ) ) )
         {
-            MT_LOG_INFO_MSG( MT_FormatString( "The architecture of the urban bloc '%d' ('%s') is not consistent with the architecture described in the urban file", object.GetUrbanId(), object.GetName().c_str() ) );
-        }*/
+            MT_LOG_INFO_MSG( MT_FormatString( "The architecture of the urban block '%d' ('%s') is not consistent with the architecture described in the urban file", pObject->GetUrbanId(), pObject->GetName().c_str() ) );
+        }
         if( pObject->GetLocalisation().GetPoints().empty() )
         {
             MT_LOG_ERROR_MSG( MT_FormatString( "Urban block %d ignored for lack of geometry", pObject->GetUrbanId() ) );
@@ -316,7 +317,6 @@ MIL_Object_ABC* MIL_ObjectManager::CreateUrbanObject( xml::xistream& xis, MIL_Ur
         }
     }
     RegisterObject( pObject );
-
     return pObject;
 }
 

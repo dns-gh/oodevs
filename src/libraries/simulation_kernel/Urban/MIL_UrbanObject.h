@@ -22,7 +22,6 @@ namespace sword
 
 class MIL_LivingArea;
 class MIL_UrbanObject_ABC;
-class MIL_UrbanMotivationsVisitor_ABC;
 
 // =============================================================================
 /** @class  MIL_UrbanObject
@@ -45,13 +44,10 @@ public:
     virtual unsigned long GetUrbanId() const;
     virtual const std::string& GetName() const;
     virtual MIL_UrbanObject_ABC* GetParent() const;
-    virtual void Accept( MIL_UrbanMotivationsVisitor_ABC& visitor ) const;
     virtual void ComputeConvexHull();
     virtual void GetUrbanBlocks( std::vector< const MIL_UrbanObject_ABC* >& blocks ) const;
-    virtual bool HasChild() const;
     virtual float GetLivingSpace() const;
     virtual float ComputeComplexity() const;
-    virtual const std::string& GetInfrastructure() const;
     //@}
 
     //! @name CheckPoints
@@ -83,17 +79,9 @@ public:
 
     //! @name Accessors
     //@{
-    virtual float GetStructuralHeight() const;
-    virtual float GetStructuralState() const;
-    virtual const std::string& GetMaterial() const;
-    virtual double GetOccupation() const;
-    virtual float GetHeight() const;
-    virtual bool HasArchitecture() const;
     virtual unsigned int GetTotalInhabitants() const;
     virtual const std::vector< boost::shared_ptr< MT_Vector2D > >& ComputeLocalisationsInsideBlock() const;
-    virtual double GetTrafficability() const;
     virtual bool IsBlock() const;
-    virtual bool HasParent() const;
     //@}
 
     //! @name Inhabitants
@@ -108,8 +96,10 @@ private:
     //@{
     void ReadLocalisation( xml::xistream& xis );
     void ReadColor( xml::xistream& xis );
+    void ReadInfrastructure( xml::xistream& xis );
+    void ReadPhysical( xml::xistream& xis );
+    void ReadResourceNetworks( xml::xistream& xis );
     void ReadPoint( xml::xistream& xis, T_PointVector& vector );
-    void InitializeAttributes();
     template < typename T >
     void SendCapacity( sword::UrbanAttributes& msg ) const;
     template < typename T >
@@ -149,9 +139,10 @@ private:
     std::string name_;
     MIL_UrbanObject_ABC* parent_;
     UrbanColor color_;
-    std::string infrastructure_;
     T_Inhabitants inhabitants_;
     T_LivingAreas livingAreas_;
+    mutable float complexity_;
+    mutable float livingSpace_;
     mutable std::vector< boost::shared_ptr< MT_Vector2D > > strechedArea_;
     static const float stretchOffset_;
     //@}

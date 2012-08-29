@@ -32,6 +32,7 @@
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Tools/MIL_Tools.h"
 #include "Urban/MIL_UrbanCache.h"
+#include "Urban/UrbanPhysicalCapacity.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_World.h"
@@ -1027,18 +1028,21 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeTrafficableLocali
         if( object )
         {
             const double myWeight = pion.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight();
-            if( object->GetTrafficability() <= myWeight )
+            if( const UrbanPhysicalCapacity* pPhysical = object->Retrieve< UrbanPhysicalCapacity >() )
             {
-                const float distance = 10.f; // $$$$ _RC_ LGY 2010-10-11: delta hardcoded
-                const T_PointVector& points = object->GetLocalisation().GetPoints();
-                const MT_Vector2D barycenter = object->GetLocalisation().ComputeBarycenter();
-                for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
+                if( pPhysical->GetTrafficability() <= myWeight )
                 {
-                    const MT_Vector2D point( *it + MT_Vector2D( *it - barycenter ).Normalize() * distance );
-                    if( DEC_GeometryFunctions::IsUrbanBlockTrafficable( point, myWeight ) && pLocalisation->IsInside( point ) )
+                    const float distance = 10.f; // $$$$ _RC_ LGY 2010-10-11: delta hardcoded
+                    const T_PointVector& points = object->GetLocalisation().GetPoints();
+                    const MT_Vector2D barycenter = object->GetLocalisation().ComputeBarycenter();
+                    for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
                     {
-                        *pBarycenter = point;
-                        return pBarycenter;
+                        const MT_Vector2D point( *it + MT_Vector2D( *it - barycenter ).Normalize() * distance );
+                        if( DEC_GeometryFunctions::IsUrbanBlockTrafficable( point, myWeight ) && pLocalisation->IsInside( point ) )
+                        {
+                            *pBarycenter = point;
+                            return pBarycenter;
+                        }
                     }
                 }
             }
@@ -1083,7 +1087,8 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeTr
 bool DEC_GeometryFunctions::IsUrbanBlockTrafficable( const MT_Vector2D& point, double weight )
 {
     if( const MIL_UrbanObject_ABC* object = MIL_AgentServer::GetWorkspace().GetUrbanCache().FindBlock( point ) )
-        return object->GetTrafficability() > weight;
+        if( const UrbanPhysicalCapacity* pPhysical = object->Retrieve< UrbanPhysicalCapacity >() )
+            return pPhysical->GetTrafficability() > weight;
     return true;
 }
 

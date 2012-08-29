@@ -19,6 +19,7 @@
 #include "Tools/MIL_Geometry.h"
 #include "MT_Tools/MT_Ellipse.h"
 #include "Urban/PHY_MaterialCompositionType.h"
+#include "Urban/UrbanPhysicalCapacity.h"
 #pragma warning( push, 0 )
 #pragma warning( disable: 4702 )
 #include <boost/geometry/geometry.hpp>
@@ -148,6 +149,7 @@ double InsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_A
 double InsideUrbanBlockPosition::ComputeUrbanProtection( const PHY_DotationCategory& dotationCategory ) const
 {
     if( const MaterialAttribute* materialAttribute = urbanObject_.RetrieveAttribute< MaterialAttribute >() )
-        return ( 1 - dotationCategory.GetUrbanAttritionScore( materialAttribute->GetMaterial() ) ) * urbanObject_.GetOccupation();
+        if( const UrbanPhysicalCapacity* physical = urbanObject_.Retrieve< UrbanPhysicalCapacity >() )
+            return ( 1 - dotationCategory.GetUrbanAttritionScore( materialAttribute->GetMaterial() ) ) * physical->GetOccupation();
     return 0.;
 }

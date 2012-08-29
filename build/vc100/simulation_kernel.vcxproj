@@ -348,7 +348,7 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\PHY_MaterialCompositionType.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\PHY_ResourceNetworkType.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\PHY_RoofShapeType.cpp" />
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\UrbanPhysicalAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\UrbanPhysicalCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\WeaponAvailabilityComputerFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\WeaponReloadingComputerFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Firing\DirectFiring\PHY_ActionDirectFirePion.cpp" />
@@ -1118,7 +1118,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\firing\directfiring\PHY_DirectFireData.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\firing\directfiring\PHY_RoleAction_DirectFiring.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\MIL_UrbanCache.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\MIL_UrbanMotivationsVisitor_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\MIL_UrbanObject.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\MIL_UrbanObject_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\PHY_AccomodationType.h" />
@@ -1126,8 +1125,7 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\PHY_MaterialCompositionType.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\PHY_ResourceNetworkType.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\PHY_RoofShapeType.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\UrbanExtension_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\UrbanPhysicalAttribute.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\UrbanPhysicalCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\WeaponAvailabilityComputer_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\WeaponAvailabilityComputerFactory.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\WeaponAvailabilityComputerFactory_ABC.h" />

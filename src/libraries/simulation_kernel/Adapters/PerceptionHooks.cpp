@@ -20,6 +20,7 @@
 #include "simulation_kernel/Entities/Objects/MIL_Object_ABC.h"
 #include "simulation_kernel/Entities/Objects/MIL_ObjectType_ABC.h"
 #include "simulation_kernel/Entities/Objects/MIL_ObjectManipulator_ABC.h"
+#include "simulation_kernel/Entities/Objects/StructuralCapacity.h"
 #include "simulation_kernel/Entities/Orders/MIL_AutomateOrderManager.h"
 #include "simulation_kernel/Entities/Agents/MIL_Agent_ABC.h"
 #include "simulation_kernel/Entities/Agents/Units/Sensors/PHY_SensorTypeAgent_ABC.h"
@@ -53,6 +54,7 @@
 #include "simulation_kernel/Knowledge/DEC_BlackBoard_CanContainKnowledgePopulationPerception.h"
 #include "simulation_kernel/Tools/MIL_Geometry.h"
 #include "simulation_kernel/Urban/MIL_UrbanObject_ABC.h"
+#include "simulation_kernel/Urban/UrbanPhysicalCapacity.h"
 #include "simulation_kernel/MIL_AgentServer.h"
 #include "simulation_kernel/OnComponentFunctor_ABC.h"
 #include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
@@ -119,9 +121,10 @@ namespace
             for( std::vector< const MIL_UrbanObject_ABC* >::const_iterator it = list.begin(); it != list.end() && rVisionNRJ > 0; it++ )
             {
                 const MIL_UrbanObject_ABC& object = **it;
-                if( !object.HasArchitecture() )
+                const UrbanPhysicalCapacity* pPhysical = object.Retrieve< UrbanPhysicalCapacity >();
+                if( pPhysical == 0 )
                     continue;
-                const PHY_MaterialCompositionType* materialCompositionType = PHY_MaterialCompositionType::Find( object.GetMaterial() );
+                const PHY_MaterialCompositionType* materialCompositionType = PHY_MaterialCompositionType::Find( pPhysical->GetMaterial() );
                 if( !materialCompositionType )
                     continue;
 
@@ -146,7 +149,7 @@ namespace
                         intersectionDistance = ( *intersectPoints.begin() ).Distance( *intersectPoints.rbegin() );
 
                     double rDistanceModificator = urbanBlockFactors[ materialCompositionType->GetId() ];
-                    double occupationFactor = std::sqrt( object.GetOccupation() );
+                    double occupationFactor = std::sqrt( pPhysical->GetOccupation() );
                     if( occupationFactor == 1. && rDistanceModificator <= epsilon )
                         rVisionNRJ = -1 ;
                     else
@@ -220,9 +223,8 @@ namespace
     }
     DEFINE_HOOK( GetUrbanBlockFactor, double, ( const MIL_UrbanObject_ABC& block, const double* urbanBlockFactors ) )
     {
-        const std::string material = block.GetMaterial();
-        if( !material.empty() )
-            if( const PHY_MaterialCompositionType* materialCompositionType = PHY_MaterialCompositionType::Find( material ) )
+        if( const UrbanPhysicalCapacity* pPhysical = block.Retrieve< UrbanPhysicalCapacity >() )
+            if( const PHY_MaterialCompositionType* materialCompositionType = PHY_MaterialCompositionType::Find( pPhysical->GetMaterial() ) )
                 return urbanBlockFactors[ materialCompositionType->GetId() ];
         return 1.f;
     }
@@ -369,19 +371,25 @@ namespace
     }
     DEFINE_HOOK( GetUrbanObjectStructuralHeight, double, ( const MIL_UrbanObject_ABC* urbanObject ) )
     {
-        return urbanObject->GetStructuralHeight();
+        if( const UrbanPhysicalCapacity* physical = urbanObject->Retrieve< UrbanPhysicalCapacity >() )
+            if( const StructuralCapacity* structuralCapacity = urbanObject->Retrieve< StructuralCapacity >() )
+                return structuralCapacity->GetStructuralState() * physical->GetHeight();
+        return 0;
     }
     DEFINE_HOOK( GetUrbanObjectOccupation, double, ( const MIL_UrbanObject_ABC* urbanObject ) )
     {
-        return urbanObject->GetOccupation();
+        if( const UrbanPhysicalCapacity* physical = urbanObject->Retrieve< UrbanPhysicalCapacity >() )
+            return physical->GetOccupation();
+        return 0;
     }
     DEFINE_HOOK( GetUrbanObjectStructuralState, double, ( const MIL_UrbanObject_ABC* urbanObject ) )
     {
-        return urbanObject->GetStructuralState();
+        const StructuralCapacity* structuralCapacity = urbanObject->Retrieve< StructuralCapacity >();
+        return structuralCapacity ? structuralCapacity->GetStructuralState() : 0;
     }
     DEFINE_HOOK( HasUrbanObjectArchitecture, bool, ( const MIL_UrbanObject_ABC* urbanObject ) )
     {
-        return urbanObject->HasArchitecture();
+        return urbanObject->Retrieve< UrbanPhysicalCapacity >() != 0;
     }
     DEFINE_HOOK( CanUrbanBlockBeSeen, bool, ( const SWORD_Model* perceiver, const MIL_UrbanObject_ABC* urbanBlock ) )
     {

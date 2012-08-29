@@ -9,10 +9,9 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_UrbanObject.h"
-#include "UrbanPhysicalAttribute.h"
+#include "UrbanPhysicalCapacity.h"
 #include "PHY_InfrastructureType.h"
 #include "PHY_MaterialCompositionType.h"
-#include "MIL_UrbanMotivationsVisitor_ABC.h"
 #include "Entities/Inhabitants/MIL_LivingArea.h"
 #include "Entities/Objects/InfrastructureCapacity.h"
 #include "Entities/Objects/MaterialAttribute.h"
@@ -26,24 +25,6 @@
 #include "protocol/ClientSenders.h"
 #include <boost/lexical_cast.hpp>
 
-/*
-#include "MIL_AgentServer.h"
-#include "ResourceNetworkAttribute.h"
-#include "ResourceNetworkCapacity.h"
-#include "MaterialAttribute.h"
-#include "MedicalCapacity.h"
-#include "InfrastructureCapacity.h"
-#include "Entities/MIL_EntityManager.h"
-#include "Entities/Objects/MIL_ObjectBuilder_ABC.h"
-#include "Urban/PHY_InfrastructureType.h"
-#include "Urban/PHY_MaterialCompositionType.h"
-#include "Urban/MIL_UrbanObject_ABC.h"
-#include "Urban/MIL_UrbanMotivationsVisitor_ABC.h"
-#include "Urban/UrbanPhysicalAttribute.h"
-#include <boost/serialization/vector.hpp>
-#include <boost/foreach.hpp>
-*/
-
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_UrbanObject )
 
 const float MIL_UrbanObject::stretchOffset_ = 10.f; // $$$$ _RC_ LGY 2010-10-11: delta hardcoded
@@ -54,39 +35,20 @@ const float MIL_UrbanObject::stretchOffset_ = 10.f; // $$$$ _RC_ LGY 2010-10-11:
 // -----------------------------------------------------------------------------
 MIL_UrbanObject::MIL_UrbanObject( xml::xistream& xis, const MIL_ObjectBuilder_ABC& builder, MIL_UrbanObject_ABC* parent /*= 0*/ )
     : MIL_UrbanObject_ABC( builder.GetType() )
-    , nUrbanId_ ( xis.attribute< unsigned long >( "id" ) )
-    , name_     ( xis.attribute< std::string >( "name" ) )
-    , parent_   ( parent )
+    , nUrbanId_( xis.attribute< unsigned long >( "id" ) )
+    , name_( xis.attribute< std::string >( "name" ) )
+    , parent_( parent )
+    , complexity_( 0 )
+    , livingSpace_( 0 )
 {
     if( name_.empty() )
         name_ = boost::lexical_cast< std::string >( nUrbanId_ );
-
+    builder.Build( *this );
     ReadLocalisation( xis );
     ReadColor( xis );
-
-    // TEMP
-    // TODO refaire au propre quand on n'aura plus les attributs dans urban et qu'on aura viré le wrapper
-    // Passer par l'attribute factory? 
-    if( xis.has_child( "physical" ) || ( parent && parent->GetParent() ) )
-        tools::Extendable< UrbanExtension_ABC >::Attach( *new UrbanPhysicalAttribute( xis ) );
-
-    xis >> xml::optional >> xml::start( "infrastructures" )
-            >> xml::optional >> xml::start( "infrastructure" )
-                >> xml::attribute( "type", infrastructure_ )
-            >>xml::end
-        >>xml::end;
-    builder.Build( *this );
-    if( xis.has_child( "resources") )
-    {
-        ResourceNetworkCapacity* capacity = Retrieve< ResourceNetworkCapacity >();
-        if( capacity )
-        {
-            xis >> xml::start( "resources" );
-            capacity->Update( xis, *this );
-            xis >> xml::end;
-        }
-    }
-    InitializeAttributes();
+    ReadInfrastructure( xis );
+    ReadPhysical( xis );
+    ReadResourceNetworks( xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -95,7 +57,9 @@ MIL_UrbanObject::MIL_UrbanObject( xml::xistream& xis, const MIL_ObjectBuilder_AB
 // -----------------------------------------------------------------------------
 MIL_UrbanObject::MIL_UrbanObject()
     : nUrbanId_( 0 )
-    , parent_  ( 0 )
+    , parent_( 0 )
+    , complexity_( 0 )
+    , livingSpace_( 0 )
 {
     // NOTHING
 }
@@ -106,7 +70,6 @@ MIL_UrbanObject::MIL_UrbanObject()
 // -----------------------------------------------------------------------------
 MIL_UrbanObject::~MIL_UrbanObject()
 {
-    tools::Extendable< UrbanExtension_ABC >::DestroyExtensions();
     DeleteAll();
 }
 
@@ -135,17 +98,6 @@ const std::string& MIL_UrbanObject::GetName() const
 MIL_UrbanObject_ABC* MIL_UrbanObject::GetParent() const
 {
     return parent_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_UrbanObject::Accept
-// Created: JSR 2012-08-01
-// -----------------------------------------------------------------------------
-void MIL_UrbanObject::Accept( MIL_UrbanMotivationsVisitor_ABC& visitor ) const
-{
-    const UrbanPhysicalAttribute* pPhysical = tools::Extendable< UrbanExtension_ABC >::Retrieve< UrbanPhysicalAttribute >();
-    if( pPhysical )
-        pPhysical->Accept( visitor );
 }
 
 namespace
@@ -243,23 +195,18 @@ void MIL_UrbanObject::GetUrbanBlocks( std::vector< const MIL_UrbanObject_ABC* >&
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_UrbanObject::HasChild
-// Created: JSR 2012-08-01
-// -----------------------------------------------------------------------------
-bool MIL_UrbanObject::HasChild() const
-{
-    return Count() > 0;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_UrbanObject::GetLivingSpace
 // Created: JSR 2012-08-01
 // -----------------------------------------------------------------------------
 float MIL_UrbanObject::GetLivingSpace() const
 {
-    const UrbanPhysicalAttribute* physical = tools::Extendable< UrbanExtension_ABC >::Retrieve< UrbanPhysicalAttribute >();
-    double factor = physical ? ( physical->GetArchitecture().floorNumber_ + 1 ) * physical->GetArchitecture().occupation_ : 1.;
-    return static_cast< float >( GetLocalisation().GetArea() * factor );
+    if( livingSpace_ == 0 )
+    {
+        const UrbanPhysicalCapacity* physical = Retrieve< UrbanPhysicalCapacity >();
+        double factor = physical ? ( physical->GetFloorNumber() + 1 ) * physical->GetOccupation() : 1.;
+        return static_cast< float >( GetLocalisation().GetArea() * factor );
+    }
+    return livingSpace_;
 }
 
 // -----------------------------------------------------------------------------
@@ -269,21 +216,16 @@ float MIL_UrbanObject::GetLivingSpace() const
 float MIL_UrbanObject::ComputeComplexity() const
 {
     // $$$$ _RC_ JSR 2010-09-16: A refaire (voir PHY_RolePion_UrbanLocation::Execute dans la sim)
-    double area = GetLocalisation().GetArea();
-    double complexity = area ? area * 0.1f : 1.f;
-    const UrbanPhysicalAttribute* physical = tools::Extendable< UrbanExtension_ABC >::Retrieve< UrbanPhysicalAttribute >();
-    if( physical )
-        complexity *= ( ( 1 + physical->GetArchitecture().floorNumber_ ) * physical->GetArchitecture().occupation_ );
-    return static_cast< float >( complexity );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_UrbanObject::GetInfrastructure
-// Created: JSR 2012-08-01
-// -----------------------------------------------------------------------------
-const std::string& MIL_UrbanObject::GetInfrastructure() const
-{
-    return infrastructure_;
+    if( complexity_ != 0 )
+    {
+        complexity_ = 0.1f * static_cast< float >( GetLocalisation().GetArea() );
+        if( complexity_ == 0 )
+            complexity_ = 1.f;
+        const UrbanPhysicalCapacity* physical = Retrieve< UrbanPhysicalCapacity >();
+        if( physical )
+            complexity_ *= static_cast< float >( ( ( 1 + physical->GetFloorNumber() ) * physical->GetOccupation() ) );
+    }
+    return complexity_;
 }
 
 // -----------------------------------------------------------------------------
@@ -315,24 +257,18 @@ void MIL_UrbanObject::ReadColor( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_UrbanObject::ReadPoint
-// Created: JSR 2012-08-28
+// Name: MIL_UrbanObject::ReadInfrastructure
+// Created: JSR 2012-08-29
 // -----------------------------------------------------------------------------
-void MIL_UrbanObject::ReadPoint( xml::xistream& xis, T_PointVector& vector )
+void MIL_UrbanObject::ReadInfrastructure( xml::xistream& xis )
 {
-    std::string strPoint = xis.attribute< std::string >( "location" );
-    MT_Vector2D vPoint;
-    TER_World::GetWorld().MosToSimMgrsCoord( strPoint, vPoint );
-    vector.push_back( vPoint );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_UrbanObject::InitializeAttributes
-// Created: JSR 2010-09-17
-// -----------------------------------------------------------------------------
-void MIL_UrbanObject::InitializeAttributes()
-{
-    if( const PHY_InfrastructureType* infraType = PHY_InfrastructureType::Find( GetInfrastructure() ) )
+    std::string infrastructure;
+    xis >> xml::optional >> xml::start( "infrastructures" )
+           >> xml::optional >> xml::start( "infrastructure" )
+                >> xml::attribute( "type", infrastructure )
+            >>xml::end
+        >>xml::end;
+    if( const PHY_InfrastructureType* infraType = PHY_InfrastructureType::Find( infrastructure ) )
     {
         InfrastructureCapacity* capacity = new InfrastructureCapacity( *infraType );
         capacity->Register( *this );
@@ -342,9 +278,47 @@ void MIL_UrbanObject::InitializeAttributes()
             capacity->Register( *this );
         }
     }
-    if( const UrbanPhysicalAttribute* pPhysical = static_cast< tools::Extendable< UrbanExtension_ABC >* >( this )->Retrieve< UrbanPhysicalAttribute >() )
-        if( const PHY_MaterialCompositionType* material = PHY_MaterialCompositionType::Find(  pPhysical->GetArchitecture().material_ ) )
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_UrbanObject::ReadPhysical
+// Created: JSR 2012-08-29
+// -----------------------------------------------------------------------------
+void MIL_UrbanObject::ReadPhysical( xml::xistream& xis )
+{
+    if( xis.has_child( "physical" ) || IsBlock() )
+    {
+        UrbanPhysicalCapacity* pPhysical = new UrbanPhysicalCapacity( xis );
+        pPhysical->Register( *this );
+        if( const PHY_MaterialCompositionType* material = PHY_MaterialCompositionType::Find(  pPhysical->GetMaterial() ) )
             GetAttribute< MaterialAttribute >() = MaterialAttribute( *material );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_UrbanObject::ReadResourceNetworks
+// Created: JSR 2012-08-29
+// -----------------------------------------------------------------------------
+void MIL_UrbanObject::ReadResourceNetworks( xml::xistream& xis )
+{
+    if( xis.has_child( "resources") )
+        if( ResourceNetworkCapacity* capacity = Retrieve< ResourceNetworkCapacity >() )
+        {
+            xis >> xml::start( "resources" );
+            capacity->Update( xis, *this );
+            xis >> xml::end;
+        }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_UrbanObject::ReadPoint
+// Created: JSR 2012-08-28
+// -----------------------------------------------------------------------------
+void MIL_UrbanObject::ReadPoint( xml::xistream& xis, T_PointVector& vector )
+{
+    MT_Vector2D vPoint;
+    TER_World::GetWorld().MosToSimMgrsCoord( xis.attribute< std::string >( "location" ), vPoint );
+    vector.push_back( vPoint );
 }
 
 // -----------------------------------------------------------------------------
@@ -361,7 +335,6 @@ void MIL_UrbanObject::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> color_.green_
          >> color_.blue_
          >> color_.alpha_
-         >> infrastructure_
          >> inhabitants_
          >> livingAreas_;
     if( parent_ )
@@ -382,7 +355,6 @@ void MIL_UrbanObject::save( MIL_CheckPointOutArchive& file, const unsigned int )
          << color_.green_
          << color_.blue_
          << color_.alpha_
-         << infrastructure_
          << inhabitants_
          << livingAreas_;
 }
@@ -438,25 +410,6 @@ void MIL_UrbanObject::SendFullStateCapacity( sword::UrbanAttributes& msg ) const
         capacity->SendFullState( msg );
 }
 
-namespace
-{
-    class MotivationsVisitor : public MIL_UrbanMotivationsVisitor_ABC
-
-    {
-    public:
-        explicit MotivationsVisitor( std::map< std::string, float >& motivations )
-            : motivations_( motivations )
-        {
-            // NOTHING
-        }
-        virtual void Visit( const std::string& motivation, float proportion )
-        {
-            motivations_[ motivation ] = proportion;
-        }
-        std::map< std::string, float >& motivations_;
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_UrbanObject::SendCreation
 // Created: SLG 2010-06-18
@@ -474,29 +427,7 @@ void MIL_UrbanObject::SendCreation() const
     msgColor->set_green( color_.green_ );
     msgColor->set_blue( color_.blue_ );
     msgColor->set_alpha( color_.alpha_ );
-    if( const UrbanPhysicalAttribute* pPhysical = tools::Extendable< UrbanExtension_ABC >::Retrieve< UrbanPhysicalAttribute >() )
-    {
-        // architecture
-        const UrbanPhysicalAttribute::Architecture& architecture = pPhysical->GetArchitecture();
-        sword::UrbanAttributes_Architecture* msg = message().mutable_attributes()->mutable_architecture();
-        msg->set_height( static_cast< float >( architecture.height_ ) );
-        msg->set_floor_number( architecture.floorNumber_ );
-        msg->set_roof_shape( architecture.roofShape_.c_str() );
-        msg->set_material( architecture.material_.c_str() );
-        msg->set_occupation( static_cast< float >( architecture.occupation_ ) );
-        msg->set_trafficability( static_cast< float >( architecture.trafficability_ ) );
-        msg->set_parking_floors( architecture.parkingFloors_ );
-        //motivations
-        std::map< std::string, float > motivations;
-        MotivationsVisitor visitor( motivations );
-        pPhysical->Accept( visitor );
-        for( std::map< std::string, float >::const_iterator it = motivations.begin(); it != motivations.end(); ++it )
-        {
-            sword::UrbanUsage& usage = *message().mutable_attributes()->add_usages();
-            usage.set_role( it->first );
-            usage.set_percentage( static_cast< unsigned int >( it->second * 100 + 0.5f ) );
-        }
-    }
+    SendFullStateCapacity< UrbanPhysicalCapacity >( *message().mutable_attributes() );
     message.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -571,63 +502,6 @@ const std::vector< boost::shared_ptr< MT_Vector2D > >& MIL_UrbanObject::ComputeL
 bool MIL_UrbanObject::IsBlock() const
 {
     return GetParent() != 0 && GetParent()->GetParent() != 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_UrbanObject::GetHeight
-// Created: JSR 2011-05-30
-// -----------------------------------------------------------------------------
-float MIL_UrbanObject::GetHeight() const
-{
-    if( const UrbanPhysicalAttribute* pPhysical = tools::Extendable< UrbanExtension_ABC >::Retrieve< UrbanPhysicalAttribute >() )
-        return static_cast< float >( pPhysical->GetArchitecture().height_ );
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_UrbanObject::GetStructuralHeight
-// Created: MMC 2012-01-09
-// -----------------------------------------------------------------------------
-float MIL_UrbanObject::GetStructuralHeight() const
-{
-    if( const UrbanPhysicalAttribute* pPhysical = tools::Extendable< UrbanExtension_ABC >::Retrieve< UrbanPhysicalAttribute >() )
-        if( const StructuralCapacity* structuralCapacity = Retrieve< StructuralCapacity >() )
-            return pPhysical->GetArchitecture().height_ * structuralCapacity->GetStructuralState();
-    return 0.0f;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_UrbanObject::GetStructuralState
-// Created: MMC 2012-01-23
-// -----------------------------------------------------------------------------
-float MIL_UrbanObject::GetStructuralState() const
-{
-    if( const UrbanPhysicalAttribute* pPhysical = tools::Extendable< UrbanExtension_ABC >::Retrieve< UrbanPhysicalAttribute >() )
-        if( const StructuralCapacity* structuralCapacity = Retrieve< StructuralCapacity >() )
-            return structuralCapacity->GetStructuralState();
-    return 0.0f;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_UrbanObject::GetOccupation
-// Created: JSR 2011-05-26
-// -----------------------------------------------------------------------------
-double MIL_UrbanObject::GetOccupation() const
-{
-    if( const UrbanPhysicalAttribute* pPhysical = tools::Extendable< UrbanExtension_ABC >::Retrieve< UrbanPhysicalAttribute >() )
-        return pPhysical->GetArchitecture().occupation_;
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_UrbanObject::GetTrafficability
-// Created: JSR 2011-05-26
-// -----------------------------------------------------------------------------
-double MIL_UrbanObject::GetTrafficability() const
-{
-    if( const UrbanPhysicalAttribute* pPhysical = tools::Extendable< UrbanExtension_ABC >::Retrieve< UrbanPhysicalAttribute >() )
-        return pPhysical->GetArchitecture().trafficability_;
-    return std::numeric_limits< double >::max();
 }
 
 // -----------------------------------------------------------------------------
@@ -754,35 +628,4 @@ void MIL_UrbanObject::OnReceiveSetEvacuated( const sword::MissionParameter_Value
 void MIL_UrbanObject::AddLivingArea( MIL_LivingArea& livingArea )
 {
     livingAreas_.push_back( &livingArea );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_UrbanObject::HasArchitecture
-// Created: JSR 2012-04-20
-// -----------------------------------------------------------------------------
-bool MIL_UrbanObject::HasArchitecture() const
-{
-    return tools::Extendable< UrbanExtension_ABC >::Retrieve< UrbanPhysicalAttribute >() != 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_UrbanObject::GetMaterial
-// Created: JSR 2012-04-20
-// -----------------------------------------------------------------------------
-const std::string& MIL_UrbanObject::GetMaterial() const
-{
-    static const std::string empty;
-    if( const UrbanPhysicalAttribute* pPhysical = tools::Extendable< UrbanExtension_ABC >::Retrieve< UrbanPhysicalAttribute >() )
-        return pPhysical->GetArchitecture().material_;
-    return empty;
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: MIL_UrbanObject::HasParent
-// Created: JSR 2012-04-20
-// -----------------------------------------------------------------------------
-bool MIL_UrbanObject::HasParent() const
-{
-    return parent_ != 0;
 }

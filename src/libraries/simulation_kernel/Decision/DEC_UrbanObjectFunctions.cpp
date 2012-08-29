@@ -18,7 +18,6 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
-#include "Urban/MIL_UrbanObject_ABC.h"
 #include "Entities/Objects/StructuralCapacity.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
@@ -27,6 +26,8 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Urban.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
+#include "Urban/UrbanPhysicalCapacity.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_UrbanObjectFunctions::GetCurrentPerceptionLevel
@@ -127,9 +128,12 @@ double DEC_UrbanObjectFunctions::GetPathfindCost( const MIL_AgentPion& callerAge
 {
     if( pUrbanObject )
     {
-        if( callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight() > pUrbanObject->GetTrafficability() )
-            return -1.;
-        return pUrbanObject->GetOccupation();
+        if( const UrbanPhysicalCapacity* pPhysical = pUrbanObject->Retrieve< UrbanPhysicalCapacity >() )
+        {
+            if( callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight() > pPhysical->GetTrafficability() )
+                return -1.;
+            return pPhysical->GetOccupation();
+        }
     }
     return 0;
 }
