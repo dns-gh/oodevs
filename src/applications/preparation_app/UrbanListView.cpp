@@ -122,7 +122,7 @@ void UrbanListView::NotifyCreated( const kernel::UrbanObject_ABC& object )
     if( item )
     {
         item->SetNamed( static_cast< const kernel::Entity_ABC& >( object ) );
-        item->setRenameEnabled( 0, true );
+        item->setRenameEnabled( 0, GetCurrentMode() == ePreparationMode_Terrain );
         UpdatePixmap( object, item );
         item->SetToolTip( QString( "%1 [%L2]" ).arg( object.GetName() ).arg( object.GetId() ) );
         if( superior )
@@ -155,7 +155,14 @@ bool UrbanListView::IsTypeRejected( const kernel::Entity_ABC& entity ) const
 void UrbanListView::NotifyModeChanged( int newMode )
 {
     ModesObserver_ABC::NotifyModeChanged( newMode );
-    setSelectionMode( newMode == ePreparationMode_Terrain ? Q3ListView::Extended : Q3ListView::Single );
+    bool isTerrainMode = newMode == ePreparationMode_Terrain;
+    setSelectionMode( isTerrainMode ? Q3ListView::Extended : Q3ListView::Single );
+    Q3ListViewItemIterator it( this );
+    while( it.current() )
+    {
+        it.current()->setRenameEnabled( 0, isTerrainMode );
+        ++it;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -175,7 +182,6 @@ void UrbanListView::OnContextMenuRequested( Q3ListViewItem* i, const QPoint& pos
         else
             gui::EntityListView::OnContextMenuRequested( i, pos, col );
     }
-
 }
 
 // -----------------------------------------------------------------------------
@@ -541,8 +547,9 @@ void UrbanListView::CreateFilters( gui::SearchListView_ABC& searchListView )
 // -----------------------------------------------------------------------------
 void UrbanListView::NotifyContextMenu( const kernel::Entity_ABC& /*element*/, kernel::ContextMenu& menu )
 {
-    if( entitySelected_ || !isMultiSelection() )
-        menu.InsertItem( "Command", tr( "Rename" ), this, SLOT( OnRename() ) );
+    if( GetCurrentMode() == ePreparationMode_Terrain )
+        if( entitySelected_ || !isMultiSelection() )
+            menu.InsertItem( "Command", tr( "Rename" ), this, SLOT( OnRename() ) );
 }
 
 // -----------------------------------------------------------------------------
