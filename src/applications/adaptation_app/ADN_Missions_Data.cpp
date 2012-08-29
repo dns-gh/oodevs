@@ -546,14 +546,15 @@ void ADN_Missions_Data::Mission::WriteMissionSheet( E_EntityType type )
     if( !bfs::is_directory( directoryPath+missionDirectoryPath ) )
         bfs::create_directories( directoryPath+missionDirectoryPath + "/obsolete" );
 
-    if( !bfs::is_regular_file( fileName ) && missionDirectoryPath != "" )
-    {
-        FILE* file = std::fopen( fileName.c_str(), "w" );
-        std::fclose( file );
-    }
+    FILE* file = std::fopen( fileName.c_str(), "w" );
+    std::fclose( file );
     std::fstream fichier( fileName.c_str() );
-    fichier.clear();
     fichier << missionSheetContent_.GetData();
+
+    if( !missionSheetContent_.GetData().empty() )
+    {
+            std::string test = missionSheetContent_.GetData();
+    }
     fichier.close();
     missionSheetPath_ = fileName;
 }
@@ -745,14 +746,9 @@ void ADN_Missions_Data::FragOrder::WriteMissionSheet()
     if( !bfs::is_directory( directoryPath+missionDirectoryPath ) )
         bfs::create_directories( directoryPath+missionDirectoryPath + "/obsolete" );
 
-    if( !bfs::is_regular_file( fileName ) )
-    {
-        FILE* file = std::fopen( fileName.c_str(), "w" );
-        std::fclose( file );
-    }
-
+    FILE* file = std::fopen( fileName.c_str(), "w" );
+    std::fclose( file );
     std::fstream fichier( fileName.c_str() );
-    fichier.clear();
     fichier << missionSheetContent_.GetData();
     fichier.close();
     missionSheetPath_ = fileName;

@@ -641,6 +641,7 @@ void HtmlEditor::CurrentCharFormatChanged(const QTextCharFormat &format)
 // -----------------------------------------------------------------------------
 void HtmlEditor::CursorPositionChanged()
 {
+    TextFamily( "Calibri" );
     AlignmentChanged( textEdit_->alignment() );
 }
 
