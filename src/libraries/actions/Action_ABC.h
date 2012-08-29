@@ -63,7 +63,7 @@ class Action_ABC : public kernel::Entity_ABC
 public:
     //! @name Static
     //@{
-    static const QString typeName_;
+    static const std::string typeName_;
     static EActionType actionTypeEntity_;
     static EActionType actionTypeObjects_;
     static EActionType actionTypeWeather_;
@@ -80,7 +80,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual QString GetTypeName() const;
+    virtual const std::string& GetTypeName() const;
     virtual unsigned long GetId() const;
     virtual QString GetName() const;
     virtual bool IsValid() const;

@@ -36,7 +36,7 @@ ReplayExtensionFactory::~ReplayExtensionFactory()
 // Name: ReplayExtensionFactory::Create
 // Created: SBO 2008-02-14
 // -----------------------------------------------------------------------------
-void ReplayExtensionFactory::Create( kernel::Entity_ABC& entity )
+void ReplayExtensionFactory::Create( kernel::EntityBase_ABC& entity )
 {
     entity.Attach( *new dispatcher::ReplaySynchronisations( model_, entity ) );
 }

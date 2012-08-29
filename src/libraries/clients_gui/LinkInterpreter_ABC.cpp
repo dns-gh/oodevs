@@ -87,7 +87,7 @@ bool LinkInterpreter_ABC::InterpreteId( const Q3Url& url )
     bool ok = false;
     const unsigned long id = strId.toULong( &ok );
 
-    const Entity_ABC* entity = entites_[ classId ][ id ];
+    const Entity_ABC* entity = entites_[ classId.toAscii().constData() ][ id ];
     return entity != 0 && InterpreteEntity( *entity, ref );
 }
 
@@ -108,7 +108,7 @@ bool LinkInterpreter_ABC::InterpreteEntity( const kernel::Entity_ABC& entity, co
 // Name: LinkInterpreter_ABC::AddEntity
 // Created: AGE 2006-08-11
 // -----------------------------------------------------------------------------
-void LinkInterpreter_ABC::AddEntity( const QString& category, const Entity_ABC& entity )
+void LinkInterpreter_ABC::AddEntity( const std::string& category, const Entity_ABC& entity )
 {
     entites_[ category ][ entity.GetId() ] = & entity;
 }
@@ -117,7 +117,7 @@ void LinkInterpreter_ABC::AddEntity( const QString& category, const Entity_ABC& 
 // Name: LinkInterpreter_ABC::RemoveEntity
 // Created: AGE 2006-08-11
 // -----------------------------------------------------------------------------
-void LinkInterpreter_ABC::RemoveEntity( const QString& category, const Entity_ABC& entity )
+void LinkInterpreter_ABC::RemoveEntity( const std::string& category, const Entity_ABC& entity )
 {
     entites_[ category ][ entity.GetId() ] = 0;
 }

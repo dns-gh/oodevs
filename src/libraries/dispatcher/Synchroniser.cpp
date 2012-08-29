@@ -38,7 +38,7 @@ Synchroniser::~Synchroniser()
 // Name: Synchroniser::FlagForCreation
 // Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void Synchroniser::FlagForCreation( kernel::Entity_ABC& entity )
+void Synchroniser::FlagForCreation( kernel::EntityBase_ABC& entity )
 {
     toCreate_.push_back( &entity );
 }
@@ -47,7 +47,7 @@ void Synchroniser::FlagForCreation( kernel::Entity_ABC& entity )
 // Name: Synchroniser::FlagForUpdate
 // Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void Synchroniser::FlagForUpdate( kernel::Entity_ABC& entity )
+void Synchroniser::FlagForUpdate( kernel::EntityBase_ABC& entity )
 {
     toUpdate_.push_back( &entity );
 }
@@ -56,7 +56,7 @@ void Synchroniser::FlagForUpdate( kernel::Entity_ABC& entity )
 // Name: Synchroniser::FlagForDestruction
 // Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void Synchroniser::FlagForDestruction( kernel::Entity_ABC& entity )
+void Synchroniser::FlagForDestruction( kernel::EntityBase_ABC& entity )
 {
     toDestroy_.push_back( &entity );
 }

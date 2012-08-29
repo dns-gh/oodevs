@@ -71,7 +71,7 @@ void UnitStateTable_ABC::Purge()
 // -----------------------------------------------------------------------------
 void UnitStateTable_ABC::RecursiveLoad( kernel::Entity_ABC& selected )
 {
-    QString typeName = selected.GetTypeName();
+    const std::string& typeName = selected.GetTypeName();
     if( typeName == kernel::Agent_ABC::typeName_ )
         Load( selected );
     else

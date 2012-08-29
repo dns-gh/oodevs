@@ -487,7 +487,7 @@ void MissionPanel::NotifyMission()
     {
         std::stringstream message;
         message << "/mission "
-                << selectedEntity_->GetTypeName().toAscii().constData() << " " << selectedEntity_->GetId() << " "
+                << selectedEntity_->GetTypeName() << " " << selectedEntity_->GetId() << " "
                 << "\"" << pMissionInterface_->Title().toAscii().constData() << "\"";
         commandPublisher_->Send( "", message.str() );
     }

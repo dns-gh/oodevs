@@ -43,7 +43,7 @@ LinkInterpreter::~LinkInterpreter()
 // -----------------------------------------------------------------------------
 void LinkInterpreter::NotifyCreated( const kernel::Entity_ABC& entity )
 {
-    AddEntity( entity.GetTypeName(), entity );
+    AddEntity( entity.GetTypeName().c_str(), entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -52,7 +52,7 @@ void LinkInterpreter::NotifyCreated( const kernel::Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void LinkInterpreter::NotifyDeleted( const kernel::Entity_ABC& entity )
 {
-    RemoveEntity( entity.GetTypeName(), entity );
+    RemoveEntity( entity.GetTypeName().c_str(), entity );
 }
 
 // -----------------------------------------------------------------------------

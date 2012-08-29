@@ -51,7 +51,7 @@ namespace sword
 
 namespace kernel
 {
-    class Entity_ABC;
+    class EntityBase_ABC;
 }
 
 namespace dispatcher
@@ -98,7 +98,7 @@ class ReplaySynchronisations : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ReplaySynchronisations( const ReplayModel_ABC& model, kernel::Entity_ABC& holder );
+             ReplaySynchronisations( const ReplayModel_ABC& model, kernel::EntityBase_ABC& holder );
     virtual ~ReplaySynchronisations();
     //@}
 
@@ -106,7 +106,6 @@ public:
     //@{
     void StartSynchronisation( bool create );
     void EndSynchronisation  ( Synchroniser& synch ) const;
-    void StartSynchronisation( kernel::Entity_ABC& next, bool create );
 
     virtual void DoUpdate( const sword::AutomatCreation& msg );
     virtual void DoUpdate( const sword::ChangeDiplomacy& msg );
@@ -156,7 +155,7 @@ private:
     //! @name Member data
     //@{
     const ReplayModel_ABC& model_;
-    kernel::Entity_ABC& holder_;
+    kernel::EntityBase_ABC& holder_;
     bool created_  : 1;
     bool updated_  : 1;
     bool synching_ : 1;

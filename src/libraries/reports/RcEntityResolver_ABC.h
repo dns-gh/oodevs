@@ -31,7 +31,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual QString CreateLink( const QString& type, unsigned long id ) const = 0;
+    virtual QString CreateLink( const std::string& type, unsigned long id ) const = 0;
     //@}
 };
 

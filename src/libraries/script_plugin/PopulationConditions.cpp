@@ -71,7 +71,7 @@ namespace
             : converter_( &converter )
         {}
 
-        virtual void Visit( const kernel::Entity_ABC& entity )
+        virtual void Visit( const kernel::EntityBase_ABC& entity )
         {
             if( const dispatcher::PopulationConcentration_ABC* c = dynamic_cast< const dispatcher::PopulationConcentration_ABC* >( &entity ) )
             {

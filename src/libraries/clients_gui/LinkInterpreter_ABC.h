@@ -47,8 +47,8 @@ public slots:
 protected:
     //! @name Operations
     //@{
-    void AddEntity   ( const QString& category, const kernel::Entity_ABC& entity );
-    void RemoveEntity( const QString& category, const kernel::Entity_ABC& entity );
+    void AddEntity   ( const std::string& category, const kernel::Entity_ABC& entity );
+    void RemoveEntity( const std::string& category, const kernel::Entity_ABC& entity );
     virtual bool InterpreteEntity( const kernel::Entity_ABC& entity, const QString& action );
     //@}
 
@@ -69,7 +69,7 @@ private:
     //! @name Types
     //@{
     typedef std::map< unsigned int, const kernel::Entity_ABC* > T_Entities;
-    typedef std::map< QString, T_Entities >                     T_TypedEntities;
+    typedef std::map< std::string, T_Entities >                     T_TypedEntities;
     //@}
 
 private:

@@ -20,8 +20,7 @@ using namespace dispatcher;
 // Created: AGE 2007-10-19
 // -----------------------------------------------------------------------------
 Report::Report( Model_ABC& /*model*/, const sword::Report& report )
-    : SimpleEntity< >( report.report().id() )
-    , message_( report.New() )
+    : message_( report.New() )
 {
     *message_ = report;
 }
@@ -74,4 +73,13 @@ void Report::SendDestruction( ClientPublisher_ABC& publisher ) const
 void Report::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Report::GetId
+// Created: LDC 2012-08-20
+// -----------------------------------------------------------------------------
+unsigned long Report::GetId() const
+{
+    return message_->report().id();
 }

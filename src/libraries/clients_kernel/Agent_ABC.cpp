@@ -13,7 +13,7 @@
 
 using namespace kernel;
 
-const QString Agent_ABC::typeName_ = "agent";
+const std::string Agent_ABC::typeName_ = "agent";
 
 // -----------------------------------------------------------------------------
 // Name: Agent_ABC constructor
@@ -37,7 +37,7 @@ Agent_ABC::~Agent_ABC()
 // Name: Agent_ABC::GetTypeName
 // Created: AGE 2008-07-16
 // -----------------------------------------------------------------------------
-QString Agent_ABC::GetTypeName() const
+const std::string& Agent_ABC::GetTypeName() const
 {
     return typeName_;
 }

@@ -23,6 +23,7 @@ namespace
     {
         return resolver.Get( id ).GetDecisionalModel();
     }
+    std::string agentString( "agent" );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,16 +71,16 @@ bool Agent::IsCommandPost() const
 // -----------------------------------------------------------------------------
 bool Agent::Matches( const Filter_ABC& filter ) const
 {
-    return filter.Accepts( "agent" );
+    return filter.Accepts( agentString );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::GetTypeName
 // Created: PHC 2011-05-17
 // -----------------------------------------------------------------------------
-QString Agent::GetTypeName() const
+const std::string& Agent::GetTypeName() const
 {
-    return "agent";
+    return agentString;
 }
 
 // -----------------------------------------------------------------------------

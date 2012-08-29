@@ -156,7 +156,7 @@ void UnitStateDialog::Reset()
     if( !selected_ )
         return;
     // Load content from selected if needed
-    QString typeName = selected_->GetTypeName();
+    const std::string& typeName = selected_->GetTypeName();
     if( typeName == kernel::Agent_ABC::typeName_ || typeName == kernel::Automat_ABC::typeName_ ||
         typeName == kernel::Formation_ABC::typeName_ || typeName == kernel::Team_ABC::typeName_ )
         for( unsigned int i = 0; i < tabs_.size(); ++i )

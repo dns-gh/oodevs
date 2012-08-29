@@ -26,7 +26,7 @@ class PopulationFlow_ABC : public PopulationPart_ABC
 public:
     //! @name Static
     //@{
-    static const QString typeName_;
+    static const std::string typeName_;
     //@}
 
 public:
@@ -38,7 +38,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual QString GetTypeName() const;
+    virtual const std::string& GetTypeName() const;
 
     virtual void Select( ActionController& controller ) const;
     virtual void MultipleSelect( ActionController& controller, const std::vector< const kernel::Selectable_ABC* >& elements ) const;

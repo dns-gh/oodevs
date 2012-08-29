@@ -89,7 +89,7 @@
     <PostBuildEvent />
     <ClCompile>
       <AdditionalIncludeDirectories>../../src/libraries/simulation_kernel;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>-Zm500 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>-Zm500 /bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>core_d.lib;spatialcontainer_d.lib;tools_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -119,7 +119,7 @@
     <ClCompile>
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <AdditionalIncludeDirectories>../../src/libraries/simulation_kernel;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>-Zm500 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>-Zm500 /bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>

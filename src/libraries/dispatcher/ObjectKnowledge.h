@@ -67,7 +67,6 @@ public:
     virtual const kernel::Object_ABC* GetEntity() const;
     virtual unsigned long GetEntityId() const;
     virtual const kernel::Team_ABC& GetOwner() const;
-    virtual QString GetTypeName() const;
     //@}
 
 private:

@@ -56,7 +56,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual QString CreateLink( const QString& type, unsigned long id ) const;
+    virtual QString CreateLink( const std::string& type, unsigned long id ) const;
     //@}
 
 private:

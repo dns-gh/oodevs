@@ -228,7 +228,7 @@ void LongNameEditor::SetExtension( Entity_ABC& entity, const QString& name, cons
     if( DictionaryExtensions* ext = entity.Retrieve< DictionaryExtensions >() )
     {
         bool extends = false;
-        QString typeName = entity.GetTypeName();
+        const std::string& typeName = entity.GetTypeName();
         if( typeName == Agent_ABC::typeName_ )
             extends = attribute.Extends( "unit" );
         else if( typeName == Automat_ABC::typeName_ )

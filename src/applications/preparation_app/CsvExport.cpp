@@ -110,7 +110,7 @@ namespace
 {
     std::string  GetType( const QString& type )
     {
-        if( type == kernel::Automat_ABC::typeName_ )
+        if( type == kernel::Automat_ABC::typeName_.c_str() )
             return tools::translate( "CsvExport", "Automat" ).toAscii().constData();
         return tools::translate( "CsvExport", "Entity" ).toAscii().constData();
     }
@@ -195,7 +195,7 @@ void CsvExport::WriteEntity( const kernel::Entity_ABC& entity, const std::string
     {
         const kernel::Entity_ABC& child = it.NextElement();
         if( child.GetTypeName() != kernel::Formation_ABC::typeName_ && child.GetTypeName() != kernel::Team_ABC::typeName_ )
-            Write( file, separator, side, GetType( child.GetTypeName() ), GetName( child ),
+            Write( file, separator, side, GetType( child.GetTypeName().c_str() ), GetName( child ),
                    GetType( child ), GetPosition( child, converter_, separator ) );
         WriteEntity( child, side, file, separator );
     }

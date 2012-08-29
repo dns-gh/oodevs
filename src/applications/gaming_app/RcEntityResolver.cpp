@@ -134,7 +134,7 @@ void RcEntityResolver::NotifyDeleted( const kernel::UrbanObject_ABC& element )
 // Name: RcEntityResolver::CreateLink
 // Created: SBO 2006-09-18
 // -----------------------------------------------------------------------------
-QString RcEntityResolver::CreateLink( const QString& type, unsigned long id ) const
+QString RcEntityResolver::CreateLink( const std::string& type, unsigned long id ) const
 {
     if( type == Agent_ABC::typeName_ )
         return CreateLink< Agent_ABC >( id );

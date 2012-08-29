@@ -20,7 +20,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 QString InternalLinks::CreateLink( const Entity_ABC& entity, const QString& message )
 {
-    return Embed( message, entity.GetTypeName(), entity.GetId() );
+    return Embed( message, entity.GetTypeName().c_str(), entity.GetId() );
 }
 
 // -----------------------------------------------------------------------------

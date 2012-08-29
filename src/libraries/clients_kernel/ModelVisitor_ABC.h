@@ -10,9 +10,11 @@
 #ifndef __ModelVisitor_ABC_h_
 #define __ModelVisitor_ABC_h_
 
+#include "tools/SortedInterfaceContainer.h"
+
 namespace kernel
 {
-    class Entity_ABC;
+    class EntityBase_ABC;
 
 // =============================================================================
 /** @class  ModelVisitor_ABC
@@ -31,7 +33,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Visit( const kernel::Entity_ABC& entity ) = 0;
+    virtual void Visit( const EntityBase_ABC& entity ) = 0;
     //@}
 };
 

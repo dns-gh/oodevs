@@ -63,7 +63,7 @@ void FragOrderType::ReadParameter( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 bool FragOrderType::IsAvailableFor( const kernel::Entity_ABC& entity ) const
 {
-    const QString typeName = entity.GetTypeName();
+    const std::string& typeName = entity.GetTypeName();
     if( 0 == diaType_.find( "Rep_OrderConduite_Pion_" ) )
         return typeName == "agent";
     if( 0 == diaType_.find( "Rep_OrderConduite_Automate_" ) )

@@ -44,7 +44,7 @@ RcEntityResolver::~RcEntityResolver()
 // Name: RcEntityResolver::CreateLink
 // Created: LDC 2010-03-18
 // -----------------------------------------------------------------------------
-QString RcEntityResolver::CreateLink( const QString& type, unsigned long id ) const
+QString RcEntityResolver::CreateLink( const std::string& type, unsigned long id ) const
 {
     Entity_ABC* entity = 0;
     if( type == Agent_ABC::typeName_ )

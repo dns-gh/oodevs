@@ -24,7 +24,7 @@
 using namespace actions;
 
 unsigned long Action_ABC::idManager_ = 0; // $$$$ SBO 2007-03-12: real id manager maybe
-const QString Action_ABC::typeName_ = "action";
+const std::string Action_ABC::typeName_ = "action";
 EActionType Action_ABC::actionTypeEntity_ = eTypeEntity;
 EActionType Action_ABC::actionTypeObjects_ = eTypeObjects;
 EActionType Action_ABC::actionTypeWeather_ = eTypeWeather;
@@ -71,7 +71,7 @@ Action_ABC::~Action_ABC()
 // Name: Action_ABC::GetTypeName
 // Created: AGE 2008-06-19
 // -----------------------------------------------------------------------------
-QString Action_ABC::GetTypeName() const
+const std::string& Action_ABC::GetTypeName() const
 {
     return typeName_;
 }
