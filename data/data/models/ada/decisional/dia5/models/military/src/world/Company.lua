@@ -52,6 +52,11 @@ masalife.brain.communication.setMessageTreatment( "needCapacityByReinforcement",
     end )
 masalife.brain.communication.setMessageTreatment( "stopNeedReinforcement",
     function( content, sender )
+       content.unit.source.needReinforcementForDotation = nil
+       content.unit.source.needReinforcementForNumberMissing = nil
+       content.unit.source.needReinforcementForObstacle = nil
+       content.unit.source.needReinforcementForCapacity = nil
+       content.unit.source.needReinforcementForAction = nil	
        content.unit.source.stopNeedReinforcement = true
     end )
 masalife.brain.communication.setMessageTreatment( "reinforceGivenByUser",

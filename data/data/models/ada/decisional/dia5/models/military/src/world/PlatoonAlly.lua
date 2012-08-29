@@ -412,7 +412,7 @@ return
     end,
     sendNoLongerNeedReinforcement = function( self, receiver, unit )
         integration.SendMessage( "needCapacityByReinforcement", receiver, {object = nil, unit = unit, action = nil}, { type = "dynamic" } )
-        integration.SendMessage( "needDotationByReinforcement", receiver, {object = nil, dotation = 0, unit = unit }, { type = "dynamic" } )
+        integration.SendMessage( "needDotationByReinforcement", receiver, {object = nil, dotation = nil, unit = unit }, { type = "dynamic" } )
     end,
     sendRC = function( self, receiver, value )
         integration.SendMessage( "displayRC", receiver, {value = value}, { type = "dynamic" } )
