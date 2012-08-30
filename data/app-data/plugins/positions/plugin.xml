@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <plugin name="position-saver" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="..\..\resources\schemas\4.3.1\plugins\plugin.xsd">
 	<descriptions>
-		<description lang="en" name="Positions saver"><![CDATA[Positions saver.]]></description>
-		<description lang="fr" name="Enregistreur de positions"><![CDATA[Enregistreur de positions.]]></description>
+		<description lang="en" name="Positions Saver"><![CDATA[Positions saver]]></description>
+		<description lang="fr" name="Enregistreur de positions"><![CDATA[Enregistreur de positions]]></description>
 	</descriptions>
 	<settings>
 		<setting attribute="@frequency" type="time" default="600">
 			<descriptions>
-				<description name="Frequency:" lang="en"><![CDATA[.]]></description>
-				<description name="Fréquence:" lang="fr"><![CDATA[.]]></description>
+				<description lang="en" name="Frequency"></description>
+				<description lang="fr" name="Fréquence"></description>
 			</descriptions>
 		</setting>
 	</settings>
