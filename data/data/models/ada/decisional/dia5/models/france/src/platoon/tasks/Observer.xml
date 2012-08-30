@@ -11,12 +11,21 @@
     <goal>
         <description>Observe l'élement.</description>
     </goal>
-    <stages/>
-    <next-task name="agent.frago.Observe">
-        <parameter name="objective">
-            <value>
-                <parameter>objective</parameter>
-            </value>
-        </parameter>
-    </next-task>
+    <stages>
+        <stage label="Observation">
+            <description>Observation des objectifs</description>
+            <goal>
+                <description>Orientation des capteurs vers l'élement passé en paramètre. Cette ordre oblige l'agent à regarder vers une PCO ou DGO.</description>
+            </goal>
+            <skills>
+                <skill name="agent.skills.actions.Observe" main="true" priority="1000.0">
+                    <parameter name="entity">
+                        <value>
+                            <parameter>objective</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
 </task>

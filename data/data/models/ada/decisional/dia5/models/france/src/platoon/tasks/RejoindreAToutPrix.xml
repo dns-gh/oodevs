@@ -7,13 +7,20 @@
             </type>
         </parameter>
     </parameters>
-    <next-task name="agent.frago.GoTo">
-        <parameter name="objectives">
-            <value>
-                <list>
-                    <parameter>objectif</parameter>
-                </list>
-            </value>
-        </parameter>
-    </next-task>
+    <stages>
+        <stage label="Ordre de mouvement vers les objectifs" permanent="false" disable-when-done="true">
+            <description>Déplacement direct vers l'un des objectifs passés en paramètre.</description>
+            <skills>
+                <skill name="agent.skills.MoveToward" main="true" priority="1000.0">
+                    <parameter name="entities">
+                        <value>
+                            <list>
+                                <parameter>objectif</parameter>
+                            </list>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
 </task>

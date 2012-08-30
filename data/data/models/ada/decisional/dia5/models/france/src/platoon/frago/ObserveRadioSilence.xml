@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.frago.ObserveRadioSilence" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.MoveToward">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="platoon.frago.ObserveRadioSilence" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.MoveToward">
   <description>Ordre de conduite demandant d'opérer un silence radio</description>
   <parameters/>
   <goal>
