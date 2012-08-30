@@ -229,7 +229,7 @@ integration.startFragOrderTask = function( self )
     -- Arty deployment
     -- ----------------------------------------------------------------------------
     elseif orderType == "Rep_OrderConduite_MiseEnBatterieInopinee" then
-        orderType = "agent.frago.RapidDeploiement"
+        orderType = "platoon.frago.RapidDeploiement"
         mission.entity = CreateKnowledge( integraTion.ontology.types.point, self.source:GetpointCible_() )
         mission.interventionType = self.source:GetnbIT_()
         mission.munition = self.source:Getmunitions_()
@@ -240,11 +240,11 @@ integration.startFragOrderTask = function( self )
     -- Pause maneuver
     -- ----------------------------------------------------------------------------
     elseif orderType == "Rep_OrderConduite_AttendreSePoster" then
-        orderType = "agent.frago.Settle"
+        orderType = "platoon.frago.Settle"
     elseif orderType == "Rep_OrderConduite_SArreter" then
         local point = CreateKnowledge( integration.ontology.types.point, DEC_Geometrie_CopiePoint( meKnowledge:getPosition() ) )
         mission.objectives = { point }
-        orderType = "agent.frago.WaitOn"
+        orderType = "platoon.frago.WaitOn"
     elseif orderType == "Rep_OrderConduite_Attendre" then
         local point = CreateKnowledge( integration.ontology.types.point, DEC_Geometrie_CopiePoint( meKnowledge:getPosition() ) )
         mission.objective = point
@@ -254,8 +254,8 @@ integration.startFragOrderTask = function( self )
     -- Resume maneuver
     -- ----------------------------------------------------------------------------
     elseif orderType == "Rep_OrderConduite_Poursuivre" then
-        stopTask( "agent.frago.Settle" )
-        stopTask( "agent.frago.WaitOn" )
+        stopTask( "platoon.frago.Settle" )
+        stopTask( "platoon.frago.WaitOn" )
         stopTask( "sword.military.crowd.tasks.frago.WaitOn" )
         myself.blocked = nil
         myself.canBeBlocked = nil
@@ -284,28 +284,28 @@ integration.startFragOrderTask = function( self )
     -- Radar activation / Deactivation
     -- ----------------------------------------------------------------------------
     elseif orderType == "Rep_OrderConduite_PasserEnSilenceRadar" then
-        stopTask( "agent.frago.ActivateRadar" )
-        orderType = "agent.frago.ObserveRadarSilence"
+        stopTask( "platoon.frago.ActivateRadar" )
+        orderType = "platoon.frago.ObserveRadarSilence"
     elseif orderType == "Rep_OrderConduite_ArreterSilenceRadar" then
-        stopTask( "agent.frago.ObserveRadarSilence" )
-        orderType = "agent.frago.ActivateRadar"
+        stopTask( "platoon.frago.ObserveRadarSilence" )
+        orderType = "platoon.frago.ActivateRadar"
 
     -- ----------------------------------------------------------------------------
     -- Radio activation / Deactivation
     -- ----------------------------------------------------------------------------
     -- FR
     elseif orderType == "Rep_OrderConduite_PasserEnSilenceRadio" then
-        stopTask( "agent.frago.ObservePartialRadioSilence" )
-        stopTask( "agent.frago.ActivateRadio" )
-        orderType = "agent.frago.ObserveRadioSilence"
+        stopTask( "platoon.frago.ObservePartialRadioSilence" )
+        stopTask( "platoon.frago.ActivateRadio" )
+        orderType = "platoon.frago.ObserveRadioSilence"
     elseif orderType == "Rep_OrderConduite_PasserEnSilenceRadioPartiel" then
-        stopTask( "agent.frago.ActivateRadio" )
-        stopTask( "agent.frago.ObserveRadioSilence" )
-        orderType = "agent.frago.ObservePartialRadioSilence"
+        stopTask( "platoon.frago.ActivateRadio" )
+        stopTask( "platoon.frago.ObserveRadioSilence" )
+        orderType = "platoon.frago.ObservePartialRadioSilence"
     elseif orderType == "Rep_OrderConduite_ArreterSilenceRadio" then
-        stopTask( "agent.frago.ObservePartialRadioSilence" )
-        stopTask( "agent.frago.ObserveRadioSilence" )
-        orderType = "agent.frago.ActivateRadio"
+        stopTask( "platoon.frago.ObservePartialRadioSilence" )
+        stopTask( "platoon.frago.ObserveRadioSilence" )
+        orderType = "platoon.frago.ActivateRadio"
     -- WW
     elseif orderType == "DeactivateRadioCommunication" then
         stopTask( "agent.frago.ActivateRadio" )
