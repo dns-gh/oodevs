@@ -227,9 +227,9 @@ integration.startFragOrderTask = function( self )
         else
             masalife.brain.core.stopTasks()
         end
-        integration.cleanFragOrder( self )
-        return
     end
+	integration.cleanFragOrder( self )
+	return
   elseif orderType == "Rep_OrderConduite_PasserEnSilenceRadar" then
     stopTask( "agent.frago.ActivateRadar" )
     orderType = "agent.frago.ObserveRadarSilence"
