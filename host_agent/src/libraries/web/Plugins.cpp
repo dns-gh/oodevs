@@ -34,15 +34,14 @@ void AddSetting( T_Defaults& dst, const Tree& src )
     if( name == boost::none )
         return;
     boost::optional< std::string > value = src.get_optional< std::string >( "<xmlattr>.default" );
-    if( value == boost::none )
-        return;
+    const std::string default = value == boost::none ? std::string() : *value;
     if( src.get< std::string >( "<xmlattr>.type" ) == "enumeration" )
     {
         std::vector< std::string > tokens;
-        boost::algorithm::split( tokens, *value, boost::is_any_of( ";" ) );
+        boost::algorithm::split( tokens, default, boost::is_any_of( ";" ) );
         value = tokens.front();
     }
-    dst.insert( std::make_pair( *name, *value ) );
+    dst.insert( std::make_pair( *name, default ) );
 }
 
 template< typename T, typename U >
