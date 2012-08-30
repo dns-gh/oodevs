@@ -115,9 +115,38 @@
                 <div class="tab-pane" id="tab_plugins">
                     {{#iterate_pair ui_plugins}}
                     {{#if list}}
-                    [[ template "input_checkbox" sub "id" "{{list.0.id}}" "label" "{{list.0.label}}" "value" "{{list.0.checked}}" "pair" 1 "id2" "{{list.1.id}}" "label2" "{{list.1.label}}" "value2" "{{list.1.checked}}" ]]
+                    <div class="row-fluid">
+                        <div class="span3 plugin_left_col">
+                            <label class="checkbox inline">
+                                <input type="checkbox" id="{{list.0.id}}"{{list.0.checked}}/>
+                                {{list.0.label}}
+                            </label>
+                        </div>
+                        <div class="pull-left plugin_edit">
+                            <a class="btn btn-small" data-ref="{{list.0.id}}"><i class="icon-cog"></i></a>
+                        </div>
+                        <div class="span3 offset1">
+                            <label class="checkbox inline">
+                                <input type="checkbox" id="{{list.1.id}}"{{list.1.checked}}/>
+                                {{list.1.label}}
+                            </label>
+                        </div>
+                        <div class="pull-left plugin_edit">
+                            <a class="btn btn-small" data-ref="{{list.1.id}}"><i class="icon-cog"></i></a>
+                        </div>
+                    </div>
                     {{else}}
-                    [[ template "input_checkbox" sub "id" "{{item.id}}" "label" "{{item.label}}" "value" "{{item.checked}}" ]]
+                    <div class="row-fluid">
+                        <div class="span3 plugin_left_col">
+                            <label class="checkbox inline">
+                                <input type="checkbox" id="{{item.id}}"{{item.checked}}/>
+                                {{item.label}}
+                            </label>
+                        </div>
+                        <div class="pull-left plugin_edit">
+                            <a class="btn btn-small" data-ref="{{item.id}}"><i class="icon-cog"></i></a>
+                        </div>
+                    </div>
                     {{/if}}
                     {{/iterate_pair}}
                 </div>
