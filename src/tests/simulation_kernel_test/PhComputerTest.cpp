@@ -62,14 +62,18 @@ namespace
                              "</objects>" )
         {
             loader.Initialize( xis );
-            xml::xistringstream xis1( "<urban-object name='parent' id='1'/>" );
-            xml::xistringstream xis2( "<urban-object name='test' id='0'/>" );
-            xis1 >> xml::start( "urban-object" );
-            urbanBlockParent.reset( loader.CreateUrbanObject( xis1, 0 ) );
-            xis1 >> xml::end;
-            xis2 >> xml::start( "urban-object" );
-            urbanBlock.reset( loader.CreateUrbanObject( xis2, urbanBlockParent.get() ) );
-            xis2 >> xml::end;
+            xml::xistringstream xisCity( "<urban-object name='city' id='2'/>" );
+            xml::xistringstream xisDistrict( "<urban-object name='district' id='1'/>" );
+            xml::xistringstream xisBlock( "<urban-object name='test' id='0'/>" );
+            xisCity >> xml::start( "urban-object" );
+            city.reset( loader.CreateUrbanObject( xisCity, 0 ) );
+            xisCity >> xml::end;
+            xisDistrict >> xml::start( "urban-object" );
+            district.reset( loader.CreateUrbanObject( xisDistrict, city.get() ) );
+            xisDistrict >> xml::end;
+            xisBlock >> xml::start( "urban-object" );
+            urbanBlock.reset( loader.CreateUrbanObject( xisBlock, district.get() ) );
+            xisBlock >> xml::end;
             TER_Localisation localisation( TER_Localisation::ePolygon, vertices );
             urbanBlock->UpdateLocalisation( localisation );
         }
@@ -77,7 +81,8 @@ namespace
         FixturePion firerFixture;
         FixturePion targetFixture;
         std::vector< MT_Vector2D > vertices;
-        std::auto_ptr< MIL_UrbanObject_ABC > urbanBlockParent;
+        std::auto_ptr< MIL_UrbanObject_ABC > city;
+        std::auto_ptr< MIL_UrbanObject_ABC > district;
         std::auto_ptr< MIL_UrbanObject_ABC > urbanBlock;
         xml::xistringstream xis;
         MIL_ObjectLoader loader;
