@@ -11,7 +11,6 @@ session_template = Handlebars.compile $("#session_template").html()
 session_error_template = Handlebars.compile $("#session_error_template").html()
 session_settings_template = Handlebars.compile $("#session_settings_template").html()
 
-
 session_plugins = {}
 init_plugins = ->
     text = $("#session_plugins").html()
@@ -30,31 +29,124 @@ Handlebars.registerHelper "can_play", (data, options) ->
         return options.fn this
     return options.inverse this
 
+make_id = (value) ->
+    value = value.replace /\s+/, '_'
+    return value.toLowerCase()
+
+convert_xpath = (xpath) ->
+    xpath = xpath.replace '@', ''
+    return xpath.split '/'
+
+get_xpath = (xpath, obj) ->
+    for it in convert_xpath xpath
+        obj = obj[it]
+    return obj
+
+set_xpath = (xpath, obj, value) ->
+    tokens = convert_xpath xpath
+    for it, i in convert_xpath xpath
+        if i+1 < tokens.length
+            obj[it] = {} unless obj[it]?
+            obj = obj[it]
+        else
+            obj[it] = value
+    return
+
+set_ui_option = (ui, data) ->
+    value = get_xpath ui.id, data
+    if ui.type == "string" || ui.type == "file" || ui.type == "file_list"
+        ui.value = value
+    else if ui.type == "integer" || ui.type == "time"
+        ui.value = parseInt value
+    else if ui.type == "boolean"
+        ui.checked = " checked=\"checked\"" if convert_to_boolean value
+    #else if ui.type == "enumeration"
+    #    console.log ui.id, "not implemented"
+    #else
+    #    console.log ui.id, ui.type + " not implemented"
+
+get_ui_option = (ui, data) ->
+    if ui.is "input[type='text'], input[type='number']"
+        return ui.val()
+    else if ui.is "input[type='checkbox']"
+        return ui.is ":checked"
+    #else
+    #    console.log ui, "not implemented"
+    return 0
+
+set_ui_plugin_group = (group, next, data) ->
+    header = {}
+    header.label = group.label
+    header.id = next.id + '_' + make_id group.label
+    content = {}
+    content.id = header.id
+    for prop in group.options
+        content.options = [] unless content.options?
+        option = $.extend {}, prop
+        option.xid = next.id + ":" + option.id
+        set_ui_option option, data
+        content.options.push option
+    if content.options?
+        next.headers = [] unless next.headers?
+        next.headers.push header
+        next.contents = [] unless next.contents?
+        next.contents.push content
+    return
+
 set_ui_plugins = (data) ->
+    idx = 0
     for k, v of data.plugins
         continue unless k of session_plugins
         data.ui_plugins = [] unless data.ui_plugins?
         next = {}
-        next.id = k
+        next.idx = idx++
+        next.id = make_id k
         next.checked = " checked=\"checked\"" if convert_to_boolean v.enabled
         next.label = session_plugins[k].name
         data.ui_plugins.push next
+        for group in session_plugins[k].groups
+            set_ui_plugin_group group, next, v
+        delete next.headers if next.headers?.length == 1
+        next.headers?[0].active = true
+        next.contents?[0].active = true
     return
+
+set_attribute = (ui, key, enabled) ->
+    if enabled
+        ui.addClass key
+    else
+        ui.removeClass key
+
+link_button_to_checkbox = (ui, e) ->
+    is_checked = $(e.target).is ":checked"
+    set_attribute ui, "disabled", !is_checked
+
+attach_button_to_checkbox = (button, cbox) ->
+    cbox.click (e) ->
+        link_button_to_checkbox button, e
+    link_button_to_checkbox button, target: cbox.get 0
+
+bind_ui_plugins = (ui) ->
+    box = ui.find ".carousel"
+    box.carousel interval: false
+    ui.find(".slide_back").click ->
+        box.carousel 0
+    buttons = ui.find(".plugin_edit a")
+    for it in buttons
+        it = $ it
+        attach_button_to_checkbox it, ui.find it.attr "data-link"
+    buttons.click (evt) ->
+        return if is_disabled evt
+        it = $ evt.currentTarget
+        idx = parseInt it.attr "data-ref"
+        box.carousel idx+1
 
 pop_settings = (ui, data) ->
     set_ui_plugins data
     ui.html session_settings_template data
-    n = [ "#checkpoints_frequency", "#checkpoints_keep",
-          "#time_step", "#time_factor", "#time_end_tick",
-          "#rng_seed", "#pathfind_threads", "#recorder_frequency" ]
-    for it in n
-        force_input_regexp /\d/, ui.find it
-    n = [ "#rng_fire_mean", "#rng_fire_deviation"
-          "#rng_wound_mean", "#rng_wound_deviation"
-          "#rng_perception_mean", "#rng_perception_deviation"
-          "#rng_breakdown_mean", "#rng_breakdown_deviation" ]
-    for it in n
-        force_input_regexp /[\d.]/, ui.find it
+    bind_ui_plugins ui
+    force_input_regexp /\d/, ui.find "input[type='number']:not([data-type='float'])"
+    force_input_regexp /[\d.]/, ui.find "input[data-type='float']"
     attach_checkbox_and_input $("#time_end_tick"), $("#time_end_tick_check")
     attach_checkbox_and_input $("#rng_seed"), $("#rng_seed_check")
     mod = ui.find ".modal"
@@ -94,7 +186,7 @@ validate_rng = (data, ui, type) ->
         return false
     return true
 
-validate_plugins = (data) ->
+validate_plugins = (ui, data) ->
     tab = $ "#tab_plugins"
     for it in tab.find "input[type='checkbox']"
         it = $ it
@@ -103,6 +195,12 @@ validate_plugins = (data) ->
         data.plugins = {} unless data.plugins?
         next = data.plugins[id] = {} unless data.plugins[id]?
         data.plugins[id].enabled = it.is ":checked"
+    for it in ui.find ".plugin_items input"
+        sub = /^(\w+):(.+)$/.exec it.id
+        continue unless sub
+        plugin = sub[1]
+        target = data.plugins[plugin]
+        set_xpath sub[2], target, get_ui_option $ it
     return
 
 has_element = (ui, selector) ->
@@ -142,7 +240,7 @@ validate_settings = (ui) ->
         return unless validate_number next, "frequency", ui, "#recorder_frequency", 1, Number.MAX_VALUE, "Invalid"
 
     if has_element ui, "#tab_plugins"
-        validate_plugins data
+        validate_plugins ui, data
 
     return data
 

@@ -63,10 +63,10 @@
 </div>
 [[ $id := concat "rng_" .type "_deviation" ]]
 [[ $v := concat "{{rng." .type ".deviation}}" ]]
-[[ template "input_number" sub "id" $id "label" "Deviation" "value" $v ]]
+[[ template "input_number" sub "id" $id "label" "Deviation" "value" $v "float" 1 ]]
 [[ $id := concat "rng_" .type "_mean" ]]
 [[ $v := concat "{{rng." .type ".mean}}" ]]
-[[ template "input_number" sub "id" $id "label" "Mean" "value" $v ]]
+[[ template "input_number" sub "id" $id "label" "Mean" "value" $v "float" 1 ]]
 [[ end ]]
 <!-- rng settings -->
 [[ define "rng_session_settings" ]]
@@ -87,78 +87,121 @@
 <!-- Settings Template -->
 <script type="text/template" id="session_settings_template">
     <div class="modal fade">
-        <div class="modal-header">
-            <a class="close" data-dismiss="modal">&times;</a>
-            <h3>{{name}} Session Settings</h3>
-        </div>
-        <form class="modal-body tabbable form-horizontal">
-            {{#is_option status stopped=""}}
-            <ul class="nav nav-tabs">
-                <li class="active"><a href="#tab_general" data-toggle="tab"> General </a></li>
-                <li><a href="#tab_checkpoints" data-toggle="tab"> Checkpoints </a></li>
-                <li><a href="#tab_time" data-toggle="tab"> Time </a></li>
-                <li><a href="#tab_rng" data-toggle="tab"> Random </a></li>
-                <li><a href="#tab_advanced" data-toggle="tab"> Advanced </a></li>
-                {{#if ui_plugins}}
-                <li><a href="#tab_plugins" data-toggle="tab"> Plugins </a></li>
-                {{/if}}
-            </ul>
-            <div class="tab-content">
-                {{/is_option}}
-                <div class="tab-pane active" id="tab_general">[[ template "general_session_settings" . ]] </div>
-                {{#is_option status stopped=""}}
-                <div class="tab-pane" id="tab_checkpoints"> [[ template "checkpoint_session_settings" . ]] </div>
-                <div class="tab-pane" id="tab_time"> [[ template "time_session_settings" . ]] </div>
-                <div class="tab-pane" id="tab_rng">  [[ template "rng_session_settings" . ]] </div>
-                <div class="tab-pane" id="tab_advanced"> [[ template "advanced_session_settings" . ]] </div>
-                {{#if ui_plugins}}
-                <div class="tab-pane" id="tab_plugins">
-                    {{#iterate_pair ui_plugins}}
-                    {{#if list}}
-                    <div class="row-fluid">
-                        <div class="span3 plugin_left_col">
-                            <label class="checkbox inline">
-                                <input type="checkbox" id="{{list.0.id}}"{{list.0.checked}}/>
-                                {{list.0.label}}
-                            </label>
-                        </div>
-                        <div class="pull-left plugin_edit">
-                            <a class="btn btn-small" data-ref="{{list.0.id}}"><i class="icon-cog"></i></a>
-                        </div>
-                        <div class="span3 offset1">
-                            <label class="checkbox inline">
-                                <input type="checkbox" id="{{list.1.id}}"{{list.1.checked}}/>
-                                {{list.1.label}}
-                            </label>
-                        </div>
-                        <div class="pull-left plugin_edit">
-                            <a class="btn btn-small" data-ref="{{list.1.id}}"><i class="icon-cog"></i></a>
-                        </div>
+        <div id="settings_slide" class="carousel slide">
+            <div class="carousel-inner">
+                <div class="active item">
+                    <div class="modal-header">
+                        <a class="close" data-dismiss="modal">&times;</a>
+                        <h3>{{name}} Session Settings</h3>
                     </div>
-                    {{else}}
-                    <div class="row-fluid">
-                        <div class="span3 plugin_left_col">
-                            <label class="checkbox inline">
-                                <input type="checkbox" id="{{item.id}}"{{item.checked}}/>
-                                {{item.label}}
-                            </label>
+                    <form class="modal-body tabbable form-horizontal">
+                        {{#is_option status stopped=""}}
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#tab_general" data-toggle="tab"> General </a></li>
+                            <li><a href="#tab_checkpoints" data-toggle="tab"> Checkpoints </a></li>
+                            <li><a href="#tab_time" data-toggle="tab"> Time </a></li>
+                            <li><a href="#tab_rng" data-toggle="tab"> Random </a></li>
+                            <li><a href="#tab_advanced" data-toggle="tab"> Advanced </a></li>
+                            {{#if ui_plugins}}
+                            <li><a href="#tab_plugins" data-toggle="tab"> Plugins </a></li>
+                            {{/if}}
+                        </ul>
+                        <div class="tab-content">
+                            {{/is_option}}
+                            <div class="tab-pane active" id="tab_general">[[ template "general_session_settings" . ]] </div>
+                            {{#is_option status stopped=""}}
+                            <div class="tab-pane" id="tab_checkpoints"> [[ template "checkpoint_session_settings" . ]] </div>
+                            <div class="tab-pane" id="tab_time"> [[ template "time_session_settings" . ]] </div>
+                            <div class="tab-pane" id="tab_rng">  [[ template "rng_session_settings" . ]] </div>
+                            <div class="tab-pane" id="tab_advanced"> [[ template "advanced_session_settings" . ]] </div>
+                            {{#if ui_plugins}}
+                            <div class="tab-pane" id="tab_plugins">
+                                {{#iterate_pair ui_plugins}}
+                                {{#if list}}
+                                <div class="row-fluid">
+                                    <div class="span3 plugin_left_col">
+                                        <label class="checkbox inline">
+                                            <input type="checkbox" id="{{list.0.id}}"{{list.0.checked}}/>
+                                            {{list.0.label}}
+                                        </label>
+                                    </div>
+                                    <div class="pull-left plugin_edit">
+                                        <a class="btn btn-small" data-link="#{{list.0.id}}" data-ref="{{list.0.idx}}"><i class="icon-cog"></i></a>
+                                    </div>
+                                    <div class="span3 offset1">
+                                        <label class="checkbox inline">
+                                            <input type="checkbox" id="{{list.1.id}}"{{list.1.checked}}/>
+                                            {{list.1.label}}
+                                        </label>
+                                    </div>
+                                    <div class="pull-left plugin_edit">
+                                        <a class="btn btn-small" data-link="#{{list.1.id}}" data-ref="{{list.1.idx}}"><i class="icon-cog"></i></a>
+                                    </div>
+                                </div>
+                                {{else}}
+                                <div class="row-fluid">
+                                    <div class="span3 plugin_left_col">
+                                        <label class="checkbox inline">
+                                            <input type="checkbox" id="{{item.id}}"{{item.checked}}/>
+                                            {{item.label}}
+                                        </label>
+                                    </div>
+                                    <div class="pull-left plugin_edit">
+                                        <a class="btn btn-small" data-link="#{{item.id}}" data-ref="{{item.idx}}"><i class="icon-cog"></i></a>
+                                    </div>
+                                </div>
+                                {{/if}}
+                                {{/iterate_pair}}
+                            </div>
+                            {{/if}}
                         </div>
-                        <div class="pull-left plugin_edit">
-                            <a class="btn btn-small" data-ref="{{item.id}}"><i class="icon-cog"></i></a>
-                        </div>
-                    </div>
-                    {{/if}}
-                    {{/iterate_pair}}
+                        {{/is_option}}
+                    </form>
                 </div>
-                {{/if}}
+                {{#each ui_plugins}}
+                <div class="item">
+                    <div class="modal-header">
+                        <h3>
+                            <a class="btn slide_back" href="#settings_slide"><i class="icon-chevron-left"></i></a>
+                            {{label}} Plugin Settings
+                        </h3>
+                    </div>
+                    <form class="modal-body tabbable form-horizontal">
+                        {{#if headers}}
+                        <ul class="nav nav-tabs">
+                            {{#each headers}}
+                            <li{{#if active}} class="active"{{/if}}><a href="#tab_{{id}}" data-toggle="tab"> {{label}} </a></li>
+                            {{/each}}
+                        </ul>
+                        {{/if}}
+                        <div class="tab-content plugin_items">
+                            {{#each contents}}
+                            <div class="tab-pane{{#if active}} active{{/if}}" id="tab_{{id}}">
+                                {{#each options}}
+                                {{#equal type "string"}}
+                                [[ template "input_text" sub "id" "{{xid}}" "label" "{{label}}" "value" "{{value}}" ]]
+                                {{/equal}}
+                                {{#equal type "boolean"}}
+                                [[ template "input_checkbox" sub "id" "{{xid}}" "label" "{{label}}" "value" "{{checked}}" ]]
+                                {{/equal}}
+                                {{#equal type "integer"}}
+                                [[ template "input_number" sub "id" "{{xid}}" "label" "{{label}}" "value" "{{value}}" ]]
+                                {{/equal}}
+                                {{/each}}
+                            </div>
+                            {{/each}}
+                        </div>
+                    </form>
+                </div>
+                {{/each}}
             </div>
-            {{/is_option}}
-        </form>
-        <div class="modal-footer">
-            <a class="btn btn-inverse apply">Apply</a>
-            <a class="btn btn-inverse" data-dismiss="modal">Discard</a>
+            <div class="modal-footer">
+                <a class="btn btn-inverse apply">Apply</a>
+                <a class="btn btn-inverse" data-dismiss="modal">Discard</a>
+            </div>
         </div>
     </div>
+</div>
 </script>
 <!-- Error Template -->
 <script type="text/template" id="session_error_template">
