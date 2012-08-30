@@ -222,7 +222,7 @@ namespace
         {
             xis >> xml::start( "terrain" )
                     >> xml::start( "data" )
-                        >> xml::start( "model" )
+                    >> xml::optional >> xml::start( "model" )
                             >> xml::attribute( "dataset", data )
                             >> xml::attribute( "physical", physical )
                         >> xml::end //! model
