@@ -1,4 +1,5 @@
 rootnode {
+    connections = { skill.links.moveToward },
 
     create = function( self )
         meKnowledge:RC(eRC_EscorteUnite)
@@ -7,7 +8,10 @@ rootnode {
     end,
 
     activate = function( self )
+        if self.params.entity:isReached() then
         integration.renfortMouvement( self.params.entity )
+        end
+         Activate( skill.links.moveToward, 1, { entities = { self.params.entity } } )
     end,
 
     destroy = function( self )
