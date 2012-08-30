@@ -100,6 +100,7 @@ Section $(^Name)
 
     ; plugins
     File "${SWORD}\plugins\web_control\web_control_plugin.dll"
+    File /r /x ".svn" "${SWORD}\plugins"
 
     ; modules
     File "${SWORD}\*_module.dll"
