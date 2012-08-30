@@ -103,11 +103,16 @@ create = function( self )
         -- Init
         local Activate = Activate
         myself.leadData = {}
+        myself.leadData.taskError = false
         self.entitiesWithoutMission = copyTable( self.parameters.commandingEntities )
         myself.feedback = false
         self.companyTask = integration.RetrieveAutomateTask( meKnowledge, self.params.companyTask )
         self.companyTask:init( self.params, self.parameters )
         
+        if myself.leadData.taskError then -- Impossible for automat to give tasks because one mandatory parameter for units cannot be given 
+           Feedback( self.feedbacks.done )
+           return
+        end
         meKnowledge.nbPionsMain = integration.nbPlatoonsHaveTask( self.parameters.commandingEntities, self.params.mainTasks )
 
         if self.params.allInFront and self.params.allInFront ~= NIL then

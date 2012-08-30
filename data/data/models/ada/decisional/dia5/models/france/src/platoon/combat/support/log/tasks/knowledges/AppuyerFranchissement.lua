@@ -2,7 +2,7 @@ local result =
 {
     fillParameters = function( self, companyTask, params )
         local objectif = companyTask:getPosition( params )
-         return { objectif = objectif }
+        return { objectif = objectif }
     end
 }
 
