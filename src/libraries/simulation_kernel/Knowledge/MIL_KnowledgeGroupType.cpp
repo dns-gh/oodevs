@@ -128,15 +128,6 @@ MIL_KnowledgeGroupType::~MIL_KnowledgeGroupType()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_KnowledgeGroupType::InstanciateKnowledgeGroup
-// Created: NLD 2004-11-15
-// -----------------------------------------------------------------------------
-MIL_KnowledgeGroup& MIL_KnowledgeGroupType::InstanciateKnowledgeGroup( unsigned int nID, MIL_Army_ABC& army ) const
-{
-    return *new MIL_KnowledgeGroup( const_cast< MIL_KnowledgeGroupType& >( *this ), nID, army );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroupType::Find
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------

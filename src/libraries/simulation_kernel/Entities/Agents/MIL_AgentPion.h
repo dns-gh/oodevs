@@ -89,7 +89,7 @@ public:
     virtual const AlgorithmsFactories& GetAlgorithms() const;
 
     virtual MIL_Army_ABC& GetArmy() const;
-    virtual MIL_KnowledgeGroup& GetKnowledgeGroup() const;
+    virtual boost::shared_ptr< MIL_KnowledgeGroup > GetKnowledgeGroup() const;
     int GetNumberOfFireHoses( int bestExtinguisherAgent );
     virtual const MIL_Automate& GetAutomate() const;
     virtual MIL_Automate& GetAutomate();
@@ -131,7 +131,7 @@ public:
 
     //! @name Knowledge
     //@{
-    virtual boost::shared_ptr< DEC_Knowledge_Agent > CreateKnowledge( const MIL_KnowledgeGroup& knowledgeGroup );
+    virtual boost::shared_ptr< DEC_Knowledge_Agent > CreateKnowledge( boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup );
     virtual bool IsPerceived( const MIL_Agent_ABC& agent ) const; //$$$$ DEGUEU - VOIR AVEC MODELISATEURS
     //@}
 

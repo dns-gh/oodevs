@@ -506,7 +506,7 @@ MIL_Automate& DEC_AutomateDecision::GetAutomate() const
 // Name: DEC_AutomateDecision::GetKnowledgeGroup
 // Created: LDC 2011-05-05
 // -----------------------------------------------------------------------------
-MIL_KnowledgeGroup& DEC_AutomateDecision::GetKnowledgeGroup() const
+boost::shared_ptr< MIL_KnowledgeGroup > DEC_AutomateDecision::GetKnowledgeGroup() const
 {
     return pEntity_->GetKnowledgeGroup();
 }

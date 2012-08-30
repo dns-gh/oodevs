@@ -177,7 +177,7 @@ boost::shared_ptr< DEC_Knowledge_Object > UrbanObjectWrapper::CreateKnowledge( c
 // Name: UrbanObjectWrapper::CreateKnowledge
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Object > UrbanObjectWrapper::CreateKnowledge( const MIL_KnowledgeGroup& /*group*/ )
+boost::shared_ptr< DEC_Knowledge_Object > UrbanObjectWrapper::CreateKnowledge( boost::shared_ptr< MIL_KnowledgeGroup >& /*group*/ )
 {
     return boost::shared_ptr< DEC_Knowledge_Object >();
 }

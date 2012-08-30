@@ -69,7 +69,7 @@ public:
     virtual MIL_AgentPion& GetPion() const = 0;
     virtual MIL_Automate& GetAutomate() const = 0;
     virtual unsigned int GetID() const = 0;
-    virtual MIL_KnowledgeGroup& GetKnowledgeGroup() const = 0;
+    virtual boost::shared_ptr< MIL_KnowledgeGroup > GetKnowledgeGroup() const = 0;
 
     //virtual void GarbageCollect() = 0;
     virtual void Reload() = 0;

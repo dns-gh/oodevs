@@ -34,7 +34,8 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedByP
     T_ConstKnowledgeAgentVector sourceKnowledge;
     source.GetKnowledge().GetLivingEnemiesPerceived( sourceKnowledge );
     T_ConstKnowledgeAgentVector results;
-    caller.GetKnowledgeGroup().GetKnowledge().TranslateKnowledges( sourceKnowledge, source.GetKnowledgeGroup(), results );
+    boost::shared_ptr< MIL_KnowledgeGroup > sourceKnowledgeGroup = source.GetKnowledgeGroup();
+    caller.GetKnowledgeGroup()->GetKnowledge().TranslateKnowledges( sourceKnowledge, sourceKnowledgeGroup, results );
     return results;
 }
 
@@ -48,7 +49,8 @@ void DEC_KnowledgeFunctions::ShareKnowledgesWith( const T& caller, DEC_Decision_
     if( !receiver )
         throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     const unsigned int sharingTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + unsigned int( MIL_Tools::ConvertMinutesToSim( minutes ) );
-    receiver->GetAutomate().GetKnowledgeGroup().GetKnowledge().GetKsSharing().ShareFromSource( caller.GetKnowledgeGroup(), sharingTimeStep );
+    boost::shared_ptr< MIL_KnowledgeGroup > callerKnowledgeGroup = caller.GetKnowledgeGroup();
+    receiver->GetAutomate().GetKnowledgeGroup()->GetKnowledge().GetKsSharing().ShareFromSource( callerKnowledgeGroup, sharingTimeStep );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,7 +62,8 @@ void DEC_KnowledgeFunctions::ShareKnowledgesInZoneWith( const T& caller, DEC_Dec
 {
     if( !receiver )
         throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
-    receiver->GetAutomate().GetKnowledgeGroup().GetKnowledge().GetKsSharing().ShareFromSource( caller.GetKnowledgeGroup(), MIL_AgentServer::GetWorkspace().GetCurrentTimeStep(), *center, MIL_Tools::ConvertMeterToSim( radius ) );
+    boost::shared_ptr< MIL_KnowledgeGroup > callerKnowledgeGroup = caller.GetKnowledgeGroup();
+    receiver->GetAutomate().GetKnowledgeGroup()->GetKnowledge().GetKsSharing().ShareFromSource( callerKnowledgeGroup, MIL_AgentServer::GetWorkspace().GetCurrentTimeStep(), *center, MIL_Tools::ConvertMeterToSim( radius ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,7 +121,7 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetFriendsInZone( const T& c
     if( !location )
         throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     T_ConstKnowledgeAgentVector results;
-    caller.GetKnowledgeGroup().GetKnowledge().GetFriendsInZone( results, *location );
+    caller.GetKnowledgeGroup()->GetKnowledge().GetFriendsInZone( results, *location );
     return results;
 }
 
@@ -130,6 +133,6 @@ template< typename T >
 std::vector< unsigned int > DEC_KnowledgeFunctions::GetPopulations( const T& caller )
 {
     std::vector< unsigned int > results;
-    caller.GetKnowledgeGroup().GetKnowledge().GetPopulations( results );
+    caller.GetKnowledgeGroup()->GetKnowledge().GetPopulations( results );
     return results;
 }

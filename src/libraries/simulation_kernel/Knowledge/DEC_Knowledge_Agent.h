@@ -19,6 +19,7 @@
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Tools/MIL_IDManager.h"
 #include "Tristate.h"
+#include <boost/shared_ptr.hpp>
 
 namespace sword
 {
@@ -57,7 +58,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Knowledge_Agent( const MIL_KnowledgeGroup& knowledgeGroup, MIL_Agent_ABC& agentKnown, double relevance = 0.);
+             DEC_Knowledge_Agent( boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, MIL_Agent_ABC& agentKnown, double relevance = 0.);
              DEC_Knowledge_Agent();
     virtual ~DEC_Knowledge_Agent();
     //@}
@@ -188,10 +189,9 @@ private:
     //! @name Member data
     //@{
     const MIL_Army_ABC* pArmyKnowing_;
-    const MIL_KnowledgeGroupType* groupType_;
+    boost::shared_ptr< MIL_KnowledgeGroup > pKnowledgeGroup_;
     MIL_Agent_ABC* pAgentKnown_;
     const unsigned int nID_;
-    const unsigned int knowledgeGroupId_;
     DEC_Knowledge_AgentDataDetection dataDetection_;
     DEC_Knowledge_AgentDataRecognition dataRecognition_;
     DEC_Knowledge_AgentDataIdentification dataIdentification_;

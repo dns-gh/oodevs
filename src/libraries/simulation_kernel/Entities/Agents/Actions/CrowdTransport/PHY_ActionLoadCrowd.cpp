@@ -26,7 +26,7 @@ PHY_ActionLoadCrowd::PHY_ActionLoadCrowd( MIL_AgentPion& pion, int knowledgeId, 
     , role_           ( pion.GetRole< PHY_RoleAction_CrowdTransport >() )
     , concentrationId_( concentrationId )
 {
-    boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = pion.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( knowledgeId );
+    boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = pion.GetKnowledgeGroup()->GetKnowledge().GetKnowledgePopulationFromID( knowledgeId );
     if( !pKnowledge )
         throw std::runtime_error( __FUNCTION__ " Unknown crowd knowledge" );
     crowd_ = &pKnowledge->GetPopulationKnown();

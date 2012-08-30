@@ -231,7 +231,7 @@ void PHY_RolePion_Transported::Update( bool /*bIsDead*/ )
     if( pTransporter_ )
     {
         pion_.Apply( &location::LocationActionNotificationHandler_ABC::Follow, *pTransporter_ );
-        pion_.GetKnowledgeGroup().UpdateKnowledgeFromTransported( *pTransporter_ );
+        pion_.GetKnowledgeGroup()->UpdateKnowledgeFromTransported( *pTransporter_ );
     }
 
     if( HasChanged() )

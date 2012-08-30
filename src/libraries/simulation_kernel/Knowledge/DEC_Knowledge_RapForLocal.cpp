@@ -72,8 +72,8 @@ void DEC_Knowledge_RapForLocal::Update()
         return;
     nLastCacheUpdateTick_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     assert( pPion_ );
-    const T_KnowledgeAgentVector& enemies = pPion_->GetKnowledgeGroup().GetKnowledge().GetEnemies();
-    const T_KnowledgeAgentVector& friends = pPion_->GetKnowledgeGroup().GetKnowledge().GetFriends();
+    const T_KnowledgeAgentVector& enemies = pPion_->GetKnowledgeGroup()->GetKnowledge().GetEnemies();
+    const T_KnowledgeAgentVector& friends = pPion_->GetKnowledgeGroup()->GetKnowledge().GetFriends();
     dangerousEnemies_.clear();
     double rTotalFightScoreEnemy  = 0;
     double rTotalFightScoreFriend = 0;

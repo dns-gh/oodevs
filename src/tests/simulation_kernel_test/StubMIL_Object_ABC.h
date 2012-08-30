@@ -50,7 +50,7 @@ public:
     virtual void ApplyDestruction( const TER_Localisation& /*attritionSurface*/, const PHY_UrbanAttritionData& /*attrition*/ ) {};
     virtual bool IsUniversal() const { throw; };
     virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const MIL_Army_ABC& /*team*/ ) { throw; }
-    virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const MIL_KnowledgeGroup& /*group*/ ) { throw; }
+    virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( boost::shared_ptr< MIL_KnowledgeGroup >& /*group*/ ) { throw; }
     virtual const MIL_ObjectManipulator_ABC& operator()() const { throw; }
     virtual MIL_ObjectManipulator_ABC& operator()() { throw; }
     virtual sword::ObjectMagicActionAck_ErrorCode OnUpdate( const sword::MissionParameter_Value& /*asn*/ ) { throw; }

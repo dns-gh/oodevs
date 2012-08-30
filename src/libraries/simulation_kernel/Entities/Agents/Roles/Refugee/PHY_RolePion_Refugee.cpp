@@ -305,7 +305,7 @@ void PHY_RolePion_Refugee::UpdateSecuritySatisfaction()
     if ( nearbyUnitsAffinity.maxSqrDistance > 0.01 /*epsilon*/ )
     {
         class_mem_fun_void_t< PHY_RolePion_Refugee, DEC_Knowledge_Agent > methodAffinityAgent( & PHY_RolePion_Refugee::AddAffinityNearUnit, *this );
-        pion_.GetKnowledgeGroup().GetKnowledge().ApplyOnKnowledgesAgent( methodAffinityAgent );
+        pion_.GetKnowledgeGroup()->GetKnowledge().ApplyOnKnowledgesAgent( methodAffinityAgent );
 
         if ( nearbyUnitsAffinity.absAffinitySum_ > 0.0f )
             securitySatisfaction_ = 0.5f * ( nearbyUnitsAffinity.affinitySum_/nearbyUnitsAffinity.absAffinitySum_ + 1.0f );

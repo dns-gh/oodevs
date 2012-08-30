@@ -29,21 +29,17 @@ namespace xml
 */
 // Created: MGD 2009-10-22
 // =============================================================================
-class KnowledgeGroupFactory_ABC : public tools::Resolver< MIL_KnowledgeGroup >
-                                , private boost::noncopyable
+class KnowledgeGroupFactory_ABC : private boost::noncopyable
 {
 public:
     //! @name Destructor
     //@{
-    virtual ~KnowledgeGroupFactory_ABC()
-    {
-        DeleteAll();
-    };
+    virtual ~KnowledgeGroupFactory_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual MIL_KnowledgeGroup& Create( xml::xistream& xis, MIL_Army_ABC& army, MIL_KnowledgeGroup* parent = 0 ) = 0;
+    virtual boost::shared_ptr< MIL_KnowledgeGroup > Create( xml::xistream& xis, MIL_Army_ABC& army, boost::shared_ptr< MIL_KnowledgeGroup > parent = boost::shared_ptr< MIL_KnowledgeGroup >() ) = 0;
     //@}
 
     //! @name CheckPoints
@@ -53,11 +49,71 @@ public:
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
+    
+    void Register( const unsigned long& identifier, boost::shared_ptr< MIL_KnowledgeGroup >& element )
+    {
+        boost::shared_ptr< MIL_KnowledgeGroup >& p = elements_[ identifier ];
+        if( p.get() )
+            Error( identifier, "already registered" );
+        p = element;
+    }
+    void Remove( const unsigned long& identifier )
+    {
+        elements_.erase( identifier );
+    }
+
+    void Clear()
+    {
+        elements_.clear();
+    }
+
+    virtual boost::shared_ptr< MIL_KnowledgeGroup > Find( const unsigned long& identifier ) const
+    {
+        CIT_Elements it = elements_.find( identifier );
+        if( it != elements_.end() )
+            return it->second;
+        return boost::shared_ptr< MIL_KnowledgeGroup >();
+    }
+    
+    const std::map< unsigned long, boost::shared_ptr< MIL_KnowledgeGroup > >& GetElements() const
+    {
+        return elements_;
+    }
+
+    unsigned long Count() const
+    {
+        return (unsigned long)elements_.size();
+    }
+    //@}
 
 protected:
     //! @name Constructor
     //@{
     KnowledgeGroupFactory_ABC() {};
+    //@}
+
+protected:
+    //! @name Helpers
+    //@{
+    void Error( const unsigned long& identifier, const std::string& message ) const
+    {
+        std::stringstream str;
+        str << "MIL_KnowledgeGroup '" << identifier << "' " << message;
+        throw std::runtime_error( str.str() );
+    }
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::map< unsigned long, boost::shared_ptr< MIL_KnowledgeGroup > > T_Elements;
+    typedef T_Elements::iterator IT_Elements;
+    typedef T_Elements::const_iterator CIT_Elements;
+    //@}
+
+protected:
+    //! @name Member data
+    //@{
+    T_Elements elements_;
     //@}
 };
 

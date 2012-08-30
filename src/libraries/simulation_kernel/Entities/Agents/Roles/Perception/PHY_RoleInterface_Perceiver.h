@@ -151,7 +151,7 @@ public:
 
     //! @name Tools
     //@{
-    virtual const MIL_KnowledgeGroup& GetKnowledgeGroup() const = 0;
+    virtual boost::shared_ptr< MIL_KnowledgeGroup > GetKnowledgeGroup() const = 0;
     virtual MIL_Agent_ABC& GetPion() const = 0;
     virtual double GetMaxAgentPerceptionDistance() const = 0;
     virtual void GetMainPerceptionDirection( MT_Vector2D& vDirection ) const = 0;

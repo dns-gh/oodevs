@@ -105,9 +105,9 @@ public:
     virtual E_Tristate IsAnEnemy( const MIL_Army_ABC& army ) const = 0;
     virtual E_Tristate IsNeutral( const MIL_Army_ABC& army ) const = 0;
 
-    virtual MIL_KnowledgeGroup* FindKnowledgeGroup( unsigned int nID ) const = 0;
-    virtual void                RegisterKnowledgeGroup  ( MIL_KnowledgeGroup& knowledgeGroup ) = 0;
-    virtual void                UnregisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup ) = 0;
+    virtual boost::shared_ptr< MIL_KnowledgeGroup > FindKnowledgeGroup( unsigned int nID ) const = 0;
+    virtual void                RegisterKnowledgeGroup  ( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup ) = 0;
+    virtual void                UnregisterKnowledgeGroup( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup ) = 0;
 
     virtual void InitializeDiplomacy( xml::xistream& xis ) = 0;
     virtual void OnReceiveChangeDiplomacy( const sword::MissionParameters& msg ) = 0;
@@ -121,7 +121,7 @@ public:
     virtual const std::string&            GetName() const = 0;
     virtual DEC_KnowledgeBlackBoard_Army& GetKnowledge() const = 0;
     virtual const MIL_Color& GetColor() const = 0;
-    virtual const std::map< unsigned int, MIL_KnowledgeGroup* >& GetKnowledgeGroups() const = 0;
+    virtual const std::map< unsigned int, boost::shared_ptr< MIL_KnowledgeGroup > >& GetKnowledgeGroups() const = 0;
     //@}
 
     //! @name

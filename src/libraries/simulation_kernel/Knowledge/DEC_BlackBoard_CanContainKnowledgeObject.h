@@ -33,7 +33,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              DEC_BlackBoard_CanContainKnowledgeObject();
-             DEC_BlackBoard_CanContainKnowledgeObject( MIL_Army_ABC& army, MIL_KnowledgeGroup* pKnowledgeGroup );
+             DEC_BlackBoard_CanContainKnowledgeObject( MIL_Army_ABC& army, boost::shared_ptr< MIL_KnowledgeGroup >& pKnowledgeGroup );
     virtual ~DEC_BlackBoard_CanContainKnowledgeObject();
     //@}
 
@@ -111,7 +111,7 @@ private:
     //@{
     T_KnowledgeObjectMap objectMap_;
     T_KnowledgeObjectIDMap knowledgeObjectFromIDMap_;
-    MIL_KnowledgeGroup* pKnowledgeGroup_;
+    boost::shared_ptr< MIL_KnowledgeGroup > pKnowledgeGroup_;
     std::map< double, T_KnowledgeObjectVector > obstacleCache_;
     //@}
 };

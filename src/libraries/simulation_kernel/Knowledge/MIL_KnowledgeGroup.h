@@ -18,7 +18,9 @@
 #include "simulation_terrain/TER_Object_ABC.h"
 #include "Tools/MIL_IDManager.h"
 #include "tools/Resolver.h"
+#include <boost/enable_shared_from_this.hpp>
 #include <boost/serialization/export.hpp>
+#include <boost/shared_ptr.hpp>
 
 namespace xml
 {
@@ -62,6 +64,7 @@ namespace sword
 // Created: JVT 2004-08-03
 // =============================================================================
 class MIL_KnowledgeGroup : private boost::noncopyable
+    , public boost::enable_shared_from_this< MIL_KnowledgeGroup >
 {
 public:
     //! @name Types
@@ -70,7 +73,7 @@ public:
     typedef T_AutomateVector::iterator        IT_AutomateVector;
     typedef T_AutomateVector::const_iterator CIT_AutomateVector;
 
-    typedef std::vector< MIL_KnowledgeGroup* >        T_KnowledgeGroupVector;
+    typedef std::vector< boost::shared_ptr< MIL_KnowledgeGroup > > T_KnowledgeGroupVector;
     typedef T_KnowledgeGroupVector::iterator         IT_KnowledgeGroupVector;
     typedef T_KnowledgeGroupVector::const_iterator  CIT_KnowledgeGroupVector;
     //@}
@@ -79,9 +82,9 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, unsigned int id, MIL_Army_ABC& army );
-             MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, MIL_KnowledgeGroup* parent, KnowledgeGroupFactory_ABC& knowledgeGroupFactory ); // LTO
+             MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, boost::shared_ptr< MIL_KnowledgeGroup >& parent, KnowledgeGroupFactory_ABC& knowledgeGroupFactory ); // LTO
              MIL_KnowledgeGroup();
-             MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source, const MIL_Agent_ABC& pion, MIL_KnowledgeGroup* parent );
+             MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source, const MIL_Agent_ABC& pion, boost::shared_ptr< MIL_KnowledgeGroup >& parent );
     virtual ~MIL_KnowledgeGroup();
     //@}
 
@@ -97,14 +100,13 @@ public:
 
     //! @name Operations
     //@{
-    void RegisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup );
-    // LTO begin
+    void Clone( const MIL_KnowledgeGroup& source );
+    void RegisterKnowledgeGroup( boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup );
     void InitializeKnowledgeGroup( xml::xistream& xis, KnowledgeGroupFactory_ABC& knowledgeGroupFactory );
-    void UnregisterKnowledgeGroup( const MIL_KnowledgeGroup& knowledgeGroup );
-    MIL_KnowledgeGroup* FindKnowledgeGroup ( unsigned int id ) const;
+    void UnregisterKnowledgeGroup( boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup );
+    boost::shared_ptr< MIL_KnowledgeGroup > FindKnowledgeGroup ( unsigned int id ) const;
     void SetType( MIL_KnowledgeGroupType *type ){ type_ = type; }
     void RefreshTimeToDiffuseToKnowledgeGroup();
-    // LTO end
     void RegisterAutomate  ( MIL_Automate& automate );
     void UnregisterAutomate( MIL_Automate& automate );
 
@@ -142,10 +144,10 @@ public:
     boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObjectByObjectID( unsigned int ) const;
     // LTO begin
     const T_KnowledgeGroupVector&                 GetKnowledgeGroups() const;
-          MIL_KnowledgeGroup*                     GetParent   () const;
+          boost::shared_ptr< MIL_KnowledgeGroup > GetParent() const;
           double                                GetTimeToDiffuseToKnowledgeGroup() const;
           bool                                    IsEnabled() const;
-          void                                    SetParent( MIL_KnowledgeGroup* parent );
+          void                                    SetParent( boost::shared_ptr< MIL_KnowledgeGroup >& parent );
     // LTO end
           bool IsJammed() const;
           void Accept( KnowledgesVisitor_ABC& visitor ) const;
@@ -213,7 +215,7 @@ private:
     unsigned int                  id_;
     std::string                   name_;  
     MIL_Army_ABC*           army_;
-    MIL_KnowledgeGroup*     parent_; // LTO
+    boost::shared_ptr< MIL_KnowledgeGroup > parent_;
     DEC_KnowledgeBlackBoard_KnowledgeGroup* knowledgeBlackBoard_;
     T_AutomateVector        automates_;
     std::set< unsigned int > additionalPerceptions_;

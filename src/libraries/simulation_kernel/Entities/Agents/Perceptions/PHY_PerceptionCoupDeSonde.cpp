@@ -76,7 +76,7 @@ const PHY_PerceptionLevel& PHY_PerceptionCoupDeSonde::Compute( const DEC_Knowled
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& PHY_PerceptionCoupDeSonde::Compute( const MIL_Agent_ABC& target ) const
 {
-    if( target.BelongsTo( perceiver_.GetKnowledgeGroup() ) || perceiver_.IsIdentified( target ) )
+    if( target.BelongsTo( *perceiver_.GetKnowledgeGroup() ) || perceiver_.IsIdentified( target ) )
         return PHY_PerceptionLevel::recognized_;
 
     const MT_Vector2D& vSourcePos = GetPerceiverPosition();

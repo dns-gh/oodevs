@@ -254,7 +254,7 @@ MIL_Automate& DEC_RolePion_Decision::GetAutomate() const
 // Name: DEC_RolePion_Decision::GetKnowledgeGroup
 // Created: LDC 2011-05-05
 // -----------------------------------------------------------------------------
-MIL_KnowledgeGroup& DEC_RolePion_Decision::GetKnowledgeGroup() const
+boost::shared_ptr< MIL_KnowledgeGroup > DEC_RolePion_Decision::GetKnowledgeGroup() const
 {
     return pEntity_->GetKnowledgeGroup();
 }

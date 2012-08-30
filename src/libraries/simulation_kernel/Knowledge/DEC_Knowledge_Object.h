@@ -48,8 +48,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              DEC_Knowledge_Object( const MIL_Army_ABC& armyKnowing, MIL_Object_ABC& objectKnown, bool sendCreation = true );
-             DEC_Knowledge_Object( const MIL_KnowledgeGroup& groupKnowing, MIL_Object_ABC& objectKnown );
-             DEC_Knowledge_Object( const DEC_Knowledge_Object& copy, const MIL_KnowledgeGroup* pGroupKnowing );
+             DEC_Knowledge_Object( boost::shared_ptr< MIL_KnowledgeGroup >& groupKnowing, MIL_Object_ABC& objectKnown );
+             DEC_Knowledge_Object( const DEC_Knowledge_Object& copy, boost::shared_ptr< MIL_KnowledgeGroup >& pGroupKnowing );
              DEC_Knowledge_Object();
     virtual ~DEC_Knowledge_Object();
     //@}
@@ -197,7 +197,7 @@ private:
     const unsigned int objectId_;
     const MIL_ObjectType_ABC* pObjectType_;
     const unsigned int nID_;
-    const unsigned int groupId_;
+    boost::shared_ptr< MIL_KnowledgeGroup > pKnowledgeGroup_;
     std::string name_;
     int nAttributesUpdated_;
     // Attributes

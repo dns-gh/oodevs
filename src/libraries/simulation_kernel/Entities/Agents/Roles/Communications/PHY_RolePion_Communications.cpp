@@ -11,20 +11,22 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Communications.h"
-#include "Entities/Agents/MIL_Agent_ABC.h"
-#include "Entities/Objects/MIL_Object_ABC.h"
 #include "MIL_Singletons.h"
 #include "MIL_Time_ABC.h"
+#include "SpeedComputer_ABC.h"
+#include "WeaponReloadingComputer_ABC.h"
+#include "Checkpoints/SerializationTools.h"
+#include "Entities/MIL_Army_ABC.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_ObjectCollision.h"
 #include "Knowledge/DEC_Knowledge_ObjectPerception.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
-#include "NetworkNotificationHandler_ABC.h"
-#include "SpeedComputer_ABC.h"
-#include "WeaponReloadingComputer_ABC.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_FormatString.h"
+#include "NetworkNotificationHandler_ABC.h"
 #include "protocol/ClientSenders.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -82,7 +84,6 @@ PHY_RolePion_Communications::PHY_RolePion_Communications( MIL_Agent_ABC& entity,
     , bBlackoutEmmittedActivated_( false )
     , bSilentBeforeCapture_      ( false )
     , bIsAutonomous_             ( bIsAutonomous )
-    , pJammingKnowledgeGroup_    ( 0 )
 {
     // NOTHING
 }
@@ -177,7 +178,13 @@ void PHY_RolePion_Communications::Jam( const MIL_Object_ABC& jammer )
 void PHY_RolePion_Communications::CopyKnowledgeGroup()
 {
     if( !pJammingKnowledgeGroup_ )
-        pJammingKnowledgeGroup_ = new MIL_KnowledgeGroup( entity_.GetKnowledgeGroup(), entity_, 0 );
+    {
+        boost::shared_ptr< MIL_KnowledgeGroup > noParent;
+        boost::shared_ptr< MIL_KnowledgeGroup > entityKnowledgeGroup = entity_.GetKnowledgeGroup();
+        pJammingKnowledgeGroup_.reset( new MIL_KnowledgeGroup( *entityKnowledgeGroup, entity_, noParent ) );
+        entityKnowledgeGroup->GetArmy().RegisterKnowledgeGroup( pJammingKnowledgeGroup_ );
+        pJammingKnowledgeGroup_->Clone( *entityKnowledgeGroup );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -188,8 +195,10 @@ void PHY_RolePion_Communications::CopyKnowledgeGroupPartial()
 {
     if( !pJammingKnowledgeGroup_ )
     {
-        MIL_KnowledgeGroup& parent = entity_.GetKnowledgeGroup();
-        pJammingKnowledgeGroup_ = new MIL_KnowledgeGroup( parent, entity_, &parent );
+        boost::shared_ptr< MIL_KnowledgeGroup > parent = entity_.GetKnowledgeGroup();
+        pJammingKnowledgeGroup_.reset( new MIL_KnowledgeGroup( *parent, entity_, parent ) );
+        parent->RegisterKnowledgeGroup( pJammingKnowledgeGroup_ );
+        pJammingKnowledgeGroup_->Clone( *parent );
     }
 }
 
@@ -202,11 +211,10 @@ void PHY_RolePion_Communications::Unjam( const MIL_Object_ABC& jammer )
     bHasChanged_ = ( jammers_.erase( &jammer ) == 1 );
 
     // delete copy of knowledge group used in jamming
-    if( pJammingKnowledgeGroup_ && CanEmit() )
+    if( pJammingKnowledgeGroup_.get() && CanEmit() )
     {
         pJammingKnowledgeGroup_->Destroy();
-        delete pJammingKnowledgeGroup_;
-        pJammingKnowledgeGroup_ = 0;
+        pJammingKnowledgeGroup_.reset();
     }
 }
 
@@ -219,7 +227,7 @@ void PHY_RolePion_Communications::SendFullState( client::UnitAttributes& msg ) c
     msg().mutable_communications()->set_jammed( !jammers_.empty() );
 
     if( !jammers_.empty() || bBlackoutEmmittedActivated_ )
-        msg().mutable_communications()->mutable_knowledge_group()->set_id( GetKnowledgeGroup().GetId() );
+        msg().mutable_communications()->mutable_knowledge_group()->set_id( GetKnowledgeGroup()->GetId() );
     else
         msg().mutable_communications()->mutable_knowledge_group()->set_id( 0 );
 
@@ -243,7 +251,7 @@ void PHY_RolePion_Communications::SendChangedState( client::UnitAttributes& msg 
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Communications::Update( bool /*bIsDead*/ )
 {
-    if( bHasChanged_ && pJammingKnowledgeGroup_ )
+    if( bHasChanged_ && pJammingKnowledgeGroup_.get() )
         pJammingKnowledgeGroup_->UpdateKnowledges( MIL_Singletons::GetTime().GetCurrentTick() );
     if( bHasChanged_ )
         entity_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
@@ -296,11 +304,10 @@ void PHY_RolePion_Communications::DeactivateBlackout()
         return;
     bBlackoutEmmittedActivated_ = false;
     bBlackoutReceivedActivated_ = false;
-    if( pJammingKnowledgeGroup_ && jammers_.empty() )
+    if( pJammingKnowledgeGroup_.get() && jammers_.empty() )
     {
         pJammingKnowledgeGroup_->Destroy();
-        delete pJammingKnowledgeGroup_;
-        pJammingKnowledgeGroup_ = 0;
+        pJammingKnowledgeGroup_.reset();
     }
     bHasChanged_ = true;
 }
@@ -312,11 +319,11 @@ void PHY_RolePion_Communications::DeactivateBlackout()
 // Throws MT_ScipioException if the jamming knowledge group is undefined
 // Created: FDS 2010-03-15
 // -----------------------------------------------------------------------------
-MIL_KnowledgeGroup& PHY_RolePion_Communications::GetKnowledgeGroup() const
+boost::shared_ptr< MIL_KnowledgeGroup > PHY_RolePion_Communications::GetKnowledgeGroup() const
 {
-    if( pJammingKnowledgeGroup_ == 0 )
+    if( !pJammingKnowledgeGroup_ )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Jamming knowledge group undefined for agent %d ", entity_.GetID() ) );
-    return *pJammingKnowledgeGroup_;
+    return pJammingKnowledgeGroup_;
 }
 
 // -----------------------------------------------------------------------------

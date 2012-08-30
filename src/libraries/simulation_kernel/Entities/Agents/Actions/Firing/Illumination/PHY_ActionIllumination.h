@@ -41,9 +41,9 @@ public:
     //@}
 
 private:
-          firing::PHY_RoleAction_DirectFiring&       role_;
-          boost::shared_ptr< DEC_Knowledge_Agent >   pEnemy_;
-          MIL_KnowledgeGroup& knowledgeGroup_;
+          firing::PHY_RoleAction_DirectFiring& role_;
+          boost::shared_ptr< DEC_Knowledge_Agent > pEnemy_;
+          boost::shared_ptr< MIL_KnowledgeGroup > knowledgeGroup_;
 };
 
 #endif // __PHY_ActionIllumination_h_

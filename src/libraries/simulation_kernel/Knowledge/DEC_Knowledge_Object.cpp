@@ -15,6 +15,7 @@
 #include "DEC_Knowledge_ObjectCollision.h"
 #include "DEC_Knowledge_ObjectMagicPerception.h"
 #include "MIL_AgentServer.h"
+#include "Checkpoints/SerializationTools.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -59,7 +60,6 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_Army_ABC& armyKnowing, MIL
     , objectId_                ( objectKnown.GetID() )
     , pObjectType_             ( &objectKnown.GetType() )
     , nID_                     ( idManager_.GetFreeId() )
-    , groupId_                 ( 0 )
     , name_                    ( objectKnown.GetName() )
     , nAttributesUpdated_      ( eAttr_AllAttributes )
     , pOwnerArmy_              ( objectKnown.GetArmy() )
@@ -80,14 +80,14 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_Army_ABC& armyKnowing, MIL
 // Name: DEC_Knowledge_Object constructor
 // Created: LDC 2010-04-15
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_KnowledgeGroup& groupKnowing, MIL_Object_ABC& objectKnown )
+DEC_Knowledge_Object::DEC_Knowledge_Object( boost::shared_ptr< MIL_KnowledgeGroup >& groupKnowing, MIL_Object_ABC& objectKnown )
     : DEC_Knowledge_ABC()
-    , pArmyKnowing_            ( &groupKnowing.GetArmy() )
+    , pArmyKnowing_            ( &groupKnowing->GetArmy() )
     , pObjectKnown_            ( &objectKnown )
     , objectId_                ( objectKnown.GetID() )
     , pObjectType_             ( &objectKnown.GetType() )
     , nID_                     ( idManager_.GetFreeId() )
-    , groupId_                 ( groupKnowing.GetId() )
+    , pKnowledgeGroup_         ( groupKnowing )
     , name_                    ( objectKnown.GetName() )
     , nAttributesUpdated_      ( eAttr_AllAttributes )
     , pOwnerArmy_              ( objectKnown.GetArmy() )
@@ -114,7 +114,6 @@ DEC_Knowledge_Object::DEC_Knowledge_Object()
     , objectId_                ( 0 )
     , pObjectType_             ( 0 )
     , nID_                     ( 0 )
-    , groupId_                 ( 0 )
     , name_                    ( "unknown" )
     , nAttributesUpdated_      ( 0 )
     , pOwnerArmy_              ( 0 )
@@ -134,14 +133,14 @@ DEC_Knowledge_Object::DEC_Knowledge_Object()
 // Name: DEC_Knowledge_Object constructor
 // Created: LDC 2010-04-07
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Object::DEC_Knowledge_Object( const DEC_Knowledge_Object& copy, const MIL_KnowledgeGroup* pGroupKnowing )
+DEC_Knowledge_Object::DEC_Knowledge_Object( const DEC_Knowledge_Object& copy, boost::shared_ptr< MIL_KnowledgeGroup >& pGroupKnowing )
     : DEC_Knowledge_ABC()
     , pArmyKnowing_                    ( copy.pArmyKnowing_ )
     , pObjectKnown_                    ( copy.pObjectKnown_ )
     , objectId_                        ( copy.objectId_ )
     , pObjectType_                     ( copy.pObjectType_ )
     , nID_                             ( copy.idManager_.GetFreeId() )
-    , groupId_                         ( pGroupKnowing ? pGroupKnowing->GetId() : 0 )
+    , pKnowledgeGroup_                 ( pGroupKnowing )
     , name_                            ( copy.name_ )
     , nAttributesUpdated_              ( copy.nAttributesUpdated_ )
     , pOwnerArmy_                      ( copy.pOwnerArmy_ )
@@ -184,7 +183,7 @@ void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const unsigned i
          >> pObjectKnown_
          >> const_cast< unsigned int& >( objectId_ )
          >> const_cast< unsigned int& >( nID_ )
-         >> const_cast< unsigned int& >( groupId_ )
+         >> pKnowledgeGroup_
          >> name_
          >> nAttributesUpdated_
          >> const_cast< MIL_Army_ABC*& >( pOwnerArmy_ )
@@ -241,7 +240,7 @@ void DEC_Knowledge_Object::save( MIL_CheckPointOutArchive& file, const unsigned 
          << pObjectKnown_
          << objectId_
          << nID_
-         << groupId_
+         << pKnowledgeGroup_
          << name_
          << nAttributesUpdated_
          << pOwnerArmy_
@@ -397,11 +396,9 @@ void DEC_Knowledge_Object::Update( const DEC_Knowledge_ObjectPerception& percept
     {
         std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > parameters;
         boost::shared_ptr< DEC_Knowledge_Object > shared_this;
-        if( groupId_ )
+        if( pKnowledgeGroup_.get() )
         {
-            MIL_KnowledgeGroup* group = pArmyKnowing_->FindKnowledgeGroup( groupId_ );
-            if( group )
-                shared_this = group->ResolveKnowledgeObjectByObjectID( objectId_ );
+            shared_this = pKnowledgeGroup_->ResolveKnowledgeObjectByObjectID( objectId_ );
         }
         else if( pArmyKnowing_ )
             shared_this = pArmyKnowing_->GetKnowledge().ResolveKnowledgeObjectByObjectID( objectId_ );
@@ -587,8 +584,8 @@ void DEC_Knowledge_Object::UpdateOnNetwork()
     asn().mutable_knowledge()->set_id( nID_ );
     assert( pArmyKnowing_ );
     asn().mutable_party()->set_id( pArmyKnowing_->GetID() );
-    if( groupId_ )
-        asn().mutable_knowledge_group()->set_id( groupId_ );
+    if( pKnowledgeGroup_.get() )
+        asn().mutable_knowledge_group()->set_id( pKnowledgeGroup_->GetId() );
 
     BuildMsgRealObject( asn() );
     BuildMsgPerceptionSources( asn() );
@@ -611,8 +608,8 @@ void DEC_Knowledge_Object::SendMsgCreation() const
     asn().mutable_knowledge()->set_id( nID_ );
     asn().mutable_object()->set_id( pObjectKnown_ ? pObjectKnown_->GetID() : 0 );
     asn().mutable_party()->set_id( pArmyKnowing_->GetID() );
-    if( groupId_ )
-        asn().mutable_knowledge_group()->set_id( groupId_ );
+    if( pKnowledgeGroup_.get() )
+        asn().mutable_knowledge_group()->set_id( pKnowledgeGroup_->GetId() );
     asn().mutable_type()->set_id( pObjectType_->GetName().c_str() );
     asn().mutable_attributes(); //$$$$ NLD 2010-10-26 - A VIRER quand viré dans le protocole ... le message de creation ne doit PAS envoyer les attributs
     asn.Send( NET_Publisher_ABC::Publisher() );

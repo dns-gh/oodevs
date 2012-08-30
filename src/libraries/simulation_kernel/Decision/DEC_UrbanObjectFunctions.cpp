@@ -50,7 +50,7 @@ float DEC_UrbanObjectFunctions::GetCurrentRecceProgress( const MIL_AgentPion& pi
 T_ConstKnowledgeAgentVector DEC_UrbanObjectFunctions::GetLivingEnemiesInBU( const MIL_AgentPion& callerAgent, UrbanObjectWrapper* pUrbanObject )
 {
     T_ConstKnowledgeAgentVector knowledges;
-    const T_KnowledgeAgentVector& enemies = callerAgent.GetKnowledgeGroup().GetKnowledge().GetEnemies();
+    const T_KnowledgeAgentVector& enemies = callerAgent.GetKnowledgeGroup()->GetKnowledge().GetEnemies();
     for( CIT_KnowledgeAgentVector it = enemies.begin(); it != enemies.end(); it++ )
     {
         if( !(*it) )
@@ -144,7 +144,7 @@ float DEC_UrbanObjectFunctions::GetRapForLocal( const MIL_AgentPion& callerAgent
     double rTotalFightScoreEnemy  = 0;
     double rTotalFightScoreFriend = 0;
 
-    const T_KnowledgeAgentVector& enemies = callerAgent.GetKnowledgeGroup().GetKnowledge().GetEnemies();
+    const T_KnowledgeAgentVector& enemies = callerAgent.GetKnowledgeGroup()->GetKnowledge().GetEnemies();
     for( CIT_KnowledgeAgentVector it = enemies.begin(); it != enemies.end(); it++ )
     {
         if( !(*it) )
@@ -158,7 +158,7 @@ float DEC_UrbanObjectFunctions::GetRapForLocal( const MIL_AgentPion& callerAgent
 
     if( !dangerousEnemies_.empty() )
     {
-        const T_KnowledgeAgentVector& allies = callerAgent.GetKnowledgeGroup().GetKnowledge().GetFriends();
+        const T_KnowledgeAgentVector& allies = callerAgent.GetKnowledgeGroup()->GetKnowledge().GetFriends();
         for( CIT_KnowledgeAgentVector it = allies.begin(); it != allies.end(); it++ )
         {
             if( !(*it) )

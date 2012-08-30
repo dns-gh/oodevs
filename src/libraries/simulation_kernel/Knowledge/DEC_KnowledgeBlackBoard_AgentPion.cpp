@@ -214,7 +214,7 @@ namespace {
             if( !knowledge.IsAvailable() ) // Record mode
                 return;
 
-            boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge = pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgent( knowledge );
+            boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge = pPion_->GetKnowledgeGroup()->GetKnowledge().GetKnowledgeAgent( knowledge );
             assert( pKnowledge );
             if( !pKnowledge )
             {
@@ -286,7 +286,7 @@ namespace {
             if( !knowledge.IsAttacker() || !knowledge.IsAvailable() ) // Record mode
                 return;
 
-            boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge = pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgent( knowledge );
+            boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge = pPion_->GetKnowledgeGroup()->GetKnowledge().GetKnowledgeAgent( knowledge );
             assert( pKnowledge );
             if( !pKnowledge )
             {
@@ -411,7 +411,7 @@ void DEC_KnowledgeBlackBoard_AgentPion::GetObjectsColliding( T_KnowledgeObjectDi
     container.reserve( objectsColliding.size() );
     for ( CIT_KnowledgeObjectCollisionVector itObjectColliding = objectsColliding.begin(); itObjectColliding != objectsColliding.end(); ++itObjectColliding )
     {
-        boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = pPion_->GetKnowledgeGroup().GetKnowledge().ResolveKnowledgeObject( (**itObjectColliding).GetObject() );
+        boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = pPion_->GetKnowledgeGroup()->GetKnowledge().ResolveKnowledgeObject( (**itObjectColliding).GetObject() );
         assert( pKnowledge && pKnowledge->IsValid() );
         if( !pKnowledge || !pKnowledge->IsValid() )
         {
@@ -492,7 +492,7 @@ void DEC_KnowledgeBlackBoard_AgentPion::GetPopulationsColliding( T_KnowledgePopu
     container.reserve( populationsColliding.size() );
     for( CIT_KnowledgePopulationCollisionVector it = populationsColliding.begin(); it != populationsColliding.end(); ++it )
     {
-        boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulation( **it );
+        boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = pPion_->GetKnowledgeGroup()->GetKnowledge().GetKnowledgePopulation( **it );
         if( !pKnowledge )
             throw std::runtime_error( __FUNCTION__ " population knowledge not found." );
         else
@@ -515,7 +515,7 @@ namespace {
             if( !knowledge.IsAttacker() )
                 return;
 
-            boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulation( knowledge );
+            boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = pPion_->GetKnowledgeGroup()->GetKnowledge().GetKnowledgePopulation( knowledge );
             assert( pKnowledge );
             if( !pKnowledge )
             {
@@ -564,7 +564,7 @@ bool DEC_KnowledgeBlackBoard_AgentPion::IsPopulationAttacking( const DEC_Knowled
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeAgent( const sword::UnitKnowledgeId& asn ) const
 {
-    return pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgentFromID( asn.id() );
+    return pPion_->GetKnowledgeGroup()->GetKnowledge().GetKnowledgeAgentFromID( asn.id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -573,7 +573,7 @@ boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_AgentPion::Reso
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeAgent( unsigned int nID ) const
 {
-    return pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgentFromID( nID );
+    return pPion_->GetKnowledgeGroup()->GetKnowledge().GetKnowledgeAgentFromID( nID );
 }
 
 // -----------------------------------------------------------------------------
@@ -582,7 +582,7 @@ boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_AgentPion::Reso
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeAgent( const MIL_Agent_ABC& agent ) const
 {
-    return pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgent( agent );
+    return pPion_->GetKnowledgeGroup()->GetKnowledge().GetKnowledgeAgent( agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -591,7 +591,7 @@ boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_AgentPion::Reso
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeObject( const sword::ObjectKnowledgeId& asn ) const
 {
-    return pPion_->GetKnowledgeGroup().ResolveKnowledgeObject( asn.id() );
+    return pPion_->GetKnowledgeGroup()->ResolveKnowledgeObject( asn.id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -600,7 +600,7 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_AgentPion::Res
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeObject( const MIL_Object_ABC& object ) const
 {
-    return pPion_->GetKnowledgeGroup().ResolveKnowledgeObject( object );
+    return pPion_->GetKnowledgeGroup()->ResolveKnowledgeObject( object );
 }
 
 // -----------------------------------------------------------------------------
@@ -609,7 +609,7 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_AgentPion::Res
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeObject( unsigned int nID ) const
 {
-    return pPion_->GetKnowledgeGroup().ResolveKnowledgeObject( nID );
+    return pPion_->GetKnowledgeGroup()->ResolveKnowledgeObject( nID );
 }
 
 // -----------------------------------------------------------------------------
@@ -618,7 +618,7 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_AgentPion::Res
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeObjectByObjectID( unsigned int nID ) const
 {
-    return pPion_->GetKnowledgeGroup().ResolveKnowledgeObjectByObjectID( nID );
+    return pPion_->GetKnowledgeGroup()->ResolveKnowledgeObjectByObjectID( nID );
 }
 
 // -----------------------------------------------------------------------------
@@ -627,7 +627,7 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_AgentPion::Res
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Population > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgePopulation( const sword::CrowdKnowledgeId& asn ) const
 {
-    return pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( asn.id() );
+    return pPion_->GetKnowledgeGroup()->GetKnowledge().GetKnowledgePopulationFromID( asn.id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -636,7 +636,7 @@ boost::shared_ptr< DEC_Knowledge_Population > DEC_KnowledgeBlackBoard_AgentPion:
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Population > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgePopulation( const MIL_Population& population ) const
 {
-    return pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulation( population );
+    return pPion_->GetKnowledgeGroup()->GetKnowledge().GetKnowledgePopulation( population );
 }
 
 // -----------------------------------------------------------------------------
@@ -645,7 +645,7 @@ boost::shared_ptr< DEC_Knowledge_Population > DEC_KnowledgeBlackBoard_AgentPion:
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Population > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgePopulation( unsigned int nID ) const
 {
-    return pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( nID );
+    return pPion_->GetKnowledgeGroup()->GetKnowledge().GetKnowledgePopulationFromID( nID );
 }
 
 // -----------------------------------------------------------------------------

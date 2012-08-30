@@ -16,6 +16,7 @@
 #include "MT_Tools/MT_Converter.h"
 #include "MT_Tools/MT_String.h"
 #include "tools/Resolver.h"
+#include <boost/shared_ptr.hpp>
 
 namespace sword
 {
@@ -62,7 +63,7 @@ class MIL_Army : public MIL_Army_ABC
 public:
     //! @name Types
     //@{
-    typedef std::map< unsigned int, MIL_KnowledgeGroup* > T_KnowledgeGroupMap;
+    typedef std::map< unsigned int, boost::shared_ptr< MIL_KnowledgeGroup > > T_KnowledgeGroupMap;
     typedef T_KnowledgeGroupMap::iterator                IT_KnowledgeGroupMap;
     typedef T_KnowledgeGroupMap::const_iterator         CIT_KnowledgeGroupMap;
 
@@ -115,9 +116,9 @@ public:
     void RegisterInhabitant( MIL_Inhabitant& inhabitant );
     void UnregisterInhabitant( MIL_Inhabitant& inhabitant );
 
-    MIL_KnowledgeGroup* FindKnowledgeGroup( unsigned int nID ) const;
-    void RegisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup );
-    void UnregisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup );
+    boost::shared_ptr< MIL_KnowledgeGroup > FindKnowledgeGroup( unsigned int nID ) const;
+    void RegisterKnowledgeGroup( const boost::shared_ptr< MIL_KnowledgeGroup > & knowledgeGroup );
+    void UnregisterKnowledgeGroup( const boost::shared_ptr< MIL_KnowledgeGroup > & knowledgeGroup );
     //@}
 
     //! @name Operations
