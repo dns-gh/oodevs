@@ -22,7 +22,7 @@
     <div class="controls">
         <div class="[[ if .prepend ]]input-prepend checkbox_addon[[ end ]][[ if .append ]] input-append[[ end ]]">
             [[ if .prepend ]]<label class="add-on"><input id="[[ .id ]]_check" type="checkbox"[[ if .prepend_value ]][[ .prepend_value ]][[ end ]]/>
-                </label>[[ end ]]<input[[ if .prepend ]] class="field"[[ end ]] type="number" id="[[ .id ]]"[[ if .value ]] value="[[ .value ]]"[[ end ]]/>[[ if .append ]]<span class="add-on">
+                </label>[[ end ]]<input[[ if .prepend ]] class="field"[[ end ]] type="number"[[ if .float ]] data-type="float"[[ end ]] id="[[ .id ]]"[[ if .value ]] value="[[ .value ]]"[[ end ]]/>[[ if .append ]]<span class="add-on">
                 [[ .append ]]</span>[[ end ]]
         </div>
     </div>
