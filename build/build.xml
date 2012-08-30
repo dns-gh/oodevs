@@ -1638,13 +1638,13 @@
 
     <!-- Package documentation/SDK -->
     <target name="package.sdk" description="package sdk documentation">
-        <delete dir="${dist.dir}/sdk" />
+        <delete dir="${dist.dir}/sdk-${platform}" />
         <copy file="${out.dir}/sdk/doc/sdk.pdf"
-            tofile="${dist.dir}/sdk/SWORD_API_Reference_${version.project}.pdf" />
-        <copy todir="${dist.dir}/sdk/SWORD_API_Reference_${version.project}-html">
+            tofile="${dist.dir}/sdk-${platform}/SWORD_API_Reference_${version.project}.pdf" />
+        <copy todir="${dist.dir}/sdk-${platform}/SWORD_API_Reference_${version.project}-html">
             <fileset dir="${out.dir}/sdk/doc/html" />
         </copy>
-        <copy todir="${dist.dir}/sdk/proto">
+        <copy todir="${dist.dir}/sdk-${platform}/proto">
             <fileset dir="${src.dir}/libraries/protocol/proto">
                 <include name="*.proto" />
             </fileset>
