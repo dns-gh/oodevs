@@ -10,6 +10,5 @@
     </parameters>
     <links>
         <link name="observeToward" skill="sword.military.platoon.skills.primitives.ObserveToward"/>
-        <link name="activateRadar" skill="france.military.platoon.combat.support.rens.skills.primitives.ActivateRadar"/>
     </links>
 </skill>

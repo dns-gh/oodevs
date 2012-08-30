@@ -3305,8 +3305,8 @@
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_MettreTenueNBC" id="335" name="Passer En NBC4"/>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_EnleverTenueNBC" id="336" name="Passer En NBC1"/>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_ArreterSilenceRadio" id="338" name="Arreter Silence Radio"/>
-    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_PasserEnSilenceRadar" id="339" name="Passer En Silence Radar"/>
-    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_ArreterSilenceRadar" id="340" name="Arreter Silence Radar"/>
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_PasserEnSilenceRadar" id="339" name="Desactiver Radar"/>
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_ArreterSilenceRadar" id="340" name="Activer Radar"/>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_RecupererTransporteurs" id="341" name="Recuperer Transporteurs"/>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_AttendreSePoster" id="342" name="Attendre Se Poster"/>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Attendre" id="398" name="Attendre"/>
@@ -3509,8 +3509,8 @@
       <parameter dia-name="pointCible_" name="Cible" optional="false" type="Point"/>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_MiseAFeuIED" id="28799" name="Pion Mise A Feu IED"/>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ROEM_PasserEnSilenceRadar" id="28800" name="ROEM Passer En Silence Radar"/>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ROEM_ArreterSilenceRadar" id="28801" name="ROEM Arreter Silence Radar"/>
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ROEM_PasserEnSilenceRadar" id="28800" name="Passer En Silence Radar"/>
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ROEM_ArreterSilenceRadar" id="28801" name="Arreter Silence Radar"/>
   </fragorders>
 </missions>
-<!-- signature="1478708772" -->
+<!-- signature="2912557516" -->

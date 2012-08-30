@@ -70,8 +70,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -118,8 +118,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -186,8 +186,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -235,8 +235,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -273,8 +273,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -313,8 +313,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -354,8 +354,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -395,8 +395,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -439,8 +439,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -519,8 +519,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -558,8 +558,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -619,8 +619,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -661,8 +661,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -701,8 +701,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -744,8 +744,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -791,8 +791,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -837,8 +837,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -887,8 +887,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -930,8 +930,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -973,8 +973,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1027,8 +1027,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1071,8 +1071,8 @@
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1103,8 +1103,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1151,8 +1151,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1186,8 +1186,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1221,7 +1221,7 @@
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1231,7 +1231,7 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Activer Radar"/>
       </fragorders>
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.Milice">
@@ -1297,8 +1297,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1343,8 +1343,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1389,8 +1389,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1433,8 +1433,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1473,8 +1473,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1512,8 +1512,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1559,8 +1559,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1593,8 +1593,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1623,8 +1623,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1662,8 +1662,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1702,8 +1702,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1747,8 +1747,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1787,8 +1787,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1819,8 +1819,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1861,8 +1861,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1911,8 +1911,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1966,8 +1966,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -2018,8 +2018,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -2081,8 +2081,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -2145,8 +2145,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -2206,8 +2206,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -2282,8 +2282,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -2356,8 +2356,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -2403,8 +2403,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -2457,8 +2457,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -2517,8 +2517,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -2563,8 +2563,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -2601,8 +2601,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -2632,7 +2632,10 @@
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
-        <mission name="PION RENS RASIT Renseigner Sur"/>
+        <mission name="PION RENS RASIT Renseigner Sur">
+          <fragorder name="Passer En Silence Radar"/>
+          <fragorder name="Arreter Silence Radar"/>
+        </mission>
         <mission name="PION MELEE Renseigner sur foule"/>
       </missions>
       <fragorders>
@@ -2640,8 +2643,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -2681,8 +2684,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -2732,8 +2735,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -2774,8 +2777,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -2823,8 +2826,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -2864,8 +2867,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -2905,8 +2908,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -2943,8 +2946,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -2990,8 +2993,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3037,8 +3040,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3076,8 +3079,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3115,8 +3118,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3154,8 +3157,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3193,8 +3196,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3234,8 +3237,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3275,8 +3278,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3334,8 +3337,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3375,8 +3378,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3414,8 +3417,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3447,8 +3450,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3477,8 +3480,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3508,8 +3511,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3538,8 +3541,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3576,8 +3579,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3608,8 +3611,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3641,8 +3644,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3679,8 +3682,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3711,7 +3714,10 @@
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION COMMUNES Decrocher"/>
-        <mission name="PION ASS RATAC Acquerir Objectifs"/>
+        <mission name="PION ASS RATAC Acquerir Objectifs">
+          <fragorder name="Passer En Silence Radar"/>
+          <fragorder name="Arreter Silence Radar"/>
+        </mission>
         <mission name="PION MELEE Renseigner sur foule"/>
         <mission name="PION COMMUNES Se Faire Transporter"/>
       </missions>
@@ -3720,8 +3726,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3759,8 +3765,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3807,8 +3813,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3851,8 +3857,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3885,8 +3891,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3914,8 +3920,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3940,8 +3946,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3976,8 +3982,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4009,8 +4015,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4039,8 +4045,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4080,8 +4086,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4116,8 +4122,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4144,8 +4150,8 @@
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION RENS ROEM Appuyer"/>
         <mission name="PION RENS ROEM Renseigner Sur">
-          <fragorder name="ROEM Passer En Silence Radar"/>
-          <fragorder name="ROEM Arreter Silence Radar"/>
+          <fragorder name="Passer En Silence Radar"/>
+          <fragorder name="Arreter Silence Radar"/>
         </mission>
         <mission name="PION MELEE Animer Poste De Controle"/>
         <mission name="PION MELEE Renseigner sur foule"/>
@@ -4172,7 +4178,10 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.RENS.START - STAIR - ELODEE">
       <missions>
-        <mission name="PION RENS ROEM Renseigner Sur"/>
+        <mission name="PION RENS ROEM Renseigner Sur">
+          <fragorder name="Passer En Silence Radar"/>
+          <fragorder name="Arreter Silence Radar"/>
+        </mission>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Se Faire Decontaminer"/>
@@ -4186,8 +4195,6 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4225,8 +4232,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4264,8 +4271,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4305,8 +4312,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4327,7 +4334,10 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.RENS.Pat recherche RASIT">
       <missions>
-        <mission name="PION RENS RASIT Renseigner Sur"/>
+        <mission name="PION RENS RASIT Renseigner Sur">
+          <fragorder name="Passer En Silence Radar"/>
+          <fragorder name="Arreter Silence Radar"/>
+        </mission>
         <mission name="PION RENS SExfiltrer"/>
         <mission name="PION S'Infiltrer"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
@@ -4343,8 +4353,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4376,8 +4386,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4408,8 +4418,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4428,7 +4438,10 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.RENS.Stations Linx">
       <missions>
-        <mission name="PION RENS ROEM Renseigner Sur"/>
+        <mission name="PION RENS ROEM Renseigner Sur">
+          <fragorder name="Passer En Silence Radar"/>
+          <fragorder name="Arreter Silence Radar"/>
+        </mission>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Se Faire Decontaminer"/>
@@ -4442,8 +4455,6 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4481,8 +4492,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4522,8 +4533,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4565,8 +4576,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4608,8 +4619,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4647,8 +4658,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4680,8 +4691,8 @@
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4706,7 +4717,7 @@
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4716,7 +4727,7 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Activer Radar"/>
       </fragorders>
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.ASS.COBRA">
@@ -4740,8 +4751,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4785,8 +4796,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4882,8 +4893,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4940,8 +4951,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -5017,8 +5028,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -5058,8 +5069,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -5112,8 +5123,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -5164,8 +5175,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -5219,8 +5230,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -5276,8 +5287,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -5342,8 +5353,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -5376,8 +5387,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -5462,8 +5473,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -5524,8 +5535,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -5604,8 +5615,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -5657,8 +5668,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -5695,8 +5706,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -5724,14 +5735,17 @@
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
         <mission name="AUTOMATE MELEE Animer Postes De Controle"/>
-        <mission name="AUTOMATE RENS RASIT Renseigner Sur"/>
+        <mission name="AUTOMATE RENS RASIT Renseigner Sur">
+          <fragorder name="Arreter Silence Radar"/>
+          <fragorder name="Passer En Silence Radar"/>
+        </mission>
       </missions>
       <fragorders>
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -5792,8 +5806,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -5848,8 +5862,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -5903,8 +5917,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -5967,8 +5981,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6006,8 +6020,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6054,8 +6068,8 @@
       </missions>
       <fragorders>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6086,8 +6100,8 @@
       </missions>
       <fragorders>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6122,8 +6136,8 @@
       </missions>
       <fragorders>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6157,8 +6171,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6181,8 +6195,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6218,8 +6232,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6254,8 +6268,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6297,8 +6311,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6328,8 +6342,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6360,8 +6374,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6393,8 +6407,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6439,8 +6453,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6481,8 +6495,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6513,8 +6527,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6542,8 +6556,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6572,8 +6586,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6613,8 +6627,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6748,8 +6762,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6777,8 +6791,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6802,8 +6816,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6826,8 +6840,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6852,8 +6866,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6877,8 +6891,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6903,8 +6917,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6924,8 +6938,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6952,8 +6966,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6987,8 +7001,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -7023,8 +7037,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -7056,8 +7070,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -7090,8 +7104,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -7108,8 +7122,8 @@
     <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.RENS.ELGE">
       <missions>
         <mission name="AUTOMATE RENS ROEM Renseigner Sur">
-          <fragorder name="ROEM Passer En Silence Radar"/>
-          <fragorder name="ROEM Arreter Silence Radar"/>
+          <fragorder name="Passer En Silence Radar"/>
+          <fragorder name="Arreter Silence Radar"/>
         </mission>
         <mission name="AUTOMATE COMMUNES Decrocher"/>
         <mission name="AUTOMATE COMMUNES Faire Mouvement"/>
@@ -7149,8 +7163,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -7164,21 +7178,24 @@
     </automat>
     <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.RENS.Systeme Linx">
       <missions>
-        <mission name="AUTOMATE RENS ROEM Renseigner Sur"/>
+        <mission name="AUTOMATE RENS ROEM Renseigner Sur">
+          <fragorder name="Passer En Silence Radar"/>
+          <fragorder name="Arreter Silence Radar"/>
+        </mission>
         <mission name="AUTOMATE COMMUNES Decrocher"/>
         <mission name="AUTOMATE COMMUNES Faire Mouvement"/>
         <mission name="AUTOMATE COMMUNES Franchir"/>
         <mission name="AUTOMATE COMMUNES Se Faire Decontaminer"/>
         <mission name="AUTOMATE COMMUNES Se Recompleter"/>
         <mission name="AUTOMATE COMMUNES Stationner"/>
-        <mission name="AUTOMATE RENS Reconnaitre"/>
+        <mission name="AUTOMATE RENS Reconnaitre">
+          <fragorder name="Passer En Silence Radar"/>
+          <fragorder name="Arreter Silence Radar"/>
+        </mission>
       </missions>
       <fragorders>
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -7188,25 +7205,29 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Arreter Silence Radio"/>
       </fragorders>
     </automat>
     <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.RENS.START STAIR MROD_ELODEE">
       <missions>
-        <mission name="AUTOMATE RENS ROEM Renseigner Sur"/>
+        <mission name="AUTOMATE RENS ROEM Renseigner Sur">
+          <fragorder name="Passer En Silence Radar"/>
+          <fragorder name="Arreter Silence Radar"/>
+        </mission>
         <mission name="AUTOMATE COMMUNES Decrocher"/>
         <mission name="AUTOMATE COMMUNES Faire Mouvement"/>
         <mission name="AUTOMATE COMMUNES Franchir"/>
         <mission name="AUTOMATE COMMUNES Se Faire Decontaminer"/>
         <mission name="AUTOMATE COMMUNES Se Recompleter"/>
         <mission name="AUTOMATE COMMUNES Stationner"/>
-        <mission name="AUTOMATE RENS Reconnaitre"/>
+        <mission name="AUTOMATE RENS Reconnaitre">
+          <fragorder name="Passer En Silence Radar"/>
+          <fragorder name="Arreter Silence Radar"/>
+        </mission>
       </missions>
       <fragorders>
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -7216,6 +7237,7 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Arreter Silence Radio"/>
       </fragorders>
     </automat>
     <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.RENS.SDTI">
@@ -7231,8 +7253,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -7260,8 +7282,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -7286,8 +7308,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -7315,8 +7337,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -7342,14 +7364,17 @@
         <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE COMMUNES Franchir"/>
         <mission name="AUTOMATE ASS Se Deployer"/>
-        <mission name="AUTOMATE ASS RATAC Acquerir Objectifs"/>
+        <mission name="AUTOMATE ASS RATAC Acquerir Objectifs">
+          <fragorder name="Arreter Silence Radar"/>
+          <fragorder name="Passer En Silence Radar"/>
+        </mission>
       </missions>
       <fragorders>
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -7383,8 +7408,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -7415,8 +7440,8 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -7448,8 +7473,8 @@
       </missions>
       <fragorders>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -7498,4 +7523,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1264549099" -->
+<!-- signature="2393125029" -->

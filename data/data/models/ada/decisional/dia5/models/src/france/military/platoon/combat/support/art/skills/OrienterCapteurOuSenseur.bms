@@ -1,6 +1,6 @@
 rootnode {
 
-    connections = { skill.links.activateRadar, skill.links.observe, skill.nodes.AcquireIntelligence },
+    connections = { skill.nodes.activateRadar, skill.links.observe, skill.nodes.AcquireIntelligence },
      
     create = function(self)
         self.hasRadar = meKnowledge:hasRadar( eRadarType_Radar )
@@ -10,11 +10,25 @@ rootnode {
         local Activate = Activate
         Activate( skill.links.observe, 1, { entity = self.params.zone } )
         if self.hasRadar then -- si l'unité a un radar, on l'active
-            Activate( skill.links.activateRadar, 1, { area = self.params.zone, typeRadar = eRadarType_Radar } )
+            Activate( skill.nodes.activateRadar, 1, { area = self.params.zone } )
         else -- si l'unité n'a pas de radar, il va surveiller la zone avec ses propres moyens
             Activate( skill.nodes.AcquireIntelligence, 1, { area = self.params.zone } )
         end
     end,
+	
+    destroy = function( self )
+        self.params.zone:radarOff()
+    end,
+}
+
+node "activateRadar"
+{
+    -- --------------------------------------------------------------------------------
+    -- Activate radar.
+    -- --------------------------------------------------------------------------------
+    create = function( self )
+        self.params.area:radarOn()
+    end
 }
 
 node "AcquireIntelligence"
