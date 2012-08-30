@@ -35,8 +35,7 @@ $(".log_in").click ->
                 first = false
                 uri += k
                 uri += "=" + v if v?
-            uri += window.location.hash
-            window.location.href = uri
+            load_url uri + window.location.hash
         ->
             toggle_input_error pwd, "Invalid", true
 

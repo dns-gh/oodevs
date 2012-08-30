@@ -48,8 +48,7 @@ $("a.update_login").click ->
                 first = false
                 uri += k
                 uri += "=" + v if v?
-            uri += window.location.hash
-            window.location.href = uri
+            load_url uri + window.location.hash
         ->
             toggle_input_error cur, "Invalid", true
 

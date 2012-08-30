@@ -8,7 +8,16 @@
 # *****************************************************************************
 
 get_url = (url) ->
-    return window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + url
+    rpy = window.location.protocol + "//" + window.location.hostname
+    if window.location.port?.length
+        rpy += ":" + window.location.port
+    return rpy + url
+
+load_url = (url) ->
+    if url == window.location.href
+        location.reload()
+    else
+        window.location.href = url
 
 raw_ajax = (url, data, success, error, type) ->
     $.ajax
@@ -26,7 +35,7 @@ ajax = (url, data, success, error) ->
 pajax = (url, params, body, success, error) ->
     suffix = $.param params
     url = url + "?" + suffix if suffix?.length
-    raw_ajax url,JSON.stringify(body), success, error, "POST"
+    raw_ajax url, JSON.stringify(body), success, error, "POST"
 
 diff_models = (prev, next) ->
     not_found = []

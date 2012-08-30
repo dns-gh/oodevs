@@ -348,7 +348,7 @@ class SessionItemView extends Backbone.View
         uri = get_url "/api/download_session?"
         uri += "node=" + uuid
         uri += "&id=" + @model.id
-        window.location.href = uri
+        load_url uri
 
     set_filter: (list) =>
         @filters = list
