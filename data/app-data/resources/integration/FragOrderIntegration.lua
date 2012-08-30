@@ -274,13 +274,12 @@ integration.startFragOrderTask = function( self )
                 integration.communication.StartMissionPionVersPion( {mission_type = "platoon.tasks.FaireMouvement", 
                                                               mission_objectives = { objectives = mission.objectives}, 
                                                               echelon = eEtatEchelon_None } )
-        else
-            masalife.brain.core.stopTasks()
+            else
+                masalife.brain.core.stopTasks()
+            end
         end
         integration.cleanFragOrder( self )
         return
-    end
-
     -- ----------------------------------------------------------------------------
     -- Radar activation / Deactivation
     -- ----------------------------------------------------------------------------
