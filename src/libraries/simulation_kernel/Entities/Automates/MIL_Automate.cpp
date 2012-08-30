@@ -1405,8 +1405,12 @@ void MIL_Automate::RegisterPion( MIL_AgentPion& pion )
 // -----------------------------------------------------------------------------
 void MIL_Automate::SetCommandPost( MIL_AgentPion* pion )
 {
-    if( pion && pion != pPionPC_ )
+    if( pion == pPionPC_ )
+        return;
+    if( pion )
         pion->NotifySendHeadquarters();
+    if( pPionPC_ )
+        pPionPC_->NotifySendHeadquarters();
     pPionPC_ = pion;
     if( !pPionPC_ && !pions_.empty() )
     {
