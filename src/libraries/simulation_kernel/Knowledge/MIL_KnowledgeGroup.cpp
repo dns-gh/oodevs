@@ -865,7 +865,7 @@ bool MIL_KnowledgeGroup::OnReceiveKnowledgeGroupSetType( const sword::MissionPar
     const MIL_KnowledgeGroupType* pFoundType = MIL_KnowledgeGroupType::FindType( message.elem( 0 ).value().Get( 0 ).acharstr() );
     if( pFoundType && pFoundType->GetID() != GetType().GetID() )
     {
-        SetType( const_cast< MIL_KnowledgeGroupType* >( pFoundType ) );
+        SetType( pFoundType );
         return true;
     }
     return false;

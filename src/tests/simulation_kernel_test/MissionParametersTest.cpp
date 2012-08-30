@@ -110,7 +110,7 @@ namespace
             mock::reset();
             MOCK_EXPECT( mockPublisher.Send );
             MIL_KnowledgeGroupType::InitializeWithTime( group, 0.5f );
-            groupArmy.SetType( const_cast< MIL_KnowledgeGroupType* >( MIL_KnowledgeGroupType::FindType( "Standard" ) ) );
+            groupArmy.SetType( MIL_KnowledgeGroupType::FindType( "Standard" ) );
             MOCK_EXPECT( army.GetID ).returns( 29u );
             MOCK_EXPECT( army.RegisterKnowledgeGroup );
             MOCK_EXPECT( army.UnregisterKnowledgeGroup );

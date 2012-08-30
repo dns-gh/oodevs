@@ -102,7 +102,7 @@ public:
     void InitializeKnowledgeGroup( xml::xistream& xis, KnowledgeGroupFactory_ABC& knowledgeGroupFactory );
     void UnregisterKnowledgeGroup( const MIL_KnowledgeGroup& knowledgeGroup );
     MIL_KnowledgeGroup* FindKnowledgeGroup ( unsigned int id ) const;
-    void SetType( MIL_KnowledgeGroupType *type ){ type_ = type; }
+    void SetType( const MIL_KnowledgeGroupType *type ){ type_ = type; }
     void RefreshTimeToDiffuseToKnowledgeGroup();
     // LTO end
     void RegisterAutomate  ( MIL_Automate& automate );
