@@ -636,6 +636,7 @@ void Node::UpdateSessionSize( const Uuid& id, size_t size )
 // ----------------------------------------------------------------------------
 void Node::FilterConfig( web::session::Config& cfg ) const
 {
+    boost::shared_lock< boost::shared_mutex > lock( access_ );
     std::set< std::string > bad;
     BOOST_FOREACH( const web::session::Config::T_Plugins::value_type& value, cfg.plugins )
         if( !cfg_.plugins.count( value.first ) )

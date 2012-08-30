@@ -935,5 +935,6 @@ void Session::ParseCheckpoints()
 // -----------------------------------------------------------------------------
 void Session::NotifyNode()
 {
+    boost::lock_guard< boost::shared_mutex > lock( access_ );
     node_->FilterConfig( cfg_ );
 }
