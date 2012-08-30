@@ -10,6 +10,6 @@ local result =
 }
 
 local t = initTaskKnowledge( result )
-taskKnowledge["agent.tasks.knowledges.Disengage"] = t
+taskKnowledge[ "agent.tasks.knowledges.Disengage" ] = t
 
 return result

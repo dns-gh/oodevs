@@ -59,7 +59,7 @@
             <argument name="fragOrder">
                 <description>L'ordres de conduite à propager</description>
                 <type>
-                    <class name="properties.FragOrder"/>
+                    <class name="world.FragOrder"/>
                 </type>
             </argument>
         </method>

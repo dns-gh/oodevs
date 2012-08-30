@@ -1,14 +1,9 @@
 -- **************************************************************************** 
--- Force ratio skill
+-- Manage frago order
 -- ****************************************************************************
 rootnode
 {
-    connections =
-    {
-        skill.nodes.StartMission
-    },
-
-    done = function( self ) end,
+    connections = { skill.nodes.ExecuteFragOrder },
 
     -- -------------------------------------------------------------------------------- 
     -- Apply the frag order 
@@ -16,16 +11,15 @@ rootnode
     activate = function( self )
         local Activate = Activate
         for _, fragOrder in ipairs( self.params.fragOrders ) do
-            Activate( skill.nodes.StartMission, 1, { fragOrder = fragOrder } )
-        end          
-        -- DDA : complete with other frag orders
+            Activate( skill.nodes.ExecuteFragOrder, 1, { fragOrder = fragOrder } )
+        end
     end
 }
 
 -- -------------------------------------------------------------------------------- 
--- Start frag order
+-- Execute the FROGO
 -- --------------------------------------------------------------------------------
-node "StartMission"
+node "ExecuteFragOrder"
 {
     select = function( self )
         self.params.fragOrder:startTask()
