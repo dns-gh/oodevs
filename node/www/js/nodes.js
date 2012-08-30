@@ -505,15 +505,12 @@
   };
 
   pop_settings = function(ui, data) {
-    var mod, num, par;
+    var mod;
     data = set_plugins($.extend({}, data));
     ui.html(node_settings(data));
-    num = $("#sessions_max_play");
-    force_input_regexp(/\d/, num);
-    attach_checkbox_and_input(num, $("#sessions_max_play_check"));
-    par = $("#sessions_max_parallel");
-    force_input_regexp(/\d/, par);
-    attach_checkbox_and_input(par, $("#sessions_max_parallel_check"));
+    force_input_regexp(/\d/, ui.find("input[type='number']"));
+    attach_checkbox_and_input($("#sessions_max_play"), $("#sessions_max_play_check"));
+    attach_checkbox_and_input($("#sessions_max_parallel"), $("#sessions_max_parallel_check"));
     mod = ui.find(".modal");
     mod.modal("show");
     return [ui, mod];
