@@ -247,9 +247,6 @@
     <ClCompile Include="..\..\src\libraries\gaming\AgentDetections.cpp">
       <Filter>Source Files\Model\Agents\Extensions</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\gaming\AgentHierarchies.cpp">
-      <Filter>Source Files\Model\Agents\Extensions</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\gaming\AgentHierarchiesCommunication.cpp">
       <Filter>Source Files\Model\Agents\Extensions</Filter>
     </ClCompile>

@@ -144,7 +144,6 @@
     <ClCompile Include="..\..\src\libraries\gaming\Affinities.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\AgentConvexHulls.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\AgentDetections.cpp" />
-    <ClCompile Include="..\..\src\libraries\gaming\AgentHierarchies.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\AgentHierarchiesCommunication.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\AgentPositions.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\Attributes.cpp" />
