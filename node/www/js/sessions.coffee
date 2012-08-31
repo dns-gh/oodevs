@@ -54,32 +54,28 @@ set_xpath = (xpath, obj, value) ->
 
 set_ui_option = (ui, data) ->
     value = get_xpath ui.id, data
-    if ui.type == "string" || ui.type == "file" || ui.type == "file_list"
+    if /^(string|file|file_list)$/.test ui.type
         ui.value = value
     else if ui.type == "integer" || ui.type == "time"
         ui.value = parseInt value
     else if ui.type == "boolean"
         ui.checked = " checked=\"checked\"" if convert_to_boolean value
-    #else if ui.type == "enumeration"
-    #    console.log ui.id, "not implemented"
+    else if ui.type == "enumeration"
+        ui.items = []
+        for it in ui.default.split ';'
+            ui.items.push
+                value:    it
+                selected: " selected=\"selected\"" if it == value
     #else
-    #    console.log ui.id, ui.type + " not implemented"
-
-get_ui_option = (ui, data) ->
-    if ui.is "input[type='text'], input[type='number']"
-        return ui.val()
-    else if ui.is "input[type='checkbox']"
-        return ui.is ":checked"
-    #else
-    #    console.log ui, "not implemented"
-    return 0
+    #    console.log data, ui, ui.id, ui.type + " not implemented"
+    return
 
 set_ui_plugin_group = (group, next, data) ->
-    header = {}
-    header.label = group.label
-    header.id = next.id + '_' + make_id group.label
-    content = {}
-    content.id = header.id
+    header =
+        label: group.label
+        id:    next.id + '_' + make_id group.label
+    content =
+        id:    header.id
     for prop in group.options
         content.options = [] unless content.options?
         option = $.extend {}, prop
@@ -98,11 +94,11 @@ set_ui_plugins = (data) ->
     for k, v of data.plugins
         continue unless k of session_plugins
         data.ui_plugins = [] unless data.ui_plugins?
-        next = {}
-        next.idx = idx++
-        next.id = make_id k
-        next.checked = " checked=\"checked\"" if convert_to_boolean v.enabled
-        next.label = session_plugins[k].name
+        next =
+            idx:     idx++
+            id:      make_id k
+            label:   session_plugins[k].name
+            checked: " checked=\"checked\"" if convert_to_boolean v.enabled
         data.ui_plugins.push next
         for group in session_plugins[k].groups
             set_ui_plugin_group group, next, v
@@ -186,16 +182,23 @@ validate_rng = (data, ui, type) ->
         return false
     return true
 
+get_ui_option = (ui) ->
+    if ui.is "input[type='text'], input[type='number']"
+        return ui.val()
+    else if ui.is "input[type='checkbox']"
+        return ui.is ":checked"
+    else if ui.is "select"
+        return ui.find("option:selected").val()
+    return 0
+
 validate_plugins = (ui, data) ->
     tab = $ "#tab_plugins"
     for it in tab.find "input[type='checkbox']"
-        it = $ it
-        id = it.attr "id"
-        continue unless id of session_plugins
+        continue unless it.id of session_plugins
         data.plugins = {} unless data.plugins?
-        next = data.plugins[id] = {} unless data.plugins[id]?
-        data.plugins[id].enabled = it.is ":checked"
-    for it in ui.find ".plugin_items input"
+        next = data.plugins[it.id] = {} unless data.plugins[it.id]?
+        data.plugins[it.id].enabled = $(it).is ":checked"
+    for it in ui.find ".plugin_items input, .plugin_items select"
         sub = /^(\w+):(.+)$/.exec it.id
         continue unless sub
         plugin = sub[1]

@@ -178,14 +178,26 @@
                             {{#each contents}}
                             <div class="tab-pane{{#if active}} active{{/if}}" id="tab_{{id}}">
                                 {{#each options}}
-                                {{#equal type "string"}}
+                                {{#equal type "string|file|file_list"}}
                                 [[ template "input_text" sub "id" "{{xid}}" "label" "{{label}}" "value" "{{value}}" ]]
                                 {{/equal}}
                                 {{#equal type "boolean"}}
                                 [[ template "input_checkbox" sub "id" "{{xid}}" "label" "{{label}}" "value" "{{checked}}" ]]
                                 {{/equal}}
-                                {{#equal type "integer"}}
+                                {{#equal type "integer|time"}}
                                 [[ template "input_number" sub "id" "{{xid}}" "label" "{{label}}" "value" "{{value}}" ]]
+                                {{/equal}}
+                                {{#equal type "enumeration"}}
+                                <div class="control-group">
+                                    <label class="control-label" for="{{xid}}">{{label}}</label>
+                                    <div class="controls">
+                                        <select id="{{xid}}">
+                                            {{#each items}}
+                                            <option value="{{value}}"{{selected}}>{{value}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>
                                 {{/equal}}
                                 {{/each}}
                             </div>

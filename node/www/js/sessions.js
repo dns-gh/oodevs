@@ -540,35 +540,38 @@
   };
 
   set_ui_option = function(ui, data) {
-    var value;
+    var it, value, _i, _len, _ref;
     value = get_xpath(ui.id, data);
-    if (ui.type === "string" || ui.type === "file" || ui.type === "file_list") {
-      return ui.value = value;
+    if (/^(string|file|file_list)$/.test(ui.type)) {
+      ui.value = value;
     } else if (ui.type === "integer" || ui.type === "time") {
-      return ui.value = parseInt(value);
+      ui.value = parseInt(value);
     } else if (ui.type === "boolean") {
       if (convert_to_boolean(value)) {
-        return ui.checked = " checked=\"checked\"";
+        ui.checked = " checked=\"checked\"";
+      }
+    } else if (ui.type === "enumeration") {
+      ui.items = [];
+      _ref = ui["default"].split(';');
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        it = _ref[_i];
+        ui.items.push({
+          value: it,
+          selected: it === value ? " selected=\"selected\"" : void 0
+        });
       }
     }
   };
 
-  get_ui_option = function(ui, data) {
-    if (ui.is("input[type='text'], input[type='number']")) {
-      return ui.val();
-    } else if (ui.is("input[type='checkbox']")) {
-      return ui.is(":checked");
-    }
-    return 0;
-  };
-
   set_ui_plugin_group = function(group, next, data) {
     var content, header, option, prop, _i, _len, _ref;
-    header = {};
-    header.label = group.label;
-    header.id = next.id + '_' + make_id(group.label);
-    content = {};
-    content.id = header.id;
+    header = {
+      label: group.label,
+      id: next.id + '_' + make_id(group.label)
+    };
+    content = {
+      id: header.id
+    };
     _ref = group.options;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       prop = _ref[_i];
@@ -604,13 +607,12 @@
       if (data.ui_plugins == null) {
         data.ui_plugins = [];
       }
-      next = {};
-      next.idx = idx++;
-      next.id = make_id(k);
-      if (convert_to_boolean(v.enabled)) {
-        next.checked = " checked=\"checked\"";
-      }
-      next.label = session_plugins[k].name;
+      next = {
+        idx: idx++,
+        id: make_id(k),
+        label: session_plugins[k].name,
+        checked: convert_to_boolean(v.enabled) ? " checked=\"checked\"" : void 0
+      };
       data.ui_plugins.push(next);
       _ref1 = session_plugins[k].groups;
       for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
@@ -742,26 +744,35 @@
     return true;
   };
 
+  get_ui_option = function(ui) {
+    if (ui.is("input[type='text'], input[type='number']")) {
+      return ui.val();
+    } else if (ui.is("input[type='checkbox']")) {
+      return ui.is(":checked");
+    } else if (ui.is("select")) {
+      return ui.find("option:selected").val();
+    }
+    return 0;
+  };
+
   validate_plugins = function(ui, data) {
-    var id, it, next, plugin, sub, tab, target, _i, _j, _len, _len1, _ref, _ref1;
+    var it, next, plugin, sub, tab, target, _i, _j, _len, _len1, _ref, _ref1;
     tab = $("#tab_plugins");
     _ref = tab.find("input[type='checkbox']");
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       it = _ref[_i];
-      it = $(it);
-      id = it.attr("id");
-      if (!(id in session_plugins)) {
+      if (!(it.id in session_plugins)) {
         continue;
       }
       if (data.plugins == null) {
         data.plugins = {};
       }
-      if (data.plugins[id] == null) {
-        next = data.plugins[id] = {};
+      if (data.plugins[it.id] == null) {
+        next = data.plugins[it.id] = {};
       }
-      data.plugins[id].enabled = it.is(":checked");
+      data.plugins[it.id].enabled = $(it).is(":checked");
     }
-    _ref1 = ui.find(".plugin_items input");
+    _ref1 = ui.find(".plugin_items input, .plugin_items select");
     for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
       it = _ref1[_j];
       sub = /^(\w+):(.+)$/.exec(it.id);
