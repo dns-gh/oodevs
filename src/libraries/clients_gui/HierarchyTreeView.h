@@ -12,7 +12,6 @@
 
 #include "HierarchyTreeView_ABC.h"
 #include "clients_kernel/Hierarchies.h"
-#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 
 namespace kernel
@@ -24,6 +23,7 @@ namespace kernel
 namespace gui
 {
 class EntitySymbols;
+class ModelObserver_ABC;
 
 // =============================================================================
 /** @class  HierarchyTreeView
@@ -39,7 +39,7 @@ class HierarchyTreeView : public HierarchyTreeView_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             HierarchyTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, const EntitySymbols& symbols, QWidget* parent = 0 );
+             HierarchyTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, const EntitySymbols& symbols, QWidget* parent = 0 );
     virtual ~HierarchyTreeView();
     //@}
 
@@ -65,7 +65,6 @@ private:
 
 #include "HierarchyTreeView.inl"
 
-typedef HierarchyTreeView< kernel::TacticalHierarchies >      TacticalTreeView;
 typedef HierarchyTreeView< kernel::CommunicationHierarchies > CommunicationTreeView;
 
 

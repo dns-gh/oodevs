@@ -130,12 +130,15 @@ void SymbolDialog::Validate()
         agent->SetSymbol( symbolEditor_->GetSymbol() );
         agent->SetNature( symbolEditor_->GetNature() );
         if( kernel::TacticalHierarchies* pTactical = agent->Retrieve< kernel::TacticalHierarchies >() )
+        {
             if( pTactical->GetSuperior() )
                 if( kernel::TacticalHierarchies* pSuperiorTactical = const_cast< kernel::Entity_ABC* >( pTactical->GetSuperior() )->Retrieve< kernel::TacticalHierarchies >() )
                 {
                     pSuperiorTactical->UpdateSymbolUpward();
                     controllers_.controller_.Update( *pSuperiorTactical );
                 }
+            controllers_.controller_.Update( *pTactical );
+        }
     }
     else if( kernel::Ghost_ABC* ghost = dynamic_cast< kernel::Ghost_ABC* >( selected_.ConstCast() ) )
     {
@@ -146,6 +149,7 @@ void SymbolDialog::Validate()
             controllers_.controller_.Update( *pTactical );
             if( const kernel::CommunicationHierarchies* pCommunication = ghost->Retrieve< kernel::CommunicationHierarchies >() )
                 controllers_.controller_.Update( *pCommunication );
+            controllers_.controller_.Update( *pTactical );
         }
     }
     selected_ = 0;

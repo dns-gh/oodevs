@@ -898,6 +898,9 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\EntityTreeView_ABC.cpp">
       <Filter>Source Files\MVC\View</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\TacticalTreeView.cpp">
+      <Filter>Source Files\MVC\View</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -1431,8 +1434,11 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\EntityTreeView.h">
       <Filter>Source Files\MVC\View</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\StandardModel.h">
+    <ClInclude Include="..\..\src\libraries\clients_gui\ModelObserver_ABC.h">
       <Filter>Source Files\MVC\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\TacticalTreeView.h">
+      <Filter>Source Files\MVC\View</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1833,6 +1839,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\HierarchyTreeView_ABC.h">
       <Filter>Source Files\MVC\View</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\StandardModel.h">
+      <Filter>Source Files\MVC\Model</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

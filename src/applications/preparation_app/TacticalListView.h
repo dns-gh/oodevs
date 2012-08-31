@@ -25,12 +25,12 @@ namespace kernel
     class Agent_ABC;
     class AgentTypes;
     class Automat_ABC;
+    class AutomatDecisions_ABC;
     class Formation_ABC;
     class Ghost_ABC;
     class KnowledgeGroup_ABC;
 }
 
-class AutomatDecisions;
 class ModelBuilder;
 class Model;
 
@@ -43,7 +43,7 @@ class Model;
 // =============================================================================
 class TacticalListView : public gui::HierarchyListView< kernel::TacticalHierarchies >
                        , public tools::ElementObserver_ABC< kernel::Entity_ABC >
-                       , public tools::ElementObserver_ABC< AutomatDecisions >
+                       , public tools::ElementObserver_ABC< kernel::AutomatDecisions_ABC >
                        , public tools::ElementObserver_ABC< kernel::Formation_ABC >
                        , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
                        , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
@@ -96,7 +96,7 @@ private:
     virtual void setColumnWidth( int column, int w );
 
     virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
-    virtual void NotifyUpdated( const AutomatDecisions& decisions );
+    virtual void NotifyUpdated( const kernel::AutomatDecisions_ABC& decisions );
     virtual void NotifyCreated( const kernel::Formation_ABC& entity );
     virtual void NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Team_ABC& agent, kernel::ContextMenu& menu );

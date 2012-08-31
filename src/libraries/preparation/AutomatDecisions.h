@@ -10,7 +10,7 @@
 #ifndef __AutomatDecisions_h_
 #define __AutomatDecisions_h_
 
-#include "clients_kernel/Extension_ABC.h"
+#include "clients_kernel/AutomatDecisions_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 
 namespace kernel
@@ -31,7 +31,7 @@ namespace xml
 */
 // Created: AGE 2006-03-14
 // =============================================================================
-class AutomatDecisions : public kernel::Extension_ABC
+class AutomatDecisions : public kernel::AutomatDecisions_ABC
                        , public kernel::Serializable_ABC
 {
 public:
@@ -53,12 +53,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    AutomatDecisions( const AutomatDecisions& );            //!< Copy constructor
-    AutomatDecisions& operator=( const AutomatDecisions& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     bool HasEngagedSuperior() const;

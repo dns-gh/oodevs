@@ -24,6 +24,7 @@ namespace kernel
 {
     class Agent_ABC;
     class Automat_ABC;
+    class AutomatDecisions_ABC;
     class Formation_ABC;
     class Time_ABC;
 }
@@ -33,7 +34,6 @@ namespace actions
     class ActionsModel;
 }
 
-class AutomatDecisions;
 class StaticModel;
 
 // =============================================================================
@@ -44,7 +44,7 @@ class StaticModel;
 // Created: AGE 2006-11-23
 // =============================================================================
 class TacticalListView : public gui::HierarchyListView< kernel::TacticalHierarchies >
-                       , public tools::ElementObserver_ABC< AutomatDecisions >
+                       , public tools::ElementObserver_ABC< kernel::AutomatDecisions_ABC >
                        , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
                        , public gui::ChangeSuperior_ABC
 {
@@ -59,7 +59,7 @@ public:
     //! @name Operations
     //@{
     virtual void Display( const kernel::Entity_ABC& agent, gui::ValuedListItem* item );
-    virtual void NotifyUpdated( const AutomatDecisions& decisions );
+    virtual void NotifyUpdated( const kernel::AutomatDecisions_ABC& decisions );
     virtual void NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     virtual bool CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const;
     virtual void DoChangeSuperior( kernel::Entity_ABC& entity, kernel::Entity_ABC& superior );

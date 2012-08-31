@@ -12,6 +12,7 @@
 #include "PropertiesPanel.h"
 #include "CreationPanels.h"
 #include "LivingAreaPanel.h"
+#include "ModelBuilder.h"
 #include "OrbatDockWidget.h"
 #include "ResourceNetworkDialog.h"
 #include "UrbanInfosDockWidget.h"
@@ -38,6 +39,7 @@
 
 #include "clients_gui/HierarchyTreeView.h"
 #include "clients_gui/EntityTreeView.h"
+#include "clients_gui/TacticalTreeView.h"
 #include "EntityTreeView.h"
 
 #include "PreparationProfile.h"
@@ -75,26 +77,27 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
         parent->addDockWidget( Qt::RightDockWidgetArea, dockWidget );
 
         // Tactical
-        gui::TacticalTreeView* tacticalTreeView = new gui::TacticalTreeView( controllers, PreparationProfile::GetProfile(), icons, tabWidget );
+        gui::TacticalTreeView* tacticalTreeView = new gui::TacticalTreeView( controllers, PreparationProfile::GetProfile(), modelBuilder, icons, tabWidget );
         tabWidget->addTab( tacticalTreeView, "Tactical" );
         // Communication
-        gui::CommunicationTreeView* communicationTreeView = new gui::CommunicationTreeView( controllers, PreparationProfile::GetProfile(), icons, tabWidget );
+        gui::CommunicationTreeView* communicationTreeView = new gui::CommunicationTreeView( controllers, PreparationProfile::GetProfile(), modelBuilder, icons, tabWidget );
         tabWidget->addTab( communicationTreeView, "Knowledges" );
         // Logistic
 
         // Urban
 
         // Population / Crowd
-        gui::PopulationTreeView* populationTreeView = new gui::PopulationTreeView( controllers, PreparationProfile::GetProfile(), tabWidget );
+        gui::PopulationTreeView* populationTreeView = new gui::PopulationTreeView( controllers, PreparationProfile::GetProfile(), modelBuilder, tabWidget );
         tabWidget->addTab( populationTreeView, "Crowd" );
         // Inhabitant
-        gui::InhabitantTreeView* inhabitantTreeView = new gui::InhabitantTreeView( controllers, PreparationProfile::GetProfile(), tabWidget );
+        gui::InhabitantTreeView* inhabitantTreeView = new gui::InhabitantTreeView( controllers, PreparationProfile::GetProfile(), modelBuilder, tabWidget );
         tabWidget->addTab( inhabitantTreeView, "Inhabitant" );
         // Object
-        gui::ObjectTreeView* objectTreeView = new gui::ObjectTreeView( controllers, PreparationProfile::GetProfile(), tabWidget );
+        gui::ObjectTreeView* objectTreeView = new gui::ObjectTreeView( controllers, PreparationProfile::GetProfile(), modelBuilder, tabWidget );
         tabWidget->addTab( objectTreeView, "Object" );
     }
 */
+
 
     // Properties panel
     {

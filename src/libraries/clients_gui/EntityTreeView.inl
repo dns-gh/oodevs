@@ -12,8 +12,8 @@
 // Created: ABR 2012-08-13
 // -----------------------------------------------------------------------------
 template< typename Entity >
-EntityTreeView< Entity >::EntityTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, QWidget* parent /*= 0*/ )
-    : EntityTreeView_ABC( controllers, profile, parent )
+EntityTreeView< Entity >::EntityTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, QWidget* parent /*= 0*/ )
+    : EntityTreeView_ABC( controllers, profile, modelObserver, parent )
 {
     dataModel_.setColumnCount( 1 );
     controllers_.Update( *this );
@@ -44,11 +44,11 @@ void EntityTreeView< Entity >::NotifyCreated( const Entity& entity )
     QStandardItem* teamItem = dataModel_.FindSafeItem( team );
     if( !teamItem )
     {
-        teamItem = dataModel_.AddRootSafeItem( dataModel_.rowCount(), 0, team.GetName(), team );
+        teamItem = dataModel_.AddRootSafeItem( dataModel_.rowCount(), 0, team.GetName(), team, ItemSpecificFlags( team ) );
         //teamItem->SetNamed( team );
     }
 
-    QStandardItem* entityItem = dataModel_.AddChildSafeItem( teamItem, teamItem->rowCount(), 0, entity.GetName(), entity );
+    QStandardItem* entityItem = dataModel_.AddChildSafeItem( teamItem, teamItem->rowCount(), 0, entity.GetName(), entity, ItemSpecificFlags( entity ) );
     //popItem->SetNamed( static_cast< const Entity_ABC& >( inhabitant ) );
     //popItem->setDragEnabled( true );
     //popItem->SetToolTip( QString( "%1 [%L2]" ).arg( inhabitant.GetName() ).arg( inhabitant.GetId() ) );

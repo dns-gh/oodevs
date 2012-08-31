@@ -463,9 +463,9 @@ void ModelBuilder::Select( const kernel::Ghost_ABC& element )
 namespace
 {
     template< typename Concrete, typename T >
-    void Rename( T& entity, const QString& text, kernel::Controllers& controllers, const QString& property )
+    void Rename( T* entity, const QString& text, kernel::Controllers& controllers, const QString& property )
     {
-        if( Concrete* concrete = dynamic_cast< Concrete* >( entity.ConstCast() ) )
+        if( Concrete* concrete = dynamic_cast< Concrete* >( entity ) )
         {
             concrete->Rename( text );
             controllers.controller_.Update( kernel::DictionaryUpdated( *concrete, property ) );
@@ -480,18 +480,32 @@ namespace
 void ModelBuilder::OnRename( Q3ListViewItem*, int, const QString& text )
 {
     if( selectedTeam_ )
-        Rename< Team >( selectedTeam_, text, controllers_, property_ );
+        Rename< Team >( selectedTeam_.ConstCast(), text, controllers_, property_ );
     else if( selectedAgent_ )
-        Rename< Agent >( selectedAgent_, text, controllers_, property_ );
+        Rename< Agent >( selectedAgent_.ConstCast(), text, controllers_, property_ );
     else if( selectedAutomat_ )
-        Rename< Automat >( selectedAutomat_, text, controllers_, property_ );
+        Rename< Automat >( selectedAutomat_.ConstCast(), text, controllers_, property_ );
     else if( selectedFormation_ )
-        Rename< Formation >( selectedFormation_, text, controllers_, property_ );
+        Rename< Formation >( selectedFormation_.ConstCast(), text, controllers_, property_ );
     else if( selectedGroup_ )
-        Rename< KnowledgeGroup >( selectedGroup_, text, controllers_, property_ );
+        Rename< KnowledgeGroup >( selectedGroup_.ConstCast(), text, controllers_, property_ );
     else if( selectedGhost_ )
-        Rename< Ghost >( selectedGhost_, text, controllers_, property_ );
+        Rename< Ghost >( selectedGhost_.ConstCast(), text, controllers_, property_ );
     else if( selectedUrbanObject_ )
-        Rename< kernel::UrbanObject >( selectedUrbanObject_, text, controllers_, property_ );
+        Rename< kernel::UrbanObject >( selectedUrbanObject_.ConstCast(), text, controllers_, property_ );
+}
 
+// -----------------------------------------------------------------------------
+// Name: ModelBuilder::OnRename
+// Created: JSR 2012-08-31
+// -----------------------------------------------------------------------------
+void ModelBuilder::OnRename( kernel::Entity_ABC& entity, const QString& newName )
+{
+    Rename< Team >( &entity, newName, controllers_, property_ );
+    Rename< Agent >( &entity, newName, controllers_, property_ );
+    Rename< Automat >( &entity, newName, controllers_, property_ );
+    Rename< Formation >( &entity, newName, controllers_, property_ );
+    Rename< KnowledgeGroup >( &entity, newName, controllers_, property_ );
+    Rename< Ghost >( &entity, newName, controllers_, property_ );
+    Rename< kernel::UrbanObject >( &entity, newName, controllers_, property_ );
 }

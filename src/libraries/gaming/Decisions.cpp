@@ -9,9 +9,9 @@
 
 #include "gaming_pch.h"
 #include "Decisions.h"
-#include "AutomatDecisions.h"
 #include "statusicons.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/AutomatDecisions_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/DecisionalModel.h"
 #include "clients_kernel/GlTools_ABC.h"
@@ -65,7 +65,7 @@ void Decisions::DoUpdate( const sword::UnitOrder& message )
 // -----------------------------------------------------------------------------
 bool Decisions::CanBeOrdered() const
 {
-    const AutomatDecisions& superiorDecisions = agent_.Get< TacticalHierarchies >().GetUp().Get< AutomatDecisions >();
+    const AutomatDecisions_ABC& superiorDecisions = agent_.Get< TacticalHierarchies >().GetUp().Get< AutomatDecisions_ABC >();
     return !superiorDecisions.IsEmbraye();
 }
 

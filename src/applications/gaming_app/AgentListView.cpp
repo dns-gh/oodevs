@@ -20,13 +20,13 @@
 #include "clients_gui/ChangeSuperiorDialog.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/AutomatDecisions_ABC.h"
 #include "clients_kernel/CommandPostAttributes_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Options.h"
-#include "gaming/AutomatDecisions.h"
 #include "gaming/StaticModel.h"
 #include "gaming/Attributes.h"
 #include "icons.h"
@@ -98,7 +98,7 @@ void AgentListView::setColumnWidth( int column, int w )
 // -----------------------------------------------------------------------------
 void AgentListView::Display( const kernel::Entity_ABC& entity, gui::ValuedListItem* item )
 {
-    const AutomatDecisions* decisions = entity.Retrieve< AutomatDecisions >();
+    const kernel::AutomatDecisions_ABC* decisions = entity.Retrieve< kernel::AutomatDecisions_ABC >();
     if( decisions )
         item->setPixmap( 1, decisions->IsEmbraye() ? lock_ : QPixmap() );
     else if( const kernel::CommandPostAttributes_ABC* commandPost = entity.Retrieve< kernel::CommandPostAttributes_ABC >() )
@@ -173,9 +173,9 @@ void AgentListView::OnChangeKnowledgeGroup()
 // Name: AgentListView::NotifyUpdated
 // Created: SBO 2006-08-18
 // -----------------------------------------------------------------------------
-void AgentListView::NotifyUpdated( const AutomatDecisions& decisions )
+void AgentListView::NotifyUpdated( const kernel::AutomatDecisions_ABC& decisions )
 {
-    const kernel::Entity_ABC* agent = & decisions.GetAgent();
+    const kernel::Entity_ABC* agent = &decisions.GetAgent();
     gui::ValuedListItem* item = gui::FindItem( agent, firstChild() );
     if( item )
         item->setPixmap( 1, decisions.IsEmbraye() ? lock_ : QPixmap() );

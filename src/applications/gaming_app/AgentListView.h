@@ -24,6 +24,7 @@ namespace kernel
     class Entity_ABC;
     class Agent_ABC;
     class Automat_ABC;
+    class AutomatDecisions_ABC;
     class KnowledgeGroup_ABC;
     class Team_ABC; // LTO
     class Controllers; // LTO
@@ -35,7 +36,6 @@ namespace actions
     class ActionsModel;
 }
 
-class AutomatDecisions;
 class StaticModel;
 
 // =============================================================================
@@ -46,7 +46,7 @@ class StaticModel;
 // Created: SBO 2006-08-18
 // =============================================================================
 class AgentListView : public gui::HierarchyListView< kernel::CommunicationHierarchies >
-                    , public tools::ElementObserver_ABC< AutomatDecisions >
+                    , public tools::ElementObserver_ABC< kernel::AutomatDecisions_ABC >
                     , public tools::ElementObserver_ABC< kernel::KnowledgeGroup_ABC > // LTO
                     , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
                     , public kernel::ContextMenuObserver_ABC< kernel::KnowledgeGroup_ABC >
@@ -80,7 +80,7 @@ private:
     virtual void viewportResizeEvent( QResizeEvent* e );
     virtual void setColumnWidth( int column, int w );
 
-    virtual void NotifyUpdated( const AutomatDecisions& decisions );
+    virtual void NotifyUpdated( const kernel::AutomatDecisions_ABC& decisions );
     virtual void NotifyUpdated( const kernel::KnowledgeGroup_ABC& knowledgeGroup ); // LTO
     virtual void NotifyContextMenu( const kernel::Automat_ABC& automat, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::KnowledgeGroup_ABC& group, kernel::ContextMenu& menu );

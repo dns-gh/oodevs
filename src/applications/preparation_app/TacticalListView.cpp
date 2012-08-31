@@ -15,7 +15,6 @@
 #include "PreparationProfile.h"
 #include "Preparation/Agent.h"
 #include "preparation/AgentsModel.h"
-#include "preparation/AutomatDecisions.h"
 #include "preparation/TacticalHierarchies.h"
 #include "preparation/EntityCommunications.h"
 #include "Preparation/Formation.h"
@@ -23,6 +22,7 @@
 #include "preparation/Model.h"
 #include "clients_gui/ChangeSuperiorDialog.h"
 #include "clients_kernel/EntityType.h"
+#include "clients_kernel/AutomatDecisions_ABC.h"
 #include "clients_kernel/CommandPostAttributes_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
@@ -143,9 +143,9 @@ void TacticalListView::Display( const Entity_ABC& entity, ValuedListItem* item )
 // Name: TacticalListView::NotifyUpdated
 // Created: SBO 2006-08-18
 // -----------------------------------------------------------------------------
-void TacticalListView::NotifyUpdated( const AutomatDecisions& decisions )
+void TacticalListView::NotifyUpdated( const kernel::AutomatDecisions_ABC& decisions )
 {
-    const Entity_ABC* agent = & decisions.GetAgent();
+    const Entity_ABC* agent = &decisions.GetAgent();
     ValuedListItem* item = FindItem( agent, firstChild() );
     if( agent )
         UpdatePixmap( *agent, item );
@@ -240,7 +240,7 @@ void TacticalListView::UpdatePixmap( const kernel::Entity_ABC& entity, gui::Valu
             item->setPixmap( 1, commandPost_ );
         else
         {
-            if( const AutomatDecisions* decisions = entity.Retrieve< AutomatDecisions >() )
+            if( const kernel::AutomatDecisions_ABC* decisions = entity.Retrieve< kernel::AutomatDecisions_ABC >() )
                 item->setPixmap( 1, decisions->IsEmbraye() ? lock_ : QPixmap() );
             else
                 item->setPixmap( 1, QPixmap() );
@@ -330,7 +330,7 @@ void TacticalListView::NotifyContextMenu( const Automat_ABC& automat, ContextMen
     contextMenuEntity_ = &automat;
     if( !isVisible() || !IsActivated() )
         return;
-    if( const AutomatDecisions* decisions = automat.Retrieve< AutomatDecisions >() )
+    if( const kernel::AutomatDecisions_ABC* decisions = automat.Retrieve< kernel::AutomatDecisions_ABC >() )
     {
         if( ! decisions->IsEmbraye() )
             menu.InsertItem( "Helpers", tr( "Engage" ), this, SLOT( Engage() ), false, 0 );
@@ -416,7 +416,7 @@ void TacticalListView::Engage()
     if( ValuedListItem* valuedItem = static_cast< ValuedListItem* >( selectedItem() ) ) // $$$$ ABR 2012-07-03: Use ContextMenuEntity instead, could operate on the wrong entity otherwise
     {
         Entity_ABC& entity = *valuedItem->GetValue< Entity_ABC >();
-        if( AutomatDecisions* decisions = entity.Retrieve< AutomatDecisions >() )
+        if( kernel::AutomatDecisions_ABC* decisions = entity.Retrieve< kernel::AutomatDecisions_ABC >() )
             decisions->Engage();
     }
 }
@@ -430,7 +430,7 @@ void TacticalListView::Disengage()
     if( ValuedListItem* valuedItem = static_cast< ValuedListItem* >( selectedItem() ) ) // $$$$ ABR 2012-07-03: Use ContextMenuEntity instead, could operate on the wrong entity otherwise
     {
         Entity_ABC& entity = *valuedItem->GetValue< Entity_ABC >();
-        if( AutomatDecisions* decisions = entity.Retrieve< AutomatDecisions >() )
+        if( kernel::AutomatDecisions_ABC* decisions = entity.Retrieve< kernel::AutomatDecisions_ABC >() )
             decisions->Disengage();
     }
 }

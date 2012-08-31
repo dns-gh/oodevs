@@ -22,6 +22,7 @@ namespace kernel
 namespace gui
 {
     class EntitySymbols;
+    class ModelObserver_ABC;
 
 // =============================================================================
 /** @class  HierarchyTreeView_ABC
@@ -36,7 +37,7 @@ class HierarchyTreeView_ABC : public EntityTreeView_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             HierarchyTreeView_ABC( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, const EntitySymbols& symbols, QWidget* parent = 0 );
+             HierarchyTreeView_ABC( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, const EntitySymbols& symbols, QWidget* parent = 0 );
     virtual ~HierarchyTreeView_ABC();
     //@}
 
@@ -51,6 +52,11 @@ protected:
     void InternalNotifyUpdated( const kernel::Hierarchies& hierarchy );
     void UpdateBackgroundColor( QStandardItem& entityItem, const kernel::Entity_ABC& entity );
     void UpdateSymbol( QStandardItem& entityItem, const kernel::Entity_ABC& entity );
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual Qt::ItemFlags ItemSpecificFlags( const kernel::Entity_ABC& entity ) const;
     //@}
 
 protected slots:

@@ -16,17 +16,17 @@
 #include "actions/Automat.h"
 #include "actions/Formation.h"
 #include "actions/UnitMagicAction.h"
-#include "gaming/AutomatDecisions.h"
-#include "gaming/Attributes.h"
-#include "gaming/StaticModel.h"
 #include "clients_gui/ChangeSuperiorDialog.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/AutomatDecisions_ABC.h"
 #include "clients_kernel/CommandPostAttributes_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Options.h"
+#include "gaming/Attributes.h"
+#include "gaming/StaticModel.h"
 #include "protocol/SimulationSenders.h"
 
 using namespace actions;
@@ -123,7 +123,7 @@ void TacticalListView::Display( const Entity_ABC& entity, ValuedListItem* item )
         item->setPixmap( 1, commandPost_ );
     else
     {
-        if( const AutomatDecisions* decisions = entity.Retrieve< AutomatDecisions >() )
+        if( const AutomatDecisions_ABC* decisions = entity.Retrieve< AutomatDecisions_ABC >() )
             item->setPixmap( 1, decisions->IsEmbraye() ? lock_ : QPixmap() );
         else
             item->setPixmap( 1, QPixmap() );
@@ -148,7 +148,7 @@ void TacticalListView::Display( const Entity_ABC& entity, ValuedListItem* item )
 // Name: TacticalListView::NotifyUpdated
 // Created: AGE 2006-11-23
 // -----------------------------------------------------------------------------
-void TacticalListView::NotifyUpdated( const AutomatDecisions& decisions )
+void TacticalListView::NotifyUpdated( const kernel::AutomatDecisions_ABC& decisions )
 {
     const Entity_ABC* agent = & decisions.GetAgent();
     ValuedListItem* item = FindItem( agent, firstChild() );

@@ -21,8 +21,8 @@ using namespace gui;
 // Name: HierarchyTreeView_ABC constructor
 // Created: ABR 2012-08-13
 // -----------------------------------------------------------------------------
-HierarchyTreeView_ABC::HierarchyTreeView_ABC( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, const EntitySymbols& symbols, QWidget* parent /*= 0*/ )
-    : EntityTreeView_ABC( controllers, profile, parent )
+HierarchyTreeView_ABC::HierarchyTreeView_ABC( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, const EntitySymbols& symbols, QWidget* parent /*= 0*/ )
+    : EntityTreeView_ABC( controllers, profile, modelObserver, parent )
     , symbols_( symbols )
     , timer_( new QTimer( this ) )
 {
@@ -53,12 +53,12 @@ void HierarchyTreeView_ABC::InternalNotifyCreated( const kernel::Hierarchies& hi
     {
         QStandardItem* superiorItem = dataModel_.FindSafeItem( *superior );
         if( !superiorItem )
-            superiorItem = dataModel_.AddRootSafeItem( dataModel_.rowCount(), 0, superior->GetName(), *superior );
-        entityItem = dataModel_.AddChildSafeItem( superiorItem, superiorItem->rowCount(), 0, entity.GetName(), entity );
+            superiorItem = dataModel_.AddRootSafeItem( dataModel_.rowCount(), 0, superior->GetName(), *superior, ItemSpecificFlags( *superior ) );
+        entityItem = dataModel_.AddChildSafeItem( superiorItem, superiorItem->rowCount(), 0, entity.GetName(), entity, ItemSpecificFlags( entity ) );
     }
     else                // Root item
     {
-        entityItem = dataModel_.AddRootSafeItem( dataModel_.rowCount(), 0, entity.GetName(), entity );
+        entityItem = dataModel_.AddRootSafeItem( dataModel_.rowCount(), 0, entity.GetName(), entity, ItemSpecificFlags( entity ) );
     }
 
     if( entityItem)
@@ -127,6 +127,15 @@ void HierarchyTreeView_ABC::UpdateSymbol( QStandardItem& entityItem, const kerne
         return;
     }
     entityItem.setData( pixmap, Qt::DecorationRole );
+}
+
+// -----------------------------------------------------------------------------
+// Name: HierarchyTreeView_ABC::ItemSpecificFlags
+// Created: JSR 2012-08-31
+// -----------------------------------------------------------------------------
+Qt::ItemFlags HierarchyTreeView_ABC::ItemSpecificFlags( const kernel::Entity_ABC& /*entity*/ ) const
+{
+    return Qt::ItemIsEditable;
 }
 
 // -----------------------------------------------------------------------------

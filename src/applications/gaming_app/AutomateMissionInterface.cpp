@@ -12,8 +12,8 @@
 #include "actions_gui/InterfaceBuilder_ABC.h"
 #include "actions/ActionsModel.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/AutomatDecisions_ABC.h"
 #include "clients_kernel/MissionType.h"
-#include "gaming/AutomatDecisions.h"
 
 using namespace kernel;
 using namespace actions;
@@ -48,8 +48,8 @@ void AutomateMissionInterface::Publish()
 {
     Action_ABC* action = model_.CreateAction( GetEntity(), mission_ );
     CommitTo( *action );
-    if( const AutomatDecisions* decisions = GetEntity().Retrieve< AutomatDecisions >() )
+    if( const kernel::AutomatDecisions_ABC* decisions = GetEntity().Retrieve< kernel::AutomatDecisions_ABC >() )
         if( ! decisions->IsEmbraye() )
-            decisions->Engage();
+            const_cast< kernel::AutomatDecisions_ABC* >( decisions )->Engage();
     model_.Publish( *action );
 }

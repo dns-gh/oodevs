@@ -35,10 +35,10 @@
 #include "clients_kernel/EntityType.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Point.h"
+#include "gaming/AutomatDecisions.h"
 #include "gaming/StaticModel.h"
 #include "gaming/MagicOrders.h"
 #include "gaming/Decisions.h"
-#include "gaming/AutomatDecisions.h"
 #include "gaming/Attributes.h"
 #include "gaming/LogisticConsigns.h"
 #include "protocol/SimulationSenders.h"
@@ -126,11 +126,11 @@ void UnitMagicOrdersInterface::NotifyContextMenu( const kernel::Automat_ABC& age
     kernel::ContextMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ), false, 1 );
     int moveId = AddMagic( tr( "Teleport" ), SLOT( Move() ), magicMenu );
     bool bMoveAllowed = false;
-    if( const AutomatDecisions* decisions = agent.Retrieve< AutomatDecisions >() )
+    const AutomatDecisions* decisions = static_cast< const AutomatDecisions* >( agent.Retrieve< kernel::AutomatDecisions_ABC >() );
+    if( decisions )
         bMoveAllowed = decisions->CanBeOrdered();
     magicMenu->setItemEnabled( moveId, bMoveAllowed );
-    AddReloadBrainMenu( magicMenu, static_.types_.automatModels_,
-        agent.Retrieve<AutomatDecisions>() ? agent.Retrieve<AutomatDecisions>()->ModelName() : "unknown",
+    AddReloadBrainMenu( magicMenu, static_.types_.automatModels_, decisions ? decisions->ModelName() : "unknown",
         agent.Get< kernel::EntityType< kernel::AutomatType > >().GetType().GetDecisionalModel().GetName() );
     AddSurrenderMenu( magicMenu, agent );
     FillCommonOrders( magicMenu );

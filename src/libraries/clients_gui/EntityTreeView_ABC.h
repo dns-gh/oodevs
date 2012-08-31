@@ -26,6 +26,7 @@ namespace kernel
 
 namespace gui
 {
+class ModelObserver_ABC;
 
 // =============================================================================
 /** @class  EntityTreeView_ABC
@@ -37,7 +38,7 @@ class EntityTreeView_ABC : public RichTreeView
                          , public tools::Observer_ABC
                          , public tools::ElementObserver_ABC< kernel::Profile_ABC >
                          , public tools::ElementObserver_ABC< kernel::Team_ABC >
-                         //, public tools::ElementObserver_ABC< kernel::Entity_ABC >
+                         , public tools::ElementObserver_ABC< kernel::Entity_ABC >
                          , public kernel::ActivationObserver_ABC< kernel::Entity_ABC >
                          , public kernel::MultipleSelectionObserver< kernel::Entity_ABC >
 {
@@ -46,7 +47,7 @@ class EntityTreeView_ABC : public RichTreeView
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityTreeView_ABC( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, QWidget* parent = 0 );
+             EntityTreeView_ABC( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, QWidget* parent = 0 );
     virtual ~EntityTreeView_ABC();
     //@}
 
@@ -63,7 +64,7 @@ public:
 
     //! @name Element_Observer_ABC< kernel::Entity_ABC >
     //@{
-    //virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
+    virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
     //@}
 
     //! @name Element_Observer_ABC< kernel::Profile_ABC >
@@ -76,15 +77,16 @@ public:
     virtual void NotifySelectionChanged( const std::vector< const kernel::Entity_ABC* >& elements );
     //@}
 
-    //! @name Operations
-    //@{
-    virtual bool IsTypeRejected( const kernel::Entity_ABC& entity ) const;
-    //@}
-
 protected:
     //! @name QWidget
     //@{
     virtual void contextMenuEvent( QContextMenuEvent* event );
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual bool IsTypeRejected( const kernel::Entity_ABC& entity ) const;
+    virtual Qt::ItemFlags ItemSpecificFlags( const kernel::Entity_ABC& entity ) const;
     //@}
 
 protected slots:
@@ -92,6 +94,7 @@ protected slots:
     //@{
     void OnActivate( const QModelIndex& index );
     void OnSelect( const QItemSelection& selected, const QItemSelection& deselected );
+    void OnDataChanged( const QModelIndex& index, const QVariant& value );
     //@}
 
 private:
@@ -103,9 +106,10 @@ private:
 protected:
     //! @name Member data
     //@{
-    kernel::Controllers&        controllers_;
-    const kernel::Profile_ABC&  profile_;
-    bool                        blockSelect_;
+    kernel::Controllers& controllers_;
+    const kernel::Profile_ABC& profile_;
+    ModelObserver_ABC& modelObserver_;
+    bool blockSelect_;
     //@}
 };
 

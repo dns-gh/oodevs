@@ -26,6 +26,8 @@ namespace gui
 // =============================================================================
 class StandardModel : public QStandardItemModel
 {
+    Q_OBJECT
+
 public:
     //! @name Types
     //@{
@@ -38,6 +40,12 @@ public:
     static const QString hideValue_;
     //@}
 
+signals:
+    //! @name Signals
+    //@{
+    void DataChanged( const QModelIndex & index, const QVariant & value );
+    //@}
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -47,6 +55,8 @@ public:
 
     //! @name Operations
     //@{
+    virtual bool setData ( const QModelIndex & index, const QVariant & value, int role = Qt::EditRole );
+
     void Purge();
     template< typename T >
     void PurgeObsoleteSafeItem();

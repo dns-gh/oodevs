@@ -126,7 +126,7 @@ kernel::Automat_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const ker
     const kernel::Karma& karma = parent.Get< kernel::TacticalHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
     result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( symbolsFactory_.GetSymbolBase( karma ) ) );
     result->Attach< kernel::TacticalHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, &parent ) );
-    result->Attach( *new AutomatDecisions( controllers_.controller_, *result ) );
+    result->Attach< kernel::AutomatDecisions_ABC >( *new AutomatDecisions( controllers_.controller_, *result ) );
     kernel::Entity_ABC* kg = FindorCreateKnowledgeGroup( parent, knowledgeGroupFactory_ );
     result->Attach< kernel::CommunicationHierarchies >( *new AutomatCommunications( controllers_.controller_, *result, kg ) );
 
@@ -262,7 +262,7 @@ kernel::Automat_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Entity_AB
     result->Attach( *new kernel::EntityType< kernel::AutomatType >( *result, *type, dictionary ) );
     result->Attach< kernel::Positions >( *new AutomatPositions( *result ) );
     result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( xis ) );
-    result->Attach( *new AutomatDecisions( xis, controllers_.controller_, *result ) );
+    result->Attach< kernel::AutomatDecisions_ABC >( *new AutomatDecisions( xis, controllers_.controller_, *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, &parent ) );
     result->Attach< kernel::CommunicationHierarchies >( *new AutomatCommunications( xis, controllers_.controller_, *result, model_.knowledgeGroups_ ) );
 
@@ -362,7 +362,7 @@ kernel::Automat_ABC* AgentFactory::Create( kernel::Ghost_ABC& ghost, const kerne
     result->Attach< kernel::Positions >( *new AutomatPositions( *result ) );
     const kernel::Karma& karma = ghost.Get< kernel::TacticalHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
     result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( symbolsFactory_.GetSymbolBase( karma ) ) );
-    result->Attach( *new AutomatDecisions( controllers_.controller_, *result ) );
+    result->Attach< kernel::AutomatDecisions_ABC >( *new AutomatDecisions( controllers_.controller_, *result ) );
     // Tactical hierarchy
     {
         const kernel::TacticalHierarchies& ghostHierarchy = ghost.Get< kernel::TacticalHierarchies >();

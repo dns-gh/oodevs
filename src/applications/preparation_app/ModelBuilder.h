@@ -11,6 +11,7 @@
 #define __ModelBuilder_h_
 
 #include "tools/SelectionObserver_ABC.h"
+#include "clients_gui/ModelObserver_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
@@ -38,6 +39,7 @@ class Model;
 // Created: SBO 2006-08-30
 // =============================================================================
 class ModelBuilder : public QObject
+                   , public gui::ModelObserver_ABC
                    , public tools::Observer_ABC
                    , public tools::SelectionObserver_ABC
                    , public tools::SelectionObserver_Base< kernel::Team_ABC >
@@ -60,6 +62,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void OnRename( kernel::Entity_ABC& entity, const QString& newName );
     void ClearSelection();
     bool CanCreateLine() const;
     void CreateLimit( const T_PointVector& points );

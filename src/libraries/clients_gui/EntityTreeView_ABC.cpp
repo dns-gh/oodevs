@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "EntityTreeView_ABC.h"
+#include "ModelObserver_ABC.h"
 #include "moc_EntityTreeView_ABC.cpp"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -22,16 +23,19 @@ using namespace gui;
 // Name: EntityTreeView_ABC constructor
 // Created: ABR 2012-08-16
 // -----------------------------------------------------------------------------
-EntityTreeView_ABC::EntityTreeView_ABC( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, QWidget* parent /*= 0*/ )
+EntityTreeView_ABC::EntityTreeView_ABC( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, QWidget* parent /*= 0*/ )
     : RichTreeView( controllers, parent )
     , controllers_( controllers )
-    , profile_    ( profile )
+    , profile_( profile )
+    , modelObserver_( modelObserver )
     , blockSelect_( false )
 {
     setHeaderHidden( true );
+    setEditTriggers( SelectedClicked | EditKeyPressed );
 
     connect( this,             SIGNAL( activated       ( const QModelIndex& ) ),                           this, SLOT( OnActivate( const QModelIndex& ) ) );
     connect( selectionModel(), SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ), this, SLOT( OnSelect  ( const QItemSelection&, const QItemSelection& ) ) );
+    connect( &dataModel_, SIGNAL( DataChanged( const QModelIndex&, const QVariant& ) ), SLOT( OnDataChanged ( const QModelIndex&, const QVariant& ) ) );
 
     controllers_.Register( *this );
 }
@@ -91,6 +95,17 @@ void EntityTreeView_ABC::NotifyCreated( const kernel::Team_ABC& team )
 void EntityTreeView_ABC::NotifyDeleted( const kernel::Team_ABC& /* team */ )
 {
     dataModel_.PurgeObsoleteSafeItem< kernel::Entity_ABC >();
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityTreeView_ABC::NotifyUpdated
+// Created: JSR 2012-08-31
+// -----------------------------------------------------------------------------
+void EntityTreeView_ABC::NotifyUpdated( const kernel::Entity_ABC& entity )
+{
+    QStandardItem* item = dataModel_.FindSafeItem( entity );
+    if( item )
+        item->setData( *new QVariant( entity.GetName() ), Qt::DisplayRole );
 }
 
 // -----------------------------------------------------------------------------
@@ -166,6 +181,20 @@ void EntityTreeView_ABC::OnSelect( const QItemSelection& selected, const QItemSe
 }
 
 // -----------------------------------------------------------------------------
+// Name: EntityTreeView_ABC::OnDataChanged
+// Created: JSR 2012-08-31
+// -----------------------------------------------------------------------------
+void EntityTreeView_ABC::OnDataChanged( const QModelIndex& index, const QVariant& value )
+{
+    if( value.type() == QVariant::String )
+    {
+        kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( index );
+        if( entity )
+            modelObserver_.OnRename( *entity, value.toString() );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: EntityTreeView_ABC::contextMenuEvent
 // Created: ABR 2012-08-16
 // -----------------------------------------------------------------------------
@@ -173,9 +202,9 @@ void EntityTreeView_ABC::contextMenuEvent( QContextMenuEvent* event )
 {
     if( !IsReadOnly() && event )
     {
-     //   kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( indexAt( event->globalPos() ) );
-        //if( ValuedListItem* value = dynamic_cast< ValuedListItem* >( i ) )
-        //    value->ContextMenu( controllers_.actions_, pos );
+        kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( indexAt( event->pos() ) );
+        if( entity )
+            entity->ContextMenu( controllers_.actions_, event->globalPos() );
     }
 }
 
@@ -186,4 +215,13 @@ void EntityTreeView_ABC::contextMenuEvent( QContextMenuEvent* event )
 bool EntityTreeView_ABC::IsTypeRejected( const kernel::Entity_ABC& entity ) const
 {
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityTreeView_ABC::ItemSpecificFlags
+// Created: JSR 2012-08-31
+// -----------------------------------------------------------------------------
+Qt::ItemFlags EntityTreeView_ABC::ItemSpecificFlags( const kernel::Entity_ABC& entity ) const
+{
+    return 0;
 }

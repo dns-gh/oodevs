@@ -129,7 +129,7 @@ kernel::Automat_ABC* AgentFactory::Create( const sword::AutomatCreation& message
     result->Attach< kernel::TacticalHierarchies >( *new AutomatTacticalHierarchies( controllers_.controller_, *result, *superior, model_.agents_, model_.teams_ ) );
     result->Attach< Lives_ABC >( *new AutomatLives( *result ) );
     result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, model_.teams_, static_.objectTypes_, result->GetLogisticLevel(), dictionary, *result ) );
-    result->Attach( *new AutomatDecisions( controllers_.controller_, publisher_, *result, static_.types_.automatModels_, *type ) );
+    result->Attach< kernel::AutomatDecisions_ABC >( *new AutomatDecisions( controllers_.controller_, publisher_, *result, static_.types_.automatModels_, *type ) );
     result->Attach< kernel::Positions >( *new AggregatedPositions( *result, 2.f ) );
     result->Attach( *new Logistics( *result, controllers_.controller_, model_, static_, dictionary ) );
     result->Attach( *new LogMaintenanceConsigns( controllers_.controller_ ) );

@@ -58,7 +58,6 @@ namespace tools
 class kernel::ContextMenu;
 class Decisions_ABC;
 class Decisions;
-class AutomatDecisions;
 class PopulationDecisions;
 class StaticModel;
 class Publisher_ABC;

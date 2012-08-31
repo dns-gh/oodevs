@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "StandardModel.h"
+#include "moc_StandardModel.cpp"
 
 using namespace gui;
 
@@ -33,6 +34,18 @@ StandardModel::StandardModel( kernel::Controllers& controllers, QObject* parent 
 StandardModel::~StandardModel()
 {
     Purge();
+}
+
+// -----------------------------------------------------------------------------
+// Name: StandardModel::setData
+// Created: JSR 2012-08-31
+// -----------------------------------------------------------------------------
+bool StandardModel::setData( const QModelIndex & index, const QVariant & value, int role /*= Qt::EditRole*/ )
+{
+    bool ret = QStandardItemModel::setData( index, value, role );
+    if( ret && role == Qt::EditRole )
+        emit DataChanged( index, value );
+    return ret;
 }
 
 // -----------------------------------------------------------------------------

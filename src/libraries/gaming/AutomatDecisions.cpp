@@ -125,7 +125,7 @@ const Mission* AutomatDecisions::GetCurrentMission() const
 // Name: AutomatDecisions::GetAgent
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-const Entity_ABC& AutomatDecisions::GetAgent() const
+const Automat_ABC& AutomatDecisions::GetAgent() const
 {
     return agent_;
 }
@@ -143,7 +143,7 @@ bool AutomatDecisions::IsEmbraye() const
 // Name: AutomatDecisions::Engage
 // Created: SBO 2006-06-19
 // -----------------------------------------------------------------------------
-void AutomatDecisions::Engage() const
+void AutomatDecisions::Engage()
 {
     simulation::SetAutomatMode message;
     message().mutable_automate()->set_id( agent_.GetId() );
@@ -155,7 +155,7 @@ void AutomatDecisions::Engage() const
 // Name: AutomatDecisions::Disengage
 // Created: SBO 2006-06-19
 // -----------------------------------------------------------------------------
-void AutomatDecisions::Disengage() const
+void AutomatDecisions::Disengage()
 {
     simulation::SetAutomatMode message;
     message().mutable_automate()->set_id( agent_.GetId() );

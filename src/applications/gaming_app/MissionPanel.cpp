@@ -26,8 +26,8 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/tools.h"
 
-#include "gaming/AutomatDecisions.h"
 #include "gaming/CommandPublisher.h"
+#include "gaming/AutomatDecisions.h"
 #include "gaming/Decisions.h"
 #include "gaming/PopulationDecisions.h"
 #include "gaming/StaticModel.h"
@@ -98,7 +98,7 @@ void MissionPanel::NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu 
         if( const Decisions* decisions = agent.Retrieve< Decisions >() )
             AddMissions( *decisions, menu, tr( "Agent missions" ), SLOT( ActivateAgentMission( int ) ) );
         if( const Automat_ABC* automat = static_cast< const Automat_ABC* >( agent.Get< kernel::TacticalHierarchies >().GetSuperior() ) )
-            AddMissions( automat->Get< AutomatDecisions >(), menu, tr( "Automat missions" ), SLOT( ActivateAutomatMission( int ) ), MAKE_PIXMAP( lock ) );
+            AddMissions( static_cast< const AutomatDecisions& >( automat->Get< kernel::AutomatDecisions_ABC >() ), menu, tr( "Automat missions" ), SLOT( ActivateAutomatMission( int ) ), MAKE_PIXMAP( lock ) );
     }
 }
 
@@ -111,7 +111,7 @@ void MissionPanel::NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::
     if( profile_.CanBeOrdered( agent ) )
     {
         selectedEntity_ = &agent;
-        const AutomatDecisions& decisions = agent.Get< AutomatDecisions >();
+        const AutomatDecisions& decisions = static_cast< const AutomatDecisions& >( agent.Get< kernel::AutomatDecisions_ABC >() );
         AddMissions( decisions, menu, tr( "Automat missions" ), SLOT( ActivateAutomatMission( int ) ), MAKE_PIXMAP( lock ) );
         if( ! decisions.IsEmbraye() )
             menu.InsertItem( "Command", tr( "Engage" ), this, SLOT( Engage() ) );
@@ -324,7 +324,7 @@ void MissionPanel::ActivateAutomatMission( int id )
     SetInterface( 0 );
     const kernel::MissionType& mission = static_cast< tools::Resolver_ABC< kernel::MissionType >& >( static_.types_).Get( id );
     Entity_ABC* entity = selectedEntity_.ConstCast();
-    if( !entity->Retrieve< AutomatDecisions >() )
+    if( !entity->Retrieve< kernel::AutomatDecisions_ABC >() )
         entity = const_cast< kernel::Entity_ABC* >( entity->Get< kernel::TacticalHierarchies >().GetSuperior() );
     SetInterface( new AutomateMissionInterface( this, *entity, mission, controllers_.actions_, interfaceBuilder_, actionsModel_, config_ ) );
 }
@@ -349,10 +349,10 @@ void MissionPanel::ActivateFragOrder( int id )
     SetInterface( 0 );
     const kernel::FragOrderType& order = static_cast< tools::Resolver_ABC< kernel::FragOrderType >& >( static_.types_).Get( id );
     Entity_ABC* entity = selectedEntity_.ConstCast();
-    if( !entity->Retrieve< AutomatDecisions >() )
+    if( !entity->Retrieve< kernel::AutomatDecisions_ABC >() )
     {
         Entity_ABC* superior = const_cast< kernel::Entity_ABC* >( entity->Get< kernel::TacticalHierarchies >().GetSuperior() );
-        if( const AutomatDecisions* decisions = superior->Retrieve< AutomatDecisions >() )
+        if( const kernel::AutomatDecisions_ABC* decisions = superior->Retrieve< kernel::AutomatDecisions_ABC >() )
             if( decisions->IsEmbraye() )
                 entity = superior;
     }
@@ -381,7 +381,11 @@ void MissionPanel::Draw( Viewport_ABC& viewport )
 // -----------------------------------------------------------------------------
 void MissionPanel::Engage()
 {
-    AutomatDecisions* decisions = selectedEntity_ ? selectedEntity_.ConstCast()->Retrieve< AutomatDecisions >() : 0;
+    if( !selectedEntity_ )
+        return;
+    kernel::AutomatDecisions_ABC* decisions = selectedEntity_.ConstCast()->Retrieve< kernel::AutomatDecisions_ABC >();
+    if( !decisions )
+        return;
 
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_mode" );
     actions::EngageMagicAction* action = new actions::EngageMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Engage" ), true, true );
@@ -390,7 +394,6 @@ void MissionPanel::Engage()
     action->RegisterAndPublish( actionsModel_ );
 
     decisions->Engage();
-
 }
 
 // -----------------------------------------------------------------------------
@@ -399,7 +402,11 @@ void MissionPanel::Engage()
 // -----------------------------------------------------------------------------
 void MissionPanel::Disengage()
 {
-    AutomatDecisions* decisions = selectedEntity_ ? selectedEntity_.ConstCast()->Retrieve< AutomatDecisions >() : 0;
+    if( !selectedEntity_ )
+        return;
+    kernel::AutomatDecisions_ABC* decisions = selectedEntity_.ConstCast()->Retrieve< kernel::AutomatDecisions_ABC >();
+    if( !decisions )
+        return;
 
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_mode" );
     actions::EngageMagicAction* action = new actions::EngageMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Disengage" ), false, true );
