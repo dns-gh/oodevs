@@ -55,6 +55,7 @@ public:
     T_Names    GetNames   ( int offset, int limit ) const;
     bool       Has        ( const std::string& name ) const;
     T_Defaults GetDefaults( const Path& plugin ) const;
+    Path       GetLibrary ( const Path& plugin ) const;
     //@}
 
 private:

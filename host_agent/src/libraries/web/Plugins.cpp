@@ -212,3 +212,15 @@ Plugins::T_Defaults Plugins::GetDefaults( const Path& plugin ) const
         return T_Defaults();
     return it->second.defaults_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Plugins::GetLibrary
+// Created: BAX 2012-08-31
+// -----------------------------------------------------------------------------
+Path Plugins::GetLibrary( const Path& plugin ) const
+{
+    T_Plugins::const_iterator it = plugins_.find( plugin );
+    if( it == plugins_.end() )
+        return Path();
+    return it->second.library_;
+}

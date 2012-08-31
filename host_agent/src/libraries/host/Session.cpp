@@ -394,6 +394,7 @@ void WritePlugin( Tree& tree, const std::string& prefix, const web::session::Plu
 {
     if( !cfg.enabled )
         return;
+    tree.put( prefix + "<xmlattr>.library", Utf8Convert( cfg.library ) );
     BOOST_FOREACH( const web::session::PluginConfig::T_Parameters::value_type& value, cfg.parameters )
         tree.put( prefix + XpathToXml( value.first ), value.second );
 }
@@ -407,7 +408,7 @@ void WriteDispatcherConfiguration( Tree& tree, int base, const Config& cfg )
     tree.put( prefix + "plugins.web_control.<xmlattr>.library", "web_control_plugin" );
     tree.put( prefix + "plugins.recorder.<xmlattr>.fragmentfreq", cfg.recorder.frequency );
     BOOST_FOREACH( const Config::T_Plugins::value_type& value, cfg.plugins )
-        WritePlugin( tree, prefix + value.first + ".", value.second );
+        WritePlugin( tree, prefix + "plugins." + value.first + ".", value.second );
 }
 
 void WriteRngConfiguration( Tree& tree, const std::string& prefix, const RngConfig& cfg )

@@ -10,18 +10,11 @@
 #ifndef CONFIGS_H
 #define CONFIGS_H
 
+#include <boost/filesystem/path.hpp>
 #include <boost/property_tree/ptree_fwd.hpp>
 #include <map>
 #include <set>
 #include <string>
-
-namespace boost
-{
-namespace filesystem
-{
-    class path;
-}
-}
 
 namespace web
 {
@@ -67,6 +60,7 @@ struct PluginConfig
     PluginConfig( const Plugins& plugins, const Path& path );
     typedef std::map< std::string, std::string > T_Parameters;
     bool         enabled;
+    Path         library;
     T_Parameters parameters;
 };
 

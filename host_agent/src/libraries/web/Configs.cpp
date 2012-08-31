@@ -41,6 +41,7 @@ session::RngConfig::RngConfig()
 // -----------------------------------------------------------------------------
 session::PluginConfig::PluginConfig( const Plugins& plugins, const Path& path )
     : enabled   ( false )
+    , library   ( plugins.GetLibrary( path ) )
     , parameters( plugins.GetDefaults( path ) )
 {
     // NOTHING
