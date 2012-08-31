@@ -26,7 +26,7 @@ namespace
     {
         return type == eNoLogisticBase || type ==  eNoCommandPost || type ==  eSeveralCommandPost
             || type ==  eNoKnowledgeGroup || type ==  eScoreError || type ==  eSuccessFactorError
-            || type == eBadCPExtensions || type == eProfileNoRole;
+            || type == eBadCPExtensions || type == eProfileNoRole || type == eNoOrbat;
     }
 
 #define CONVERT_TO_MASK( mask ) { if( type & mask ) return mask; }
