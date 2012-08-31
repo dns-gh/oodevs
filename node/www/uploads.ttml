@@ -71,7 +71,7 @@
                 {{/is_first_item}}
 
                 {{#for_all_items items "[[ .type ]]"}}
-                <tr class="package_row">
+                <tr class="package_row{{#equal action "error"}} error{{/equal}}">
                     <td class="name">
                         {{name}}
                         {{#equal action "error"}}
