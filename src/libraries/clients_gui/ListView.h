@@ -15,7 +15,7 @@
 #include "ItemFactory_ABC.h"
 #include <boost/noncopyable.hpp>
 #include <boost/function.hpp>
-#include "clients_kernel/ModesObserver_ABC.h"
+#include "clients_kernel/ReadOnlyModable.h"
 
 #pragma warning( push, 0 )
 #include <QtGui/QWindowsStyle>
@@ -26,7 +26,7 @@ namespace gui
     class SearchListView_ABC;
 
 class RichListView : public Q3ListView
-                   , public kernel::ModesObserver_ABC
+                   , public kernel::ReadOnlyModable
 {
     Q_OBJECT
 
@@ -34,8 +34,6 @@ public:
     explicit RichListView( QWidget* parent, const char* name = 0 )
         : Q3ListView( parent, name )
         , creationBlocked_   ( false )
-        , readOnly_          ( false )
-        , readOnlyModes_     ( 0 )
         , dndLocked_         ( false )
         , contextMenuBlocked_( false )
     {
@@ -88,19 +86,6 @@ public:
         DeleteTail( static_cast< ValuedListItem *>( firstChild() ) );
         clear();
     }
-
-    //! @name ReadOnly management// $$$$ ABR 2012-05-24: Factorize this to tools::ReadOnlyModable and use it on HierarchyListView_ABC
-    //@{
-    bool IsReadOnly() const
-    {
-        return ( readOnlyModes_ & GetCurrentMode() ) != 0;
-    }
-
-    void SetReadOnlyModes( int modes )
-    {
-        readOnlyModes_ = modes;
-    }
-    //@}
 
 public slots:
     void SearchAndSelect( const QString& searchedText )
@@ -222,9 +207,7 @@ private:
 
 private:
     QString searchedText_;
-    int     readOnlyModes_;
     bool    creationBlocked_;
-    bool    readOnly_;
     bool    contextMenuBlocked_;
     bool    dndLocked_;
 };

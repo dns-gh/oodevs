@@ -1191,6 +1191,9 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\CriticalIntelligence.h">
       <Filter>Source Files\Model\Entities\Properties</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ReadOnlyModable.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\EntityType.h">
       <Filter>Source Files\Model\Entities\Properties</Filter>
     </ClInclude>

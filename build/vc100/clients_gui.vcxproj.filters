@@ -886,6 +886,18 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\PropertyDisplayer.cpp">
       <Filter>Source Files\Tools\Editors</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichTreeView.cpp">
+      <Filter>Source Files\MVC\View</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\HierarchyTreeView_ABC.cpp">
+      <Filter>Source Files\MVC\View</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\StandardModel.cpp">
+      <Filter>Source Files\MVC\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\EntityTreeView_ABC.cpp">
+      <Filter>Source Files\MVC\View</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -1413,6 +1425,15 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\PropertyModel.h">
       <Filter>Source Files\MVC\Model</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\HierarchyTreeView.h">
+      <Filter>Source Files\MVC\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\EntityTreeView.h">
+      <Filter>Source Files\MVC\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\StandardModel.h">
+      <Filter>Source Files\MVC\Model</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\clients_gui\HierarchyListView.inl">
@@ -1447,6 +1468,15 @@
     </None>
     <None Include="..\..\src\libraries\clients_gui\clients_gui_app6_ar.ts">
       <Filter>Translations</Filter>
+    </None>
+    <None Include="..\..\src\libraries\clients_gui\HierarchyTreeView.inl">
+      <Filter>Source Files\MVC\View</Filter>
+    </None>
+    <None Include="..\..\src\libraries\clients_gui\StandardModel.inl">
+      <Filter>Source Files\MVC\Model</Filter>
+    </None>
+    <None Include="..\..\src\libraries\clients_gui\EntityTreeView.inl">
+      <Filter>Source Files\MVC\View</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -1794,6 +1824,15 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\HtmlEditor.h">
       <Filter>Source Files\Tools</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\RichTreeView.h">
+      <Filter>Source Files\MVC\View</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\EntityTreeView_ABC.h">
+      <Filter>Source Files\MVC\View</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\HierarchyTreeView_ABC.h">
+      <Filter>Source Files\MVC\View</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

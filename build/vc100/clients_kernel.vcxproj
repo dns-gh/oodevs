@@ -265,6 +265,7 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\MultipleSelectionObserver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\OverFlyingObserver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Property_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ReadOnlyModable.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\RectangleSelectionHandler_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Selectable_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\PhysicalAttribute_ABC.h" />

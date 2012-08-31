@@ -1,0 +1,72 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2012 MASA Group
+//
+// *****************************************************************************
+
+#ifndef __EntityTreeView_h_
+#define __EntityTreeView_h_
+
+#include "EntityTreeView_ABC.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
+
+namespace kernel
+{
+    class Controllers;
+    class Profile_ABC;
+}
+
+namespace gui
+{
+
+// =============================================================================
+/** @class  EntityTreeView
+    @brief  EntityTreeView
+*/
+// Created: ABR 2012-08-10
+// =============================================================================
+template< typename Entity >
+class EntityTreeView : public EntityTreeView_ABC
+                     , public tools::ElementObserver_ABC< Entity >
+{
+
+public:
+    //! @name Constructors/Destructor
+    //@{
+             EntityTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, QWidget* parent = 0 );
+    virtual ~EntityTreeView();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void NotifyCreated( const Entity& entity );
+    virtual void NotifyDeleted( const Entity& entity );
+    virtual bool IsTypeRejected( const kernel::Entity_ABC& entity ) const;
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    //@}
+};
+
+#include "EntityTreeView.inl"
+
+typedef EntityTreeView< kernel::Inhabitant_ABC > InhabitantTreeView;
+typedef EntityTreeView< kernel::Object_ABC >     ObjectTreeView;
+typedef EntityTreeView< kernel::Population_ABC > PopulationTreeView;
+typedef EntityTreeView< kernel::UrbanObject_ABC> UrbanTreeView;
+
+} //! namespace gui
+
+#endif // __EntityTreeView_h_

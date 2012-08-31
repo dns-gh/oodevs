@@ -52,12 +52,6 @@ class HierarchyListView_ABC : public ListView< HierarchyListView_ABC >
    Q_OBJECT
 
 public:
-    //! @name Constants
-    //@{
-    static const char* agentMimeType_;
-    //@}
-
-public:
     //! @name Constructors/Destructor
     //@{
              HierarchyListView_ABC( QWidget* pParent, kernel::Controllers& controllers, ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, const EntitySymbols& symbols );

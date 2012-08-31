@@ -469,6 +469,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\applications\preparation_app\EntityTreeView.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\GhostsLayer.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\InhabitantLayer.h" />
     <CustomBuild Include="..\..\src\applications\preparation_app\LivingAreaPanel.h">
@@ -1708,6 +1709,7 @@
     <ClInclude Include="..\..\src\applications\preparation_app\FileLoaderObserver.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\src\applications\preparation_app\EntityTreeView.inl" />
     <None Include="..\..\src\applications\preparation_app\MultipleResolverEditor.inl" />
     <None Include="..\..\src\applications\preparation_app\preparation_app_ar.ts" />
     <None Include="..\..\src\applications\preparation_app\preparation_app_es.ts" />
@@ -1732,6 +1734,7 @@ lrelease -verbose %(FullPath)
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">./translator;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">./translator;%(Outputs)</Outputs>
     </CustomBuild>
+    <None Include="..\..\src\libraries\clients_gui\HierarchyDataModel.inl" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="actions.vcxproj">

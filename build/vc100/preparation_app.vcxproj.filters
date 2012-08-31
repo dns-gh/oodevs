@@ -107,6 +107,9 @@
     <Filter Include="Source Files\Dialogs\Urban">
       <UniqueIdentifier>{989feade-54a7-4ddf-8489-1b2cbc8103e7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\TreeView">
+      <UniqueIdentifier>{b04ca06d-c57d-4fca-a9cc-60ec7a3164a4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\applications\preparation_app\Application.cpp">
@@ -717,6 +720,9 @@
     <ClInclude Include="..\..\src\applications\preparation_app\PropertyDisplayer.h">
       <Filter>Source Files\Dialogs\Editors</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\EntityTreeView.h">
+      <Filter>Source Files\TreeView</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\preparation_app\preparation_app_es.ts">
@@ -730,6 +736,12 @@
     </None>
     <None Include="..\..\src\applications\preparation_app\preparation_app_ar.ts">
       <Filter>Translations</Filter>
+    </None>
+    <None Include="..\..\src\libraries\clients_gui\HierarchyDataModel.inl">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\src\applications\preparation_app\EntityTreeView.inl">
+      <Filter>Source Files\TreeView</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
