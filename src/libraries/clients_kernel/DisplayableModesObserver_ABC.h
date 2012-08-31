@@ -61,14 +61,6 @@ public:
     //@{
     virtual void NotifyModeChanged( int newMode, bool useDefault, bool firstChangeToSavedMode )
     {
-#ifdef DEBUG
-        if( newMode & hiddenModes_ && newMode & defaultModes_ )
-            throw std::exception( __FUNCTION__ " This component tries to always be hidden but it's used by default." );
-        if( newMode & visibleModes_ && !( newMode & defaultModes_ ) )
-            throw std::exception( __FUNCTION__ " This component tries to always be visible but it's not used by default." );
-        if( newMode & visibleModes_ && newMode & hiddenModes_ )
-            throw std::exception( __FUNCTION__ " This component tries to always be visible and hidden in the same time." );
-#endif
         if( currentMode_ != -1 && IsOptional( currentMode_ ) )  // was optional
             visible_ = IsVisible();             
 
