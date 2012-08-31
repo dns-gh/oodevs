@@ -36,8 +36,6 @@ Object::Object( xml::xistream& xis, const MIL_ObjectBuilder_ABC& builder, MIL_Ar
     if( pLocation )
         Initialize( *pLocation );
     builder.Build( *this );
-    if( ObstacleAttribute* pObstacle = RetrieveAttribute< ObstacleAttribute >() )
-        pObstacle->SetType( reserved );
 }
 
 namespace
