@@ -44,7 +44,7 @@ TimelineRuler::~TimelineRuler()
 // -----------------------------------------------------------------------------
 void TimelineRuler::NotifyUpdated( const Simulation& simulation )
 {
-    if( simulation.GetInitialDateTime() != initialDateTime_ )
+    if( simulation.IsConnected() && simulation.GetInitialDateTime() != initialDateTime_ )
     {
         initialDateTime_ = simulation.GetInitialDateTime();
         update();
@@ -130,6 +130,10 @@ namespace
 // -----------------------------------------------------------------------------
 void TimelineRuler::DrawDates( QPainter& painter ) const
 {
+    // this code can get into an infinite loop if the time is not initialized.
+    if (initialDateTime_.isNull())
+        return;
+
     const QFontMetrics metrics( painter.font() );
     QDateTime current = initialDateTime_.addSecs( ConvertToSeconds( startX_ ) );
     QDateTime     next( current.date().addDays( 1 ) );
@@ -153,11 +157,16 @@ void TimelineRuler::DrawDates( QPainter& painter ) const
 // -----------------------------------------------------------------------------
 void TimelineRuler::DrawTimes( QPainter& painter ) const
 {
+    // this code can get into an infinite loop if the time is not initialized.
+    if (initialDateTime_.isNull())
+        return;
+
     const QFontMetrics metrics( painter.font() );
     QDateTime current = initialDateTime_.addSecs( ConvertToSeconds( startX_ ) );
     QDateTime next    = FloorHour( current ).addSecs( 3600 );
     long lastX = 0;
-    while( lastX < width() )
+    long w = width();
+    while( lastX < w )
     {
         const long x = long( ConvertToPosition( next ) ) - startX_;
         const QString text = GetTimeText( metrics, current.time(), x - lastX );
