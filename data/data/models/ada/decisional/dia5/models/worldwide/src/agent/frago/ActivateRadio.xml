@@ -3,9 +3,6 @@
     <description>To order the agent to switch the radio communication on.</description>
     <stages>
         <stage label="switching the radio on" permanent="true">
-            <goal>
-                <description>Remet les radio en route</description>
-            </goal>
             <skills>
                 <skill name="agent.skills.actions.ActivateRadio"/>
             </skills>

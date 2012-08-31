@@ -81,7 +81,7 @@ integration.isTask = function( self )
 end
 
 integration.mustBePropagate = function( self )
-  local orderType = self.source:GetType()
+  DEC_Trace( "orderType = "..tostring( orderType ) )
   return orderType == "platoon.combat.support.air.tasks.ModifierAltitude" or
          orderType == "platoon.combat.support.engineer.tasks.ActiverObstacles" or
          orderType == "platoon.tasks.Embarquer" or 
