@@ -9,7 +9,13 @@
 
 #include "edxlhave_app_pch.h"
 #include "EDXLHaveApp.h"
+#ifdef _MSC_VER
+#pragma warning( push, 0 )
+#endif
 #include <boost/program_options.hpp>
+#ifdef _MSC_VER
+#pragma warning( pop )
+#endif
 #include <fstream>
 
 namespace

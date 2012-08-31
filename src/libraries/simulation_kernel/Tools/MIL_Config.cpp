@@ -18,8 +18,7 @@
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_FormatString.h"
 #include <xeumeuleu/xml.hpp>
-#pragma warning( push )
-#pragma warning( disable: 4127 4512 )
+#pragma warning( push, 0 )
 #include <boost/program_options.hpp>
 #include <boost/filesystem/path.hpp>
 #pragma warning( pop )

@@ -15,8 +15,7 @@
 #include "tools/Codec.h"
 #include "tools/WinArguments.h"
 #include <windows.h>
-#pragma warning( push )
-#pragma warning( disable: 4512 )
+#pragma warning( push, 0 )
 #include <boost/program_options.hpp>
 #pragma warning( pop )
 

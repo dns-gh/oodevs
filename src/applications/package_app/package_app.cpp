@@ -9,8 +9,7 @@
 
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/convenience.hpp>
-#pragma warning( push )
-#pragma warning( disable: 4127 4512 )
+#pragma warning( push, 0 )
 #include <boost/program_options.hpp>
 #pragma warning( pop )
 #include <windows.h>
