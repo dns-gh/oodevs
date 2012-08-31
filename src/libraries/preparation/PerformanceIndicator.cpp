@@ -226,7 +226,7 @@ void PerformanceIndicator::TeamGetInfoFunctor::Compute( TeamData& teamData, cons
             teamData.units_++;
             const Agent* pAgent = dynamic_cast< const Agent* >( &entity );
             if( pAgent )
-                teamData.unitTypes_[ pAgent->GetType().GetTypeName() ]++;
+                teamData.unitTypes_[ pAgent->Get< kernel::EntityType< kernel::AgentType > >().GetType().GetTypeName() ]++;
         }
     }
 }

@@ -21,6 +21,7 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/App6Symbol.h"
+#include "clients_kernel/EntityType.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/Protocol.h"
 
@@ -50,8 +51,9 @@ AgentKnowledge::AgentKnowledge( const KnowledgeGroup_ABC& group, const sword::Un
     , bRefugies_   ( false, false )
     , nRelevance_  ( 0u, false )
     , criticalIntelligence_( "", false )
+    , type_( realAgent_.Get< kernel::EntityType< kernel::AgentType > >().GetType() )
 {
-    fullSymbol_  = realAgent_.GetType().GetSymbol();
+    fullSymbol_  = type_.GetSymbol();
     UpdateSymbol();
     RegisterSelf( *this );
 }
@@ -244,9 +246,9 @@ void AgentKnowledge::Draw( const geometry::Point2f& where, const kernel::Viewpor
         tools.DrawApp6Symbol( currentSymbol_, where, -1 );
         if( nMaxPerceptionLevel_.IsSet() && nMaxPerceptionLevel_ > eDetection )
         {
-            tools.DrawApp6Symbol( realAgent_.GetType().GetLevelSymbol(), where, -1 );
+            tools.DrawApp6Symbol(type_.GetLevelSymbol(), where, -1 );
             if( bIsPC_.IsSet() && bIsPC_ )
-                tools.DrawApp6Symbol( realAgent_.GetType().GetHQSymbol(), where, -1 );
+                tools.DrawApp6Symbol( type_.GetHQSymbol(), where, -1 );
         }
         tools.Select( backupState.first, backupState.second );
     }
@@ -305,8 +307,8 @@ void AgentKnowledge::UpdateSymbol()
     App6Symbol::SetKarma( currentSymbol_, TeamKarma( perception ) );
     App6Symbol::FilterPerceptionLevel( currentSymbol_, perception );
 
-    currentNature_ = Strip( realAgent_.GetType().GetNature().GetNature(), toKeep - 3 ); // $$$$ AGE 2006-10-25:
+    currentNature_ = Strip( type_.GetNature().GetNature(), toKeep - 3 ); // $$$$ AGE 2006-10-25:
 
     if( nLevel_ == eNatureLevel_None && nMaxPerceptionLevel_.IsSet() && nMaxPerceptionLevel_ > eDetection )
-        nLevel_ = tools::NatureLevelFromString( realAgent_.GetType().GetNature().GetLevel() ); // $$$$ AGE 2006-11-20:
+        nLevel_ = tools::NatureLevelFromString( type_.GetNature().GetLevel() ); // $$$$ AGE 2006-11-20:
 }

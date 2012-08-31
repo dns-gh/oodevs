@@ -100,7 +100,7 @@ void UnitMagicOrdersInterface::NotifyContextMenu( const kernel::Agent_ABC& agent
         AddSurrenderMenu( magicMenu, agent );
         AddReloadBrainMenu( magicMenu, static_.types_.unitModels_,
         agent.Retrieve<Decisions>() ? agent.Retrieve<Decisions>()->ModelName() : "unknown",
-        agent.GetType().GetDecisionalModel().GetName() );
+        agent.Get< kernel::EntityType< kernel::AgentType > >().GetType().GetDecisionalModel().GetName() );
         if( orders->CanRetrieveTransporters() )
             AddMagic( tr( "Recover - Transporters" ), SLOT( RecoverHumanTransporters() ), magicMenu );
         AddMagic( tr( "Destroy - Component" ), SLOT( DestroyComponent() ), magicMenu );

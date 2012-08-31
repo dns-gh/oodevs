@@ -9,13 +9,6 @@
     </message>
 </context>
 <context>
-    <name>Agent</name>
-    <message>
-        <source>Info/Type</source>
-        <translation>Info/Type</translation>
-    </message>
-</context>
-<context>
     <name>AgentKnowledge</name>
     <message>
         <source>Nature:</source>

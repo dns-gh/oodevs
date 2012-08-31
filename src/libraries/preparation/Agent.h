@@ -55,7 +55,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual const kernel::AgentType& GetType() const;
     virtual E_NatureLevel GetLevel() const;
     virtual const std::string& GetNature() const;
     virtual const std::string& GetSymbol() const;
@@ -76,19 +75,18 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary();
     void InitializeSymbol() const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    E_NatureLevel            level_;
-    const kernel::AgentType& type_;
-    mutable std::string      symbolPath_;
-    mutable std::string      levelPath_;
-    std::string              nature_;
-    bool                     overridenSymbol_;
+    E_NatureLevel       level_;
+    mutable std::string symbolPath_;
+    mutable std::string levelPath_;
+    std::string         nature_;
+    std::string         natureLevel_;
+    bool                overridenSymbol_;
     //@}
 };
 

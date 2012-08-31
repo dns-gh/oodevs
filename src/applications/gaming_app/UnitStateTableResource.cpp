@@ -28,6 +28,7 @@
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/EntityType.h"
 #include "gaming/Dotation.h"
 #include "gaming/Dotations.h"
 #include "gaming/StaticModel.h"
@@ -184,7 +185,7 @@ void UnitStateTableResource::Load( kernel::Entity_ABC& selected )
 {
     selected_ = &selected;
     assert( selected.GetTypeName() == kernel::Agent_ABC::typeName_ );
-    kernel::AgentType& agent = staticModel_.types_.tools::Resolver< kernel::AgentType >::Get( static_cast< kernel::Agent_ABC& >( selected ).GetType().GetId() );
+    kernel::AgentType& agent = staticModel_.types_.tools::Resolver< kernel::AgentType >::Get( static_cast< kernel::Agent_ABC& >( selected ).Get< kernel::EntityType< kernel::AgentType > >().GetType().GetId() );
     tools::Iterator< const Dotation& > dotationIterator = static_cast< const Dotations& >( selected.Get< kernel::Dotations_ABC >() ).CreateIterator();
     while( dotationIterator.HasMoreElements() )
     {

@@ -23,15 +23,15 @@
 // Name: AgentHierarchiesCommunication
 // Created: FDS 2010-03-29
 // -----------------------------------------------------------------------------
-AgentHierarchiesCommunication::AgentHierarchiesCommunication( kernel::Controller& controller, kernel::Agent_ABC& holder,
+AgentHierarchiesCommunication::AgentHierarchiesCommunication( kernel::Controller& controller, kernel::Agent_ABC& holder, const kernel::AgentType& type,
                                const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver,
                                const tools::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groupResolver )
-:AgentHierarchies< kernel::CommunicationHierarchies >::AgentHierarchies(controller, holder, automatResolver)
-    ,jammed_ ( false )
-    ,radioEmitterDisabled_ ( false )
-    ,radioReceiverDisabled_ ( false )
-    , superior_ ( 0 )
-    ,groupResolver_ ( groupResolver )
+    :   AgentHierarchies< kernel::CommunicationHierarchies >::AgentHierarchies(controller, holder, type, automatResolver)
+    , jammed_( false )
+    , radioEmitterDisabled_( false )
+    , radioReceiverDisabled_( false )
+    , superior_( 0 )
+    , groupResolver_( groupResolver )
 {
     // NOTHING
 }

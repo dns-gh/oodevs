@@ -27,19 +27,17 @@ using namespace kernel;
 // Name: Agent constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-Agent::Agent( const sword::UnitCreation& message, Controller& controller, const tools::Resolver_ABC< AgentType >& resolver )
+Agent::Agent( const sword::UnitCreation& message, Controller& controller, const AgentType& type )
     : EntityImplementation< Agent_ABC >( controller, message.unit().id(), QString( message.name().c_str() ), true )
-    , type_       ( resolver.Get( message.type().id() ) )
     , initialized_( false )
 {
     if( name_.isEmpty() )
-        name_ = QString( "%1 %L2" ).arg( type_.GetName().c_str() ).arg( message.unit().id() );
+        name_ = QString( "%1 %L2" ).arg( type.GetName().c_str() ).arg( message.unit().id() );
 
-    level_ = ( message.has_level() ) ? "levels/" + ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( message.level() ) ) : type_.GetLevelSymbol();
-    symbol_ = ( message.has_app6symbol() ) ? "symbols/" + message.app6symbol() : type_.GetSymbol();
+    level_ = ( message.has_level() ) ? "levels/" + ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( message.level() ) ) : type.GetLevelSymbol();
+    symbol_ = ( message.has_app6symbol() ) ? "symbols/" + message.app6symbol() : type.GetSymbol();
 
     RegisterSelf( *this );
-    CreateDictionary();
 }
 
 // -----------------------------------------------------------------------------
@@ -72,15 +70,6 @@ void Agent::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& vi
 }
 
 // -----------------------------------------------------------------------------
-// Name: Agent::GetType
-// Created: SBO 2006-08-03
-// -----------------------------------------------------------------------------
-const AgentType& Agent::GetType() const
-{
-    return type_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: Agent::DisplayInTooltip
 // Created: AGE 2006-10-26
 // -----------------------------------------------------------------------------
@@ -89,14 +78,4 @@ void Agent::DisplayInTooltip( Displayer_ABC& displayer ) const
      displayer.Item( "" ).Start( Styles::bold )
                  .Add( (Agent_ABC*)this )
               .End();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Agent::CreateDictionary
-// Created: AGE 2006-06-27
-// -----------------------------------------------------------------------------
-void Agent::CreateDictionary()
-{
-    PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Type" ), type_, true );
 }

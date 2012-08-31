@@ -43,16 +43,14 @@ class Agent : public kernel::EntityImplementation< kernel::Agent_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-            Agent( const sword::UnitCreation& message,
-                    kernel::Controller& controller,
-                    const tools::Resolver_ABC< kernel::AgentType >& resolver );
+            Agent( const sword::UnitCreation& message, kernel::Controller& controller,
+                   const kernel::AgentType& resolver );
     virtual ~Agent();
     //@}
 
     //! @name Operations
     //@{
     virtual void DisplayInTooltip( kernel::Displayer_ABC& ) const;
-    virtual const kernel::AgentType& GetType() const;
     //@}
 
 private:
@@ -65,13 +63,11 @@ private:
     //! @name Helpers
     //@{
     void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
-    void CreateDictionary();
     //@}
 
 private:
     //! @name Member data
     //@{
-    const kernel::AgentType& type_;
     mutable std::string symbol_;
     std::string level_;
     mutable bool initialized_;

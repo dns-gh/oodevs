@@ -15,10 +15,6 @@
 <context>
     <name>Agent</name>
     <message>
-        <source>Info/Type</source>
-        <translation type="unfinished">Info/Tipo</translation>
-    </message>
-    <message>
         <source>Info/Command post</source>
         <translation type="unfinished"></translation>
     </message>

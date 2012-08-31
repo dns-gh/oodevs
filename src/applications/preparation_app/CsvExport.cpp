@@ -116,13 +116,13 @@ namespace
     }
     std::string GetType( const kernel::Entity_ABC& entity )
     {
-        if( const kernel::Agent_ABC* pAgent = dynamic_cast< const kernel::Agent_ABC* >( &entity ) )
-            return pAgent->GetType().GetName();
-        else if( const kernel::EntityType< kernel::InhabitantType >* type = entity.Retrieve< kernel::EntityType< kernel::InhabitantType > >() )
+        if( const kernel::EntityType< kernel::InhabitantType >* type = entity.Retrieve< kernel::EntityType< kernel::InhabitantType > >() )
             return type->GetType().GetName();
         else if( const kernel::EntityType< kernel::PopulationType >* type = entity.Retrieve< kernel::EntityType< kernel::PopulationType > >() )
             return type->GetType().GetName();
         else if( const kernel::EntityType< kernel::AutomatType >* type = entity.Retrieve< kernel::EntityType< kernel::AutomatType > >() )
+            return type->GetType().GetName();
+        else if( const kernel::EntityType< kernel::AgentType >* type = entity.Retrieve< kernel::EntityType< kernel::AgentType > >() )
             return type->GetType().GetName();
         return "";
     }

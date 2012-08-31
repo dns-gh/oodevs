@@ -46,7 +46,7 @@ class AgentHierarchies : public kernel::EntityHierarchies< I  >
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentHierarchies( kernel::Controller& controller, kernel::Agent_ABC& holder,
+             AgentHierarchies( kernel::Controller& controller, kernel::Agent_ABC& holder, const kernel::AgentType& type,
                                const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver );
     virtual ~AgentHierarchies();
     //@}
@@ -89,11 +89,12 @@ private:
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
 template< typename I >
-AgentHierarchies< I >::AgentHierarchies( kernel::Controller& controller, kernel::Agent_ABC& holder, const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver )
+AgentHierarchies< I >::AgentHierarchies( kernel::Controller& controller, kernel::Agent_ABC& holder, const kernel::AgentType& type,
+                                        const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver )
     : kernel::EntityHierarchies< I  >( controller, holder, 0 )
     , controller_                    ( controller )
-    , symbol_                        ( holder.GetType().GetSymbol() )
-    , level_                         ( holder.GetType().GetLevelSymbol() )
+    , symbol_                        ( type.GetSymbol() )
+    , level_                         ( type.GetLevelSymbol() )
     , automatResolver_               ( automatResolver )
 {
     // NOTHING

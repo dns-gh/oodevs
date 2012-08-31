@@ -37,11 +37,6 @@ public:
     virtual ~Agent_ABC();
     //@}
 
-    //! @name Accessors
-    //@{
-    virtual const AgentType& GetType() const = 0;
-    //@}
-
     //! @name Operations
     //@{
     virtual const std::string& GetTypeName() const;

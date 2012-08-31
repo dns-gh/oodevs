@@ -33,6 +33,7 @@ namespace kernel
     class Controller;
     class Displayer_ABC;
     class DecisionalModel;
+    class AgentType;
 }
 
 // =============================================================================
@@ -51,7 +52,7 @@ class Decisions : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Decisions( kernel::Controller& controller, const kernel::Agent_ABC& agent,
+             Decisions( kernel::Controller& controller, const kernel::Agent_ABC& agent, const kernel::AgentType& type,
                      const tools::Resolver_ABC< kernel::DecisionalModel, std::string >& modelResolver); // $$$$ AGE 2006-04-05: Agent_ABC, pas terrible...
     virtual ~Decisions();
     //@}
