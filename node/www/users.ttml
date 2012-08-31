@@ -84,10 +84,12 @@
     <td class="ufirst">{{type}}</td>
     [[ end ]]
     <td class="action">
-        <a class="btn edit"><i class="icon-edit"></i> Edit </a>
-        {{#equal id "[[ .user.id ]]" }}
-        {{else}}
-        <a class="btn delete"><i class="icon-trash"></i> </a>
-        {{/equal}}
+        <div class="btn-group">
+            <a class="btn edit"><i class="icon-cog"></i></a>
+            {{#equal id "[[ .user.id ]]" }}
+            {{else}}
+            <a class="btn delete"><i class="icon-trash"></i> </a>
+            {{/equal}}
+        </div>
     </td>
 </script>

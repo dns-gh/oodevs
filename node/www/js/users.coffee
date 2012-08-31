@@ -144,7 +144,7 @@ class UserItemView extends Backbone.View
                     print_error "Unable to update user " + @model.get "username"
 
     toggle_load: =>
-        toggle_spinner $(@el).find ".btn"
+        toggle_spinner $(@el).find ".btn-group"
 
 class UserListView extends Backbone.View
     el: $ "#users"

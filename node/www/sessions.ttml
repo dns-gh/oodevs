@@ -208,7 +208,7 @@
                 {{/each}}
             </div>
             <div class="modal-footer">
-                <a class="btn btn-inverse apply">Apply</a>
+                <a class="btn btn-inverse apply">Save</a>
                 <a class="btn btn-inverse" data-dismiss="modal">Discard</a>
             </div>
         </div>

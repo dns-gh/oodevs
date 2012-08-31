@@ -706,7 +706,7 @@
     };
 
     UserItemView.prototype.toggle_load = function() {
-      return toggle_spinner($(this.el).find(".btn"));
+      return toggle_spinner($(this.el).find(".btn-group"));
     };
 
     return UserItemView;
