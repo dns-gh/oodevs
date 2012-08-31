@@ -32,7 +32,7 @@ struct PluginProcessHandler::InternalData
     InternalData() { ZeroMemory( &pid_ , sizeof( pid_ ) ); }
 };
 
-class PluginProcessHandler::PluginConfig 
+class PluginProcessHandler::PluginConfig : boost::noncopyable
 {
 public:
     PluginProcessHandler::PluginConfig( const std::string& data, const std::string& session, dispatcher::Logger_ABC& logger )
@@ -88,7 +88,7 @@ private:
         {
             xml::xifstream xif( file );
             xif >> xml::start( "profiles" )
-                >> xml::list( "profile", boost::bind( &PluginProcessHandler::PluginConfig::ReadProfileInfo, *this, _1, boost::ref( profile ), boost::ref( password ) ) );
+                >> xml::list( "profile", boost::bind( &PluginProcessHandler::PluginConfig::ReadProfileInfo, this, _1, boost::ref( profile ), boost::ref( password ) ) );
         }
         catch( const xml::exception& e ) 
         {
