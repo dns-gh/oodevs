@@ -35,7 +35,14 @@ using namespace frontend;
 #endif
 
 #ifndef PLUGIN
-#define PLUGIN( plugin ) ( std::string( plugin ) + std::string(  "-" BOOST_PP_STRINGIZE( PLATFORM ) "-mt.dll" ) )
+
+#ifdef _DEBUG
+    #define PLUGIN_EXTENSION_DLL "-mt-gd.dll"
+#else
+    #define PLUGIN_EXTENSION_DLL "-mt.dll"
+#endif
+
+#define PLUGIN( plugin ) ( std::string( plugin ) + std::string(  "-" BOOST_PP_STRINGIZE( PLATFORM ) PLUGIN_EXTENSION_DLL ) )
 #endif
 
 // -----------------------------------------------------------------------------

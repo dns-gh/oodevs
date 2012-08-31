@@ -104,6 +104,7 @@ public:
     virtual sword::ForceRatio_Value GetForceRatio() const;
     virtual const Order_ABC* GetOrder() const;
     virtual bool IsMounted() const;
+    virtual bool GetExtension( const std::string& key, std::string& result ) const;
     //@}
 
 private:

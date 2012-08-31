@@ -105,6 +105,7 @@ Section "!${PRODUCT_NAME}"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File /r "${RUNDIR}\plugins\crossbow"
     File /r "${RUNDIR}\plugins\positions"
+    File /r "${RUNDIR}\plugins\logistic"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
     ;projection settings (used in crossbow)

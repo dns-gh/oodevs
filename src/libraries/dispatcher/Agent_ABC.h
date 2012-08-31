@@ -70,6 +70,7 @@ public:
     virtual const Order_ABC* GetOrder() const = 0;
     virtual bool IsMounted() const = 0;
     virtual bool IsCommandPost() const = 0;
+    virtual bool GetExtension( const std::string& , std::string& ) const { return false; }
     //@}
 
     //! @name Operations

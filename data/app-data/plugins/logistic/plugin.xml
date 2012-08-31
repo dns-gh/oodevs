@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<plugin name="logistic" library="logistic_plugin" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="..\..\resources\schemas\4.3.1\plugins\plugin.xsd">
+	<descriptions>
+		<description lang="en" name="Logistics"><![CDATA[Logistics.]]></description>
+		<description lang="fr" name="Logistique"><![CDATA[Logistique.]]></description>
+	</descriptions>
+    <settings>
+        <group>
+            <descriptions>
+                <description lang="en" name="Trace files"><![CDATA[]]></description>
+                <description lang="fr" name="Fichiers de trace"><![CDATA[]]></description>
+            </descriptions>
+            <settings>
+                <setting attribute="@maintenancefile" type="string" default="LogMaintenance">
+                    <descriptions>
+                        <description lang="en" name="Maintenance: "><![CDATA[]]></description>
+                        <description lang="fr" name="Maintenance : "><![CDATA[]]></description>
+                    </descriptions>
+                </setting>
+                <setting attribute="@supplyfile" type="string" default="LogSupply">
+                    <descriptions>
+                        <description lang="en" name="Supply: "><![CDATA[]]></description>
+                        <description lang="fr" name="Approvisionnement : "><![CDATA[]]></description>
+                    </descriptions>
+                </setting>
+                <setting attribute="@medicalfile" type="string" default="LogMedical">
+                    <descriptions>
+                        <description lang="en" name="Medical: "><![CDATA[]]></description>
+                        <description lang="fr" name="Médical : "><![CDATA[]]></description>
+                    </descriptions>
+                </setting>
+                <setting attribute="@funeralfile" type="string" default="LogFuneral">
+                    <descriptions>
+                        <description lang="en" name="Funeral: "><![CDATA[]]></description>
+                        <description lang="fr" name="Funéraire : "><![CDATA[]]></description>
+                    </descriptions>
+                </setting>
+            </settings>
+        </group>    
+    </settings>
+</plugin>

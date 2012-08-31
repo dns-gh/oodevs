@@ -54,6 +54,7 @@ public:
     virtual const tools::Resolver< dispatcher::Automat_ABC >& GetAutomates() const;
     virtual LogisticEntity_ABC* GetLogisticEntity() const;
     virtual const kernel::LogisticLevel& GetLogisticLevel() const;
+    virtual bool GetExtension( const std::string& key, std::string& result ) const;
     //@}
 
     //! @name Operations
