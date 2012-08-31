@@ -71,7 +71,7 @@ private:
     //@{
     virtual void DoUpdate( const sword::UnitKnowledgeUpdate& message );
     void UpdateSymbol();
-    std::size_t ElementsToKeep( kernel::E_PerceptionResult perception ) const;
+    int ElementsToKeep( kernel::E_PerceptionResult perception ) const;
     const kernel::Karma& TeamKarma( kernel::E_PerceptionResult perception ) const;
     bool IsRecognized() const;
     //@}

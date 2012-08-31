@@ -339,7 +339,7 @@ void UrbanModel::SerializeTerrain( const std::string& filename, const tools::Sch
             bfs::create_directories( directory );
         }
     }
-    catch( bfs::filesystem_error& e )
+    catch( bfs::filesystem_error& )
     {
         bfs::create_directories( directory );
     }

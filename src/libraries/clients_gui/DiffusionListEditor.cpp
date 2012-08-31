@@ -141,14 +141,14 @@ void DiffusionListEditor::Fill( kernel::SafePointer< kernel::Entity_ABC > curren
             functor( *currentAgent );
         else
             agents_.Apply( functor );
-        assert( emittersHeaders_.count() == emitters_.size() );
+        assert( emittersHeaders_.count() == static_cast< int >( emitters_.size() ) );
     }
     // Find receiver
     {
         const DiffusionListReceiversExtractor functor( extensionName_, *currentTeam_, receivers_, receiversHeaders_ );
         agents_.Apply( functor );
         formations_.Apply( functor );
-        assert( receiversHeaders_.count() == receivers_.size() );
+        assert( receiversHeaders_.count() == static_cast< int >( receivers_.size() ) );
     }
     // Fill data
     {

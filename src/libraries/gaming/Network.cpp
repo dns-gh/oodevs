@@ -41,7 +41,7 @@ Network::Network( Services& services, Simulation& simu, kernel::Logger_ABC& logg
     , manager_ ( new AgentServerMsgMgr( *this, *this, services_, simu_, logger_, *commands_ ) )
 {
     localEncoding_ = boost::locale::util::get_system_locale();
-    int pointPosition = localEncoding_.find_first_of( '.' );
+    std::size_t pointPosition = localEncoding_.find_first_of( '.' );
     if( pointPosition + 1 < localEncoding_.size() )
         localEncoding_ = localEncoding_.substr( pointPosition + 1, localEncoding_.size() - pointPosition - 1 );
 }
