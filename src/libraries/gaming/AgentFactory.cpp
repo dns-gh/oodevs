@@ -160,17 +160,13 @@ kernel::Automat_ABC* AgentFactory::Create( const sword::AutomatCreation& message
 // -----------------------------------------------------------------------------
 kernel::Agent_ABC* AgentFactory::Create( const sword::UnitCreation& message )
 {
-    const kernel::AgentType* type = static_.types_.tools::Resolver< kernel::AgentType >::Find( message.type().id() );
-    if( !type )
-        return 0;
-    Agent* result = new Agent( message, controllers_.controller_, *type );
+    Agent* result = new Agent( message, controllers_.controller_, static_.types_ );
     kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
-    result->Attach( *new kernel::EntityType< kernel::AgentType >( *result, *type, dictionary ) );
     result->Attach< kernel::CriticalIntelligence >( *new kernel::CriticalIntelligence( *result, controllers_.controller_, dictionary ) );
     result->Attach< Lives_ABC >( *new Lives( controllers_.controller_ ) );
     result->Attach< kernel::CommandPostAttributes_ABC >( *new CommandPostAttributes( *result, message, static_.types_ ) ); // $$$$ LDC Warning: Must be before new Attributes because Attributes uses it without knowing it to paint the headquarters symbol...
     result->Attach< kernel::Attributes_ABC >( *new Attributes( *result, controllers_.controller_, static_.coordinateConverter_, dictionary, model_.teams_ ) );
-    result->Attach( *new Decisions( controllers_.controller_, *result, *type, static_.types_.unitModels_ ) );
+    result->Attach( *new Decisions( controllers_.controller_, *result, static_.types_.unitModels_ ) );
     result->Attach< kernel::Positions >( *new AgentPositions( controllers_.controller_, *result, static_.coordinateConverter_ ) );
     result->Attach( *new VisionCones( *result, model_.surfaceFactory_, workers_ ) );
     result->Attach( *new AgentDetections( controllers_.controller_, model_.agents_, *result ) );
@@ -180,8 +176,8 @@ kernel::Agent_ABC* AgentFactory::Create( const sword::UnitCreation& message )
     result->Attach( *new LogMedicalConsigns( controllers_.controller_ ) );
     result->Attach( *new LogSupplyConsigns( controllers_.controller_ ) );
     result->Attach( *new LogFuneralConsigns( controllers_.controller_ ) );
-    result->Attach< kernel::CommunicationHierarchies >( *new AgentHierarchiesCommunication( controllers_.controller_, *result, *type, model_.agents_, model_.knowledgeGroups_ ) );
-    result->Attach< kernel::TacticalHierarchies >     ( *new AgentHierarchies< kernel::TacticalHierarchies >     ( controllers_.controller_, *result, *type, model_.agents_ ) );
+    result->Attach< kernel::CommunicationHierarchies >( *new AgentHierarchiesCommunication( controllers_.controller_, *result, model_.agents_, model_.knowledgeGroups_ ) );
+    result->Attach< kernel::TacticalHierarchies >     ( *new AgentHierarchies< kernel::TacticalHierarchies >     ( controllers_.controller_, *result, model_.agents_ ) );
 
     result->Attach< kernel::HumanFactors_ABC >( *new HumanFactors( *result, controllers_.controller_, dictionary ) );
     result->Attach( *new Reinforcements( *result, controllers_.controller_, model_.agents_, dictionary ) );

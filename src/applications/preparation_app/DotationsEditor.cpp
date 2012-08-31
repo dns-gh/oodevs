@@ -13,7 +13,6 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentComposition.h"
 #include "clients_kernel/AgentType.h"
-#include "clients_kernel/EntityType.h"
 #include "clients_kernel/ComponentType.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/Entity_ABC.h"
@@ -167,7 +166,7 @@ void DotationsEditor::UpdateInfos()
     {
         // Compute max
         T_StockCapacities maxCapacities;
-        tools::Iterator< const AgentComposition& > itComposition = agent->Get< kernel::EntityType< kernel::AgentType > >().GetType().CreateIterator();
+        tools::Iterator< const AgentComposition& > itComposition = agent->GetType().CreateIterator();
         while( itComposition.HasMoreElements() )
         {
             const AgentComposition& agentComposition = itComposition.NextElement();

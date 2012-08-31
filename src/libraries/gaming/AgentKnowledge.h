@@ -84,7 +84,6 @@ public:
 
     kernel::Agent_ABC&      realAgent_;
     const kernel::Team_ABC* team_;
-    const kernel::AgentType& type_;
 
     std::string fullSymbol_;
     std::string currentSymbol_;

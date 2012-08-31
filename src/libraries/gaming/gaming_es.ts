@@ -9,6 +9,13 @@
     </message>
 </context>
 <context>
+    <name>Agent</name>
+    <message>
+        <source>Info/Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AgentKnowledge</name>
     <message>
         <source>Nature:</source>

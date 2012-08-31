@@ -41,9 +41,9 @@ class AgentHierarchiesCommunication : public AgentHierarchies< kernel::Communica
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentHierarchiesCommunication( kernel::Controller& controller, kernel::Agent_ABC& holder, const kernel::AgentType& type,
-                                           const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver,
-                                           const tools::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groupResolver );
+             AgentHierarchiesCommunication( kernel::Controller& controller, kernel::Agent_ABC& holder,
+                               const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver,
+                               const tools::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groupResolver );
     virtual ~AgentHierarchiesCommunication();
     //@}
 

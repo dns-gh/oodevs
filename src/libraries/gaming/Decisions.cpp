@@ -28,13 +28,13 @@ using namespace kernel;
 // Name: Decisions constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-Decisions::Decisions( Controller& controller, const Agent_ABC& agent, const kernel::AgentType& type,
-                      const tools::Resolver_ABC< DecisionalModel, std::string >& modelResolver)
+Decisions::Decisions( Controller& controller, const Agent_ABC& agent,
+        const tools::Resolver_ABC< DecisionalModel, std::string >& modelResolver)
     : controller_( controller )
     , agent_( agent )
     , modelResolver_( modelResolver )
     , current_( 0 )
-    , decisionalModel_( &( type.GetDecisionalModel() ) )
+    , decisionalModel_( &( agent.GetType().GetDecisionalModel() ) )
 {
     // NOTHING
 }

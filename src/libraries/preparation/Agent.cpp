@@ -36,13 +36,14 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 Agent::Agent( const AgentType& type, Controller& controller, IdManager& idManager )
     : EntityImplementation< Agent_ABC >( controller, idManager.GetNextId(), type.GetName().c_str() )
-    , symbolPath_          ( type.GetSymbol() )
+    , type_                ( type )
+    , symbolPath_          ( type_.GetSymbol() )
     , level_               ( ENT_Tr::ConvertToNatureLevel( type.GetNature().GetLevel() ) )
     , overridenSymbol_     ( false )
     , nature_              ( type.GetNature().GetNature() )
-    , natureLevel_         ( type.GetNature().GetLevel() )
 {
     RegisterSelf( *this );
+    CreateDictionary();
 }
 
 namespace
@@ -61,10 +62,10 @@ namespace
 // -----------------------------------------------------------------------------
 Agent::Agent( xml::xistream& xis, Controller& controller, IdManager& idManager, const AgentType& type, const kernel::SymbolFactory& symbolFactory )
     : EntityImplementation< Agent_ABC >( controller, xis.attribute< unsigned long >( "id" ), ReadName( xis ) )
-    , symbolPath_     ( type.GetSymbol() )
+    , type_           ( type )
+    , symbolPath_     ( type_.GetSymbol() )
     , overridenSymbol_( xis.attribute< bool >( "overridden-symbol", false ) )
     , nature_         ( type.GetNature().GetNature() )
-    , natureLevel_    ( type.GetNature().GetLevel() )
 {
     std::string level = "";
     xis >> xml::optional
@@ -82,6 +83,7 @@ Agent::Agent( xml::xistream& xis, Controller& controller, IdManager& idManager, 
     level_ = ENT_Tr::ConvertToNatureLevel( ( level.empty() ) ? type.GetNature().GetLevel() : level );
     idManager.Lock( id_ );
     RegisterSelf( *this );
+    CreateDictionary();
 }
 
 // -----------------------------------------------------------------------------
@@ -125,13 +127,33 @@ void Agent::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& vi
 }
 
 // -----------------------------------------------------------------------------
+// Name: Agent::GetType
+// Created: SBO 2006-08-03
+// -----------------------------------------------------------------------------
+const AgentType& Agent::GetType() const
+{
+    return type_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::CreateDictionary
+// Created: AGE 2006-06-27
+// -----------------------------------------------------------------------------
+void Agent::CreateDictionary()
+{
+    PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Type" ), type_, true );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Agent::DoSerialize
 // Created: SBO 2006-09-06
 // -----------------------------------------------------------------------------
 void Agent::SerializeAttributes( xml::xostream& xos ) const
 {
     kernel::EntityImplementation< kernel::Agent_ABC >::SerializeAttributes( xos );
-    if( level_ != ENT_Tr::ConvertToNatureLevel( natureLevel_ ) )
+    xos << xml::attribute( "type", type_.GetName() );
+    if( level_ != ENT_Tr::ConvertToNatureLevel( type_.GetNature().GetLevel() ) )
         xos << xml::attribute( "level", ENT_Tr::ConvertFromNatureLevel( level_ ) );
     if( overridenSymbol_ )
     {

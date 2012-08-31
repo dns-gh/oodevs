@@ -284,7 +284,7 @@ void ModelConsistencyChecker::CheckStockInitialization()
     {
         const Agent_ABC& agent = it.NextElement();
         const Stocks* stocks = agent.Retrieve< Stocks >();
-        if( agent.Get< kernel::EntityType< kernel::AgentType > >().GetType().HasStocks() && ( !stocks || ( stocks && !stocks->HasDotations() ) ) )
+        if( agent.GetType().HasStocks() && ( !stocks || ( stocks && !stocks->HasDotations() ) ) )
             AddError( eStockInitialization, &agent );
         else if( stocks && !stocks->GetInvalidDotations().empty() )
             for( std::vector< std::string >::const_iterator itDotation = stocks->GetInvalidDotations().begin(); itDotation != stocks->GetInvalidDotations().end(); ++itDotation )
@@ -310,7 +310,7 @@ namespace
                     const kernel::Entity_ABC& entity = child.NextElement();
                     if( const Agent_ABC* pLogChildAgent = dynamic_cast< const Agent_ABC* >( &entity ) ) // if it's an agent
                     {
-                        kernel::AgentType& agentType = staticModel.types_.tools::Resolver< kernel::AgentType >::Get( pLogChildAgent->Get< kernel::EntityType< kernel::AgentType > >().GetType().GetId() );
+                        kernel::AgentType& agentType = staticModel.types_.tools::Resolver< kernel::AgentType >::Get( pLogChildAgent->GetType().GetId() );
                         tools::Iterator< const kernel::AgentComposition& > agentCompositionIterator = agentType.CreateIterator();
                         while( agentCompositionIterator.HasMoreElements() ) // for each equipment in this agent
                         {
@@ -393,7 +393,7 @@ void ModelConsistencyChecker::CheckMaxStockExceeded()
             typedef std::map< std::string, std::pair< double, double > > T_StockCapacities;
             typedef T_StockCapacities::const_iterator                  CIT_StockCapacities;
             T_StockCapacities maxCapacities;
-            Iterator< const AgentComposition& > itComposition = agent.Get< kernel::EntityType< kernel::AgentType > >().GetType().CreateIterator();
+            Iterator< const AgentComposition& > itComposition = agent.GetType().CreateIterator();
             while( itComposition.HasMoreElements() )
             {
                 const AgentComposition& agentComposition = itComposition.NextElement();

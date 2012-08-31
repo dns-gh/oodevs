@@ -99,13 +99,12 @@ kernel::Agent_ABC* AgentFactory::Create( kernel::Automat_ABC& parent, const kern
     if( !name.isEmpty() )
         result->Rename( name );
     kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
-    result->Attach( *new kernel::EntityType< kernel::AgentType >( *result, type, dictionary ) );
     result->Attach< kernel::Positions >( *new AgentPositions( *result, static_.coordinateConverter_, controllers_.controller_, position, dictionary ) );
     result->Attach< kernel::CriticalIntelligence >( *new kernel::CriticalIntelligence( *result, controllers_.controller_, dictionary ) );
     result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent, symbolsFactory_ ) );
-    result->Attach( *new InitialState( static_, type.GetId() ) );
+    result->Attach( *new InitialState( static_, result->GetType().GetId() ) );
     result->Attach< Affinities >( *new AgentAffinities( *result, controllers_, model_, dictionary, tools::translate( "Affinities", "Affinities" ) ) );
-    if( type.IsLogisticSupply() )
+    if( result->GetType().IsLogisticSupply() )
         result->Attach( *new Stocks( controllers_.controller_, *result, dictionary ) );
     result->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     result->Attach< kernel::CommandPostAttributes_ABC >( *new CommandPostAttributes( *result, type, dictionary, commandPost ) );
@@ -235,14 +234,13 @@ kernel::Agent_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Automat_ABC
         return 0;
     Agent* result = new Agent( xis, controllers_.controller_, idManager_, *type, symbolsFactory_ );
     kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
-    result->Attach( *new kernel::EntityType< kernel::AgentType >( *result, *type, dictionary ) );
     result->Attach< kernel::CriticalIntelligence >( *new kernel::CriticalIntelligence( xis, controllers_.controller_, *result, dictionary ) );
     result->Attach< kernel::Positions >( *new AgentPositions( xis, *result, static_.coordinateConverter_, controllers_.controller_, dictionary ) );
     result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent, symbolsFactory_ ) );
-    result->Attach( *new InitialState( xis, static_, type->GetId() ) );
+    result->Attach( *new InitialState( xis, static_, result->GetType().GetId() ) );
     result->Attach< Affinities >( *new AgentAffinities( xis, *result, controllers_, model_, dictionary, tools::translate( "Affinities", "Affinities" ) ) );
     result->Attach< kernel::CommandPostAttributes_ABC >( *new CommandPostAttributes( xis, *result, *type, dictionary ) );
-    if( type->IsLogisticSupply() )
+    if( result->GetType().IsLogisticSupply() )
         result->Attach( *new Stocks( xis, controllers_.controller_, *result, static_.objectTypes_, dictionary ) );
     result->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", xis, static_.extensions_ ) );
     result->Attach< kernel::Color_ABC >( *new Color( xis ) );
@@ -328,7 +326,6 @@ kernel::Agent_ABC* AgentFactory::Create( kernel::Ghost_ABC& ghost, const kernel:
     Agent* result = new Agent( type, controllers_.controller_, idManager_ );
     result->Rename( ghost.GetName() );
     kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
-    result->Attach( *new kernel::EntityType< kernel::AgentType >( *result, type, dictionary ) );
     result->Attach< kernel::Positions >( *new AgentPositions( *result, static_.coordinateConverter_, controllers_.controller_, position, dictionary ) );
     result->Attach< kernel::CriticalIntelligence >( *new kernel::CriticalIntelligence( *result, controllers_.controller_, dictionary ) );
     // Hierarchies
@@ -340,9 +337,9 @@ kernel::Agent_ABC* AgentFactory::Create( kernel::Ghost_ABC& ghost, const kernel:
 
         result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, tactSuperior, symbolsFactory_ ) );
     }
-    result->Attach( *new InitialState( static_, type.GetId() ) );
+    result->Attach( *new InitialState( static_, result->GetType().GetId() ) );
     result->Attach< Affinities >( *new AgentAffinities( *result, controllers_, model_, dictionary, tools::translate( "Affinities", "Affinities" ) ) );
-    if( type.IsLogisticSupply() )
+    if( result->GetType().IsLogisticSupply() )
         result->Attach( *new Stocks( controllers_.controller_, *result, dictionary ) );
     result->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     result->Attach< kernel::CommandPostAttributes_ABC >( *new CommandPostAttributes( *result, type, dictionary, ghost.Get< kernel::CommandPostAttributes_ABC >().IsCommandPost() ) );

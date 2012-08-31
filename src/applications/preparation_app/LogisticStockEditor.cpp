@@ -15,7 +15,6 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentComposition.h"
 #include "clients_kernel/AgentType.h"
-#include "clients_kernel/EntityType.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/ComponentType.h"
 #include "clients_kernel/Controllers.h"
@@ -345,7 +344,7 @@ void LogisticStockEditor::FindStocks( const kernel::Entity_ABC& rootEntity , con
         const kernel::Agent_ABC* pAgent = dynamic_cast< const kernel::Agent_ABC* >( &childrenEntity );
         if( pAgent )
         {
-            if( pAgent->Get< kernel::EntityType< kernel::AgentType > >().GetType().IsLogisticSupply() )
+            if( pAgent->GetType().IsLogisticSupply() )
             {
                 Stocks* stocks = const_cast< Stocks* >( pAgent->Retrieve< Stocks >() );
                 if( stocks )
@@ -393,7 +392,7 @@ void LogisticStockEditor::CleanStocks( std::set< const kernel::Agent_ABC* >& ent
 // -----------------------------------------------------------------------------
 void LogisticStockEditor::ComputeRequirements( const kernel::Agent_ABC& agent, const kernel::LogisticSupplyClass& logType, T_Requirements& requirements )
 {
-    kernel::AgentType& agentType = staticModel_.types_.tools::Resolver< kernel::AgentType >::Get( agent.Get< kernel::EntityType< kernel::AgentType > >().GetType().GetId() );
+    kernel::AgentType& agentType = staticModel_.types_.tools::Resolver< kernel::AgentType >::Get( agent.GetType().GetId() );
     tools::Iterator< const kernel::AgentComposition& > agentCompositionIterator = agentType.CreateIterator();
     while( agentCompositionIterator.HasMoreElements() )
     {
@@ -418,7 +417,7 @@ void LogisticStockEditor::ComputeAvailableCapacity( const kernel::Agent_ABC& ent
 {
     weight = volume = 0.;
     double weightCapacity = 0., volumeCapacity = 0.;
-    tools::Iterator< const kernel::AgentComposition& > itComposition = entStock.Get< kernel::EntityType< kernel::AgentType > >().GetType().CreateIterator();
+    tools::Iterator< const kernel::AgentComposition& > itComposition = entStock.GetType().CreateIterator();
     while( itComposition.HasMoreElements() )
     {
         const kernel::AgentComposition& agentComposition = itComposition.NextElement();
@@ -549,7 +548,7 @@ void LogisticStockEditor::SupplyStocks( std::set< const kernel::Agent_ABC* >& en
 // -----------------------------------------------------------------------------
 bool LogisticStockEditor::IsStockValid( const kernel::Agent_ABC& stockUnit, const kernel::DotationType& dotation )
 {
-    kernel::AgentType& agentType = staticModel_.types_.tools::Resolver< kernel::AgentType >::Get( stockUnit.Get< kernel::EntityType< kernel::AgentType > >().GetType().GetId() );
+    kernel::AgentType& agentType = staticModel_.types_.tools::Resolver< kernel::AgentType >::Get( stockUnit.GetType().GetId() );
     return agentType.IsStockCategoryDefined( dotation.GetLogisticSupplyClass() );
 }
 

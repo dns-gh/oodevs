@@ -12,7 +12,6 @@
 #include "AgentsModel.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/EntityType.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/CommandPostAttributes_ABC.h"
 #include "clients_kernel/DictionaryExtensions.h"
@@ -38,7 +37,7 @@ namespace
 // -----------------------------------------------------------------------------
 AgentTemplateElement::AgentTemplateElement( AgentsModel& agents, const kernel::Agent_ABC& agent )
     : agents_( agents )
-    , type_  ( agent.Get< kernel::EntityType< kernel::AgentType > >().GetType() )
+    , type_  ( agent.GetType() )
     , cp_    ( IsCommandPost( agent ) )
     , name_  ( agent.GetName() )
 {

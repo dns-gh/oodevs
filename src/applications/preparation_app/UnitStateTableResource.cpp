@@ -13,7 +13,6 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentComposition.h"
 #include "clients_kernel/AgentType.h"
-#include "clients_kernel/EntityType.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/ComponentType.h"
 #include "clients_kernel/ContextMenu.h"
@@ -224,7 +223,7 @@ void UnitStateTableResource::Load( kernel::Entity_ABC& selected )
 {
     assert( selected.GetTypeName() == kernel::Agent_ABC::typeName_ );
     kernel::Agent_ABC& agent = static_cast< kernel::Agent_ABC& >( selected );
-    typeId_ = agent.Get< kernel::EntityType< kernel::AgentType > >().GetType().GetId();
+    typeId_ = agent.GetType().GetId();
     InitialState& extension = selected.Get< InitialState >();
     for( InitialState::CIT_Resources it = extension.resources_.begin(); it != extension.resources_.end(); ++it )
         MergeLine( it->name_, it->category_, it->number_, it->maximum_, it->threshold_, it->consumption_ );

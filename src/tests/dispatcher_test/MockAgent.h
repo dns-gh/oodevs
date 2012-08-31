@@ -29,6 +29,9 @@ MOCK_BASE_CLASS( MockAgent, dispatcher::Agent_ABC )
     MOCK_METHOD( ContextMenu, 2 );
     MOCK_METHOD( Activate, 1 );
 
+    // kernel::Agent_ABC
+    MOCK_METHOD( GetType, 0 );
+
     // dispatcher::Sendable< kernel::Agent_ABC >
     MOCK_METHOD( SendCreation, 1 );
     MOCK_METHOD( SendFullUpdate, 1 );

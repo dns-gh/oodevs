@@ -15,6 +15,10 @@
 <context>
     <name>Agent</name>
     <message>
+        <source>Info/Type</source>
+        <translation>Info/Type</translation>
+    </message>
+    <message>
         <source>Info/Command post</source>
         <translation>Info/Poste de commande</translation>
     </message>
