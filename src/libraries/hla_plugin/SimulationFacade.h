@@ -62,6 +62,8 @@ namespace hla
     class EquipmentUpdater;
     class RemoteAgentController;
     class NetnRemoteCallsignListener;
+    class AgentSubject_ABC;
+    class LocalAgentResolver_ABC;
 
 // =============================================================================
 /** @class  SimulationFacade
@@ -78,7 +80,7 @@ public:
                                dispatcher::SimulationPublisher_ABC& publisher, dispatcher::Model_ABC& dynamicModel, const rpr::EntityTypeResolver_ABC& componentTypeResolver,
                                const dispatcher::StaticModel& staticModel, const UnitTypeResolver_ABC& unitTypeResolver,
                                RemoteAgentSubject_ABC& remoteAgentSubject, const ComponentTypes_ABC& componentTypes, CallsignResolver_ABC& callsignResolver,
-                               dispatcher::Logger_ABC& logger, const ExtentResolver_ABC& extent );
+                               dispatcher::Logger_ABC& logger, const ExtentResolver_ABC& extent, AgentSubject_ABC& subject, const LocalAgentResolver_ABC& localResolver  );
     virtual ~SimulationFacade();
     //@}
 

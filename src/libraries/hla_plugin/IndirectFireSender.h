@@ -30,7 +30,7 @@ namespace plugins
 namespace hla
 {
     template< typename Interaction > class InteractionSender_ABC;
-    class MunitionTypeResolver_ABC;
+    class DotationTypeResolver_ABC;
     class LocalAgentResolver_ABC;
 
 namespace interactions
@@ -51,7 +51,7 @@ public:
     //@{
              IndirectFireSender( InteractionSender_ABC< interactions::MunitionDetonation >& interactionSender,
                                  tools::MessageController_ABC< sword::SimToClient_Content >& controller, const std::string& federateName,
-                                 const MunitionTypeResolver_ABC& munitionTypeResolver, const LocalAgentResolver_ABC& localResolver );
+                                 const DotationTypeResolver_ABC& munitionTypeResolver, const LocalAgentResolver_ABC& localResolver );
     virtual ~IndirectFireSender();
     //@}
 
@@ -73,7 +73,7 @@ private:
     //@{
     InteractionSender_ABC< interactions::MunitionDetonation >& interactionSender_;
     const std::string federateName_;
-    const MunitionTypeResolver_ABC& munitionTypeResolver_;
+    const DotationTypeResolver_ABC& munitionTypeResolver_;
     const LocalAgentResolver_ABC& localResolver_;
     T_Fires fires_;
     //@}

@@ -12,7 +12,7 @@
 #include "hla_plugin/Interactions.h"
 #include "MockSimulationPublisher.h"
 #include "MockContextFactory.h"
-#include "MockMunitionTypeResolver.h"
+#include "MockDotationTypeResolver.h"
 #include "protocol/Senders.h"
 #include "protocol/Simulation.h"
 
@@ -35,7 +35,7 @@ namespace
         }
         dispatcher::MockSimulationPublisher publisher;
         MockContextFactory factory;
-        MockMunitionTypeResolver munitionResolver;
+        MockDotationTypeResolver munitionResolver;
         IndirectFireReceiver receiver;
         interactions::MunitionDetonation parameters;
         const double latitude;

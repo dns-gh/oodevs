@@ -70,7 +70,7 @@ SimulationFacade::SimulationFacade( xml::xisubstream xis, const ContextFactory_A
                                     dispatcher::SimulationPublisher_ABC& publisher, dispatcher::Model_ABC& dynamicModel, const rpr::EntityTypeResolver_ABC& componentTypeResolver,
                                     const dispatcher::StaticModel& staticModel, const UnitTypeResolver_ABC& unitTypeResolver,
                                     RemoteAgentSubject_ABC& remoteAgentSubject, const ComponentTypes_ABC& componentTypes, CallsignResolver_ABC& callsignResolver,
-                                    dispatcher::Logger_ABC& logger, const ExtentResolver_ABC& extent )
+                                    dispatcher::Logger_ABC& logger, const ExtentResolver_ABC& extent, AgentSubject_ABC& subject, const LocalAgentResolver_ABC& localResolver  )
     : pFormationHandler_          ( new FormationContextHandler( messageController, contextFactory, publisher ) )
     , pAutomatHandler_            ( new AutomatContextHandler( messageController, contextFactory, publisher ) )
     , pUnitHandler_               ( new UnitContextHandler( messageController, contextFactory, publisher ) )
@@ -78,9 +78,9 @@ SimulationFacade::SimulationFacade( xml::xisubstream xis, const ContextFactory_A
     , pAutomatDisengager_         ( new AutomatDisengager( *pAutomatHandler_, publisher, contextFactory ) )
     , pFormationCreater_          ( new FormationCreater( dynamicModel.Sides(), *pFormationHandler_ ) )
     , pAutomatCreater_            ( new AutomatCreater( xis, *pFormationHandler_, *pAutomatHandler_, *pAutomatTypeResolver_, dynamicModel.KnowledgeGroups() ) )
-    , pUnitTeleporter_            ( new UnitTeleporter( remoteAgentSubject, *pUnitHandler_, publisher, contextFactory, callsignResolver, logger ) )
+    , pUnitTeleporter_            ( new UnitTeleporter( remoteAgentSubject, *pUnitHandler_, publisher, contextFactory, localResolver, callsignResolver, logger ) )
     , pEquipmentUpdater_          ( new EquipmentUpdater( remoteAgentSubject, *pUnitHandler_, publisher, contextFactory, componentTypeResolver, componentTypes, messageController ) )
-    , pRemoteAgentController_     ( new RemoteAgentController( remoteAgentSubject, *pAutomatHandler_, *pUnitHandler_, dynamicModel.Sides(), unitTypeResolver, logger, extent ) )
+    , pRemoteAgentController_     ( new RemoteAgentController( remoteAgentSubject, *pAutomatHandler_, *pUnitHandler_, dynamicModel, unitTypeResolver, logger, extent, subject ) )
     , pNetnRemoteCallsignListener_( new NetnRemoteCallsignListener( callsignResolver, remoteAgentSubject, *pUnitHandler_ ) )
 {
     // NOTHING

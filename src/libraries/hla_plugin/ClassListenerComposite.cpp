@@ -88,3 +88,23 @@ void ClassListenerComposite::LocalDestroyed( const std::string& identifier )
     BOOST_FOREACH(ClassListener_ABC* listener, listeners_)
         listener->LocalDestroyed( identifier );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ClassListenerComposite::Divested
+// Created: AHC 2010-03-02
+// -----------------------------------------------------------------------------
+void ClassListenerComposite::Divested( const std::string& identifier )
+{
+    BOOST_FOREACH(ClassListener_ABC* listener, listeners_)
+        listener->Divested( identifier );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClassListenerComposite::Acquired
+// Created: AHC 2010-02-27
+// -----------------------------------------------------------------------------
+void ClassListenerComposite::Acquired( const std::string& identifier )
+{
+    BOOST_FOREACH(ClassListener_ABC* listener, listeners_)
+        listener->Acquired( identifier );
+}

@@ -46,6 +46,8 @@ public:
     virtual const std::string& GetIdentifier() const;
     virtual void Register( ObjectListener_ABC& listener );
     virtual void Unregister( ObjectListener_ABC& listener );
+    virtual void Attach( Agent_ABC* agent, unsigned long simId );
+    virtual void ResetAttributes();
     //@}
 
 private:

@@ -35,7 +35,7 @@ namespace hla
 {
     class RemoteAgentResolver_ABC;
     class LocalAgentResolver_ABC;
-    class MunitionTypeResolver_ABC;
+    class DotationTypeResolver_ABC;
     class ContextFactory_ABC;
     class RemoteAgentSubject_ABC;
     class DirectFireSender;
@@ -61,7 +61,7 @@ public:
     //@{
              DetonationFacade( dispatcher::SimulationPublisher_ABC& publisher, tools::MessageController_ABC< sword::SimToClient_Content >& controller,
                                const RemoteAgentResolver_ABC& remoteResolver, const LocalAgentResolver_ABC& localResolver,
-                               const ContextFactory_ABC& contextFactory, const MunitionTypeResolver_ABC& munitionTypeResolver,
+                               const ContextFactory_ABC& contextFactory, const DotationTypeResolver_ABC& munitionTypeResolver,
                                RemoteAgentSubject_ABC& remoteAgentSubject, const std::string& federateName, const InteractionBuilder& builder );
     virtual ~DetonationFacade();
     //@}

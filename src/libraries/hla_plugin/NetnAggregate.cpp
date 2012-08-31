@@ -15,9 +15,55 @@
 #include "SerializationTools.h"
 #include "ObjectListener_ABC.h"
 #include "ObjectListenerComposite.h"
-#include "AttributesSerializer.h"
+#include "AttributesUpdater.h"
+#include <hla/AttributeIdentifier.h>
+#include <hla/Deserializer_ABC.h>
 
 using namespace plugins::hla;
+
+namespace
+{
+    void ReadCallsign( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, UnicodeString& callsign )
+    {
+        callsign.Deserialize( deserializer );
+        listener.CallsignChanged( identifier, callsign.str() );
+    }
+    void ReadUniqueId( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, UniqueId& uniqueId )
+    {
+        uniqueId.Deserialize( deserializer );
+        listener.UniqueIdChanged( identifier, uniqueId.str() );
+    }
+    void ReadMounted( ::hla::Deserializer_ABC& deserializer, const std::string& /*identifier*/, ObjectListener_ABC& /*listener*/, double& mounted )
+    {
+        deserializer >> mounted;
+    }
+    void ReadSymbol( ::hla::Deserializer_ABC& deserializer, const std::string& /*identifier*/, ObjectListener_ABC& /*listener*/, UnicodeString& symbol )
+    {
+        symbol.Deserialize( deserializer );
+    }
+    void ReadStatus( ::hla::Deserializer_ABC& deserializer, const std::string& /*identifier*/, ObjectListener_ABC& /*listener*/, int8& status )
+    {
+        deserializer >> status;
+    }
+    void ReadNothing( ::hla::Deserializer_ABC& /*deserializer*/, const std::string& /*identifier*/, ObjectListener_ABC& /*listener*/ )
+    {
+        // NOTHING
+    }
+    void ReadEmbeddedUnitList( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener )
+    {
+        std::vector< std::string > embeddedUnits;
+        uint32 size;
+        deserializer >> size;
+        embeddedUnits.resize(size);
+        for(uint32 i=0; i < size; ++i )
+        {
+            UniqueId tmp;
+            deserializer >> tmp;
+            embeddedUnits[i]=tmp.str();
+        }
+        listener.EmbeddedUnitListChanged( identifier, embeddedUnits );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: NetnAggregate constructor
@@ -26,18 +72,29 @@ using namespace plugins::hla;
 NetnAggregate::NetnAggregate( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC& agent, const std::string& callsign, const std::string& uniqueIdentifier, const std::string& symbol )
     : listeners_ ( new ObjectListenerComposite() )
     , aggregate_ ( aggregate )
-    , agent_     ( agent )
-    , attributes_( new AttributesSerializer() )
+    , agent_     ( &agent )
+    , attributesUpdater_( new AttributesUpdater(callsign, *listeners_) ) // TODO AHC check callsign
+    , callsign_  ( callsign )
+    , uniqueId_  ( uniqueIdentifier )
+    , symbol_    ( symbol )
+    , mounted_   ( 0. )
+    , status_    ( 1 )
 {
-    attributes_->Register( "Mounted", Wrapper< double >( 0. ) ); // 0%
-    attributes_->Register( "Echelon", Wrapper< unsigned char >( 14 ) ); // platoon
-    attributes_->Register( "UniqueID", UniqueId( uniqueIdentifier ) );
-    attributes_->Register( "HigherHeadquarters", UniqueId( uniqueIdentifier ) );
-    attributes_->Register( "Callsign", UnicodeString( callsign ) );
-    attributes_->Register( "Status", Wrapper< int8 >( 1 ) ); // Active
-    attributes_->Register( "Symbol", UnicodeString( symbol ) ); // APP6
-    attributes_->Register( "EmbeddedUnitList", VectorWrapper< UniqueId >( std::vector< UniqueId >() ) );
-    agent_.Register( *this );
+    RegisterAttributes();
+    agent_->Register( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnRemoteAggregate constructor
+// Created: AHC 2012-02-21
+// -----------------------------------------------------------------------------
+NetnAggregate::NetnAggregate( std::auto_ptr< HlaObject_ABC > aggregate, const std::string& identifier )
+    : listeners_ ( new ObjectListenerComposite() )
+    , aggregate_ ( aggregate )
+    , agent_ ( 0 )
+    , attributesUpdater_( new AttributesUpdater( identifier, *listeners_ ) )
+{
+    RegisterAttributes();
 }
 
 // -----------------------------------------------------------------------------
@@ -46,7 +103,8 @@ NetnAggregate::NetnAggregate( std::auto_ptr< HlaObject_ABC > aggregate, Agent_AB
 // -----------------------------------------------------------------------------
 NetnAggregate::~NetnAggregate()
 {
-    agent_.Unregister( *this );
+    if( agent_ )
+        agent_->Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -56,16 +114,17 @@ NetnAggregate::~NetnAggregate()
 void NetnAggregate::Serialize( ::hla::UpdateFunctor_ABC& functor, bool updateAll ) const
 {
     aggregate_->Serialize( functor, updateAll );
-    attributes_->Serialize( functor, updateAll );
+    attributesUpdater_->Serialize( functor, updateAll );
 }
 
 // -----------------------------------------------------------------------------
 // Name: NetnAggregate::Deserialize
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-void NetnAggregate::Deserialize( const ::hla::AttributeIdentifier& /*identifier*/, ::hla::Deserializer_ABC& /*deserializer*/ )
+void NetnAggregate::Deserialize( const ::hla::AttributeIdentifier& identifier, ::hla::Deserializer_ABC& deserializer )
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
+    aggregate_->Deserialize( identifier, deserializer );
+    attributesUpdater_->Deserialize( identifier.ToString(), deserializer );
 }
 
 // -----------------------------------------------------------------------------
@@ -101,26 +160,8 @@ void NetnAggregate::EquipmentChanged( unsigned int /*type*/, const rpr::EntityTy
 // -----------------------------------------------------------------------------
 void NetnAggregate::EmbarkmentChanged( bool mounted )
 {
-    attributes_->Update( "Mounted", Wrapper< double >( mounted ? 100. : 0. ) );
-    attributes_->Update( "Status", Wrapper< int8 >( mounted ? 2 : 1 ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: NetnAggregate::SetIdentifier
-// Created: AHC 2012-03-15
-// -----------------------------------------------------------------------------
-void NetnAggregate::SetIdentifier( const std::string& id )
-{
-    aggregate_->SetIdentifier( id );
-}
-
-// -----------------------------------------------------------------------------
-// Name: NetnAggregate::GetIdentifier
-// Created: AHC 2012-04-18
-// -----------------------------------------------------------------------------
-const std::string& NetnAggregate::GetIdentifier( ) const
-{
-    return aggregate_->GetIdentifier();
+    attributesUpdater_->Update( "Mounted", Wrapper< double >( mounted ? 100. : 0. ) );
+    attributesUpdater_->Update( "Status", Wrapper< int8 >( mounted ? 2 : 1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -144,6 +185,66 @@ void NetnAggregate::Unregister( ObjectListener_ABC& listener )
 }
 
 // -----------------------------------------------------------------------------
+// Name: NetnAggregate::Attach
+// Created: AHC 2012-03-09
+// -----------------------------------------------------------------------------
+void NetnAggregate::Attach( Agent_ABC* agent, unsigned long simId )
+{
+    aggregate_->Attach( agent, simId );
+    if( agent_ )
+        agent_->Unregister( *this );
+    agent_ = agent;
+    agent_->Register( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnAggregate::RegisterAttributes
+// Created: AHC 2012-03-13
+// -----------------------------------------------------------------------------
+void NetnAggregate::RegisterAttributes()
+{
+    attributesUpdater_->Register( "Mounted", boost::bind( &ReadMounted, _1, _2, _3, boost::ref( mounted_ ) ), Wrapper< double >( mounted_ ) );
+    attributesUpdater_->Register( "Echelon", boost::bind( &ReadNothing, _1, _2, _3 ), Wrapper< unsigned char >( 14 ) ); // platoon
+    attributesUpdater_->Register( "UniqueID", boost::bind( &ReadUniqueId, _1, _2, _3, boost::ref( uniqueId_ ) ), uniqueId_ );
+    attributesUpdater_->Register( "HigherHeadquarters", boost::bind( &ReadNothing, _1, _2, _3 ), uniqueId_ );
+    attributesUpdater_->Register( "Callsign", boost::bind( &ReadCallsign, _1, _2, _3, boost::ref( callsign_ ) ), callsign_ );
+    attributesUpdater_->Register( "Status", boost::bind( &ReadStatus, _1, _2, _3, boost::ref( status_ ) ), Wrapper< int8 >( status_ ) );
+    attributesUpdater_->Register( "Symbol", boost::bind( &ReadSymbol, _1, _2, _3, boost::ref( symbol_ ) ), symbol_ );
+    attributesUpdater_->Register( "EmbeddedUnitList", boost::bind( &ReadEmbeddedUnitList, _1, _2, _3 ), Wrapper< std::vector< UniqueId > >( std::vector< UniqueId >() ) );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: NetnAggregate::SetIdentifier
+// Created: AHC 2012-03-15
+// -----------------------------------------------------------------------------
+void NetnAggregate::SetIdentifier( const std::string& id )
+{
+    aggregate_->SetIdentifier( id );
+    identifier_ = id;
+    attributesUpdater_.reset( new AttributesUpdater(identifier_, *listeners_) );
+    RegisterAttributes();
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnAggregate::GetIdentifier
+// Created: AHC 2012-04-18
+// -----------------------------------------------------------------------------
+const std::string& NetnAggregate::GetIdentifier( ) const
+{
+    return aggregate_->GetIdentifier();
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnAggregate::GetIdentifier
+// Created: AHC 2012-04-20
+// -----------------------------------------------------------------------------
+void NetnAggregate::ResetAttributes()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: NetnAggregate::EmbarkmentChanged
 // Created: AHC 2012-07-30
 // -----------------------------------------------------------------------------
@@ -151,3 +252,4 @@ void NetnAggregate::PlatformAdded( const std::string& /*name*/, unsigned int /*i
 {
     // NOTHING
 }
+

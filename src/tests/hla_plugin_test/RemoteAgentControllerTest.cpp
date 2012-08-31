@@ -21,6 +21,9 @@
 #include "MockLogger.h"
 #include "MockHlaObject.h"
 #include "MockHlaClass.h"
+#include "MockModel.h"
+#include "MockComponentTypes.h"
+#include "MockAgentSubject.h"
 #include <boost/shared_ptr.hpp>
 #include <boost/assign.hpp>
 #include <boost/foreach.hpp>
@@ -38,19 +41,26 @@ namespace
     public:
         Fixture()
             : automatCreationHandler( 0 )
+            , unitCreationHandler   ( 0)
             , remoteClassListener   ( 0 )
             , party                 ( 42u )
             , latitude              ( 1. )
             , longitude             ( 2. )
             , automat               ( 1337 )
+            , agentListener         ( 0 )
         {
             MOCK_EXPECT( logger.LogInfo );
             MOCK_EXPECT( logger.LogError );
             MOCK_EXPECT( logger.LogWarning );
             MOCK_EXPECT( remoteSubject.Register ).once().with( mock::retrieve( remoteClassListener ) );
             MOCK_EXPECT( automatCreation.Register ).once().with( mock::retrieve( automatCreationHandler ) );
+            MOCK_EXPECT( unitCreation.Register ).once().with( mock::retrieve( unitCreationHandler ) );
+            MOCK_EXPECT( agentSubject.Register ).once().with( mock::retrieve( agentListener ) );
             MOCK_EXPECT( automatCreation.Unregister );
+            MOCK_EXPECT( unitCreation.Unregister );
             MOCK_EXPECT( remoteSubject.Unregister );
+            MOCK_EXPECT( agentSubject.Unregister );
+            MOCK_EXPECT( dynamicModel.Sides ).once().returns( boost::ref( teamResolver ) );
             ConfigureTeams();
         }
         template< typename T_Result, typename T_Mock, typename T_Vector >
@@ -74,6 +84,7 @@ namespace
         MockRemoteAgentSubject remoteSubject;
         ClassListener_ABC* remoteClassListener;
         ResponseObserver_ABC< sword::AutomatCreation >* automatCreationHandler;
+        ResponseObserver_ABC< sword::UnitCreation >* unitCreationHandler;
         MockContextHandler< sword::AutomatCreation > automatCreation;
         MockContextHandler< sword::UnitCreation > unitCreation;
         tools::MockResolver< dispatcher::Team_ABC > teamResolver;
@@ -85,15 +96,20 @@ namespace
         const double longitude;
         const unsigned long automat;
         T_Teams teams;
+        dispatcher::MockModel dynamicModel;
+        MockAgentSubject agentSubject;
+        AgentListener_ABC* agentListener;
     };
     class AutomatFixture : public Fixture
     {
     public:
         AutomatFixture()
-            : remoteController( remoteSubject, automatCreation, unitCreation, teamResolver, unitTypeResolver, logger, extentResolver )
+            : remoteController( remoteSubject, automatCreation, unitCreation, dynamicModel, unitTypeResolver, logger, extentResolver, agentSubject )
         {
             BOOST_REQUIRE( automatCreationHandler );
+            BOOST_REQUIRE( unitCreationHandler );
             BOOST_REQUIRE( remoteClassListener );
+            BOOST_REQUIRE( agentListener );
             MOCK_EXPECT( object.Register ).once().with( mock::retrieve( remoteAgentListener ) );
             remoteClassListener->RemoteCreated( "identifier", hlaClass, object );
             BOOST_REQUIRE( remoteAgentListener );
@@ -112,7 +128,7 @@ namespace
         MockHlaObject object;
     };
 }
-
+// TODO leaks
 BOOST_FIXTURE_TEST_CASE( remote_agent_controller_creates_agent_when_receiving_remote_creation_and_moved_events, AutomatFixture )
 {
     const rpr::EntityType entityType( "1 2" );

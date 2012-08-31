@@ -261,6 +261,23 @@ void EquipmentUpdater::LocalDestroyed( const std::string& /*identifier*/ )
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: EquipmentUpdater::Divested
+// Created: AHC 2010-03-02
+// -----------------------------------------------------------------------------
+void EquipmentUpdater::Divested( const std::string& /*identifier*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: EquipmentUpdater::Acquired
+// Created: AHC 2010-02-27
+// -----------------------------------------------------------------------------
+void EquipmentUpdater::Acquired( const std::string& /*identifier*/ )
+{
+    // NOTHING
+}
 
 // -----------------------------------------------------------------------------
 // Name: EquipmentUpdater::EmbeddedUnitListChanged

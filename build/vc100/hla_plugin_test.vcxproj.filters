@@ -142,6 +142,15 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\MappingsTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\OwnershipControllerTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\OwnershipStrategyTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\TransferSenderTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\tests\hla_plugin_test\hla_plugin_test_pch.h">
@@ -225,9 +234,6 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockInteractionSender.h">
       <Filter>Source Files\mock</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockMunitionTypeResolver.h">
-      <Filter>Source Files\mock</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockInteractionNotification.h">
       <Filter>Source Files\mock</Filter>
     </ClInclude>
@@ -298,6 +304,21 @@
       <Filter>Source Files\mock</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockHlaObjectNameFactory.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockEntityIdentifierResolver.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockOwnershipController.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockOwnershipStrategy.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTransferSender.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockDotationTypeResolver.h">
       <Filter>Source Files\mock</Filter>
     </ClInclude>
   </ItemGroup>

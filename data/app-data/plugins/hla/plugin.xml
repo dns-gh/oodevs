@@ -146,6 +146,24 @@
                         <description lang="fr" name="Désagreger les pions"><![CDATA[Emettre les vehicules (demos seulement)]]></description>
                     </descriptions>
                 </setting>
+                <setting attribute="@transfer-sender" type="enumeration" default="rpr;null">
+                    <descriptions>
+                        <description lang="en" name="Transfer sender"><![CDATA[]]>Select how ownership transfer is initiated.</description>
+                        <description lang="fr" name="Requete transfert"><![CDATA[]]>Détermine comment démarre le transfert de controle.</description>
+                    </descriptions>
+                </setting>
+                <setting attribute="@accept-external-transfer" type="enumeration" default="negotiated;always;never">
+                    <descriptions>
+                        <description lang="en" name="Accept Transfer"><![CDATA[]]>Specify whether external transfer request should be accepted.</description>
+                        <description lang="fr" name="Accepter les tansfert"><![CDATA[]]>Détermine s'il faut accepter les demandes de transfert externes.</description>
+                    </descriptions>
+                </setting>
+				<setting attribute="@attribute-ownership-negotiation" type="boolean" default="false">
+                    <descriptions>
+                        <description lang="en" name="Use HLA ownership negotiation"><![CDATA[]]>Specify whether RTI attribute negotiation should be used.</description>
+                        <description lang="fr" name="Negotiation ownership HLA"><![CDATA[]]>Détermine s'il faut utiliser la négotiation de transfert HLA.</description>
+                    </descriptions>
+                </setting>
             </settings>
         </group>
     </settings>

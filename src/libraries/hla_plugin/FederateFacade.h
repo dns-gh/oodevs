@@ -51,6 +51,9 @@ namespace hla
     class HlaTacticalObjectClass;
     class HlaObjectNameFactory_ABC;
     class TacticalObjectSubject_ABC;
+    class OwnershipStrategy_ABC;
+    class CommentMissionSender;
+    class EntityIdentifierResolver_ABC;
 
 // =============================================================================
 /** @class  FederateFacade
@@ -70,7 +73,8 @@ public:
              FederateFacade( xml::xisubstream xis, tools::MessageController_ABC< sword::SimToClient_Content >& controller,
                              AgentSubject_ABC& subject, LocalAgentResolver_ABC& resolver, const RtiAmbassadorFactory_ABC& rtiFactory,
                              const FederateAmbassadorFactory_ABC& federateFactory, const std::string& pluginDirectory, CallsignResolver_ABC& callsignResolver,
-                             TacticalObjectSubject_ABC& tacticalObjectSubject );
+                             TacticalObjectSubject_ABC& tacticalObjectSubject,
+                             OwnershipStrategy_ABC& ownershipStrategy, EntityIdentifierResolver_ABC& entityIdentifierResolver );
     virtual ~FederateFacade();
     //@}
 
@@ -93,11 +97,18 @@ public:
     virtual void Resign();
 
     virtual void Step();
+    virtual void Tick();
 
     virtual void Register( const ::hla::ClassIdentifier& classID, ::hla::Class_ABC& objectClass, bool publish, bool subscribe );
     virtual void Register( const ::hla::InteractionIdentifier& interactionID, ::hla::Interaction_ABC& interactionClass, bool publish, bool subscribe );
 
     virtual void Register( ::hla::FederateAmbassador_ABC& listener );
+
+    // Ownership control
+    virtual void DivestRequest( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes );
+    virtual void UnconditionalDivest( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes );
+    virtual void AcquisitionRequest( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes );
+    virtual void UnconditionalAcquisition( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes );
     //@}
 
 private:
@@ -108,7 +119,7 @@ private:
 
     //! @name Operations
     //@{
-    virtual void AggregateCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol );
+    virtual void AggregateCreated( Agent_ABC& agent, unsigned long identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol, bool isLocal, unsigned long agentType );
     virtual void PlatformCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol );
     virtual void ObjectCreated( TacticalObject_ABC& object, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type );
     //@}

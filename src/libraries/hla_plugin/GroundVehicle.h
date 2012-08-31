@@ -36,6 +36,7 @@ namespace hla
     class ObjectListener_ABC;
     class ObjectListenerComposite;
     class MarkingFactory_ABC;
+    class EntityIdentifierResolver_ABC;
 
 // =============================================================================
 /** @class  GroundVehicle
@@ -51,7 +52,7 @@ public:
     //@{
              GroundVehicle( Agent_ABC& agent, unsigned int identifier,
                             const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const MarkingFactory_ABC& markingFactory,
-                            unsigned short siteID, unsigned short applicationID );
+                            unsigned short siteID, unsigned short applicationID, EntityIdentifierResolver_ABC& entityIdentifierResolver );
     virtual ~GroundVehicle();
     //@}
 
@@ -63,6 +64,8 @@ public:
     virtual const std::string& GetIdentifier() const;
     virtual void Register( ObjectListener_ABC& listener );
     virtual void Unregister( ObjectListener_ABC& listener );
+    virtual void Attach( Agent_ABC* agent, unsigned long simId );
+    virtual void ResetAttributes();
     //@}
 
 private:

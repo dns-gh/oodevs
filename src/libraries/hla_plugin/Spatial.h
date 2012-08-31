@@ -34,6 +34,7 @@ public:
 
     //! @name Operations
     //@{
+    void Refresh( bool isStatic, double latitude, double longitude, float altitude, float speed, float heading );
     template< typename Archive >
     void Serialize( Archive& archive ) const
     {

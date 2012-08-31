@@ -32,6 +32,7 @@ namespace hla
 {
     class RemoteAgentSubject_ABC;
     class ContextFactory_ABC;
+    class LocalAgentResolver_ABC;
     class CallsignResolver_ABC;
     template< typename ResponseMessage > class ContextHandler_ABC;
 
@@ -50,7 +51,7 @@ public:
     //@{
              UnitTeleporter( RemoteAgentSubject_ABC& agentSubject, ContextHandler_ABC< sword::UnitCreation >& contextHandler,
                              dispatcher::SimulationPublisher_ABC& publisher, const ContextFactory_ABC& contextFactory,
-                             const CallsignResolver_ABC& callsignResolver, dispatcher::Logger_ABC& logger );
+                             const LocalAgentResolver_ABC& localResolver, const CallsignResolver_ABC& callsignResolver, dispatcher::Logger_ABC& logger );
     virtual ~UnitTeleporter();
     //@}
 
@@ -61,6 +62,8 @@ private:
     virtual void RemoteDestroyed( const std::string& identifier );
     virtual void LocalCreated( const std::string& identifier, HlaClass_ABC& hlaClass, HlaObject_ABC& object );
     virtual void LocalDestroyed( const std::string& identifier );
+    virtual void Divested( const std::string& identifier );
+    virtual void Acquired( const std::string& identifier );
     virtual void Moved( const std::string& identifier, double latitude, double longitude );
     virtual void SideChanged( const std::string& identifier, rpr::ForceIdentifier side );
     virtual void NameChanged( const std::string& identifier, const std::string& name );
@@ -80,6 +83,7 @@ private:
     //! @name Types
     //@{
     typedef std::map< std::string, unsigned long > T_Identifiers;
+    typedef std::map< std::string, HlaObject_ABC* > T_Objects;
     typedef std::map< std::string, std::vector< std::string > > T_EmbeddedUnitsMap;
     //@}
 
@@ -90,9 +94,11 @@ private:
     ContextHandler_ABC< sword::UnitCreation >& contextHandler_;
     dispatcher::SimulationPublisher_ABC& publisher_;
     const ContextFactory_ABC& contextFactory_;
+    const LocalAgentResolver_ABC& localResolver_;
     const CallsignResolver_ABC& callsignResolver_;
     dispatcher::Logger_ABC& logger_;
     T_Identifiers identifiers_;
+    T_Objects objects_;
     T_EmbeddedUnitsMap pendingLoaded_;
     //@}
 };

@@ -12,7 +12,9 @@
 
 #include "ClassListener_ABC.h"
 #include "ObjectListener_ABC.h"
+#include "AgentListener_ABC.h"
 #include "ResponseObserver_ABC.h"
+#include "dispatcher/ExtensionFactory_ABC.h"
 #include "tools/Resolver_ABC.h"
 #include <boost/shared_ptr.hpp>
 #include <map>
@@ -21,11 +23,18 @@ namespace dispatcher
 {
     class Team_ABC;
     class Logger_ABC;
+    class Model_ABC;
+    class Agent;
 }
 
 namespace kernel
 {
     class Karma;
+}
+
+namespace rpr
+{
+    class EntityTypeResolver_ABC;
 }
 
 namespace sword
@@ -47,6 +56,9 @@ namespace hla
     template< typename Response > class ContextHandler_ABC;
     class UnitTypeResolver_ABC;
     class ExtentResolver_ABC;
+    class ComponentTypes_ABC;
+    class Agent_ABC;
+    class AgentSubject_ABC;
 
 // =============================================================================
 /** @class  RemoteAgentController
@@ -57,6 +69,8 @@ namespace hla
 class RemoteAgentController : private ResponseObserver_ABC< sword::AutomatCreation >
                             , private ClassListener_ABC
                             , private ObjectListener_ABC
+                            , private ResponseObserver_ABC< sword::UnitCreation >
+                            , private AgentListener_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -64,9 +78,9 @@ public:
              RemoteAgentController( RemoteAgentSubject_ABC& agentSubject,
                                     ContextHandler_ABC< sword::AutomatCreation >& automatHandler,
                                     ContextHandler_ABC< sword::UnitCreation >& unitHandler,
-                                    const tools::Resolver_ABC< dispatcher::Team_ABC >& sides,
+                                    dispatcher::Model_ABC& dynamicModel,
                                     const UnitTypeResolver_ABC& typeResolver, dispatcher::Logger_ABC& logger,
-                                    const ExtentResolver_ABC& extent );
+                                    const ExtentResolver_ABC& extent, AgentSubject_ABC& subject );
     virtual ~RemoteAgentController();
     //@}
 
@@ -74,6 +88,7 @@ private:
     //! @name Operations
     //@{
     virtual void Notify( const sword::AutomatCreation& message, const std::string& identifier );
+    virtual void Notify( const sword::UnitCreation& message, const std::string& identifier );
     //@}
 
     //! @name Operations
@@ -82,6 +97,8 @@ private:
     virtual void RemoteDestroyed( const std::string& identifier );
     virtual void LocalCreated( const std::string& identifier, HlaClass_ABC& hlaClass, HlaObject_ABC& object );
     virtual void LocalDestroyed( const std::string& identifier );
+    virtual void Divested( const std::string& identifier );
+    virtual void Acquired( const std::string& identifier );
     virtual void Moved( const std::string& identifier, double latitude, double longitude );
     virtual void SideChanged( const std::string& identifier, rpr::ForceIdentifier side );
     virtual void NameChanged( const std::string& identifier, const std::string& name );
@@ -90,6 +107,9 @@ private:
     virtual void UniqueIdChanged( const std::string& identifier, const std::string& uniqueId );
     virtual void CallsignChanged( const std::string& identifier, const std::string& callsign );
     virtual void EmbeddedUnitListChanged( const std::string& identifier, const std::vector< std::string >& units );
+
+    virtual void AggregateCreated( Agent_ABC& agent, unsigned long identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol, bool isLocal, unsigned long agentType );
+    virtual void PlatformCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol ) ;
     //@}
 
 private:
@@ -97,6 +117,7 @@ private:
     //@{
     unsigned long FindAutomat( rpr::ForceIdentifier ) const;
     void Send( simulation::UnitMagicAction& message, const std::string& identifier );
+    void Attach( unsigned long simId );
     //@}
 
 private:
@@ -107,6 +128,9 @@ private:
     typedef std::map< unsigned long, unsigned long > T_Parties;
     typedef std::map< kernel::Karma, unsigned long > T_Karmas;
     typedef std::map< std::string, rpr::ForceIdentifier > T_WaitingAutomats;
+    typedef std::map< std::string, HlaObject_ABC* > T_RemoteObjects;
+    typedef std::map< std::string, unsigned long > T_Hla2SimIds;
+    typedef std::map< unsigned long, Agent_ABC* > T_Agents;
     //@}
 
 private:
@@ -115,14 +139,18 @@ private:
     RemoteAgentSubject_ABC& agentSubject_;
     ContextHandler_ABC< sword::AutomatCreation >& automatHandler_;
     ContextHandler_ABC< sword::UnitCreation >& unitHandler_;
-    const tools::Resolver_ABC< dispatcher::Team_ABC >& sides_;
+    dispatcher::Model_ABC& dynamicModel_;
     const UnitTypeResolver_ABC& typeResolver_;
     dispatcher::Logger_ABC& logger_;
     const ExtentResolver_ABC& extent_;
+    AgentSubject_ABC& simSubject_;
     T_UnitCreations unitCreations_;
     T_Parties parties_;
     T_Karmas karmas_;
     T_WaitingAutomats waitingAutomats_;
+    T_RemoteObjects remoteObjects_;
+    T_Hla2SimIds remoteIds_;
+    T_Agents remoteAgents_;
     //@}
 };
 

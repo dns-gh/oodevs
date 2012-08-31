@@ -14,8 +14,10 @@
 #include "HlaClass_ABC.h"
 #include "rpr/ForceIdentifier.h"
 #include <hla/ObjectRegistration_ABC.h>
+#include <hla/AttributeIdentifier.h>
 #include <boost/shared_ptr.hpp>
 #include <map>
+#include <set>
 
 namespace hla
 {
@@ -41,6 +43,7 @@ namespace hla
     class ClassListener_ABC;
     class ClassListenerComposite;
     class HlaObjectNameFactory_ABC;
+    class OwnershipStrategy_ABC;
 
 // =============================================================================
 /** @class  HlaClass
@@ -48,8 +51,8 @@ namespace hla
 */
 // Created: AGE 2008-02-22
 // =============================================================================
-class HlaClass : public HlaClass_ABC
-                , public RemoteAgentSubject_ABC
+class HlaClass : public RemoteAgentSubject_ABC
+                , private HlaClass_ABC
                 , private ::hla::ObjectRegistration_ABC< HlaObject_ABC >
 {
 public:
@@ -57,7 +60,7 @@ public:
     //@{
              HlaClass( Federate_ABC& federate, LocalAgentResolver_ABC& resolver, const HlaObjectNameFactory_ABC& nameFactory,
                        std::auto_ptr< HlaObjectFactory_ABC > factory, std::auto_ptr< RemoteHlaObjectFactory_ABC > remoteFactory,
-                       std::auto_ptr< ClassBuilder_ABC > builder );
+                       std::auto_ptr< ClassBuilder_ABC > builder, OwnershipStrategy_ABC& ownershipStrategy );
     virtual ~HlaClass();
     //@}
 
@@ -65,7 +68,7 @@ public:
     //@{
     virtual void Register( ClassListener_ABC& listener );
     virtual void Unregister( ClassListener_ABC& listener );
-    void Created( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol );
+    void Created( Agent_ABC& agent, unsigned long identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol );
     //@}
 
 private:
@@ -77,6 +80,8 @@ private:
     virtual bool RequestConfirmDivestiture( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const ::hla::T_AttributeIdentifiers& attributes );
     virtual void OwnershipAcquisitionNotification( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const ::hla::T_AttributeIdentifiers& attributes );
     virtual bool RequestOwnershipAssumption( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const ::hla::T_AttributeIdentifiers& attributes );
+    virtual void Divest(const std::string& objectID );
+    virtual void Acquire(const std::string& objectID );
     //@}
 
 private:
@@ -84,21 +89,28 @@ private:
     //@{
     typedef boost::shared_ptr< HlaObject_ABC > T_Entity;
     typedef std::map< std::string, T_Entity > T_Entities;
+    typedef std::vector< ::hla::AttributeIdentifier > T_AttributeIdentifiers;
     typedef std::map< std::string, unsigned long > T_HlaIdentifiers;
+    typedef std::set< unsigned long > T_IdentifierSet;
     //@}
 
 private:
     //! @name Member data
     //@{
+    Federate_ABC& federate_;
     LocalAgentResolver_ABC& resolver_;
     const HlaObjectNameFactory_ABC& nameFactory_;
     std::auto_ptr< HlaObjectFactory_ABC > factory_;
     std::auto_ptr< RemoteHlaObjectFactory_ABC > remoteFactory_;
+    OwnershipStrategy_ABC& ownershipStrategy_;
     T_Entities localEntities_;
     T_Entities remoteEntities_;
     std::auto_ptr< ClassListenerComposite > pListeners_;
     std::auto_ptr< ::hla::Class< HlaObject_ABC > > hlaClass_;
+    T_AttributeIdentifiers attributes_;
     T_HlaIdentifiers hlaIdentifiers_;
+    T_IdentifierSet divesting_;
+    T_IdentifierSet acquiring_;
     //@}
 };
 

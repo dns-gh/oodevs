@@ -10,6 +10,8 @@
 #ifndef plugins_hla_HlaClass_ABC_h
 #define plugins_hla_HlaClass_ABC_h
 
+#include <string>
+
 namespace plugins
 {
 namespace hla
@@ -30,6 +32,8 @@ public:
 
     //! @name Operations
     //@{
+    virtual void Divest(const std::string& objectID ) = 0;
+    virtual void Acquire(const std::string& objectID ) = 0;
     //@}
 };
 

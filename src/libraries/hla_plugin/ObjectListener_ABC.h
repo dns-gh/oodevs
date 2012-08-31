@@ -11,6 +11,7 @@
 
 #include <rpr/ForceIdentifier.h>
 #include <string>
+#include <vector>
 
 namespace rpr
 {

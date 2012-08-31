@@ -44,3 +44,16 @@ Spatial::~Spatial()
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: Spatial destructor
+// Created: AHC 2012-03-26
+// -----------------------------------------------------------------------------
+void Spatial::Refresh( bool isStatic, double latitude, double longitude, float altitude, float speed, float heading )
+{
+    isStatic_ = isStatic;
+    worldLocation_ = rpr::WorldLocation( latitude, longitude, altitude );
+    deadReckoningAlgorithm_ = isStatic ? 1 : 2 ;
+    velocityVector_ = rpr::VelocityVector( worldLocation_, speed, heading );
+    orientation_ = rpr::Orientation( worldLocation_, velocityVector_ );
+}

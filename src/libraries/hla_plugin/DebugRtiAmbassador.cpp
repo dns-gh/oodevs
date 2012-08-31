@@ -366,8 +366,8 @@ void DebugRtiAmbassador::UnconditionalOwnershipDivestiture( const ::hla::ObjectI
 void DebugRtiAmbassador::NegotiatedOwnershipDivestiture( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes )
 {
     Flush();
-    logger_.LogInfo( "-> ConfirmDivestiture object " + objectID.ToString() );
-    ambassador_->ConfirmDivestiture( objectID, attributes );
+    logger_.LogInfo( "-> NegotiatedOwnershipDivestiture object " + objectID.ToString() );
+    ambassador_->NegotiatedOwnershipDivestiture( objectID, attributes );
 }
 
 // -----------------------------------------------------------------------------
@@ -421,7 +421,7 @@ void DebugRtiAmbassador::OwnershipDivestitureIfWanted( const ::hla::ObjectIdenti
 void DebugRtiAmbassador::CancelNegotiatedOwnershipDivestiture( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes )
 {
     Flush();
-    logger_.LogInfo( "-> RegisterSynchronizationPoint object " + objectID.ToString() );
+    logger_.LogInfo( "-> CancelNegotiatedOwnershipDivestiture object " + objectID.ToString() );
     ambassador_->CancelNegotiatedOwnershipDivestiture( objectID, attributes );
 }
 

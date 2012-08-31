@@ -42,6 +42,7 @@ public:
     //! @name Operations
     //@{
     virtual void Build( Federate_ABC& federate, ::hla::Class< HlaObject_ABC >& hlaClass ) const = 0;
+    virtual void GetAttributes( std::vector< std::string>& attributes ) const = 0;
     //@}
 };
 

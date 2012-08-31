@@ -52,7 +52,7 @@ HlaTacticalObjectClass::~HlaTacticalObjectClass()
 // Name: HlaTacticalObjectClass destructor
 // Created: AHC 2012-08-07
 // -----------------------------------------------------------------------------
-HlaObject_ABC& HlaTacticalObjectClass::Create ( const ::hla::ObjectIdentifier& objectID, const std::string& objectName )
+HlaObject_ABC& HlaTacticalObjectClass::Create ( const ::hla::ObjectIdentifier& /*objectID*/, const std::string& objectName )
 {
     T_Entity& entity = remoteEntities_[ objectName ];
     entity.reset( remoteFactory_->Create( objectName ).release() );
@@ -119,4 +119,22 @@ void HlaTacticalObjectClass::Created( TacticalObject_ABC& object, unsigned int i
     //hlaIdentifiers_[ objectName ] = objectId.ToLong();
     //resolver_.Add( identifier, objectName );
     //pListeners_->LocalCreated( objectName, *this, *localEntity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: HlaTacticalObjectClass::Divest
+// Created: AHC 2012-08-07
+// -----------------------------------------------------------------------------
+void HlaTacticalObjectClass::Divest(const std::string& /*objectID*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: HlaTacticalObjectClass::Acquire
+// Created: AHC 2012-08-07
+// -----------------------------------------------------------------------------
+void HlaTacticalObjectClass::Acquire(const std::string& /*objectID*/ )
+{
+    // NOTHING
 }

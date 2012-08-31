@@ -12,6 +12,16 @@
 
 using namespace rpr;
 
+namespace
+{
+    bool Match(unsigned short lhs, unsigned short rhs)
+    {
+        return lhs == 0xFFFF ||
+               rhs == 0xFFFF ||
+               lhs == rhs;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: EntityIdentifier constructor
 // Created: AGE 2008-04-30
@@ -54,4 +64,37 @@ std::string EntityIdentifier::str() const
        << federateIdentifier_.applicationID_ << " "
        << entityNumber_;
     return ss.str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityIdentifier::operator==
+// Created: AHC 2012-06-30
+// -----------------------------------------------------------------------------
+bool EntityIdentifier::operator== ( const EntityIdentifier& rhs ) const
+{
+    return entityNumber_ == rhs.entityNumber_ &&
+            federateIdentifier_.siteID_ == rhs.federateIdentifier_.siteID_ &&
+            federateIdentifier_.applicationID_ == rhs.federateIdentifier_.applicationID_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityIdentifier::operator<
+// Created: AHC 2012-06-30
+// -----------------------------------------------------------------------------
+bool EntityIdentifier::operator< ( const EntityIdentifier& rhs ) const
+{
+    return entityNumber_ < rhs.entityNumber_
+            || ( entityNumber_ == rhs.entityNumber_ && federateIdentifier_.siteID_ < rhs.federateIdentifier_.siteID_ )
+            || ( entityNumber_ == rhs.entityNumber_ && federateIdentifier_.siteID_ == rhs.federateIdentifier_.siteID_  && federateIdentifier_.applicationID_ < rhs.federateIdentifier_.applicationID_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityIdentifier::Match
+// Created: AHC 2012-06-30
+// -----------------------------------------------------------------------------
+bool EntityIdentifier::Match( const rpr::EntityIdentifier& lhs, const rpr::EntityIdentifier& rhs)
+{
+    return ::Match( lhs.federateIdentifier_.siteID_, rhs.federateIdentifier_.siteID_ ) &&
+           ::Match( lhs.federateIdentifier_.applicationID_, rhs.federateIdentifier_.applicationID_ ) &&
+           ::Match( lhs.entityNumber_, rhs.entityNumber_ );
 }

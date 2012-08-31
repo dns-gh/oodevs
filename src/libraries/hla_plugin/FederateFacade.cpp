@@ -9,7 +9,6 @@
 
 #include "hla_plugin_pch.h"
 #include "FederateFacade.h"
-
 #include "HlaClass.h"
 #include "HlaTacticalObjectClass.h"
 
@@ -23,21 +22,16 @@
 
 #include "AggregateEntity.h"
 #include "NetnAggregate.h"
-#include "RemoteAggregate.h"
-#include "NetnRemoteAggregate.h"
 #include "SurfaceVessel.h"
 #include "NetnSurfaceVessel.h"
-#include "RemoteSurfaceVessel.h"
-#include "NetnRemoteSurfaceVessel.h"
 #include "Aircraft.h"
 #include "NetnAircraft.h"
-#include "RemoteAircraft.h"
-#include "NetnRemoteAircraft.h"
 #include "GroundVehicle.h"
 #include "NetnGroundVehicle.h"
 #include "Minefield.h"
 
 #include "MarkingFactory.h"
+#include "RemoteAgentResolver_ABC.h"
 #include "HlaObjectNameFactory.h"
 #include "MT_Tools/MT_Random.h"
 #include "protocol/Simulation.h"
@@ -54,7 +48,7 @@ namespace
 {
     struct NullFactory : public HlaObjectFactory_ABC
     {
-        virtual std::auto_ptr< HlaObject_ABC > Create( Agent_ABC&, const std::string&, unsigned int, rpr::ForceIdentifier, const rpr::EntityType&, const std::string& ) const
+        virtual std::auto_ptr< HlaObject_ABC > Create( Agent_ABC&, const std::string&, unsigned long, rpr::ForceIdentifier, const rpr::EntityType&, const std::string& ) const
         {
             return std::auto_ptr< HlaObject_ABC >( 0 );
         }
@@ -108,17 +102,17 @@ namespace
     }
     template< typename Rpr, typename Netn >
     std::auto_ptr< HlaObjectFactory_ABC > CreateFactory( bool isNetn, CallsignResolver_ABC& resolver, const MarkingFactory_ABC& markingFactory,
-            unsigned short siteID, unsigned short applicationID )
+            unsigned short siteID, unsigned short applicationID, EntityIdentifierResolver_ABC& entityIdentifierResolver )
     {
-        std::auto_ptr< HlaObjectFactory_ABC > result( new HlaObjectFactory< Rpr >( markingFactory, siteID, applicationID ) );
+        std::auto_ptr< HlaObjectFactory_ABC > result( new HlaObjectFactory< Rpr >( markingFactory, siteID, applicationID, entityIdentifierResolver ) );
         if( isNetn )
             return std::auto_ptr< HlaObjectFactory_ABC >( new NetnHlaObjectFactory< Netn >( result, resolver ) );
         return result;
     }
     template< typename Rpr, typename Netn >
-    std::auto_ptr< RemoteHlaObjectFactory_ABC > CreateRemoteFactory( bool isNetn )
+    std::auto_ptr< RemoteHlaObjectFactory_ABC > CreateRemoteFactory( bool isNetn, EntityIdentifierResolver_ABC& entityIdentifierResolver )
     {
-        std::auto_ptr< RemoteHlaObjectFactory_ABC > result( new RemoteHlaObjectFactory< Rpr >() );
+        std::auto_ptr< RemoteHlaObjectFactory_ABC > result( new RemoteHlaObjectFactory< Rpr >( entityIdentifierResolver ) );
         if( isNetn )
             return std::auto_ptr< RemoteHlaObjectFactory_ABC >( new NetnRemoteHlaObjectFactory< Netn >( result ) );
         return result;
@@ -165,8 +159,8 @@ private:
 FederateFacade::FederateFacade( xml::xisubstream xis, tools::MessageController_ABC< sword::SimToClient_Content >& controller,
                                 AgentSubject_ABC& subject, LocalAgentResolver_ABC& resolver, const RtiAmbassadorFactory_ABC& rtiFactory,
                                 const FederateAmbassadorFactory_ABC& federateFactory, const std::string& pluginDirectory, CallsignResolver_ABC& callsignResolver,
-                                TacticalObjectSubject_ABC& tacticalObjectSubject )
-
+                                TacticalObjectSubject_ABC& tacticalObjectSubject,
+                                OwnershipStrategy_ABC& ownershipStrategy, EntityIdentifierResolver_ABC& entityIdentifierResolver )
     : subject_           ( subject )
     , tacticalObjectSubject_( tacticalObjectSubject )
     , rtiFactory_        ( rtiFactory )
@@ -179,46 +173,43 @@ FederateFacade::FederateFacade( xml::xisubstream xis, tools::MessageController_A
     , nameFactory_       ( new HlaObjectNameFactory( xis.attribute< std::string >( "name", "SWORD" ),
                                 boost::lexical_cast< std::string >( MT_Random::GetInstance().rand32() ) ) )
     , aggregateClass_    ( new HlaClass( *federate_, resolver, *nameFactory_,
-                                         CreateFactory< AggregateEntity, NetnAggregate >( xis.attribute< bool >( "netn", true ), callsignResolver, *markingFactory_, xis.attribute<unsigned short>("dis-site",1), xis.attribute<unsigned short>("dis-application", 1) ),
-                                         CreateRemoteFactory< RemoteAggregate, NetnRemoteAggregate >( xis.attribute< bool >( "netn", true ) ),
-                                         CreateClassBuilder< AggregateEntityBuilder, NetnAggregateEntityBuilder >( xis.attribute< bool >( "netn", true ) ) ) )
+                                         CreateFactory< AggregateEntity, NetnAggregate >( xis.attribute< bool >( "netn", true ), callsignResolver, *markingFactory_, xis.attribute<unsigned short>("dis-site",1), xis.attribute<unsigned short>("dis-application", 1), entityIdentifierResolver ),
+                                         CreateRemoteFactory< AggregateEntity, NetnAggregate >( xis.attribute< bool >( "netn", true ), entityIdentifierResolver ),
+                                         CreateClassBuilder< AggregateEntityBuilder, NetnAggregateEntityBuilder >( xis.attribute< bool >( "netn", true ) ), ownershipStrategy ) )
     , surfaceVesselClass_( new HlaClass( *federate_, resolver, *nameFactory_,
-                                         CreateFactory< SurfaceVessel, NetnSurfaceVessel >( xis.attribute< bool >( "netn", true ), callsignResolver, *markingFactory_, xis.attribute<unsigned short>("dis-site",1), xis.attribute<unsigned short>("dis-application", 1) ),
-                                         CreateRemoteFactory< RemoteSurfaceVessel, NetnRemoteSurfaceVessel >( xis.attribute< bool >( "netn", true ) ),
-                                         CreateClassBuilder< SurfaceVesselBuilder, NetnSurfaceVesselBuilder >( xis.attribute< bool >( "netn", true ) ) ) )
+                                         CreateFactory< SurfaceVessel, NetnSurfaceVessel >( xis.attribute< bool >( "netn", true ), callsignResolver, *markingFactory_, xis.attribute<unsigned short>("dis-site",1), xis.attribute<unsigned short>("dis-application", 1), entityIdentifierResolver ),
+                                         CreateRemoteFactory< SurfaceVessel, NetnSurfaceVessel >( xis.attribute< bool >( "netn", true ), entityIdentifierResolver ),
+                                         CreateClassBuilder< SurfaceVesselBuilder, NetnSurfaceVesselBuilder >( xis.attribute< bool >( "netn", true ) ), ownershipStrategy ) )
     , aircraftClass_     ( new HlaClass( *federate_, resolver, *nameFactory_,
-                                         CreateFactory< Aircraft, NetnAircraft >( xis.attribute< bool >( "netn", true ), callsignResolver, *markingFactory_, xis.attribute<unsigned short>("dis-site",1), xis.attribute<unsigned short>("dis-application", 1) ),
-                                         CreateRemoteFactory< RemoteAircraft, NetnRemoteAircraft >( xis.attribute< bool >( "netn", true ) ),
-                                         CreateClassBuilder< AircraftBuilder, NetnAircraftBuilder >( xis.attribute< bool >( "netn", true ) ) ) )
+                                         CreateFactory< Aircraft, NetnAircraft >( xis.attribute< bool >( "netn", true ), callsignResolver, *markingFactory_, xis.attribute<unsigned short>("dis-site",1), xis.attribute<unsigned short>("dis-application", 1), entityIdentifierResolver ),
+                                         CreateRemoteFactory< Aircraft, NetnAircraft >( xis.attribute< bool >( "netn", true ), entityIdentifierResolver ),
+                                         CreateClassBuilder< AircraftBuilder, NetnAircraftBuilder >( xis.attribute< bool >( "netn", true ) ), ownershipStrategy ) )
     , groundVehicleClass_( new HlaClass( *federate_, resolver, *nameFactory_,
-                                         CreateFactory< GroundVehicle, NetnGroundVehicle >( xis.attribute< bool >( "netn", true ), callsignResolver, *markingFactory_, xis.attribute<unsigned short>("dis-site",1), xis.attribute<unsigned short>("dis-application", 1) ),
+                                         CreateFactory< GroundVehicle, NetnGroundVehicle >( xis.attribute< bool >( "netn", true ), callsignResolver, *markingFactory_, xis.attribute<unsigned short>("dis-site",1), xis.attribute<unsigned short>("dis-application", 1), entityIdentifierResolver ),
                                          std::auto_ptr< RemoteHlaObjectFactory_ABC >( new NullRemoteFactory ),
-                                         CreateClassBuilder< GroundVehicleBuilder, NetnGroundVehicleBuilder >( xis.attribute< bool >( "netn", true ) ) ) )
-    , rprAggregateClass_ ( xis.attribute< bool >( "netn", true ) && xis.attribute< bool >( "netn-subscribe-rpr", true ) ?
+                                         CreateClassBuilder< GroundVehicleBuilder, NetnGroundVehicleBuilder >( xis.attribute< bool >( "netn", true ) ), ownershipStrategy ) )
+    , rprAggregateClass_ ( xis.attribute< bool >( "netn", true ) ?
                                 new HlaClass( *federate_, resolver, *nameFactory_,
                                      std::auto_ptr< HlaObjectFactory_ABC >( new NullFactory ),
-                                     CreateRemoteFactory< RemoteAggregate, NetnRemoteAggregate >( false ),
-                                     CreateClassBuilder< AggregateEntityBuilder, NetnAggregateEntityBuilder >( false )
-                                     )
-                                : 0 )
-    , rprSurfaceVesselClass_ ( xis.attribute< bool >( "netn", true ) && xis.attribute< bool >( "netn-subscribe-rpr", true ) ?
+                                     CreateRemoteFactory< AggregateEntity, NetnAggregate >( false, entityIdentifierResolver ),
+                                     CreateClassBuilder< AggregateEntityBuilder, NetnAggregateEntityBuilder >( false ), ownershipStrategy
+                                     ) : 0 )
+    , rprSurfaceVesselClass_ ( xis.attribute< bool >( "netn", true ) ?
                                 new HlaClass( *federate_, resolver, *nameFactory_,
                                      std::auto_ptr< HlaObjectFactory_ABC >( new NullFactory ),
-                                     CreateRemoteFactory< RemoteSurfaceVessel, NetnRemoteSurfaceVessel >( false ),
-                                     CreateClassBuilder< SurfaceVesselBuilder, NetnSurfaceVesselBuilder >( false)
-                                     )
-                                : 0 )
-    , rprAircraftClass_ ( xis.attribute< bool >( "netn", true ) && xis.attribute< bool >( "netn-subscribe-rpr", true ) ?
+                                     CreateRemoteFactory< SurfaceVessel, NetnSurfaceVessel >( false, entityIdentifierResolver ),
+                                     CreateClassBuilder< SurfaceVesselBuilder, NetnSurfaceVesselBuilder >( false) , ownershipStrategy
+                                     ) : 0 )
+    , rprAircraftClass_ ( xis.attribute< bool >( "netn", true ) ?
                                 new HlaClass( *federate_, resolver, *nameFactory_,
                                      std::auto_ptr< HlaObjectFactory_ABC >( new NullFactory ),
-                                     CreateRemoteFactory< RemoteAircraft, NetnRemoteAircraft >( false ),
-                                     CreateClassBuilder< AircraftBuilder, NetnAircraftBuilder >( false )
-                                    )
-                                : 0 )
+                                     CreateRemoteFactory< Aircraft, NetnAircraft >( false, entityIdentifierResolver  ),
+                                     CreateClassBuilder< AircraftBuilder, NetnAircraftBuilder >( false ) , ownershipStrategy
+                                    ) : 0 )
     , minefieldClass_ ( xis.attribute< bool >( "handle_objects", true ) ?
                                 new HlaTacticalObjectClass( *federate_, *nameFactory_,
                                     std::auto_ptr< HlaTacticalObjectFactory_ABC > ( new TacticalObjectFactory< Minefield >( xis.attribute<unsigned short>("dis-site",1), xis.attribute<unsigned short>("dis-application", 1) ) ) ,
-                                    std::auto_ptr< RemoteHlaObjectFactory_ABC > ( new RemoteHlaObjectFactory< Minefield >() ),
+                                    std::auto_ptr< RemoteHlaObjectFactory_ABC > ( new RemoteHlaObjectFactory< Minefield >( entityIdentifierResolver ) ),
                                     CreateClassBuilder< MinefieldBuilder, MinefieldBuilder >( false) )
                                 : 0)
 {
@@ -391,9 +382,56 @@ void FederateFacade::Register( ::hla::FederateAmbassador_ABC& listener )
 // Name: FederateFacade::AggregateCreated
 // Created: SLI 2011-10-05
 // -----------------------------------------------------------------------------
-void FederateFacade::AggregateCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol )
+void FederateFacade::AggregateCreated( Agent_ABC& agent, unsigned long identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol, bool isLocal, unsigned long /*agentType*/ )
 {
-    aggregateClass_->Created( agent, identifier, name, force, type, symbol );
+    // TODO Handle vessels and aircrafts
+    if( isLocal )
+        aggregateClass_->Created( agent, identifier, name, force, type, symbol );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FederateFacade::DivestRequest
+// Created: AHC 2012-02-27
+// -----------------------------------------------------------------------------
+void FederateFacade::DivestRequest( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes )
+{
+    federate_->DivestRequest( objectID, attributes );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FederateFacade::AcquisitionRequest
+// Created: AHC 2012-03-01
+// -----------------------------------------------------------------------------
+void FederateFacade::AcquisitionRequest( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes )
+{
+    federate_->AcquisitionRequest( objectID, attributes );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FederateFacade::Tick
+// Created: AHC 2012-03-21
+// -----------------------------------------------------------------------------
+void FederateFacade::Tick()
+{
+    federate_->Tick();
+}
+
+// -----------------------------------------------------------------------------
+// Name: FederateFacade::UnconditionalDivest
+// Created: AHC 2012-04-16
+// -----------------------------------------------------------------------------
+void FederateFacade::UnconditionalDivest( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes )
+{
+    federate_->UnconditionalDivest( objectID, attributes );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FederateFacade::UnconditionalDivest
+// Created: AHC 2012-04-17
+// -----------------------------------------------------------------------------
+void FederateFacade::UnconditionalAcquisition( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes )
+{
+    federate_->UnconditionalAcquisition( objectID, attributes );
 }
 
 // -----------------------------------------------------------------------------
@@ -425,3 +463,4 @@ void FederateFacade::ObjectCreated( TacticalObject_ABC& object, unsigned int ide
     if( minefieldClass_.get() )
         minefieldClass_->Created( object, identifier, name, force, type );
 }
+

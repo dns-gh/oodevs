@@ -38,6 +38,7 @@ namespace hla
 class Federate_ABC : private boost::noncopyable
 {
 public:
+    typedef std::vector< ::hla::AttributeIdentifier > T_AttributeIdentifiers;
     typedef std::vector< std::string >                T_FomFiles;
     //! @name Constructors/Destructor
     //@{
@@ -58,11 +59,18 @@ public:
     virtual void Resign() = 0;
 
     virtual void Step() = 0;
+    virtual void Tick() = 0;
 
     virtual void Register( const ::hla::ClassIdentifier& classID, ::hla::Class_ABC& objectClass, bool publish, bool subscribe ) = 0;
     virtual void Register( const ::hla::InteractionIdentifier& interactionID, ::hla::Interaction_ABC& interactionClass, bool publish, bool subscribe ) = 0;
 
     virtual void Register( ::hla::FederateAmbassador_ABC& listener ) = 0;
+
+    // Ownership control
+    virtual void DivestRequest( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes ) = 0;
+    virtual void UnconditionalDivest( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes ) = 0;
+    virtual void AcquisitionRequest( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes ) = 0;
+    virtual void UnconditionalAcquisition( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes ) = 0;
     //@}
 };
 

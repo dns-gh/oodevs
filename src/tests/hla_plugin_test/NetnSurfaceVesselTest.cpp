@@ -44,10 +44,11 @@ namespace
     };
 }
 
-BOOST_FIXTURE_TEST_CASE( netn_surface_vessel_cannot_be_deserialized, RegisteredFixture )
+BOOST_FIXTURE_TEST_CASE( empty_netn_surface_vessel_can_be_deserialized, RegisteredFixture )
 {
     hla::Deserializer deserializer( 0 );
-    BOOST_CHECK_THROW( entity.Deserialize( "identifier", deserializer ), std::runtime_error );
+    MOCK_EXPECT( aggregate->Deserialize ).once();
+    entity.Deserialize( "identifier", deserializer );
 }
 
 BOOST_FIXTURE_TEST_CASE( unmodified_netn_surface_vessel_serializes_nothing, RegisteredFixture )

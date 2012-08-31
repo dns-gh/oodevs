@@ -37,6 +37,7 @@ namespace hla
     class AttributesUpdater;
     class ObjectListenerComposite;
     class TacticalObject_ABC;
+    class EntityIdentifierResolver_ABC;
 
 /// =============================================================================
 /// @class Minefield
@@ -53,7 +54,7 @@ public:
     //@{
     Minefield( TacticalObject_ABC& object, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type,
             unsigned short siteID, unsigned short applicationID );
-    Minefield( const std::string& identifier );
+    Minefield( const std::string& identifier, EntityIdentifierResolver_ABC& entityIdentifierResolver );
     virtual  ~Minefield();
     //@}
 
@@ -63,8 +64,10 @@ public:
     virtual void Deserialize( const ::hla::AttributeIdentifier& identifier, ::hla::Deserializer_ABC& deserializer );
     virtual void SetIdentifier( const std::string& id );
     virtual const std::string& GetIdentifier() const;
+    virtual void Attach( Agent_ABC* agent, unsigned long simId );
     virtual void Register( ObjectListener_ABC& listener );
     virtual void Unregister( ObjectListener_ABC& listener );
+    virtual void ResetAttributes();
     //@}
 
 private:

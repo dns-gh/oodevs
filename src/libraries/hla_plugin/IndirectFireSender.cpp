@@ -12,7 +12,7 @@
 #include "Omt13String.h"
 #include "Interactions.h"
 #include "InteractionSender_ABC.h"
-#include "MunitionTypeResolver_ABC.h"
+#include "DotationTypeResolver_ABC.h"
 #include "LocalAgentResolver_ABC.h"
 #include "protocol/Simulation.h"
 #include <boost/lexical_cast.hpp>
@@ -25,7 +25,7 @@ using namespace plugins::hla;
 // -----------------------------------------------------------------------------
 IndirectFireSender::IndirectFireSender( InteractionSender_ABC< interactions::MunitionDetonation >& interactionSender,
                                         tools::MessageController_ABC< sword::SimToClient_Content >& controller,
-                                        const std::string& federateName, const MunitionTypeResolver_ABC& munitionTypeResolver,
+                                        const std::string& federateName, const DotationTypeResolver_ABC& munitionTypeResolver,
                                         const LocalAgentResolver_ABC& localResolver )
     : interactionSender_   ( interactionSender )
     , federateName_        ( federateName )

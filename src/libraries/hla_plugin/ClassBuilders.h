@@ -34,9 +34,14 @@ namespace hla
         virtual bool Join( const std::string&, bool, bool ) { return true; }
         virtual void Resign() {}
         virtual void Step() {}
+        virtual void Tick() {}
         virtual void Register( const ::hla::ClassIdentifier&, ::hla::Class_ABC&, bool, bool ) {}
         virtual void Register( const ::hla::InteractionIdentifier&, ::hla::Interaction_ABC&, bool, bool ) {}
         virtual void Register( ::hla::FederateAmbassador_ABC& ) {}
+        virtual void DivestRequest( const ::hla::ObjectIdentifier& , const T_AttributeIdentifiers& ) {}
+        virtual void UnconditionalDivest( const ::hla::ObjectIdentifier& , const T_AttributeIdentifiers& ) {}
+        virtual void AcquisitionRequest( const ::hla::ObjectIdentifier& , const T_AttributeIdentifiers& ) {}
+        virtual void UnconditionalAcquisition( const ::hla::ObjectIdentifier&, const T_AttributeIdentifiers& ) {}
     };
     class ClassBuilder : public ClassBuilder_ABC
     {
@@ -56,6 +61,10 @@ namespace hla
                 hlaClass.Register( ::hla::AttributeIdentifier( attribute ) );
             hlaClass.ActivateUpdates( true );
             federate.Register( ::hla::ClassIdentifier( name_ ), hlaClass, publish_, subscribe_ );
+        }
+        virtual void GetAttributes( std::vector< std::string>& attributes ) const
+        {
+            attributes.insert( attributes.end(), attributes_.begin(), attributes_.end() );
         }
     private:
         const std::string name_;
@@ -78,6 +87,11 @@ namespace hla
             builder_->Build( empty, hlaClass );
             ClassBuilder::Build( federate, hlaClass );
         }
+        virtual void GetAttributes( std::vector< std::string>& attributes ) const
+        {
+            builder_->GetAttributes( attributes );
+            ClassBuilder::GetAttributes( attributes );
+        }
     private:
         std::auto_ptr< ClassBuilder_ABC > builder_;
     };
@@ -87,7 +101,8 @@ namespace hla
     public:
         AggregateEntityBuilder()
             : ClassBuilder( "BaseEntity.AggregateEntity", true, true
-            , boost::assign::list_of( "EntityType" )
+            , boost::assign::list_of( "HLAprivilegeToDeleteObject" )
+                                    ( "EntityType" )
                                     ( "EntityIdentifier" )
                                     ( "ForceIdentifier" )
                                     ( "AggregateMarking" )
@@ -99,7 +114,11 @@ namespace hla
                                     ( "SilentEntities" )
                                     ( "SilentAggregates" )
                                     ( "SubAggregateIdentifiers" )
-                                    ( "EntityIdentifiers" ) )
+                                    ( "IsPartOf" )
+                                    ( "NumberOfVariableDatums" )
+                                    ( "RelativeSpatial" )
+                                    ( "EntityIdentifiers" )
+                                    ( "VariableDatums" ) )
         {}
     };
     class NetnAggregateEntityBuilder : public NetnClassBuilder
@@ -123,7 +142,8 @@ namespace hla
     public:
         SurfaceVesselBuilder()
             : ClassBuilder( "BaseEntity.PhysicalEntity.Platform.SurfaceVessel", true, true
-            , boost::assign::list_of( "EntityType" )
+            , boost::assign::list_of( "HLAprivilegeToDeleteObject" )
+                                    ( "EntityType" )
                                     ( "EntityIdentifier" )
                                     ( "ForceIdentifier" )
                                     ( "Marking" )
@@ -146,7 +166,8 @@ namespace hla
     public:
         AircraftBuilder()
             : ClassBuilder( "BaseEntity.PhysicalEntity.Platform.Aircraft", true, true
-            , boost::assign::list_of( "EntityType" )
+            , boost::assign::list_of( "HLAprivilegeToDeleteObject" )
+                                    ( "EntityType" )
                                     ( "EntityIdentifier" )
                                     ( "ForceIdentifier" )
                                     ( "Marking" )

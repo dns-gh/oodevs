@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "hla_plugin_test_pch.h"
-#include "hla_plugin/NetnRemoteSurfaceVessel.h"
+#include "hla_plugin/NetnSurfaceVessel.h"
 #include "hla_plugin/UnicodeString.h"
 #include "hla_plugin/UniqueId.h"
 #include "MockHlaObject.h"
@@ -42,7 +42,7 @@ namespace
         MockHlaObject* rprRemote;
         std::auto_ptr< HlaObject_ABC > pRemote;
         MockObjectListener listener;
-        NetnRemoteSurfaceVessel netnRemote;
+        NetnSurfaceVessel netnRemote;
         ::hla::Serializer serializer;
         T_Buffer buffer;
     };
@@ -57,10 +57,12 @@ BOOST_FIXTURE_TEST_CASE( netn_remote_vessel_deserialize_also_rpr_remote_vessel, 
     netnRemote.Deserialize( "attribute", deserializer );
 }
 
-BOOST_FIXTURE_TEST_CASE( netn_remote_vessel_cannot_be_serialized, Fixture )
+BOOST_FIXTURE_TEST_CASE( empty_netn_remote_vessel_can_be_serialized, Fixture )
 {
     ::hla::MockUpdateFunctor functor;
-    BOOST_CHECK_THROW( netnRemote.Serialize( functor, true ), std::runtime_error );
+    MOCK_EXPECT( rprRemote->Serialize );
+    MOCK_EXPECT( functor.Visit );
+    netnRemote.Serialize( functor, true );
 }
 
 BOOST_FIXTURE_TEST_CASE( netn_remote_vessel_deserializes_callsign_attribute_and_notifies_listener, Fixture )

@@ -47,6 +47,7 @@ namespace tic
 namespace sword
 {
     class SimToClient_Content;
+    class MessengerToClient_Content;
 }
 
 namespace tools
@@ -65,7 +66,7 @@ namespace hla
     class ObjectResolver_ABC;
     class Stepper;
     class UnitTypeResolver_ABC;
-    class MunitionTypeResolver_ABC;
+    class DotationTypeResolver_ABC;
     class LocalAgentResolver_ABC;
     class RemoteAgentResolver_ABC;
     class CallsignResolver_ABC;
@@ -81,6 +82,11 @@ namespace hla
     class DetonationFacade;
     class TransportationFacade;
     class TacticalObjectController;
+    class OwnershipStrategy_ABC;
+    class OwnershipController;
+    class OwnershipPolicy_ABC;
+    class TransferSender_ABC;
+    class EntityIdentifierResolver_ABC;
 
 // =============================================================================
 /** @class  HlaPlugin
@@ -102,6 +108,7 @@ public:
     //! @name Operations
     //@{
     virtual void Receive( const sword::SimToClient& message );
+    virtual void Receive( const sword::MessengerToClient& message );
     //@}
 
 private:
@@ -129,7 +136,7 @@ private:
     std::auto_ptr< rpr::EntityTypeResolver_ABC > pEntityMunitionTypeResolver_;
     std::auto_ptr< ComponentTypes_ABC > pComponentTypes_;
     std::auto_ptr< UnitTypeResolver_ABC > pUnitTypeResolver_;
-    std::auto_ptr< MunitionTypeResolver_ABC > pMunitionTypeResolver_;
+    std::auto_ptr< DotationTypeResolver_ABC > pMunitionTypeResolver_;
     std::auto_ptr< LocalAgentResolver_ABC > pLocalAgentResolver_;
     std::auto_ptr< CallsignResolver_ABC > pCallsignResolver_;
     std::auto_ptr< MissionResolver_ABC > pMissionResolver_;
@@ -149,6 +156,12 @@ private:
     std::auto_ptr< TransportationFacade > pTransportationFacade_;
     std::auto_ptr< Stepper > pStepper_;
     std::auto_ptr< tic::PlatformDelegateFactory_ABC > platforms_;
+    std::auto_ptr< tools::MessageController< sword::MessengerToClient_Content > > pMessengerMessageController_;
+    std::auto_ptr< OwnershipStrategy_ABC > pOwnershipStrategy_;
+    std::auto_ptr< TransferSender_ABC > transferSender_;
+    std::auto_ptr< OwnershipController > pOwnershipController_;
+    std::auto_ptr< OwnershipPolicy_ABC > pOwnershipPolicy_;
+    std::auto_ptr< EntityIdentifierResolver_ABC > pEntityIdentifierResolver_;
     //@}
 };
 

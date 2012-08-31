@@ -191,6 +191,23 @@ void DirectFireSender::LocalDestroyed( const std::string& /*identifier*/ )
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: DirectFireSender::Divested
+// Created: AHC 2010-03-02
+// -----------------------------------------------------------------------------
+void DirectFireSender::Divested( const std::string& /*identifier*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: DirectFireSender::Acquired
+// Created: AHC 2010-02-27
+// -----------------------------------------------------------------------------
+void DirectFireSender::Acquired( const std::string& /*identifier*/ )
+{
+    // NOTHING
+}
 
 // -----------------------------------------------------------------------------
 // Name: DirectFireSender::EmbeddedUnitListChanged

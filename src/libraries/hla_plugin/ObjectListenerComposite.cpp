@@ -9,8 +9,22 @@
 #include "hla_plugin_pch.h"
 #include "ObjectListenerComposite.h"
 #include <boost/foreach.hpp>
+#include <boost/bind.hpp>
+#include <vector>
 
 using namespace plugins::hla;
+
+namespace
+{
+    template <typename T>
+    inline
+    void copyAndApply(const std::set<ObjectListener_ABC*>& listeners, const T& ftor )
+    {
+        std::vector<ObjectListener_ABC*> tmp( listeners.begin(), listeners.end() );
+        BOOST_FOREACH( ObjectListener_ABC* listener, tmp )
+            ftor( listener );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: ObjectListenerComposite constructor
@@ -36,8 +50,7 @@ ObjectListenerComposite::ObjectListenerComposite()
 // -----------------------------------------------------------------------------
 void ObjectListenerComposite::Moved( const std::string& identifier, double latitude, double longitude )
 {
-    BOOST_FOREACH( ObjectListener_ABC* listener, listeners_ )
-        listener->Moved( identifier, latitude, longitude );
+    copyAndApply( listeners_, boost::bind( &ObjectListener_ABC::Moved, _1, identifier, latitude, longitude ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -46,8 +59,7 @@ void ObjectListenerComposite::Moved( const std::string& identifier, double latit
 // -----------------------------------------------------------------------------
 void ObjectListenerComposite::SideChanged( const std::string& identifier, rpr::ForceIdentifier side )
 {
-    BOOST_FOREACH( ObjectListener_ABC* listener, listeners_ )
-        listener->SideChanged( identifier, side );
+    copyAndApply( listeners_, boost::bind( &ObjectListener_ABC::SideChanged, _1, identifier, side ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -56,8 +68,7 @@ void ObjectListenerComposite::SideChanged( const std::string& identifier, rpr::F
 // -----------------------------------------------------------------------------
 void ObjectListenerComposite::NameChanged( const std::string& identifier, const std::string& name )
 {
-    BOOST_FOREACH( ObjectListener_ABC* listener, listeners_ )
-        listener->NameChanged( identifier, name );
+    copyAndApply( listeners_, boost::bind( &ObjectListener_ABC::NameChanged, _1, identifier, name ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -66,8 +77,7 @@ void ObjectListenerComposite::NameChanged( const std::string& identifier, const 
 // -----------------------------------------------------------------------------
 void ObjectListenerComposite::TypeChanged( const std::string& identifier, const rpr::EntityType& type )
 {
-    BOOST_FOREACH( ObjectListener_ABC* listener, listeners_ )
-        listener->TypeChanged( identifier, type );
+    copyAndApply( listeners_, boost::bind( &ObjectListener_ABC::TypeChanged, _1, identifier, boost::cref(type) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -76,8 +86,7 @@ void ObjectListenerComposite::TypeChanged( const std::string& identifier, const 
 // -----------------------------------------------------------------------------
 void ObjectListenerComposite::EquipmentUpdated( const std::string& identifier, const rpr::EntityType& equipmentType, unsigned int number )
 {
-    BOOST_FOREACH( ObjectListener_ABC* listener, listeners_ )
-        listener->EquipmentUpdated( identifier, equipmentType, number );
+    copyAndApply( listeners_, boost::bind( &ObjectListener_ABC::EquipmentUpdated, _1, identifier, boost::cref(equipmentType), number ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,8 +95,7 @@ void ObjectListenerComposite::EquipmentUpdated( const std::string& identifier, c
 // -----------------------------------------------------------------------------
 void ObjectListenerComposite::UniqueIdChanged( const std::string& identifier, const std::string& uniqueId )
 {
-    BOOST_FOREACH( ObjectListener_ABC* listener, listeners_ )
-        listener->UniqueIdChanged( identifier, uniqueId );
+    copyAndApply( listeners_, boost::bind( &ObjectListener_ABC::UniqueIdChanged, _1, identifier, uniqueId ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,8 +104,7 @@ void ObjectListenerComposite::UniqueIdChanged( const std::string& identifier, co
 // -----------------------------------------------------------------------------
 void ObjectListenerComposite::CallsignChanged( const std::string& identifier, const std::string& callsign )
 {
-    BOOST_FOREACH( ObjectListener_ABC* listener, listeners_ )
-        listener->CallsignChanged( identifier, callsign );
+    copyAndApply( listeners_, boost::bind( &ObjectListener_ABC::CallsignChanged, _1, identifier, callsign ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -120,10 +127,9 @@ void ObjectListenerComposite::Unregister( ObjectListener_ABC& listener )
 
 // -----------------------------------------------------------------------------
 // Name: ObjectListenerComposite::EmbeddedUnitListChanged
-// Created: AHC 2012-07-04
+// Created: AHC 2010-05-29
 // -----------------------------------------------------------------------------
 void ObjectListenerComposite::EmbeddedUnitListChanged( const std::string& identifier, const std::vector< std::string >& embeddedUnits )
 {
-    BOOST_FOREACH( ObjectListener_ABC* listener, listeners_ )
-        listener->EmbeddedUnitListChanged( identifier, embeddedUnits );
+    copyAndApply( listeners_, boost::bind( &ObjectListener_ABC::EmbeddedUnitListChanged, _1, identifier, embeddedUnits ) );
 }

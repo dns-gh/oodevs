@@ -16,43 +16,112 @@
 #include "SilentEntity.h"
 #include "Formation.h"
 #include "Dimension.h"
-#include "AttributesSerializer.h"
+#include "AttributesUpdater.h"
 #include "ObjectListener_ABC.h"
 #include "MarkingFactory_ABC.h"
 #include "ObjectListenerComposite.h"
-#include "rpr/EntityIdentifier.h"
+#include "EntityIdentifierResolver_ABC.h"
+#include <hla/AttributeIdentifier.h>
+#include <hla/Deserializer_ABC.h>
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
 
 using namespace plugins::hla;
 
+namespace
+{
+    void ReadSpatial( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, Spatial& spatial )
+    {
+        spatial.Deserialize( deserializer );
+        listener.Moved( identifier, spatial.worldLocation_.Latitude(), spatial.worldLocation_.Longitude() );
+    }
+    void ReadForceIdentifier( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, rpr::ForceIdentifier& force )
+    {
+        int8 tmpForce;
+        deserializer >> tmpForce;
+        listener.SideChanged( identifier, static_cast< rpr::ForceIdentifier >( tmpForce ) );
+        force = static_cast< rpr::ForceIdentifier >( tmpForce );
+    }
+    void ReadAggregateMarking( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, AggregateMarking& marking )
+    {
+        marking.Deserialize( deserializer );
+        listener.NameChanged( identifier, marking.str() );
+    }
+    void ReadEntityType( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, rpr::EntityType& type )
+    {
+        type.Deserialize( deserializer );
+        listener.TypeChanged( identifier, type );
+    }
+    void ReadNumberOfSilentEntities( ::hla::Deserializer_ABC& deserializer, const std::string& /*identifier*/, ObjectListener_ABC& /*listener*/, unsigned short& numberOfSilentEntities )
+    {
+        deserializer >> numberOfSilentEntities;
+    }
+    void ReadSilentEntities( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, unsigned int numberOfSilentEntities )
+    {
+        for( unsigned int i = 0; i < numberOfSilentEntities; ++i )
+        {
+            SilentEntity entity;
+            entity.Deserialize( deserializer );
+            listener.EquipmentUpdated( identifier, entity.entityType_, entity.numberOfEntitiesOfThisType_ );
+        }
+    }
+    void ReadEntityIdentifier( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& /*listener*/, rpr::EntityIdentifier& entityId, EntityIdentifierResolver_ABC& entityIdentifierResolver )
+    {
+        entityId.Deserialize( deserializer );
+        entityIdentifierResolver.Unregister( identifier );
+        entityIdentifierResolver.Register( entityId, identifier );
+    }
+    void ReadNothing( ::hla::Deserializer_ABC& /*deserializer*/, const std::string& /*identifier*/, ObjectListener_ABC& /*listener*/ )
+    {
+        // NOTHING
+    }
+    void ReadUnsignedChar( ::hla::Deserializer_ABC& deserializer, const std::string& /*identifier*/, ObjectListener_ABC& /*listener*/, unsigned char& value)
+    {
+        deserializer >> value;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: AggregateEntity constructor
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
-AggregateEntity::AggregateEntity( Agent_ABC& agent, unsigned int identifier,
+AggregateEntity::AggregateEntity( Agent_ABC& agent, unsigned long identifier,
                                   const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const MarkingFactory_ABC& markingFactory,
-                                  unsigned short siteID, unsigned short applicationID )
-    : listeners_ ( new ObjectListenerComposite() )
-    , identifier_( name )
-    , agent_     ( agent )
-    , attributes_( new AttributesSerializer() )
+                                  unsigned short siteID, unsigned short applicationID, EntityIdentifierResolver_ABC& entityIdentifierResolver  )
+    : identifier_( name )
+    , listeners_ ( new ObjectListenerComposite() )
+    , agent_     ( &agent )
+    , entityIdentifierResolver_ ( entityIdentifierResolver )
+    , attributesUpdater_( new AttributesUpdater(identifier_, *listeners_) )
+    , simIdentifier_ ( identifier )
+    , force_ ( force )
+    , type_ ( type )
+    , marking_( markingFactory.CreateAggregateMarking( identifier_, identifier ) )
+    , entityIdentifier_( siteID, applicationID, identifier )
+    , aggregateState_( 1 ) // fully aggregated
+    , spatial_ ( true, 0., 0., 0., 0., 0. )
 {
-    attributes_->Register( "EntityType", type );
-    attributes_->Register( "EntityIdentifier", rpr::EntityIdentifier( siteID, applicationID, static_cast< unsigned short >( identifier ) ) );
-    attributes_->Register( "ForceIdentifier", Wrapper< unsigned char >( static_cast< unsigned char >( force ) ) );
-    attributes_->Register( "AggregateMarking", markingFactory.CreateAggregateMarking( name, identifier ) );
-    attributes_->Register( "AggregateState", Wrapper< unsigned char >( 1 ) ); // fully aggregated
-    attributes_->Register( "Dimensions", Dimension( false ) );
-    attributes_->Register( "Spatial", Spatial( true, 0., 0., 0., 0., 0. ) );
-    attributes_->Register( "Formation", Formation( false ) );
-    attributes_->Register( "NumberOfSilentEntities", Wrapper< unsigned short >( 0 ) );
-    attributes_->Register( "SilentEntities", Wrapper< std::vector< SilentEntity > >( std::vector< SilentEntity >() ) );
-    attributes_->Register( "SilentAggregates", Wrapper< uint32 >( 0 ) ); // no aggregates
-    attributes_->Register( "SubAggregateIdentifiers", Wrapper< uint32 >( 0 ) ); // no sub aggregates identifiers
-    attributes_->Register( "EntityIdentifiers", entities_ );
-    agent_.Register( *this );
+    RegisterAttributes( );
+    agent_->Register( *this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: AggregateEntity constructor
+// Created: AHC 2012-02-21
+// -----------------------------------------------------------------------------
+AggregateEntity::AggregateEntity( const std::string& identifier , EntityIdentifierResolver_ABC& entityIdentifierResolver )
+    : identifier_( identifier )
+    , listeners_ ( new ObjectListenerComposite() )
+    , agent_     ( 0 )
+    , entityIdentifierResolver_ ( entityIdentifierResolver )
+    , numberOfSilentEntities_( 0 )
+    , attributesUpdater_ ( new AttributesUpdater( identifier, *listeners_ ) )
+    , marking_( )
+    , spatial_ ( true, 0., 0., 0., 0., 0. )
+{
+    RegisterAttributes( );
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: AggregateEntity destructor
@@ -60,7 +129,8 @@ AggregateEntity::AggregateEntity( Agent_ABC& agent, unsigned int identifier,
 // -----------------------------------------------------------------------------
 AggregateEntity::~AggregateEntity()
 {
-    agent_.Unregister( *this );
+    if( agent_ )
+        agent_->Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -69,16 +139,16 @@ AggregateEntity::~AggregateEntity()
 // -----------------------------------------------------------------------------
 void AggregateEntity::Serialize( ::hla::UpdateFunctor_ABC& functor, bool updateAll ) const
 {
-    attributes_->Serialize( functor, updateAll );
+    attributesUpdater_->Serialize( functor, updateAll );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AggregateEntity::Deserialize
 // Created: SLI 2011-02-08
 // -----------------------------------------------------------------------------
-void AggregateEntity::Deserialize( const ::hla::AttributeIdentifier& /*identifier*/, ::hla::Deserializer_ABC& /*deserializer*/ )
+void AggregateEntity::Deserialize( const ::hla::AttributeIdentifier& identifier, ::hla::Deserializer_ABC& deserializer )
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
+    attributesUpdater_->Deserialize( identifier.ToString(), deserializer );
 }
 
 namespace
@@ -101,11 +171,12 @@ void AggregateEntity::EquipmentChanged( unsigned int type, const rpr::EntityType
         equipments_.push_back( T_Equipment( type, available, entityType ) );
     else
         result->available_ = available;
-    attributes_->Update( "NumberOfSilentEntities", Wrapper< unsigned short >( static_cast< unsigned short >( equipments_.size() ) ) );
+    numberOfSilentEntities_ = static_cast< unsigned short >( equipments_.size() );
+    attributesUpdater_->Update( "NumberOfSilentEntities", Wrapper< unsigned short >( numberOfSilentEntities_ ) );
     std::vector< SilentEntity > entities;
     BOOST_FOREACH( const T_Equipment& equipment, equipments_ )
         entities.push_back( SilentEntity( equipment.entityType_, static_cast< unsigned short >( equipment.available_ ) ) );
-    attributes_->Update( "SilentEntities", Wrapper< std::vector< SilentEntity > >( entities ) );
+    attributesUpdater_->Update( "SilentEntities", Wrapper< std::vector< SilentEntity > >( entities ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -114,7 +185,9 @@ void AggregateEntity::EquipmentChanged( unsigned int type, const rpr::EntityType
 // -----------------------------------------------------------------------------
 void AggregateEntity::SpatialChanged( double latitude, double longitude, float altitude, float speed, float direction )
 {
-    attributes_->Update( "Spatial", Spatial( true, latitude, longitude, altitude, speed, direction ) );
+    spatial_.Refresh( true, latitude, longitude, altitude, speed, direction );
+    attributesUpdater_->Update( "Spatial", spatial_ );
+    listeners_->Moved( identifier_, latitude, longitude );
 }
 
 // -----------------------------------------------------------------------------
@@ -123,8 +196,8 @@ void AggregateEntity::SpatialChanged( double latitude, double longitude, float a
 // -----------------------------------------------------------------------------
 void AggregateEntity::FormationChanged( bool isOnRoad )
 {
-    attributes_->Update( "Formation", Formation( isOnRoad ) );
-    attributes_->Update( "Dimensions", Dimension( isOnRoad ) );
+    attributesUpdater_->Update( "Formation", Formation( isOnRoad ) );
+    attributesUpdater_->Update( "Dimensions", Dimension( isOnRoad ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -135,26 +208,6 @@ void AggregateEntity::EmbarkmentChanged( bool /*mounted*/ )
 {
     // NOTHING
 }
-
-
-// -----------------------------------------------------------------------------
-// Name: AggregateEntity::SetIdentifier
-// Created: AHC 2012-03-15
-// -----------------------------------------------------------------------------
-void AggregateEntity::SetIdentifier( const std::string& id )
-{
-    identifier_ = id;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AggregateEntity::GetIdentifier
-// Created: AHC 2012-04-18
-// -----------------------------------------------------------------------------
-const std::string& AggregateEntity::GetIdentifier( ) const
-{
-    return identifier_;
-}
-
 
 // -----------------------------------------------------------------------------
 // Name: AggregateEntity::Register
@@ -175,11 +228,80 @@ void AggregateEntity::Unregister( ObjectListener_ABC& listener )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AggregateEntity::EmbarkmentChanged
+// Name: AggregateEntity::RegisterAttributes
+// Created: AHC 2012-03-07
+// -----------------------------------------------------------------------------
+void AggregateEntity::RegisterAttributes( )
+{
+    attributesUpdater_->Register( "EntityType", boost::bind( &ReadEntityType, _1, _2, _3, boost::ref( type_ ) ), type_ );
+    attributesUpdater_->Register( "EntityIdentifier", boost::bind( &ReadEntityIdentifier, _1, _2, _3, boost::ref( entityIdentifier_ ), boost::ref( entityIdentifierResolver_ ) ), entityIdentifier_ );
+    attributesUpdater_->Register( "ForceIdentifier", boost::bind( &ReadForceIdentifier, _1, _2, _3, boost::ref( force_ ) ), Wrapper< int8 >( static_cast< int8 >( force_ ) ) );
+    attributesUpdater_->Register( "AggregateMarking", boost::bind( &ReadAggregateMarking, _1, _2, _3, boost::ref( marking_ ) ), marking_ );
+    attributesUpdater_->Register( "AggregateState", boost::bind( &ReadUnsignedChar, _1, _2, _3, boost::ref( aggregateState_ ) ), Wrapper< unsigned char >( aggregateState_ ) );
+    attributesUpdater_->Register( "Dimensions", boost::bind( &ReadNothing, _1, _2, _3 ), Dimension( false ) );
+    attributesUpdater_->Register( "Spatial", boost::bind( &ReadSpatial, _1, _2, _3, boost::ref( spatial_ ) ), spatial_ );
+    attributesUpdater_->Register( "Formation", boost::bind( &ReadNothing, _1, _2, _3 ), Formation( false ) );
+    attributesUpdater_->Register( "NumberOfSilentEntities", boost::bind( &ReadNumberOfSilentEntities, _1, _2, _3, boost::ref( numberOfSilentEntities_ ) ), Wrapper< unsigned short >( 0 ) );
+    attributesUpdater_->Register( "SilentEntities", boost::bind( &ReadSilentEntities, _1, _2, _3, boost::ref( numberOfSilentEntities_ ) ), Wrapper< std::vector< SilentEntity > >( std::vector< SilentEntity >() ) );
+    attributesUpdater_->Register( "SilentAggregates", boost::bind( &ReadNothing, _1, _2, _3 ), Wrapper< uint32 >( 0 ) ); // no aggregates
+    attributesUpdater_->Register( "SubAggregateIdentifiers", boost::bind( &ReadNothing, _1, _2, _3 ), Wrapper< uint32 >( 0 ) ); // no sub aggregates identifiers
+    attributesUpdater_->Register( "EntityIdentifiers", boost::bind( &ReadNothing, _1, _2, _3 ), entities_ ); // no entity identifiers
+    attributesUpdater_->Register( "NumberOfVariableDatums", boost::bind( &ReadNothing, _1, _2, _3 ), Wrapper< uint32 >( 0 ) ); // no variable datums
+}
+
+// -----------------------------------------------------------------------------
+// Name: AggregateEntity::Attach
+// Created: AHC 2012-03-09
+// -----------------------------------------------------------------------------
+void AggregateEntity::Attach( Agent_ABC* agent, unsigned long /*simId*/ )
+{
+    if( agent_ )
+        agent_->Unregister( *this );
+    agent_ = agent;
+    agent_->Register( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AggregateEntity::SetIdentifier
+// Created: AHC 2012-03-15
+// -----------------------------------------------------------------------------
+void AggregateEntity::SetIdentifier( const std::string& id )
+{
+    identifier_ = id;
+    attributesUpdater_.reset( new AttributesUpdater(identifier_, *listeners_) );
+    entityIdentifierResolver_.Register( entityIdentifier_,  identifier_ );
+    RegisterAttributes();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AggregateEntity::GetIdentifier
+// Created: AHC 2012-04-18
+// -----------------------------------------------------------------------------
+const std::string& AggregateEntity::GetIdentifier( ) const
+{
+    return identifier_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AggregateEntity::GetIdentifier
+// Created: AHC 2012-04-20
+// -----------------------------------------------------------------------------
+void AggregateEntity::ResetAttributes()
+{
+    aggregateState_ = 1;
+    attributesUpdater_->Update( "AggregateState", Wrapper< unsigned char >( aggregateState_ ) );
+    attributesUpdater_->Update( "SilentAggregates", Wrapper< uint32 >( 0 ) );
+    attributesUpdater_->Update( "NumberOfVariableDatums", Wrapper< uint32 >( 0 ) );
+    // TODO silent entities
+}
+
+// -----------------------------------------------------------------------------
+// Name: AggregateEntity::PlatformAdded
 // Created: AHC 2012-07-30
 // -----------------------------------------------------------------------------
 void AggregateEntity::PlatformAdded( const std::string& name, unsigned int /*id*/ )
 {
     entities_.Add( name );
-    attributes_->Update( "EntityIdentifiers", entities_ );
+    attributesUpdater_->Update( "EntityIdentifiers", entities_ );
 }
+

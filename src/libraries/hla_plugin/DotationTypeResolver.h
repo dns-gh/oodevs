@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#ifndef MunitionTypeResolver_h
-#define MunitionTypeResolver_h
+#ifndef DotationTypeResolver_h
+#define DotationTypeResolver_h
 
-#include "MunitionTypeResolver_ABC.h"
+#include "DotationTypeResolver_ABC.h"
 
 namespace rpr
 {
@@ -33,19 +33,19 @@ namespace hla
 {
 
 // =============================================================================
-/** @class  MunitionTypeResolver
-    @brief  MunitionTypeResolver
+/** @class  DotationTypeResolver
+    @brief  DotationTypeResolver
 */
 // Created: VPR 2011-09-26
 // =============================================================================
-class MunitionTypeResolver : public MunitionTypeResolver_ABC
+class DotationTypeResolver : public DotationTypeResolver_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             MunitionTypeResolver( const rpr::EntityTypeResolver_ABC& entityTypeResolver, const tools::Resolver_ABC< kernel::DotationType, unsigned long >& dotationTypeResolver,
+             DotationTypeResolver( const rpr::EntityTypeResolver_ABC& entityTypeResolver, const tools::Resolver_ABC< kernel::DotationType, unsigned long >& dotationTypeResolver,
                                    const tools::Resolver_ABC< kernel::DotationType, std::string >& dotationNameResolver );
-    virtual ~MunitionTypeResolver();
+    virtual ~DotationTypeResolver();
     //@}
 
     //! @name Operations
@@ -66,4 +66,4 @@ private:
 }
 }
 
-#endif // MunitionTypeResolver_h
+#endif // DotationTypeResolver_h

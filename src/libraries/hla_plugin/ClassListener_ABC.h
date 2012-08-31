@@ -39,6 +39,8 @@ public:
     virtual void RemoteDestroyed( const std::string& identifier ) = 0;
     virtual void LocalCreated( const std::string& identifier, HlaClass_ABC& hlaClass, HlaObject_ABC& object ) = 0;
     virtual void LocalDestroyed( const std::string& identifier ) = 0;
+    virtual void Divested( const std::string& identifier ) = 0;
+    virtual void Acquired( const std::string& identifier ) = 0;
     //@}
 };
 

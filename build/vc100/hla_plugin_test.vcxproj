@@ -166,6 +166,8 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRemoteSurfaceVesselTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnSurfaceVesselTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\Omt13StringTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\OwnershipControllerTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\OwnershipStrategyTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\RemoteAgentControllerTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\RemoteAgentResolverTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\RemoteAggregateTest.cpp" />
@@ -177,6 +179,7 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\SpatialTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\SubordinatesTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\SurfaceVesselTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\TransferSenderTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportationOffererTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportationRequesterTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportationTypesTest.cpp" />
@@ -198,6 +201,8 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockComponentTypes.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockContextFactory.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockContextHandler.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockDotationTypeResolver.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockEntityIdentifierResolver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockEntityTypeResolver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockExtentResolver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockFederate.h" />
@@ -216,10 +221,11 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockMessageController.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockMissionResolver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockModel.h" />
-    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockMunitionTypeResolver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockObjectIdentifierFactory.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockObjectListener.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockObjectRegistration.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockOwnershipController.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockOwnershipStrategy.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRemoteAgentResolver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRemoteAgentSubject.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRemoteHlaObjectFactory.h" />
@@ -231,6 +237,7 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockSimulationPublisher.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockSubordinates.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTeam.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTransferSender.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTransportedUnits.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTransportedUnitsVisitor.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockUnitTypeResolver.h" />

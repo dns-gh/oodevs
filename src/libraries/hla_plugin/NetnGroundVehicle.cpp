@@ -99,3 +99,21 @@ void NetnGroundVehicle::Unregister( ObjectListener_ABC& listener )
     aggregate_->Unregister( listener );
     listeners_->Unregister( listener ) ;
 }
+
+// -----------------------------------------------------------------------------
+// Name: NetnGroundVehicle::EmbarkmentChanged
+// Created: AHC 2012-08-30
+// -----------------------------------------------------------------------------
+void NetnGroundVehicle::Attach( Agent_ABC* /*agent*/, unsigned long /*simId*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnGroundVehicle::EmbarkmentChanged
+// Created: AHC 2012-08-30
+// -----------------------------------------------------------------------------
+void NetnGroundVehicle::ResetAttributes()
+{
+    // NOTHING
+}

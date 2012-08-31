@@ -57,7 +57,7 @@ namespace dispatcher
         MOCK_METHOD( GetOperationalStateValue, 0 );
         MOCK_METHOD( Accept, 1 );
         MOCK_METHOD( IsCommandPost, 0 );
-        MOCK_METHOD( Equipments, 0 );
+        MOCK_METHOD( Equipments, 0 )
         MOCK_METHOD( Troops, 0 );
         MOCK_METHOD( GetAltitude, 0 );
         MOCK_METHOD( GetSpeed, 0 );

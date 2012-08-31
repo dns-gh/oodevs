@@ -15,6 +15,7 @@
 #include "MockAgent.h"
 #include "MockUpdateFunctor.h"
 #include "MockMarkingFactory.h"
+#include "MockEntityIdentifierResolver.h"
 #include <hla/Deserializer.h>
 #include <hla/Serializer.h>
 #include <hla/AttributeIdentifier.h>
@@ -40,21 +41,22 @@ namespace
         EventListener_ABC* listener;
         hla::MockUpdateFunctor functor;
         rpr::EntityType entityType;
+        MockEntityIdentifierResolver entityIdResolver;
     };
     class RegisteredFixture : public Fixture
     {
     public:
         RegisteredFixture()
-            : entity( agent, 1u, "name", rpr::Friendly, rpr::EntityType(), factory, 42, 43 )
+            : entity( agent, 1u, "name", rpr::Friendly, rpr::EntityType(), factory, 42, 43, entityIdResolver )
         {}
         SurfaceVessel entity;
     };
 }
 
-BOOST_FIXTURE_TEST_CASE( surface_vessel_cannot_be_deserialized, RegisteredFixture )
+BOOST_FIXTURE_TEST_CASE( empty_surface_vessel_can_be_deserialized, RegisteredFixture )
 {
     hla::Deserializer deserializer( 0 );
-    BOOST_CHECK_THROW( entity.Deserialize( "identifier", deserializer ), std::runtime_error );
+    BOOST_CHECK_NO_THROW( entity.Deserialize( "identifier", deserializer ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( unmodified_surface_vessel_serializes_nothing, RegisteredFixture )

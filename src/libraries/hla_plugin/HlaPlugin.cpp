@@ -19,7 +19,7 @@
 #include "Stepper.h"
 #include "ContextFactory.h"
 #include "UnitTypeResolver.h"
-#include "MunitionTypeResolver.h"
+#include "DotationTypeResolver.h"
 #include "LocalAgentResolver.h"
 #include "RemoteAgentResolver.h"
 #include "SimulationFacade.h"
@@ -34,6 +34,12 @@
 #include "InteractionBuilder.h"
 #include "ExtentResolver_ABC.h"
 #include "TacticalObjectController.h"
+#include "OwnershipStrategy.h"
+#include "OwnershipController.h"
+#include "LocationOwnershipPolicy.h"
+#include "RprTransferSender.h"
+#include "NullTransferSender.h"
+#include "EntityIdentifierResolver.h"
 #include "tools/MessageController.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/ObjectTypes.h"
@@ -43,6 +49,7 @@
 #include "dispatcher/StaticModel.h"
 #include "dispatcher/Model_ABC.h"
 #include "protocol/Simulation.h"
+#include "protocol/Messenger.h"
 #include "rpr/EntityTypeResolver.h"
 #include "rpr/EntityIdentifier.h"
 #include "tic/PlatformDelegateFactory.h"
@@ -68,6 +75,12 @@ namespace
         xis >> xml::start( "mappings" );
         return xis.content< std::string >( mapping );
     }
+	std::string ReadDivestitureZone( xml::xisubstream xis )
+	{
+		xis >> xml::start( "drawings" );
+		return xis.content< std::string >( "divesture-area" );
+	}
+
     class LogFilter : public dispatcher::Logger_ABC
     {
     public:
@@ -115,6 +128,29 @@ namespace
         const bool useExtent_;
         const kernel::CoordinateConverter_ABC& converter_;
     };
+    TransferSender_ABC* CreateTransferSender( xml::xisubstream xis, const rpr::EntityIdentifier& federateID,
+            const ContextFactory_ABC& ctxtFactory, const InteractionBuilder& builder, OwnershipStrategy_ABC& strategy,
+            OwnershipController_ABC& controller,  dispatcher::Logger_ABC& logger)
+    {
+        std::string value( xis.attribute< std::string >( "transfer-sender", "null" ) );
+        TransferSender_ABC* transferResult = NULL;
+        if( value == "rpr" )
+        {
+            try
+            {
+                transferResult = new RprTransferSender( federateID, ctxtFactory, builder, strategy, controller, logger );
+            }
+            catch (const ::hla::HLAException& ex)
+            {
+                logger.LogError( "Unable to create RPR transfer sender with error: " + std::string(ex.what()) + ".\n  Creating NullTransferSender instead.  Ownership transfer will not work." );    
+            }
+        }
+
+        if (transferResult == NULL)
+            transferResult = new NullTransferSender( federateID, ctxtFactory, builder, strategy, controller, logger);
+
+        return transferResult;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -146,7 +182,7 @@ HlaPlugin::HlaPlugin( dispatcher::Model_ABC& dynamicModel, const dispatcher::Sta
     , pEntityMunitionTypeResolver_( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + ReadMapping( *pXis_, "munition" ) ) ) )
     , pComponentTypes_            ( new ComponentTypes( staticModel.types_ ) )
     , pUnitTypeResolver_          ( new UnitTypeResolver( *pAggregateTypeResolver_, staticModel.types_ ) )
-    , pMunitionTypeResolver_      ( new MunitionTypeResolver( *pEntityMunitionTypeResolver_, staticModel.objectTypes_, staticModel.objectTypes_ ) )
+    , pMunitionTypeResolver_      ( new DotationTypeResolver( *pEntityMunitionTypeResolver_, staticModel.objectTypes_, staticModel.objectTypes_ ) )
     , pLocalAgentResolver_        ( new LocalAgentResolver() )
     , pCallsignResolver_          ( new CallsignResolver() )
     , pMissionResolver_           ( new MissionResolver( staticModel.types_, staticModel.types_ ) )
@@ -166,6 +202,11 @@ HlaPlugin::HlaPlugin( dispatcher::Model_ABC& dynamicModel, const dispatcher::Sta
     , pTransportationFacade_      ( 0 )
     , pStepper_                   ( 0 )
     , platforms_                  ( new tic::PlatformDelegateFactory( *pConverter_, static_cast< float >( ReadTimeStep( config.GetSessionFile() ) ) ) )
+    , transferSender_             ( 0 )
+    , pMessengerMessageController_( new tools::MessageController< sword::MessengerToClient_Content >() )
+    , pOwnershipStrategy_         ( new OwnershipStrategy( *pXis_ ) )
+    , pOwnershipPolicy_           ( 0 )
+    , pEntityIdentifierResolver_   ( new EntityIdentifierResolver() )
 {
     logger_.LogInfo( "Debug log enabled" );
 }
@@ -198,16 +239,20 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
             pFederate_.reset( new FederateFacade( *pXis_, *pMessageController_, *pSubject_, *pLocalAgentResolver_,
                                                   pXis_->attribute< bool >( "debug", false ) ? *pDebugRtiFactory_ : *pRtiFactory_,
                                                   pXis_->attribute< bool >( "debug", false ) ? *pDebugFederateFactory_ : *pFederateFactory_,
-                                                  config_.BuildPluginDirectory( "hla" ), *pCallsignResolver_, *pTacticalObjectSubject_ ) );
+                                                  config_.BuildPluginDirectory( "hla" ), *pCallsignResolver_, *pTacticalObjectSubject_, *pOwnershipStrategy_, *pEntityIdentifierResolver_ ) );
             pInteractionBuilder_.reset( new InteractionBuilder( logger_, *pFederate_ ) );
-            pSimulationFacade_.reset( new SimulationFacade( *pXis_, *pContextFactory_, *pMessageController_, simulationPublisher_, dynamicModel_, *pComponentTypeResolver_, staticModel_, *pUnitTypeResolver_, *pFederate_, *pComponentTypes_, *pCallsignResolver_, logger_, *pExtentResolver_ ) );
+            pSimulationFacade_.reset( new SimulationFacade( *pXis_, *pContextFactory_, *pMessageController_, simulationPublisher_, dynamicModel_, *pComponentTypeResolver_, staticModel_, *pUnitTypeResolver_, *pFederate_, *pComponentTypes_, *pCallsignResolver_, logger_, *pExtentResolver_, *pSubject_, *pLocalAgentResolver_ ) );
             pRemoteAgentResolver_.reset( new RemoteAgentResolver( *pFederate_, *pSimulationFacade_ ) );
             pDetonationFacade_.reset( new DetonationFacade( simulationPublisher_, *pMessageController_, *pRemoteAgentResolver_, *pLocalAgentResolver_, *pContextFactory_, *pMunitionTypeResolver_, *pFederate_, pXis_->attribute< std::string >( "name", "SWORD" ), *pInteractionBuilder_ ) );
             pSideChecker_.reset( new SideChecker( *pSubject_, *pFederate_, *pRemoteAgentResolver_ ) );
             pTransportationFacade_.reset( pXis_->attribute< bool >( "netn", true ) ? new TransportationFacade( *pXis_, *pMissionResolver_, *pMessageController_, *pCallsignResolver_, *pSubordinates_, *pInteractionBuilder_, *pContextFactory_, simulationPublisher_, clientsPublisher_ ) : 0 );
             pStepper_.reset( new Stepper( *pXis_, *pMessageController_, simulationPublisher_ ) );
+            pOwnershipController_.reset( new OwnershipController( federateID, *pFederate_, logger_ ) );
+            transferSender_.reset( CreateTransferSender( *pXis_, federateID, *pContextFactory_, *pInteractionBuilder_, *pOwnershipStrategy_, *pOwnershipController_, logger_) );
+            pOwnershipPolicy_.reset( new LocationOwnershipPolicy( *pMessengerMessageController_, *pOwnershipController_, *pFederate_, *transferSender_, ReadDivestitureZone( *pXisConfiguration_ ) ) );
+            // must be last action
             pSubject_->Visit( dynamicModel_ );
-			pTacticalObjectSubject_->Visit( dynamicModel_ );
+            pTacticalObjectSubject_->Visit( dynamicModel_ );
         }
     }
     catch( ::hla::HLAException& e )
@@ -222,4 +267,13 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
     {
         logger_.LogError( "Step failed (unhandled error)." );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: HlaPlugin::Receive
+// Created: AHC 2012-02-21
+// -----------------------------------------------------------------------------
+void HlaPlugin::Receive( const sword::MessengerToClient& message )
+{
+    pMessengerMessageController_->Dispatch( message.message(), message.has_context() ? message.context() : -1 );
 }

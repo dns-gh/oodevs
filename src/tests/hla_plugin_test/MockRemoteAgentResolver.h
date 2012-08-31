@@ -24,7 +24,7 @@ namespace hla
 // =============================================================================
 MOCK_BASE_CLASS( MockRemoteAgentResolver, RemoteAgentResolver_ABC )
 {
-    MOCK_METHOD_EXT( Resolve, 1, std::string( unsigned int ), ResolveIdentifier )
+    MOCK_METHOD_EXT( Resolve, 1, const std::string&( unsigned int ), ResolveIdentifier )
     MOCK_METHOD_EXT( Resolve, 1, unsigned int( const std::string& ), ResolveName )
 };
 

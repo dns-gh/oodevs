@@ -36,15 +36,15 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Add( unsigned int simulationIdentifier, const std::string& objectIdentifier );
-    virtual std::string Resolve( unsigned int simulationIdentifier ) const;
-    virtual unsigned int Resolve( const std::string& objectIdentifier ) const;
+    virtual void Add( unsigned long simulationIdentifier, const std::string& objectIdentifier );
+    virtual std::string Resolve( unsigned long simulationIdentifier ) const;
+    virtual unsigned long Resolve( const std::string& objectIdentifier ) const;
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef boost::bimap< unsigned int, std::string > T_Identifiers;
+    typedef boost::bimap< unsigned long, std::string > T_Identifiers;
     //@}
 
 private:

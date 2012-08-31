@@ -14,10 +14,11 @@
 #include "MockContextHandler.h"
 #include "MockContextFactory.h"
 #include "MockRemoteAgentSubject.h"
-#include "MockCallsignResolver.h"
-#include "MockLogger.h"
 #include "MockHlaObject.h"
 #include "MockHlaClass.h"
+#include "MockLogger.h"
+#include "MockLocalAgentResolver.h"
+#include "MockCallsignResolver.h"
 #include "protocol/Simulation.h"
 
 using namespace plugins::hla;
@@ -51,6 +52,7 @@ namespace
         ResponseObserver_ABC< sword::UnitCreation >* unitCreationObserver;
         sword::UnitCreation creationMessage;
         sword::ClientToSim teleportMessage;
+        MockLocalAgentResolver agentResolver;
         MockCallsignResolver callsignResolver;
         dispatcher::MockLogger logger;
     };
@@ -58,7 +60,7 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( unit_teleporter_teleports_unit, Fixture )
 {
-    UnitTeleporter teleporter( agentSubject, contextHandler, publisher, contextFactory, callsignResolver, logger );
+    UnitTeleporter teleporter( agentSubject, contextHandler, publisher, contextFactory, agentResolver,callsignResolver, logger );
     ObjectListener_ABC* remoteAgentListener( 0 );
     MockHlaClass hlaClass;
     MockHlaObject object;
@@ -84,7 +86,7 @@ BOOST_FIXTURE_TEST_CASE( unit_teleporter_teleports_unit, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( unit_teleporter_teleports_only_when_unit_has_been_created, Fixture )
 {
-    UnitTeleporter teleporter( agentSubject, contextHandler, publisher, contextFactory, callsignResolver, logger );
+    UnitTeleporter teleporter( agentSubject, contextHandler, publisher, contextFactory, agentResolver, callsignResolver, logger );
     ObjectListener_ABC* remoteAgentListener( 0 );
     MockHlaClass hlaClass;
     MockHlaObject object;
@@ -121,14 +123,13 @@ namespace
         ++idx;
     }
 }
-
 BOOST_FIXTURE_TEST_CASE( unit_teleporter_load_embedded_units, Fixture)
 {
     static const char* TRANSPORTED_UNITS[] = { "unit1", "unit2" };
     std::vector< std::string > transported( TRANSPORTED_UNITS, TRANSPORTED_UNITS+( sizeof( TRANSPORTED_UNITS ) / sizeof( TRANSPORTED_UNITS[0] ) ) );
     sword::ClientToSim loadMessage;
 
-    UnitTeleporter teleporter( agentSubject, contextHandler, publisher, contextFactory, callsignResolver, logger );
+    UnitTeleporter teleporter( agentSubject, contextHandler, publisher, contextFactory, agentResolver, callsignResolver, logger );
 
     ObjectListener_ABC* remoteAgentListener( 0 );
     MockHlaClass hlaClass;

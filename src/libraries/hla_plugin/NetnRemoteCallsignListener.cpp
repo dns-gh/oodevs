@@ -166,6 +166,23 @@ void NetnRemoteCallsignListener::LocalDestroyed( const std::string& /*identifier
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: NetnRemoteCallsignListener::Divested
+// Created: AHC 2010-03-02
+// -----------------------------------------------------------------------------
+void NetnRemoteCallsignListener::Divested( const std::string& /*identifier*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnRemoteCallsignListener::Acquired
+// Created: AHC 2010-02-27
+// -----------------------------------------------------------------------------
+void NetnRemoteCallsignListener::Acquired( const std::string& /*identifier*/ )
+{
+    // NOTHING
+}
 
 // -----------------------------------------------------------------------------
 // Name: NetnRemoteCallsignListener::EmbeddedUnitListChanged

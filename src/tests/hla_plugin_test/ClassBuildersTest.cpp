@@ -47,7 +47,8 @@ namespace
 BOOST_FIXTURE_TEST_CASE( aggegate_entity_builder_registers_attributes, Fixture )
 {
     AggregateEntityBuilder builder;
-    attributes = boost::assign::list_of( "EntityType" )
+    attributes = boost::assign::list_of( "HLAprivilegeToDeleteObject" )
+                                       ( "EntityType" )
                                        ( "EntityIdentifier" )
                                        ( "ForceIdentifier" )
                                        ( "AggregateMarking" )
@@ -59,14 +60,19 @@ BOOST_FIXTURE_TEST_CASE( aggegate_entity_builder_registers_attributes, Fixture )
                                        ( "SilentEntities" )
                                        ( "SilentAggregates" )
                                        ( "SubAggregateIdentifiers" )
-                                       ( "EntityIdentifiers" );
+                                       ( "IsPartOf" )
+                                       ( "NumberOfVariableDatums" )
+                                       ( "RelativeSpatial" )
+                                       ( "EntityIdentifiers" )
+                                       ( "VariableDatums" ) ;
     Check( builder, "BaseEntity.AggregateEntity", true, true );
 }
 
 BOOST_FIXTURE_TEST_CASE( netn_aggegate_entity_builder_registers_attributes, Fixture )
 {
     NetnAggregateEntityBuilder builder;
-    attributes = boost::assign::list_of( "EntityType" )
+    attributes = boost::assign::list_of( "HLAprivilegeToDeleteObject" )
+                                       ( "EntityType" )
                                        ( "EntityIdentifier" )
                                        ( "ForceIdentifier" )
                                        ( "AggregateMarking" )
@@ -78,7 +84,11 @@ BOOST_FIXTURE_TEST_CASE( netn_aggegate_entity_builder_registers_attributes, Fixt
                                        ( "SilentEntities" )
                                        ( "SilentAggregates" )
                                        ( "SubAggregateIdentifiers" )
+                                       ( "IsPartOf" )
+                                       ( "NumberOfVariableDatums" )
+                                       ( "RelativeSpatial" )
                                        ( "EntityIdentifiers" )
+                                       ( "VariableDatums" )
                                        // NETN
                                        ( "Mounted" )
                                        ( "Echelon" )
@@ -94,7 +104,8 @@ BOOST_FIXTURE_TEST_CASE( netn_aggegate_entity_builder_registers_attributes, Fixt
 BOOST_FIXTURE_TEST_CASE( surface_vessel_builder_registers_attributes, Fixture )
 {
     SurfaceVesselBuilder builder;
-    attributes = boost::assign::list_of( "EntityType" )
+    attributes = boost::assign::list_of( "HLAprivilegeToDeleteObject" )
+                                       ( "EntityType" )
                                        ( "EntityIdentifier" )
                                        ( "ForceIdentifier" )
                                        ( "Marking" )
@@ -105,7 +116,8 @@ BOOST_FIXTURE_TEST_CASE( surface_vessel_builder_registers_attributes, Fixture )
 BOOST_FIXTURE_TEST_CASE( netn_surface_vessel_builder_registers_attributes, Fixture )
 {
     NetnSurfaceVesselBuilder builder;
-    attributes = boost::assign::list_of( "EntityType" )
+    attributes = boost::assign::list_of( "HLAprivilegeToDeleteObject" )
+                                       ( "EntityType" )
                                        ( "EntityIdentifier" )
                                        ( "ForceIdentifier" )
                                        ( "Marking" )
@@ -120,7 +132,8 @@ BOOST_FIXTURE_TEST_CASE( netn_surface_vessel_builder_registers_attributes, Fixtu
 BOOST_FIXTURE_TEST_CASE( aircraft_builder_registers_attributes, Fixture )
 {
     AircraftBuilder builder;
-    attributes = boost::assign::list_of( "EntityType" )
+    attributes = boost::assign::list_of( "HLAprivilegeToDeleteObject" )
+                                       ( "EntityType" )
                                        ( "EntityIdentifier" )
                                        ( "ForceIdentifier" )
                                        ( "Marking" )
@@ -131,7 +144,8 @@ BOOST_FIXTURE_TEST_CASE( aircraft_builder_registers_attributes, Fixture )
 BOOST_FIXTURE_TEST_CASE( netn_aircraft_builder_registers_attributes, Fixture )
 {
     NetnAircraftBuilder builder;
-    attributes = boost::assign::list_of( "EntityType" )
+    attributes = boost::assign::list_of( "HLAprivilegeToDeleteObject" )
+                                       ( "EntityType" )
                                        ( "EntityIdentifier" )
                                        ( "ForceIdentifier" )
                                        ( "Marking" )
@@ -195,3 +209,4 @@ BOOST_FIXTURE_TEST_CASE( culturefeature_builder_registers_attributes, Fixture )
                                         ( "Spatial" );
     Check( builder, "BaseEntity.PhysicalEntity.CulturalFeature", true, true );
 }
+

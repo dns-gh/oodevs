@@ -47,6 +47,9 @@
     <Filter Include="Source Files\Interactions\Transportation">
       <UniqueIdentifier>{0c58d9fa-3e3a-4144-a91c-fadb18fc4654}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Interactions\Ownership">
+      <UniqueIdentifier>{2c323efe-2870-46af-8b10-c0eb7881f9e0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.cpp">
@@ -118,12 +121,6 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\AggregateEntity.cpp">
       <Filter>Source Files\Classes\rpr</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregate.cpp">
-      <Filter>Source Files\Classes\netn</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAggregate.cpp">
-      <Filter>Source Files\Classes\rpr</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\ContextFactory.cpp">
       <Filter>Source Files\Dispatcher\Context</Filter>
     </ClCompile>
@@ -163,9 +160,6 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentResolver.cpp">
       <Filter>Source Files\Resolvers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\hla_plugin\MunitionTypeResolver.cpp">
-      <Filter>Source Files\Resolvers</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\DirectFireReceiver.cpp">
       <Filter>Source Files\Interactions\Detonation</Filter>
     </ClCompile>
@@ -185,12 +179,6 @@
       <Filter>Source Files\Classes\rpr</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnSurfaceVessel.cpp">
-      <Filter>Source Files\Classes\netn</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteSurfaceVessel.cpp">
-      <Filter>Source Files\Classes\rpr</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteSurfaceVessel.cpp">
       <Filter>Source Files\Classes\netn</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\HlaClass.cpp">
@@ -226,16 +214,10 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\AutomatChecker.cpp">
       <Filter>Source Files\Resolvers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAircraft.cpp">
-      <Filter>Source Files\Classes\rpr</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\Aircraft.cpp">
       <Filter>Source Files\Classes\rpr</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnAircraft.cpp">
-      <Filter>Source Files\Classes\netn</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteAircraft.cpp">
       <Filter>Source Files\Classes\netn</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\TransportationOfferer.cpp">
@@ -293,6 +275,27 @@
       <Filter>Source Files\Dispatcher</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\TacticalObjectEventListenerComposite.cpp">
+      <Filter>Source Files\Resolvers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\LocationOwnershipPolicy.cpp">
+      <Filter>Source Files\Interactions\Ownership</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NullTransferSender.cpp">
+      <Filter>Source Files\Interactions\Ownership</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\OwnershipController.cpp">
+      <Filter>Source Files\Interactions\Ownership</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\OwnershipStrategy.cpp">
+      <Filter>Source Files\Interactions\Ownership</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\RprTransferSender.cpp">
+      <Filter>Source Files\Interactions\Ownership</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\DotationTypeResolver.cpp">
+      <Filter>Source Files\Resolvers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\EntityIdentifierResolver.cpp">
       <Filter>Source Files\Resolvers</Filter>
     </ClCompile>
   </ItemGroup>
@@ -399,12 +402,6 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\ClassBuilder_ABC.h">
       <Filter>Source Files\Classes</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteAggregate.h">
-      <Filter>Source Files\Classes\netn</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAggregate.h">
-      <Filter>Source Files\Classes\rpr</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAggregateListener_ABC.h">
       <Filter>Source Files\Classes</Filter>
     </ClInclude>
@@ -468,12 +465,6 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentResolver.h">
       <Filter>Source Files\Resolvers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\MunitionTypeResolver.h">
-      <Filter>Source Files\Resolvers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\MunitionTypeResolver_ABC.h">
-      <Filter>Source Files\Resolvers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\DirectFireReceiver.h">
       <Filter>Source Files\Interactions\Detonation</Filter>
     </ClInclude>
@@ -515,12 +506,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\HlaFactories.h">
       <Filter>Source Files\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteSurfaceVessel.h">
-      <Filter>Source Files\Classes\rpr</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteSurfaceVessel.h">
-      <Filter>Source Files\Classes\netn</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\ClassBuilders.h">
       <Filter>Source Files\Classes</Filter>
@@ -582,16 +567,10 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatChecker_ABC.h">
       <Filter>Source Files\Resolvers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAircraft.h">
-      <Filter>Source Files\Classes\rpr</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\Aircraft.h">
       <Filter>Source Files\Classes\rpr</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnAircraft.h">
-      <Filter>Source Files\Classes\netn</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteAircraft.h">
       <Filter>Source Files\Classes\netn</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\TransportationOfferer.h">
@@ -694,6 +673,45 @@
       <Filter>Source Files\Resolvers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\TacticalObjectEventListenerComposite.h">
+      <Filter>Source Files\Resolvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\LocationOwnershipPolicy.h">
+      <Filter>Source Files\Interactions\Ownership</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NullTransferSender.h">
+      <Filter>Source Files\Interactions\Ownership</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\OwnershipController.h">
+      <Filter>Source Files\Interactions\Ownership</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\OwnershipController_ABC.h">
+      <Filter>Source Files\Interactions\Ownership</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\OwnershipPolicy_ABC.h">
+      <Filter>Source Files\Interactions\Ownership</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\OwnershipStrategy.h">
+      <Filter>Source Files\Interactions\Ownership</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\OwnershipStrategy_ABC.h">
+      <Filter>Source Files\Interactions\Ownership</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\RprTransferSender.h">
+      <Filter>Source Files\Interactions\Ownership</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\TransferSender_ABC.h">
+      <Filter>Source Files\Interactions\Ownership</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\DotationTypeResolver.h">
+      <Filter>Source Files\Resolvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\DotationTypeResolver_ABC.h">
+      <Filter>Source Files\Resolvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\EntityIdentifierResolver.h">
+      <Filter>Source Files\Resolvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\EntityIdentifierResolver_ABC.h">
       <Filter>Source Files\Resolvers</Filter>
     </ClInclude>
   </ItemGroup>

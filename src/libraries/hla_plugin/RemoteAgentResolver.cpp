@@ -16,6 +16,10 @@
 
 using namespace plugins::hla;
 
+namespace
+{
+    static const std::string DEFAULT_ID("");
+}
 // -----------------------------------------------------------------------------
 // Name: RemoteAgentResolver constructor
 // Created: SLI 2011-09-22
@@ -42,11 +46,11 @@ RemoteAgentResolver::~RemoteAgentResolver()
 // Name: RemoteAgentResolver::Resolve
 // Created: SLI 2011-09-22
 // -----------------------------------------------------------------------------
-std::string RemoteAgentResolver::Resolve( unsigned int identifier ) const
+const std::string& RemoteAgentResolver::Resolve( unsigned int identifier ) const
 {
     T_Identifiers::left_const_iterator it = identifiers_.left.find( identifier );
     if( it == identifiers_.left.end() )
-        return "";
+        return DEFAULT_ID;
     return it->second;
 }
 
@@ -174,6 +178,23 @@ void RemoteAgentResolver::LocalDestroyed( const std::string& /*identifier*/ )
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: RemoteAgentResolver::Divested
+// Created: AHC 2010-03-02
+// -----------------------------------------------------------------------------
+void RemoteAgentResolver::Divested( const std::string& /*identifier*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteAgentResolver::Acquired
+// Created: AHC 2010-02-27
+// -----------------------------------------------------------------------------
+void RemoteAgentResolver::Acquired( const std::string& /*identifier*/ )
+{
+    // NOTHING
+}
 
 // -----------------------------------------------------------------------------
 // Name: RemoteAgentResolver::EmbeddedUnitListChanged

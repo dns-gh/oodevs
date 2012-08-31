@@ -12,6 +12,7 @@
 #include "ContextHandler_ABC.h"
 #include "RemoteAgentSubject_ABC.h"
 #include "ContextFactory_ABC.h"
+#include "LocalAgentResolver_ABC.h"
 #include "CallsignResolver_ABC.h"
 #include "HlaObject_ABC.h"
 #include "protocol/SimulationSenders.h"
@@ -26,11 +27,12 @@ using namespace plugins::hla;
 // -----------------------------------------------------------------------------
 UnitTeleporter::UnitTeleporter( RemoteAgentSubject_ABC& agentSubject, ContextHandler_ABC< sword::UnitCreation >& contextHandler,
                                 dispatcher::SimulationPublisher_ABC& publisher, const ContextFactory_ABC& contextFactory,
-                                const CallsignResolver_ABC& callsignResolver, dispatcher::Logger_ABC& logger )
+                                const LocalAgentResolver_ABC& localResolver, const CallsignResolver_ABC& callsignResolver, dispatcher::Logger_ABC& logger )
     : agentSubject_  ( agentSubject )
     , contextHandler_( contextHandler )
     , publisher_     ( publisher )
     , contextFactory_( contextFactory )
+    , localResolver_ ( localResolver )
     , callsignResolver_ ( callsignResolver )
     , logger_        ( logger )
 {
@@ -52,18 +54,44 @@ UnitTeleporter::~UnitTeleporter()
 // Name: UnitTeleporter::Created
 // Created: SLI 2011-09-13
 // -----------------------------------------------------------------------------
-void UnitTeleporter::RemoteCreated( const std::string& /*identifier*/, HlaClass_ABC& /*hlaClass*/, HlaObject_ABC& object )
+void UnitTeleporter::RemoteCreated( const std::string& identifier, HlaClass_ABC& /*hlaClass*/, HlaObject_ABC& object )
 {
     object.Register( *this );
+    objects_[identifier]=&object;
 }
 
 // -----------------------------------------------------------------------------
 // Name: UnitTeleporter::Destroyed
 // Created: SLI 2011-09-13
 // -----------------------------------------------------------------------------
-void UnitTeleporter::RemoteDestroyed( const std::string& /*identifier*/ )
+void UnitTeleporter::RemoteDestroyed( const std::string& identifier )
 {
-    // NOTHING
+    T_Objects::iterator it( objects_.find( identifier ) );
+    if( objects_.end() == it)
+        return;
+    it->second->Unregister( *this );
+
+    T_Identifiers::iterator idIt( identifiers_.find( identifier ) );
+    if(  idIt != identifiers_.end() )
+    {
+        simulation::UnitMagicAction message;
+        message().mutable_tasker()->mutable_unit()->set_id( idIt->second );
+        message().set_type( sword::UnitMagicAction::move_to );
+        sword::MissionParameter& parameter = *message().mutable_parameters()->add_elem();
+        parameter.set_null_value( false );
+        sword::Location& location = *parameter.add_value()->mutable_point()->mutable_location();
+        location.set_type( sword::Location::point );
+        sword::CoordLatLong& coordinates = *location.mutable_coordinates()->add_elem();
+        coordinates.set_latitude( 0. );
+        coordinates.set_longitude( 0. );
+        message.Send( publisher_, contextFactory_.Create() );
+
+        simulation::UnitMagicAction message2;
+        message2().mutable_tasker()->mutable_unit()->set_id( idIt->second );
+        message2().set_type( sword::UnitMagicAction::destroy_all );
+        message2().mutable_parameters();
+        message2.Send( publisher_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -179,9 +207,10 @@ void UnitTeleporter::CallsignChanged( const std::string& /*identifier*/, const s
 // Name: UnitTeleporter::LocalCreated
 // Created: AHC 2010-02-27
 // -----------------------------------------------------------------------------
-void UnitTeleporter::LocalCreated( const std::string& /*identifier*/, HlaClass_ABC& /*hlaClass*/, HlaObject_ABC& /*object*/ )
+void UnitTeleporter::LocalCreated( const std::string& identifier, HlaClass_ABC& /*hlaClass*/, HlaObject_ABC& object )
 {
-    // NOTHING
+    identifiers_[ identifier ] = localResolver_.Resolve( identifier );
+    objects_[ identifier ]=&object;
 }
 
 // -----------------------------------------------------------------------------
@@ -191,6 +220,30 @@ void UnitTeleporter::LocalCreated( const std::string& /*identifier*/, HlaClass_A
 void UnitTeleporter::LocalDestroyed( const std::string& /*identifier*/ )
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitTeleporter::Divested
+// Created: AHC 2010-03-02
+// -----------------------------------------------------------------------------
+void UnitTeleporter::Divested( const std::string& identifier )
+{
+    T_Objects::iterator it( objects_.find( identifier ) );
+    if( objects_.end() == it)
+        return;
+    it->second->Register( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitTeleporter::Acquired
+// Created: AHC 2010-02-27
+// -----------------------------------------------------------------------------
+void UnitTeleporter::Acquired( const std::string& identifier )
+{
+    T_Objects::iterator it( objects_.find( identifier ) );
+    if( objects_.end() == it)
+        return;
+    it->second->Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

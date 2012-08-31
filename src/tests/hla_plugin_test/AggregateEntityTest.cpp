@@ -15,6 +15,7 @@
 #include "MockAgent.h"
 #include "MockUpdateFunctor.h"
 #include "MockMarkingFactory.h"
+#include "MockEntityIdentifierResolver.h"
 #include <hla/Deserializer.h>
 #include <hla/Serializer.h>
 #include <hla/AttributeIdentifier.h>
@@ -37,6 +38,7 @@ namespace
         }
         MockAgent agent;
         MockMarkingFactory factory;
+        MockEntityIdentifierResolver entityIdResolver;
         EventListener_ABC* listener;
         hla::MockUpdateFunctor functor;
         rpr::EntityType entityType;
@@ -45,7 +47,7 @@ namespace
     {
     public:
         RegisteredFixture()
-            : entity( agent, 1u, "name", rpr::Friendly, rpr::EntityType(), factory, 42, 43 )
+            : entity( agent, 1u, "name", rpr::Friendly, rpr::EntityType(), factory, 42, 43, entityIdResolver )
         {}
         AggregateEntity entity;
     };
@@ -54,7 +56,7 @@ namespace
 BOOST_FIXTURE_TEST_CASE( agent_cannot_be_deserialized, RegisteredFixture )
 {
     hla::Deserializer deserializer( 0 );
-    BOOST_CHECK_THROW( entity.Deserialize( "identifier", deserializer ), std::runtime_error );
+    BOOST_CHECK_NO_THROW( entity.Deserialize( "identifier", deserializer ) ); //, std::runtime_error );
 }
 
 BOOST_FIXTURE_TEST_CASE( unmodified_agent_serializes_nothing, RegisteredFixture )
@@ -76,7 +78,8 @@ BOOST_FIXTURE_TEST_CASE( agregate_entity_serializes_all_its_attributes, Register
                                                                         ( "SilentEntities" )
                                                                         ( "SilentAggregates" )
                                                                         ( "SubAggregateIdentifiers" )
-                                                                        ( "EntityIdentifiers" );
+                                                                        ( "EntityIdentifiers" )
+                                                                        ( "NumberOfVariableDatums" );
     {
         hla::MockUpdateFunctor functor;
         mock::sequence s;

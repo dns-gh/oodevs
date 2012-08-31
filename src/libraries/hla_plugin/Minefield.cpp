@@ -79,10 +79,11 @@ Minefield::Minefield( TacticalObject_ABC& object, unsigned int identifier, const
 // Name: Minefield constructor
 // Created: AHC 2012-08-07
 // -----------------------------------------------------------------------------
-Minefield::Minefield( const std::string& identifier )
+Minefield::Minefield( const std::string& identifier, EntityIdentifierResolver_ABC& /*entityIdentifierResolver*/ )
     : object_( 0 )
     , listeners_ ( new ObjectListenerComposite() )
     , identifier_( identifier )
+    , attributes_( new AttributesUpdater( identifier_, *listeners_ ) )
 {
 	RegisterAttributes();
 }
@@ -205,4 +206,22 @@ void Minefield::SpatialChanged( const TacticalObjectEventListener_ABC::T_Positio
     perimeter_.resize( pos.size() );
     std::transform( pos.begin(), pos.end(), perimeter_.begin(), boost::bind( &computePerimeter, _1, center_.X(), center_.Y() ) );
     attributes_->Update( "PerimeterPointCoordinates", Wrapper< std::vector< rpr::PerimeterPoint > >( perimeter_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Minefield::ResetAttributes
+// Created: AHC 2012-08-30
+// -----------------------------------------------------------------------------
+void Minefield::ResetAttributes()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Minefield::Attach
+// Created: AHC 2012-08-30
+// -----------------------------------------------------------------------------
+void Minefield::Attach( Agent_ABC* agent, unsigned long simId )
+{
+    // NOTHING
 }

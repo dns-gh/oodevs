@@ -324,7 +324,7 @@ bool InteractionBuilder::Build( ::hla::Interaction< interactions::ResupplyReceiv
 bool InteractionBuilder::Build( ::hla::Interaction< interactions::ServiceRequest >& interaction ) const
 {
     const std::string name = "ServiceRequest";
-    REGISTER( "ReceivingObject"           , &interactions::ServiceRequest::receivingObject );
+    REGISTER( "RequestingObject"           , &interactions::ServiceRequest::requestingObject );
     REGISTER( "ServicingObject"           , &interactions::ServiceRequest::servicingObject );
     REGISTER( "ServiceType"               , &interactions::ServiceRequest::serviceType );
     REGISTER( "SuppliesData"              , &interactions::ServiceRequest::suppliesData );
@@ -346,3 +346,32 @@ bool InteractionBuilder::Build( ::hla::Interaction< interactions::TransferContro
     REGISTER( "RecordSetData"             , &interactions::TransferControl::recordSetData );
     return DoRegister( name, interaction, true, true );
 }
+
+// -----------------------------------------------------------------------------
+// Name: InteractionBuilder::Build
+// Created: AHC 2012-02-08
+// -----------------------------------------------------------------------------
+bool InteractionBuilder::Build( ::hla::Interaction< interactions::Acknowledge >& interaction ) const
+{
+    const std::string name = "Acknowledge";
+    REGISTER( "OriginatingEntity"         , &interactions::Acknowledge::originatingEntity );
+    REGISTER( "ReceivingEntity"           , &interactions::Acknowledge::receivingEntity );
+    REGISTER( "RequestIdentifier"         , &interactions::Acknowledge::requestIdentifier );
+    REGISTER( "AcknowledgeFlag"           , &interactions::Acknowledge::acknowledgeFlag );
+    REGISTER( "ResponseFlag"            , &interactions::Acknowledge::responseFlag );
+    return DoRegister( name, interaction, true, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InteractionBuilder::Build
+// Created: AHC 2012-04-18
+// -----------------------------------------------------------------------------
+bool InteractionBuilder::Build( ::hla::Interaction< interactions::Comment >& interaction ) const
+{
+    const std::string name = "Comment";
+    REGISTER( "OriginatingEntity"         , &interactions::Comment::originatingEntity );
+    REGISTER( "ReceivingEntity"           , &interactions::Comment::receivingEntity );
+    REGISTER( "VariableDatumSet"         , &interactions::Comment::variableDatumSet );
+    return DoRegister( name, interaction, true, true );
+}
+

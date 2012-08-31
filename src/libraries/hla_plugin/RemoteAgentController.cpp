@@ -14,12 +14,16 @@
 #include "UnitTypeResolver_ABC.h"
 #include "ExtentResolver_ABC.h"
 #include "HlaObject_ABC.h"
+#include "AgentSubject_ABC.h"
 #include "protocol/SimulationSenders.h"
+#include "dispatcher/Model_ABC.h"
 #include "dispatcher/Team_ABC.h"
 #include "dispatcher/Logger_ABC.h"
+#include "dispatcher/Agent.h"
 #include "clients_kernel/Karma.h"
 #include <boost/lexical_cast.hpp>
 #include <boost/foreach.hpp>
+#include <algorithm>
 
 using namespace plugins::hla;
 
@@ -44,25 +48,29 @@ namespace
 RemoteAgentController::RemoteAgentController( RemoteAgentSubject_ABC& agentSubject,
                                               ContextHandler_ABC< sword::AutomatCreation >& automatHandler,
                                               ContextHandler_ABC< sword::UnitCreation >& unitHandler,
-                                              const tools::Resolver_ABC< dispatcher::Team_ABC >& sides,
+                                              dispatcher::Model_ABC& dynamicModel,
                                               const UnitTypeResolver_ABC& typeResolver, dispatcher::Logger_ABC& logger,
-                                              const ExtentResolver_ABC& extent )
+                                              const ExtentResolver_ABC& extent, AgentSubject_ABC& subject )
     : agentSubject_  ( agentSubject )
     , automatHandler_( automatHandler )
     , unitHandler_   ( unitHandler )
-    , sides_         ( sides )
+    , dynamicModel_  ( dynamicModel )
     , typeResolver_  ( typeResolver )
     , logger_        ( logger )
     , extent_        ( extent )
+    , simSubject_       ( subject )
 {
     automatHandler_.Register( *this );
+    unitHandler_.Register( *this );
     agentSubject_.Register( *this );
+    simSubject_.Register( *this );
+    const tools::Resolver_ABC< dispatcher::Team_ABC >& sides( dynamicModel.Sides() );
     for( tools::Iterator< const dispatcher::Team_ABC& > it = sides.CreateIterator(); it.HasMoreElements(); )
     {
         const dispatcher::Team_ABC& team = it.NextElement();
         if( team.GetId() )
         {
-            logger_.LogInfo( "karmas[ " + boost::lexical_cast< std::string >( team.GetId() ) + " ] = " + team.GetKarma().GetName().toAscii().constData() + " (" + team.GetName().toAscii().constData() + ")" );
+            logger_.LogInfo( "karmas[ " + boost::lexical_cast< std::string >( team.GetId() ) + " ] = " + team.GetKarma().GetName().ascii() + " (" + team.GetName().ascii() + ")" );
             karmas_[ team.GetKarma() ] = team.GetId();
         }
     }
@@ -75,7 +83,9 @@ RemoteAgentController::RemoteAgentController( RemoteAgentSubject_ABC& agentSubje
 RemoteAgentController::~RemoteAgentController()
 {
     automatHandler_.Unregister( *this );
+    unitHandler_.Unregister( *this );
     agentSubject_.Unregister( *this );
+    simSubject_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -97,6 +107,7 @@ void RemoteAgentController::Notify( const sword::AutomatCreation& message, const
 void RemoteAgentController::RemoteCreated( const std::string& identifier, HlaClass_ABC& /*hlaClass*/, HlaObject_ABC& object )
 {
     object.Register( *this );
+    remoteObjects_[ identifier ] = &object;
     unitCreations_[ identifier ] = T_UnitCreation( new simulation::UnitMagicAction() );
     simulation::UnitMagicAction& message = *unitCreations_[ identifier ];
     message().set_type( sword::UnitMagicAction::unit_creation );
@@ -220,6 +231,7 @@ void RemoteAgentController::Send( simulation::UnitMagicAction& message, const st
     {
         unitHandler_.Send( message, identifier );
         unitCreations_.erase( identifier );
+        //remoteObjects_[ identifier ]->Unregister( *this );
     }
 }
 
@@ -235,8 +247,8 @@ unsigned long RemoteAgentController::FindAutomat( rpr::ForceIdentifier force ) c
     T_Karmas::const_iterator itKarma = karmas_.find( *karma );
     if( itKarma == karmas_.end() )
     {
-        //throw std::runtime_error( "Karma '" + karma.GetName().toAscii().constData() + "' not found in scenario" );
-        logger_.LogError( "Karma '" + std::string( karma->GetName().toAscii().constData() ) + "' not found in scenario" );
+        //throw std::runtime_error( "Karma '" + karma.GetName().toStdString() + "' not found in scenario" );
+        logger_.LogError( "Karma '" +  karma->GetName().toStdString() + "' not found in scenario" );
         return 0;
     }
     T_Parties::const_iterator itParty = parties_.find( itKarma->second );
@@ -266,12 +278,88 @@ void RemoteAgentController::LocalDestroyed( const std::string& /*identifier*/ )
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: RemoteAgentController::Divested
+// Created: AHC 2010-03-02
+// -----------------------------------------------------------------------------
+void RemoteAgentController::Divested( const std::string& /*identifier*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteAgentController::Acquired
+// Created: AHC 2010-02-27
+// -----------------------------------------------------------------------------
+void RemoteAgentController::Acquired( const std::string& /*identifier*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteAgentController::Notify
+// Created: AHC 2010-03-09
+// -----------------------------------------------------------------------------
+void RemoteAgentController::Notify( const sword::UnitCreation& message, const std::string& identifier )
+{
+    remoteIds_[ identifier ] = message.unit().id();
+    Attach( message.unit().id() );
+}
+
+namespace
+{
+    struct CheckId
+    {
+        CheckId( unsigned long p ) : p_( p ) {}
+        bool operator()( const std::map< std::string, unsigned long >::value_type& v)
+        {
+            return v.second == p_;
+        }
+    private:
+        unsigned long p_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteAgentController::Attach
+// Created: AHC 2010-03-09
+// -----------------------------------------------------------------------------
+void RemoteAgentController::Attach( unsigned long simId )
+{
+    T_Hla2SimIds::iterator itId( std::find_if( remoteIds_.begin(), remoteIds_.end(),
+        CheckId( simId ) ) );
+    if( remoteIds_.end() == itId )
+        return;
+    T_Agents::iterator itAg( remoteAgents_.find( simId ) );
+    if( remoteAgents_.end() == itAg )
+        return;
+    remoteObjects_[itId->first]->Attach( itAg->second, simId );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteAgentController::AggregateCreated
+// Created: AHC 2010-03-09
+// -----------------------------------------------------------------------------
+void RemoteAgentController::AggregateCreated( Agent_ABC& agent, unsigned long identifier, const std::string& /*name*/,
+        rpr::ForceIdentifier /*force*/, const rpr::EntityType& /*type*/, const std::string& /*symbol*/, bool isLocal, unsigned long /*agentType*/ )
+{
+    if( !isLocal )
+        remoteAgents_[ identifier ] = &agent;
+}
 
 // -----------------------------------------------------------------------------
 // Name: RemoteAgentController::EmbeddedUnitListChanged
 // Created: AHC 2010-05-29
 // -----------------------------------------------------------------------------
 void RemoteAgentController::EmbeddedUnitListChanged( const std::string& /*identifier*/, const std::vector< std::string >& /*units*/ )
+{
+    // NOTHING
+}
+// -----------------------------------------------------------------------------
+// Name: RemoteAgentController::PlatformCreated
+// Created: AHC 2010-03-09
+// -----------------------------------------------------------------------------
+void RemoteAgentController::PlatformCreated( Agent_ABC& /*agent*/, unsigned int /*identifier*/, const std::string& /*name*/, rpr::ForceIdentifier /*force*/, const rpr::EntityType& /*type*/, const std::string& /*symbol*/ )
 {
     // NOTHING
 }

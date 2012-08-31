@@ -10,9 +10,6 @@
 #include "hla_plugin_pch.h"
 #include "LocalAgentResolver.h"
 
-#include <boost/foreach.hpp>
-#include <fstream>
-
 using namespace plugins::hla;
 
 // -----------------------------------------------------------------------------
@@ -21,7 +18,7 @@ using namespace plugins::hla;
 // -----------------------------------------------------------------------------
 LocalAgentResolver::LocalAgentResolver()
 {
-    // NOTHING
+    // NOTHINGs
 }
 
 // -----------------------------------------------------------------------------
@@ -37,7 +34,7 @@ LocalAgentResolver::~LocalAgentResolver()
 // Name: LocalAgentResolver::Add
 // Created: SLI 2011-09-26
 // -----------------------------------------------------------------------------
-void LocalAgentResolver::Add( unsigned int simulationIdentifier, const std::string& objectIdentifier )
+void LocalAgentResolver::Add( unsigned long simulationIdentifier, const std::string& objectIdentifier )
 {
     identifiers_.insert( T_Identifiers::value_type( simulationIdentifier, objectIdentifier ) );
 }
@@ -46,7 +43,7 @@ void LocalAgentResolver::Add( unsigned int simulationIdentifier, const std::stri
 // Name: LocalAgentResolver::Resolve
 // Created: SLI 2011-09-26
 // -----------------------------------------------------------------------------
-std::string LocalAgentResolver::Resolve( unsigned int simulationIdentifier ) const
+std::string LocalAgentResolver::Resolve( unsigned long simulationIdentifier ) const
 {
     T_Identifiers::left_const_iterator it = identifiers_.left.find( simulationIdentifier );
     if( it == identifiers_.left.end() )
@@ -58,7 +55,7 @@ std::string LocalAgentResolver::Resolve( unsigned int simulationIdentifier ) con
 // Name: LocalAgentResolver::Resolve
 // Created: SLI 2011-09-26
 // -----------------------------------------------------------------------------
-unsigned int LocalAgentResolver::Resolve( const std::string& objectIdentifier ) const
+unsigned long LocalAgentResolver::Resolve( const std::string& objectIdentifier ) const
 {
     T_Identifiers::right_const_iterator it = identifiers_.right.find( objectIdentifier );
     if( it == identifiers_.right.end() )

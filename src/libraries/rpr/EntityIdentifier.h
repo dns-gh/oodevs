@@ -45,14 +45,10 @@ public:
         archive >> entityNumber_;
     }
 
-    bool operator == ( const EntityIdentifier& other ) const
-    {
-        return entityNumber_ == other.entityNumber_ &&
-                federateIdentifier_.siteID_ == other.federateIdentifier_.siteID_ &&
-                federateIdentifier_.applicationID_ == other.federateIdentifier_.applicationID_;
-    }
-
     std::string str() const;
+	static bool Match( const EntityIdentifier& lhs, const EntityIdentifier& rhs);
+    bool operator== ( const EntityIdentifier& rhs ) const;
+    bool operator< ( const EntityIdentifier& rhs ) const;
     //@}
 
 private:

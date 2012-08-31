@@ -9,8 +9,8 @@
 
 #include "hla_plugin_test_pch.h"
 #include "hla_plugin/InteractionBuilder.h"
-#include "hla_plugin/Interactions.h"
 #include "hla_plugin/InteractionSender.h"
+#include "hla_plugin/Interactions.h"
 #include "MockFederate.h"
 #include "MockInteractionHandler.h"
 #include "MockInteractionNotification.h"
@@ -60,6 +60,18 @@ namespace
     };
 }
 
+BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_acknowledge, Fixture )
+{
+    const std::string name = "Acknowledge";
+    const std::vector< std::string > parameters = boost::assign::list_of( "OriginatingEntity" )
+                                                                        ( "ReceivingEntity" )
+                                                                        ( "RequestIdentifier" )
+                                                                        ( "AcknowledgeFlag" )
+                                                                        ( "ResponseFlag" );
+
+    CheckBuild< interactions::Acknowledge >( name, parameters );
+}
+
 BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_munition_detonation, Fixture )
 {
     const std::string name = "MunitionDetonation";
@@ -84,7 +96,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_a
 BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_service_request, Fixture )
 {
     const std::string name = "ServiceRequest";
-    const std::vector< std::string > parameters = boost::assign::list_of( "ReceivingObject" )
+    const std::vector< std::string > parameters = boost::assign::list_of( "RequestingObject" )
                                                                         ( "ServicingObject" )
                                                                         ( "ServiceType" )
                                                                         ( "SuppliesData" );
@@ -127,6 +139,15 @@ BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_a
                                                                         ( "TransferEntity" )
                                                                         ( "RecordSetData" );
     CheckBuild< interactions::TransferControl >( name, parameters );
+}
+
+BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_comment, Fixture )
+{
+    const std::string name = "Comment";
+    const std::vector< std::string > parameters = boost::assign::list_of( "OriginatingEntity" )
+                                                                        ( "ReceivingEntity" )
+                                                                        ( "VariableDatumSet" );
+    CheckBuild< interactions::Comment >( name, parameters );
 }
 
 BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_request_convoy, Fixture )

@@ -9,7 +9,7 @@
 
 #include "hla_plugin_pch.h"
 #include "IndirectFireReceiver.h"
-#include "MunitionTypeResolver_ABC.h"
+#include "DotationTypeResolver_ABC.h"
 #include "ContextFactory_ABC.h"
 #include "Interactions.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
@@ -21,7 +21,7 @@ using namespace plugins::hla;
 // Name: IndirectFireReceiver constructor
 // Created: SLI 2011-09-27
 // -----------------------------------------------------------------------------
-IndirectFireReceiver::IndirectFireReceiver( dispatcher::SimulationPublisher_ABC& publisher, const ContextFactory_ABC& factory, const MunitionTypeResolver_ABC& resolver )
+IndirectFireReceiver::IndirectFireReceiver( dispatcher::SimulationPublisher_ABC& publisher, const ContextFactory_ABC& factory, const DotationTypeResolver_ABC& resolver )
     : publisher_( publisher )
     , factory_  ( factory )
     , resolver_ ( resolver )

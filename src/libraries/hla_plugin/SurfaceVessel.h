@@ -12,8 +12,13 @@
 
 #include "HlaObject_ABC.h"
 #include "EventListener_ABC.h"
+#include "AggregateMarking.h"
+#include "Spatial.h"
 #include "rpr/ForceIdentifier.h"
 #include "rpr/EntityType.h"
+#include "rpr/EntityIdentifier.h"
+#include <string>
+#include <memory>
 
 namespace hla
 {
@@ -32,10 +37,11 @@ namespace plugins
 namespace hla
 {
     class Agent_ABC;
-    class AttributesSerializer;
+    class AttributesUpdater;
     class ObjectListener_ABC;
     class ObjectListenerComposite;
     class MarkingFactory_ABC;
+    class EntityIdentifierResolver_ABC;
 
 // =============================================================================
 /** @class  SurfaceVessel
@@ -49,9 +55,10 @@ class SurfaceVessel : public HlaObject_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             SurfaceVessel( Agent_ABC& agent, unsigned int identifier,
+             SurfaceVessel( Agent_ABC& agent, unsigned long identifier,
                             const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const MarkingFactory_ABC& markingFactory,
-                            unsigned short siteID, unsigned short applicationID );
+                            unsigned short siteID, unsigned short applicationID, EntityIdentifierResolver_ABC& entityIdentifierResolver );
+             SurfaceVessel( const std::string& identifier, EntityIdentifierResolver_ABC& entityIdentifierResolver );
     virtual ~SurfaceVessel();
     //@}
 
@@ -59,10 +66,12 @@ public:
     //@{
     virtual void Serialize( ::hla::UpdateFunctor_ABC& functor, bool updateAll ) const;
     virtual void Deserialize( const ::hla::AttributeIdentifier& identifier, ::hla::Deserializer_ABC& deserializer );
-    virtual void SetIdentifier( const std::string& id );
-    virtual const std::string& GetIdentifier() const;
     virtual void Register( ObjectListener_ABC& listener );
     virtual void Unregister( ObjectListener_ABC& listener );
+    virtual void Attach( Agent_ABC* agent, unsigned long simId );
+    virtual void SetIdentifier( const std::string& id );
+    virtual const std::string& GetIdentifier() const;
+    virtual void ResetAttributes();
     //@}
 
 private:
@@ -75,13 +84,25 @@ private:
     virtual void PlatformAdded( const std::string& name, unsigned int id );
     //@}
 
+    //! @name Operations
+    //@{
+    void RegisterAttributes( );
+    //@}
+
 private:
     //! @name Member data
     //@{
     std::string identifier_;
     std::auto_ptr< ObjectListenerComposite > listeners_;
-    Agent_ABC& agent_;
-    std::auto_ptr< AttributesSerializer > attributes_;
+    Agent_ABC* agent_;
+    EntityIdentifierResolver_ABC& entityIdentifierResolver_;
+    std::auto_ptr< AttributesUpdater > attributesUpdater_;
+    unsigned long simIdentifier_;
+    rpr::ForceIdentifier force_;
+    rpr::EntityType type_;
+    Marking marking_;
+    rpr::EntityIdentifier entityIdentifier_;
+    Spatial spatial_;
     //@}
 };
 

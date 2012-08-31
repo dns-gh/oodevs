@@ -2,21 +2,21 @@
 //
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
-
 // Copyright (c) 2012 MASA Group
 //
 // *****************************************************************************
 
+
 #include "hla_plugin_pch.h"
 #include "EventListenerComposite.h"
-
+#include <algorithm>
 #include <boost/foreach.hpp>
 
 using namespace plugins::hla;
 
 // -----------------------------------------------------------------------------
 // Name: EventListenerComposite constructor
-// Created: AHC 2012-07-26
+// Created: AHC 2012-02-21
 // -----------------------------------------------------------------------------
 EventListenerComposite::EventListenerComposite()
 {
@@ -25,7 +25,7 @@ EventListenerComposite::EventListenerComposite()
 
 // -----------------------------------------------------------------------------
 // Name: EventListenerComposite destructor
-// Created: AHC 2012-07-26
+// Created: AHC 2012-02-21
 // -----------------------------------------------------------------------------
 EventListenerComposite::~EventListenerComposite()
 {
@@ -34,25 +34,25 @@ EventListenerComposite::~EventListenerComposite()
 
 // -----------------------------------------------------------------------------
 // Name: EventListenerComposite::Register
-// Created: AHC 2012-07-26
+// Created: AHC 2012-02-21
 // -----------------------------------------------------------------------------
 void EventListenerComposite::Register( EventListener_ABC& listener )
 {
-    listeners_.insert( &listener );
+    listeners_.push_back( &listener );
 }
 
 // -----------------------------------------------------------------------------
 // Name: EventListenerComposite::Unregister
-// Created: AHC 2012-07-26
+// Created: AHC 2012-02-21
 // -----------------------------------------------------------------------------
 void EventListenerComposite::Unregister( EventListener_ABC& listener )
 {
-    listeners_.erase( &listener );
+    listeners_.erase( std::remove( listeners_.begin(), listeners_.end(), &listener ), listeners_.end() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventListenerComposite::SpatialChanged
-// Created: AHC 2012-07-26
+// Name: EventListenerComposite::Unregister
+// Created: AHC 2012-02-21
 // -----------------------------------------------------------------------------
 void EventListenerComposite::SpatialChanged( double latitude, double longitude, float altitude, float speed, float direction )
 {
@@ -61,8 +61,8 @@ void EventListenerComposite::SpatialChanged( double latitude, double longitude, 
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventListenerComposite::FormationChanged
-// Created: AHC 2012-07-26
+// Name: EventListenerComposite::Unregister
+// Created: AHC 2012-02-21
 // -----------------------------------------------------------------------------
 void EventListenerComposite::FormationChanged( bool isOnRoad )
 {
@@ -71,8 +71,8 @@ void EventListenerComposite::FormationChanged( bool isOnRoad )
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventListenerComposite::EquipmentChanged
-// Created: AHC 2012-07-26
+// Name: EventListenerComposite::Unregister
+// Created: AHC 2012-02-21
 // -----------------------------------------------------------------------------
 void EventListenerComposite::EquipmentChanged( unsigned int type, const rpr::EntityType& entityType, unsigned int available )
 {
@@ -81,8 +81,8 @@ void EventListenerComposite::EquipmentChanged( unsigned int type, const rpr::Ent
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventListenerComposite::EmbarkmentChanged
-// Created: AHC 2012-07-26
+// Name: EventListenerComposite::Unregister
+// Created: AHC 2012-02-21
 // -----------------------------------------------------------------------------
 void EventListenerComposite::EmbarkmentChanged( bool mounted )
 {
@@ -91,7 +91,7 @@ void EventListenerComposite::EmbarkmentChanged( bool mounted )
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventListenerComposite::EmbarkmentChanged
+// Name: EventListenerComposite::PlatformAdded
 // Created: AHC 2012-07-30
 // -----------------------------------------------------------------------------
 void EventListenerComposite::PlatformAdded( const std::string& name, unsigned int id )

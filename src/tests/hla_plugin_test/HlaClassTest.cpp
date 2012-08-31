@@ -21,6 +21,7 @@
 #include "MockClassListener.h"
 #include "MockContextFactory.h"
 #include "MockHlaObjectNameFactory.h"
+#include "MockOwnershipStrategy.h"
 #include "rpr/EntityType.h"
 #include "rpr/ForceIdentifier.h"
 #include <hla/Class.h>
@@ -29,7 +30,6 @@
 #include <hla/ClassIdentifier.h>
 
 using namespace plugins::hla;
-
 
 namespace
 {
@@ -44,6 +44,7 @@ namespace
             , hlaObjectClass  ( 0 )
         {
             MOCK_EXPECT( builder->Build ).once().with( mock::any, mock::retrieve( hlaObjectClass ) );
+            MOCK_EXPECT( builder->GetAttributes );
             MOCK_EXPECT( identifierFactory.Create ).returns( 42 );
         }
         MockFederate federate;
@@ -57,6 +58,7 @@ namespace
         MockContextFactory identifierFactory;
         hla::Class< HlaObject_ABC >* hlaObjectClass;
         MockHlaObjectNameFactory objectNameFactory;
+        MockOwnershipStrategy ownershipStrategy;
     };
     class RegisteredFixture : public Fixture
     {
@@ -65,7 +67,7 @@ namespace
             : hlaClass( federate, localResolver, objectNameFactory,
                         std::auto_ptr< HlaObjectFactory_ABC >( hlaObjectFactory ),
                         std::auto_ptr< RemoteHlaObjectFactory_ABC >( remoteFactory ),
-                        std::auto_ptr< ClassBuilder_ABC >( builder ) )
+                        std::auto_ptr< ClassBuilder_ABC >( builder ), ownershipStrategy )
         {
             BOOST_REQUIRE( hlaObjectClass );
             hlaObjectClass->SetFactory( *factory );

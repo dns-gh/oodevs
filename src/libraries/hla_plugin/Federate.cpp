@@ -130,3 +130,48 @@ void Federate::Register( ::hla::FederateAmbassador_ABC& listener )
 {
     federate_->Register( listener );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Federate::DivestRequest
+// Created: AHC 2012-02-27
+// -----------------------------------------------------------------------------
+void Federate::DivestRequest( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes )
+{
+    federate_->NegotiatedOwnershipDivestiture( objectID, attributes );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Federate::UnconditionalDivest
+// Created: AHC 2012-04-16
+// -----------------------------------------------------------------------------
+void Federate::UnconditionalDivest( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes )
+{
+    federate_->UnconditionalOwnershipDivestiture( objectID, attributes );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Federate::AcquisitionRequest
+// Created: AHC 2012-03-01
+// -----------------------------------------------------------------------------
+void Federate::AcquisitionRequest( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes )
+{
+    federate_->OwnershipAcquisitionIfAvailable( objectID, attributes );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Federate::Tick
+// Created: AHC 2012-03-21
+// -----------------------------------------------------------------------------
+void Federate::Tick()
+{
+    federate_->Tick();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Federate::UnconditionalAcquisition
+// Created: AHC 2012-04-17
+// -----------------------------------------------------------------------------
+void Federate::UnconditionalAcquisition( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes )
+{
+    federate_->OwnershipAcquisition( objectID, attributes )
+;}

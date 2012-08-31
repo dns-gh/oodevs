@@ -29,12 +29,14 @@ namespace hla
 {
 namespace interactions
 {
+    struct Acknowledge;
     struct MunitionDetonation;
     struct ServiceRequest;
     struct ResupplyCancel;
     struct ResupplyOffer;
     struct ResupplyReceived;
     struct TransferControl;
+    struct Comment;
     struct NetnRequestConvoy;
     struct NetnOfferConvoy;
     struct NetnAcceptOffer;
@@ -69,12 +71,15 @@ public:
     //@{
     //! @name RPR
     //@{
+    bool Build( ::hla::Interaction< interactions::Acknowledge >& interaction ) const;
     bool Build( ::hla::Interaction< interactions::MunitionDetonation >& interaction ) const;
     bool Build( ::hla::Interaction< interactions::ServiceRequest >& interaction ) const;
     bool Build( ::hla::Interaction< interactions::ResupplyCancel >& interaction ) const;
     bool Build( ::hla::Interaction< interactions::ResupplyOffer >& interaction ) const;
     bool Build( ::hla::Interaction< interactions::ResupplyReceived >& interaction ) const;
     bool Build( ::hla::Interaction< interactions::TransferControl >& interaction ) const;
+    bool Build( ::hla::Interaction< interactions::Comment >& interaction ) const;
+
     //@}
     //! @name NETN
     //@{

@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "hla_plugin_test_pch.h"
-#include "hla_plugin/RemoteAggregate.h"
+#include "hla_plugin/AggregateEntity.h"
 #include "hla_plugin/Spatial.h"
 #include "hla_plugin/AggregateMarking.h"
 #include "hla_plugin/SerializationTools.h"
@@ -16,6 +16,7 @@
 #include "rpr/EntityType.h"
 #include "MockUpdateFunctor.h"
 #include "MockObjectListener.h"
+#include "MockEntityIdentifierResolver.h"
 #include <hla/Serializer.h>
 #include <hla/Deserializer.h>
 #include <vector>
@@ -29,7 +30,7 @@ namespace
     {
     public:
         Fixture()
-            : aggregate( "identifier" )
+            : aggregate( "identifier", entityIdResolver )
         {
             aggregate.Register( listener );
         }
@@ -40,22 +41,24 @@ namespace
             return ::hla::Deserializer( &buffer[0], buffer.size() );
         }
         MockObjectListener listener;
-        RemoteAggregate aggregate;
+		MockEntityIdentifierResolver entityIdResolver;
+        AggregateEntity aggregate;
         ::hla::Serializer serializer;
         T_Buffer buffer;
     };
 }
 
-BOOST_FIXTURE_TEST_CASE( remote_aggregate_cannot_be_serialized, Fixture )
+BOOST_FIXTURE_TEST_CASE( remote_aggregate_can_be_serialized, Fixture )
 {
     ::hla::MockUpdateFunctor functor;
-    BOOST_CHECK_THROW( aggregate.Serialize( functor, true ), std::runtime_error );
+    MOCK_EXPECT( functor.Visit );
+    BOOST_CHECK_NO_THROW( aggregate.Serialize( functor, true ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( remote_aggregate_deserializes_spatial_attribute_and_notifies_listener, Fixture )
 {
     Spatial spatial( true, 1., 2., 3., 4., 5. );
-    spatial.Serialize( static_cast< ::hla::Serializer_ABC& >( serializer )  );
+    spatial.Serialize( static_cast< ::hla::Serializer_ABC& >( serializer ) );
     MOCK_EXPECT( listener.Moved ).once().with( "identifier", mock::close( 1., 0.001 ), mock::close( 2., 0.001 ) );
     ::hla::Deserializer deserializer( Deserialize() );
     aggregate.Deserialize( "Spatial", deserializer );

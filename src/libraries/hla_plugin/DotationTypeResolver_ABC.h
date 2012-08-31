@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef MunitionTypeResolver_ABC_h
-#define MunitionTypeResolver_ABC_h
+#ifndef DotationTypeResolver_ABC_h
+#define DotationTypeResolver_ABC_h
 
 #include <boost/noncopyable.hpp>
 
@@ -22,18 +22,18 @@ namespace plugins
 namespace hla
 {
 // =============================================================================
-/** @class  MunitionTypeResolver_ABC
-    @brief  Munition type resolver definition
+/** @class  DotationTypeResolver_ABC
+    @brief  Dotatio type resolver definition
 */
 // Created: VPR 2011-09-26
 // =============================================================================
-class MunitionTypeResolver_ABC : private boost::noncopyable
+class DotationTypeResolver_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             MunitionTypeResolver_ABC() {}
-    virtual ~MunitionTypeResolver_ABC() {}
+            DotationTypeResolver_ABC() {}
+    virtual ~DotationTypeResolver_ABC() {}
     //@}
 
     //! @name Operations
@@ -46,4 +46,4 @@ public:
 }
 }
 
-#endif // MunitionTypeResolver_ABC_h
+#endif // DotationTypeResolver_ABC_h

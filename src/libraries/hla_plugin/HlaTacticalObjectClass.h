@@ -62,6 +62,8 @@ public:
     //! @name Operations
     //@{
     void Created( TacticalObject_ABC& object, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type );
+    virtual void Divest(const std::string& objectID );
+    virtual void Acquire(const std::string& objectID );
     //@}
 
 private:

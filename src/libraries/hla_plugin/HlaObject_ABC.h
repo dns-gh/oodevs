@@ -11,6 +11,7 @@
 #define plugins_hla_HlaObject_ABC_h
 
 #include <boost/noncopyable.hpp>
+#include <boost/shared_ptr.hpp>
 
 namespace hla
 {
@@ -24,6 +25,7 @@ namespace plugins
 namespace hla
 {
 class ObjectListener_ABC;
+class Agent_ABC;
 
 // =============================================================================
 /** @class  HlaObject_ABC
@@ -44,10 +46,12 @@ public:
     //@{
     virtual void Serialize( ::hla::UpdateFunctor_ABC& functor, bool updateAll ) const = 0;
     virtual void Deserialize( const ::hla::AttributeIdentifier& identifier, ::hla::Deserializer_ABC& deserializer ) = 0;
-    virtual void SetIdentifier( const std::string& id ) = 0;
-    virtual const std::string& GetIdentifier() const = 0;
     virtual void Register( ObjectListener_ABC& listener ) = 0;
     virtual void Unregister( ObjectListener_ABC& listener ) = 0;
+    virtual void Attach( Agent_ABC* agent, unsigned long simId ) = 0;
+    virtual void SetIdentifier( const std::string& id ) = 0;
+    virtual const std::string& GetIdentifier() const = 0;
+    virtual void ResetAttributes() = 0;
     //@}
 };
 

@@ -26,7 +26,7 @@ namespace interactions
     struct MunitionDetonation;
 }
     class ContextFactory_ABC;
-    class MunitionTypeResolver_ABC;
+    class DotationTypeResolver_ABC;
 
 // =============================================================================
 /** @class  IndirectFireReceiver
@@ -39,7 +39,7 @@ class IndirectFireReceiver : public ::hla::InteractionNotification_ABC< interact
 public:
     //! @name Constructors/Destructor
     //@{
-             IndirectFireReceiver( dispatcher::SimulationPublisher_ABC& publisher, const ContextFactory_ABC& factory, const MunitionTypeResolver_ABC& resolver );
+             IndirectFireReceiver( dispatcher::SimulationPublisher_ABC& publisher, const ContextFactory_ABC& factory, const DotationTypeResolver_ABC& resolver );
     virtual ~IndirectFireReceiver();
     //@}
 
@@ -53,7 +53,7 @@ private:
     //@{
     dispatcher::SimulationPublisher_ABC& publisher_;
     const ContextFactory_ABC& factory_;
-    const MunitionTypeResolver_ABC& resolver_;
+    const DotationTypeResolver_ABC& resolver_;
     //@}
 };
 

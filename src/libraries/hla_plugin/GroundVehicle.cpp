@@ -28,7 +28,7 @@ using namespace plugins::hla;
 // -----------------------------------------------------------------------------
 GroundVehicle::GroundVehicle( Agent_ABC& agent, unsigned int identifier,
                               const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const MarkingFactory_ABC& markingFactory,
-                              unsigned short siteID, unsigned short applicationID )
+                              unsigned short siteID, unsigned short applicationID, EntityIdentifierResolver_ABC& /*entityIdentifierResolver*/ )
     :  identifier_( name )
     , listeners_ ( new ObjectListenerComposite() )
     , agent_     ( agent )
@@ -146,6 +146,24 @@ void GroundVehicle::Unregister( ObjectListener_ABC& listener )
 // Created: AHC 2012-07-30
 // -----------------------------------------------------------------------------
 void GroundVehicle::PlatformAdded( const std::string& /*name*/, unsigned int /*id*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: GroundVehicle::EmbarkmentChanged
+// Created: AHC 2012-08-30
+// -----------------------------------------------------------------------------
+void GroundVehicle::Attach( Agent_ABC* /*agent*/, unsigned long /*simId*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: GroundVehicle::EmbarkmentChanged
+// Created: AHC 2012-08-30
+// -----------------------------------------------------------------------------
+void GroundVehicle::ResetAttributes()
 {
     // NOTHING
 }

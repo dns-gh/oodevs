@@ -13,7 +13,7 @@
 #include "hla_plugin/Interactions.h"
 #include "MockMessageController.h"
 #include "MockInteractionSender.h"
-#include "MockMunitionTypeResolver.h"
+#include "MockDotationTypeResolver.h"
 #include "MockLocalAgentResolver.h"
 #include "protocol/Simulation.h"
 #include "tools/MessageController.h"
@@ -37,7 +37,7 @@ namespace
         tools::MessageController< sword::SimToClient_Content > controller;
         MockInteractionSender< interactions::MunitionDetonation > interactionSender;
         MockLocalAgentResolver localResolver;
-        MockMunitionTypeResolver munitionTypeResolver;
+        MockDotationTypeResolver munitionTypeResolver;
         IndirectFireSender sender;
         sword::SimToClient_Content startMessage;
         sword::SimToClient_Content stopMessage;

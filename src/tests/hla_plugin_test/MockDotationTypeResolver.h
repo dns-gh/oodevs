@@ -10,19 +10,19 @@
 #ifndef MockMunitionTypeResolver_h
 #define MockMunitionTypeResolver_h
 
-#include "hla_plugin/MunitionTypeResolver_ABC.h"
+#include "hla_plugin/DotationTypeResolver_ABC.h"
 
 namespace plugins
 {
 namespace hla
 {
 // =============================================================================
-/** @class  MockMunitionTypeResolver
-    @brief  Mock munition type resolver
+/** @class  MockDotationTypeResolver
+    @brief  Mock dotation type resolver
 */
 // Created: VPR 2011-09-26
 // =============================================================================
-MOCK_BASE_CLASS( MockMunitionTypeResolver, MunitionTypeResolver_ABC )
+MOCK_BASE_CLASS( MockDotationTypeResolver, DotationTypeResolver_ABC )
 {
     MOCK_METHOD_EXT( Resolve, 1, rpr::EntityType( unsigned int ), ResolveIdentifier );
     MOCK_METHOD_EXT( Resolve, 1, unsigned int( const rpr::EntityType& ), ResolveType );
