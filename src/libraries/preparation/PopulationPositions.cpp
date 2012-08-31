@@ -18,6 +18,8 @@
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/EntityType.h"
+#include "clients_kernel/PopulationType.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -77,6 +79,7 @@ geometry::Point2f PopulationPositions::ReadPosition( xml::xistream& xis, const k
     return converter.ConvertToXY( mgrs );
 }
 
+
 // -----------------------------------------------------------------------------
 // Name: PopulationPositions::UpdatePosition
 // Created: SBO 2006-11-08
@@ -88,7 +91,7 @@ void PopulationPositions::UpdatePosition()
     if( owner_.GetTotalLivingHumans() != livingHumans_ )
     {
         livingHumans_ = owner_.GetTotalLivingHumans();
-        const float density = owner_.GetType().GetDensity();
+        const float density = owner_.Get< kernel::EntityType< kernel::PopulationType > >().GetType().GetDensity();
         if( density > 0 )
             radius_ = std::sqrt( ( livingHumans_ / density ) * oneOnpi );
         radius_ = std::max( radius_, 50.f );

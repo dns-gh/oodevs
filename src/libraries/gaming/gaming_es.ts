@@ -238,10 +238,6 @@
         <source>Info/LogisticLevel</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Info/Type</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>AutomatHierarchies</name>
@@ -397,10 +393,6 @@
     </message>
     <message>
         <source>M\F\C Repartition/Children</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Type</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -587,10 +579,6 @@
     </message>
     <message>
         <source>Living Area/Urban blocks number</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Type</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

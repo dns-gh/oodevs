@@ -66,7 +66,6 @@ public:
     virtual void Accept( kernel::LocationVisitor_ABC& visitor ) const;
     virtual bool CanAggregate() const;
     virtual bool IsAggregated() const;
-    const kernel::InhabitantType& GetType() const { return type_; }
     //@}
 
 private:
@@ -100,7 +99,6 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::InhabitantType& type_;
     const tools::Resolver_ABC< kernel::DotationType >& dotationResolver_;
     const unsigned int male_;
     const unsigned int female_;

@@ -22,7 +22,7 @@
 #include "Preparation/FormationModel.h"
 #include "preparation/Model.h"
 #include "clients_gui/ChangeSuperiorDialog.h"
-#include "clients_kernel/AutomatType.h"
+#include "clients_kernel/EntityType.h"
 #include "clients_kernel/CommandPostAttributes_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
@@ -445,7 +445,7 @@ void TacticalListView::ChangeAutomatType()
     if( !contextMenuEntity_ )
         return;
     if( contextMenuEntity_->GetTypeName() == kernel::Automat_ABC::typeName_ )
-        typeName = static_cast< const kernel::Automat_ABC& >( *contextMenuEntity_ ).GetType().GetName();
+        typeName = contextMenuEntity_->Get< kernel::EntityType< kernel::AutomatType > >().GetType().GetName();
     else if( contextMenuEntity_->GetTypeName() == kernel::Ghost_ABC::typeName_ )
         typeName = static_cast< const kernel::Ghost_ABC& >( *contextMenuEntity_ ).GetType();
     else

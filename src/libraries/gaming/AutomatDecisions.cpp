@@ -27,12 +27,12 @@ using namespace kernel;
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
 AutomatDecisions::AutomatDecisions( Controller& controller, Publisher_ABC& publisher, const Automat_ABC& agent,
-            const tools::Resolver_ABC< kernel::DecisionalModel, std::string >& modelResolver)
+            const tools::Resolver_ABC< kernel::DecisionalModel, std::string >& modelResolver, const AutomatType& type )
     : controller_( controller )
     , publisher_ ( publisher )
     , agent_     ( agent )
     , modelResolver_ ( modelResolver )
-    , model_     ( &agent.GetType().GetDecisionalModel() )
+    , model_     ( &type.GetDecisionalModel() )
     , bEmbraye_  ( false )
     , current_   ( 0 )
 {

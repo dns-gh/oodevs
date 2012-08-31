@@ -21,6 +21,7 @@ namespace kernel
     class Controller;
     class Displayer_ABC;
     class DecisionalModel;
+    class AutomatType;
 }
 
 namespace sword
@@ -47,7 +48,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              AutomatDecisions( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::Automat_ABC& agent,
-                               const tools::Resolver_ABC< kernel::DecisionalModel, std::string >& modelResolver);
+                               const tools::Resolver_ABC< kernel::DecisionalModel, std::string >& modelResolver,
+                               const kernel::AutomatType& type );
     virtual ~AutomatDecisions();
     //@}
 

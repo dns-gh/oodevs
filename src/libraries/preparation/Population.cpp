@@ -25,7 +25,6 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 Population::Population( const PopulationType& type, int number, Controller& controller, IdManager& idManager )
     : EntityImplementation< Population_ABC >( controller, idManager.GetNextId(), "" )
-    , type_            ( type )
     , healthy_         ( number )
     , wounded_         ( 0 )
     , dead_            ( 0 )
@@ -48,15 +47,14 @@ Population::Population( const PopulationType& type, int number, Controller& cont
 // -----------------------------------------------------------------------------
 Population::Population( xml::xistream& xis, const kernel::PopulationType& type, Controller& controller, IdManager& idManager )
     : EntityImplementation< Population_ABC >( controller, xis.attribute< int >( "id" ), xis.attribute< std::string >( "name" ).c_str() )
-    , type_            ( type )
     , armedIndividuals_( 0, Units::percentage )
     , repartition_     ( new PopulationRepartition() )
     , attitude_        ( xis.attribute< std::string >( "attitude" ).c_str() )
 {
-    float male = type_.GetMale();
-    float female = type_.GetFemale();
-    float children = type_.GetChildren();
-    float armedIndividuals = type_.GetArmedIndividuals();
+    float male = type.GetMale();
+    float female = type.GetFemale();
+    float children = type.GetChildren();
+    float armedIndividuals = type.GetArmedIndividuals();
     std::string criticalIntelligence;
     xis >> xml::start( "composition" )
             >> xml::attribute( "healthy", healthy_ )
@@ -89,15 +87,6 @@ Population::~Population()
 {
     delete repartition_;
     Destroy();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Population::GetType
-// Created: SBO 2006-11-08
-// -----------------------------------------------------------------------------
-const PopulationType& Population::GetType() const
-{
-    return type_;
 }
 
 // -----------------------------------------------------------------------------
@@ -154,7 +143,6 @@ void Population::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
     QString id = QString( "[%L1]" ).arg( GetId() );
     displayer.Item( "" ).Start( Styles::bold ).Add( static_cast< const Population_ABC* >( this ) ).AddToDisplay( id );
     displayer.End();
-    displayer.Display( tools::translate( "Crowd", "Type:" ), type_ );
     displayer.Display( tools::translate( "Crowd", "Healthy:" ), healthy_ );
     displayer.Display( tools::translate( "Crowd", "Contaminated:" ), contaminated_ );
     displayer.Display( tools::translate( "Crowd", "Wounded:" ), wounded_ );
@@ -169,7 +157,6 @@ void Population::CreateDictionary()
 {
     PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
     const Entity_ABC& constEntity = *static_cast< const Entity_ABC* >( this );
-    dictionary.Register( constEntity, tools::translate( "Crowd", "Info/Type" ), type_, true );
     dictionary.Register( constEntity, tools::translate( "Crowd", "Info/Mood" ), attitude_ );
     dictionary.Register( constEntity, tools::translate( "Crowd", "Info/Armed-Individuals" ), armedIndividuals_ );
 
@@ -191,8 +178,7 @@ void Population::CreateDictionary()
 void Population::SerializeAttributes( xml::xostream& xos ) const
 {
     kernel::EntityImplementation< kernel::Population_ABC >::SerializeAttributes( xos );
-    xos << xml::attribute( "type", type_.GetName() )
-        << xml::attribute( "attitude", attitude_.ToXml() )
+    xos << xml::attribute( "attitude", attitude_.ToXml() )
         << xml::start( "composition" )
             << xml::attribute( "healthy", healthy_ )
             << xml::attribute( "wounded", wounded_ )

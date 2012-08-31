@@ -14,8 +14,6 @@
 
 namespace kernel
 {
-    class InhabitantType;
-    class AutomatType;
 
 // =============================================================================
 /** @class  Inhabitant_ABC
@@ -41,7 +39,6 @@ public:
     //! @name Operations
     //@{
     virtual const std::string& GetTypeName() const;
-    virtual const kernel::InhabitantType& GetType() const = 0;
 
     virtual void Select( ActionController& controller ) const;
     virtual void MultipleSelect( ActionController& controller, const std::vector< const kernel::Selectable_ABC* >& elements ) const;

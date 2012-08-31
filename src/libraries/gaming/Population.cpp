@@ -20,6 +20,7 @@
 #include "clients_kernel/Styles.h"
 #include "clients_kernel/DictionaryUpdated.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include "clients_kernel/EntityType.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/SimulationSenders.h"
 #include <boost/foreach.hpp>
@@ -31,11 +32,10 @@ using namespace kernel;
 // Name: Population constructor
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-Population::Population( const sword::CrowdCreation& message, Controllers& controllers, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< PopulationType >& typeResolver )
+Population::Population( const sword::CrowdCreation& message, Controllers& controllers, const CoordinateConverter_ABC& converter, const kernel::PopulationType& type )
     : EntityImplementation< Population_ABC >( controllers.controller_, message.crowd().id(), QString( message.name().c_str() ), true )
     , controllers_         ( controllers )
     , converter_           ( converter )
-    , type_                ( typeResolver.Get( message.type().id() ) )
     , male_                ( static_cast< unsigned int >( 100 * message.repartition().male() + 0.5f ) )
     , female_              ( static_cast< unsigned int >( 100 * message.repartition().female() + 0.5f ) )
     , children_            ( static_cast< unsigned int >( 100 * message.repartition().children() + 0.5f ) )
@@ -43,7 +43,7 @@ Population::Population( const sword::CrowdCreation& message, Controllers& contro
     , armedIndividuals_    ( 0, false )
 {
     if( name_.isEmpty() )
-        name_ = QString( "%1 %L2" ).arg( type_.GetName().c_str() ).arg( message.crowd().id() );
+        name_ = QString( "%1 %L2" ).arg( type.GetName().c_str() ).arg( message.crowd().id() );
     RegisterSelf( *this );
     CreateDictionary();
     controllers_.Register( *this );
@@ -187,7 +187,7 @@ void Population::DoUpdate( const sword::CrowdConcentrationCreation& message )
 {
     if( ! tools::Resolver< PopulationConcentration_ABC >::Find( message.concentration().id() ) )
     {
-        PopulationConcentration* entity = new PopulationConcentration( message, converter_, type_.GetDensity() );
+        PopulationConcentration* entity = new PopulationConcentration( message, converter_, Get< kernel::EntityType< kernel::PopulationType > >().GetType().GetDensity() );
         entity->Attach< Positions >( *new PopulationPartPositionsProxy( *entity ) );
         tools::Resolver< PopulationConcentration_ABC >::Register( message.concentration().id(), *entity );
         ComputeCenter();
@@ -385,15 +385,6 @@ void Population::Accept( LocationVisitor_ABC& visitor ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Population::GetType
-// Created: AGE 2006-04-10
-// -----------------------------------------------------------------------------
-const PopulationType& Population::GetType() const
-{
-    return type_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: Population::CreateDictionary
 // Created: JSR 2011-03-18
 // -----------------------------------------------------------------------------
@@ -401,7 +392,6 @@ void Population::CreateDictionary()
 {
     PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
     const Entity_ABC& selfEntity = static_cast< const Entity_ABC& >( *this );
-    dictionary.Register( selfEntity, tools::translate( "Crowd", "Info/Type" ), type_, true );
     dictionary.Register( selfEntity, tools::translate( "Crowd", "Info/Domination" ), nDomination_, true );
     dictionary.Register( selfEntity, tools::translate( "Crowd", "Info/Armed individuals" ), armedIndividuals_, true );
     dictionary.Register( selfEntity, tools::translate( "Crowd", "M\\F\\C Repartition/Male" ), male_, true );

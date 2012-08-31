@@ -22,6 +22,7 @@ namespace kernel
     class PropertiesDictionary;
     class LogisticLevel;
     class StaticModel;
+    class AutomatType;
 }
 
 namespace sword
@@ -42,13 +43,12 @@ class Automat : public kernel::EntityImplementation< kernel::Automat_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Automat( const sword::AutomatCreation& message, kernel::Controller& controller, const tools::Resolver_ABC< kernel::AutomatType >& resolver );
+             Automat( const sword::AutomatCreation& message, kernel::Controller& controller, const kernel::AutomatType& type );
     virtual ~Automat();
     //@}
 
     //! @name Operations
     //@{
-    virtual const kernel::AutomatType& GetType() const;
     virtual const kernel::LogisticLevel& GetLogisticLevel() const;
     //@}
 
@@ -60,14 +60,13 @@ public:
 private:
     //! @name Helpers
     //@{
-    void CreateDictionary();
+    void CreateDictionary( const kernel::AutomatType& type );
     void InitializeSymbol() const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    const kernel::AutomatType& type_;
     mutable std::string symbol_; // $$$$ RC LDC: code duplication with preparation
     mutable std::string level_;
     const kernel::LogisticLevel* logisticLevel_;

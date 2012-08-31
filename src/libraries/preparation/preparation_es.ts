@@ -45,13 +45,6 @@
     </message>
 </context>
 <context>
-    <name>Automat</name>
-    <message>
-        <source>Info/Type</source>
-        <translation type="unfinished">Info/Tipo</translation>
-    </message>
-</context>
-<context>
     <name>CrossingSiteAttribute</name>
     <message>
         <source>Info/Crossing site attributes/Width</source>
@@ -72,10 +65,6 @@
 </context>
 <context>
     <name>Crowd</name>
-    <message>
-        <source>Info/Type</source>
-        <translation type="unfinished">Info/Tipo</translation>
-    </message>
     <message>
         <source>Info/Mood</source>
         <translation type="unfinished">Info/Moral</translation>
@@ -103,10 +92,6 @@
     <message>
         <source>Male\Female\Children/Repartition</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Type:</source>
-        <translation type="unfinished">Tipo :</translation>
     </message>
     <message>
         <source>Healthy:</source>
@@ -567,10 +552,6 @@
 </context>
 <context>
     <name>Population</name>
-    <message>
-        <source>Info/Type</source>
-        <translation type="unfinished">Info/Tipo</translation>
-    </message>
     <message>
         <source>Info/Info</source>
         <translation type="unfinished"></translation>

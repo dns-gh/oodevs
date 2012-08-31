@@ -1,4 +1,5 @@
 HEADERS = EntityImplementation.h \
+EntityType.h \
 
 SOURCES = AtlasNatures.cpp \
 Architecture.cpp \

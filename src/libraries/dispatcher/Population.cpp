@@ -272,15 +272,6 @@ void Population::Accept( kernel::ModelVisitor_ABC& visitor ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Population::GetType
-// Created: AGE 2008-06-20
-// -----------------------------------------------------------------------------
-const kernel::PopulationType& Population::GetType() const
-{
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
-}
-
-// -----------------------------------------------------------------------------
 // Name: Population::GetHealthyHumans
 // Created: JSR 2011-03-11
 // -----------------------------------------------------------------------------

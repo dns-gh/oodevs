@@ -62,6 +62,7 @@
 #include "clients_kernel/SymbolHierarchy_ABC.h"
 #include "clients_kernel/CriticalIntelligence.h"
 #include "clients_kernel/Color_ABC.h"
+#include "clients_kernel/EntityType.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
@@ -120,6 +121,7 @@ kernel::Automat_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const ker
 {
     Automat* result = new Automat( type, controllers_.controller_, idManager_, name );
     kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
+    result->Attach( *new kernel::EntityType< kernel::AutomatType >( *result, type, dictionary ) );
     result->Attach< kernel::Positions >( *new AutomatPositions( *result ) );
     const kernel::Karma& karma = parent.Get< kernel::TacticalHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
     result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( symbolsFactory_.GetSymbolBase( karma ) ) );
@@ -128,7 +130,7 @@ kernel::Automat_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const ker
     kernel::Entity_ABC* kg = FindorCreateKnowledgeGroup( parent, knowledgeGroupFactory_ );
     result->Attach< kernel::CommunicationHierarchies >( *new AutomatCommunications( controllers_.controller_, *result, kg ) );
 
-    bool isTC2 = result->GetType().IsTC2(); //$$ NAZE
+    bool isTC2 = type.IsTC2(); //$$ NAZE
     result->Attach( *new LogisticLevelAttritube( controllers_.controller_, *result, isTC2, dictionary ) );
     result->Attach< LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_.controller_, *result, static_.objectTypes_, dictionary, isTC2 ) );
 
@@ -152,6 +154,7 @@ kernel::Population_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const 
         top = const_cast< kernel::Entity_ABC* >( &parent.Get< kernel::CommunicationHierarchies >().GetTop() );
     Population* result = new Population( type, number, controllers_.controller_, idManager_ );
     kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
+    result->Attach( *new kernel::EntityType< kernel::PopulationType >( *result, type, dictionary ) );
     result->Attach< kernel::CriticalIntelligence >( *new kernel::CriticalIntelligence( *result, controllers_.controller_, dictionary ) );
     result->Attach< kernel::Positions >( *new PopulationPositions( *result, controllers_.controller_, static_.coordinateConverter_, position, dictionary ) );
     result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, top ) );
@@ -163,6 +166,7 @@ kernel::Population_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const 
     return result;
 }
 
+#include "clients_kernel/InhabitantType.h"
 // -----------------------------------------------------------------------------
 // Name: AgentFactory::Create
 // Created: SBO 2010-11-23
@@ -185,6 +189,7 @@ kernel::Inhabitant_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const 
         delete result;
         return 0;
     }
+    result->Attach( *new kernel::EntityType< kernel::InhabitantType >( *result, type, dictionary ) );
     result->Attach< kernel::Positions >( positions );
     result->Attach< kernel::TacticalHierarchies >( *new InhabitantHierarchies( *result, top ) );
     result->Attach< Affinities >( *new PeopleAffinities( controllers_, model_, dictionary ) );
@@ -252,15 +257,16 @@ kernel::Automat_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Entity_AB
     const kernel::AutomatType* type = static_.types_.Resolver< kernel::AutomatType, std::string >::Find( xis.attribute< std::string >( "type" ) );
     if( !type )
         return 0;
-    Automat* result = new Automat( xis, controllers_.controller_, idManager_, *type );
+    Automat* result = new Automat( xis, controllers_.controller_, idManager_ );
     kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
+    result->Attach( *new kernel::EntityType< kernel::AutomatType >( *result, *type, dictionary ) );
     result->Attach< kernel::Positions >( *new AutomatPositions( *result ) );
     result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( xis ) );
     result->Attach( *new AutomatDecisions( xis, controllers_.controller_, *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, &parent ) );
     result->Attach< kernel::CommunicationHierarchies >( *new AutomatCommunications( xis, controllers_.controller_, *result, model_.knowledgeGroups_ ) );
 
-    bool isTC2 = result->GetType().IsTC2(); //$$ NAZE
+    bool isTC2 = type->IsTC2(); //$$ NAZE
     result->Attach( *new LogisticLevelAttritube( controllers_.controller_, xis, *result, isTC2, dictionary ) );
     result->Attach< LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_.controller_, *result, static_.objectTypes_, dictionary, isTC2 ) );
 
@@ -279,6 +285,7 @@ kernel::Population_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Team_A
 {
     Population* result = new Population( xis, type, controllers_.controller_, idManager_ );
     kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
+    result->Attach( *new kernel::EntityType< kernel::PopulationType >( *result, type, dictionary ) );
     result->Attach< kernel::CriticalIntelligence >( *new kernel::CriticalIntelligence( xis, controllers_.controller_, *result, dictionary ) );
     result->Attach< kernel::Positions >( *new PopulationPositions( xis, *result, controllers_.controller_, static_.coordinateConverter_, dictionary ) );
     result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, &parent ) );
@@ -296,8 +303,9 @@ kernel::Population_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Team_A
 // -----------------------------------------------------------------------------
 kernel::Inhabitant_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Team_ABC& parent, const kernel::InhabitantType& type )
 {
-    Inhabitant* result = new Inhabitant( xis, type, controllers_.controller_, idManager_ );
+    Inhabitant* result = new Inhabitant( xis, controllers_.controller_, idManager_ );
     kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
+    result->Attach( *new kernel::EntityType< kernel::InhabitantType >( *result, type, dictionary ) );
     result->Attach< kernel::Positions >( *new InhabitantPositions( xis, controllers_.controller_, static_.coordinateConverter_, model_.urban_, *result, dictionary ) );
     result->Attach< kernel::TacticalHierarchies >( *new InhabitantHierarchies( *result, &parent ) );
     result->Attach< Affinities >( *new PeopleAffinities( xis, controllers_, model_, dictionary ) );
@@ -350,6 +358,7 @@ kernel::Automat_ABC* AgentFactory::Create( kernel::Ghost_ABC& ghost, const kerne
 
     Automat* result = new Automat( type, controllers_.controller_, idManager_, ghost.GetName() );
     kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
+    result->Attach( *new kernel::EntityType< kernel::AutomatType >( *result, type, dictionary ) );
     result->Attach< kernel::Positions >( *new AutomatPositions( *result ) );
     const kernel::Karma& karma = ghost.Get< kernel::TacticalHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
     result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( symbolsFactory_.GetSymbolBase( karma ) ) );
@@ -382,7 +391,7 @@ kernel::Automat_ABC* AgentFactory::Create( kernel::Ghost_ABC& ghost, const kerne
     {
         const LogisticHierarchiesBase& ghostHierarchy = ghost.Get< LogisticHierarchiesBase >();
         // $$$$ ABR 2012-06-27: TODO: Warn if dropping a non log base to a log base ghost.
-        bool isTC2 = result->GetType().IsTC2(); //$$ NAZE
+        bool isTC2 = type.IsTC2(); //$$ NAZE
         result->Attach( *new LogisticLevelAttritube( controllers_.controller_, *result, isTC2, dictionary ) );
         LogisticBaseStates* logBaseStates = new LogisticBaseStates( controllers_.controller_, *result, static_.objectTypes_, dictionary, isTC2 );
         result->Attach< LogisticHierarchiesBase >( *logBaseStates );

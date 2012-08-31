@@ -45,10 +45,9 @@ Inhabitant::Inhabitant( const sword::PopulationCreation& message, Controller& co
                         const tools::Resolver_ABC< DotationType >& dotationResolver )
     : EntityImplementation< Inhabitant_ABC >( controller, message.id().id(), QString( message.name().c_str() ), true )
     , controller_      ( controller )
-    , type_            ( type )
-    , male_            ( ToInt( type_.GetMalePercentage() ) )
-    , female_          ( ToInt( type_.GetFemalePercentage() ) )
-    , children_        ( ToInt( type_.GetChildrenPercentage() ) )
+    , male_            ( ToInt( type.GetMalePercentage() ) )
+    , female_          ( ToInt( type.GetFemalePercentage() ) )
+    , children_        ( ToInt( type.GetChildrenPercentage() ) )
     , dotationResolver_( dotationResolver )
     , livingUrbanObjects_       ( 0 )
     , nominalCapacity_          ( 0 )
@@ -56,7 +55,7 @@ Inhabitant::Inhabitant( const sword::PopulationCreation& message, Controller& co
     , medicalInfrastructures_   ( 0 )
 {
     if( name_.isEmpty() )
-        name_ = QString( "%1 %L2" ).arg( type_.GetName().c_str() ).arg( message.id().id() );
+        name_ = QString( "%1 %L2" ).arg( type.GetName().c_str() ).arg( message.id().id() );
     Polygon2f polygon;
     for( int i = 0; i < message.objects_size(); ++i )
     {
@@ -94,7 +93,6 @@ void Inhabitant::CreateDictionary()
 {
     PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
     const Entity_ABC& selfEntity = static_cast< const Entity_ABC& >( *this );
-    dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Info/Type" ), type_, true );
     dictionary.Register( selfEntity, tools::translate( "Inhabitant", "M\\F\\C Repartition/Male" ), male_, true );
     dictionary.Register( selfEntity, tools::translate( "Inhabitant", "M\\F\\C Repartition/Female" ), female_, true );
     dictionary.Register( selfEntity, tools::translate( "Inhabitant", "M\\F\\C Repartition/Children" ), children_, true );

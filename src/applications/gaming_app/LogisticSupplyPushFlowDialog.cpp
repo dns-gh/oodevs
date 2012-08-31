@@ -23,7 +23,7 @@
 #include "gaming/StaticModel.h"
 #include "gaming/SupplyStates.h"
 #include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/AutomatType.h"
+#include "clients_kernel/EntityType.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/CoordinateConverter.h"
 #include "clients_kernel/Dotations_ABC.h"
@@ -900,7 +900,7 @@ void LogisticSupplyPushFlowDialog::ComputeRecipients()
         const Automat_ABC& automat = it.NextElement();
         if( (const Entity_ABC*)&automat != selected_ )
         {
-            const kernel::AutomatType& type = automat.GetType();
+            const kernel::AutomatType& type = automat.Get< kernel::EntityType< kernel::AutomatType > >().GetType();
             if( type.IsLogisticSupply() && &automat.Get< kernel::TacticalHierarchies >().GetTop() == &team )
                 recipientsNames_[ GetDisplayName( automat ) + QString( " [" ) + QString::number( automat.GetId() ) + QString( "]" ) ] = &automat;
         }

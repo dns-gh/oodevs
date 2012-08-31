@@ -364,6 +364,13 @@
     </message>
 </context>
 <context>
+    <name>EntityType</name>
+    <message>
+        <source>Info/Type</source>
+        <translation>Info/Type</translation>
+    </message>
+</context>
+<context>
     <name>Formatter</name>
     <message>
         <source> - </source>

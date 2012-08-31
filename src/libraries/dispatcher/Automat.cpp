@@ -370,15 +370,6 @@ void Automat::Accept( kernel::ModelVisitor_ABC& visitor ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Automat::GetType
-// Created: AGE 2008-06-20
-// -----------------------------------------------------------------------------
-const kernel::AutomatType& Automat::GetType() const
-{
-    throw std::runtime_error( __FUNCTION__ " not implemented" ); // $$$$ AGE 2008-06-20:
-}
-
-// -----------------------------------------------------------------------------
 // Name: Automat::IsEngaged
 // Created: SBO 2008-07-10
 // -----------------------------------------------------------------------------

@@ -32,7 +32,7 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/AgentType.h"
-#include "clients_kernel/AutomatType.h"
+#include "clients_kernel/EntityType.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Point.h"
 #include "gaming/StaticModel.h"
@@ -131,7 +131,7 @@ void UnitMagicOrdersInterface::NotifyContextMenu( const kernel::Automat_ABC& age
     magicMenu->setItemEnabled( moveId, bMoveAllowed );
     AddReloadBrainMenu( magicMenu, static_.types_.automatModels_,
         agent.Retrieve<AutomatDecisions>() ? agent.Retrieve<AutomatDecisions>()->ModelName() : "unknown",
-        agent.GetType().GetDecisionalModel().GetName() );
+        agent.Get< kernel::EntityType< kernel::AutomatType > >().GetType().GetDecisionalModel().GetName() );
     AddSurrenderMenu( magicMenu, agent );
     FillCommonOrders( magicMenu );
 }

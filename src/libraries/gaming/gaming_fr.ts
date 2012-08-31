@@ -238,10 +238,6 @@
         <source>Info/LogisticLevel</source>
         <translation>Info/NiveauLogistique</translation>
     </message>
-    <message>
-        <source>Info/Type</source>
-        <translation>Info/Type</translation>
-    </message>
 </context>
 <context>
     <name>AutomatHierarchies</name>
@@ -398,10 +394,6 @@
     <message>
         <source>M\F\C Repartition/Children</source>
         <translation>Répartition H\F\E/Enfants</translation>
-    </message>
-    <message>
-        <source>Info/Type</source>
-        <translation>Info/Type</translation>
     </message>
 </context>
 <context>
@@ -588,10 +580,6 @@
     <message>
         <source>Living Area/Urban blocks number</source>
         <translation>Zone de vie/Nombre de blocs urbains</translation>
-    </message>
-    <message>
-        <source>Info/Type</source>
-        <translation>Info/Type</translation>
     </message>
 </context>
 <context>

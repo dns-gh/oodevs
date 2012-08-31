@@ -13,14 +13,13 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
-#include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "tools/Resolver_ABC.h"
 
 namespace kernel
 {
-    class AutomatType;
     class Controller;
+    class AutomatType;
 }
 
 namespace xml
@@ -45,13 +44,12 @@ public:
     //! @name Constructors/Destructor
     //@{
              Automat( const kernel::AutomatType& type, kernel::Controller& controller, IdManager& idManager, const QString& name );
-             Automat( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, const kernel::AutomatType& type );
+             Automat( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager );
     virtual ~Automat();
     //@}
 
     //! @name Operations
     //@{
-    virtual const kernel::AutomatType& GetType() const;
     virtual const kernel::LogisticLevel& GetLogisticLevel() const;
     //@}
 
@@ -69,15 +67,12 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void SerializeAttributes( xml::xostream& xos ) const;
-    void CreateDictionary();
     void InitializeSymbol() const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    const kernel::AutomatType& type_;
     mutable std::string symbol_;
     mutable std::string level_;
     //@}

@@ -235,10 +235,6 @@
 <context>
     <name>Automat</name>
     <message>
-        <source>Info/Type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Info/LogisticLevel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -275,10 +271,6 @@
 </context>
 <context>
     <name>Crowd</name>
-    <message>
-        <source>Info/Type</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Info/Domination</source>
         <translation type="unfinished"></translation>
@@ -505,10 +497,6 @@
 </context>
 <context>
     <name>Inhabitant</name>
-    <message>
-        <source>Info/Type</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>M\F\C Repartition/Male</source>
         <translation type="unfinished"></translation>

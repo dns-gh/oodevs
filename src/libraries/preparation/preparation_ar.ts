@@ -45,13 +45,6 @@
     </message>
 </context>
 <context>
-    <name>Automat</name>
-    <message>
-        <source>Info/Type</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>CrossingSiteAttribute</name>
     <message>
         <source>Info/Crossing site attributes/Width</source>
@@ -73,10 +66,6 @@
 <context>
     <name>Crowd</name>
     <message>
-        <source>Type:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Healthy:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -90,10 +79,6 @@
     </message>
     <message>
         <source>Dead:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -565,10 +550,6 @@
     <name>Population</name>
     <message>
         <source>%1 [%L2]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

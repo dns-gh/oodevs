@@ -16,10 +16,9 @@
 #include "actions/UnitMagicAction.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Inhabitant_ABC.h"
-#include "clients_kernel/InhabitantType.h"
-#include "clients_kernel/PopulationType.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/EntityType.h"
 #include "clients_kernel/tools.h"
 #include "clients_gui/RichSpinBox.h"
 #include "gaming/Inhabitant.h"
@@ -118,7 +117,7 @@ void InhabitantExtractCrowdDialog::Show()
     QToolTip::add( healthySpinBox_, tools::translate( "InhabitantExtractCrowdDialog", QString( "Maximum %L1" ).arg( selected_->GetHealthy() ) ) );
     QToolTip::add( woundedSpinBox_, tools::translate( "InhabitantExtractCrowdDialog", QString( "Maximum %L1" ).arg( selected_->GetWounded() ) ) );
     deadSizeLabel_->setText( locale().toString( selected_->GetDead() ) );
-    crowdTypeLabel_->setText( static_cast< const Inhabitant& > ( *( selected_.ConstCast() ) ).GetType().GetCrowdType().GetName().c_str() );
+    crowdTypeLabel_->setText( selected_->Get< kernel::EntityType< kernel::InhabitantType > >().GetType().GetCrowdType().GetName().c_str() );
     originalInhabitantSize_ = selected_->GetHealthy() + selected_->GetWounded() + selected_->GetDead();
     OnValuesChanged();
     show();
@@ -145,7 +144,7 @@ void InhabitantExtractCrowdDialog::Validate()
     {
         const Inhabitant& entity = static_cast< const Inhabitant& > ( *( selected_.ConstCast() ) );
         const kernel::Entity_ABC& top = entity.Get< kernel::TacticalHierarchies >().GetTop();
-        actions::Action_ABC* action = actionsModel_.CreateCrowdCreationAction( entity.GetType().GetCrowdType(), healthySpinBox_->value() + woundedSpinBox_->value(), entity.GetPosition(), top );
+        actions::Action_ABC* action = actionsModel_.CreateCrowdCreationAction( entity.Get< kernel::EntityType< kernel::InhabitantType > >().GetType().GetCrowdType(), healthySpinBox_->value() + woundedSpinBox_->value(), entity.GetPosition(), top );
         action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new actions::ActionTasker( &top, false ) );
         action->Polish();

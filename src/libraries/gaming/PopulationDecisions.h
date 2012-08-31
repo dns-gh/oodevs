@@ -18,6 +18,7 @@ namespace kernel
 {
     class Controller;
     class Population_ABC;
+    class PopulationType;
     class DecisionalModel;
 }
 
@@ -41,7 +42,8 @@ class PopulationDecisions : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationDecisions( kernel::Controller& controller, const kernel::Population_ABC& popu );
+             PopulationDecisions( kernel::Controller& controller, const kernel::Population_ABC& population,
+                                  const kernel::PopulationType& type );
     virtual ~PopulationDecisions();
     //@}
 

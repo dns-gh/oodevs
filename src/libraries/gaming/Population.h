@@ -56,7 +56,7 @@ public:
     //! @name Constructor/Destructor
     //@{
              Population( const sword::CrowdCreation& message, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter,
-                         const tools::Resolver_ABC< kernel::PopulationType >& typeResolver );
+                         const kernel::PopulationType& type );
     virtual ~Population();
     //@}
 
@@ -77,11 +77,6 @@ public:
     virtual void Accept( kernel::LocationVisitor_ABC& visitor ) const;
     virtual bool CanAggregate() const;
     virtual bool IsAggregated() const;
-    //@}
-
-    //! @name Accessors
-    //@{
-    virtual const kernel::PopulationType& GetType() const;
     //@}
 
 private:
@@ -109,7 +104,6 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const kernel::CoordinateConverter_ABC& converter_;
-    const kernel::PopulationType& type_;
     const unsigned int male_;
     const unsigned int female_;
     const unsigned int children_;

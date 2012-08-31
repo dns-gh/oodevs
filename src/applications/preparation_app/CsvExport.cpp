@@ -39,6 +39,7 @@
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Karma.h"
+#include "clients_kernel/EntityType.h"
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_gui/LongNameHelper.h"
 #include "meteo/Meteo.h"
@@ -105,7 +106,6 @@ void CsvExport::Execute( bfs::path& path, Progress_ABC& progress )
     WriteLogistic( path, separator );
     progress.Update( 100 );
 }
-
 namespace
 {
     std::string  GetType( const QString& type )
@@ -116,12 +116,17 @@ namespace
     }
     std::string GetType( const kernel::Entity_ABC& entity )
     {
-        if( const kernel::Automat_ABC* pAutomat = dynamic_cast< const kernel::Automat_ABC* >( &entity ) )
-            return pAutomat->GetType().GetName();
-        else if( const kernel::Agent_ABC* pAgent = dynamic_cast< const kernel::Agent_ABC* >( &entity ) )
+        if( const kernel::Agent_ABC* pAgent = dynamic_cast< const kernel::Agent_ABC* >( &entity ) )
             return pAgent->GetType().GetName();
+        else if( const kernel::EntityType< kernel::InhabitantType >* type = entity.Retrieve< kernel::EntityType< kernel::InhabitantType > >() )
+            return type->GetType().GetName();
+        else if( const kernel::EntityType< kernel::PopulationType >* type = entity.Retrieve< kernel::EntityType< kernel::PopulationType > >() )
+            return type->GetType().GetName();
+        else if( const kernel::EntityType< kernel::AutomatType >* type = entity.Retrieve< kernel::EntityType< kernel::AutomatType > >() )
+            return type->GetType().GetName();
         return "";
     }
+
     std::string GetPosition( const kernel::Entity_ABC& entity, const kernel::CoordinateConverter_ABC& converter, const std::string& separator )
     {
         if( const kernel::Agent_ABC* pAgent = dynamic_cast< const kernel::Agent_ABC* >( &entity ) )
@@ -172,14 +177,14 @@ void CsvExport::WriteEntity( bfs::path& path, const std::string& separator )
     {
         const kernel::Population_ABC& population = itPopulation.NextElement();
         Write( file, separator, GetSide( population ), tools::translate( "CsvExport", "Population" ).toAscii().constData(),
-               population.GetName().toAscii().constData(), population.GetType().GetName(), GetPosition( population, converter_, separator ) );
+               population.GetName().toAscii().constData(), GetType( population ), GetPosition( population, converter_, separator ) );
     }
     tools::Iterator< const kernel::Inhabitant_ABC& > itInhabitant = model_.GetInhabitantResolver().CreateIterator();
     while( itInhabitant.HasMoreElements() )
     {
         const kernel::Inhabitant_ABC& inhabitant = itInhabitant.NextElement();
         Write( file, separator, GetSide( inhabitant ), tools::translate( "CsvExport", "Inhabitant" ).toAscii().constData(),
-               inhabitant.GetName().toAscii().constData(), inhabitant.GetType().GetName(), GetPosition( inhabitant, converter_, separator ) );
+               inhabitant.GetName().toAscii().constData(), GetType( inhabitant ), GetPosition( inhabitant, converter_, separator ) );
     }
     file.close();
 }

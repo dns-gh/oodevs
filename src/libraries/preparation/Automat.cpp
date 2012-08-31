@@ -13,8 +13,8 @@
 #include "clients_kernel/Tools.h"
 #include "LogisticLevelAttritube.h"
 #include "clients_gui/Tools.h"
-#include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/AutomatType.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/GlTools_ABC.h"
@@ -33,23 +33,19 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 Automat::Automat( const AutomatType& type, Controller& controller, IdManager& idManager, const QString& name )
     : EntityImplementation< Automat_ABC >( controller, idManager.GetNextId(), "" )
-    , type_( type )
 {
     name_ = name.isEmpty() ? type.GetName().c_str() : name;
     RegisterSelf( *this );
-    CreateDictionary();
 }
 
 // -----------------------------------------------------------------------------
 // Name: Automat constructor
 // Created: SBO 2006-10-09
 // -----------------------------------------------------------------------------
-Automat::Automat( xml::xistream& xis, Controller& controller, IdManager& idManager, const AutomatType& type )
+Automat::Automat( xml::xistream& xis, Controller& controller, IdManager& idManager )
     : EntityImplementation< Automat_ABC >( controller, xis.attribute< unsigned long >( "id" ), xis.attribute< std::string >( "name" ).c_str() )
-    , type_( type )
 {
     RegisterSelf( *this );
-    CreateDictionary();
     idManager.Lock( id_ );
 }
 
@@ -60,15 +56,6 @@ Automat::Automat( xml::xistream& xis, Controller& controller, IdManager& idManag
 Automat::~Automat()
 {
     Destroy();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Automat::GetType
-// Created: AGE 2006-10-06
-// -----------------------------------------------------------------------------
-const AutomatType& Automat::GetType() const
-{
-    return type_;
 }
 
 // -----------------------------------------------------------------------------
@@ -99,26 +86,6 @@ void Automat::InitializeSymbol() const
     symbol_ = symbol;
     level_ = level;
     kernel::App6Symbol::SetKarma( symbol_, hierarchies.GetTop().Get< kernel::Diplomacies_ABC >().GetKarma() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Automat::CreateDictionary
-// Created: SBO 2006-10-09
-// -----------------------------------------------------------------------------
-void Automat::CreateDictionary()
-{
-    PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Automat", "Info/Type" ), type_, true );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Automat::SerializeAttributes
-// Created: SBO 2006-10-09
-// -----------------------------------------------------------------------------
-void Automat::SerializeAttributes( xml::xostream& xos ) const
-{
-    kernel::EntityImplementation< kernel::Automat_ABC >::SerializeAttributes( xos );
-    xos << xml::attribute( "type", type_.GetName() );
 }
 
 // -----------------------------------------------------------------------------

@@ -22,12 +22,11 @@
 // -----------------------------------------------------------------------------
 Inhabitant::Inhabitant( const kernel::InhabitantType& type, int number, const QString& name, kernel::Controller& controller, IdManager& idManager )
     : kernel::EntityImplementation< kernel::Inhabitant_ABC >( controller, idManager.GetNextId(), "" )
-    , type_      ( type )
     , healthNeed_( 0 )
     , text_      ( "" )
 {
     healthy_ = number;
-    unsigned int healthPeopleNumber = type_.GetHealthPeopleNumber();
+    unsigned int healthPeopleNumber = type.GetHealthPeopleNumber();
     if( healthPeopleNumber )
         healthNeed_ = static_cast< float >( number ) / healthPeopleNumber;
     RegisterSelf( *this );
@@ -39,9 +38,8 @@ Inhabitant::Inhabitant( const kernel::InhabitantType& type, int number, const QS
 // Name: Inhabitant constructor
 // Created: SLG 2010-11-23
 // -----------------------------------------------------------------------------
-Inhabitant::Inhabitant( xml::xistream& xis, const kernel::InhabitantType& type, kernel::Controller& controller, IdManager& idManager )
+Inhabitant::Inhabitant( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager )
     : kernel::EntityImplementation< kernel::Inhabitant_ABC >( controller, xis.attribute< int >( "id" ), xis.attribute< std::string >( "name" ).c_str() )
-    , type_( type )
 {
     xis >> xml::start( "composition" )
             >> xml::attribute( "healthy", healthy_ )
@@ -80,7 +78,6 @@ void Inhabitant::CreateDictionary()
 {
     kernel::PropertiesDictionary& dictionary = Get< kernel::PropertiesDictionary >();
     const Entity_ABC& constEntity = *static_cast< const Entity_ABC* >( this );
-    dictionary.Register( constEntity, tools::translate( "Population", "Info/Type" ), type_, true );
     dictionary.Register( constEntity, tools::translate( "Population", "Info/Info" ), text_ );
     dictionary.Register( constEntity, tools::translate( "Population", "Human/Alive" ), healthy_ );
     dictionary.Register( constEntity, tools::translate( "Population", "Human/Wounded" ), wounded_ );
@@ -95,8 +92,7 @@ void Inhabitant::CreateDictionary()
 void Inhabitant::SerializeAttributes( xml::xostream& xos ) const
 {
     kernel::EntityImplementation< kernel::Inhabitant_ABC >::SerializeAttributes( xos );
-    xos << xml::attribute( "type", type_.GetName() )
-        << xml::start( "composition" )
+    xos << xml::start( "composition" )
             << xml::attribute( "healthy", healthy_ )
             << xml::attribute( "wounded", wounded_ )
             << xml::attribute( "dead", dead_ )
@@ -105,13 +101,4 @@ void Inhabitant::SerializeAttributes( xml::xostream& xos ) const
             << xml::attribute( "quantity", healthNeed_ )
         << xml::end
         << xml::content( "information", text_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Inhabitant::GetType
-// Created: LGY 2011-10-18
-// -----------------------------------------------------------------------------
-const kernel::InhabitantType& Inhabitant::GetType() const
-{
-    return type_;
 }

@@ -31,7 +31,6 @@ MOCK_BASE_CLASS( MockAutomat, dispatcher::Automat_ABC )
     MOCK_METHOD( Activate, 1 );
 
     // kernel::Automat_ABC
-    MOCK_METHOD( GetType, 0 );
     MOCK_METHOD( GetLogisticEntity, 0 );
 
     // dispatcher::Automat_ABC

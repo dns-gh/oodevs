@@ -29,15 +29,14 @@ using namespace kernel;
 // Name: Automat constructor
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-Automat::Automat( const sword::AutomatCreation& message, Controller& controller, const tools::Resolver_ABC< kernel::AutomatType >& resolver )
+Automat::Automat( const sword::AutomatCreation& message, Controller& controller, const kernel::AutomatType& type )
     : EntityImplementation< Automat_ABC >( controller, message.automat().id(), QString( message.name().c_str() ), true )
-    , type_( resolver.Get( message.type().id() ) )
     , logisticLevel_ ( &kernel::LogisticLevel::Resolve( message.logistic_level() ) )
 {
     if( name_.isEmpty() )
-        name_ = QString( "%1 %L2" ).arg( type_.GetName().c_str() ).arg( message.automat().id() );
+        name_ = QString( "%1 %L2" ).arg( type.GetName().c_str() ).arg( message.automat().id() );
     RegisterSelf( *this );
-    CreateDictionary();
+    CreateDictionary( type );
 }
 
 // -----------------------------------------------------------------------------
@@ -53,21 +52,11 @@ Automat::~Automat()
 // Name: Automat::CreateDictionary
 // Created: SBO 2006-10-19
 // -----------------------------------------------------------------------------
-void Automat::CreateDictionary()
+void Automat::CreateDictionary( const kernel::AutomatType& type )
 {
     PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
-    dictionary.Register( *this, tools::translate( "Automat", "Info/Type" ), type_, true );
-    if( type_.IsTC2() ) //$$$ NAZE
+    if( type.IsTC2() ) //$$$ NAZE
         dictionary.Register( *this, tools::translate( "Automat", "Info/LogisticLevel" ), *logisticLevel_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Automat::GetType
-// Created: AGE 2006-10-06
-// -----------------------------------------------------------------------------
-const kernel::AutomatType& Automat::GetType() const
-{
-    return type_;
 }
 
 // -----------------------------------------------------------------------------

@@ -65,7 +65,6 @@ public:
 
     //! @name Accessors
     //@{
-    virtual const kernel::AutomatType& GetType() const;
     virtual bool IsEngaged() const;
     virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     virtual LogisticEntity_ABC* GetLogisticEntity() const;

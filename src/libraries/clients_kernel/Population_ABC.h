@@ -15,7 +15,6 @@
 
 namespace kernel
 {
-    class PopulationType;
     class PopulationFlow_ABC;
     class PopulationConcentration_ABC;
 
@@ -44,8 +43,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual const PopulationType& GetType() const = 0;
-
     virtual unsigned int GetHealthyHumans() const = 0;
     virtual unsigned int GetWoundedHumans() const = 0;
     virtual unsigned int GetContaminatedHumans() const = 0;

@@ -21,11 +21,12 @@ using namespace kernel;
 // Name: PopulationDecisions constructor
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-PopulationDecisions::PopulationDecisions( kernel::Controller& controller, const Population_ABC& popu )
+PopulationDecisions::PopulationDecisions( kernel::Controller& controller, const Population_ABC& population,
+                                          const PopulationType& type )
     : controller_( controller )
-    , popu_      ( popu )
+    , popu_      ( population )
     , current_   ( 0 )
-    , decisionalModel_ ( &popu_.GetType().GetDecisionalModel() )
+    , decisionalModel_( &type.GetDecisionalModel() )
 {
     // NOTHING
 }

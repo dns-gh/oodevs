@@ -79,7 +79,6 @@ public:
 
     virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
 
-    virtual const kernel::PopulationType& GetType() const;
     virtual unsigned int GetHealthyHumans() const;
     virtual unsigned int GetWoundedHumans() const;
     virtual unsigned int GetContaminatedHumans() const;

@@ -52,7 +52,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual const kernel::PopulationType& GetType() const;
     virtual unsigned int GetHealthyHumans() const;
     virtual unsigned int GetWoundedHumans() const;
     virtual unsigned int GetContaminatedHumans() const;
@@ -71,7 +70,6 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::PopulationType& type_;
     unsigned long healthy_;
     unsigned long wounded_;
     unsigned long dead_;

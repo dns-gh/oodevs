@@ -54,6 +54,7 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/UrbanObject_ABC.h"
+#include "clients_kernel/EntityType.h"
 #include "ENT/ENT_Tr_Gen.h"
 #include "tools/GeneralConfig.h"
 #include "tools/RealFileLoaderObserver_ABC.h"
@@ -678,7 +679,7 @@ void ModelConsistencyChecker::CheckLogisticFormation()
     while( it.HasMoreElements() )
     {
         const Automat_ABC& automat = it.NextElement();
-        const kernel::AutomatType& type = automat.GetType();
+        const kernel::AutomatType& type = automat.Get< kernel::EntityType< kernel::AutomatType > >().GetType();
         if( !type.HasLogistics() )
             continue;
         if( automat.GetLogisticLevel() == kernel::LogisticLevel::logistic_base_ )
