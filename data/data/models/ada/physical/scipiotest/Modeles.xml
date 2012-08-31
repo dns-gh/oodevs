@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<models model-version="4.9.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Models.xsd">
+  <units>
+    <unit dia-type="AACCP" file="Appui\Alat\Pions\PC\model.bms" masalife="false" name="PC Alat">
+      <missions>
+        <mission name="PION ALAT Faire Mouvement"/>
+        <mission name="PION ALAT Suivre"/>
+        <mission name="PION ALAT Stationner"/>
+        <mission name="PION ALAT Aller Se Recompleter"/>
+      </missions>
+      <fragorders/>
+    </unit>
+    <unit dia-type="AntitankHelicopterPatrol" file="Appui\Alat\Pions\Pat Hah\model.bms" masalife="false" name="Patrouille HAH">
+      <missions>
+        <mission name="PION ALAT Faire Mouvement"/>
+        <mission name="PION ALAT Suivre"/>
+        <mission name="PION ALAT Stationner"/>
+        <mission name="PION ALAT Aller Se Recompleter"/>
+      </missions>
+      <fragorders/>
+    </unit>
+    <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hac\model.bms" masalife="false" name="Patrouille HAC">
+      <missions>
+        <mission name="PION ALAT Faire Mouvement"/>
+        <mission name="PION ALAT Suivre"/>
+        <mission name="PION ALAT Stationner"/>
+        <mission name="PION ALAT Aller Se Recompleter"/>
+      </missions>
+      <fragorders/>
+    </unit>
+    <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Ham\model.bms" masalife="false" name="Patrouille HAM">
+      <missions>
+        <mission name="PION ALAT Faire Mouvement"/>
+        <mission name="PION ALAT Suivre"/>
+        <mission name="PION ALAT Stationner"/>
+        <mission name="PION ALAT Aller Se Recompleter"/>
+      </missions>
+      <fragorders/>
+    </unit>
+    <unit dia-type="TransportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\model.bms" masalife="false" name="Patrouille HM">
+      <missions>
+        <mission name="PION ALAT Faire Mouvement"/>
+        <mission name="PION ALAT Suivre"/>
+        <mission name="PION ALAT Stationner"/>
+        <mission name="PION ALAT Aller Se Recompleter"/>
+      </missions>
+      <fragorders/>
+    </unit>
+    <unit dia-type="GeneralPurposeHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\model.bms" masalife="false" name="Patrouille HM Log">
+      <missions>
+        <mission name="PION ALAT Faire Mouvement"/>
+        <mission name="PION ALAT Suivre"/>
+        <mission name="PION ALAT Stationner"/>
+        <mission name="PION ALAT Aller Se Recompleter"/>
+      </missions>
+      <fragorders/>
+    </unit>
+    <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Tigre\model.bms" masalife="false" name="Patrouille Tigre">
+      <missions>
+        <mission name="PION ALAT Faire Mouvement"/>
+        <mission name="PION ALAT Suivre"/>
+        <mission name="PION ALAT Stationner"/>
+        <mission name="PION ALAT Aller Se Recompleter"/>
+      </missions>
+      <fragorders/>
+    </unit>
+    <unit dia-type="Stations_Horizon" file="Appui\Rens\Pions\Radint\Stations Horizon\Model.bms" masalife="false" name="Stations Horizon">
+      <missions>
+        <mission name="PION Decrocher"/>
+        <mission name="PION ALAT Faire Mouvement"/>
+        <mission name="PION ALAT Suivre"/>
+        <mission name="PION ALAT Stationner"/>
+      </missions>
+      <fragorders/>
+    </unit>
+    <unit dia-type="Cougar_Horizon" file="Appui\Rens\Pions\Radint\Cougar Horizon\Model.bms" masalife="false" name="Cougar Horizon">
+      <missions>
+        <mission name="PION ALAT Faire Mouvement"/>
+        <mission name="PION Decrocher"/>
+        <mission name="PION ALAT Suivre"/>
+      </missions>
+      <fragorders/>
+    </unit>
+    <unit dia-type="AntitankHelicopterPatrol" file="Appui\Alat\Pions\Pat Ham\model.bms" masalife="false" name="Patrouille HR">
+      <missions>
+        <mission name="PION ALAT Faire Mouvement"/>
+        <mission name="PION ALAT Suivre"/>
+        <mission name="PION ALAT Stationner"/>
+        <mission name="PION ALAT Aller Se Recompleter"/>
+      </missions>
+      <fragorders/>
+    </unit>
+    <unit dia-type="TransportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\Model.bms" masalife="false" name="GLAISE ALFT Patrouille UH">
+      <missions>
+        <mission name="PION ALAT Faire Mouvement"/>
+        <mission name="PION ALAT Suivre"/>
+        <mission name="PION ALAT Stationner"/>
+        <mission name="PION ALAT Aller Se Recompleter"/>
+      </missions>
+      <fragorders/>
+    </unit>
+    <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Tigre\Model.bms" masalife="false" name="GLAISE ALFT Patrouille A">
+      <missions>
+        <mission name="PION ALAT Faire Mouvement"/>
+        <mission name="PION ALAT Suivre"/>
+        <mission name="PION ALAT Stationner"/>
+        <mission name="PION ALAT Aller Se Recompleter"/>
+      </missions>
+      <fragorders/>
+    </unit>
+    <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Ham\Model.bms" masalife="false" name="GLAISE ALFT Patrouille R">
+      <missions>
+        <mission name="PION ALAT Faire Mouvement"/>
+        <mission name="PION ALAT Suivre"/>
+        <mission name="PION ALAT Stationner"/>
+        <mission name="PION ALAT Aller Se Recompleter"/>
+      </missions>
+      <fragorders/>
+    </unit>
+    <unit dia-type="AACCP" file="Appui\Alat\Pions\PC\Model.bms" masalife="false" name="GLAISE ALFT PC">
+      <missions>
+        <mission name="PION ALAT Faire Mouvement"/>
+        <mission name="PION ALAT Suivre"/>
+        <mission name="PION ALAT Stationner"/>
+        <mission name="PION ALAT Aller Se Recompleter"/>
+      </missions>
+      <fragorders/>
+    </unit>
+    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.Test">
+      <missions>
+        <mission name="PION COMMUNES Decrocher"/>
+        <mission name="PION COMMUNES Faire Mouvement"/>
+        <mission name="PION COMMUNES Stationner"/>
+        <mission name="PION COMMUNES Suivre"/>
+        <mission name="TEST 02 Parametres Obligatoires"/>
+        <mission name="TEST 01 Parametres Optionnels"/>
+      </missions>
+      <fragorders/>
+    </unit>
+    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.LOG.Convoi">
+      <missions>
+        <mission name="PION COMMUNES Decrocher"/>
+        <mission name="PION COMMUNES Faire Mouvement"/>
+        <mission name="PION COMMUNES Stationner"/>
+        <mission name="PION COMMUNES Suivre"/>
+        <mission name="PION LOGISTIQUE Convoyer"/>
+        <mission name="TEST 02 Parametres Obligatoires"/>
+        <mission name="TEST 01 Parametres Optionnels"/>
+      </missions>
+      <fragorders/>
+    </unit>
+  </units>
+  <automats>
+    <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.Test">
+      <missions>
+        <mission name="AUTOMATE COMMUNES Decrocher"/>
+        <mission name="AUTOMATE COMMUNES Faire Mouvement"/>
+        <mission name="AUTOMATE COMMUNES Stationner"/>
+        <mission name="AUTOMATE COMMUNES Suivre"/>
+      </missions>
+      <fragorders/>
+    </automat>
+    <automat dia-type="AttackHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hap Mixte\model.bms" masalife="false" name="Sgpt Hap Mixte">
+      <missions>
+        <mission name="AUTOMATE Faire Mouvement"/>
+        <mission name="AUTOMATE Suivre"/>
+        <mission name="AUTOMATE Stationner"/>
+        <mission name="AUTOMATE Decrocher"/>
+      </missions>
+      <fragorders/>
+    </automat>
+    <automat dia-type="AttackHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Tigre\model.bms" masalife="false" name="Sgpt Tigre">
+      <missions>
+        <mission name="AUTOMATE Faire Mouvement"/>
+        <mission name="AUTOMATE Suivre"/>
+        <mission name="AUTOMATE Stationner"/>
+        <mission name="AUTOMATE Decrocher"/>
+      </missions>
+      <fragorders/>
+    </automat>
+    <automat dia-type="TransportHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hm\model.bms" masalife="false" name="Sgpt Hm">
+      <missions>
+        <mission name="AUTOMATE Faire Mouvement"/>
+        <mission name="AUTOMATE Suivre"/>
+        <mission name="AUTOMATE Stationner"/>
+        <mission name="AUTOMATE Decrocher"/>
+      </missions>
+      <fragorders/>
+    </automat>
+    <automat dia-type="Escadrille_Horizon" file="Appui\Rens\Automates\Radint\Esc Horizon\Model.bms" masalife="false" name="Escadrille Horizon">
+      <missions>
+        <mission name="AUTOMATE Faire Mouvement"/>
+        <mission name="AUTOMATE Suivre"/>
+        <mission name="AUTOMATE Decrocher"/>
+      </missions>
+      <fragorders/>
+    </automat>
+    <automat dia-type="TransportHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hm\Model.bms" masalife="false" name="GLAISE ALFT esc UH et UM">
+      <missions>
+        <mission name="AUTOMATE Faire Mouvement"/>
+        <mission name="AUTOMATE Suivre"/>
+        <mission name="AUTOMATE Stationner"/>
+      </missions>
+      <fragorders/>
+    </automat>
+    <automat dia-type="AttackHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hap Mixte\Model.bms" masalife="false" name="GLAISE ALFT Esc A et Reco">
+      <missions>
+        <mission name="AUTOMATE Faire Mouvement"/>
+        <mission name="AUTOMATE Suivre"/>
+        <mission name="AUTOMATE Stationner"/>
+      </missions>
+      <fragorders/>
+    </automat>
+  </automats>
+  <crowd>
+    <crowd dia-type="france.military.crowd.roles.Foule" file="BMCrowd.bms" masalife="true" name="Masalife.Foule">
+      <missions>
+        <mission name="FOULES COMMUNES Faire Mouvement"/>
+        <mission name="FOULES COMMUNES Suivre"/>
+        <mission name="FOULES COMMUNES Se Faire Decontaminer"/>
+        <mission name="FOULES Agresser"/>
+        <mission name="FOULES Deteriorer"/>
+        <mission name="FOULES Proteger"/>
+        <mission name="FOULES Manifester"/>
+      </missions>
+      <fragorders/>
+    </crowd>
+  </crowd>
+</models>
+<!-- signature="3508025823" -->
