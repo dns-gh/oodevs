@@ -2643,8 +2643,6 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Desactiver Radar"/>
-        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3726,8 +3724,6 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Desactiver Radar"/>
-        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4353,8 +4349,6 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Desactiver Radar"/>
-        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -5744,8 +5738,6 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Desactiver Radar"/>
-        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -7369,8 +7361,6 @@
         <fragorder name="Passer En NBC4"/>
         <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Desactiver Radar"/>
-        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -7519,4 +7509,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1377554150" -->
+<!-- signature="1837746405" -->
