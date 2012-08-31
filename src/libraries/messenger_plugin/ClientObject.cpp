@@ -12,7 +12,9 @@
 #include "ClientObjectProperty.h"
 #include "protocol/MessengerSenders.h"
 #include "protocol/ClientPublisher_ABC.h"
+#pragma warning( push, 0 )
 #include <boost/lexical_cast.hpp>
+#pragma warning( pop )
 #include <xeumeuleu/xml.hpp>
 
 using namespace plugins::messenger;

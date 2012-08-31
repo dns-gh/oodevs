@@ -17,7 +17,9 @@
 #include "WorkingSession_ABC.h"
 #include <gdal/ogr_core.h>
 #include <boost/noncopyable.hpp>
+#pragma warning( push, 0 )
 #include <boost/lexical_cast.hpp>
+#pragma warning( pop )
 
 using namespace plugins;
 using namespace plugins::crossbow;

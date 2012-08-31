@@ -33,8 +33,9 @@
 #include "clients_kernel/ObjectType.h"
 #include "tools/App6Symbol.h"
 #include "WorkingSession_ABC.h"
-
+#pragma warning( push, 0 )
 #include <boost/lexical_cast.hpp>
+#pragma warning( pop )
 
 using namespace plugins;
 using namespace plugins::crossbow;

@@ -55,7 +55,9 @@
 #include "tic/PlatformDelegateFactory.h"
 #include <hla/HLAException.h>
 #include <xeumeuleu/xml.hpp>
+#pragma warning( push, 0 )
 #include <boost/lexical_cast.hpp>
+#pragma warning( pop )
 
 using namespace plugins::hla;
 

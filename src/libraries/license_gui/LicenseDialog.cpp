@@ -35,8 +35,8 @@ namespace
         HKEY hkCle = NULL;
         char sValeur[ 200 ];
         DWORD dwTailleValeur1 = 200;
-        bool found = false;
-        if( found = RegOpenKeyEx( HKEY_CURRENT_USER, "Software\\MASA Group\\SWORD\\Common", 0, KEY_ALL_ACCESS, &hkCle ) == ERROR_SUCCESS )
+        LONG found = RegOpenKeyEx( HKEY_CURRENT_USER, "Software\\MASA Group\\SWORD\\Common", 0, KEY_ALL_ACCESS, &hkCle );
+        if( found == ERROR_SUCCESS )
         {
             RegQueryValueEx( hkCle, "Language", NULL, NULL, (LPBYTE)sValeur, &dwTailleValeur1 );
             RegCloseKey(hkCle);
