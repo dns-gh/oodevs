@@ -80,13 +80,13 @@ void ADN_MainTabWidget::OnCurrentChanged( int index )
 {
     if( !navigating_ )
     {
-        while( currentHistoryIndex_ != history_.size() - 1 )
+        while( currentHistoryIndex_ != static_cast< int > ( history_.size() ) - 1 )
             history_.pop_back();
         history_.push_back( index );
-        currentHistoryIndex_ = static_cast< int >( history_.size() - 1 );
+        currentHistoryIndex_ = static_cast< int > ( history_.size() ) - 1 ;
     }
     emit BackEnabled( currentHistoryIndex_ > 0 );
-    emit ForwardEnabled( currentHistoryIndex_ < history_.size() - 1 );
+    emit ForwardEnabled( currentHistoryIndex_ < static_cast< int > ( history_.size() ) - 1 );
 }
 
 // -----------------------------------------------------------------------------
