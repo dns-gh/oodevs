@@ -10,8 +10,7 @@
 #include "frontend_pch.h"
 #include "Config.h"
 #include "clients_gui/Tools.h"
-#pragma warning( push )
-#pragma warning( disable: 4512 )
+#pragma warning( push, 0 )
 #include <boost/program_options.hpp>
 #pragma warning( pop )
 #include <boost/filesystem/path.hpp>
