@@ -32,11 +32,11 @@ class PackageView extends Backbone.View
         @model.fetch()
         setTimeout @delta, 5000
 
-    toggle_load: (next, group) =>
-        @enabled = next unless enabled
+    toggle_load: (enabled, group) =>
+        @enabled = enabled unless enabled
         if group?
             toggle_spinner $ group
-        @enabled = next
+        @enabled = enabled
 
     delete_items: (list) =>
         next = []

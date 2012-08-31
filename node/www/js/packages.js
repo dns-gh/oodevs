@@ -528,14 +528,14 @@
       return setTimeout(this.delta, 5000);
     };
 
-    PackageView.prototype.toggle_load = function(next, group) {
+    PackageView.prototype.toggle_load = function(enabled, group) {
       if (!enabled) {
-        this.enabled = next;
+        this.enabled = enabled;
       }
       if (group != null) {
         toggle_spinner($(group));
       }
-      return this.enabled = next;
+      return this.enabled = enabled;
     };
 
     PackageView.prototype.delete_items = function(list) {
