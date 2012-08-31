@@ -116,17 +116,14 @@ unsigned int DirectFireData::GetNbrWeaponsUsable() const
         unsigned int nNbrUsedComposantes = 0;
         for( CIT_ComposanteWeaponsMap itData = composantesWeapons_.begin(); itData != composantesWeapons_.end(); ++itData )
             if( itData->second.IsFiring() )
-                ++ nNbrUsedComposantes;
-
-        unsigned int nNbrComps = (unsigned int)( composantesWeapons_.size() * rPercentageComposantesToUse_ );
-        if( !( nNbrComps || composantesWeapons_.empty() ) )
+                ++nNbrUsedComposantes;
+        unsigned int nNbrComps = static_cast< unsigned int >( composantesWeapons_.size() * rPercentageComposantesToUse_ );
+        if( nNbrComps == 0 && ! composantesWeapons_.empty() )
             nNbrComps = 1;
-
         if( nNbrComps >= nNbrUsedComposantes )
             return nNbrComps - nNbrUsedComposantes;
         return 0;
     }
-
     assert( false );
     return 0;
 }

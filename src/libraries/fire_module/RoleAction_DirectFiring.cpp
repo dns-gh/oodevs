@@ -41,11 +41,11 @@ void RoleAction_DirectFiring::FirePion( DirectFireData& data, const wrapper::Vie
 {
     // Pour chaque cible, choix de la meilleure arme
     unsigned int nNbrWeaponsUsed = 0;
-    for( CIT_ComposanteVector itCompTarget = compTargets.begin(); itCompTarget != compTargets.end(); ++itCompTarget )
+    for( CIT_ComposanteVector it = compTargets.begin(); it != compTargets.end(); ++it )
     {
-        const wrapper::View& compTarget       = *itCompTarget;
-        const SWORD_Model* pBestFirer       = 0;
-        const Weapon*         pBestFirerWeapon = 0;
+        const wrapper::View& compTarget = *it;
+        const SWORD_Model* pBestFirer = 0;
+        const Weapon* pBestFirerWeapon = 0;
         data.ChooseBestWeapon( target, compTarget, pBestFirer, pBestFirerWeapon );
         if( !pBestFirer )
             continue;
@@ -55,15 +55,15 @@ void RoleAction_DirectFiring::FirePion( DirectFireData& data, const wrapper::Vie
         data.ReleaseWeapon( pBestFirer, *pBestFirerWeapon );
     }
     // Pour toutes les armes non utilisées, choix de la meilleure cible
-    const SWORD_Model* pUnusedFirer       = 0;
+    const SWORD_Model* pUnusedFirer = 0;
     const Weapon* pUnusedFirerWeapon = 0;
-    while( data.GetUnusedFirerWeapon( pUnusedFirer, pUnusedFirerWeapon ) && nNbrWeaponsUsed < compTargets.size() )
+    while( data.GetUnusedFirerWeapon( pUnusedFirer, pUnusedFirerWeapon ) && nNbrWeaponsUsed < compTargets.size() ) // $$$$ MCO 2012-08-30: not sure why we stop firing when nNbrWeaponsUsed reaches compTargets.size()
     {
         const wrapper::View* pBestCompTarget = 0;
-        double rBestScore = 0.;
-        for( CIT_ComposanteVector itCompTarget = compTargets.begin(); itCompTarget != compTargets.end(); ++itCompTarget )
+        double rBestScore = 0;
+        for( CIT_ComposanteVector it = compTargets.begin(); it != compTargets.end(); ++it )
         {
-            const wrapper::View& compTarget = *itCompTarget;
+            const wrapper::View& compTarget = *it;
             const double rCurrentScore = pUnusedFirerWeapon->GetDangerosity( entity, target, compTarget, true, true ); // 'true' is for 'use ph' and true for 'use ammo'
             if( rCurrentScore > rBestScore )
             {
@@ -165,10 +165,8 @@ int RoleAction_DirectFiring::FirePion( const wrapper::View& model, const wrapper
         return eNoCapacity;
     }
     NotifyAttacking( entity, target, mustReport, false );
-    const bool bFireOnlyOnMajorComposantes = ( nComposanteFiredType == DirectFireData::eFireOnlyOnMajorComposantes ); // $$$$ MCO 2012-04-27: check this feature
     const wrapper::View& targets = model[ "entities" ][ static_cast< unsigned int >( target[ "identifier" ] ) ][ "components" ];
-    T_ComposanteVector compTargets =
-        GetComposantesAbleToBeFired( targets, bFireOnlyOnMajorComposantes, nNbrWeaponsUsable );
+    T_ComposanteVector compTargets = GetComposantesAbleToBeFired( targets, nComposanteFiredType == DirectFireData::eFireOnlyOnMajorComposantes, nNbrWeaponsUsable );
     if( compTargets.empty() )
         return eEnemyDestroyed;
     assert( compTargets.size() == nNbrWeaponsUsable );

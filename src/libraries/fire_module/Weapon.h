@@ -51,7 +51,7 @@ public:
     //! @name Operations
     //@{
     //bool     IndirectFire             ( MIL_Agent_ABC& firer, MIL_Effect_IndirectFire& effect );
-    bool     DirectFire               ( const wrapper::View& firer, const wrapper::View& target, const wrapper::View& compTarget, bool bUsePH ) const;
+    void     DirectFire               ( const wrapper::View& firer, const wrapper::View& target, const wrapper::View& compTarget, bool bUsePH ) const;
     //bool     DirectFire               ( MIL_AgentPion& firer, MIL_PopulationElement_ABC& target );
     //void     ThrowSmoke               ( MIL_Agent_ABC& firer, const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmo ) const;
     double GetDangerosity           ( const wrapper::View& firer, const wrapper::View& target, const wrapper::View& targetComposante, bool bUsePH, bool checkAmmo ) const;

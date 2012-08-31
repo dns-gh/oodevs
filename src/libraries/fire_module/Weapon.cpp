@@ -63,10 +63,9 @@ double Weapon::ModifyReloadingDuration( const wrapper::View& firer, double rDura
 // Name: Weapon::DirectFire
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
-bool Weapon::DirectFire( const wrapper::View& firer, const wrapper::View& target, const wrapper::View& compTarget, bool bUsePH ) const
+void Weapon::DirectFire( const wrapper::View& firer, const wrapper::View& target, const wrapper::View& compTarget, bool bUsePH ) const
 {
     assert( IsReady() );
-    bool bHasFired = false;
     const unsigned int nCurrentTimeStep = model_[ "tick" ];
     const unsigned int nNextTimeStep = nCurrentTimeStep + 1;
     double rNextTimeStepToFire = weapon_[ "next-time" ]; // $$$$ MCO 2012-08-28: this is buggy because next-time should be changed synchronously when firing
@@ -84,7 +83,6 @@ bool Weapon::DirectFire( const wrapper::View& firer, const wrapper::View& target
         {
             nNbrAmmoFiredFromLoader += nNbrAmmoReserved;
             type_->DirectFire( firer, target, compTarget, bUsePH );
-            bHasFired = true;
             rNextTimeStepToFire += type_->GetBurstDuration();
             if( nNbrAmmoFiredFromLoader == type_->GetNbrAmmoPerLoader() )
             {
@@ -105,7 +103,6 @@ bool Weapon::DirectFire( const wrapper::View& firer, const wrapper::View& target
         effect[ "next-time" ] = rNextTimeStepToFire; // $$$$ MCO 2012-08-28: this is buggy because next-time should be changed synchronously when firing
         effect.Post();
     }
-    return bHasFired;
 }
 
 //// -----------------------------------------------------------------------------
