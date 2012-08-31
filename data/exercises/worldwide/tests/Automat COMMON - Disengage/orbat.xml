@@ -133,7 +133,7 @@
     <party color="0xff0000" id="1397" name="Enemies" type="enemy">
       <objects/>
       <tactical>
-        <formation color="0xff0000" id="1511" level="ii" name="Formation [1 511]" symbol="symbols/shgpucim">
+        <formation color="0xff0000" id="1511" level="ii" name="Formation [1 511]" symbol="symbols/shgpucath">
           <automat color="0xff0000" engaged="true" id="1512" knowledge-group="1446" name="MILITARY.Infantry company" symbol="symbols/shgpucim" type="MILITARY.Infantry company">
             <unit color="0xff0000" command-post="true" id="1513" name="MILITARY.Infantry platoon" position="30UYU1274931630" type="MILITARY.Infantry platoon"/>
             <unit color="0xff0000" command-post="false" id="1514" name="MILITARY.Infantry platoon" position="30UYU1274631730" type="MILITARY.Infantry platoon"/>
@@ -302,6 +302,146 @@
             <unit color="0xff0000" command-post="true" id="1660" name="MILITARY.Company command post" position="30UYU1184632803" type="MILITARY.Company command post"/>
             <unit color="0xff0000" command-post="false" id="1661" name="MILITARY.Scouting platoon" position="30UYU1175732850" type="MILITARY.Scouting platoon"/>
           </automat>
+          <automat color="0xff0000" engaged="true" id="1662" knowledge-group="1446" name="ARMOR.MBT squadron" symbol="symbols/shgpucath" type="ARMOR.MBT squadron">
+            <unit color="0xff0000" command-post="true" id="1663" name="ARMOR.Armored squadron CP" position="30UYU0657829326" type="ARMOR.Armored squadron CP"/>
+            <unit color="0xff0000" command-post="false" id="1664" name="ARMOR.MBT platoon" position="30UYU0657529425" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1665" name="ARMOR.MBT platoon" position="30UYU0667929329" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1666" name="ARMOR.MBT platoon" position="30UYU0658229226" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1667" name="ARMOR.MBT platoon" position="30UYU0647829322" type="ARMOR.MBT platoon"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="1668" knowledge-group="1446" name="ARMOR.MBT squadron" symbol="symbols/shgpucath" type="ARMOR.MBT squadron">
+            <unit color="0xff0000" command-post="true" id="1669" name="ARMOR.Armored squadron CP" position="30UYU0700629161" type="ARMOR.Armored squadron CP"/>
+            <unit color="0xff0000" command-post="false" id="1670" name="ARMOR.MBT platoon" position="30UYU0700329261" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1671" name="ARMOR.MBT platoon" position="30UYU0710729164" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1672" name="ARMOR.MBT platoon" position="30UYU0701029061" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1673" name="ARMOR.MBT platoon" position="30UYU0690629157" type="ARMOR.MBT platoon"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="1674" knowledge-group="1446" name="ARMOR.MBT squadron" symbol="symbols/shgpucath" type="ARMOR.MBT squadron">
+            <unit color="0xff0000" command-post="true" id="1675" name="ARMOR.Armored squadron CP" position="30UYU0729628931" type="ARMOR.Armored squadron CP"/>
+            <unit color="0xff0000" command-post="false" id="1676" name="ARMOR.MBT platoon" position="30UYU0729329031" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1677" name="ARMOR.MBT platoon" position="30UYU0739628934" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1678" name="ARMOR.MBT platoon" position="30UYU0730028831" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1679" name="ARMOR.MBT platoon" position="30UYU0719628927" type="ARMOR.MBT platoon"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="1680" knowledge-group="1446" name="ARMOR.MBT squadron" symbol="symbols/shgpucath" type="ARMOR.MBT squadron">
+            <unit color="0xff0000" command-post="true" id="1681" name="ARMOR.Armored squadron CP" position="30UYU0770728685" type="ARMOR.Armored squadron CP"/>
+            <unit color="0xff0000" command-post="false" id="1682" name="ARMOR.MBT platoon" position="30UYU0770328785" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1683" name="ARMOR.MBT platoon" position="30UYU0780728689" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1684" name="ARMOR.MBT platoon" position="30UYU0771128585" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1685" name="ARMOR.MBT platoon" position="30UYU0760728681" type="ARMOR.MBT platoon"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="1686" knowledge-group="1446" name="ARMOR.MBT squadron" symbol="symbols/shgpucath" type="ARMOR.MBT squadron">
+            <unit color="0xff0000" command-post="true" id="1687" name="ARMOR.Armored squadron CP" position="30UYU0808128338" type="ARMOR.Armored squadron CP"/>
+            <unit color="0xff0000" command-post="false" id="1688" name="ARMOR.MBT platoon" position="30UYU0807828438" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1689" name="ARMOR.MBT platoon" position="30UYU0818128341" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1690" name="ARMOR.MBT platoon" position="30UYU0808528238" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1691" name="ARMOR.MBT platoon" position="30UYU0798128334" type="ARMOR.MBT platoon"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="1692" knowledge-group="1446" name="ARMOR.MBT squadron" symbol="symbols/shgpucath" type="ARMOR.MBT squadron">
+            <unit color="0xff0000" command-post="true" id="1693" name="ARMOR.Armored squadron CP" position="30UYU0851228113" type="ARMOR.Armored squadron CP"/>
+            <unit color="0xff0000" command-post="false" id="1694" name="ARMOR.MBT platoon" position="30UYU0850828213" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1695" name="ARMOR.MBT platoon" position="30UYU0861228117" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1696" name="ARMOR.MBT platoon" position="30UYU0851528013" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1697" name="ARMOR.MBT platoon" position="30UYU0841128109" type="ARMOR.MBT platoon"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="1698" knowledge-group="1446" name="ARMOR.MBT squadron" symbol="symbols/shgpucath" type="ARMOR.MBT squadron">
+            <unit color="0xff0000" command-post="true" id="1699" name="ARMOR.Armored squadron CP" position="30UYU0888227886" type="ARMOR.Armored squadron CP"/>
+            <unit color="0xff0000" command-post="false" id="1700" name="ARMOR.MBT platoon" position="30UYU0887827986" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1701" name="ARMOR.MBT platoon" position="30UYU0898227889" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1702" name="ARMOR.MBT platoon" position="30UYU0888527786" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1703" name="ARMOR.MBT platoon" position="30UYU0878127882" type="ARMOR.MBT platoon"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="1704" knowledge-group="1446" name="ARMOR.MBT squadron" symbol="symbols/shgpucath" type="ARMOR.MBT squadron">
+            <unit color="0xff0000" command-post="true" id="1705" name="ARMOR.Armored squadron CP" position="30UYU0906427852" type="ARMOR.Armored squadron CP"/>
+            <unit color="0xff0000" command-post="false" id="1706" name="ARMOR.MBT platoon" position="30UYU0906027952" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1707" name="ARMOR.MBT platoon" position="30UYU0916427856" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1708" name="ARMOR.MBT platoon" position="30UYU0906727753" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1709" name="ARMOR.MBT platoon" position="30UYU0896427849" type="ARMOR.MBT platoon"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="1710" knowledge-group="1446" name="ARMOR.MBT squadron" symbol="symbols/shgpucath" type="ARMOR.MBT squadron">
+            <unit color="0xff0000" command-post="true" id="1711" name="ARMOR.Armored squadron CP" position="30UYU0934827762" type="ARMOR.Armored squadron CP"/>
+            <unit color="0xff0000" command-post="false" id="1712" name="ARMOR.MBT platoon" position="30UYU0934527862" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1713" name="ARMOR.MBT platoon" position="30UYU0944827766" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1714" name="ARMOR.MBT platoon" position="30UYU0935227663" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1715" name="ARMOR.MBT platoon" position="30UYU0924827759" type="ARMOR.MBT platoon"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="1716" knowledge-group="1446" name="ARMOR.MBT squadron" symbol="symbols/shgpucath" type="ARMOR.MBT squadron">
+            <unit color="0xff0000" command-post="true" id="1717" name="ARMOR.Armored squadron CP" position="30UYU0986227460" type="ARMOR.Armored squadron CP"/>
+            <unit color="0xff0000" command-post="false" id="1718" name="ARMOR.MBT platoon" position="30UYU0985827560" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1719" name="ARMOR.MBT platoon" position="30UYU0996227464" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1720" name="ARMOR.MBT platoon" position="30UYU0986527361" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1721" name="ARMOR.MBT platoon" position="30UYU0976227457" type="ARMOR.MBT platoon"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="1722" knowledge-group="1446" name="ARMOR.MBT squadron" symbol="symbols/shgpucath" type="ARMOR.MBT squadron">
+            <unit color="0xff0000" command-post="true" id="1723" name="ARMOR.Armored squadron CP" position="30UYU1016927311" type="ARMOR.Armored squadron CP"/>
+            <unit color="0xff0000" command-post="false" id="1724" name="ARMOR.MBT platoon" position="30UYU1016527411" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1725" name="ARMOR.MBT platoon" position="30UYU1026927315" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1726" name="ARMOR.MBT platoon" position="30UYU1017227211" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1727" name="ARMOR.MBT platoon" position="30UYU1006827308" type="ARMOR.MBT platoon"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="1728" knowledge-group="1446" name="ARMOR.MBT squadron" symbol="symbols/shgpucath" type="ARMOR.MBT squadron">
+            <unit color="0xff0000" command-post="true" id="1729" name="ARMOR.Armored squadron CP" position="30UYU1047727122" type="ARMOR.Armored squadron CP"/>
+            <unit color="0xff0000" command-post="false" id="1730" name="ARMOR.MBT platoon" position="30UYU1047327222" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1731" name="ARMOR.MBT platoon" position="30UYU1057727126" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1732" name="ARMOR.MBT platoon" position="30UYU1048127022" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1733" name="ARMOR.MBT platoon" position="30UYU1037727118" type="ARMOR.MBT platoon"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="1734" knowledge-group="1446" name="ARMOR.MBT squadron" symbol="symbols/shgpucath" type="ARMOR.MBT squadron">
+            <unit color="0xff0000" command-post="true" id="1735" name="ARMOR.Armored squadron CP" position="30UYU1080227033" type="ARMOR.Armored squadron CP"/>
+            <unit color="0xff0000" command-post="false" id="1736" name="ARMOR.MBT platoon" position="30UYU1079827133" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1737" name="ARMOR.MBT platoon" position="30UYU1090227037" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1738" name="ARMOR.MBT platoon" position="30UYU1080526934" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1739" name="ARMOR.MBT platoon" position="30UYU1070227030" type="ARMOR.MBT platoon"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="1740" knowledge-group="1446" name="ARMOR.MBT squadron" symbol="symbols/shgpucath" type="ARMOR.MBT squadron">
+            <unit color="0xff0000" command-post="true" id="1741" name="ARMOR.Armored squadron CP" position="30UYU1109226783" type="ARMOR.Armored squadron CP"/>
+            <unit color="0xff0000" command-post="false" id="1742" name="ARMOR.MBT platoon" position="30UYU1108926883" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1743" name="ARMOR.MBT platoon" position="30UYU1119226787" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1744" name="ARMOR.MBT platoon" position="30UYU1109626684" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1745" name="ARMOR.MBT platoon" position="30UYU1099226780" type="ARMOR.MBT platoon"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="1746" knowledge-group="1446" name="ARMOR.MBT squadron" symbol="symbols/shgpucath" type="ARMOR.MBT squadron">
+            <unit color="0xff0000" command-post="true" id="1747" name="ARMOR.Armored squadron CP" position="30UYU1150226558" type="ARMOR.Armored squadron CP"/>
+            <unit color="0xff0000" command-post="false" id="1748" name="ARMOR.MBT platoon" position="30UYU1149926658" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1749" name="ARMOR.MBT platoon" position="30UYU1160226561" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1750" name="ARMOR.MBT platoon" position="30UYU1150626458" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1751" name="ARMOR.MBT platoon" position="30UYU1140226554" type="ARMOR.MBT platoon"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="1752" knowledge-group="1446" name="ARMOR.MBT squadron" symbol="symbols/shgpucath" type="ARMOR.MBT squadron">
+            <unit color="0xff0000" command-post="true" id="1753" name="ARMOR.Armored squadron CP" position="30UYU1183126369" type="ARMOR.Armored squadron CP"/>
+            <unit color="0xff0000" command-post="false" id="1754" name="ARMOR.MBT platoon" position="30UYU1182726469" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1755" name="ARMOR.MBT platoon" position="30UYU1193126373" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1756" name="ARMOR.MBT platoon" position="30UYU1183426269" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1757" name="ARMOR.MBT platoon" position="30UYU1173126366" type="ARMOR.MBT platoon"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="1758" knowledge-group="1446" name="ARMOR.MBT squadron" symbol="symbols/shgpucath" type="ARMOR.MBT squadron">
+            <unit color="0xff0000" command-post="true" id="1759" name="ARMOR.Armored squadron CP" position="30UYU1201726216" type="ARMOR.Armored squadron CP"/>
+            <unit color="0xff0000" command-post="false" id="1760" name="ARMOR.MBT platoon" position="30UYU1201426316" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1761" name="ARMOR.MBT platoon" position="30UYU1211726219" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1762" name="ARMOR.MBT platoon" position="30UYU1202126116" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1763" name="ARMOR.MBT platoon" position="30UYU1191726212" type="ARMOR.MBT platoon"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="1764" knowledge-group="1446" name="ARMOR.MBT squadron" symbol="symbols/shgpucath" type="ARMOR.MBT squadron">
+            <unit color="0xff0000" command-post="true" id="1765" name="ARMOR.Armored squadron CP" position="30UYU1236825968" type="ARMOR.Armored squadron CP"/>
+            <unit color="0xff0000" command-post="false" id="1766" name="ARMOR.MBT platoon" position="30UYU1236426068" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1767" name="ARMOR.MBT platoon" position="30UYU1246825971" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1768" name="ARMOR.MBT platoon" position="30UYU1237125868" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1769" name="ARMOR.MBT platoon" position="30UYU1226825964" type="ARMOR.MBT platoon"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="1770" knowledge-group="1446" name="ARMOR.MBT squadron" symbol="symbols/shgpucath" type="ARMOR.MBT squadron">
+            <unit color="0xff0000" command-post="true" id="1771" name="ARMOR.Armored squadron CP" position="30UYU1275525821" type="ARMOR.Armored squadron CP"/>
+            <unit color="0xff0000" command-post="false" id="1772" name="ARMOR.MBT platoon" position="30UYU1275125921" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1773" name="ARMOR.MBT platoon" position="30UYU1285525825" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1774" name="ARMOR.MBT platoon" position="30UYU1275925722" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1775" name="ARMOR.MBT platoon" position="30UYU1265525818" type="ARMOR.MBT platoon"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="1776" knowledge-group="1446" name="ARMOR.MBT squadron" symbol="symbols/shgpucath" type="ARMOR.MBT squadron">
+            <unit color="0xff0000" command-post="true" id="1777" name="ARMOR.Armored squadron CP" position="30UYU1299825770" type="ARMOR.Armored squadron CP"/>
+            <unit color="0xff0000" command-post="false" id="1778" name="ARMOR.MBT platoon" position="30UYU1299425870" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1779" name="ARMOR.MBT platoon" position="30UYU1309825774" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1780" name="ARMOR.MBT platoon" position="30UYU1300225670" type="ARMOR.MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1781" name="ARMOR.MBT platoon" position="30UYU1289825767" type="ARMOR.MBT platoon"/>
+          </automat>
         </formation>
       </tactical>
       <communication>
@@ -346,4 +486,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="4114603431" -->
+<!-- signature="1434570534" -->
