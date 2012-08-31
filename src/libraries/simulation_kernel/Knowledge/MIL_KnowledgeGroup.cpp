@@ -63,6 +63,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, unsi
     : type_               ( &type )
     , id_                 ( id )
     , army_               ( &army )
+    , parent_             ( 0 )
     , knowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_KnowledgeGroup( this ) )
     , timeToDiffuse_      ( 0 ) // LTO
     , isActivated_        ( true ) // LTO
@@ -84,7 +85,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, 
     , type_               ( MIL_KnowledgeGroupType::FindType( xis.attribute< std::string >( "type" ) ) )
     , name_               ( xis.attribute< std::string >( "name" ) )
     , army_               ( &army )
-    , parent_             ( parent )
+    , parent_             ( parent.get() )
     , knowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_KnowledgeGroup( this ) )
     , timeToDiffuse_      ( 0 ) // LTO
     , isActivated_        ( true ) // LTO
@@ -96,7 +97,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, 
     if( ! type_ )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Knowledge group '%d' cannot be created because its type does not exist: %s ", id_, xis.attribute< std::string >( "type" ).c_str() ) );
     idManager_.Lock( id_ );
-    if( parent_.get() )
+    if( parent_ )
         timeToDiffuse_ = parent_->GetType().GetKnowledgeCommunicationDelay();
     xis >> xml::list( "knowledge-group", *this, &MIL_KnowledgeGroup::InitializeKnowledgeGroup, knowledgeGroupFactory );
 }
@@ -109,6 +110,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup()
     : type_               ( 0 )
     , id_                 ( 0 )
     , army_               ( 0 )
+    , parent_             ( 0 )
     , knowledgeBlackBoard_( 0 )
     , timeToDiffuse_      ( 0 ) // LTO
     , isActivated_        ( true ) // LTO
@@ -129,7 +131,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source, const 
     , id_                 ( idManager_.GetFreeId() )
     , name_               ( source.name_ + " (" + pion.GetName() + ")" )
     , army_               ( source.army_ )
-    , parent_             ( parent ) // LTO
+    , parent_             ( parent.get() )
     , knowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_KnowledgeGroup( this ) )
     , timeToDiffuse_      ( 0 ) // LTO
     , isActivated_        ( true ) // LTO
@@ -138,7 +140,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source, const 
     , createdByJamming_   ( true )
     , jammedPion_         ( &pion )
 {
-    if( parent.get() )
+    if( parent_ )
         timeToDiffuse_ = parent_->GetType().GetKnowledgeCommunicationDelay();
     SendCreation();
 }
@@ -210,8 +212,8 @@ void MIL_KnowledgeGroup::Destroy()
     if( knowledgeBlackBoard_ )
     {
         boost::shared_ptr< MIL_KnowledgeGroup > shared = shared_from_this();
-        if( GetParent() )
-            GetParent()->UnregisterKnowledgeGroup( shared );
+        if( parent_ )
+            parent_->UnregisterKnowledgeGroup( shared );
         else if( army_ )
             army_->UnregisterKnowledgeGroup( shared );
         delete knowledgeBlackBoard_;
@@ -495,8 +497,8 @@ void MIL_KnowledgeGroup::UpdateKnowledgeGroup()
     {
         client::KnowledgeGroupUpdate message;
         message().mutable_knowledge_group()->set_id( id_ );
-        if( boost::shared_ptr< MIL_KnowledgeGroup > parent = GetParent() )
-            message().mutable_parent()->set_id( parent->GetId() );
+        if( parent_ )
+            message().mutable_parent()->set_id( parent_->GetId() );
         else
             // army is the parent
             message().mutable_parent()->set_id( 0 );
@@ -516,11 +518,10 @@ void MIL_KnowledgeGroup::UpdateKnowledgeGroup()
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::MoveKnowledgeGroup( MIL_KnowledgeGroup *newParent )
 {
-    boost::shared_ptr< MIL_KnowledgeGroup > parent = GetParent();
-    if( newParent && parent )
+    if( newParent && parent_ )
     {
         boost::shared_ptr< MIL_KnowledgeGroup > shared = shared_from_this();
-        parent->UnregisterKnowledgeGroup( shared );
+        parent_->UnregisterKnowledgeGroup( shared );
         newParent->RegisterKnowledgeGroup( shared );
         hasBeenUpdated_ = true;
     }
@@ -643,23 +644,13 @@ MIL_Army_ABC& MIL_KnowledgeGroup::GetArmy() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_KnowledgeGroup::GetParent
-// Created: NLD 2004-09-07
-// LTO
-// -----------------------------------------------------------------------------
-boost::shared_ptr< MIL_KnowledgeGroup > MIL_KnowledgeGroup::GetParent() const
-{
-    return parent_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::SetParent
 // Created: FHD 2009-12-22
 // LTO
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::SetParent( boost::shared_ptr< MIL_KnowledgeGroup >& parent )
 {
-    parent_ = parent;
+    parent_ = parent.get();
 }
 
 // -----------------------------------------------------------------------------
@@ -824,17 +815,16 @@ bool MIL_KnowledgeGroup::OnReceiveKnowledgeGroupChangeSuperior( const sword::Mis
     }
     if( pNewParent.get() )
     {
-        boost::shared_ptr< MIL_KnowledgeGroup > parent = GetParent();
-        if( parent.get() && parent != pNewParent )
+        if( parent_ && parent_ != pNewParent.get() )
         {
             boost::shared_ptr< MIL_KnowledgeGroup > shared = shared_from_this();
             // moving knowledge group from knowledgegroup under knowledgegroup
-            parent->UnregisterKnowledgeGroup( shared );
+            parent_->UnregisterKnowledgeGroup( shared );
             pNewParent->RegisterKnowledgeGroup( shared );
             SetParent( pNewParent );
             return true;
         }
-        else if( !parent )
+        else if( !parent_ )
         {
             boost::shared_ptr< MIL_KnowledgeGroup > shared = shared_from_this();
             // moving knowledge group from army node under knowledgegroup
@@ -847,11 +837,10 @@ bool MIL_KnowledgeGroup::OnReceiveKnowledgeGroupChangeSuperior( const sword::Mis
     else
     {
         // moving knowledge group under army node
-        boost::shared_ptr< MIL_KnowledgeGroup > parent = GetParent();
-        if( parent.get() )
+        if( parent_ )
         {
             boost::shared_ptr< MIL_KnowledgeGroup > shared = shared_from_this();
-            parent->UnregisterKnowledgeGroup( shared );
+            parent_->UnregisterKnowledgeGroup( shared );
             GetArmy().RegisterKnowledgeGroup( shared );
             boost::shared_ptr< MIL_KnowledgeGroup > noParent;
             SetParent( noParent );
@@ -1105,14 +1094,13 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
     {
         // LTO begin
         //mis à jour des groupes de connaissances depuis leur parent avec un délai
-        boost::shared_ptr< MIL_KnowledgeGroup > parent = GetParent();
         if( GetTimeToDiffuseToKnowledgeGroup() < currentTimeStep )
         {
-            if( parent.get() && IsEnabled() )
+            if( parent_ && IsEnabled() )
             {
                 boost::function< void( DEC_Knowledge_Agent& ) > functorAgent = boost::bind( &MIL_KnowledgeGroup::UpdateAgentKnowledgeFromParentKnowledgeGroup, this, _1, boost::ref(currentTimeStep) );
-                parent->GetKnowledge().GetKnowledgeAgentContainer().ApplyOnPreviousKnowledgesAgent( functorAgent );
-                parent->GetKnowledge().GetKnowledgeAgentContainer().SaveAllCurrentKnowledgeAgent();
+                parent_->GetKnowledge().GetKnowledgeAgentContainer().ApplyOnPreviousKnowledgesAgent( functorAgent );
+                parent_->GetKnowledge().GetKnowledgeAgentContainer().SaveAllCurrentKnowledgeAgent();
             }
             RefreshTimeToDiffuseToKnowledgeGroup();
         }

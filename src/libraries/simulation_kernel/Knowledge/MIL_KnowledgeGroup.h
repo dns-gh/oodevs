@@ -144,7 +144,6 @@ public:
     boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObjectByObjectID( unsigned int ) const;
     // LTO begin
     const T_KnowledgeGroupVector&                 GetKnowledgeGroups() const;
-          boost::shared_ptr< MIL_KnowledgeGroup > GetParent() const;
           double                                GetTimeToDiffuseToKnowledgeGroup() const;
           bool                                    IsEnabled() const;
           void                                    SetParent( boost::shared_ptr< MIL_KnowledgeGroup >& parent );
@@ -212,20 +211,20 @@ private:
     //! @name Member data
     //@{
     const MIL_KnowledgeGroupType* type_;
-    unsigned int                  id_;
-    std::string                   name_;  
-    MIL_Army_ABC*           army_;
-    boost::shared_ptr< MIL_KnowledgeGroup > parent_;
+    unsigned int id_;
+    std::string name_;  
+    MIL_Army_ABC* army_;
+    MIL_KnowledgeGroup* parent_;
     DEC_KnowledgeBlackBoard_KnowledgeGroup* knowledgeBlackBoard_;
-    T_AutomateVector        automates_;
+    T_AutomateVector automates_;
     std::set< unsigned int > additionalPerceptions_;
-    T_KnowledgeGroupVector  knowledgeGroups_; // LTO
-    double                  timeToDiffuse_; // LTO
-    bool                    isActivated_; // LTO
-    bool                    hasBeenUpdated_;
-    bool                    isJammed_;
-    bool                    createdByJamming_;
-    const MIL_Agent_ABC*    jammedPion_;
+    T_KnowledgeGroupVector knowledgeGroups_; // LTO
+    double timeToDiffuse_; // LTO
+    bool isActivated_; // LTO
+    bool hasBeenUpdated_;
+    bool isJammed_;
+    bool createdByJamming_;
+    const MIL_Agent_ABC* jammedPion_;
     static MIL_IDManager idManager_;
     //@}
 };

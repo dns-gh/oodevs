@@ -228,6 +228,7 @@ BOOST_AUTO_TEST_CASE( TestExtrapolationTimeInKnowledgeGroup )
 BOOST_AUTO_TEST_CASE( TestLatentRelevance )
 {
     MockArmy army;
+    MOCK_EXPECT( army, GetID ).returns( 42u );
     MockMIL_Time_ABC time;
     MOCK_EXPECT( time, GetCurrentTick ).returns( 1u );
     boost::shared_ptr< MIL_KnowledgeGroup > armyGroup( CreateKnowledgeGroup( army, 1 ) );
