@@ -179,54 +179,6 @@ void DirectFireData::RemoveFirer( const SWORD_Model* component )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DirectFireData::sComposanteWeapons::GetBestWeapon
-// Created: NLD 2004-10-05
-// -----------------------------------------------------------------------------
-bool DirectFireData::sComposanteWeapons::GetBestWeapon( double& rBestScore, const wrapper::View& firer, const wrapper::View& target, const wrapper::View& compTarget, const Weapon*& pBestWeapon ) const
-{
-    bool bUpdated = false;
-    for( CIT_WeaponVector itWeapon = weapons_.begin(); itWeapon != weapons_.end(); ++itWeapon )
-    {
-        const Weapon& weapon = *itWeapon;
-        double rCurrentScore = weapon.GetDangerosity( firer, target, compTarget, true, true ); // 'true' = 'use PH', true = "use ammo"
-        if( rCurrentScore >= rBestScore )
-        {
-            bUpdated = true;
-            rBestScore  = rCurrentScore;
-            pBestWeapon = &weapon;
-        }
-    }
-    return bUpdated;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DirectFireData::sComposanteWeapons::GetRandomWeapon
-// Created: NLD 2004-10-05
-// -----------------------------------------------------------------------------
-bool DirectFireData::sComposanteWeapons::GetRandomWeapon( const wrapper::View& firer, const wrapper::View& target, const wrapper::View& compTarget, const Weapon*& pRandomWeapon ) const
-{
-    const std::size_t nRnd = GET_HOOK( GetFireRandomInteger )( 0, weapons_.size() );
-
-    CIT_WeaponVector it = weapons_.begin();
-    std::advance( it, nRnd );
-
-    for( std::size_t i = 0; i < weapons_.size(); ++i )
-    {
-        const Weapon& weapon = *it;
-        if( weapon.GetDangerosity( firer, target, compTarget, false, true ) > 0 ) // 'false' = 'don't use PH' 'true' = 'use ammo'
-        {
-            pRandomWeapon = &weapon;
-            return true;
-        }
-
-        ++it;
-        if( it == weapons_.end() )
-            it = weapons_.begin();
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
 // Name: DirectFireData::ChooseBestWeapon
 // Created: NLD 2004-10-05
 // -----------------------------------------------------------------------------
@@ -238,7 +190,6 @@ void DirectFireData::ChooseBestWeapon( const wrapper::View& target, const wrappe
     for( CIT_ComposanteWeaponsMap it = composantesWeapons_.begin(); it != composantesWeapons_.end(); ++it )
     {
         const sComposanteWeapons& data = it->second;
-
         bool bUpdated = data.GetBestWeapon( rBestScore, firer_, target, compTarget, pBestWeapon );
         if( bUpdated )
             pBestFirer = it->first;
@@ -252,20 +203,16 @@ void DirectFireData::ChooseBestWeapon( const wrapper::View& target, const wrappe
 void DirectFireData::ChooseRandomWeapon( const wrapper::View& target, const wrapper::View& compTarget, const SWORD_Model*& pRandomFirer, const Weapon*& pRandomWeapon ) const
 {
     const std::size_t nRnd = GET_HOOK( GetFireRandomInteger )( 0, composantesWeapons_.size() );
-
     CIT_ComposanteWeaponsMap it = composantesWeapons_.begin();
     std::advance( it, nRnd );
-
     for( std::size_t i = 0; i < composantesWeapons_.size(); ++i )
     {
         const sComposanteWeapons& data = it->second;
-
         if( data.GetRandomWeapon( firer_, target, compTarget, pRandomWeapon ) )
         {
             pRandomFirer = it->first;
             return;
         }
-
         ++it;
         if( it == composantesWeapons_.end() )
             it = composantesWeapons_.begin();
@@ -282,7 +229,6 @@ bool DirectFireData::GetUnusedFirerWeapon( const SWORD_Model*& pUnusedFirer, con
     pUnusedFirer       = 0;
     if( composantesWeapons_.empty() )
         return false;
-
     CIT_ComposanteWeaponsMap it = composantesWeapons_.begin();
     pUnusedFirerWeapon = it->second.GetUnusedWeapon();
     if( !pUnusedFirerWeapon )
@@ -360,4 +306,49 @@ const Weapon* DirectFireData::sComposanteWeapons::GetUnusedWeapon() const
     if( weapons_.empty() )
         return 0;
     return &weapons_.front();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DirectFireData::sComposanteWeapons::GetBestWeapon
+// Created: NLD 2004-10-05
+// -----------------------------------------------------------------------------
+bool DirectFireData::sComposanteWeapons::GetBestWeapon( double& rBestScore, const wrapper::View& firer, const wrapper::View& target, const wrapper::View& compTarget, const Weapon*& pBestWeapon ) const
+{
+    bool bUpdated = false;
+    for( CIT_WeaponVector itWeapon = weapons_.begin(); itWeapon != weapons_.end(); ++itWeapon )
+    {
+        const Weapon& weapon = *itWeapon;
+        double rCurrentScore = weapon.GetDangerosity( firer, target, compTarget, true, true ); // 'true' = 'use PH', true = "use ammo"
+        if( rCurrentScore >= rBestScore )
+        {
+            bUpdated = true;
+            rBestScore  = rCurrentScore;
+            pBestWeapon = &weapon;
+        }
+    }
+    return bUpdated;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DirectFireData::sComposanteWeapons::GetRandomWeapon
+// Created: NLD 2004-10-05
+// -----------------------------------------------------------------------------
+bool DirectFireData::sComposanteWeapons::GetRandomWeapon( const wrapper::View& firer, const wrapper::View& target, const wrapper::View& compTarget, const Weapon*& pRandomWeapon ) const
+{
+    const std::size_t nRnd = GET_HOOK( GetFireRandomInteger )( 0, weapons_.size() );
+    CIT_WeaponVector it = weapons_.begin();
+    std::advance( it, nRnd );
+    for( std::size_t i = 0; i < weapons_.size(); ++i )
+    {
+        const Weapon& weapon = *it;
+        if( weapon.GetDangerosity( firer, target, compTarget, false, true ) > 0 ) // 'false' = 'don't use PH' 'true' = 'use ammo'
+        {
+            pRandomWeapon = &weapon;
+            return true;
+        }
+        ++it;
+        if( it == weapons_.end() )
+            it = weapons_.begin();
+    }
+    return false;
 }
