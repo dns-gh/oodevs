@@ -263,22 +263,23 @@ namespace
             UpdateKnowledgeRelations( enemies, friends, group, knowledge );
         }
     }
-    void UpdateKnowledgeGroup( const core::Model& entities, core::Model& knowledges, core::Model& enemies, core::Model& friends, const MIL_KnowledgeGroup& group )
+    void UpdateKnowledgeGroup( const core::Model& entities, core::Model& knowledges, core::Model& enemies, core::Model& friends, boost::shared_ptr< MIL_KnowledgeGroup > group )
     {
-        const unsigned int id = group.GetId();
-        UpdateKnowledgeGroupBlackBoard( entities, knowledges[ id ], enemies[ id ], friends[ id ], group );
-        BOOST_FOREACH( const MIL_KnowledgeGroup* subgroup, group.GetKnowledgeGroups() )
-            UpdateKnowledgeGroup( entities, knowledges, enemies, friends, *subgroup );
+        const unsigned int id = group->GetId();
+        UpdateKnowledgeGroupBlackBoard( entities, knowledges[ id ], enemies[ id ], friends[ id ], *group );
+        MIL_KnowledgeGroup::T_KnowledgeGroupVector groups = group->GetKnowledgeGroups();
+        for( MIL_KnowledgeGroup::T_KnowledgeGroupVector::const_iterator it = groups.begin(); it != groups.end(); ++it )
+            UpdateKnowledgeGroup( entities, knowledges, enemies, friends, *it );
     }
     void UpdateKnowledges( const core::Model& entities, core::Model& knowledges, core::Model& enemies, core::Model& friends )
     {
         const tools::Resolver< MIL_Army_ABC >& armies = MIL_AgentServer::GetWorkspace().GetEntityManager().GetArmies();
         for( tools::Iterator< const MIL_Army_ABC& > it = armies.CreateIterator(); it.HasMoreElements(); )
         {
-            typedef std::map< unsigned int, MIL_KnowledgeGroup* > T_Groups;
+            typedef std::map< unsigned int, boost::shared_ptr< MIL_KnowledgeGroup > > T_Groups;
             const T_Groups& groups = it.NextElement().GetKnowledgeGroups();
             for( T_Groups::const_iterator it = groups.begin(); it != groups.end(); ++it )
-                UpdateKnowledgeGroup( entities, knowledges, enemies, friends, *it->second );
+                UpdateKnowledgeGroup( entities, knowledges, enemies, friends, it->second );
         }
     }
     void UpdateAgent( MIL_AgentPion& pion, core::Model& entity )
@@ -294,7 +295,7 @@ namespace
         movement[ "max-slope" ] = pion.GetRole< RoleAction_Moving >().GetMaxSlope();
         movement[ "has-resources" ] = pion.GetRole< RoleAction_Moving >().HasResources();
         movement[ "can-move" ] = pion.GetRole< RoleAction_Moving >().CanMove();
-        entity[ "knowledges" ] = pion.GetKnowledgeGroup().GetId();
+        entity[ "knowledges" ] = pion.GetKnowledgeGroup()->GetId();
         core::Model& components = entity[ "components" ];
         for( std::size_t c = 0; c < components.GetSize(); ++c )
         {

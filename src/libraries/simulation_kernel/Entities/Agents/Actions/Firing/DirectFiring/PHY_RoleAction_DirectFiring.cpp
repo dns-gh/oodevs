@@ -71,7 +71,7 @@ void PHY_RoleAction_DirectFiring::serialize( Archive& archive, const unsigned in
 // -----------------------------------------------------------------------------
 MIL_Population* PHY_RoleAction_DirectFiring::GetPopulationTarget( unsigned int nTargetKnowledgeID )
 {
-    boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = owner_.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( nTargetKnowledgeID );
+    boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = owner_.GetKnowledgeGroup()->GetKnowledge().GetKnowledgePopulationFromID( nTargetKnowledgeID );
     return pKnowledge ? &pKnowledge->GetPopulationKnown() : 0;
 }
 

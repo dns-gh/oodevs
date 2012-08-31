@@ -373,7 +373,7 @@ unsigned int DEC_Decision< T >::GetID() const
 // Created: LDC 2011-05-05
 // -----------------------------------------------------------------------------
 template< class T >
-MIL_KnowledgeGroup& DEC_Decision<T>::GetKnowledgeGroup() const
+boost::shared_ptr< MIL_KnowledgeGroup > DEC_Decision<T>::GetKnowledgeGroup() const
 {
     throw std::runtime_error( "GetKnowledgeGroup cannot be called for this Decision class" );
 }

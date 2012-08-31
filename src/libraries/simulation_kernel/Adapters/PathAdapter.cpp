@@ -285,7 +285,7 @@ void PathAdapter::InitializePathKnowledges( const core::Model& entity, const MIL
     // Enemies
     if( GET_HOOK( AvoidEnemies )( path_ ) )
     {
-        const T_KnowledgeAgentVector& enemies = pion.GetKnowledgeGroup().GetKnowledge().GetEnemies();
+        const T_KnowledgeAgentVector& enemies = pion.GetKnowledgeGroup()->GetKnowledge().GetEnemies();
         for( CIT_KnowledgeAgentVector itKnowledgeAgent = enemies.begin(); itKnowledgeAgent != enemies.end(); ++itKnowledgeAgent )
         {
             const DEC_Knowledge_Agent& knowledge = **itKnowledgeAgent;
@@ -340,7 +340,7 @@ void PathAdapter::InitializePathKnowledges( const core::Model& entity, const MIL
     if( GET_HOOK( HandlePopulations )( path_ ) )
     {
         T_KnowledgePopulationVector knowledgesPopulation;
-        pion.GetKnowledgeGroup().GetKnowledge().GetPopulations( knowledgesPopulation );
+        pion.GetKnowledgeGroup()->GetKnowledge().GetPopulations( knowledgesPopulation );
         pathKnowledgePopulations_.reserve( knowledgesPopulation.size() );
         for( CIT_KnowledgePopulationVector it = knowledgesPopulation.begin(); it != knowledgesPopulation.end(); ++it )
             pathKnowledgePopulations_.push_back( DEC_Path_KnowledgePopulation( **it, boost::bind( &GetPopulationAttitudeCost, path_, _1 ), !pion.GetType().IsTerrorist() ) );

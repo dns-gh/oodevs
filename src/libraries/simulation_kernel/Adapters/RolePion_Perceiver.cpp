@@ -754,7 +754,7 @@ void RolePion_Perceiver::Update( bool /*bIsDead*/ )
 // Name: RolePion_Perceiver::GetKnowledgeGroup
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------
-const MIL_KnowledgeGroup& RolePion_Perceiver::GetKnowledgeGroup() const
+boost::shared_ptr< MIL_KnowledgeGroup > RolePion_Perceiver::GetKnowledgeGroup() const
 {
     return owner_.GetKnowledgeGroup();
 }
@@ -765,7 +765,7 @@ const MIL_KnowledgeGroup& RolePion_Perceiver::GetKnowledgeGroup() const
 // -----------------------------------------------------------------------------
 bool RolePion_Perceiver::IsKnown( const MIL_Agent_ABC& agent ) const
 {
-    return owner_.GetKnowledgeGroup().GetKnowledge().IsKnown( agent );
+    return owner_.GetKnowledgeGroup()->GetKnowledge().IsKnown( agent );
 }
 
 // -----------------------------------------------------------------------------

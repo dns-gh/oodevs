@@ -19,6 +19,7 @@
 #include "simulation_terrain/TER_Object_ABC.h"
 #include "tools/Extendable.h"
 #include "Tools/MIL_IDManager.h"
+#include <boost/shared_ptr.hpp>
 
 namespace google
 {
@@ -149,7 +150,7 @@ public:
     //! @name Knowledge
     //@{
     virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const MIL_Army_ABC& team ) = 0;
-    virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const MIL_KnowledgeGroup& group ) = 0;
+    virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( boost::shared_ptr< MIL_KnowledgeGroup >& group ) = 0;
     //@}
 
     //! @name Manipulator

@@ -225,7 +225,7 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
 {
     if( pathClass_.AvoidEnemies() )
     {
-        const T_KnowledgeAgentVector& enemies = queryMaker_.GetKnowledgeGroup().GetKnowledge().GetEnemies();
+        const T_KnowledgeAgentVector& enemies = queryMaker_.GetKnowledgeGroup()->GetKnowledge().GetEnemies();
         for( CIT_KnowledgeAgentVector itKnowledgeAgent = enemies.begin(); itKnowledgeAgent != enemies.end(); ++itKnowledgeAgent )
         {
             const DEC_Knowledge_Agent& knowledge = **itKnowledgeAgent;
@@ -282,7 +282,7 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
     if( pathClass_.HandlePopulations() )
     {
         T_KnowledgePopulationVector knowledgesPopulation;
-        queryMaker_.GetKnowledgeGroup().GetKnowledge().GetPopulations( knowledgesPopulation );
+        queryMaker_.GetKnowledgeGroup()->GetKnowledge().GetPopulations( knowledgesPopulation );
         pathKnowledgePopulations_.reserve( knowledgesPopulation.size() );
         for( CIT_KnowledgePopulationVector it = knowledgesPopulation.begin(); it != knowledgesPopulation.end(); ++it )
             pathKnowledgePopulations_.push_back( DEC_Path_KnowledgePopulation( **it, boost::bind( &DEC_Agent_PathClass::GetPopulationAttitudeCost, &pathClass_, _1 ), !queryMaker_.GetType().IsTerrorist() ) );

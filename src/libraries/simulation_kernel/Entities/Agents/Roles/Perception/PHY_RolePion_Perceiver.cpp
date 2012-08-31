@@ -902,7 +902,7 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
         TER_Object_ABC::T_ObjectVector perceivableObjects;
         TER_PopulationConcentration_ABC::T_ConstPopulationConcentrationVector perceivableConcentrations;
         TER_PopulationFlow_ABC::T_ConstPopulationFlowVector perceivableFlows;
-        GetKnowledgeGroup().AppendAddedKnowledge( perceivableAgents, perceivableObjects, perceivableConcentrations, perceivableFlows );
+        GetKnowledgeGroup()->AppendAddedKnowledge( perceivableAgents, perceivableObjects, perceivableConcentrations, perceivableFlows );
 
         TER_World::GetWorld().GetAgentManager().GetListWithinCircle( position, maxPerceptionDistance, perceivableAgents );
         for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
@@ -1021,7 +1021,7 @@ void PHY_RolePion_Perceiver::Update( bool /*bIsDead*/ )
 // Name: PHY_RolePion_Perceiver::GetKnowledgeGroup
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------
-const MIL_KnowledgeGroup& PHY_RolePion_Perceiver::GetKnowledgeGroup() const
+boost::shared_ptr< MIL_KnowledgeGroup > PHY_RolePion_Perceiver::GetKnowledgeGroup() const
 {
     return owner_.GetKnowledgeGroup();
 }
@@ -1032,7 +1032,7 @@ const MIL_KnowledgeGroup& PHY_RolePion_Perceiver::GetKnowledgeGroup() const
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Perceiver::IsKnown( const MIL_Agent_ABC& agent ) const
 {
-    return owner_.GetKnowledgeGroup().GetKnowledge().IsKnown( agent );
+    return owner_.GetKnowledgeGroup()->GetKnowledge().IsKnown( agent );
 }
 
 // -----------------------------------------------------------------------------

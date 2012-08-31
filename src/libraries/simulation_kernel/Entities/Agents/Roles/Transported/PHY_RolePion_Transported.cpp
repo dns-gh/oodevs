@@ -220,7 +220,7 @@ void PHY_RolePion_Transported::Update( bool /*bIsDead*/ )
     if( pTransporter_ )
     {
         owner_.Apply( &location::LocationActionNotificationHandler_ABC::Follow, *pTransporter_ );
-        owner_.GetKnowledgeGroup().UpdateKnowledgeFromTransported( *pTransporter_ );
+        owner_.GetKnowledgeGroup()->UpdateKnowledgeFromTransported( *pTransporter_ );
     }
 }
 

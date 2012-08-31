@@ -809,7 +809,9 @@ void MIL_EntityManager::UpdateKnowledgeGroups()
     profiler_.Start();
     try
     {
-        knowledgeGroupFactory_->Apply( boost::bind( &MIL_KnowledgeGroup::UpdateKnowledgeGroup, _1 ) );
+        const std::map< unsigned long, boost::shared_ptr< MIL_KnowledgeGroup > >& groups = knowledgeGroupFactory_->GetElements();
+        for( std::map< unsigned long, boost::shared_ptr< MIL_KnowledgeGroup > >::const_iterator it = groups.begin(); it != groups.end(); ++it )
+            (it->second)->UpdateKnowledgeGroup();
     }
     catch( std::exception& e )
     {
@@ -1046,7 +1048,7 @@ void MIL_EntityManager::ProcessAutomatCreationRequest( const UnitMagicAction& ms
             throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_parameter );
 
         unsigned int theGroupId = groupId.value().Get( 0 ).has_identifier() ? groupId.value().Get( 0 ).identifier() : groupId.value().Get( 0 ).knowledgegroup().id();
-        MIL_KnowledgeGroup* group = entity.GetArmy().FindKnowledgeGroup( theGroupId );
+        boost::shared_ptr< MIL_KnowledgeGroup > group = entity.GetArmy().FindKnowledgeGroup( theGroupId );
         if( !group || group->IsJammed() )
             throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_parameter );
 
@@ -1387,7 +1389,7 @@ void MIL_EntityManager::ProcessAutomateChangeKnowledgeGroup( const UnitMagicActi
         client::AutomatChangeKnowledgeGroup resendMessage;
         resendMessage().mutable_automat()->set_id( pAutomate->GetID() );
         resendMessage().mutable_party()->set_id( pAutomate->GetArmy().GetID() );
-        resendMessage().mutable_knowledge_group()->set_id( pAutomate->GetKnowledgeGroup().GetId() );
+        resendMessage().mutable_knowledge_group()->set_id( pAutomate->GetKnowledgeGroup()->GetId() );
         resendMessage.Send( NET_Publisher_ABC::Publisher(), nCtx );
     }
 }
@@ -1633,8 +1635,8 @@ void MIL_EntityManager::ProcessKnowledgeGroupUpdate( const KnowledgeMagicAction&
     ack().set_error_code( KnowledgeGroupAck::no_error );
     try
     {
-        MIL_KnowledgeGroup* pReceiver = FindKnowledgeGroupFromParents( message.knowledge_group().id() );
-        if( pReceiver && ( !pReceiver->IsJammed()
+        boost::shared_ptr< MIL_KnowledgeGroup > pReceiver = FindKnowledgeGroupFromParents( message.knowledge_group().id() );
+        if ( pReceiver.get() && ( !pReceiver->IsJammed()
                             || message.type() == sword::KnowledgeMagicAction::add_knowledge ) )
             pReceiver->OnReceiveKnowledgeGroupUpdate( message, *armyFactory_ );
         else
@@ -2149,38 +2151,29 @@ MIL_Formation* MIL_EntityManager::FindFormation( unsigned int nID ) const
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::FindKnowledgeGroup
 // Created: SLG 2009-12-17
-// LTO
 // -----------------------------------------------------------------------------
-MIL_KnowledgeGroup* MIL_EntityManager::FindKnowledgeGroup( unsigned int nID ) const
+boost::shared_ptr< MIL_KnowledgeGroup > MIL_EntityManager::FindKnowledgeGroup( unsigned int nID ) const
 {
     return knowledgeGroupFactory_->Find( nID );
 }
 
 // -----------------------------------------------------------------------------
-namespace
-{
-    void FindKnowledgeGroupFromParent( MIL_KnowledgeGroup** ppKnowledgetGroupFound, unsigned int nID, MIL_KnowledgeGroup& curKG )
-    {
-        if( *ppKnowledgetGroupFound )
-            return;
-        MIL_KnowledgeGroup* pKG = curKG.FindKnowledgeGroup( nID );
-        if( pKG )
-            *ppKnowledgetGroupFound = pKG;
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::FindKnowledgeGroupFromParents
 // Created: MMC 2011-06-14
-// LTO
 // -----------------------------------------------------------------------------
-MIL_KnowledgeGroup* MIL_EntityManager::FindKnowledgeGroupFromParents( unsigned int nID )
+boost::shared_ptr< MIL_KnowledgeGroup > MIL_EntityManager::FindKnowledgeGroupFromParents( unsigned int nID )
 {
-    MIL_KnowledgeGroup* pCurKG = knowledgeGroupFactory_->Find( nID );
-    if( pCurKG )
+    boost::shared_ptr< MIL_KnowledgeGroup > pCurKG = knowledgeGroupFactory_->Find( nID );
+    if ( pCurKG.get() )
         return pCurKG;
-    knowledgeGroupFactory_->Apply( boost::bind( &FindKnowledgeGroupFromParent, &pCurKG, nID, _1 ) );
-    return pCurKG;
+    std::map< unsigned long, boost::shared_ptr< MIL_KnowledgeGroup > > elements = knowledgeGroupFactory_->GetElements();
+    for( std::map< unsigned long, boost::shared_ptr< MIL_KnowledgeGroup > >::const_iterator it = elements.begin(); it != elements.end(); ++it )
+    {
+        boost::shared_ptr< MIL_KnowledgeGroup > pKG = (it->second)->FindKnowledgeGroup( nID );
+        if ( pKG.get() )
+            return pKG;
+    }
+    return boost::shared_ptr< MIL_KnowledgeGroup >();
 }
 
 // -----------------------------------------------------------------------------
@@ -2382,7 +2375,9 @@ MIL_Population* MIL_EntityManager::FindPopulation( MIL_UrbanObject_ABC* urbanObj
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::Accept( KnowledgesVisitor_ABC& visitor ) const
 {
-    knowledgeGroupFactory_->Apply( boost::bind( &MIL_KnowledgeGroup::Accept, _1, boost::ref( visitor ) ) );
+    std::map< unsigned long, boost::shared_ptr< MIL_KnowledgeGroup > > elements = knowledgeGroupFactory_->GetElements();
+    for( std::map< unsigned long, boost::shared_ptr< MIL_KnowledgeGroup > >::const_iterator it = elements.begin(); it != elements.end(); ++it )
+        (it->second)->Accept( visitor );
     armyFactory_->Apply( boost::bind( &MIL_Army_ABC::Accept, _1, boost::ref( visitor ) ) );
 }
 

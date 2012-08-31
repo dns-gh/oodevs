@@ -343,7 +343,7 @@ namespace
     }
     DEFINE_HOOK( IsKnown, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) )
     {
-        return GET_PION( perceiver ).GetKnowledgeGroup().GetKnowledge().IsKnown( GET_PION( target ) );
+        return GET_PION( perceiver ).GetKnowledgeGroup()->GetKnowledge().IsKnown( GET_PION( target ) );
     }
     DEFINE_HOOK( ComputeAgentRatioInsidePerceptionPolygon, double, ( const SWORD_Model* perceiver, const SWORD_Model* target, double distance, double roll ) )
     {
@@ -419,7 +419,7 @@ namespace
         TER_Object_ABC::T_ObjectVector perceivableObjects;
         TER_PopulationConcentration_ABC::T_ConstPopulationConcentrationVector perceivableConcentrations;
         TER_PopulationFlow_ABC::T_ConstPopulationFlowVector perceivableFlows;
-        GET_PION( entity ).GetKnowledgeGroup().AppendAddedKnowledge( perceivableAgents, perceivableObjects, perceivableConcentrations, perceivableFlows );
+        GET_PION( entity ).GetKnowledgeGroup()->AppendAddedKnowledge( perceivableAgents, perceivableObjects, perceivableConcentrations, perceivableFlows );
         BOOST_FOREACH( TER_Agent_ABC* agent, perceivableAgents )
             agentCallback( core::Convert( &rootNode[ "entities" ][ static_cast< const PHY_RoleInterface_Location* >( agent )->GetAgent().GetID() ] ), userData );
         BOOST_FOREACH( TER_Object_ABC* object, perceivableObjects )
@@ -435,39 +435,39 @@ namespace
     }
     DEFINE_HOOK( BelongsToKnowledgeGroup, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) )
     {
-        return GET_PION( target ).BelongsTo( GET_PION( perceiver ).GetKnowledgeGroup() );
+        return GET_PION( target ).BelongsTo( *( GET_PION( perceiver ).GetKnowledgeGroup() ) );
     }
     DEFINE_HOOK( IsAgentPerceptionDistanceHacked, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) )
     {
-        return GET_PION( perceiver ).GetKnowledgeGroup().IsPerceptionDistanceHacked( GET_PION( target ) );
+        return GET_PION( perceiver ).GetKnowledgeGroup()->IsPerceptionDistanceHacked( GET_PION( target ) );
     }
     DEFINE_HOOK( IsObjectPerceptionDistanceHacked, bool, ( const SWORD_Model* perceiver, const MIL_Object_ABC* object ) )
     {
-        return GET_PION( perceiver ).GetKnowledgeGroup().IsPerceptionDistanceHacked( *object );
+        return GET_PION( perceiver ).GetKnowledgeGroup()->IsPerceptionDistanceHacked( *object );
     }
     DEFINE_HOOK( IsPopulationFlowPerceptionDistanceHacked, bool, ( const SWORD_Model* perceiver, const MIL_PopulationFlow* flow ) )
     {
-        return GET_PION( perceiver ).GetKnowledgeGroup().IsPerceptionDistanceHacked( flow->GetPopulation() );
+        return GET_PION( perceiver ).GetKnowledgeGroup()->IsPerceptionDistanceHacked( flow->GetPopulation() );
     }
     DEFINE_HOOK( IsPopulationConcentrationPerceptionDistanceHacked, bool, ( const SWORD_Model* perceiver, const MIL_PopulationConcentration* concentration ) )
     {
-        return GET_PION( perceiver ).GetKnowledgeGroup().IsPerceptionDistanceHacked( concentration->GetPopulation() );
+        return GET_PION( perceiver ).GetKnowledgeGroup()->IsPerceptionDistanceHacked( concentration->GetPopulation() );
     }
     DEFINE_HOOK( GetHackedPerceptionLevel, int, ( const SWORD_Model* perceiver, const SWORD_Model* target ) )
     {
-        return GET_PION( perceiver ).GetKnowledgeGroup().GetPerceptionLevel( GET_PION( target ) ).GetID();
+        return GET_PION( perceiver ).GetKnowledgeGroup()->GetPerceptionLevel( GET_PION( target ) ).GetID();
     }
     DEFINE_HOOK( GetObjectPerceptionLevel, int, ( const SWORD_Model* perceiver, const MIL_Object_ABC* object ) )
     {
-        return GET_PION( perceiver ).GetKnowledgeGroup().GetPerceptionLevel( *object ).GetID();
+        return GET_PION( perceiver ).GetKnowledgeGroup()->GetPerceptionLevel( *object ).GetID();
     }
     DEFINE_HOOK( GetPopulationFlowPerceptionLevel, int, ( const SWORD_Model* perceiver, const MIL_PopulationFlow* flow ) )
     {
-        return GET_PION( perceiver ).GetKnowledgeGroup().GetPerceptionLevel( flow->GetPopulation() ).GetID();
+        return GET_PION( perceiver ).GetKnowledgeGroup()->GetPerceptionLevel( flow->GetPopulation() ).GetID();
     }
     DEFINE_HOOK( GetPopulationConcentrationPerceptionLevel, int, ( const SWORD_Model* perceiver, const MIL_PopulationConcentration* concentration ) )
     {
-        return GET_PION( perceiver ).GetKnowledgeGroup().GetPerceptionLevel( concentration->GetPopulation() ).GetID();
+        return GET_PION( perceiver ).GetKnowledgeGroup()->GetPerceptionLevel( concentration->GetPopulation() ).GetID();
     }
     DEFINE_HOOK( CanBeSeen, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) )
     {

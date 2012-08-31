@@ -17,6 +17,7 @@
 #include "SurrenderNotificationHandler_ABC.h"
 #include "PHY_RoleInterface_Communications.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
+#include <boost/shared_ptr.hpp>
 
 namespace xml
 {
@@ -102,7 +103,7 @@ public:
 
     //! @name Accessors
     //@{
-    MIL_KnowledgeGroup& GetKnowledgeGroup() const;
+    boost::shared_ptr< MIL_KnowledgeGroup > GetKnowledgeGroup() const;
     bool IsJammed() const;
     bool IsInEmissionBlackout() const;
     bool IsInReceptionBlackout() const;
@@ -136,7 +137,8 @@ private:
     bool                bHasChanged_;
     bool                bSilentBeforeCapture_;
     const bool          bIsAutonomous_;
-    MIL_KnowledgeGroup* pJammingKnowledgeGroup_;
+    boost::shared_ptr< MIL_KnowledgeGroup > pJammingKnowledgeGroup_;
+
     //@}
 
     //! @name Static member data

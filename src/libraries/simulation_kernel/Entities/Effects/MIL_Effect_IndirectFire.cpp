@@ -89,7 +89,7 @@ void MIL_Effect_IndirectFire::UpdateTargetPositionFromKnowledge()
 {
     if( nTargetKnowledgeID_ == 0 )
         return;
-    boost::shared_ptr< DEC_Knowledge_Agent > pTargetKnowledge = firer_.GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgentFromID( nTargetKnowledgeID_ );
+    boost::shared_ptr< DEC_Knowledge_Agent > pTargetKnowledge = firer_.GetKnowledgeGroup()->GetKnowledge().GetKnowledgeAgentFromID( nTargetKnowledgeID_ );
     if( !pTargetKnowledge || !pTargetKnowledge->IsValid() )
     {
         nTargetKnowledgeID_ = 0;
@@ -163,7 +163,7 @@ bool MIL_Effect_IndirectFire::Execute()
         //LTO begin
         if( indirectDotationCategory_.GetDotationCategory().IsGuided() )
         {
-            boost::shared_ptr< DEC_Knowledge_Agent > pTargetKnowledge = firer_.GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgentFromID( nTargetKnowledgeID_ );
+            boost::shared_ptr< DEC_Knowledge_Agent > pTargetKnowledge = firer_.GetKnowledgeGroup()->GetKnowledge().GetKnowledgeAgentFromID( nTargetKnowledgeID_ );
             if( pTargetKnowledge && pTargetKnowledge->IsValid() )
             {
                 indirectDotationCategory_.GetDotationCategory().ApplyIndirectFireEffect( firer_, pTargetKnowledge->GetAgentKnown(), nNbrAmmoFired_, *pFireResult_ );
@@ -273,7 +273,7 @@ bool MIL_Effect_IndirectFire::IsTargetValid() const
 {
     if( indirectDotationCategory_.GetDotationCategory().IsGuided() && nTargetKnowledgeID_ != 0 )
     {
-        boost::shared_ptr< DEC_Knowledge_Agent > pTargetKnowledge = firer_.GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgentFromID( nTargetKnowledgeID_ );
+        boost::shared_ptr< DEC_Knowledge_Agent > pTargetKnowledge = firer_.GetKnowledgeGroup()->GetKnowledge().GetKnowledgeAgentFromID( nTargetKnowledgeID_ );
         if( pTargetKnowledge && pTargetKnowledge->IsValid() )
         {
             if( pTargetKnowledge->GetPosition().Distance( firer_.GetRole< PHY_RoleInterface_Location >().GetPosition() ) > indirectDotationCategory_.GetDotationCategory().GetGuidanceRange()

@@ -41,12 +41,7 @@ public:
     static const MIL_KnowledgeGroupType* FindType( const std::string& strName );
     static const MIL_KnowledgeGroupType* FindType( unsigned int nID );
     //@}
-
-    //! @name Instantiation
-    //@{
-    MIL_KnowledgeGroup& InstanciateKnowledgeGroup( unsigned int nID, MIL_Army_ABC& army ) const;
-    //@}
-
+    
     //! @name Accessors
     //@{
     double GetKnowledgeAgentMaxLifeTime() const;

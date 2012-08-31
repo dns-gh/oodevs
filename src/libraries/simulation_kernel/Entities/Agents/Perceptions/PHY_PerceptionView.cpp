@@ -75,7 +75,7 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MT_Vector2D& vPoin
 const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_Agent_ABC& target )
 {
     TransfertPerception();
-    if( target.BelongsTo( perceiver_.GetKnowledgeGroup() ) || perceiver_.IsIdentified( target ) )
+    if( target.BelongsTo( *perceiver_.GetKnowledgeGroup() ) || perceiver_.IsIdentified( target ) )
         return PHY_PerceptionLevel::identified_;
 
     if( !bIsEnabled_ )
@@ -117,15 +117,15 @@ void PHY_PerceptionView::Execute( const TER_Agent_ABC::T_AgentPtrVector& perceiv
         {
             MIL_Agent_ABC& agent = static_cast< PHY_RoleInterface_Location& >( **itAgent ).GetAgent();
 
-            if( agent.BelongsTo( perceiver_.GetKnowledgeGroup() ) )
+            if( agent.BelongsTo( *perceiver_.GetKnowledgeGroup() ) )
                 continue;
 
             std::auto_ptr< detection::DetectionComputer_ABC > detectionComputer( detectionComputerFactory.Create( agent ) );
             perceiver_.GetPion().Execute( *detectionComputer );
             agent.Execute( *detectionComputer );
 
-            if ( perceiver_.GetKnowledgeGroup().IsPerceptionDistanceHacked( agent ) )
-                perceiver_.NotifyPerception( agent, perceiver_.GetKnowledgeGroup().GetPerceptionLevel( agent ) );
+            if ( perceiver_.GetKnowledgeGroup()->IsPerceptionDistanceHacked( agent ) )
+                perceiver_.NotifyPerception( agent, perceiver_.GetKnowledgeGroup()->GetPerceptionLevel( agent ) );
             else if( detectionComputer->CanBeSeen() && perceiver_.NotifyPerception( agent, Compute( agent ) ) )
                 if( !civiliansEncountered && agent.IsCivilian() )
                 {
@@ -204,8 +204,8 @@ void PHY_PerceptionView::Execute( const TER_Object_ABC::T_ObjectVector& perceiva
         {
             MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **itObject );
 
-            if ( perceiver_.GetKnowledgeGroup().IsPerceptionDistanceHacked( object ) )
-                perceiver_.NotifyPerception( object, perceiver_.GetKnowledgeGroup().GetPerceptionLevel( object ) );
+            if ( perceiver_.GetKnowledgeGroup()->IsPerceptionDistanceHacked( object ) )
+                perceiver_.NotifyPerception( object, perceiver_.GetKnowledgeGroup()->GetPerceptionLevel( object ) );
             else
                 perceiver_.NotifyPerception( object, Compute( object ) );
         }
@@ -257,8 +257,8 @@ void PHY_PerceptionView::Execute( const TER_PopulationFlow_ABC::T_ConstPopulatio
             const PHY_PerceptionLevel& level = Compute( flow, shape );
 
             bool mustReport = false;
-            if ( perceiver_.GetKnowledgeGroup().IsPerceptionDistanceHacked( flow.GetPopulation() ) )
-                mustReport = perceiver_.NotifyPerception( flow, perceiver_.GetKnowledgeGroup().GetPerceptionLevel( flow.GetPopulation()), shape );
+            if ( perceiver_.GetKnowledgeGroup()->IsPerceptionDistanceHacked( flow.GetPopulation() ) )
+                mustReport = perceiver_.NotifyPerception( flow, perceiver_.GetKnowledgeGroup()->GetPerceptionLevel( flow.GetPopulation()), shape );
             else
                 mustReport = perceiver_.NotifyPerception( flow, level, shape );
             civiliansEncountered |= mustReport;
@@ -309,8 +309,8 @@ void PHY_PerceptionView::Execute( const TER_PopulationConcentration_ABC::T_Const
             MIL_PopulationConcentration& concentration = const_cast< MIL_PopulationConcentration& >( static_cast< const MIL_PopulationConcentration& >( **it ) ); // $$$ RC LDC Should propagate constness to called methods instead
 
             bool mustReport = false;
-            if ( perceiver_.GetKnowledgeGroup().IsPerceptionDistanceHacked( concentration.GetPopulation() ) )
-                mustReport = perceiver_.NotifyPerception( concentration, perceiver_.GetKnowledgeGroup().GetPerceptionLevel( concentration.GetPopulation() ) );
+            if ( perceiver_.GetKnowledgeGroup()->IsPerceptionDistanceHacked( concentration.GetPopulation() ) )
+                mustReport = perceiver_.NotifyPerception( concentration, perceiver_.GetKnowledgeGroup()->GetPerceptionLevel( concentration.GetPopulation() ) );
             else
                 mustReport = perceiver_.NotifyPerception( concentration, Compute( concentration ) );
             civiliansEncountered |= mustReport;

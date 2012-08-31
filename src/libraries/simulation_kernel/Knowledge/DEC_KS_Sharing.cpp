@@ -24,7 +24,18 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KS_Sharing )
 // Created: NLD 2005-04-20
 // -----------------------------------------------------------------------------
 DEC_KS_Sharing::sShareSource::sShareSource()
-    : pShareSource_       ( 0 )
+    : vSharedCircleCenter_( )
+    , rSharedCircleRadius_( std::numeric_limits< double >::max() )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_Sharing::sShareSource::sShareSource
+// Created: NLD 2005-04-20
+// -----------------------------------------------------------------------------
+DEC_KS_Sharing::sShareSource::sShareSource( boost::shared_ptr< MIL_KnowledgeGroup >& shareSource )
+    : pShareSource_       ( shareSource )
     , vSharedCircleCenter_( )
     , rSharedCircleRadius_( std::numeric_limits< double >::max() )
 {
@@ -35,20 +46,8 @@ DEC_KS_Sharing::sShareSource::sShareSource()
 // Name: DEC_KS_Sharing::sShareSource::sShareSource
 // Created: NLD 2005-04-20
 // -----------------------------------------------------------------------------
-DEC_KS_Sharing::sShareSource::sShareSource( const MIL_KnowledgeGroup& shareSource )
-    : pShareSource_       ( &shareSource )
-    , vSharedCircleCenter_( )
-    , rSharedCircleRadius_( std::numeric_limits< double >::max() )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KS_Sharing::sShareSource::sShareSource
-// Created: NLD 2005-04-20
-// -----------------------------------------------------------------------------
-DEC_KS_Sharing::sShareSource::sShareSource( const MIL_KnowledgeGroup& shareSource, const MT_Vector2D& vSharedCircleCenter, double rSharedCircleRadius )
-    : pShareSource_       ( &shareSource )
+DEC_KS_Sharing::sShareSource::sShareSource( boost::shared_ptr< MIL_KnowledgeGroup >& shareSource, const MT_Vector2D& vSharedCircleCenter, double rSharedCircleRadius )
+    : pShareSource_       ( shareSource )
     , vSharedCircleCenter_( vSharedCircleCenter )
     , rSharedCircleRadius_( rSharedCircleRadius )
 {
@@ -109,7 +108,7 @@ namespace
     class sKnowledgeSharer : boost::noncopyable
     {
     public:
-        sKnowledgeSharer( const MIL_KnowledgeGroup& knowledgeGroup, DEC_BlackBoard_CanContainKnowledgeAgent& blackBoard, const DEC_KS_Sharing::sShareSource& shareSource )
+        sKnowledgeSharer( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, DEC_BlackBoard_CanContainKnowledgeAgent& blackBoard, const DEC_KS_Sharing::sShareSource& shareSource )
             : knowledgeGroup_( knowledgeGroup )
             , blackBoard_    ( blackBoard )
             , shareSource_   ( shareSource )
@@ -130,7 +129,7 @@ namespace
         }
 
     private:
-        const MIL_KnowledgeGroup&                      knowledgeGroup_;
+              boost::shared_ptr< MIL_KnowledgeGroup > knowledgeGroup_;
               DEC_BlackBoard_CanContainKnowledgeAgent& blackBoard_;
         const DEC_KS_Sharing::sShareSource&            shareSource_;
     };
@@ -157,7 +156,7 @@ void DEC_KS_Sharing::Talk( int currentTimeStep )
 // Name: DEC_KS_Sharing::ShareFromSource
 // Created: NLD 2005-04-20
 // -----------------------------------------------------------------------------
-void DEC_KS_Sharing::ShareFromSource( const MIL_KnowledgeGroup& source, unsigned int nShareTimeStep )
+void DEC_KS_Sharing::ShareFromSource( boost::shared_ptr< MIL_KnowledgeGroup >& source, unsigned int nShareTimeStep )
 {
     shareSources_.insert( std::make_pair( nShareTimeStep, sShareSource( source ) ) );
 }
@@ -166,7 +165,7 @@ void DEC_KS_Sharing::ShareFromSource( const MIL_KnowledgeGroup& source, unsigned
 // Name: DEC_KS_Sharing::ShareFromSource
 // Created: NLD 2005-04-20
 // -----------------------------------------------------------------------------
-void DEC_KS_Sharing::ShareFromSource( const MIL_KnowledgeGroup& source, unsigned int nShareTimeStep, const MT_Vector2D& vSharedCircleCenter, double rSharedCircleRadius )
+void DEC_KS_Sharing::ShareFromSource( boost::shared_ptr< MIL_KnowledgeGroup >& source, unsigned int nShareTimeStep, const MT_Vector2D& vSharedCircleCenter, double rSharedCircleRadius )
 {
     shareSources_.insert( std::make_pair( nShareTimeStep, sShareSource( source, vSharedCircleCenter, rSharedCircleRadius ) ) );
 }

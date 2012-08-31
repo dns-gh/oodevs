@@ -15,6 +15,7 @@
 #include "MIL.h"
 #include "DEC_Knowledge_ABC.h"
 #include "Tools/MIL_IDManager.h"
+#include <boost/shared_ptr.hpp>
 
 class MIL_Agent_ABC;
 class MIL_AgentPion;
@@ -42,7 +43,7 @@ class DEC_Knowledge_Population : public DEC_Knowledge_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Knowledge_Population( const MIL_KnowledgeGroup& knowledgeGroup, MIL_Population& populationKnown );
+             DEC_Knowledge_Population( boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, MIL_Population& populationKnown );
              DEC_Knowledge_Population();
     virtual ~DEC_Knowledge_Population();
     //@}
@@ -131,11 +132,10 @@ private:
     //@{
     static MIL_IDManager idManager_;
     MIL_Population* pPopulationKnown_;
+    boost::shared_ptr< MIL_KnowledgeGroup > pKnowledgeGroup_;
     const PHY_PerceptionLevel* pHackedPerceptionLevel_;
     std::string criticalIntelligence_;
     const unsigned int nID_;
-    const unsigned int knowledgeGroupId_;
-    const MIL_KnowledgeGroupType* groupType_;
     T_ConcentrationMap concentrations_;
     T_FlowMap flows_;
     double rDominationState_;

@@ -36,7 +36,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_BlackBoard_CanContainKnowledgeAgent( const MIL_KnowledgeGroup& knowledgeGroup );
+             DEC_BlackBoard_CanContainKnowledgeAgent( MIL_KnowledgeGroup* knowledgeGroup );
              DEC_BlackBoard_CanContainKnowledgeAgent();
     virtual ~DEC_BlackBoard_CanContainKnowledgeAgent();
     //@}
@@ -51,7 +51,7 @@ public:
 
     //! @name Operations
     //@{
-    DEC_Knowledge_Agent& CreateKnowledgeAgent ( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_Agent_ABC& agentKnown );
+    DEC_Knowledge_Agent& CreateKnowledgeAgent ( boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, const MIL_Agent_ABC& agentKnown );
     void                 DestroyKnowledgeAgent( DEC_Knowledge_Agent& knowledge );
     void                 SaveAllCurrentKnowledgeAgent();
     void Accept( KnowledgesVisitor_ABC& visitor ) const;
@@ -125,7 +125,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const MIL_KnowledgeGroup*   pKnowledgeGroup_;
+    const MIL_KnowledgeGroup* pKnowledgeGroup_;
           T_KnowledgeAgentMap   realAgentMap_;
           T_KnowledgeAgentMap   previousAgentMap_;
           T_KnowledgeAgentIDMap unitKnowledgeFromIDMap_;

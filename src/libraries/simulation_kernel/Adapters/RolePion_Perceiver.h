@@ -163,7 +163,7 @@ public:
 
     //! @name Tools
     //@{
-    virtual const MIL_KnowledgeGroup& GetKnowledgeGroup() const;
+    virtual boost::shared_ptr< MIL_KnowledgeGroup > GetKnowledgeGroup() const;
     virtual MIL_Agent_ABC& GetPion() const;
     virtual double GetMaxAgentPerceptionDistance() const;
     virtual double GetMaxTheoreticalAgentPerceptionDistance() const;

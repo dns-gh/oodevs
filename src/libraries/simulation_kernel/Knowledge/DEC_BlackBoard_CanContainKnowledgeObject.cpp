@@ -31,7 +31,6 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_BlackBoard_CanContainKnowledgeObject )
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_BlackBoard_CanContainKnowledgeObject::DEC_BlackBoard_CanContainKnowledgeObject()
-: pKnowledgeGroup_( 0 )
 {
     // NOTHING
 }
@@ -51,7 +50,7 @@ DEC_BlackBoard_CanContainKnowledgeObject::~DEC_BlackBoard_CanContainKnowledgeObj
 // Created: LDC 2010-04-06
 // Copies army's object blackboard.
 // -----------------------------------------------------------------------------
-DEC_BlackBoard_CanContainKnowledgeObject::DEC_BlackBoard_CanContainKnowledgeObject( MIL_Army_ABC& army, MIL_KnowledgeGroup* pKnowledgeGroup )
+DEC_BlackBoard_CanContainKnowledgeObject::DEC_BlackBoard_CanContainKnowledgeObject( MIL_Army_ABC& army, boost::shared_ptr< MIL_KnowledgeGroup >& pKnowledgeGroup )
 : pKnowledgeGroup_( pKnowledgeGroup )
 {
     DEC_BlackBoard_CanContainKnowledgeObject& copy = army.GetKnowledge().GetKnowledgeObjectContainer();
@@ -138,8 +137,8 @@ void DEC_BlackBoard_CanContainKnowledgeObject::save( MIL_CheckPointOutArchive& f
 boost::shared_ptr< DEC_Knowledge_Object > DEC_BlackBoard_CanContainKnowledgeObject::CreateKnowledgeObject( const MIL_Army_ABC& teamKnowing, MIL_Object_ABC& objectKnown )
 {
     boost::shared_ptr< DEC_Knowledge_Object > knowledge;
-    if( pKnowledgeGroup_ )
-        knowledge = objectKnown.CreateKnowledge( *pKnowledgeGroup_ );
+    if( pKnowledgeGroup_.get() )
+        knowledge = objectKnown.CreateKnowledge( pKnowledgeGroup_ );
     else
         knowledge = objectKnown.CreateKnowledge( teamKnowing );
 

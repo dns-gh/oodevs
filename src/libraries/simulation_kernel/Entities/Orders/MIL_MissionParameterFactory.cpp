@@ -591,7 +591,7 @@ void MIL_MissionParameterFactory::SetCrowdKnowledgeParameter( DEC_Decision_ABC* 
 {
     if( !pMission.get() )
         throw std::runtime_error( "Invalid mission" );
-    boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = caller->GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( knowledgeId );
+    boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = caller->GetKnowledgeGroup()->GetKnowledge().GetKnowledgePopulationFromID( knowledgeId );
     pMission->SetParameter( parameter, CreatePopulationKnowledge( pKnowledge ) );
 }
 

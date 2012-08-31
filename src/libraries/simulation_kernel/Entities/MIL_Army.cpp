@@ -11,6 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_Army.h"
+#include "Checkpoints/SerializationTools.h"
 #include "Entities/Inhabitants/MIL_Inhabitant.h"
 #include "Entities/Objects/MIL_ObjectManager.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
@@ -125,8 +126,6 @@ MIL_Army::MIL_Army( ArmyFactory_ABC& armyFactory, const MT_Converter< std::strin
 // -----------------------------------------------------------------------------
 MIL_Army::~MIL_Army()
 {
-    for( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
-        delete it->second;
     knowledgeGroups_.clear();
     delete pKnowledgeBlackBoard_;
 }
@@ -497,9 +496,9 @@ void MIL_Army::ReadLogisticLinkSubordinate( xml::xistream& xis, AutomateFactory_
 // Name: MIL_Army::RegisterKnowledgeGroup
 // Created: NLD 2006-10-18
 // -----------------------------------------------------------------------------
-void MIL_Army::RegisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup )
+void MIL_Army::RegisterKnowledgeGroup( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup )
 {
-    if( ! knowledgeGroups_.insert( std::make_pair( knowledgeGroup.GetId(), &knowledgeGroup ) ).second )
+    if( ! knowledgeGroups_.insert( std::make_pair( knowledgeGroup->GetId(), knowledgeGroup ) ).second )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
 }
 
@@ -507,9 +506,9 @@ void MIL_Army::RegisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup )
 // Name: MIL_Army::UnregisterKnowledgeGroup
 // Created: NLD 2006-10-18
 // -----------------------------------------------------------------------------
-void MIL_Army::UnregisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup )
+void MIL_Army::UnregisterKnowledgeGroup( const boost::shared_ptr< MIL_KnowledgeGroup > & knowledgeGroup )
 {
-    if( knowledgeGroups_.erase( knowledgeGroup.GetId() ) != 1 )
+    if( knowledgeGroups_.erase( knowledgeGroup->GetId() ) != 1 )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
 }
 
@@ -805,21 +804,19 @@ void MIL_Army::UnregisterInhabitant( MIL_Inhabitant& inhabitant )
 // Name: MIL_Army::FindKnowledgeGroup
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------
-MIL_KnowledgeGroup* MIL_Army::FindKnowledgeGroup( unsigned int nID ) const
+boost::shared_ptr< MIL_KnowledgeGroup > MIL_Army::FindKnowledgeGroup( unsigned int nID ) const
 {
     CIT_KnowledgeGroupMap it = knowledgeGroups_.find( nID );
-    // LTO begin
     if( it == knowledgeGroups_.end() )
     {
         for( CIT_KnowledgeGroupMap itBis = knowledgeGroups_.begin(); itBis != knowledgeGroups_.end(); ++itBis )
         {
-            MIL_KnowledgeGroup* pkg = itBis->second->FindKnowledgeGroup( nID );
+            boost::shared_ptr< MIL_KnowledgeGroup > pkg = itBis->second->FindKnowledgeGroup( nID );
             if( pkg )
                 return pkg;
         }
-        return 0;
+        return boost::shared_ptr< MIL_KnowledgeGroup >();
     }
-    // LTO end
     return it->second;
 }
 

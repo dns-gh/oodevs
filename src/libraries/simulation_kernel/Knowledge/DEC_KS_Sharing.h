@@ -39,8 +39,8 @@ public:
     virtual void Clean();
     virtual void Talk   ( int currentTimeStep );
 
-    void ShareFromSource( const MIL_KnowledgeGroup& source, unsigned int nShareTimeStep );
-    void ShareFromSource( const MIL_KnowledgeGroup& source, unsigned int nShareTimeStep, const MT_Vector2D& vSharedCircleCenter, double rSharedCircleRadius );
+    void ShareFromSource( boost::shared_ptr< MIL_KnowledgeGroup >& source, unsigned int nShareTimeStep );
+    void ShareFromSource( boost::shared_ptr< MIL_KnowledgeGroup >& source, unsigned int nShareTimeStep, const MT_Vector2D& vSharedCircleCenter, double rSharedCircleRadius );
     //@}
 
     //! @name CheckPoints
@@ -54,10 +54,10 @@ public:
     struct sShareSource
     {
         sShareSource();
-        sShareSource( const MIL_KnowledgeGroup& shareSource );
-        sShareSource( const MIL_KnowledgeGroup& shareSource, const MT_Vector2D& vSharedCircleCenter, double rSharedCircleRadius );
+        sShareSource( boost::shared_ptr< MIL_KnowledgeGroup >& shareSource );
+        sShareSource( boost::shared_ptr< MIL_KnowledgeGroup >& shareSource, const MT_Vector2D& vSharedCircleCenter, double rSharedCircleRadius );
 
-        const MIL_KnowledgeGroup* pShareSource_;
+        boost::shared_ptr< MIL_KnowledgeGroup > pShareSource_;
               MT_Vector2D         vSharedCircleCenter_;
               double            rSharedCircleRadius_;
     };

@@ -10,6 +10,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "KnowledgeGroupFactory.h"
+#include "Checkpoints/SerializationTools.h"
+#include "Entities/MIL_Army_ABC.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( KnowledgeGroupFactory )
 
@@ -40,17 +42,30 @@ KnowledgeGroupFactory::KnowledgeGroupFactory()
 // -----------------------------------------------------------------------------
 KnowledgeGroupFactory::~KnowledgeGroupFactory()
 {
-    DeleteAll();
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroupFactory::Create
+// Created: JSR 2012-08-30
+// -----------------------------------------------------------------------------
+boost::shared_ptr< MIL_KnowledgeGroup > KnowledgeGroupFactory::Create( xml::xistream& xis, MIL_Army_ABC& army )
+{
+    boost::shared_ptr< MIL_KnowledgeGroup > noParent;
+    return Create( xis, army, noParent );
 }
 
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroupFactory::Create
 // Created: MGD 2009-10-22
 // -----------------------------------------------------------------------------
-MIL_KnowledgeGroup& KnowledgeGroupFactory::Create( xml::xistream& xis, MIL_Army_ABC& army, MIL_KnowledgeGroup* parent )
+boost::shared_ptr< MIL_KnowledgeGroup > KnowledgeGroupFactory::Create( xml::xistream& xis, MIL_Army_ABC& army, boost::shared_ptr< MIL_KnowledgeGroup > parent )
 {
-    MIL_KnowledgeGroup& knowledgeGroup = *new MIL_KnowledgeGroup( xis, army, parent, *this );
-    Register( knowledgeGroup.GetId(), knowledgeGroup );
+    boost::shared_ptr< MIL_KnowledgeGroup > knowledgeGroup( new MIL_KnowledgeGroup( xis, army, parent, *this ) );
+    if( parent.get() )
+        parent->RegisterKnowledgeGroup( knowledgeGroup );
+    else
+        army.RegisterKnowledgeGroup( knowledgeGroup );
+    Register( knowledgeGroup->GetId(), knowledgeGroup );
     return knowledgeGroup;
 }
 
@@ -96,7 +111,7 @@ void KnowledgeGroupFactory_ABC::save( MIL_CheckPointOutArchive& file, const unsi
 {
     std::size_t size = elements_.size();
     file << size;
-    for( std::map< unsigned long, MIL_KnowledgeGroup* >::const_iterator it = elements_.begin(); it != elements_.end(); ++it )
+    for ( std::map< unsigned long, boost::shared_ptr< MIL_KnowledgeGroup > >::const_iterator it = elements_.begin(); it != elements_.end(); ++it )
     {
         file << it->first
              << it->second;

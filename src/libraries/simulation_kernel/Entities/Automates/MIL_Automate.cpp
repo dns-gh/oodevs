@@ -99,7 +99,6 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
     , nID_                           ( nID )
     , pParentFormation_              ( dynamic_cast< MIL_Formation* >( &parent ) )
     , pParentAutomate_               ( dynamic_cast< MIL_Automate* >( &parent ) )
-    , pKnowledgeGroup_               ( 0 )
     , pOrderManager_                 ( new MIL_AutomateOrderManager( *this ) )
     , pPionPC_                       ( 0 )
     , pions_                         ()
@@ -135,7 +134,6 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID )
     , pParentFormation_              ( 0 )
     , pParentAutomate_               ( 0 )
     , bEngaged_                      ( true )
-    , pKnowledgeGroup_               ( 0 )
     , pOrderManager_                 ( new MIL_AutomateOrderManager( *this ) )
     , pPionPC_                       ( 0 )
     , bAutomateModeChanged_          ( true )
@@ -164,7 +162,6 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
     , pParentFormation_              ( dynamic_cast< MIL_Formation* >( &parent ) )
     , pParentAutomate_               ( dynamic_cast< MIL_Automate* >( &parent ) )
     , bEngaged_                      ( true )
-    , pKnowledgeGroup_               ( 0 )
     , pOrderManager_                 ( new MIL_AutomateOrderManager( *this ) )
     , pPionPC_                       ( 0 )
     , pions_                         ()
@@ -821,7 +818,7 @@ void MIL_Automate::SendCreation( unsigned int context ) const
     message().mutable_automat()->set_id( nID_ );
     message().mutable_type()->set_id( pType_->GetID() );
     message().mutable_party()->set_id( GetArmy().GetID() );
-    message().mutable_knowledge_group()->set_id( GetKnowledgeGroup().GetId() );
+    message().mutable_knowledge_group()->set_id( GetKnowledgeGroup()->GetId() );
     message().set_app6symbol( symbol_ );
     message().set_logistic_level( pBrainLogistic_.get() ?
         (sword::EnumLogisticLevel)pBrainLogistic_->GetLogisticLevel().GetID() : sword::none );
@@ -1093,7 +1090,7 @@ void MIL_Automate::OnReceiveChangeKnowledgeGroup( const sword::UnitMagicAction& 
     MIL_Army_ABC* pNewArmy = armies.Find( partyId );
     if( !pNewArmy || *pNewArmy != GetArmy() )
         throw NET_AsnException< sword::HierarchyModificationAck::ErrorCode >( sword::HierarchyModificationAck::error_invalid_party );
-    MIL_KnowledgeGroup* pNewKnowledgeGroup = pNewArmy->FindKnowledgeGroup( knowledgeGroupId );
+    boost::shared_ptr< MIL_KnowledgeGroup > pNewKnowledgeGroup = pNewArmy->FindKnowledgeGroup( knowledgeGroupId );
     if( !pNewKnowledgeGroup )
         throw NET_AsnException< sword::HierarchyModificationAck::ErrorCode >( sword::HierarchyModificationAck::error_invalid_knowledge_group );
     if( *pKnowledgeGroup_ != *pNewKnowledgeGroup )
@@ -1318,10 +1315,9 @@ MIL_AgentPion* MIL_Automate::GetPionPC() const
 // Name: MIL_Automate::GetKnowledgeGroup
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------
-MIL_KnowledgeGroup& MIL_Automate::GetKnowledgeGroup() const
+boost::shared_ptr< MIL_KnowledgeGroup > MIL_Automate::GetKnowledgeGroup() const
 {
-    assert( pKnowledgeGroup_ );
-    return *pKnowledgeGroup_;
+    return pKnowledgeGroup_;
 }
 
 // -----------------------------------------------------------------------------

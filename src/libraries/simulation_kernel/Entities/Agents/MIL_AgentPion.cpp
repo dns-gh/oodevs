@@ -668,7 +668,7 @@ MIL_Army_ABC& MIL_AgentPion::GetArmy() const
 // Created: NLD 2004-08-30
 // Modified: FDS 2010-03-17
 // -----------------------------------------------------------------------------
-MIL_KnowledgeGroup& MIL_AgentPion::GetKnowledgeGroup() const
+boost::shared_ptr< MIL_KnowledgeGroup > MIL_AgentPion::GetKnowledgeGroup() const
 {
     if( GetRole< PHY_RolePion_Communications >().CanEmit() )
     {
@@ -685,14 +685,14 @@ MIL_KnowledgeGroup& MIL_AgentPion::GetKnowledgeGroup() const
 // -----------------------------------------------------------------------------
 bool MIL_AgentPion::BelongsTo( const MIL_KnowledgeGroup& group ) const
 {
-    return GetKnowledgeGroup() == group;
+    return *GetKnowledgeGroup() == group;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::CreateKnowledge
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Agent > MIL_AgentPion::CreateKnowledge( const MIL_KnowledgeGroup& knowledgeGroup )
+boost::shared_ptr< DEC_Knowledge_Agent > MIL_AgentPion::CreateKnowledge( boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup )
 {
     boost::shared_ptr< DEC_Knowledge_Agent > result( new DEC_Knowledge_Agent( knowledgeGroup, *this ) );
     return result;
@@ -1665,7 +1665,8 @@ void MIL_AgentPion::OnReceiveCreateDirectFireOrder( const sword::MissionParamete
     MIL_AgentPion* target = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( msg.elem( 0 ).value( 0 ).agent().id() );
     if( target == 0 )
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
-    boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge = target->CreateKnowledge( GetKnowledgeGroup() );
+    boost::shared_ptr< MIL_KnowledgeGroup > knowledgeGroup = GetKnowledgeGroup();
+    boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge = target->CreateKnowledge( knowledgeGroup );
     // firing mode
     firing::PHY_DirectFireData::E_FiringMode firingMode = firing::PHY_DirectFireData::eFiringModeNormal;
     if( msg.elem_size() >= 2 && msg.elem( 1 ).value_size() == 1 && msg.elem( 1 ).value( 1 ).has_enumeration() )

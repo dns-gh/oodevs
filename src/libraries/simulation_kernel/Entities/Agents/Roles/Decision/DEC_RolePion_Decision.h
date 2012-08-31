@@ -70,7 +70,7 @@ public:
     //@{
     virtual MIL_AgentPion&        GetPion         () const;
     virtual MIL_Automate&         GetAutomate     () const;
-    virtual MIL_KnowledgeGroup&   GetKnowledgeGroup() const;
+    virtual boost::shared_ptr< MIL_KnowledgeGroup > GetKnowledgeGroup() const;
 
     const PHY_RoePopulation&      GetRoePopulation() const;
 

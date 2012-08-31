@@ -24,6 +24,7 @@
 #include "DEC_KS_KnowledgeSynthetizer.h"
 #include "DEC_KS_Sharing.h"
 #include "MIL_KnowledgeGroup.h"
+#include "Checkpoints/SerializationTools.h"
 #include "Entities/MIL_Army.h"
 #include "protocol/Protocol.h"
 #include <boost/bind.hpp>
@@ -34,8 +35,8 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KnowledgeBlackBoard_KnowledgeGroup )
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup constructor
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
-DEC_KnowledgeBlackBoard_KnowledgeGroup::DEC_KnowledgeBlackBoard_KnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup )
-    : pKnowledgeGroup_              ( &knowledgeGroup )
+DEC_KnowledgeBlackBoard_KnowledgeGroup::DEC_KnowledgeBlackBoard_KnowledgeGroup( MIL_KnowledgeGroup* knowledgeGroup )
+    : pKnowledgeGroup_              ( knowledgeGroup )
     , pKnowledgeAgentContainer_     ( new DEC_BlackBoard_CanContainKnowledgeAgent( knowledgeGroup ) )
     , pKnowledgePopulationContainer_( new DEC_BlackBoard_CanContainKnowledgePopulation() )
     , pKnowledgeObjectContainer_    ( 0 )
@@ -50,7 +51,7 @@ DEC_KnowledgeBlackBoard_KnowledgeGroup::DEC_KnowledgeBlackBoard_KnowledgeGroup( 
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_KnowledgeBlackBoard_KnowledgeGroup::DEC_KnowledgeBlackBoard_KnowledgeGroup()
-    : pKnowledgeGroup_                  ( 0 )
+    : pKnowledgeGroup_( 0 )
     , pKnowledgeAgentContainer_         ( 0 )
     , pKnowledgePopulationContainer_    ( 0 )
     , pKnowledgeObjectContainer_        ( 0 )
@@ -470,7 +471,6 @@ namespace
 void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetPopulations( T_KnowledgePopulationDiaIDVector& container ) const
 {
     container.clear();
-    assert( pKnowledgeGroup_ );
     sDIAInserter functor( container );
     assert( pKnowledgePopulationContainer_ );
     pKnowledgePopulationContainer_->ApplyOnKnowledgesPopulation( functor );
@@ -483,7 +483,6 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetPopulations( T_KnowledgePopulati
 void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetPopulations( T_KnowledgePopulationVector& container ) const
 {
     container.clear();
-    assert( pKnowledgeGroup_ );
     sInserter functor( container );
     assert( pKnowledgePopulationContainer_ );
     pKnowledgePopulationContainer_->ApplyOnKnowledgesPopulation( functor );
@@ -493,10 +492,10 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetPopulations( T_KnowledgePopulati
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::TranslateKnowledges
 // Created: NLD 2006-04-24
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeBlackBoard_KnowledgeGroup::TranslateKnowledges( const T_ConstKnowledgeAgentVector& sourceKnowledges, const MIL_KnowledgeGroup& sourceKnowledgeGroup, T_ConstKnowledgeAgentVector& translatedKnowledges ) const
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::TranslateKnowledges( const T_ConstKnowledgeAgentVector& sourceKnowledges, boost::shared_ptr< MIL_KnowledgeGroup >& sourceKnowledgeGroup, T_ConstKnowledgeAgentVector& translatedKnowledges ) const
 {
     assert( pKnowledgeGroup_ );
-    if( *pKnowledgeGroup_ == sourceKnowledgeGroup )
+    if( pKnowledgeGroup_ == sourceKnowledgeGroup.get() )
         translatedKnowledges = sourceKnowledges;
     else
     {
@@ -623,10 +622,9 @@ DEC_KS_Sharing& DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKsSharing() const
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgeGroup
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
-MIL_KnowledgeGroup& DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgeGroup() const
+boost::shared_ptr< MIL_KnowledgeGroup > DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgeGroup() const
 {
-    assert( pKnowledgeGroup_ );
-    return *pKnowledgeGroup_;
+    return pKnowledgeGroup_->shared_from_this();
 }
 
 // -----------------------------------------------------------------------------
@@ -664,7 +662,8 @@ DEC_BlackBoard_CanContainKnowledgeObject* DEC_KnowledgeBlackBoard_KnowledgeGroup
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeBlackBoard_KnowledgeGroup::Jam()
 {
-    pKnowledgeObjectContainer_ = new DEC_BlackBoard_CanContainKnowledgeObject( pKnowledgeGroup_->GetArmy(), pKnowledgeGroup_ );
+    boost::shared_ptr< MIL_KnowledgeGroup > group( pKnowledgeGroup_->shared_from_this() );
+    pKnowledgeObjectContainer_ = new DEC_BlackBoard_CanContainKnowledgeObject( pKnowledgeGroup_->GetArmy(), group );
 }
 
 // -----------------------------------------------------------------------------
@@ -682,14 +681,14 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_KnowledgeGroup
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeBlackBoard_KnowledgeGroup::ApplyOnKnowledgesPerception( int currentTimeStep )
 {
-    GetKnowledgeGroup().ApplyOnKnowledgesPerception( currentTimeStep );
+    GetKnowledgeGroup()->ApplyOnKnowledgesPerception( currentTimeStep );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgeAgent
 // Created: FDS 2010-04-12
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Agent& DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgeAgent( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_Agent_ABC& perceived )
+DEC_Knowledge_Agent& DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgeAgent( boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, const MIL_Agent_ABC& perceived )
 {
     return GetKnowledgeAgentContainer().CreateKnowledgeAgent( knowledgeGroup, perceived );
 }
@@ -698,7 +697,7 @@ DEC_Knowledge_Agent& DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgeAgen
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgePopulation
 // Created: FDS 2010-04-12
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Population& DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgePopulation( const MIL_KnowledgeGroup& knowledgeGroup, MIL_Population& perceived )
+DEC_Knowledge_Population& DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgePopulation( boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, MIL_Population& perceived )
 {
     return GetKnowledgePopulationContainer().CreateKnowledgePopulation( knowledgeGroup, perceived );
 }

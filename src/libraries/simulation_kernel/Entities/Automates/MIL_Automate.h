@@ -114,7 +114,7 @@ public:
           unsigned int                      GetID            () const;
     const MIL_AutomateType&                 GetType          () const;
           MIL_Army_ABC&                     GetArmy          () const;
-          MIL_KnowledgeGroup&               GetKnowledgeGroup() const;
+          boost::shared_ptr< MIL_KnowledgeGroup > GetKnowledgeGroup() const;
     const MIL_AutomateOrderManager&         GetOrderManager  () const;
           MIL_AutomateOrderManager&         GetOrderManager  ();
           MIL_AgentPion*                    GetPionPC        () const;
@@ -267,7 +267,7 @@ private:
     const unsigned int                                         nID_;
     MIL_Formation*                                             pParentFormation_;
     MIL_Automate*                                              pParentAutomate_;
-    MIL_KnowledgeGroup*                                        pKnowledgeGroup_;
+    boost::shared_ptr< MIL_KnowledgeGroup >                    pKnowledgeGroup_;
     MIL_AutomateOrderManager*                                  pOrderManager_;
     MIL_AgentPion*                                             pPionPC_;
     T_PionVector                                               pions_; // Including pion PC
