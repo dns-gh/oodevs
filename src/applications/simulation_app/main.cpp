@@ -17,8 +17,7 @@
 #include <new.h>
 #include <dbghelp.h>
 #include <direct.h>
-#pragma warning( push )
-#pragma warning( disable: 4512 4100 )
+#pragma warning( push, 0 )
 #include <boost/program_options.hpp>
 #include <boost/optional.hpp>
 #pragma warning( pop )
