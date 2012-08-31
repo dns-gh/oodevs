@@ -60,12 +60,12 @@ public:
                                   bool reserved, unsigned int externalIdentifier, unsigned int forcedId, double density ) const;
     MIL_Object_ABC* CreateObject( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC* army ) const;
     MIL_UrbanObject_ABC* CreateUrbanObject( xml::xistream& xis, MIL_UrbanObject_ABC* parent ) const;
+    void Update( const std::string& capacity, xml::xistream& xis, MIL_Object_ABC& object ) const;
     //@}
 
     //! @name Accessors
     //@{
     const MIL_ObjectType_ABC& GetType( const std::string& type ) const;
-    const CapacityFactory& GetCapacityFactory() const;
     const void GetDangerousIDs( std::vector< unsigned int >& dangerousIDs, const MIL_ObjectFilter& filter ) const;
     const double GetMaxAvoidanceDistance() const;
     //@}

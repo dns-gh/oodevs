@@ -76,15 +76,6 @@ const MIL_ObjectType_ABC& MIL_ObjectLoader::GetType( const std::string& type ) c
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_ObjectLoader::GetCapactityFactory
-// Created: JSR 2010-03-12
-// -----------------------------------------------------------------------------
-const CapacityFactory& MIL_ObjectLoader::GetCapacityFactory() const
-{
-    return *factory_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_ObjectLoader::Initialize
 // Created: JCR 2008-04-21
 // -----------------------------------------------------------------------------
@@ -324,4 +315,13 @@ const double MIL_ObjectLoader::GetMaxAvoidanceDistance() const
     AvoidableObjectDistance functor( maxDistance );
     ApplyOnPrototypes( functor );
     return maxDistance;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectLoader::Update
+// Created: LGY 2012-08-31
+// -----------------------------------------------------------------------------
+void MIL_ObjectLoader::Update( const std::string& capacity, xml::xistream& xis, MIL_Object_ABC& object ) const
+{
+    factory_->Update( object, capacity, xis );
 }

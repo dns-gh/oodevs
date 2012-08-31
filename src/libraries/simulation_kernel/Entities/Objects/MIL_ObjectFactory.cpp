@@ -123,5 +123,5 @@ MIL_UrbanObject_ABC* MIL_ObjectFactory::BuildUrbanObject( xml::xistream& xis, MI
 // -----------------------------------------------------------------------------
 void MIL_ObjectFactory::Update( const std::string& capacity, xml::xistream& xis, MIL_Object_ABC& object ) const
 {
-    return MIL_ObjectLoader::GetLoader().GetCapacityFactory().Update( object, capacity, xis );
+    return MIL_ObjectLoader::GetLoader().Update( capacity, xis, object );
 }
