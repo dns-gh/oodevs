@@ -7,6 +7,9 @@ include( MasaMacros.cmake )
 set( root_dir ${CMAKE_SOURCE_DIR}/.. )
 set( run_dir  ${root_dir}/run/${platform} )
 
+set( COMPANY "Masa Group" )
+set( PRODUCT "Sword Cloud" )
+
 include_directories( ${root_dir}/src/libraries )
 add_definitions( -D_CRT_SECURE_NO_WARNINGS )
 add_definitions( -D_SCL_SECURE_NO_WARNINGS )
@@ -89,6 +92,19 @@ endif()
 glob_dir( files src
     "${root_dir}/src/applications/cloud_server/*.cpp"
 )
+if( WIN32 )
+    set( FILENAME cloud_server${CMAKE_EXECUTABLE_SUFFIX} )
+    set( VERSION ${MASA_VERSION} )
+    STRING( REGEX REPLACE "\\." ", " VERSION_ID ${MASA_VERSION} )
+    EXECUTE_PROCESS( COMMAND "cmd" " /C date /T" OUTPUT_VARIABLE RESULT )
+    STRING( REGEX REPLACE "[0-9]+/[0-9]+/([0-9]+)" "\\1" YEAR ${RESULT} )
+    configure_file(
+        "${root_dir}/src/applications/cloud_server/version.rc.in"
+        "${CMAKE_CURRENT_BINARY_DIR}/version.rc"
+        @ONLY
+    )
+    list( APPEND files "${CMAKE_CURRENT_BINARY_DIR}/version.rc" )
+endif()
 add_executable_target( cloud_server ${files} )
 set_target_folder( cloud_server applications )
 target_link_libraries( cloud_server

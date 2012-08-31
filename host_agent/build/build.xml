@@ -4,6 +4,8 @@
     <property environment="env"/>
     <property name="env.PONEY_HOME" value="//install/masa/common/dev/common/poney"/>
     <import file="${env.PONEY_HOME}/poney.xml"/>
+    <property name="version.major" value="1.0.0"/>
+    <property name="svn.revision" value="0"/>
 
     <macrodef name="forward_path">
         <attribute name="input"/>
@@ -32,6 +34,7 @@
                 <arg value="${@{generator}}"/>
                 <arg value="-DMASA_INCLUDE=${cmake.include}"/>
                 <arg value="-DMASA_LIB=${cmake.lib}"/>
+                <arg value="-DMASA_VERSION=${version.major}.${svn.revision}"/>
             </exec>
         </sequential>
     </macrodef>
