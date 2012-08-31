@@ -908,7 +908,7 @@
         <extract-knowledges dir="${models.dir}" tofile="${run.dir}/resources/integration/TaskKnowledge.lua"/>
     </target>
 
-    <target name="generate-database" depends="generate-database-france,generate-database-worldwide,generate-database-security" description="compile all behavior models"/>
+    <target name="generate-database" depends="deploy-application-data,generate-database-france,generate-database-worldwide,generate-database-security" description="compile all behavior models"/>
 
     <target name="generate-symbols" description="generate symbols">
         <zip destfile="${run.dir}/resources/symbols.pak">
@@ -1860,7 +1860,6 @@
         <update name="iconv"/>
         <update name="proj4"/>
         <update name="asciidoc" version="8.6.8" />
-        <antcall target="deploy-application-data"/>
         <antcall target="generate-database"/>
         <antcall target="generate-symbols"/>
     </target>
