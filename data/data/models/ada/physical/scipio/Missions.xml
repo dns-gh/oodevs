@@ -2086,20 +2086,6 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="itineraire_" name="Itineraire" optional="false" type="Path"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_SoutenirEnMesureDe" dia-type="T_Mission_Automate_SoutenirEnMesureDe" id="300" mrt-dia-behavior="MIS_Automate_MRT_SoutenirEnMesureDe" name="AUTOMATE Soutenir En Mesure De" package="support">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="itineraire_" name="Itineraire" optional="false" type="Path"/>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_SoutenirSurPositionEnMesureDe" dia-type="T_Mission_Automate_SoutenirSurPositionEnMesureDe" id="301" mrt-dia-behavior="MIS_Automate_MRT_SoutenirSurPositionEnMesureDe" name="AUTOMATE Soutenir Sur Position En Mesure De" package="support">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="position_" name="Position" optional="false" type="Polygon"/>
-    </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_SeFaireDecontaminer" dia-type="T_Mission_Automate_SeFaireDecontaminer" id="302" mrt-dia-behavior="MIS_Automate_MRT_SeFaireDecontaminer" name="AUTOMATE Se Faire Decontaminer" package="none">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -3513,4 +3499,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ROEM_ArreterSilenceRadar" id="28801" name="Arreter Silence Radar"/>
   </fragorders>
 </missions>
-<!-- signature="2912557516" -->
+<!-- signature="3477830366" -->

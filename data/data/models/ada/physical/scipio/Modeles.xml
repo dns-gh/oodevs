@@ -6429,8 +6429,6 @@
         <mission name="AUTOMATE ALAT Jalonner"/>
         <mission name="AUTOMATE ALAT Surveiller"/>
         <mission name="AUTOMATE Faire Mouvement"/>
-        <mission name="AUTOMATE Soutenir En Mesure De"/>
-        <mission name="AUTOMATE Soutenir Sur Position En Mesure De"/>
         <mission name="AUTOMATE Suivre"/>
         <mission name="AUTOMATE Se Faire Decontaminer"/>
         <mission name="AUTOMATE Se Recompleter"/>
@@ -6544,8 +6542,6 @@
     <automat dia-type="Escadrille_Horizon" file="Appui\Rens\Automates\Radint\Esc Horizon\Model.bms" masalife="false" name="Escadrille Horizon">
       <missions>
         <mission name="AUTOMATE Faire Mouvement"/>
-        <mission name="AUTOMATE Soutenir En Mesure De"/>
-        <mission name="AUTOMATE Soutenir Sur Position En Mesure De"/>
         <mission name="AUTOMATE Suivre"/>
         <mission name="AUTOMATE Decrocher"/>
         <mission name="AUTOMATE RENS RADINT Renseigner Sur"/>
@@ -7523,4 +7519,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2393125029" -->
+<!-- signature="1377554150" -->
