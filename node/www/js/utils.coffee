@@ -79,7 +79,8 @@ Handlebars.registerHelper "is_option", (value, options) ->
     return options.inverse this
 
 Handlebars.registerHelper "equal", (lhs, rhs, options) ->
-    if lhs == rhs
+    regexp = new RegExp "^" + rhs + "$"
+    if regexp.test lhs
         return options.fn this
     return options.inverse this
 

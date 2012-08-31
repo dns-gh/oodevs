@@ -105,7 +105,9 @@
   });
 
   Handlebars.registerHelper("equal", function(lhs, rhs, options) {
-    if (lhs === rhs) {
+    var regexp;
+    regexp = new RegExp("^" + rhs + "$");
+    if (regexp.test(lhs)) {
       return options.fn(this);
     }
     return options.inverse(this);
