@@ -140,6 +140,168 @@
             <unit color="0xff0000" command-post="false" id="1515" name="MILITARY.Infantry platoon" position="30UYU1283831584" type="MILITARY.Infantry platoon"/>
             <unit color="0xff0000" command-post="false" id="1516" name="MILITARY.Engineer platoon" position="30UYU1266431577" type="MILITARY.Engineer platoon"/>
           </automat>
+          <automat color="0xff0000" engaged="true" id="1518" knowledge-group="1446" name="MILITARY.Infantry company" symbol="symbols/shgpucim" type="MILITARY.Infantry company">
+            <unit color="0xff0000" command-post="false" id="1519" name="MILITARY.Infantry platoon" position="30UYU1216832427" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1520" name="MILITARY.Infantry platoon" position="30UYU1225732380" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1521" name="MILITARY.Infantry platoon" position="30UYU1226132280" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1522" name="MILITARY.Infantry platoon" position="30UYU1217632227" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1523" name="MILITARY.Engineer platoon" position="30UYU1208732274" type="MILITARY.Engineer platoon"/>
+            <unit color="0xff0000" command-post="true" id="1524" name="MILITARY.Company command post" position="30UYU1217232327" type="MILITARY.Company command post"/>
+            <unit color="0xff0000" command-post="false" id="1525" name="MILITARY.Scouting platoon" position="30UYU1208432374" type="MILITARY.Scouting platoon"/>
+            <automat color="0xff0000" engaged="true" id="1526" knowledge-group="1446" name="MILITARY.Infantry company" symbol="symbols/shgpucim" type="MILITARY.Infantry company">
+              <unit color="0xff0000" command-post="false" id="1527" name="MILITARY.Infantry platoon" position="30UYU1124832958" type="MILITARY.Infantry platoon"/>
+              <unit color="0xff0000" command-post="false" id="1528" name="MILITARY.Infantry platoon" position="30UYU1133732912" type="MILITARY.Infantry platoon"/>
+              <unit color="0xff0000" command-post="false" id="1529" name="MILITARY.Infantry platoon" position="30UYU1134032812" type="MILITARY.Infantry platoon"/>
+              <unit color="0xff0000" command-post="false" id="1530" name="MILITARY.Infantry platoon" position="30UYU1125532759" type="MILITARY.Infantry platoon"/>
+              <unit color="0xff0000" command-post="false" id="1531" name="MILITARY.Engineer platoon" position="30UYU1116732806" type="MILITARY.Engineer platoon"/>
+              <unit color="0xff0000" command-post="true" id="1532" name="MILITARY.Company command post" position="30UYU1125232859" type="MILITARY.Company command post"/>
+              <unit color="0xff0000" command-post="false" id="1533" name="MILITARY.Scouting platoon" position="30UYU1116332905" type="MILITARY.Scouting platoon"/>
+            </automat>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="1534" knowledge-group="1446" name="MILITARY.Infantry company" symbol="symbols/shgpucim" type="MILITARY.Infantry company">
+            <unit color="0xff0000" command-post="false" id="1535" name="MILITARY.Infantry platoon" position="30UYU1075533788" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1536" name="MILITARY.Infantry platoon" position="30UYU1084333741" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1537" name="MILITARY.Infantry platoon" position="30UYU1084733641" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1538" name="MILITARY.Infantry platoon" position="30UYU1076233588" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1539" name="MILITARY.Engineer platoon" position="30UYU1067333635" type="MILITARY.Engineer platoon"/>
+            <unit color="0xff0000" command-post="true" id="1540" name="MILITARY.Company command post" position="30UYU1075833688" type="MILITARY.Company command post"/>
+            <unit color="0xff0000" command-post="false" id="1541" name="MILITARY.Scouting platoon" position="30UYU1067033735" type="MILITARY.Scouting platoon"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="1542" knowledge-group="1446" name="MILITARY.Infantry company" symbol="symbols/shgpucim" type="MILITARY.Infantry company">
+            <unit color="0xff0000" command-post="false" id="1543" name="MILITARY.Infantry platoon" position="30UYU1323131516" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1544" name="MILITARY.Infantry platoon" position="30UYU1332031469" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1545" name="MILITARY.Infantry platoon" position="30UYU1332431369" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1546" name="MILITARY.Infantry platoon" position="30UYU1323931316" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1547" name="MILITARY.Engineer platoon" position="30UYU1315031363" type="MILITARY.Engineer platoon"/>
+            <unit color="0xff0000" command-post="true" id="1548" name="MILITARY.Company command post" position="30UYU1323531416" type="MILITARY.Company command post"/>
+            <unit color="0xff0000" command-post="false" id="1549" name="MILITARY.Scouting platoon" position="30UYU1314631462" type="MILITARY.Scouting platoon"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="1550" knowledge-group="1446" name="MILITARY.Infantry company" symbol="symbols/shgpucim" type="MILITARY.Infantry company">
+            <unit color="0xff0000" command-post="false" id="1551" name="MILITARY.Infantry platoon" position="30UYU1361631555" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1552" name="MILITARY.Infantry platoon" position="30UYU1370531508" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1553" name="MILITARY.Infantry platoon" position="30UYU1370831408" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1554" name="MILITARY.Infantry platoon" position="30UYU1362331355" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1555" name="MILITARY.Engineer platoon" position="30UYU1353531402" type="MILITARY.Engineer platoon"/>
+            <unit color="0xff0000" command-post="true" id="1556" name="MILITARY.Company command post" position="30UYU1362031455" type="MILITARY.Company command post"/>
+            <unit color="0xff0000" command-post="false" id="1557" name="MILITARY.Scouting platoon" position="30UYU1353131502" type="MILITARY.Scouting platoon"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="1558" knowledge-group="1446" name="MILITARY.Infantry company" symbol="symbols/shgpucim" type="MILITARY.Infantry company">
+            <unit color="0xff0000" command-post="false" id="1559" name="MILITARY.Infantry platoon" position="30UYU1393731233" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1560" name="MILITARY.Infantry platoon" position="30UYU1402531186" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1561" name="MILITARY.Infantry platoon" position="30UYU1402931086" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1562" name="MILITARY.Infantry platoon" position="30UYU1394431033" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1563" name="MILITARY.Engineer platoon" position="30UYU1385631080" type="MILITARY.Engineer platoon"/>
+            <unit color="0xff0000" command-post="true" id="1564" name="MILITARY.Company command post" position="30UYU1394031133" type="MILITARY.Company command post"/>
+            <unit color="0xff0000" command-post="false" id="1565" name="MILITARY.Scouting platoon" position="30UYU1385231180" type="MILITARY.Scouting platoon"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="1566" knowledge-group="1446" name="MILITARY.Infantry company" symbol="symbols/shgpucim" type="MILITARY.Infantry company">
+            <unit color="0xff0000" command-post="false" id="1567" name="MILITARY.Infantry platoon" position="30UYU1422231192" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1568" name="MILITARY.Infantry platoon" position="30UYU1431031145" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1569" name="MILITARY.Infantry platoon" position="30UYU1431431045" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1570" name="MILITARY.Infantry platoon" position="30UYU1422930992" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1571" name="MILITARY.Engineer platoon" position="30UYU1414031039" type="MILITARY.Engineer platoon"/>
+            <unit color="0xff0000" command-post="true" id="1572" name="MILITARY.Company command post" position="30UYU1422531092" type="MILITARY.Company command post"/>
+            <unit color="0xff0000" command-post="false" id="1573" name="MILITARY.Scouting platoon" position="30UYU1413731139" type="MILITARY.Scouting platoon"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="1574" knowledge-group="1446" name="MILITARY.Infantry company" symbol="symbols/shgpucim" type="MILITARY.Infantry company">
+            <unit color="0xff0000" command-post="false" id="1575" name="MILITARY.Infantry platoon" position="30UYU1456330999" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1576" name="MILITARY.Infantry platoon" position="30UYU1465230952" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1577" name="MILITARY.Infantry platoon" position="30UYU1465530852" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1578" name="MILITARY.Infantry platoon" position="30UYU1457130799" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1579" name="MILITARY.Engineer platoon" position="30UYU1448230846" type="MILITARY.Engineer platoon"/>
+            <unit color="0xff0000" command-post="true" id="1580" name="MILITARY.Company command post" position="30UYU1456730899" type="MILITARY.Company command post"/>
+            <unit color="0xff0000" command-post="false" id="1581" name="MILITARY.Scouting platoon" position="30UYU1447830946" type="MILITARY.Scouting platoon"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="1582" knowledge-group="1446" name="MILITARY.Infantry company" symbol="symbols/shgpucim" type="MILITARY.Infantry company">
+            <unit color="0xff0000" command-post="false" id="1583" name="MILITARY.Infantry platoon" position="30UYU1500530887" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1584" name="MILITARY.Infantry platoon" position="30UYU1509430840" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1585" name="MILITARY.Infantry platoon" position="30UYU1509730740" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1586" name="MILITARY.Infantry platoon" position="30UYU1501230687" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1587" name="MILITARY.Engineer platoon" position="30UYU1492430734" type="MILITARY.Engineer platoon"/>
+            <unit color="0xff0000" command-post="true" id="1588" name="MILITARY.Company command post" position="30UYU1500930787" type="MILITARY.Company command post"/>
+            <unit color="0xff0000" command-post="false" id="1589" name="MILITARY.Scouting platoon" position="30UYU1492030833" type="MILITARY.Scouting platoon"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="1590" knowledge-group="1446" name="MILITARY.Infantry company" symbol="symbols/shgpucim" type="MILITARY.Infantry company">
+            <unit color="0xff0000" command-post="false" id="1591" name="MILITARY.Infantry platoon" position="30UYU1524530664" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1592" name="MILITARY.Infantry platoon" position="30UYU1533330617" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1593" name="MILITARY.Infantry platoon" position="30UYU1533730518" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1594" name="MILITARY.Infantry platoon" position="30UYU1525230464" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1595" name="MILITARY.Engineer platoon" position="30UYU1516430511" type="MILITARY.Engineer platoon"/>
+            <unit color="0xff0000" command-post="true" id="1596" name="MILITARY.Company command post" position="30UYU1524830564" type="MILITARY.Company command post"/>
+            <unit color="0xff0000" command-post="false" id="1597" name="MILITARY.Scouting platoon" position="30UYU1516030611" type="MILITARY.Scouting platoon"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="1598" knowledge-group="1446" name="MILITARY.Infantry company" symbol="symbols/shgpucim" type="MILITARY.Infantry company">
+            <unit color="0xff0000" command-post="false" id="1599" name="MILITARY.Infantry platoon" position="30UYU1550930468" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1600" name="MILITARY.Infantry platoon" position="30UYU1559830422" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1601" name="MILITARY.Infantry platoon" position="30UYU1560230322" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1602" name="MILITARY.Infantry platoon" position="30UYU1551730269" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1603" name="MILITARY.Engineer platoon" position="30UYU1542830315" type="MILITARY.Engineer platoon"/>
+            <unit color="0xff0000" command-post="true" id="1604" name="MILITARY.Company command post" position="30UYU1551330368" type="MILITARY.Company command post"/>
+            <unit color="0xff0000" command-post="false" id="1605" name="MILITARY.Scouting platoon" position="30UYU1542530415" type="MILITARY.Scouting platoon"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="1606" knowledge-group="1446" name="MILITARY.Infantry company" symbol="symbols/shgpucim" type="MILITARY.Infantry company">
+            <unit color="0xff0000" command-post="false" id="1607" name="MILITARY.Infantry platoon" position="30UYU1580330197" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1608" name="MILITARY.Infantry platoon" position="30UYU1589130150" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1609" name="MILITARY.Infantry platoon" position="30UYU1589530050" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1610" name="MILITARY.Infantry platoon" position="30UYU1581029997" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1611" name="MILITARY.Engineer platoon" position="30UYU1572130044" type="MILITARY.Engineer platoon"/>
+            <unit color="0xff0000" command-post="true" id="1612" name="MILITARY.Company command post" position="30UYU1580630097" type="MILITARY.Company command post"/>
+            <unit color="0xff0000" command-post="false" id="1613" name="MILITARY.Scouting platoon" position="30UYU1571830143" type="MILITARY.Scouting platoon"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="1614" knowledge-group="1446" name="MILITARY.Infantry company" symbol="symbols/shgpucim" type="MILITARY.Infantry company">
+            <unit color="0xff0000" command-post="false" id="1615" name="MILITARY.Infantry platoon" position="30UYU1619929903" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1616" name="MILITARY.Infantry platoon" position="30UYU1628829856" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1617" name="MILITARY.Infantry platoon" position="30UYU1629229756" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1618" name="MILITARY.Infantry platoon" position="30UYU1620729703" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1619" name="MILITARY.Engineer platoon" position="30UYU1611829750" type="MILITARY.Engineer platoon"/>
+            <unit color="0xff0000" command-post="true" id="1620" name="MILITARY.Company command post" position="30UYU1620329803" type="MILITARY.Company command post"/>
+            <unit color="0xff0000" command-post="false" id="1621" name="MILITARY.Scouting platoon" position="30UYU1611429850" type="MILITARY.Scouting platoon"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="1622" knowledge-group="1446" name="MILITARY.Infantry company" symbol="symbols/shgpucim" type="MILITARY.Infantry company">
+            <unit color="0xff0000" command-post="false" id="1623" name="MILITARY.Infantry platoon" position="30UYU1250832285" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1624" name="MILITARY.Infantry platoon" position="30UYU1259732238" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1625" name="MILITARY.Infantry platoon" position="30UYU1260032139" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1626" name="MILITARY.Infantry platoon" position="30UYU1251632086" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1627" name="MILITARY.Engineer platoon" position="30UYU1242732132" type="MILITARY.Engineer platoon"/>
+            <unit color="0xff0000" command-post="true" id="1628" name="MILITARY.Company command post" position="30UYU1251232185" type="MILITARY.Company command post"/>
+            <unit color="0xff0000" command-post="false" id="1629" name="MILITARY.Scouting platoon" position="30UYU1242332232" type="MILITARY.Scouting platoon"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="1630" knowledge-group="1446" name="MILITARY.Infantry company" symbol="symbols/shgpucim" type="MILITARY.Infantry company">
+            <unit color="0xff0000" command-post="false" id="1631" name="MILITARY.Infantry platoon" position="30UYU1160932946" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1632" name="MILITARY.Infantry platoon" position="30UYU1169732899" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1633" name="MILITARY.Infantry platoon" position="30UYU1170132799" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1634" name="MILITARY.Infantry platoon" position="30UYU1161632746" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1635" name="MILITARY.Engineer platoon" position="30UYU1152832793" type="MILITARY.Engineer platoon"/>
+            <unit color="0xff0000" command-post="true" id="1636" name="MILITARY.Company command post" position="30UYU1161332846" type="MILITARY.Company command post"/>
+            <unit color="0xff0000" command-post="false" id="1637" name="MILITARY.Scouting platoon" position="30UYU1152432893" type="MILITARY.Scouting platoon"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="1638" knowledge-group="1446" name="MILITARY.Infantry company" symbol="symbols/shgpucim" type="MILITARY.Infantry company">
+            <unit color="0xff0000" command-post="false" id="1639" name="MILITARY.Infantry platoon" position="30UYU1101733643" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1640" name="MILITARY.Infantry platoon" position="30UYU1110633596" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1641" name="MILITARY.Infantry platoon" position="30UYU1110933497" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1642" name="MILITARY.Infantry platoon" position="30UYU1102433444" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1643" name="MILITARY.Engineer platoon" position="30UYU1093633490" type="MILITARY.Engineer platoon"/>
+            <unit color="0xff0000" command-post="true" id="1644" name="MILITARY.Company command post" position="30UYU1102133543" type="MILITARY.Company command post"/>
+            <unit color="0xff0000" command-post="false" id="1645" name="MILITARY.Scouting platoon" position="30UYU1093233590" type="MILITARY.Scouting platoon"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="1646" knowledge-group="1446" name="MILITARY.Infantry company" symbol="symbols/shgpucim" type="MILITARY.Infantry company">
+            <unit color="0xff0000" command-post="false" id="1647" name="MILITARY.Infantry platoon" position="30UYU1653429915" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1648" name="MILITARY.Infantry platoon" position="30UYU1662229868" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1649" name="MILITARY.Infantry platoon" position="30UYU1662629768" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1650" name="MILITARY.Infantry platoon" position="30UYU1654129715" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1651" name="MILITARY.Engineer platoon" position="30UYU1645229762" type="MILITARY.Engineer platoon"/>
+            <unit color="0xff0000" command-post="true" id="1652" name="MILITARY.Company command post" position="30UYU1653729815" type="MILITARY.Company command post"/>
+            <unit color="0xff0000" command-post="false" id="1653" name="MILITARY.Scouting platoon" position="30UYU1644929862" type="MILITARY.Scouting platoon"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="1654" knowledge-group="1446" name="MILITARY.Infantry company" symbol="symbols/shgpucim" type="MILITARY.Infantry company">
+            <unit color="0xff0000" command-post="false" id="1655" name="MILITARY.Infantry platoon" position="30UYU1184232903" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1656" name="MILITARY.Infantry platoon" position="30UYU1193132856" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1657" name="MILITARY.Infantry platoon" position="30UYU1193432756" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1658" name="MILITARY.Infantry platoon" position="30UYU1184932703" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1659" name="MILITARY.Engineer platoon" position="30UYU1176132750" type="MILITARY.Engineer platoon"/>
+            <unit color="0xff0000" command-post="true" id="1660" name="MILITARY.Company command post" position="30UYU1184632803" type="MILITARY.Company command post"/>
+            <unit color="0xff0000" command-post="false" id="1661" name="MILITARY.Scouting platoon" position="30UYU1175732850" type="MILITARY.Scouting platoon"/>
+          </automat>
         </formation>
       </tactical>
       <communication>
@@ -184,4 +346,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="1755813359" -->
+<!-- signature="4114603431" -->
