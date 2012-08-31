@@ -52,10 +52,9 @@
     </target>
 
     <target name="library.protocol" description="build protocol static library">
-        <exec taskname="protolint" executable="python.exe"
-            failonerror="true" timeout="60000">
-            <arg value="${src.dir}/libraries/protocol/protolint.py"/>
-            <arg value="${src.dir}/libraries/protocol/proto"/>
+        <exec taskname="protolint" executable="python" failonerror="true" timeout="60000">
+            <arg value="${libraries.dir}/protocol/protolint.py"/>
+            <arg value="${libraries.dir}/protocol/proto"/>
             <arg value="style"/>
         </exec>
         <build-lib name="protocol" pattern="lib${ant.project.name}_protocol-${platform}-mt@{suffix}" suffix="-gd">
@@ -1886,7 +1885,7 @@
         <update name="geos"/>
         <update name="iconv"/>
         <update name="proj4"/>
-        <update name="asciidoc" version="8.6.8" />
+        <update name="asciidoc" version="8.6.8"/>
         <antcall target="generate-database"/>
         <antcall target="generate-symbols"/>
     </target>
