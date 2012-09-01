@@ -1445,10 +1445,10 @@
     <target name="proto-api-documentation"
         description="generate SDK documentation">
         <mkdir dir="${out.dir}/sdk/doc/html"/>
-        <exec executable="python" failonerror="true">
+        <exec taskname="python" executable="python" failonerror="true">
             <arg value="${bin.dir}/asciidoc/asciidoc/asciidoc.py" />
             <arg value="--out-file=${out.dir}/sdk/doc/html/index.html" />
-            <arg value="${src.dir}/libraries/protocol/doc/sdk.txt" />
+            <arg value="${libraries.dir}/protocol/doc/sdk.txt" />
         </exec>
         <exec executable="python" failonerror="true">
             <arg value="${bin.dir}/asciidoc/asciidoc/a2x.py" />
@@ -1460,7 +1460,7 @@
             <arg value="--no-xmllint" />
             <arg value="--xsltproc-opts=-nonet" />
             <arg value="--destination-dir=${out.dir}/sdk/doc" />
-            <arg value="${src.dir}/libraries/protocol/doc/sdk.txt" />
+            <arg value="${libraries.dir}/protocol/doc/sdk.txt" />
         </exec>
     </target>
 
