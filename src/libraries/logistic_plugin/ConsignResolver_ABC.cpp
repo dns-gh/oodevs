@@ -21,7 +21,7 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/StaticModel.h"
 #include "clients_kernel/Tools.h"
-#include "ENT/ENT_Tr_Gen.h".
+#include "ENT/ENT_Tr_Gen.h"
 
 using namespace plugins::logistic;
 namespace bpt = boost::posix_time;

@@ -8,8 +8,10 @@
 // *****************************************************************************
 
 #include "MedicalResolver.h"
-#include <boost/lexical_cast.hpp>
 #include "clients_kernel/Tools.h"
+#pragma warning( push, 0 )
+#include <boost/lexical_cast.hpp>
+#pragma warning( pop )
 
 using namespace plugins::logistic;
 
