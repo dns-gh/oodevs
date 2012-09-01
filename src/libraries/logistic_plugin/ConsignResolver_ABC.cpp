@@ -151,13 +151,13 @@ void ConsignResolver_ABC::OpenFile()
             if( bfs::exists( fileName_ ) )
             {
                 if( !output_.is_open() )
-                    output_.open( fileName_, std::ios_base::out | std::ios_base::app );
+                    output_.open( fileName_.c_str(), std::ios_base::out | std::ios_base::app );
             }
             else
             {
                 if( output_.is_open() )
                     output_.close();
-                output_.open( fileName_, std::ios_base::out | std::ios_base::app );
+                output_.open( fileName_.c_str(), std::ios_base::out | std::ios_base::app );
                 output_ << header_;
             }
         }
