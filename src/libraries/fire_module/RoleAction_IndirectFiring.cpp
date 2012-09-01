@@ -14,35 +14,6 @@ using namespace sword;
 using namespace sword::fire;
 
 //// -----------------------------------------------------------------------------
-//// Name: RoleAction_IndirectFiring constructor
-//// Created: NLD 2004-10-04
-//// -----------------------------------------------------------------------------
-//RoleAction_IndirectFiring::RoleAction_IndirectFiring( MIL_Agent_ABC& pion )
-//    : owner_( pion )
-//{
-//    // NOTHING
-//}
-//
-//// -----------------------------------------------------------------------------
-//// Name: RoleAction_IndirectFiring destructor
-//// Created: NLD 2004-10-04
-//// -----------------------------------------------------------------------------
-//RoleAction_IndirectFiring::~RoleAction_IndirectFiring()
-//{
-//    // NOTHING
-//}
-//
-//// -----------------------------------------------------------------------------
-//// Name: RoleAction_IndirectFiring::serialize
-//// Created: JVT 2005-03-30
-//// -----------------------------------------------------------------------------
-//template< typename Archive >
-//void RoleAction_IndirectFiring::serialize( Archive& archive , const unsigned int )
-//{
-//    archive & boost::serialization::base_object< tools::Role_ABC >( *this );
-//}
-//
-//// -----------------------------------------------------------------------------
 //// Name: RoleAction_IndirectFiring::Fire
 //// Created: NLD 2004-10-11
 //// -----------------------------------------------------------------------------
@@ -127,7 +98,7 @@ using namespace sword::fire;
 // Name: RoleAction_IndirectFiring::GetAmmunitionForIndirectFire
 // Created: NLD 2006-08-08
 // -----------------------------------------------------------------------------
-const char* RoleAction_IndirectFiring::GetAmmunitionForIndirectFire( const wrapper::View& model, const wrapper::View& firer, const std::string& type, const MT_Vector2D* target )
+const char* RoleAction_IndirectFiring::GetAmmunitionForIndirectFire( ModuleFacade& module, const wrapper::View& model, const wrapper::View& firer, const std::string& type, const MT_Vector2D* target )
 {
     AmmunitionForIndirectFireData data( firer, type, target );
     const wrapper::View& components = firer[ "components" ];
@@ -136,7 +107,7 @@ const char* RoleAction_IndirectFiring::GetAmmunitionForIndirectFire( const wrapp
         const wrapper::View& component = components.GetElement( c );
         const wrapper::View& weapons = component[ "weapons" ];
         for( std::size_t w = 0; w < weapons.GetSize(); ++w )
-            data.ApplyOnWeapon( model, component, weapons.GetElement( w ) );
+            data.ApplyOnWeapon( module, model, component, weapons.GetElement( w ) );
     }
     return data.GetResult();
 }

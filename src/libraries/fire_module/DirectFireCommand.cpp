@@ -19,10 +19,11 @@ using namespace sword::fire;
 // Name: DirectFireCommand constructor
 // Created: MCO 2012-03-19
 // -----------------------------------------------------------------------------
-DirectFireCommand::DirectFireCommand( ModuleFacade& /*module*/, const wrapper::View& parameters, const wrapper::View& /*model*/, std::size_t identifier )
+DirectFireCommand::DirectFireCommand( ModuleFacade& module, const wrapper::View& parameters, const wrapper::View& /*model*/, std::size_t identifier )
     : commandIdentifier_          ( identifier )
     , identifier_                 ( parameters[ "identifier" ] )
     , enemy_                      ( parameters[ "enemy" ] )
+    , role_                       ( module )
     , rPercentageComposantesToUse_( std::max( 0., std::min< double >( 1., parameters[ "percentage" ] ) ) )
     , nFiringMode_                ( static_cast< DirectFireData::E_FiringMode >( static_cast< int >( parameters[ "mode" ] ) ) )
     , nComposanteFiringType_      ( DirectFireData::eFireUsingAllComposantes )

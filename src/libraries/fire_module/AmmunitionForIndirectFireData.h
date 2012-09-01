@@ -19,6 +19,7 @@ namespace sword
 {
 namespace fire
 {
+    class ModuleFacade;
     class DotationCategory;
 
 // =============================================================================
@@ -35,7 +36,7 @@ public:
 
     //! @name Operations
     //@{
-    void ApplyOnWeapon( const wrapper::View& model, const wrapper::View& component, const wrapper::View& weapon );
+    void ApplyOnWeapon( ModuleFacade& module, const wrapper::View& model, const wrapper::View& component, const wrapper::View& weapon );
 
     const char* GetResult() const;
     //@}

@@ -11,7 +11,9 @@
 #define fire_module_ModuleFacade_h
 
 #include <wrapper/Hook.h>
+#include <wrapper/View.h>
 #include <boost/noncopyable.hpp>
+#include <map>
 
 namespace sword
 {
@@ -29,6 +31,11 @@ public:
     //! @name Constructors/Destructor
     //@{
     ModuleFacade();
+    //@}
+
+    //! @name Member data
+    //@{
+    std::map< const SWORD_Model*, std::pair< double, unsigned int > > weapons;
     //@}
 };
 

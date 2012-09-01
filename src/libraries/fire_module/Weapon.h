@@ -19,6 +19,7 @@ namespace sword
 {
 namespace fire
 {
+    class ModuleFacade;
     class WeaponType;
     class DotationCategory;
 
@@ -33,7 +34,7 @@ class Weapon
 public:
     //! @name Constructors/Destructor
     //@{
-    Weapon( const wrapper::View& model, const wrapper::View& weapon );
+    Weapon( ModuleFacade& module, const wrapper::View& model, const wrapper::View& weapon );
     //@}
 
     //! @name Accessors
@@ -71,6 +72,7 @@ private:
 private:
     //! @name Member data
     //@{
+    ModuleFacade* module_;
     wrapper::View model_;
     wrapper::View weapon_;
     boost::shared_ptr< WeaponType > type_;

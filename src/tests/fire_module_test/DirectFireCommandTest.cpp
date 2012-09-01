@@ -103,8 +103,6 @@ namespace
             component_2[ "volume" ] = volume_1;
             component_2[ "component_2" ].SetUserData( &component_2 );
             weapon[ "type" ] = "launcher_1/ammo_1";
-            weapon[ "fired-ammo" ] = 0;
-            weapon[ "next-time" ] = 0;
             MOCK_EXPECT( IsTemporarilyBlocked ).once().returns( false );
         }
         core::Model& component_2;
@@ -193,8 +191,6 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_running_and_no_hit_when_fir
     MOCK_EXPECT( ReserveAmmunition ).once().with( firer, ammo_1, 3 ).returns( 2 );
     MOCK_EXPECT( GetFireRandomNumber ).once().returns( 0 );
     ExpectCallback( 4 );
-    ExpectEffect( weapon, sword::test::MakeModel( "fired-ammo", 2 ) );
-    ExpectEffect( weapon, sword::test::MakeModel( "next-time", 0.7 ) );
     ExpectEvent( "direct fire pion attack",
         sword::test::MakeModel( "entity", 42 )
             ( "enemy", 43 )
@@ -219,8 +215,6 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_running_and_hit_when_firing
     MOCK_EXPECT( ReserveAmmunition ).once().with( firer, ammo_1, 3 ).returns( 2 );
     MOCK_EXPECT( GetFireRandomNumber ).once().returns( 1 );
     ExpectCallback( 4 );
-    ExpectEffect( weapon, sword::test::MakeModel( "fired-ammo", 2 ) );
-    ExpectEffect( weapon, sword::test::MakeModel( "next-time", 0.7 ) );
     ExpectEvent( "direct fire pion attack",
         sword::test::MakeModel( "entity", 42 )
             ( "enemy", 43 )

@@ -97,8 +97,6 @@ namespace
     {
         core::Model& w = weapons.AddElement();
         w[ "type" ] = weapon.GetType().GetName();
-        w[ "fired-ammo" ] = 0;
-        w[ "next-time" ] = 0;
     }
 }
 

@@ -10,6 +10,7 @@
 #ifndef fire_module_RoleAction_IndirectFiring_h
 #define fire_module_RoleAction_IndirectFiring_h
 
+#include <boost/noncopyable.hpp>
 #include <string>
 
 class MT_Vector2D;
@@ -22,6 +23,8 @@ namespace wrapper
 }
 namespace fire
 {
+    class ModuleFacade;
+
 // =============================================================================
 /** @class  RoleAction_IndirectFiring
     @brief  Role action INdirect firing
@@ -31,8 +34,6 @@ namespace fire
 class RoleAction_IndirectFiring
 {
 public:
-    //explicit RoleAction_IndirectFiring( MIL_Agent_ABC& pion );
-
     ////! @name Operations
     ////@{
     //void Update( bool bIsDead );
@@ -44,7 +45,7 @@ public:
     //int  Fire( MIL_Effect_IndirectFire* pEffect );
     //void FireSuspended();
 
-    const char* GetAmmunitionForIndirectFire( const wrapper::View& model, const wrapper::View& firer, const std::string& type, const MT_Vector2D* target );
+    const char* GetAmmunitionForIndirectFire( ModuleFacade& module, const wrapper::View& model, const wrapper::View& firer, const std::string& type, const MT_Vector2D* target );
     //int ThrowSmoke( const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmo );
     ////@}
 

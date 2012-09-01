@@ -20,6 +20,11 @@
 using namespace sword;
 using namespace sword::fire;
 
+namespace
+{
+    ModuleFacade* module = 0;
+}
+
 DEFINE_HOOK( GetForceRatio, double, ( const SWORD_Model* model, const SWORD_Model* entity ) )
 {
     return sword::fire::Knowledge_RapForLocal().GetValue( model, entity ); // $$$$ MCO 2012-05-15: cache this
@@ -40,7 +45,8 @@ DEFINE_HOOK( GetAmmunitionForIndirectFire, const char*, ( const SWORD_Model* mod
     }
     try
     {
-        return RoleAction_IndirectFiring().GetAmmunitionForIndirectFire( model, firer, type, target );
+        assert( module );
+        return RoleAction_IndirectFiring().GetAmmunitionForIndirectFire( *module, model, firer, type, target );
     }
     catch( std::exception& e )
     {
@@ -59,5 +65,6 @@ DEFINE_HOOK( GetAmmunitionForIndirectFire, const char*, ( const SWORD_Model* mod
 // -----------------------------------------------------------------------------
 ModuleFacade::ModuleFacade()
 {
+    module = this;
     wrapper::RegisterCommand< DirectFireCommand >( "direct fire command", *this );
 }

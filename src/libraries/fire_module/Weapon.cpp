@@ -9,6 +9,7 @@
 
 #include "Weapon.h"
 #include "WeaponType.h"
+#include "ModuleFacade.h"
 #include <wrapper/Effect.h>
 #include <wrapper/Hook.h>
 #include <wrapper/View.h>
@@ -22,8 +23,9 @@ DECLARE_HOOK( GetWeaponReloadingDuration, double, ( const SWORD_Model* firer, do
 // Name: Weapon constructor
 // Created: NLD 2004-08-06
 // -----------------------------------------------------------------------------
-Weapon::Weapon( const wrapper::View& model, const wrapper::View& weapon )
-    : model_ ( model )
+Weapon::Weapon( ModuleFacade& module, const wrapper::View& model, const wrapper::View& weapon )
+    : module_( &module )
+    , model_ ( model )
     , weapon_( weapon )
     , type_  ( WeaponType::FindWeaponType( weapon[ "type" ] ) )
 {
@@ -47,7 +49,7 @@ double Weapon::GetDangerosity( const wrapper::View& firer, const wrapper::View& 
 bool Weapon::IsReady() const
 {
     const std::size_t tick = model_[ "tick" ];
-    return weapon_[ "next-time" ] <= tick; // $$$$ MCO 2012-08-28: this is buggy because next-time should be changed synchronously when firing
+    return module_->weapons[ weapon_ ].first <= tick;
 }
 
 // -----------------------------------------------------------------------------
@@ -68,10 +70,10 @@ void Weapon::DirectFire( const wrapper::View& firer, const wrapper::View& target
     assert( IsReady() );
     const unsigned int nCurrentTimeStep = model_[ "tick" ];
     const unsigned int nNextTimeStep = nCurrentTimeStep + 1;
-    double rNextTimeStepToFire = weapon_[ "next-time" ]; // $$$$ MCO 2012-08-28: this is buggy because next-time should be changed synchronously when firing
+    double rNextTimeStepToFire = module_->weapons[ weapon_ ].first;
     if( rNextTimeStepToFire < (float)nCurrentTimeStep )
         rNextTimeStepToFire = nCurrentTimeStep;
-    unsigned int nNbrAmmoFiredFromLoader = weapon_[ "fired-ammo" ]; // $$$$ MCO 2012-08-28: this is buggy because fired-ammo should be changed synchronously when firing
+    unsigned int nNbrAmmoFiredFromLoader = module_->weapons[ weapon_ ].second;
     while( (unsigned int)rNextTimeStepToFire < nNextTimeStep )
     {
         unsigned int nNbrAmmoToFire = type_->GetNbrAmmoPerBurst();
@@ -93,16 +95,7 @@ void Weapon::DirectFire( const wrapper::View& firer, const wrapper::View& target
         if( nNbrAmmoReserved < nNbrAmmoToFire ) // Soutes vide
             break;
     }
-    {
-        wrapper::Effect effect( weapon_ );
-        effect[ "fired-ammo" ] = nNbrAmmoFiredFromLoader; // $$$$ MCO 2012-08-28: this is buggy because fired-ammo should be changed synchronously when firing
-        effect.Post();
-    }
-    {
-        wrapper::Effect effect( weapon_ );
-        effect[ "next-time" ] = rNextTimeStepToFire; // $$$$ MCO 2012-08-28: this is buggy because next-time should be changed synchronously when firing
-        effect.Post();
-    }
+    module_->weapons[ weapon_ ] = std::make_pair( rNextTimeStepToFire, nNbrAmmoFiredFromLoader ); // $$$$ MCO 2012-08-30: yes we maintain a module global state, and no it's not that great...
 }
 
 //// -----------------------------------------------------------------------------

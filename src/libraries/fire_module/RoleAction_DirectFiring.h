@@ -11,6 +11,7 @@
 #define fire_module_RoleAction_DirectFiring_h
 
 #include "DirectFireData.h"
+#include <boost/noncopyable.hpp>
 #include <vector>
 
 namespace sword
@@ -21,15 +22,22 @@ namespace wrapper
 }
 namespace fire
 {
+    class ModuleFacade;
+
 // =============================================================================
 /** @class  RoleAction_DirectFiring
     @brief  Role action direct firing
 */
 // Created: MCO 2012-03-19
 // =============================================================================
-class RoleAction_DirectFiring
+class RoleAction_DirectFiring : boost::noncopyable
 {
 public:
+    //! @name Constructors/Destructor
+    //@{
+    explicit RoleAction_DirectFiring( ModuleFacade& module );
+    //@}
+
     //! @name Operations
     //@{
     //int  FirePopulation         ( unsigned int nTargetKnowledgeID, const PHY_AmmoDotationClass* dotationClass );
@@ -73,6 +81,12 @@ private:
     //MIL_Population* GetPopulationTarget( unsigned int nTargetKnowledgeID );
     void FirePion( DirectFireData& firerWeapons, const wrapper::View& entity, const wrapper::View& target, const T_ComposanteVector& compTargets ) const;
     T_ComposanteVector GetComposantesAbleToBeFired( const wrapper::View& components, bool bFireOnlyOnMajorComposantes, unsigned int nNbrWeaponsUsable ) const;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    ModuleFacade& module_;
     //@}
 };
 

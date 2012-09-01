@@ -50,42 +50,12 @@ DECLARE_HOOK( GetFireRandomInteger, size_t, ( size_t min, size_t max ) )
 std::size_t DirectFireData::nUrbanCoefficient_ = 100;
 
 // -----------------------------------------------------------------------------
-// Name: DirectFireData::sComposanteWeapons::sComposanteWeapons
-// Created: NLD 2004-10-05
-// -----------------------------------------------------------------------------
-DirectFireData::sComposanteWeapons::sComposanteWeapons()
-    : bIsFiring_( false )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: DirectFireData::sComposanteWeapons::AddWeapon
-// Created: NLD 2004-10-05
-// -----------------------------------------------------------------------------
-void DirectFireData::sComposanteWeapons::AddWeapon( const Weapon& weapon )
-{
-    if( weapon.IsReady() )
-        weapons_.push_back( weapon );
-    else
-        bIsFiring_ = true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DirectFireData::sComposanteWeapons::RemoveWeapon
-// Created: NLD 2004-10-05
-// -----------------------------------------------------------------------------
-void DirectFireData::sComposanteWeapons::RemoveWeapon( const Weapon& weapon )
-{
-    weapons_.erase( std::remove( weapons_.begin(), weapons_.end(), weapon ), weapons_.end() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DirectFireData constructor
 // Created: NLD 2004-10-05
 // -----------------------------------------------------------------------------
-DirectFireData::DirectFireData( const wrapper::View& firer, E_ComposanteFiringType nComposanteFiringType, E_FiringMode nFiringMode, double rPercentageComposantesToUse, int ammoDotationClass )
-    : firer_                      ( firer )
+DirectFireData::DirectFireData( ModuleFacade& module, const wrapper::View& firer, E_ComposanteFiringType nComposanteFiringType, E_FiringMode nFiringMode, double rPercentageComposantesToUse, int ammoDotationClass )
+    : module_                     ( module )
+    , firer_                      ( firer )
     , nComposanteFiringType_      ( nComposanteFiringType )
     , nFiringMode_                ( nFiringMode )
     , rPercentageComposantesToUse_( rPercentageComposantesToUse )
@@ -144,7 +114,7 @@ bool DirectFireData::CanFire( const wrapper::View& firer )
 // -----------------------------------------------------------------------------
 void DirectFireData::ApplyOnWeapon( const wrapper::View& model, const wrapper::View& component, const wrapper::View& weapon )
 {
-    const Weapon w( model, weapon );
+    const Weapon w( module_, model, weapon );
     if( ! w.CanDirectFire( component, nComposanteFiringType_, ammoDotationClass_ ) )
         return;
     if( ! w.HasDotation( firer_ ) )
@@ -274,6 +244,37 @@ bool DirectFireData::HasWeaponsAndNoAmmo() const
 bool DirectFireData::IsTemporarilyBlocked() const
 {
     return bTemporarilyBlocked_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DirectFireData::sComposanteWeapons::sComposanteWeapons
+// Created: NLD 2004-10-05
+// -----------------------------------------------------------------------------
+DirectFireData::sComposanteWeapons::sComposanteWeapons()
+    : bIsFiring_( false )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: DirectFireData::sComposanteWeapons::AddWeapon
+// Created: NLD 2004-10-05
+// -----------------------------------------------------------------------------
+void DirectFireData::sComposanteWeapons::AddWeapon( const Weapon& weapon )
+{
+    if( weapon.IsReady() )
+        weapons_.push_back( weapon );
+    else
+        bIsFiring_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DirectFireData::sComposanteWeapons::RemoveWeapon
+// Created: NLD 2004-10-05
+// -----------------------------------------------------------------------------
+void DirectFireData::sComposanteWeapons::RemoveWeapon( const Weapon& weapon )
+{
+    weapons_.erase( std::remove( weapons_.begin(), weapons_.end(), weapon ), weapons_.end() );
 }
 
 // -----------------------------------------------------------------------------

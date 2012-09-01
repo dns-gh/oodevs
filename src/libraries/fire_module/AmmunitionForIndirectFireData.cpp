@@ -42,9 +42,9 @@ AmmunitionForIndirectFireData::~AmmunitionForIndirectFireData()
 // Name: AmmunitionForIndirectFireData::ApplyOnWeapon
 // Created: NLD 2004-10-21
 // -----------------------------------------------------------------------------
-void AmmunitionForIndirectFireData::ApplyOnWeapon( const wrapper::View& model, const wrapper::View& component, const wrapper::View& weapon )
+void AmmunitionForIndirectFireData::ApplyOnWeapon( ModuleFacade& module, const wrapper::View& model, const wrapper::View& component, const wrapper::View& weapon )
 {
-    const Weapon w( model, weapon );
+    const Weapon w( module, model, weapon );
     if( ! w.CanIndirectFire( firer_, component, type_, target_ ) )
         return;
     const DotationCategory& ammunition = w.GetDotation();

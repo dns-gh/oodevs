@@ -23,6 +23,16 @@ using namespace sword::fire;
 DECLARE_HOOK( CanComponentBeFiredAt, bool, ( const SWORD_Model* component ) )
 DECLARE_HOOK( GetFireRandomInteger, size_t, ( size_t min, size_t max ) )
 
+// -----------------------------------------------------------------------------
+// Name: RoleAction_DirectFiring constructor
+// Created: MCO 2012-08-30
+// -----------------------------------------------------------------------------
+RoleAction_DirectFiring::RoleAction_DirectFiring( ModuleFacade& module )
+    : module_( module )
+{
+    // NOTHING
+}
+
 //// -----------------------------------------------------------------------------
 //// Name: RoleAction_DirectFiring::GetPopulationTarget
 //// Created: NLD 2004-10-04
@@ -141,7 +151,7 @@ int RoleAction_DirectFiring::FirePion( const wrapper::View& model, const wrapper
     if( target[ "dead" ] )
         return eEnemyDestroyed;
     // Firers
-    DirectFireData data( entity, nComposanteFiringType, nFiringMode, rPercentageComposantesToUse, ammoDotationClass );
+    DirectFireData data( module_, entity, nComposanteFiringType, nFiringMode, rPercentageComposantesToUse, ammoDotationClass );
     if( data.CanFire( entity ) )
     {
         const wrapper::View& components = entity[ "components" ];

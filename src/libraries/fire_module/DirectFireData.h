@@ -24,6 +24,8 @@ namespace wrapper
 
 namespace fire
 {
+    class ModuleFacade;
+
 // =============================================================================
 /** @class  DirectFireData
     @brief  Direct fire data
@@ -58,7 +60,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    DirectFireData( const wrapper::View& firer, E_ComposanteFiringType nComposanteFiringType,
+    DirectFireData( ModuleFacade& module, const wrapper::View& firer, E_ComposanteFiringType nComposanteFiringType,
         E_FiringMode nFiringMode = eFiringModeNormal, double rPercentageComposantesToUse = 1.,
         int ammoDotationClass = -1 );
     //@}
@@ -125,6 +127,9 @@ private:
     //@}
 
 private:
+    //! @name Member data
+    //@{
+    ModuleFacade& module_;
     const wrapper::View firer_;
     const int ammoDotationClass_;
     const E_ComposanteFiringType nComposanteFiringType_;
@@ -135,6 +140,7 @@ private:
           bool                   bHasWeaponsNotReady_;
           bool                   bHasWeaponsAndNoAmmo_;
           bool                   bTemporarilyBlocked_;
+    //@}
 
 public:
     // Factor applied to number of components that can fire in urban areas.
