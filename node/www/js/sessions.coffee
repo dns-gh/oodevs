@@ -410,10 +410,16 @@ class SessionItemView extends Backbone.View
 
     delete: (evt) =>
         return if is_disabled evt
-        @toggle_load()
-        @model.destroy wait: true, error: =>
-            @toggle_load()
-            print_error "Unable to delete session " + @model.get "name"
+        name = @model.get "name"
+        modal_confirm
+            message: "Are you sure you want to delete session #{name}?"
+            accept: "Delete"
+            reject: "Cancel",
+            =>
+                @toggle_load()
+                @model.destroy wait: true, error: =>
+                    @toggle_load()
+                    print_error "Unable to delete session #{name}"
 
     modify: (cmd, data) =>
         @toggle_load()

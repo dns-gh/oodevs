@@ -74,3 +74,5 @@ select{width:224px;}
 .plugin_left_col{margin-left:69px !important;}
 .plugin_edit{padding-left:10px;}
 #settings_slide{margin-bottom:0;}
+.modal_confirm .alert{margin-bottom:0;}
+.modal_confirm .buttons{position:absolute;bottom:10px;right:10px;}

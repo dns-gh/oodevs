@@ -133,8 +133,14 @@ class NodeItemView extends Backbone.View
         $(@el).html node_template data
 
     delete: =>
-        @toggle_load()
-        @model.destroy wait: true, error: => print_error "Unable to delete node " + @model.get "ident"
+        ident = @model.get "ident"
+        modal_confirm
+            message: "Are you sure you want to delete node #{ident}?"
+            accept: "Delete"
+            reject: "Cancel",
+            =>
+                @toggle_load()
+                @model.destroy wait: true, error: => print_error "Unable to delete node #{ident}"
 
     stop: =>
         @toggle_load()

@@ -65,14 +65,19 @@ class PackageView extends Backbone.View
 
         discard.click =>
             return if discard.hasClass "disabled"
-            @toggle_load false, disable_list, discard
-            ajax "/api/delete_cache", id: uuid,
+            modal_confirm
+                message: "Are you sure you want to discard this package?"
+                accept: "Discard"
+                reject: "Cancel",
                 =>
-                    @reset()
-                    @enabled = true
-                =>
-                    @toggle_load true, disable_list, discard
-                    print_error "Unable to discard package(s)"
+                    @toggle_load false, disable_list, discard
+                    ajax "/api/delete_cache", id: uuid,
+                        =>
+                            @reset()
+                            @enabled = true
+                        =>
+                            @toggle_load true, disable_list, discard
+                            print_error "Unable to discard package(s)"
 
         save.click =>
             return if save.hasClass "disabled"

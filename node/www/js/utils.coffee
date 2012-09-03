@@ -312,3 +312,21 @@ select_attributes = (item, list) ->
         else
             data[it] = v
     return data
+
+modal_confirm = (opts, fn, args...) ->
+    msg = $ """
+<div class="modal fade in modal_confirm">
+    <div class="alert alert-error alert-block">
+        <h4 class="alert-heading">Warning</h4>
+        <p> #{opts.message} </p>
+        <div class="buttons">
+            <a class="btn btn-danger">#{opts.accept}</a>
+            <a class="btn" data-dismiss="modal">#{opts.reject}</a>
+        </div>
+    </div>
+</div>
+"""
+    msg.modal "show"
+    msg.find(".btn-danger").click (e) ->
+        msg.modal "hide"
+        fn args...

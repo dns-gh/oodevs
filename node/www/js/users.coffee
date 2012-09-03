@@ -114,10 +114,16 @@ class UserItemView extends Backbone.View
 
     delete: (evt) =>
         return if is_disabled evt
-        @toggle_load()
-        @model.destroy wait: true, error: =>
-            @toggle_load()
-            print_error "Unable to delete user " + @model.get "username"
+        name = @model.get "username"
+        modal_confirm
+            message: "Are you sure you want to delete user #{name}?"
+            accept: "Delete"
+            reject: "Cancel",
+            =>
+                @toggle_load()
+                @model.destroy wait: true, error: =>
+                    @toggle_load()
+                    print_error "Unable to delete user #{name}"
 
     edit: (evt) =>
         return if is_disabled evt

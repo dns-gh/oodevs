@@ -59,11 +59,16 @@ class PackageView extends Backbone.View
 
         for it in $(@el).find ".package_header .remove_all a"
             $(it).click =>
-                items = []
-                for btn in $(@el).find ".action .delete"
-                    @toggle_load false, btn
-                    items.push btn
-                @delete_items items if items.length
+                modal_confirm
+                    message: "Are you sure you want to delete all packages?"
+                    accept: "Delete"
+                    reject: "Cancel",
+                    =>
+                        items = []
+                        for btn in $(@el).find ".action .delete"
+                            @toggle_load false, btn
+                            items.push btn
+                        @delete_items items if items.length
 
         for it in $(@el).find ".action .more"
             $(it).click ->
@@ -74,8 +79,13 @@ class PackageView extends Backbone.View
 
         for it in $(@el).find ".action .delete"
             $(it).click it, (e) =>
-                @toggle_load false, e.data
-                @delete_items [e.data]
+                modal_confirm
+                    message: "Are you sure you want to delete this package?"
+                    accept: "Delete"
+                    reject: "Cancel",
+                    =>
+                        @toggle_load false, e.data
+                        @delete_items [e.data]
         return
 
     delta: =>
