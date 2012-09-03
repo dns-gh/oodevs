@@ -173,6 +173,30 @@ void DEC_Knowledge_PopulationConcentration::save( MIL_CheckPointOutArchive& file
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationConcentration::WriteKnowledges
+// Created: NPT 2012-08-09
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_PopulationConcentration::WriteKnowledges( xml::xostream& xos ) const
+{
+    xos << xml::start( "concentration" )
+            << xml::attribute( "id", nID_ )
+            << xml::attribute( "last-time-update", nTimeLastUpdate_ )
+            << xml::attribute( "relevance", rRelevance_ );
+    if( pAttitude_ )
+        xos << xml::attribute( "attitude", pAttitude_->GetID() );
+    xos     << xml::attribute( "alive-humans", nNbrAliveHumans_ )
+            << xml::attribute( "dead-humans", nNbrDeadHumans_ );
+    if( pCurrentPerceptionLevel_ )
+        xos << xml::attribute( "perception-level", pCurrentPerceptionLevel_->GetID() );
+    xos     << xml::attribute( "recon-attributes-valid", bReconAttributesValid_ )
+            << xml::start( "position")
+                << xml::attribute( "x", position_.rX_ )
+                << xml::attribute( "y", position_.rY_ )
+            << xml::end;
+    xos << xml::end;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationConcentration::Prepare
 // Created: NLD 2005-10-13
 // -----------------------------------------------------------------------------

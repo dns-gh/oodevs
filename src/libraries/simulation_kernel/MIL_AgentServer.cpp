@@ -400,6 +400,16 @@ void MIL_AgentServer::WriteODB( xml::xostream& xos ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::WriteKnowledges
+// Created: NPT 2012-08-08
+// -----------------------------------------------------------------------------
+void MIL_AgentServer::WriteKnowledges( xml::xostream& xos ) const
+{
+    assert( pEntityManager_ );
+    pEntityManager_->WriteKnowledges( xos );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AgentServer::SendControlInformation
 // Created: AGE 2007-08-10
 // -----------------------------------------------------------------------------

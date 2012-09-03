@@ -25,6 +25,7 @@
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeAgent.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeAgentPerception.h"
+#include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgePopulation.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgePopulationCollision.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgePopulationPerception.h"
@@ -299,7 +300,44 @@ void MIL_KnowledgeGroup::WriteODB( xml::xostream& xos ) const
             << xml::attribute( "type", type_->GetName() )
         << xml::end;
     for( CIT_KnowledgeGroupVector it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it ) // LTO
-        (**it).WriteODB( boost::ref(xos) );     // LTO
+        ( **it ).WriteODB( boost::ref( xos ) );     // LTO
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::WriteKnowledges
+// Created: NPT 2012-08-08
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::WriteKnowledges( xml::xostream& xos ) const
+{
+    assert( type_ );
+    xos << xml::start( "knowledge-group" )
+        << xml::attribute( "id", id_ )
+        << xml::attribute( "name", name_ )
+        << xml::attribute( "type", type_->GetName() );
+    xos     << xml::start( "objects" );
+    if( GetKnowledge().GetKnowledgeObjectContainer() )
+    {
+        const DEC_BlackBoard_CanContainKnowledgeObject::T_KnowledgeObjectMap& objectMap = GetKnowledge().GetKnowledgeObjectContainer()->GetKnowledgeObjects();
+        for( DEC_BlackBoard_CanContainKnowledgeObject::CIT_KnowledgeObjectMap it = objectMap.begin(); it != objectMap.end(); ++it )
+            it->second->WriteKnowledges( xos );
+    }
+    xos     << xml::end;
+
+    xos     << xml::start( "populations" );
+    const DEC_BlackBoard_CanContainKnowledgePopulation::T_KnowledgePopulationMap& populationMap = GetKnowledge().GetKnowledgePopulationContainer().GetKnowledgePopulations();
+    for( DEC_BlackBoard_CanContainKnowledgePopulation::CIT_KnowledgePopulationMap it = populationMap.begin(); it != populationMap.end(); ++it )
+        it->second->WriteKnowledges( xos );
+    xos     << xml::end;
+
+    xos     << xml::start( "units" );
+    const DEC_BlackBoard_CanContainKnowledgeAgent::T_KnowledgeAgentMap& agentMap =  GetKnowledge().GetKnowledgeAgentContainer().GetKnowledgeAgents();
+    for( DEC_BlackBoard_CanContainKnowledgeAgent::CIT_KnowledgeAgentMap it = agentMap.begin(); it != agentMap.end(); ++it )
+        it->second->WriteKnowledges( xos );
+    xos     << xml::end;
+
+    for( CIT_KnowledgeGroupVector it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
+        ( **it ).WriteKnowledges( boost::ref( xos ) );
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------

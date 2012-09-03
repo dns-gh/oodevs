@@ -89,6 +89,37 @@ void DEC_Knowledge_AgentDataRecognition::save( MIL_CheckPointOutArchive& file, c
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentDataRecognition::WriteKnowledges
+// Created: NPT 2012-08-09
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_AgentDataRecognition::WriteKnowledges( xml::xostream& xos ) const
+{
+    xos << xml::start( "data-recognition" )
+            << xml::attribute( "time-last-update", nTimeLastUpdate_ );
+    if( rOperationalState_ != std::numeric_limits< double >::max() )
+        xos << xml::attribute( "op-state", rOperationalState_ );
+    if( rMajorOperationalState_ != std::numeric_limits< double >::max() )
+        xos << xml::attribute( "major-op-state", rMajorOperationalState_ );
+    unsigned int number = 1;
+    for( CIT_KnowledgeComposanteVector it = composantes_.begin(); it != composantes_.end(); it++ )
+    {
+        CIT_KnowledgeComposanteVector itNext = it + 1;
+        if( itNext == composantes_.end() || ( it->GetType().GetMosID().id() != itNext->GetType().GetMosID().id() ) )
+        {
+            it->WriteKnowledges( xos, number );
+            number = 1;
+        }
+        else
+            ++number;
+    }
+
+    if( pAgentType_ )
+        xos << xml::attribute( "agent-type", pAgentType_->GetID() );
+    xos << xml::end;
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentDataRecognition::Prepare
 // Created: NLD 2004-11-10
 // -----------------------------------------------------------------------------

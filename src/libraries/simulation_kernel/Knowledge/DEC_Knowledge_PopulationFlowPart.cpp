@@ -84,6 +84,20 @@ void DEC_Knowledge_PopulationFlowPart::save( MIL_CheckPointOutArchive& file, con
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationFlowPart::WriteKnowledges
+// Created: NPT 2012-08-09
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_PopulationFlowPart::WriteKnowledges( xml::xostream& xos ) const
+{
+    xos << xml::start( "flow-part" )
+        << xml::attribute( "relevance", rRelevance_ )
+        << xml::attribute( "last-relevance-sent", rLastRelevanceSent_ )
+        << xml::attribute( "time-last-update", nTimeLastUpdate_ )
+        << xml::attribute( "perceived", bPerceived_ );
+    xos << xml::end;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationFlowPart::Prepare
 // Created: NLD 2005-10-14
 // -----------------------------------------------------------------------------

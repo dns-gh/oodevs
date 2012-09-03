@@ -37,6 +37,15 @@ public:
     virtual ~DEC_BlackBoard_CanContainKnowledgeObject();
     //@}
 
+public:
+    //! @name Types
+    //@{
+    typedef std::map< const MIL_Object_ABC*, boost::shared_ptr< DEC_Knowledge_Object > > T_KnowledgeObjectMap;
+    typedef T_KnowledgeObjectMap::iterator                                              IT_KnowledgeObjectMap;
+    typedef T_KnowledgeObjectMap::const_iterator                                       CIT_KnowledgeObjectMap;
+    //@}
+
+public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
@@ -64,6 +73,7 @@ public:
     boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObjectFromID( unsigned int nID ) const;
     boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObjectFromObjectID( unsigned int nID ) const;
     boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObject( const MIL_Object_ABC& objectKnown ) const;
+    const T_KnowledgeObjectMap& GetKnowledgeObjects() const;
     DEC_Knowledge_Object* RetrieveKnowledgeObject( const MIL_Object_ABC& objectKnown ) const;
     void GetKnowledgesObject( T_KnowledgeObjectVector& outContainer ) const;
     bool HasKnowledgeObject( const MIL_Object_ABC& objectKnown ) const;
@@ -89,14 +99,6 @@ public:
             fct( knowledge );
         }
     }
-    //@}
-
-public:
-    //! @name Types
-    //@{
-    typedef std::map< const MIL_Object_ABC*, boost::shared_ptr< DEC_Knowledge_Object > > T_KnowledgeObjectMap;
-    typedef T_KnowledgeObjectMap::iterator                                              IT_KnowledgeObjectMap;
-    typedef T_KnowledgeObjectMap::const_iterator                                       CIT_KnowledgeObjectMap;
     //@}
 
 private:

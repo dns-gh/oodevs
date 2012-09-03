@@ -119,6 +119,36 @@ void DEC_Knowledge_Population::save( MIL_CheckPointOutArchive& file, const unsig
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population::WriteKnowledges
+// Created: NPT 2012-08-09
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Population::WriteKnowledges( xml::xostream& xos ) const
+{
+    xos << xml::start( "population-knowledge" );
+    if( pPopulationKnown_ )
+        xos << xml::attribute( "population-known", pPopulationKnown_->GetID() );
+
+    if( pHackedPerceptionLevel_ && pHackedPerceptionLevel_ != &PHY_PerceptionLevel::notSeen_ )
+        xos << xml::attribute( "hacked", pHackedPerceptionLevel_->GetID() );
+    if( !criticalIntelligence_.empty() )
+        xos << xml::attribute( "critical-intelligence", criticalIntelligence_ );
+    xos     << xml::attribute( "id", nID_ );
+
+    for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
+        it->second->WriteKnowledges( xos );
+    for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
+        it->second->WriteKnowledges( xos );
+
+    if( rDominationState_ )
+        xos << xml::attribute( "domination-state", rDominationState_ );
+    if( bIsRecon_ )
+        xos << xml::attribute( "is-recon", bIsRecon_ );
+    if( bReconAttributesValid_ )
+        xos << xml::attribute( "recon-attributes-valid", bReconAttributesValid_ );
+    xos << xml::end;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Population::Prepare
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------

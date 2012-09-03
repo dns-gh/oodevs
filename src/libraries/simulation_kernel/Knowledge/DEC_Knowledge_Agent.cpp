@@ -238,6 +238,26 @@ void DEC_Knowledge_Agent::save( MIL_CheckPointOutArchive& file, const unsigned i
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::WriteKnowledges
+// Created: NPT 2012-08-09
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Agent::WriteKnowledges( xml::xostream& xos ) const
+{
+    xos << xml::start( "agent-knowledge" )
+            << xml::attribute( "id", GetID() );
+    if( pAgentKnown_ )
+    {
+        xos << xml::attribute( "real-unit", pAgentKnown_->GetID() )
+            << xml::attribute( "real-unit-type", pAgentKnown_->GetType().GetID() );
+    }
+    xos     << xml::attribute( "max-level", GetMaxPerceptionLevel().GetID() )
+            << xml::attribute( "relevance", GetRelevance() );
+            dataDetection_.WriteKnowledges( xos );
+            dataRecognition_.WriteKnowledges( xos );
+    xos << xml::end;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Agent::Prepare
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------

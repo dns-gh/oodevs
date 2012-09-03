@@ -82,6 +82,7 @@ public:
     void load( MIL_CheckPointInArchive& );
 
     void WriteODB( xml::xostream& xos ) const;
+    void WriteKnowledges( xml::xostream& xos ) const;
     //@}
 
     //! @name Simulation management

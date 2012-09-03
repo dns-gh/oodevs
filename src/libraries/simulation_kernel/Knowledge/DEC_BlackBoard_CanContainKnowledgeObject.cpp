@@ -196,6 +196,15 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_BlackBoard_CanContainKnowledgeObje
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgeObjects
+// Created: NPT 2012-08-09
+// -----------------------------------------------------------------------------
+const DEC_BlackBoard_CanContainKnowledgeObject::T_KnowledgeObjectMap& DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgeObjects() const
+{
+    return objectMap_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgeObject::RetrieveKnowledgeObject
 // Created: LDC 2011-08-24
 // -----------------------------------------------------------------------------

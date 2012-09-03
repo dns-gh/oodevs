@@ -96,6 +96,7 @@ public:
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
 
     void WriteODB( xml::xostream& xos ) const;
+    void WriteKnowledges( xml::xostream& xos ) const;
     //@}
 
     //! @name Operations

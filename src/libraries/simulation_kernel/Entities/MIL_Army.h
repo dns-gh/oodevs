@@ -88,6 +88,7 @@ public:
 
     virtual void WriteODB( xml::xostream& xos ) const;
     virtual void WriteDiplomacyODB( xml::xostream& xos ) const;
+    virtual void WriteKnowledges( xml::xostream& xos ) const;
     //@}
 
     //! @name Init

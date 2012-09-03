@@ -208,6 +208,7 @@ public:
     template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_EntityManager* role, const unsigned int /*version*/ );
 
     void WriteODB( xml::xostream& xos ) const;
+    void WriteKnowledges( xml::xostream& xos ) const;
     //@}
 
 private:

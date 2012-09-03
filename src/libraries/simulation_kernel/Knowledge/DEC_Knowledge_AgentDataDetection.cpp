@@ -144,6 +144,47 @@ void DEC_Knowledge_AgentDataDetection::save( MIL_CheckPointOutArchive& file, con
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentDataDetection::WriteKnowledges
+// Created: NPT 2012-08-09
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_AgentDataDetection::WriteKnowledges( xml::xostream& xos ) const
+{
+    xos << xml::start( "data-detection" )
+            << xml::attribute( "last-time-update", nTimeLastUpdate_ )
+            << xml::start( "position" )
+                << xml::attribute( "x", vPosition_.rX_ )
+                << xml::attribute( "y", vPosition_.rY_ )
+            << xml::end
+            << xml::start( "direction" )
+                << xml::attribute( "x", vDirection_.rX_ )
+                << xml::attribute( "y", vDirection_.rY_ )
+            << xml::end
+            << xml::attribute( "speed", rSpeed_ )
+            << xml::attribute( "altitude", rAltitude_ )
+            << xml::attribute( "population-density", rPopulationDensity_ );
+    if( pArmySurrenderedTo_ )
+        xos << xml::attribute( "surrendered-to", pArmySurrenderedTo_->GetID() );
+    xos     << xml::start( "vision-volumes" );
+    for( CIT_ComposanteVolumeSet it = visionVolumes_.begin(); it != visionVolumes_.end(); it++ )
+    {
+        xos     << xml::start( "volume" );
+        xos     << xml::attribute( "id", ( *it )->GetID() );
+        xos     << xml::end;
+    }
+    xos     << xml::end;
+    if( pCurrentPosture_ )
+        xos << xml::attribute( "posture", pCurrentPosture_->GetID() );
+    xos     << xml::attribute( "posture-completion", rPostureCompletionPercentage_ );
+    if( bDead_ )
+        xos << xml::attribute( "dead", bDead_ );
+    if( bPrisoner_ )
+        xos << xml::attribute( "prisoner", bPrisoner_ );
+    if( bRefugeeManaged_ )
+        xos << xml::attribute( "refugee-managed", bRefugeeManaged_ );
+    xos << xml::end;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentDataDetection::Prepare
 // Created: NLD 2004-11-09
 // -----------------------------------------------------------------------------

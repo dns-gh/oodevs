@@ -82,6 +82,24 @@ void DEC_Knowledge_AgentComposante::save( MIL_CheckPointOutArchive& file, const 
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentComposante::WriteKnowledges
+// Created: NPT 2012-08-10
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_AgentComposante::WriteKnowledges( xml::xostream& xos, unsigned int number ) const
+{
+    if( pType_ )
+    {
+        xos << xml::start( "composante" )
+                << xml::attribute( "type", pType_->GetMosID().id() )
+                << xml::attribute( "can-fire", bCanFire_ )
+                << xml::attribute( "major", bMajor_ )
+                << xml::attribute( "major-score", nMajorScore_ )
+                << xml::attribute( "number", number )
+            << xml::end;
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentComposante::GetDangerosity
 // Created: NLD 2004-05-07
 // -----------------------------------------------------------------------------

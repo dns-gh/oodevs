@@ -171,6 +171,30 @@ void DEC_Knowledge_PopulationFlow::save( MIL_CheckPointOutArchive& file, const u
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationFlow::WriteKnowledges
+// Created: NPT 2012-08-09
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_PopulationFlow::WriteKnowledges( xml::xostream& xos ) const
+{
+    xos << xml::start( "flow" )
+            << xml::attribute( "id", nID_ )
+            << xml::attribute( "speed", rSpeed_ );
+    xos << xml::attribute( "alive-humans", nNbrAliveHumans_ )
+        << xml::attribute( "dead-humans", nNbrDeadHumans_ );
+    if( pAttitude_ )
+        xos << xml::attribute( "attitude", pAttitude_->GetID() );
+    xos << xml::attribute( "recon-attributes-valid", bReconAttributesValid_ );
+    if ( pCurrentPerceptionLevel_ )
+        xos << xml::attribute( "perception-level", pCurrentPerceptionLevel_->GetID() );
+    xos     << xml::start( "direction")
+                << xml::attribute( "x", direction_.rX_ )
+                << xml::attribute( "y", direction_.rY_ )
+            << xml::end;
+            flowParts_.WriteKnowledges( xos );
+    xos << xml::end;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationFlow::Prepare
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------

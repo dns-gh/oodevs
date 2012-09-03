@@ -92,6 +92,7 @@
 #include "Tools/MIL_Config.h"
 #include "Tools/MIL_ProfilerMgr.h"
 #include "Tools/MIL_Tools.h"
+#include "tools/SchemaWriter.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_ScipioException.h"
@@ -2060,8 +2061,10 @@ void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const unsigned int
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::WriteODB( xml::xostream& xos ) const
 {
-    xos << xml::start( "orbat" )
-            << xml::start( "parties" );
+    tools::SchemaWriter schemaWriter;
+    xos << xml::start( "orbat" );
+    schemaWriter.WriteSchema( xos, "exercise", "orbat" );
+    xos     << xml::start( "parties" );
                 armyFactory_->Apply( boost::bind( &MIL_Army_ABC::WriteODB, _1, boost::ref( xos ) ) );
                 pObjectManager_->WriteODB( xos );
     xos     << xml::end
@@ -2069,6 +2072,19 @@ void MIL_EntityManager::WriteODB( xml::xostream& xos ) const
                 armyFactory_->Apply( boost::bind( &MIL_Army_ABC::WriteDiplomacyODB, _1, boost::ref( xos ) ) );
     xos     << xml::end
         << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::WriteKnowledges
+// Created: NPT 2012-08-08
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::WriteKnowledges( xml::xostream& xos ) const
+{
+    tools::SchemaWriter schemaWriter;
+    xos << xml::start( "knowledges" );
+        schemaWriter.WriteSchema( xos, "exercise", "knowledges" );
+        armyFactory_->Apply( boost::bind( &MIL_Army_ABC::WriteKnowledges, _1, boost::ref( xos ) ) );
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------

@@ -42,6 +42,7 @@ public:
 
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
+    void WriteKnowledges( xml::xostream& xos, unsigned int number ) const;
     //@}
 
     //! @name Accessors

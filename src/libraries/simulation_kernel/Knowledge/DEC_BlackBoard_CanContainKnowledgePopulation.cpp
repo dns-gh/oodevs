@@ -120,6 +120,15 @@ boost::shared_ptr< DEC_Knowledge_Population > DEC_BlackBoard_CanContainKnowledge
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgePopulation::GetKnowledgePopulations
+// Created: NPT 2012-08-09
+// -----------------------------------------------------------------------------
+const DEC_BlackBoard_CanContainKnowledgePopulation::T_KnowledgePopulationMap& DEC_BlackBoard_CanContainKnowledgePopulation::GetKnowledgePopulations() const
+{
+    return knowledgePopulationMap_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgePopulation::Accept
 // Created: LGY 2011-08-29
 // -----------------------------------------------------------------------------

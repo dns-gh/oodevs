@@ -36,6 +36,7 @@
 #include "simulation_kernel/FormationFactory_ABC.h"
 #include "simulation_kernel/InhabitantFactory_ABC.h"
 #include "simulation_kernel/Knowledge/KnowledgeGroupFactory_ABC.h" // LTO
+#include "simulation_kernel/Knowledge/DEC_Knowledge_Object.h"
 #include "simulation_kernel/PopulationFactory_ABC.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
@@ -358,6 +359,32 @@ void MIL_Army::WriteDiplomacyODB( xml::xostream& xos ) const
                 << xml::attribute( "diplomacy", diplomacyConverter_.RevertConvert(it->second) )
             << xml::end;
     }
+    xos << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Army::WriteKnowledges
+// Created: NPT 2012-08-08
+// -----------------------------------------------------------------------------
+void MIL_Army::WriteKnowledges( xml::xostream& xos ) const
+{
+    xos << xml::start( "army" )
+            << xml::attribute( "id", GetID() )
+            << xml::attribute( "name", GetName() );
+
+    xos     << xml::start( "objects" );
+    T_KnowledgeObjectVector knowledgeVector;
+    GetKnowledge().GetKnowledgesObject( knowledgeVector );
+    for( CIT_KnowledgeObjectVector it = knowledgeVector.begin(); it != knowledgeVector.end(); ++it )
+        ( *it )->WriteKnowledges( xos );
+    xos     << xml::end;
+
+    xos << xml::start( "knowledge-groups" );
+    T_KnowledgeGroupMap knowledgeGroupMap = GetKnowledgeGroups();
+    for( CIT_KnowledgeGroupMap it = knowledgeGroupMap.begin(); it != knowledgeGroupMap.end(); ++it )
+        it->second->WriteKnowledges( boost::ref( xos ) );
+    xos     << xml::end;
+
     xos << xml::end;
 }
 

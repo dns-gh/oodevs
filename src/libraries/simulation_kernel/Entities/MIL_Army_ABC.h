@@ -68,6 +68,7 @@ public:
     template< typename Archive > void serialize( Archive&, const unsigned int ) {}
     virtual void WriteODB         ( xml::xostream& xos ) const = 0;
     virtual void WriteDiplomacyODB( xml::xostream& xos ) const = 0;
+    virtual void WriteKnowledges  ( xml::xostream& xos ) const = 0;
     //@}
 
     //! @name Hierarchy

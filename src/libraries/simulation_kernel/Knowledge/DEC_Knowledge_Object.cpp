@@ -283,6 +283,34 @@ void DEC_Knowledge_Object::save( MIL_CheckPointOutArchive& file, const unsigned 
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::WriteKnowledge
+// Created: NPT 2012-08-08
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Object::WriteKnowledges( xml::xostream& xos ) const
+{
+    if( !bValid_ )
+        return;
+
+    xos << xml::start( "object-knowledge" )
+        << xml::attribute( "id", nID_ )
+        << xml::attribute( "name", name_ )
+        << xml::attribute( "object-id", objectId_ );
+    if( pObjectType_ )
+        xos << xml::attribute( "type", pObjectType_->GetID() );
+    if( pCurrentPerceptionLevel_ )
+        xos << xml::attribute( "level", pCurrentPerceptionLevel_->GetID() );
+    if( pMaxPerceptionLevel_ )
+        xos << xml::attribute( "max-level", pMaxPerceptionLevel_->GetID() );
+    xos  << xml::attribute( "last-time-update", nTimeLastUpdate_ )
+         << xml::attribute( "relevance", rRelevance_ );
+    if( bPerceptionDistanceHacked_ )
+        xos << xml::attribute( "hacked", bPerceptionDistanceHacked_ );
+    if( bSkipPreparation_ )
+        xos << xml::attribute( "skip-preparation", bSkipPreparation_ );
+    xos << xml::end;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Object::Prepare
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------

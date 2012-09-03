@@ -26,7 +26,7 @@ class KnowledgesVisitor_ABC;
 class DEC_BlackBoard_CanContainKnowledgePopulation : private boost::noncopyable
 {
 
-private:
+public:
     //! @name Types
     //@{
     typedef std::map< const MIL_Population*, boost::shared_ptr< DEC_Knowledge_Population > > T_KnowledgePopulationMap;
@@ -61,6 +61,7 @@ public:
     //@{
     boost::shared_ptr< DEC_Knowledge_Population > GetKnowledgePopulation( const MIL_Population& associatedPopulation ) const;
     boost::shared_ptr< DEC_Knowledge_Population > GetKnowledgePopulationFromID( unsigned int nID ) const;
+    const T_KnowledgePopulationMap& GetKnowledgePopulations() const;
 
     template < class UnaryFunction >
     void ApplyOnKnowledgesPopulation( UnaryFunction& fct ) const
