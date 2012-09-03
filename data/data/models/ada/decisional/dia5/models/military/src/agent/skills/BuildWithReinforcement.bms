@@ -30,14 +30,13 @@ rootnode
     elementNotActivated = function( self, params, additionalParams )
         if self.params.withImprovement then
             self.toImprove = additionalParams.element
-        else
-            self.objectsToActivate[#self.objectsToActivate + 1] = additionalParams.element
-            meKnowledge:RC( eRC_ObstacleEnAttenteActivation, additionalParams.element.source )
-            self.nextTargetIndex = self.nextTargetIndex + 1
-            myself.obstacleToActivate = true
-            if self.nextTargetIndex > #self.params.entities then
-                self.alltry = true
-            end
+        end
+        self.objectsToActivate[#self.objectsToActivate + 1] = additionalParams.element
+        meKnowledge:RC( eRC_ObstacleEnAttenteActivation, additionalParams.element.source )
+        self.nextTargetIndex = self.nextTargetIndex + 1
+        myself.obstacleToActivate = true
+        if self.nextTargetIndex > #self.params.entities then
+            self.alltry = true
         end
     end,
 
