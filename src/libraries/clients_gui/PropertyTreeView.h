@@ -12,6 +12,7 @@
 
 namespace gui
 {
+    class PropertyModel;
 // =============================================================================
 /** @class  PropertyTreeView
     @brief  Property Tree view
@@ -29,13 +30,22 @@ public:
 
     //! @name Operations
     //@{
+    void SaveState();
     void Display();
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void DisplayHeader( QModelIndex root );
+    void DisplayHeader( QModelIndex root, const QStandardItemModel& model );
+    void SaveState( QModelIndex root, const QStandardItemModel& model );
+    void RestoreState( const PropertyModel& model );
+    //@}
+
+private:
+    //! @name Member Data
+    //@{
+    std::set< std::string > itemsCollapsed_;
     //@}
 };
 

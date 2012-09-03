@@ -42,11 +42,6 @@ public:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
     //! @name Member data
     //@{
     PropertyDisplayer&    displayer_;

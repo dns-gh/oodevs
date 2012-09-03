@@ -46,6 +46,11 @@ public:
     void Delete( const QString& category );
     //@}
 
+    //! @name Accessors
+    //@{
+    QStandardItem* FindItem( const QString& category ) const;
+    //@}
+
 private:
     //! @name Operations
     //@{
@@ -59,7 +64,6 @@ private:
     //@{
     void Update( QStandardItem* parent, kernel::E_Category category );
     void Update( QStandardItem* parent, QStandardItem* property );
-    QStandardItem* FindItem( const QString& category ) const;
     QStandardItem* FindParent( QStandardItem* item ) const;
     QStandardItem* FindItem( QStandardItem* item, const QString& text ) const;
     //@}

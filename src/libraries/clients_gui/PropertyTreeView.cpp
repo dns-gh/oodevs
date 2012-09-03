@@ -9,6 +9,8 @@
 
 #include "clients_gui_pch.h"
 #include "PropertyTreeView.h"
+#include "PropertyModel.h"
+#include <boost/foreach.hpp>
 
 using namespace gui;
 
@@ -31,12 +33,49 @@ PropertyTreeView::~PropertyTreeView()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PropertyTreeView::SaveState
+// Created: LGY 2012-09-03
+// -----------------------------------------------------------------------------
+void PropertyTreeView::SaveState()
+{
+    SaveState( rootIndex(), *static_cast< QStandardItemModel* >( model() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropertyTreeView::SaveState
+// Created: LGY 2012-09-03
+// -----------------------------------------------------------------------------
+void PropertyTreeView::SaveState( QModelIndex root, const QStandardItemModel& model )
+{
+    for( int i = 0; i < model.rowCount( root ); ++i )
+    {
+        QModelIndex child = model.index( i, 0, root );
+        if( !isExpanded( child ) )
+            itemsCollapsed_.insert( child.data( Qt::UserRole ).toString() );
+        else
+            SaveState( child, model );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropertyTreeView::RestoreState
+// Created: LGY 2012-09-03
+// -----------------------------------------------------------------------------
+void PropertyTreeView::RestoreState( const PropertyModel& model )
+{
+    BOOST_FOREACH( const std::string& category, itemsCollapsed_ )
+        if( QStandardItem* item = model.FindItem( category.c_str() ) )
+            setExpanded( item->index(), false );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PropertyTreeView::Display
 // Created: LGY 2012-08-20
 // -----------------------------------------------------------------------------
 void PropertyTreeView::Display()
 {
-    DisplayHeader( rootIndex() );
+    PropertyModel* propertyModel = static_cast< PropertyModel* >( model() );
+    DisplayHeader( rootIndex(), *propertyModel );
     QHeaderView* headerView = header();
     if( headerView->count() > 1 )
     {
@@ -45,19 +84,21 @@ void PropertyTreeView::Display()
     }
     sortByColumn( 0, Qt::AscendingOrder );
     expandAll();
+    RestoreState( *propertyModel );
+    itemsCollapsed_.clear();
 }
 
 // -----------------------------------------------------------------------------
 // Name: PropertyTreeView::DisplayHeader
 // Created: LGY 2012-08-20
 // -----------------------------------------------------------------------------
-void PropertyTreeView::DisplayHeader( QModelIndex root )
+void PropertyTreeView::DisplayHeader( QModelIndex root, const QStandardItemModel& model )
 {
-    for( int i = 0; i < model()->rowCount( root ); ++i )
+    for( int i = 0; i < model.rowCount( root ); ++i )
     {
-        QModelIndex child = model()->index( i, 0, root );
-        DisplayHeader( child );
-        if( QStandardItem* item = static_cast< QStandardItemModel* >( model() )->itemFromIndex( child ) )
+        QModelIndex child = model.index( i, 0, root );
+        DisplayHeader( child, model );
+        if( QStandardItem* item = model.itemFromIndex( child ) )
             if( item->hasChildren() )
                 setFirstColumnSpanned( i, root, true );
     }

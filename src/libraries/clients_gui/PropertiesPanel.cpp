@@ -70,6 +70,7 @@ void PropertiesPanel::NotifySelected( const kernel::Entity_ABC* element )
 {
     if( !element || selected_ != element )
     {
+        view_->SaveState();
         model_->clear();
         selected_ = element;
 

@@ -108,7 +108,7 @@ namespace
         parent.appendRow( items );
     }
 
-    QStandardItem* CreateCategory( QStandardItem& parent, const QString& name )
+    QStandardItem* CreateCategory( QStandardItem& parent, const QString& name, const QString& path )
     {
         QStandardItem* category = new QStandardItem( name );
         CreateData( *category, Qt::BackgroundRole, QBrush( QColor( 115, 110, 100 ) ) );
@@ -116,6 +116,7 @@ namespace
         boldFont.setBold( true );
         CreateData( *category, Qt::FontRole, boldFont );
         CreateData( *category, Qt::ForegroundRole, QBrush( QColor( 255, 255, 255 ) ) );
+        CreateData( *category, Qt::UserRole, path );
         QList< QStandardItem* > items;
         items << category;
         items << new QStandardItem();
@@ -133,7 +134,7 @@ QStandardItem* PropertyModel::FindItem( QStandardItem* item, const QString& text
     for( int row = 0; row < item->rowCount(); ++row )
     {
         QStandardItem* childItem = item->child( row, 0 );
-        if( childItem && childItem->text() == text)
+        if( childItem && childItem->text() == text )
             return childItem;
     }
     return 0;
@@ -167,6 +168,7 @@ QStandardItem* PropertyModel::FindItem( const QString& category ) const
 void PropertyModel::Call( kernel::Property_ABC* const& property )
 {
     QStandardItem* parent = invisibleRootItem();
+    QString name;
     QStringList path = QStringList::split( '/', property->GetName() );
     for( int i = 0; i < path.size(); ++i )
     {
@@ -175,8 +177,9 @@ void PropertyModel::Call( kernel::Property_ABC* const& property )
             CreateRow( *parent, category, *property, displayer_ );
         else
         {
+            name = name != "" ? name + "/" + category : category;
             QStandardItem* item = FindItem( parent, category );
-            parent = item ? item : CreateCategory( *parent, category );
+            parent = item ? item : CreateCategory( *parent, category, name );
         }
     }
 }
@@ -190,7 +193,7 @@ void PropertyModel::Update( QWidget* editor, const QModelIndex& index )
     if( PropertyItem* item = static_cast< PropertyItem* >( itemFromIndex( index ) ) )
     {
         item->Update( editor );
-        kernel::E_Category category = static_cast< kernel::E_Category >( item->data( Qt::UserRole + 1 ).toInt () );
+        kernel::E_Category category = static_cast< kernel::E_Category >( item->data( Qt::UserRole + 1 ).toInt() );
         if( category != kernel::eNothing )
             Update( invisibleRootItem(), category );
     }
