@@ -1,6 +1,6 @@
 @echo off
 set PATH=c:\cygwin\bin;%PATH%
-cat jquery-1.7.2.js ^
+cat jquery-1.8.1.js ^
     bootstrap-2.1.0.js ^
     underscore-1.3.3.js ^
     backbone-0.9.2.js ^
