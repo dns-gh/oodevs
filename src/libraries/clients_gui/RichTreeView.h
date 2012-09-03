@@ -37,7 +37,7 @@ class RichTreeView : public QTreeView
 public:
     //! @name Constructors/Destructor
     //@{
-             RichTreeView( kernel::Controllers& controllers, QWidget* parent = 0 );
+    explicit RichTreeView( kernel::Controllers& controllers, QWidget* parent = 0 );
     virtual ~RichTreeView();
     //@}
 
@@ -82,8 +82,8 @@ private:
 protected:
     //! @name Member data
     //@{
+    QSortFilterProxyModel   proxyModel_;
     StandardModel           dataModel_;
-    //QSortFilterProxyModel   proxyModel_;
     QString                 searchedText_;
     bool                    creationBlocked_;
     bool                    contextMenuBlocked_;

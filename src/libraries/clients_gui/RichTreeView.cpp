@@ -19,20 +19,21 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 RichTreeView::RichTreeView( kernel::Controllers& controllers, QWidget* parent /*= 0*/ )
     : QTreeView( parent )
-    , dataModel_( controllers, this )
-    //, proxyModel_( this )
+    , proxyModel_( this )
+    , dataModel_( controllers, proxyModel_, this )
 {
-    setModel( &dataModel_ ); // $$$$ ABR 2012-08-17: To remove when proxy
+    //setModel( &dataModel_ ); // $$$$ ABR 2012-08-17: To remove when proxy
 
     // $$$$ ABR 2012-08-17: Does work for now hide everything without any call to ApplyFilter
+    //dataModel_.SetProxyModel( proxyModel_ );
     //proxyModel_.setSourceModel( &dataModel_ );
     //proxyModel_.setFilterRole( StandardModel::FilterRole );
     //proxyModel_.setFilterRegExp( StandardModel::showValue_ );
-    //setModel( &proxyModel_ );
+    setModel( &proxyModel_ );
 
     // $$$$ ABR 2012-08-17: TODO: May be use a custom proxy model for place pc in top of automat
-    //proxyModel_->setDynamicSortFilter( true );
-    //proxyModel_->setSortRole( Qt::UserRole );
+    proxyModel_.setDynamicSortFilter( true );
+    //proxyModel_.setSortRole( Qt::UserRole );
 }
 
 // -----------------------------------------------------------------------------

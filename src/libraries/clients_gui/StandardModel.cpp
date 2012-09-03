@@ -20,11 +20,12 @@ const QString StandardModel::hideValue_ = "hide";
 // Name: StandardModel constructor
 // Created: ABR 2012-08-13
 // -----------------------------------------------------------------------------
-StandardModel::StandardModel( kernel::Controllers& controllers, QObject* parent /*= 0*/ )
+StandardModel::StandardModel( kernel::Controllers& controllers, QSortFilterProxyModel& proxy, QObject* parent /*= 0*/ )
     : QStandardItemModel( parent )
     , controllers_( controllers )
+    , proxy_( proxy )
 {
-    // NOTHING
+    proxy.setSourceModel( this );
 }
 
 // -----------------------------------------------------------------------------
@@ -46,6 +47,15 @@ bool StandardModel::setData( const QModelIndex & index, const QVariant & value, 
     if( ret && role == Qt::EditRole )
         emit DataChanged( index, value );
     return ret;
+}
+
+// -----------------------------------------------------------------------------
+// Name: StandardModel::MapFromSource
+// Created: JSR 2012-09-03
+// -----------------------------------------------------------------------------
+QModelIndex StandardModel::MapFromSource( const QModelIndex& source ) const
+{
+    return proxy_.mapFromSource( source );
 }
 
 // -----------------------------------------------------------------------------

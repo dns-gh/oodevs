@@ -49,13 +49,15 @@ signals:
 public:
     //! @name Constructors/Destructor
     //@{
-             StandardModel( kernel::Controllers& controllers, QObject* parent = 0 );
+             StandardModel( kernel::Controllers& controllers, QSortFilterProxyModel& proxy, QObject* parent = 0 );
     virtual ~StandardModel();
     //@}
 
     //! @name Operations
     //@{
     virtual bool setData ( const QModelIndex & index, const QVariant & value, int role = Qt::EditRole );
+
+    QModelIndex MapFromSource( const QModelIndex& source ) const;
 
     void Purge();
     template< typename T >
@@ -108,6 +110,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
+    QSortFilterProxyModel& proxy_;
     //@}
 };
 

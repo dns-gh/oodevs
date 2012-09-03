@@ -59,7 +59,7 @@ void EntityTreeView_ABC::NotifyActivated( const kernel::Entity_ABC& entity )
         return;
     QStandardItem* item = dataModel_.FindSafeItem( entity );
     if( item )
-        scrollTo( item->index() );
+        scrollTo( dataModel_.MapFromSource( item->index() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -153,8 +153,8 @@ void EntityTreeView_ABC::NotifySelectionChanged( const std::vector< const kernel
         if( *it && !IsTypeRejected( **it ) )
             if( QStandardItem* item = dataModel_.FindSafeItem( **it ) )
             {
-                selectionModel()->select( item->index(), QItemSelectionModel::Select );
-                scrollTo( item->index() );
+                selectionModel()->select( dataModel_.MapFromSource( item->index() ), QItemSelectionModel::Select );
+                scrollTo( dataModel_.MapFromSource( item->index() ) );
             }
     }
     blockSelect_ = false;
