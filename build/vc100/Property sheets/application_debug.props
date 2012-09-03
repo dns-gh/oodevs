@@ -24,6 +24,7 @@
     <libAnalysis>analysis_d.lib</libAnalysis>
     <libSvgl>svgl_d.lib</libSvgl>
     <SrcDir>..\..\src\applications\$(ProjectName)</SrcDir>
+    <Suffix>-gd</Suffix>
   </PropertyGroup>
   <PropertyGroup>
     <OutDir>..\..\out\$(CurrentPlatform)\$(Configuration)\applications\$(ProjectName)\</OutDir>
@@ -123,6 +124,9 @@
     </BuildMacro>
     <BuildMacro Include="SrcDir">
       <Value>$(SrcDir)</Value>
+    </BuildMacro>
+    <BuildMacro Include="Suffix">
+      <Value>$(Suffix)</Value>
     </BuildMacro>
   </ItemGroup>
 </Project>

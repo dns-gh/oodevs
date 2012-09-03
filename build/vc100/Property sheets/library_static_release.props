@@ -3,13 +3,14 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros">
     <SrcDir>..\..\src\libraries\$(ProjectName)</SrcDir>
+    <Suffix />
   </PropertyGroup>
   <PropertyGroup>
     <OutDir>..\..\out\$(CurrentPlatform)\$(Configuration)\libraries\$(ProjectName)\</OutDir>
   </PropertyGroup>
   <PropertyGroup>
     <IntDir>..\..\out\$(CurrentPlatform)\$(Configuration)\libraries\$(ProjectName)\</IntDir>
-    <TargetName>libcsword_$(ProjectName)-$(CurrentPlatform)-mt</TargetName>
+    <TargetName>libcsword_$(ProjectName)-$(CurrentPlatform)-mt$(Suffix)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -41,6 +42,9 @@
   <ItemGroup>
     <BuildMacro Include="SrcDir">
       <Value>$(SrcDir)</Value>
+    </BuildMacro>
+    <BuildMacro Include="Suffix">
+      <Value>$(Suffix)</Value>
     </BuildMacro>
   </ItemGroup>
 </Project>
