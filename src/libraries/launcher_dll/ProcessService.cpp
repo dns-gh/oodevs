@@ -256,7 +256,10 @@ sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const std::
 
     boost::shared_ptr< frontend::SpawnCommand > command;
     if( message.type() == sword::SessionStartRequest::simulation )
-        command.reset( new frontend::StartExercise( config_, exercise.c_str(), session.c_str(), checkpoint.c_str(), false, false, endpoint ) );
+    {
+        std::vector< QString > args;
+        command.reset( new frontend::StartExercise( config_, exercise.c_str(), session.c_str(), checkpoint.c_str(), false, args, false, endpoint ) );
+    }
     else if( message.type() == sword::SessionStartRequest::dispatch )
         command.reset( new frontend::StartDispatcher( config_, false, exercise.c_str(), session.c_str(), checkpoint.c_str(), "", endpoint ) );
     else

@@ -34,7 +34,7 @@ namespace
 // Name: StartExercise constructor
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-StartExercise::StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& checkpoint, bool attach, bool launchDispatchedIfNotEmbedded /*= true*/, std::string commanderEndpoint /*= ""*/ )
+StartExercise::StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& checkpoint, bool attach, const std::vector< QString >& additionalArgs, bool launchDispatchedIfNotEmbedded /*= true*/, std::string commanderEndpoint /*= ""*/ )
     : SpawnCommand( config, "simulation_app.exe", attach, commanderEndpoint )
     , configManipulator_ ( new ConfigurationManipulator( config_, exercise.toAscii().constData(), session.toAscii().constData() ) )
     , percentage_( 0 )
@@ -49,6 +49,8 @@ StartExercise::StartExercise( const tools::GeneralConfig& config, const QString&
     AddSessionArgument( session );
     if( !checkpoint.isEmpty() )
         AddArgument( "--checkpoint=" + checkpoint );
+    for( std::vector< QString >::const_iterator it = additionalArgs.begin(); it != additionalArgs.end(); ++it )
+        AddArgument( *it );
 }
 
 // -----------------------------------------------------------------------------

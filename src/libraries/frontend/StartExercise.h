@@ -28,7 +28,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     StartExercise(  const tools::GeneralConfig& config, const QString& exercise,
-                    const QString& session, const QString& checkpoint, bool attach, bool launchDispatchedIfNotEmbedded = true,
+                    const QString& session, const QString& checkpoint, bool attach, const std::vector<QString >& additionalArgs, bool launchDispatchedIfNotEmbedded = true,
                     std::string commanderEndpoint = "" );
     virtual ~StartExercise();
     //@}

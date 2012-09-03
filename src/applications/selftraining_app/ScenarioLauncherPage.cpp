@@ -234,7 +234,9 @@ void ScenarioLauncherPage::OnStart()
     {
         const QString session = session_.isEmpty() ? BuildSessionName().c_str() : session_;
         CreateSession( exerciseName, session );
-        boost::shared_ptr< frontend::SpawnCommand > simulation( new frontend::StartExercise( config_, exerciseName, session, checkpoint_, true ) );
+        std::vector< QString > args;
+        args.push_back( QString( "--verbose" ) );
+        boost::shared_ptr< frontend::SpawnCommand > simulation( new frontend::StartExercise( config_, exerciseName, session, checkpoint_, true, args ) );
         boost::shared_ptr< frontend::SpawnCommand > client( new frontend::JoinExercise( config_, exerciseName, session, profile_.GetLogin(), true ) );
         boost::shared_ptr< CompositeProcessWrapper > process( new CompositeProcessWrapper( *progressPage_, simulation, client ) );
         progressPage_->Attach( process );
