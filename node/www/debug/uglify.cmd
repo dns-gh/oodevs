@@ -8,4 +8,4 @@ cat jquery-1.7.2.js ^
     spin.js ^
     jquery.cookie.js ^
     json2.js ^
-  | uglifyjs -nc -o externals.js
+  | uglifyjs -nc -o ../js/externals.js
