@@ -65,8 +65,10 @@
     <TargetName Condition="'$(Configuration)|$(Platform)'=='debug|x64'">propagation_module_d</TargetName>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='release|win32'">propagation_module</TargetName>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='release|x64'">propagation_module</TargetName>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='debug|win32'">..\..\run\$(CurrentPlatform)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='release|win32'">..\..\run\$(CurrentPlatform)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(RunDir)</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(RunDir)</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(RunDir)</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(RunDir)</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
     <ClCompile />
