@@ -69,7 +69,8 @@ select{width:224px;}
 .checkbox_addon input[type=checkbox]{position:relative;top:-3px;}
 .checkbox_addon .field{width:177px;}
 .sidebar{padding:8px 0;}
-.modal-body.form-horizontal{margin-bottom:0;}
+.modal-body.form-horizontal{margin-bottom:0;padding-bottom:0;}
+.modal-body.form-horizontal #tab_plugins{padding-bottom:20px;}
 .plugin_left_col{margin-left:69px !important;}
 .plugin_edit{padding-left:10px;}
 #settings_slide{margin-bottom:0;}
