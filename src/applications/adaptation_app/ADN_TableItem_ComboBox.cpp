@@ -173,7 +173,7 @@ QWidget *ADN_TableItem_ComboBox::createEditor() const
 
     for( std::vector< int >::const_iterator it = vItemsEnum_.begin(); it != vItemsEnum_.end(); ++it )
     {
-        assert( *it >= 0 && *it < vItemsEnum_.size() );
+        assert( *it >= 0 && *it < static_cast< int >( vItemsEnum_.size() ) );
         cb->insertItem( entries_[ *it ] );
     }
 
