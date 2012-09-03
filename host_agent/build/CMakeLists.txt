@@ -7,7 +7,7 @@ include( MasaMacros.cmake )
 set( root_dir ${CMAKE_SOURCE_DIR}/.. )
 set( run_dir  ${root_dir}/run/${platform} )
 
-set( COMPANY "Masa Group" )
+set( COMPANY "MASA Group" )
 set( PRODUCT "Sword Cloud" )
 
 include_directories( ${root_dir}/src/libraries )
