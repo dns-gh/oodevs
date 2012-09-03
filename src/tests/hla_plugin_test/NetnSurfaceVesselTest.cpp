@@ -12,6 +12,7 @@
 #include "MockHlaObject.h"
 #include "MockUpdateFunctor.h"
 #include "MockAgent.h"
+#include "hla_plugin/FOM_Serializer.h"
 #include <hla/Deserializer.h>
 #include <hla/Serializer.h>
 #include <hla/AttributeIdentifier.h>
@@ -27,18 +28,20 @@ namespace
     public:
         Fixture()
             : listener ( 0 )
-            , aggregate( new MockHlaObject() )
+            , fomSerialization( 1 )
+			, aggregate( new MockHlaObject() )
         {}
         MockHlaObject* aggregate;
         MockAgent agent;
         EventListener_ABC* listener;
         hla::MockUpdateFunctor functor;
+		FOM_Serializer fomSerialization;
     };
     class RegisteredFixture : public Fixture
     {
     public:
         RegisteredFixture()
-            : entity( std::auto_ptr< HlaObject_ABC >( aggregate ), agent, "name", "identifier", "symbol" )
+            : entity( std::auto_ptr< HlaObject_ABC >( aggregate ), agent, "name", "identifier", "symbol", fomSerialization )
         {}
         NetnSurfaceVessel entity;
     };

@@ -37,6 +37,7 @@ namespace hla
     class ObjectListenerComposite;
     class MarkingFactory_ABC;
     class EntityIdentifierResolver_ABC;
+    class FOM_Serializer_ABC;
 
 // =============================================================================
 /** @class  GroundVehicle
@@ -52,8 +53,8 @@ public:
     //@{
              GroundVehicle( Agent_ABC& agent, unsigned int identifier,
                             const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const MarkingFactory_ABC& markingFactory,
-                            unsigned short siteID, unsigned short applicationID, EntityIdentifierResolver_ABC& entityIdentifierResolver );
-    virtual ~GroundVehicle();
+                            unsigned short siteID, unsigned short applicationID, EntityIdentifierResolver_ABC& entityIdentifierResolver, FOM_Serializer_ABC& fomSerializer );
+    virtual ~GroundVehicle( );
     //@}
 
     //! @name Operations
@@ -82,6 +83,7 @@ private:
     //! @name Member data
     //@{
     std::string identifier_;
+	FOM_Serializer_ABC& fomSerializer_;
     std::auto_ptr< ObjectListenerComposite > listeners_;
     Agent_ABC& agent_;
     std::auto_ptr< AttributesSerializer > attributes_;

@@ -17,6 +17,7 @@
 #include "ObjectListener_ABC.h"
 #include "ObjectListenerComposite.h"
 #include "EntityIdentifierResolver_ABC.h"
+#include "FOM_Serializer_ABC.h"
 #include <hla/AttributeIdentifier.h>
 #include <hla/Deserializer_ABC.h>
 #include <boost/bind.hpp>
@@ -66,11 +67,12 @@ namespace
 // -----------------------------------------------------------------------------
 SurfaceVessel::SurfaceVessel( Agent_ABC& agent, unsigned long identifier,
                               const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const MarkingFactory_ABC& markingFactory,
-                              unsigned short siteID, unsigned short applicationID, EntityIdentifierResolver_ABC& entityIdentifierResolver )
+                              unsigned short siteID, unsigned short applicationID, EntityIdentifierResolver_ABC& entityIdentifierResolver, FOM_Serializer_ABC& fomSerializer )
     : identifier_( name )
     , listeners_ ( new ObjectListenerComposite() )
     , agent_     ( &agent )
     , entityIdentifierResolver_ ( entityIdentifierResolver )
+    , fomSerializer_( fomSerializer )
     , attributesUpdater_( new AttributesUpdater(identifier_, *listeners_) )
     , simIdentifier_ ( identifier )
     , force_ ( force )
@@ -87,9 +89,10 @@ SurfaceVessel::SurfaceVessel( Agent_ABC& agent, unsigned long identifier,
 // Name: SurfaceVessel constructor
 // Created: AHC 2012-02-21
 // -----------------------------------------------------------------------------
-SurfaceVessel::SurfaceVessel( const std::string& identifier, EntityIdentifierResolver_ABC& entityIdentifierResolver )
+SurfaceVessel::SurfaceVessel( const std::string& identifier, EntityIdentifierResolver_ABC& entityIdentifierResolver, FOM_Serializer_ABC& fomSerializer )
     : identifier_( identifier )
     , listeners_ ( new ObjectListenerComposite() )
+    , fomSerializer_( fomSerializer )
     , attributesUpdater_( new AttributesUpdater(identifier_, *listeners_) )
     , agent_ ( 0 )
     , entityIdentifierResolver_ ( entityIdentifierResolver )
@@ -189,10 +192,10 @@ void SurfaceVessel::Unregister( ObjectListener_ABC& listener )
 void SurfaceVessel::RegisterAttributes( )
 {
     attributesUpdater_->Register( "EntityType", boost::bind( &ReadEntityType, _1, _2, _3, boost::ref( type_ ) ), type_ );
-    attributesUpdater_->Register( "EntityIdentifier", boost::bind( &ReadEntityIdentifier, _1, _2, _3, boost::ref( entityIdentifier_ ), boost::ref( entityIdentifierResolver_ ) ), entityIdentifier_ );
-    attributesUpdater_->Register( "ForceIdentifier", boost::bind( &ReadForceIdentifier, _1, _2, _3, boost::ref( force_ ) ), Wrapper< int8 >( static_cast< int8 >( force_ ) ) );
-    attributesUpdater_->Register( "Marking", boost::bind( &ReadMarking, _1, _2, _3, boost::ref( marking_ ) ), marking_ );
-    attributesUpdater_->Register( "Spatial", boost::bind( &ReadSpatial, _1, _2, _3, boost::ref( spatial_ ) ), spatial_ );
+    attributesUpdater_->Register( "EntityIdentifier", boost::bind( &FOM_Serializer_ABC::ReadEntityIdentifier, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( entityIdentifier_ ), boost::ref( entityIdentifierResolver_ ) ), entityIdentifier_ );
+    attributesUpdater_->Register( "ForceIdentifier", boost::bind( &FOM_Serializer_ABC::ReadForceIdentifier, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( force_ ) ), Wrapper< int8 >( static_cast< int8 >( force_ ) ) );
+    attributesUpdater_->Register( "Marking", boost::bind( &FOM_Serializer_ABC::ReadMarking, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( marking_ ) ), marking_ );
+    attributesUpdater_->Register( "Spatial", boost::bind( &FOM_Serializer_ABC::ReadSpatial, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( spatial_ ) ), spatial_ );
 }
 
 // -----------------------------------------------------------------------------

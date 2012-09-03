@@ -31,6 +31,8 @@
 #include "MissionResolver.h"
 #include "SideChecker.h"
 #include "AutomatChecker.h"
+#include "NETNv1_InteractionBuilder.h"
+#include "NETNv2_InteractionBuilder.h"
 #include "InteractionBuilder.h"
 #include "ExtentResolver_ABC.h"
 #include "TacticalObjectController.h"
@@ -40,6 +42,7 @@
 #include "RprTransferSender.h"
 #include "NullTransferSender.h"
 #include "EntityIdentifierResolver.h"
+#include "FOM_Serializer.h"
 #include "tools/MessageController.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/ObjectTypes.h"
@@ -235,14 +238,19 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
         pMessageController_->Dispatch( message.message(), message.has_context() ? message.context() : -1 );
         if( message.message().has_control_end_tick() && !pSimulationFacade_.get() )
         {
+            pFomSerializer_.reset( new FOM_Serializer( pXis_->attribute< int >( "netn-version", 1 ) ) );
             pSubject_.reset( new AgentController( dynamicModel_, *pAggregateTypeResolver_, *pComponentTypeResolver_, *pComponentTypes_,
                                                   *platforms_, *pConverter_, pXis_->attribute< bool >( "disaggregate", false ) ) );
             pTacticalObjectSubject_.reset( new TacticalObjectController ( dynamicModel_, *pConverter_ ) );
             pFederate_.reset( new FederateFacade( *pXis_, *pMessageController_, *pSubject_, *pLocalAgentResolver_,
                                                   pXis_->attribute< bool >( "debug", false ) ? *pDebugRtiFactory_ : *pRtiFactory_,
                                                   pXis_->attribute< bool >( "debug", false ) ? *pDebugFederateFactory_ : *pFederateFactory_,
-                                                  config_.BuildPluginDirectory( "hla" ), *pCallsignResolver_, *pTacticalObjectSubject_, *pOwnershipStrategy_, *pEntityIdentifierResolver_ ) );
-            pInteractionBuilder_.reset( new InteractionBuilder( logger_, *pFederate_ ) );
+                                                  config_.BuildPluginDirectory( "hla" ), *pCallsignResolver_, *pTacticalObjectSubject_,
+                                                  *pOwnershipStrategy_, *pEntityIdentifierResolver_, *pFomSerializer_ ) );
+            pNetnInteractionBuilder_.reset( pXis_->attribute< int >( "netn-version", 1 ) == 1 ?
+                    static_cast< NETN_InteractionBuilder_ABC* >( new NETNv1_InteractionBuilder( logger_, *pFederate_ ) ):
+                    static_cast< NETN_InteractionBuilder_ABC* >( new NETNv2_InteractionBuilder( logger_, *pFederate_ ) ) );
+            pInteractionBuilder_.reset( new InteractionBuilder( logger_, *pFederate_, *pNetnInteractionBuilder_ ) );
             pSimulationFacade_.reset( new SimulationFacade( *pXis_, *pContextFactory_, *pMessageController_, simulationPublisher_, dynamicModel_, *pComponentTypeResolver_, staticModel_, *pUnitTypeResolver_, *pFederate_, *pComponentTypes_, *pCallsignResolver_, logger_, *pExtentResolver_, *pSubject_, *pLocalAgentResolver_ ) );
             pRemoteAgentResolver_.reset( new RemoteAgentResolver( *pFederate_, *pSimulationFacade_ ) );
             pDetonationFacade_.reset( new DetonationFacade( simulationPublisher_, *pMessageController_, *pRemoteAgentResolver_, *pLocalAgentResolver_, *pContextFactory_, *pMunitionTypeResolver_, *pFederate_, pXis_->attribute< std::string >( "name", "SWORD" ), *pInteractionBuilder_ ) );

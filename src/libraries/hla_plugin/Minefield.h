@@ -38,6 +38,7 @@ namespace hla
     class ObjectListenerComposite;
     class TacticalObject_ABC;
     class EntityIdentifierResolver_ABC;
+    class FOM_Serializer_ABC;
 
 /// =============================================================================
 /// @class Minefield
@@ -54,7 +55,7 @@ public:
     //@{
     Minefield( TacticalObject_ABC& object, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type,
             unsigned short siteID, unsigned short applicationID );
-    Minefield( const std::string& identifier, EntityIdentifierResolver_ABC& entityIdentifierResolver );
+    Minefield( const std::string& identifier, EntityIdentifierResolver_ABC& entityIdentifierResolver, FOM_Serializer_ABC& fomSerializer );
     virtual  ~Minefield();
     //@}
 

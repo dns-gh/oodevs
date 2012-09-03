@@ -110,6 +110,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\EntityIdentifierResolver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\EquipmentUpdater.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\EventListenerComposite.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\FOM_Serializer.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\FormationCreater.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\GroundVehicle.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\HlaClass.cpp" />
@@ -137,6 +138,8 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnGroundVehicle.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteCallsignListener.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnSurfaceVessel.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NETNv1_InteractionBuilder.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NETNv2_InteractionBuilder.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NullTransferSender.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\ObjectListenerComposite.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\Omt13String.cpp" />
@@ -208,11 +211,14 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\DirectFireSender.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\DotationTypeResolver.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\DotationTypeResolver_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\Encodable.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\EntityIdentifierResolver.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\EntityIdentifierResolver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\EquipmentUpdater.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\EventListenerComposite.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ExtentResolver_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\FOM_Serializer.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\FOM_Serializer_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\FormationCreater.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\GroundVehicle.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\HlaClass.h" />
@@ -249,6 +255,9 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnGroundVehicle.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteCallsignListener.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnSurfaceVessel.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NETNv1_InteractionBuilder.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NETNv2_InteractionBuilder.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NETN_InteractionBuilder_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NullTransferSender.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ObjectListenerComposite.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ObjectListener_ABC.h" />

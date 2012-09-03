@@ -44,6 +44,7 @@ namespace hla
     class ObjectListener_ABC;
     class ObjectListenerComposite;
     class EntityIdentifierResolver_ABC;
+    class FOM_Serializer_ABC;
 
 // =============================================================================
 /** @class  AggregateEntity
@@ -59,8 +60,8 @@ public:
     //@{
              AggregateEntity( Agent_ABC& agent, unsigned long identifier,
                               const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const MarkingFactory_ABC& markingFactory,
-                              unsigned short siteID, unsigned short applicationID, EntityIdentifierResolver_ABC& entityIdentifierResolver );
-             AggregateEntity( const std::string& identifier, EntityIdentifierResolver_ABC& entityIdentifierResolver );
+                              unsigned short siteID, unsigned short applicationID, EntityIdentifierResolver_ABC& entityIdentifierResolver, FOM_Serializer_ABC& fomSerializer );
+             AggregateEntity( const std::string& identifier, EntityIdentifierResolver_ABC& entityIdentifierResolver, FOM_Serializer_ABC& fomSerializer );
     virtual ~AggregateEntity();
     //@}
 
@@ -117,6 +118,7 @@ private:
     std::auto_ptr< ObjectListenerComposite > listeners_;
     Agent_ABC* agent_;
     EntityIdentifierResolver_ABC& entityIdentifierResolver_;
+    FOM_Serializer_ABC& fomSerializer_;
     std::auto_ptr< AttributesUpdater > attributesUpdater_;
     T_Equipments equipments_;
 	Omt13StringArray entities_;

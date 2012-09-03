@@ -17,6 +17,7 @@
 #include "ObjectListener_ABC.h"
 #include "ObjectListenerComposite.h"
 #include "MarkingFactory_ABC.h"
+#include "FOM_Serializer_ABC.h"
 #include "rpr/EntityIdentifier.h"
 #include <boost/bind.hpp>
 
@@ -28,9 +29,10 @@ using namespace plugins::hla;
 // -----------------------------------------------------------------------------
 GroundVehicle::GroundVehicle( Agent_ABC& agent, unsigned int identifier,
                               const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const MarkingFactory_ABC& markingFactory,
-                              unsigned short siteID, unsigned short applicationID, EntityIdentifierResolver_ABC& /*entityIdentifierResolver*/ )
+                              unsigned short siteID, unsigned short applicationID, EntityIdentifierResolver_ABC& /*entityIdentifierResolver*/, FOM_Serializer_ABC& fomSerializer )
     :  identifier_( name )
     , listeners_ ( new ObjectListenerComposite() )
+    , fomSerializer_( fomSerializer )
     , agent_     ( agent )
     , attributes_( new AttributesSerializer() )
 {
@@ -46,7 +48,7 @@ GroundVehicle::GroundVehicle( Agent_ABC& agent, unsigned int identifier,
 // Name: GroundVehicle destructor
 // Created: AHC 2012-07-26
 // -----------------------------------------------------------------------------
-GroundVehicle::~GroundVehicle()
+GroundVehicle::~GroundVehicle( )
 {
     agent_.Unregister( *this );
 }

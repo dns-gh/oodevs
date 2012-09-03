@@ -16,6 +16,7 @@
 #include "MockUpdateFunctor.h"
 #include "MockMarkingFactory.h"
 #include "MockEntityIdentifierResolver.h"
+#include "MockFOM_Serialization.h"
 #include <hla/Deserializer.h>
 #include <hla/Serializer.h>
 #include <hla/AttributeIdentifier.h>
@@ -42,12 +43,13 @@ namespace
         hla::MockUpdateFunctor functor;
         rpr::EntityType entityType;
         MockEntityIdentifierResolver entityIdResolver;
+		MockFOM_Serialization fomSerialization;
     };
     class RegisteredFixture : public Fixture
     {
     public:
         RegisteredFixture()
-            : entity( agent, 1u, "name", rpr::Friendly, rpr::EntityType(), factory, 42, 43, entityIdResolver )
+            : entity( agent, 1u, "name", rpr::Friendly, rpr::EntityType(), factory, 42, 43, entityIdResolver, fomSerialization )
         {}
         SurfaceVessel entity;
     };

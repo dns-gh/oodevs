@@ -16,63 +16,22 @@
 #include "ObjectListener_ABC.h"
 #include "ObjectListenerComposite.h"
 #include "AttributesUpdater.h"
+#include "FOM_Serializer_ABC.h"
 #include <hla/AttributeIdentifier.h>
 #include <hla/Deserializer_ABC.h>
 
 using namespace plugins::hla;
 
-namespace
-{
-    void ReadCallsign( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, UnicodeString& callsign )
-    {
-        callsign.Deserialize( deserializer );
-        listener.CallsignChanged( identifier, callsign.str() );
-    }
-    void ReadUniqueId( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, UniqueId& uniqueId )
-    {
-        uniqueId.Deserialize( deserializer );
-        listener.UniqueIdChanged( identifier, uniqueId.str() );
-    }
-    void ReadMounted( ::hla::Deserializer_ABC& deserializer, const std::string& /*identifier*/, ObjectListener_ABC& /*listener*/, double& mounted )
-    {
-        deserializer >> mounted;
-    }
-    void ReadSymbol( ::hla::Deserializer_ABC& deserializer, const std::string& /*identifier*/, ObjectListener_ABC& /*listener*/, UnicodeString& symbol )
-    {
-        symbol.Deserialize( deserializer );
-    }
-    void ReadStatus( ::hla::Deserializer_ABC& deserializer, const std::string& /*identifier*/, ObjectListener_ABC& /*listener*/, int8& status )
-    {
-        deserializer >> status;
-    }
-    void ReadNothing( ::hla::Deserializer_ABC& /*deserializer*/, const std::string& /*identifier*/, ObjectListener_ABC& /*listener*/ )
-    {
-        // NOTHING
-    }
-    void ReadEmbeddedUnitList( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener )
-    {
-        std::vector< std::string > embeddedUnits;
-        uint32 size;
-        deserializer >> size;
-        embeddedUnits.resize(size);
-        for(uint32 i=0; i < size; ++i )
-        {
-            UniqueId tmp;
-            deserializer >> tmp;
-            embeddedUnits[i]=tmp.str();
-        }
-        listener.EmbeddedUnitListChanged( identifier, embeddedUnits );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: NetnAggregate constructor
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-NetnAggregate::NetnAggregate( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC& agent, const std::string& callsign, const std::string& uniqueIdentifier, const std::string& symbol )
+NetnAggregate::NetnAggregate( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC& agent, const std::string& callsign,
+        const std::string& uniqueIdentifier, const std::string& symbol, FOM_Serializer_ABC& fomSerializer )
     : listeners_ ( new ObjectListenerComposite() )
     , aggregate_ ( aggregate )
     , agent_     ( &agent )
+    , fomSerializer_( fomSerializer )
     , attributesUpdater_( new AttributesUpdater(callsign, *listeners_) ) // TODO AHC check callsign
     , callsign_  ( callsign )
     , uniqueId_  ( uniqueIdentifier )
@@ -88,10 +47,11 @@ NetnAggregate::NetnAggregate( std::auto_ptr< HlaObject_ABC > aggregate, Agent_AB
 // Name: NetnRemoteAggregate constructor
 // Created: AHC 2012-02-21
 // -----------------------------------------------------------------------------
-NetnAggregate::NetnAggregate( std::auto_ptr< HlaObject_ABC > aggregate, const std::string& identifier )
+NetnAggregate::NetnAggregate( std::auto_ptr< HlaObject_ABC > aggregate, const std::string& identifier, FOM_Serializer_ABC& fomSerializer )
     : listeners_ ( new ObjectListenerComposite() )
     , aggregate_ ( aggregate )
     , agent_ ( 0 )
+    , fomSerializer_( fomSerializer )
     , attributesUpdater_( new AttributesUpdater( identifier, *listeners_ ) )
 {
     RegisterAttributes();
@@ -203,14 +163,14 @@ void NetnAggregate::Attach( Agent_ABC* agent, unsigned long simId )
 // -----------------------------------------------------------------------------
 void NetnAggregate::RegisterAttributes()
 {
-    attributesUpdater_->Register( "Mounted", boost::bind( &ReadMounted, _1, _2, _3, boost::ref( mounted_ ) ), Wrapper< double >( mounted_ ) );
-    attributesUpdater_->Register( "Echelon", boost::bind( &ReadNothing, _1, _2, _3 ), Wrapper< unsigned char >( 14 ) ); // platoon
-    attributesUpdater_->Register( "UniqueID", boost::bind( &ReadUniqueId, _1, _2, _3, boost::ref( uniqueId_ ) ), uniqueId_ );
-    attributesUpdater_->Register( "HigherHeadquarters", boost::bind( &ReadNothing, _1, _2, _3 ), uniqueId_ );
-    attributesUpdater_->Register( "Callsign", boost::bind( &ReadCallsign, _1, _2, _3, boost::ref( callsign_ ) ), callsign_ );
-    attributesUpdater_->Register( "Status", boost::bind( &ReadStatus, _1, _2, _3, boost::ref( status_ ) ), Wrapper< int8 >( status_ ) );
-    attributesUpdater_->Register( "Symbol", boost::bind( &ReadSymbol, _1, _2, _3, boost::ref( symbol_ ) ), symbol_ );
-    attributesUpdater_->Register( "EmbeddedUnitList", boost::bind( &ReadEmbeddedUnitList, _1, _2, _3 ), Wrapper< std::vector< UniqueId > >( std::vector< UniqueId >() ) );
+    attributesUpdater_->Register( "Mounted", boost::bind( &FOM_Serializer_ABC::ReadMounted, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( mounted_ ) ), Wrapper< double >( mounted_ ) );
+    attributesUpdater_->Register( "Echelon", boost::bind( &FOM_Serializer_ABC::ReadNothing, boost::ref( fomSerializer_ ), _1, _2, _3 ), Wrapper< unsigned char >( 14 ) ); // platoon
+    attributesUpdater_->Register( "UniqueID", boost::bind( &FOM_Serializer_ABC::ReadUniqueId, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( uniqueId_ ) ), uniqueId_, fomSerializer_.GetUniqueIdSerializer() );
+    attributesUpdater_->Register( "HigherHeadquarters", boost::bind( &FOM_Serializer_ABC::ReadNothing, boost::ref( fomSerializer_ ), _1, _2, _3 ), uniqueId_, fomSerializer_.GetUniqueIdSerializer() );
+    attributesUpdater_->Register( "Callsign", boost::bind( &FOM_Serializer_ABC::ReadCallsign, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( callsign_ ) ), callsign_ );
+    attributesUpdater_->Register( "Status", boost::bind( &FOM_Serializer_ABC::ReadStatus, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( status_ ) ), Wrapper< int8 >( status_ ) );
+    attributesUpdater_->Register( "Symbol", boost::bind( &FOM_Serializer_ABC::ReadSymbol, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( symbol_ ) ), symbol_ );
+    attributesUpdater_->Register( "EmbeddedUnitList", boost::bind( &FOM_Serializer_ABC::ReadEmbeddedUnitList, boost::ref( fomSerializer_ ), _1, _2, _3 ), std::vector< std::string >() , fomSerializer_.GetUniqueIdSerializer() );
 }
 
 

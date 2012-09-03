@@ -15,6 +15,7 @@
 #include "MockAgent.h"
 #include "MockUpdateFunctor.h"
 #include "MockMarkingFactory.h"
+#include "MockFOM_Serialization.h"
 #include "MockEntityIdentifierResolver.h"
 #include <hla/Deserializer.h>
 #include <hla/Serializer.h>
@@ -42,12 +43,13 @@ namespace
         EventListener_ABC* listener;
         hla::MockUpdateFunctor functor;
         rpr::EntityType entityType;
+		MockFOM_Serialization fomSerialization;
     };
     class RegisteredFixture : public Fixture
     {
     public:
         RegisteredFixture()
-            : entity( agent, 1u, "name", rpr::Friendly, rpr::EntityType(), factory, 42, 43, entityIdResolver )
+            : entity( agent, 1u, "name", rpr::Friendly, rpr::EntityType(), factory, 42, 43, entityIdResolver, fomSerialization )
         {}
         AggregateEntity entity;
     };

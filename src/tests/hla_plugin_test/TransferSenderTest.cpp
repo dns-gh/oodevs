@@ -11,6 +11,7 @@
 #include "hla_plugin/RprTransferSender.h"
 #include "hla_plugin/NullTransferSender.h"
 #include "hla_plugin/InteractionBuilder.h"
+#include "hla_plugin/NETNv1_InteractionBuilder.h"
 #include "hla_plugin/SerializationTools.h"
 #include "hla_plugin/InteractionsRpr.h"
 #include "hla_plugin/Omt13String.h"
@@ -35,7 +36,7 @@ namespace
 {
     struct Fixture
     {
-        Fixture() :  builder( logger, federate ), federateID( 1, 1, 0xFFFF ), transferInteraction( 0 ), ackInteraction( 0 )
+        Fixture() :  netnBuilder( logger, federate ), builder( logger, federate, netnBuilder ), federateID( 1, 1, 0xFFFF ), transferInteraction( 0 ), ackInteraction( 0 )
         {
             MOCK_EXPECT( federate.RegisterInteraction ).once().with( ::hla::InteractionIdentifier( "TransferControl" ), mock::retrieve( transferInteraction ), true, true );
             MOCK_EXPECT( federate.RegisterInteraction ).once().with( ::hla::InteractionIdentifier( "Acknowledge" ), mock::retrieve( ackInteraction ), true, true );
@@ -43,6 +44,7 @@ namespace
         dispatcher::MockLogger logger;
         MockContextFactory contextFactory;
         MockFederate federate;
+        NETNv1_InteractionBuilder netnBuilder;
         InteractionBuilder builder;
         const rpr::EntityIdentifier federateID;
         ::hla::Interaction_ABC* transferInteraction;

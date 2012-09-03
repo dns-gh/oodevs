@@ -13,6 +13,7 @@
 #include "ObjectListenerComposite.h"
 #include "SerializationTools.h"
 #include "TacticalObject_ABC.h"
+#include "FOM_Serializer_ABC.h"
 
 #include "protocol/proto/common.pb.h"
 
@@ -79,7 +80,7 @@ Minefield::Minefield( TacticalObject_ABC& object, unsigned int identifier, const
 // Name: Minefield constructor
 // Created: AHC 2012-08-07
 // -----------------------------------------------------------------------------
-Minefield::Minefield( const std::string& identifier, EntityIdentifierResolver_ABC& /*entityIdentifierResolver*/ )
+Minefield::Minefield( const std::string& identifier, EntityIdentifierResolver_ABC& /*entityIdentifierResolver*/, FOM_Serializer_ABC& fomSerializer )
     : object_( 0 )
     , listeners_ ( new ObjectListenerComposite() )
     , identifier_( identifier )

@@ -207,6 +207,7 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockExtentResolver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockFederate.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockFederateAmbassadorFactory.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockFOM_Serialization.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockHlaClass.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockHlaObject.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockHlaObjectFactory.h" />

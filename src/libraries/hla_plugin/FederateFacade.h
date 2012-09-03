@@ -54,6 +54,7 @@ namespace hla
     class OwnershipStrategy_ABC;
     class CommentMissionSender;
     class EntityIdentifierResolver_ABC;
+    class FOM_Serializer_ABC;
 
 // =============================================================================
 /** @class  FederateFacade
@@ -74,7 +75,7 @@ public:
                              AgentSubject_ABC& subject, LocalAgentResolver_ABC& resolver, const RtiAmbassadorFactory_ABC& rtiFactory,
                              const FederateAmbassadorFactory_ABC& federateFactory, const std::string& pluginDirectory, CallsignResolver_ABC& callsignResolver,
                              TacticalObjectSubject_ABC& tacticalObjectSubject,
-                             OwnershipStrategy_ABC& ownershipStrategy, EntityIdentifierResolver_ABC& entityIdentifierResolver );
+                             OwnershipStrategy_ABC& ownershipStrategy, EntityIdentifierResolver_ABC& entityIdentifierResolver, FOM_Serializer_ABC& fomSerializer );
     virtual ~FederateFacade();
     //@}
 

@@ -21,35 +21,39 @@ namespace hla
 {
     class MarkingFactory_ABC;
     class EntityIdentifierResolver_ABC;
+    class FOM_Serializer_ABC;
 
     template< typename T >
     class HlaObjectFactory : public HlaObjectFactory_ABC
     {
     public:
         HlaObjectFactory( const MarkingFactory_ABC& markingFactory, unsigned short siteID, unsigned short applicationID,
-                EntityIdentifierResolver_ABC& entityIdentifierResolver )
+                EntityIdentifierResolver_ABC& entityIdentifierResolver, FOM_Serializer_ABC& fomSerializer )
             : markingFactory_( markingFactory )
             , siteID_( siteID )
             , applicationID_( applicationID )
             , entityIdentifierResolver_( entityIdentifierResolver )
+            , fomSerializer_( fomSerializer )
         {}
         virtual std::auto_ptr< HlaObject_ABC > Create( Agent_ABC& agent, const std::string& name, unsigned long identifier, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& /*symbol*/ ) const
         {
-            return std::auto_ptr< HlaObject_ABC >( new T( agent, identifier, name, force, type, markingFactory_, siteID_, applicationID_, entityIdentifierResolver_ ) );
+            return std::auto_ptr< HlaObject_ABC >( new T( agent, identifier, name, force, type, markingFactory_, siteID_, applicationID_, entityIdentifierResolver_, fomSerializer_ ) );
         }
     private:
         const MarkingFactory_ABC& markingFactory_;
         unsigned short siteID_;
         unsigned short applicationID_;
         EntityIdentifierResolver_ABC& entityIdentifierResolver_;
+        FOM_Serializer_ABC& fomSerializer_;
     };
     template< typename T >
     class NetnHlaObjectFactory : public HlaObjectFactory_ABC
     {
     public:
-        NetnHlaObjectFactory( std::auto_ptr< HlaObjectFactory_ABC > factory, CallsignResolver_ABC& resolver )
+        NetnHlaObjectFactory( std::auto_ptr< HlaObjectFactory_ABC > factory, CallsignResolver_ABC& resolver, FOM_Serializer_ABC& fomSerializer )
             : factory_ ( factory )
             , resolver_( resolver )
+            , fomSerializer_( fomSerializer )
         {}
         virtual std::auto_ptr< HlaObject_ABC > Create( Agent_ABC& agent, const std::string& name, unsigned long identifier, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol ) const
         {
@@ -57,44 +61,49 @@ namespace hla
             const std::string uniqueIdentifier( "SWORD" + boost::lexical_cast< std::string >( identifier ) );
             const std::string callsign( name + boost::lexical_cast< std::string >( identifier ) );
             resolver_.Add( identifier, callsign, uniqueIdentifier );
-            return std::auto_ptr< HlaObject_ABC >( new T( object, agent, callsign, uniqueIdentifier, symbol ) );
+            return std::auto_ptr< HlaObject_ABC >( new T( object, agent, callsign, uniqueIdentifier, symbol, fomSerializer_ ) );
         }
     private:
         std::auto_ptr< HlaObjectFactory_ABC > factory_;
         CallsignResolver_ABC& resolver_;
+        FOM_Serializer_ABC& fomSerializer_;
     };
     template< typename T >
     class RemoteHlaObjectFactory : public RemoteHlaObjectFactory_ABC
     {
     public:
-        explicit RemoteHlaObjectFactory( EntityIdentifierResolver_ABC& entityIdentifierResolver )
+        explicit RemoteHlaObjectFactory( EntityIdentifierResolver_ABC& entityIdentifierResolver, FOM_Serializer_ABC& fomSerializer )
             : entityIdentifierResolver_( entityIdentifierResolver )
+            , fomSerializer_( fomSerializer )
         {
             // NOTHING
         }
         virtual std::auto_ptr< HlaObject_ABC > Create( const std::string& name ) const
         {
-            std::auto_ptr< HlaObject_ABC > retval( new T( name, entityIdentifierResolver_ ) );
+            std::auto_ptr< HlaObject_ABC > retval( new T( name, entityIdentifierResolver_, fomSerializer_ ) );
             return retval;
         }
     private:
         EntityIdentifierResolver_ABC& entityIdentifierResolver_;
+        FOM_Serializer_ABC& fomSerializer_;
     };
     template< typename T >
     class NetnRemoteHlaObjectFactory : public RemoteHlaObjectFactory_ABC
     {
     public:
-        explicit NetnRemoteHlaObjectFactory( std::auto_ptr< RemoteHlaObjectFactory_ABC > factory )
+        explicit NetnRemoteHlaObjectFactory( std::auto_ptr< RemoteHlaObjectFactory_ABC > factory, FOM_Serializer_ABC& fomSerializer )
             : factory_( factory )
+            , fomSerializer_( fomSerializer )
         {}
         virtual std::auto_ptr< HlaObject_ABC > Create( const std::string& name ) const
         {
             std::auto_ptr< HlaObject_ABC > remote = factory_->Create( name );
-            std::auto_ptr< HlaObject_ABC > retval( new T( remote, name ) );
+            std::auto_ptr< HlaObject_ABC > retval( new T( remote, name, fomSerializer_ ) );
             return retval;
         }
     private:
         std::auto_ptr< RemoteHlaObjectFactory_ABC > factory_;
+        FOM_Serializer_ABC& fomSerializer_;
     };
 
     template< typename T >

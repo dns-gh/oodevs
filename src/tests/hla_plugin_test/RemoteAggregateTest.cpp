@@ -17,6 +17,7 @@
 #include "MockUpdateFunctor.h"
 #include "MockObjectListener.h"
 #include "MockEntityIdentifierResolver.h"
+#include "hla_plugin/FOM_Serializer.h"
 #include <hla/Serializer.h>
 #include <hla/Deserializer.h>
 #include <vector>
@@ -30,7 +31,8 @@ namespace
     {
     public:
         Fixture()
-            : aggregate( "identifier", entityIdResolver )
+            : fomSerialization( 1 )
+			, aggregate( "identifier", entityIdResolver, fomSerialization )
         {
             aggregate.Register( listener );
         }
@@ -42,6 +44,7 @@ namespace
         }
         MockObjectListener listener;
 		MockEntityIdentifierResolver entityIdResolver;
+		FOM_Serializer fomSerialization;
         AggregateEntity aggregate;
         ::hla::Serializer serializer;
         T_Buffer buffer;

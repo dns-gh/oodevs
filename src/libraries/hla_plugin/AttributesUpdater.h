@@ -59,6 +59,12 @@ public:
         serializer_.Register( name, value );
         deserializer_.Register( name, notification );
     }
+    template< typename T, typename F >
+    void Register( const std::string& name, T_Notification notification, const T& value, const F& szr )
+    {
+        serializer_.Register( name, value, szr );
+        deserializer_.Register( name, notification );
+    }
     template< typename T >
     void Update( const std::string& name, const T& value )
     {

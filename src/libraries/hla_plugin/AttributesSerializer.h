@@ -87,6 +87,13 @@ public:
         T_Serializer serializer = boost::bind( &T::Serialize< ::hla::Serializer_ABC >, copy, _1 );
         attributes_.push_back( std::make_pair( name, serializer ) );
     }
+    template< typename T, typename F >
+    void Register( const std::string& name, const T& value, const F& szr )
+    {
+        boost::shared_ptr< T > copy( new T( value ) );
+        T_Serializer serializer = boost::bind< void >( szr, copy, _1 );
+        attributes_.push_back( std::make_pair( name, serializer ) );
+    }
     template< typename T >
     void Update( const std::string& name, const T& value )
     {

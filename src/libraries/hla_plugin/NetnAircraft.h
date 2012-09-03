@@ -24,6 +24,7 @@ namespace hla
     class AttributesUpdater;
     class ObjectListener_ABC;
     class ObjectListenerComposite;
+    class FOM_Serializer_ABC;
 
 // =============================================================================
 /** @class  NetnAircraft
@@ -36,8 +37,8 @@ class NetnAircraft : public HlaObject_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             NetnAircraft( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC& agent, const std::string& callsign, const std::string& uniqueIdentifier, const std::string& symbol );
-             NetnAircraft( std::auto_ptr< HlaObject_ABC > vessel, const std::string& identifier );
+             NetnAircraft( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC& agent, const std::string& callsign, const std::string& uniqueIdentifier, const std::string& symbol, FOM_Serializer_ABC& fomSerializer );
+             NetnAircraft( std::auto_ptr< HlaObject_ABC > vessel, const std::string& identifier, FOM_Serializer_ABC& fomSerializer );
     virtual ~NetnAircraft();
     //@}
 
@@ -64,9 +65,10 @@ private:
     //@{
     std::auto_ptr< ObjectListenerComposite > listeners_;
     std::auto_ptr< HlaObject_ABC > aggregate_;
+    FOM_Serializer_ABC& fomSerializer_;
     std::auto_ptr< AttributesUpdater > attributesUpdater_;
     UnicodeString callsign_;
-    UniqueId uniqueId_;
+    std::string uniqueId_;
     std::string identifier_;
     //@}
 };

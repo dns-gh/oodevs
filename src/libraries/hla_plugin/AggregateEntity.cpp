@@ -19,6 +19,7 @@
 #include "AttributesUpdater.h"
 #include "ObjectListener_ABC.h"
 #include "MarkingFactory_ABC.h"
+#include "FOM_Serializer_ABC.h"
 #include "ObjectListenerComposite.h"
 #include "EntityIdentifierResolver_ABC.h"
 #include <hla/AttributeIdentifier.h>
@@ -28,70 +29,18 @@
 
 using namespace plugins::hla;
 
-namespace
-{
-    void ReadSpatial( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, Spatial& spatial )
-    {
-        spatial.Deserialize( deserializer );
-        listener.Moved( identifier, spatial.worldLocation_.Latitude(), spatial.worldLocation_.Longitude() );
-    }
-    void ReadForceIdentifier( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, rpr::ForceIdentifier& force )
-    {
-        int8 tmpForce;
-        deserializer >> tmpForce;
-        listener.SideChanged( identifier, static_cast< rpr::ForceIdentifier >( tmpForce ) );
-        force = static_cast< rpr::ForceIdentifier >( tmpForce );
-    }
-    void ReadAggregateMarking( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, AggregateMarking& marking )
-    {
-        marking.Deserialize( deserializer );
-        listener.NameChanged( identifier, marking.str() );
-    }
-    void ReadEntityType( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, rpr::EntityType& type )
-    {
-        type.Deserialize( deserializer );
-        listener.TypeChanged( identifier, type );
-    }
-    void ReadNumberOfSilentEntities( ::hla::Deserializer_ABC& deserializer, const std::string& /*identifier*/, ObjectListener_ABC& /*listener*/, unsigned short& numberOfSilentEntities )
-    {
-        deserializer >> numberOfSilentEntities;
-    }
-    void ReadSilentEntities( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, unsigned int numberOfSilentEntities )
-    {
-        for( unsigned int i = 0; i < numberOfSilentEntities; ++i )
-        {
-            SilentEntity entity;
-            entity.Deserialize( deserializer );
-            listener.EquipmentUpdated( identifier, entity.entityType_, entity.numberOfEntitiesOfThisType_ );
-        }
-    }
-    void ReadEntityIdentifier( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& /*listener*/, rpr::EntityIdentifier& entityId, EntityIdentifierResolver_ABC& entityIdentifierResolver )
-    {
-        entityId.Deserialize( deserializer );
-        entityIdentifierResolver.Unregister( identifier );
-        entityIdentifierResolver.Register( entityId, identifier );
-    }
-    void ReadNothing( ::hla::Deserializer_ABC& /*deserializer*/, const std::string& /*identifier*/, ObjectListener_ABC& /*listener*/ )
-    {
-        // NOTHING
-    }
-    void ReadUnsignedChar( ::hla::Deserializer_ABC& deserializer, const std::string& /*identifier*/, ObjectListener_ABC& /*listener*/, unsigned char& value)
-    {
-        deserializer >> value;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: AggregateEntity constructor
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
 AggregateEntity::AggregateEntity( Agent_ABC& agent, unsigned long identifier,
                                   const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const MarkingFactory_ABC& markingFactory,
-                                  unsigned short siteID, unsigned short applicationID, EntityIdentifierResolver_ABC& entityIdentifierResolver  )
+                                  unsigned short siteID, unsigned short applicationID, EntityIdentifierResolver_ABC& entityIdentifierResolver, FOM_Serializer_ABC& fomSerializer )
     : identifier_( name )
     , listeners_ ( new ObjectListenerComposite() )
     , agent_     ( &agent )
     , entityIdentifierResolver_ ( entityIdentifierResolver )
+    , fomSerializer_( fomSerializer )
     , attributesUpdater_( new AttributesUpdater(identifier_, *listeners_) )
     , simIdentifier_ ( identifier )
     , force_ ( force )
@@ -109,11 +58,12 @@ AggregateEntity::AggregateEntity( Agent_ABC& agent, unsigned long identifier,
 // Name: AggregateEntity constructor
 // Created: AHC 2012-02-21
 // -----------------------------------------------------------------------------
-AggregateEntity::AggregateEntity( const std::string& identifier , EntityIdentifierResolver_ABC& entityIdentifierResolver )
+AggregateEntity::AggregateEntity( const std::string& identifier , EntityIdentifierResolver_ABC& entityIdentifierResolver, FOM_Serializer_ABC& fomSerializer )
     : identifier_( identifier )
     , listeners_ ( new ObjectListenerComposite() )
     , agent_     ( 0 )
     , entityIdentifierResolver_ ( entityIdentifierResolver )
+    , fomSerializer_( fomSerializer )
     , numberOfSilentEntities_( 0 )
     , attributesUpdater_ ( new AttributesUpdater( identifier, *listeners_ ) )
     , marking_( )
@@ -233,20 +183,20 @@ void AggregateEntity::Unregister( ObjectListener_ABC& listener )
 // -----------------------------------------------------------------------------
 void AggregateEntity::RegisterAttributes( )
 {
-    attributesUpdater_->Register( "EntityType", boost::bind( &ReadEntityType, _1, _2, _3, boost::ref( type_ ) ), type_ );
-    attributesUpdater_->Register( "EntityIdentifier", boost::bind( &ReadEntityIdentifier, _1, _2, _3, boost::ref( entityIdentifier_ ), boost::ref( entityIdentifierResolver_ ) ), entityIdentifier_ );
-    attributesUpdater_->Register( "ForceIdentifier", boost::bind( &ReadForceIdentifier, _1, _2, _3, boost::ref( force_ ) ), Wrapper< int8 >( static_cast< int8 >( force_ ) ) );
-    attributesUpdater_->Register( "AggregateMarking", boost::bind( &ReadAggregateMarking, _1, _2, _3, boost::ref( marking_ ) ), marking_ );
-    attributesUpdater_->Register( "AggregateState", boost::bind( &ReadUnsignedChar, _1, _2, _3, boost::ref( aggregateState_ ) ), Wrapper< unsigned char >( aggregateState_ ) );
-    attributesUpdater_->Register( "Dimensions", boost::bind( &ReadNothing, _1, _2, _3 ), Dimension( false ) );
-    attributesUpdater_->Register( "Spatial", boost::bind( &ReadSpatial, _1, _2, _3, boost::ref( spatial_ ) ), spatial_ );
-    attributesUpdater_->Register( "Formation", boost::bind( &ReadNothing, _1, _2, _3 ), Formation( false ) );
-    attributesUpdater_->Register( "NumberOfSilentEntities", boost::bind( &ReadNumberOfSilentEntities, _1, _2, _3, boost::ref( numberOfSilentEntities_ ) ), Wrapper< unsigned short >( 0 ) );
-    attributesUpdater_->Register( "SilentEntities", boost::bind( &ReadSilentEntities, _1, _2, _3, boost::ref( numberOfSilentEntities_ ) ), Wrapper< std::vector< SilentEntity > >( std::vector< SilentEntity >() ) );
-    attributesUpdater_->Register( "SilentAggregates", boost::bind( &ReadNothing, _1, _2, _3 ), Wrapper< uint32 >( 0 ) ); // no aggregates
-    attributesUpdater_->Register( "SubAggregateIdentifiers", boost::bind( &ReadNothing, _1, _2, _3 ), Wrapper< uint32 >( 0 ) ); // no sub aggregates identifiers
-    attributesUpdater_->Register( "EntityIdentifiers", boost::bind( &ReadNothing, _1, _2, _3 ), entities_ ); // no entity identifiers
-    attributesUpdater_->Register( "NumberOfVariableDatums", boost::bind( &ReadNothing, _1, _2, _3 ), Wrapper< uint32 >( 0 ) ); // no variable datums
+    attributesUpdater_->Register( "EntityType", boost::bind( &FOM_Serializer_ABC::ReadEntityType, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( type_ ) ), type_ );
+    attributesUpdater_->Register( "EntityIdentifier", boost::bind( &FOM_Serializer_ABC::ReadEntityIdentifier, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( entityIdentifier_ ), boost::ref( entityIdentifierResolver_ ) ), entityIdentifier_ );
+    attributesUpdater_->Register( "ForceIdentifier", boost::bind( &FOM_Serializer_ABC::ReadForceIdentifier, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( force_ ) ), Wrapper< int8 >( static_cast< int8 >( force_ ) ) );
+    attributesUpdater_->Register( "AggregateMarking", boost::bind( &FOM_Serializer_ABC::ReadAggregateMarking, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( marking_ ) ), marking_ );
+    attributesUpdater_->Register( "AggregateState", boost::bind( &FOM_Serializer_ABC::ReadUnsignedChar, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( aggregateState_ ) ), Wrapper< unsigned char >( aggregateState_ ) );
+    attributesUpdater_->Register( "Dimensions", boost::bind( &FOM_Serializer_ABC::ReadNothing, boost::ref( fomSerializer_ ), _1, _2, _3 ), Dimension( false ) );
+    attributesUpdater_->Register( "Spatial", boost::bind( &FOM_Serializer_ABC::ReadSpatial, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( spatial_ ) ), spatial_ );
+    attributesUpdater_->Register( "Formation", boost::bind( &FOM_Serializer_ABC::ReadNothing, boost::ref( fomSerializer_ ), _1, _2, _3 ), Formation( false ) );
+    attributesUpdater_->Register( "NumberOfSilentEntities", boost::bind( &FOM_Serializer_ABC::ReadNumberOfSilentEntities, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( numberOfSilentEntities_ ) ), Wrapper< unsigned short >( 0 ) );
+    attributesUpdater_->Register( "SilentEntities", boost::bind( &FOM_Serializer_ABC::ReadSilentEntities, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( numberOfSilentEntities_ ) ), Wrapper< std::vector< SilentEntity > >( std::vector< SilentEntity >() ) );
+    attributesUpdater_->Register( "SilentAggregates", boost::bind( &FOM_Serializer_ABC::ReadNothing, boost::ref( fomSerializer_ ), _1, _2, _3 ), Wrapper< uint32 >( 0 ) ); // no aggregates
+    attributesUpdater_->Register( "SubAggregateIdentifiers", boost::bind( &FOM_Serializer_ABC::ReadNothing, boost::ref( fomSerializer_ ), _1, _2, _3 ), Wrapper< uint32 >( 0 ) ); // no sub aggregates identifiers
+    attributesUpdater_->Register( "EntityIdentifiers", boost::bind( &FOM_Serializer_ABC::ReadNothing, boost::ref( fomSerializer_ ), _1, _2, _3 ), entities_ ); // no entity identifiers
+    attributesUpdater_->Register( "NumberOfVariableDatums", boost::bind( &FOM_Serializer_ABC::ReadNothing, boost::ref( fomSerializer_ ), _1, _2, _3 ), Wrapper< uint32 >( 0 ) ); // no variable datums
 }
 
 // -----------------------------------------------------------------------------

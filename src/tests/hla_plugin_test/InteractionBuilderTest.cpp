@@ -11,6 +11,8 @@
 #include "hla_plugin/InteractionBuilder.h"
 #include "hla_plugin/InteractionSender.h"
 #include "hla_plugin/Interactions.h"
+#include "hla_plugin/NETNv1_InteractionBuilder.h"
+#include "hla_plugin/NETNv2_InteractionBuilder.h"
 #include "MockFederate.h"
 #include "MockInteractionHandler.h"
 #include "MockInteractionNotification.h"
@@ -22,11 +24,13 @@ using namespace plugins::hla;
 
 namespace
 {
-    class Fixture
+    template <typename NetnBldr >
+    class FixtureBase
     {
     public:
-        Fixture()
-            : builder( logger, federate )
+        FixtureBase()
+            : netnBuilder( logger, federate )
+            , builder( logger, federate, netnBuilder )
         {}
         template< typename Interaction >
         void CheckBuild( const std::string& name, const std::vector< std::string >& parameters )
@@ -56,8 +60,11 @@ namespace
         }
         MockFederate federate;
         dispatcher::MockLogger logger;
+        NetnBldr netnBuilder;
         InteractionBuilder builder;
     };
+    typedef FixtureBase< NETNv1_InteractionBuilder > Fixture;
+    typedef FixtureBase< NETNv2_InteractionBuilder > FixtureV2;
 }
 
 BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_acknowledge, Fixture )
@@ -150,7 +157,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_a
     CheckBuild< interactions::Comment >( name, parameters );
 }
 
-BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_request_convoy, Fixture )
+BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_request_convoy_v1, Fixture )
 {
     const std::string name = "NETN_Service.NETN_RequestService.NETN_RequestConvoy";
     const std::vector< std::string > parameters = boost::assign::list_of( "ServiceID" )
@@ -162,7 +169,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_a
     CheckBuild< interactions::NetnRequestConvoy >( name, parameters );
 }
 
-BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_offer_convoy, Fixture )
+BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_offer_convoy_v1, Fixture )
 {
     const std::string name = "NETN_Service.NETN_OfferService.NETN_OfferConvoy";
     const std::vector< std::string > parameters = boost::assign::list_of( "IsOffering" )
@@ -177,7 +184,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_a
     CheckBuild< interactions::NetnOfferConvoy >( name, parameters );
 }
 
-BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_accept_offer, Fixture )
+BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_accept_offer_v1, Fixture )
 {
     const std::string name = "NETN_Service.NETN_AcceptOffer";
     const std::vector< std::string > parameters = boost::assign::list_of( "ServiceID" )
@@ -187,7 +194,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_a
     CheckBuild< interactions::NetnAcceptOffer>( name, parameters );
 }
 
-BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_reject_offer_convoy, Fixture )
+BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_reject_offer_convoy_v1, Fixture )
 {
     const std::string name = "NETN_Service.NETN_RejectOffer.NETN_RejectOfferConvoy";
     const std::vector< std::string > parameters = boost::assign::list_of( "ServiceID" )
@@ -198,7 +205,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_a
     CheckBuild< interactions::NetnRejectOfferConvoy >( name, parameters );
 }
 
-BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_cancel_convoy, Fixture )
+BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_cancel_convoy_v1, Fixture )
 {
     const std::string name = "NETN_Service.NETN_CancelService.NETN_CancelConvoy";
     const std::vector< std::string > parameters = boost::assign::list_of( "ServiceID" )
@@ -209,7 +216,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_a
     CheckBuild< interactions::NetnCancelConvoy >( name, parameters );
 }
 
-BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_ready_to_receive_service, Fixture )
+BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_ready_to_receive_service_v1, Fixture )
 {
     const std::string name = "NETN_Service.NETN_ReadyToReceiveService";
     const std::vector< std::string > parameters = boost::assign::list_of( "ServiceID" )
@@ -219,7 +226,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_a
     CheckBuild< interactions::NetnReadyToReceiveService >( name, parameters );
 }
 
-BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_service_started, Fixture )
+BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_service_started_v1, Fixture )
 {
     const std::string name = "NETN_Service.NETN_ServiceStarted";
     const std::vector< std::string > parameters = boost::assign::list_of( "ServiceID" )
@@ -229,7 +236,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_a
     CheckBuild< interactions::NetnServiceStarted >( name, parameters );
 }
 
-BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_convoy_embarkment_status, Fixture )
+BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_convoy_embarkment_status_v1, Fixture )
 {
     const std::string name = "NETN_Service.NETN_ConvoyEmbarkmentStatus";
     const std::vector< std::string > parameters = boost::assign::list_of( "ServiceID" )
@@ -241,7 +248,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_a
     CheckBuild< interactions::NetnConvoyEmbarkmentStatus >( name, parameters );
 }
 
-BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_convoy_disembarkment_status, Fixture )
+BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_convoy_disembarkment_status_v1, Fixture )
 {
     const std::string name = "NETN_Service.NETN_ConvoyDisembarkmentStatus";
     const std::vector< std::string > parameters = boost::assign::list_of( "ServiceID" )
@@ -253,7 +260,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_a
     CheckBuild< interactions::NetnConvoyDisembarkmentStatus >( name, parameters );
 }
 
-BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_convoy_destroyed_entities, Fixture )
+BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_convoy_destroyed_entities_v1, Fixture )
 {
     const std::string name = "NETN_Service.NETN_ConvoyDestroyedEntities";
     const std::vector< std::string > parameters = boost::assign::list_of( "ServiceID" )
@@ -264,7 +271,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_a
     CheckBuild< interactions::NetnConvoyDestroyedEntities >( name, parameters );
 }
 
-BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_service_complete, Fixture )
+BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_service_complete_v1, Fixture )
 {
     const std::string name = "NETN_Service.NETN_ServiceComplete";
     const std::vector< std::string > parameters = boost::assign::list_of( "ServiceID" )
@@ -274,7 +281,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_a
     CheckBuild< interactions::NetnServiceComplete >( name, parameters );
 }
 
-BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_service_received, Fixture )
+BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_service_received_v1, Fixture )
 {
     const std::string name = "NETN_Service.NETN_ServiceReceived";
     const std::vector< std::string > parameters = boost::assign::list_of( "ServiceID" )
@@ -283,3 +290,140 @@ BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_a
                                                                         ( "ServiceType" );
     CheckBuild< interactions::NetnServiceReceived >( name, parameters );
 }
+
+// NETNv2
+
+BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_request_convoy_v2, FixtureV2 )
+{
+    const std::string name = "SCP_Service.SCP_RequestService.RequestTransport";
+    const std::vector< std::string > parameters = boost::assign::list_of( "ServiceID" )
+                                                                        ( "Consumer" )
+                                                                        ( "Provider" )
+                                                                        ( "ServiceType" )
+                                                                        ( "RequestTimeOut" )
+                                                                        ( "TransportData" );
+    CheckBuild< interactions::NetnRequestConvoy >( name, parameters );
+}
+
+BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_offer_convoy_v2, FixtureV2 )
+{
+    const std::string name = "SCP_Service.SCP_OfferService.OfferTransport";
+    const std::vector< std::string > parameters = boost::assign::list_of( "IsOffering" )
+                                                                        ( "RequestTimeOut" )
+                                                                        ( "ServiceID" )
+                                                                        ( "Consumer" )
+                                                                        ( "Provider" )
+                                                                        ( "ServiceType" )
+                                                                        ( "TransportData" )
+                                                                        ( "OfferType" )
+                                                                        ( "Transporters" );
+    CheckBuild< interactions::NetnOfferConvoy >( name, parameters );
+}
+
+BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_accept_offer_v2, FixtureV2 )
+{
+    const std::string name = "SCP_Service.SCP_AcceptOffer";
+    const std::vector< std::string > parameters = boost::assign::list_of( "ServiceID" )
+                                                                        ( "Consumer" )
+                                                                        ( "Provider" )
+                                                                        ( "ServiceType" );
+    CheckBuild< interactions::NetnAcceptOffer>( name, parameters );
+}
+
+BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_reject_offer_convoy_v2, FixtureV2 )
+{
+    const std::string name = "SCP_Service.SCP_RejectOffer.RejectOfferTransport";
+    const std::vector< std::string > parameters = boost::assign::list_of( "ServiceID" )
+                                                                        ( "Consumer" )
+                                                                        ( "Provider" )
+                                                                        ( "ServiceType" )
+                                                                        ( "Reason" );
+    CheckBuild< interactions::NetnRejectOfferConvoy >( name, parameters );
+}
+
+BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_cancel_convoy_v2, FixtureV2 )
+{
+    const std::string name = "SCP_Service.SCP_CancelService.CancelTransport";
+    const std::vector< std::string > parameters = boost::assign::list_of( "ServiceID" )
+                                                                        ( "Consumer" )
+                                                                        ( "Provider" )
+                                                                        ( "ServiceType" )
+                                                                        ( "Reason" );
+    CheckBuild< interactions::NetnCancelConvoy >( name, parameters );
+}
+
+BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_ready_to_receive_service_v2, FixtureV2 )
+{
+    const std::string name = "SCP_Service.SCP_ReadyToReceiveService";
+    const std::vector< std::string > parameters = boost::assign::list_of( "ServiceID" )
+                                                                        ( "Consumer" )
+                                                                        ( "Provider" )
+                                                                        ( "ServiceType" );
+    CheckBuild< interactions::NetnReadyToReceiveService >( name, parameters );
+}
+
+BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_service_started_v2, FixtureV2 )
+{
+    const std::string name = "SCP_Service.SCP_ServiceStarted";
+    const std::vector< std::string > parameters = boost::assign::list_of( "ServiceID" )
+                                                                        ( "Consumer" )
+                                                                        ( "Provider" )
+                                                                        ( "ServiceType" );
+    CheckBuild< interactions::NetnServiceStarted >( name, parameters );
+}
+
+BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_convoy_embarkment_status_v2, FixtureV2 )
+{
+    const std::string name = "SCP_Service.TransportEmbarkmentStatus";
+    const std::vector< std::string > parameters = boost::assign::list_of( "ServiceID" )
+                                                                        ( "Consumer" )
+                                                                        ( "Provider" )
+                                                                        ( "ServiceType" )
+                                                                        ( "EmbarkedObjects" )
+                                                                        ( "TransportUnitIdentifier" );
+    CheckBuild< interactions::NetnConvoyEmbarkmentStatus >( name, parameters );
+}
+
+BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_convoy_disembarkment_status_v2, FixtureV2 )
+{
+    const std::string name = "SCP_Service.TransportDisembarkmentStatus";
+    const std::vector< std::string > parameters = boost::assign::list_of( "ServiceID" )
+                                                                        ( "Consumer" )
+                                                                        ( "Provider" )
+                                                                        ( "ServiceType" )
+                                                                        ( "DisembarkedObjects" )
+                                                                        ( "TransportUnitIdentifier" );
+    CheckBuild< interactions::NetnConvoyDisembarkmentStatus >( name, parameters );
+}
+
+BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_convoy_destroyed_entities_v2, FixtureV2 )
+{
+    const std::string name = "SCP_Service.TransportDestroyedEntities";
+    const std::vector< std::string > parameters = boost::assign::list_of( "ServiceID" )
+                                                                        ( "Consumer" )
+                                                                        ( "Provider" )
+                                                                        ( "ServiceType" )
+                                                                        ( "DestroyedObjects" );
+    CheckBuild< interactions::NetnConvoyDestroyedEntities >( name, parameters );
+}
+
+BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_service_complete_v2, FixtureV2 )
+{
+    const std::string name = "SCP_Service.SCP_ServiceComplete";
+    const std::vector< std::string > parameters = boost::assign::list_of( "ServiceID" )
+                                                                        ( "Consumer" )
+                                                                        ( "Provider" )
+                                                                        ( "ServiceType" );
+    CheckBuild< interactions::NetnServiceComplete >( name, parameters );
+}
+
+BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_service_received_v2, FixtureV2 )
+{
+    const std::string name = "SCP_Service.SCP_ServiceReceived";
+    const std::vector< std::string > parameters = boost::assign::list_of( "ServiceID" )
+                                                                        ( "Consumer" )
+                                                                        ( "Provider" )
+                                                                        ( "ServiceType" );
+    CheckBuild< interactions::NetnServiceReceived >( name, parameters );
+}
+

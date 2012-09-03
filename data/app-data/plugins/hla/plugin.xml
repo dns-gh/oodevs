@@ -122,6 +122,12 @@
                         <description lang="fr" name="Utiliser les modules NETN"><![CDATA[Active la souscription et la publication NETN]]></description>
                     </descriptions>
                 </setting>
+                <setting attribute="@netn-version" type="enumeration" default="1;2">
+                    <descriptions>
+                        <description lang="en" name="NETN version"><![CDATA[NETN FOM version]]></description>
+                        <description lang="fr" name="Version NETN"><![CDATA[Version FOM NETN]]></description>
+                    </descriptions>
+                </setting>
                 <setting attribute="@netn-subscribe-rpr" type="boolean" default="false">
                     <descriptions>
                         <description lang="en" name="Subscribe RPR in NETN "><![CDATA[Enable subscription to RPR classes in NETN mode]]></description>

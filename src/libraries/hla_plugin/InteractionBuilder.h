@@ -51,6 +51,7 @@ namespace interactions
     struct NetnServiceReceived;
 }
     class Federate_ABC;
+    class NETN_InteractionBuilder_ABC;
 
 // =============================================================================
 /** @class  InteractionBuilder
@@ -63,7 +64,7 @@ class InteractionBuilder : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             InteractionBuilder( dispatcher::Logger_ABC& logger, Federate_ABC& federate );
+             InteractionBuilder( dispatcher::Logger_ABC& logger, Federate_ABC& federate, const NETN_InteractionBuilder_ABC& netnBuilder );
     virtual ~InteractionBuilder();
     //@}
 
@@ -107,6 +108,7 @@ private:
     //@{
     dispatcher::Logger_ABC& logger_;
     Federate_ABC& federate_;
+    const NETN_InteractionBuilder_ABC& netnBuilder_;
     //@}
 };
 

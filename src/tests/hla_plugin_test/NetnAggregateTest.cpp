@@ -12,6 +12,8 @@
 #include "MockHlaObject.h"
 #include "MockAgent.h"
 #include "MockUpdateFunctor.h"
+#include "MockFOM_Serialization.h"
+#include "hla_plugin/UniqueId.h"
 #include <hla/Deserializer.h>
 #include <hla/Serializer.h>
 #include <hla/AttributeIdentifier.h>
@@ -28,20 +30,24 @@ namespace
         Fixture()
             : listener ( 0 )
             , aggregate( new MockHlaObject() )
+			, uniqueIdSerializer( 1 )
         {
             MOCK_EXPECT( agent.Register ).once().with( mock::retrieve( listener ) );
+			MOCK_EXPECT( fomSerialization.GetUniqueIdSerializer ).returns( uniqueIdSerializer );
             MOCK_EXPECT( agent.Unregister ).once();
         }
         MockAgent agent;
         MockHlaObject* aggregate;
         EventListener_ABC* listener;
         hla::MockUpdateFunctor functor;
+		UniqueIdSerializer uniqueIdSerializer;
+		MockFOM_Serialization fomSerialization;
     };
     class RegisteredFixture : public Fixture
     {
     public:
         RegisteredFixture()
-            : entity( std::auto_ptr< HlaObject_ABC >( aggregate ), agent, "name", "identifier", "symbol" )
+            : entity( std::auto_ptr< HlaObject_ABC >( aggregate ), agent, "name", "identifier", "symbol", fomSerialization )
         {}
         NetnAggregate entity;
     };

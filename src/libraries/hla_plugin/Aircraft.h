@@ -40,6 +40,7 @@ namespace hla
     class ObjectListenerComposite;
     class MarkingFactory_ABC;
     class EntityIdentifierResolver_ABC;
+    class FOM_Serializer_ABC;
 
 // =============================================================================
 /** @class  Aircraft
@@ -55,8 +56,8 @@ public:
     //@{
              Aircraft( Agent_ABC& agent, unsigned long identifier,
                             const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const MarkingFactory_ABC& markingFactory,
-                            unsigned short siteID, unsigned short applicationID, EntityIdentifierResolver_ABC& entityIdentifierResolver );
-             Aircraft( const std::string& identifier, EntityIdentifierResolver_ABC& entityIdentifierResolver );
+                            unsigned short siteID, unsigned short applicationID, EntityIdentifierResolver_ABC& entityIdentifierResolver, FOM_Serializer_ABC& fomSerializer );
+             Aircraft( const std::string& identifier, EntityIdentifierResolver_ABC& entityIdentifierResolver, FOM_Serializer_ABC& fomSerializer );
     virtual ~Aircraft();
     //@}
 
@@ -94,6 +95,7 @@ private:
     std::auto_ptr< ObjectListenerComposite > listeners_;
     Agent_ABC* agent_;
     EntityIdentifierResolver_ABC& entityIdentifierResolver_;
+    FOM_Serializer_ABC& fomSerializer_;
     std::auto_ptr< AttributesUpdater > attributesUpdater_;
     unsigned long simIdentifier_;
     rpr::ForceIdentifier force_;

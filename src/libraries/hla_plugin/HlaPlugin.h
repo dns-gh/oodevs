@@ -77,6 +77,7 @@ namespace hla
     class AutomatChecker_ABC;
     class Subordinates_ABC;
     class ExtentResolver_ABC;
+    class NETN_InteractionBuilder_ABC;
     class InteractionBuilder;
     class SimulationFacade;
     class DetonationFacade;
@@ -87,6 +88,7 @@ namespace hla
     class OwnershipPolicy_ABC;
     class TransferSender_ABC;
     class EntityIdentifierResolver_ABC;
+    class FOM_Serializer_ABC;
 
 // =============================================================================
 /** @class  HlaPlugin
@@ -147,7 +149,9 @@ private:
     std::auto_ptr< ExtentResolver_ABC > pExtentResolver_;
     std::auto_ptr< AgentController > pSubject_;
     std::auto_ptr< TacticalObjectController > pTacticalObjectSubject_;
+    std::auto_ptr< FOM_Serializer_ABC > pFomSerializer_;
     std::auto_ptr< FederateFacade > pFederate_;
+    std::auto_ptr< NETN_InteractionBuilder_ABC > pNetnInteractionBuilder_;
     std::auto_ptr< InteractionBuilder > pInteractionBuilder_;
     std::auto_ptr< SimulationFacade > pSimulationFacade_;
     std::auto_ptr< RemoteAgentResolver_ABC > pRemoteAgentResolver_;

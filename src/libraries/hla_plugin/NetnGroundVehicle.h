@@ -22,6 +22,7 @@ namespace hla
     class AttributesSerializer;
     class ObjectListener_ABC;
     class ObjectListenerComposite;
+    class FOM_Serializer_ABC;
 
 // =============================================================================
 /** @class  NetnGroundVehicle
@@ -34,8 +35,8 @@ class NetnGroundVehicle : public HlaObject_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             NetnGroundVehicle( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC& agent, const std::string& callsign, const std::string& uniqueIdentifier, const std::string& symbol );
-    virtual ~NetnGroundVehicle();
+             NetnGroundVehicle( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC& agent, const std::string& callsign, const std::string& uniqueIdentifier, const std::string& symbol, FOM_Serializer_ABC& fomSerializer );
+    virtual ~NetnGroundVehicle( );
     //@}
 
     //! @name Operations
@@ -55,6 +56,7 @@ private:
     //@{
     std::auto_ptr< ObjectListenerComposite > listeners_;
     std::auto_ptr< HlaObject_ABC > aggregate_;
+    FOM_Serializer_ABC& fomSerializer_;
     std::auto_ptr< AttributesSerializer > attributes_;
     //@}
 };

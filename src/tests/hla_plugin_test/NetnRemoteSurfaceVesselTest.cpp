@@ -13,6 +13,7 @@
 #include "hla_plugin/UniqueId.h"
 #include "MockHlaObject.h"
 #include "MockUpdateFunctor.h"
+#include "hla_plugin/FOM_Serializer.h"
 #include "MockObjectListener.h"
 #include <hla/Deserializer.h>
 #include <hla/Serializer.h>
@@ -28,7 +29,8 @@ namespace
         Fixture()
             : rprRemote ( new MockHlaObject() )
             , pRemote   ( static_cast< HlaObject_ABC* >( rprRemote ) )
-            , netnRemote( pRemote, "identifier" )
+			, fomSerialization( 1 )
+            , netnRemote( pRemote, "identifier", fomSerialization )
         {
             MOCK_EXPECT( rprRemote->Register );
             netnRemote.Register( listener );
@@ -42,6 +44,7 @@ namespace
         MockHlaObject* rprRemote;
         std::auto_ptr< HlaObject_ABC > pRemote;
         MockObjectListener listener;
+		FOM_Serializer fomSerialization;
         NetnSurfaceVessel netnRemote;
         ::hla::Serializer serializer;
         T_Buffer buffer;

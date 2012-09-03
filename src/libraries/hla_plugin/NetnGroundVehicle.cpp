@@ -23,9 +23,10 @@ using namespace plugins::hla;
 // Name: NetnGroundVehicle constructor
 // Created: AHC 2012-07-27
 // -----------------------------------------------------------------------------
-NetnGroundVehicle::NetnGroundVehicle( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC& /*agent*/, const std::string& callsign, const std::string& uniqueIdentifier, const std::string& /*symbol*/ )
+NetnGroundVehicle::NetnGroundVehicle( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC& /*agent*/, const std::string& callsign, const std::string& uniqueIdentifier, const std::string& /*symbol*/, FOM_Serializer_ABC& fomSerializer )
     : listeners_ ( new ObjectListenerComposite() )
     , aggregate_ ( aggregate )
+    , fomSerializer_( fomSerializer )
     , attributes_( new AttributesSerializer() )
 {
     attributes_->Register( "UniqueID", UniqueId( uniqueIdentifier ) );
@@ -38,7 +39,7 @@ NetnGroundVehicle::NetnGroundVehicle( std::auto_ptr< HlaObject_ABC > aggregate, 
 // Name: NetnGroundVehicle destructor
 // Created: AHC 2012-07-27
 // -----------------------------------------------------------------------------
-NetnGroundVehicle::~NetnGroundVehicle()
+NetnGroundVehicle::~NetnGroundVehicle( )
 {
     // NOTHING
 }
