@@ -46,7 +46,7 @@ set_xpath = (xpath, obj, value) ->
     tokens = convert_xpath xpath
     for it, i in convert_xpath xpath
         if i+1 < tokens.length
-            obj[it] = {} unless obj[it]?
+            obj[it] ?= {}
             obj = obj[it]
         else
             obj[it] = value
@@ -77,15 +77,15 @@ set_ui_plugin_group = (group, next, data) ->
     content =
         id:    header.id
     for prop in group.options
-        content.options = [] unless content.options?
+        content.options ?= []
         option = $.extend {}, prop
         option.xid = next.id + ":" + option.id
         set_ui_option option, data
         content.options.push option
     if content.options?
-        next.headers = [] unless next.headers?
+        next.headers ?= []
         next.headers.push header
-        next.contents = [] unless next.contents?
+        next.contents ?= []
         next.contents.push content
     return
 
@@ -93,7 +93,7 @@ set_ui_plugins = (data) ->
     idx = 0
     for k, v of data.plugins
         continue unless k of session_plugins
-        data.ui_plugins = [] unless data.ui_plugins?
+        data.ui_plugins ?= []
         next =
             idx:     idx++
             id:      make_id k
@@ -195,8 +195,8 @@ validate_plugins = (ui, data) ->
     tab = $ "#tab_plugins"
     for it in tab.find "input[type='checkbox']"
         continue unless it.id of session_plugins
-        data.plugins = {} unless data.plugins?
-        next = data.plugins[it.id] = {} unless data.plugins[it.id]?
+        data.plugins ?= {}
+        data.plugins[it.id] ?= {}
         data.plugins[it.id].enabled = $(it).is ":checked"
     for it in ui.find ".plugin_items input, .plugin_items select"
         sub = /^(\w+):(.+)$/.exec it.id

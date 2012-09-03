@@ -523,13 +523,13 @@
   };
 
   set_xpath = function(xpath, obj, value) {
-    var i, it, tokens, _i, _len, _ref;
+    var i, it, tokens, _i, _len, _ref, _ref1;
     tokens = convert_xpath(xpath);
     _ref = convert_xpath(xpath);
     for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
       it = _ref[i];
       if (i + 1 < tokens.length) {
-        if (obj[it] == null) {
+        if ((_ref1 = obj[it]) == null) {
           obj[it] = {};
         }
         obj = obj[it];
@@ -564,7 +564,7 @@
   };
 
   set_ui_plugin_group = function(group, next, data) {
-    var content, header, option, prop, _i, _len, _ref;
+    var content, header, option, prop, _i, _len, _ref, _ref1, _ref2, _ref3;
     header = {
       label: group.label,
       id: next.id + '_' + make_id(group.label)
@@ -575,7 +575,7 @@
     _ref = group.options;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       prop = _ref[_i];
-      if (content.options == null) {
+      if ((_ref1 = content.options) == null) {
         content.options = [];
       }
       option = $.extend({}, prop);
@@ -584,11 +584,11 @@
       content.options.push(option);
     }
     if (content.options != null) {
-      if (next.headers == null) {
+      if ((_ref2 = next.headers) == null) {
         next.headers = [];
       }
       next.headers.push(header);
-      if (next.contents == null) {
+      if ((_ref3 = next.contents) == null) {
         next.contents = [];
       }
       next.contents.push(content);
@@ -596,7 +596,7 @@
   };
 
   set_ui_plugins = function(data) {
-    var group, idx, k, next, v, _i, _len, _ref, _ref1, _ref2, _ref3, _ref4;
+    var group, idx, k, next, v, _i, _len, _ref, _ref1, _ref2, _ref3, _ref4, _ref5;
     idx = 0;
     _ref = data.plugins;
     for (k in _ref) {
@@ -604,7 +604,7 @@
       if (!(k in session_plugins)) {
         continue;
       }
-      if (data.ui_plugins == null) {
+      if ((_ref1 = data.ui_plugins) == null) {
         data.ui_plugins = [];
       }
       next = {
@@ -614,19 +614,19 @@
         checked: convert_to_boolean(v.enabled) ? " checked=\"checked\"" : void 0
       };
       data.ui_plugins.push(next);
-      _ref1 = session_plugins[k].groups;
-      for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-        group = _ref1[_i];
+      _ref2 = session_plugins[k].groups;
+      for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
+        group = _ref2[_i];
         set_ui_plugin_group(group, next, v);
       }
-      if (((_ref2 = next.headers) != null ? _ref2.length : void 0) === 1) {
+      if (((_ref3 = next.headers) != null ? _ref3.length : void 0) === 1) {
         delete next.headers;
       }
-      if ((_ref3 = next.headers) != null) {
-        _ref3[0].active = true;
-      }
-      if ((_ref4 = next.contents) != null) {
+      if ((_ref4 = next.headers) != null) {
         _ref4[0].active = true;
+      }
+      if ((_ref5 = next.contents) != null) {
+        _ref5[0].active = true;
       }
     }
   };
@@ -756,7 +756,7 @@
   };
 
   validate_plugins = function(ui, data) {
-    var it, next, plugin, sub, tab, target, _i, _j, _len, _len1, _ref, _ref1;
+    var it, plugin, sub, tab, target, _base, _i, _j, _len, _len1, _name, _ref, _ref1, _ref2, _ref3;
     tab = $("#tab_plugins");
     _ref = tab.find("input[type='checkbox']");
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -764,17 +764,17 @@
       if (!(it.id in session_plugins)) {
         continue;
       }
-      if (data.plugins == null) {
+      if ((_ref1 = data.plugins) == null) {
         data.plugins = {};
       }
-      if (data.plugins[it.id] == null) {
-        next = data.plugins[it.id] = {};
+      if ((_ref2 = (_base = data.plugins)[_name = it.id]) == null) {
+        _base[_name] = {};
       }
       data.plugins[it.id].enabled = $(it).is(":checked");
     }
-    _ref1 = ui.find(".plugin_items input, .plugin_items select");
-    for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-      it = _ref1[_j];
+    _ref3 = ui.find(".plugin_items input, .plugin_items select");
+    for (_j = 0, _len1 = _ref3.length; _j < _len1; _j++) {
+      it = _ref3[_j];
       sub = /^(\w+):(.+)$/.exec(it.id);
       if (!sub) {
         continue;

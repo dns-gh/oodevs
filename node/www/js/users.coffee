@@ -59,7 +59,7 @@ validate_settings = (ui, add) ->
     return data
 
 scope = (model) ->
-    model = {} unless model
+    model ?= {}
     if uuid?
         model.node = uuid
     return model

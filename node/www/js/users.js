@@ -541,7 +541,7 @@
   };
 
   scope = function(model) {
-    if (!model) {
+    if (model == null) {
       model = {};
     }
     if (typeof uuid !== "undefined" && uuid !== null) {
