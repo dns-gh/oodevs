@@ -19,6 +19,7 @@
 #include <boost/filesystem/operations.hpp>
 #pragma warning( pop )
 #include <boost/bind.hpp>
+#include "MT_TOOLS/MT_Logger.h"
 #include "MT_TOOLS/MT_Logger_ABC.h"
 #include "tools/XmlCrc32Signature.h"
 
@@ -97,9 +98,14 @@ void ExerciseConfig::LoadExercise( const std::string& file )
             SetExerciseName( file );
         pWorldParameters_.reset( new WorldParameters( *fileLoader_, dataset_, physical_, GetTerrainFile(), GetPopulationFile() ) );
     }
-    catch( ... )
+    catch( xml::exception& exception )
     {
-        // NOTHING
+        throw exception;
+    }
+    catch( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( e.what() );
+        throw e;
     }
 }
 
