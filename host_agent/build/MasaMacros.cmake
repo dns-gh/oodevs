@@ -10,6 +10,7 @@
 if( MSVC )
     set_property( GLOBAL PROPERTY USE_FOLDERS ON )
     set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")
+    set( CMAKE_RC_FLAGS "${CMAKE_RC_FLAGS} /nologo" )
     math( EXPR msvc_platform "(${MSVC_VERSION} - 600) / 10" )
     set( msvc_suffix "_x64" )
     if( ${CMAKE_SIZEOF_VOID_P} EQUAL 4 )
