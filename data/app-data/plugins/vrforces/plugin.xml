@@ -21,12 +21,12 @@
 		</setting>
 		<setting attribute="@federation" type="string" default="VR-Link">
 			<descriptions>
-				<description lang="en" name="FOM"><![CDATA[Federation Name]]></description>
+				<description lang="en" name="FOM Name"><![CDATA[Federation Name]]></description>
 			</descriptions>
 		</setting>
 		<setting attribute="@RprFomVersion" type="string" default="1.0">
 			<descriptions>
-				<description lang="en" name="RPR FOM"><![CDATA[Version of the RPR FOM]]></description>
+				<description lang="en" name="RPR FOM Version"><![CDATA[RPR FOM Version]]></description>
 			</descriptions>
 		</setting>
 	</settings>
