@@ -65,6 +65,7 @@ select{width:224px;}
 .sign_in_action a{width:254px;}
 .update_login_header{text-align:center;margin-bottom:24px;font-weight:bold;}
 .update_login_action .cancel{width:95px;}
+.checkbox,.radio{cursor:pointer;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:-moz-none;-o-user-select:none;user-select:none;display:table;}
 .checkbox_addon label.add-on{margin-left:0;margin-bottom:0;width:22px;}
 .checkbox_addon input[type=checkbox]{position:relative;top:-3px;}
 .checkbox_addon .field{width:177px;}
