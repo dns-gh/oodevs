@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <plugin name="edxlhave" version="1.0"
-	library="edxlhave_plugin-vc100-mt.dll"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="..\..\resources\schemas\4.3.1\plugins\plugin.xsd">
+	library="edxlhave_plugin"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="..\..\resources\schemas\4.3.1\plugins\plugin.xsd">
 	<descriptions>
 		<description lang="en" name="EDXL-HAVE"><![CDATA[EDXL-HAVE communication plugin]]></description>
 		<description lang="fr" name="EDXL-HAVE"><![CDATA[Plugin de communication EDXL-HAVE]]></description>
