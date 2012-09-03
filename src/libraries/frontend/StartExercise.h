@@ -28,9 +28,6 @@ public:
     //! @name Constructors/Destructor
     //@{
     StartExercise(  const tools::GeneralConfig& config, const QString& exercise,
-                    const QString& session, bool attach, bool launchDispatchedIfNotEmbedded = true,
-                    std::string commanderEndpoint = "" );
-    StartExercise(  const tools::GeneralConfig& config, const QString& exercise,
                     const QString& session, const QString& checkpoint, bool attach, bool launchDispatchedIfNotEmbedded = true,
                     std::string commanderEndpoint = "" );
     virtual ~StartExercise();
