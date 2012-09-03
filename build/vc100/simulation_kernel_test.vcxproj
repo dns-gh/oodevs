@@ -260,7 +260,6 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
       <PreprocessSuppressLineNumbers Condition="'$(Configuration)|$(Platform)'=='release|x64'">false</PreprocessSuppressLineNumbers>
     </ClCompile>
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\PkComputerTest.cpp" />
-    <ClCompile Include="..\..\src\tests\simulation_kernel_test\KnowledgeGroupTest.cpp" />
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\Knowledge_UrbanPerceptionTest.cpp" />
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\Knowledge_UrbanTest.cpp" />
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\KnowledgeTest.cpp">

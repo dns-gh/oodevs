@@ -29,9 +29,6 @@
     <Filter Include="Source Files\Firing">
       <UniqueIdentifier>{50d3ed2b-afd4-4884-adac-a0c663cb3237}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\KnowledgeGroup">
-      <UniqueIdentifier>{ca131b9f-765b-450c-8c24-d51d682b4db8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\urban">
       <UniqueIdentifier>{8d63479b-9ec9-4616-a706-1fa6e51bb247}</UniqueIdentifier>
     </Filter>
@@ -290,9 +287,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\PkComputerTest.cpp">
       <Filter>Source Files\Firing</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\tests\simulation_kernel_test\KnowledgeGroupTest.cpp">
-      <Filter>Source Files\KnowledgeGroup</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\Knowledge_UrbanPerceptionTest.cpp">
       <Filter>Source Files\urban</Filter>
