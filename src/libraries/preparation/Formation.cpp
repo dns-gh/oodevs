@@ -12,21 +12,16 @@
 #include "FormationHierarchies.h"
 #include "IdManager.h"
 #include "LogisticBaseStates.h"
-#include "clients_gui/Tools.h"
-#include "clients_kernel/ActionController.h"
+#include "LogisticLevelAttritube.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/TacticalHierarchies.h"
-#include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Diplomacies_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
-#include "LogisticLevelAttritube.h"
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
-#include <QtGui/qmessagebox.h>
 #include "ENT/ENT_Tr_Gen.h"
 
 using namespace kernel;

@@ -25,7 +25,6 @@
 #include "clients_kernel/AutomatDecisions_ABC.h"
 #include "clients_kernel/CommandPostAttributes_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
