@@ -50,12 +50,12 @@ int main( int argc, char** argv )
     }
     catch( std::exception& e )
     {
-        QMessageBox::critical( 0, tools::translate( "Application", "Error" ), e.what() );
+        MessageBox( 0, e.what(), "SWORD - Invalid input data", MB_ICONERROR | MB_OK | MB_TOPMOST );
         return 1;
     }
     catch( ... )
     {
-        QMessageBox::critical( 0, tools::translate( "Application", "Error" ), tools::translate( "Application", "Unhandled error" ) );
+        MessageBox( 0, "Unhandled error", "SWORD - Invalid input data", MB_ICONERROR | MB_OK | MB_TOPMOST );
         return 1;
     }
     return 0;
