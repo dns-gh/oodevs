@@ -34,16 +34,8 @@
         <translation>SWORD</translation>
     </message>
     <message>
-        <source>Unhandled error</source>
-        <translation>Error inesperado</translation>
-    </message>
-    <message>
         <source>Preparation</source>
         <translation>Preparación</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The signatures for the following files do not exist or are invalid : </source>

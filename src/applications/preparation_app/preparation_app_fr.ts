@@ -34,16 +34,8 @@
         <translation>SWORD</translation>
     </message>
     <message>
-        <source>Unhandled error</source>
-        <translation>Erreur irrécupérable</translation>
-    </message>
-    <message>
         <source>Preparation</source>
         <translation>Préparation</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation>Erreur</translation>
     </message>
     <message>
         <source>The signatures for the following files do not exist or are invalid : </source>
