@@ -24,11 +24,12 @@
     <libAnalysis>analysis_d.lib</libAnalysis>
     <libSvgl>svgl_d.lib</libSvgl>
     <SrcDir>..\..\src\libraries\$(ProjectName)</SrcDir>
+    <Suffix>-gd</Suffix>
   </PropertyGroup>
   <PropertyGroup>
     <OutDir>..\..\out\$(CurrentPlatform)\$(Configuration)\libraries\$(ProjectName)\</OutDir>
     <IntDir>..\..\out\$(CurrentPlatform)\$(Configuration)\libraries\$(ProjectName)\</IntDir>
-    <TargetName>$(ProjectName)-$(CurrentPlatform)-mt-gd</TargetName>
+    <TargetName>$(ProjectName)-$(CurrentPlatform)-mt$(Suffix)</TargetName>
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup>
@@ -119,6 +120,9 @@
     </BuildMacro>
     <BuildMacro Include="SrcDir">
       <Value>$(SrcDir)</Value>
+    </BuildMacro>
+    <BuildMacro Include="Suffix">
+      <Value>$(Suffix)</Value>
     </BuildMacro>
   </ItemGroup>
 </Project>
