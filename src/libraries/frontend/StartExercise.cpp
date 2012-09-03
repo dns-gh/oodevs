@@ -32,27 +32,6 @@ namespace
 
 // -----------------------------------------------------------------------------
 // Name: StartExercise constructor
-// Created: AGE 2007-10-04
-// -----------------------------------------------------------------------------
-StartExercise::StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, bool attach, bool launchDispatchedIfNotEmbedded /* = true*/, std::string commanderEndpoint /* = ""*/, std::string processJobName /* = ""*/ )
-    : SpawnCommand( config, "simulation_app.exe", attach, commanderEndpoint, processJobName )
-    , exercise_ ( exercise.toAscii().constData() )
-    , session_ ( session.toAscii().constData() )
-    , configManipulator_ ( new ConfigurationManipulator( config_, exercise_, session_ ) )
-    , percentage_( 0 )
-{
-    if( ! HasEmbeddedDispatcher( *configManipulator_ ) && launchDispatchedIfNotEmbedded )
-    {
-        QString dispatcher_path( GetEmbeddedDispatcherPath( *configManipulator_ ).c_str() );
-        dispatcher_.reset( new frontend::StartDispatcher( config, attach, exercise, session, "", dispatcher_path ) );
-    }
-    AddRootDirArgument();
-    AddExerciseArgument( exercise );
-    AddSessionArgument( session );
-}
-
-// -----------------------------------------------------------------------------
-// Name: StartExercise constructor
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
 StartExercise::StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& checkpoint, bool attach, bool legacy, bool launchDispatchedIfNotEmbedded /* = true*/, std::string commanderEndpoint /* = ""*/, std::string processJobName /* = ""*/ )
