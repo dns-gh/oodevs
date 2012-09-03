@@ -14,7 +14,7 @@
 
     <property name="version.project.major" value="trunk"/>
     <property name="version.project" value="${version.project.major}"/>
-    <property name="version.company" value="Masagroup"/>
+    <property name="version.company" value="MASA Group"/>
     <property name="version.product" value="Sword"/>
     <property name="version.major" value="5.1.0"/>
     <property name="svn.revision" value="0"/>
