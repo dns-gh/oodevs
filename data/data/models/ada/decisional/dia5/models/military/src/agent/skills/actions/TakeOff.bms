@@ -1,3 +1,7 @@
+-- **************************************************************************** 
+-- Take off: to set the agent altitude with the 'self.params.height' value.
+-- self.params.height: the wanted altitude
+-- ****************************************************************************
 rootnode 
 {
     -- -------------------------------------------------------------------------------- 
@@ -5,7 +9,7 @@ rootnode
     -- --------------------------------------------------------------------------------
     create = function( self )
         if not DEC_Agent_EstEnVol() then
-            myself.altitude = self.params.HauteurDeVol
+            myself.altitude = self.params.height
             DEC_Agent_HauteurDeVol( myself.altitude )
         end
         integration.activateSensors()

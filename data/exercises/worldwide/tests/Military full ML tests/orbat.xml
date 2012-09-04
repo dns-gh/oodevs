@@ -125,6 +125,10 @@
             <unit command-post="false" id="734" name="MILITARY.Infantry dismounted platoon" position="29TNF3625757463" type="MILITARY.Infantry dismounted platoon"/>
             <unit command-post="false" id="735" name="MILITARY.Infantry dismounted platoon" position="29TNF3630757440" type="MILITARY.Infantry dismounted platoon"/>
           </automat>
+          <automat engaged="false" id="853" knowledge-group="321" name="MILITARY.Aircraft" symbol="symbols/sfgpucv" type="MILITARY.Aircraft">
+            <unit command-post="true" id="854" name="MILITARY.Aircraft" position="29TNF3562859219" type="MILITARY.Aircraft"/>
+            <unit command-post="false" id="856" name="MILITARY.Aircraft" position="29TNF3562959119" type="MILITARY.Aircraft"/>
+          </automat>
           <lima name="Phase line 372">
             <point>29TNF3257758436</point>
             <point>29TNF3451257933</point>
@@ -453,4 +457,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="0513611213" -->
+<!-- signature="1922876650" -->

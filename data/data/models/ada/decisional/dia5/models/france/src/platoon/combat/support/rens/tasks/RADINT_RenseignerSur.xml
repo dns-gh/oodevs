@@ -15,8 +15,8 @@
     <stages>
         <stage label="Décoller" permanent="false">
             <skills>
-                <skill name="platoon.combat.support.air.skills.Decoller" main="true" priority="1.0">
-                    <parameter name="HauteurDeVol">
+                <skill name="agent.skills.actions.TakeOff" main="true" priority="1.0">
+                    <parameter name="height">
                         <value>
                             <number>100.0</number>
                         </value>
@@ -37,7 +37,7 @@
         </stage>
         <stage label="Attérissage" disable-when-done="true">
             <skills>
-                <skill name="platoon.combat.support.air.skills.Atterrir" main="true" priority="1.0"/>
+                <skill name="agent.skills.actions.Land" main="true" priority="1.0"/>
             </skills>
         </stage>
     </stages>

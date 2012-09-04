@@ -1,10 +1,13 @@
+-- **************************************************************************** 
+-- Change altitude: to change the agent altitude from x meters to 0 meters.
+-- ****************************************************************************
 rootnode 
 {
     -- -------------------------------------------------------------------------------- 
     -- Init
     -- --------------------------------------------------------------------------------
     create = function( self )
-        myself.altitude = self.params.HauteurDeVol
+        myself.altitude = self.params.height
         DEC_Agent_HauteurDeVol( myself.altitude )
         Feedback( self.feedbacks.done, additionalParams )
     end,

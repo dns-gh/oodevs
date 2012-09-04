@@ -4,13 +4,11 @@
 -- ****************************************************************************
 rootnode
 {
-    done = function( self ) end,
-    
     create  = function( self )
-       masalife.brain.knowledge.me.body.safetyAttitude = true
+        masalife.brain.knowledge.me.body.safetyAttitude = true
     end,
     
     destroy = function( self ) 
-      masalife.brain.knowledge.me.body.safetyAttitude = false    
+        masalife.brain.knowledge.me.body.safetyAttitude = false
     end
 }

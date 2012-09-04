@@ -4,16 +4,13 @@
 -- ****************************************************************************
 rootnode
 {
-  connections = 
-    { 
-        skill.nodes.CR
-    },
-  
-  done = function( self ) end,
+  connections = { skill.nodes.CR },
+
     create  = function( self )
-    local Activate = Activate
-    Activate( skill.nodes.CR, 1, { RC = eRC_AmbianceVitesse } )
-    masalife.brain.knowledge.me.body.safetyAttitude = false
+        local Activate = Activate
+
+        Activate( skill.nodes.CR, 1, { RC = eRC_AmbianceVitesse } )
+        masalife.brain.knowledge.me.body.safetyAttitude = false
     end,
 }
 

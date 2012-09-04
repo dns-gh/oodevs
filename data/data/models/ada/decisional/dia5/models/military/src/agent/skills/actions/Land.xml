@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.skills.actions.Land" source-version="1.0.0">
+    <description>For then (flying) agent to change  its current altitude to 0 meters.</description>
+</skill>
