@@ -19,17 +19,40 @@ if( MSVC )
     set( platform vc${msvc_platform}${msvc_suffix} )
 endif()
 
+# set common includes
 if(NOT MASA_INCLUDE)
     set( MASA_INCLUDE $ENV{MASA_HOME}/include )
 endif()
+message( "-- Includes  " ${MASA_INCLUDE} )
+set( CMAKE_INCLUDE_PATH ${MASA_INCLUDE} )
+include_directories( ${MASA_INCLUDE} )
+
+# set common libraries
 if(NOT MASA_LIB)
     set( MASA_LIB $ENV{MASA_HOME}/lib/${platform} )
 endif()
+message( "-- Libraries " ${MASA_LIB} )
+set( CMAKE_LIBRARY_PATH ${MASA_LIB} )
+link_directories( ${MASA_LIB} )
+
+# set common binaries
+if(NOT MASA_BIN)
+    set( MASA_BIN $ENV{MASA_HOME}/bin )
+endif()
+message( "-- Binaries  " ${MASA_BIN} )
+set( CMAKE_PROGRAM_PATH ${MASA_BIN} )
+
 if(NOT MASA_VERSION )
     set( MASA_VERSION "0.0.0.0" )
 endif()
-include_directories( ${MASA_INCLUDE} )
-link_directories( ${MASA_LIB} )
+
+macro( find_qt4 )
+    set( QT_BINARY_DIR ${MASA_BIN} )
+    set( CMAKE_INCLUDE_PATH ${MASA_INCLUDE}/qt )
+    find_package( Qt4 ${ARGN} )
+    set( CMAKE_INCLUDE_PATH ${MASA_INCLUDE} )
+    include( ${QT_USE_FILE} )
+endmacro()
 
 # Hack around protobuf output directory limitations
 macro( protobuf_make srcs hdrs output_dir )

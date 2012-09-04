@@ -19,6 +19,7 @@
 
     <forward_path input="${include.dir}" output="cmake.include"/>
     <forward_path input="${lib.dir}"     output="cmake.lib"/>
+    <forward_path input="${bin.dir}"     output="cmake.bin"/>
 
     <property name="cmake.platform.vc100"      value="Win32"/>
     <property name="cmake.platform.vc100_x64"  value="X64"/>
@@ -34,6 +35,7 @@
                 <arg value="${@{generator}}"/>
                 <arg value="-DMASA_INCLUDE=${cmake.include}"/>
                 <arg value="-DMASA_LIB=${cmake.lib}"/>
+                <arg value="-DMASA_BIN=${cmake.bin}"/>
                 <arg value="-DMASA_VERSION=${version.major}.${svn.revision}"/>
             </exec>
         </sequential>

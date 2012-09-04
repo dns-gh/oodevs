@@ -21,8 +21,6 @@ if( WIN32 )
 endif()
 
 set( Boost_USE_STATIC_LIBS ON )
-set( BOOST_INCLUDEDIR ${MASA_INCLUDE} )
-set( BOOST_LIBRARYDIR ${MASA_LIB} )
 find_package( Boost COMPONENTS
     chrono
     date_time
