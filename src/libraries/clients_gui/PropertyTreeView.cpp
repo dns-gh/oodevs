@@ -51,7 +51,7 @@ void PropertyTreeView::SaveState( QModelIndex root, const QStandardItemModel& mo
     {
         QModelIndex child = model.index( i, 0, root );
         if( !isExpanded( child ) )
-            itemsCollapsed_.insert( child.data( Qt::UserRole ).toString() );
+            itemsCollapsed_.insert( child.data( Qt::UserRole ).toString().toAscii().constData() );
         else
             SaveState( child, model );
     }
