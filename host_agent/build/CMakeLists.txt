@@ -103,6 +103,7 @@ if( WIN32 )
         "${CMAKE_CURRENT_BINARY_DIR}/version.rc"
         @ONLY
     )
+    source_group( res FILES "${CMAKE_CURRENT_BINARY_DIR}/version.rc" )
     list( APPEND files "${CMAKE_CURRENT_BINARY_DIR}/version.rc" )
 endif()
 add_executable_target( cloud_server ${files} )
