@@ -12,7 +12,9 @@
 
 #include "dispatcher/Plugin_ABC.h"
 #include "ConsignResolver_ABC.h"
+#include <boost/scoped_ptr.hpp>
 
+class QApplication;
 
 namespace tools
 {
@@ -72,12 +74,13 @@ private:
     //@{
     int currentTick_;
     std::string simTime_;
-    const tools::SessionConfig&    sessionConfig_;
-    const kernel::StaticModel&     staticModel_;
-    std::auto_ptr< ConsignResolver_ABC >    maintenanceResolver_;
-    std::auto_ptr< ConsignResolver_ABC >    supplyResolver_;
-    std::auto_ptr< ConsignResolver_ABC >    funeralResolver_;
-    std::auto_ptr< ConsignResolver_ABC >    medicalResolver_;
+    const tools::SessionConfig& sessionConfig_;
+    const kernel::StaticModel& staticModel_;
+    boost::scoped_ptr< ConsignResolver_ABC >    maintenanceResolver_;
+    boost::scoped_ptr< ConsignResolver_ABC >    supplyResolver_;
+    boost::scoped_ptr< ConsignResolver_ABC >    funeralResolver_;
+    boost::scoped_ptr< ConsignResolver_ABC >    medicalResolver_;
+    boost::scoped_ptr< QApplication >           appli_;
     //@}
 };
 }

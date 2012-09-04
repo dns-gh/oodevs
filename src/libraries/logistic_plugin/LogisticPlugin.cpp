@@ -22,7 +22,9 @@
 #pragma warning( push, 0 )
 #include <QtCore/qsettings.h>
 #include <QtCore/qtextcodec.h>
-#include "QtCore/QTranslator.h"
+#include "QtCore/qTranslator.h"
+#include "QtCore/qLocale.h"
+#include <QtGui/qapplication.h>
 #pragma warning( pop )
 #include <xeumeuleu/xml.hpp>
 
@@ -30,23 +32,8 @@ using namespace plugins::logistic;
 
 namespace
 {
-    QString ReadLang()
-    {
-        QSettings settings( "MASA Group", qApp->translate( "Application", "SWORD" ) );
-        return settings.readEntry( "/Common/Language", QTextCodec::locale() );
-    }
-
-    void InitTranslator( const QString& name, const QString& lang )
-    {
-        QTranslator* translator = new QTranslator( qApp );
-        QString filename( name );
-        filename += "_";
-        filename += lang;
-        if( translator->load( filename, "." ) || translator->load( filename, "resources/locales" ) )
-            qApp->installTranslator( translator ); 
-        else
-            delete translator;
-    }
+    int localAppliArgc( 1 );
+    char* localAppliArgv[] = { " " };
 }
 
 // -----------------------------------------------------------------------------
@@ -61,10 +48,14 @@ LogisticPlugin::LogisticPlugin( const dispatcher::Model_ABC& model, const kernel
     , supplyResolver_       ( new SupplyResolver( config.BuildSessionChildFile( xis.attribute( "supplyfile", "LogSupply" ) ), model, staticModel ) )
     , funeralResolver_      ( new FuneralResolver( config.BuildSessionChildFile( xis.attribute( "funeralfile", "LogFuneral" ) ), model, staticModel ) )
     , medicalResolver_      ( new MedicalResolver( config.BuildSessionChildFile( xis.attribute( "medicalfile", "LogMedical" ) ), model, staticModel ) )
+    , localAppli_ ( !qApp ? new QApplication( localAppliArgc, localAppliArgv ) : 0 )
 {
-    QString lang = ReadLang();
-    InitTranslator( "ENT", lang );
-    InitTranslator( "logistic_plugin", lang );
+    std::string lang = tools::readLang();
+    if( qApp )
+    {
+        tools::AddTranslator( *qApp, tools::readLocale(), "ENT" );
+        tools::AddTranslator( *qApp, tools::readLocale(), "logistic_plugin" );
+    }
     ENT_Tr::InitTranslations();
     maintenanceResolver_->InitHeader();
     supplyResolver_->InitHeader();

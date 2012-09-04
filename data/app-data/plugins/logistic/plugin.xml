@@ -20,7 +20,7 @@
                 <setting attribute="@supplyfile" type="string" default="LogSupply">
                     <descriptions>
                         <description lang="en" name="Supply"></description>
-                        <description lang="fr" name="Approvisionnement"></description>
+                        <description lang="fr" name="Ravitaillement"></description>
                     </descriptions>
                 </setting>
                 <setting attribute="@medicalfile" type="string" default="LogMedical">
