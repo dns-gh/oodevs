@@ -34,6 +34,8 @@ find_package( Boost COMPONENTS
 set( ZLIB_ROOT ${MASA_INCLUDE}/zlib ${MASA_LIB} )
 find_package( ZLIB REQUIRED )
 
+find_qt4( REQUIRED QtCore QtGui )
+
 ################################################################################
 # runtime
 ################################################################################
@@ -118,6 +120,20 @@ if( WIN32 )
         ws2_32
     )
 endif()
+
+################################################################################
+# cloud_client
+################################################################################
+glob_dir( files src
+    "${root_dir}/src/applications/cloud_client/*.cpp"
+)
+glob_qt4_ui( ui_headers ui_files 
+    "${root_dir}/src/applications/cloud_client/*.ui"
+)
+add_executable_target( cloud_client WIN32 ${files} ${ui_headers} )
+set_target_folder( cloud_client applications )
+add_target_include( cloud_client ${CMAKE_CURRENT_BINARY_DIR} )
+target_link_libraries( cloud_client ${QT_LIBRARIES} )
 
 ################################################################################
 # runtime_test
