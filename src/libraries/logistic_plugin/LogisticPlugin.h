@@ -52,7 +52,6 @@ public:
     //! @name Constructors/Destructor
     //@{
              LogisticPlugin( const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, const tools::SessionConfig& config );
-             LogisticPlugin( const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, const tools::SessionConfig& config, xml::xistream& xis );
     virtual ~LogisticPlugin();
     //@}
 

@@ -12,7 +12,7 @@
 
 #include <fstream>
 #include <sstream>
-
+#include <boost/noncopyable.hpp>
 
 namespace plugins
 {
@@ -25,12 +25,12 @@ namespace logistic
 */
 // Created: MMC 2012-08-06
 // =============================================================================
-class ConsignData_ABC
+class ConsignData_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-            ConsignData_ABC( const std::string& requestId ) : requestId_( requestId ) {}
+            ConsignData_ABC( const std::string& requestId ) : requestId_( requestId ), separator_( " ; " ) {}
     virtual ~ConsignData_ABC() {}
     //@}
 
@@ -38,20 +38,13 @@ public:
     //@{
     virtual void operator>>( std::stringstream& output ) const = 0;
     virtual void operator>>( std::ofstream& output ) const { std::stringstream line; *this >> line; output << line.str(); }
-    inline static std::string GetSeparator() { return " ; "; }
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    ConsignData_ABC( const ConsignData_ABC& );            //!< Copy constructor
-    ConsignData_ABC& operator=( const ConsignData_ABC& ); //!< Assignment operator
     //@}
 
 protected:
     //! @name Member data
     //@{
-    const std::string requestId_;
+    std::string requestId_;
+    const std::string separator_;
     //@}
 };
 }

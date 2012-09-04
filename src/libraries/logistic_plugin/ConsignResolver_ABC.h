@@ -11,8 +11,10 @@
 #define __ConsignResolver_ABC_h_
 
 #include "ConsignData_ABC.h"
-#include <boost/date_time/gregorian/gregorian.hpp>
 #include "protocol/Protocol.h"
+#include <boost/date_time/gregorian/gregorian.hpp>
+#include <boost/noncopyable.hpp>
+
 
 namespace sword
 {
@@ -38,9 +40,10 @@ namespace logistic
 /** @class  ConsignResolver_ABC
     @brief  ConsignResolver_ABC
 */
+// Treats specialized logistic messages and traces and keeps consigns data
 // Created: MMC 2012-08-06
 // =============================================================================
-class ConsignResolver_ABC
+class ConsignResolver_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructor/Destructor
@@ -74,39 +77,22 @@ public:
     void GetResourceName( const sword::ResourceType& resourceType, std::string& name ) const;
     //@}
 
-private:
-    //! @name Copy/Assignment
-    //@{
-    ConsignResolver_ABC( const ConsignResolver_ABC& );            //!< Copy constructor
-    ConsignResolver_ABC& operator=( const ConsignResolver_ABC& ); //!< Assignment operator
-    //@}
-
 protected:
 
     //! @name Operations
     //@{
     virtual bool IsManageable( const sword::SimToClient& ) { return false; }
     virtual void ManageMessage( const sword::SimToClient& ) {}
-    
-    template < typename T > 
-    T& GetConsign( int requestId )
-    {
-        std::map< int, ConsignData_ABC* >::iterator it = consignsData_.find( requestId );
-        if( it == consignsData_.end() )
-        {
-            T* pConsign = new T( boost::lexical_cast< std::string >( requestId ) );
-            consignsData_[ requestId ] = static_cast< ConsignData_ABC* >( pConsign );
-            return *pConsign;
-        }
-        return *static_cast< T* >( it->second );
-    }
+    ConsignData_ABC& ConsignResolver_ABC::GetConsign( int requestId );
+    virtual ConsignData_ABC* CreateConsignData( int requestId ) = 0;
+    virtual void DestroyConsignData( int requestId );
 
     template < typename M, typename T >
     void TraceConsign( const M& msg, std::ofstream& output )
     {
         if( msg.has_request() )
         {
-            GetConsign< T >( static_cast< int >( msg.request().id() ) ).ManageMessage( msg, *this ) >> output;
+            static_cast< T& >( GetConsign( static_cast< int >( msg.request().id() ) ) ).ManageMessage( msg, *this ) >> output;
             output.flush();
         }
     }
@@ -119,12 +105,7 @@ protected:
     void SetNewFile();
     void RemoveOldFiles();
     void OpenFile();
-    void SetHeader( const ConsignData_ABC& consign )
-    {
-        std::stringstream header;
-        consign >> header;
-        header_ = header.str();
-    }
+    void SetHeader( const ConsignData_ABC& consign );
     //@}
 
     //! @name Member data
@@ -140,7 +121,6 @@ protected:
     std::ofstream output_;
     boost::gregorian::date fileDateForMedical_;
     std::map< int, ConsignData_ABC* > consignsData_;
-    static std::string separator_;
     int curLineIndex_;
     //@}
 };
