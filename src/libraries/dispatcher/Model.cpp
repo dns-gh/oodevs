@@ -276,6 +276,10 @@ void Model::Update( const sword::SimToClient& wrapper )
         agents_.Get( message.unit_detection().observer().id() ).Update( message.unit_detection() );
     else if( message.has_object_detection() )
         agents_.Get( message.object_detection().observer().id() ).Update( message.object_detection() );
+    else if( message.has_crowd_concentration_detection() )
+        agents_.Get( message.crowd_concentration_detection().observer().id() ).Update( message.crowd_concentration_detection() );
+    else if( message.has_crowd_flow_detection() )
+        agents_.Get( message.crowd_flow_detection().observer().id() ).Update( message.crowd_flow_detection() );
     else if( message.has_decisional_state() )
         UpdateAnyAgent( TaskerToId( message.decisional_state().source() ), message.decisional_state() );
     else if( message.has_start_fire_effect() )

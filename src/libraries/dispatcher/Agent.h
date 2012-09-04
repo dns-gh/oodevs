@@ -58,6 +58,8 @@ class Agent : public dispatcher::Agent_ABC
             , public kernel::Updatable_ABC< sword::UnitEnvironmentType >
             , public kernel::Updatable_ABC< sword::UnitDetection >
             , public kernel::Updatable_ABC< sword::ObjectDetection >
+            , public kernel::Updatable_ABC< sword::CrowdConcentrationDetection >
+            , public kernel::Updatable_ABC< sword::CrowdFlowDetection >
 {
 public:
     //! @name Constructors/Destructor
@@ -80,6 +82,8 @@ public:
     virtual void DoUpdate( const sword::UnitEnvironmentType& message );
     virtual void DoUpdate( const sword::UnitDetection&		 message );
     virtual void DoUpdate( const sword::ObjectDetection&	 message );
+    virtual void DoUpdate( const sword::CrowdConcentrationDetection& message );
+    virtual void DoUpdate( const sword::CrowdFlowDetection& message );
 
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
@@ -144,6 +148,22 @@ private:
     
     typedef std::map< unsigned long, sword::UnitVisibility_Level > T_ObjectDetection;
     typedef T_ObjectDetection::const_iterator			           CIT_ObjectDetection;
+
+    struct CrowdConcentrationDetectionData
+    {
+        unsigned long crowdId_;
+        sword::UnitVisibility_Level level_;
+    };
+    typedef std::map< unsigned long, CrowdConcentrationDetectionData > T_CrowdConcentrationDetection;
+    typedef T_CrowdConcentrationDetection::const_iterator CIT_CrowdConcentrationDetection;
+
+    struct CrowdFlowDetectionData
+    {
+        unsigned long crowdId_;
+        Localisation path_;
+    };
+    typedef std::map< unsigned long, CrowdFlowDetectionData > T_CrowdFlowDetection;
+    typedef T_CrowdFlowDetection::const_iterator CIT_CrowdFlowDetection;
     //@}
 
 private:
@@ -215,6 +235,8 @@ private:
     std::auto_ptr< HumanRepartition >          humanRepartition_;
     T_UnitDetection                            unitDetections_;
     T_ObjectDetection                          objectDetections_;
+    T_CrowdConcentrationDetection              crowdConcentrationDetections_;
+    T_CrowdFlowDetection                       crowdFlowDetections_;
     std::string                                app6Symbol_;
     E_NatureLevel                              level_;
 };

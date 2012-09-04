@@ -438,6 +438,30 @@ void Agent::DoUpdate( const sword::ObjectDetection&	message )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Agent::DoUpdate
+// Created: LDC 2012-09-04
+// -----------------------------------------------------------------------------
+void Agent::DoUpdate( const sword::CrowdConcentrationDetection& message )
+{
+    CrowdConcentrationDetectionData data;
+    data.crowdId_ = message.detected_crowd().id();
+    data.level_ = message.visibility();
+    crowdConcentrationDetections_[ message.detected_concentration().id() ] = data;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::DoUpdate
+// Created: LDC 2012-09-04
+// -----------------------------------------------------------------------------
+void Agent::DoUpdate( const sword::CrowdFlowDetection& message )
+{
+    CrowdFlowDetectionData data;
+    data.crowdId_ = message.detected_crowd().id();
+    data.path_.Update( message.visible_flow().location() );
+    crowdFlowDetections_[ message.detected_flow().id() ] = data;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Agent::SendCreation
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
@@ -627,6 +651,23 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         msg().mutable_detected_object()->set_id( it->first );
         msg().set_visibility( it->second );
         msg.Send( publisher );
+    }
+    for( CIT_CrowdConcentrationDetection it = crowdConcentrationDetections_.begin(); it != crowdConcentrationDetections_.end(); ++it )
+    {
+        client::CrowdConcentrationDetection msg;
+        msg().mutable_observer()->set_id( GetId() );
+        msg().mutable_detected_concentration()->set_id( it->first );
+        msg().mutable_detected_crowd()->set_id( it->second.crowdId_ );
+        msg().set_visibility( it->second.level_ );
+        msg.Send( publisher );
+    }
+    for( CIT_CrowdFlowDetection it = crowdFlowDetections_.begin(); it != crowdFlowDetections_.end(); ++it )
+    {
+        client::CrowdFlowDetection msg;
+        msg().mutable_observer()->set_id( GetId() );
+        msg().mutable_detected_flow()->set_id( it->first );
+        msg().mutable_detected_crowd()->set_id( it->second.crowdId_ );
+        it->second.path_.Send( *msg().mutable_visible_flow()->mutable_location() );
     }
 }
 
