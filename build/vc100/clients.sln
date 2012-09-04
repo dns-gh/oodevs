@@ -325,7 +325,6 @@ Global
 		{21BBAC69-79AE-46F5-82CF-1280D5FE92EB}.release|win32.ActiveCfg = release|win32
 		{21BBAC69-79AE-46F5-82CF-1280D5FE92EB}.release|win32.Build.0 = release|win32
 		{21BBAC69-79AE-46F5-82CF-1280D5FE92EB}.release|x64.ActiveCfg = release|x64
-		{21BBAC69-79AE-46F5-82CF-1280D5FE92EB}.release|x64.Build.0 = release|x64
 		{4F663FF2-87FC-4A77-9147-1553CDD142CF}.debug|win32.ActiveCfg = debug|win32
 		{4F663FF2-87FC-4A77-9147-1553CDD142CF}.debug|win32.Build.0 = debug|win32
 		{4F663FF2-87FC-4A77-9147-1553CDD142CF}.debug|x64.ActiveCfg = debug|x64

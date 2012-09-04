@@ -119,7 +119,6 @@ Section "!${PRODUCT_NAME}"
     File /nonfatal "${OUTDIR}\release\libraries\launcher_dll\*.pdb"
     File /nonfatal "${OUTDIR}\release\libraries\logger_plugin\*.pdb"
     File /nonfatal "${OUTDIR}\release\libraries\logistic_plugin\*.pdb"
-    File /nonfatal "${OUTDIR}\release\libraries\logistic_plugin_dll\*.pdb"
     File /nonfatal "${OUTDIR}\release\libraries\messenger_plugin\*.pdb"
     File /nonfatal "${OUTDIR}\release\libraries\meteo\*.pdb"
     File /nonfatal "${OUTDIR}\release\libraries\MT_Tools\*.pdb"
@@ -144,7 +143,6 @@ Section "!${PRODUCT_NAME}"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File /r "${RUNDIR}\plugins\crossbow"
     File /r "${RUNDIR}\plugins\positions"
-    File /r "${RUNDIR}\plugins\logistic"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
     ;projection settings (used in crossbow)
