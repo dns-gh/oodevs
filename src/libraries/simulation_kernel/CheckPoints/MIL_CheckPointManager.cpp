@@ -283,10 +283,11 @@ bool MIL_CheckPointManager::SaveOrbatCheckPoint( const std::string& name )
 {
     try
     {
-        xml::xofstream xos( MIL_AgentServer::GetWorkspace().GetConfig().BuildCheckpointChildFile( "orbat.xml", name ) );
+        const MIL_Config& config = MIL_AgentServer::GetWorkspace().GetConfig();
+        xml::xofstream xos( config.BuildCheckpointChildFile( config.GetOrbatFileName(), name ) );
         MIL_AgentServer::GetWorkspace().WriteODB( xos );
 
-        xml::xofstream xosKnowledge ( MIL_AgentServer::GetWorkspace().GetConfig().BuildCheckpointChildFile( "knowledges.xml", name ) );
+        xml::xofstream xosKnowledge ( config.BuildCheckpointChildFile( config.GetKnowledgesFileName(), name ) );
         MIL_AgentServer::GetWorkspace().WriteKnowledges( xosKnowledge );
     }
     catch( xml::exception& e )

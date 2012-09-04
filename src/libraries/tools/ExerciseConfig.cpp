@@ -136,6 +136,9 @@ void ExerciseConfig::ReadExercise( xml::xistream& xis )
             >> xml::start( "orbat" )
                 >> xml::attribute( "file", orbat_ )
             >> xml::end
+            >> xml::optional >> xml::start( "knowledges" );
+    knowledges_ = xis.attribute< std::string >( "file", "knowledges.xml" );
+    xis     >> xml::end
             >> xml::start( "profiles" )
                 >> xml::attribute( "file", profiles_ )
             >> xml::end
@@ -351,6 +354,15 @@ std::string ExerciseConfig::GetOrbatFile() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetOrbatFileName
+// Created: NPT 2012-09-04
+// -----------------------------------------------------------------------------
+std::string ExerciseConfig::GetOrbatFileName() const
+{
+    return orbat_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ExerciseConfig::GetUrbanFile
 // Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
@@ -370,6 +382,24 @@ std::string ExerciseConfig::GetUrbanStateFile() const
     if( urbanState_.empty() )
         return urbanState_;
     return BuildExerciseChildFile( urbanState_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetKnowledgesFile
+// Created: NPT 2012-09-04
+// -----------------------------------------------------------------------------
+std::string ExerciseConfig::GetKnowledgesFile() const
+{
+    return BuildExerciseChildFile( knowledges_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetKnowledgesFileName
+// Created: NPT 2012-09-04
+// -----------------------------------------------------------------------------
+std::string ExerciseConfig::GetKnowledgesFileName() const
+{
+    return knowledges_;
 }
 
 // -----------------------------------------------------------------------------
