@@ -82,12 +82,22 @@ template< typename Archive >
 void DEC_KnowledgeBlackBoard_KnowledgeGroup::serialize( Archive& archive, const unsigned int )
 {
     archive & boost::serialization::base_object< DEC_KnowledgeBlackBoard_ABC >( *this )
-            & pKnowledgeGroup_
             & pKnowledgeAgentContainer_
             & pKnowledgePopulationContainer_
             & pKnowledgeObjectContainer_
             & pKsKnowledgeSynthetizer_
             & pKsSharing_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::SetKnowledgeGroup
+// Created: JSR 2012-09-04
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::SetKnowledgeGroup( MIL_KnowledgeGroup* group )
+{
+    pKnowledgeGroup_ = group;
+    if( pKnowledgeObjectContainer_ )
+        pKnowledgeObjectContainer_->SetKnowledgeGroup( group );
 }
 
 // -----------------------------------------------------------------------------
@@ -662,8 +672,7 @@ DEC_BlackBoard_CanContainKnowledgeObject* DEC_KnowledgeBlackBoard_KnowledgeGroup
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeBlackBoard_KnowledgeGroup::Jam()
 {
-    boost::shared_ptr< MIL_KnowledgeGroup > group( pKnowledgeGroup_->shared_from_this() );
-    pKnowledgeObjectContainer_ = new DEC_BlackBoard_CanContainKnowledgeObject( pKnowledgeGroup_->GetArmy(), group );
+    pKnowledgeObjectContainer_ = new DEC_BlackBoard_CanContainKnowledgeObject( pKnowledgeGroup_->GetArmy(), pKnowledgeGroup_ );
 }
 
 // -----------------------------------------------------------------------------
