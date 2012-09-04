@@ -17,7 +17,7 @@ namespace
     {
         FireFixture()
         {
-            ExpectEvent( "direct fire pion callback", sword::test::MakeModel( "entity", 42 )( "id", mock::any )( "code", 4 ) );
+            ExpectCallback( 4 );
             commands.Start( "direct fire command",
                 core::MakeModel( "identifier", 42 )
                     ( "enemy", 51 )
@@ -103,7 +103,7 @@ namespace
             component_2[ "volume" ] = volume_1;
             component_2[ "component_2" ].SetUserData( &component_2 );
             weapon[ "type" ] = "launcher_1/ammo_1";
-            MOCK_EXPECT( IsTemporarilyBlocked ).once().returns( false );
+            MOCK_EXPECT( IsTemporarilyBlocked ).returns( false );
         }
         core::Model& component_2;
         core::Model& weapon;
