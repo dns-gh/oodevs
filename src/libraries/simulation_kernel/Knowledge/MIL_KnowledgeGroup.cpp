@@ -254,6 +254,7 @@ void MIL_KnowledgeGroup::load( MIL_CheckPointInArchive& file, const unsigned int
     idManager_.Lock( id_ );
 //    ids_.insert( id_ );
     hasBeenUpdated_ = true;
+    knowledgeBlackBoard_->SetKnowledgeGroup( this );
 }
 
 // -----------------------------------------------------------------------------

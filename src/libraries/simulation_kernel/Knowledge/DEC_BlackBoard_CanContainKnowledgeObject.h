@@ -33,7 +33,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              DEC_BlackBoard_CanContainKnowledgeObject();
-             DEC_BlackBoard_CanContainKnowledgeObject( MIL_Army_ABC& army, boost::shared_ptr< MIL_KnowledgeGroup >& pKnowledgeGroup );
+             DEC_BlackBoard_CanContainKnowledgeObject( MIL_Army_ABC& army, MIL_KnowledgeGroup* pKnowledgeGroup );
     virtual ~DEC_BlackBoard_CanContainKnowledgeObject();
     //@}
 
@@ -43,6 +43,7 @@ public:
 
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
+    void SetKnowledgeGroup( MIL_KnowledgeGroup* group );
     //@}
 
     //! @name Operations
@@ -111,7 +112,7 @@ private:
     //@{
     T_KnowledgeObjectMap objectMap_;
     T_KnowledgeObjectIDMap knowledgeObjectFromIDMap_;
-    boost::shared_ptr< MIL_KnowledgeGroup > pKnowledgeGroup_;
+    MIL_KnowledgeGroup* pKnowledgeGroup_;
     std::map< double, T_KnowledgeObjectVector > obstacleCache_;
     //@}
 };

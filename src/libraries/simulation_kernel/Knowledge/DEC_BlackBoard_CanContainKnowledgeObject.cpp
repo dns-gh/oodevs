@@ -31,6 +31,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_BlackBoard_CanContainKnowledgeObject )
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_BlackBoard_CanContainKnowledgeObject::DEC_BlackBoard_CanContainKnowledgeObject()
+: pKnowledgeGroup_( 0 )
 {
     // NOTHING
 }
@@ -50,13 +51,13 @@ DEC_BlackBoard_CanContainKnowledgeObject::~DEC_BlackBoard_CanContainKnowledgeObj
 // Created: LDC 2010-04-06
 // Copies army's object blackboard.
 // -----------------------------------------------------------------------------
-DEC_BlackBoard_CanContainKnowledgeObject::DEC_BlackBoard_CanContainKnowledgeObject( MIL_Army_ABC& army, boost::shared_ptr< MIL_KnowledgeGroup >& pKnowledgeGroup )
+DEC_BlackBoard_CanContainKnowledgeObject::DEC_BlackBoard_CanContainKnowledgeObject( MIL_Army_ABC& army, MIL_KnowledgeGroup* pKnowledgeGroup )
 : pKnowledgeGroup_( pKnowledgeGroup )
 {
     DEC_BlackBoard_CanContainKnowledgeObject& copy = army.GetKnowledge().GetKnowledgeObjectContainer();
     for( CIT_KnowledgeObjectMap it = copy.objectMap_.begin(); it != copy.objectMap_.end(); ++it )
     {
-        boost::shared_ptr< DEC_Knowledge_Object > knowledge( new DEC_Knowledge_Object( *(it->second), pKnowledgeGroup_ ) );
+        boost::shared_ptr< DEC_Knowledge_Object > knowledge( new DEC_Knowledge_Object( *(it->second), pKnowledgeGroup_->shared_from_this() ) );
         if( ! objectMap_.insert( std::make_pair( it->first, knowledge ) ).second )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
         if( ! knowledgeObjectFromIDMap_.insert( std::make_pair( knowledge->GetID(), knowledge ) ).second )
@@ -111,7 +112,6 @@ namespace boost
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeObject::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> pKnowledgeGroup_;
     file >> objectMap_;
     for( CIT_KnowledgeObjectMap it = objectMap_.begin(); it != objectMap_.end(); ++it )
     {
@@ -126,8 +126,16 @@ void DEC_BlackBoard_CanContainKnowledgeObject::load( MIL_CheckPointInArchive& fi
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeObject::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << pKnowledgeGroup_;
     file << objectMap_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeObject::SetKnowledgeGroup
+// Created: LDC 2012-09-04
+// -----------------------------------------------------------------------------
+void DEC_BlackBoard_CanContainKnowledgeObject::SetKnowledgeGroup( MIL_KnowledgeGroup* group )
+{
+    pKnowledgeGroup_ = group;
 }
 
 // -----------------------------------------------------------------------------
@@ -137,8 +145,8 @@ void DEC_BlackBoard_CanContainKnowledgeObject::save( MIL_CheckPointOutArchive& f
 boost::shared_ptr< DEC_Knowledge_Object > DEC_BlackBoard_CanContainKnowledgeObject::CreateKnowledgeObject( const MIL_Army_ABC& teamKnowing, MIL_Object_ABC& objectKnown )
 {
     boost::shared_ptr< DEC_Knowledge_Object > knowledge;
-    if( pKnowledgeGroup_.get() )
-        knowledge = objectKnown.CreateKnowledge( pKnowledgeGroup_ );
+    if( pKnowledgeGroup_ )
+        knowledge = objectKnown.CreateKnowledge( pKnowledgeGroup_->shared_from_this() );
     else
         knowledge = objectKnown.CreateKnowledge( teamKnowing );
 

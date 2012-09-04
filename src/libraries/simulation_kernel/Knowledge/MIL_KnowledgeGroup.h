@@ -45,10 +45,6 @@ class MIL_Population;
 class PHY_PerceptionLevel;
 class KnowledgesVisitor_ABC;
 
-// LTO begin
-class KnowledgeGroupFactory_ABC;
-class MIL_KnowledgeGroup;
-
 namespace sword
 {
     class MissionParameters;
@@ -57,7 +53,6 @@ namespace sword
     class KnowledgeGroupCreationRequest;
     class KnowledgeMagicAction;
 }
-// LTO end
 
 // =============================================================================
 // @class  MIL_KnowledgeGroup

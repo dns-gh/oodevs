@@ -62,6 +62,7 @@ public:
 
     //! @name Accessors
     //@{
+    void SetKnowledgeGroup( MIL_KnowledgeGroup* group );
     boost::shared_ptr< MIL_KnowledgeGroup > GetKnowledgeGroup() const;
     DEC_KS_Sharing& GetKsSharing() const;
     DEC_BlackBoard_CanContainKnowledgeAgent& GetKnowledgeAgentContainer() const;
