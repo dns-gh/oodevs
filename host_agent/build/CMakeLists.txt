@@ -133,8 +133,11 @@ glob_qt4_ui( ui_headers ui_files
 )
 add_executable_target( cloud_client WIN32 ${files} ${ui_headers} )
 set_target_folder( cloud_client applications )
-add_target_include( cloud_client ${CMAKE_CURRENT_BINARY_DIR} )
-target_link_libraries( cloud_client ${QT_LIBRARIES} )
+set_target_qt4( cloud_client )
+target_link_libraries( cloud_client
+    runtime
+    shlwapi
+)
 
 ################################################################################
 # runtime_test

@@ -92,6 +92,14 @@ macro( glob_qt4_ui headers ui )
     source_group( autogen FILES ${${headers}} )
 endmacro()
 
+macro( set_target_qt4 target )
+    # include dir where ui/moc files are generated
+    add_target_include( ${target} ${CMAKE_CURRENT_BINARY_DIR} )
+    # disable wchar_t as built-in type for QString::fromStdWString
+    add_target_compile_flag( ${target} "-Zc:wchar_t-" )
+    target_link_libraries( ${target} ${QT_LIBRARIES} )
+endmacro()
+
 macro( set_target_folder target folder )
     set_property( TARGET ${target} PROPERTY FOLDER ${folder} )
 endmacro()
