@@ -31,10 +31,6 @@ namespace
             ExpectCallback( 5 );
             ExpectEvent( "direct fire pion", sword::test::MakeModel( "entity", 42 )( "running", false ) );
         }
-        void ExpectCallback( int code ) // $$$$ MCO 2012-04-27: use RoleAction_DirectFiring::E_ReturnCode ?
-        {
-            ExpectEvent( "direct fire pion callback", sword::test::MakeModel( "entity", 42 )( "id", mock::any )( "code", code ) );
-        }
     };
 }
 
@@ -172,8 +168,8 @@ namespace
             , data( 117 )
         {
             component_1[ "weapons" ];
-            MOCK_EXPECT( GetDistance ).at_least( 1 ).with( firer, enemy ).returns( 500 );
-            MOCK_EXPECT( CanComponentBeFiredAt ).once().with( core::Convert( &component_2 ) ).returns( true );
+            MOCK_EXPECT( GetDistance ).with( firer, enemy ).returns( 500 );
+            MOCK_EXPECT( CanComponentBeFiredAt ).with( core::Convert( &component_2 ) ).returns( true );
             component_2[ "volume" ] = volume_1;
             component_2[ "component" ].SetUserData( &data );
         }
@@ -229,4 +225,41 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_running_and_hit_when_firing
             ( "use-ph", true )
             ( "missed", false ) );
     commands.Execute();
+}
+
+BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_running_and_no_hit_when_weapon_not_ready, OneAtOneFiringFixture )
+{
+    MOCK_EXPECT( ModifyDangerosity ).returns( 1 );
+    MOCK_EXPECT( ModifyPh ).returns( 1 );
+    MOCK_EXPECT( GetPhModificator ).returns( 1 );
+    MOCK_EXPECT( ReserveAmmunition ).once().with( firer, ammo_1, 3 ).returns( 2 );
+    MOCK_EXPECT( GetFireRandomNumber ).returns( 1 );
+    ExpectCallback( 4 );
+    ExpectEvent( "direct fire pion attack",
+        sword::test::MakeModel( "entity", 42 )
+            ( "enemy", 43 )
+            ( "report", true )
+            ( "paused", false ) );
+    ExpectEvent( "direct fire pion",
+        sword::test::MakeModel( "component", sword::test::MakeUserData( &data ) )
+            ( "dotation", ammo_1 )
+            ( "enemy", 43 )
+            ( "entity", 42 )
+            ( "running", true )
+            ( "use-ph", true )
+            ( "missed", false ) );
+
+    ExpectCallback( 4 );
+    commands.Start( "direct fire command",
+        core::MakeModel( "identifier", 42 )
+            ( "enemy", 51 )
+            ( "percentage", 7 )
+            ( "mode", 0 )
+            ( "dotation", 0 ) );
+    ExpectCallback( 4 );
+
+    commands.Execute();
+
+    ExpectCallback( 5 );
+    ExpectEvent( "direct fire pion", sword::test::MakeModel( "entity", 42 )( "running", false ) );
 }

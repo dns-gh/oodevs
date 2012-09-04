@@ -129,6 +129,10 @@ namespace fire
             mock::verify();
             MOCK_RESET( Log );
         }
+        void ExpectCallback( int code ) // $$$$ MCO 2012-04-27: use RoleAction_DirectFiring::E_ReturnCode ?
+        {
+            ExpectEvent( "direct fire pion callback", sword::test::MakeModel( "entity", 42 )( "id", mock::any )( "code", code ) );
+        }
         core::Model& entity;
         SWORD_Model* firer;
         core::Model& target;
