@@ -83,7 +83,7 @@ std::string tools::readLang()
 // Name: tools::AddTranslator
 // Created: ABR 2012-07-11
 // -----------------------------------------------------------------------------
-QTranslator* tools::AddTranslator( QApplication& application, QLocale& locale, const char* t )
+QTranslator* tools::AddTranslator( QApplication& application, const QLocale& locale, const char* t )
 {
     std::auto_ptr< QTranslator > trans( new QTranslator( &application ) );
     const QString file = QString( "%1_%2" ).arg( t ).arg( locale.name().left( 2 ) );
