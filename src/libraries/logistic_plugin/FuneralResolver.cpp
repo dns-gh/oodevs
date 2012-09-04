@@ -18,16 +18,15 @@ using namespace plugins::logistic;
 // -----------------------------------------------------------------------------
 void FuneralConsignData::operator>>( std::stringstream& output ) const
 {
-    static const std::string separator = ConsignData_ABC::GetSeparator();
-    output  << requestId_            << separator
-            << tick_                 << separator
-            << simTime_              << separator   // << creationTick_         << separator    << unitId_  << separator
-            << unit_                 << separator   // << handlingUnitId_       << separator
-            << handlingUnit_         << separator   // << conveyingUnitId_      << separator
-            << conveyingUnit_        << separator   
-            << rank_                 << separator   // << packagingResourceId_  << separator
-            << packagingResource_    << separator   // << stateId_              << separator
-            << state_                << separator
+    output  << requestId_            << separator_
+            << tick_                 << separator_
+            << simTime_              << separator_   // << creationTick_         << separator_    << unitId_  << separator_
+            << unit_                 << separator_   // << handlingUnitId_       << separator_
+            << handlingUnit_         << separator_   // << conveyingUnitId_      << separator_
+            << conveyingUnit_        << separator_   
+            << rank_                 << separator_   // << packagingResourceId_  << separator_
+            << packagingResource_    << separator_   // << stateId_              << separator_
+            << state_                << separator_
             << stateEndTick_         << std::endl;
 }
 
@@ -130,7 +129,8 @@ FuneralResolver::~FuneralResolver()
 bool FuneralResolver::IsManageable( const sword::SimToClient& message )
 {
     return     message.message().has_log_funeral_handling_creation()
-            || message.message().has_log_funeral_handling_update();
+            || message.message().has_log_funeral_handling_update()
+            || message.message().has_log_funeral_handling_destruction();
 }
 
 // -----------------------------------------------------------------------------
@@ -143,6 +143,8 @@ void FuneralResolver::ManageMessage( const sword::SimToClient& message )
         TraceConsign< ::sword::LogFuneralHandlingCreation, FuneralConsignData >( message.message().log_funeral_handling_creation(), output_ );
     if( message.message().has_log_funeral_handling_update() )
         TraceConsign< ::sword::LogFuneralHandlingUpdate, FuneralConsignData >( message.message().log_funeral_handling_update(), output_ );
+    if( message.message().has_log_funeral_handling_destruction() && message.message().log_funeral_handling_destruction().has_request() )
+        DestroyConsignData( message.message().log_funeral_handling_destruction().request().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -151,7 +153,7 @@ void FuneralResolver::ManageMessage( const sword::SimToClient& message )
 // -----------------------------------------------------------------------------
 void FuneralResolver::InitHeader()
 {
-    FuneralConsignData consign( tools::translate( "logistic", "request id" ).toAscii().constData() );
+    FuneralConsignData consign( tools::translate( "logistic", "request id" ).toAscii().constData()  );
     consign.tick_                   = tools::translate( "logistic", "tick" ).toAscii().constData();
     consign.creationTick_           = tools::translate( "logistic", "creation tick" ).toAscii().constData();
     consign.stateEndTick_           = tools::translate( "logistic", "state end tick" ).toAscii().constData();
@@ -168,4 +170,13 @@ void FuneralResolver::InitHeader()
     consign.packagingResource_      = tools::translate( "logistic", "packaging resource" ).toAscii().constData();
     consign.state_                  = tools::translate( "logistic", "state" ).toAscii().constData();
     SetHeader( consign );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FuneralResolver::CreateConsignData
+// Created: MMC 2012-08-24
+// -----------------------------------------------------------------------------
+ConsignData_ABC* FuneralResolver::CreateConsignData( int requestId )
+{ 
+    return static_cast< ConsignData_ABC* >( new FuneralConsignData( boost::lexical_cast< std::string >( requestId ) ) ); 
 }

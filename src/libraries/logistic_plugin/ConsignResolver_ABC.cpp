@@ -56,9 +56,6 @@ ConsignResolver_ABC::~ConsignResolver_ABC()
     for ( std::map< int, ConsignData_ABC* >::iterator it = consignsData_.begin(); it != consignsData_.end(); ++it )
         delete it->second;
     consignsData_.clear();
-
-    if( output_.is_open() )
-        output_.close();
 }
 
 // -----------------------------------------------------------------------------
@@ -72,6 +69,36 @@ void ConsignResolver_ABC::Receive( const sword::SimToClient& message )
     CheckOutputFile();
     if( output_.is_open() )
         ManageMessage( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ConsignResolver_ABC::GetConsign
+// Created: MMC 2012-08-23
+// -----------------------------------------------------------------------------
+ConsignData_ABC& ConsignResolver_ABC::GetConsign( int requestId )
+{
+    std::map< int, ConsignData_ABC* >::iterator it = consignsData_.find( requestId );
+    if( it == consignsData_.end() )
+    {
+        ConsignData_ABC* pConsign = CreateConsignData( requestId );
+        consignsData_[ requestId ] = pConsign;
+        return *pConsign;
+    }
+    return *it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ConsignResolver_ABC::DestroyConsignData
+// Created: MMC 2012-09-03
+// -----------------------------------------------------------------------------
+void ConsignResolver_ABC::DestroyConsignData( int requestId )
+{
+    std::map< int, ConsignData_ABC* >::iterator it = consignsData_.find( requestId );
+    if( it != consignsData_.end() )
+    {
+        delete it->second;
+        consignsData_.erase( it );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -323,4 +350,15 @@ void ConsignResolver_ABC::GetResourceName( const sword::ResourceType& resourceTy
     kernel::DotationType* pDotation = staticModel_.objectTypes_.kernel::Resolver2< kernel::DotationType >::Find( resourceType.id() );
     if( pDotation )
         name = pDotation->GetName();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ConsignResolver_ABC::SetHeader
+// Created: MMC 2012-08-23
+// -----------------------------------------------------------------------------
+void ConsignResolver_ABC::SetHeader( const ConsignData_ABC& consign )
+{
+    std::stringstream header;
+    consign >> header;
+    header_ = header.str();
 }

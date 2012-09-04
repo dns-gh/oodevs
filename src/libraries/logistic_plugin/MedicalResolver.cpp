@@ -21,17 +21,16 @@ using namespace plugins::logistic;
 // -----------------------------------------------------------------------------
 void MedicalConsignData::operator>>( std::stringstream& output ) const
 {
-    static std::string separator = ConsignData_ABC::GetSeparator();
-    output  << requestId_    << separator
-            << tick_         << separator
-            << simTime_      << separator   // << creationTick_ << separator << unitId_ << separator
-            << unit_         << separator   // << providerId_   << separator
-            << provider_     << separator
-            << rank_         << separator
-            << wound_        << separator
-            << nbc_          << separator
-            << mental_       << separator   // << stateId_      << separator
-            << state_        << separator
+    output  << requestId_    << separator_
+            << tick_         << separator_
+            << simTime_      << separator_   // << creationTick_ << separator_ << unitId_ << separator_
+            << unit_         << separator_   // << providerId_   << separator_
+            << provider_     << separator_
+            << rank_         << separator_
+            << wound_        << separator_
+            << nbc_          << separator_
+            << mental_       << separator_   // << stateId_      << separator_
+            << state_        << separator_
             << stateEndTick_ << std::endl;
 }
 
@@ -130,7 +129,8 @@ MedicalResolver::~MedicalResolver()
 bool MedicalResolver::IsManageable( const sword::SimToClient& message )
 {
     return      message.message().has_log_medical_handling_creation()
-            ||  message.message().has_log_medical_handling_update();
+            ||  message.message().has_log_medical_handling_update()
+            ||  message.message().has_log_medical_handling_destruction();
 }
 
 // -----------------------------------------------------------------------------
@@ -143,6 +143,8 @@ void MedicalResolver::ManageMessage( const sword::SimToClient& message )
         TraceConsign< ::sword::LogMedicalHandlingCreation, MedicalConsignData >( message.message().log_medical_handling_creation(), output_ );
     if( message.message().has_log_medical_handling_update() )
         TraceConsign< ::sword::LogMedicalHandlingUpdate, MedicalConsignData >( message.message().log_medical_handling_update(), output_ );
+    if( message.message().has_log_medical_handling_destruction() && message.message().log_medical_handling_destruction().has_request() )
+        DestroyConsignData( message.message().log_medical_handling_destruction().request().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -167,4 +169,13 @@ void MedicalResolver::InitHeader()
     consign.provider_       = tools::translate( "logistic", "provider" ).toAscii().constData();
     consign.state_          = tools::translate( "logistic", "state" ).toAscii().constData();
     SetHeader( consign );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MedicalResolver::MaintenanceResolver
+// Created: MMC 2012-09-03
+// -----------------------------------------------------------------------------
+ConsignData_ABC* MedicalResolver::CreateConsignData( int requestId )
+{
+    return static_cast< ConsignData_ABC* >( new MedicalConsignData( boost::lexical_cast< std::string >( requestId ) ) ); 
 }

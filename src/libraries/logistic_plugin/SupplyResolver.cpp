@@ -21,17 +21,16 @@ using namespace plugins::logistic;
 // -----------------------------------------------------------------------------
 void SupplyConsignData::operator>>( std::stringstream& output ) const
 {
-    static const std::string separator = ConsignData_ABC::GetSeparator();
     if( recipientAutomats_.empty() )
     {
-        output << requestId_         << separator
-            << tick_                 << separator
-            << simTime_              << separator   // << creationTick_         << separator    << recipientId_       << separator
-            << recipientAutomat_     << separator   // << providerId_           << separator
-            << provider_             << separator   // << transportProviderId_  << separator
-            << transportProvider_    << separator   // << conveyorId_           << separator
-            << conveyor_             << separator   // << stateId_              << separator
-            << state_                << separator
+        output << requestId_         << separator_
+            << tick_                 << separator_
+            << simTime_              << separator_   // << creationTick_         << separator_    << recipientId_       << separator_
+            << recipientAutomat_     << separator_   // << providerId_           << separator_
+            << provider_             << separator_   // << transportProviderId_  << separator_
+            << transportProvider_    << separator_   // << conveyorId_           << separator_
+            << conveyor_             << separator_   // << stateId_              << separator_
+            << state_                << separator_
             << stateEndTick_;
         output  << std::endl;
     }
@@ -39,14 +38,14 @@ void SupplyConsignData::operator>>( std::stringstream& output ) const
         for( std::map< int, std::string >::const_iterator it = recipientAutomats_.begin(); it != recipientAutomats_.end(); ++it )
         {
             int recipientAutomatId = it->first;
-            output << requestId_         << separator
-                << tick_                 << separator
-                << simTime_              << separator   // << creationTick_         <<  separator   << recipientId_    <<  separator
-                << it->second            << separator   // << providerId_           <<  separator
-                << provider_             << separator   // << transportProviderId_  <<  separator
-                << transportProvider_    << separator   // << conveyorId_           <<  separator
-                << conveyor_             << separator   // << stateId_              <<  separator
-                << state_                << separator
+            output << requestId_         << separator_
+                << tick_                 << separator_
+                << simTime_              << separator_   // << creationTick_         <<  separator_   << recipientId_    <<  separator_
+                << it->second            << separator_   // << providerId_           <<  separator_
+                << provider_             << separator_   // << transportProviderId_  <<  separator_
+                << transportProvider_    << separator_   // << conveyorId_           <<  separator_
+                << conveyor_             << separator_   // << stateId_              <<  separator_
+                << state_                << separator_
                 << stateEndTick_;
 
             for( std::map< int, Resource >::const_iterator itRes = resources_.begin(); itRes != resources_.end(); ++itRes )
@@ -54,10 +53,10 @@ void SupplyConsignData::operator>>( std::stringstream& output ) const
                 const Resource& resource = itRes->second;
                 if( resource.recipientAutomatId_ == recipientAutomatId )
                 {
-                    output << separator      // << resource.id_ << separator
-                        << resource.type_       << separator
-                        << resource.requested_  << separator
-                        << resource.granted_    << separator
+                    output << separator_      // << resource.id_ << separator_
+                        << resource.type_       << separator_
+                        << resource.requested_  << separator_
+                        << resource.granted_    << separator_
                         << resource.conveyed_;
                 }
             }
@@ -193,7 +192,8 @@ SupplyResolver::~SupplyResolver()
 bool SupplyResolver::IsManageable( const sword::SimToClient& message )
 {
     return      message.message().has_log_supply_handling_creation()
-            ||  message.message().has_log_supply_handling_update();
+            ||  message.message().has_log_supply_handling_update()
+            ||  message.message().has_log_supply_handling_destruction();
 }
 
 // -----------------------------------------------------------------------------
@@ -206,6 +206,8 @@ void SupplyResolver::ManageMessage( const sword::SimToClient& message )
         TraceConsign< ::sword::LogSupplyHandlingCreation, SupplyConsignData >( message.message().log_supply_handling_creation(), output_ );
     if( message.message().has_log_supply_handling_update() )
         TraceConsign< ::sword::LogSupplyHandlingUpdate, SupplyConsignData >( message.message().log_supply_handling_update(), output_ );
+    if( message.message().has_log_supply_handling_destruction() && message.message().log_supply_handling_destruction().has_request() )
+        DestroyConsignData( message.message().log_supply_handling_destruction().request().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -243,4 +245,13 @@ void SupplyResolver::InitHeader()
         consign.resources_[ i ] = resource;
     }
     SetHeader( consign );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyResolver::MaintenanceResolver
+// Created: MMC 2012-09-03
+// -----------------------------------------------------------------------------
+ConsignData_ABC* SupplyResolver::CreateConsignData( int requestId )
+{
+    return static_cast< ConsignData_ABC* >( new SupplyConsignData( boost::lexical_cast< std::string >( requestId ) ) ); 
 }

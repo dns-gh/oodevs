@@ -18,15 +18,14 @@ using namespace plugins::logistic;
 // -----------------------------------------------------------------------------
 void MaintenanceConsignData::operator>>( std::stringstream& output ) const
 {
-    static const std::string separator = ConsignData_ABC::GetSeparator();
-    output  << requestId_    << separator
-            << tick_         << separator
-            << simTime_      << separator   // << creationTick_     << separator    << unitId_  << separator
-            << unit_         << separator   // << providerId_       << separator
-            << provider_     << separator   // << equipmentId_      << separator
-            << equipment_    << separator   // << breakdownId_      << separator
-            << breakdown_    << separator   // << stateId_          << separator
-            << state_        << separator
+    output  << requestId_    << separator_
+            << tick_         << separator_
+            << simTime_      << separator_   // << creationTick_     << separator_    << unitId_  << separator_
+            << unit_         << separator_   // << providerId_       << separator_
+            << provider_     << separator_   // << equipmentId_      << separator_
+            << equipment_    << separator_   // << breakdownId_      << separator_
+            << breakdown_    << separator_   // << stateId_          << separator_
+            << state_        << separator_
             << stateEndTick_ << std::endl;
 }
 
@@ -121,7 +120,8 @@ MaintenanceResolver::~MaintenanceResolver()
 bool MaintenanceResolver::IsManageable( const sword::SimToClient& message )
 {
     return      message.message().has_log_maintenance_handling_creation()
-            ||  message.message().has_log_maintenance_handling_update();
+            ||  message.message().has_log_maintenance_handling_update()
+            ||  message.message().has_log_maintenance_handling_destruction();
 }
 
 // -----------------------------------------------------------------------------
@@ -134,6 +134,8 @@ void MaintenanceResolver::ManageMessage( const sword::SimToClient& message )
         TraceConsign< ::sword::LogMaintenanceHandlingCreation, MaintenanceConsignData >( message.message().log_maintenance_handling_creation(), output_ );
     if( message.message().has_log_maintenance_handling_update() )
         TraceConsign< ::sword::LogMaintenanceHandlingUpdate, MaintenanceConsignData >( message.message().log_maintenance_handling_update(), output_ );
+    if( message.message().has_log_maintenance_handling_destruction() && message.message().log_maintenance_handling_destruction().has_request() )
+        DestroyConsignData( message.message().log_maintenance_handling_destruction().request().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -158,4 +160,13 @@ void MaintenanceResolver::InitHeader()
     consign.breakdown_      = tools::translate( "logistic", "breakdown" ).toAscii().constData();
     consign.state_          = tools::translate( "logistic", "state" ).toAscii().constData();
     SetHeader( consign );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MaintenanceResolver::MaintenanceResolver
+// Created: MMC 2012-09-03
+// -----------------------------------------------------------------------------
+ConsignData_ABC* MaintenanceResolver::CreateConsignData( int requestId )
+{
+    return static_cast< ConsignData_ABC* >( new MaintenanceConsignData( boost::lexical_cast< std::string >( requestId ) ) ); 
 }
