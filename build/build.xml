@@ -595,7 +595,10 @@
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
                   lib${ant.project.name}_shield-${platform}-mt@{suffix},
                   lib${ant.project.name}_tools-${platform}-mt@{suffix}">
+            <syslibset libs="shell32,user32"/>
+            <defineset define="QT3_SUPPORT"/>
             <defineset define="LAUNCHER_DLL_EXPORTS"/>
+            <linkerarg value="/FIXED:NO"/>
         </build-lib>
     </target>
 
