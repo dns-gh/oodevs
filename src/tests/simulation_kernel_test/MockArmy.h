@@ -21,6 +21,7 @@
 MOCK_BASE_CLASS( MockArmy, MIL_Army_ABC )
 {
     MOCK_METHOD( WriteODB, 1 )
+    MOCK_METHOD( WriteKnowledges, 1 )
     MOCK_METHOD( WriteDiplomacyODB, 1 )
 
     MOCK_METHOD( RegisterFormation, 1 )
