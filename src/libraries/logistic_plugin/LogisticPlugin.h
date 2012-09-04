@@ -80,7 +80,7 @@ private:
     boost::scoped_ptr< ConsignResolver_ABC >    supplyResolver_;
     boost::scoped_ptr< ConsignResolver_ABC >    funeralResolver_;
     boost::scoped_ptr< ConsignResolver_ABC >    medicalResolver_;
-    boost::scoped_ptr< QApplication >           appli_;
+    boost::scoped_ptr< QApplication >           localAppli_;
     //@}
 };
 }
