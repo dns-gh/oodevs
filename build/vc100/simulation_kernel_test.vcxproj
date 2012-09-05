@@ -110,7 +110,6 @@
     <ClCompile />
     <Link>
       <AdditionalDependencies>log4cxxd.lib;psapi.lib;spatialcontainer_d.lib;pathfind_d.lib;masalloc_d.lib;geodata_d.lib;analysis_d.lib;core_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <Profile>true</Profile>
     </Link>
     <PostBuildEvent />
     <ClCompile>
@@ -122,7 +121,6 @@
     <ClCompile />
     <Link>
       <AdditionalDependencies>log4cxxd.lib;psapi.lib;spatialcontainer_d.lib;pathfind_d.lib;masalloc_d.lib;analysis_d.lib;geodata_d.lib;core_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <Profile>true</Profile>
     </Link>
     <PostBuildEvent />
     <ClCompile>
