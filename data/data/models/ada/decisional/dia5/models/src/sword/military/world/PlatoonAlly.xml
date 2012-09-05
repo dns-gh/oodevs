@@ -1452,6 +1452,9 @@ que pourrait subir l'agent dans son efficacité à résoudre la tâche de groupe
                 </type>
             </return>
         </method>
+        <method name="launchDREB">
+            <description>Envoie des fumigènes pour se protéger d'une ou plusieurs entités dangereuses.</description>
+        </method>
     </methods>
     <predicates>
         <predicate name="isCommandingFor">

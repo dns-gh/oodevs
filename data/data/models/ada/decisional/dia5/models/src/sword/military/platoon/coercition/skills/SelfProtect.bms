@@ -11,7 +11,8 @@ rootnode
         skill.links.dismount,
         skill.links.respond,
         skill.nodes.CoverAttitude,
-        skill.nodes.SafetyAttitude
+        skill.nodes.SafetyAttitude,
+        skill.nodes.LaunchDREB
     },
 
     -- --------------------------------------------------------------------------------
@@ -104,6 +105,7 @@ rootnode
 
         -- Coover from entities
         if self.needToTakeCover then
+            Activate( skill.nodes.LaunchDREB, 1)
             Activate( skill.links.takeCover, skill.modifiers.importance, { entities = self.entitiesToSafeguardFrom } )
         end
     end
@@ -127,5 +129,15 @@ node "SafetyAttitude"
 {
     select = function( self )
         meKnowledge:adoptSafetyAttitude()
+    end
+}
+
+-- ****************************************************************************
+-- Launch DREB.
+-- ****************************************************************************
+node "LaunchDREB"
+{
+    select = function( self )
+        meKnowledge:launchDREB()
     end
 }

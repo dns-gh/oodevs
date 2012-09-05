@@ -196,3 +196,14 @@ integration.findEnemyToMortarIndirectFire = function( targets )
         return result
     end
 end
+
+integration.launchDREB = function()
+    local DEC_ConnaissanceAgent_EstValide = DEC_ConnaissanceAgent_EstValide
+    local DEC_Tir_LancerFumigeneSurConnaissance = DEC_Tir_LancerFumigeneSurConnaissance
+    local listeConnaissances = DEC_Connaissances_UnitesEnnemiesDangereuses()
+    for _, eni in pairs( listeConnaissances or emptyTable ) do
+        if DEC_ConnaissanceAgent_EstValide( eni ) then
+            DEC_Tir_LancerFumigeneSurConnaissance( eni )
+        end
+    end
+end
