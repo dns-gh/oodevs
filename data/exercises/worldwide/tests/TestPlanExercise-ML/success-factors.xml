@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<factors model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/success-factors.xsd">
+  <factor name="Red is dead">
+    <profiles>
+      <profile name="Admin"/>
+    </profiles>
+    <conditions operator="or">
+      <condition operator="le" property="Red Attack" value="0.48"/>
+    </conditions>
+    <actions>
+      <action type="Display">
+        <parameter name="message" value="Congratz"/>
+      </action>
+      <action type="sim:Pause"/>
+    </actions>
+  </factor>
+</factors>
+<!-- signature="1441553512" -->

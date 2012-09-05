@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="221" name="Armor - attack" target="551" time="2008-11-13T22:30:06" type="mission">
+    <parameter name="Danger direction" type="Direction" value="40"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXS2657258333"/>
+        <point coordinates="30TXS3446369735"/>
+        <point coordinates="30TXS4042776985"/>
+        <point coordinates="30TXS4297383178"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXS4813081147"/>
+        <point coordinates="30TXS4536974084"/>
+        <point coordinates="30TXS4262667859"/>
+        <point coordinates="30TXS3150155751"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+  </action>
+  <action id="221" name="Armor - attack" target="499" time="2008-11-13T22:30:06" type="mission">
+    <parameter name="Danger direction" type="Direction" value="40"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXS3338955617"/>
+        <point coordinates="30TXS3912562675"/>
+        <point coordinates="30TXS4300964643"/>
+        <point coordinates="30TXS4638769113"/>
+        <point coordinates="30TXS4947778954"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXS3672052891"/>
+        <point coordinates="30TXS4023358299"/>
+        <point coordinates="30TXS4705061702"/>
+        <point coordinates="30TXS5037966512"/>
+        <point coordinates="30TXS5287972211"/>
+        <point coordinates="30TXS5344175393"/>
+        <point coordinates="30TXS5461678637"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+  </action>
+  <action id="236" name="Armor - hold" target="569" time="2008-11-13T23:20:06" type="mission">
+    <parameter name="Danger direction" type="Direction" value="204"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXS4813081147"/>
+        <point coordinates="30TXS4655574052"/>
+        <point coordinates="30TXS4262667859"/>
+        <point coordinates="30TXS3150155751"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXS2657258333"/>
+        <point coordinates="30TXS3446369735"/>
+        <point coordinates="30TXS4042776985"/>
+        <point coordinates="30TXS4297383178"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Deployment area" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30TXS4277681189"/>
+        <point coordinates="30TXS4084677393"/>
+        <point coordinates="30TXS4648474199"/>
+        <point coordinates="30TXS4719477785"/>
+        <point coordinates="30TXS4277681189"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="236" name="Armor - hold" target="505" time="2008-11-13T23:20:06" type="mission">
+    <parameter name="Danger direction" type="Direction" value="189"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXS3672052891"/>
+        <point coordinates="30TXS4023358299"/>
+        <point coordinates="30TXS4705061702"/>
+        <point coordinates="30TXS5037966512"/>
+        <point coordinates="30TXS5287972211"/>
+        <point coordinates="30TXS5344175393"/>
+        <point coordinates="30TXS5461678637"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXS3338955617"/>
+        <point coordinates="30TXS3912562675"/>
+        <point coordinates="30TXS4300964643"/>
+        <point coordinates="30TXS4638769113"/>
+        <point coordinates="30TXS4947778954"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Deployment area" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30TXS4890575175"/>
+        <point coordinates="30TXS4742071395"/>
+        <point coordinates="30TXS5145369424"/>
+        <point coordinates="30TXS5288873035"/>
+        <point coordinates="30TXS4890575175"/>
+      </location>
+    </parameter>
+  </action>
+</actions>
