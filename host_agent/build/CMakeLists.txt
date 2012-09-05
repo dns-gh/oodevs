@@ -31,9 +31,8 @@ find_package( Boost COMPONENTS
     thread
     unit_test_framework
     REQUIRED )
-set( ZLIB_ROOT ${MASA_INCLUDE}/zlib ${MASA_LIB} )
-find_package( ZLIB REQUIRED )
-
+find_with_prefix( ZLIB zlib REQUIRED )
+find_package( OpenSSL REQUIRED )
 find_qt4( REQUIRED QtCore QtGui )
 
 ################################################################################
@@ -55,6 +54,7 @@ set_target_folder( runtime libraries )
 if( MSVC )
     add_target_external_library( runtime archive_static_d archive_static )
     add_target_external_library( runtime zlibd zlib )
+    target_link_libraries( runtime shlwapi )
 endif()
 
 ################################################################################
@@ -70,7 +70,9 @@ if( MSVC )
     add_target_external_library( web cpp-netlib_client-${platform}-mt_d cpp-netlib_client-${platform}-mt )
     add_target_external_library( web cpp-netlib_server-${platform}-mt_d cpp-netlib_server-${platform}-mt )
     add_target_external_library( web cpp-netlib_uri-${platform}-mt_d cpp-netlib_uri-${platform}-mt )
+    target_link_libraries( web ws2_32 )
 endif()
+target_link_libraries( web ${OPENSSL_LIBRARIES} )
 
 ################################################################################
 # host
@@ -92,20 +94,9 @@ endif()
 glob_dir( files src
     "${root_dir}/src/applications/cloud_server/*.cpp"
 )
-if( WIN32 )
-    set( FILENAME cloud_server${CMAKE_EXECUTABLE_SUFFIX} )
-    set( VERSION ${MASA_VERSION} )
-    STRING( REGEX REPLACE "\\." ", " VERSION_ID ${MASA_VERSION} )
-    EXECUTE_PROCESS( COMMAND "cmd" " /C date /T" OUTPUT_VARIABLE RESULT )
-    STRING( REGEX REPLACE "[0-9]+/[0-9]+/([0-9]+)" "\\1" YEAR ${RESULT} )
-    configure_file(
-        "${root_dir}/src/applications/cloud_server/version.rc.in"
-        "${CMAKE_CURRENT_BINARY_DIR}/version.rc"
-        @ONLY
-    )
-    source_group( res FILES "${CMAKE_CURRENT_BINARY_DIR}/version.rc" )
-    list( APPEND files "${CMAKE_CURRENT_BINARY_DIR}/version.rc" )
-endif()
+configure_rc( cloud_server res files
+    "${root_dir}/src/applications/cloud_server/version.rc.in"
+)
 add_executable_target( cloud_server ${files} )
 set_target_folder( cloud_server applications )
 target_link_libraries( cloud_server
@@ -113,14 +104,6 @@ target_link_libraries( cloud_server
     runtime
     web
 )
-if( WIN32 )
-    target_link_libraries( cloud_server
-        libeay32
-        shlwapi
-        ssleay32
-        ws2_32
-    )
-endif()
 
 ################################################################################
 # cloud_client
@@ -136,7 +119,6 @@ set_target_folder( cloud_client applications )
 set_target_qt4( cloud_client )
 target_link_libraries( cloud_client
     runtime
-    shlwapi
 )
 
 ################################################################################
