@@ -28,7 +28,7 @@
         </parameter>
     </parameters>
     <stages>
-        <stage label="freinage" disable-when-done="true">
+        <stage label="coup d'arrêt sur les objectifs" disable-when-done="true">
             <skills>
                 <skill name="commander.skills.LeadDelay" main="true">
                     <parameter name="companyTask">
