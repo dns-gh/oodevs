@@ -160,6 +160,10 @@ create = function( self )
 
         -- Le premier echelon recoit les missions principales ("mainTasks")
         local bestUnits = giveMission ( self, self.params.mainTasks, self.nbrFront, eEtatEchelon_First)
+        if #bestUnits == 0 then
+            Activate( skill.nodes.RC, 1, { RC = eRC_NoPEInAutomat } )
+            return
+        end
         manageFeedback( bestUnits )
         -- Le second echelon recoit les missions de soutien
         giveSupport ( self, self.params.supportTasks, #self.entitiesWithoutMission, eEtatEchelon_Reserve)
