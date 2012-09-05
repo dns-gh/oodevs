@@ -118,6 +118,7 @@ public:
 private slots:
     //! @name slots
     //@{
+    void OnNameChanged();
     void OnTypeChanged();
     void OnNbrOfOfficersChanged();
     void OnNbrOfNCOfficersChanged();
@@ -134,6 +135,7 @@ private:
     //! @name Member data
     //@{
     ADN_Units_Data& data_;
+    ADN_EditLine_String* pNameEditLine_;
     ADN_EditLine_Int* pOfficersEditLine_;
     ADN_EditLine_Int* pNCOfficersEditLine_;
     QComboBox* pTypeCombo_;
