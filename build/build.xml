@@ -1751,6 +1751,7 @@
                 <include name="9_cases/**"/>
                 <include name="tests/Pathfind/**"/>
                 <include name="tests/TestPlanExercise/**"/>
+				 <include name="tests/TestPlanExercise-ML/**"/>
             </zipfileset>
         </pack>
     </target>
