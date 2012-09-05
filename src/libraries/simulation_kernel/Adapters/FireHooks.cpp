@@ -140,7 +140,8 @@ namespace
             MT_LOG_ERROR_MSG( "Unknown dotation category in ReserveAmmunition hook implementation : " << dotation );
             return 0;
         }
-        return (unsigned int)GET_ROLE( firer, dotation::PHY_RoleInterface_Dotations ).AddFireReservation( *category, nNbrAmmoToFire );
+        using namespace dotation;
+        return (unsigned int)GET_ROLE( firer, PHY_RoleInterface_Dotations ).AddFireReservation( *category, nNbrAmmoToFire );
     }
     DEFINE_HOOK( GetVolumeId, unsigned int, ( const char* type ) )
     {
