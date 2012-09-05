@@ -44,23 +44,11 @@ void AddSetting( T_Defaults& dst, const Tree& src )
     dst.insert( std::make_pair( *name, def ) );
 }
 
-template< typename T, typename U >
-void Walk( const Tree& src, const T& begin, const T& end, const U& operand )
-{
-    std::pair< Tree::const_assoc_iterator, Tree::const_assoc_iterator > range = src.equal_range( *begin );
-    if( std::distance( begin, end ) > 1 )
-        for( Tree::const_assoc_iterator it = range.first; it != range.second; ++it )
-            Walk( it->second, begin + 1, end, operand );
-    else
-        for( Tree::const_assoc_iterator it = range.first; it != range.second; ++it )
-            operand( it->second );
-}
-
 void AddSettings( T_Defaults& dst, const Tree& src, const std::string& key )
 {
     std::vector< std::string > tokens;
     boost::algorithm::split( tokens, key, boost::is_any_of( "." ) );
-    Walk( src, tokens.begin(), tokens.end(), boost::bind( &AddSetting, boost::ref( dst ), _1 ) );
+    property_tree::Walk( src, tokens.begin(), tokens.end(), boost::bind( &AddSetting, boost::ref( dst ), _1 ) );
 }
 
 T_Defaults LoadDefaults( const FileSystem_ABC& fs, const Path& cfg )

@@ -49,6 +49,18 @@ namespace property_tree
         for( typename T::const_iterator it = list.begin(); it != list.end(); ++it )
             sub.push_back( std::make_pair( std::string(), boost::lexical_cast< std::string >( *it ) ) );
     }
+
+    template< typename T, typename U >
+    void Walk( const T_Tree& src, const T& begin, const T& end, const U& operand )
+    {
+        std::pair< Tree::const_assoc_iterator, Tree::const_assoc_iterator > range = src.equal_range( *begin );
+        if( std::distance( begin, end ) > 1 )
+            for( Tree::const_assoc_iterator it = range.first; it != range.second; ++it )
+                Walk( it->second, begin + 1, end, operand );
+        else
+            for( Tree::const_assoc_iterator it = range.first; it != range.second; ++it )
+                operand( it->second );
+    }
 }
 
 #endif // PROPERTY_TREE_H
