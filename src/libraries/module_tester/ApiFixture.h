@@ -96,7 +96,7 @@ namespace core
         }
 
         #define DECLARE_GET_SET( TYPE_NAME, TYPE ) \
-        static int SWORD_Get##TYPE_NAME ( const SWORD_Model* node, TYPE* value ) \
+        static int SWORD_Get##TYPE_NAME( const SWORD_Model* node, TYPE* value ) \
         { \
             TRY \
                 BOOST_REQUIRE( node ); \
@@ -104,16 +104,16 @@ namespace core
                 *value = *core::Convert( node ); \
                 return true; \
             CATCH \
-                return false; \
+            return false; \
         } \
-        static int SWORD_Set##TYPE_NAME ( SWORD_Model* node, TYPE value ) \
+        static int SWORD_Set##TYPE_NAME( SWORD_Model* node, TYPE value ) \
         { \
             TRY \
                 BOOST_REQUIRE( node ); \
                 *core::Convert( node ) = value; \
                 return true; \
             CATCH \
-                return false; \
+            return false; \
         }
         DECLARE_GET_SET( Int8,   int8_t )
         DECLARE_GET_SET( Int16,  int16_t )
@@ -135,7 +135,7 @@ namespace core
                 *value = *core::Convert( node );
                 return true;
             CATCH
-                return false;
+            return false;
         }
         static int SWORD_GetText( const SWORD_Model* node, const char** value, size_t* size )
         {
@@ -148,7 +148,7 @@ namespace core
                 *size = text.size();
                 return true;
             CATCH
-                return false;
+            return false;
         }
         static int SWORD_SetText( SWORD_Model* node, const char* value, size_t size )
         {
@@ -158,7 +158,7 @@ namespace core
                 *Convert( node ) = std::string( value, size );
                 return true;
             CATCH
-                return false;
+            return false;
         }
         static int SWORD_CopyValue( const SWORD_Model* from, SWORD_Model* to )
         {
@@ -168,7 +168,7 @@ namespace core
                 *Convert( to ) = *Convert( from );
                 return true;
             CATCH
-                return false;
+            return false;
         }
         static int SWORD_GetSize( const SWORD_Model* node, size_t* size )
         {
@@ -178,7 +178,7 @@ namespace core
                 *size = core::Convert( node )->GetSize();
                 return true;
             CATCH
-                return false;
+            return false;
         }
         static const SWORD_Model* SWORD_GetElement( const SWORD_Model* node, size_t index )
         {
@@ -186,7 +186,7 @@ namespace core
                 BOOST_REQUIRE( node );
                 return core::Convert( &core::Convert( node )->GetElement( index ) );
             CATCH
-                return 0;
+            return 0;
         }
         static SWORD_Model* SWORD_AddElement( SWORD_Model* parent )
         {
@@ -194,7 +194,7 @@ namespace core
                 BOOST_REQUIRE( parent );
                 return core::Convert( &core::Convert( parent )->AddElement() );
             CATCH
-                return 0;
+            return 0;
         }
         static const SWORD_Model* SWORD_GetChild( const SWORD_Model* node, const char* key )
         {
@@ -203,7 +203,7 @@ namespace core
                 BOOST_REQUIRE( key );
                 return core::Convert( &(*core::Convert( node ))[ key ] );
             CATCH
-                return 0;
+            return 0;
         }
         static SWORD_Model* SWORD_SetChild( SWORD_Model* node, const char* key )
         {
@@ -212,7 +212,7 @@ namespace core
                 BOOST_REQUIRE( key );
                 return core::Convert( &(*core::Convert( node ))[ key ] );
             CATCH
-                return 0;
+            return 0;
         }
         static int SWORD_VisitChildren( const SWORD_Model* parent, SWORD_ChildrenVisitor visitor, void* userData )
         {
@@ -222,7 +222,7 @@ namespace core
                 core::ChildrenVisitor( *core::Convert( parent ), visitor, userData );
                 return true;
             CATCH
-                return false;
+            return false;
         }
         static int SWORD_MarkForRemove( SWORD_Model* node )
         {
@@ -231,7 +231,7 @@ namespace core
                 core::Convert( node )->MarkForRemove();
                 return true;
             CATCH
-                return false;
+            return false;
         }
         static const SWORD_Model* SWORD_GetChildInt( const SWORD_Model* parent, unsigned int key )
         {
@@ -239,7 +239,7 @@ namespace core
                 BOOST_REQUIRE( parent );
                 return core::Convert( &(*core::Convert( parent ))[ key ] );
             CATCH
-                return 0;
+            return 0;
         }
         static SWORD_Model* SWORD_SetChildInt( SWORD_Model* parent, unsigned int key )
         {
@@ -247,7 +247,7 @@ namespace core
                 BOOST_REQUIRE( parent );
                 return core::Convert( &(*core::Convert( parent ))[ key ] );
             CATCH
-                return 0;
+            return 0;
         }
         static int SWORD_GetUserData( const SWORD_Model* node, void** value )
         {
@@ -257,7 +257,7 @@ namespace core
                 (*value) = core::Convert( node )->GetData();
                 return true;
             CATCH
-                return false;
+            return false;
         }
         static int SWORD_SetUserData( SWORD_Model* node, const void* value )
         {
@@ -266,16 +266,16 @@ namespace core
                 core::Convert( node )->SetUserData( value );
                 return true;
             CATCH
-                return false;
+            return false;
         }
         MOCK_STATIC_METHOD( SWORD_Log, 2, void( SWORD_LogLevel level, const char* message ), Log )
 
         static void Configure( core::ModuleLoader& loader, void* module, const std::string& name )
         {
             SWORD_Api api;
-            #define API_SETTER( function, result, parameters ) api.function = function;
-                SWORD_FUNCTION_LIST( API_SETTER )
-            #undef API_SETTER
+#define API_SETTER( function, result, parameters ) api.function = function;
+    SWORD_FUNCTION_LIST( API_SETTER )
+#undef API_SETTER
             loader.LoadFunction< void (*)( SWORD_Api* ) >( module, name, "SWORD_InitializeApi" )( &api );
         }
         core::MockModuleApi api;
