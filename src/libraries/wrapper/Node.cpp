@@ -124,7 +124,7 @@ Node Node::AddElement()
 // -----------------------------------------------------------------------------
 Node& Node::SetUserData( const void* data )
 {
-    if( ! ::SWORD_SetUserData( node_, data ) )
+    if( ! ::SWORD_SetUserData( node_, data, 0 ) )
         throw std::runtime_error( "unable to set user data" );
     return *this;
 }

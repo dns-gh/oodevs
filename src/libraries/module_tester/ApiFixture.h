@@ -259,11 +259,20 @@ namespace core
             CATCH
             return false;
         }
-        static int SWORD_SetUserData( SWORD_Model* node, const void* value )
+        static void ReleaseUserData( SWORD_UserDataDestructor destructor, core::UserData_ABC* userData )
+        {
+            destructor( userData->Get() );
+            delete userData;
+        }
+        static int SWORD_SetUserData( SWORD_Model* node, const void* value, SWORD_UserDataDestructor destructor )
         {
             TRY
                 BOOST_REQUIRE( node );
-                core::Convert( node )->SetUserData( value );
+                if( destructor )
+                    Convert( node )->SetData( boost::shared_ptr< core::UserData_ABC >( new core::UserData< const void* >( value ),
+                                                                                       boost::bind( &ReleaseUserData, destructor, _1 ) ) );
+                else
+                    Convert( node )->SetUserData( value );
                 return true;
             CATCH
             return false;
