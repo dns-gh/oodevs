@@ -554,7 +554,7 @@ namespace
     }
     DEFINE_HOOK( CanComponentPerceive, bool, ( const SWORD_Model* entity, const SWORD_Model* component ) )
     {
-        return (*core::Convert( component ))[ "component" ].GetUserData< const PHY_ComposantePion* >()->CanPerceive( &GET_ROLE( entity, PHY_RoleAction_Loading ) );
+        return (*core::Convert( component ))[ "component" ].GetUserData< PHY_ComposantePion >().CanPerceive( &GET_ROLE( entity, PHY_RoleAction_Loading ) );
     }
     DEFINE_HOOK( GetTransporter, const SWORD_Model*, ( const SWORD_Model* model, const SWORD_Model* agent ) )
     {

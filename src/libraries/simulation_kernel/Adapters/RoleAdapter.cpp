@@ -134,6 +134,7 @@ RoleAdapter::RoleAdapter( MIL_AgentPion& pion, core::Model& entity )
 {
     senders_.push_back( MakeModelSender< client::UnitPathFind >( entity_[ "movement/path/points" ], boost::bind( &Serialize< client::UnitPathFind >, _1, pion.GetID(), _2 ) ) );
     senders_.push_back( MakeModelSender< client::UnitEnvironmentType >( entity_[ "movement/environment" ], boost::bind( &Serialize< client::UnitEnvironmentType >, _1, pion.GetID(), _2 ) ) );
+    entity_[ "pion" ].SetUserData( &pion );
     entity_[ "roles/RoleAction_Moving" ].SetUserData( &pion.GetRole< RoleAction_Moving >() );
     entity_[ "roles/PHY_RoleInterface_TerrainAnalysis" ].SetUserData( &pion.GetRole< PHY_RoleInterface_TerrainAnalysis >() );
     entity_[ "roles/PHY_RoleInterface_Composantes" ].SetUserData( &pion.GetRole< PHY_RoleInterface_Composantes >() );
@@ -157,7 +158,6 @@ RoleAdapter::RoleAdapter( MIL_AgentPion& pion, core::Model& entity )
     entity_[ "movement/environment/right" ] = 0;
     entity_[ "movement/environment/linear" ] = 0;
     entity_[ "identifier" ] = pion.GetID();
-    entity_[ "pion" ].SetUserData( &pion );
     entity_[ "can-fly" ] = pion.GetType().GetUnitType().CanFly();
     entity_[ "is-autonomous" ] = pion.IsAutonomous();
     entity_[ "is-pc" ] = pion.IsPC();
@@ -184,8 +184,8 @@ RoleAdapter::RoleAdapter( MIL_AgentPion& pion, core::Model& entity )
     entity_[ "perceptions/vision/location/y" ] = 1;
     entity_[ "perceptions/main-perception-direction/x" ] = 0;
     entity_[ "perceptions/main-perception-direction/y" ] = 1;
-    entity_[ "perceptions/drill-blow/width" ] = pion.GetType().GetUnitType().GetCoupDeSondeWidth ();
-    entity_[ "perceptions/drill-blow/length" ] = pion.GetType().GetUnitType().GetCoupDeSondeLength ();
+    entity_[ "perceptions/drill-blow/width" ] = pion.GetType().GetUnitType().GetCoupDeSondeWidth();
+    entity_[ "perceptions/drill-blow/length" ] = pion.GetType().GetUnitType().GetCoupDeSondeLength();
     entity_[ "fire/force-ratio/feedback-time" ] = pion.GetType().GetFeedbackTime();
 }
 
