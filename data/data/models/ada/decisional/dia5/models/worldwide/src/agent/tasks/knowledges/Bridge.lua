@@ -5,9 +5,9 @@ local result =
             companyTask:init()
             self.alreadyInit = true
         end
-        local siteFranchissement = companyTask:getSite( params )
-        local typePontage = companyTask:getTypePontage( params )
-        return { siteFranchissement = siteFranchissement, typePontage = typePontage }
+        local objective = companyTask:getSite( params )
+        local system = companyTask:getBridgeSystem( params )
+        return { crossingSite = objective, bridgeSystem = system }
     end,
 
     getObstaclesParameter = function( self, companyTask, params )
@@ -15,13 +15,14 @@ local result =
     end,
 
     hasDotation = function( self, entity, obstacle )
-        return DEC_Agent_AgentADotationPourConstruireObjet( entity.source, tostring(obstacle:getType()) )
+        return DEC_Agent_AgentADotationPourConstruireObjet( entity.source, tostring( obstacle:getType() ) )
     end,
 
     canDoIt = function( self, entity, obstacle )
         local localisation = obstacle:getLocalisation()
         if localisation ~= nil then
-            return DEC_Agent_AgentPeutConstruireObjetEmbarqueAvecLocalisation( entity.source, tostring(obstacle:getType()), localisation )
+            return DEC_Agent_AgentPeutConstruireObjetEmbarqueAvecLocalisation( 
+                   entity.source, tostring( obstacle:getType() ), localisation )
         else
             return false
         end
@@ -29,6 +30,6 @@ local result =
 }
 
 local t = initTaskKnowledge( result )
-taskKnowledge["platoon.combat.support.engineer.tasks.knowledges.EquiperExploiterSite"] = t
+taskKnowledge[ "agent.tasks.knowledges.Bridge" ] = t
 
 return result

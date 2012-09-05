@@ -14,6 +14,6 @@ local result =
 }
 
 local t = initTaskKnowledge( result )
-taskKnowledge["agent.tasks.knowledges.Reinforce"] = t
+taskKnowledge[ "agent.tasks.Reinforce" ] = t
 
 return result

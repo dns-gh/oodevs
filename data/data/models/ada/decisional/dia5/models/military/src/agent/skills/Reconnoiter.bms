@@ -29,9 +29,10 @@ rootnode
     -- Reconnoitring the elements.
     -- --------------------------------------------------------------------------------
     activate = function( self )
-        local Activate = Activate   
+        local Activate = Activate
+
         local positions = self.params.entities[ self.nextTargetIndex ]:getPositionsToReconnoiter()
-        local position = getBetterReachingEfficiencyInList( positions, self.params.entities[ self.nextTargetIndex ])
+        local position = getBetterReachingEfficiencyInList( positions, self.params.entities[ self.nextTargetIndex ] )
         Activate( skill.links.reconnoitre, 1, { entities  = { self.params.entities[ self.nextTargetIndex ] }, 
                                                 positions = { position } } )
     end

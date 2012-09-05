@@ -3,7 +3,7 @@
     <description>For an agent to move toward an agent, and reinforce it. &#xD;
 Once the agent is reached, the agent starts reinforcing it.&#xD;
 &#xD;
-Because the action of reinforcing another agent is &quot;permanent&quot; this mission is permanent. The reinforcement is active until the agent is given onother mission.</description>
+Because the action of reinforcing another agent is &quot;permanent&quot; this mission is permanent. The reinforcement is active until another mission is issued.</description>
     <parameters>
         <parameter name="agent">
             <description>The element to reinforce.</description>

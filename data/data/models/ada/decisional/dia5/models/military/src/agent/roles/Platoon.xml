@@ -95,6 +95,8 @@
         <skill name="agent.skills.Settle"/>
         <skill name="agent.skills.GetTransported"/>
         <skill name="agent.skills.Transport"/>
+        <skill name="agent.skills.Bridge"/>
+        <skill name="agent.skills.Reconnoiter"/>
     </skills>
     <resources>
         <resource name="agent.resources.EngageCapacity"/>

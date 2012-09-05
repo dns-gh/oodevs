@@ -16,7 +16,7 @@
     <stages>
         <stage label="Reconnaissance du site de franchissement" disable-when-done="true">
             <skills>
-                <skill name="agent.skills.ReconnoiterSite" main="true">
+                <skill name="agent.skills.Reconnoiter" main="true">
                     <parameter name="entities">
                         <value>
                             <list>

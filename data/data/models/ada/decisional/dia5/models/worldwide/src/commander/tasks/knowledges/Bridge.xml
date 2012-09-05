@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="company.combat.support.engineer.tasks.knowledges.FaireFranchir" source-version="1.0.0" extends="commander.tasks.knowledges.CompanyTask">
-    <description>Interface des connaissances de mission de niveau compagnie</description>
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.tasks.knowledges.Bridge" source-version="1.0.0" extends="commander.tasks.knowledges.CompanyTask">
+    <description>The knowledge of the 'Bridge' mission. This knowledge is used by the commander agent to perform this mission.</description>
     <methods>
         <method name="getSite">
+            <description>Returns the current crossing site.</description>
             <return>
                 <type>
                     <class name="directia.core.Object"/>
@@ -10,6 +11,7 @@
             </return>
         </method>
         <method name="getObjectives">
+            <description>Returns the 'crossingSites' list.</description>
             <return>
                 <type>
                     <list>
@@ -18,7 +20,8 @@
                 </type>
             </return>
         </method>
-        <method name="getTypePontage">
+        <method name="getBridgeSystem">
+            <description>Returns the chosen bridge system (continiously or discontiniously)</description>
             <return>
                 <type>
                     <simple name="numeric"/>
@@ -26,6 +29,7 @@
             </return>
         </method>
         <method name="getPositions">
+            <description>Returns the &quot;crossingSites&quot; list parameter.</description>
             <return>
                 <type>
                     <list>
@@ -35,6 +39,7 @@
             </return>
         </method>
         <method name="getMeetingPoint">
+            <description>Returns the meeting position parameter.</description>
             <return>
                 <type>
                     <list>
@@ -43,8 +48,6 @@
                 </type>
             </return>
         </method>
-        <method name="init" abstract="false">
-            <description>Methode d'initialisation appelée une seule fois</description>
-        </method>
+        <method name="init" abstract="false"/>
     </methods>
 </class>

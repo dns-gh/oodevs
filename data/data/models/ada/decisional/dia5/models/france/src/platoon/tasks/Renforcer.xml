@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="platoon.tasks.Renforcer" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.Reinforce">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="platoon.tasks.Renforcer" source-version="1.0.0" knowledge-class="platoon.tasks.knowledges.Reinforce">
     <parameters>
         <parameter name="objective">
             <description>L'éléments à renforcer.</description>
             <type>
                 <class name="properties.Reinforcable"/>
+                <class name="properties.Supportable"/>
             </type>
         </parameter>
         <parameter name="positions" nullable="true">
@@ -19,16 +20,47 @@
             </default>
         </parameter>
     </parameters>
-    <next-task name="agent.tasks.Reinforce">
-        <parameter name="objective">
-            <value>
-                <parameter>objective</parameter>
-            </value>
-        </parameter>
-        <parameter name="positions">
-            <value>
-                <parameter>positions</parameter>
-            </value>
-        </parameter>
-    </next-task>
+    <stages>
+        <stage label="moving to position" permanent="true">
+            <let name="enemiesInRange">
+                <value>
+                    <call method="queries.getEnemiesToSupport">
+                        <parameter name="elementsToSupport">
+                            <value>
+                                <list>
+                                    <parameter>objective</parameter>
+                                </list>
+                            </value>
+                        </parameter>
+                    </call>
+                </value>
+            </let>
+            <skills>
+                <skill name="agent.skills.primitives.Reinforce" priority="0.7">
+                    <parameter name="entity">
+                        <value>
+                            <parameter>objective</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="positions">
+                        <value>
+                            <parameter>positions</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+                <skill name="agent.skills.Engage" priority="0.3">
+                    <parameter name="entities">
+                        <value>
+                            <parameter>enemiesInRange</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="positions">
+                        <value>
+                            <parameter>positions</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
 </task>

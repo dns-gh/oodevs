@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.skills.primitives.Reinforce" source-version="1.0.0">
-    <description>Renforce un ensemble d'élements</description>
+    <description>To reinforce a given entity.</description>
     <parameters>
         <parameter name="entity">
-            <description>L'élément à renforcer.</description>
+            <description>The entity to reinforce.</description>
             <type>
                 <class name="properties.Reinforcable"/>
             </type>
         </parameter>
         <parameter name="positions" nullable="true">
-            <description>Positions permettant de renforcer les éléments.</description>
+            <description>The positions from which the agent reinforce the entity.</description>
             <type>
                 <list>
                     <class name="properties.Reinforcing"/>
@@ -20,9 +20,6 @@
             </default>
         </parameter>
     </parameters>
-    <goal>
-        <description>Renforcer les éléments.</description>
-    </goal>
     <links>
         <link name="moveAndTakePosition" skill="agent.skills.actions.MoveAndTakePosition">
             <description>Lien vers le skill MoveAndTakePosition</description>

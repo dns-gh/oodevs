@@ -27,7 +27,6 @@
         <skill name="platoon.combat.support.log.skills.PreparerBascule"/>
         <skill name="platoon.combat.support.log.skills.TraiterBlesses"/>
         <skill name="platoon.combat.support.log.skills.TrierBlesses"/>
-        <skill name="platoon.combat.support.engineer.skills.EquiperExploiterSite"/>
         <skill name="platoon.combat.support.engineer.skills.ReparerAvecRenforcement"/>
         <skill name="platoon.combat.support.engineer.skills.Reparer"/>
         <skill name="platoon.combat.support.engineer.skills.ValoriserReparation"/>
@@ -59,9 +58,10 @@
         <skill name="platoon.combat.support.art.skills.AcquerirObjectif"/>
         <skill name="platoon.combat.support.art.skills.OrienterCapteurOuSenseur"/>
         <skill name="platoon.combat.support.rens.skills.Appuyer"/>
-        <skill name="agent.skills.ReconnoiterSite"/>
+        <skill name="agent.skills.Reconnoiter"/>
         <skill name="platoon.combat.support.art.skills.OrienterCapteurTirIndirect"/>
         <skill name="platoon.combat.support.rens.skills.primitives.ActivateRadarTirIndirect"/>
+        <skill name="agent.skills.Bridge"/>
     </skills>
     <resources>
         <resource name="agent.resources.RadarCapacity"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.skills.ReconnoiterSite" source-version="1.0.0">
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.skills.Reconnoiter" source-version="1.0.0">
     <description>Décide de reconnaître les éléments passées en paramètre, dans l'ordre dans lequel ils ont été assignés. Dans le cas ou la fouille des objectifs est préconisée, l'agent décidera, après chaque reconnaissance de chacun des éléments, de le fouiller pour y détecter d'éventuels individus  isolés camouflés dans l'élement. Fouiller les objectifs est beacoup plus long qu'une simple reconnaissance.</description>
     <parameters>
         <parameter name="entities">

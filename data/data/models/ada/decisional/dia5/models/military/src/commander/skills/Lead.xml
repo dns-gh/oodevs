@@ -4,7 +4,7 @@
 This skill may be used for defensive and offensive missions.</description>
     <parameters>
         <parameter name="companyTask">
-            <description>The company task to perform.</description>
+            <description>The string name of the company task to perform.</description>
             <type>
                 <simple name="string"/>
             </type>
@@ -71,7 +71,7 @@ This mission is issued to rear echelon units ready to support the forward echelo
             </type>
         </parameter>
         <parameter name="noCoordination">
-            <description>Define if the agent uses coordination. Depending on the company mission, the coodination can be enable or disabled.</description>
+            <description>Define if the agent uses coordination. Depending on the company mission, the coordination can be enable or disabled.</description>
             <type>
                 <simple name="boolean"/>
             </type>
@@ -80,7 +80,7 @@ This mission is issued to rear echelon units ready to support the forward echelo
             </default>
         </parameter>
         <parameter name="allInFront" nullable="true">
-            <description>Define if all subodinate units should by as part of the first echelon.</description>
+            <description>Define if all subordinate units should by as part of the first echelon.</description>
             <type>
                 <simple name="boolean"/>
             </type>
