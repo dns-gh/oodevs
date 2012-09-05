@@ -106,21 +106,36 @@ target_link_libraries( cloud_server
 )
 
 ################################################################################
+# client
+################################################################################
+glob_dir( files src
+    "${root_dir}/src/libraries/client/*.cpp"
+)
+glob_qt4_headers( moc_headers headers src
+    "${root_dir}/src/libraries/client/*.h"
+)
+glob_qt4_ui( ui_headers ui_files 
+    "${root_dir}/src/libraries/client/*.ui"
+)
+add_static_library( client ${files} ${headers} ${moc_headers} ${ui_headers} )
+set_target_folder( client libraries )
+set_target_qt4( client )
+
+################################################################################
 # cloud_client
 ################################################################################
 glob_dir( files src
     "${root_dir}/src/applications/cloud_client/*.cpp"
 )
-glob_qt4_ui( ui_headers ui_files 
-    "${root_dir}/src/applications/cloud_client/*.ui"
-)
 configure_rc( cloud_client res files
     "${root_dir}/src/applications/cloud_client/version.rc.in"
 )
-add_executable_target( cloud_client WIN32 ${files} ${ui_headers} )
+add_executable_target( cloud_client WIN32 ${files} )
 set_target_folder( cloud_client applications )
 set_target_qt4( cloud_client )
 target_link_libraries( cloud_client
+    client
+    host
     runtime
 )
 

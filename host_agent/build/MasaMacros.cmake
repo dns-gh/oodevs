@@ -96,6 +96,12 @@ macro( glob_qt4_ui headers ui )
     source_group( autogen FILES ${${headers}} )
 endmacro()
 
+macro( glob_qt4_headers output input group )
+    glob_dir( ${input} ${group} ${ARGN} )
+    qt4_wrap_cpp( ${output} ${${input}} )
+    source_group( autogen FILES ${${output}} )
+endmacro()
+
 macro( set_target_qt4 target )
     # include dir where ui/moc files are generated
     add_target_include( ${target} ${CMAKE_CURRENT_BINARY_DIR} )
