@@ -41,7 +41,9 @@ InfrastructureCapacity::InfrastructureCapacity( xml::xistream& xis )
     , enabled_        ( true )
     , needUpdate_     ( true )
 {
-    InitializeData( xis );
+    xis >> xml::attribute( "role", role_ )
+        >> xml::attribute( "enabled", enabled_ )
+        >> xml::attribute( "threshold", threshold_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,17 +80,6 @@ InfrastructureCapacity::InfrastructureCapacity( const InfrastructureCapacity& fr
 InfrastructureCapacity::~InfrastructureCapacity()
 {
     //NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: InfrastructureCapacity::InitializeSpeed
-// Created: SLG 2010-01-13
-// -----------------------------------------------------------------------------
-void InfrastructureCapacity::InitializeData( xml::xistream& xis )
-{
-    xis >> xml::attribute( "role", role_ )
-        >> xml::attribute( "enabled", enabled_ )
-        >> xml::attribute( "threshold", threshold_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -148,7 +139,8 @@ void InfrastructureCapacity::Update( MIL_Object_ABC& object, unsigned int /*time
 // -----------------------------------------------------------------------------
 void InfrastructureCapacity::Update( xml::xistream& xis, const MIL_Object_ABC& /*object*/ )
 {
-    InitializeData( xis );
+    xis >> xml::optional >> xml::attribute( "enabled", enabled_ )
+        >> xml::optional >> xml::attribute( "threshold", threshold_ );
 }
 
 // -----------------------------------------------------------------------------

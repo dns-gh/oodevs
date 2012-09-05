@@ -99,6 +99,7 @@ private:
     void ReadInfrastructure( xml::xistream& xis );
     void ReadPhysical( xml::xistream& xis );
     void ReadResourceNetworks( xml::xistream& xis );
+    void ReadStructuralState( xml::xistream& xis );
     void ReadPoint( xml::xistream& xis, T_PointVector& vector );
     template < typename T >
     void SendCapacity( sword::UrbanAttributes& msg ) const;

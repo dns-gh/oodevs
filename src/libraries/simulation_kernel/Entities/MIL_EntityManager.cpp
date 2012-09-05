@@ -344,19 +344,26 @@ void MIL_EntityManager::ReadOrbat( xml::xistream& xis )
 void MIL_EntityManager::LoadUrbanModel( const MIL_Config& config )
 {
     // TODO déplacer dans une factory? ou dans MIL_ObjectManager
-    std::string directoryPath = bfs::path( config.GetTerrainFile() ).branch_path().string();
     try
     {
-        // TODO Supprimer le chemin en hard
-        const bfs::path fullPath = bfs::path( directoryPath ) / "urban" / "urban.xml";
-        if( bfs::exists( fullPath ) ) // avoid exception
+        bool oldUrbanMode = false;
+        bfs::path fullPath( config.GetUrbanFile() );
+        bool urbanFound = bfs::exists( fullPath );
+        if( !urbanFound )
+        {
+            fullPath = bfs::path( config.GetTerrainUrbanFile() );
+            urbanFound = bfs::exists( fullPath );
+            oldUrbanMode = urbanFound; 
+        }
+        if( urbanFound ) // avoid exception
         {
             MT_LOG_STARTUP_MESSAGE( "--------------------------------" );
             MT_LOG_STARTUP_MESSAGE( "----  Loading UrbanModel    ----" );
             MT_LOG_STARTUP_MESSAGE( "--------------------------------" );
 
-            MT_LOG_INFO_MSG( MT_FormatString( "Loading Urban Model from path '%s'", directoryPath.c_str() ) )
-                MIL_Tools::CheckXmlCrc32Signature( config.GetUrbanTerrainFile() );
+            std::string directoryPath = bfs::path( oldUrbanMode ? config.GetTerrainFile() : config.GetExerciseFile() ).branch_path().string();
+            MT_LOG_INFO_MSG( MT_FormatString( "Loading Urban Model from path '%s'", directoryPath.c_str() ) );
+            MIL_Tools::CheckXmlCrc32Signature( oldUrbanMode ? config.GetUrbanTerrainFile() : config.GetUrbanFile() );
 
             config.GetLoader().LoadFile( fullPath.string(), boost::bind( &MIL_EntityManager::ReadUrban, this, _1, boost::ref( cities_ ) ) );
             if( cities_.empty() )
@@ -367,11 +374,14 @@ void MIL_EntityManager::LoadUrbanModel( const MIL_Config& config )
 
             MT_LOG_INFO_MSG( MT_FormatString( "%d Urban blocs", MIL_AgentServer::GetWorkspace().GetUrbanCache().GetUrbanBlocks().size() ) );
 
-            const std::string strUrbanState = config.GetUrbanStateFile();
-            if( !strUrbanState.empty() && bfs::exists( bfs::path( strUrbanState ) ) )
+            if( oldUrbanMode )
             {
-                MT_LOG_INFO_MSG( MT_FormatString( "UrbanState file name : '%s'", strUrbanState.c_str() ) );
-                config.GetLoader().LoadFile( strUrbanState, boost::bind( &MIL_EntityManager::ReadUrbanStates, this, _1 ) );
+                const std::string strUrbanState = config.GetUrbanStateFile();
+                if( !strUrbanState.empty() && bfs::exists( bfs::path( strUrbanState ) ) )
+                {
+                    MT_LOG_INFO_MSG( MT_FormatString( "UrbanState file name : '%s'", strUrbanState.c_str() ) );
+                    config.GetLoader().LoadFile( strUrbanState, boost::bind( &MIL_EntityManager::ReadUrbanStates, this, _1 ) );
+                }
             }
             NotifyPionsInsideUrbanObject();
         }

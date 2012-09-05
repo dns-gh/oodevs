@@ -348,7 +348,8 @@ void Model::SaveExercise( const tools::ExerciseConfig& config )
     }
     tools::WriteXmlCrc32Signature( config.GetOrbatFile() );
     config.SerializeAndSignTerrainFiles( schemaWriter );
-    SerializeAndSign( config.GetUrbanFile(), urban_, schemaWriter );
+    if( urban_.Count() > 0 )
+        SerializeAndSign( config.GetUrbanFile(), urban_, schemaWriter );
     SerializeAndSign( config.GetWeatherFile(), weather_, schemaWriter );
     SerializeAndSign( config.GetProfilesFile(), profiles_, schemaWriter );
     SerializeAndSign( config.GetScoresFile(), scores_, schemaWriter );

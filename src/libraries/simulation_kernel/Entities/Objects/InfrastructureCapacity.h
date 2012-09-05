@@ -60,11 +60,6 @@ private:
     InfrastructureCapacity( const InfrastructureCapacity& );            //!< Copy constructor
     InfrastructureCapacity& operator=( const InfrastructureCapacity& ); //!< Assignment operator
 
-    //! @name Helpers
-    //@{
-    void InitializeData( xml::xistream& xis );
-    //@}
-
 private:
     //! @name Member data
     //@{

@@ -49,6 +49,7 @@ MIL_UrbanObject::MIL_UrbanObject( xml::xistream& xis, const MIL_ObjectBuilder_AB
     ReadInfrastructure( xis );
     ReadPhysical( xis );
     ReadResourceNetworks( xis );
+    ReadStructuralState( xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -262,20 +263,35 @@ void MIL_UrbanObject::ReadColor( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_UrbanObject::ReadInfrastructure( xml::xistream& xis )
 {
-    std::string infrastructure;
+    std::string type;
+    std::string role;
     xis >> xml::optional >> xml::start( "infrastructures" )
            >> xml::optional >> xml::start( "infrastructure" )
-                >> xml::attribute( "type", infrastructure )
+           >> xml::optional >> xml::attribute( "type", type )
+           >> xml::optional >> xml::attribute( "role", role )
             >>xml::end
         >>xml::end;
-    if( const PHY_InfrastructureType* infraType = PHY_InfrastructureType::Find( infrastructure ) )
+    if( type.empty() && !role.empty() )
+        type =  role;
+    if( const PHY_InfrastructureType* infraType = PHY_InfrastructureType::Find( type ) )
     {
         InfrastructureCapacity* capacity = new InfrastructureCapacity( *infraType );
         capacity->Register( *this );
+        xis >> xml::start( "infrastructures" )
+                >> xml::start( "infrastructure" );
+        capacity->Update( xis, *this );
+        xis     >> xml::end
+            >> xml::end;
         if( const PHY_InfrastructureType::MedicalProperties* medical = infraType->GetMedicalProperties() )
         {
             MedicalCapacity* capacity = new MedicalCapacity( medical->emergencyBedsRate_, medical->emergencyDoctorsRate_, medical->nightDoctorsRate_ );
             capacity->Register( *this );
+            if( xis.has_child( "medical-treatment" ) )
+            {
+                xis >> xml::start( "medical-treatment" );
+                capacity->Update( xis, *this );
+                xis >> xml::end;
+            }
         }
     }
 }
@@ -305,6 +321,21 @@ void MIL_UrbanObject::ReadResourceNetworks( xml::xistream& xis )
         if( ResourceNetworkCapacity* capacity = Retrieve< ResourceNetworkCapacity >() )
         {
             xis >> xml::start( "resources" );
+            capacity->Update( xis, *this );
+            xis >> xml::end;
+        }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_UrbanObject::ReadStructuralState
+// Created: JSR 2012-09-05
+// -----------------------------------------------------------------------------
+void MIL_UrbanObject::ReadStructuralState( xml::xistream& xis )
+{
+    if( xis.has_child( "structural-state") )
+        if( StructuralCapacity* capacity = Retrieve< StructuralCapacity >() )
+        {
+            xis >> xml::start( "structural-state" );
             capacity->Update( xis, *this );
             xis >> xml::end;
         }

@@ -71,17 +71,20 @@ InfrastructureAttribute::InfrastructureAttribute( xml::xistream& xis, kernel::Co
     , position_   ( object.Get< kernel::UrbanPositions_ABC >().Barycenter() )
 {
     std::string type;
+    std::string role;
     float threshold = static_cast< float >( threshold_ ) / 100.f;
     xis >> xml::optional 
             >> xml::start( "infrastructures" )
                 >> xml::start( "infrastructure" )
                     >> xml::optional >> xml::attribute( "type", type )
-                    >> xml::optional >> xml::attribute( "role", type )
+                    >> xml::optional >> xml::attribute( "role", role )
                     >> xml::optional >> xml::attribute( "enabled", enabled_ )
                     >> xml::optional >> xml::attribute( "threshold", threshold )
                 >> xml::end
             >> xml::end;
     threshold_ = static_cast< unsigned int >( 100 * threshold + 0.5f );
+    if( type.empty() && !role.empty() )
+        type =  role;
     type_ = objectTypes.StringResolver< kernel::InfrastructureType >::Find( type );
     if( type_ )
     {
