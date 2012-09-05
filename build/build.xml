@@ -996,7 +996,7 @@
                   lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix}"/>
     </target>
 
-    <target name="plugins_test" depends="library.hla_plugin,library.tic,library.script_plugin,library.bml_plugin,library.crossbow_plugin,library.timeline_plugin,web_control_plugin_test">
+    <target name="plugins_test" depends="library.hla_plugin,library.tic,library.script_plugin,library.bml_plugin,library.crossbow_plugin,library.timeline_plugin,web_control_plugin_test,library.logistic_plugin">
         <build-test name="plugins" depends="xerces,terrain,boost,openssl,protobuf,qt4"
             libs="directia-${platform}-mt-4_6,gdal_i,
                   lib${ant.project.name}_tools-${platform}-mt,
@@ -1009,7 +1009,8 @@
                   lib${ant.project.name}_timeline_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_crossbow_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
-                  lib${ant.project.name}_protocol-${platform}-mt">
+                  lib${ant.project.name}_protocol-${platform}-mt,
+                  lib${ant.project.name}_logistic_plugin-${platform}-mt">
             <defineset define="QT3_SUPPORT"/>
         </build-test>
     </target>

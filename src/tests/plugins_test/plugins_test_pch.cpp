@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "plugins_test_pch.h"
+#include <google/protobuf/stubs/common.h>
 #include <iostream>
 #include <stdexcept>
 #include <string>
@@ -59,3 +60,17 @@ std::string GetTestTempDirectory()
 {
     return temp_directory;
 }
+
+struct ProtobufConfig
+{
+    ProtobufConfig()
+    {
+        GOOGLE_PROTOBUF_VERIFY_VERSION;
+    }
+    ~ProtobufConfig()
+    {
+        google::protobuf::ShutdownProtobufLibrary();
+    }
+};
+
+BOOST_GLOBAL_FIXTURE( ProtobufConfig );
