@@ -195,8 +195,8 @@ MIL_KnowledgeGroup::~MIL_KnowledgeGroup()
             msg().mutable_knowledge_group()->set_id( id_ );
             msg().mutable_party()->set_id( army_->GetID() );
             msg.Send( NET_Publisher_ABC::Publisher() );
-    }
-        catch( std::exception& e )
+        }
+        catch( std::exception& )
         {} // Never mind if no publisher registered, just don't throw.
     }
 }
