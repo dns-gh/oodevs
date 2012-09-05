@@ -75,7 +75,6 @@ private:
     int currentTick_;
     std::string simTime_;
     const tools::SessionConfig& sessionConfig_;
-    const kernel::StaticModel& staticModel_;
     boost::scoped_ptr< ConsignResolver_ABC >    maintenanceResolver_;
     boost::scoped_ptr< ConsignResolver_ABC >    supplyResolver_;
     boost::scoped_ptr< ConsignResolver_ABC >    funeralResolver_;
