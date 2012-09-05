@@ -138,6 +138,23 @@ void OrderParameter::SetMinMaxOccurs( unsigned int min, unsigned int max )
     maxOccurs_ = max;
 }
 
+// -----------------------------------------------------------------------------
+// Name: OrderParameter::GetIdentifier
+// Created: LDC 2012-09-05
+// -----------------------------------------------------------------------------
+std::string OrderParameter::GetIdentifier() const
+{
+    return identifier_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrderParameter::SetIdentifier
+// Created: LDC 2012-09-05
+// -----------------------------------------------------------------------------
+void OrderParameter::SetIdentifier( const std::string& id )
+{
+    identifier_ = id;
+}
 
 // -----------------------------------------------------------------------------
 // Name: OrderParameter::GetValue

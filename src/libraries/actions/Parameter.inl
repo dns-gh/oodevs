@@ -55,6 +55,36 @@ std::string Parameter< T >::GetType() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Parameter::GetIdentifier
+// Created: LDC 2012-09-05
+// -----------------------------------------------------------------------------
+template< typename T >
+std::string Parameter< T >::GetIdentifier() const
+{
+    return parameter_.GetIdentifier();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Parameter::SetIdentifier
+// Created: LDC 2012-09-05
+// -----------------------------------------------------------------------------
+template< typename T >
+void Parameter< T >::SetIdentifier( const std::string& identifier )
+{
+    parameter_.SetIdentifier( identifier );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Parameter::IsOptional
+// Created: LDC 2012-09-05
+// -----------------------------------------------------------------------------
+template< typename T >
+bool Parameter< T >::IsOptional() const
+{
+    return parameter_.IsOptional();
+}
+
+// -----------------------------------------------------------------------------
 // Name: Parameter::SetValue
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------

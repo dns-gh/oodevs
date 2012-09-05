@@ -39,6 +39,9 @@ public:
     //! @name Operations
     //@{
     virtual std::string GetType() const;
+    virtual std::string GetIdentifier() const;
+    virtual void SetIdentifier( const std::string& identifier );
+    virtual bool IsOptional() const;
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void Serialize( xml::xostream& xos ) const;
     void SetValue( const T& value );

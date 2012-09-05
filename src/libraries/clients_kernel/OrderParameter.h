@@ -60,7 +60,9 @@ public:
     //@{
     std::string GetName() const;
     std::string GetType() const;
+    std::string GetIdentifier() const;
     void SetName( const std::string& name );
+    void SetIdentifier( const std::string& id );
     void SetOptional( bool optional );
     void SetMinMaxOccurs( unsigned int min, unsigned int max );
     bool IsOptional() const;
@@ -95,6 +97,7 @@ private:
     //! @name Member data
     //@{
     std::string name_;
+    std::string identifier_;
     std::string type_;
     bool optional_;
     unsigned int minOccurs_;

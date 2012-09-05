@@ -150,5 +150,20 @@
         <source>Density per 100 square meter</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>gui::ObstaclePrototype_ABC</name>
+    <message>
+        <source>Activity time:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activation time:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

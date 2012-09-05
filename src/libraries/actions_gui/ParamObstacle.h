@@ -11,7 +11,6 @@
 #define __ParamObstacle_h_
 
 #include "ParamLocationComposite.h"
-//#include "Param_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_gui/ValuedComboBox.h"
 
@@ -36,6 +35,8 @@ namespace actions
         class ParamLocation;
         template< typename T > class ParamNumericField;
         class ParamAutomat;
+        class ParamDateTime;
+        class ParamStringField;
 
 // =============================================================================
 /** @class  ParamObstacle
@@ -43,7 +44,7 @@ namespace actions
 */
 // Created: APE 2004-05-18
 // =============================================================================
-class ParamObstacle : public ParamLocationComposite // public Param_ABC
+class ParamObstacle : public ParamLocationComposite
 {
     Q_OBJECT
 
@@ -93,6 +94,9 @@ private:
     ParamLocation*                                      location_;
     ParamNumericField< float >*                         density_;
     ParamAutomat*                                       tc2_;
+    ParamNumericField< int >*                           activityTime_;
+    ParamNumericField< int >*                           activationTime_;
+    ParamStringField*                                   name_;
     //@}
 };
 

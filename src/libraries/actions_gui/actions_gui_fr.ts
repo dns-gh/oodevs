@@ -150,5 +150,20 @@
         <source>Density per 100 square meter</source>
         <translation>Densité par 100 mètres carrés</translation>
     </message>
+    <message>
+        <source>Name</source>
+        <translation>Nom</translation>
+    </message>
+</context>
+<context>
+    <name>gui::ObstaclePrototype_ABC</name>
+    <message>
+        <source>Activity time:</source>
+        <translation>Temps d&apos;activité:</translation>
+    </message>
+    <message>
+        <source>Activation time:</source>
+        <translation>Délai avant activation :</translation>
+    </message>
 </context>
 </TS>

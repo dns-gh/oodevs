@@ -12,9 +12,11 @@
 #include "moc_ParamObstacle.cpp"
 #include "InterfaceBuilder_ABC.h"
 #include "ListParameter.h"
+#include "ParamAutomat.h"
+#include "ParamDateTime.h"
 #include "ParamLocation.h"
 #include "ParamNumericField.h"
-#include "ParamAutomat.h"
+#include "ParamStringField.h"
 #include "actions/Action_ABC.h"
 #include "actions/EngineerConstruction.h"
 #include "actions/ObstacleType.h"
@@ -41,9 +43,16 @@ ParamObstacle::ParamObstacle( const InterfaceBuilder_ABC& builder, const kernel:
     , typeCombo_  ( 0 )
     , obstacleTypeCombo_( 0 )
 {
-    location_   = static_cast< ParamLocation* > ( AddElement( "location", tr( "Obstacle location" ).toAscii().constData() ) );
-    density_    = static_cast< ParamFloat* >    ( AddElement( "float", tr( "Density per 100 square meter" ).toAscii().constData() ) );
-    tc2_        = static_cast< ParamAutomat* >  ( AddElement( "automat", tr( "TC2" ).toAscii().constData() ) );
+    location_ = static_cast< ParamLocation* >( AddElement( "location", tr( "Obstacle location" ).toAscii().constData() ) );
+    density_ = static_cast< ParamFloat* >( AddElement( "float", tr( "Density per 100 square meter" ).toAscii().constData() ) );
+    tc2_ = static_cast< ParamAutomat* >( AddElement( "automat", tr( "TC2" ).toAscii().constData() ) );
+    kernel::OrderParameter activityTimeParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activity time:" ).toAscii().constData(), "integer", true );
+    activityTimeParameter.SetIdentifier( "ActivityTime" );
+    activityTime_ = static_cast< ParamNumericField< int >* >( &builder.BuildOne( activityTimeParameter, false ) );
+    kernel::OrderParameter activationTimeParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activation time:" ).toAscii().constData(), "integer", true );
+    activationTimeParameter.SetIdentifier( "ActivationTime" );
+    activationTime_ = static_cast< ParamNumericField< int >* >( &builder.BuildOne( activationTimeParameter, false ) );
+    name_ = static_cast< ParamStringField* >( &builder.BuildOne( kernel::OrderParameter( tr( "Name" ).toAscii().constData(), "string", true ), false ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -120,7 +129,7 @@ QWidget* ParamObstacle::BuildInterface( QWidget* parent )
 
     // Density
     {
-        QGroupBox* densityBox = static_cast< QGroupBox* >( static_cast< Param_ABC* >( density_ )->BuildInterface( parent ) );
+        QGroupBox* densityBox = static_cast< QGroupBox* >( density_->BuildInterface( parent ) );
         density_->SetLimits( 0.f, 5.f );
         densityBox->layout()->setMargin( 0 );
         densityBox->layout()->setSpacing( 0 );
@@ -129,7 +138,7 @@ QWidget* ParamObstacle::BuildInterface( QWidget* parent )
 
     // TC2
     {
-        QGroupBox* tc2Box = static_cast< QGroupBox* >( static_cast< Param_ABC* >( tc2_ )->BuildInterface( parent ) );
+        QGroupBox* tc2Box = static_cast< QGroupBox* >( tc2_->BuildInterface( parent ) );
         tc2Box->layout()->setMargin( 0 );
         tc2Box->layout()->setSpacing( 0 );
         layout->addWidget( tc2Box );
@@ -137,10 +146,28 @@ QWidget* ParamObstacle::BuildInterface( QWidget* parent )
 
     // Location
     {
-        QGroupBox* locationBox = static_cast< QGroupBox* >( static_cast< Param_ABC* >( location_ )->BuildInterface( parent ) );
+        QGroupBox* locationBox = static_cast< QGroupBox* >( location_->BuildInterface( parent ) );
         locationBox->layout()->setMargin( 0 );
         locationBox->layout()->setSpacing( 0 );
         layout->addWidget( locationBox );
+    }
+    // Name
+    {
+        QGroupBox* nameBox = static_cast< QGroupBox* >( name_->BuildInterface( parent ) );
+        nameBox->layout()->setMargin( 0 );
+        nameBox->layout()->setSpacing( 0 );
+        layout->addWidget( nameBox );
+    }
+    // Activity/Activation Times
+    {
+        QGroupBox* activityTimeBox = static_cast< QGroupBox* >( activityTime_->BuildInterface( parent ) );
+        activityTimeBox->layout()->setMargin( 0 );
+        activityTimeBox->layout()->setSpacing( 0 );
+        layout->addWidget( activityTimeBox );
+        QGroupBox* activationTimeBox = static_cast< QGroupBox* >( activationTime_->BuildInterface( parent ) );
+        activationTimeBox->layout()->setMargin( 0 );
+        activationTimeBox->layout()->setSpacing( 0 );
+        layout->addWidget( activationTimeBox );        
     }
 
     connect( typeCombo_, SIGNAL( activated( int ) ), SLOT( OnTypeChanged() ) );
@@ -186,7 +213,12 @@ void ParamObstacle::CommitTo( actions::ParameterContainer_ABC& action ) const
         if( type->HasLogistic() )
             tc2_->CommitTo( *param );
         if( type->CanBeReservedObstacle() )
+        {
             param->AddParameter( *new actions::parameters::ObstacleType( kernel::OrderParameter( tr( "Obstacle type" ).toAscii().constData(), "obstacletype", false ), obstacleTypeCombo_->GetValue() ) );
+            activityTime_->CommitTo( *param );
+            activationTime_->CommitTo( *param );
+        }
+        name_->CommitTo( *param );
         location_->CommitTo( *param );
         action.AddParameter( *param.release() );
     }
@@ -213,6 +245,8 @@ void ParamObstacle::OnTypeChanged()
     tc2_->Purge();
     tc2_->RemoveFromController();
     tc2_->Hide();
+    activityTime_->Hide();
+    activationTime_->Hide();
     const kernel::ObjectType* type = typeCombo_->GetValue();
     if( !type )
         return;
@@ -222,6 +256,11 @@ void ParamObstacle::OnTypeChanged()
     {
         tc2_->RegisterIn( controller_ );
         tc2_->Show();
+    }
+    if( type->CanBeReservedObstacle() )
+    {
+        activityTime_->Show();
+        activationTime_->Show();
     }
     location_->RemoveFromController();
     location_->SetShapeFilter( type->CanBePoint(), type->CanBeLine(), type->CanBePolygon(), type->CanBeCircle(), type->CanBeRectangle() );
