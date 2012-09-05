@@ -88,6 +88,7 @@ private:
     void AlignmentChanged( Qt::Alignment alignment );
     void FileNew();
     void FileOpen();
+    void SetLineSpacing( int lineSpacing );
     //@}
 
 private slots:
@@ -109,7 +110,6 @@ private slots:
 
     void CurrentCharFormatChanged( const QTextCharFormat& format );
     void CursorPositionChanged();
-
     void InsertImage();
     //@}
 

@@ -297,7 +297,7 @@ QWidget* ADN_Missions_GUI::BuildFragOrders()
     connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), genObjectList, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
 
     //Html Mission Sheet Editor
-    ADN_HtmlEditor* editor = new ADN_HtmlEditor();
+    ADN_HtmlEditor* editor = new ADN_HtmlEditor( gui::HtmlEditor::eAllMask ^ gui::HtmlEditor::ePoliceType );
     vInfosConnectors[ eMissionSheetDescription ] = &editor->GetConnector();
 
     // Connect the gui to the data.

@@ -243,7 +243,6 @@ void HtmlEditor::CreateActions()
         actionTextList_->setPriority( QAction::LowPriority );
         actionTextList_->setShortcut( Qt::CTRL + Qt::Key_K );
         connect( actionTextList_, SIGNAL( triggered() ), this, SLOT( TextListing() ) );
-        actionTextList_->setCheckable( true );
 
         bulletComboStyle_ = new QComboBox();
         bulletComboStyle_->addItem( "Standard" );
@@ -539,7 +538,6 @@ void HtmlEditor::TextSize( const QString &point )
 void HtmlEditor::TextStyle( int styleIndex )
 {
     QTextCursor cursor = textEdit_->textCursor();
-
     if( styleIndex != 0 )
     {
         bulletStyle_ = QTextListFormat::ListDisc;
@@ -588,7 +586,17 @@ void HtmlEditor::TextStyle( int styleIndex )
     }
     else
     {
+        QTextList *list = cursor.currentList();
         QTextBlockFormat bfmt;
+        if( list ) {
+            QTextListFormat listFormat;
+            listFormat.setIndent( 0 );
+            listFormat.setStyle( bulletStyle_ );
+            list->setFormat( listFormat );
+
+            for( int i = list->count() - 1; i >= 0 ; --i )
+                list->removeItem( i );
+        }
         bfmt.setObjectIndex( -1 );
         cursor.mergeBlockFormat( bfmt );
     }
@@ -642,7 +650,28 @@ void HtmlEditor::CurrentCharFormatChanged(const QTextCharFormat &format)
 void HtmlEditor::CursorPositionChanged()
 {
     TextFamily( "Calibri" );
+    SetLineSpacing( 0 );
     AlignmentChanged( textEdit_->alignment() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: HtmlEditor::SetLineSpacing
+// Created: NPT 2012-09-04
+// -----------------------------------------------------------------------------
+void HtmlEditor::SetLineSpacing( int lineSpacing )
+{
+    int lineCount = 0;
+    for ( QTextBlock block = textEdit_->document()->begin(); block.isValid(); block = block.next(), ++lineCount )
+    {
+        QTextCursor tc = QTextCursor(block);
+        QTextBlockFormat fmt = block.blockFormat();
+        if(fmt.topMargin() != lineSpacing || fmt.bottomMargin() != lineSpacing ) 
+        {
+            fmt.setTopMargin( lineSpacing );
+            fmt.setBottomMargin( lineSpacing );
+            tc.setBlockFormat( fmt );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
