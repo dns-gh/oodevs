@@ -98,7 +98,7 @@ endmacro()
 
 macro( glob_qt4_headers output input group )
     glob_dir( ${input} ${group} ${ARGN} )
-    qt4_wrap_cpp( ${output} ${${input}} )
+    qt4_wrap_cpp( ${output} ${${input}} OPTIONS "-nw" )
     source_group( autogen FILES ${${output}} )
 endmacro()
 
