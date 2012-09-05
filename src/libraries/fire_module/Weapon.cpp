@@ -68,34 +68,31 @@ double Weapon::ModifyReloadingDuration( const wrapper::View& firer, double rDura
 void Weapon::DirectFire( const wrapper::View& firer, const wrapper::View& target, const wrapper::View& compTarget, bool bUsePH ) const
 {
     assert( IsReady() );
-    const unsigned int nCurrentTimeStep = model_[ "tick" ];
-    const unsigned int nNextTimeStep = nCurrentTimeStep + 1;
-    double rNextTimeStepToFire = module_->weapons[ weapon_ ].first;
-    if( rNextTimeStepToFire < (float)nCurrentTimeStep )
-        rNextTimeStepToFire = nCurrentTimeStep;
-    unsigned int nNbrAmmoFiredFromLoader = module_->weapons[ weapon_ ].second;
-    while( (unsigned int)rNextTimeStepToFire < nNextTimeStep )
+    const double current = model_[ "tick" ];
+    double next = std::max( current, module_->weapons[ weapon_ ].first );
+    unsigned int fired = module_->weapons[ weapon_ ].second;
+    while( next <= current )
     {
-        unsigned int nNbrAmmoToFire = type_->GetNbrAmmoPerBurst();
+        unsigned int burst = type_->GetNbrAmmoPerBurst();
         if( type_->GetNbrAmmoPerLoader() != 0 )
-            nNbrAmmoToFire = std::min( nNbrAmmoToFire, type_->GetNbrAmmoPerLoader() - nNbrAmmoFiredFromLoader );
-        assert( nNbrAmmoToFire > 0 );
-        unsigned int nNbrAmmoReserved = type_->ReserveAmmunition( firer, nNbrAmmoToFire );
-        if( nNbrAmmoReserved )
+            burst = std::min( burst, type_->GetNbrAmmoPerLoader() - fired );
+        assert( burst > 0 );
+        unsigned int reserved = type_->ReserveAmmunition( firer, burst );
+        if( reserved )
         {
-            nNbrAmmoFiredFromLoader += nNbrAmmoReserved;
+            fired += reserved;
             type_->DirectFire( firer, target, compTarget, bUsePH );
-            rNextTimeStepToFire += type_->GetBurstDuration();
-            if( nNbrAmmoFiredFromLoader == type_->GetNbrAmmoPerLoader() )
+            next += type_->GetBurstDuration();
+            if( fired == type_->GetNbrAmmoPerLoader() )
             {
-                rNextTimeStepToFire += ModifyReloadingDuration( firer, type_->GetReloadingDuration() );
-                nNbrAmmoFiredFromLoader  = 0;
+                next += ModifyReloadingDuration( firer, type_->GetReloadingDuration() );
+                fired = 0;
             }
         }
-        if( nNbrAmmoReserved < nNbrAmmoToFire ) // Soutes vide
+        if( reserved < burst ) // Soutes vide
             break;
     }
-    module_->weapons[ weapon_ ] = std::make_pair( rNextTimeStepToFire, nNbrAmmoFiredFromLoader ); // $$$$ MCO 2012-08-30: yes we maintain a module global state, and no it's not that great...
+    module_->weapons[ weapon_ ] = std::make_pair( next, fired ); // $$$$ MCO 2012-08-30: yes we maintain a module global state, and no it's not that great...
 }
 
 //// -----------------------------------------------------------------------------
@@ -106,10 +103,10 @@ void Weapon::DirectFire( const wrapper::View& firer, const wrapper::View& target
 //{
 //    assert( type_->CanDirectFire() && IsReady() );
 //
-//    const unsigned int nCurrentTimeStep = time_.GetCurrentTick();
-//    const unsigned int nNextTimeStep    = nCurrentTimeStep + 1;
-//    if( rNextTimeStepToFire_ < (float)nCurrentTimeStep )
-//        rNextTimeStepToFire_ = nCurrentTimeStep;
+//    const unsigned int current = time_.GetCurrentTick();
+//    const unsigned int nNextTimeStep    = current + 1;
+//    if( rNextTimeStepToFire_ < (float)current )
+//        rNextTimeStepToFire_ = current;
 //
 //    if( (unsigned int)rNextTimeStepToFire_ < nNextTimeStep )
 //    {
@@ -117,9 +114,9 @@ void Weapon::DirectFire( const wrapper::View& firer, const wrapper::View& target
 //        const double rDamageSurface = target.GetPopulation().GetType().GetDamageSurface( roe );
 //        const unsigned int     nKilledHumans  = (unsigned int)ceil( rDamageSurface * target.GetDensity() );
 //
-//        unsigned int nNbrAmmoToFire = (unsigned int)firer.GetRole< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( type_->GetDotationCategory(), nKilledHumans );
+//        unsigned int burst = (unsigned int)firer.GetRole< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( type_->GetDotationCategory(), nKilledHumans );
 //
-//        type_->DirectFire( firer, target, nNbrAmmoToFire, fireResult );
+//        type_->DirectFire( firer, target, burst, fireResult );
 //
 //        rNextTimeStepToFire_ += type_->GetBurstDuration();
 //    }
@@ -136,26 +133,26 @@ void Weapon::DirectFire( const wrapper::View& firer, const wrapper::View& target
 //    assert( type_->GetDotationCategory() == effect.GetIndirectDotationCategory().GetDotationCategory() );
 //
 //    bool bHasFired = false;
-//    const unsigned int nCurrentTimeStep = time_.GetCurrentTick();
-//    const unsigned int nNextTimeStep    = nCurrentTimeStep + 1;
-//    if( rNextTimeStepToFire_ < (float)nCurrentTimeStep )
-//        rNextTimeStepToFire_ = nCurrentTimeStep;
+//    const unsigned int current = time_.GetCurrentTick();
+//    const unsigned int nNextTimeStep    = current + 1;
+//    if( rNextTimeStepToFire_ < (float)current )
+//        rNextTimeStepToFire_ = current;
 //
 //    while( (unsigned int)rNextTimeStepToFire_ < nNextTimeStep && !effect.IsInterventionTypeFired() )
 //    {
-//        unsigned int nNbrAmmoToFire = type_->GetNbrAmmoPerBurst();
+//        unsigned int burst = type_->GetNbrAmmoPerBurst();
 //        if( type_->GetNbrAmmoPerLoader() != 0 )
-//            nNbrAmmoToFire = std::min( nNbrAmmoToFire, type_->GetNbrAmmoPerLoader() - nNbrAmmoFiredFromLoader_ );
+//            burst = std::min( burst, type_->GetNbrAmmoPerLoader() - nNbrAmmoFiredFromLoader_ );
 //
-//        nNbrAmmoToFire = std::min( nNbrAmmoToFire, effect.GetNbrAmmoToCompleteInterventionType() );
-//        assert( nNbrAmmoToFire > 0 );
+//        burst = std::min( burst, effect.GetNbrAmmoToCompleteInterventionType() );
+//        assert( burst > 0 );
 //
-//        unsigned int nNbrAmmoReserved = (unsigned int)firer.GetRole< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( type_->GetDotationCategory(), nNbrAmmoToFire );
-//        if( nNbrAmmoReserved )
+//        unsigned int reserved = (unsigned int)firer.GetRole< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( type_->GetDotationCategory(), burst );
+//        if( reserved )
 //        {
-//            nNbrAmmoFiredFromLoader_ += nNbrAmmoReserved;
+//            nNbrAmmoFiredFromLoader_ += reserved;
 //
-//            type_->IndirectFire( effect, nNbrAmmoReserved );
+//            type_->IndirectFire( effect, reserved );
 //            bHasFired = true;
 //
 //            rNextTimeStepToFire_ += type_->GetBurstDuration();
@@ -166,7 +163,7 @@ void Weapon::DirectFire( const wrapper::View& firer, const wrapper::View& target
 //            }
 //        }
 //
-//        if( nNbrAmmoReserved < nNbrAmmoToFire ) // Soutes vide
+//        if( reserved < burst ) // Soutes vide
 //            break;
 //    }
 //    return bHasFired;
@@ -179,8 +176,8 @@ void Weapon::DirectFire( const wrapper::View& firer, const wrapper::View& target
 //void Weapon::ThrowSmoke( MIL_Agent_ABC& firer, const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmo ) const
 //{//@TODO MGD See with AHC if we remove this GetRole kind
 //    const MT_Vector2D& vSourcePosition = firer.GetRole< PHY_RoleInterface_Location >().GetPosition();
-//    unsigned int nNbrAmmoReserved = (unsigned int)firer.GetRole< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( type_->GetDotationCategory(), nNbrAmmo );
-//    assert( nNbrAmmoReserved == nNbrAmmo );
+//    unsigned int reserved = (unsigned int)firer.GetRole< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( type_->GetDotationCategory(), nNbrAmmo );
+//    assert( reserved == nNbrAmmo );
 //    type_->ThrowSmoke( firer, vSourcePosition, vTargetPosition, nNbrAmmo, fireResult );
 //}
 
