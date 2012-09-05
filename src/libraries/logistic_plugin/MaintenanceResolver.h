@@ -70,7 +70,7 @@ class MaintenanceResolver : public ConsignResolver_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MaintenanceResolver( const std::string& name, const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel );
+             MaintenanceResolver( const std::string& name, const NameResolver_ABC& nameResolver );
     virtual ~MaintenanceResolver();
     //@}
 

@@ -71,7 +71,7 @@ class FuneralResolver : public ConsignResolver_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             FuneralResolver( const std::string& name, const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel );
+             FuneralResolver( const std::string& name, const NameResolver_ABC& nameResolver );
     virtual ~FuneralResolver();
     //@}
 

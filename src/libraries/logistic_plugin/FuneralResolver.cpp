@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "FuneralResolver.h"
+#include "NameResolver_ABC.h"
 #include "clients_kernel/Tools.h"
 
 using namespace plugins::logistic;
@@ -36,6 +37,7 @@ void FuneralConsignData::operator>>( std::stringstream& output ) const
 // -----------------------------------------------------------------------------
 const ConsignData_ABC& FuneralConsignData::ManageMessage( const ::sword::LogFuneralHandlingCreation& msg, ConsignResolver_ABC& resolver )
 {
+    const NameResolver_ABC& nameResolver = resolver.GetNameResolver();
     resolver.GetSimTime( simTime_, tick_ );
     if( msg.has_tick() )
         creationTick_ = boost::lexical_cast< std::string >( msg.tick() );
@@ -43,10 +45,10 @@ const ConsignData_ABC& FuneralConsignData::ManageMessage( const ::sword::LogFune
     {
         int unitId = msg.unit().id();
         unitId_ = boost::lexical_cast< std::string >( unitId );
-        resolver.GetAgentName( unitId, unit_ );
+        nameResolver.GetAgentName( unitId, unit_ );
     }
     if( msg.has_rank() )
-        resolver.GetRankName( msg.rank(), rank_ );
+        nameResolver.GetRankName( msg.rank(), rank_ );
     resolver.AddToLineIndex( 1 );
     return *this;
 }
@@ -57,6 +59,7 @@ const ConsignData_ABC& FuneralConsignData::ManageMessage( const ::sword::LogFune
 // -----------------------------------------------------------------------------
 const ConsignData_ABC& FuneralConsignData::ManageMessage( const ::sword::LogFuneralHandlingUpdate& msg, ConsignResolver_ABC& resolver )
 {
+    const NameResolver_ABC& nameResolver = resolver.GetNameResolver();
     resolver.GetSimTime( simTime_, tick_ );
     if( msg.has_current_state_end_tick() )
     {
@@ -70,13 +73,13 @@ const ConsignData_ABC& FuneralConsignData::ManageMessage( const ::sword::LogFune
         {
             int automatId = static_cast< int >( msg.handling_unit().automat().id() );
             handlingUnitId_ = boost::lexical_cast< std::string >( automatId );
-            resolver.GetAutomatName( automatId, handlingUnit_ );
+            nameResolver.GetAutomatName( automatId, handlingUnit_ );
         }
         else if( msg.handling_unit().has_formation() )
         {
             int formationId = static_cast< int >( msg.handling_unit().formation().id() );
             handlingUnitId_ = boost::lexical_cast< std::string >( formationId );
-            resolver.GetFormationName( formationId, handlingUnit_ );
+            nameResolver.GetFormationName( formationId, handlingUnit_ );
         }
     }
     if( msg.has_convoying_unit() )
@@ -85,18 +88,18 @@ const ConsignData_ABC& FuneralConsignData::ManageMessage( const ::sword::LogFune
         if( unitId > 0 )
         {
             conveyingUnitId_ = boost::lexical_cast< std::string >( unitId );
-            resolver.GetAgentName( unitId, conveyingUnit_ );
+            nameResolver.GetAgentName( unitId, conveyingUnit_ );
         }
     }
     if( msg.has_packaging_resource() )
     {
         packagingResourceId_ = boost::lexical_cast< std::string >( msg.packaging_resource().id() );
-        resolver.GetResourceName( msg.packaging_resource(), packagingResource_ );
+        nameResolver.GetResourceName( msg.packaging_resource(), packagingResource_ );
     }
     if( msg.has_state() )
     {
         sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus eState = msg.state();
-        resolver.GetFuneralName( eState, state_ );
+        nameResolver.GetFuneralName( eState, state_ );
         stateId_ = boost::lexical_cast< std::string >( static_cast< int >( eState ) );
     }
     resolver.AddToLineIndex( 1 );
@@ -107,8 +110,8 @@ const ConsignData_ABC& FuneralConsignData::ManageMessage( const ::sword::LogFune
 // Name: FuneralResolver constructor
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-FuneralResolver::FuneralResolver( const std::string& name, const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel ) 
-    : ConsignResolver_ABC( name, model, staticModel )
+FuneralResolver::FuneralResolver( const std::string& name, const NameResolver_ABC& nameResolver ) 
+    : ConsignResolver_ABC( name, nameResolver )
 {
     // NOTHING
 }

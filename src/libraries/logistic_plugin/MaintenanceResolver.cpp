@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "MaintenanceResolver.h"
+#include "NameResolver_ABC.h"
 #include "clients_kernel/Tools.h"
 
 using namespace plugins::logistic;
@@ -35,6 +36,7 @@ void MaintenanceConsignData::operator>>( std::stringstream& output ) const
 // -----------------------------------------------------------------------------
 const ConsignData_ABC& MaintenanceConsignData::ManageMessage( const ::sword::LogMaintenanceHandlingCreation& msg, ConsignResolver_ABC& resolver )
 {
+    const NameResolver_ABC& nameResolver = resolver.GetNameResolver();
     resolver.GetSimTime( simTime_, tick_ );
     if( msg.has_tick() )
         creationTick_ = boost::lexical_cast< std::string >( msg.tick() );
@@ -42,18 +44,18 @@ const ConsignData_ABC& MaintenanceConsignData::ManageMessage( const ::sword::Log
     {
         int unitId = msg.unit().id();
         unitId_ = boost::lexical_cast< std::string >( unitId );
-        resolver.GetAgentName( unitId, unit_ );
+        nameResolver.GetAgentName( unitId, unit_ );
     }
     if( msg.has_equipement() )
     {
         equipmentId_ = boost::lexical_cast< std::string >( msg.equipement().id() );
-        resolver.GetEquipmentName( msg.equipement(), equipment_ );
+        nameResolver.GetEquipmentName( msg.equipement(), equipment_ );
     }
     if( msg.has_breakdown() )
     {
         int breakdownId = msg.breakdown().id();
         breakdownId_ = boost::lexical_cast< std::string >( breakdownId );
-        resolver.GetBreakdownName( msg.breakdown(), breakdown_ );
+        nameResolver.GetBreakdownName( msg.breakdown(), breakdown_ );
     }
     resolver.AddToLineIndex( 1 );
     return *this;
@@ -65,6 +67,7 @@ const ConsignData_ABC& MaintenanceConsignData::ManageMessage( const ::sword::Log
 // -----------------------------------------------------------------------------
 const ConsignData_ABC& MaintenanceConsignData::ManageMessage( const ::sword::LogMaintenanceHandlingUpdate& msg, ConsignResolver_ABC& resolver )
 {
+    const NameResolver_ABC& nameResolver = resolver.GetNameResolver();
     resolver.GetSimTime( simTime_, tick_ );
     if( msg.has_current_state_end_tick() )
     {
@@ -76,18 +79,18 @@ const ConsignData_ABC& MaintenanceConsignData::ManageMessage( const ::sword::Log
     {
         int unitId = msg.unit().id();
         unitId_ = boost::lexical_cast< std::string >( unitId );
-        resolver.GetAgentName( unitId, unit_ );
+        nameResolver.GetAgentName( unitId, unit_ );
     }
     if( msg.has_provider() )
     {
         int providerId = msg.provider().id();
         providerId_ = boost::lexical_cast< std::string >( providerId );
-        resolver.GetAgentName( providerId, provider_ );
+        nameResolver.GetAgentName( providerId, provider_ );
     }
     if( msg.has_state() )
     {
         sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus eState = msg.state();
-        resolver.GetMaintenanceName( eState, state_ );
+        nameResolver.GetMaintenanceName( eState, state_ );
         stateId_ = boost::lexical_cast< std::string >( static_cast< int >( eState ) );
     }
     resolver.AddToLineIndex( 1 );
@@ -98,8 +101,8 @@ const ConsignData_ABC& MaintenanceConsignData::ManageMessage( const ::sword::Log
 // Name: MaintenanceResolver constructor
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-MaintenanceResolver::MaintenanceResolver( const std::string& name, const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel )
-    : ConsignResolver_ABC( name, model, staticModel )
+MaintenanceResolver::MaintenanceResolver( const std::string& name, const NameResolver_ABC& nameResolver )
+    : ConsignResolver_ABC( name, nameResolver )
 {
     // NOTHING
 }

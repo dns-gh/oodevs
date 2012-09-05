@@ -10,18 +10,7 @@
 #include "ConsignResolver_ABC.h"
 #include <boost/filesystem/operations.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
-#include "dispatcher/Model_ABC.h"
-#include "dispatcher/Agent_ABC.h"
-#include "dispatcher/Automat_ABC.h"
-#include "dispatcher/Formation_ABC.h"
-#include "clients_kernel/AgentTypes.h"
-#include "clients_kernel/BreakdownType.h"
-#include "clients_kernel/ComponentType.h"
-#include "clients_kernel/DotationType.h"
-#include "clients_kernel/ObjectTypes.h"
-#include "clients_kernel/StaticModel.h"
 #include "clients_kernel/Tools.h"
-#include "ENT/ENT_Tr_Gen.h"
 
 using namespace plugins::logistic;
 namespace bpt = boost::posix_time;
@@ -41,8 +30,8 @@ namespace
 // Name: ConsignResolver_ABC constructor
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-ConsignResolver_ABC::ConsignResolver_ABC( const std::string& name, const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel )
-    : name_( name ), curTick_( 0 ), model_( model ), staticModel_( staticModel ), curLineIndex_( 0 )
+ConsignResolver_ABC::ConsignResolver_ABC( const std::string& name, const NameResolver_ABC& nameResolver )
+    : name_( name ), curTick_( 0 ), nameResolver_( nameResolver ), curLineIndex_( 0 )
 {
     // NOTHING
 }
@@ -233,123 +222,12 @@ void ConsignResolver_ABC::GetSimTime( std::string& simTime, std::string& tick ) 
 }
 
 // -----------------------------------------------------------------------------
-// Name: ConsignResolver_ABC::GetAgentName
-// Created: MMC 2012-08-06
+// Name: ConsignResolver_ABC::GetNameResolver
+// Created: PMD 2012-09-02
 // -----------------------------------------------------------------------------
-void ConsignResolver_ABC::GetAgentName( int id, std::string& name ) const
+const NameResolver_ABC& ConsignResolver_ABC::GetNameResolver() const
 {
-    const dispatcher::Agent_ABC* pAgent = model_.Agents().Find( static_cast< unsigned int >( id ) );
-    if( pAgent && !pAgent->GetExtension( "NomLong" , name ) )
-        name = pAgent->GetName().toAscii().constData();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConsignResolver_ABC::GetAutomatName
-// Created: MMC 2012-08-06
-// -----------------------------------------------------------------------------
-void ConsignResolver_ABC::GetAutomatName( int id, std::string& name ) const
-{
-    const dispatcher::Automat_ABC* pAutomat = model_.Automats().Find( static_cast< unsigned int >( id ) );
-    if( pAutomat && !pAutomat->GetExtension( "NomLong" , name ) )
-        name = pAutomat->GetName().toAscii().constData();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConsignResolver_ABC::GetFormationName
-// Created: MMC 2012-08-06
-// -----------------------------------------------------------------------------
-void ConsignResolver_ABC::GetFormationName( int id, std::string& name ) const
-{
-    const dispatcher::Formation_ABC* pFormation = model_.Formations().Find( static_cast< unsigned int >( id ) );
-    if( pFormation && !pFormation->GetExtension( "NomLong" , name ) )
-        name = pFormation->GetName().toAscii().constData();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConsignResolver_ABC::GetSupplykName
-// Created: MMC 2012-08-21
-// -----------------------------------------------------------------------------
-void ConsignResolver_ABC::GetSupplykName( const sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus& eSupply, std::string& name ) const
-{
-    name = ENT_Tr::ConvertFromLogSupplyHandlingStatus( static_cast< E_LogSupplyHandlingStatus >( eSupply ), ENT_Tr::eToTr );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConsignResolver_ABC::GetRankName
-// Created: MMC 2012-08-21
-// -----------------------------------------------------------------------------
-void ConsignResolver_ABC::GetRankName( const sword::EnumHumanRank& eRank, std::string& name ) const
-{
-    name = ENT_Tr::ConvertFromHumanRank( static_cast< E_HumanRank >( eRank ), ENT_Tr::eToTr );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConsignResolver_ABC::GetWoundName
-// Created: MMC 2012-08-21
-// -----------------------------------------------------------------------------
-void ConsignResolver_ABC::GetWoundName( const sword::EnumHumanWound& eWound, std::string& name ) const
-{
-    name = ENT_Tr::ConvertFromHumanWound( static_cast< E_HumanWound >( eWound ), ENT_Tr::eToTr );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConsignResolver_ABC::GetMedicalName
-// Created: MMC 2012-08-21
-// -----------------------------------------------------------------------------
-void ConsignResolver_ABC::GetMedicalName( const sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus& eMedical, std::string& name ) const
-{
-    name = ENT_Tr::ConvertFromLogMedicalHandlingStatus( static_cast< E_LogMedicalHandlingStatus >( eMedical ), ENT_Tr::eToTr );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConsignResolver_ABC::GetMaintenanceName
-// Created: MMC 2012-08-21
-// -----------------------------------------------------------------------------
-void ConsignResolver_ABC::GetMaintenanceName( const sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus& eMaintenance, std::string& name ) const
-{
-    name = ENT_Tr::ConvertFromLogMaintenanceHandlingStatus( static_cast< E_LogMaintenanceHandlingStatus >( eMaintenance ), ENT_Tr::eToTr );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConsignResolver_ABC::GetFuneralName
-// Created: MMC 2012-08-21
-// -----------------------------------------------------------------------------
-void ConsignResolver_ABC::GetFuneralName( const sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus& eFuneral, std::string& name ) const
-{
-    name = ENT_Tr::ConvertFromLogFuneralHandlingStatus( static_cast< E_LogFuneralHandlingStatus >( eFuneral ), ENT_Tr::eToTr );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConsignResolver_ABC::GetEquipmentName
-// Created: MMC 2012-08-22
-// -----------------------------------------------------------------------------
-void ConsignResolver_ABC::GetEquipmentName( const sword::EquipmentType& equipmentType, std::string& name ) const
-{
-    kernel::ComponentType* pEquipment = staticModel_.types_.tools::Resolver< kernel::ComponentType >::Find( equipmentType.id() );
-    if( pEquipment )
-        name = pEquipment->GetName();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConsignResolver_ABC::GetBreakdownName
-// Created: MMC 2012-08-22
-// -----------------------------------------------------------------------------
-void ConsignResolver_ABC::GetBreakdownName( const sword::BreakdownType& breakdownType, std::string& name ) const
-{
-    kernel::BreakdownType* pBreakdown = staticModel_.objectTypes_.kernel::Resolver2< kernel::BreakdownType >::Find( breakdownType.id() );
-    if( pBreakdown )
-        name = pBreakdown->GetName();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConsignResolver_ABC::GetResourceName
-// Created: MMC 2012-08-23
-// -----------------------------------------------------------------------------
-void ConsignResolver_ABC::GetResourceName( const sword::ResourceType& resourceType, std::string& name ) const
-{
-    kernel::DotationType* pDotation = staticModel_.objectTypes_.kernel::Resolver2< kernel::DotationType >::Find( resourceType.id() );
-    if( pDotation )
-        name = pDotation->GetName();
+    return nameResolver_;
 }
 
 // -----------------------------------------------------------------------------

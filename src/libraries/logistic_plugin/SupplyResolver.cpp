@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "SupplyResolver.h"
+#include "NameResolver_ABC.h"
 #include "clients_kernel/Tools.h"
 #pragma warning( push, 0 )
 #include <boost/lexical_cast.hpp>
@@ -70,6 +71,7 @@ void SupplyConsignData::operator>>( std::stringstream& output ) const
 // -----------------------------------------------------------------------------
 const ConsignData_ABC& SupplyConsignData::ManageMessage( const ::sword::LogSupplyHandlingCreation& msg, ConsignResolver_ABC& resolver )
 {
+    const NameResolver_ABC& nameResolver = resolver.GetNameResolver();
     resolver.GetSimTime( simTime_, tick_ );
     if( msg.has_tick() )
         creationTick_ = boost::lexical_cast< std::string >( msg.tick() );
@@ -79,13 +81,13 @@ const ConsignData_ABC& SupplyConsignData::ManageMessage( const ::sword::LogSuppl
         {
             int supplierId = static_cast< int >( msg.supplier().automat().id() );
             providerId_ = boost::lexical_cast< std::string >( supplierId );
-            resolver.GetAutomatName( supplierId, provider_ );
+            nameResolver.GetAutomatName( supplierId, provider_ );
         }
         else if( msg.supplier().has_formation() )
         {
             int supplierId = static_cast< int >( msg.supplier().formation().id() );
             providerId_ = boost::lexical_cast< std::string >( supplierId );
-            resolver.GetFormationName( msg.supplier().formation().id(), provider_ );
+            nameResolver.GetFormationName( msg.supplier().formation().id(), provider_ );
         }
     }
     if( msg.has_transporters_provider() )
@@ -94,13 +96,13 @@ const ConsignData_ABC& SupplyConsignData::ManageMessage( const ::sword::LogSuppl
         {
             int transportId = static_cast< int >( msg.transporters_provider().automat().id() );
             transportProviderId_ = boost::lexical_cast< std::string >( transportId );
-            resolver.GetAutomatName( transportId, transportProvider_ );
+            nameResolver.GetAutomatName( transportId, transportProvider_ );
         }
         else if( msg.transporters_provider().has_formation() )
         {
             int transportId = static_cast< int >( msg.transporters_provider().formation().id() );
             transportProviderId_ = boost::lexical_cast< std::string >( transportId );
-            resolver.GetFormationName( transportId, transportProvider_ );
+            nameResolver.GetFormationName( transportId, transportProvider_ );
         }
     }
     resolver.AddToLineIndex( 1 );
@@ -113,6 +115,7 @@ const ConsignData_ABC& SupplyConsignData::ManageMessage( const ::sword::LogSuppl
 // -----------------------------------------------------------------------------
 const ConsignData_ABC& SupplyConsignData::ManageMessage( const ::sword::LogSupplyHandlingUpdate& msg, ConsignResolver_ABC& resolver )
 {
+    const NameResolver_ABC& nameResolver = resolver.GetNameResolver();
     resolver.GetSimTime( simTime_, tick_ );
     if( msg.has_current_state_end_tick() )
     {
@@ -126,13 +129,13 @@ const ConsignData_ABC& SupplyConsignData::ManageMessage( const ::sword::LogSuppl
         if( conveyorId > 0 )
         {
             conveyorId_ = boost::lexical_cast< std::string >( msg.convoyer().id() );
-            resolver.GetAgentName( conveyorId, conveyor_ );
+            nameResolver.GetAgentName( conveyorId, conveyor_ );
         }
     }
     if( msg.has_state() )
     {
         sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus eSupply = msg.state();
-        resolver.GetSupplykName( eSupply, state_ );
+        nameResolver.GetSupplykName( eSupply, state_ );
         stateId_ = boost::lexical_cast< std::string >( static_cast< int >( eSupply ) );
     }
     if( msg.has_requests() )
@@ -142,14 +145,14 @@ const ConsignData_ABC& SupplyConsignData::ManageMessage( const ::sword::LogSuppl
         {
             const sword::SupplyRecipientResourcesRequest& request = requests.requests( req );
             int recipientId = request.recipient().id();
-            resolver.GetAutomatName( recipientId, recipientAutomats_[ recipientId ] );
+            nameResolver.GetAutomatName( recipientId, recipientAutomats_[ recipientId ] );
             for ( int res = 0; res < request.resources().size(); ++res )
             {
                 const sword::SupplyResourceRequest& resourceMsg = request.resources( res );
                 SupplyConsignData::Resource resource;
                 if( resourceMsg.has_resource() )
                 {
-                    resolver.GetResourceName( resourceMsg.resource(), resource.type_ );
+                    nameResolver.GetResourceName( resourceMsg.resource(), resource.type_ );
                     int resourceId = resourceMsg.resource().id();
                     resource.recipientAutomatId_ = recipientId;
                     resource.recipientId_   = boost::lexical_cast< std::string >( recipientId );
@@ -170,8 +173,8 @@ const ConsignData_ABC& SupplyConsignData::ManageMessage( const ::sword::LogSuppl
 // Name: SupplyResolver constructor
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-SupplyResolver::SupplyResolver( const std::string& name, const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel )
-    : ConsignResolver_ABC( name, model, staticModel )
+SupplyResolver::SupplyResolver( const std::string& name, const NameResolver_ABC& nameResolver )
+    : ConsignResolver_ABC( name, nameResolver )
 {
     // NOTHING
 }

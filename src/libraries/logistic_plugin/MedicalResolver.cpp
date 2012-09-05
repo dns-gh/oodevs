@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "MedicalResolver.h"
+#include "NameResolver_ABC.h"
 #include "clients_kernel/Tools.h"
 #pragma warning( push, 0 )
 #include <boost/lexical_cast.hpp>
@@ -40,18 +41,19 @@ void MedicalConsignData::operator>>( std::stringstream& output ) const
 // -----------------------------------------------------------------------------
 const ConsignData_ABC& MedicalConsignData::ManageMessage( const ::sword::LogMedicalHandlingCreation& msg, ConsignResolver_ABC& resolver )
 {
+    const NameResolver_ABC& nameResolver = resolver.GetNameResolver();
     resolver.GetSimTime( simTime_, tick_ );
     if( msg.has_tick() )
         creationTick_ = boost::lexical_cast< std::string >( msg.tick() );
     if( msg.has_unit() )
     {
         unitId_ = boost::lexical_cast< std::string >( msg.unit().id() );
-        resolver.GetAgentName( msg.unit().id(), unit_ );
+        nameResolver.GetAgentName( msg.unit().id(), unit_ );
     }
     if( msg.has_rank() )
-        resolver.GetRankName( msg.rank(), rank_ );
+        nameResolver.GetRankName( msg.rank(), rank_ );
     if( msg.has_wound() )
-        resolver.GetWoundName( msg.wound(), wound_ );
+        nameResolver.GetWoundName( msg.wound(), wound_ );
     std::string strYes = tools::translate( "logistic", "yes" ).toAscii().constData();
     std::string strNo = tools::translate( "logistic", "no" ).toAscii().constData();
     if( msg.has_mental_wound() )
@@ -68,6 +70,7 @@ const ConsignData_ABC& MedicalConsignData::ManageMessage( const ::sword::LogMedi
 // -----------------------------------------------------------------------------
 const ConsignData_ABC& MedicalConsignData::ManageMessage( const ::sword::LogMedicalHandlingUpdate& msg, ConsignResolver_ABC& resolver )
 {
+    const NameResolver_ABC& nameResolver = resolver.GetNameResolver();
     resolver.GetSimTime( simTime_, tick_ );
     if( msg.has_current_state_end_tick() )
     {
@@ -78,23 +81,23 @@ const ConsignData_ABC& MedicalConsignData::ManageMessage( const ::sword::LogMedi
     if( msg.has_unit() )
     {
         unitId_ = boost::lexical_cast< std::string >( msg.unit().id() );
-        resolver.GetAgentName( msg.unit().id(), unit_ );
+        nameResolver.GetAgentName( msg.unit().id(), unit_ );
     }
     if( msg.has_provider() )
     {
         providerId_ = boost::lexical_cast< std::string >( msg.provider().id() );
-        resolver.GetAgentName( msg.provider().id(), provider_ );
+        nameResolver.GetAgentName( msg.provider().id(), provider_ );
     }
     if( msg.has_state() )
     {
         sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus eState = msg.state();
-        resolver.GetMedicalName( eState, state_ );
+        nameResolver.GetMedicalName( eState, state_ );
         stateId_ = boost::lexical_cast< std::string >( static_cast< int >( eState ) );
     }
     std::string strYes = tools::translate( "logistic", "yes" ).toAscii().constData();
     std::string strNo = tools::translate( "logistic", "no" ).toAscii().constData();
     if( msg.has_wound() )
-        resolver.GetWoundName( msg.wound(), wound_ );
+        nameResolver.GetWoundName( msg.wound(), wound_ );
     if( msg.has_mental_wound() )
         mental_ = msg.mental_wound() ? strYes : strNo;
     if( msg.has_nbc_contaminated() )
@@ -107,8 +110,8 @@ const ConsignData_ABC& MedicalConsignData::ManageMessage( const ::sword::LogMedi
 // Name: MedicalResolver constructor
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-MedicalResolver::MedicalResolver( const std::string& name, const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel ) 
-    : ConsignResolver_ABC( name, model, staticModel )
+MedicalResolver::MedicalResolver( const std::string& name, const NameResolver_ABC& nameResolver ) 
+    : ConsignResolver_ABC( name, nameResolver )
 {
     // NOTHING
 }

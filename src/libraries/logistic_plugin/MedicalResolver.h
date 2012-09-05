@@ -71,7 +71,7 @@ class MedicalResolver : public ConsignResolver_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MedicalResolver( const std::string& name, const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel );
+             MedicalResolver( const std::string& name, const NameResolver_ABC& nameResolver );
     virtual ~MedicalResolver();
     //@}
 

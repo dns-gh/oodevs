@@ -13,6 +13,7 @@
 #include "dispatcher/Plugin_ABC.h"
 #include "ConsignResolver_ABC.h"
 #include <boost/scoped_ptr.hpp>
+#include <boost/shared_ptr.hpp>
 
 class QApplication;
 
@@ -26,21 +27,13 @@ namespace xml
     class xistream;
 }
 
-namespace dispatcher
-{
-    class Model_ABC;
-}
-
-namespace kernel
-{
-    class StaticModel;
-}
-
 namespace plugins
 {
 namespace logistic
 {
-     class ConsignResolver_ABC;
+
+class ConsignResolver_ABC;
+class NameResolver_ABC;
 
 // =============================================================================
 /** @class  LogisticPlugin
@@ -53,7 +46,8 @@ class LogisticPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticPlugin( const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, const tools::SessionConfig& config, xml::xistream& xis );
+             LogisticPlugin(const boost::shared_ptr<const NameResolver_ABC>& nameResolver,
+                 const tools::SessionConfig& config, xml::xistream& xis );
     virtual ~LogisticPlugin();
     //@}
 
@@ -80,6 +74,7 @@ private:
     boost::scoped_ptr< ConsignResolver_ABC >    funeralResolver_;
     boost::scoped_ptr< ConsignResolver_ABC >    medicalResolver_;
     boost::scoped_ptr< QApplication >           localAppli_;
+    boost::shared_ptr<const NameResolver_ABC> nameResolver_;
     //@}
 };
 }

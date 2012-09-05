@@ -11,7 +11,8 @@
 #include "dispatcher/Logger_ABC.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/StaticModel.h"
-#include "logistic_plugin/logisticPlugin.h"
+#include "logistic_plugin/LogisticPlugin.h"
+#include "logistic_plugin/NameResolver.h"
 #include <windows.h>
 
 namespace dispatcher
@@ -20,6 +21,8 @@ namespace dispatcher
     class StaticModel;
     class SimulationPublisher_ABC;
 }
+
+using plugins::logistic::NameResolver;
 
 // -----------------------------------------------------------------------------
 // Name: CreateInstance
@@ -30,7 +33,8 @@ LOGISTIC_PLUGIN_DLL_API dispatcher::Plugin_ABC* CreateInstance( dispatcher::Mode
     try
     {
         logger.LogInfo( "Initialization..." );
-        dispatcher::Plugin_ABC* result = new plugins::logistic::LogisticPlugin( model, staticModel, config, xis );
+        boost::shared_ptr<NameResolver> nameResolver( new NameResolver( model, staticModel ));
+        dispatcher::Plugin_ABC* result = new plugins::logistic::LogisticPlugin( nameResolver, config, xis );
         logger.LogInfo( "Initialized!" );
         return result;
     }

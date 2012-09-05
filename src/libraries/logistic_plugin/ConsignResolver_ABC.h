@@ -21,20 +21,12 @@ namespace sword
     class SimToClient;
 }
 
-namespace dispatcher
-{
-    class Model_ABC;
-}
-
-namespace kernel
-{
-    class StaticModel;
-}
-
 namespace plugins
 {
 namespace logistic
 {
+
+class NameResolver_ABC;
 
 // =============================================================================
 /** @class  ConsignResolver_ABC
@@ -48,7 +40,7 @@ class ConsignResolver_ABC : private boost::noncopyable
 public:
     //! @name Constructor/Destructor
     //@{
-    ConsignResolver_ABC( const std::string& name, const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel );
+    ConsignResolver_ABC( const std::string& name, const NameResolver_ABC& nameResolver );
     virtual ~ConsignResolver_ABC();
     //@}
 
@@ -57,24 +49,9 @@ public:
     void Receive( const sword::SimToClient& message );
     void SetTime( int tick, const std::string& simTime );
     void GetSimTime( std::string& simTime, std::string& tick ) const;
+    const NameResolver_ABC& GetNameResolver() const;
     virtual void InitHeader() = 0;
     virtual void AddToLineIndex( int number ) { curLineIndex_ += number; }
-    //@}
-
-    //! @name Helpers
-    //@{
-    void GetAgentName( int id, std::string& name ) const;
-    void GetAutomatName( int id, std::string& name ) const;
-    void GetFormationName( int id, std::string& name ) const;
-    void GetSupplykName( const sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus& eSupply, std::string& name ) const;
-    void GetRankName( const sword::EnumHumanRank& eRank, std::string& name ) const;
-    void GetWoundName( const sword::EnumHumanWound& eWound, std::string& name ) const;
-    void GetMedicalName( const sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus& eMedical, std::string& name ) const;
-    void GetMaintenanceName( const sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus& eMaintenance, std::string& name ) const;
-    void GetFuneralName( const sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus& eFuneral, std::string& name ) const;
-    void GetEquipmentName( const sword::EquipmentType& equipmentType, std::string& name ) const;
-    void GetBreakdownName( const sword::BreakdownType& breakdownType, std::string& name ) const;
-    void GetResourceName( const sword::ResourceType& resourceType, std::string& name ) const;
     //@}
 
 protected:
@@ -110,8 +87,7 @@ protected:
 
     //! @name Member data
     //@{
-    const dispatcher::Model_ABC& model_;
-    const kernel::StaticModel& staticModel_;
+    const NameResolver_ABC& nameResolver_; 
     std::string header_;
     boost::gregorian::date fileDate_;
     int curTick_;

@@ -14,7 +14,6 @@
 #include "MedicalResolver.h"
 #include "SupplyResolver.h"
 #include "clients_kernel/Tools.h"
-#include "dispatcher/Model_ABC.h"
 #include "ENT/ENT_Tr_Gen.h"
 #include "protocol/Protocol.h"
 #include "protocol/ServerPublisher_ABC.h"
@@ -40,13 +39,14 @@ namespace
 // Name: LogisticPlugin constructor
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-LogisticPlugin::LogisticPlugin( const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, const tools::SessionConfig& config, xml::xistream& xis )
+LogisticPlugin::LogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>& nameResolver, const tools::SessionConfig& config, xml::xistream& xis )
     : sessionConfig_( config )
     , currentTick_( 0 )
-    , maintenanceResolver_  ( new MaintenanceResolver( config.BuildSessionChildFile( xis.attribute( "maintenancefile", "LogMaintenance" ) ), model, staticModel ) )
-    , supplyResolver_       ( new SupplyResolver( config.BuildSessionChildFile( xis.attribute( "supplyfile", "LogSupply" ) ), model, staticModel ) )
-    , funeralResolver_      ( new FuneralResolver( config.BuildSessionChildFile( xis.attribute( "funeralfile", "LogFuneral" ) ), model, staticModel ) )
-    , medicalResolver_      ( new MedicalResolver( config.BuildSessionChildFile( xis.attribute( "medicalfile", "LogMedical" ) ), model, staticModel ) )
+    , nameResolver_( nameResolver )
+    , maintenanceResolver_  ( new MaintenanceResolver( config.BuildSessionChildFile( xis.attribute( "maintenancefile", "LogMaintenance" ) ), *nameResolver ) )
+    , supplyResolver_       ( new SupplyResolver( config.BuildSessionChildFile( xis.attribute( "supplyfile", "LogSupply" ) ), *nameResolver ) )
+    , funeralResolver_      ( new FuneralResolver( config.BuildSessionChildFile( xis.attribute( "funeralfile", "LogFuneral" ) ), *nameResolver ) )
+    , medicalResolver_      ( new MedicalResolver( config.BuildSessionChildFile( xis.attribute( "medicalfile", "LogMedical" ) ), *nameResolver ) )
     , localAppli_ ( !qApp ? new QApplication( localAppliArgc, localAppliArgv ) : 0 )
 {
     std::string lang = tools::readLang();
