@@ -13,6 +13,7 @@ rootnode
         -- $$$ MIA TODO a revoir
         
         if integration.query.getFirstFragOrderFromType( "Rep_OrderConduite_Decrocher" ) then
+           meKnowledge:launchDREB()
            self.fragOrderReceived = true
            return
         end

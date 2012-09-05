@@ -955,6 +955,9 @@ return
     isUnderIndirectFire = function( self )
         return integration.isUnderIndirectFire()
     end,
+    launchDREB = function( self )
+        return integration.launchDREB()
+    end
     sendMessage = masalife.brain.integration.startStopAction( 
     { 
         start = function( self, message )
