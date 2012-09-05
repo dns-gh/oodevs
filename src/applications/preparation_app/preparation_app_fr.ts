@@ -911,7 +911,7 @@
         <translation>Entrer le nom de l&apos;exercice ici</translation>
     </message>
     <message>
-        <source>The exercise &apos;%1&apos; already exist. Please, enter a new exercise name:</source>
+        <source>The exercise &apos;%1&apos; already exists. Please, enter a new exercise name:</source>
         <translation>L&apos;exercice &apos;%1&apos; existe déjà. Merci de saisir un nouveau nom d&apos;exercice:</translation>
     </message>
     <message>
@@ -965,34 +965,6 @@
     <message>
         <source>Loading graphical interface ...</source>
         <translation>Chargement de l&apos;interface graphique ...</translation>
-    </message>
-    <message>
-        <source>Unsaved modification detected.
-Do you want to save the exercise &apos;%1&apos;?</source>
-        <translation>Modifications détectées.
-Voulez-vous sauvegarder l&apos;exercice &apos;%1&apos; ?</translation>
-    </message>
-    <message>
-        <source>Unsaved modification detected.
-Do you want to save the terrain &apos;%1&apos;?</source>
-        <translation>Modifications détectées.
-Voulez-vous sauvegarder le terrain &apos;%1&apos; ?</translation>
-    </message>
-    <message>
-        <source>Save terrain as ...</source>
-        <translation>Enregistrer le terrain sous ...</translation>
-    </message>
-    <message>
-        <source>The terrain &apos;%1&apos; already exist. Please, enter a new terrain name:</source>
-        <translation>Le terrain &apos;%1&apos; existe déjà. Merci de saisir un nouveau nom de terrain:</translation>
-    </message>
-    <message>
-        <source>Enter a terrain name:</source>
-        <translation>Saisir un nom de terrain:</translation>
-    </message>
-    <message>
-        <source>Type terrain name here</source>
-        <translation>Entrer le nom du terrain ici</translation>
     </message>
     <message>
         <source>Preparation - %1 - [%2]</source>
@@ -2849,6 +2821,12 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Error loading exercise: </source>
         <translation>Erreur lors du chargement de l&apos;exercice: </translation>
+    </message>
+    <message>
+        <source>Unsaved modification detected.
+Do you want to save the exercise &apos;%1&apos;?</source>
+        <translation>Modifications détectées.
+Voulez-vous sauvegarder l&apos;exercice &apos;%1&apos; ?</translation>
     </message>
 </context>
 </TS>

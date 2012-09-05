@@ -269,15 +269,6 @@ std::string MIL_Config::GetOrbatFile() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Config::GetUrbanFile
-// Created: SLG 2009-10-10
-// -----------------------------------------------------------------------------
-std::string MIL_Config::GetUrbanFile() const
-{
-    return tools::SessionConfig::GetUrbanFile();
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Config::BuildCheckpointChildFile
 // Created: NLD 2007-01-11
 // -----------------------------------------------------------------------------

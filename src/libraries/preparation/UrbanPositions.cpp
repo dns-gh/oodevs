@@ -44,6 +44,7 @@ namespace
 UrbanPositions::UrbanPositions( kernel::PropertiesDictionary& dictionary, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter )
     : kernel::UrbanPositions( level, object )
     , converter_( converter )
+    , level_( level )
 {
     assert( level_ == eUrbanLevelCity || level_ == eUrbanLevelDistrict );
     dictionary.Register( object, tools::translate( "UrbanPositions", "Info/Area" ), area_, true );
@@ -56,6 +57,7 @@ UrbanPositions::UrbanPositions( kernel::PropertiesDictionary& dictionary, EUrban
 UrbanPositions::UrbanPositions( const geometry::Polygon2f& location, kernel::PropertiesDictionary& dictionary, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter )
     : kernel::UrbanPositions( level, object, location.Vertices() )
     , converter_( converter )
+    , level_( level )
 {
     assert( level_ == eUrbanLevelBlock );
     dictionary.Register( object, tools::translate( "UrbanPositions", "Info/Area" ), area_, true );
@@ -68,6 +70,7 @@ UrbanPositions::UrbanPositions( const geometry::Polygon2f& location, kernel::Pro
 UrbanPositions::UrbanPositions( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter )
     : kernel::UrbanPositions( level, object, Convert( xis, level, converter ) )
     , converter_( converter )
+    , level_( level )
 {
     dictionary.Register( *this, tools::translate( "UrbanPositions", "Info/Area" ), area_, true );
 }
@@ -87,11 +90,14 @@ UrbanPositions::~UrbanPositions()
 // -----------------------------------------------------------------------------
 void UrbanPositions::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << xml::start( "footprint" );
-    const geometry::Polygon2f::T_Vertices& locations = polygon_.Vertices();
-    for( geometry::Polygon2f::CIT_Vertices it = locations.begin(); it != locations.end(); ++it )
-        xos << xml::start( "point" )
-                << xml::attribute( "location", converter_.ConvertToMgrs( *it ) )
-            << xml::end;
-    xos << xml::end; // footprint
+    if( level_ == eUrbanLevelBlock )
+    {
+        xos << xml::start( "footprint" );
+        const geometry::Polygon2f::T_Vertices& locations = polygon_.Vertices();
+        for( geometry::Polygon2f::CIT_Vertices it = locations.begin(); it != locations.end(); ++it )
+            xos << xml::start( "point" )
+                    << xml::attribute( "location", converter_.ConvertToMgrs( *it ) )
+                << xml::end;
+        xos << xml::end; // footprint
+    }
 }

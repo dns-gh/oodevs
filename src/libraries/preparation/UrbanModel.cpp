@@ -48,17 +48,6 @@ namespace
         return spatialcontainer::SegmentIntersecter< float >( boundingBox.BottomLeft(), boundingBox.TopRight() );
     };
 
-    template< typename ConcretType, typename AbstractType >
-    void SerializeIFN( const kernel::Entity_ABC& entity, xml::xostream& xos )
-    {
-        const AbstractType* abstractExtension = entity.Retrieve< AbstractType >();
-        if( !abstractExtension )
-            return;
-        const ConcretType& extension = static_cast< const ConcretType& >( *abstractExtension );
-        if( extension.IsOverriden() )
-            extension.SerializeAttributes( xos );
-    }
-
     template< typename CollisionChecker >
     struct DataExtractor
     {
@@ -288,56 +277,12 @@ void UrbanModel::Serialize( const std::string& filename, const tools::SchemaWrit
 {
     if( filename.empty() )
         return;
-    assert( controllers_.modes_ != 0 );
-    if( controllers_.modes_->GetCurrentMode() == ePreparationMode_Exercise )
-        SerializeExercise( filename, schemaWriter );
-    else
-        SerializeTerrain( filename, schemaWriter );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanModel::SerializeExercise
-// Created: ABR 2012-05-22
-// -----------------------------------------------------------------------------
-void UrbanModel::SerializeExercise( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const
-{
-    xml::xofstream xos( filename, xml::encoding( "UTF-8" ) );
-    xos << xml::start( "urban-state" );
-    schemaWriter.WriteExerciseSchema( xos, "urbanstate" );
-    xos << xml::start( "urban-objects" );
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-    {
-        const UrbanHierarchies& hierarchy = static_cast< const UrbanHierarchies& >( it->second->Get< kernel::Hierarchies >() );
-        if( hierarchy.GetLevel() != eUrbanLevelBlock ) // only city here, UrbanHierarchy proceed the recursion
-            continue;
-        xos << xml::start( "urban-object" )
-            << xml::attribute( "id", it->second->GetId() );
-
-        SerializeIFN< StructuralStateAttribute, kernel::StructuralStateAttribute_ABC >( *it->second, xos );
-        SerializeIFN< ResourceNetworkAttribute, kernel::ResourceNetwork_ABC >( *it->second, xos );
-        SerializeIFN< InfrastructureAttribute, kernel::Infrastructure_ABC >( *it->second, xos );
-        SerializeIFN< MedicalTreatmentAttribute, kernel::MedicalTreatmentAttribute_ABC >( *it->second, xos );
-
-        xos << xml::end;
-    }
-    xos << xml::end  // urban-objects
-        << xml::end; // urban-state
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanModel::SerializeTerrain
-// Created: ABR 2012-05-22
-// -----------------------------------------------------------------------------
-void UrbanModel::SerializeTerrain( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const
-{
     bfs::path directory( filename, bfs::native );
     directory = directory.parent_path();
     try
     {
         if( !bfs::exists( directory ) )
-        {
             bfs::create_directories( directory );
-        }
     }
     catch( bfs::filesystem_error& )
     {
@@ -345,7 +290,7 @@ void UrbanModel::SerializeTerrain( const std::string& filename, const tools::Sch
     }
     xml::xofstream xos( filename, xml::encoding( "UTF-8" ) );
     xos << xml::start( "urban" );
-    schemaWriter.WriteSchema( xos, "terrain", "urban" );
+    schemaWriter.WriteSchema( xos, "exercise", "urban" );
     xos<< xml::start( "urban-objects" );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {

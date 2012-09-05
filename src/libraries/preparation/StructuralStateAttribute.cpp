@@ -17,16 +17,25 @@
 
 // -----------------------------------------------------------------------------
 // Name: StructuralStateAttribute constructor
+// Created: JSR 2012-09-05
+// -----------------------------------------------------------------------------
+StructuralStateAttribute::StructuralStateAttribute( xml::xistream& xis, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary )
+    : structuralState_( 100 )
+{
+    xis >> xml::optional >> xml::start( "structural-state" )
+            >> xml::attribute( "value", structuralState_ )
+        >> xml::end;
+    CreateDictionary( object, dictionary );
+}
+
+// -----------------------------------------------------------------------------
+// Name: StructuralStateAttribute constructor
 // Created: JSR 2010-09-01
 // -----------------------------------------------------------------------------
-StructuralStateAttribute::StructuralStateAttribute( kernel::Controllers& controllers, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary )
+StructuralStateAttribute::StructuralStateAttribute( kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary )
     : structuralState_( 100 )
-    , controllers_    ( controllers )
-    , object_         ( object )
-    , dictionary_     ( dictionary )
 {
-    assert( controllers_.modes_ );
-    controllers_.modes_->Register( *this );
+    CreateDictionary( object, dictionary );
 }
 
 // -----------------------------------------------------------------------------
@@ -35,8 +44,46 @@ StructuralStateAttribute::StructuralStateAttribute( kernel::Controllers& control
 // -----------------------------------------------------------------------------
 StructuralStateAttribute::~StructuralStateAttribute()
 {
-    assert( controllers_.modes_ );
-    controllers_.modes_->Unregister( *this );
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: StructuralStateAttribute::SerializeAttributes
+// Created: JSR 2012-09-04
+// -----------------------------------------------------------------------------
+void StructuralStateAttribute::SerializeAttributes( xml::xostream& xos ) const
+{
+    SerializeObjectAttributes( xos );
+}
+
+// -----------------------------------------------------------------------------
+// Name: StructuralStateAttribute::SerializeObjectAttributes
+// Created: JSR 2010-09-07
+// -----------------------------------------------------------------------------
+void StructuralStateAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
+{
+    if( structuralState_ != 100 )
+        xos << xml::start( "structural-state" )
+                << xml::attribute( "value", structuralState_ )
+            << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: StructuralStateAttribute::Update
+// Created: JSR 2010-09-08
+// -----------------------------------------------------------------------------
+void StructuralStateAttribute::Update( xml::xistream& xis )
+{
+    xis >> xml::attribute( "value", structuralState_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: StructuralStateAttribute::GetValue
+// Created: LGY 2012-06-15
+// -----------------------------------------------------------------------------
+unsigned int StructuralStateAttribute::GetValue() const
+{
+    return structuralState_;
 }
 
 namespace
@@ -51,53 +98,10 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: StructuralStateAttribute::SerializeObjectAttributes
-// Created: JSR 2010-09-07
+// Name: StructuralStateAttribute::CreateDictionary
+// Created: JSR 2012-09-05
 // -----------------------------------------------------------------------------
-void StructuralStateAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
+void StructuralStateAttribute::CreateDictionary( kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary )
 {
-    if( GetCurrentMode() == ePreparationMode_Exercise )
-        xos << xml::start( "structural-state" )
-                << xml::attribute( "value", structuralState_ )
-            << xml::end;
-}
-
-// -----------------------------------------------------------------------------
-// Name: StructuralStateAttribute::IsOverriden
-// Created: JSR 2010-09-09
-// -----------------------------------------------------------------------------
-bool StructuralStateAttribute::IsOverriden() const
-{
-    return structuralState_ != 100;
-}
-
-// -----------------------------------------------------------------------------
-// Name: StructuralStateAttribute::Update
-// Created: JSR 2010-09-08
-// -----------------------------------------------------------------------------
-void StructuralStateAttribute::Update( xml::xistream& xis )
-{
-    xis >> xml::attribute( "value", structuralState_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: StructuralStateAttribute::NotifyModeChanged
-// Created: ABR 2012-05-30
-// -----------------------------------------------------------------------------
-void StructuralStateAttribute::NotifyModeChanged( int newMode )
-{
-    kernel::ModesObserver_ABC::NotifyModeChanged( newMode );
-    if( newMode == ePreparationMode_Exercise )
-        dictionary_.Register( object_, tools::translate( "StructuralStateAttribute", "Info/StructuralState" ), structuralState_, StructuralSetter() );
-    else if( newMode == ePreparationMode_Terrain )
-        dictionary_.Remove( tools::translate( "StructuralStateAttribute", "Info/StructuralState" ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: StructuralStateAttribute::GetValue
-// Created: LGY 2012-06-15
-// -----------------------------------------------------------------------------
-unsigned int StructuralStateAttribute::GetValue() const
-{
-    return structuralState_;
+    dictionary.Register( object, tools::translate( "StructuralStateAttribute", "Info/StructuralState" ), structuralState_, StructuralSetter() );
 }

@@ -38,6 +38,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual bool IsDefault() const;
     virtual void Initialize( unsigned int height, unsigned int floorNumber, unsigned int parkingFloors, float occupation,
                              float trafficability, const std::string& material = "", const std::string& roofShape = "" );
     virtual const MaterialCompositionType& GetMaterial() const;

@@ -93,6 +93,8 @@ Architecture::~Architecture()
 // -----------------------------------------------------------------------------
 void Architecture::SerializeAttributes( xml::xostream& xos ) const
 {
+    if( IsDefault() )
+        return;
     assert( roofShape_ && material_ );
     xos << xml::start( "architecture" )
             << xml::attribute( "height", height_.value_ )

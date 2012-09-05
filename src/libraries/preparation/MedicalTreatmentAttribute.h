@@ -10,13 +10,11 @@
 #ifndef __MedicalTreatmentAttribute_h_
 #define __MedicalTreatmentAttribute_h_
 
-#include "Overridable_ABC.h"
-#include "clients_kernel/ModesObserver_ABC.h"
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Serializable_ABC.h"
-#include "tools/Observer_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "tools/Resolver_ABC.h"
-#include <map>
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -25,11 +23,7 @@ namespace kernel
     class Entity_ABC;
     class MedicalTreatmentType;
     class PropertiesDictionary;
-}
-
-namespace xml
-{
-    class xistream;
+    class UrbanObject_ABC;
 }
 
 // =============================================================================
@@ -41,8 +35,8 @@ namespace xml
 class MedicalTreatmentAttribute : public kernel::MedicalTreatmentAttribute_ABC
                                 , public kernel::Serializable_ABC
                                 , public tools::Observer_ABC
-                                , public kernel::ModesObserver_ABC
-                                , public Overridable_ABC
+                                , public tools::ElementObserver_ABC< kernel::UrbanObject_ABC >
+                                , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -50,7 +44,7 @@ public:
              MedicalTreatmentAttribute( const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& treatmentTypes,
                                         kernel::PropertiesDictionary& dictionary, kernel::Controllers* controllers = 0, const kernel::Entity_ABC* owner = 0 );
              MedicalTreatmentAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& treatmentTypes,
-                                        kernel::PropertiesDictionary& dictionary );
+                                        kernel::PropertiesDictionary& dictionary, kernel::Controllers* controllers = 0, const kernel::Entity_ABC* owner = 0 );
     virtual ~MedicalTreatmentAttribute();
     //@}
 
@@ -58,8 +52,9 @@ public:
     //@{
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
+    virtual void SerializeAttributes( xml::xostream& xos ) const;
     virtual void SerializeObjectAttributes( xml::xostream& xos ) const;
-    virtual bool IsOverriden() const;
+    virtual void NotifyUpdated( const kernel::UrbanObject_ABC& object );
     void Update( xml::xistream& xis );
     //@}
 
@@ -68,11 +63,6 @@ public:
     void SetDoctors( unsigned n );
     void SetReferenceID( const std::string& id );
     void UpdateTreatmentCapacity( const std::string& type, unsigned beds );
-    //@}
-
-    //! @name ModesObserver_ABC
-    //@{
-    virtual void NotifyModeChanged( int newMode );
     //@}
 
 private:
@@ -86,13 +76,13 @@ private:
     //@{
     bool IsSet() const;
     void ReadBedCapacity( xml::xistream& xis );
-    void CreateDictionary();
+    void UpdateDictionary();
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::map< std::string, unsigned > T_TreatmentCapacities;
+    typedef std::map< std::string, unsigned int > T_TreatmentCapacities;
     //@}
 
 public:

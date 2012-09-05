@@ -10,7 +10,6 @@
 #include "preparation_app_pch.h"
 #include "TerrainToolBar.h"
 #include "moc_TerrainToolBar.cpp"
-#include "MainWindow.h"
 #include "RemoveBlocksDialog.h"
 #include "clients_gui/ExclusiveEventStrategy.h"
 #include "clients_gui/ParametersLayer.h"
@@ -83,25 +82,10 @@ TerrainToolBar::~TerrainToolBar()
 // -----------------------------------------------------------------------------
 void TerrainToolBar::OnSwitchMode()
 {
-    QMessageBox::StandardButton ret = static_cast< MainWindow* >( parent() )->CheckSaving( true );
-    if( ret == QMessageBox::Cancel )
-    {
-        // Canceled
-        switchModeButton_->disconnect( this, SLOT( OnSwitchMode() ) );
-        switchModeButton_->setChecked( !switchModeButton_->isChecked() );
-        QObject::connect( switchModeButton_, SIGNAL( clicked() ), this, SLOT( OnSwitchMode() ) );
-        blockRemoveButton_->setEnabled( switchModeButton_->isChecked() );
-    }
-    else
-    {
-        // Succeed
-        if( ret == QMessageBox::No )
-            static_cast< MainWindow* >( parent() )->ExternalReload();
-        controllers_.ChangeMode( switchModeButton_->isChecked() ? ePreparationMode_Terrain : ePreparationMode_Exercise );
-        UncheckBlockCreationButtons();
-        EnableBlockCreationButtons( false );
-        blockRemoveButton_->setEnabled( switchModeButton_->isChecked() );
-    }
+    controllers_.ChangeMode( switchModeButton_->isChecked() ? ePreparationMode_Terrain : ePreparationMode_Exercise );
+    UncheckBlockCreationButtons();
+    EnableBlockCreationButtons( false );
+    blockRemoveButton_->setEnabled( switchModeButton_->isChecked() );
 }
 
 // -----------------------------------------------------------------------------

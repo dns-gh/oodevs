@@ -70,10 +70,12 @@ PhysicalAttribute::~PhysicalAttribute()
 // -----------------------------------------------------------------------------
 void PhysicalAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << xml::start( "physical" );
     assert( architecture_.get() );
-    architecture_->SerializeAttributes( xos );
     assert( usages_.get() );
+    if( architecture_->IsDefault() && usages_->IsDefault() )
+        return;
+    xos << xml::start( "physical" );
+    architecture_->SerializeAttributes( xos );
     usages_->SerializeAttributes( xos );
     xos << xml::end;
 }

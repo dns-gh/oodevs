@@ -28,18 +28,26 @@ using namespace geometry;
 // Name: ResourceNetworkAttribute constructor
 // Created: JSR 2010-09-07
 // -----------------------------------------------------------------------------
-ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& controllers, xml::xistream& xis, const geometry::Point2f position,
-                                                    const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources, bool needSaving )
+ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& controllers, xml::xistream& xis, bool isUrban, const geometry::Point2f position,
+                                                    const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources )
     : controllers_( controllers )
+    , isUrban_    ( isUrban )
     , position_   ( position )
     , urbans_     ( urbans )
     , objects_    ( objects )
     , resources_  ( resources )
-    , needSaving_ ( needSaving )
 {
-    xis >> xml::optional >> xml::start( "resources" )
-            >> xml::list( "node", *this, &ResourceNetworkAttribute::ReadNode )
-        >> xml::end;
+    if( isUrban_ )
+    {
+        if( xis.has_child( "resources" ) )
+        {
+            xis >> xml::start( "resources" );
+            Update( xis );
+            xis >> xml::end;
+        }
+    }
+    else
+        Update( xis );
     controllers_.controller_.Register( *this );
 }
 
@@ -47,14 +55,14 @@ ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& control
 // Name: ResourceNetworkAttribute constructor
 // Created: JSR 2011-02-23
 // -----------------------------------------------------------------------------
-ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& controllers, const geometry::Point2f position,
-                                                    const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources, bool needSaving )
+ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& controllers, bool isUrban, const geometry::Point2f position,
+                                                    const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources )
     : controllers_( controllers )
+    , isUrban_    ( isUrban )
     , position_   ( position )
     , urbans_     ( urbans )
     , objects_    ( objects )
     , resources_  ( resources )
-    , needSaving_ ( needSaving )
 {
     controllers_.controller_.Register( *this );
 }
@@ -80,23 +88,17 @@ QString ResourceNetworkAttribute::GetLinkName( const std::string& resource, unsi
     const ResourceLink& link = node->links_[ i ];
     kernel::Entity_ABC* entity = 0;
     if( link.urban_ )
-        entity = &urbans_.Get( link.id_ );
+        entity = urbans_.Find( link.id_ );
     else
-        entity = &objects_.Get( link.id_ );
-    QString ret = entity->GetName();
-    if( ret.isEmpty() )
-        ret = QString::number( link.id_ );
+        entity = objects_.Find( link.id_ );
+    QString ret;
+    if( entity )
+    {
+        ret = entity->GetName();
+        if( ret.isEmpty() )
+            ret = QString::number( link.id_ );
+    }
     return ret;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ResourceNetworkAttribute::FindOrCreateResourceNode
-// Created: JSR 2011-02-25
-// -----------------------------------------------------------------------------
-kernel::ResourceNetwork_ABC::ResourceNode& ResourceNetworkAttribute::FindOrCreateResourceNode( std::string resource )
-{
-    needSaving_ = true;
-    return kernel::ResourceNetwork_ABC::FindOrCreateResourceNode( resource );
 }
 
 // -----------------------------------------------------------------------------
@@ -130,8 +132,22 @@ void ResourceNetworkAttribute::Draw( const kernel::Viewport_ABC& viewport, const
                     if( !resourceTarget || ( !IsSelected() && !resourceTarget->IsSelected() ) )
                         continue;
                 }
-                Point2f to = link->urban_ ? urbans_.Get( link->id_ ).Get< kernel::UrbanPositions_ABC >().Barycenter()
-                                          : objects_.Get( link->id_ ).Get< kernel::Positions >().GetPosition();
+                Point2f to;
+                if( link->urban_ )
+                {
+                    if( const kernel::UrbanObject_ABC* obj = urbans_.Find( link->id_ ) )
+                        to = obj->Get< kernel::UrbanPositions_ABC >().Barycenter();
+                    else
+                        continue;
+                }
+                else
+                {
+                    if( const kernel::Object_ABC* obj = objects_.Find( link->id_ ) )
+                        to = obj->Get< kernel::Positions >().GetPosition();
+                    else
+                        continue;
+                }
+                
                 if( viewport.IsVisible( Rectangle2f( from, to ) ) )
                     tools.DrawArrow( from, to );
             }
@@ -152,7 +168,7 @@ namespace
         {}
         bool operator() ( const kernel::ResourceNetwork_ABC::ResourceLink& link )
         {
-            return link.urban_ && urbans_->Find( link.id_ );
+            return link.urban_ && urbans_->Find( link.id_ ) == 0;
         }
     private:
         const ResourceNetworkAttribute::T_Urbans* urbans_;
@@ -173,13 +189,22 @@ void ResourceNetworkAttribute::CleanLinksToDeletedUrbanBlocks()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ResourceNetworkAttribute::SerializeAttributes
+// Created: JSR 2012-09-04
+// -----------------------------------------------------------------------------
+void ResourceNetworkAttribute::SerializeAttributes( xml::xostream& xos ) const
+{
+    SerializeObjectAttributes( xos );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ResourceNetworkAttribute::SerializeObjectAttributes
 // Created: JSR 2010-09-08
 // -----------------------------------------------------------------------------
 void ResourceNetworkAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 {
     const_cast< ResourceNetworkAttribute* >( this )->invalidResources_.clear();
-    if( controllers_.modes_->GetCurrentMode() == ePreparationMode_Terrain && !resourceNodes_.empty() || IsOverriden() )
+    if( !isUrban_ || !resourceNodes_.empty() )
     {
         xos << xml::start( "resources" );
         for( CIT_ResourceNodes it = resourceNodes_.begin(); it != resourceNodes_.end(); ++it )
@@ -197,13 +222,13 @@ void ResourceNetworkAttribute::SerializeObjectAttributes( xml::xostream& xos ) c
                 xos << xml::attribute( "critical-consumption", true );
             if( node.maxStock_ )
                 xos << xml::attribute( "stock", node.maxStock_ );
-            if( controllers_.modes_->GetCurrentMode() == ePreparationMode_Exercise )
+            if( node.stock_ )
                 xos << xml::attribute( "initial-stock", node.stock_ );
             for( unsigned int i = 0; i < node.links_.size(); ++i )
             {
                 xos << xml::start( "link" );
-                if( controllers_.modes_->GetCurrentMode() == ePreparationMode_Exercise )
-                    xos << xml::attribute( "kind", node.links_[ i ].urban_ ? "urban-object" : "terrain-object" );
+                if( !node.links_[ i ].urban_ )
+                    xos << xml::attribute( "kind", "terrain-object" );
                 xos << xml::attribute( "target", node.links_[ i ].id_ )
                     << xml::attribute( "capacity", node.links_[ i ].capacity_ )
                     << xml::end();
@@ -242,22 +267,12 @@ const std::set< std::string >& ResourceNetworkAttribute::GetInvalidResources() c
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourceNetworkAttribute::IsOverriden
-// Created: JSR 2010-09-09
-// -----------------------------------------------------------------------------
-bool ResourceNetworkAttribute::IsOverriden() const
-{
-    return needSaving_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ResourceNetworkAttribute::Update
 // Created: JSR 2010-09-08
 // -----------------------------------------------------------------------------
 void ResourceNetworkAttribute::Update( xml::xistream& xis )
 {
     xis >> xml::list( "node", *this, &ResourceNetworkAttribute::ReadNode );
-    needSaving_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -267,7 +282,6 @@ void ResourceNetworkAttribute::Update( xml::xistream& xis )
 void ResourceNetworkAttribute::Update( const kernel::ResourceNetwork_ABC::T_ResourceNodes& nodes )
 {
     resourceNodes_ = nodes;
-    needSaving_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -304,7 +318,7 @@ void ResourceNetworkAttribute::ReadLink( xml::xistream& xis, ResourceNode& node 
     link.capacity_ = xis.attribute< int >( "capacity" );
     link.urban_ = true;
     if( xis.has_attribute( "kind" ) )
-        link.urban_ = ( xis.attribute< std::string >( "kind" ) == "urban-object" );
+        link.urban_ = ( xis.attribute< std::string >( "kind" ) != "terrain-object" );
     for( unsigned int i = 0; i < node.links_.size(); ++i )
         if( node.links_[ i ].id_ == link.id_ && node.links_[ i ].urban_ == link.urban_ )
         {

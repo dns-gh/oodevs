@@ -250,10 +250,10 @@ std::string GeneralConfig::GetTerrainFile( const std::string& terrain ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: GeneralConfig::GetUrbanFile
+// Name: GeneralConfig::GetTerrainUrbanFile
 // Created: ABR 2012-05-22
 // -----------------------------------------------------------------------------
-std::string GeneralConfig::GetUrbanFile( const std::string& terrain ) const
+std::string GeneralConfig::GetTerrainUrbanFile( const std::string& terrain ) const
 {
     return ( bfs::path( GetTerrainDir( terrain ) ) / "urban" / "urban.xml" ).string();
 }

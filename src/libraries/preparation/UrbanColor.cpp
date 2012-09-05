@@ -21,11 +21,7 @@
 // Name: UrbanColor constructor
 // Created: ABR 2012-06-04
 // -----------------------------------------------------------------------------
-UrbanColor::UrbanColor( const kernel::Entity_ABC* parent, kernel::Controllers& controllers,
-                        kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary )
-    : controllers_( controllers )
-    , object_     ( object )
-    , dictionary_ ( dictionary )
+UrbanColor::UrbanColor( const kernel::Entity_ABC* parent, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary )
 {
     if( parent )
     {
@@ -33,19 +29,14 @@ UrbanColor::UrbanColor( const kernel::Entity_ABC* parent, kernel::Controllers& c
         SetColor( parentColor.Red(), parentColor.Green(), parentColor.Blue(), static_cast< int >( parentColor.Alpha() * 255 + 0.5 ) );
         initial_ = current_;
     }
-    assert( controllers_.modes_ );
-    controllers_.modes_->Register( *this );
-    CreateDictionnary( controllers_.modes_->GetCurrentMode() == ePreparationMode_Exercise );
+    dictionary.Register( object, tools::translate( "UrbanColor", "Info/Color" ), current_, false, kernel::eUrbanTemplate );
 }
 
 // -----------------------------------------------------------------------------
 // Name: UrbanColor constructor
 // Created: LGY 2011-04-19
 // -----------------------------------------------------------------------------
-UrbanColor::UrbanColor( xml::xistream& xis, kernel::Controllers& controllers, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary )
-    : controllers_( controllers )
-    , object_     ( object )
-    , dictionary_ ( dictionary )
+UrbanColor::UrbanColor( xml::xistream& xis, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary )
 {
     if( xis.has_child( "color" ) )
     {
@@ -55,9 +46,7 @@ UrbanColor::UrbanColor( xml::xistream& xis, kernel::Controllers& controllers, ke
         initial_ = current_;
         xis >> xml::end;
     }
-    CreateDictionnary( true );
-    if( controllers_.modes_ )
-        controllers_.modes_->Register( *this );
+    dictionary.Register( object, tools::translate( "UrbanColor", "Info/Color" ), current_, false, kernel::eUrbanTemplate );
 }
 
 // -----------------------------------------------------------------------------
@@ -66,8 +55,7 @@ UrbanColor::UrbanColor( xml::xistream& xis, kernel::Controllers& controllers, ke
 // -----------------------------------------------------------------------------
 UrbanColor::~UrbanColor()
 {
-    if( controllers_.modes_ )
-        controllers_.modes_->Unregister( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -76,31 +64,13 @@ UrbanColor::~UrbanColor()
 // -----------------------------------------------------------------------------
 void UrbanColor::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << xml::start( "color" )
+    if( current_.red_ != 200 || current_.green_ != 200 || current_.blue_ != 200 || current_.alpha_ != 180 )
+    {
+        xos << xml::start( "color" )
             << xml::attribute< int >( "red", current_.red_ )
             << xml::attribute< int >( "green", current_.green_ )
             << xml::attribute< int >( "blue", current_.blue_ )
             << xml::attribute< float >( "alpha", Alpha() )
         << xml::end;
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanColor::NotifyModeChanged
-// Created: ABR 2012-06-04
-// -----------------------------------------------------------------------------
-void UrbanColor::NotifyModeChanged( int newMode )
-{
-    if( newMode == ePreparationMode_Exercise )
-        CreateDictionnary( true );
-    else if( newMode == ePreparationMode_Terrain )
-        CreateDictionnary( false );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanColor::CreateDictionnary
-// Created: ABR 2012-06-04
-// -----------------------------------------------------------------------------
-void UrbanColor::CreateDictionnary( bool readOnly )
-{
-    dictionary_.Register( object_, tools::translate( "UrbanColor", "Info/Color" ), current_, readOnly, kernel::eUrbanTemplate );
+    }
 }

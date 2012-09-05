@@ -67,7 +67,9 @@ public:
     virtual std::string GetWeatherFile() const;
     virtual std::string GetOrbatFile() const;
     virtual std::string GetOrbatFileName() const;
+    virtual std::string GetTerrainUrbanFile() const;
     virtual std::string GetUrbanFile() const;
+    virtual std::string GetUrbanFileName() const;
     virtual std::string GetUrbanStateFile() const;
     virtual std::string GetKnowledgesFile() const;
     virtual std::string GetKnowledgesFileName() const;

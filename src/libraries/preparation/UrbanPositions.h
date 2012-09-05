@@ -53,6 +53,7 @@ private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
+    EUrbanLevel level_;
     //@}
 
 };

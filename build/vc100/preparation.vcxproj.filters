@@ -897,9 +897,6 @@
     <ClInclude Include="..\..\src\libraries\preparation\ObjectsModel.h">
       <Filter>Source Files\Model\Object</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\preparation\Overridable_ABC.h">
-      <Filter>Source Files\Model\Object</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\ObjectHierarchies.h">
       <Filter>Source Files\Model\Object\Extensions</Filter>
     </ClInclude>

@@ -10,11 +10,8 @@
 #ifndef __InfrastructureAttribute_h_
 #define __InfrastructureAttribute_h_
 
-#include "Overridable_ABC.h"
 #include "clients_kernel/Infrastructure_ABC.h"
-#include "clients_kernel/ModesObserver_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
-#include "tools/Observer_ABC.h"
 #include <boost/noncopyable.hpp>
 
 namespace kernel
@@ -39,10 +36,7 @@ namespace xml
 // Created: SLG 2011-01-11
 // =============================================================================
 class InfrastructureAttribute : public kernel::Infrastructure_ABC
-                              , public Overridable_ABC
-                              , public tools::Observer_ABC
                               , public kernel::Serializable_ABC
-                              , public kernel::ModesObserver_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -67,7 +61,6 @@ public:
     //@{
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
-    virtual bool IsOverriden() const;
     virtual void Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     void Update( xml::xistream& xis );
     //@}
@@ -75,11 +68,6 @@ public:
     //! @name Serializable_ABC
     //@{
     virtual void SerializeAttributes( xml::xostream& ) const;
-    //@}
-
-    //! @name ModesObserver_ABC
-    //@{
-    virtual void NotifyModeChanged( int newMode );
     //@}
 
 private:

@@ -125,7 +125,6 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     , config_           ( config )
     , loading_          ( false )
     , needsSaving_      ( false )
-    , terrainHasChanged_( false )
     , modelBuilder_     ( new ModelBuilder( controllers, model ) )
     , forward_          ( new gui::CircularEventStrategy() )
     , eventStrategy_    ( new gui::ExclusiveEventStrategy( *forward_ ) )
@@ -540,7 +539,7 @@ void MainWindow::LoadExercise( bool checkConsistency /*= true*/ )
         }
         loading_ = false;
         controllers_.ChangeMode( ePreparationMode_Exercise );
-        SetWindowTitle( !model_.GetLoadingErrors().empty() || model_.ghosts_.NeedSaving() );
+        SetWindowTitle( !model_.GetLoadingErrors().empty() || model_.ghosts_.NeedSaving() || model_.OldUrbanMode() );
         if( checkConsistency )
             emit CheckConsistency();
     }
@@ -564,16 +563,6 @@ void MainWindow::ReloadExercise()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MainWindow::ExternalReload
-// Created: JSR 2012-06-21
-// -----------------------------------------------------------------------------
-void MainWindow::ExternalReload()
-{
-    DoClose();
-    DoLoad( config_.GetExerciseFile().c_str(), false );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MainWindow::Save
 // Created: SBO 2006-09-06
 // -----------------------------------------------------------------------------
@@ -582,17 +571,9 @@ void MainWindow::Save( bool checkConsistency /* = true */ )
     if( needsSaving_ )
     {
         assert( controllers_.modes_ );
-        if( controllers_.modes_->GetCurrentMode() == ePreparationMode_Exercise )
-        {
-            if( checkConsistency )
-                emit CheckConsistency();
-            model_.SaveExercise( config_ );
-        }
-        else
-        {
-            assert( controllers_.modes_->GetCurrentMode() == ePreparationMode_Terrain );
-            model_.SaveTerrain( config_ );
-        }
+        if( checkConsistency )
+            emit CheckConsistency();
+        model_.SaveExercise( config_ );
         SetWindowTitle( false );
     }
 }
@@ -605,52 +586,26 @@ void MainWindow::SaveAs()
 {
     bool exist = false;
     QString name;
-    if( controllers_.modes_->GetCurrentMode() == ePreparationMode_Exercise )
+    bfs::path exerciseDirectory;
+    do
     {
-        bfs::path exerciseDirectory;
-        do
+        bool ok = false;
+        name = QInputDialog::getText( tr( "Save exercise as ..." ),
+            ( exist ) ? tr( "The exercise '%1' already exists. Please, enter a new exercise name:" ).arg( name ) : tr( "Enter an exercise name:" ),
+            QLineEdit::Normal, tr( "Type exercise name here" ), &ok, this );
+        if( ok && !name.isEmpty() )
         {
-            bool ok = false;
-            name = QInputDialog::getText( tr( "Save exercise as ..." ),
-                ( exist ) ? tr( "The exercise '%1' already exist. Please, enter a new exercise name:" ).arg( name ) : tr( "Enter an exercise name:" ),
-                QLineEdit::Normal, tr( "Type exercise name here" ), &ok, this );
-            if( ok && !name.isEmpty() )
-            {
-                exerciseDirectory = bfs::path( config_.GetExercisesDir() ) / name.toAscii().constData();
-                exist = frontend::commands::ExerciseExists( config_, name.toAscii().constData() ) || bfs::exists( exerciseDirectory );
-            }
-            else
-                return;
-        } while( exist );
-        bfs::create_directories( exerciseDirectory );
-        bfs::path exerciseFile( config_.tools::ExerciseConfig::GeneralConfig::GetExerciseFile( name.toAscii().constData() ) );
-        bfs::copy_file( config_.GetExerciseFile(), exerciseFile );
-        config_.LoadExercise( exerciseFile.string() );
-        model_.exercise_.SetName( name );
-    }
-    else
-    {
-        assert( controllers_.modes_->GetCurrentMode() == ePreparationMode_Terrain );
-        bfs::path terrainDirectory;
-        do
-        {
-            bool ok = false;
-            name = QInputDialog::getText( tr( "Save terrain as ..." ),
-                ( exist ) ? tr( "The terrain '%1' already exist. Please, enter a new terrain name:" ).arg( name ) : tr( "Enter a terrain name:" ),
-                QLineEdit::Normal, tr( "Type terrain name here" ), &ok, this );
-            if( ok && !name.isEmpty() )
-            {
-                terrainDirectory = bfs::path( config_.GetTerrainsDir() ) / name.toAscii().constData();
-                exist = frontend::commands::TerrainExists( config_, name.toAscii().constData() ) || bfs::exists( terrainDirectory );
-            }
-            else
-                return;
-        } while( exist );
-        bfs::create_directories( terrainDirectory );
-        frontend::Copy( config_.GetTerrainDir( config_.GetTerrainName() ), terrainDirectory.string() );
-        config_.LoadTerrain( name.toAscii().constData() );
-        terrainHasChanged_ = true;
-    }
+            exerciseDirectory = bfs::path( config_.GetExercisesDir() ) / name.toAscii().constData();
+            exist = frontend::commands::ExerciseExists( config_, name.toAscii().constData() ) || bfs::exists( exerciseDirectory );
+        }
+        else
+            return;
+    } while( exist );
+    bfs::create_directories( exerciseDirectory );
+    bfs::path exerciseFile( config_.tools::ExerciseConfig::GeneralConfig::GetExerciseFile( name.toAscii().constData() ) );
+    bfs::copy_file( config_.GetExerciseFile(), exerciseFile );
+    config_.LoadExercise( exerciseFile.string() );
+    model_.exercise_.SetName( name );
     dialogContainer_->Purge();
     needsSaving_ = true;
     Save();
@@ -766,18 +721,10 @@ void MainWindow::SetWindowTitle( bool needsSaving )
     QString mode = ENT_Tr::ConvertFromPreparationMode( static_cast< E_PreparationMode >( controllers_.modes_->GetCurrentMode() ), ENT_Tr_ABC::eToTr ).c_str();
     if( model_.IsLoaded() )
     {
-        if( controllers_.modes_->GetCurrentMode() == ePreparationMode_Terrain )
-        {
-            filename = config_.GetTerrainName().c_str();
-            filename += ( needsSaving ) ? "*" : "";
-        }
-        else
-        {
-            filename = model_.exercise_.GetName().isEmpty()
-                ? ( config_.GetExerciseName().empty() ? tr( "Untitled" ) : config_.GetExerciseName().c_str() )
-                : model_.exercise_.GetName();
-            filename += ( needsSaving ) ? "*" : "";
-        }
+        filename = model_.exercise_.GetName().isEmpty()
+            ? ( config_.GetExerciseName().empty() ? tr( "Untitled" ) : config_.GetExerciseName().c_str() )
+            : model_.exercise_.GetName();
+        filename += ( needsSaving ) ? "*" : "";
     }
     if( filename.isEmpty() )
         setCaption( tr( "Preparation - [%1]" ).arg( tr( "No file loaded" ) ) );
@@ -807,9 +754,7 @@ QMessageBox::StandardButton MainWindow::CheckSaving( bool checkConsistency /* = 
     {
         assert( controllers_.modes_ != 0 );
         result = QMessageBox::question( this, tools::translate( "Application", "SWORD" )
-                                                , controllers_.modes_->GetCurrentMode() == ePreparationMode_Exercise
-                                                ? tr( "Unsaved modification detected.\nDo you want to save the exercise \'%1\'?" ).arg( config_.GetExerciseName().c_str() )
-                                                : tr( "Unsaved modification detected.\nDo you want to save the terrain \'%1\'?" ).arg( config_.GetTerrainName().c_str() )
+                                                , tr( "Unsaved modification detected.\nDo you want to save the exercise \'%1\'?" ).arg( config_.GetExerciseName().c_str() )
                                                 , QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, QMessageBox::Yes );
         if( result == QMessageBox::Yes )
             Save( !checkConsistency );
@@ -870,20 +815,15 @@ void MainWindow::SetProgression( int value, const QString& text )
     if( !progressDialog_.get() )
         return;
     if( !value )
+    {
+        const QRect rc = QApplication::desktop()->availableGeometry( QApplication::desktop()->screenNumber( this ) );
+        const QSize size = progressDialog_->size();
+        progressDialog_->move( ( rc.topLeft() + rc.bottomRight() - QPoint( size.width(), size.height() ) ) / 2 );
         progressDialog_->show();
+    }
     progressDialog_->setLabelText( text );
     progressDialog_->setValue( value );
     qApp->processEvents();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::NotifyModeChanged
-// Created: ABR 2012-06-11
-// -----------------------------------------------------------------------------
-void MainWindow::NotifyModeChanged( int newMode )
-{
-    kernel::ModesObserver_ABC::NotifyModeChanged( newMode );
-    SetWindowTitle( terrainHasChanged_ && ( newMode & ePreparationMode_Exercise ) != 0 );
 }
 
 // -----------------------------------------------------------------------------

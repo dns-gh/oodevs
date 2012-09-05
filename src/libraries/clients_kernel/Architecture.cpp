@@ -47,6 +47,21 @@ Architecture::~Architecture()
 }
 
 // -----------------------------------------------------------------------------
+// Name: Architecture::IsDefault
+// Created: JSR 2012-09-04
+// -----------------------------------------------------------------------------
+bool Architecture::IsDefault() const
+{
+    tools::Iterator< const MaterialCompositionType& > itMaterial = static_cast< const tools::StringResolver< MaterialCompositionType >& >( objectTypes_ ).CreateIterator();
+    assert( itMaterial.HasMoreElements() );
+    const MaterialCompositionType* material = &itMaterial.NextElement();
+    tools::Iterator< const RoofShapeType& > itRoof = static_cast< const tools::StringResolver< RoofShapeType >& >( objectTypes_ ).CreateIterator();
+    assert( itRoof.HasMoreElements() );
+    const RoofShapeType* roofShape = &itRoof.NextElement();
+    return height_.value_ == 20 && floorNumber_ == 6 && parkingFloors_ ==  0 && occupation_.value_ == 50 && trafficability_.value_ == 0.5f && material_ == material && roofShape_ == roofShape;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Architecture::Initialize
 // Created: ABR 2012-05-31
 // -----------------------------------------------------------------------------
@@ -61,21 +76,21 @@ void Architecture::Initialize( unsigned int height, unsigned int floorNumber, un
 
     if( material.empty() || material == "default" )
     {
-        tools::Iterator< const MaterialCompositionType& > it = objectTypes_.StringResolver< MaterialCompositionType >::CreateIterator();
+        tools::Iterator< const MaterialCompositionType& > it = static_cast< const tools::StringResolver< MaterialCompositionType >& >( objectTypes_ ).CreateIterator();
         assert( it.HasMoreElements() );
         material_ = const_cast< MaterialCompositionType* >( &it.NextElement() );
     }
     else
-        material_ = &objectTypes_.StringResolver< MaterialCompositionType >::Get( material );
+        material_ = &static_cast< const tools::StringResolver< MaterialCompositionType >& >( objectTypes_ ).Get( material );
 
     if( roofShape.empty() || roofShape == "default" )
     {
-        tools::Iterator< const RoofShapeType& > it = objectTypes_.StringResolver< RoofShapeType >::CreateIterator();
+        tools::Iterator< const RoofShapeType& > it = static_cast< const tools::StringResolver< RoofShapeType >& >( objectTypes_ ).CreateIterator();
         assert( it.HasMoreElements() );
         roofShape_ = const_cast< RoofShapeType* >( &it.NextElement() );
     }
     else
-        roofShape_ = &objectTypes_.StringResolver< RoofShapeType >::Get( roofShape );
+        roofShape_ = &static_cast< const tools::StringResolver< RoofShapeType >& >( objectTypes_ ).Get( roofShape );
 }
 
 template< typename T >

@@ -81,6 +81,7 @@ Model::Model( Controllers& controllers, const ::StaticModel& staticModel )
     , ghostFactory_         ( *new GhostFactory( controllers, *this, staticModel, idManager_, knowledgeGroupFactory_, symbolsFactory_ ) )
     , resourceObserver_     ( *new ResourceNetworkSelectionObserver( controllers ) )
     , loaded_               ( false )
+    , oldUrbanMode_         ( false )
     , exercise_             ( *new Exercise( controllers.controller_ ) )
     , teams_                ( *new TeamsModel( controllers, teamFactory_ ) )
     , objects_              ( *new ObjectsModel( controllers, objectFactory_, staticModel.objectTypes_ ) )
@@ -225,6 +226,15 @@ void Model::ClearLoadingErrors()
 }
 
 // -----------------------------------------------------------------------------
+// Name: Model::OldUrbanMode
+// Created: JSR 2012-09-05
+// -----------------------------------------------------------------------------
+bool Model::OldUrbanMode() const
+{
+    return oldUrbanMode_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Model::Purge
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
@@ -274,8 +284,14 @@ void Model::Load( const tools::ExerciseConfig& config )
 {
     config.GetLoader().LoadFile( config.GetExerciseFile(), boost::bind( &Exercise::Load, &exercise_, _1 ) );
     config.GetLoader().LoadFile( config.GetSettingsFile(), boost::bind( &tools::ExerciseSettings::Load, &exercise_.GetSettings(), _1 ) );
-    config.GetLoader().LoadOptionalFile( config.GetUrbanFile(), boost::bind( &UrbanModel::LoadUrban, &urban_, _1 ) );
-    config.GetLoader().LoadOptionalFile( config.GetUrbanStateFile(), boost::bind( &UrbanModel::LoadUrbanState, &urban_, _1 ) );
+    const std::string urbanFile = config.GetUrbanFile();
+    oldUrbanMode_ = false;
+    if( !config.GetLoader().LoadOptionalFile( config.GetUrbanFile(), boost::bind( &UrbanModel::LoadUrban, &urban_, _1 ) ) )
+        if( config.GetLoader().LoadOptionalFile( config.GetTerrainUrbanFile(), boost::bind( &UrbanModel::LoadUrban, &urban_, _1 ) ) )
+        {
+            oldUrbanMode_ = true;
+            config.GetLoader().LoadOptionalFile( config.GetUrbanStateFile(), boost::bind( &UrbanModel::LoadUrbanState, &urban_, _1 ) );
+        }
     symbolsFactory_.Load( config );
     urban_.Load();
 
@@ -331,26 +347,14 @@ void Model::SaveExercise( const tools::ExerciseConfig& config )
         xos << xml::end;
     }
     tools::WriteXmlCrc32Signature( config.GetOrbatFile() );
-    SerializeAndSign( config.GetUrbanStateFile(), urban_, schemaWriter );
+    config.SerializeAndSignTerrainFiles( schemaWriter );
+    SerializeAndSign( config.GetUrbanFile(), urban_, schemaWriter );
     SerializeAndSign( config.GetWeatherFile(), weather_, schemaWriter );
     SerializeAndSign( config.GetProfilesFile(), profiles_, schemaWriter );
     SerializeAndSign( config.GetScoresFile(), scores_, schemaWriter );
     SerializeAndSign( config.GetSuccessFactorsFile(), successFactors_, schemaWriter );
     successFactors_.SerializeScript( config );
     UpdateName( config.GetOrbatFile() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Model::SaveTerrain
-// Created: ABR 2012-05-22
-// -----------------------------------------------------------------------------
-void Model::SaveTerrain( const tools::ExerciseConfig& config )
-{
-    if( !loaded_ )
-        return;
-    const tools::SchemaWriter schemaWriter;
-    SerializeAndSign( config.GetUrbanFile(), urban_, schemaWriter );
-    config.SerializeAndSignTerrainFiles( schemaWriter );
 }
 
 // -----------------------------------------------------------------------------

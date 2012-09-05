@@ -10,7 +10,6 @@
 #ifndef __ResourceNetworkAttribute_h_
 #define __ResourceNetworkAttribute_h_
 
-#include "Overridable_ABC.h"
 #include "clients_kernel/ResourceNetwork_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include <tools/Resolver.h>
@@ -37,7 +36,6 @@ namespace xml
 // =============================================================================
 class ResourceNetworkAttribute : public kernel::ResourceNetwork_ABC
                                , public kernel::Serializable_ABC
-                               , public Overridable_ABC
                                , public tools::Observer_ABC
                                , public tools::ElementObserver_ABC< kernel::Object_ABC >
                                , public tools::ElementObserver_ABC< kernel::UrbanObject_ABC >
@@ -53,19 +51,17 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             ResourceNetworkAttribute( kernel::Controllers& controllers, xml::xistream& xis, const geometry::Point2f position
-                                     , const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources, bool needSaving );
-             ResourceNetworkAttribute( kernel::Controllers& controllers, const geometry::Point2f position
-                                     , const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources, bool needSaving );
+             ResourceNetworkAttribute( kernel::Controllers& controllers, xml::xistream& xis, bool isUrban, const geometry::Point2f position
+                                     , const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources );
+             ResourceNetworkAttribute( kernel::Controllers& controllers, bool isUrban, const geometry::Point2f position
+                                     , const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources );
     virtual ~ResourceNetworkAttribute();
     //@}
 
     //! @name Operations
     //@{
     virtual QString GetLinkName( const std::string& resource, unsigned int i ) const;
-    virtual kernel::ResourceNetwork_ABC::ResourceNode& FindOrCreateResourceNode( std::string resource );
     virtual void Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
-    virtual bool IsOverriden() const;
     void Update( xml::xistream& xis );
     void Update( const kernel::ResourceNetwork_ABC::T_ResourceNodes& nodes );
     virtual void NotifyDeleted( const kernel::Object_ABC& object );
@@ -76,6 +72,7 @@ public:
 
     //! @name Serializable_ABC
     //@{
+    virtual void SerializeAttributes( xml::xostream& ) const;
     virtual void SerializeObjectAttributes( xml::xostream& ) const;
     //@}
 
@@ -91,12 +88,12 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
+    bool isUrban_;
     const geometry::Point2f position_;
     const T_Urbans& urbans_;
     const T_Objects& objects_;
     const T_Resources& resources_;
     std::set< std::string > invalidResources_;
-    bool needSaving_;
     //@}
 };
 

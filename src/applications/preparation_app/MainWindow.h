@@ -77,7 +77,6 @@ public:
     //! @name Operations
     //@{
     QMessageBox::StandardButton CheckSaving( bool checkConsistency = false );
-    void ExternalReload();
     //@}
 
 public slots:
@@ -121,7 +120,6 @@ private:
     virtual void NotifyCreated();
     virtual void NotifyUpdated();
     virtual void NotifyDeleted();
-    virtual void NotifyModeChanged( int newMode );
     void SetWindowTitle( bool needsSaving );
     void SetNeedsSaving( bool status );
     void SetProgression( int value, const QString& text );
@@ -136,7 +134,6 @@ private:
     Config&              config_;
     bool                 loading_;
     bool                 needsSaving_;
-    bool                 terrainHasChanged_;
 
     std::auto_ptr< ModelBuilder >                modelBuilder_;
     std::auto_ptr< gui::CircularEventStrategy >  forward_;

@@ -95,7 +95,6 @@ public:
     std::string GetPopulationDir() const;
 
     virtual std::string GetOrbatFile() const;
-    virtual std::string GetUrbanFile() const;
     //@}
 
     //! @name CheckPoints

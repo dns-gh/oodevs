@@ -102,8 +102,6 @@ private:
     void ReadCapacity( const std::string& capacity, xml::xistream& xis, kernel::UrbanObject_ABC& object );
     template< typename T, typename U >
     void UpdateCapacity( xml::xistream& xis, kernel::UrbanObject_ABC& object );
-    void SerializeExercise( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const;
-    void SerializeTerrain( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const;
     void CreateQuadTree( float width, float height );
     void CleanLinks();
     //@}

@@ -70,9 +70,8 @@ void Usages::ReadUsages( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void Usages::SerializeAttributes( xml::xostream& xos ) const
 {
-    if( usages_.empty() )
+    if( IsDefault() )
         return;
-
     xos << xml::start( "usages" );
     for( kernel::CIT_Usages it = usages_.begin(); it != usages_.end(); ++it )
     {

@@ -309,6 +309,10 @@
         <source>Info/Medical Treatment attributes/Hospital ID</source>
         <translation>Info/Attributs Traitement médical/Id Hopital</translation>
     </message>
+    <message>
+        <source>Info/Medical Treatment attributes/</source>
+        <translation>Info/Attributs Traitement médical/</translation>
+    </message>
 </context>
 <context>
     <name>MineAttribute</name>

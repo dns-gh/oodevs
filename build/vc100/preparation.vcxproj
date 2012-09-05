@@ -396,7 +396,6 @@
     <ClInclude Include="..\..\src\libraries\preparation\ObjectFactory.h" />
     <ClInclude Include="..\..\src\libraries\preparation\ObjectFactory_ABC.h" />
     <ClInclude Include="..\..\src\libraries\preparation\ObjectsModel.h" />
-    <ClInclude Include="..\..\src\libraries\preparation\Overridable_ABC.h" />
     <ClInclude Include="..\..\src\libraries\preparation\ObjectHierarchies.h" />
     <ClInclude Include="..\..\src\libraries\preparation\ObjectPositions.h" />
     <ClInclude Include="..\..\src\libraries\preparation\AltitudeModifierAttribute.h" />

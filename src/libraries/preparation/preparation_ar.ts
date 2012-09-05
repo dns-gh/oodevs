@@ -305,6 +305,10 @@
         <source>Info/Medical Treatment attributes/Hospital ID</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Info/Medical Treatment attributes/</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MineAttribute</name>

@@ -99,10 +99,10 @@ public:
     //@
     void Load( const tools::ExerciseConfig& config );
     void SaveExercise( const tools::ExerciseConfig& config );
-    void SaveTerrain( const tools::ExerciseConfig& config );
     void AppendLoadingError( E_ConsistencyCheck type, const std::string& error );
     const T_LoadingErrors& GetLoadingErrors() const;
     void ClearLoadingErrors();
+    bool OldUrbanMode() const;
     void SetExerciseValidity( bool valid );
     void Purge();
     QString GetName() const;
@@ -138,6 +138,7 @@ private:
     kernel::ResourceNetworkSelectionObserver& resourceObserver_;
     QString name_;
     bool loaded_;
+    bool oldUrbanMode_;
     T_LoadingErrors loadingErrors_;
     //@}
 

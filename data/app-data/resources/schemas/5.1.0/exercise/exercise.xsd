@@ -6,7 +6,6 @@
 			<xs:all>
 				<xs:element ref="meta" minOccurs="0"/>
 				<xs:element ref="model"/>
-				<xs:element ref="urbanstate" minOccurs="0"/>
 				<xs:element ref="population" minOccurs="0"/>
 				<xs:element ref="terrain"/>
 				<xs:element name="orbat" type="T_FileReference">
@@ -42,6 +41,16 @@
 				<xs:element name="weather" type="T_FileReference">
 					<xs:annotation>
 						<xs:documentation xml:lang="en">Defines the file to be used for weather definition.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="urban" type="T_FileReference" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Defines the file to be used for urban model.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="urbanstate" type="T_FileReference" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Defines the file to be used to specialise urban blocks (for compatibility with former versions).</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 				<xs:element name="action-planning" type="T_FileReference" minOccurs="0">
@@ -198,18 +207,6 @@
 			<xs:attribute name="name" type="xs:string" use="required">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">Defines the population model to be used.</xs:documentation>
-				</xs:annotation>
-			</xs:attribute>
-		</xs:complexType>
-	</xs:element>
-	<xs:element name="urbanstate">
-		<xs:annotation>
-			<xs:documentation xml:lang="en">Defines the urbanstate file used to specialise urban blocks.</xs:documentation>
-		</xs:annotation>
-		<xs:complexType>
-			<xs:attribute name="file" type="xs:string" use="required">
-				<xs:annotation>
-					<xs:documentation xml:lang="en">Defines the urbanstate file to be used.</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
 		</xs:complexType>

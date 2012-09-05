@@ -943,7 +943,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The exercise &apos;%1&apos; already exist. Please, enter a new exercise name:</source>
+        <source>The exercise &apos;%1&apos; already exists. Please, enter a new exercise name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -952,22 +952,6 @@
     </message>
     <message>
         <source>Type exercise name here</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save terrain as ...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The terrain &apos;%1&apos; already exist. Please, enter a new terrain name:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter a terrain name:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Type terrain name here</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -984,16 +968,6 @@
     </message>
     <message>
         <source>Preparation - %1 - [%2]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unsaved modification detected.
-Do you want to save the exercise &apos;%1&apos;?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unsaved modification detected.
-Do you want to save the terrain &apos;%1&apos;?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2844,6 +2818,11 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Error loading exercise: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unsaved modification detected.
+Do you want to save the exercise &apos;%1&apos;?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

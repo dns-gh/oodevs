@@ -49,10 +49,10 @@ namespace
         if( !actionPlanning.empty() )
             xos << xml::start( "action-planning" ) << xml::attribute( "file", actionPlanning ) << xml::end;
 
-        xos     << xml::start( "profiles" )   << xml::attribute( "file", "profiles.xml" ) << xml::end
-                << xml::start( "orbat" )      << xml::attribute( "file", "orbat.xml" ) << xml::end
-                << xml::start( "urbanstate" ) << xml::attribute( "file", "urbanstate.xml" ) << xml::end
-                << xml::start( "weather" )    << xml::attribute( "file", "weather.xml" ) << xml::end
+        xos     << xml::start( "profiles" ) << xml::attribute( "file", "profiles.xml" ) << xml::end
+                << xml::start( "orbat" )    << xml::attribute( "file", "orbat.xml" ) << xml::end
+                << xml::start( "urban" )    << xml::attribute( "file", "urban.xml" ) << xml::end
+                << xml::start( "weather" )  << xml::attribute( "file", "weather.xml" ) << xml::end
                 << xml::start( "terrain" )
                     << xml::attribute( "name", terrain )
                 << xml::end

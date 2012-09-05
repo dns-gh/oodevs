@@ -10,11 +10,11 @@
 #include "preparation_pch.h"
 #include "MedicalTreatmentAttribute.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/DictionaryUpdated.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Infrastructure_ABC.h"
 #include "clients_kernel/InfrastructureType.h"
 #include "clients_kernel/MedicalTreatmentType.h"
-#include "clients_kernel/ModeController_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/UrbanObject_ABC.h"
@@ -35,9 +35,9 @@ MedicalTreatmentAttribute::MedicalTreatmentAttribute( const tools::Resolver_ABC<
     , resolver_   ( treatmentTypes )
 {
     if( !owner_ )
-        CreateDictionary();
-    if( controllers_ && controllers_->modes_ )
-        controllers_->modes_->Register( *this );
+        UpdateDictionary();
+    if( controllers_ )
+        controllers_->controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -45,18 +45,27 @@ MedicalTreatmentAttribute::MedicalTreatmentAttribute( const tools::Resolver_ABC<
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
 MedicalTreatmentAttribute::MedicalTreatmentAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& treatmentTypes,
-                                                      kernel::PropertiesDictionary& dictionary )
-    : controllers_( 0 )
+                                                      kernel::PropertiesDictionary& dictionary, kernel::Controllers* controllers /* = 0 */, const kernel::Entity_ABC* owner /* = 0 */ )
+    : controllers_( controllers )
     , dictionary_ ( dictionary )
-    , owner_      ( 0 )
+    , owner_      ( owner )
     , doctors_    ( 0 )
     , resolver_   ( treatmentTypes )
 {
-    xis >> xml::attribute( "doctors", doctors_ )
-        >> xml::optional >> xml::attribute( "reference", referenceID_ );
-    xis >> xml::start( "bed-capacities" )
-        >> list( "bed-capacity", *this, &MedicalTreatmentAttribute::ReadBedCapacity );
-    CreateDictionary();
+    if( owner_ ) // urban
+    {
+        if( xis.has_child( "medical-treatment" ) )
+        {
+            xis >> xml::start( "medical-treatment" );
+            Update( xis );
+            xis >> xml::end;
+        }
+    }
+    else
+        Update( xis );
+    UpdateDictionary();
+    if( controllers_ )
+        controllers_->controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -65,8 +74,8 @@ MedicalTreatmentAttribute::MedicalTreatmentAttribute( xml::xistream& xis, const 
 // -----------------------------------------------------------------------------
 MedicalTreatmentAttribute::~MedicalTreatmentAttribute()
 {
-    if( controllers_ && controllers_->modes_ )
-        controllers_->modes_->Unregister( *this );
+    if( controllers_ )
+        controllers_->controller_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -166,12 +175,20 @@ bool MedicalTreatmentAttribute::IsSet() const
 {
     if( !owner_ )
         return true;
-    if( GetCurrentMode() == ePreparationMode_Exercise )
-        if( const kernel::UrbanObject_ABC* urbanObject = dynamic_cast< const kernel::UrbanObject_ABC* >( owner_ ) )
-            if( const kernel::Infrastructure_ABC* infra = owner_->Retrieve< kernel::Infrastructure_ABC >() )
-                if( const kernel::InfrastructureType* type = infra->GetType() )
-                    return ( type->FindCapacity( "medical" ) != 0 );
+    if( const kernel::UrbanObject_ABC* urbanObject = dynamic_cast< const kernel::UrbanObject_ABC* >( owner_ ) )
+        if( const kernel::Infrastructure_ABC* infra = owner_->Retrieve< kernel::Infrastructure_ABC >() )
+            if( const kernel::InfrastructureType* type = infra->GetType() )
+                return ( type->FindCapacity( "medical" ) != 0 );
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MedicalTreatmentAttribute::SerializeAttributes
+// Created: JSR 2012-09-04
+// -----------------------------------------------------------------------------
+void MedicalTreatmentAttribute::SerializeAttributes( xml::xostream& xos ) const
+{
+    SerializeObjectAttributes( xos );
 }
 
 // -----------------------------------------------------------------------------
@@ -196,50 +213,48 @@ void MedicalTreatmentAttribute::SerializeObjectAttributes( xml::xostream& xos ) 
 }
 
 // -----------------------------------------------------------------------------
-// Name: MedicalTreatmentAttribute::CreateDictionary
+// Name: MedicalTreatmentAttribute::NotifyUpdated
+// Created: JSR 2012-09-04
+// -----------------------------------------------------------------------------
+void MedicalTreatmentAttribute::NotifyUpdated( const kernel::UrbanObject_ABC& object )
+{
+    if( &object == owner_ )
+        UpdateDictionary();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MedicalTreatmentAttribute::UpdateDictionary
 // Created: SBO 2006-10-30
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::CreateDictionary()
+void MedicalTreatmentAttribute::UpdateDictionary()
 {
     if( owner_ )
     {
-        dictionary_.Register( *owner_, tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Doctors" ), doctors_ );
-        dictionary_.Register( *owner_, tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Hospital ID" ), referenceID_ );
-        for( T_TreatmentCapacities::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )
-            dictionary_.Register( *owner_, tools::translate( "MedicalTreatmentAttribute", std::string( "Info/Medical Treatment attributes/" + it->first ).c_str() ), it->second );
+        if( IsSet() )
+        {
+            dictionary_.Register( *owner_, tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Doctors" ), doctors_ );
+            dictionary_.Register( *owner_, tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Hospital ID" ), referenceID_ );
+            for( T_TreatmentCapacities::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )
+                dictionary_.Register( *owner_, tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/" ) + it->first.c_str(), it->second );
+        }
+        else
+        {
+            dictionary_.Remove( tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Doctors" ) );
+            dictionary_.Remove( tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Hospital ID" ) );
+            for( T_TreatmentCapacities::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )
+                dictionary_.Remove( tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/" ) + it->first.c_str() );
+            if( controllers_ )
+                controllers_->controller_.Delete( kernel::DictionaryUpdated( const_cast< kernel::Entity_ABC& >( *owner_ ), tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/" ) ) );
+        }
+        // TODO à voir avec LGY
+        // if( controllers_ )
+            //controllers_->controller_.Create( kernel::DictionaryUpdated( const_cast< kernel::Entity_ABC& >( *owner_ ), tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/" ) ) );
     }
     else
     {
         dictionary_.Register( *this, tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Doctors" ), doctors_ );
         dictionary_.Register( *this, tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Hospital ID" ), referenceID_ );
         for( T_TreatmentCapacities::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )
-            dictionary_.Register( *this, tools::translate( "MedicalTreatmentAttribute", std::string( "Info/Medical Treatment attributes/" + it->first ).c_str() ), it->second );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MedicalTreatmentAttribute::IsOverriden
-// Created: ABR 2012-05-30
-// -----------------------------------------------------------------------------
-bool MedicalTreatmentAttribute::IsOverriden() const
-{
-    return doctors_ != 0 || capacities_.size() != 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MedicalTreatmentAttribute::NotifyModeChanged
-// Created: ABR 2012-05-30
-// -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::NotifyModeChanged( int newMode )
-{
-    kernel::ModesObserver_ABC::NotifyModeChanged( newMode );
-    if( IsSet() )
-        CreateDictionary();
-    else
-    {
-        dictionary_.Remove( tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Doctors" ) );
-        dictionary_.Remove( tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Hospital ID" ) );
-        for( T_TreatmentCapacities::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )
-            dictionary_.Remove( tools::translate( "MedicalTreatmentAttribute", std::string( "Info/Medical Treatment attributes/" + it->first ).c_str() ) );
+            dictionary_.Register( *this, tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/" ) + it->first.c_str(), it->second );
     }
 }

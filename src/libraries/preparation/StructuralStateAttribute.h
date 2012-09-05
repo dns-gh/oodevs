@@ -10,22 +10,14 @@
 #ifndef __StructuralStateAttribute_h_
 #define __StructuralStateAttribute_h_
 
-#include "Overridable_ABC.h"
-#include "clients_kernel/ModesObserver_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/StructuralStateAttribute_ABC.h"
-#include "tools/Observer_ABC.h"
 
 namespace kernel
 {
     class Controllers;
     class PropertiesDictionary;
     class UrbanObject_ABC;
-}
-
-namespace xml
-{
-    class xistream;
 }
 
 // =============================================================================
@@ -35,42 +27,38 @@ namespace xml
 // Created: JSR 2010-09-01
 // =============================================================================
 class StructuralStateAttribute : public kernel::StructuralStateAttribute_ABC
-                               , public Overridable_ABC
-                               , public tools::Observer_ABC
-                               , public kernel::ModesObserver_ABC
                                , public kernel::Serializable_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             StructuralStateAttribute( kernel::Controllers& controllers, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary );
+             StructuralStateAttribute( xml::xistream& xis, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary );
+             StructuralStateAttribute( kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary );
     virtual ~StructuralStateAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual bool IsOverriden() const;
     virtual unsigned int GetValue() const;
     void Update( xml::xistream& xis );
     //@}
 
     //! @name Serializable_ABC
     //@{
+    virtual void SerializeAttributes      ( xml::xostream& ) const;
     virtual void SerializeObjectAttributes( xml::xostream& ) const;
     //@}
 
-    //! @name ModesObserver_ABC
+private:
+    //! @name Helpers
     //@{
-    virtual void NotifyModeChanged( int newMode );
+    void CreateDictionary( kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary );
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controllers&          controllers_;
-    kernel::UrbanObject_ABC&      object_;
-    unsigned int                  structuralState_;
-    kernel::PropertiesDictionary& dictionary_;
+    unsigned int structuralState_;
     //@}
 };
 

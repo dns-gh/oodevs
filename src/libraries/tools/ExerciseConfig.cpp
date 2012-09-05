@@ -142,15 +142,15 @@ void ExerciseConfig::ReadExercise( xml::xistream& xis )
             >> xml::start( "profiles" )
                 >> xml::attribute( "file", profiles_ )
             >> xml::end
-            >> xml::optional >> xml::start( "urban" )
-                >> xml::attribute( "file", urban_ )
-            >> xml::end
             >> xml::optional >> xml::start( "urbanstate" )
                 >> xml::attribute( "file", urbanState_ )
             >> xml::end
             >> xml::optional >> xml::start( "population" )
                 >> xml::attribute( "name", population_ )
             >> xml::end
+            >> xml::optional >> xml::start( "urban" );
+    urban_ = xis.attribute< std::string >( "file", "urban.xml" );
+    xis     >> xml::end
             >> xml::optional >> xml::start( "settings" );
     settings_ = xis.attribute< std::string >( "file", "settings.xml" );
     xis     >> xml::end
@@ -309,6 +309,24 @@ std::string ExerciseConfig::GetTerrainFile() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetUrbanFile
+// Created: JSR 2012-09-04
+// -----------------------------------------------------------------------------
+std::string ExerciseConfig::GetUrbanFile() const
+{
+    return BuildExerciseChildFile( urban_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetUrbanFileName
+// Created: JSR 2012-09-04
+// -----------------------------------------------------------------------------
+std::string ExerciseConfig::GetUrbanFileName() const
+{
+    return urban_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ExerciseConfig::BuildTerrainChildFile
 // Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
@@ -363,14 +381,12 @@ std::string ExerciseConfig::GetOrbatFileName() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExerciseConfig::GetUrbanFile
+// Name: ExerciseConfig::GetTerrainUrbanFile
 // Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::GetUrbanFile() const
+std::string ExerciseConfig::GetTerrainUrbanFile() const
 {
-    if( !urban_.empty() )
-        return BuildExerciseChildFile( urban_ );
-    return GeneralConfig::GetUrbanFile( terrain_ );
+    return GeneralConfig::GetTerrainUrbanFile( terrain_ );
 }
 
 // -----------------------------------------------------------------------------

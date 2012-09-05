@@ -52,10 +52,14 @@ void DefaultLoader::LoadFile( const std::string& fileName, T_Loader loader ) con
 // Name: DefaultLoader::LoadOptionalFile
 // Created: JSR 2012-05-30
 // -----------------------------------------------------------------------------
-void DefaultLoader::LoadOptionalFile( const std::string& fileName, T_Loader loader ) const
+bool DefaultLoader::LoadOptionalFile( const std::string& fileName, T_Loader loader ) const
 {
     if( bfs::exists( fileName ) && !bfs::is_directory( fileName ) )
+    {
         LoadFile( fileName, loader );
+        return true;
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

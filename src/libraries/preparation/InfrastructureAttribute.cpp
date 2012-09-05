@@ -52,9 +52,7 @@ InfrastructureAttribute::InfrastructureAttribute( kernel::Controllers& controlle
     , threshold_  ( DEFAULT_THRESHOLD )
     , position_   ( object.Get< kernel::UrbanPositions_ABC >().Barycenter() )
 {
-    assert( controllers_.modes_ );
-    controllers_.modes_->Register( *this );
-    NotifyModeChanged( controllers_.modes_->GetCurrentMode() );
+    UpdateDictionnary();
 }
 
 // -----------------------------------------------------------------------------
@@ -73,12 +71,17 @@ InfrastructureAttribute::InfrastructureAttribute( xml::xistream& xis, kernel::Co
     , position_   ( object.Get< kernel::UrbanPositions_ABC >().Barycenter() )
 {
     std::string type;
-    xis >> xml::optional
+    float threshold = static_cast< float >( threshold_ ) / 100.f;
+    xis >> xml::optional 
             >> xml::start( "infrastructures" )
                 >> xml::start( "infrastructure" )
-                    >> xml::attribute( "type", type )
+                    >> xml::optional >> xml::attribute( "type", type )
+                    >> xml::optional >> xml::attribute( "role", type )
+                    >> xml::optional >> xml::attribute( "enabled", enabled_ )
+                    >> xml::optional >> xml::attribute( "threshold", threshold )
                 >> xml::end
             >> xml::end;
+    threshold_ = static_cast< unsigned int >( 100 * threshold + 0.5f );
     type_ = objectTypes.StringResolver< kernel::InfrastructureType >::Find( type );
     if( type_ )
     {
@@ -87,8 +90,7 @@ InfrastructureAttribute::InfrastructureAttribute( xml::xistream& xis, kernel::Co
     }
     else
         invalidType_ = type;
-    assert( controllers_.modes_ );
-    controllers_.modes_->Register( *this );
+    UpdateDictionnary();
 }
 
 // -----------------------------------------------------------------------------
@@ -97,8 +99,7 @@ InfrastructureAttribute::InfrastructureAttribute( xml::xistream& xis, kernel::Co
 // -----------------------------------------------------------------------------
 InfrastructureAttribute::~InfrastructureAttribute()
 {
-    assert( controllers_.modes_ );
-    controllers_.modes_->Unregister( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -145,31 +146,16 @@ void InfrastructureAttribute::DisplayInTooltip( kernel::Displayer_ABC& displayer
 void InfrastructureAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
     const_cast< InfrastructureAttribute* >( this )->invalidType_.clear();
-    if( GetCurrentMode() == ePreparationMode_Exercise && type_ && IsOverriden() )
-    {
-        xos << xml::start( "infrastructure" )
-                << xml::attribute( "role", type_->GetName() )
-                << xml::attribute( "enabled", enabled_ )
-                << xml::attribute( "threshold", static_cast< float >( threshold_ ) / 100.f )
-            << xml::end;
-    }
-    else if( GetCurrentMode() == ePreparationMode_Terrain && type_ && enabled_ == true )
+    if( type_ )
     {
         xos << xml::start( "infrastructures" )
                 << xml::start( "infrastructure" )
-                    << xml::attribute( "type", type_->GetName() )
+                    << xml::attribute( "role", type_->GetName() )
+                    << xml::attribute( "enabled", enabled_ )
+                    << xml::attribute( "threshold", static_cast< float >( threshold_ ) / 100.f )
                 << xml::end
             << xml::end;
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: InfrastructureAttribute::SetOverriden
-// Created: JSR 2011-02-11
-// -----------------------------------------------------------------------------
-bool InfrastructureAttribute::IsOverriden() const
-{
-    return enabled_ != true || threshold_ != DEFAULT_THRESHOLD;
 }
 
 // -----------------------------------------------------------------------------
@@ -235,36 +221,17 @@ void InfrastructureAttribute::SetType( kernel::InfrastructureType* infrastructur
 }
 
 // -----------------------------------------------------------------------------
-// Name: InfrastructureAttribute::NotifyModeChanged
-// Created: ABR 2012-05-30
-// -----------------------------------------------------------------------------
-void InfrastructureAttribute::NotifyModeChanged( int newMode )
-{
-    kernel::ModesObserver_ABC::NotifyModeChanged( newMode );
-    UpdateDictionnary();
-}
-
-// -----------------------------------------------------------------------------
 // Name: InfrastructureAttribute::UpdateDictionnary
 // Created: JSR 2012-06-11
 // -----------------------------------------------------------------------------
 void InfrastructureAttribute::UpdateDictionnary()
 {
-    if( GetCurrentMode() == ePreparationMode_Exercise )
+    if( type_ )
     {
-        if( type_ )
-        {
-            dictionary_.Register( object_, tools::translate( "Infrastructure", "Info/Infrastructure/Type" ), type_, true );
-            dictionary_.Register( object_, tools::translate( "Infrastructure", "Info/Infrastructure/Enable" ), enabled_ );
-            dictionary_.Register( object_, tools::translate( "Infrastructure", "Info/Infrastructure/Threshold" ), threshold_, ThresholdSetter() );
-        }
-        else
-            dictionary_.Remove( tools::translate( "Infrastructure", "Info/Infrastructure/Type" ) );
+        dictionary_.Register( object_, tools::translate( "Infrastructure", "Info/Infrastructure/Type" ), type_, true );
+        dictionary_.Register( object_, tools::translate( "Infrastructure", "Info/Infrastructure/Enable" ), enabled_ );
+        dictionary_.Register( object_, tools::translate( "Infrastructure", "Info/Infrastructure/Threshold" ), threshold_, ThresholdSetter() );
     }
-    else if( GetCurrentMode() == ePreparationMode_Terrain )
-    {
-        dictionary_.Remove( tools::translate( "Infrastructure", "Info/Infrastructure/Enable" ) );
-        dictionary_.Remove( tools::translate( "Infrastructure", "Info/Infrastructure/Threshold" ) );
-        dictionary_.Register( object_, tools::translate( "Infrastructure", "Info/Infrastructure/Type" ), type_ );
-    }
+    else
+        dictionary_.Remove( tools::translate( "Infrastructure", "Info/Infrastructure/Type" ) );
 }
