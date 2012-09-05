@@ -502,7 +502,7 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetPopulations( T_KnowledgePopulati
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::TranslateKnowledges
 // Created: NLD 2006-04-24
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeBlackBoard_KnowledgeGroup::TranslateKnowledges( const T_ConstKnowledgeAgentVector& sourceKnowledges, boost::shared_ptr< MIL_KnowledgeGroup >& sourceKnowledgeGroup, T_ConstKnowledgeAgentVector& translatedKnowledges ) const
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::TranslateKnowledges( const T_ConstKnowledgeAgentVector& sourceKnowledges, const boost::shared_ptr< MIL_KnowledgeGroup >& sourceKnowledgeGroup, T_ConstKnowledgeAgentVector& translatedKnowledges ) const
 {
     assert( pKnowledgeGroup_ );
     if( pKnowledgeGroup_ == sourceKnowledgeGroup.get() )
@@ -697,7 +697,7 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::ApplyOnKnowledgesPerception( int cu
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgeAgent
 // Created: FDS 2010-04-12
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Agent& DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgeAgent( boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, const MIL_Agent_ABC& perceived )
+DEC_Knowledge_Agent& DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgeAgent( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, const MIL_Agent_ABC& perceived )
 {
     return GetKnowledgeAgentContainer().CreateKnowledgeAgent( knowledgeGroup, perceived );
 }
@@ -706,7 +706,7 @@ DEC_Knowledge_Agent& DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgeAgen
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgePopulation
 // Created: FDS 2010-04-12
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Population& DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgePopulation( boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, MIL_Population& perceived )
+DEC_Knowledge_Population& DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgePopulation( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, MIL_Population& perceived )
 {
     return GetKnowledgePopulationContainer().CreateKnowledgePopulation( knowledgeGroup, perceived );
 }

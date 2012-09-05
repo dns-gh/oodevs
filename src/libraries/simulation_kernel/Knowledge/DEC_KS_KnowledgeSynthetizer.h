@@ -45,7 +45,7 @@ private:
     //@{
     void CleanKnowledgeAgent     ( DEC_Knowledge_Agent& knowledge );
     void CleanKnowledgePopulation( DEC_Knowledge_Population& knowledge );
-    void CleanKnowledgeObject    ( boost::shared_ptr< DEC_Knowledge_Object >& knowledge );
+    void CleanKnowledgeObject    ( const boost::shared_ptr< DEC_Knowledge_Object >& knowledge );
 
     //@}
 

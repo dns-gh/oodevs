@@ -198,7 +198,7 @@ void DEC_KS_ObjectKnowledgeSynthetizer::ProcessKnowledgesObjectToForget()
 // Name: DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgeRelevance
 // Created: NLD 2005-10-19
 // -----------------------------------------------------------------------------
-void DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgeRelevance( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
+void DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgeRelevance( const boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
 {
     assert( pBlackBoard_ );
 
@@ -236,7 +236,7 @@ void DEC_KS_ObjectKnowledgeSynthetizer::Talk( int /*currentTimeStep*/ )
 // Name: DEC_KS_ObjectKnowledgeSynthetizer::CleanKnowledgeObject
 // Created: NLD 2004-03-17
 // -----------------------------------------------------------------------------
-void DEC_KS_ObjectKnowledgeSynthetizer::CleanKnowledgeObject( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
+void DEC_KS_ObjectKnowledgeSynthetizer::CleanKnowledgeObject( const boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
 {
     if( knowledge->Clean() )
     {
@@ -253,7 +253,7 @@ void DEC_KS_ObjectKnowledgeSynthetizer::Clean()
 {
     assert( pBlackBoard_ );
 
-    class_mem_fun_void_t< DEC_KS_ObjectKnowledgeSynthetizer, boost::shared_ptr< DEC_Knowledge_Object > > methodObject( & DEC_KS_ObjectKnowledgeSynthetizer::CleanKnowledgeObject, *this );
+    class_mem_fun_void_t< DEC_KS_ObjectKnowledgeSynthetizer, const boost::shared_ptr< DEC_Knowledge_Object > > methodObject( & DEC_KS_ObjectKnowledgeSynthetizer::CleanKnowledgeObject, *this );
     pBlackBoard_->GetKnowledgeObjectContainer().ApplyOnKnowledgesObject( methodObject );
 }
 

@@ -692,7 +692,7 @@ bool MIL_AgentPion::BelongsTo( const MIL_KnowledgeGroup& group ) const
 // Name: MIL_AgentPion::CreateKnowledge
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Agent > MIL_AgentPion::CreateKnowledge( boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup )
+boost::shared_ptr< DEC_Knowledge_Agent > MIL_AgentPion::CreateKnowledge( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup )
 {
     boost::shared_ptr< DEC_Knowledge_Agent > result( new DEC_Knowledge_Agent( knowledgeGroup, *this ) );
     return result;

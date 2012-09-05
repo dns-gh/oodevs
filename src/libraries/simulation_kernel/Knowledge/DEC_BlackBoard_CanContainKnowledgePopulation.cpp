@@ -74,7 +74,7 @@ void DEC_BlackBoard_CanContainKnowledgePopulation::save( MIL_CheckPointOutArchiv
 // Name: DEC_BlackBoard_CanContainKnowledgePopulation::CreateKnowledgePopulation
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Population& DEC_BlackBoard_CanContainKnowledgePopulation::CreateKnowledgePopulation( boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, MIL_Population& populationPerceived )
+DEC_Knowledge_Population& DEC_BlackBoard_CanContainKnowledgePopulation::CreateKnowledgePopulation( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, MIL_Population& populationPerceived )
 {
     boost::shared_ptr< DEC_Knowledge_Population > pKnowledge( new DEC_Knowledge_Population( knowledgeGroup, populationPerceived ) );
     if( ! knowledgePopulationMap_.insert( std::make_pair( &populationPerceived, pKnowledge ) ).second )

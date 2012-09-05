@@ -158,7 +158,7 @@ int PHY_RoleAction_Objects::Construct( MIL_Object_ABC* pObject, boost::shared_pt
 // Name: PHY_RoleAction_Objects::Destroy
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-int PHY_RoleAction_Objects::Destroy( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge )
+int PHY_RoleAction_Objects::Destroy( const boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge )
 {
     if( !pKnowledge || !pKnowledge->IsValid() )
         return 0;
@@ -238,7 +238,7 @@ int PHY_RoleAction_Objects::Mine( MIL_Object_ABC& object )
 // Name: PHY_RoleAction_Objects::Mine
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-int PHY_RoleAction_Objects::Mine( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge )
+int PHY_RoleAction_Objects::Mine( const boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge )
 {
     MIL_Object_ABC* pObject = GetObject( pKnowledge );
     if( !pObject )
@@ -250,7 +250,7 @@ int PHY_RoleAction_Objects::Mine( boost::shared_ptr< DEC_Knowledge_Object >& pKn
 // Name: PHY_RoleAction_Objects::Demine
 // Created: JCR 2008-06-03
 // -----------------------------------------------------------------------------
-int PHY_RoleAction_Objects::Demine( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge )
+int PHY_RoleAction_Objects::Demine( const boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge )
 {
     MIL_Object_ABC* pObject = GetObject( pKnowledge );
     if( !pObject )
@@ -282,7 +282,7 @@ int PHY_RoleAction_Objects::Demine( MIL_Object_ABC& object )
 // Name: PHY_RoleAction_Objects::Bypass
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-int PHY_RoleAction_Objects::Bypass( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge )
+int PHY_RoleAction_Objects::Bypass( const boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge )
 {
     MIL_Object_ABC* pObject = GetObject( pKnowledge );
     if( !pObject )
@@ -308,7 +308,7 @@ int PHY_RoleAction_Objects::Bypass( boost::shared_ptr< DEC_Knowledge_Object >& p
 // Name: PHY_RoleAction_Objects::Extinguish
 // Created: RFT 28/05/2008
 // -----------------------------------------------------------------------------
-int PHY_RoleAction_Objects::Extinguish( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge )
+int PHY_RoleAction_Objects::Extinguish( const boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge )
 {
     MIL_Object_ABC* pObject = GetObject( pKnowledge );
     if( !pObject || pObject->IsMarkedForDestruction() )
@@ -345,7 +345,7 @@ int PHY_RoleAction_Objects::Extinguish( boost::shared_ptr< DEC_Knowledge_Object 
 // Name: PHY_RoleAction_Objects::SupplyStock
 // Created: JCR 2009-06-04
 // -----------------------------------------------------------------------------
-int PHY_RoleAction_Objects::SupplyStock( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge, const std::vector< const PHY_DotationCategory* >& dotationTypes, double quantity )
+int PHY_RoleAction_Objects::SupplyStock( const boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge, const std::vector< const PHY_DotationCategory* >& dotationTypes, double quantity )
 {
     MIL_Object_ABC* pObject = GetObject( objectKnowledge );
     if( !pObject || pObject->IsMarkedForDestruction() )
@@ -382,7 +382,7 @@ int PHY_RoleAction_Objects::SupplyStock( boost::shared_ptr< DEC_Knowledge_Object
 // Name: PHY_RoleAction_Objects::ExtractFromStock
 // Created: BCI 2011-02-08
 // -----------------------------------------------------------------------------
-int PHY_RoleAction_Objects::ExtractFromStock( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge, const std::vector< const PHY_DotationCategory* >& dotationTypes, double quantity )
+int PHY_RoleAction_Objects::ExtractFromStock( const boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge, const std::vector< const PHY_DotationCategory* >& dotationTypes, double quantity )
 {
     MIL_Object_ABC* pObject = GetObject( objectKnowledge );
     if( !pObject || pObject->IsMarkedForDestruction() )
@@ -419,7 +419,7 @@ int PHY_RoleAction_Objects::ExtractFromStock( boost::shared_ptr< DEC_Knowledge_O
 // Name: PHY_RoleAction_Objects::Distribute
 // Created: JCR 2009-06-04
 // -----------------------------------------------------------------------------
-int PHY_RoleAction_Objects::Distribute( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge, double quantity )
+int PHY_RoleAction_Objects::Distribute( const boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge, double quantity )
 {
     MIL_Object_ABC* pObject = GetObject( objectKnowledge );
     if( !pObject || pObject->IsMarkedForDestruction() )
@@ -458,7 +458,7 @@ int PHY_RoleAction_Objects::Distribute( boost::shared_ptr< DEC_Knowledge_Object 
 // Name: PHY_RoleAction_Objects::ResumeWork
 // Created: NLD 2005-01-19
 // -----------------------------------------------------------------------------
-int PHY_RoleAction_Objects::ResumeWork( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge )
+int PHY_RoleAction_Objects::ResumeWork( const boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge )
 {
     MIL_Object_ABC* pObject = GetObject( pKnowledge );
     if( !pObject )
@@ -475,7 +475,7 @@ int PHY_RoleAction_Objects::ResumeWork( boost::shared_ptr< DEC_Knowledge_Object 
 // Name: PHY_RoleAction_Objects::ResumeWork
 // Created: LMT 2012-02-01
 // -----------------------------------------------------------------------------
-int PHY_RoleAction_Objects::ResumeWork( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge, bool valorizeIt )
+int PHY_RoleAction_Objects::ResumeWork( const boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge, bool valorizeIt )
 {
     MIL_Object_ABC* pObject = GetObject( pKnowledge );
     if( !pObject )
@@ -507,7 +507,7 @@ int PHY_RoleAction_Objects::ResumeWork( MIL_UrbanObject_ABC* pUrbanBlock )
 // Name: PHY_RoleAction_Objects::StartAnimateObject
 // Created: NLD 2004-11-02
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Objects::StartAnimateObject( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge )
+void PHY_RoleAction_Objects::StartAnimateObject( const boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge )
 {
     MIL_Object_ABC* pObject = GetObject( pKnowledge );
     if( !pObject )
@@ -537,7 +537,7 @@ void PHY_RoleAction_Objects::SetCreator( MIL_Object_ABC& object )
 // Name: PHY_RoleAction_Objects::StopAnimateObject
 // Created: NLD 2004-11-02
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Objects::StopAnimateObject( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge )
+void PHY_RoleAction_Objects::StopAnimateObject( const boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge )
 {
     MIL_Object_ABC* pObject = GetObject( pKnowledge );
     if( !pObject )
@@ -557,7 +557,7 @@ void PHY_RoleAction_Objects::StopAnimateObject( boost::shared_ptr< DEC_Knowledge
 // Name: PHY_RoleAction_Objects::StartOccupyingObject
 // Created: NLD 2004-11-02
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Objects::StartOccupyingObject( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge )
+void PHY_RoleAction_Objects::StartOccupyingObject( const boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge )
 {
     MIL_Object_ABC* pObject = GetObject( pKnowledge );
     if( !pObject )
@@ -575,7 +575,7 @@ void PHY_RoleAction_Objects::StartOccupyingObject( boost::shared_ptr< DEC_Knowle
 // Name: PHY_RoleAction_Objects::StopOccupyingObject
 // Created: NLD 2004-11-02
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Objects::StopOccupyingObject( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge )
+void PHY_RoleAction_Objects::StopOccupyingObject( const boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge )
 {
     MIL_Object_ABC* pObject = GetObject( pKnowledge );
     if( !pObject )

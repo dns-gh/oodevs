@@ -79,7 +79,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, unsi
 // Created: SLG 2009-11-11
 // LTO
 // -----------------------------------------------------------------------------
-MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, boost::shared_ptr< MIL_KnowledgeGroup >& parent, KnowledgeGroupFactory_ABC& knowledgeGroupFactory )
+MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, const boost::shared_ptr< MIL_KnowledgeGroup >& parent, KnowledgeGroupFactory_ABC& knowledgeGroupFactory )
     : id_                 ( xis.attribute< unsigned int >( "id" ) )
     , type_               ( MIL_KnowledgeGroupType::FindType( xis.attribute< std::string >( "type" ) ) )
     , name_               ( xis.attribute< std::string >( "name" ) )
@@ -124,7 +124,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup()
 // Name: KnowledgeGroupFactory::Create
 // Created: FDS 2010-03-17
 // -----------------------------------------------------------------------------
-MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source, const MIL_Agent_ABC& pion, boost::shared_ptr< MIL_KnowledgeGroup >& parent )
+MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source, const MIL_Agent_ABC& pion, const boost::shared_ptr< MIL_KnowledgeGroup >& parent )
     : type_               ( source.type_ )
     , id_                 ( idManager_.GetFreeId() )
     , name_               ( source.name_ + " (" + pion.GetName() + ")" )
@@ -689,7 +689,7 @@ boost::shared_ptr< MIL_KnowledgeGroup > MIL_KnowledgeGroup::GetParent() const
 // Created: FHD 2009-12-22
 // LTO
 // -----------------------------------------------------------------------------
-void MIL_KnowledgeGroup::SetParent( boost::shared_ptr< MIL_KnowledgeGroup >& parent )
+void MIL_KnowledgeGroup::SetParent( const boost::shared_ptr< MIL_KnowledgeGroup >& parent )
 {
     parent_ = parent;
 }
@@ -698,7 +698,7 @@ void MIL_KnowledgeGroup::SetParent( boost::shared_ptr< MIL_KnowledgeGroup >& par
 // Name: MIL_KnowledgeGroup::RegisterKnowledgeGroup
 // Created: NLD 2006-10-13
 // -----------------------------------------------------------------------------
-void MIL_KnowledgeGroup::RegisterKnowledgeGroup( boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup )
+void MIL_KnowledgeGroup::RegisterKnowledgeGroup( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup )
 {
     assert( std::find( knowledgeGroups_.begin(), knowledgeGroups_.end(), knowledgeGroup ) == knowledgeGroups_.end() );
     knowledgeGroups_.push_back( knowledgeGroup );
@@ -710,7 +710,7 @@ void MIL_KnowledgeGroup::RegisterKnowledgeGroup( boost::shared_ptr< MIL_Knowledg
 // Name: MIL_KnowledgeGroup::UnregisterKnowledgeGroup
 // Created: FHD 2009-12-16:
 // -----------------------------------------------------------------------------
-void MIL_KnowledgeGroup::UnregisterKnowledgeGroup( boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup )
+void MIL_KnowledgeGroup::UnregisterKnowledgeGroup( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup )
 {
     knowledgeGroups_.erase( std::remove( knowledgeGroups_.begin(), knowledgeGroups_.end(), knowledgeGroup ), knowledgeGroups_.end() );
 }

@@ -126,7 +126,7 @@ namespace
             // NOTHING
         }
 
-        void operator()( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
+        void operator()( const boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
         {
             if( filter_.Test( knowledge->GetType() ) )
                 pContainer_->push_back( knowledge );
@@ -160,7 +160,7 @@ namespace
             // NOTHING
         }
 
-        void operator() ( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
+        void operator() ( const boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
         {
             if( knowledge->IsValid()
             && ( !knowledge->IsReservedObstacle() || knowledge->IsReservedObstacleActivated() )
@@ -203,7 +203,7 @@ namespace
             // NOTHING
         }
 
-        void operator()( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
+        void operator()( const boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
         {
             if( filter_.Test( knowledge->GetType() )
             && ( !knowledge->IsReservedObstacle() || knowledge->IsReservedObstacleActivated() )
@@ -248,7 +248,7 @@ namespace
             // NOTHING
         }
 
-        void operator()( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
+        void operator()( const boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
         {
             if( knowledge && knowledge->IsValid() && CapacityRetriever::RetrieveCapacity( knowledge->GetType(), capacity_ ) != 0
                 && pZone_.IsInside( knowledge->GetLocalisation().ComputeBarycenter() ) )
@@ -287,7 +287,7 @@ namespace
             // NOTHING
         }
 
-        void operator()( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
+        void operator()( const boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
         {
             if( result_ )
                 return;
@@ -338,7 +338,7 @@ namespace
             // NOTHING
         }
 
-        void operator()( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
+        void operator()( const boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
         {
             if( !knowledge->IsValid() )
                 return;
@@ -395,7 +395,7 @@ namespace
             // NOTHING
         }
 
-        void operator() ( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
+        void operator() ( const boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
         {
             if( ( !knowledge->IsReservedObstacle() || knowledge->IsReservedObstacleActivated() ) && knowledge->IsValid() )
                 pContainer_->push_back( knowledge );
@@ -427,7 +427,7 @@ namespace
             // NOTHING
         }
 
-        void operator()( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
+        void operator()( const boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
         {
             if( !filter_.Test( knowledge->GetType() ) || !knowledge->IsValid() )
                 return;
@@ -472,7 +472,7 @@ namespace
             // NOTHING
         }
 
-        void operator() ( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
+        void operator() ( const boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
         {
             if( !knowledge->IsValid() )
                 return;
@@ -751,7 +751,7 @@ namespace
             // NOTHING
         }
 
-        void operator() ( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
+        void operator() ( const boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
         {
             if( knowledge->IsValid() )
                 if( MIL_Object_ABC* obj = knowledge->GetObjectKnown() )

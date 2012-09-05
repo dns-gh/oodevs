@@ -51,7 +51,7 @@ MIL_IDManager DEC_Knowledge_Agent::idManager_;
 // Name: DEC_Knowledge_Agent constructor
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Agent::DEC_Knowledge_Agent( boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, MIL_Agent_ABC& agentKnown, double rRelevance )
+DEC_Knowledge_Agent::DEC_Knowledge_Agent( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, MIL_Agent_ABC& agentKnown, double rRelevance )
     : DEC_Knowledge_ABC()
     , pArmyKnowing_                  ( &knowledgeGroup->GetArmy() )
     , pKnowledgeGroup_               ( knowledgeGroup )

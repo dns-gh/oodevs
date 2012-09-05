@@ -119,7 +119,7 @@ void DEC_KS_KnowledgeSynthetizer::CleanKnowledgePopulation( DEC_Knowledge_Popula
 // Name: DEC_KS_KnowledgeSynthetizer::CleanKnowledgeObject
 // Created: JSR 2010-07-01
 // -----------------------------------------------------------------------------
-void DEC_KS_KnowledgeSynthetizer::CleanKnowledgeObject( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
+void DEC_KS_KnowledgeSynthetizer::CleanKnowledgeObject( const boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
 {
     if( knowledge->Clean() )
     {
@@ -143,7 +143,7 @@ void DEC_KS_KnowledgeSynthetizer::Clean()
     class_mem_fun_void_t< DEC_KS_KnowledgeSynthetizer, DEC_Knowledge_Population > methodPopulation( & DEC_KS_KnowledgeSynthetizer::CleanKnowledgePopulation, *this );
     pBlackBoard_->GetKnowledgePopulationContainer().ApplyOnKnowledgesPopulation( methodPopulation );
 
-    class_mem_fun_void_t< DEC_KS_KnowledgeSynthetizer, boost::shared_ptr< DEC_Knowledge_Object > > methodObject( & DEC_KS_KnowledgeSynthetizer::CleanKnowledgeObject, *this );
+    class_mem_fun_void_t< DEC_KS_KnowledgeSynthetizer, const boost::shared_ptr< DEC_Knowledge_Object > > methodObject( & DEC_KS_KnowledgeSynthetizer::CleanKnowledgeObject, *this );
     if( pBlackBoard_->GetKnowledgeObjectContainer() )
         pBlackBoard_->GetKnowledgeObjectContainer()->ApplyOnKnowledgesObject( methodObject );
 }

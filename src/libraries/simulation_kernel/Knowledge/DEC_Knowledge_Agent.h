@@ -57,7 +57,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Knowledge_Agent( boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, MIL_Agent_ABC& agentKnown, double relevance = 0.);
+             DEC_Knowledge_Agent( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, MIL_Agent_ABC& agentKnown, double relevance = 0.);
              DEC_Knowledge_Agent();
     virtual ~DEC_Knowledge_Agent();
     //@}

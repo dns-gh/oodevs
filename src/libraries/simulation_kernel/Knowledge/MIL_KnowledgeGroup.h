@@ -77,9 +77,9 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, unsigned int id, MIL_Army_ABC& army );
-             MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, boost::shared_ptr< MIL_KnowledgeGroup >& parent, KnowledgeGroupFactory_ABC& knowledgeGroupFactory ); // LTO
+             MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, const boost::shared_ptr< MIL_KnowledgeGroup >& parent, KnowledgeGroupFactory_ABC& knowledgeGroupFactory ); // LTO
              MIL_KnowledgeGroup();
-             MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source, const MIL_Agent_ABC& pion, boost::shared_ptr< MIL_KnowledgeGroup >& parent );
+             MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source, const MIL_Agent_ABC& pion, const boost::shared_ptr< MIL_KnowledgeGroup >& parent );
     virtual ~MIL_KnowledgeGroup();
     //@}
 
@@ -97,9 +97,9 @@ public:
     //! @name Operations
     //@{
     void Clone( const MIL_KnowledgeGroup& source );
-    void RegisterKnowledgeGroup( boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup );
+    void RegisterKnowledgeGroup( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup );
     void InitializeKnowledgeGroup( xml::xistream& xis, KnowledgeGroupFactory_ABC& knowledgeGroupFactory );
-    void UnregisterKnowledgeGroup( boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup );
+    void UnregisterKnowledgeGroup( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup );
     boost::shared_ptr< MIL_KnowledgeGroup > FindKnowledgeGroup ( unsigned int id ) const;
     void SetType( const MIL_KnowledgeGroupType *type ){ type_ = type; }
     void RefreshTimeToDiffuseToKnowledgeGroup();
@@ -143,7 +143,7 @@ public:
           boost::shared_ptr< MIL_KnowledgeGroup > GetParent() const;
           double                                GetTimeToDiffuseToKnowledgeGroup() const;
           bool                                    IsEnabled() const;
-          void                                    SetParent( boost::shared_ptr< MIL_KnowledgeGroup >& parent );
+          void                                    SetParent( const boost::shared_ptr< MIL_KnowledgeGroup >& parent );
     // LTO end
           bool IsJammed() const;
           void Accept( KnowledgesVisitor_ABC& visitor ) const;

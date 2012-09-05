@@ -43,7 +43,7 @@ class DEC_Knowledge_Population : public DEC_Knowledge_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Knowledge_Population( boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, MIL_Population& populationKnown );
+             DEC_Knowledge_Population( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, MIL_Population& populationKnown );
              DEC_Knowledge_Population();
     virtual ~DEC_Knowledge_Population();
     //@}

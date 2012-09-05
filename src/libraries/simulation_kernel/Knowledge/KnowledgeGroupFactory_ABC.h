@@ -50,7 +50,7 @@ public:
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
     
-    void Register( const unsigned long& identifier, boost::shared_ptr< MIL_KnowledgeGroup >& element )
+    void Register( const unsigned long& identifier, const boost::shared_ptr< MIL_KnowledgeGroup >& element )
     {
         boost::shared_ptr< MIL_KnowledgeGroup >& p = elements_[ identifier ];
         if( p.get() )

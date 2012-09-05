@@ -66,8 +66,8 @@ private:
     void                  UpdateKnowledgesFromObjectPerception( const DEC_Knowledge_ObjectPerception& perception );
     void                  UpdateKnowledgesFromObjectCollision ( const DEC_Knowledge_ObjectCollision& collision );
     boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeToUpdate                ( MIL_Object_ABC& objectKnown ) const;
-    void                  UpdateKnowledgeRelevance            ( boost::shared_ptr< DEC_Knowledge_Object >& knowledge );
-    void                  CleanKnowledgeObject                ( boost::shared_ptr< DEC_Knowledge_Object >& knowledge );
+    void                  UpdateKnowledgeRelevance            ( const boost::shared_ptr< DEC_Knowledge_Object >& knowledge );
+    void                  CleanKnowledgeObject                ( const boost::shared_ptr< DEC_Knowledge_Object >& knowledge );
     //@}
 
     //! @name Operations

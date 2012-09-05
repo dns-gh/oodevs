@@ -82,7 +82,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_Army_ABC& armyKnowing, MIL
 // Name: DEC_Knowledge_Object constructor
 // Created: LDC 2010-04-15
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Object::DEC_Knowledge_Object( boost::shared_ptr< MIL_KnowledgeGroup >& groupKnowing, MIL_Object_ABC& objectKnown )
+DEC_Knowledge_Object::DEC_Knowledge_Object( const boost::shared_ptr< MIL_KnowledgeGroup >& groupKnowing, MIL_Object_ABC& objectKnown )
     : DEC_Knowledge_ABC()
     , pArmyKnowing_            ( &groupKnowing->GetArmy() )
     , pObjectKnown_            ( &objectKnown )
@@ -135,7 +135,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object()
 // Name: DEC_Knowledge_Object constructor
 // Created: LDC 2010-04-07
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Object::DEC_Knowledge_Object( const DEC_Knowledge_Object& copy, boost::shared_ptr< MIL_KnowledgeGroup >& pGroupKnowing )
+DEC_Knowledge_Object::DEC_Knowledge_Object( const DEC_Knowledge_Object& copy, const boost::shared_ptr< MIL_KnowledgeGroup >& pGroupKnowing )
     : DEC_Knowledge_ABC()
     , pArmyKnowing_                    ( copy.pArmyKnowing_ )
     , pObjectKnown_                    ( copy.pObjectKnown_ )

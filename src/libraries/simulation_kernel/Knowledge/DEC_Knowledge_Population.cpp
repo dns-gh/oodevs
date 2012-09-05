@@ -36,7 +36,7 @@ MIL_IDManager DEC_Knowledge_Population::idManager_;
 // Name: DEC_Knowledge_Population constructor
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Population::DEC_Knowledge_Population( boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, MIL_Population& populationKnown )
+DEC_Knowledge_Population::DEC_Knowledge_Population( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, MIL_Population& populationKnown )
     : DEC_Knowledge_ABC()
     , pPopulationKnown_            ( &populationKnown )
     , pKnowledgeGroup_             ( knowledgeGroup )

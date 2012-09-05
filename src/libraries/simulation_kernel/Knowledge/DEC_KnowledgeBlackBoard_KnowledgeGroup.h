@@ -104,8 +104,8 @@ public:
     //! @name Queries
     //@{
     // Knowledge agents
-    DEC_Knowledge_Agent& CreateKnowledgeAgent( boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, const MIL_Agent_ABC& agentKnown );
-    DEC_Knowledge_Population& CreateKnowledgePopulation( boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, MIL_Population& perceived );
+    DEC_Knowledge_Agent& CreateKnowledgeAgent( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, const MIL_Agent_ABC& agentKnown );
+    DEC_Knowledge_Population& CreateKnowledgePopulation( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, MIL_Population& perceived );
     bool IsKnown( const MIL_Agent_ABC& agent ) const;
     boost::shared_ptr< DEC_Knowledge_Agent > GetKnowledgeAgent( const DEC_Knowledge_AgentPerception& perception ) const;
     boost::shared_ptr< DEC_Knowledge_Agent > GetKnowledgeAgent( const MIL_Agent_ABC& agent ) const;
@@ -137,7 +137,7 @@ public:
 
     //! @name Tools
     //@{
-    void TranslateKnowledges( const T_ConstKnowledgeAgentVector& sourceKnowledges, boost::shared_ptr< MIL_KnowledgeGroup >& sourceKnowledgeGroup, T_ConstKnowledgeAgentVector& translatedKnowledges ) const;
+    void TranslateKnowledges( const T_ConstKnowledgeAgentVector& sourceKnowledges, const boost::shared_ptr< MIL_KnowledgeGroup >& sourceKnowledgeGroup, T_ConstKnowledgeAgentVector& translatedKnowledges ) const;
     boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledgeObject( const MIL_Army_ABC& teamKnowing, MIL_Object_ABC& objectKnown );
     void ApplyOnKnowledgesPerception( int currentTimeStep );
     void UpdateUniversalObjects();
