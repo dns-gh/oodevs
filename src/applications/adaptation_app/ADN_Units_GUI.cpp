@@ -74,7 +74,8 @@ void ADN_Units_GUI::Build()
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
     // Name
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[ eName ] );
+    pNameEditLine_ = builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[ eName ] );
+    connect( pNameEditLine_, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnNameChanged() ) );
     // Unit type
     pTypeCombo_ = builder.AddEnumField<E_AgentTypePion>( pInfoHolder, tr( "Type" ), vInfosConnectors[ eTypeId ], &ADN_Tr::ConvertFromAgentTypePion );
     builder.SetToolTip( tr( "The type of unit in the simulation. This type must match the associated decisional model." ) );
@@ -279,6 +280,15 @@ void ADN_Units_GUI::Build()
     // Main widget
     pMainWidget_ = CreateScrollArea( *pContent, pSearchListView );
     pMainWidget_->setObjectName( strClassName_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_GUI::OnNameChanged
+// Created: MMC 2012-09-05
+// -----------------------------------------------------------------------------
+void ADN_Units_GUI::OnNameChanged()
+{
+    UpdateValidators();
 }
 
 // -----------------------------------------------------------------------------
