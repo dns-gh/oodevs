@@ -42,6 +42,7 @@ public:
     virtual QWidget* BuildInterface( QWidget* parent );
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     void SetLimits( NumericType min, NumericType max );
+    void SetSuffix( const QString& suffix );
     //@}
 
 private:
@@ -54,6 +55,8 @@ private:
     //! @name Member data
     //@{
     QLineEdit* pEdit_;
+    QLabel* pLabel_;
+    QString suffix_;
     //@}
 };
 

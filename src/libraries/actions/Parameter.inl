@@ -55,6 +55,26 @@ std::string Parameter< T >::GetType() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Parameter::SetKeyName
+// Created: LDC 2012-09-05
+// -----------------------------------------------------------------------------
+template< typename T >
+void Parameter< T >::SetKeyName( const std::string& identifier )
+{
+    parameter_.SetKeyName( identifier );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Parameter::IsOptional
+// Created: LDC 2012-09-05
+// -----------------------------------------------------------------------------
+template< typename T >
+bool Parameter< T >::IsOptional() const
+{
+    return parameter_.IsOptional();
+}
+
+// -----------------------------------------------------------------------------
 // Name: Parameter::SetValue
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------

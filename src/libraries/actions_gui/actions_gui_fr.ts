@@ -155,5 +155,20 @@
         <source>Construction location</source>
         <translation>Position de la construction</translation>
     </message>
+    <message>
+        <source>Name</source>
+        <translation>Nom</translation>
+    </message>
+</context>
+<context>
+    <name>gui::ObstaclePrototype_ABC</name>
+    <message>
+        <source>Activity time:</source>
+        <translation>Temps d&apos;activité:</translation>
+    </message>
+    <message>
+        <source>Activation time:</source>
+        <translation>Délai avant activation :</translation>
+    </message>
 </context>
 </TS>

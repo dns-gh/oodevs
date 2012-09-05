@@ -97,7 +97,7 @@ void ParamQuantity::SetLimit( int min, int max )
 // Name: ParamQuantity::SetSuffix
 // Created: MMC 2012-05-15
 // -----------------------------------------------------------------------------
-void ParamQuantity::SetSuffix( QString suffix )
+void ParamQuantity::SetSuffix( const QString& suffix )
 {
     suffix_ = suffix;
     if( spinBox_ )

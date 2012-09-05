@@ -334,6 +334,9 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
         param.reset( new parameters::PullFlowParameters( parameter, converter_, entities_, staticModel_.objectTypes_, staticModel_.objectTypes_, xis ) );
     else
         return false;
+    std::string identifier = xis.attribute( "identifier", std::string() );
+    if( !identifier.empty() )
+        param->SetKeyName( identifier );
     return true;
 }
 

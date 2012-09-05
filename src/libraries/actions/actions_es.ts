@@ -175,6 +175,10 @@
         <source>Construction location</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ParameterList</name>
@@ -195,6 +199,17 @@
     </message>
     <message>
         <source>Object Destruction</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>gui::ObstaclePrototype_ABC</name>
+    <message>
+        <source>Activity time:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activation time:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

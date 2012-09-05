@@ -25,6 +25,7 @@ template< typename NumericType >
 ParamNumericField< NumericType >::ParamNumericField( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
     : Param_ABC( builder.GetParentObject(), builder.GetParamInterface(), parameter )
     , pEdit_ ( 0 )
+    , pLabel_( 0 )
 {
     // NOTHING
 }
@@ -47,12 +48,26 @@ template< typename NumericType >
 QWidget* ParamNumericField< NumericType >::BuildInterface( QWidget* parent )
 {
     Param_ABC::BuildInterface( parent );
-    QVBoxLayout* layout = new QVBoxLayout( group_ );
+    QHBoxLayout* layout = new QHBoxLayout( group_ );
     pEdit_ = new QLineEdit( parent );
     layout->addWidget( pEdit_ );
     pEdit_->setPlaceholderText( "0" );
     SetLimits( static_cast< NumericType >( 0.f ), static_cast< NumericType >( 100000.f ) );
+    pLabel_ = new QLabel( suffix_ );
+    layout->addWidget( pLabel_ );
     return group_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamNumericField::SetSuffix
+// Created: LDC 2012-09-05
+// -----------------------------------------------------------------------------
+template< typename NumericType >
+void ParamNumericField< NumericType >::SetSuffix( const QString& suffix )
+{
+    suffix_ = suffix;
+    if( pLabel_ )
+        pLabel_->setText( suffix );
 }
 
 // -----------------------------------------------------------------------------

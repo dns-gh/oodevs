@@ -16,6 +16,7 @@
 #include "Numeric.h"
 #include "ObstacleType.h"
 #include "Quantity.h"
+#include "String.h"
 #include "ParameterVisitor_ABC.h"
 #include "clients_kernel/EntityResolver_ABC.h"
 #include "clients_kernel/ObjectType.h"
@@ -154,6 +155,24 @@ void EngineerConstruction::ReadParameter( xml::xistream& xis, const CoordinateCo
         AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Construction location" ).toAscii().constData(), "location", false ), converter, xis ) );
     else if( type == "tc2" )
         AddParameter( *new Automat( xis, entities, controller ) );
+    else if( type == "string" )
+        AddParameter( *new String( OrderParameter( tools::translate( "Parameter", "Name" ).toAscii().constData(), "string", true ), xis ) );
+    else if( type == "Integer" )
+    {
+        std::string identifier = xis.attribute( "identifier", std::string() );
+        if( identifier == "ActivityTime" )
+        {
+            Numeric* numeric = new Numeric( OrderParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activity time:" ).toAscii().constData(), "integer", true ), xis );
+            numeric->SetKeyName( identifier );
+            AddParameter( *numeric );
+        }
+        else if( identifier == "ActivationTime" )
+        {
+            Numeric* numeric = new Numeric( OrderParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activation time:" ).toAscii().constData(), "integer", true ), xis );
+            numeric->SetKeyName( identifier );
+            AddParameter( *numeric );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -219,7 +238,16 @@ void EngineerConstruction::CommitTo( sword::PlannedWork& message ) const
         else if( keyName == "density" && type == "float" )
             static_cast< const Numeric* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_density, boost::ref( message ), _1 ) );
         else if( type == "tc2" || type == "automat" || type == "automate" )
-            static_cast< const Automat* >( it->second )->CommitTo( boost::bind( &sword::AutomatId::set_id, boost::ref( *message.mutable_combat_train() ), _1 ) );
+            message.mutable_combat_train()->set_id( static_cast< const Automat* >( it->second )->GetValue()->GetId() );
+        else if( type == "string" )
+            static_cast< const String* >( it->second )->CommitTo( *message.mutable_name() );
+        else if( type == "integer" )
+        {
+            if( keyName == "ActivityTime" )
+                static_cast< const Numeric* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_activity_time, boost::ref( message ), _1 ) );
+            else if( keyName == "ActivationTime" )
+                static_cast< const Numeric* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_activation_time, boost::ref( message ), _1 ) );
+        }
         else if( keyName == "altitude_modifier" && type == "quantity" )
             static_cast< const Quantity* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_altitude_modifier, boost::ref( message ), _1 ) );
         else if( keyName == "obstacle_mining" && type == "boolean" )
@@ -257,7 +285,7 @@ void EngineerConstruction::Accept( ParameterVisitor_ABC& visitor ) const
 bool EngineerConstruction::IsSet() const
 {
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        if( !it->second->IsSet() )
+        if( !it->second->IsSet() && !it->second->IsOptional() )
             return false;
     return !elements_.empty();
 }

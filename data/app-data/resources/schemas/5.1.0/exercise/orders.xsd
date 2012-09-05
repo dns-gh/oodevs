@@ -508,6 +508,7 @@
 			<xs:element name="location" type="Geometry" minOccurs="0"/>
 		</xs:sequence>
 		<xs:attribute name="name" type="xs:string"/>
+                <xs:attribute name="identifier" type="xs:string" use="optional"/>
 		<xs:attribute name="type" type="ParameterType" use="optional"/>
 		<xs:attribute name="value" type="xs:string" use="optional"/>
 	</xs:complexType>

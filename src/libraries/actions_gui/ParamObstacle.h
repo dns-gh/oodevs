@@ -35,6 +35,8 @@ namespace actions
         class ParamLocation;
         template< typename T > class ParamNumericField;
         class ParamAutomat;
+        class ParamDateTime;
+        class ParamStringField;
         class ParamBool;
         class ParamTime;
         class ParamQuantity;
@@ -94,6 +96,9 @@ private:
     ParamLocation*                                      location_;
     ParamNumericField< float >*                         density_;
     ParamAutomat*                                       tc2_;
+    ParamNumericField< int >*                           activityTime_;
+    ParamNumericField< int >*                           activationTime_;
+    ParamStringField*                                   name_;
     ParamQuantity*                                      altitudeModifier_;
     ParamTime*                                          timeLimit_;
     ParamBool*                                          mining_;

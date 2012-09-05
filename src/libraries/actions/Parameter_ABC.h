@@ -60,6 +60,8 @@ public:
     //! @name Accessors
     //@{
     virtual QString GetName() const;
+    virtual void SetKeyName( const std::string& identifier );
+    virtual bool IsOptional() const;
     virtual std::string GetType() const;
     virtual geometry::Point2f GetPosition() const;
     virtual std::string GetKeyName() const;

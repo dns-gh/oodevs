@@ -60,6 +60,24 @@ std::string Parameter_ABC::GetType() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Parameter_ABC::SetKeyName
+// Created: LDC 2012-09-05
+// -----------------------------------------------------------------------------
+void Parameter_ABC::SetKeyName( const std::string& identifier )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Parameter_ABC::IsOptional
+// Created: LDC 2012-09-05
+// -----------------------------------------------------------------------------
+bool Parameter_ABC::IsOptional() const
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Parameter_ABC::Draw
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
@@ -109,6 +127,9 @@ void Parameter_ABC::DrawToolTip( const Viewport_ABC& viewport, const GlTools_ABC
 void Parameter_ABC::Serialize( xml::xostream& xos ) const
 {
     xos << xml::attribute( "name", name_.toAscii().constData() );
+    std::string id = GetKeyName();
+    if( !id.empty() )
+        xos << xml::attribute( "identifier", id.c_str() );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
         xos << xml::start( "parameter" );
