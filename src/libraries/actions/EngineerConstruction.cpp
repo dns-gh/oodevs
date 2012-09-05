@@ -80,6 +80,22 @@ void EngineerConstruction::SetParameters( const sword::PlannedWork& message, con
         const OrderParameter param( tools::translate( "ActionParameter", "Density" ).toAscii().constData(), "float", false );
         AddParameter( *new Numeric( param, message.density() ) );
     }
+    if( message.has_name() && !message.name().empty() )
+    {
+        AddParameter( *new String( OrderParameter( tools::translate( "Parameter", "Name" ).toAscii().constData(), "string", true ), message.name() ) );
+    }
+    if( message.has_activation_time() )
+    {
+        Numeric* numeric = new Numeric( OrderParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activation time:" ).toAscii().constData(), "integer", true ), message.activation_time() );
+        numeric->SetKeyName( "ActivationTime" );
+        AddParameter( *numeric );
+    }
+    if( message.has_activity_time() )
+    {
+        Numeric* numeric = new Numeric( OrderParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activity time:" ).toAscii().constData(), "integer", true ), message.activity_time() );
+        numeric->SetKeyName( "ActivityTime" );
+        AddParameter( *numeric );
+    }
     if( message.altitude_modifier() != 0 )
     {
         const OrderParameter param( tools::translate( "ActionParameter", "Altitude modifier" ).toAscii().constData(), "integer", false );
