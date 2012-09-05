@@ -108,7 +108,7 @@ struct Main : public QMainWindow
                 break;
 
             case CMD_RUN:
-                throw std::exception( "run not implemented" );
+                throw std::runtime_error( "run not implemented" );
                 break;
 
             case CMD_DISPLAY:

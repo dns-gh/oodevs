@@ -63,7 +63,7 @@ BOOST_AUTO_TEST_CASE( runtime_process_starts )
     p->Join( 5000 );
 
     // Check the redirection output
-    std::fstream f( logs, std::ios::in );
+    std::fstream f( logs.c_str(), std::ios::in );
     std::string line;
     BOOST_CHECK( std::getline( f, line ));
     BOOST_CHECK_EQUAL( line, "hello" + randarg );

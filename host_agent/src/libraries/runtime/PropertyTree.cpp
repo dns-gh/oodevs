@@ -96,7 +96,8 @@ Tree Read( std::istream& data, const T& functor )
 template< typename T >
 Tree Read( const std::string& data, const T& functor )
 {
-    return Read( std::istringstream( data ), functor );
+    std::istringstream stream( data );
+    return Read( stream, functor );
 }
 
 template< typename T >

@@ -10,6 +10,7 @@
 #ifndef PROPERTY_TREE_H
 #define PROPERTY_TREE_H
 
+#include <boost/lexical_cast.hpp>
 #include <boost/property_tree/ptree.hpp>
 
 namespace property_tree

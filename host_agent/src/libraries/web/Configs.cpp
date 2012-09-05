@@ -170,7 +170,7 @@ template< typename T >
 bool TryReadPluginParameters( T& dst, const Tree& src, const std::string& prefix )
 {
     bool modified = false;
-    BOOST_FOREACH( T::value_type& value, dst )
+    BOOST_FOREACH( typename T::value_type& value, dst )
         modified |= property_tree::TryRead( value.second, src, prefix + XpathToJson( value.first ) );
     return modified;
 }
