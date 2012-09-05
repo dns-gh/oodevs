@@ -14,21 +14,24 @@ namespace
 {
     std::string data_directory;
 
-    void set_data_directory( int argc, char* argv[] )
+    std::string get_option( int argc, char* argv[], const char* name )
     {
         while( argc-- )
         {
             const std::string argument = argv[argc];
             const std::string::size_type n = argument.find( '=' );
-            if( n != std::string::npos && argument.substr( 0, n ) == "--data_directory" )
-                data_directory = argument.substr( n+1 );
+            if( n != std::string::npos && argument.substr( 0, n ) == name )
+                return argument.substr( n+1 );
         }
+        return "";
     }
 }
 
 ::boost::unit_test::test_suite* init_unit_test_suite( int argc, char* argv[] )
 {
-    set_data_directory( argc, argv );
+    std::string value = get_option( argc, argv, "--data_directory" );
+    if( !value.empty() )
+        data_directory = value;
     return 0;
 }
 
