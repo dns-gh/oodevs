@@ -34,7 +34,7 @@ LOGISTIC_PLUGIN_DLL_API dispatcher::Plugin_ABC* CreateInstance( dispatcher::Mode
     {
         logger.LogInfo( "Initialization..." );
         boost::shared_ptr<NameResolver> nameResolver( new NameResolver( model, staticModel ));
-        dispatcher::Plugin_ABC* result = new plugins::logistic::LogisticPlugin( nameResolver, config, xis );
+        dispatcher::Plugin_ABC* result = CreateLogisticPlugin( nameResolver, config, xis );
         logger.LogInfo( "Initialized!" );
         return result;
     }

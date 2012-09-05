@@ -27,7 +27,10 @@
 #pragma warning( pop )
 #include <xeumeuleu/xml.hpp>
 
-using namespace plugins::logistic;
+namespace plugins 
+{
+namespace logistic
+{
 
 namespace
 {
@@ -39,14 +42,14 @@ namespace
 // Name: LogisticPlugin constructor
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-LogisticPlugin::LogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>& nameResolver, const tools::SessionConfig& config, xml::xistream& xis )
-    : sessionConfig_( config )
-    , currentTick_( 0 )
+LogisticPlugin::LogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>& nameResolver, const std::string& maintenanceFile,
+    const std::string& supplyFile, const std::string& funeralFile, const std::string& medicalFile )
+    : currentTick_( 0 )
     , nameResolver_( nameResolver )
-    , maintenanceResolver_  ( new MaintenanceResolver( config.BuildSessionChildFile( xis.attribute( "maintenancefile", "LogMaintenance" ) ), *nameResolver ) )
-    , supplyResolver_       ( new SupplyResolver( config.BuildSessionChildFile( xis.attribute( "supplyfile", "LogSupply" ) ), *nameResolver ) )
-    , funeralResolver_      ( new FuneralResolver( config.BuildSessionChildFile( xis.attribute( "funeralfile", "LogFuneral" ) ), *nameResolver ) )
-    , medicalResolver_      ( new MedicalResolver( config.BuildSessionChildFile( xis.attribute( "medicalfile", "LogMedical" ) ), *nameResolver ) )
+    , maintenanceResolver_  ( new MaintenanceResolver( maintenanceFile, *nameResolver ) )
+    , supplyResolver_       ( new SupplyResolver( supplyFile, *nameResolver ) )
+    , funeralResolver_      ( new FuneralResolver( funeralFile, *nameResolver ) )
+    , medicalResolver_      ( new MedicalResolver( medicalFile, *nameResolver ) )
     , localAppli_ ( !qApp ? new QApplication( localAppliArgc, localAppliArgv ) : 0 )
 {
     std::string lang = tools::readLang();
@@ -91,3 +94,19 @@ void LogisticPlugin::Receive( const sword::SimToClient& message )
     funeralResolver_->Receive( message );
     medicalResolver_->Receive( message );
 }
+
+
+LogisticPlugin* CreateLogisticPlugin(
+    const boost::shared_ptr<const NameResolver_ABC>& nameResolver,
+    const tools::SessionConfig& config, xml::xistream& xis )
+{
+    return new LogisticPlugin(
+        nameResolver,
+        config.BuildSessionChildFile( xis.attribute( "maintenancefile", "LogMaintenance" )),
+        config.BuildSessionChildFile( xis.attribute( "supplyfile", "LogSupply" )),
+        config.BuildSessionChildFile( xis.attribute( "funeralfile", "LogFuneral" )),
+        config.BuildSessionChildFile( xis.attribute( "medicalfile", "LogMedical" )));
+}
+
+}  // namespace logistic
+}  // namespace plugins

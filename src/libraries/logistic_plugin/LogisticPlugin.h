@@ -16,7 +16,6 @@
 #include <boost/shared_ptr.hpp>
 
 class QApplication;
-
 namespace tools
 {
     class SessionConfig;
@@ -47,7 +46,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              LogisticPlugin(const boost::shared_ptr<const NameResolver_ABC>& nameResolver,
-                 const tools::SessionConfig& config, xml::xistream& xis );
+                 const std::string& maintenanceFile, const std::string& supplyFile,
+                 const std::string& funeralFile, const std::string& medicalFile );
     virtual ~LogisticPlugin();
     //@}
 
@@ -68,7 +68,6 @@ private:
     //@{
     int currentTick_;
     std::string simTime_;
-    const tools::SessionConfig& sessionConfig_;
     boost::scoped_ptr< ConsignResolver_ABC >    maintenanceResolver_;
     boost::scoped_ptr< ConsignResolver_ABC >    supplyResolver_;
     boost::scoped_ptr< ConsignResolver_ABC >    funeralResolver_;
@@ -77,6 +76,11 @@ private:
     boost::shared_ptr<const NameResolver_ABC> nameResolver_;
     //@}
 };
+
+LogisticPlugin* CreateLogisticPlugin(
+    const boost::shared_ptr<const NameResolver_ABC>& nameResolver,
+    const tools::SessionConfig& config, xml::xistream& xis );
+
 }
 }
 
