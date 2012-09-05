@@ -261,35 +261,6 @@ void WeaponDataType_DirectFire::Fire( const wrapper::View& firer, const wrapper:
     event[ "missed" ] = missed;
     event[ "use-ph" ] = bUsePH;
     event.Post();
-
-    // $$$$ MCO 2012-04-26: need to handle collateral damage on population
-    //const PHY_RoleInterface_Location& firerLocation = firer.GetRole< PHY_RoleInterface_Location >();
-    //const PHY_RoleInterface_Location& targetLocation = target.GetRole< PHY_RoleInterface_Location >();
-
-    // handle direct-indirect fire on populations
-    //const MT_Vector2D firerPosition ( firerLocation.GetPosition().rX_, firerLocation.GetPosition().rY_ );
-    //const MT_Vector2D targetPosition( targetLocation.GetPosition().rX_, targetLocation.GetPosition().rY_ );
-
-    //TER_PopulationConcentration_ABC::T_PopulationConcentrationVector concentrations;
-    //TER_World::GetWorld().GetPopulationManager().GetConcentrationManager()
-    //                     .GetListIntersectingLine( firerPosition, targetPosition, concentrations );
-    //for( TER_PopulationConcentration_ABC::CIT_PopulationConcentrationVector itConcentration = concentrations.begin();
-    //    itConcentration != concentrations.end(); ++itConcentration )
-    //{
-    //    MIL_PopulationConcentration* pElement = static_cast< MIL_PopulationConcentration* >( *itConcentration );
-    //    MIL_Effect_DirectFirePopulation* pEffect = new MIL_Effect_DirectFirePopulation( *pElement, 1, fireResult );
-    //    MIL_EffectManager::GetEffectManager().Register( *pEffect );
-    //}
-
-    //TER_PopulationFlow_ABC::T_PopulationFlowVector flows;
-    //TER_World::GetWorld().GetPopulationManager().GetFlowManager()
-    //                     .GetListIntersectingLine( firerPosition, targetPosition, flows );
-    //for( TER_PopulationFlow_ABC::CIT_PopulationFlowVector itFlow = flows.begin(); itFlow != flows.end(); ++itFlow )
-    //{
-    //    MIL_PopulationFlow* pElement = static_cast< MIL_PopulationFlow* >( *itFlow );
-    //    MIL_Effect_DirectFirePopulation* pEffect = new MIL_Effect_DirectFirePopulation( *pElement, 1, fireResult );
-    //    MIL_EffectManager::GetEffectManager().Register( *pEffect );
-    //}
 }
 
 //// -----------------------------------------------------------------------------

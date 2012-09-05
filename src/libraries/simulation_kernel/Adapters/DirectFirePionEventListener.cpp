@@ -26,9 +26,13 @@
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
 #include "Entities/Agents/Units/Sensors/PHY_Sensor.h"
-#include "Urban/MIL_UrbanObject_ABC.h"
+#include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Objects/StructuralCapacity.h"
+#include "Entities/Populations/MIL_PopulationFlow.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 #include "MT_Tools/MT_Logger.h"
+#include "simulation_terrain/TER_PopulationManager.h"
+#include "simulation_terrain/TER_World.h"
 #include <core/Facade.h>
 #include <core/Model.h>
 
@@ -187,6 +191,29 @@ void DirectFirePionEventListener::Update( const core::Model& event )
             results->IncRef();
         }
         target.GetRole< PHY_RoleInterface_Composantes >().ApplyDirectFire( component, *category, *results );
+
+        // handle direct-indirect fire on populations
+        const PHY_RoleInterface_Location& firerLocation = pion.GetRole< PHY_RoleInterface_Location >();
+        const PHY_RoleInterface_Location& targetLocation = target.GetRole< PHY_RoleInterface_Location >();
+        const MT_Vector2D firerPosition ( firerLocation.GetPosition().rX_, firerLocation.GetPosition().rY_ );
+        const MT_Vector2D targetPosition( targetLocation.GetPosition().rX_, targetLocation.GetPosition().rY_ );
+        TER_PopulationConcentration_ABC::T_PopulationConcentrationVector concentrations;
+        TER_World::GetWorld().GetPopulationManager().GetConcentrationManager()
+                             .GetListIntersectingLine( firerPosition, targetPosition, concentrations );
+        for( TER_PopulationConcentration_ABC::CIT_PopulationConcentrationVector itConcentration = concentrations.begin();
+            itConcentration != concentrations.end(); ++itConcentration )
+        {
+            MIL_PopulationConcentration* pElement = static_cast< MIL_PopulationConcentration* >( *itConcentration );
+            pElement->ApplyFire( 1, *results, true );
+        }
+        TER_PopulationFlow_ABC::T_PopulationFlowVector flows;
+        TER_World::GetWorld().GetPopulationManager().GetFlowManager()
+                             .GetListIntersectingLine( firerPosition, targetPosition, flows );
+        for( TER_PopulationFlow_ABC::CIT_PopulationFlowVector itFlow = flows.begin(); itFlow != flows.end(); ++itFlow )
+        {
+            MIL_PopulationFlow* pElement = static_cast< MIL_PopulationFlow* >( *itFlow );
+            pElement->ApplyFire( 1, *results, true );
+        }
     }
     NotifyFirerPerception( pion, target );
     if( event[ "use-ph" ] )
