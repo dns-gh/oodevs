@@ -22,6 +22,6 @@
   <urbanstate file="urbanstate.xml"/>
   <weather file="weather.xml"/>
   <terrain name="Angers_x9_en"/>
-  <model dataset="ada" physical="worldwide"/>
+  <model dataset="ada" physical="worldwide-ML"/>
 </exercise>
 <!-- signature="0782551468" -->
