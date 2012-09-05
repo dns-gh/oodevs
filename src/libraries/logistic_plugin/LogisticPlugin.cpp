@@ -43,7 +43,7 @@ namespace
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
 LogisticPlugin::LogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>& nameResolver, const std::string& maintenanceFile,
-    const std::string& supplyFile, const std::string& funeralFile, const std::string& medicalFile )
+    const std::string& supplyFile, const std::string& funeralFile, const std::string& medicalFile, const char* localeStr )
     : currentTick_( 0 )
     , nameResolver_( nameResolver )
     , maintenanceResolver_  ( new MaintenanceResolver( maintenanceFile, *nameResolver ) )
@@ -52,11 +52,14 @@ LogisticPlugin::LogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>&
     , medicalResolver_      ( new MedicalResolver( medicalFile, *nameResolver ) )
     , localAppli_ ( !qApp ? new QApplication( localAppliArgc, localAppliArgv ) : 0 )
 {
+    QLocale locale = tools::readLocale();
+    if( localeStr != 0)
+        locale = QLocale( localeStr );
     std::string lang = tools::readLang();
     if( qApp )
     {
-        tools::AddTranslator( *qApp, tools::readLocale(), "ENT" );
-        tools::AddTranslator( *qApp, tools::readLocale(), "logistic_plugin" );
+        tools::AddTranslator( *qApp, locale, "ENT" );
+        tools::AddTranslator( *qApp, locale, "logistic_plugin" );
     }
     ENT_Tr::InitTranslations();
     maintenanceResolver_->InitHeader();
@@ -105,7 +108,8 @@ LogisticPlugin* CreateLogisticPlugin(
         config.BuildSessionChildFile( xis.attribute( "maintenancefile", "LogMaintenance" )),
         config.BuildSessionChildFile( xis.attribute( "supplyfile", "LogSupply" )),
         config.BuildSessionChildFile( xis.attribute( "funeralfile", "LogFuneral" )),
-        config.BuildSessionChildFile( xis.attribute( "medicalfile", "LogMedical" )));
+        config.BuildSessionChildFile( xis.attribute( "medicalfile", "LogMedical" )),
+        0 );  // localeStr
 }
 
 }  // namespace logistic
