@@ -405,3 +405,111 @@ NetnTransportStruct::~NetnTransportStruct()
 {
     // NOTHING
 }
+
+// NETNv2
+
+// -----------------------------------------------------------------------------
+// Name: Netn2DataTStruct::Netn2DataTStruct
+// Created: AHC 2012-09-03
+// -----------------------------------------------------------------------------
+Netn2DataTStruct::Netn2DataTStruct()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Netn2DataTStruct::Netn2DataTStruct
+// Created: AHC 2012-09-03
+// -----------------------------------------------------------------------------
+Netn2DataTStruct::Netn2DataTStruct( const std::vector< NETN_UUID >& objectToManage,
+                                  const NetnAppointmentStruct& appointment,
+                                  const NetnAppointmentStruct& finalAppointment )
+    : objectToManage  ( objectToManage.begin(), objectToManage.end() )
+    , appointment     ( appointment )
+    , finalAppointment( finalAppointment )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Netn2DataTStruct::~Netn2DataTStruct
+// Created: AHC 2012-09-03
+// -----------------------------------------------------------------------------
+Netn2DataTStruct::~Netn2DataTStruct()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Netn2DataEDStruct::Netn2DataEDStruct
+// Created: AHC 2012-09-03
+// -----------------------------------------------------------------------------
+Netn2DataEDStruct::Netn2DataEDStruct( const std::vector< NETN_UUID >& objectToManage,
+                                    const NetnAppointmentStruct& appointment )
+    : objectToManage( objectToManage.begin(), objectToManage.end() )
+    , appointment   ( appointment )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Netn2DataEDStruct::Netn2DataEDStruct
+// Created: AHC 2012-09-03
+// -----------------------------------------------------------------------------
+Netn2DataEDStruct::Netn2DataEDStruct()
+{
+    // NOTHING
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: Netn2DataEDStruct::~Netn2DataEDStruct
+// Created: AHC 2012-09-03
+// -----------------------------------------------------------------------------
+Netn2DataEDStruct::~Netn2DataEDStruct()
+{
+    // NOITHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Netn2TransportStruct::Netn2TransportStruct
+// Created: AHC 2012-09-03
+// -----------------------------------------------------------------------------
+Netn2TransportStruct::Netn2TransportStruct()
+    : transportType( E_Transport )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Netn2TransportStruct::Netn2TransportStruct
+// Created: AHC 2012-09-03
+// -----------------------------------------------------------------------------
+Netn2TransportStruct::Netn2TransportStruct( const Netn2DataTStruct& dataTransport )
+    : transportType   ( E_Transport )
+    , dataTransport( dataTransport )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Netn2TransportStruct::Netn2TransportStruct
+// Created: AHC 2012-09-03
+// -----------------------------------------------------------------------------
+Netn2TransportStruct::Netn2TransportStruct( const Netn2DataEDStruct& data, TransportType transportT )
+    : transportType       ( transportT )
+{
+    if( transportType == E_Embarkment )
+        dataEmbarkment = data;
+    if( transportType == E_Disembarkment )
+        dataDisembarkment = data;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Netn2TransportStruct::~Netn2TransportStruct
+// Created: AHC 2012-09-03
+// -----------------------------------------------------------------------------
+Netn2TransportStruct::~Netn2TransportStruct()
+{
+    // NOTHING
+}

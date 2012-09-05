@@ -206,7 +206,7 @@ FederateFacade::FederateFacade( xml::xisubstream xis, tools::MessageController_A
                                      CreateRemoteFactory< Aircraft, NetnAircraft >( false, entityIdentifierResolver, fomSerializer  ),
                                      CreateClassBuilder< AircraftBuilder, NetnAircraftBuilder >( false ) , ownershipStrategy
                                     ) : 0 )
-    , minefieldClass_ ( xis.attribute< bool >( "handle_objects", true ) ?
+    , minefieldClass_ ( xis.attribute< bool >( "handle-objects", true ) ?
                                 new HlaTacticalObjectClass( *federate_, *nameFactory_,
                                     std::auto_ptr< HlaTacticalObjectFactory_ABC > ( new TacticalObjectFactory< Minefield >( xis.attribute<unsigned short>("dis-site",1), xis.attribute<unsigned short>("dis-application", 1) ) ) ,
                                     std::auto_ptr< RemoteHlaObjectFactory_ABC > ( new RemoteHlaObjectFactory< Minefield >( entityIdentifierResolver, fomSerializer ) ),

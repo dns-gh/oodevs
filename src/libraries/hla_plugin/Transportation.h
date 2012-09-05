@@ -573,6 +573,170 @@ public:
     NetnDataEDStruct dataDisembarkment;
     //@}
 };
+
+// NETNv2
+
+struct Netn2DataTStruct
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+             Netn2DataTStruct();
+             Netn2DataTStruct( const std::vector< NETN_UUID >& objectToManage,
+                              const NetnAppointmentStruct& appointment,
+                              const NetnAppointmentStruct& finalAppointment );
+    virtual ~Netn2DataTStruct();
+    //@}
+
+    //! @name Operations
+    //@{
+    template< typename Archive >
+    void Serialize( Archive& archive ) const
+    {
+        const uint32 size = objectToManage.size();
+        archive << size
+                << objectToManage;
+        const unsigned int padding = archive.GetSize() % 8;
+        for( unsigned int i = 0; i < padding; ++i )
+            archive << static_cast< int8 >( 0 );
+        archive << appointment
+                << finalAppointment;
+    }
+    template< typename Archive >
+    void Deserialize( Archive& archive )
+    {
+        const unsigned int start = archive.GetSize();
+        uint32 size = 0;
+        archive >> size;
+        objectToManage.resize( size );
+        archive >> objectToManage;
+        const unsigned int padding = ( archive.GetSize() - start ) % 8;
+        int8 junk;
+        for( unsigned int i = 0; i < padding; ++i )
+            archive >> junk;
+        archive >> appointment
+                >> finalAppointment;
+    }
+    //@}
+public:
+    //! @name Member data
+    //@{
+    std::vector< NETN_UUID > objectToManage;
+    NetnAppointmentStruct appointment;
+    NetnAppointmentStruct finalAppointment;
+    //@}
+};
+
+struct Netn2DataEDStruct
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+             Netn2DataEDStruct();
+             Netn2DataEDStruct( const std::vector< NETN_UUID >& objectToManage,
+                               const NetnAppointmentStruct& appointment );
+    virtual ~Netn2DataEDStruct();
+    //@}
+
+    //! @name Operations
+    //@{
+    template< typename Archive >
+    void Serialize( Archive& archive ) const
+    {
+        // TODO AHC padding
+        const uint32 size = objectToManage.size();
+        archive << size
+                << objectToManage;
+
+        const unsigned int padding = archive.GetSize() % 8;
+        for( unsigned int i = 0; i < padding; ++i )
+            archive << static_cast< int8 >( 0 );
+
+        archive << appointment;
+    }
+    template< typename Archive >
+    void Deserialize( Archive& archive )
+    {
+        const unsigned int start = archive.GetSize();
+        uint32 size = 0;
+        archive >> size;
+        objectToManage.resize( size );
+        archive >> objectToManage;
+
+        const unsigned int padding = ( archive.GetSize() - start ) % 8;
+        int8 junk;
+        for( unsigned int i = 0; i < padding; ++i )
+            archive >> junk;
+
+        archive >> appointment;
+    }
+    //@}
+
+public:
+    //! @name Member data
+    //@{
+    std::vector< NETN_UUID > objectToManage;
+    NetnAppointmentStruct appointment;
+    //@}
+};
+
+struct Netn2TransportStruct
+{
+public:	
+    enum TransportType
+    {
+        E_Transport     = 0,
+        E_Embarkment    = 1,
+        E_Disembarkment = 2
+    };
+
+	//! @name Constructors/Destructor
+    //@{
+             Netn2TransportStruct();
+    explicit Netn2TransportStruct( const Netn2DataTStruct& dataTransport );
+             Netn2TransportStruct( const Netn2DataEDStruct& data, TransportType transportType );
+    virtual ~Netn2TransportStruct();
+    //@}
+
+    //! @name Operations
+    //@{
+    template< typename Archive >
+    void Serialize( Archive& archive ) const
+    {
+        const uint32 padding = 0;
+        archive << static_cast<int32>( transportType ) << padding;
+        if( transportType == E_Transport )
+            archive << dataTransport;
+        if( transportType == E_Embarkment )
+            archive << dataEmbarkment;
+        if( transportType == E_Disembarkment )
+            archive << dataDisembarkment;
+    }
+    template< typename Archive >
+    void Deserialize( Archive& archive )
+    {
+        uint32 padding = 0;
+        int32 convoy;
+        archive >> convoy >> padding;
+        transportType = static_cast<TransportType>( convoy );
+        if( transportType == E_Transport )
+            archive >> dataTransport;
+        if( transportType == E_Embarkment )
+            archive >> dataEmbarkment;
+        if( transportType == E_Disembarkment )
+            archive >> dataDisembarkment;
+    }
+    //@}
+public:
+    //! @name Member data
+    //@{
+    TransportType transportType;
+    Netn2DataTStruct dataTransport;
+    Netn2DataEDStruct dataEmbarkment;
+    Netn2DataEDStruct dataDisembarkment;
+    //@}
+};
+
 }
 }
 

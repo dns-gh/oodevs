@@ -170,6 +170,12 @@
                         <description lang="fr" name="Negotiation ownership HLA"><![CDATA[]]>Détermine s'il faut utiliser la négotiation de transfert HLA.</description>
                     </descriptions>
                 </setting>
+				<setting attribute="@handle-objects" type="boolean" default="false">
+                    <descriptions>
+                        <description lang="en" name="Publish tactical objects on HLA"><![CDATA[]]>Specify whether tactical objects shall be published.</description>
+                        <description lang="fr" name="Publier les objets tactiques"><![CDATA[]]>Détermine s'il faut publier les objets tactiques.</description>
+                    </descriptions>
+                </setting>
             </settings>
         </group>
     </settings>
