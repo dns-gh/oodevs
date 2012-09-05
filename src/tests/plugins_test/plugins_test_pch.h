@@ -22,6 +22,7 @@
 #include <turtle/mock.hpp>
 
 std::string BOOST_RESOLVE( const std::string& filename );
+std::string GetTestTempDirectory();
 
 #undef max
 

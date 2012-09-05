@@ -8,11 +8,14 @@
 // *****************************************************************************
 
 #include "plugins_test_pch.h"
+#include <iostream>
+#include <stdexcept>
 #include <string>
 
 namespace
 {
     std::string data_directory;
+    std::string temp_directory;
 
     std::string get_option( int argc, char* argv[], const char* name )
     {
@@ -32,6 +35,16 @@ namespace
     std::string value = get_option( argc, argv, "--data_directory" );
     if( !value.empty() )
         data_directory = value;
+    
+    value = get_option( argc, argv, "--temp_directory" );
+    if( value.empty() )
+    {
+        const char message[] = "test --temp_directory option was not supplied";
+        std::cout << message << std::endl;
+        throw std::invalid_argument( message );
+    }
+    temp_directory = value;
+
     return 0;
 }
 
@@ -40,4 +53,9 @@ std::string BOOST_RESOLVE( const std::string& filename )
     if( data_directory.empty() )
         return filename;
     return data_directory + '/' + filename;
+}
+
+std::string GetTestTempDirectory()
+{
+    return temp_directory;
 }
