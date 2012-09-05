@@ -114,6 +114,9 @@ glob_dir( files src
 glob_qt4_ui( ui_headers ui_files 
     "${root_dir}/src/applications/cloud_client/*.ui"
 )
+configure_rc( cloud_client res files
+    "${root_dir}/src/applications/cloud_client/version.rc.in"
+)
 add_executable_target( cloud_client WIN32 ${files} ${ui_headers} )
 set_target_folder( cloud_client applications )
 set_target_qt4( cloud_client )
