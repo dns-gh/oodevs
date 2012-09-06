@@ -158,8 +158,10 @@ private:
     bool bFlowShapeUpdated_;
     bool bDirectionUpdated_;
     bool bSpeedUpdated_;
+    bool bBlocked_;
     // Split
     const MIL_Object_ABC* pSplittingObject_;
+    const MIL_Object_ABC* pBlockingObject_;
     double armedIndividualsBeforeSplit_;
     unsigned int personsPassedThroughObject_;
     static MIL_IDManager idManager_;

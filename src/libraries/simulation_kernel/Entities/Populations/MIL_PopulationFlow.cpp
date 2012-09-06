@@ -18,7 +18,9 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Objects/AnimatorAttribute.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Objects/MIL_ObjectLoader.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
+#include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/PopulationAttribute.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Populations/MIL_Population.h"
@@ -66,7 +68,9 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, MIL_Populati
     , bFlowShapeUpdated_          ( true )
     , bDirectionUpdated_          ( true )
     , bSpeedUpdated_              ( true )
+    , bBlocked_                   ( false )
     , pSplittingObject_           ( 0 )
+    , pBlockingObject_            ( 0 )
     , personsPassedThroughObject_ ( 0 )
     , armedIndividualsBeforeSplit_( 0 )
 {
@@ -94,7 +98,9 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, const MIL_Po
     , bFlowShapeUpdated_          ( true )
     , bDirectionUpdated_          ( true )
     , bSpeedUpdated_              ( true )
+    , bBlocked_                   ( false )
     , pSplittingObject_           ( 0 )
+    , pBlockingObject_            ( 0 )
     , personsPassedThroughObject_ ( 0 )
     , armedIndividualsBeforeSplit_( 0 )
 {
@@ -122,7 +128,9 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, unsigned int
     , bFlowShapeUpdated_          ( true )
     , bDirectionUpdated_          ( true )
     , bSpeedUpdated_              ( true )
+    , bBlocked_                   ( false )
     , pSplittingObject_           ( 0 )
+    , pBlockingObject_            ( 0 )
     , personsPassedThroughObject_ ( 0 )
     , armedIndividualsBeforeSplit_( 0 )
 {
@@ -227,6 +235,21 @@ void MIL_PopulationFlow::Move( const MT_Vector2D& destination )
         ApplyMove( GetHeadPosition(), GetDirection(), 0, 0 );
     if( nOut == DEC_PathWalker::eFinished )
         bHeadMoveFinished_ = true;
+    if( nOut == DEC_PathWalker::eBlockedByObject )
+    {
+        if( !bBlocked_ )
+        {
+            if( pBlockingObject_ )
+            {
+                const std::string name = MIL_ObjectLoader::GetLoader().GetType( pBlockingObject_->GetType().GetName() ).GetRealName();
+                SendRC( MIL_Report::eReport_DifficultMovementProgression, name );
+            }
+        }
+        bBlocked_ = true;
+        pBlockingObject_ = 0;
+    }
+    else
+        bBlocked_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -257,6 +280,7 @@ void MIL_PopulationFlow::NotifyMovingInsideObject( MIL_Object_ABC& object )
 void MIL_PopulationFlow::NotifyMovingOutsideObject( MIL_Object_ABC& object )
 {
     object.NotifyPopulationMovingOutside( *this );
+    pBlockingObject_ = &object;
     pSplittingObject_ = 0;
 }
 
@@ -753,6 +777,7 @@ void MIL_PopulationFlow::Clean()
     bSpeedUpdated_ = false;
     bHeadMoveFinished_ = false;
     pSplittingObject_ = 0;
+    pBlockingObject_ = 0;
 }
 
 // -----------------------------------------------------------------------------
