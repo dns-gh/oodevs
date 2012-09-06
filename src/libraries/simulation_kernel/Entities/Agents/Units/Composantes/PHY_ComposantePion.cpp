@@ -1463,8 +1463,7 @@ double PHY_ComposantePion::GetBypassTime( const MIL_ObjectType_ABC& objectType, 
 void PHY_ComposantePion::HealAllHumans()
 {
     assert( pHumans_ );
-    if( *pState_ != PHY_ComposanteState::dead_ )
-        pHumans_->HealAllHumans();
+    pHumans_->HealAllHumans();
 }
 
 // -----------------------------------------------------------------------------
@@ -1484,9 +1483,7 @@ void PHY_ComposantePion::KillAllHumans()
 unsigned int PHY_ComposantePion::HealHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange )
 {
     assert( pHumans_ );
-    if( *pState_ != PHY_ComposanteState::dead_ )
-        return pHumans_->HealHumans( rank, nNbrToChange );
-    return 0;
+    return pHumans_->HealHumans( rank, nNbrToChange );
 }
 
 // -----------------------------------------------------------------------------
@@ -1496,9 +1493,7 @@ unsigned int PHY_ComposantePion::HealHumans( const PHY_HumanRank& rank, unsigned
 unsigned int PHY_ComposantePion::OverloadHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& wound, bool psyop /*= false*/, bool contaminated /*= false*/ )
 {
     assert( pHumans_ );
-    if( *pState_ != PHY_ComposanteState::dead_ )
-        return pHumans_->OverloadHumans( rank, nNbrToChange, wound, psyop, contaminated );
-    return 0;
+    return pHumans_->OverloadHumans( rank, nNbrToChange, wound, psyop, contaminated );
 }
 
 // -----------------------------------------------------------------------------
@@ -1508,9 +1503,7 @@ unsigned int PHY_ComposantePion::OverloadHumans( const PHY_HumanRank& rank, unsi
 unsigned int PHY_ComposantePion::WoundHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& wound )
 {
     assert( pHumans_ );
-    if( *pState_ != PHY_ComposanteState::dead_ )
-        return pHumans_->WoundHumans( rank, nNbrToChange, wound );
-    return 0;
+    return pHumans_->WoundHumans( rank, nNbrToChange, wound );
 }
 
 // -----------------------------------------------------------------------------
@@ -1600,8 +1593,7 @@ bool PHY_ComposantePion::DestroyIndirectFire( const PHY_DotationCategory& catego
 void PHY_ComposantePion::ChangeHumanState( sword::MissionParameters& msg )
 {
     assert( pHumans_ );
-    if( *pState_ != PHY_ComposanteState::dead_ )
-        pHumans_->ChangeHumanState( msg );
+    pHumans_->ChangeHumanState( msg );
 }
 
 // -----------------------------------------------------------------------------
