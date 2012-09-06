@@ -73,7 +73,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void UpdateDictionnary();
+    void UpdateDictionnary( bool changed = false );
     //@}
 
 public:
@@ -87,6 +87,9 @@ public:
     unsigned int                  threshold_;
     std::string                   invalidType_;
     const geometry::Point2f       position_;
+    const QString                 typeProperty_;
+    const QString                 enableProperty_;
+    const QString                 thresholdProperty_;
     //@}
 };
 

@@ -219,23 +219,35 @@ void MedicalTreatmentAttribute::SerializeObjectAttributes( xml::xostream& xos ) 
 void MedicalTreatmentAttribute::NotifyUpdated( const kernel::UrbanObject_ABC& object )
 {
     if( &object == owner_ )
-        UpdateDictionary();
+        UpdateDictionary( true );
+}
+
+namespace
+{
+    template< typename T >
+    void CreateProperties( const kernel::Entity_ABC& entity, kernel::Controller& controller, kernel::PropertiesDictionary& dictionary,
+        const QString& name, T& value, bool changed )
+    {
+        dictionary.Register( entity, name, value );
+        if( changed )
+            controller.Create( kernel::DictionaryUpdated( entity, name ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: MedicalTreatmentAttribute::UpdateDictionary
 // Created: SBO 2006-10-30
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::UpdateDictionary()
+void MedicalTreatmentAttribute::UpdateDictionary( bool changed )
 {
-    if( owner_ )
+    if( owner_ && controllers_ )
     {
         if( IsSet() )
         {
-            dictionary_.Register( *owner_, tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Doctors" ), doctors_ );
-            dictionary_.Register( *owner_, tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Hospital ID" ), referenceID_ );
+            CreateProperties( *owner_, controllers_->controller_, dictionary_, tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Doctors" ), doctors_, changed );
+            CreateProperties( *owner_, controllers_->controller_, dictionary_, tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Hospital ID" ), referenceID_, changed );
             for( T_TreatmentCapacities::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )
-                dictionary_.Register( *owner_, tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/" ) + it->first.c_str(), it->second );
+                CreateProperties( *owner_, controllers_->controller_, dictionary_, tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/" ) + it->first.c_str(), it->second, changed );
         }
         else
         {
@@ -243,12 +255,8 @@ void MedicalTreatmentAttribute::UpdateDictionary()
             dictionary_.Remove( tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Hospital ID" ) );
             for( T_TreatmentCapacities::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )
                 dictionary_.Remove( tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/" ) + it->first.c_str() );
-            if( controllers_ )
-                controllers_->controller_.Delete( kernel::DictionaryUpdated( const_cast< kernel::Entity_ABC& >( *owner_ ), tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/" ) ) );
+            controllers_->controller_.Delete( kernel::DictionaryUpdated( const_cast< kernel::Entity_ABC& >( *owner_ ), tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/" ) ) );
         }
-        // TODO à voir avec LGY
-        // if( controllers_ )
-            //controllers_->controller_.Create( kernel::DictionaryUpdated( const_cast< kernel::Entity_ABC& >( *owner_ ), tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/" ) ) );
     }
     else
     {

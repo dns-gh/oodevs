@@ -76,7 +76,7 @@ private:
     //@{
     bool IsSet() const;
     void ReadBedCapacity( xml::xistream& xis );
-    void UpdateDictionary();
+    void UpdateDictionary( bool changed = false );
     //@}
 
 private:

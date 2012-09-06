@@ -25,14 +25,14 @@ class DictionaryUpdated
 public:
     //! @name Constructors/Destructor
     //@{
-             DictionaryUpdated( kernel::Entity_ABC& entity, const QString& entry )
+             DictionaryUpdated( const kernel::Entity_ABC& entity, const QString& entry )
                  : entity_( entity ), entry_( entry ) {}
     virtual ~DictionaryUpdated() {}
     //@}
 
     //! @name Accessors
     //@{
-    kernel::Entity_ABC& GetEntity() const { return entity_; }
+    const kernel::Entity_ABC& GetEntity() const { return entity_; }
     const QString&      GetEntry () const { return entry_; }
     //@}
 
@@ -46,7 +46,7 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Entity_ABC& entity_;
+    const kernel::Entity_ABC& entity_;
     QString entry_;
     //@}
 };

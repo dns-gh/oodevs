@@ -44,13 +44,16 @@ namespace
 // -----------------------------------------------------------------------------
 InfrastructureAttribute::InfrastructureAttribute( kernel::Controllers& controllers, kernel::UrbanObject_ABC& object,
                                                   kernel::PropertiesDictionary& dictionary )
-    : controllers_( controllers )
-    , dictionary_ ( dictionary )
-    , type_       ( 0 )
-    , object_     ( object )
-    , enabled_    ( true )
-    , threshold_  ( DEFAULT_THRESHOLD )
-    , position_   ( object.Get< kernel::UrbanPositions_ABC >().Barycenter() )
+    : controllers_      ( controllers )
+    , dictionary_       ( dictionary )
+    , type_             ( 0 )
+    , object_           ( object )
+    , enabled_          ( true )
+    , threshold_        ( DEFAULT_THRESHOLD )
+    , position_         ( object.Get< kernel::UrbanPositions_ABC >().Barycenter() )
+    , typeProperty_     ( tools::translate( "Infrastructure", "Info/Infrastructure/Type" ) )
+    , enableProperty_   ( tools::translate( "Infrastructure", "Info/Infrastructure/Enable" ) )
+    , thresholdProperty_( tools::translate( "Infrastructure", "Info/Infrastructure/Threshold" ) )
 {
     UpdateDictionnary();
 }
@@ -62,13 +65,16 @@ InfrastructureAttribute::InfrastructureAttribute( kernel::Controllers& controlle
 InfrastructureAttribute::InfrastructureAttribute( xml::xistream& xis, kernel::Controllers& controllers,
                                                   kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary,
                                                   const kernel::ObjectTypes& objectTypes )
-    : controllers_( controllers )
-    , dictionary_ ( dictionary )
-    , type_       ( 0 )
-    , object_     ( object )
-    , enabled_    ( true )
-    , threshold_  ( DEFAULT_THRESHOLD )
-    , position_   ( object.Get< kernel::UrbanPositions_ABC >().Barycenter() )
+    : controllers_      ( controllers )
+    , dictionary_       ( dictionary )
+    , type_             ( 0 )
+    , object_           ( object )
+    , enabled_          ( true )
+    , threshold_        ( DEFAULT_THRESHOLD )
+    , position_         ( object.Get< kernel::UrbanPositions_ABC >().Barycenter() )
+    , typeProperty_     ( tools::translate( "Infrastructure", "Info/Infrastructure/Type" ) )
+    , enableProperty_   ( tools::translate( "Infrastructure", "Info/Infrastructure/Enable" ) )
+    , thresholdProperty_( tools::translate( "Infrastructure", "Info/Infrastructure/Threshold" ) )
 {
     std::string type;
     std::string role;
@@ -214,9 +220,28 @@ void InfrastructureAttribute::SetType( kernel::InfrastructureType* infrastructur
     {
         type_ = infrastructure;
         object_.Get< kernel::UrbanPositions_ABC >().SetInfrastructurePresent( type_ != 0 );
-        UpdateDictionnary();
+        UpdateDictionnary( true );
         controllers_.controller_.Update( object_ );
-        controllers_.controller_.Update( kernel::DictionaryUpdated( object_, tools::translate( "Infrastructure", "Info/Infrastructure" ) ) );
+    }
+}
+
+namespace
+{
+    template< typename T, typename Setter >
+    void CreateProperties( kernel::Entity_ABC& entity, kernel::Controller& controller, kernel::PropertiesDictionary& dictionary,
+        const QString& name, T& value, const Setter& setter, bool changed )
+    {
+        dictionary.Register( entity, name, value, setter );
+        if( changed )
+            controller.Create( kernel::DictionaryUpdated( entity, name ) );
+    }
+    template< typename T >
+    void CreateProperties( kernel::Entity_ABC& entity, kernel::Controller& controller, kernel::PropertiesDictionary& dictionary,
+                           const QString& name, T& value, bool changed, bool readOnly = false )
+    {
+        dictionary.Register( entity, name, value, readOnly );
+        if( changed )
+            controller.Create( kernel::DictionaryUpdated( entity, name ) );
     }
 }
 
@@ -224,14 +249,19 @@ void InfrastructureAttribute::SetType( kernel::InfrastructureType* infrastructur
 // Name: InfrastructureAttribute::UpdateDictionnary
 // Created: JSR 2012-06-11
 // -----------------------------------------------------------------------------
-void InfrastructureAttribute::UpdateDictionnary()
+void InfrastructureAttribute::UpdateDictionnary( bool changed )
 {
     if( type_ )
     {
-        dictionary_.Register( object_, tools::translate( "Infrastructure", "Info/Infrastructure/Type" ), type_, true );
-        dictionary_.Register( object_, tools::translate( "Infrastructure", "Info/Infrastructure/Enable" ), enabled_ );
-        dictionary_.Register( object_, tools::translate( "Infrastructure", "Info/Infrastructure/Threshold" ), threshold_, ThresholdSetter() );
+        CreateProperties( object_, controllers_.controller_, dictionary_, typeProperty_, type_, changed, true );
+        CreateProperties( object_, controllers_.controller_, dictionary_, enableProperty_, enabled_, changed );
+        CreateProperties( object_, controllers_.controller_, dictionary_, thresholdProperty_, threshold_, ThresholdSetter(), changed );
     }
     else
-        dictionary_.Remove( tools::translate( "Infrastructure", "Info/Infrastructure/Type" ) );
+    {
+        dictionary_.Remove( typeProperty_ );
+        dictionary_.Remove( enableProperty_ );
+        dictionary_.Remove( thresholdProperty_ );
+        controllers_.controller_.Delete( kernel::DictionaryUpdated( object_, tools::translate( "Infrastructure", "Info/Infrastructure" ) ) );
+    }
 }
