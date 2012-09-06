@@ -40,7 +40,7 @@ Only engineer units work for that mission. Other units reach the meeting positio
                     </parameter>
                     <parameter name="supportTasks">
                         <value>
-                            <string>platoon.tasks.Renforcer</string>
+                            <string>agent.tasks.Reinforce</string>
                         </value>
                     </parameter>
                     <parameter name="taskForSupporting">
