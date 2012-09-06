@@ -140,10 +140,10 @@ boost::shared_ptr<LogisticPlugin> CreateLogisticPlugin( const bfs::path& tempDir
 {
     boost::shared_ptr< SimpleNameResolver > nameResolver( new SimpleNameResolver() );
     return boost::shared_ptr< LogisticPlugin >( new LogisticPlugin( nameResolver,
-        (tempDir / bfs::path( "maintenance" )).string(),
-        (tempDir / bfs::path( "supply" )).string(),
-        (tempDir / bfs::path( "funeral" )).string(),
-        (tempDir / bfs::path( "medical" )).string(),
+        (tempDir / "maintenance" ).string(),
+        (tempDir / "supply" ).string(),
+        (tempDir / "funeral" ).string(),
+        (tempDir / "medical" ).string(),
         "en" ));
 }
 
