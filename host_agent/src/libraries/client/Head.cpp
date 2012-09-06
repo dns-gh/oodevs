@@ -65,10 +65,16 @@ Head::Head( const Runtime_ABC& runtime, const FileSystem_ABC& fs, Pool_ABC& pool
     ui_.status->addPermanentWidget( &count_ );
     ui_.items->setModel( &proxy_ );
     proxy_.setSourceModel( &items_ );
+    proxy_.setDynamicSortFilter( true );
+    proxy_.setFilterKeyColumn( -1 );
+    proxy_.setFilterCaseSensitivity( Qt::CaseInsensitive );
+    proxy_.setSortCaseSensitivity( Qt::CaseInsensitive );
     QObject::connect( this, SIGNAL( ProgressVisible( bool ) ), this, SLOT( OnProgressVisible( bool ) ) );
     QObject::connect( &items_, SIGNAL( modelReset() ), this, SLOT( OnModifiedItems() ) );
     QObject::connect( &items_, SIGNAL( rowsInserted( const QModelIndex&, int, int ) ), this, SLOT( OnModifiedItems() ) );
     QObject::connect( &items_, SIGNAL( rowsRemoved( const QModelIndex&, int, int ) ), this, SLOT( OnModifiedItems() ) );
+    QObject::connect( ui_.filter, SIGNAL( textChanged( const QString& ) ), &proxy_, SLOT( setFilterFixedString( const QString& ) ) );
+    QObject::connect( ui_.clear_filter, SIGNAL( clicked ( bool ) ), ui_.filter, SLOT( clear() ) );
     OnModifiedItems();
 
     LoadSettings();
@@ -216,5 +222,5 @@ void Head::OnProgressVisible( bool visible )
 void Head::OnModifiedItems()
 {
     const size_t count = items_.rowCount();
-    count_.setText( QString( "%1 item%2" ).arg( count ).arg( count ? "s" : "" ) );
+    count_.setText( QString( "%1 item%2" ).arg( count ).arg( count != 1 ? "s" : "" ) );
 }
