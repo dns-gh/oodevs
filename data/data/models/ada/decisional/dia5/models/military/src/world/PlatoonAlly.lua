@@ -957,7 +957,7 @@ return
     end,
     launchDREB = function( self )
         return integration.launchDREB()
-    end
+    end,
     sendMessage = masalife.brain.integration.startStopAction( 
     { 
         start = function( self, message )
