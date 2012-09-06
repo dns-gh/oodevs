@@ -632,6 +632,10 @@
         <source>Life time:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Info/Breaching/Value</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Population</name>

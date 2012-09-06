@@ -204,10 +204,17 @@
     </message>
 </context>
 <context>
+    <name>gui::ByPassPrototype_ABC</name>
+    <message>
+        <source>Value:</source>
+        <translation  type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>gui::BypassPrototype_ABC</name>
     <message>
-        <source>Breaching parameters</source>
-        <translation>Paramètres de brechage</translation>
+        <source>Breaching</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -218,7 +225,7 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Annuler</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select new superior</source>

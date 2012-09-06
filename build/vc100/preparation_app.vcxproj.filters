@@ -526,6 +526,9 @@
     <ClCompile Include="..\..\src\applications\preparation_app\EntitySymbolEditor.cpp">
       <Filter>Source Files\Dialogs\Editors</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\BypassPrototype.cpp">
+      <Filter>Source Files\Panels\Creation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\preparation_app\Application.h">
@@ -722,6 +725,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\ResourceNetworkDialog.h">
       <Filter>Source Files\Dialogs\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\BypassPrototype.h">
+      <Filter>Source Files\Panels\Creation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

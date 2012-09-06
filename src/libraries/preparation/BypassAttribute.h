@@ -52,8 +52,7 @@ public:
 
     //! @name Modifiers
     //@{
-    void SetActivityTime( unsigned int time );
-    void SetDensity( float density );
+    void SetBypassConstruction( int value );
     //@}
 
 private:
@@ -71,7 +70,7 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::UnitedValue< float > rBypassConstructionPercentage_;
+    kernel::UnitedValue< int > rBypassConstructionPercentage_;
     //@}
 };
 

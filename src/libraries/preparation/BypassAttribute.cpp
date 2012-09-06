@@ -21,7 +21,7 @@ using namespace kernel;
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
 BypassAttribute::BypassAttribute( kernel::PropertiesDictionary& dico )
-    : rBypassConstructionPercentage_ ( 0., Units::percentage )
+    : rBypassConstructionPercentage_ ( 0, Units::percentage )
 {
     CreateDictionary( dico );
 }
@@ -31,9 +31,10 @@ BypassAttribute::BypassAttribute( kernel::PropertiesDictionary& dico )
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
 BypassAttribute::BypassAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dico )
-    : rBypassConstructionPercentage_ ( 0., Units::percentage )
+    : rBypassConstructionPercentage_ ( 0, Units::percentage )
 {
-    xis >> xml::attribute( "value", rBypassConstructionPercentage_.value_ );
+    float percentage = xis.attribute< float >( "value" );
+    rBypassConstructionPercentage_.value_ = static_cast< int >( percentage * 100 + 0.5 );
     CreateDictionary( dico );
 }
 
@@ -72,7 +73,7 @@ void BypassAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
 void BypassAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "bypass" )
-            << xml::attribute( "value", rBypassConstructionPercentage_.value_ )
+            << xml::attribute( "value", rBypassConstructionPercentage_.value_ * 0.01f )
         << xml::end;
 }
 
@@ -80,7 +81,16 @@ void BypassAttribute::SerializeAttributes( xml::xostream& xos ) const
 // Name: BypassAttribute::CreateDictionary
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void BypassAttribute::CreateDictionary( kernel::PropertiesDictionary& /*dico*/ )
+void BypassAttribute::CreateDictionary( kernel::PropertiesDictionary& dico )
 {
-    // NOTHING
+    dico.Register( *this, tools::translate( "Object", "Info/Breaching/Value" ), rBypassConstructionPercentage_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BypassAttribute::SetBypassConstruction
+// Created: NPT 2012-09-05
+// -----------------------------------------------------------------------------
+void BypassAttribute::SetBypassConstruction( int value )
+{
+    rBypassConstructionPercentage_.value_ = value;
 }

@@ -14,6 +14,7 @@
 
 namespace gui
 {
+    class LoadableSpinBox;
 
 // =============================================================================
 /** @class  BypassPrototype_ABC
@@ -33,6 +34,13 @@ public:
     //! @name Operations
     //@{
     virtual bool CheckValidity( const kernel::Team_ABC& team ) const;
+    virtual void SetLoader( ObjectPrototypeLoader_ABC* loader );
+    //@}
+
+protected:
+    //! @name Member data
+    //@{
+    LoadableSpinBox* bypassConstructionPercentage_;
     //@}
 };
 

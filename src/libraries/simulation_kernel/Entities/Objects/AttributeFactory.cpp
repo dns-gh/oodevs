@@ -130,6 +130,7 @@ AttributeFactory::AttributeFactory()
     Register( "lodging", boost::bind( &AddBuilder< LodgingAttribute >::Add, _1, _2 ) );
     Register( "underground", boost::bind( &AddBuilder< UndergroundAttribute >::Add, _1, _2 ) );
     Register( "trafficability", boost::bind( &AddBuilder< TrafficabilityAttribute >::Add, _1, _2 ) );
+    Register( "bypass", boost::bind( &AddBuilder< BypassAttribute >::Add, _1, _2 ) );
 }
 
 // -----------------------------------------------------------------------------

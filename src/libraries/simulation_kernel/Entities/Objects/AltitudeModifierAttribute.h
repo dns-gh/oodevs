@@ -15,11 +15,6 @@
 #include "knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
 #include <boost/serialization/export.hpp>
 
-namespace xml
-{
-    class xistream;
-}
-
 class TER_Localisation;
 
 // =============================================================================

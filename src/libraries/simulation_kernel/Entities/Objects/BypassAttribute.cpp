@@ -30,6 +30,16 @@ BypassAttribute::BypassAttribute()
 
 // -----------------------------------------------------------------------------
 // Name: BypassAttribute constructor
+// Created: NPT 2012-09-05
+// -----------------------------------------------------------------------------
+BypassAttribute::BypassAttribute( const xml::xistream& xis )
+    : bypassPercentage_( xis.attribute< double >( "value" ), 0.05, 0., 1.)
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: BypassAttribute constructor
 // Created: RPD 2009-10-20
 // -----------------------------------------------------------------------------
 BypassAttribute::BypassAttribute( const sword::MissionParameter_Value& attributes )
@@ -67,6 +77,17 @@ void BypassAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) c
 {
     ar << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     ar << static_cast< double >( bypassPercentage_.Get() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BypassAttribute::WriteODB
+// Created: NPT 2012-09-05
+// -----------------------------------------------------------------------------
+void BypassAttribute::WriteODB( xml::xostream& xos ) const
+{
+    xos << xml::start( "bypass")
+            << xml::attribute("value", bypassPercentage_.Get() )
+        << xml::end;
 }
 
 // -----------------------------------------------------------------------------

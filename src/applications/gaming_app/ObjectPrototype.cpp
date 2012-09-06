@@ -11,6 +11,7 @@
 #include "ObjectPrototype.h"
 #include "ActivityTimePrototype.h"
 #include "AltitudeModifierPrototype.h"
+#include "BypassPrototype.h"
 #include "CrossingSitePrototype.h"
 #include "DelayPrototype.h"
 #include "FirePrototype.h"
@@ -58,6 +59,11 @@ namespace
     {
         if( xis.has_child( "improvable" ) )
             container.push_back( new MinePrototype( parent, attributesList ) );
+    }
+
+    void BypassableAttribute( T_AttributeContainer& container, QWidget* parent, ParameterList*& attributesList )
+    {
+        container.push_back( new BypassPrototype( parent, attributesList ) );
     }
 
     void BridgingAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, ParameterList*& attributesList )
@@ -190,6 +196,7 @@ namespace
         factory->Register( "stock"                     , boost::bind( &StockAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
         factory->Register( "altitude-modifier"         , boost::bind( &Capacity< AltitudeModifierPrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
         factory->Register( "trafficability"            , boost::bind( &TrafficabilityAttribute, _1, _2, _3, boost::ref( attributesList ) ) );
+        factory->Register( "bypassable"                , boost::bind( &BypassableAttribute, _2, _3, boost::ref( attributesList ) ) );
 
         boost::shared_ptr< NBCBuilder > pNBCBuilders( new NBCBuilder() );
         factory->Register( "intoxication"              , boost::bind( &NBCBuilder::Add, pNBCBuilders, _1, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );

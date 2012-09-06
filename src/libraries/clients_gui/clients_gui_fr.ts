@@ -206,10 +206,17 @@
     </message>
 </context>
 <context>
+    <name>gui::ByPassPrototype_ABC</name>
+    <message>
+        <source>Value:</source>
+        <translation>Valeur:</translation>
+    </message>
+</context>
+<context>
     <name>gui::BypassPrototype_ABC</name>
     <message>
-        <source>Breaching parameters</source>
-        <translation>Paramètres de brechage</translation>
+        <source>Breaching</source>
+        <translation>Bréchage</translation>
     </message>
 </context>
 <context>

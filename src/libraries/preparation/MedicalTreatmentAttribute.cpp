@@ -184,12 +184,13 @@ void MedicalTreatmentAttribute::SerializeAttributes( xml::xostream& xos ) const
             << xml::attribute( "doctors", doctors_ );
     if( !referenceID_.empty() )
         xos << xml::attribute( "reference", referenceID_ );
-    xos << xml::start( "bed-capacities" );
+    xos     << xml::start( "bed-capacities" );
     for( T_TreatmentCapacities::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )
-        xos << xml::start( "bed-capacity" )
-                << xml::attribute( "type", it->first ) << xml::attribute( "baseline", it->second )
-            << xml::end;
-    xos << xml::end // bed-capacities
+        xos     << xml::start( "bed-capacity" )
+                    << xml::attribute( "type", it->first ) 
+                    << xml::attribute( "baseline", it->second )
+                << xml::end;
+    xos     << xml::end // bed-capacities
         << xml::end; // medical-treatment
 }
 

@@ -60,7 +60,9 @@ void MineAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void MineAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << xml::start( "mine" ) << xml::attribute( "density", ( density_.value_ != 0 ) ? density_.value_ / 100. : 0. ) << xml::end;
+    xos << xml::start( "mine" ) 
+            << xml::attribute( "density", ( density_.value_ != 0 ) ? density_.value_ / 100. : 0. ) 
+        << xml::end;
 }
 
 // -----------------------------------------------------------------------------
