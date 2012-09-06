@@ -39,6 +39,12 @@ public:
              TacticalTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, const EntitySymbols& symbols, QWidget* parent = 0 );
     virtual ~TacticalTreeView();
     //@}
+
+public:
+    //! @name Filters/Sort
+    //@{
+    virtual bool LessThan( const QModelIndex& left, const QModelIndex& right, bool& valid ) const;
+    //@}
 };
 
 }

@@ -262,7 +262,7 @@ template< typename T >
 inline
 T* StandardModel::GetDataFromIndex( const QModelIndex& index ) const
 {
-    QStandardItem* item = itemFromIndex( proxy_.mapToSource( index ) );
+    QStandardItem* item = itemFromIndex( index.model() == this ? index : proxy_.mapToSource( index ) );
     if( !item )
         return 0;
     return GetDataFromItem< T >( *item );

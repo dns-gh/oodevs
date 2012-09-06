@@ -50,15 +50,6 @@ bool StandardModel::setData( const QModelIndex & index, const QVariant & value, 
 }
 
 // -----------------------------------------------------------------------------
-// Name: StandardModel::MapFromSource
-// Created: JSR 2012-09-03
-// -----------------------------------------------------------------------------
-QModelIndex StandardModel::MapFromSource( const QModelIndex& source ) const
-{
-    return proxy_.mapFromSource( source );
-}
-
-// -----------------------------------------------------------------------------
 // Name: StandardModel::Purge
 // Created: ABR 2012-08-14
 // -----------------------------------------------------------------------------

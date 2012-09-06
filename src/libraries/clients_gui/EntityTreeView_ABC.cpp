@@ -59,7 +59,7 @@ void EntityTreeView_ABC::NotifyActivated( const kernel::Entity_ABC& entity )
         return;
     QStandardItem* item = dataModel_.FindSafeItem( entity );
     if( item )
-        scrollTo( dataModel_.MapFromSource( item->index() ) );
+        scrollTo( proxyModel_->mapFromSource( item->index() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -105,17 +105,11 @@ void EntityTreeView_ABC::NotifyUpdated( const kernel::Entity_ABC& entity )
 {
     QStandardItem* item = dataModel_.FindSafeItem( entity );
     if( item )
+    {
         item->setData( *new QVariant( entity.GetName() ), Qt::DisplayRole );
+        proxyModel_->invalidate();
+    }
 }
-
-// -----------------------------------------------------------------------------
-// Name: EntityTreeView_ABC::NotifyUpdated
-// Created: ABR 2012-08-17
-// -----------------------------------------------------------------------------
-//void EntityTreeView_ABC::NotifyUpdated( const kernel::Entity_ABC& entity )
-//{
-//    SetNamed()
-//}
 
 // -----------------------------------------------------------------------------
 // Name: EntityTreeView_ABC::ApplyProfileFilter
@@ -153,8 +147,8 @@ void EntityTreeView_ABC::NotifySelectionChanged( const std::vector< const kernel
         if( *it && !IsTypeRejected( **it ) )
             if( QStandardItem* item = dataModel_.FindSafeItem( **it ) )
             {
-                selectionModel()->select( dataModel_.MapFromSource( item->index() ), QItemSelectionModel::Select );
-                scrollTo( dataModel_.MapFromSource( item->index() ) );
+                selectionModel()->select( proxyModel_->mapFromSource( item->index() ), QItemSelectionModel::Select );
+                scrollTo( proxyModel_->mapFromSource( item->index() ) );
             }
     }
     blockSelect_ = false;

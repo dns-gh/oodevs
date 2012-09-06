@@ -56,9 +56,10 @@ public:
     bool IsDragAndDropBlocked() const;
     //@}
 
-    //! @name Filters
+    //! @name Filters/Sort
     //@{
     virtual void CreateFilters( SearchListView_ABC& searchListView );
+    virtual bool LessThan( const QModelIndex& left, const QModelIndex& right, bool& valid ) const;
     //@}
 
 public slots:
@@ -82,12 +83,12 @@ private:
 protected:
     //! @name Member data
     //@{
-    QSortFilterProxyModel   proxyModel_;
-    StandardModel           dataModel_;
-    QString                 searchedText_;
-    bool                    creationBlocked_;
-    bool                    contextMenuBlocked_;
-    bool                    dndBlocked_;
+    QSortFilterProxyModel* proxyModel_;
+    StandardModel dataModel_;
+    QString searchedText_;
+    bool creationBlocked_;
+    bool contextMenuBlocked_;
+    bool dndBlocked_;
     //@}
 };
 

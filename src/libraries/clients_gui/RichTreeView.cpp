@@ -13,15 +13,46 @@
 
 using namespace gui;
 
+namespace
+{
+    class CustomSortFilterProxyModel : public QSortFilterProxyModel
+    {
+    public:
+        CustomSortFilterProxyModel( RichTreeView& parent )
+            : QSortFilterProxyModel( &parent )
+            , parent_( parent )
+        {
+            // NOTHING
+        }
+        ~CustomSortFilterProxyModel()
+        {
+            // NOTHING
+        }
+    protected:
+        virtual bool lessThan( const QModelIndex& left, const QModelIndex& right ) const
+        {
+            bool valid = false;
+            bool ret = parent_.LessThan( left, right, valid );
+            if( valid )
+                return ret;
+            return QSortFilterProxyModel::lessThan( left, right );
+        }
+
+    public:
+        const RichTreeView& parent_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: RichTreeView constructor
 // Created: ABR 2012-08-13
 // -----------------------------------------------------------------------------
 RichTreeView::RichTreeView( kernel::Controllers& controllers, QWidget* parent /*= 0*/ )
     : QTreeView( parent )
-    , proxyModel_( this )
-    , dataModel_( controllers, proxyModel_, this )
+    , proxyModel_( new CustomSortFilterProxyModel( *this ) )
+    , dataModel_( controllers, *proxyModel_, this )
 {
+    setSortingEnabled( true );
     //setModel( &dataModel_ ); // $$$$ ABR 2012-08-17: To remove when proxy
 
     // $$$$ ABR 2012-08-17: Does work for now hide everything without any call to ApplyFilter
@@ -29,10 +60,10 @@ RichTreeView::RichTreeView( kernel::Controllers& controllers, QWidget* parent /*
     //proxyModel_.setSourceModel( &dataModel_ );
     //proxyModel_.setFilterRole( StandardModel::FilterRole );
     //proxyModel_.setFilterRegExp( StandardModel::showValue_ );
-    setModel( &proxyModel_ );
+    setModel( proxyModel_ );
 
     // $$$$ ABR 2012-08-17: TODO: May be use a custom proxy model for place pc in top of automat
-    proxyModel_.setDynamicSortFilter( true );
+    proxyModel_->setDynamicSortFilter( true );
     //proxyModel_.setSortRole( Qt::UserRole );
 }
 
@@ -116,6 +147,15 @@ void RichTreeView::CreateFilters( SearchListView_ABC& searchListView )
 {
     // NOTHING
     // $$$$ ABR 2012-08-14: TODO for urban, nothing here, cf existing list view.
+}
+
+// -----------------------------------------------------------------------------
+// Name: RichTreeView::LessThan
+// Created: JSR 2012-09-06
+// -----------------------------------------------------------------------------
+bool RichTreeView::LessThan( const QModelIndex& /*left*/, const QModelIndex& /*right*/, bool& /*valid*/ ) const
+{
+    return false;
 }
 
 // -----------------------------------------------------------------------------

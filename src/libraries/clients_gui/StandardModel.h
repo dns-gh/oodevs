@@ -57,8 +57,6 @@ public:
     //@{
     virtual bool setData ( const QModelIndex & index, const QVariant & value, int role = Qt::EditRole );
 
-    QModelIndex MapFromSource( const QModelIndex& source ) const;
-
     void Purge();
     template< typename T >
     void PurgeObsoleteSafeItem();
