@@ -21,6 +21,7 @@ using namespace gui;
 PropertyTreeView::PropertyTreeView()
 {
     header()->hide();
+    setEditTriggers( SelectedClicked | DoubleClicked );
 }
 
 // -----------------------------------------------------------------------------
