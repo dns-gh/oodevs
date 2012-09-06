@@ -135,7 +135,7 @@ struct FlatModel : public QAbstractItemModel
     {
         for( T_Items::const_iterator it = items_.begin(); it != items_.end(); ++it )
             if( (*it)->Equal( target ) )
-                return index( std::distance( items_.begin(), it ), 0 );
+                return index( std::distance< T_Items::const_iterator >( items_.begin(), it ), 0 );
         return QModelIndex();
     }
 
