@@ -14,6 +14,10 @@
 
 using namespace gui;
 
+// -----------------------------------------------------------------------------
+// Name: QAsync::Register
+// Created: BAX 2012-09-06
+// -----------------------------------------------------------------------------
 void QAsync::Register( T_Task task )
 {
     QMutexLocker lock( &access_ );
@@ -21,6 +25,10 @@ void QAsync::Register( T_Task task )
     futures_.push_back( task );
 }
 
+// -----------------------------------------------------------------------------
+// Name: QAsync::Join
+// Created: BAX 2012-09-06
+// -----------------------------------------------------------------------------
 void QAsync::Join()
 {
     while( true )
