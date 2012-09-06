@@ -28,6 +28,8 @@ struct Item
     QVariant Data( int col, int role );
     bool SetData( int col, const QVariant& value, int role );
     Qt::CheckState GetCheckState() const;
+    size_t GetId() const;
+    bool Equal( size_t id ) const;
 
 private:
     const size_t    id_;
@@ -53,7 +55,7 @@ public:
 
 public slots:
     void Toggle();
-    void Remove();
+    std::vector< size_t > Remove();
 
 private:
     Qt::CheckState toggle_;

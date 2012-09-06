@@ -69,6 +69,7 @@ signals:
 private slots:
     void OnProgressVisible( bool visible );
     void OnModifiedItems();
+    void OnRemove();
 
 private:
     const runtime::Runtime_ABC& runtime_;

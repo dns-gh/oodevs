@@ -76,7 +76,7 @@ Head::Head( const Runtime_ABC& runtime, const FileSystem_ABC& fs, Pool_ABC& pool
     QObject::connect( ui_.filter, SIGNAL( textChanged( const QString& ) ), &proxy_, SLOT( setFilterFixedString( const QString& ) ) );
     QObject::connect( ui_.clear_filter, SIGNAL( clicked ( bool ) ), ui_.filter, SLOT( clear() ) );
     QObject::connect( ui_.toggle_items, SIGNAL( clicked( bool ) ), &items_, SLOT( Toggle() ) );
-    QObject::connect( ui_.remove_items, SIGNAL( clicked( bool ) ), &items_, SLOT( Remove() ) );
+    QObject::connect( ui_.remove_items, SIGNAL( clicked( bool ) ), this, SLOT( OnRemove() ) );
     OnModifiedItems();
 
     LoadSettings();
@@ -225,4 +225,13 @@ void Head::OnModifiedItems()
 {
     const size_t count = items_.rowCount();
     count_.setText( QString( "%1 item%2" ).arg( count ).arg( count != 1 ? "s" : "" ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Head::OnRemove
+// Created: BAX 2012-09-06
+// -----------------------------------------------------------------------------
+void Head::OnRemove()
+{
+    const std::vector< size_t > removed = items_.Remove();
 }

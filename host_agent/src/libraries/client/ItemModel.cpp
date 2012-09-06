@@ -157,6 +157,24 @@ Qt::CheckState Item::GetCheckState() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Item::GetId
+// Created: BAX 2012-09-06
+// -----------------------------------------------------------------------------
+size_t Item::GetId() const
+{
+    return id_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Item::Equal
+// Created: BAX 2012-09-06
+// -----------------------------------------------------------------------------
+bool Item::Equal( size_t id ) const
+{
+    return id_ == id;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ItemModel::ItemModel
 // Created: BAX 2012-09-06
 // -----------------------------------------------------------------------------
@@ -236,7 +254,15 @@ void ItemModel::Toggle()
 // Name: ItemModel::Remove
 // Created: BAX 2012-09-06
 // -----------------------------------------------------------------------------
-void ItemModel::Remove()
+std::vector< size_t > ItemModel::Remove()
 {
-    qDebug() << __FUNCTION__;
+    std::vector< size_t > rpy;
+    BOOST_FOREACH( const T_Ptr& ptr, items_ )
+        if( ptr->GetCheckState() )
+            rpy.push_back( ptr->GetId() );
+    // it is not possible to remove all items in one pass
+    // as row indexes can be discontinuous...
+    BOOST_FOREACH( size_t id, rpy )
+        FlatModel< gui::Item >::Remove( Find( id ).row() );
+    return rpy;
 }
