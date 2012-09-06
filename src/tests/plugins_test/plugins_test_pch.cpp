@@ -41,7 +41,6 @@ namespace
     if( value.empty() )
     {
         const char message[] = "test --temp_directory option was not supplied";
-        std::cout << message << std::endl;
         throw std::invalid_argument( message );
     }
     temp_directory = value;
