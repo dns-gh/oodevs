@@ -55,7 +55,6 @@ LogisticPlugin::LogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>&
     QLocale locale = tools::readLocale();
     if( localeStr != 0)
         locale = QLocale( localeStr );
-    std::string lang = tools::readLang();
     if( qApp )
     {
         tools::AddTranslator( *qApp, locale, "ENT" );
