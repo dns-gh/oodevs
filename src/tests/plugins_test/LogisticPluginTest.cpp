@@ -73,8 +73,6 @@ private:
 class SimpleNameResolver : public NameResolver_ABC
 {
 public:
-            SimpleNameResolver() {}
-
     virtual void GetAgentName( int id, std::string& name ) const
     {
         name = "agent_" + boost::lexical_cast<std::string>( id );
