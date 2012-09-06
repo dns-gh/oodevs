@@ -145,7 +145,7 @@
     </message>
     <message>
         <source>wounded extreme seriousness</source>
-        <translation>blessé urgence extrème</translation>
+        <translation>blessé urgence extrême</translation>
     </message>
     <message>
         <source>unknown</source>
