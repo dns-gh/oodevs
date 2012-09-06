@@ -217,7 +217,9 @@ void MIL_ObjectManipulator::AddCreator( const MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void MIL_ObjectManipulator::AddDetector( const MIL_Agent_ABC& agent )
 {
-    object_.Get< DetectionCapacity >().AddDetector( object_, agent );
+    DetectionCapacity* capacity = object_.Retrieve< DetectionCapacity >();
+    if( capacity )
+        capacity->AddDetector( object_, agent );
 }
 
 // -----------------------------------------------------------------------------

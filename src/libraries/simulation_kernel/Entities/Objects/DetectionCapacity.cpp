@@ -209,48 +209,44 @@ void DetectionCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_AB
     if( it != agentInsideMap_.end() )
     {
         int currentTime = MIL_Singletons::GetTime().GetCurrentTick();
-        const AnimatorAttribute::T_AgentSet& animators = object.GetAttribute< AnimatorAttribute >().GetAnimators();
+        int detectionTime = it->second;
+        int maxAnimators = object.GetAttribute< AnimatorAttribute >().GetMaxAnimators();
+        AnimatorAttribute::T_AgentSet animators = object.GetAttribute< AnimatorAttribute >().GetAnimators();
+        const MIL_Agent_ABC* detector = object.GetAttribute< DetectorAttribute >().GetDetector();
+        if( detector )
+            animators.insert( detector );
         for( AnimatorAttribute::CIT_AgentSet itAnimator = animators.begin(); itAnimator != animators.end(); ++itAnimator )
         {
-            PHY_RoleInterface_Perceiver& role = const_cast< MIL_Agent_ABC& >(**itAnimator).GetRole< PHY_RoleInterface_Perceiver >();
-            role.NotifyExternalPerception( agent, PHY_PerceptionLevel::identified_ );
-        }
-
-        const MIL_Agent_ABC* detector = object.GetAttribute< DetectorAttribute >().GetDetector();
-        if( detector && !detector->IsDead() )
+            MIL_Agent_ABC* animator = const_cast< MIL_Agent_ABC* >( *itAnimator );
+            if( animator && !animator->IsDead() )
         {
-            PHY_RoleInterface_Perceiver& role = const_cast< MIL_Agent_ABC& >( *detector ).GetRole< PHY_RoleInterface_Perceiver >();
-
-        // LTO begin
-            if( it->second + rIdentificationTime_ < currentTime )
+                PHY_RoleInterface_Perceiver& role = animator->GetRole< PHY_RoleInterface_Perceiver >();
+                if( detectionTime + rIdentificationTime_ < currentTime )
                 role.NotifyExternalPerception( agent, PHY_PerceptionLevel::identified_ );
-            else if( it->second + rRecognitionTime_ < currentTime )
+                else if( detectionTime + rRecognitionTime_ < currentTime )
                 role.NotifyExternalPerception( agent, PHY_PerceptionLevel::recognized_ );
-            else if( it->second + rDetectionTime_ < currentTime )
+                else if( detectionTime + rDetectionTime_ < currentTime )
                 role.NotifyExternalPerception( agent, PHY_PerceptionLevel::detected_ );
-        // LTO end
         }
-        // LTO begin
-        else if( !detector && object.GetArmy() )
+        }
+        if( animators.empty() && !maxAnimators && object.GetArmy() )
         {
-            if( it->second + rIdentificationTime_ < currentTime )
+            if( detectionTime + rIdentificationTime_ < currentTime )
             {
                 KnowledgeCreation knowledgeCreation( agent, PHY_PerceptionLevel::identified_ );
                 object.GetArmy()->ApplyOnKnowledgeGroup( knowledgeCreation );
             }
-            else if( it->second + rRecognitionTime_ < currentTime )
+            else if( detectionTime + rRecognitionTime_ < currentTime )
             {
                 KnowledgeCreation knowledgeCreation( agent, PHY_PerceptionLevel::recognized_ );
                 object.GetArmy()->ApplyOnKnowledgeGroup( knowledgeCreation );
             }
-            else if( it->second + rDetectionTime_ < currentTime )
+            else if( detectionTime + rDetectionTime_ < currentTime )
             {
                 KnowledgeCreation knowledgeCreation( agent, PHY_PerceptionLevel::detected_ );
                 object.GetArmy()->ApplyOnKnowledgeGroup( knowledgeCreation );
             }
         }
-    // LTO end
-
     }
 }
 

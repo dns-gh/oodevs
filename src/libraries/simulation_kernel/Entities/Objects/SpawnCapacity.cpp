@@ -167,10 +167,7 @@ void SpawnCapacity::CreateNBCObject( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void SpawnCapacity::AddCreator( MIL_Object_ABC& object, const MIL_Agent_ABC& agent )
 {
-    if( !nbc_ )
-    {
-        MIL_Object_ABC* childObject = object.RetrieveAttribute< ChildObjectAttribute >()->GetChildObject();
-        if( childObject )
-            childObject->operator ()().AddDetector( agent );
-    }
+    MIL_Object_ABC* childObject = object.RetrieveAttribute< ChildObjectAttribute >()->GetChildObject();
+    if( childObject )
+        (*childObject)().AddDetector( agent );
 }
