@@ -62,8 +62,14 @@ Head::Head( const Runtime_ABC& runtime, const FileSystem_ABC& fs, Pool_ABC& pool
 {
     ui_.setupUi( this );
     ui_.status->addPermanentWidget( &progress_ );
-    ui_.items->setModel( &items_ );
+    ui_.status->addPermanentWidget( &count_ );
+    ui_.items->setModel( &proxy_ );
+    proxy_.setSourceModel( &items_ );
     QObject::connect( this, SIGNAL( ProgressVisible( bool ) ), this, SLOT( OnProgressVisible( bool ) ) );
+    QObject::connect( &items_, SIGNAL( modelReset() ), this, SLOT( OnModifiedItems() ) );
+    QObject::connect( &items_, SIGNAL( rowsInserted( const QModelIndex&, int, int ) ), this, SLOT( OnModifiedItems() ) );
+    QObject::connect( &items_, SIGNAL( rowsRemoved( const QModelIndex&, int, int ) ), this, SLOT( OnModifiedItems() ) );
+    OnModifiedItems();
 
     LoadSettings();
     ParseArguments();
@@ -155,6 +161,7 @@ bool Head::ProcessCommand()
     }
     ui_.status->showMessage( "Loading package(s)..." );
     progress_.setRange( 0, 0 );
+    progress_.setTextVisible( false );
     progress_.setVisible( true );
     async_.Register( QtConcurrent::run( this, &Head::ParseRoot ) );
     return false;
@@ -186,7 +193,7 @@ void Head::Unregister()
 // -----------------------------------------------------------------------------
 void Head::ParseRoot()
 {
-    install_ = boost::make_shared< Package >( pool_, fs_, root_.absolutePath().toStdWString(), true );
+    install_ = boost::make_shared< Package >( pool_, fs_, root_.absoluteFilePath().toStdWString(), true );
     install_->Parse();
     items_.Fill( install_->GetProperties() );
     emit ProgressVisible( false );
@@ -200,4 +207,14 @@ void Head::OnProgressVisible( bool visible )
 {
     progress_.setVisible( visible );
     ui_.status->clearMessage();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Head::OnModifiedItems
+// Created: BAX 2012-09-06
+// -----------------------------------------------------------------------------
+void Head::OnModifiedItems()
+{
+    const size_t count = items_.rowCount();
+    count_.setText( QString( "%1 item%2" ).arg( count ).arg( count ? "s" : "" ) );
 }

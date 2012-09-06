@@ -48,6 +48,12 @@ QString QGet( const Tree& tree, const std::string& key )
 {
     return Q8( Get< std::string >( tree, key ).c_str() );
 }
+
+QString Capitalize( QString text )
+{
+    text[0] = text[0].toUpper();
+    return text;
+}
 }
 
 // -----------------------------------------------------------------------------
@@ -58,8 +64,9 @@ Item::Item( const Tree& tree )
     : id_      ( Get< size_t >( tree, "id" ) )
     , type_    ( QGet( tree, "type" ) )
     , name_    ( QGet( tree, "name" ) )
+    , package_ ( QGet( tree, "package" ) )
     , version_ ( QGet( tree, "version" ) )
-    , date_    ( QDate::fromString( QGet( tree, "date" ), Qt::ISODate ) )
+    , date_    ( QDateTime::fromString( QGet( tree, "date" ), Qt::ISODate ) )
     , checksum_( QGet( tree, "checksum" ) )
 {
     // NOTHING
@@ -89,12 +96,12 @@ QVariant Item::Data( int col, int role )
         case Qt::DisplayRole:
             switch( col )
             {
-                case ITEM_COL_TYPE:     return type_;
+                case ITEM_COL_TYPE:     return Capitalize( type_ );
                 case ITEM_COL_NAME:     return name_;
                 case ITEM_COL_PACKAGE:  return package_;
                 case ITEM_COL_VERSION:  return version_;
-                case ITEM_COL_DATE:     return date_;
-                case ITEM_COL_CHECKSUM: return checksum_;
+                case ITEM_COL_DATE:     return date_.toString( "yyyy-MM-dd hh:mm:ss" );
+                case ITEM_COL_CHECKSUM: return "0x" + checksum_;
             }
             break;
     }
@@ -126,7 +133,6 @@ ItemModel::~ItemModel()
 // -----------------------------------------------------------------------------
 void ItemModel::Fill( const Tree& tree )
 {
-    //qDebug() << ToJson( tree, true ).c_str();
     typedef std::pair< Tree::const_assoc_iterator, Tree::const_assoc_iterator > Range;
     Range range = tree.get_child( "items" ).equal_range( "" );
     for( Tree::const_assoc_iterator it = range.first; it != range.second; ++it )

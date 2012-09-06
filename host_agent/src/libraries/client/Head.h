@@ -16,8 +16,10 @@
 
 #include <boost/shared_ptr.hpp>
 #include <QFileInfo>
+#include <QLabel>
 #include <QMainWindow>
 #include <QProgressBar>
+#include <QSortFilterProxyModel>
 
 namespace host
 {
@@ -66,6 +68,7 @@ signals:
 
 private slots:
     void OnProgressVisible( bool visible );
+    void OnModifiedItems();
 
 private:
     const runtime::Runtime_ABC& runtime_;
@@ -77,7 +80,9 @@ private:
     QString url_;
     boost::shared_ptr< host::Package_ABC > install_;
     ItemModel items_;
+    QSortFilterProxyModel proxy_;
     QProgressBar progress_;
+    QLabel count_;
     QAsync async_;
 };
 }

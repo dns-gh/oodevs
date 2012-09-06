@@ -28,14 +28,14 @@ struct Item
     QVariant Data( int col, int role );
 
 private:
-    const size_t  id_;
-    const QString type_;
-    const QString name_;
-    const QString package_;
-    const QString version_;
-    const QDate   date_;
-    const QString checksum_;
-    const QString briefing_;
+    const size_t    id_;
+    const QString   type_;
+    const QString   name_;
+    const QString   package_;
+    const QString   version_;
+    const QDateTime date_;
+    const QString   checksum_;
+    const QString   briefing_;
 };
 
 struct ItemModel : FlatModel< Item >
