@@ -36,9 +36,9 @@ QStandardItem* StandardModel::AddChildItem( QStandardItem* root, int row, int co
 // Created: ABR 2012-08-16
 // -----------------------------------------------------------------------------
 inline
-QStandardItem* StandardModel::AddRootTextItem( int row, int col, QString text, Qt::ItemFlags flags /*= 0*/ )
+QStandardItem* StandardModel::AddRootTextItem( int row, int col, const QString& text, const QString& tooltip, Qt::ItemFlags flags /*= 0*/ )
 {
-    return AddChildTextItem( invisibleRootItem(), row, col, text, flags );
+    return AddChildTextItem( invisibleRootItem(), row, col, text, tooltip, flags );
 }
 
 // -----------------------------------------------------------------------------
@@ -46,10 +46,11 @@ QStandardItem* StandardModel::AddRootTextItem( int row, int col, QString text, Q
 // Created: ABR 2012-08-16
 // -----------------------------------------------------------------------------
 inline
-QStandardItem* StandardModel::AddChildTextItem( QStandardItem* root, int row, int col, QString text, Qt::ItemFlags flags /*= 0*/ )
+QStandardItem* StandardModel::AddChildTextItem( QStandardItem* root, int row, int col, const QString& text, const QString& tooltip,  Qt::ItemFlags flags /*= 0*/ )
 {
     QStandardItem* item = AddChildItem( root, row, col, flags );
     item->setData( *new QVariant( text ), Qt::DisplayRole );
+    item->setData( *new QVariant( tooltip ), Qt::ToolTipRole );
     return item;
 }
 
@@ -59,9 +60,9 @@ QStandardItem* StandardModel::AddChildTextItem( QStandardItem* root, int row, in
 // -----------------------------------------------------------------------------
 template< typename T >
 inline
-QStandardItem* StandardModel::AddRootSafeItem( int row, int col, QString text, const T& value, Qt::ItemFlags flags /*= 0*/ )
+QStandardItem* StandardModel::AddRootSafeItem( int row, int col, const QString& text, const QString& tooltip, const T& value, Qt::ItemFlags flags /*= 0*/ )
 {
-    return AddChildSafeItem( invisibleRootItem(), row, col, text, value, flags );
+    return AddChildSafeItem( invisibleRootItem(), row, col, text, tooltip, value, flags );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,9 +71,9 @@ QStandardItem* StandardModel::AddRootSafeItem( int row, int col, QString text, c
 // -----------------------------------------------------------------------------
 template< typename T >
 inline
-QStandardItem* StandardModel::AddChildSafeItem( QStandardItem* root, int row, int col, QString text, const T& value, Qt::ItemFlags flags /*= 0*/ )
+QStandardItem* StandardModel::AddChildSafeItem( QStandardItem* root, int row, int col, const QString& text, const QString& tooltip, const T& value, Qt::ItemFlags flags /*= 0*/ )
 {
-    QStandardItem* item = AddChildTextItem( root, row, col, text, flags );
+    QStandardItem* item = AddChildTextItem( root, row, col, text, tooltip, flags );
 
     QVariant* variant = new QVariant();
     variant->setValue( kernel::VariantPointer( new kernel::SafePointer< T >( controllers_, &value ) ) );

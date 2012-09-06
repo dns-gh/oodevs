@@ -77,6 +77,7 @@ public:
     virtual QString GetName() const = 0;
     virtual unsigned long GetId() const = 0;
     virtual const std::string& GetTypeName() const;
+    virtual QString GetTooltip() const;
     //@}
 
     //! @name Operations

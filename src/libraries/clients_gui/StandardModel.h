@@ -43,7 +43,7 @@ public:
 signals:
     //! @name Signals
     //@{
-    void DataChanged( const QModelIndex & index, const QVariant & value );
+    void DataChanged( const QModelIndex& index, const QVariant& value );
     //@}
 
 public:
@@ -55,7 +55,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool setData ( const QModelIndex & index, const QVariant & value, int role = Qt::EditRole );
+    virtual bool setData ( const QModelIndex& index, const QVariant& value, int role = Qt::EditRole );
 
     void Purge();
     template< typename T >
@@ -64,13 +64,13 @@ public:
     QStandardItem* AddRootItem( int row, int col, Qt::ItemFlags flags = 0 );
     QStandardItem* AddChildItem( QStandardItem* parent, int row, int col, Qt::ItemFlags flags = 0 );
 
-    QStandardItem* AddRootTextItem( int row, int col, QString text, Qt::ItemFlags flags = 0 );
-    QStandardItem* AddChildTextItem( QStandardItem* parent, int row, int col, QString text, Qt::ItemFlags flags = 0 );
+    QStandardItem* AddRootTextItem( int row, int col, const QString& text, const QString& tooltip, Qt::ItemFlags flags = 0 );
+    QStandardItem* AddChildTextItem( QStandardItem* parent, int row, int col, const QString& text, const QString& tooltip, Qt::ItemFlags flags = 0 );
 
     template< typename T >
-    QStandardItem* AddRootSafeItem( int row, int col, QString text, const T& value, Qt::ItemFlags flags = 0 );
+    QStandardItem* AddRootSafeItem( int row, int col, const QString& text, const QString& tooltip, const T& value, Qt::ItemFlags flags = 0 );
     template< typename T >
-    QStandardItem* AddChildSafeItem( QStandardItem* parent, int row, int col, QString text, const T& value, Qt::ItemFlags flags = 0 );
+    QStandardItem* AddChildSafeItem( QStandardItem* parent, int row, int col, const QString& text, const QString& tooltip, const T& value, Qt::ItemFlags flags = 0 );
 
     QStandardItem* AddRootIconItem( int row, int col, const QPixmap& pixmap, Qt::ItemFlags flags = 0 );
     QStandardItem* AddChildIconItem( QStandardItem* parent, int row, int col, const QPixmap& pixmap, Qt::ItemFlags flags = 0 );

@@ -53,13 +53,11 @@ void HierarchyTreeView_ABC::InternalNotifyCreated( const kernel::Hierarchies& hi
     {
         QStandardItem* superiorItem = dataModel_.FindSafeItem( *superior );
         if( !superiorItem )
-            superiorItem = dataModel_.AddRootSafeItem( dataModel_.rowCount(), 0, superior->GetName(), *superior, ItemSpecificFlags( *superior ) );
-        entityItem = dataModel_.AddChildSafeItem( superiorItem, superiorItem->rowCount(), 0, entity.GetName(), entity, ItemSpecificFlags( entity ) );
+            superiorItem = dataModel_.AddRootSafeItem( dataModel_.rowCount(), 0, superior->GetName(), superior->GetTooltip(), *superior, ItemSpecificFlags( *superior ) );
+        entityItem = dataModel_.AddChildSafeItem( superiorItem, superiorItem->rowCount(), 0, entity.GetName(), entity.GetTooltip(), entity, ItemSpecificFlags( entity ) );
     }
     else                // Root item
-    {
-        entityItem = dataModel_.AddRootSafeItem( dataModel_.rowCount(), 0, entity.GetName(), entity, ItemSpecificFlags( entity ) );
-    }
+        entityItem = dataModel_.AddRootSafeItem( dataModel_.rowCount(), 0, entity.GetName(), entity.GetTooltip(), entity, ItemSpecificFlags( entity ) );
 
     if( entityItem)
     {
