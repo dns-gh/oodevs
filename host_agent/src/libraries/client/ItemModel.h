@@ -35,7 +35,7 @@ private:
     const QString   version_;
     const QDateTime date_;
     const QString   checksum_;
-    const QString   briefing_;
+    const size_t    size_;
 };
 
 struct ItemModel : FlatModel< Item >

@@ -27,6 +27,7 @@ enum ItemColumn
     ITEM_COL_VERSION,
     ITEM_COL_DATE,
     ITEM_COL_CHECKSUM,
+    ITEM_COL_SIZE,
     ITEM_COL_COUNT,
 };
 
@@ -38,6 +39,7 @@ static const QString item_headers[] =
     "Version",
     "Date",
     "Checksum",
+    "Size",
 };
 
 BOOST_STATIC_ASSERT( ITEM_COL_COUNT == COUNT_OF( item_headers ) );
@@ -54,6 +56,23 @@ QString Capitalize( QString text )
     text[0] = text[0].toUpper();
     return text;
 }
+
+QString PrettySize( size_t n )
+{
+    static const size_t kb = 1000;
+    static const size_t mb = kb * 1000;
+    static const size_t gb = mb * 1000;
+    static const size_t tb = gb * 1000;
+    if( n < kb )
+        return QString( "%1 B" ).arg( n );
+    if( n < mb )
+        return QString( "%1 KB" ).arg( n / kb );
+    if( n < gb )
+        return QString( "%1 MB" ).arg( n / mb );
+    if( n < tb )
+        return QString( "%1 GB" ).arg( n / mb );
+    return QString( "%1 TB" ).arg( n / tb );
+}
 }
 
 // -----------------------------------------------------------------------------
@@ -68,6 +87,7 @@ Item::Item( const Tree& tree )
     , version_ ( QGet( tree, "version" ) )
     , date_    ( QDateTime::fromString( QGet( tree, "date" ), Qt::ISODate ) )
     , checksum_( QGet( tree, "checksum" ) )
+    , size_    ( Get< size_t >( tree, "size" ) )
 {
     // NOTHING
 }
@@ -102,6 +122,7 @@ QVariant Item::Data( int col, int role )
                 case ITEM_COL_VERSION:  return version_;
                 case ITEM_COL_DATE:     return date_.toString( "yyyy-MM-dd hh:mm:ss" );
                 case ITEM_COL_CHECKSUM: return "0x" + checksum_;
+                case ITEM_COL_SIZE:     return PrettySize( size_ );
             }
             break;
     }

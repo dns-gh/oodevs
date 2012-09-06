@@ -259,6 +259,7 @@ struct Item : Package_ABC::Item_ABC
         tree.put( "name", Utf8Convert( name_ ) );
         tree.put( "date", date_ );
         tree.put( "checksum", checksum_ );
+        tree.put( "size", size_ );
         meta_.SaveTo( tree );
         if( !action_.empty() )
             tree.put( "action", action_ );
