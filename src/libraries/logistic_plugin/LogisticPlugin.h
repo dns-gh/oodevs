@@ -68,8 +68,6 @@ private:
 private:
     //! @name Member data
     //@{
-    int currentTick_;
-    std::string simTime_;
     std::vector< ConsignResolver_ABC* > resolvers_;
     boost::scoped_ptr< QApplication >           localAppli_;
     boost::shared_ptr<const NameResolver_ABC> nameResolver_;

@@ -46,8 +46,7 @@ namespace
 // -----------------------------------------------------------------------------
 LogisticPlugin::LogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>& nameResolver, const std::string& maintenanceFile,
     const std::string& supplyFile, const std::string& funeralFile, const std::string& medicalFile, const char* localeStr )
-    : currentTick_( 0 )
-    , nameResolver_( nameResolver )
+    : nameResolver_( nameResolver )
     , localAppli_ ( !qApp ? new QApplication( localAppliArgc, localAppliArgv ) : 0 )
 {
     QLocale locale = tools::readLocale();
@@ -86,10 +85,10 @@ void LogisticPlugin::Receive( const sword::SimToClient& message )
 {
     if( message.message().has_control_begin_tick() )
     {
-        currentTick_= message.message().control_begin_tick().current_tick();
-        simTime_    = message.message().control_begin_tick().date_time().data();        
+        int currentTick = message.message().control_begin_tick().current_tick();
+        std::string simTime = message.message().control_begin_tick().date_time().data();        
         for( IT_ConsignResolvers r = resolvers_.begin(); r != resolvers_.end(); ++r )
-            (*r)->SetTime( currentTick_, simTime_ );
+            (*r)->SetTime( currentTick, simTime );
     }
     for( IT_ConsignResolvers r = resolvers_.begin(); r != resolvers_.end(); ++r )
         if( (*r)->Receive( message ))
