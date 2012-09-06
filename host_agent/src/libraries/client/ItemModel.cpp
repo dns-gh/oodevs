@@ -26,14 +26,14 @@ enum ItemColumn
 
 #define COUNT_OF(X) (sizeof(X)/sizeof*(X))
 
-static const struct { ItemColumn col; QString name; } item_headers[] =
+static const QString item_headers[] =
 {
-    { ITEM_COL_TYPE,     "Type" },
-    { ITEM_COL_NAME,     "Name" },
-    { ITEM_COL_PACKAGE,  "Package" },
-    { ITEM_COL_VERSION,  "Version" },
-    { ITEM_COL_DATE,     "Date" },
-    { ITEM_COL_CHECKSUM, "Checksum" },
+    "Type",
+    "Name",
+    "Package",
+    "Version",
+    "Date",
+    "Checksum",
 };
 
 BOOST_STATIC_ASSERT( ITEM_COL_COUNT == COUNT_OF( item_headers ) );
@@ -72,7 +72,7 @@ QVariant Item::data( int col, int role )
 ItemModel::ItemModel()
 {
     for( size_t i = 0; i < COUNT_OF( item_headers ); ++i )
-        headers_ << item_headers[i].name;
+        headers_ << item_headers[i];
 }
 
 // -----------------------------------------------------------------------------
