@@ -58,12 +58,12 @@ QString Capitalize( QString text )
     return text;
 }
 
-QString PrettySize( size_t n )
+QString PrettySize( uint64_t n )
 {
-    static const size_t kb = 1000;
-    static const size_t mb = kb * 1000;
-    static const size_t gb = mb * 1000;
-    static const size_t tb = gb * 1000;
+    static const uint64_t kb = 1000;
+    static const uint64_t mb = kb * 1000;
+    static const uint64_t gb = mb * 1000;
+    static const uint64_t tb = gb * 1000;
     if( n < kb )
         return QString( "%1 B" ).arg( n );
     if( n < mb )
@@ -88,7 +88,7 @@ Item::Item( const Tree& tree )
     , version_    ( QGet( tree, "version" ) )
     , date_       ( QDateTime::fromString( QGet( tree, "date" ), Qt::ISODate ) )
     , checksum_   ( QGet( tree, "checksum" ) )
-    , size_       ( Get< size_t >( tree, "size" ) )
+    , size_       ( Get< uint64_t >( tree, "size" ) )
     , check_state_( Qt::Unchecked )
 {
     // NOTHING
