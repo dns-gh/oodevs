@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.company.tasks.Disengage" source-version="1.0.0" knowledge-class="sword.military.company.tasks.knowledges.Disengage">
     <parameters>
-        <parameter name="objective">
+        <parameter name="objectives">
             <type>
-                <class name="sword.military.knowledge.decisional.Approachable"/>
-                <class name="sword.military.knowledge.decisional.Positionable"/>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Approachable"/>
+                    <class name="sword.military.knowledge.decisional.Positionable"/>
+                </list>
             </type>
         </parameter>
         <parameter name="companyTask">

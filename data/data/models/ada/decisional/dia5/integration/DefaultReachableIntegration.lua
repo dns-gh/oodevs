@@ -210,7 +210,7 @@ integration.moveToItGeneric = masalife.brain.integration.startStopAction(
 -- ****************************************************************************
 integration.startMoveToIt = function( objective, pathType )
 
-    objective[ myself ] = objective[ myself ] or {}
+	objective[ myself ] = objective[ myself ] or {}
 
     -- -------------------------------------------------------------------------------- 
     -- Leaving occupied position
@@ -270,6 +270,7 @@ end
 integration.updateMoveToIt = function( objective, pathType )
 
     local etat = objective[ myself ].etat
+	--affichePositions( { objective } )
 
     -- -------------------------------------------------------------------------------- 
     -- End of movement, check if objective is traficable
@@ -646,4 +647,8 @@ integration.creerItineraireAPartirListePoint = function( listPoint )
         listPointSource[#listPointSource + 1] = listPoint[i].source
     end
     return CreateKnowledge( france.military.ontologie.classe.Itinerary, DEC_CreerItineraireListe(listPointSource, eTypeItiMouvement) )
+end
+
+integration.isElementInAOR = function( self )
+	return DEC_Geometrie_EstPointDansFuseau( self:getPosition() )
 end

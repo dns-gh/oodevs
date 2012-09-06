@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.Decrocher" source-version="1.0.0" knowledge-class="sword.military.platoon.coercition.tasks.knowledges.Disengage">
-  <parameters>
-    <parameter name="objective">
-      <type>
-        <class name="sword.military.knowledge.decisional.Approachable"/>
-        <class name="sword.military.knowledge.decisional.Positionable"/>
-      </type>
-    </parameter>
-  </parameters>
-  <stages/>
-  <next-task name="sword.military.platoon.coercition.tasks.Disengage">
-    <parameter name="objective">
-      <value>
-        <parameter>objective</parameter>
-      </value>
-    </parameter>
-  </next-task>
+    <parameters>
+        <parameter name="objective">
+            <type>
+                <class name="sword.military.knowledge.decisional.Approachable"/>
+                <class name="sword.military.knowledge.decisional.Positionable"/>
+            </type>
+        </parameter>
+    </parameters>
+    <stages/>
+    <next-task name="sword.military.platoon.coercition.tasks.Disengage">
+        <parameter name="objective">
+            <value>
+                <parameter>objective</parameter>
+            </value>
+        </parameter>
+    </next-task>
 </task>

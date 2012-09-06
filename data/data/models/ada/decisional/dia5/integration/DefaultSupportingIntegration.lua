@@ -9,8 +9,14 @@
 -- Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
 -------------------------------------------------------------------------------
 
-integration.isInMiddleFiringRange = function( target )
-    return integration.distance( meKnowledge, target ) < DEC_Tir_PorteeMaxPourTirer( 0.7 )/2
+integration.firingRangeToSupport = function()
+	local tirIndirect = { DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition() / 3, DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition() / 2 }
+	local tirDirect = { DEC_Tir_PorteeMaxPourTirer( 0.9 ) / 2, DEC_Tir_PorteeMaxPourTirer( 0.7 ) / 2 }
+	if tirIndirect[2] > tirDirect[2] then
+		return tirIndirect
+	else
+	    return tirDirect
+	end
 end
 
 integration.getPositionToSupportFriend = function( friendToSupport )
