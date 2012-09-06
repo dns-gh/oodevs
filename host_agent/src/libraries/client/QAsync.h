@@ -18,10 +18,10 @@ namespace gui
 {
 struct QAsync
 {
-    typedef QFuture< void >       T_Task;
-    typedef std::vector< T_Task > T_Futures;
+    typedef QFuture< void >         T_Future;
+    typedef std::vector< T_Future > T_Futures;
 
-    void Register( T_Task task );
+    void Register( T_Future future );
     void Join();
 
 private:

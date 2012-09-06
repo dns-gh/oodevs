@@ -18,11 +18,11 @@ using namespace gui;
 // Name: QAsync::Register
 // Created: BAX 2012-09-06
 // -----------------------------------------------------------------------------
-void QAsync::Register( T_Task task )
+void QAsync::Register( T_Future future )
 {
     QMutexLocker lock( &access_ );
-    futures_.erase( std::remove_if( futures_.begin(), futures_.end(), boost::bind( &T_Task::isFinished, _1 ) ), futures_.end() );
-    futures_.push_back( task );
+    futures_.erase( std::remove_if( futures_.begin(), futures_.end(), boost::bind( &T_Future::isFinished, _1 ) ), futures_.end() );
+    futures_.push_back( future );
 }
 
 // -----------------------------------------------------------------------------
@@ -39,7 +39,6 @@ void QAsync::Join()
             return;
         next.swap( futures_ );
         lock.unlock();
-        lock.unlock();
-        std::for_each( next.begin(), next.end(), boost::bind( &T_Task::waitForFinished, _1 ) );
+        std::for_each( next.begin(), next.end(), boost::bind( &T_Future::waitForFinished, _1 ) );
     }
 }
