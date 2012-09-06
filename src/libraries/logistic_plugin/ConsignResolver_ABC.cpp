@@ -44,7 +44,6 @@ ConsignResolver_ABC::~ConsignResolver_ABC()
 {
     for ( std::map< int, ConsignData_ABC* >::iterator it = consignsData_.begin(); it != consignsData_.end(); ++it )
         delete it->second;
-    consignsData_.clear();
 }
 
 // -----------------------------------------------------------------------------
