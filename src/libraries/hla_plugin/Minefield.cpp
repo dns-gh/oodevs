@@ -165,7 +165,7 @@ void Minefield::RegisterAttributes()
     attributes_->Register( "MinefieldIdentifier", boost::bind( &ReadEntityIdentifier, _1, _2, _3, boost::ref( entityIdentifier_ ) ), entityIdentifier_ );
     attributes_->Register( "ForceIdentifier", boost::bind( &ReadForceIdentifier, _1, _2, _3, boost::ref( force_ ) ), Wrapper< int8 >( static_cast< int8 >( force_ ) ) );
     attributes_->Register( "MinefieldLocation", boost::bind( &ReadWorldLocation, _1, _2, _3, boost::ref( center_ ) ), center_);
-    //attributes_->Register( "MinefieldOrientation" );
+    //attributes_->Register( "MinefieldOrientation" ); // FIXME AHC
     attributes_->Register( "MineTypes", boost::bind( &ReadNothing, _1, _2, _3 ), Wrapper< std::vector< rpr::EntityType > >( mineTypes_ ) );
     attributes_->Register( "PerimeterPointCoordinates", boost::bind( &ReadNothing, _1, _2, _3 ), Wrapper< std::vector< rpr::PerimeterPoint > >( perimeter_ ) );
     attributes_->Register( "ProtocolMode", boost::bind( &ReadNothing, _1, _2, _3 ), Wrapper< uint8 >( 0 ) ); // HearbeatMode
@@ -225,4 +225,14 @@ void Minefield::ResetAttributes()
 void Minefield::Attach( Agent_ABC* agent, unsigned long simId )
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Minefield::ResourcesChanged
+// Created: AHC 2012-09-06
+// -----------------------------------------------------------------------------
+void Minefield::ResourcesChanged( const TacticalObjectEventListener_ABC::T_ResourceVector& res )
+{
+    mineTypes_ = res;
+    attributes_->Update( "MineTypes",  Wrapper< std::vector< rpr::EntityType > >( mineTypes_ )  );
 }

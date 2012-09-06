@@ -4,6 +4,7 @@
         <surface-vessel>vessel.xml</surface-vessel>
         <component>component.xml</component>
         <munition>munition.xml</munition>
+        <object>object.xml</object>
     </mappings>
     <types>
         <automat>ARMOR.MBT squadron</automat>

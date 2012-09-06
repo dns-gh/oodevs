@@ -18,6 +18,11 @@ namespace dispatcher
     class Object_ABC;
 }
 
+namespace rpr
+{
+    class EntityTypeResolver_ABC;
+}
+
 namespace plugins
 {
 namespace hla
@@ -35,7 +40,7 @@ class TacticalObjectProxy : public TacticalObject_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    TacticalObjectProxy( dispatcher::Object_ABC& object );
+    TacticalObjectProxy( dispatcher::Object_ABC& object, const rpr::EntityTypeResolver_ABC& dotationResolver );
     virtual ~TacticalObjectProxy();
     //@}
 
@@ -49,6 +54,7 @@ private:
     //! @name Attributes
     //@{
     dispatcher::Object_ABC& object_;
+    const rpr::EntityTypeResolver_ABC& dotationResolver_;
     TacticalObjectEventListenerComposite listeners_;
     //@}
 };

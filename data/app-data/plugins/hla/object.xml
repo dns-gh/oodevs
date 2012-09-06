@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<dis-mapping default-type="2 0 225 3 7" default-name="Mined Area (scattered)" threshold="0 0 9 1 1 9 9">
+    <!-- dis : Kind Domain Country Category Subcategory Specific Extra -->
+    <!-- aggregates -->
+    <entry name="Mined Area (scattered)" dis="2 0 225 3 7"/>
+</dis-mapping>

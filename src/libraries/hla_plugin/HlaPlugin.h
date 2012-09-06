@@ -136,6 +136,7 @@ private:
     std::auto_ptr< rpr::EntityTypeResolver_ABC > pSurfaceVesselTypeResolver_;
     std::auto_ptr< rpr::EntityTypeResolver_ABC > pComponentTypeResolver_;
     std::auto_ptr< rpr::EntityTypeResolver_ABC > pEntityMunitionTypeResolver_;
+    std::auto_ptr< rpr::EntityTypeResolver_ABC > pEntityObjectTypeResolver_;
     std::auto_ptr< ComponentTypes_ABC > pComponentTypes_;
     std::auto_ptr< UnitTypeResolver_ABC > pUnitTypeResolver_;
     std::auto_ptr< DotationTypeResolver_ABC > pMunitionTypeResolver_;

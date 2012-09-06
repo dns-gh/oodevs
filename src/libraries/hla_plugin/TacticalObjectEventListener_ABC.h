@@ -38,6 +38,7 @@ public:
     //! @name Types
     //@{
     typedef std::vector< sword::CoordLatLong > T_PositionVector;
+    typedef std::vector< rpr::EntityType > T_ResourceVector;
     //@}
 
     //! @name Constructors/Destructor
@@ -49,6 +50,7 @@ public:
     //! @name Operations
     //@{
     virtual void SpatialChanged( const T_PositionVector& pos )  = 0;
+    virtual void ResourcesChanged( const T_ResourceVector& pos )  = 0;
     //@}
 };
 

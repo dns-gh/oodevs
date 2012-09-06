@@ -30,6 +30,11 @@ namespace kernel
     class CoordinateConverter_ABC;
 }
 
+namespace rpr
+{
+    class EntityTypeResolver_ABC;
+}
+
 namespace plugins
 {
 namespace hla
@@ -50,7 +55,8 @@ class TacticalObjectController : public TacticalObjectSubject_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    TacticalObjectController( dispatcher::Model_ABC& model, const kernel::CoordinateConverter_ABC& converter );
+    TacticalObjectController( dispatcher::Model_ABC& model, const kernel::CoordinateConverter_ABC& converter, const rpr::EntityTypeResolver_ABC& objectResolver,
+            const rpr::EntityTypeResolver_ABC& dotationResolver );
     virtual ~TacticalObjectController();
     //@}
 
@@ -80,6 +86,8 @@ private:
     //@{
     dispatcher::Model_ABC& model_;
     const kernel::CoordinateConverter_ABC& converter_;
+    const rpr::EntityTypeResolver_ABC& objectResolver_;
+    const rpr::EntityTypeResolver_ABC& dotationResolver_;
     T_Listeners listeners_;
     T_Objects objects_;
     //@}

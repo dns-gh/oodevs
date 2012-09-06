@@ -75,6 +75,7 @@ private:
     //! @name Operations
     //@{
     virtual void SpatialChanged( const TacticalObjectEventListener_ABC::T_PositionVector& pos );
+    virtual void ResourcesChanged( const TacticalObjectEventListener_ABC::T_ResourceVector& res );
     void RegisterAttributes();
     //@}
     //! @name Attributes

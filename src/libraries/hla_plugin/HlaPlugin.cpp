@@ -185,6 +185,7 @@ HlaPlugin::HlaPlugin( dispatcher::Model_ABC& dynamicModel, const dispatcher::Sta
     , pSurfaceVesselTypeResolver_ ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + ReadMapping( *pXis_, "surface-vessel" ) ) ) )
     , pComponentTypeResolver_     ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + ReadMapping( *pXis_, "component" ) ) ) )
     , pEntityMunitionTypeResolver_( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + ReadMapping( *pXis_, "munition" ) ) ) )
+    , pEntityObjectTypeResolver_  ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + ReadMapping( *pXis_, "object" ) ) ) )
     , pComponentTypes_            ( new ComponentTypes( staticModel.types_ ) )
     , pUnitTypeResolver_          ( new UnitTypeResolver( *pAggregateTypeResolver_, staticModel.types_ ) )
     , pMunitionTypeResolver_      ( new DotationTypeResolver( *pEntityMunitionTypeResolver_, staticModel.objectTypes_, staticModel.objectTypes_ ) )
@@ -241,7 +242,7 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
             pFomSerializer_.reset( new FOM_Serializer( pXis_->attribute< int >( "netn-version", 1 ) ) );
             pSubject_.reset( new AgentController( dynamicModel_, *pAggregateTypeResolver_, *pComponentTypeResolver_, *pComponentTypes_,
                                                   *platforms_, *pConverter_, pXis_->attribute< bool >( "disaggregate", false ) ) );
-            pTacticalObjectSubject_.reset( new TacticalObjectController ( dynamicModel_, *pConverter_ ) );
+            pTacticalObjectSubject_.reset( new TacticalObjectController ( dynamicModel_, *pConverter_, *pEntityObjectTypeResolver_, *pEntityMunitionTypeResolver_ ) );
             pFederate_.reset( new FederateFacade( *pXis_, *pMessageController_, *pSubject_, *pLocalAgentResolver_,
                                                   pXis_->attribute< bool >( "debug", false ) ? *pDebugRtiFactory_ : *pRtiFactory_,
                                                   pXis_->attribute< bool >( "debug", false ) ? *pDebugFederateFactory_ : *pFederateFactory_,

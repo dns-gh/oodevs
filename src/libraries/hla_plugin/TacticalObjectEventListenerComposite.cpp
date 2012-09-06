@@ -60,3 +60,13 @@ void TacticalObjectEventListenerComposite::SpatialChanged( const TacticalObjectE
         listener->SpatialChanged( pos );
 }
 
+// -----------------------------------------------------------------------------
+// Name: TacticalObjectEventListenerComposite::ResourcesChanged
+// Created: AHC 2012-09-06
+// -----------------------------------------------------------------------------
+void TacticalObjectEventListenerComposite::ResourcesChanged( const TacticalObjectEventListener_ABC::T_ResourceVector& res )
+{
+    BOOST_FOREACH( TacticalObjectEventListener_ABC* listener, listeners_ )
+        listener->ResourcesChanged( res );
+}
+
