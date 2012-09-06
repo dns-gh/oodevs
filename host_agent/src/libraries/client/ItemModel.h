@@ -27,6 +27,7 @@ struct Item
 
     QVariant Data( int col, int role );
     bool SetData( int col, const QVariant& value, int role );
+    Qt::CheckState GetCheckState() const;
 
 private:
     const size_t    id_;

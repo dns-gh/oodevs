@@ -148,6 +148,15 @@ bool Item::SetData( int col, const QVariant& value, int role )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Item::GetCheckState
+// Created: BAX 2012-09-06
+// -----------------------------------------------------------------------------
+Qt::CheckState Item::GetCheckState() const
+{
+    return check_state_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ItemModel::ItemModel
 // Created: BAX 2012-09-06
 // -----------------------------------------------------------------------------
@@ -191,16 +200,36 @@ void ItemModel::Fill( const Tree& tree )
         Append( boost::make_shared< gui::Item >( it->second ) );
 }
 
+namespace
+{
+Qt::CheckState Reverse( Qt::CheckState state )
+{
+    return state == Qt::Checked ? Qt::Unchecked : Qt::Checked;
+}
+}
+
 // -----------------------------------------------------------------------------
 // Name: ItemModel::Toggle
 // Created: BAX 2012-09-06
 // -----------------------------------------------------------------------------
 void ItemModel::Toggle()
 {
+    if( items_.empty() )
+        return;
+
+    bool mixed = false;
+    boost::optional< Qt::CheckState > def;
+    BOOST_FOREACH( const T_Ptr& ptr, items_ )
+        if( def == boost::none )
+            def = ptr->GetCheckState();
+        else
+            mixed |= *def != ptr->GetCheckState();
+
+    def = mixed ? toggle_ : Reverse( *def );
     BOOST_FOREACH( T_Ptr& ptr, items_ )
-        ptr->SetData( ITEM_COL_TYPE, toggle_, Qt::CheckStateRole );
+        ptr->SetData( ITEM_COL_TYPE, *def, Qt::CheckStateRole );
     ModifyColumn( ITEM_COL_TYPE );
-    toggle_ = toggle_ == Qt::Checked ? Qt::Unchecked : Qt::Checked;
+    toggle_ = Reverse( *def );
 }
 
 // -----------------------------------------------------------------------------
