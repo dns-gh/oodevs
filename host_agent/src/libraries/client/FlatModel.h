@@ -72,23 +72,33 @@ struct FlatModel : public QAbstractItemModel
     }
 
     // -----------------------------------------------------------------------------
-    // Name: FlatModel::Modify
+    // Name: FlatModel::ModifyRow
     // Created: BAX 2012-09-06
     // -----------------------------------------------------------------------------
-    virtual void Modify( int row )
+    virtual void ModifyRow( int row )
     {
         emit dataChanged( index( row, 0 ),
-                          index( row, headers_.size() ) );
+                          index( row, headers_.size() - 1 ) );
     }
 
     // -----------------------------------------------------------------------------
-    // Name: FlatModel::Modify
+    // Name: FlatModel::ModifyCell
     // Created: BAX 2012-09-06
     // -----------------------------------------------------------------------------
-    virtual void Modify( int row, int col )
+    virtual void ModifyCell( int row, int col )
     {
         emit dataChanged( index( row, col ),
                           index( row, col ) );
+    }
+
+    // -----------------------------------------------------------------------------
+    // Name: FlatModel::ModifyColumn
+    // Created: BAX 2012-09-06
+    // -----------------------------------------------------------------------------
+    virtual void ModifyColumn( int col )
+    {
+        emit dataChanged( index( 0, col ),
+                          index( items_.size() - 1, col ) );
     }
 
     // -----------------------------------------------------------------------------
@@ -189,6 +199,15 @@ struct FlatModel : public QAbstractItemModel
     virtual QVariant data( const QModelIndex& index, int role ) const
     {
         return FlatModel< T >::Item( index ).Data( index.column(), role );
+    }
+
+    // -----------------------------------------------------------------------------
+    // Name: FlatModel::setData
+    // Created: BAX 2012-09-06
+    // -----------------------------------------------------------------------------
+    virtual bool setData( const QModelIndex& index, const QVariant& value, int role )
+    {
+        return FlatModel< T >::Item( index ).SetData( index.column(), value, role );
     }
 
 protected:

@@ -26,6 +26,7 @@ struct Item
     ~Item();
 
     QVariant Data( int col, int role );
+    bool SetData( int col, const QVariant& value, int role );
 
 private:
     const size_t    id_;
@@ -36,13 +37,25 @@ private:
     const QDateTime date_;
     const QString   checksum_;
     const size_t    size_;
+    Qt::CheckState  check_state_;
 };
 
-struct ItemModel : FlatModel< Item >
+class ItemModel : public FlatModel< gui::Item >
 {
+    Q_OBJECT
+
+public:
      ItemModel();
     ~ItemModel();
+    virtual Qt::ItemFlags flags( const QModelIndex& idx ) const;
     void Fill( const Tree& tree );
+
+public slots:
+    void Toggle();
+    void Remove();
+
+private:
+    Qt::CheckState toggle_;
 };
 }
 

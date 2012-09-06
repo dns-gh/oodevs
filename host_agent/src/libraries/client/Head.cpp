@@ -75,6 +75,8 @@ Head::Head( const Runtime_ABC& runtime, const FileSystem_ABC& fs, Pool_ABC& pool
     QObject::connect( &items_, SIGNAL( rowsRemoved( const QModelIndex&, int, int ) ), this, SLOT( OnModifiedItems() ) );
     QObject::connect( ui_.filter, SIGNAL( textChanged( const QString& ) ), &proxy_, SLOT( setFilterFixedString( const QString& ) ) );
     QObject::connect( ui_.clear_filter, SIGNAL( clicked ( bool ) ), ui_.filter, SLOT( clear() ) );
+    QObject::connect( ui_.toggle_items, SIGNAL( clicked( bool ) ), &items_, SLOT( Toggle() ) );
+    QObject::connect( ui_.remove_items, SIGNAL( clicked( bool ) ), &items_, SLOT( Remove() ) );
     OnModifiedItems();
 
     LoadSettings();

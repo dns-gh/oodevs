@@ -11,6 +11,7 @@
 #include "Helpers.h"
 
 #include "runtime/PropertyTree.h"
+#include <boost/foreach.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/static_assert.hpp>
 #include <QDebug>
@@ -80,14 +81,15 @@ QString PrettySize( size_t n )
 // Created: BAX 2012-09-06
 // -----------------------------------------------------------------------------
 Item::Item( const Tree& tree )
-    : id_      ( Get< size_t >( tree, "id" ) )
-    , type_    ( QGet( tree, "type" ) )
-    , name_    ( QGet( tree, "name" ) )
-    , package_ ( QGet( tree, "package" ) )
-    , version_ ( QGet( tree, "version" ) )
-    , date_    ( QDateTime::fromString( QGet( tree, "date" ), Qt::ISODate ) )
-    , checksum_( QGet( tree, "checksum" ) )
-    , size_    ( Get< size_t >( tree, "size" ) )
+    : id_         ( Get< size_t >( tree, "id" ) )
+    , type_       ( QGet( tree, "type" ) )
+    , name_       ( QGet( tree, "name" ) )
+    , package_    ( QGet( tree, "package" ) )
+    , version_    ( QGet( tree, "version" ) )
+    , date_       ( QDateTime::fromString( QGet( tree, "date" ), Qt::ISODate ) )
+    , checksum_   ( QGet( tree, "checksum" ) )
+    , size_       ( Get< size_t >( tree, "size" ) )
+    , check_state_( Qt::Unchecked )
 {
     // NOTHING
 }
@@ -125,8 +127,24 @@ QVariant Item::Data( int col, int role )
                 case ITEM_COL_SIZE:     return PrettySize( size_ );
             }
             break;
+
+        case Qt::CheckStateRole:
+            if( !col ) return check_state_;
+            break;
     }
     return QVariant();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Item::SetData
+// Created: BAX 2012-09-06
+// -----------------------------------------------------------------------------
+bool Item::SetData( int col, const QVariant& value, int role )
+{
+    if( role != Qt::CheckStateRole )
+        return false;
+    check_state_ = static_cast< Qt::CheckState >( value.toInt() );
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -134,6 +152,7 @@ QVariant Item::Data( int col, int role )
 // Created: BAX 2012-09-06
 // -----------------------------------------------------------------------------
 ItemModel::ItemModel()
+    : toggle_( Qt::Checked )
 {
     for( size_t i = 0; i < COUNT_OF( item_headers ); ++i )
         headers_ << item_headers[i];
@@ -152,10 +171,43 @@ ItemModel::~ItemModel()
 // Name: ItemModel::Fill
 // Created: BAX 2012-09-06
 // -----------------------------------------------------------------------------
+Qt::ItemFlags ItemModel::flags( const QModelIndex& idx ) const
+{
+    Qt::ItemFlags flags = QAbstractItemModel::flags( idx );
+    if( idx.column() == ITEM_COL_TYPE )
+        flags |= Qt::ItemIsUserCheckable;
+    return flags;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ItemModel::Fill
+// Created: BAX 2012-09-06
+// -----------------------------------------------------------------------------
 void ItemModel::Fill( const Tree& tree )
 {
     typedef std::pair< Tree::const_assoc_iterator, Tree::const_assoc_iterator > Range;
     Range range = tree.get_child( "items" ).equal_range( "" );
     for( Tree::const_assoc_iterator it = range.first; it != range.second; ++it )
         Append( boost::make_shared< gui::Item >( it->second ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ItemModel::Toggle
+// Created: BAX 2012-09-06
+// -----------------------------------------------------------------------------
+void ItemModel::Toggle()
+{
+    BOOST_FOREACH( T_Ptr& ptr, items_ )
+        ptr->SetData( ITEM_COL_TYPE, toggle_, Qt::CheckStateRole );
+    ModifyColumn( ITEM_COL_TYPE );
+    toggle_ = toggle_ == Qt::Checked ? Qt::Unchecked : Qt::Checked;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ItemModel::Remove
+// Created: BAX 2012-09-06
+// -----------------------------------------------------------------------------
+void ItemModel::Remove()
+{
+    qDebug() << __FUNCTION__;
 }
