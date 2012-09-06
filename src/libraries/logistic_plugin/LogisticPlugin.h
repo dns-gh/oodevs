@@ -14,6 +14,7 @@
 #include "ConsignResolver_ABC.h"
 #include <boost/scoped_ptr.hpp>
 #include <boost/shared_ptr.hpp>
+#include <vector>
 
 class QApplication;
 namespace tools
@@ -69,10 +70,7 @@ private:
     //@{
     int currentTick_;
     std::string simTime_;
-    boost::scoped_ptr< ConsignResolver_ABC >    maintenanceResolver_;
-    boost::scoped_ptr< ConsignResolver_ABC >    supplyResolver_;
-    boost::scoped_ptr< ConsignResolver_ABC >    funeralResolver_;
-    boost::scoped_ptr< ConsignResolver_ABC >    medicalResolver_;
+    std::vector< ConsignResolver_ABC* > resolvers_;
     boost::scoped_ptr< QApplication >           localAppli_;
     boost::shared_ptr<const NameResolver_ABC> nameResolver_;
     //@}

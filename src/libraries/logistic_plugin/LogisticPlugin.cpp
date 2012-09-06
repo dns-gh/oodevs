@@ -36,6 +36,8 @@ namespace
 {
     int localAppliArgc( 1 );
     char* localAppliArgv[] = { " " };
+
+    typedef std::vector< ConsignResolver_ABC* >::iterator IT_ConsignResolvers;
 }
 
 // -----------------------------------------------------------------------------
@@ -46,10 +48,6 @@ LogisticPlugin::LogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>&
     const std::string& supplyFile, const std::string& funeralFile, const std::string& medicalFile, const char* localeStr )
     : currentTick_( 0 )
     , nameResolver_( nameResolver )
-    , maintenanceResolver_  ( new MaintenanceResolver( maintenanceFile, *nameResolver ) )
-    , supplyResolver_       ( new SupplyResolver( supplyFile, *nameResolver ) )
-    , funeralResolver_      ( new FuneralResolver( funeralFile, *nameResolver ) )
-    , medicalResolver_      ( new MedicalResolver( medicalFile, *nameResolver ) )
     , localAppli_ ( !qApp ? new QApplication( localAppliArgc, localAppliArgv ) : 0 )
 {
     QLocale locale = tools::readLocale();
@@ -61,10 +59,13 @@ LogisticPlugin::LogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>&
         tools::AddTranslator( *qApp, locale, "logistic_plugin" );
     }
     ENT_Tr::InitTranslations();
-    maintenanceResolver_->InitHeader();
-    supplyResolver_->InitHeader();
-    funeralResolver_->InitHeader();
-    medicalResolver_->InitHeader();
+
+    resolvers_.push_back( new MaintenanceResolver( maintenanceFile, *nameResolver ));
+    resolvers_.push_back( new SupplyResolver( supplyFile, *nameResolver ));
+    resolvers_.push_back( new FuneralResolver( funeralFile, *nameResolver ));
+    resolvers_.push_back( new MedicalResolver( medicalFile, *nameResolver ));
+    for( IT_ConsignResolvers r = resolvers_.begin(); r != resolvers_.end(); ++r )
+        (*r)->InitHeader();
 }
 
 // -----------------------------------------------------------------------------
@@ -73,7 +74,8 @@ LogisticPlugin::LogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>&
 // -----------------------------------------------------------------------------
 LogisticPlugin::~LogisticPlugin()
 {
-    // NOTHING
+    for( IT_ConsignResolvers r = resolvers_.begin(); r != resolvers_.end(); ++r )
+        delete *r;
 }
 
 // -----------------------------------------------------------------------------
@@ -86,15 +88,11 @@ void LogisticPlugin::Receive( const sword::SimToClient& message )
     {
         currentTick_= message.message().control_begin_tick().current_tick();
         simTime_    = message.message().control_begin_tick().date_time().data();        
-        maintenanceResolver_->SetTime( currentTick_, simTime_ );
-        supplyResolver_->SetTime( currentTick_, simTime_ );
-        funeralResolver_->SetTime( currentTick_, simTime_ );
-        medicalResolver_->SetTime( currentTick_, simTime_ );
+        for( IT_ConsignResolvers r = resolvers_.begin(); r != resolvers_.end(); ++r )
+            (*r)->SetTime( currentTick_, simTime_ );
     }
-    maintenanceResolver_->Receive( message );
-    supplyResolver_->Receive( message );
-    funeralResolver_->Receive( message );
-    medicalResolver_->Receive( message );
+    for( IT_ConsignResolvers r = resolvers_.begin(); r != resolvers_.end(); ++r )
+        (*r)->Receive( message );
 }
 
 
