@@ -32,7 +32,7 @@ DECLARE_HOOK( GetObjectListWithinCircle, void, ( const MT_Vector2D& vCenter, dou
 // -----------------------------------------------------------------------------
 PerceptionRecoObjectsReco::PerceptionRecoObjectsReco( const wrapper::View& perception, const wrapper::View& entity )
     : vCenter_     ( perception[ "center/x" ], perception[ "center/y" ] )
-    , localisation_( static_cast< const TER_Localisation* >( perception[ "localization" ].GetUserData() ) )
+    , localisation_( static_cast< boost::shared_ptr< TER_Localisation >* >( perception[ "localization" ].GetUserData() )->get() )
     , rCurrentSize_( static_cast< double >( perception[ "radius" ] ) + perception[ "growth-speed" ] )
 {
     if( perception[ "max-radius-reached" ] )

@@ -16,7 +16,7 @@ BOOST_FIXTURE_TEST_CASE( perception_reco_object_sensor_identifies_all_objects_in
 {
     const double growthSpeed = 2;
     const std::size_t perceptionId = 42;
-    const TER_Localisation* localization = reinterpret_cast< const TER_Localisation* >( 1337 );
+    boost::shared_ptr< TER_Localisation > localization;
     MIL_Object_ABC* object = reinterpret_cast< MIL_Object_ABC* >( 666 );
     entity[ "perceptions/sensor/activated" ] = false;
     core::Model& perception = entity[ "perceptions/object-detection" ][ perceptionId ];
@@ -31,7 +31,7 @@ BOOST_FIXTURE_TEST_CASE( perception_reco_object_sensor_identifies_all_objects_in
     MOCK_RESET( GetObjectListWithinCircle );
     MOCK_EXPECT( GetObjectListWithinCircle ).once();
     MOCK_EXPECT( GetObjectListWithinCircle ).once().with( mock::any, growthSpeed, mock::any, mock::any ).calls( boost::bind( boost::apply< void >(), _3, object, _4 ) );
-    MOCK_EXPECT( IsObjectIntersectingLocalization ).once().with( localization, object ).returns( true );
+    MOCK_EXPECT( IsObjectIntersectingLocalization ).once().with( mock::any, object ).returns( true );
     MOCK_EXPECT( CanObjectBePerceived ).once().with( object ).returns( true );
     ExpectEffect( perception[ "radius" ], sword::test::MakeModel( growthSpeed ) );
     ExpectEvent( "perception callback", sword::test::MakeModel( "entity", identifier )

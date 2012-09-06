@@ -676,7 +676,7 @@ namespace
         parameters[ "perception-id" ] = perceptionId;
         facade.PostCommand( command, parameters );
     }
-    int EnableObjectDetection( core::Facade& facade, MIL_AgentPion& pion, const TER_Localisation* localisation, const MT_Vector2D* center, double speed )
+    int EnableObjectDetection( core::Facade& facade, MIL_AgentPion& pion, boost::shared_ptr< TER_Localisation > localisation, const MT_Vector2D* center, double speed )
     {
         if( !localisation )
             throw std::runtime_error( __FUNCTION__ ": invalid localization parameter while enabling object detection on location." );
@@ -776,7 +776,7 @@ void RolePion_Decision::RegisterPerception()
     RegisterCommand< void( int ) >                                 ( "DEC_Perception_DesactiverReconnaissanceLocalisation", &DisableIdentifiedCommand, "toggle reco", _1 );
     RegisterCommand< int( MIL_UrbanObject_ABC* ) >                  ( "DEC_Perception_ActiverReconnaissanceDansBlocUrbain", &EnableLocalizedDetection< MIL_UrbanObject_ABC* >, "urban", _1 );
     RegisterCommand< void( int ) >                                 ( "DEC_Perception_DesactiverReconnaissanceDansBlocUrbain", &DisableLocalizedDetection, "urban", _1 );
-    RegisterCommand< int( const TER_Localisation*,
+    RegisterCommand< int( boost::shared_ptr< TER_Localisation >,
                           const MT_Vector2D*, double ) >           ( "DEC_Perception_ActiverDetectionObjetLocalisation", &EnableObjectDetection, _1, _2, _3 );
     RegisterCommand< void( int ) >                                 ( "DEC_Perception_DesactiverDetectionObjetLocalisation", &DisableIdentifiedCommand, "toggle object detection", _1 );
     RegisterCommand< int( MT_Vector2D*, double, double ) >         ( "DEC_Perception_ActiverReconnaissancePoint", &EnableRecognitionPoint, _1, _2, _3 );

@@ -14,6 +14,15 @@
 using namespace sword;
 using namespace sword::perception;
 
+namespace
+{
+    template< typename T >
+    T* Copy( const wrapper::View& parameter )
+    {
+        return new T( *static_cast< T* >( parameter.GetUserData() ) );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ToggleObjectDetectionCommand constructor
 // Created: SLI 2012-03-20
@@ -25,7 +34,7 @@ ToggleObjectDetectionCommand::ToggleObjectDetectionCommand( ModuleFacade& /*modu
     , centerX_     ( isActivated_ ? parameters[ "center/x" ] : 0. )
     , centerY_     ( isActivated_ ? parameters[ "center/y" ] : 0. )
     , perceptionId_( parameters[ "perception-id" ] )
-    , localization_( isActivated_ ? static_cast< TER_Localisation* >( parameters[ "localization" ].GetUserData() ) : 0 )
+    , localization_( isActivated_ ?  Copy< boost::shared_ptr< TER_Localisation > >( parameters[ "localization" ] ) : 0 )
 {
     // NOTHING
 }
@@ -37,6 +46,14 @@ ToggleObjectDetectionCommand::ToggleObjectDetectionCommand( ModuleFacade& /*modu
 ToggleObjectDetectionCommand::~ToggleObjectDetectionCommand()
 {
     // NOTHING
+}
+
+namespace
+{
+    void DeleteLocalization( const void* userData )
+    {
+        delete static_cast< const boost::shared_ptr< TER_Localisation >* >( userData );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -55,7 +72,7 @@ void ToggleObjectDetectionCommand::Execute( const wrapper::View& model ) const
         effect[ perceptionId_ ][ "radius" ] = 0;
         effect[ perceptionId_ ][ "max-radius-reached" ] = false;
         effect[ perceptionId_ ][ "identifier" ] = perceptionId_;
-        effect[ perceptionId_ ][ "localization" ].SetUserData( localization_ );
+        effect[ perceptionId_ ][ "localization" ].SetUserData( localization_, &DeleteLocalization );
     }
     else
         effect[ perceptionId_ ].MarkForRemove();

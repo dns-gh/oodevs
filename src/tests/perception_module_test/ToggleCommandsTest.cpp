@@ -206,7 +206,6 @@ BOOST_FIXTURE_TEST_CASE( activating_object_detection_forwards_localization_and_s
 {
     const size_t identifier = 42;
     const size_t perceptionId = 1337;
-    const int localization = 0;
     const double speed = 13;
     core::Model& object = model[ "entities" ][ identifier ][ "perceptions/object-detection" ];
     ExpectEffect( object, sword::test::MakeModel( perceptionId,
@@ -216,7 +215,7 @@ BOOST_FIXTURE_TEST_CASE( activating_object_detection_forwards_localization_and_s
                                                                           ( "identifier", perceptionId )
                                                                           ( "center/x", 1 )
                                                                           ( "center/y", 2 )
-                                                                          ( "localization", sword::test::MakeUserData( &localization ) ) ) );
+                                                                          ( "localization", mock::any ) ) );
     commands.Start( "toggle object detection",
         core::MakeModel( "identifier", identifier )
                        ( "activated", true )
@@ -224,7 +223,7 @@ BOOST_FIXTURE_TEST_CASE( activating_object_detection_forwards_localization_and_s
                        ( "growth-speed", speed )
                        ( "center/x", 1 )
                        ( "center/y", 2 )
-                       ( "localization", sword::test::MakeUserData( &localization ) ) );
+                       ( "localization", core::MakeUserData( boost::shared_ptr< TER_Localisation >() ) ) );
     commands.Execute();
 }
 

@@ -11,6 +11,7 @@
 #define SWORD_PERCEPTION_TOGGLE_OBJECT_DETECTION_COMMAND_H
 
 #include <boost/noncopyable.hpp>
+#include <boost/shared_ptr.hpp>
 
 class TER_Localisation;
 
@@ -55,7 +56,7 @@ private:
     const double centerX_;
     const double centerY_;
     const int perceptionId_;
-    TER_Localisation* localization_;
+    boost::shared_ptr< TER_Localisation >* localization_;
     //@}
 };
 

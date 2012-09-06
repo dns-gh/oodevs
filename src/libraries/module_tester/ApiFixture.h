@@ -48,7 +48,7 @@ namespace core
         {
             MOCK_EXPECT( api.Configure ).once().calls( boost::bind( &ConfigureFixture::Configure, boost::ref( loader ), _1, _2 ) );
         }
-        ~ConfigureFixture()
+        virtual ~ConfigureFixture()
         {
             if( ! std::uncaught_exception() )
                 mock::verify();
@@ -289,7 +289,6 @@ namespace core
         }
         core::MockModuleApi api;
         core::ModuleLoader loader;
-        core::Model model;
         std::list< boost::shared_ptr< core::Model > > models_;
     };
     struct LoadFixture : public ConfigureFixture
@@ -297,8 +296,9 @@ namespace core
         LoadFixture( const std::string& name )
             : module( loader, api, name, SWORD_API_VERSION )
         {}
-        ~LoadFixture()
+        virtual ~LoadFixture()
         {
+            models_.clear();
             module.Deinitialize();
         }
         core::Module module;
@@ -330,6 +330,7 @@ namespace core
         {
             BOOST_FAIL( message );
         }
+        core::Model model;
         core::Commands commands;
         core::Hooks hooks;
     };
