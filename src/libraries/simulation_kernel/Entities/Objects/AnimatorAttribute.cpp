@@ -142,7 +142,19 @@ void AnimatorAttribute::ReleaseAnimator( const MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 double AnimatorAttribute::GetAnimatorsRatio() const
 {
-    return static_cast< double >( animators_.size() ) / maxAnimators_;
+    if( maxAnimators_ )
+        return static_cast< double >( animators_.size() ) / maxAnimators_;
+    else
+        return 1.;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AnimatorAttribute::GetMaxAnimators
+// Created: JSR 2012-09-06
+// -----------------------------------------------------------------------------
+int AnimatorAttribute::GetMaxAnimators() const
+{
+    return maxAnimators_;
 }
 
 // -----------------------------------------------------------------------------

@@ -52,6 +52,7 @@ public:
     //! @name Operations
     //@{
     double GetAnimatorsRatio() const;
+    int GetMaxAnimators() const;
     bool AddAnimator( const MIL_Agent_ABC& agent );
     void ReleaseAnimator( const MIL_Agent_ABC& agent );
     //@}
