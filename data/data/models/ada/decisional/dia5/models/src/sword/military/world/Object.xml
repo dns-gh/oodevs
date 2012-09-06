@@ -690,6 +690,13 @@
                 </type>
             </return>
         </method>
+        <method name="delayedActivationTime" abstract="false">
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
     </methods>
     <predicates>
         <predicate name="isFullyAnimated">
