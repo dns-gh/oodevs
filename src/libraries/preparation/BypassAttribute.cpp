@@ -10,6 +10,7 @@
 #include "preparation_pch.h"
 #include "BypassAttribute.h"
 #include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -19,10 +20,10 @@ using namespace kernel;
 // Name: BypassAttribute constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-BypassAttribute::BypassAttribute( kernel::PropertiesDictionary& /*dictionary*/ )
-    : rBypassConstructionPercentage_( 0., Units::percentage )
+BypassAttribute::BypassAttribute( kernel::PropertiesDictionary& dico )
+    : rBypassConstructionPercentage_( 0, Units::percentage )
 {
-    // NOTHING
+    CreateDictionary( dico );
 }
 
 // -----------------------------------------------------------------------------
@@ -30,9 +31,10 @@ BypassAttribute::BypassAttribute( kernel::PropertiesDictionary& /*dictionary*/ )
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
 BypassAttribute::BypassAttribute( xml::xistream& xis, kernel::PropertiesDictionary& /*dictionary*/ )
-    : rBypassConstructionPercentage_ ( 0., Units::percentage )
+    : rBypassConstructionPercentage_ ( 0, Units::percentage )
 {
-    xis >> xml::attribute( "value", rBypassConstructionPercentage_.value_ );
+    float percentage = xis.attribute< float >( "value" );
+    rBypassConstructionPercentage_.value_ = static_cast< int >( percentage * 100 + 0.5 );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,6 +72,24 @@ void BypassAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
 void BypassAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "bypass" )
-            << xml::attribute( "value", rBypassConstructionPercentage_.value_ )
+            << xml::attribute( "value", rBypassConstructionPercentage_.value_ * 0.01f )
         << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: BypassAttribute::CreateDictionary
+// Created: SBO 2007-02-08
+// -----------------------------------------------------------------------------
+void BypassAttribute::CreateDictionary( kernel::PropertiesDictionary& dico )
+{
+    dico.Register( *this, tools::translate( "Object", "Info/Breaching/Value" ), rBypassConstructionPercentage_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BypassAttribute::SetBypassConstruction
+// Created: NPT 2012-09-05
+// -----------------------------------------------------------------------------
+void BypassAttribute::SetBypassConstruction( int value )
+{
+    rBypassConstructionPercentage_.value_ = value;
 }

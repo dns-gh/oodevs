@@ -142,6 +142,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\applications\gaming_app\Application.cpp" />
+    <ClCompile Include="..\..\src\applications\gaming_app\BypassPrototype.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\Config.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\ConnectLoginDialog.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\FuneralConsignsWidget.cpp" />
@@ -374,6 +375,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\applications\gaming_app\BypassPrototype.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\Config.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\ConnectLoginDialog.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\FuneralConsignsWidget.h" />

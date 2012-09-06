@@ -162,6 +162,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\applications\preparation_app\Application.cpp" />
+    <ClCompile Include="..\..\src\applications\preparation_app\BypassPrototype.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\ChangeAutomatTypeDialog.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\Config.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\CsvExport.cpp" />
@@ -321,6 +322,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\applications\preparation_app\BypassPrototype.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\Config.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\CsvExport.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\DialogContainer.h" />

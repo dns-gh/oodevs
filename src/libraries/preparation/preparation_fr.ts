@@ -553,6 +553,10 @@
         <source>Life time:</source>
         <translation>Durée d&apos;existence:</translation>
     </message>
+    <message>
+        <source>Info/Breaching/Value</source>
+        <translation>Info/Contournement/Valeur</translation>
+    </message>
 </context>
 <context>
     <name>Population</name>

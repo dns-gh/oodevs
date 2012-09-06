@@ -790,6 +790,9 @@
     <ClCompile Include="..\..\src\applications\gaming_app\PlanificationModePanel.cpp">
       <Filter>Source Files\Panels</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\BypassPrototype.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\gaming_app\Config.h">
@@ -1139,6 +1142,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\PlanificationModePanel.h">
       <Filter>Source Files\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\BypassPrototype.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

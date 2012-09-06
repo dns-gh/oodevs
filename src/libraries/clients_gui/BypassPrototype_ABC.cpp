@@ -11,7 +11,9 @@
 
 #include "clients_gui_pch.h"
 #include "BypassPrototype_ABC.h"
+#include "LoadableSpinBox.h"
 #include "Tools.h"
+#include "clients_kernel/Units.h"
 
 using namespace gui;
 
@@ -20,9 +22,14 @@ using namespace gui;
 // Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
 BypassPrototype_ABC::BypassPrototype_ABC( QWidget* parent )
-    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::BypassPrototype_ABC", "Bypass parameters" ) )
+    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::BypassPrototype_ABC", "Bypass" ) )
 {
-    // NOTHING
+    QGridLayout* layout = new QGridLayout( this, 0, 2 );
+    layout->addWidget( new QLabel( tools::translate( "gui::ByPassPrototype_ABC", "Value:" ) ) );
+    bypassConstructionPercentage_ = new LoadableSpinBox( 1, 100, 1, 0 );
+    bypassConstructionPercentage_->setSuffix( kernel::Units::percentage.AsString() );
+    bypassConstructionPercentage_->setValue( 100 );
+    layout->addWidget( bypassConstructionPercentage_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,3 +49,13 @@ bool BypassPrototype_ABC::CheckValidity( const kernel::Team_ABC& ) const
 {
     return true;
 }
+
+// -----------------------------------------------------------------------------
+// Name: BypassPrototype_ABC::SetLoader
+// Created: NPT 2012-09-05
+// -----------------------------------------------------------------------------
+void BypassPrototype_ABC::SetLoader( ObjectPrototypeLoader_ABC* loader )
+{
+    bypassConstructionPercentage_->SetLoader( loader );
+}
+

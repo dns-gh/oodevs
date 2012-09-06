@@ -11,6 +11,7 @@
 #include "ObjectPrototype.h"
 #include "ActivityTimePrototype.h"
 #include "AltitudeModifierPrototype.h"
+#include "BypassPrototype.h"
 #include "ConstructionPrototype.h"
 #include "CrossingSitePrototype.h"
 #include "DelayPrototype.h"
@@ -23,11 +24,11 @@
 #include "MedicalTreatmentPrototype.h"
 #include "MinePrototype.h"
 #include "NBCPrototype.h"
-#include "TrafficabilityPrototype.h"
 #include "ObstaclePrototype.h"
 #include "ResourceNetworkPrototype.h"
 #include "StockPrototype.h"
 #include "SupplyRoutePrototype.h"
+#include "TrafficabilityPrototype.h"
 #include "UndergroundPrototype.h"
 #include "clients_gui/ObjectAttributePrototypeFactory.h"
 #include "clients_kernel/ObjectTypes.h"
@@ -51,8 +52,9 @@ namespace
             container.push_back( new MinePrototype( parent, object ) );
     }
 
-    void BypassableAttribute( T_AttributeContainer& /*container*/, QWidget* /*parent*/, Object_ABC*& /*object*/ )
+    void BypassableAttribute( T_AttributeContainer& container, QWidget* parent, Object_ABC*& object )
     {
+        container.push_back( new BypassPrototype( parent, object ) );
     }
 
     void LogisticAttribute( T_AttributeContainer& container, QWidget* parent, Controllers& controllers, Object_ABC*& object )
@@ -208,6 +210,7 @@ namespace
         factory->Register( "time-limited"              , boost::bind( &Capacity< ActivityTimePrototype >::Build, _2, _3, boost::ref( object ) ) );
         factory->Register( "supply-route"              , boost::bind( &Capacity< SupplyRoutePrototype >::Build, _2, _3, boost::ref( object ) ) );
         factory->Register( "bridging"                  , boost::bind( &::BridgingAttribute, _1, _2, _3, boost::ref( object ) ) );
+        factory->Register( "bypassable"                , boost::bind( &::BypassableAttribute, _2, _3, boost::ref( object ) ) );
 
         factory->Register( "delay"                     , boost::bind( &Capacity< DelayPrototype >::Build, _2, _3, boost::ref( object ) ) );
         factory->Register( "fire-propagation-modifier" , boost::bind( &Capacity< FirePropagationModifierPrototype >::Build, _2, _3, boost::ref( object ) ) );

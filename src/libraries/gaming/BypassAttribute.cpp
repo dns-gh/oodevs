@@ -92,9 +92,9 @@ void BypassAttribute::DoUpdate( const sword::ObjectUpdate& message )
 template< typename T >
 void BypassAttribute::UpdateData( const T& message )
 {
-    if( message.has_bypass()  )
+    if( message.has_bypass() )
     {
-        rBypassConstructionPercentage_ = static_cast< float >( message.bypass().percentage() );
+        rBypassConstructionPercentage_ = message.bypass().percentage();
         controller_.Update( *(BypassAttribute_ABC*)this );
     }
 }

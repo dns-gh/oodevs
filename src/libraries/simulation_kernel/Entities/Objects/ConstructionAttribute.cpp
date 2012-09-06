@@ -222,7 +222,14 @@ void ConstructionAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned i
 void ConstructionAttribute::WriteODB( xml::xostream& xos ) const
 {
     xos << xml::start( "construction" )
-            << xml::attribute( "completion", constructionPercentage_.Get() )
+            << xml::attribute( "completion", constructionPercentage_.Get() );
+    if( dotation_ != 0 && nFullNbrDotation_ != 0 )
+        xos << xml::start( "resources" )
+                << xml::start( "dotation" )
+                    << xml::attribute( "name", dotation_->GetName() )
+                    << xml::attribute( "count", nFullNbrDotation_ )
+                << xml::end
+            << xml::end
         << xml::end;
 }
 

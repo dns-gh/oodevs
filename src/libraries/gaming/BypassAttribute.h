@@ -63,7 +63,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    float rBypassConstructionPercentage_;
+    int rBypassConstructionPercentage_;
     //@}
 };
 

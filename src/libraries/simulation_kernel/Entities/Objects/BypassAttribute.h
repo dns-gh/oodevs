@@ -33,6 +33,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              BypassAttribute();
+    explicit BypassAttribute( const xml::xistream& xis );
     explicit BypassAttribute( const sword::MissionParameter_Value& attributes );
     virtual ~BypassAttribute();
     //@}
@@ -42,6 +43,11 @@ public:
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
+    //@}
+
+    //! @name ODB
+    //@{
+    virtual void WriteODB( xml::xostream& xos ) const;
     //@}
 
     //! @name From ObjectAttribute_ABC

@@ -52,8 +52,7 @@ public:
 
     //! @name Modifiers
     //@{
-    void SetActivityTime( unsigned int time );
-    void SetDensity( float density );
+    void SetBypassConstruction( int value );
     //@}
 
 private:
@@ -63,10 +62,15 @@ private:
     BypassAttribute& operator=( const BypassAttribute& ); //!< Assignment operator
     //@}
 
+    //! @name Helpers
+    //@{
+    void CreateDictionary( kernel::PropertiesDictionary& dico );
+    //@}
+
 private:
     //! @name Member data
     //@{
-    kernel::UnitedValue< float > rBypassConstructionPercentage_;
+    kernel::UnitedValue< int > rBypassConstructionPercentage_;
     //@}
 };
 

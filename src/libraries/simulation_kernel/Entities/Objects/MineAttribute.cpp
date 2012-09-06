@@ -154,7 +154,9 @@ void MineAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) con
 // -----------------------------------------------------------------------------
 void MineAttribute::WriteODB( xml::xostream& xos ) const
 {
-    xos << xml::start( "mine" ) << xml::attribute( "density", miningPercentage_.Get() ) << xml::end;
+    xos << xml::start( "mine" ) 
+            << xml::attribute( "density", miningPercentage_.Get() ) 
+        << xml::end;
 }
 
 // -----------------------------------------------------------------------------

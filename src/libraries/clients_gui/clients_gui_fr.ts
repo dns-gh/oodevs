@@ -204,10 +204,17 @@
     </message>
 </context>
 <context>
+    <name>gui::ByPassPrototype_ABC</name>
+    <message>
+        <source>Value:</source>
+        <translation>Valeur:</translation>
+    </message>
+</context>
+<context>
     <name>gui::BypassPrototype_ABC</name>
     <message>
-        <source>Bypass parameters</source>
-        <translation>Paramètres de contournement</translation>
+        <source>Bypass</source>
+        <translation>Contournement</translation>
     </message>
 </context>
 <context>
