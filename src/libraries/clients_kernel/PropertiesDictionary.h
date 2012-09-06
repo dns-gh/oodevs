@@ -43,6 +43,7 @@ public:
     bool HasKey( const QString& name ) const;
     void Remove( const QString& name );
     void Display( Displayer_ABC& displayer );
+    void Display( const QString& name, Displayer_ABC& displayer );
 
     template< typename T, typename Owner, typename Setter >
     void Register( const Owner& owner, const QString& name, T& value, const Setter& setter, bool readOnly = false, E_Category category = eNothing )

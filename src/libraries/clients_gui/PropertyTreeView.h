@@ -34,6 +34,11 @@ public:
     void Display();
     //@}
 
+    //! @name Accessors
+    //@{
+    bool Exist( const QString& name ) const;
+    //@}
+
 private:
     //! @name Helpers
     //@{

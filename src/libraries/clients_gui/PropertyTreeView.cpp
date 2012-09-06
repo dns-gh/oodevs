@@ -103,3 +103,12 @@ void PropertyTreeView::DisplayHeader( QModelIndex root, const QStandardItemModel
                 setFirstColumnSpanned( i, root, true );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: PropertyTreeView::Exist
+// Created: LGY 2012-09-05
+// -----------------------------------------------------------------------------
+bool PropertyTreeView::Exist( const QString& name ) const
+{
+    return static_cast< PropertyModel* >( model() )->FindItem( name ) != 0;
+}

@@ -75,9 +75,9 @@ void PropertiesPanel::NotifySelected( const kernel::Entity_ABC* element )
         selected_ = element;
 
         if( element )
-            if( kernel::PropertiesDictionary* dico = const_cast< kernel::Entity_ABC* >( element )->Retrieve< kernel::PropertiesDictionary >() )
+            if( kernel::PropertiesDictionary* dictionary = const_cast< kernel::Entity_ABC* >( element )->Retrieve< kernel::PropertiesDictionary >() )
             {
-                dico->Display( *model_ );
+                dictionary->Display( *model_ );
                 view_->Display();
             }
     }
@@ -114,5 +114,22 @@ void PropertiesPanel::NotifyDeleted( const kernel::DictionaryUpdated& message )
 {
     if( selected_ && selected_->GetId() == message.GetEntity().GetId() )
         model_->Delete( message.GetEntry() );
+}
 
+// -----------------------------------------------------------------------------
+// Name: PropertiesPanel::NotifyCreated
+// Created: LGY 2012-09-05
+// -----------------------------------------------------------------------------
+void PropertiesPanel::NotifyCreated( const kernel::DictionaryUpdated& message )
+{
+    if( selected_ && selected_->GetId() == message.GetEntity().GetId() )
+    {
+        if( view_->Exist( message.GetEntry() ) )
+            NotifyUpdated( message );
+        else if( kernel::PropertiesDictionary* dictionary = const_cast< kernel::Entity_ABC* >( selected_ )->Retrieve< kernel::PropertiesDictionary >() )
+        {
+            dictionary->Display( message.GetEntry(), *model_ );
+            view_->Display();
+        }
+    }
 }

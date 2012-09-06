@@ -43,6 +43,17 @@ Usages::~Usages()
     // NOTHING
 }
 
+namespace
+{
+    template< typename T >
+    void CreateProperties( kernel::Entity_ABC& entity, kernel::Controller& controller, kernel::PropertiesDictionary& dictionary,
+        const QString& name, T& value )
+    {
+        dictionary.Register( entity, name, value, true, eUrbanTemplate );
+        controller.Create( kernel::DictionaryUpdated( entity, name ) );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Usages::IsDefault
 // Created: JSR 2012-09-04
@@ -72,10 +83,9 @@ void Usages::UpdateDefault()
         occupations_[ defaultStr_ ].first = static_cast< unsigned int >( occupation * ( accommodation ? accommodation->GetNominalCapacity() : 1 ) );
         occupations_[ defaultStr_ ].second = static_cast< unsigned int >( occupation * ( accommodation ? accommodation->GetMaxCapacity() : 1 ) );
 
-        dictionary_.Register( owner_, defaultString + tools::translate( "Block", "/Percentage" ), usages_[ defaultStr_ ], true, eUrbanTemplate );
-        dictionary_.Register( owner_, defaultString + tools::translate( "Block", "/Nominal capacity" ), occupations_[ defaultStr_ ].first, true, eUrbanTemplate );
-        dictionary_.Register( owner_, defaultString + tools::translate( "Block", "/Maximal capacity" ), occupations_[ defaultStr_ ].second, true, eUrbanTemplate );
-        controller_.Update( DictionaryUpdated( owner_, defaultString ) );
+        CreateProperties( owner_, controller_, dictionary_, defaultString + tools::translate( "Block", "/Percentage" ), usages_[ defaultStr_ ] );
+        CreateProperties( owner_, controller_, dictionary_, defaultString + tools::translate( "Block", "/Nominal capacity" ), occupations_[ defaultStr_ ].first );
+        CreateProperties( owner_, controller_, dictionary_, defaultString + tools::translate( "Block", "/Maximal capacity" ), occupations_[ defaultStr_ ].second );
     }
     else
     {
@@ -84,7 +94,7 @@ void Usages::UpdateDefault()
             dictionary_.Remove( defaultString + tools::translate( "Block", "/Percentage" ) );
             dictionary_.Remove( defaultString + tools::translate( "Block", "/Nominal capacity" ) );
             dictionary_.Remove( defaultString + tools::translate( "Block", "/Maximal capacity" ) );
-            controller_.Update( DictionaryUpdated( owner_, defaultString ) );
+            controller_.Delete( DictionaryUpdated( owner_, defaultString ) );
         }
     }
 }
@@ -102,11 +112,9 @@ void Usages::Add( const std::string& usage, unsigned int proportion )
     occupations_[ usage ].first = static_cast< unsigned int >( occupation * ( accommodation ? accommodation->GetNominalCapacity() : 1 ) );
     occupations_[ usage ].second = static_cast< unsigned int >( occupation * ( accommodation ? accommodation->GetMaxCapacity() : 1 ) );
 
-    dictionary_.Register( owner_, motivationString + tools::translate( "Block", "/Percentage" ), usages_[ usage ], true, eUrbanTemplate );
-    dictionary_.Register( owner_, motivationString + tools::translate( "Block", "/Nominal capacity" ), occupations_[ usage ].first, true, eUrbanTemplate );
-    dictionary_.Register( owner_, motivationString + tools::translate( "Block", "/Maximal capacity" ), occupations_[ usage ].second, true, eUrbanTemplate );
-
-    controller_.Update( kernel::DictionaryUpdated( owner_, motivationString ) );
+    CreateProperties( owner_, controller_, dictionary_, motivationString + tools::translate( "Block", "/Percentage" ), usages_[ usage ] );
+    CreateProperties( owner_, controller_, dictionary_, motivationString + tools::translate( "Block", "/Nominal capacity" ), occupations_[ usage ].first );
+    CreateProperties( owner_, controller_, dictionary_, motivationString + tools::translate( "Block", "/Maximal capacity" ), occupations_[ usage ].second );
 
     UpdateDefault();
 }

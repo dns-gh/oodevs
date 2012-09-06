@@ -62,3 +62,14 @@ void PropertiesDictionary::Display( Displayer_ABC& displayer )
     for( CIT_Properties it = properties_.begin(); it != properties_.end(); ++it )
         displayer.Display( it->second );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PropertiesDictionary::Display
+// Created: LGY 2012-09-05
+// -----------------------------------------------------------------------------
+void PropertiesDictionary::Display( const QString& name, Displayer_ABC& displayer )
+{
+    CIT_Properties it = properties_.find( name );
+    if( it != properties_.end() )
+        displayer.Display( it->second );
+}

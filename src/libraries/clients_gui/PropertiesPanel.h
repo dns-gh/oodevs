@@ -60,6 +60,7 @@ private:
     virtual void NotifyDeleted( const kernel::Entity_ABC& element );
     virtual void NotifyUpdated( const kernel::DictionaryUpdated& message );
     virtual void NotifyDeleted( const kernel::DictionaryUpdated& message );
+    virtual void NotifyCreated( const kernel::DictionaryUpdated& message );
     //@}
 
 private:
