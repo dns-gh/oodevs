@@ -25,6 +25,16 @@
 
 using namespace plugins::hla;
 
+namespace
+{
+   void ReadEntityType( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, rpr::EntityType& type )
+   {
+       type.Deserialize( deserializer );
+       listener.TypeChanged( identifier, type );
+       listener.EquipmentUpdated( identifier, type, 1 );
+   }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Aircraft constructor
 // Created: SLI 2011-10-04
@@ -155,7 +165,7 @@ void Aircraft::Unregister( ObjectListener_ABC& listener )
 // -----------------------------------------------------------------------------
 void Aircraft::RegisterAttributes( )
 {
-    attributesUpdater_->Register( "EntityType", boost::bind( &FOM_Serializer_ABC::ReadEntityType, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( type_ ) ), type_ );
+    attributesUpdater_->Register( "EntityType", boost::bind( &ReadEntityType, _1, _2, _3, boost::ref( type_ ) ), type_ );
     attributesUpdater_->Register( "EntityIdentifier", boost::bind( &FOM_Serializer_ABC::ReadEntityIdentifier, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( entityIdentifier_ ), boost::ref( entityIdentifierResolver_ ) ), entityIdentifier_ );
     attributesUpdater_->Register( "ForceIdentifier", boost::bind( &FOM_Serializer_ABC::ReadForceIdentifier, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( force_ ) ), Wrapper< int8 >( static_cast< int8 >( force_ ) ) );
     attributesUpdater_->Register( "Marking", boost::bind( &FOM_Serializer_ABC::ReadMarking, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( marking_ ) ), marking_ );

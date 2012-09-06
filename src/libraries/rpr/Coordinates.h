@@ -28,6 +28,7 @@ public:
              WorldLocation();
              WorldLocation( const std::string& mgrs, float altitude );
              WorldLocation( double latitude, double longitude, float altitude );
+			 WorldLocation( const WorldLocation& other );
     virtual ~WorldLocation();
     //@}
 
@@ -43,6 +44,7 @@ public:
     {
         archive >> x_ >> y_ >> z_;
     }
+	const WorldLocation& operator=( const WorldLocation& rhs );
     //@}
 
     //! @name Accessors

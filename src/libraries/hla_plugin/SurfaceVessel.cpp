@@ -26,38 +26,11 @@ using namespace plugins::hla;
 
 namespace
 {
-    void ReadSpatial( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, Spatial& spatial )
-    {
-        spatial.Deserialize( deserializer );
-        listener.Moved( identifier, spatial.worldLocation_.Latitude(), spatial.worldLocation_.Longitude() );
-    }
-   void ReadForceIdentifier( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, rpr::ForceIdentifier& force )
-   {
-       int8 tmpForce;
-       deserializer >> tmpForce;
-       listener.SideChanged( identifier, static_cast< rpr::ForceIdentifier >( tmpForce ) );
-       force = static_cast< rpr::ForceIdentifier >( tmpForce );
-   }
-   void ReadMarking( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, Marking& marking )
-   {
-       marking.Deserialize( deserializer );
-       listener.NameChanged( identifier, marking.str() );
-   }
    void ReadEntityType( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, rpr::EntityType& type )
    {
        type.Deserialize( deserializer );
        listener.TypeChanged( identifier, type );
        listener.EquipmentUpdated( identifier, type, 1 );
-   }
-   void ReadEntityIdentifier( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& /*listener*/, rpr::EntityIdentifier& entityId, EntityIdentifierResolver_ABC& entityIdentifierResolver )
-   {
-       entityId.Deserialize( deserializer );
-       entityIdentifierResolver.Unregister( identifier );
-       entityIdentifierResolver.Register( entityId, identifier );
-   }
-   void ReadNothing( ::hla::Deserializer_ABC& /*deserializer*/, const std::string& /*identifier*/, ObjectListener_ABC& /*listener*/ )
-   {
-       // NOTHING
    }
 }
 

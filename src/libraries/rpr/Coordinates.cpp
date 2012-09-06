@@ -62,6 +62,18 @@ WorldLocation::WorldLocation( double latitude, double longitude, float altitude 
 }
 
 // -----------------------------------------------------------------------------
+// Name: WorldLocation::WorldLocation
+// Created: AHC 2012-09-05
+// -----------------------------------------------------------------------------
+WorldLocation::WorldLocation( const WorldLocation& other )
+	: x_( other.x_ )
+	, y_( other.y_ )
+	, z_( other.z_ )
+{
+	// NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: WorldLocation::~WorldLocation
 // Created: AGE 2008-02-21
 // -----------------------------------------------------------------------------
@@ -70,6 +82,17 @@ WorldLocation::~WorldLocation()
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: WorldLocation::operator =
+// Created: AHC 2012-09-05
+// -----------------------------------------------------------------------------
+const WorldLocation& WorldLocation::operator=( const WorldLocation& other )
+{
+	x_ = other.x_;
+	y_ = other.y_;
+	z_ = other.z_;
+	return *this;
+}
 
 // -----------------------------------------------------------------------------
 // Name: WorldLocation::Latitude

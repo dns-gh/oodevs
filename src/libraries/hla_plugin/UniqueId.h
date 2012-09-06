@@ -45,19 +45,19 @@ public:
     template< typename Archive >
     void Serialize( Archive& archive ) const
     {
-        for( unsigned i = 0; i < 11; ++i )
+        for( unsigned i = 0; i < Number; ++i )
             archive << identifier_[ i ];
     }
     template< typename Archive >
     void Deserialize( Archive& archive )
     {
-        for( unsigned i = 0; i < 11; ++i )
+        for( unsigned i = 0; i < Number; ++i )
             archive >> identifier_[ i ];
     }
     std::string str() const
     {
         std::string result;
-        for( unsigned int i = 0; i < 11; ++i )
+        for( unsigned int i = 0; i < Number; ++i )
         {
             if( !identifier_[ i ] )
                 return result;
@@ -76,7 +76,7 @@ private:
 };
 
 typedef UniqueIdBase< 11 > UniqueId;
-typedef UniqueIdBase< 11 > NETN_UUID;
+typedef UniqueIdBase< 16 > NETN_UUID;
 
 // =============================================================================
 /** @class  UniqueIdSerializer

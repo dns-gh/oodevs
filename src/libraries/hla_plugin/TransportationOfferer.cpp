@@ -133,7 +133,9 @@ namespace
         std::string result;
         for( std::vector< NetnObjectDefinitionStruct >::const_iterator it = objectsToManage.begin(); it != objectsToManage.end(); )
         {
-            result +=  "<a href='id://agent/" + boost::lexical_cast< std::string >( callsignResolver.ResolveSimulationIdentifier( it->uniqueId.str() ) ) + "#select'>" +  it->callsign.str() + "</a>";
+			unsigned long simId( callsignResolver.ResolveSimulationIdentifier( it->uniqueId.str() ) );
+			std::string cs ( it->callsign.str().length() != 0 ? it->callsign.str() : callsignResolver.ResolveCallsign( simId ) );
+			result +=  "<a href='id://agent/" + boost::lexical_cast< std::string >( simId ) + "#select'>" + cs + "</a>";
             if( ++it == objectsToManage.end() )
                 return result;
             result += ", ";

@@ -326,11 +326,13 @@ public:
     //@{
              NetnAppointmentStruct();
              NetnAppointmentStruct( int64 dateTime, const rpr::WorldLocation& location );
+			 NetnAppointmentStruct( const NetnAppointmentStruct& other );
     virtual ~NetnAppointmentStruct();
     //@}
 
     //! @name Operations
     //@{
+	const NetnAppointmentStruct& operator=( const NetnAppointmentStruct& rhs );
     template< typename Archive >
     void Serialize( Archive& archive ) const
     {
