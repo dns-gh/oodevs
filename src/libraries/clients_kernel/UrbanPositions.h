@@ -42,7 +42,7 @@ public:
     virtual const geometry::Polygon2f& Polygon() const;
     virtual bool IsInside( const geometry::Point2f& point ) const;
     virtual bool IsInside( const geometry::Rectangle2f& rectangle ) const;
-    virtual void SetInfrastructurePresent();
+    virtual void SetInfrastructurePresent( bool present );
     virtual void SetSelection( bool selected );
     virtual bool IsSelected() const;
     virtual void ResetConvexHull();

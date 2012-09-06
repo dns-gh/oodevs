@@ -87,10 +87,7 @@ InfrastructureAttribute::InfrastructureAttribute( xml::xistream& xis, kernel::Co
         type =  role;
     type_ = objectTypes.StringResolver< kernel::InfrastructureType >::Find( type );
     if( type_ )
-    {
-        role_ = type_->GetName();
-        object.Get< kernel::UrbanPositions_ABC >().SetInfrastructurePresent();
-    }
+        object.Get< kernel::UrbanPositions_ABC >().SetInfrastructurePresent( true );
     else
         invalidType_ = type;
     UpdateDictionnary();
@@ -114,8 +111,7 @@ void InfrastructureAttribute::Update( xml::xistream& xis )
     if( type_ )
     {
         float threshold;
-        xis >> xml::attribute( "role", role_ )
-            >> xml::attribute( "enabled", enabled_ )
+        xis >> xml::attribute( "enabled", enabled_ )
             >> xml::attribute( "threshold", threshold );
         threshold_ = static_cast< unsigned int >( 100 * threshold + 0.5f );
     }
@@ -217,6 +213,7 @@ void InfrastructureAttribute::SetType( kernel::InfrastructureType* infrastructur
     if( type_ != infrastructure )
     {
         type_ = infrastructure;
+        object_.Get< kernel::UrbanPositions_ABC >().SetInfrastructurePresent( type_ != 0 );
         UpdateDictionnary();
         controllers_.controller_.Update( object_ );
         controllers_.controller_.Update( kernel::DictionaryUpdated( object_, tools::translate( "Infrastructure", "Info/Infrastructure" ) ) );

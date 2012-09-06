@@ -97,7 +97,7 @@ void UrbanModel::Update( const sword::UrbanUpdate& message )
                 if( message.attributes().infrastructures().has_infrastructure() && pTerrainObject->Retrieve< kernel::Infrastructure_ABC >() == 0 )
                 {
                     pTerrainObject->Attach< kernel::Infrastructure_ABC >( *new InfrastructureAttribute( controllers_, *pTerrainObject, static_.objectTypes_, pTerrainObject->Get< kernel::PropertiesDictionary >() ) );
-                    pTerrainObject->Get< kernel::UrbanPositions_ABC >().SetInfrastructurePresent();
+                    pTerrainObject->Get< kernel::UrbanPositions_ABC >().SetInfrastructurePresent( true );
                 }
             }
         }

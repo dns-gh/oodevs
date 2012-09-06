@@ -118,7 +118,6 @@
 					<xs:attribute name="material" type="xs:string" use="required"/>
 					<xs:attribute name="occupation" type="T_ZeroToOneDouble" use="required"/>
 					<xs:attribute name="trafficability" type="T_NonNegativeDouble" use="required"/>
-					<xs:attribute name="parking-availability" type="xs:boolean" use="required"/>
 					<xs:attribute name="parking-floors" type="T_NonNegativeInteger"/>
 				</xs:complexType>
 			</xs:element>

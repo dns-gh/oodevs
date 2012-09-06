@@ -121,9 +121,9 @@ bool UrbanPositions::IsInside( const geometry::Rectangle2f& rectangle ) const
 // Name: UrbanPositions::SetInfrastructurePresent
 // Created: LGY 2012-05-07
 // -----------------------------------------------------------------------------
-void UrbanPositions::SetInfrastructurePresent()
+void UrbanPositions::SetInfrastructurePresent( bool present )
 {
-    hasInfrastructure_ = true;
+    hasInfrastructure_ =  present;
 }
 
 // -----------------------------------------------------------------------------

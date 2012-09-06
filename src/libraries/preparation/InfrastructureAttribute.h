@@ -85,7 +85,6 @@ public:
     kernel::UrbanObject_ABC&      object_;
     bool                          enabled_;
     unsigned int                  threshold_;
-    std::string                   role_;
     std::string                   invalidType_;
     const geometry::Point2f       position_;
     //@}
