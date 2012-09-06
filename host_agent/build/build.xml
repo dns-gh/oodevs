@@ -72,8 +72,6 @@
     </macrodef>
 
     <target name="build">
-        <msbuild_call configuration="Debug"
-            project="host_agent" platform="cmake.platform.${platform}" />
         <msbuild_call configuration="RelWithDebInfo"
             project="host_agent" platform="cmake.platform.${platform}" />
     </target>
