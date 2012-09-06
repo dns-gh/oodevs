@@ -453,6 +453,7 @@ void RegisterMissionParametersFunctions( directia::brain::Brain& brain, bool isM
     brain[ "DEC_AssignMissionResourceNetworkParameter" ] = &MIL_MissionParameterFactory::SetResourceNetworkParameter;
     brain[ "DEC_AssignMissionResourceNetworkListParameter" ] = &MIL_MissionParameterFactory::CreateResourceNetwork;
     brain[ "DEC_AssignMissionPathConstParameter" ] = &MIL_MissionParameterFactory::AssignPathConst;
+    brain[ "DEC_IsFragOrderAvailable" ] = &DEC_OrdersFunctions::IsFragOrderAvailable;
     brain[ "DEC_IsMissionAvailable" ] = &DEC_OrdersFunctions::IsPionMissionAvailable;
     brain[ "DEC_Mission_IsPath" ] = &DEC_OrdersFunctions::DEC_Mission_IsPath;
     brain[ "DEC_IsAutomateMissionAvailable" ] = &DEC_OrdersFunctions::IsAutomateMissionAvailable;
@@ -468,7 +469,14 @@ void RegisterMissionParametersFunctions( directia::brain::Brain& brain, bool isM
     brain[ "DEC_AssignerDirectionAMissionAutomate_Mission" ] =
             boost::function< void (MT_Vector2D* ,  boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_OrdersFunctions::AssignDirectionToAutomateMission , _1, _2 ) );
     brain[ "DEC_AssignMissionListParameter" ] = &MIL_MissionParameterFactory::AssignMissionListParameter;
+}
 
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::RegisterObjectFunctions
+// Created: LDC 2012-09-06
+// -----------------------------------------------------------------------------
+void RegisterObjectFunctions( directia::brain::Brain& brain )
+{
     // Objet
     brain[ "DEC_Agent_AgentPeutConstruireObjetEmbarque" ] = &DEC_AgentFunctions::AgentCanConstructObjectWithLoaded;
     brain[ "DEC_Agent_AgentPeutConstruireObjetEmbarqueAvecLocalisation" ] = &DEC_AgentFunctions::AgentCanConstructObjectWithLoadedAndLocalisation;
@@ -494,6 +502,7 @@ void RegisterMissionParametersFunctions( directia::brain::Brain& brain, bool isM
     brain[ "DEC_GetAgentsPouvantDetruire" ] = &DEC_AgentFunctions::RetrieveUnitsAbleToDestroy;
     brain[ "DEC_GetAgentsPouvantDetruireAvecLocalisation" ] = &DEC_AgentFunctions::RetrieveUnitsAbleToDestroyWithLocalisation;
 }
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::RegisterReportFunctions
 // Created: SLI 2010-07-09
@@ -613,6 +622,7 @@ void RegisterCommonUserFunctions( directia::brain::Brain& brain, bool isMasalife
     RegisterSpecificPointsFunctions( brain );
     RegisterTypeFunctions( brain );
     RegisterMissionParametersFunctions( brain, isMasalife );
+    RegisterObjectFunctions( brain );
     RegisterReportFunctions( brain );
     RegisterTelepathyFunctions( brain );
     RegisterItineraryFunctions( brain );

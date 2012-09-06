@@ -26,8 +26,11 @@ class DEC_Knowledge_Agent;
 class DEC_Knowledge_Object;
 class MIL_AgentPion;
 class MIL_Automate;
+class MIL_FragOrderType;
 class MIL_KnowledgeGroup;
 class MIL_Mission_ABC;
+class MIL_MissionType_ABC;
+
 class MT_Vector2D;
 class PHY_Action_ABC;
 class PHY_DotationCategory;
@@ -76,6 +79,8 @@ public:
 
     virtual void StartMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission ) = 0;
     virtual void StopMissionBehavior ( const boost::shared_ptr< MIL_Mission_ABC > mission ) = 0;
+    virtual bool IsFragOrderAvailableForMission( const MIL_MissionType_ABC& missionType, const MIL_FragOrderType& fragOrderType ) const = 0;
+    virtual bool IsFragOrderAvailable( const MIL_FragOrderType& fragOrderType ) const = 0;
 
     virtual int  GeteEtatPhaseMission() const = 0;
     virtual void SeteEtatPhaseMission( int value ) = 0;

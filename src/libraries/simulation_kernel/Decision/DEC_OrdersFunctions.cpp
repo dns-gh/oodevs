@@ -17,6 +17,7 @@
 #include "Entities/Orders/MIL_PionMissionType.h"
 #include "Entities/Orders/MIL_AutomateMissionType.h"
 #include "Entities/Orders/MIL_AutomateOrderManager.h"
+#include "Entities/Orders/MIL_FragOrderType.h"
 #include "Entities/Orders/MIL_OrderTypeParameter.h"
 #include "Entities/Orders/MIL_ParameterType_ABC.h"
 
@@ -370,6 +371,29 @@ bool DEC_OrdersFunctions::IsPionMissionAvailable( DEC_Decision_ABC* agent, std::
     if( agent && pMissionType )
         return agent->GetPion().GetOrderManager().IsMissionAvailable( *pMissionType );
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_OrdersFunctions::IsFragOrderAvailable
+// Created: LDC 2012-09-06
+// -----------------------------------------------------------------------------
+bool DEC_OrdersFunctions::IsFragOrderAvailable( DEC_Decision_ABC* agent, const std::string& fragorder )
+{
+    if( !agent )
+        return false;
+    const MIL_FragOrderType* fragOrderType = MIL_FragOrderType::FindByDiaType( fragorder );
+    if( !fragOrderType )
+        return false;
+    if( fragOrderType->IsAvailableWithoutMission() )
+        return agent->IsFragOrderAvailable( *fragOrderType );
+    else
+    {
+        boost::shared_ptr< MIL_Mission_ABC > mission = agent->GetMission();
+        if( !mission )
+            return false;
+        const MIL_MissionType_ABC& missionType = mission->GetType();
+        return agent->IsFragOrderAvailableForMission( missionType, *fragOrderType );
+    }
 }
 
 // -----------------------------------------------------------------------------

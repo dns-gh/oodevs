@@ -59,6 +59,8 @@ public:
 
     virtual void StartMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission );
     virtual void StopMissionBehavior ( const boost::shared_ptr< MIL_Mission_ABC > mission );
+    virtual bool IsFragOrderAvailableForMission( const MIL_MissionType_ABC& missionType, const MIL_FragOrderType& fragOrderType ) const;
+    virtual bool IsFragOrderAvailable( const MIL_FragOrderType& fragOrderType ) const;
 
     virtual int  GeteEtatPhaseMission() const;
     virtual void SeteEtatPhaseMission( int value );

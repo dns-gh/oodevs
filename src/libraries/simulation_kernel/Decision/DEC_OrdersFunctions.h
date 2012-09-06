@@ -64,6 +64,7 @@ public:
 
     static bool IsPionMissionAvailable( DEC_Decision_ABC* agent, std::string diaType );
     static bool IsAutomateMissionAvailable( DEC_Decision_ABC* agent, std::string diaType );
+    static bool IsFragOrderAvailable( DEC_Decision_ABC* agent, const std::string& fragorder );
     
     static bool DEC_Mission_IsPath( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter );
 
