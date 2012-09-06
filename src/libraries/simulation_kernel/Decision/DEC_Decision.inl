@@ -399,6 +399,26 @@ void DEC_Decision< T >::StopMissionBehavior( const boost::shared_ptr< MIL_Missio
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Decision::IsFragOrderAvailableForMission
+// Created: LDC 2012-09-06
+// -----------------------------------------------------------------------------
+template< class T >
+bool DEC_Decision< T >::IsFragOrderAvailableForMission( const MIL_MissionType_ABC& missionType, const MIL_FragOrderType& fragOrderType ) const
+{
+    return model_->IsFragOrderAvailableForMission( missionType, fragOrderType );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::IsFragOrderAvailable
+// Created: LDC 2012-09-06
+// -----------------------------------------------------------------------------
+template< class T >
+bool DEC_Decision< T >::IsFragOrderAvailable( const MIL_FragOrderType& fragOrderType ) const
+{
+    return model_->IsFragOrderAvailable( fragOrderType );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Decision::GeteEtatPhaseMission
 // Created: LDC 2009-07-13
 // -----------------------------------------------------------------------------
