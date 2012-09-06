@@ -54,6 +54,7 @@ public:
 
     Node AddElement();
     Node& SetUserData( const void* data );
+    Node& SetUserData( const void* data, SWORD_UserDataDestructor destructor );
     Node& MarkForRemove();
     //@}
 

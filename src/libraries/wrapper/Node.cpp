@@ -124,7 +124,16 @@ Node Node::AddElement()
 // -----------------------------------------------------------------------------
 Node& Node::SetUserData( const void* data )
 {
-    if( ! ::SWORD_SetUserData( node_, data, 0 ) )
+    return SetUserData( data, 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Node::SetUserData
+// Created: SLI 2012-09-05
+// -----------------------------------------------------------------------------
+Node& Node::SetUserData( const void* data, SWORD_UserDataDestructor destructor )
+{
+    if( ! ::SWORD_SetUserData( node_, data, destructor ) )
         throw std::runtime_error( "unable to set user data" );
     return *this;
 }
