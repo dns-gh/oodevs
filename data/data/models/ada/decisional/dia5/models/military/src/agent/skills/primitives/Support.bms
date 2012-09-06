@@ -77,7 +77,7 @@ node "SupportElement"
         local Activate = Activate
 
         if not self.params.entity:isOperational() then
-               DEC_RC( eRC_CombatSupportUnitIsDead, DEC_GetSzName(self.params.entity.source) )
+               DEC_RC( eRC_CombatSupportUnitIsDead, DEC_GetSzName(self.params.entity.source ) )
                Feedback( self.feedbacks.failed, {entity = self.params.entity } )
         end
 
@@ -85,13 +85,13 @@ node "SupportElement"
         Activate( skill.links.observe, 1, { entity = self.params.entity } )
 
         -- Moving toward supporting positions
-        
+
         --If the old bestPosition is still good
         if self.bestPosition then
             if self.bestPosition:supportEfficiency( self.params.entity ) > 0.8 then
                 for i = 1, #self.positions do
                      Activate( skill.links.moveAndTakePosition,
-                               self.efficiencies[self.positions[i]], { entity = self.positions[i] } )
+                               self.efficiencies[ self.positions[ i ] ], { entity = self.positions[ i ] } )
                 end
                 if not self.bestPosition:isReached() then
                     return
@@ -106,10 +106,11 @@ node "SupportElement"
                                       elementsToSupport = { self.params.entity }, 
                                       retrogradeContext = self.params.retrogradeContext,
                                       dynamic           = true } )
+
         for i = 1, #self.positions do
-            local position = self.positions[i]
+            local position = self.positions[ i ]
             local efficiency = position:supportEfficiency( self.params.entity )
-            self.efficiencies[position] = efficiency
+            self.efficiencies[ position ] = efficiency
             if( efficiency > self.maxEfficiency ) then
                 self.maxEfficiency = efficiency
                 self.bestPosition = position

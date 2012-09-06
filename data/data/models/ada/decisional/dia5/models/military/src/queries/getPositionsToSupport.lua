@@ -24,8 +24,15 @@ queryImplementation "getPositionsToSupport"
     [ "execute" ] = function ( params )
         local result = knowledgeManager.getQueryResult( "getPositionsToSupport" )
         local newResult = {}
+        DEC_Trace( "params.retrogradeContext = "..tostring( params.retrogradeContext ) )
         if params.retrogradeContext then
-            newResult = { integration.getPositionToSupportFriend( params.elementsToSupport ) } 
+            for _, element in pairs ( params.elementsToSupport ) do
+                local pos = integration.getPositionToSupportFriend( element )
+                if pos ~= nil then
+                    newResult[ #newResult + 1 ] = pos
+                end
+            end
+            return newResult
         else
             local knowledges = {}
             local newPositions = {}
