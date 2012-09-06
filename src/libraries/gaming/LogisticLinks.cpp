@@ -42,7 +42,6 @@ LogisticLinks::LogisticLinks( Controller& controller,
                               PropertiesDictionary& dictionary,
                               kernel::Entity_ABC& entity )
     : controller_       ( controller )
-    , dictionary_       ( dictionary )
     , automatResolver_  ( automatResolver )
     , formationResolver_( formationResolver )
     , dotationResolver_ ( dotationResolver )
@@ -50,7 +49,7 @@ LogisticLinks::LogisticLinks( Controller& controller,
     , entity_           ( entity )
     , property_         ( tools::translate( "Logistic", "Logistic links/Superiors" ) )
 {
-    CreateDictionary( dictionary );
+    dictionary.Register( *this, property_, superiors_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,15 +59,6 @@ LogisticLinks::LogisticLinks( Controller& controller,
 LogisticLinks::~LogisticLinks()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticLinks::CreateDictionary
-// Created: SBO 2006-10-19
-// -----------------------------------------------------------------------------
-void LogisticLinks::CreateDictionary( kernel::PropertiesDictionary& /*dico*/ ) const
-{
-    dictionary_.Register( *this, property_, superiors_ );
 }
 
 // -----------------------------------------------------------------------------

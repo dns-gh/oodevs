@@ -83,7 +83,6 @@ private:
     //@{
     virtual void DoUpdate( const sword::ChangeLogisticLinks& message );
     virtual void DoUpdate( const sword::LogSupplyQuotas& message );
-    void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
 
     kernel::Entity_ABC* FindLogisticEntity( const sword::ParentEntity& message ) const;
     LogisticLink*       FindLogisticLink  ( const kernel::Entity_ABC& superior ) const;
@@ -99,7 +98,6 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    kernel::PropertiesDictionary& dictionary_;
     const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver_;
     const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver_;
     const kernel::LogisticLevel& currentLevel_;
