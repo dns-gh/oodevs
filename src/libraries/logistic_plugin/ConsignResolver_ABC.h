@@ -95,7 +95,6 @@ protected:
     const std::string name_;
     std::string fileName_;
     std::ofstream output_;
-    boost::gregorian::date fileDateForMedical_;
     std::map< int, ConsignData_ABC* > consignsData_;
     int curLineIndex_;
     //@}
