@@ -72,7 +72,7 @@ std::string Parameter_ABC::GetIdentifier() const
 // Name: Parameter_ABC::SetIdentifier
 // Created: LDC 2012-09-05
 // -----------------------------------------------------------------------------
-void Parameter_ABC::SetIdentifier( const std::string& identifier )
+void Parameter_ABC::SetIdentifier( const std::string& )
 {
     // NOTHING
 }
