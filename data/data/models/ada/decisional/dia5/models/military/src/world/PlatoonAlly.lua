@@ -113,6 +113,11 @@ masalife.brain.communication.setMessageTreatment( "DataToNewUnitInAutomat",
        DEC_Agent_ChangeEtatROE( content.etatROE )
     end )
 
+masalife.brain.communication.setMessageTreatment( "killOfficers",
+    function( content, sender )
+        meKnowledge:RC( eRC_OfficersKilled )
+    end )
+
 -- -------------------------------------------------------------------------------- 
 -- Predicates
 -- --------------------------------------------------------------------------------

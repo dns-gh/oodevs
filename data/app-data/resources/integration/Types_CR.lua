@@ -417,7 +417,6 @@ eRC_AlreadyDisengaged = 402
 eRC_NoPEInAutomat = 403
 eRC_SectionUndeployed = 404
 eRC_StartUndeploy = 405
-
 eRC_NoPopulationInUrbanBlock = 406
 eRC_ObjectiveAlerted = 407
 eRC_ObjectiveIsNoLongerAlerted = 408
@@ -495,4 +494,5 @@ eRC_NoUnitsInParameter = 479
 eRC_CaptureEnd = 480
 eRC_PrisSousTirEclairant = 481
 eRC_PrisSousTirFumigene = 482
-eNbr = 483
+eRC_OfficersKilled = 483
+eNbr = 484

@@ -635,15 +635,16 @@ public:
         eRC_FireObserver,
         eRC_ImpossibleActivateIED,
         eRC_Jammed,
-        eRC_PCJammed, // 430
+        eRC_PCJammed,
         eRC_IEDNotReady,
         eRC_IEDReadyForFiring,
         eRC_FollowingUnitIsDead,
         eRC_CombatSupportUnitIsDead,
         eRC_NoUnitsInParameter,
-        eRC_CaptureEnd,
+        eRC_CaptureEnd,//480
         eRC_PrisSousTirEclairant,
         eRC_PrisSousTirFumigene,
+        eRC_OfficersKilled,
         eLast
     };
     //@}

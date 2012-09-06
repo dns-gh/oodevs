@@ -498,7 +498,8 @@ eRC_NoUnitsInParameter = 479
 eRC_CaptureEnd = 480
 eRC_PrisSousTirEclairant = 481
 eRC_PrisSousTirFumigene = 482
-eNbr = 483
+eRC_OfficersKilled = 483
+eNbr = 484
 
 --[[// Parametre : T_ConnaissanceObjet
 ]]--[[// Parametre : delai (float),
