@@ -34,8 +34,9 @@ public:
 
     //! @name Operations
     //@{
-    QWidget* createEditor( QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index ) const;
-    void setModelData( QWidget* editor, QAbstractItemModel* model, const QModelIndex& index ) const;
+    virtual QWidget* createEditor( QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index ) const;
+    virtual void setModelData( QWidget* editor, QAbstractItemModel* model, const QModelIndex& index ) const;
+    virtual QSize sizeHint( const QStyleOptionViewItem & option, const QModelIndex & index ) const;
     //@}
 
 private:

@@ -54,3 +54,12 @@ void PropertyDelegate::setModelData( QWidget* editor, QAbstractItemModel * model
     if( PropertyModel* standardModel = static_cast< PropertyModel* >( model ) )
         standardModel->Update( editor, index );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PropertyDelegate::sizeHint
+// Created: LGY 2012-09-06
+// -----------------------------------------------------------------------------
+QSize PropertyDelegate::sizeHint( const QStyleOptionViewItem& /*option*/, const QModelIndex& /*index*/ ) const
+{
+    return QSize( 50, 20 );
+}
