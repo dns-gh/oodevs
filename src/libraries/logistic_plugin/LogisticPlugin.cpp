@@ -92,7 +92,8 @@ void LogisticPlugin::Receive( const sword::SimToClient& message )
             (*r)->SetTime( currentTick_, simTime_ );
     }
     for( IT_ConsignResolvers r = resolvers_.begin(); r != resolvers_.end(); ++r )
-        (*r)->Receive( message );
+        if( (*r)->Receive( message ))
+            break;
 }
 
 

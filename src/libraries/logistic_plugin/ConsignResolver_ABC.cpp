@@ -51,13 +51,14 @@ ConsignResolver_ABC::~ConsignResolver_ABC()
 // Name: ConsignResolver_ABC::Receive
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-void ConsignResolver_ABC::Receive( const sword::SimToClient& message )
+bool ConsignResolver_ABC::Receive( const sword::SimToClient& message )
 {
     if( !IsManageable( message ) )
-        return;
+        return false;
     CheckOutputFile();
     if( output_.is_open() )
         ManageMessage( message );
+    return true;
 }
 
 // -----------------------------------------------------------------------------

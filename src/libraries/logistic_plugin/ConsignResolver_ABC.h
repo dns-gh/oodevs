@@ -46,7 +46,7 @@ public:
 
     //! @name Operations
     //@{
-    void Receive( const sword::SimToClient& message );
+    bool Receive( const sword::SimToClient& message );
     void SetTime( int tick, const std::string& simTime );
     void GetSimTime( std::string& simTime, std::string& tick ) const;
     const NameResolver_ABC& GetNameResolver() const;
