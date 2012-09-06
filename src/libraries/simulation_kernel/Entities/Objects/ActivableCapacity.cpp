@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "ActivableCapacity.h"
+#include "ConstructionAttribute.h"
 #include "MIL_AgentServer.h"
 #include "MIL_Object_ABC.h"
 #include "ObstacleAttribute.h"
@@ -22,7 +23,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( ActivableCapacity )
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 ActivableCapacity::ActivableCapacity( xml::xistream& /*xis*/ )
-    : timeOfCreation_( MIL_Singletons::GetTime().GetCurrentTimeStep() )
+    : timeOfCreation_( 0 )
 {
     // NOTHING
 }
@@ -32,7 +33,7 @@ ActivableCapacity::ActivableCapacity( xml::xistream& /*xis*/ )
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 ActivableCapacity::ActivableCapacity()
-    : timeOfCreation_( MIL_Singletons::GetTime().GetCurrentTimeStep() )
+    : timeOfCreation_( 0 )
 {
     // NOTHING
 }
@@ -42,7 +43,7 @@ ActivableCapacity::ActivableCapacity()
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 ActivableCapacity::ActivableCapacity( const ActivableCapacity& /*from*/ )
-    : timeOfCreation_( MIL_Singletons::GetTime().GetCurrentTimeStep() )
+    : timeOfCreation_( 0 )
 {
     // NOTHING
 }
@@ -109,33 +110,41 @@ bool ActivableCapacity::IsActivated( MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 void ActivableCapacity::Update( MIL_Object_ABC& object, unsigned int time )
 {
-    unsigned int delta = static_cast< int >( time - timeOfCreation_ );
-    ObstacleAttribute& attr = object.GetAttribute< ObstacleAttribute >();
-    double activationTime = MIL_Tools::ConvertSecondsToSim( attr.GetActivationTime() );
-    if( attr.IsTimesUndefined() )
+    if( timeOfCreation_ == 0 )
     {
-        if( !attr.IsActivable() && !attr.IsActivated() )
-            attr.Activate();
+        if( object.GetAttribute< ConstructionAttribute >().IsConstructed() )
+            timeOfCreation_ = time;
     }
-    else if( attr.GetActivityTime() > 0 )
+    if( timeOfCreation_ != 0 )
     {
-        if( delta > MIL_Tools::ConvertSecondsToSim( attr.GetEndActivity() ) )
+        unsigned int delta = static_cast< int >( time - timeOfCreation_ );
+        ObstacleAttribute& attr = object.GetAttribute< ObstacleAttribute >();
+        double activationTime = MIL_Tools::ConvertSecondsToSim( attr.GetActivationTime() );
+        if( attr.IsTimesUndefined() )
         {
-            if( attr.IsActivated() )
-                attr.Deactivate();
-        }
-        else if( delta > activationTime )
-        {
-            if( !attr.IsActivated() )
+            if( !attr.IsActivable() && !attr.IsActivated() )
                 attr.Activate();
         }
-    }
-    else
-    {
-        if( delta > activationTime )
+        else if( attr.GetActivityTime() > 0 )
         {
-            if( !attr.IsActivated() )
-                attr.Activate();
+            if( delta > MIL_Tools::ConvertSecondsToSim( attr.GetEndActivity() ) )
+            {
+                if( attr.IsActivated() )
+                    attr.Deactivate();
+            }
+            else if( delta > activationTime )
+            {
+                if( !attr.IsActivated() )
+                    attr.Activate();
+            }
+        }
+        else
+        {
+            if( delta > activationTime )
+            {
+                if( !attr.IsActivated() )
+                    attr.Activate();
+            }
         }
     }
 }
