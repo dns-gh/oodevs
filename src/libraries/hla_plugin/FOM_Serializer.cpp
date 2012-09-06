@@ -153,25 +153,25 @@ void FOM_Serializer::ReadCallsign( ::hla::Deserializer_ABC& deserializer, const 
 // -----------------------------------------------------------------------------
 void FOM_Serializer::ReadUniqueId( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, std::string& uniqueId )
 {
-	switch( netnVersion_ )
-	{
-	case 1:
-		{
-			UniqueId u;
-			u.Deserialize( deserializer );
-			uniqueId = u.str();
-		}
-		break;
-	case 2:
-		{
-			NETN_UUID u;
-			u.Deserialize( deserializer );
-			uniqueId = u.str();
-		}
-		break;
-	default:
-		throw std::runtime_error("wrong NETN version") ;
-	}
+    switch( netnVersion_ )
+    {
+    case 1:
+        {
+            UniqueId u;
+            u.Deserialize( deserializer );
+            uniqueId = u.str();
+        }
+        break;
+    case 2:
+        {
+            NETN_UUID u;
+            u.Deserialize( deserializer );
+            uniqueId = u.str();
+        }
+        break;
+    default:
+        throw std::runtime_error("wrong NETN version") ;
+    }
     listener.UniqueIdChanged( identifier, uniqueId );
 }
 
@@ -215,7 +215,7 @@ void FOM_Serializer::ReadEmbeddedUnitList( ::hla::Deserializer_ABC& deserializer
     for(uint32 i=0; i < size; ++i )
     {
         UniqueId tmp;
-		tmp.Deserialize( deserializer );
+        tmp.Deserialize( deserializer );
         embeddedUnits[i]=tmp.str();
     }
     listener.EmbeddedUnitListChanged( identifier, embeddedUnits );

@@ -268,10 +268,10 @@ NetnAppointmentStruct::NetnAppointmentStruct( int64 dateTime, const rpr::WorldLo
 // Created: AHC 2012-09-05
 // -----------------------------------------------------------------------------
 NetnAppointmentStruct::NetnAppointmentStruct( const NetnAppointmentStruct& other )
-	: dateTime( other.dateTime )
-	, location( other.location )
+    : dateTime( other.dateTime )
+    , location( other.location )
 {
-	// NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -289,9 +289,9 @@ NetnAppointmentStruct::~NetnAppointmentStruct()
 // ----------------------------------------------------------------------------
 const NetnAppointmentStruct& NetnAppointmentStruct::operator=( const NetnAppointmentStruct& other )
 {
-	dateTime = other.dateTime;
-	location = other.location;
-	return *this;
+    dateTime = other.dateTime;
+    location = other.location;
+    return *this;
 }
 
 // -----------------------------------------------------------------------------

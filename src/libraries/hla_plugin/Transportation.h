@@ -326,13 +326,13 @@ public:
     //@{
              NetnAppointmentStruct();
              NetnAppointmentStruct( int64 dateTime, const rpr::WorldLocation& location );
-			 NetnAppointmentStruct( const NetnAppointmentStruct& other );
+             NetnAppointmentStruct( const NetnAppointmentStruct& other );
     virtual ~NetnAppointmentStruct();
     //@}
 
     //! @name Operations
     //@{
-	const NetnAppointmentStruct& operator=( const NetnAppointmentStruct& rhs );
+    const NetnAppointmentStruct& operator=( const NetnAppointmentStruct& rhs );
     template< typename Archive >
     void Serialize( Archive& archive ) const
     {
@@ -684,7 +684,7 @@ public:
 
 struct Netn2TransportStruct
 {
-public:	
+public:    
     enum TransportType
     {
         E_Transport     = 0,
@@ -692,7 +692,7 @@ public:
         E_Disembarkment = 2
     };
 
-	//! @name Constructors/Destructor
+    //! @name Constructors/Destructor
     //@{
              Netn2TransportStruct();
     explicit Netn2TransportStruct( const Netn2DataTStruct& dataTransport );

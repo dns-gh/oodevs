@@ -108,16 +108,16 @@ private:
         switch( netnVersion_ )
         {
         case 1:
-			{
-				UniqueId id( v );
-				id.Serialize( serializer );
-			}
+            {
+                UniqueId id( v );
+                id.Serialize( serializer );
+            }
             break;
         case 2:
-			{
-			    NETN_UUID id( v );
-				id.Serialize( serializer );
-			}
+            {
+                NETN_UUID id( v );
+                id.Serialize( serializer );
+            }
             break;
         default:
             throw std::runtime_error( "NETN version not recognized" );

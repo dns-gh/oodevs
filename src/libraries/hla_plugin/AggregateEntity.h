@@ -84,7 +84,7 @@ private:
     virtual void FormationChanged( bool isOnRoad );
     virtual void EquipmentChanged( unsigned int type, const rpr::EntityType& entityType, unsigned int available );
     virtual void EmbarkmentChanged( bool mounted );
-	virtual void PlatformAdded( const std::string& name, unsigned int id );
+    virtual void PlatformAdded( const std::string& name, unsigned int id );
     //@}
 
     //! @name Operations
@@ -121,7 +121,7 @@ private:
     FOM_Serializer_ABC& fomSerializer_;
     std::auto_ptr< AttributesUpdater > attributesUpdater_;
     T_Equipments equipments_;
-	Omt13StringArray entities_;
+    Omt13StringArray entities_;
     unsigned short numberOfSilentEntities_;
     unsigned long simIdentifier_;
     rpr::ForceIdentifier force_;

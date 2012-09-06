@@ -83,7 +83,7 @@ private:
 private:
     //! @name Member data
     //@{
-	const std::string divestitureZoneName_;
+    const std::string divestitureZoneName_;
     RemoteAgentSubject_ABC& subject_;
     OwnershipController_ABC& ownershipController_;
     TransferSender_ABC& transferSender_;

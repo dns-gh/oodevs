@@ -307,9 +307,9 @@ void LocationOwnershipPolicy::OwnershipState::EmbeddedUnitListChanged( const std
 // -----------------------------------------------------------------------------
 LocationOwnershipPolicy::LocationOwnershipPolicy( tools::MessageController_ABC< sword::MessengerToClient_Content >& controller,
         OwnershipController_ABC& ownershipController, RemoteAgentSubject_ABC& subject, TransferSender_ABC& transferSender,
-		const std::string divestitureZoneName )
+        const std::string divestitureZoneName )
     : divestitureZoneName_( divestitureZoneName )
-	, ownershipController_( ownershipController )
+    , ownershipController_( ownershipController )
     , transferSender_( transferSender )
     , subject_( subject )
 {

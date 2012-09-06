@@ -83,7 +83,7 @@ private:
     //! @name Member data
     //@{
     std::string identifier_;
-	FOM_Serializer_ABC& fomSerializer_;
+    FOM_Serializer_ABC& fomSerializer_;
     std::auto_ptr< ObjectListenerComposite > listeners_;
     Agent_ABC& agent_;
     std::auto_ptr< AttributesSerializer > attributes_;

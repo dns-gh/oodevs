@@ -40,79 +40,79 @@ namespace
         REGISTER_TEMPLATE( "Provider"   , &T::provider, T );
         REGISTER_TEMPLATE( "ServiceType", &T::serviceType, T );
     }
-	NETN_UUID objectDef2uuid( const NetnObjectDefinitionStruct& v )
-	{
-		return NETN_UUID( v.uniqueId.str() ) ;
-	}
-	NetnObjectDefinitionStruct uuid2ObjDef( const NETN_UUID& v )
-	{
-		NetnObjectDefinitionStruct retval;
-		retval.uniqueId = UniqueId( v.str() );
-		return retval;
-	}
-	template< typename T>
-	struct TransportDataEncoder : public ::hla::Encodable_ABC< T >
-	{
-		virtual void Decode( ::hla::Deserializer_ABC& deserializer, T& object ) const
-		{
-			Netn2TransportStruct tmp;
-			tmp.Deserialize( deserializer );
-			object.transportData.convoyType = static_cast< NetnTransportStruct::ConvoyType >( tmp.transportType );
-			switch( tmp.transportType )
-			{
-			case Netn2TransportStruct::E_Transport:
-				object.transportData.dataTransport.appointment = tmp.dataTransport.appointment;
-				object.transportData.dataTransport.finalAppointment = tmp.dataTransport.finalAppointment;
-				object.transportData.dataTransport.objectToManage.resize( tmp.dataTransport.objectToManage.size() );
-				std::transform( tmp.dataTransport.objectToManage.begin(), tmp.dataTransport.objectToManage.end(),
-					object.transportData.dataTransport.objectToManage.begin(), &uuid2ObjDef );
-				break;
-			case Netn2TransportStruct::E_Disembarkment:
-				object.transportData.dataDisembarkment.appointment = tmp.dataDisembarkment.appointment;
-				object.transportData.dataDisembarkment.objectToManage.resize( tmp.dataDisembarkment.objectToManage.size() );
-				std::transform( tmp.dataDisembarkment.objectToManage.begin(), tmp.dataDisembarkment.objectToManage.end(),
-					object.transportData.dataDisembarkment.objectToManage.begin(), &uuid2ObjDef );
-				break;
-			case Netn2TransportStruct::E_Embarkment:
-				object.transportData.dataEmbarkment.appointment = tmp.dataEmbarkment.appointment;
-				object.transportData.dataEmbarkment.objectToManage.resize( tmp.dataEmbarkment.objectToManage.size() );
-				std::transform( tmp.dataEmbarkment.objectToManage.begin(), tmp.dataEmbarkment.objectToManage.end(),
-					object.transportData.dataEmbarkment.objectToManage.begin(), &uuid2ObjDef );
-				break;
-			}
-		}
-		virtual void Encode( ::hla::Serializer_ABC& serializer, const T& object ) const
-		{
-			Netn2TransportStruct tmp;
-			tmp.transportType = static_cast< Netn2TransportStruct::TransportType >( object.transportData.convoyType );
-			switch( tmp.transportType )
-			{
-			case Netn2TransportStruct::E_Transport:
-				tmp.dataTransport.appointment = object.transportData.dataTransport.appointment;
-				tmp.dataTransport.finalAppointment = object.transportData.dataTransport.finalAppointment;
-				tmp.dataTransport.objectToManage.resize( object.transportData.dataTransport.objectToManage.size() );
-				std::transform( object.transportData.dataTransport.objectToManage.begin(), 
-					object.transportData.dataTransport.objectToManage.end(), tmp.dataTransport.objectToManage.begin(),
-					&objectDef2uuid );
-				break;
-			case Netn2TransportStruct::E_Disembarkment:
-				tmp.dataDisembarkment.appointment = object.transportData.dataDisembarkment.appointment;
-				tmp.dataDisembarkment.objectToManage.resize( object.transportData.dataDisembarkment.objectToManage.size() );
-				std::transform( object.transportData.dataDisembarkment.objectToManage.begin(), 
-					object.transportData.dataDisembarkment.objectToManage.end(), tmp.dataDisembarkment.objectToManage.begin(),
-					&objectDef2uuid );
-				break;
-			case Netn2TransportStruct::E_Embarkment:
-				tmp.dataEmbarkment.appointment = object.transportData.dataEmbarkment.appointment;
-				tmp.dataEmbarkment.objectToManage.resize( object.transportData.dataEmbarkment.objectToManage.size() );
-				std::transform( object.transportData.dataEmbarkment.objectToManage.begin(), 
-					object.transportData.dataEmbarkment.objectToManage.end(), tmp.dataEmbarkment.objectToManage.begin(),
-					&objectDef2uuid );
-				break;
-			}
-			tmp.Serialize( serializer );
-		}
-	};
+    NETN_UUID objectDef2uuid( const NetnObjectDefinitionStruct& v )
+    {
+        return NETN_UUID( v.uniqueId.str() ) ;
+    }
+    NetnObjectDefinitionStruct uuid2ObjDef( const NETN_UUID& v )
+    {
+        NetnObjectDefinitionStruct retval;
+        retval.uniqueId = UniqueId( v.str() );
+        return retval;
+    }
+    template< typename T>
+    struct TransportDataEncoder : public ::hla::Encodable_ABC< T >
+    {
+        virtual void Decode( ::hla::Deserializer_ABC& deserializer, T& object ) const
+        {
+            Netn2TransportStruct tmp;
+            tmp.Deserialize( deserializer );
+            object.transportData.convoyType = static_cast< NetnTransportStruct::ConvoyType >( tmp.transportType );
+            switch( tmp.transportType )
+            {
+            case Netn2TransportStruct::E_Transport:
+                object.transportData.dataTransport.appointment = tmp.dataTransport.appointment;
+                object.transportData.dataTransport.finalAppointment = tmp.dataTransport.finalAppointment;
+                object.transportData.dataTransport.objectToManage.resize( tmp.dataTransport.objectToManage.size() );
+                std::transform( tmp.dataTransport.objectToManage.begin(), tmp.dataTransport.objectToManage.end(),
+                    object.transportData.dataTransport.objectToManage.begin(), &uuid2ObjDef );
+                break;
+            case Netn2TransportStruct::E_Disembarkment:
+                object.transportData.dataDisembarkment.appointment = tmp.dataDisembarkment.appointment;
+                object.transportData.dataDisembarkment.objectToManage.resize( tmp.dataDisembarkment.objectToManage.size() );
+                std::transform( tmp.dataDisembarkment.objectToManage.begin(), tmp.dataDisembarkment.objectToManage.end(),
+                    object.transportData.dataDisembarkment.objectToManage.begin(), &uuid2ObjDef );
+                break;
+            case Netn2TransportStruct::E_Embarkment:
+                object.transportData.dataEmbarkment.appointment = tmp.dataEmbarkment.appointment;
+                object.transportData.dataEmbarkment.objectToManage.resize( tmp.dataEmbarkment.objectToManage.size() );
+                std::transform( tmp.dataEmbarkment.objectToManage.begin(), tmp.dataEmbarkment.objectToManage.end(),
+                    object.transportData.dataEmbarkment.objectToManage.begin(), &uuid2ObjDef );
+                break;
+            }
+        }
+        virtual void Encode( ::hla::Serializer_ABC& serializer, const T& object ) const
+        {
+            Netn2TransportStruct tmp;
+            tmp.transportType = static_cast< Netn2TransportStruct::TransportType >( object.transportData.convoyType );
+            switch( tmp.transportType )
+            {
+            case Netn2TransportStruct::E_Transport:
+                tmp.dataTransport.appointment = object.transportData.dataTransport.appointment;
+                tmp.dataTransport.finalAppointment = object.transportData.dataTransport.finalAppointment;
+                tmp.dataTransport.objectToManage.resize( object.transportData.dataTransport.objectToManage.size() );
+                std::transform( object.transportData.dataTransport.objectToManage.begin(), 
+                    object.transportData.dataTransport.objectToManage.end(), tmp.dataTransport.objectToManage.begin(),
+                    &objectDef2uuid );
+                break;
+            case Netn2TransportStruct::E_Disembarkment:
+                tmp.dataDisembarkment.appointment = object.transportData.dataDisembarkment.appointment;
+                tmp.dataDisembarkment.objectToManage.resize( object.transportData.dataDisembarkment.objectToManage.size() );
+                std::transform( object.transportData.dataDisembarkment.objectToManage.begin(), 
+                    object.transportData.dataDisembarkment.objectToManage.end(), tmp.dataDisembarkment.objectToManage.begin(),
+                    &objectDef2uuid );
+                break;
+            case Netn2TransportStruct::E_Embarkment:
+                tmp.dataEmbarkment.appointment = object.transportData.dataEmbarkment.appointment;
+                tmp.dataEmbarkment.objectToManage.resize( object.transportData.dataEmbarkment.objectToManage.size() );
+                std::transform( object.transportData.dataEmbarkment.objectToManage.begin(), 
+                    object.transportData.dataEmbarkment.objectToManage.end(), tmp.dataEmbarkment.objectToManage.begin(),
+                    &objectDef2uuid );
+                break;
+            }
+            tmp.Serialize( serializer );
+        }
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -144,7 +144,7 @@ bool NETNv2_InteractionBuilder::Build( ::hla::Interaction< interactions::NetnReq
     const std::string name = "SCP_Service.SCP_RequestService.RequestTransport";
     RegisterNetnService( interaction, name, logger_ );
     REGISTER( "RequestTimeOut", &interactions::NetnRequestConvoy::requestTimeOut );
-	interaction.Register( "TransportData", * new TransportDataEncoder< interactions::NetnRequestConvoy >() );
+    interaction.Register( "TransportData", * new TransportDataEncoder< interactions::NetnRequestConvoy >() );
     return DoRegister( name, interaction, true, true );
 }
 
@@ -158,7 +158,7 @@ bool NETNv2_InteractionBuilder::Build( ::hla::Interaction< interactions::NetnOff
     REGISTER( "IsOffering"        , &interactions::NetnOfferConvoy::isOffering );
     REGISTER( "RequestTimeOut"    , &interactions::NetnOfferConvoy::requestTimeOut );
     RegisterNetnService( interaction, name, logger_ );
-	interaction.Register( "TransportData", * new TransportDataEncoder< interactions::NetnOfferConvoy >() );
+    interaction.Register( "TransportData", * new TransportDataEncoder< interactions::NetnOfferConvoy >() );
     REGISTER( "OfferType"         , &interactions::NetnOfferConvoy::offerType );
     REGISTER( "Transporters", &interactions::NetnOfferConvoy::listOfTransporters );
     return DoRegister( name, interaction, true, true );

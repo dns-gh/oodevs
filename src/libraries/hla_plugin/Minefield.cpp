@@ -72,8 +72,8 @@ Minefield::Minefield( TacticalObject_ABC& object, unsigned int identifier, const
     , entityIdentifier_( siteID, applicationID, static_cast< unsigned short >( identifier ) )
     , force_( force )
 {
-	RegisterAttributes();
-	object_->Register( *this );
+    RegisterAttributes();
+    object_->Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,7 +86,7 @@ Minefield::Minefield( const std::string& identifier, EntityIdentifierResolver_AB
     , identifier_( identifier )
     , attributes_( new AttributesUpdater( identifier_, *listeners_ ) )
 {
-	RegisterAttributes();
+    RegisterAttributes();
 }
 
 // -----------------------------------------------------------------------------
@@ -125,7 +125,7 @@ void Minefield::SetIdentifier( const std::string& id )
 {
     identifier_ = id;
     attributes_.reset( new AttributesUpdater(identifier_, *listeners_) );
-	RegisterAttributes();
+    RegisterAttributes();
 }
 
 // -----------------------------------------------------------------------------
@@ -170,7 +170,7 @@ void Minefield::RegisterAttributes()
     attributes_->Register( "PerimeterPointCoordinates", boost::bind( &ReadNothing, _1, _2, _3 ), Wrapper< std::vector< rpr::PerimeterPoint > >( perimeter_ ) );
     attributes_->Register( "ProtocolMode", boost::bind( &ReadNothing, _1, _2, _3 ), Wrapper< uint8 >( 0 ) ); // HearbeatMode
     attributes_->Register( "State", boost::bind( &ReadNothing, _1, _2, _3 ), Wrapper< bool >( false ) ); // FIXME AHC
-	attributes_->Register( "ActiveStatus", boost::bind( &ReadNothing, _1, _2, _3 ), Wrapper< bool >( true ) ); // FIXME AHC
+    attributes_->Register( "ActiveStatus", boost::bind( &ReadNothing, _1, _2, _3 ), Wrapper< bool >( true ) ); // FIXME AHC
 }
 
 namespace

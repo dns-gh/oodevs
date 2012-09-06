@@ -80,11 +80,11 @@ namespace
         xis >> xml::start( "mappings" );
         return xis.content< std::string >( mapping );
     }
-	std::string ReadDivestitureZone( xml::xisubstream xis )
-	{
-		xis >> xml::start( "drawings" );
-		return xis.content< std::string >( "divesture-area" );
-	}
+    std::string ReadDivestitureZone( xml::xisubstream xis )
+    {
+        xis >> xml::start( "drawings" );
+        return xis.content< std::string >( "divesture-area" );
+    }
 
     class LogFilter : public dispatcher::Logger_ABC
     {

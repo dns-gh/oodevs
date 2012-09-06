@@ -26,7 +26,7 @@ namespace hla
 namespace rpr
 {
     class EntityIdentifier;
-	class EntityType;
+    class EntityType;
 }
 
 namespace plugins
