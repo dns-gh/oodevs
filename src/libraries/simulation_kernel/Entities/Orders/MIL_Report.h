@@ -613,6 +613,7 @@ public:
         eRC_PrisSousTirEclairant,
         eRC_PrisSousTirFumigene,
         eRC_DetectedObject,
+        eRC_OfficersKilled,
         eLast
     };
     //@}

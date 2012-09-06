@@ -644,5 +644,19 @@
     <parameter type="String"/>
   </report>
   <report category="operational" id="435" message="Les unités passées en paramètre sont toutes détruites"/>
+  <report category="operational" id="436" message="Unité détectée"/>
+  <report category="operational" id="437" message="Unité amie reconnue"/>
+  <report category="operational" id="438" message="Unité amie identifiée"/>
+  <report category="operational" id="439" message="Unité ennemie reconnue"/>
+  <report category="operational" id="440" message="Unité ennemie identifiée"/>
+  <report category="operational" id="441" message="Unité neutre reconnue"/>
+  <report category="operational" id="442" message="Unité neutre identifiée"/>
+  <report category="operational" id="443" message="Libéré"/>
+  <report category="operational" id="444" message="Pris sous tir éclairant"/>
+  <report category="operational" id="445" message="Pris sous tir fumigène"/>
+  <report category="operational" id="446" message="Objet détecté : %1">
+    <parameter type="ObjectKnowledge"/>
+  </report>
+  <report category="operational" id="447" message="Les officiers de l'unité ont subi un attentat"/>
 </reports>
-<!-- signature="3143469309" -->
+<!-- signature="2922520492" -->

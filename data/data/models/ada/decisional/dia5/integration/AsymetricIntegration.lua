@@ -72,6 +72,7 @@ end
 --Terrorist Officer assassination integration
 integration.killOfficers = function( unit )
     DEC_ConnaissanceAgent_TuerOfficiers( unit.source )
+    integration.SendMessage( "killOfficers", integration.getAgentFromKnowledge( unit ), emptyTable, { type = "dynamic" } )
     meKnowledge:RC( eRC_ExecutionAttentat )
     return true
 end

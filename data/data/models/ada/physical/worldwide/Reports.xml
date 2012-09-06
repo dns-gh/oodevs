@@ -657,5 +657,6 @@
   <report category="operational" id="446" message="Object detected : %1">
     <parameter type="ObjectKnowledge"/>
   </report>
+  <report category="operational" id="447" message="The unit officers suffered an attack"/>
 </reports>
-<!-- signature="2736009267" -->
+<!-- signature="4173704490" -->
