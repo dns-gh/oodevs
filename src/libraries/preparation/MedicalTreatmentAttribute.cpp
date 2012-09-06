@@ -255,7 +255,7 @@ void MedicalTreatmentAttribute::UpdateDictionary( bool changed )
             dictionary_.Remove( tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Hospital ID" ) );
             for( T_TreatmentCapacities::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )
                 dictionary_.Remove( tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/" ) + it->first.c_str() );
-            controllers_->controller_.Delete( kernel::DictionaryUpdated( const_cast< kernel::Entity_ABC& >( *owner_ ), tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/" ) ) );
+            controllers_->controller_.Delete( kernel::DictionaryUpdated( *owner_, tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/" ) ) );
         }
     }
     else
