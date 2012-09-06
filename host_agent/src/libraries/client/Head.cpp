@@ -13,6 +13,7 @@
 #include "host/Package.h"
 #include <boost/filesystem/path.hpp>
 #include <boost/make_shared.hpp>
+#include <boost/property_tree/ptree.hpp>
 #include <QSettings>
 #include <QtConcurrentRun>
 
@@ -187,6 +188,7 @@ void Head::ParseRoot()
 {
     install_ = boost::make_shared< Package >( pool_, fs_, root_.absolutePath().toStdWString(), true );
     install_->Parse();
+    items_.Fill( install_->GetProperties() );
     emit ProgressVisible( false );
 }
 
@@ -197,4 +199,5 @@ void Head::ParseRoot()
 void Head::OnProgressVisible( bool visible )
 {
     progress_.setVisible( visible );
+    ui_.status->clearMessage();
 }

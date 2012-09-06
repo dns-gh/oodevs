@@ -188,7 +188,7 @@ struct FlatModel : public QAbstractItemModel
     // -----------------------------------------------------------------------------
     virtual QVariant data( const QModelIndex& index, int role ) const
     {
-        return FlatModel< T >::Item( index ).data( index.column(), role );
+        return FlatModel< T >::Item( index ).Data( index.column(), role );
     }
 
 protected:

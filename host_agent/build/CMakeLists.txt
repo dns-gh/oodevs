@@ -94,7 +94,7 @@ endif()
 glob_dir( files src
     "${root_dir}/src/applications/cloud_server/*.cpp"
 )
-configure_rc( cloud_server res files
+configure_rc( cloud_server files res
     "${root_dir}/src/applications/cloud_server/version.rc.in"
 )
 add_executable_target( cloud_server ${files} )
@@ -108,28 +108,21 @@ target_link_libraries( cloud_server
 ################################################################################
 # client
 ################################################################################
-glob_dir( files src
-    "${root_dir}/src/libraries/client/*.cpp"
-)
-glob_qt4_headers( moc_headers headers src
-    "${root_dir}/src/libraries/client/*.h"
-)
-glob_qt4_ui( ui_headers ui_files 
-    "${root_dir}/src/libraries/client/*.ui"
-)
-add_static_library( client ${files} ${headers} ${moc_headers} ${ui_headers} )
+set( root "${root_dir}/src/libraries/client" )
+glob_dir( files src "${root}/*.cpp" )
+glob_qt4_headers( files src "${root}/*.h" )
+glob_qt4_ui( files ui "${root}/*.ui" )
+add_static_library( client ${files} )
 set_target_folder( client libraries )
 set_target_qt4( client )
 
 ################################################################################
 # cloud_client
 ################################################################################
-glob_dir( files src
-    "${root_dir}/src/applications/cloud_client/*.cpp"
-)
-configure_rc( cloud_client res files
-    "${root_dir}/src/applications/cloud_client/version.rc.in"
-)
+set( root "${root_dir}/src/applications/cloud_client" )
+glob_dir( files src "${root}/*.cpp" )
+configure_rc( cloud_client files res "${root}/version.rc.in" )
+glob_qt4_rc( files res "${root}/*.qrc" )
 add_executable_target( cloud_client WIN32 ${files} )
 set_target_folder( cloud_client applications )
 set_target_qt4( cloud_client )
