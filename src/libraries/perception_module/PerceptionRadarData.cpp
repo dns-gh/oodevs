@@ -88,7 +88,7 @@ void PerceptionRadarData::AcquireTargets( const wrapper::View& model, const wrap
         const wrapper::View& target = *it;
         if( GET_HOOK( CanBeSeen )( perceiver, target ) && pRadarType_->CanAcquire( perceiver, target ) )
         {
-            const std::string& identifier = target[ "identifier" ];
+            const std::size_t& identifier = target[ "identifier" ];
             T_AgentAcquisitionMap::iterator agentData = acquisitionData_.find( identifier );
             if( agentData == acquisitionData_.end() )
             {

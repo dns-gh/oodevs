@@ -71,7 +71,7 @@ private:
         unsigned int nFirstTimeStepPerceived_;
         bool bUpdated_;
     };
-    typedef std::map< std::string, sAcquisitionData > T_AgentAcquisitionMap;
+    typedef std::map< std::size_t, sAcquisitionData > T_AgentAcquisitionMap;
     //@}
 
 private:
