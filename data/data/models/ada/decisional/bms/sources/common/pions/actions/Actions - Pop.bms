@@ -145,6 +145,7 @@ includedFiles["sources/common/pions/actions/Actions - Pop.bms"] = true
     destroy = function( self )
                 DEC_Trace( "Site non anime" )
         self.actionAnimer = DEC_StopAction( self.actionAnimer )
+        DEC_DetruireObjetSansDelais( self._namedParams.posteControle )
         DEC_ConnaissanceObjet_ResetDensitePopulationSortante( self._namedParams.posteControle )
     end,
 
