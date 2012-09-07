@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Sword Client</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../../applications/cloud_client/main.qrc">
+    <normaloff>:/logo32x32.png</normaloff>:/logo32x32.png</iconset>
+  </property>
   <widget class="QWidget" name="central">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="1">
