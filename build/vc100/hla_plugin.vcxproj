@@ -148,7 +148,6 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\PlatformProxy.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentController.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentResolver.cpp" />
-    <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteTacticalObjectController.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\RprTransferSender.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\SideChecker.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\SideResolver.cpp" />
@@ -276,7 +275,6 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentSubject_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAggregateListener_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteHlaObjectFactory_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteTacticalObjectController.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ResponseObserver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RprTransferSender.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\SideChecker.h" />
