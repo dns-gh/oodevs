@@ -15,6 +15,7 @@
 #include "ExtentResolver_ABC.h"
 #include "HlaObject_ABC.h"
 #include "AgentSubject_ABC.h"
+#include "SideResolver_ABC.h"
 #include "protocol/SimulationSenders.h"
 #include "dispatcher/Model_ABC.h"
 #include "dispatcher/Team_ABC.h"
@@ -27,20 +28,6 @@
 
 using namespace plugins::hla;
 
-namespace
-{
-    const kernel::Karma& GetKarma( rpr::ForceIdentifier force )
-    {
-        if( force == rpr::Friendly )
-            return kernel::Karma::friend_;
-        if( force == rpr::Neutral )
-            return kernel::Karma::neutral_;
-        if( force == rpr::Opposing )
-            return kernel::Karma::enemy_;
-        return kernel::Karma::unknown_;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: RemoteAgentController constructor
 // Created: SLI 2011-09-01
@@ -48,13 +35,13 @@ namespace
 RemoteAgentController::RemoteAgentController( RemoteAgentSubject_ABC& agentSubject,
                                               ContextHandler_ABC< sword::AutomatCreation >& automatHandler,
                                               ContextHandler_ABC< sword::UnitCreation >& unitHandler,
-                                              dispatcher::Model_ABC& dynamicModel,
+                                              const SideResolver_ABC& sideResolver,
                                               const UnitTypeResolver_ABC& typeResolver, dispatcher::Logger_ABC& logger,
                                               const ExtentResolver_ABC& extent, AgentSubject_ABC& subject )
     : agentSubject_  ( agentSubject )
     , automatHandler_( automatHandler )
     , unitHandler_   ( unitHandler )
-    , dynamicModel_  ( dynamicModel )
+    , sideResolver_  ( sideResolver )
     , typeResolver_  ( typeResolver )
     , logger_        ( logger )
     , extent_        ( extent )
@@ -64,16 +51,6 @@ RemoteAgentController::RemoteAgentController( RemoteAgentSubject_ABC& agentSubje
     unitHandler_.Register( *this );
     agentSubject_.Register( *this );
     simSubject_.Register( *this );
-    const tools::Resolver_ABC< dispatcher::Team_ABC >& sides( dynamicModel.Sides() );
-    for( tools::Iterator< const dispatcher::Team_ABC& > it = sides.CreateIterator(); it.HasMoreElements(); )
-    {
-        const dispatcher::Team_ABC& team = it.NextElement();
-        if( team.GetId() )
-        {
-            logger_.LogInfo( "karmas[ " + boost::lexical_cast< std::string >( team.GetId() ) + " ] = " + team.GetKarma().GetName().ascii() + " (" + team.GetName().ascii() + ")" );
-            karmas_[ team.GetKarma() ] = team.GetId();
-        }
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -241,20 +218,11 @@ void RemoteAgentController::Send( simulation::UnitMagicAction& message, const st
 // -----------------------------------------------------------------------------
 unsigned long RemoteAgentController::FindAutomat( rpr::ForceIdentifier force ) const
 {
-    const kernel::Karma* karma = &GetKarma( force );
-    if (*karma == kernel::Karma::unknown_)
-        karma = &kernel::Karma::neutral_;
-    T_Karmas::const_iterator itKarma = karmas_.find( *karma );
-    if( itKarma == karmas_.end() )
-    {
-        //throw std::runtime_error( "Karma '" + karma.GetName().toStdString() + "' not found in scenario" );
-        logger_.LogError( "Karma '" +  karma->GetName().toStdString() + "' not found in scenario" );
-        return 0;
-    }
-    T_Parties::const_iterator itParty = parties_.find( itKarma->second );
+    unsigned long teamId = sideResolver_.ResolveTeam( force ).GetId();
+    T_Parties::const_iterator itParty = parties_.find( teamId );
     if( itParty == parties_.end() )
     {
-        logger_.LogWarning( "Party '" + boost::lexical_cast< std::string >( itKarma->second ) + "' not existing yet" );
+        logger_.LogWarning( "Party '" + boost::lexical_cast< std::string >( teamId ) + "' not existing yet" );
         return 0;
     }
     return itParty->second;
@@ -360,6 +328,15 @@ void RemoteAgentController::EmbeddedUnitListChanged( const std::string& /*identi
 // Created: AHC 2010-03-09
 // -----------------------------------------------------------------------------
 void RemoteAgentController::PlatformCreated( Agent_ABC& /*agent*/, unsigned int /*identifier*/, const std::string& /*name*/, rpr::ForceIdentifier /*force*/, const rpr::EntityType& /*type*/, const std::string& /*symbol*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteAgentController::PerimeterChanged
+// Created: AHC 2010-09-07
+// -----------------------------------------------------------------------------
+void RemoteAgentController::PerimeterChanged( const std::string& /*identifier*/, const std::vector< rpr::PerimeterPoint >& /*perimeter*/ )
 {
     // NOTHING
 }

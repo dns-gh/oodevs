@@ -235,6 +235,7 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRtiAmbassador.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRtiAmbassadorFactory.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockSideChecker.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockSideResolver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockSimulationPublisher.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockSubordinates.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTeam.h" />

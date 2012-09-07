@@ -307,6 +307,12 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\FOM_Serializer.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteTacticalObjectController.cpp">
+      <Filter>Source Files\Dispatcher\Simulation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\SideResolver.cpp">
+      <Filter>Source Files\Resolvers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h">
@@ -740,6 +746,15 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\FOM_Serializer_ABC.h">
       <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteTacticalObjectController.h">
+      <Filter>Source Files\Dispatcher\Simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\SideResolver.h">
+      <Filter>Source Files\Resolvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\SideResolver_ABC.h">
+      <Filter>Source Files\Resolvers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -64,6 +64,7 @@ namespace hla
     class NetnRemoteCallsignListener;
     class AgentSubject_ABC;
     class LocalAgentResolver_ABC;
+    class SideResolver_ABC;
 
 // =============================================================================
 /** @class  SimulationFacade
@@ -80,7 +81,8 @@ public:
                                dispatcher::SimulationPublisher_ABC& publisher, dispatcher::Model_ABC& dynamicModel, const rpr::EntityTypeResolver_ABC& componentTypeResolver,
                                const dispatcher::StaticModel& staticModel, const UnitTypeResolver_ABC& unitTypeResolver,
                                RemoteAgentSubject_ABC& remoteAgentSubject, const ComponentTypes_ABC& componentTypes, CallsignResolver_ABC& callsignResolver,
-                               dispatcher::Logger_ABC& logger, const ExtentResolver_ABC& extent, AgentSubject_ABC& subject, const LocalAgentResolver_ABC& localResolver  );
+                               dispatcher::Logger_ABC& logger, const ExtentResolver_ABC& extent, AgentSubject_ABC& subject, const LocalAgentResolver_ABC& localResolver,
+                               const SideResolver_ABC& sideResolver );
     virtual ~SimulationFacade();
     //@}
 
@@ -94,6 +96,7 @@ public:
 private:
     //! @name Member data
     //@{
+    const SideResolver_ABC& sideResolver_;
     std::auto_ptr< ContextHandler_ABC< sword::FormationCreation > > pFormationHandler_;
     std::auto_ptr< ContextHandler_ABC< sword::AutomatCreation > > pAutomatHandler_;
     std::auto_ptr< ContextHandler_ABC< sword::UnitCreation > > pUnitHandler_;

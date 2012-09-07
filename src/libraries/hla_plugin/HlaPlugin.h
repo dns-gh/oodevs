@@ -89,6 +89,7 @@ namespace hla
     class TransferSender_ABC;
     class EntityIdentifierResolver_ABC;
     class FOM_Serializer_ABC;
+    class SideResolver_ABC;
 
 // =============================================================================
 /** @class  HlaPlugin
@@ -148,6 +149,7 @@ private:
     std::auto_ptr< AutomatChecker_ABC > pAutomatChecker_;
     std::auto_ptr< kernel::CoordinateConverter_ABC > pConverter_;
     std::auto_ptr< ExtentResolver_ABC > pExtentResolver_;
+    std::auto_ptr< SideResolver_ABC > pSideResolver_;
     std::auto_ptr< AgentController > pSubject_;
     std::auto_ptr< TacticalObjectController > pTacticalObjectSubject_;
     std::auto_ptr< FOM_Serializer_ABC > pFomSerializer_;

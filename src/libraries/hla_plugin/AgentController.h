@@ -52,6 +52,7 @@ namespace hla
     class Agent_ABC;
     class AgentProxy;
     class ComponentTypes_ABC;
+    class SideResolver_ABC;
 
     class AgentAdapter;
 
@@ -69,7 +70,8 @@ public:
     //@{
              AgentController( dispatcher::Model_ABC& model, const rpr::EntityTypeResolver_ABC& aggregatesResolver,
                               const rpr::EntityTypeResolver_ABC& componentTypeResolver, const ComponentTypes_ABC& componentTypes,
-                              tic::PlatformDelegateFactory_ABC& factory, const kernel::CoordinateConverter_ABC& converter, bool sendPlatforms );
+                              tic::PlatformDelegateFactory_ABC& factory, const kernel::CoordinateConverter_ABC& converter, bool sendPlatforms,
+                              const SideResolver_ABC& sideResolver );
     virtual ~AgentController();
     //@}
 
@@ -114,6 +116,7 @@ private:
     tic::PlatformDelegateFactory_ABC& factory_;
     const kernel::CoordinateConverter_ABC& converter_;
     bool doDisaggregation_;
+    const SideResolver_ABC& sideResolver_;
     T_Listeners listeners_;
     T_Agents agents_;
     T_AgentAdapters adapters_;

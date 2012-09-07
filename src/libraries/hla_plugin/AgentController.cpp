@@ -12,6 +12,7 @@
 #include "AgentListener_ABC.h"
 #include "AgentProxy.h"
 #include "AgentAdapter.h"
+#include "SideResolver_ABC.h"
 #include "dispatcher/Model_ABC.h"
 #include "dispatcher/Automat_ABC.h"
 #include "dispatcher/Team_ABC.h"
@@ -39,7 +40,7 @@ using namespace plugins::hla;
 AgentController::AgentController( dispatcher::Model_ABC& model, const rpr::EntityTypeResolver_ABC& aggregatesResolver,
                                   const rpr::EntityTypeResolver_ABC& componentTypeResolver, const ComponentTypes_ABC& componentTypes,
                                   tic::PlatformDelegateFactory_ABC& factory, const kernel::CoordinateConverter_ABC& converter,
-                                  bool sendPlatforms )
+                                  bool sendPlatforms, const SideResolver_ABC& sideResolver )
     : model_                 ( model )
     , aggregatesResolver_    ( aggregatesResolver )
     , componentTypeResolver_ ( componentTypeResolver )
@@ -47,6 +48,7 @@ AgentController::AgentController( dispatcher::Model_ABC& model, const rpr::Entit
     , factory_               ( factory )
     , converter_             ( converter )
     , doDisaggregation_      ( sendPlatforms )
+    , sideResolver_          ( sideResolver )
 {
     model_.RegisterFactory( *this );
 }
@@ -58,21 +60,6 @@ AgentController::AgentController( dispatcher::Model_ABC& model, const rpr::Entit
 AgentController::~AgentController()
 {
     model_.UnregisterFactory( *this );
-}
-
-namespace
-{
-    rpr::ForceIdentifier GetForce( const dispatcher::Agent_ABC& agent )
-    {
-        const kernel::Karma& karma = agent.GetSuperior().GetTeam().GetKarma();
-        if( karma == kernel::Karma::friend_ )
-            return rpr::Friendly;
-        if( karma == kernel::Karma::enemy_ )
-            return rpr::Opposing;
-        if( karma == kernel::Karma::neutral_ )
-            return rpr::Neutral;
-        return rpr::Other;
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -103,33 +90,18 @@ void AgentController::Create( dispatcher::Agent& entity )
 // -----------------------------------------------------------------------------
 void AgentController::CreateAgent( dispatcher::Agent_ABC& agent )
 {
-    /*if( !boost::algorithm::starts_with( agent.GetName().toAscii().constData(), "HLA_" ) ) // $$$$ _RC_ SLI 2011-09-22: refactor this...
-    {
-        T_Agents::iterator itAgent( agents_.insert( T_Agents::value_type( agent.GetId(), T_Agent( new AgentProxy( agent, componentTypes_, componentTypeResolver_, doDisaggregation_ ) ) ) ).first );
-        const kernel::AgentType& agentType = agent.GetType();
-        const std::string typeName = agentType.GetName();
-        const rpr::EntityType entityType = aggregatesResolver_.Find( typeName );
-        const rpr::ForceIdentifier forceIdentifier = GetForce( agent );
-        for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
-            (*it)->AggregateCreated( *(itAgent->second), agent.GetId(), agent.GetName().toAscii().constData(), forceIdentifier, entityType, agentType.GetSymbol(), true, agentType.GetId() );
-        if( doDisaggregation_ )
-            adapters_.push_back( T_AgentAdapter( new AgentAdapter( factory_, converter_, agent,
-                    AgentAdapter::T_NotificationCallback( boost::bind( &AgentController::NotifyPlatformCreation, boost::ref( *this ), _1, _2, _3, _4 ) ) ) ) );
-    }*/
-
     bool isLocal( !boost::algorithm::starts_with( agent.GetName().ascii(), "HLA_" ) );// $$$$ _RC_ SLI 2011-09-22: refactor this...
     T_Agent proxy( new AgentProxy( agent, componentTypes_, componentTypeResolver_, doDisaggregation_ ) );
     agents_.insert( T_Agents::value_type( agent.GetId(), proxy ) );
     const kernel::AgentType& agentType = agent.GetType();
     const std::string typeName = agentType.GetName();
     const rpr::EntityType entityType = aggregatesResolver_.Find( typeName );
-    const rpr::ForceIdentifier forceIdentifier = GetForce( agent );
+    const rpr::ForceIdentifier forceIdentifier = sideResolver_.ResolveForce( agent.GetSuperior().GetTeam() );
     for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
         (*it)->AggregateCreated( *proxy, agent.GetId(), std::string( agent.GetName().ascii() ), forceIdentifier, entityType, agentType.GetSymbol(), isLocal, agentType.GetId() );
     if( isLocal && doDisaggregation_ )
             adapters_.push_back( T_AgentAdapter( new AgentAdapter( factory_, converter_, agent,
                     AgentAdapter::T_NotificationCallback( boost::bind( &AgentController::NotifyPlatformCreation, boost::ref( *this ), _1, _2, _3, _4 ) ) ) ) );
-
 }
 
 // -----------------------------------------------------------------------------
@@ -160,7 +132,7 @@ void AgentController::NotifyPlatformCreation( Agent_ABC& agent, dispatcher::Agen
     const std::string symbol( parent.GetType().GetSymbol() ); // FIXME
     const std::string typeName = platform.GetType().GetName();
     const rpr::EntityType entityType = componentTypeResolver_.Find( typeName );
-    const rpr::ForceIdentifier forceIdentifier = GetForce( parent );
+    const rpr::ForceIdentifier forceIdentifier = sideResolver_.ResolveForce( parent.GetSuperior().GetTeam() );
     unsigned int identifier = --identifier_factory;  // FIXME
     const std::string name( std::string( parent.GetName().toAscii().constData() ) + "_" + typeName + " " + boost::lexical_cast< std::string >( childIndex ) );
 

@@ -22,7 +22,9 @@
 #include "MockHlaObject.h"
 #include "MockHlaClass.h"
 #include "MockModel.h"
+#include "MockTeam.h"
 #include "MockComponentTypes.h"
+#include "MockSideResolver.h"
 #include "MockAgentSubject.h"
 #include <boost/shared_ptr.hpp>
 #include <boost/assign.hpp>
@@ -60,8 +62,7 @@ namespace
             MOCK_EXPECT( unitCreation.Unregister );
             MOCK_EXPECT( remoteSubject.Unregister );
             MOCK_EXPECT( agentSubject.Unregister );
-            MOCK_EXPECT( dynamicModel.Sides ).once().returns( boost::ref( teamResolver ) );
-            ConfigureTeams();
+            //ConfigureTeams();
         }
         template< typename T_Result, typename T_Mock, typename T_Vector >
         tools::Iterator< const T_Result& > MakeIterator( const T_Identifiers& identifiers, T_Vector& elements )
@@ -96,7 +97,7 @@ namespace
         const double longitude;
         const unsigned long automat;
         T_Teams teams;
-        dispatcher::MockModel dynamicModel;
+        MockSideResolver sideResolver;
         MockAgentSubject agentSubject;
         AgentListener_ABC* agentListener;
     };
@@ -104,7 +105,7 @@ namespace
     {
     public:
         AutomatFixture()
-            : remoteController( remoteSubject, automatCreation, unitCreation, dynamicModel, unitTypeResolver, logger, extentResolver, agentSubject )
+            : remoteController( remoteSubject, automatCreation, unitCreation, sideResolver, unitTypeResolver, logger, extentResolver, agentSubject )
         {
             BOOST_REQUIRE( automatCreationHandler );
             BOOST_REQUIRE( unitCreationHandler );
@@ -134,6 +135,8 @@ BOOST_FIXTURE_TEST_CASE( remote_agent_controller_creates_agent_when_receiving_re
     const rpr::EntityType entityType( "1 2" );
     const unsigned long agentTypeId = 4343;
     //remoteClassListener->RemoteCreated( "identifier" );
+    dispatcher::MockTeam team( 42 );
+    MOCK_EXPECT( sideResolver.ResolveTeam ).once().with( rpr::Friendly ).returns( boost::cref( team ) );
     remoteAgentListener->SideChanged( "identifier", rpr::Friendly );
     remoteAgentListener->NameChanged( "identifier", "name" );
     MOCK_EXPECT( unitTypeResolver.Resolve ).once().with( mock::same( entityType ) ).returns( agentTypeId );
@@ -159,6 +162,8 @@ BOOST_FIXTURE_TEST_CASE( remote_agent_controller_creates_agent_when_receiving_re
 BOOST_FIXTURE_TEST_CASE( remote_agent_controller_does_not_recreate_agent_after_second_moved_event, AutomatFixture )
 {
     //remoteClassListener->RemoteCreated( "identifier" );
+    dispatcher::MockTeam team( 42 );
+    MOCK_EXPECT( sideResolver.ResolveTeam ).once().with( rpr::Friendly ).returns( boost::cref( team ) );
     remoteAgentListener->SideChanged( "identifier", rpr::Friendly );
     remoteAgentListener->NameChanged( "identifier", "name" );
     MOCK_EXPECT( unitTypeResolver.Resolve ).once().returns( 4242 );
@@ -173,6 +178,8 @@ BOOST_FIXTURE_TEST_CASE( remote_agent_controller_does_not_recreate_agent_after_s
 BOOST_FIXTURE_TEST_CASE( remote_agent_controller_creates_out_of_bounds_agent_only_when_moving_inside_extent, AutomatFixture )
 {
     //remoteClassListener->RemoteCreated( "identifier" );
+    dispatcher::MockTeam team( 42 );
+    MOCK_EXPECT( sideResolver.ResolveTeam ).once().with( rpr::Friendly ).returns( boost::cref( team ) );
     remoteAgentListener->SideChanged( "identifier", rpr::Friendly );
     remoteAgentListener->NameChanged( "identifier", "name" );
     MOCK_EXPECT( unitTypeResolver.Resolve ).once().returns( 4242 );

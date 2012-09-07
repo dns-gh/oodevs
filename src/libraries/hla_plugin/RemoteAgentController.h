@@ -23,7 +23,6 @@ namespace dispatcher
 {
     class Team_ABC;
     class Logger_ABC;
-    class Model_ABC;
     class Agent;
 }
 
@@ -59,6 +58,7 @@ namespace hla
     class ComponentTypes_ABC;
     class Agent_ABC;
     class AgentSubject_ABC;
+    class SideResolver_ABC;
 
 // =============================================================================
 /** @class  RemoteAgentController
@@ -78,7 +78,7 @@ public:
              RemoteAgentController( RemoteAgentSubject_ABC& agentSubject,
                                     ContextHandler_ABC< sword::AutomatCreation >& automatHandler,
                                     ContextHandler_ABC< sword::UnitCreation >& unitHandler,
-                                    dispatcher::Model_ABC& dynamicModel,
+                                    const SideResolver_ABC& sideResolver,
                                     const UnitTypeResolver_ABC& typeResolver, dispatcher::Logger_ABC& logger,
                                     const ExtentResolver_ABC& extent, AgentSubject_ABC& subject );
     virtual ~RemoteAgentController();
@@ -107,6 +107,7 @@ private:
     virtual void UniqueIdChanged( const std::string& identifier, const std::string& uniqueId );
     virtual void CallsignChanged( const std::string& identifier, const std::string& callsign );
     virtual void EmbeddedUnitListChanged( const std::string& identifier, const std::vector< std::string >& units );
+    virtual void PerimeterChanged( const std::string& identifier, const std::vector< rpr::PerimeterPoint >& perimeter );
 
     virtual void AggregateCreated( Agent_ABC& agent, unsigned long identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol, bool isLocal, unsigned long agentType );
     virtual void PlatformCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol ) ;
@@ -126,7 +127,6 @@ private:
     typedef boost::shared_ptr< simulation::UnitMagicAction > T_UnitCreation;
     typedef std::map< std::string, T_UnitCreation > T_UnitCreations;
     typedef std::map< unsigned long, unsigned long > T_Parties;
-    typedef std::map< kernel::Karma, unsigned long > T_Karmas;
     typedef std::map< std::string, rpr::ForceIdentifier > T_WaitingAutomats;
     typedef std::map< std::string, HlaObject_ABC* > T_RemoteObjects;
     typedef std::map< std::string, unsigned long > T_Hla2SimIds;
@@ -139,14 +139,13 @@ private:
     RemoteAgentSubject_ABC& agentSubject_;
     ContextHandler_ABC< sword::AutomatCreation >& automatHandler_;
     ContextHandler_ABC< sword::UnitCreation >& unitHandler_;
-    dispatcher::Model_ABC& dynamicModel_;
+    const SideResolver_ABC& sideResolver_;
     const UnitTypeResolver_ABC& typeResolver_;
     dispatcher::Logger_ABC& logger_;
     const ExtentResolver_ABC& extent_;
     AgentSubject_ABC& simSubject_;
     T_UnitCreations unitCreations_;
     T_Parties parties_;
-    T_Karmas karmas_;
     T_WaitingAutomats waitingAutomats_;
     T_RemoteObjects remoteObjects_;
     T_Hla2SimIds remoteIds_;
