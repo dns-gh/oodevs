@@ -54,7 +54,7 @@ endmacro()
 
 macro( find_qt4 )
     set( QT_BINARY_DIR ${MASA_BIN} )
-    SET( QT_USE_QTMAIN TRUE )
+    set( QT_USE_QTMAIN true )
     find_with_prefix( Qt4 qt ${ARGN} )
     include( ${QT_USE_FILE} )
 endmacro()
