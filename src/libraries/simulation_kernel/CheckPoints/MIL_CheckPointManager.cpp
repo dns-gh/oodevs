@@ -207,8 +207,7 @@ namespace
             xis >> xml::attribute( "name", strFileName )
                 >> xml::attribute( "crc", nCRC );
             if( MIL_Tools::ComputeCRC( strFileName ) != nCRC )
-                throw MT_ScipioException( __FILE__, __FUNCTION__, __LINE__ ,
-                    "Cannot load checkpoint - File '" + strFileName + "' has changed since the checkpoint creation" );
+                MT_LOG_ERROR_MSG( "Problem loading checkpoint - File '" + strFileName + "' has changed since the checkpoint creation" );
         }
     };
 }
@@ -240,12 +239,12 @@ void MIL_CheckPointManager::CheckCRC( const MIL_Config& config )
             >> xml::attribute( "crc", nCRC )
         >> xml::end;
     if( MIL_Tools::ComputeCRC( config.BuildCheckpointChildFile( "CRCs.xml" ) ) != nCRC )
-        throw MT_ScipioException( __FILE__, __FUNCTION__, __LINE__ , "Cannot load checkpoint - File 'CRCs.xml' has changed since the checkpoint creation" );
+        MT_LOG_ERROR_MSG( "Problem loading checkpoint - File 'CRCs.xml' has changed since the checkpoint creation" );
     CheckFilesCRC( config );
     xis >> xml::start( "save" )
             >> xml::attribute( "crc", nCRC );
     if( MIL_Tools::ComputeCRC( config.BuildCheckpointChildFile( "data" ) ) != nCRC )
-        throw MT_ScipioException( __FILE__, __FUNCTION__, __LINE__ , "Cannot load checkpoint - File 'data' has changed since the checkpoint creation" );
+        MT_LOG_ERROR_MSG( "Problem loading checkpoint - File 'data' has changed since the checkpoint creation" );
 }
 
 // -----------------------------------------------------------------------------
