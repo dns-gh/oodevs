@@ -21,7 +21,7 @@ BOOST_FIXTURE_TEST_CASE( perception_reco_object_sensor_identifies_all_objects_in
     entity[ "perceptions/sensor/activated" ] = false;
     core::Model& perception = entity[ "perceptions/object-detection" ][ perceptionId ];
     perception = core::MakeModel( "localization", core::MakeUserData( localization ) )
-                                ( "identifier", perceptionId )
+                                ( "perception-id", perceptionId )
                                 ( "growth-speed", growthSpeed )
                                 ( "center", core::MakeModel( "x", 10 )
                                                            ( "y", 20 ) )

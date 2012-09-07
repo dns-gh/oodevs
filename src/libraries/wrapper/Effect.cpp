@@ -38,7 +38,7 @@ Effect::~Effect()
 // Name: Effect::Post
 // Created: SLI 2011-12-21
 // -----------------------------------------------------------------------------
-void Effect::Post()
+void Effect::Post() const
 {
     ::SWORD_PostEffect( effect_, target_ );
 }

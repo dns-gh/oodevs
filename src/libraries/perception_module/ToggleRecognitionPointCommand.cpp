@@ -9,7 +9,6 @@
 
 #include "ToggleRecognitionPointCommand.h"
 #include "wrapper/View.h"
-#include "wrapper/Effect.h"
 
 using namespace sword;
 using namespace sword::perception;
@@ -18,16 +17,21 @@ using namespace sword::perception;
 // Name: ToggleRecognitionPointCommand constructor
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-ToggleRecognitionPointCommand::ToggleRecognitionPointCommand( ModuleFacade& /*module*/, const wrapper::View& parameters, const wrapper::View& /*model*/, size_t /*identifier*/ )
-    : identifier_  ( parameters[ "identifier" ] )
-    , isActivated_ ( parameters[ "activated" ] )
-    , size_        ( isActivated_ ? parameters[ "max-radius" ] : 0. )
-    , speed_       ( isActivated_ ? parameters[ "growth-speed" ] : 0. )
-    , centerX_     ( isActivated_ ? parameters[ "center/x" ] : 0. )
-    , centerY_     ( isActivated_ ? parameters[ "center/y" ] : 0. )
-    , perceptionId_( parameters[ "perception-id" ] )
+ToggleRecognitionPointCommand::ToggleRecognitionPointCommand( ModuleFacade& /*module*/, const wrapper::View& parameters, const wrapper::View& model, size_t /*identifier*/ )
+    : effect_( model[ "entities" ][ static_cast< std::size_t >( parameters[ "identifier" ] ) ][ "perceptions/recognition-point" ] )
 {
-    // NOTHING
+    const std::size_t perceptionId = parameters[ "perception-id" ];
+    if( parameters[ "activated" ] )
+    {
+        effect_[ perceptionId ][ "growth-speed" ] = parameters[ "growth-speed" ];
+        effect_[ perceptionId ][ "perception-id" ] = parameters[ "perception-id" ];
+        effect_[ perceptionId ][ "center" ] = parameters[ "center" ];
+        effect_[ perceptionId ][ "max-radius" ] = parameters[ "max-radius" ];
+        effect_[ perceptionId ][ "radius" ] = 0;
+        effect_[ perceptionId ][ "max-radius-reached" ] = false;
+    }
+    else
+        effect_[ perceptionId ].MarkForRemove();
 }
 
 // -----------------------------------------------------------------------------
@@ -43,23 +47,9 @@ ToggleRecognitionPointCommand::~ToggleRecognitionPointCommand()
 // Name: ToggleRecognitionPointCommand::Execute
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-void ToggleRecognitionPointCommand::Execute( const wrapper::View& model ) const
+void ToggleRecognitionPointCommand::Execute( const wrapper::View& /*model*/ ) const
 {
-    const wrapper::View& point = model[ "entities" ][ identifier_ ][ "perceptions/recognition-point" ];
-    wrapper::Effect effect( point );
-    if( isActivated_ )
-    {
-        effect[ perceptionId_ ][ "max-radius" ] = size_;
-        effect[ perceptionId_ ][ "radius" ] = 0.;
-        effect[ perceptionId_ ][ "growth-speed" ] = speed_;
-        effect[ perceptionId_ ][ "max-radius-reached" ] = false;
-        effect[ perceptionId_ ][ "center/x" ] = centerX_;
-        effect[ perceptionId_ ][ "center/y" ] = centerY_;
-        effect[ perceptionId_ ][ "identifier" ] = perceptionId_;
-    }
-    else
-        effect[ perceptionId_ ].MarkForRemove();
-    effect.Post();
+    effect_.Post();
 }
 
 // -----------------------------------------------------------------------------

@@ -10,10 +10,8 @@
 #ifndef SWORD_PERCEPTION_TOGGLE_LOCALIZED_RADAR_COMMAND_H
 #define SWORD_PERCEPTION_TOGGLE_LOCALIZED_RADAR_COMMAND_H
 
+#include "wrapper/Effect.h"
 #include <boost/noncopyable.hpp>
-#include <string>
-
-class TER_Localisation;
 
 namespace sword
 {
@@ -50,11 +48,7 @@ public:
 private:
     //! @name Member data
     //@{
-    const size_t identifier_;
-    const std::string radarClass_;
-    const bool isActivated_;
-    const int perceptionId_;
-    TER_Localisation* localization_;
+    wrapper::Effect effect_;
     //@}
 };
 

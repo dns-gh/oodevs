@@ -9,34 +9,29 @@
 
 #include "ToggleObjectDetectionCommand.h"
 #include "wrapper/View.h"
-#include "wrapper/Effect.h"
 
 using namespace sword;
 using namespace sword::perception;
-
-namespace
-{
-    template< typename T >
-    T* Copy( const wrapper::View& parameter )
-    {
-        return new T( *static_cast< T* >( parameter.GetUserData() ) );
-    }
-}
 
 // -----------------------------------------------------------------------------
 // Name: ToggleObjectDetectionCommand constructor
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-ToggleObjectDetectionCommand::ToggleObjectDetectionCommand( ModuleFacade& /*module*/, const wrapper::View& parameters, const wrapper::View& /*model*/, size_t /*identifier*/ )
-    : identifier_  ( parameters[ "identifier" ] )
-    , isActivated_ ( parameters[ "activated" ] )
-    , speed_       ( isActivated_ ? parameters[ "growth-speed" ] : 0. )
-    , centerX_     ( isActivated_ ? parameters[ "center/x" ] : 0. )
-    , centerY_     ( isActivated_ ? parameters[ "center/y" ] : 0. )
-    , perceptionId_( parameters[ "perception-id" ] )
-    , localization_( isActivated_ ?  Copy< boost::shared_ptr< TER_Localisation > >( parameters[ "localization" ] ) : 0 )
+ToggleObjectDetectionCommand::ToggleObjectDetectionCommand( ModuleFacade& /*module*/, const wrapper::View& parameters, const wrapper::View& model, size_t /*identifier*/ )
+    : effect_( model[ "entities" ][ static_cast< std::size_t >( parameters[ "identifier" ] ) ][ "perceptions/object-detection" ] )
 {
-    // NOTHING
+    const std::size_t perceptionId = parameters[ "perception-id" ];
+    if( parameters[ "activated" ] )
+    {
+        effect_[ perceptionId ][ "growth-speed" ] = parameters[ "growth-speed" ];
+        effect_[ perceptionId ][ "perception-id" ] = parameters[ "perception-id" ];
+        effect_[ perceptionId ][ "center" ] = parameters[ "center" ];
+        effect_[ perceptionId ][ "localization" ] = parameters[ "localization" ];
+        effect_[ perceptionId ][ "radius" ] = 0;
+        effect_[ perceptionId ][ "max-radius-reached" ] = false;
+    }
+    else
+        effect_[ perceptionId ].MarkForRemove();
 }
 
 // -----------------------------------------------------------------------------
@@ -48,35 +43,13 @@ ToggleObjectDetectionCommand::~ToggleObjectDetectionCommand()
     // NOTHING
 }
 
-namespace
-{
-    void DeleteLocalization( const void* userData )
-    {
-        delete static_cast< const boost::shared_ptr< TER_Localisation >* >( userData );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: ToggleObjectDetectionCommand::Execute
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-void ToggleObjectDetectionCommand::Execute( const wrapper::View& model ) const
+void ToggleObjectDetectionCommand::Execute( const wrapper::View& /*model*/ ) const
 {
-    const wrapper::View& radar = model[ "entities" ][ identifier_ ][ "perceptions/object-detection"];
-    wrapper::Effect effect( radar );
-    if( isActivated_ )
-    {
-        effect[ perceptionId_ ][ "growth-speed" ] = speed_;
-        effect[ perceptionId_ ][ "center/x" ] = centerX_;
-        effect[ perceptionId_ ][ "center/y" ] = centerY_;
-        effect[ perceptionId_ ][ "radius" ] = 0;
-        effect[ perceptionId_ ][ "max-radius-reached" ] = false;
-        effect[ perceptionId_ ][ "identifier" ] = perceptionId_;
-        effect[ perceptionId_ ][ "localization" ].SetUserData( localization_, &DeleteLocalization );
-    }
-    else
-        effect[ perceptionId_ ].MarkForRemove();
-    effect.Post();
+    effect_.Post();
 }
 
 // -----------------------------------------------------------------------------

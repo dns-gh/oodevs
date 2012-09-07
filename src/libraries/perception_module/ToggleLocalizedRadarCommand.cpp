@@ -10,7 +10,6 @@
 #include "ToggleLocalizedRadarCommand.h"
 #include "RadarClass.h"
 #include "wrapper/View.h"
-#include "wrapper/Effect.h"
 #include <boost/lexical_cast.hpp>
 
 using namespace sword;
@@ -26,20 +25,28 @@ namespace
             + "' for entity '" + boost::lexical_cast< std::string >( entity ) + "'" );
         return found->GetName();
     }
+    wrapper::View GetTarget( const wrapper::View& parameters, const wrapper::View& model )
+    {
+        const std::size_t identifier = parameters[ "identifier" ];
+        return model[ "entities" ][ identifier ][ "perceptions/localized-radars/" ][ FindRadar( parameters[ "radar-class" ], identifier ) ];
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: ToggleLocalizedRadarCommand constructor
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-ToggleLocalizedRadarCommand::ToggleLocalizedRadarCommand( ModuleFacade& /*module*/, const wrapper::View& parameters, const wrapper::View& /*model*/, size_t /*identifier*/ )
-    : identifier_  ( parameters[ "identifier" ] )
-    , radarClass_  ( FindRadar( parameters[ "radar-class" ], identifier_ ) )
-    , isActivated_ ( parameters[ "activated" ] )
-    , perceptionId_( parameters[ "perception-id" ] )
-    , localization_( isActivated_ ? static_cast< TER_Localisation* >( parameters[ "localization" ].GetUserData() ) : 0 )
+ToggleLocalizedRadarCommand::ToggleLocalizedRadarCommand( ModuleFacade& /*module*/, const wrapper::View& parameters, const wrapper::View& model, size_t /*identifier*/ )
+    : effect_( GetTarget( parameters, model ) )
 {
-    // NOTHING
+    const std::size_t perceptionId = parameters[ "perception-id" ];
+    if( parameters[ "activated" ] )
+    {
+        effect_[ perceptionId ][ "localization" ] = parameters[ "localization" ];
+        effect_[ perceptionId ][ "perception-id" ] = perceptionId;
+    }
+    else
+        effect_[ perceptionId ].MarkForRemove();
 }
 
 // -----------------------------------------------------------------------------
@@ -55,18 +62,9 @@ ToggleLocalizedRadarCommand::~ToggleLocalizedRadarCommand()
 // Name: ToggleLocalizedRadarCommand::Execute
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-void ToggleLocalizedRadarCommand::Execute( const wrapper::View& model ) const
+void ToggleLocalizedRadarCommand::Execute( const wrapper::View& /*model*/ ) const
 {
-    const wrapper::View& radar = model[ "entities" ][ identifier_ ][ "perceptions/localized-radars"][ radarClass_ ];
-    wrapper::Effect effect( radar );
-    if( isActivated_ )
-    {
-        effect[ perceptionId_ ][ "localization" ].SetUserData( localization_ );
-        effect[ perceptionId_ ][ "identifier" ] = perceptionId_;
-    }
-    else
-        effect[ perceptionId_ ].MarkForRemove();
-    effect.Post();
+    effect_.Post();
 }
 
 // -----------------------------------------------------------------------------

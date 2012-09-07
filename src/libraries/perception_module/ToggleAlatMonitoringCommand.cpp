@@ -9,7 +9,6 @@
 
 #include "ToggleAlatMonitoringCommand.h"
 #include "wrapper/View.h"
-#include "wrapper/Effect.h"
 #include "wrapper/Hook.h"
 #include "tools/Codec.h"
 #include <xeumeuleu/xml.hpp>
@@ -33,13 +32,24 @@ namespace
 // Name: ToggleAlatMonitoringCommand constructor
 // Created: SLI 2012-07-26
 // -----------------------------------------------------------------------------
-ToggleAlatMonitoringCommand::ToggleAlatMonitoringCommand( ModuleFacade& /*module*/, const wrapper::View& parameters, const wrapper::View& /*model*/, size_t /*identifier*/ )
-    : identifier_  ( parameters[ "identifier" ] )
-    , isActivated_ ( parameters[ "activated" ] )
-    , perceptionId_( parameters[ "perception-id" ] )
-    , localization_( isActivated_ ? parameters[ "localization" ].GetUserData() : 0 )
+ToggleAlatMonitoringCommand::ToggleAlatMonitoringCommand( ModuleFacade& /*module*/, const wrapper::View& parameters, const wrapper::View& model, size_t /*identifier*/ )
+    : effect_( model[ "entities" ][ static_cast< std::size_t >( parameters[ "identifier" ] ) ][ "perceptions/alat/monitoring" ] )
 {
-    // NOTHING
+    const std::size_t perceptionId = parameters[ "perception-id" ];
+    if( parameters[ "activated" ] )
+    {
+        const unsigned int currentTimeStep = model[ "tick" ];
+        unsigned int nForestSurface = 0;
+        unsigned int nEmptySurface  = 0;
+        unsigned int nUrbanSurface  = 0;
+        GET_HOOK( GetVisionObjectsInSurface )( reinterpret_cast< const TER_Localisation* >( parameters[ "localization" ].GetUserData() ), nEmptySurface, nForestSurface, nUrbanSurface );
+        effect_[ perceptionId ][ "forest-detection-time-step" ] = currentTimeStep + static_cast< unsigned int >( nForestSurface * rForestSurveillanceTime_ );
+        effect_[ perceptionId ][ "empty-detection-time-step" ] = currentTimeStep + static_cast< unsigned int >( nEmptySurface * rEmptySurveillanceTime_ );
+        effect_[ perceptionId ][ "urban-detection-time-step" ] = currentTimeStep + static_cast< unsigned int >( nUrbanSurface * rUrbanSurveillanceTime_ );
+        effect_[ perceptionId ][ "localization" ] = parameters[ "localization" ];
+    }
+    else
+        effect_[ perceptionId ].MarkForRemove();
 }
 
 // -----------------------------------------------------------------------------
@@ -55,25 +65,9 @@ ToggleAlatMonitoringCommand::~ToggleAlatMonitoringCommand()
 // Name: ToggleAlatMonitoringCommand::Execute
 // Created: SLI 2012-07-26
 // -----------------------------------------------------------------------------
-void ToggleAlatMonitoringCommand::Execute( const wrapper::View& model ) const
+void ToggleAlatMonitoringCommand::Execute( const wrapper::View& /*model*/ ) const
 {
-    const wrapper::View& perception = model[ "entities" ][ identifier_ ][ "perceptions/alat/monitoring"];
-    wrapper::Effect effect( perception );
-    if( isActivated_ )
-    {
-        effect[ perceptionId_ ][ "localization" ].SetUserData( localization_ );
-        const unsigned int currentTimeStep = model[ "tick" ];
-        unsigned int nForestSurface = 0;
-        unsigned int nEmptySurface  = 0;
-        unsigned int nUrbanSurface  = 0;
-        GET_HOOK( GetVisionObjectsInSurface )( reinterpret_cast< const TER_Localisation* >( localization_ ), nEmptySurface, nForestSurface, nUrbanSurface );
-        effect[ perceptionId_ ][ "forest-detection-time-step" ] = currentTimeStep + static_cast< unsigned int >( nForestSurface * rForestSurveillanceTime_ );
-        effect[ perceptionId_ ][ "empty-detection-time-step" ] = currentTimeStep + static_cast< unsigned int >( nEmptySurface * rEmptySurveillanceTime_ );
-        effect[ perceptionId_ ][ "urban-detection-time-step" ] = currentTimeStep + static_cast< unsigned int >( nUrbanSurface * rUrbanSurveillanceTime_ );
-    }
-    else
-        effect[ perceptionId_ ].MarkForRemove();
-    effect.Post();
+    effect_.Post();
 }
 
 // -----------------------------------------------------------------------------

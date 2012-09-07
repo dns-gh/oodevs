@@ -109,7 +109,7 @@ BOOST_FIXTURE_TEST_CASE( activated_radar_localization_is_forwarded_to_effect, sw
     core::Model& radar = model[ "entities" ][ identifier ][ "perceptions/localized-radars/tapping" ];
     ExpectEffect( radar, sword::test::MakeModel( perceptionId,
                             sword::test::MakeModel( "localization", sword::test::MakeUserData( &localization ) )
-                                                  ( "identifier", perceptionId ) ) );
+                                                  ( "perception-id", perceptionId ) ) );
     commands.Start( "toggle localized radar",
         core::MakeModel( "identifier", identifier )
                        ( "radar-class", tapping )
@@ -178,7 +178,7 @@ BOOST_FIXTURE_TEST_CASE( activating_reco_forwards_localization_and_growth_speed_
                                                                                     ( "growth-speed", 31 )
                                                                                     ( "radius", 0 )
                                                                                     ( "max-radius-reached", false )
-                                                                                    ( "identifier", perceptionId )
+                                                                                    ( "perception-id", perceptionId )
                                                                                     ( "localization", sword::test::MakeUserData( &localization ) ) ) );
     commands.Start( "toggle reco",
         core::MakeModel( "identifier", identifier )
@@ -213,7 +213,7 @@ BOOST_FIXTURE_TEST_CASE( activating_object_detection_forwards_localization_and_s
                                                     sword::test::MakeModel( "growth-speed", speed )
                                                                           ( "radius", 0 )
                                                                           ( "max-radius-reached", false )
-                                                                          ( "identifier", perceptionId )
+                                                                          ( "perception-id", perceptionId )
                                                                           ( "center/x", 1 )
                                                                           ( "center/y", 2 )
                                                                           ( "localization", mock::any ) ) );
@@ -251,7 +251,7 @@ BOOST_FIXTURE_TEST_CASE( activating_recognition_point_forwards_center_and_speed_
     ExpectEffect( point, sword::test::MakeModel( perceptionId,
                             sword::test::MakeModel( "growth-speed", growthSpeed )
                                                   ( "radius", 0. )
-                                                  ( "identifier", perceptionId )
+                                                  ( "perception-id", perceptionId )
                                                   ( "max-radius", size )
                                                   ( "max-radius-reached", false )
                                                   ( "center/x", 1 )

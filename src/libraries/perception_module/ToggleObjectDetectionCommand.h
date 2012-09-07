@@ -10,10 +10,8 @@
 #ifndef SWORD_PERCEPTION_TOGGLE_OBJECT_DETECTION_COMMAND_H
 #define SWORD_PERCEPTION_TOGGLE_OBJECT_DETECTION_COMMAND_H
 
+#include "wrapper/Effect.h"
 #include <boost/noncopyable.hpp>
-#include <boost/shared_ptr.hpp>
-
-class TER_Localisation;
 
 namespace sword
 {
@@ -50,13 +48,7 @@ public:
 private:
     //! @name Member data
     //@{
-    const size_t identifier_;
-    const bool isActivated_;
-    const double speed_;
-    const double centerX_;
-    const double centerY_;
-    const int perceptionId_;
-    boost::shared_ptr< TER_Localisation >* localization_;
+    wrapper::Effect effect_;
     //@}
 };
 

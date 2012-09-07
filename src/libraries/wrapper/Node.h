@@ -47,14 +47,13 @@ public:
     Node& operator=( float value );
     Node& operator=( double value );
     Node& operator=( const std::string& value );
+    Node& operator=( const View& value );
 
     Node operator[]( const std::string& key );
     Node operator[]( const char* key );
     Node operator[]( unsigned int key );
 
     Node AddElement();
-    Node& SetUserData( const void* data );
-    Node& SetUserData( const void* data, SWORD_UserDataDestructor destructor );
     Node& MarkForRemove();
     //@}
 

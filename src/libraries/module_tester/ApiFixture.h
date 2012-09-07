@@ -22,9 +22,9 @@
 #include <core/Model.h>
 #include <core/Hooks.h>
 #include <core/Logger_ABC.h>
-#include <core/UserData.h>
 #include <core/MakeModel.h>
 #include <core/ChildrenVisitor.h>
+#include <core/MergeVisitor.h>
 #include <boost/make_shared.hpp>
 #include <boost/bind.hpp>
 #include <boost/assign.hpp>
@@ -259,23 +259,15 @@ namespace core
             CATCH
             return false;
         }
-        static void ReleaseUserData( SWORD_UserDataDestructor destructor, core::UserData_ABC* userData )
-        {
-            destructor( userData->Get() );
-            delete userData;
-        }
-        static int SWORD_SetUserData( SWORD_Model* node, const void* value, SWORD_UserDataDestructor destructor )
+        static int SWORD_CopyModel( const SWORD_Model* source, SWORD_Model* target )
         {
             TRY
-                BOOST_REQUIRE( node );
-                if( destructor )
-                    Convert( node )->SetData( boost::shared_ptr< core::UserData_ABC >( new core::UserData< const void* >( value ),
-                                                                                       boost::bind( &ReleaseUserData, destructor, _1 ) ) );
-                else
-                    Convert( node )->SetUserData( value );
+                BOOST_REQUIRE( source );
+                BOOST_REQUIRE( target );
+                MergeVisitor( *Convert( source ), *Convert( target ) );
                 return true;
             CATCH
-            return false;
+                return false;
         }
         MOCK_STATIC_METHOD( SWORD_Log, 2, void( SWORD_LogLevel level, const char* message ), Log )
 

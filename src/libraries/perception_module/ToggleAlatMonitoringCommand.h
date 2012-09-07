@@ -10,6 +10,7 @@
 #ifndef SWORD_PERCEPTION_TOGGLE_ALAT_MONITORING_COMMAND_H
 #define SWORD_PERCEPTION_TOGGLE_ALAT_MONITORING_COMMAND_H
 
+#include "wrapper/Effect.h"
 #include <boost/noncopyable.hpp>
 
 namespace xml
@@ -63,10 +64,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const size_t identifier_;
-    const bool isActivated_;
-    const int perceptionId_;
-    void* localization_;
+    wrapper::Effect effect_;
     //@}
 };
 

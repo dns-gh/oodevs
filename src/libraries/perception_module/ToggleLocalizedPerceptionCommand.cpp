@@ -19,14 +19,17 @@ using namespace sword::perception;
 // Name: ToggleLocalizedPerceptionCommand constructor
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-ToggleLocalizedPerceptionCommand::ToggleLocalizedPerceptionCommand( ModuleFacade& /*module*/, const wrapper::View& parameters, const wrapper::View& /*model*/, size_t /*identifier*/ )
-    : identifier_  ( parameters[ "identifier" ] )
-    , isActivated_ ( parameters[ "activated" ] )
-    , perception_  ( parameters[ "perception" ] )
-    , perceptionId_( parameters[ "perception-id" ] )
-    , localization_( isActivated_ ? parameters[ "localization" ].GetUserData() : 0 )
+ToggleLocalizedPerceptionCommand::ToggleLocalizedPerceptionCommand( ModuleFacade& /*module*/, const wrapper::View& parameters, const wrapper::View& model, size_t /*identifier*/ )
+    : identifier_ ( parameters[ "identifier" ] )
+    , perception_ ( parameters[ "perception" ] )
+    , isActivated_( parameters[ "activated" ] )
+    , effect_     ( model[ "entities" ][ identifier_ ][ "perceptions" ][ perception_ ] )
 {
-    // NOTHING
+    const std::size_t perceptionId = parameters[ "perception-id" ];
+    if( isActivated_ )
+        effect_[ perceptionId ][ "localization" ] = parameters[ "localization" ];
+    else
+        effect_[ perceptionId ].MarkForRemove();
 }
 
 // -----------------------------------------------------------------------------
@@ -42,20 +45,15 @@ ToggleLocalizedPerceptionCommand::~ToggleLocalizedPerceptionCommand()
 // Name: ToggleLocalizedPerceptionCommand::Execute
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-void ToggleLocalizedPerceptionCommand::Execute( const wrapper::View& model ) const
+void ToggleLocalizedPerceptionCommand::Execute( const wrapper::View& /*model*/ ) const
 {
-    const wrapper::View& perception = model[ "entities" ][ identifier_ ][ "perceptions"][ perception_ ];
-    wrapper::Effect effect( perception );
-    if( isActivated_ )
-        effect[ perceptionId_ ][ "localization" ].SetUserData( localization_ );
-    else
+    if( !isActivated_ )
     {
-        effect[ perceptionId_ ].MarkForRemove();
         wrapper::Event event( perception_ + " disabled" );
         event[ "entity" ] = identifier_;
         event.Post();
     }
-    effect.Post();
+    effect_.Post();
 }
 
 // -----------------------------------------------------------------------------

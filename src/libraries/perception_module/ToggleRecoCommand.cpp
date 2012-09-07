@@ -9,7 +9,6 @@
 
 #include "ToggleRecoCommand.h"
 #include "wrapper/View.h"
-#include "wrapper/Effect.h"
 
 using namespace sword;
 using namespace sword::perception;
@@ -18,14 +17,24 @@ using namespace sword::perception;
 // Name: ToggleRecoCommand constructor
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-ToggleRecoCommand::ToggleRecoCommand( ModuleFacade& /*module*/, const wrapper::View& parameters, const wrapper::View& /*model*/, size_t /*identifier*/ )
-    : identifier_  ( parameters[ "identifier" ] )
-    , isActivated_ ( parameters[ "activated" ] )
-    , growthSpeed_ ( ( isActivated_ && parameters[ "has-growth-speed" ] ) ? boost::optional< float >( parameters[ "growth-speed" ] ) : boost::none )
-    , perceptionId_( parameters[ "perception-id" ] )
-    , localization_( isActivated_ ? static_cast< TER_Localisation* >( parameters[ "localization" ].GetUserData() ) : 0 )
+ToggleRecoCommand::ToggleRecoCommand( ModuleFacade& /*module*/, const wrapper::View& parameters, const wrapper::View& model, size_t /*identifier*/ )
+    : effect_( model[ "entities" ][ static_cast< std::size_t >( parameters[ "identifier" ] ) ][ "perceptions/reco" ] )
 {
-    // NOTHING
+    const std::size_t perceptionId = parameters[ "perception-id" ];
+    if( parameters[ "activated" ] )
+    {
+        effect_[ perceptionId ][ "perception-id" ] = perceptionId;
+        effect_[ perceptionId ][ "localization" ] = parameters[ "localization" ];
+        if( parameters[ "has-growth-speed" ] )
+        {
+            effect_[ perceptionId ][ "has-growth-speed" ] = true;
+            effect_[ perceptionId ][ "growth-speed" ] = parameters[ "growth-speed" ];
+        }
+        effect_[ perceptionId ][ "radius" ] = 0;
+        effect_[ perceptionId ][ "max-radius-reached" ] = false;
+    }
+    else
+        effect_[ perceptionId ].MarkForRemove();
 }
 
 // -----------------------------------------------------------------------------
@@ -41,22 +50,9 @@ ToggleRecoCommand::~ToggleRecoCommand()
 // Name: ToggleRecoCommand::Execute
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-void ToggleRecoCommand::Execute( const wrapper::View& model ) const
+void ToggleRecoCommand::Execute( const wrapper::View& /*model*/ ) const
 {
-    const wrapper::View& radar = model[ "entities" ][ identifier_ ][ "perceptions/reco"];
-    wrapper::Effect effect( radar );
-    if( isActivated_ )
-    {
-        effect[ perceptionId_ ][ "has-growth-speed" ] = static_cast< bool >( growthSpeed_ );
-        effect[ perceptionId_ ][ "growth-speed" ] = growthSpeed_ ? *growthSpeed_ : 0;
-        effect[ perceptionId_ ][ "radius" ] = 0;
-        effect[ perceptionId_ ][ "max-radius-reached" ] = false;
-        effect[ perceptionId_ ][ "identifier" ] = perceptionId_;
-        effect[ perceptionId_ ][ "localization" ].SetUserData( localization_ );
-    }
-    else
-        effect[ perceptionId_ ].MarkForRemove();
-    effect.Post();
+    effect_.Post();
 }
 
 // -----------------------------------------------------------------------------

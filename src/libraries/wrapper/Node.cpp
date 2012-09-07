@@ -64,12 +64,12 @@ Node& Node::operator=( const std::string& value )
 // Name: Node::operator=
 // Created: MCO 2012-04-26
 // -----------------------------------------------------------------------------
-//Node& Node::operator=( const View& view )
-//{
-//    if( ! ::SWORD_CopyValue( view, node_ ) )
-//        throw std::runtime_error( "unable copy node value" );
-//    return *this;
-//}
+Node& Node::operator=( const View& view )
+{
+    if( ! ::SWORD_CopyModel( view, node_ ) )
+        throw std::runtime_error( "unable copy node model" );
+    return *this;
+}
 
 // -----------------------------------------------------------------------------
 // Name: Node::operator[]
@@ -116,26 +116,6 @@ Node Node::AddElement()
     if( ! element )
         throw std::runtime_error( "could not add element to node" );
     return Node( element );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Node::SetUserData
-// Created: SLI 2012-03-26
-// -----------------------------------------------------------------------------
-Node& Node::SetUserData( const void* data )
-{
-    return SetUserData( data, 0 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Node::SetUserData
-// Created: SLI 2012-09-05
-// -----------------------------------------------------------------------------
-Node& Node::SetUserData( const void* data, SWORD_UserDataDestructor destructor )
-{
-    if( ! ::SWORD_SetUserData( node_, data, destructor ) )
-        throw std::runtime_error( "unable to set user data" );
-    return *this;
 }
 
 // -----------------------------------------------------------------------------

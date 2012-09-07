@@ -36,7 +36,7 @@ public:
 
     //! @name Operations
     //@{
-    void Post(); // $$$$ MCO : should it be done by the destructor (it cannot throw) ?
+    void Post() const; // $$$$ MCO : should it be done by the destructor (it cannot throw) ?
 
     Node AddElement();
     Node MarkForRemove();

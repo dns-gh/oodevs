@@ -81,7 +81,7 @@ BOOST_FIXTURE_TEST_CASE( localized_radar_sensor_acquire_targets_and_waits_ticks_
     const TER_Localisation* localization = reinterpret_cast< const TER_Localisation* >( 0xCAFE );
     entity[ "perceptions/sensor/activated" ] = false;
     entity[ "perceptions/localized-radars/radar/421/localization" ].SetUserData( localization );
-    entity[ "perceptions/localized-radars/radar/421/identifier" ] = 421u;
+    entity[ "perceptions/localized-radars/radar/421/perception-id" ] = 421u;
     ExpectEffect( entity[ "perceptions/radars/acquisitions" ],
                         sword::test::MakeModel( "my-radar/13337", sword::test::MakeModel( "first-step", 0u )
                                                                                         ( "identifier", 13337 ) ) );

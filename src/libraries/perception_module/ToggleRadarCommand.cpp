@@ -55,7 +55,7 @@ ToggleRadarCommand::~ToggleRadarCommand()
 // -----------------------------------------------------------------------------
 void ToggleRadarCommand::Execute( const wrapper::View& model ) const
 {
-    const wrapper::View& radar = model[ "entities" ][ identifier_ ][ "perceptions/radars"][ radarClass_ ]["activated" ];
+    const wrapper::View& radar = model[ "entities" ][ identifier_ ][ "perceptions/radars" ][ radarClass_ ][ "activated" ];
     if( radar == isActivated_ )
         return;
     wrapper::Effect effect( radar );

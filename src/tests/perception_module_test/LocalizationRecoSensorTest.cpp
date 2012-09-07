@@ -19,7 +19,7 @@ BOOST_FIXTURE_TEST_CASE( localization_reco_sensor_recognized_all_agents_in_locat
     entity[ "perceptions/sensor/activated" ] = false;
     core::Model& perception = entity[ "perceptions/reco" ][ perceptionId ];
     perception = core::MakeModel( "localization", core::MakeUserData( localization ) )
-                                ( "identifier", perceptionId )
+                                ( "perception-id", perceptionId )
                                 ( "growth-speed", 2 )
                                 ( "has-growth-speed", true )
                                 ( "radius", 0 )

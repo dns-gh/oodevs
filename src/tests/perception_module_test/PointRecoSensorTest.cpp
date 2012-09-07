@@ -18,7 +18,7 @@ BOOST_FIXTURE_TEST_CASE( perception_reco_point_sensor_recognizes_all_agents_in_g
     entity[ "perceptions/sensor/activated" ] = false;
     const std::size_t perceptionId = 42;
     core::Model& perception = entity[ "perceptions/recognition-point" ][ perceptionId ];
-    perception = core::MakeModel( "identifier", perceptionId )
+    perception = core::MakeModel( "perception-id", perceptionId )
                                 ( "growth-speed", growthSpeed )
                                 ( "center", core::MakeModel( "x", 10 )
                                                            ( "y", 20 ) )
@@ -50,7 +50,7 @@ BOOST_FIXTURE_TEST_CASE( perception_reco_point_sensor_identifies_all_objects_in_
     entity[ "perceptions/sensor/activated" ] = false;
     const std::size_t perceptionId = 42;
     core::Model& perception = entity[ "perceptions/recognition-point" ][ perceptionId ];
-    perception = core::MakeModel( "identifier", perceptionId )
+    perception = core::MakeModel( "perception-id", perceptionId )
                                 ( "growth-speed", growthSpeed )
                                 ( "center", core::MakeModel( "x", 10 )
                                                            ( "y", 20 ) )

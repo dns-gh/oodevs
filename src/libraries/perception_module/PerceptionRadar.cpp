@@ -72,7 +72,7 @@ void PerceptionRadar::EnableLocalizedRadar( const wrapper::View& radar, const Ra
     const TER_Localisation* zone = reinterpret_cast< const TER_Localisation* >( radar[ "localization" ].GetUserData() );
     if( !radarZones_[ radarClass.GetID() ].insert( zone ).second )
         throw std::runtime_error( "Insertion failed in perception radar" );
-    radarId_[ radar[ "identifier" ] ] = zone;
+    radarId_[ radar[ "perception-id" ] ] = zone;
 }
 
 // -----------------------------------------------------------------------------

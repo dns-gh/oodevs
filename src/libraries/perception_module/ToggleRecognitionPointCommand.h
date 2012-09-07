@@ -10,6 +10,7 @@
 #ifndef SWORD_PERCEPTION_TOGGLE_RECOGNITION_POINT_COMMAND_H
 #define SWORD_PERCEPTION_TOGGLE_RECOGNITION_POINT_COMMAND_H
 
+#include "wrapper/Effect.h"
 #include <boost/noncopyable.hpp>
 
 namespace sword
@@ -47,13 +48,7 @@ public:
 private:
     //! @name Member data
     //@{
-    const size_t identifier_;
-    const bool isActivated_;
-    const double size_;
-    const double speed_;
-    const double centerX_;
-    const double centerY_;
-    const int perceptionId_;
+    wrapper::Effect effect_;
     //@}
 };
 
