@@ -22,6 +22,7 @@ PropertyTreeView::PropertyTreeView()
 {
     header()->hide();
     setEditTriggers( SelectedClicked | DoubleClicked );
+    setAlternatingRowColors( true );
 
     QPalette p = palette();
     p.setColor( QPalette::Inactive, QPalette::Highlight, Qt::lightGray );

@@ -18,7 +18,6 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 PropertyDisplayer::PropertyDisplayer()
     : item_ ( 0 )
-    , color_( Qt::white )
 {
     // NOTHING
 }
@@ -83,7 +82,7 @@ void PropertyDisplayer::DisplayFormatted( const QString& formatted )
     }
     else
     {
-        color_ = Qt::white;
+        color_ = QColor();
         message_ += formatted;
     }
 }
@@ -98,7 +97,9 @@ void PropertyDisplayer::EndDisplay()
         throw std::runtime_error( __FUNCTION__ );
 
     item_->setData( message_, Qt::DisplayRole );
-    item_->setBackground( QBrush( color_ ) );
+    if( color_.isValid() )
+        item_->setBackground( QBrush( color_ ) );
+
     item_ = 0;
 }
 
