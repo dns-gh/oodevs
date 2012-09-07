@@ -31,16 +31,8 @@
         <translation>sword-ot@masagroup.net</translation>
     </message>
     <message>
-        <source>Unhandled error</source>
-        <translation>Erreur irrécupérable</translation>
-    </message>
-    <message>
         <source>Preparation</source>
         <translation>Préparation</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation>Erreur</translation>
     </message>
     <message>
         <source>Unknown exception caught</source>
@@ -1462,6 +1454,10 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Cycle detected in diffusion list.</source>
         <translation>Cycle détecté dans la liste de diffusion.</translation>
+    </message>
+    <message>
+        <source>Some resource network nodes point on nonexistent urban blocks. They will be deleted at next save.</source>
+        <translation>Des liens de réseau de ressource pointent sur des bloc inexistant sur ce terrain et seront supprimés à la prochaine sauvegarde.</translation>
     </message>
 </context>
 <context>

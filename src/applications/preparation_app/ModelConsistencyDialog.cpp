@@ -118,6 +118,7 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ eNoOrbat ]                         = tools::translate( "ModelConsistencyDialog", "No orbat.xml found. The orbat.xml file will be created after the first save." );
     errorDescriptions_[ eBadCPExtensions ]                 = tools::translate( "ModelConsistencyDialog", "CP type or SIOC type extensions defined for a non CP unit." );
     errorDescriptions_[ eDiffusionList ]                   = tools::translate( "ModelConsistencyDialog", "Cycle detected in diffusion list." );
+    errorDescriptions_[ eDeletedUrbanBlocks ]              = tools::translate( "ModelConsistencyDialog", "Some resource network nodes point on nonexistent urban blocks. They will be deleted at next save.");
     errorDescriptions_[ eOthers ]                          = "%1";
 }
 

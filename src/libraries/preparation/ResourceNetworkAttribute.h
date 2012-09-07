@@ -71,7 +71,7 @@ public:
     virtual void NotifyDeleted( const kernel::Object_ABC& object );
     virtual void NotifyDeleted( const kernel::UrbanObject_ABC& object );
     const std::set< std::string >& GetInvalidResources() const;
-    void CleanLinksToDeletedUrbanBlocks();
+    bool CleanLinksToDeletedUrbanBlocks();
     //@}
 
     //! @name Serializable_ABC

@@ -57,7 +57,8 @@ enum E_ConsistencyCheck
     eNoOrbat                         = 0x000a << 20,
     eBadCPExtensions                 = 0x000b << 20,
     eDiffusionList                   = 0x000c << 20,
-    eOthers                          = 0x000d << 20,
+    eDeletedUrbanBlocks              = 0x000d << 20,
+    eOthers                          = 0x000e << 20,
 };
 
 #endif // __ConsistencyErrorTypes_h_

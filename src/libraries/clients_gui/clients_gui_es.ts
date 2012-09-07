@@ -207,7 +207,7 @@
     <name>gui::ByPassPrototype_ABC</name>
     <message>
         <source>Value:</source>
-        <translation  type="unfinished"></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -225,7 +225,7 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Annuler</translation>
     </message>
     <message>
         <source>Select new superior</source>

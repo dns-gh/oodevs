@@ -31,19 +31,11 @@
         <translation>sword-ot@masagroup.net</translation>
     </message>
     <message>
-        <source>Unhandled error</source>
-        <translation>Error inesperado</translation>
-    </message>
-    <message>
         <source>Preparation</source>
         <translation>Preparación</translation>
     </message>
     <message>
         <source>Unknown exception caught</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1456,6 +1448,10 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Cycle detected in diffusion list.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Some resource network nodes point on nonexistent urban blocks. They will be deleted at next save.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

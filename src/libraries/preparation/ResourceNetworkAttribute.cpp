@@ -152,7 +152,7 @@ namespace
         {}
         bool operator() ( const kernel::ResourceNetwork_ABC::ResourceLink& link )
         {
-            return link.urban_ && urbans_->Find( link.id_ );
+            return link.urban_ && !urbans_->Find( link.id_ );
         }
     private:
         const ResourceNetworkAttribute::T_Urbans* urbans_;
@@ -161,15 +161,20 @@ namespace
 
 // -----------------------------------------------------------------------------
 // Name: ResourceNetworkAttribute::CleanLinksToDeletedUrbanBlocks
-// Created: JSR 2012-08-08
+// Created: LDC 2012-08-08
 // -----------------------------------------------------------------------------
-void ResourceNetworkAttribute::CleanLinksToDeletedUrbanBlocks()
+bool ResourceNetworkAttribute::CleanLinksToDeletedUrbanBlocks()
 {
+    bool cleaned = false;
     for( IT_ResourceNodes node = resourceNodes_.begin(); node != resourceNodes_.end(); ++node )
     {
         T_ResourceLinks& links = node->second.links_;
+        size_t size = links.size();
         links.erase( std::remove_if( links.begin(), links.end(), IsUrbanDeleted( urbans_ ) ), links.end() );
+        if( size != links.size() )
+            cleaned = true;
     }
+    return cleaned;
 }
 
 // -----------------------------------------------------------------------------
