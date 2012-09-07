@@ -9,7 +9,7 @@
     </target>
 
     <target name="package">
-        <nsis name="cloud"/>
+        <nsis dir="${src.dir}" name="cloud_server"/>
         <zip destfile="${dist.dir}/sword_cloud_${platform}_debug.zip">
             <mappedresources>
                 <fileset dir="../../host_agent/out/${platform}/RelWithDebInfo" includes="**/*.pdb"/>

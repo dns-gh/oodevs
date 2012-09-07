@@ -7,12 +7,12 @@
 ;
 ; ------------------------------------------------------------------------------
 
-!define HOST_AGENT "..\..\..\host_agent"
-!define PROXY "..\..\..\proxy"
-!define NODE "..\..\..\node"
+!define HOST_AGENT "..\..\host_agent"
+!define PROXY "..\..\proxy"
+!define NODE "..\..\node"
 !define SWORD "${NODE}\out\${PLATFORM}"
-!define OUT "..\..\out\${PLATFORM}"
-!define EXTERNAL "..\..\external"
+!define OUT "..\out\${PLATFORM}"
+!define EXTERNAL "..\external"
 
 !if ${PLATFORM} == "vc100_x64"
 !define PRG $PROGRAMFILES64
