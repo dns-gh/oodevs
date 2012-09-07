@@ -1459,6 +1459,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>No user role defined for profile &quot;%1&quot;.</source>
         <translation>Pas de rôle utilisateur défini pour le profil &quot;%1&quot;.</translation>
     </message>
+    <message>
+        <source>Cycle detected in diffusion list.</source>
+        <translation>Cycle détecté dans la liste de diffusion.</translation>
+    </message>
 </context>
 <context>
     <name>NewProfileDialog</name>

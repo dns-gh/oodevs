@@ -55,10 +55,15 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/UrbanObject_ABC.h"
+#include "clients_kernel/DictionaryExtensions.h"
 #include "ENT/ENT_Tr_Gen.h"
 #include "tools/GeneralConfig.h"
 #include "tools/RealFileLoaderObserver_ABC.h"
 #include "tools/SchemaWriter.h"
+#pragma warning( push, 0 )
+#include <boost/algorithm/string.hpp>
+#pragma warning( pop )
+#include <boost/lexical_cast.hpp>
 #include <boost/foreach.hpp>
 #include <boost/format.hpp>
 #include <xeuseuleu/xsl.hpp>
@@ -163,6 +168,7 @@ bool ModelConsistencyChecker::CheckConsistency()
     CheckUrban();
     CheckOrbat();
     CheckFiles();
+    CheckDiffusionList();
 
     return !errors_.empty();
 }
@@ -824,6 +830,81 @@ void ModelConsistencyChecker::CheckFiles()
     for( int i = 0; i < filesErrors.size(); ++i )
         AddError( eOthers, 0, filesErrors[ i ] );
     fileLoaderObserver_.Purge();
+}
+
+namespace
+{
+    bool IsReceiver( const kernel::Entity_ABC& entity )
+    {
+        kernel::DictionaryExtensions* dictionary = const_cast< kernel::DictionaryExtensions* >( entity.Retrieve< kernel::DictionaryExtensions >() );
+        if( !dictionary )
+            return false;
+        kernel::ExtensionType* type = dictionary->GetExtensionTypes().tools::StringResolver< kernel::ExtensionType >::Find( "orbat-attributes" );
+        if( !type || dictionary->GetExtensions().size() == 0 )
+            return false;
+        if( !dictionary->GetValue( "TypePC" ).empty() && dictionary->GetValue( "TypePC" ) != "PasCorresp" )
+            return true;
+        return false;
+    }
+
+    bool IsTransmitter( const kernel::Entity_ABC& entity )
+    {
+        if( const kernel::DictionaryExtensions* dictionary = entity.Retrieve< kernel::DictionaryExtensions >() )
+        {
+            const std::string name = dictionary->GetExtensionTypes().GetNameByType( kernel::AttributeType::ETypeDiffusionList );
+            kernel::ExtensionType* type = dictionary->GetExtensionTypes().tools::StringResolver< kernel::ExtensionType >::Find( "orbat-attributes" );
+            if( !type )
+                return false;
+            kernel::AttributeType* attribute = type->tools::StringResolver< kernel::AttributeType >::Find( name );
+            if( !attribute )
+                return false;
+            if( attribute->IsActive( dictionary->GetExtensions() ) )
+                return true;
+        }
+        return false;
+    }
+
+    std::vector< std::string > GetReceivers( const kernel::Agent_ABC& transmitter )
+    {
+        std::vector< std::string > list;
+        if( const kernel::DictionaryExtensions* extension = transmitter.Retrieve< kernel::DictionaryExtensions >() )
+        {
+            const std::string name = extension->GetExtensionTypes().GetNameByType( kernel::AttributeType::ETypeDiffusionList );
+            const std::string value = extension->GetValue( name );
+            boost::split( list, value, boost::algorithm::is_any_of( ";" ) );
+        }
+        return list;
+    }
+
+    bool IsValid( const kernel::Agent_ABC& transmitter, const kernel::Agent_ABC& entity, tools::Resolver_ABC< kernel::Agent_ABC >& resolver )
+    {
+        if( IsTransmitter( transmitter ) )
+            BOOST_FOREACH( const std::string id, GetReceivers( transmitter ) )
+                if( id != "" )
+                    if( const kernel::Agent_ABC* agent = resolver.Find( boost::lexical_cast< unsigned int >( id ) ) )
+                    {
+                        if( entity.GetId() == agent->GetId() )
+                            return false;
+                        if( !IsValid( *agent, entity, resolver ) )
+                            return false;
+                    }
+        return true;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelConsistencyChecker::CheckDiffusionList
+// Created: LGY 2012-09-06
+// -----------------------------------------------------------------------------
+void ModelConsistencyChecker::CheckDiffusionList()
+{
+    Iterator< const Agent_ABC& > it = model_.GetAgentResolver().CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const Agent_ABC& agent = it.NextElement();
+        if( !IsValid( agent, agent, model_.GetAgentResolver() ) )
+            AddError( eDiffusionList, &agent );
+    }
 }
 
 // -----------------------------------------------------------------------------

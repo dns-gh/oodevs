@@ -83,6 +83,7 @@ private:
     void CheckUrban();
     void CheckOrbat();
     void CheckFiles();
+    void CheckDiffusionList();
     //@}
 
 private:
