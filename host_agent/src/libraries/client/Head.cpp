@@ -9,8 +9,10 @@
 
 #include "Head.h"
 
+#include "runtime/FileSystem_ABC.h"
 #include "runtime/Runtime_ABC.h"
 #include "host/Package.h"
+
 #include <boost/filesystem/path.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -23,6 +25,9 @@ using host::Package;
 
 namespace
 {
+    const std::wstring install_dir = L"_";
+    const std::wstring tmp_dir     = L"tmp";
+
 // -----------------------------------------------------------------------------
 // Name: RegisterProtocolHandler
 // Created: BAX 2012-09-06
@@ -45,6 +50,11 @@ void UnregisterProtocolHandler( const QString& protocol )
     QSettings opt( "HKEY_CLASSES_ROOT\\" + protocol, QSettings::NativeFormat );
     opt.remove( "" );
 }
+
+Path MakePath( const QFileInfo& fi, const std::wstring& suffix )
+{
+    return fi.absoluteFilePath().toStdWString() + L"/" + suffix;
+}
 }
 
 // -----------------------------------------------------------------------------
@@ -56,9 +66,11 @@ Head::Head( const Runtime_ABC& runtime, const FileSystem_ABC& fs, Pool_ABC& pool
     , runtime_   ( runtime )
     , fs_        ( fs )
     , pool_      ( pool )
+    , root_      ( QString::fromStdWString( runtime.GetModuleFilename().remove_filename().wstring().c_str() ) )
     , cmd_       ( CMD_DISPLAY )
     , items_     ()
     , async_     ()
+    , io_async_  ( pool )
 {
     ui_.setupUi( this );
     ui_.status->addPermanentWidget( &progress_ );
@@ -81,6 +93,9 @@ Head::Head( const Runtime_ABC& runtime, const FileSystem_ABC& fs, Pool_ABC& pool
 
     LoadSettings();
     ParseArguments();
+
+    fs_.MakePaths( MakePath( root_, install_dir ) );
+    fs_.MakePaths( MakePath( root_, tmp_dir ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,6 +106,8 @@ Head::~Head()
 {
     SaveSettings();
     async_.Join();
+    io_async_.Join();
+    fs_.Remove( MakePath( root_, tmp_dir ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -201,7 +218,7 @@ void Head::Unregister()
 // -----------------------------------------------------------------------------
 void Head::ParseRoot()
 {
-    install_ = boost::make_shared< Package >( pool_, fs_, root_.absoluteFilePath().toStdWString(), true );
+    install_ = boost::make_shared< Package >( pool_, fs_, MakePath( root_, install_dir ), true );
     install_->Parse();
     items_.Fill( install_->GetProperties() );
     emit ProgressVisible( false );
@@ -234,4 +251,5 @@ void Head::OnModifiedItems()
 void Head::OnRemove()
 {
     const std::vector< size_t > removed = items_.Remove();
+    install_->Uninstall( io_async_, MakePath( root_, tmp_dir ), removed );
 }

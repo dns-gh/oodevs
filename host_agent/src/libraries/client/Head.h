@@ -12,6 +12,7 @@
 
 #include "ItemModel.h"
 #include "QAsync.h"
+#include "runtime/Async.h"
 #include "ui_head.h"
 
 #include <boost/shared_ptr.hpp>
@@ -85,6 +86,7 @@ private:
     QProgressBar progress_;
     QLabel count_;
     QAsync async_;
+    runtime::Async io_async_;
 };
 }
 
