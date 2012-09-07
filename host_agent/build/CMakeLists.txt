@@ -114,7 +114,7 @@ glob_qt4_headers( files src "${root}/*.h" )
 glob_qt4_ui( files ui "${root}/*.ui" )
 add_static_library( client ${files} )
 set_target_folder( client libraries )
-set_target_qt4( client false )
+set_target_qt4( client )
 
 ################################################################################
 # cloud_client
@@ -125,7 +125,7 @@ configure_rc( cloud_client files res "${root}/version.rc.in" )
 glob_qt4_rc( files res "${root}/*.qrc" )
 add_executable_target( cloud_client WIN32 ${files} )
 set_target_folder( cloud_client applications )
-set_target_qt4( cloud_client true )
+set_target_qt4( cloud_client )
 target_link_libraries( cloud_client
     client
     host

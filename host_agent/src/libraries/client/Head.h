@@ -15,6 +15,7 @@
 #include "runtime/Async.h"
 #include "ui_head.h"
 
+#include <boost/filesystem/path.hpp>
 #include <boost/shared_ptr.hpp>
 #include <QFileInfo>
 #include <QLabel>
@@ -33,6 +34,11 @@ namespace runtime
     struct FileSystem_ABC;
     struct Pool_ABC;
     struct Runtime_ABC;
+}
+
+namespace gui
+{
+    typedef boost::filesystem::path Path;
 }
 
 namespace gui
@@ -78,7 +84,7 @@ private:
     const runtime::FileSystem_ABC& fs_;
     runtime::Pool_ABC& pool_;
     Ui::Head ui_;
-    QFileInfo root_;
+    Path root_;
     Command cmd_;
     QString url_;
     boost::shared_ptr< host::Package_ABC > install_;

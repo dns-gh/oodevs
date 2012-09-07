@@ -9,11 +9,12 @@
 
 #include "Head.h"
 
+#include "Helpers.h"
 #include "runtime/FileSystem_ABC.h"
 #include "runtime/Runtime_ABC.h"
+#include "runtime/Utf8.h"
 #include "host/Package.h"
 
-#include <boost/filesystem/path.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <QSettings>
@@ -25,8 +26,8 @@ using host::Package;
 
 namespace
 {
-    const std::wstring install_dir = L"_";
-    const std::wstring tmp_dir     = L"tmp";
+    const std::string install_dir = "_";
+    const std::string tmp_dir     = "tmp";
 
 // -----------------------------------------------------------------------------
 // Name: RegisterProtocolHandler
@@ -50,11 +51,6 @@ void UnregisterProtocolHandler( const QString& protocol )
     QSettings opt( "HKEY_CLASSES_ROOT\\" + protocol, QSettings::NativeFormat );
     opt.remove( "" );
 }
-
-Path MakePath( const QFileInfo& fi, const std::wstring& suffix )
-{
-    return fi.absoluteFilePath().toStdWString() + L"/" + suffix;
-}
 }
 
 // -----------------------------------------------------------------------------
@@ -66,7 +62,7 @@ Head::Head( const Runtime_ABC& runtime, const FileSystem_ABC& fs, Pool_ABC& pool
     , runtime_   ( runtime )
     , fs_        ( fs )
     , pool_      ( pool )
-    , root_      ( QString::fromStdWString( runtime.GetModuleFilename().remove_filename().wstring().c_str() ) )
+    , root_      ( runtime.GetModuleFilename().remove_filename() )
     , cmd_       ( CMD_DISPLAY )
     , items_     ()
     , async_     ()
@@ -94,8 +90,8 @@ Head::Head( const Runtime_ABC& runtime, const FileSystem_ABC& fs, Pool_ABC& pool
     LoadSettings();
     ParseArguments();
 
-    fs_.MakePaths( MakePath( root_, install_dir ) );
-    fs_.MakePaths( MakePath( root_, tmp_dir ) );
+    fs_.MakePaths( root_ / install_dir );
+    fs_.MakePaths( root_ / tmp_dir );
 }
 
 // -----------------------------------------------------------------------------
@@ -107,7 +103,7 @@ Head::~Head()
     SaveSettings();
     async_.Join();
     io_async_.Join();
-    fs_.Remove( MakePath( root_, tmp_dir ) );
+    fs_.Remove( root_ / tmp_dir );
 }
 
 // -----------------------------------------------------------------------------
@@ -144,7 +140,7 @@ void Head::ParseArguments()
     for( QStringList::const_iterator it = list.begin() + 1; it != list.end(); ++it )
         if( *it == "--root" && ++it != list.end() )
         {
-            root_ = *it;
+            root_ = Utf8Convert( Utf8( *it ) );
         }
         else if( *it == "--register" )
         {
@@ -198,7 +194,7 @@ bool Head::ProcessCommand()
 // -----------------------------------------------------------------------------
 void Head::Register()
 {
-    QString app = QString::fromStdWString( runtime_.GetModuleFilename().wstring() );
+    QString app = Utf8( Utf8Convert( runtime_.GetModuleFilename() ) );
     QString cmd = QString( "\"%1\" \"%2\"" ).arg( app ).arg( "%1" );
     RegisterProtocolHandler( "sword", cmd );
 }
@@ -220,7 +216,7 @@ void Head::ParseRoot()
 {
     {
         QMutexLocker lock( &access_ );
-        install_ = boost::make_shared< Package >( pool_, fs_, MakePath( root_, install_dir ), true );
+        install_ = boost::make_shared< Package >( pool_, fs_, root_ / install_dir, true );
         install_->Parse();
     }
     items_.Fill( install_->GetProperties() );
@@ -255,5 +251,5 @@ void Head::OnRemove()
 {
     const std::vector< size_t > removed = items_.Remove();
     QMutexLocker lock( &access_ );
-    install_->Uninstall( io_async_, MakePath( root_, tmp_dir ), removed );
+    install_->Uninstall( io_async_, root_ / tmp_dir, removed );
 }
