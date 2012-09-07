@@ -83,6 +83,7 @@ public:
     void DeleteBlock( const kernel::UrbanObject_ABC& urbanObject );
     void ExportShapeFile( const std::string exportDirectory, const tools::ExerciseConfig& config, QProgressDialog& progressDialog ) const;
     UrbanMenuManager& GetUrbanMenuManager() const;
+    bool TakeLinkErrors();
     //@}
 
     //! @name Accessors
@@ -119,6 +120,7 @@ private:
     std::auto_ptr< UrbanMenuManager >               menuManager_;
     float                                           precision_;
     float                                           maxElementSize_;
+    bool                                            cleanedLinks_;
     //@}
 };
 

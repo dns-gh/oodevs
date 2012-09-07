@@ -27,6 +27,8 @@
 #include "SuccessFactorsModel.h"
 #include "TacticalLine_ABC.h"
 #include "TeamsModel.h"
+#include "UrbanModel.h"
+#include "UserProfile.h"
 #include "clients_gui/LongNameHelper.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentComposition.h"
@@ -725,6 +727,8 @@ void ModelConsistencyChecker::CheckUrban()
     }
     for( std::set< std::string >::const_iterator itNetwork = unknownNetworks.begin(); itNetwork != unknownNetworks.end(); ++ itNetwork )
         AddError( eUnknownResourceNetwork, 0, *itNetwork );
+    if( model_.urban_.TakeLinkErrors() )
+        AddError( eDeletedUrbanBlocks, 0, "" );
 }
 
 // -----------------------------------------------------------------------------

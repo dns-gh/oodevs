@@ -317,6 +317,7 @@ void UrbanModel::LoadUrbanState( xml::xistream& xis )
                 >> xml::list( "urban-object", *this, &UrbanModel::ReadUrbanObject )
             >> xml::end
         >> xml::end;
+    CleanLinks();
 }
 
 // -----------------------------------------------------------------------------
@@ -557,10 +558,11 @@ void UrbanModel::ExportShapeFile( const std::string exportDirectory, const tools
 
 // -----------------------------------------------------------------------------
 // Name: UrbanModel::CleanLinks
-// Created: JSR 2012-08-08
+// Created: LDC 2012-08-08
 // -----------------------------------------------------------------------------
 void UrbanModel::CleanLinks()
 {
+    cleanedLinks_ = false;
     for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
         kernel::Entity_ABC& entity = *it->second;
@@ -568,8 +570,19 @@ void UrbanModel::CleanLinks()
         if( !abstractExtension )
             continue;
         ResourceNetworkAttribute* extension = static_cast< ResourceNetworkAttribute* >( abstractExtension );
-        extension->CleanLinksToDeletedUrbanBlocks();
+        cleanedLinks_ = extension->CleanLinksToDeletedUrbanBlocks() | cleanedLinks_;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanModel::TakeLinkErrors
+// Created: LDC 2012-09-07
+// -----------------------------------------------------------------------------
+bool UrbanModel::TakeLinkErrors()
+{
+    bool result = cleanedLinks_;
+    cleanedLinks_ = false;
+    return result;
 }
 
 // -----------------------------------------------------------------------------

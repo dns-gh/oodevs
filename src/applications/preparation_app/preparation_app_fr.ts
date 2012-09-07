@@ -1393,6 +1393,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Unknown infrastructure &quot;%1&quot;. It will be deleted at next save.</source>
         <translation>Infrastructure &quot;%1&quot; inconnue. Elle sera supprimée à la prochaine sauvegarde.</translation>
     </message>
+    <message>
+        <source>Some resource network nodes point on nonexistent urban blocks. They will be deleted at next save.</source>
+        <translation>Des liens de réseau de ressource pointent sur des bloc inexistant sur ce terrain et seront supprimés à la prochaine sauvegarde.</translation>
+    </message>
 </context>
 <context>
     <name>NewProfileDialog</name>

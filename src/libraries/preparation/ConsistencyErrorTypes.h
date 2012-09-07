@@ -52,7 +52,8 @@ enum E_ConsistencyCheck
     eSuccessFactorError              = 0x0007 << 20,
     eUnknownInfrastructure           = 0x0008 << 20,
     eUnknownResourceNetwork          = 0x0009 << 20,
-    eOthers                          = 0x000a << 20,
+    eDeletedUrbanBlocks              = 0x000a << 20,
+    eOthers                          = 0x000b << 20,
 };
 
 #endif // __ConsistencyErrorTypes_h_
