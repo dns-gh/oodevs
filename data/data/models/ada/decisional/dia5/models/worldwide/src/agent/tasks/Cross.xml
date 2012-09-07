@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.tasks.Cross" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.Cross">
-    <description>Mission de franchissment d'une coupure. Mouvement jusqu'au site de franchissement, puis jusqu'à la destination finale.</description>
+    <description>To cross a water obstacle using a prepared crossing site.</description>
     <parameters>
         <parameter name="crossingSite">
-            <description>Les sites de franchissement</description>
+            <description>The prepared crossing site to use.</description>
             <type>
                 <class name="world.Object"/>
             </type>
         </parameter>
         <parameter name="meetingPoint">
-            <description>Le point de rendez-vous de l'autre côté de la coupure.</description>
+            <description>The final destination beyond the water obstacle.</description>
             <type>
-                <class name="properties.Reaching"/>
+                <class name="properties.Reachable"/>
             </type>
         </parameter>
     </parameters>
     <stages>
-        <stage label="Deplacement vers le site de franchissement">
+        <stage label="moving to crossing site">
             <skills>
                 <skill name="agent.skills.MoveToward" main="true">
                     <parameter name="entities">
@@ -29,7 +29,7 @@
                 </skill>
             </skills>
         </stage>
-        <stage label="Deplacement vers le point de rendez vous" disable-when-done="true">
+        <stage label="moving to meeting position" disable-when-done="true">
             <skills>
                 <skill name="agent.skills.MoveToward" main="true">
                     <parameter name="entities">

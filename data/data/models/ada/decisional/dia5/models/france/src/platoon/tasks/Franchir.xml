@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="platoon.tasks.Franchir" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.PassThrough">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="platoon.tasks.Franchir" source-version="1.0.0" knowledge-class="platoon.tasks.knowledges.Franchir">
     <description>Mouvement jusqu'à un site de franchissement, puis jusqu'à la destination finale.</description>
     <parameters>
         <parameter name="crossingSite">
@@ -9,23 +9,38 @@
             </type>
         </parameter>
         <parameter name="meetingPoint">
-            <description>Le ou les élements à rejoindre</description>
+            <description>L'élement à rejoindre</description>
             <type>
                 <class name="properties.Reaching"/>
             </type>
         </parameter>
     </parameters>
-    <stages/>
-    <next-task name="agent.tasks.Cross">
-        <parameter name="crossingSite">
-            <value>
-                <parameter>crossingSite</parameter>
-            </value>
-        </parameter>
-        <parameter name="meetingPoint">
-            <value>
-                <parameter>meetingPoint</parameter>
-            </value>
-        </parameter>
-    </next-task>
+    <stages>
+        <stage label="deplacement vers le site de franchissement">
+            <skills>
+                <skill name="agent.skills.MoveToward" main="true">
+                    <parameter name="entities">
+                        <value>
+                            <list>
+                                <parameter>crossingSite</parameter>
+                            </list>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+        <stage label="deplacement vers le point de regroupement" disable-when-done="true">
+            <skills>
+                <skill name="agent.skills.MoveToward" main="true">
+                    <parameter name="entities">
+                        <value>
+                            <list>
+                                <parameter>meetingPoint</parameter>
+                            </list>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
 </task>
