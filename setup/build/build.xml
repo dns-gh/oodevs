@@ -9,6 +9,7 @@
     </target>
 
     <target name="package">
+        <nsis dir="${src.dir}" name="cloud_client"/>
         <nsis dir="${src.dir}" name="cloud_server"/>
         <zip destfile="${dist.dir}/sword_cloud_${platform}_debug.zip">
             <mappedresources>
