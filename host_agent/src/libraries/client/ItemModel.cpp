@@ -258,7 +258,7 @@ std::vector< size_t > ItemModel::Remove()
 {
     std::vector< size_t > rpy;
     BOOST_FOREACH( const T_Ptr& ptr, items_ )
-        if( ptr->GetCheckState() )
+        if( ptr->GetCheckState() == Qt::Checked )
             rpy.push_back( ptr->GetId() );
     // it is not possible to remove all items in one pass
     // as row indexes can be discontinuous...
