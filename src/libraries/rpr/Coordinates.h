@@ -55,6 +55,7 @@ public:
     double Latitude () const;
     double Longitude() const;
     double Altitude()  const;
+    void Reset( double x, double y, double z );
     //@}
 
 private:

@@ -323,6 +323,7 @@ void RemoteAgentController::EmbeddedUnitListChanged( const std::string& /*identi
 {
     // NOTHING
 }
+
 // -----------------------------------------------------------------------------
 // Name: RemoteAgentController::PlatformCreated
 // Created: AHC 2010-03-09
@@ -332,3 +333,11 @@ void RemoteAgentController::PlatformCreated( Agent_ABC& /*agent*/, unsigned int 
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: RemoteAgentController::PlatformCreated
+// Created: AHC 2012-09-07
+// -----------------------------------------------------------------------------
+void RemoteAgentController::PerimeterChanged( const std::string& /*identifier*/, const std::vector< rpr::PerimeterPoint >& /*perimeter*/ )
+{
+    // NOTHING
+}

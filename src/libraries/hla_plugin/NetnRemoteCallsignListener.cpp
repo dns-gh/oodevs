@@ -192,3 +192,12 @@ void NetnRemoteCallsignListener::EmbeddedUnitListChanged( const std::string& /*i
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: NetnRemoteCallsignListener::PerimeterChanged
+// Created: AHC 2010-09-07
+// -----------------------------------------------------------------------------
+void NetnRemoteCallsignListener::PerimeterChanged( const std::string& /*identifier*/, const std::vector< rpr::PerimeterPoint >& /*perimeter*/ )
+{
+    // NOTHING
+}

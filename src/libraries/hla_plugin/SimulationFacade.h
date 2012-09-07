@@ -65,6 +65,8 @@ namespace hla
     class AgentSubject_ABC;
     class LocalAgentResolver_ABC;
     class SideResolver_ABC;
+    class RemoteTacticalObjectController;
+    class RemoteTacticalObjectSubject_ABC;
 
 // =============================================================================
 /** @class  SimulationFacade
@@ -82,7 +84,7 @@ public:
                                const dispatcher::StaticModel& staticModel, const UnitTypeResolver_ABC& unitTypeResolver,
                                RemoteAgentSubject_ABC& remoteAgentSubject, const ComponentTypes_ABC& componentTypes, CallsignResolver_ABC& callsignResolver,
                                dispatcher::Logger_ABC& logger, const ExtentResolver_ABC& extent, AgentSubject_ABC& subject, const LocalAgentResolver_ABC& localResolver,
-                               const SideResolver_ABC& sideResolver );
+                               const SideResolver_ABC& sideResolver, const rpr::EntityTypeResolver_ABC& objectEntityTypeResolver, RemoteTacticalObjectSubject_ABC& remoteTacticalSubject );
     virtual ~SimulationFacade();
     //@}
 
@@ -108,6 +110,7 @@ private:
     std::auto_ptr< EquipmentUpdater > pEquipmentUpdater_;
     std::auto_ptr< RemoteAgentController > pRemoteAgentController_;
     std::auto_ptr< NetnRemoteCallsignListener > pNetnRemoteCallsignListener_;
+    std::auto_ptr< RemoteTacticalObjectController > pRemoteTacticalObjectController_;
     //@}
 };
 

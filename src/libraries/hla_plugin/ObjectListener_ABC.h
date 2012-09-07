@@ -15,7 +15,8 @@
 
 namespace rpr
 {
-class EntityType;
+    class EntityType;
+    class PerimeterPoint;
 }
 
 namespace plugins
@@ -47,6 +48,7 @@ public:
     virtual void UniqueIdChanged( const std::string& identifier, const std::string& uniqueId ) = 0;
     virtual void CallsignChanged( const std::string& identifier, const std::string& callsign ) = 0;
     virtual void EmbeddedUnitListChanged( const std::string& identifier, const std::vector< std::string >& embeddedUnits ) = 0;
+    virtual void PerimeterChanged( const std::string& identifier, const std::vector< rpr::PerimeterPoint >& perimeter ) = 0;
     //@}
 };
 }

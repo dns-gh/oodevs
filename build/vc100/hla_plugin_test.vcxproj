@@ -172,6 +172,7 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\RemoteAgentResolverTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\RemoteAggregateTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\RemoteSurfaceVesselTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\RemoteTacticalObjectControllerTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\RprDeserializationTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\RprSerializationTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\SideCheckerTest.cpp" />
@@ -230,6 +231,7 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRemoteAgentResolver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRemoteAgentSubject.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRemoteHlaObjectFactory.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRemoteTacticalObjectSubject.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockResolver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockResponseObserver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRtiAmbassador.h" />

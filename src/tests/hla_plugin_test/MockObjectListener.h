@@ -11,6 +11,7 @@
 #define hla_plugin_MockObjectListener_h
 
 #include "hla_plugin/ObjectListener_ABC.h"
+#include "rpr/Coordinates.h"
 
 namespace plugins
 {
@@ -33,6 +34,7 @@ MOCK_BASE_CLASS( MockObjectListener, ObjectListener_ABC )
     MOCK_METHOD( UniqueIdChanged, 2 )
     MOCK_METHOD( CallsignChanged, 2 )
     MOCK_METHOD( EmbeddedUnitListChanged, 2 )
+    MOCK_METHOD( PerimeterChanged, 2 )
 };
 }
 }

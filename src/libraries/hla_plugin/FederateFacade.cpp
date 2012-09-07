@@ -464,3 +464,22 @@ void FederateFacade::ObjectCreated( TacticalObject_ABC& object, unsigned int ide
         minefieldClass_->Created( object, identifier, name, force, type );
 }
 
+// -----------------------------------------------------------------------------
+// Name: FederateFacade::RegisterTactical
+// Created: AHC 2012-09-07
+// -----------------------------------------------------------------------------
+void FederateFacade::RegisterTactical( ClassListener_ABC& listener )
+{
+    if( minefieldClass_.get() )
+        minefieldClass_->Register( listener );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FederateFacade::UnregisterTactical
+// Created: AHC 2012-09-07
+// -----------------------------------------------------------------------------
+void FederateFacade::UnregisterTactical( ClassListener_ABC& listener )
+{
+    if( minefieldClass_.get() )
+        minefieldClass_->Unregister( listener );
+}

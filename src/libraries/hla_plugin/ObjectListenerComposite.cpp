@@ -133,3 +133,12 @@ void ObjectListenerComposite::EmbeddedUnitListChanged( const std::string& identi
 {
     copyAndApply( listeners_, boost::bind( &ObjectListener_ABC::EmbeddedUnitListChanged, _1, identifier, embeddedUnits ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ObjectListenerComposite::PerimeterChanged
+// Created: AHC 2010-09-07
+// -----------------------------------------------------------------------------
+void ObjectListenerComposite::PerimeterChanged( const std::string& /*identifier*/, const std::vector< rpr::PerimeterPoint >& /*perimeter*/ )
+{
+    // NOTHING
+}

@@ -16,12 +16,14 @@
 
 #include "ClassBuilder_ABC.h"
 #include "HlaObject_ABC.h"
+#include "ClassListenerComposite.h"
 
 #include "rpr/EntityType.h"
 
 #include <hla/Class.h>
 
 #include <boost/lexical_cast.hpp>
+#include <boost/foreach.hpp>
 
 using namespace plugins::hla;
 
@@ -35,6 +37,7 @@ HlaTacticalObjectClass::HlaTacticalObjectClass( Federate_ABC& federate, const Hl
     , factory_( factory )
     , remoteFactory_    ( remoteFactory )
     , hlaClass_         ( new ::hla::Class< HlaObject_ABC >( *this, true ) )
+    , pListeners_       ( new ClassListenerComposite() )
 {
     builder->Build( federate, *hlaClass_ );
 }
@@ -56,6 +59,7 @@ HlaObject_ABC& HlaTacticalObjectClass::Create ( const ::hla::ObjectIdentifier& /
 {
     T_Entity& entity = remoteEntities_[ objectName ];
     entity.reset( remoteFactory_->Create( objectName ).release() );
+    pListeners_->RemoteCreated( objectName, *this, *entity );
     return *entity;
 }
 
@@ -114,7 +118,7 @@ void HlaTacticalObjectClass::Created( TacticalObject_ABC& object, unsigned int i
     std::string objectName( nameFactory_.CreateName( name + boost::lexical_cast< std::string >( identifier ) ) );
     ::hla::ObjectIdentifier objectId( hlaClass_->Register( *localEntity, objectName ) );
     localEntity->SetIdentifier( objectName );
-    //pListeners_->LocalCreated( objectId.ToString(), *this, *localEntity );
+    pListeners_->LocalCreated( objectId.ToString(), *this, *localEntity );
     localEntities_[ objectName ] = localEntity;
     //hlaIdentifiers_[ objectName ] = objectId.ToLong();
     //resolver_.Add( identifier, objectName );
@@ -137,4 +141,26 @@ void HlaTacticalObjectClass::Divest(const std::string& /*objectID*/ )
 void HlaTacticalObjectClass::Acquire(const std::string& /*objectID*/ )
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: HlaTacticalObjectClass::Register
+// Created: AHC 2012-09-06
+// -----------------------------------------------------------------------------
+void HlaTacticalObjectClass::Register( ClassListener_ABC& listener )
+{
+    pListeners_->Register( listener );
+    BOOST_FOREACH( const T_Entities::value_type& entity, remoteEntities_ )
+        listener.RemoteCreated( entity.first, *this, *entity.second );
+    BOOST_FOREACH( const T_Entities::value_type& entity, localEntities_ )
+        listener.LocalCreated( entity.first, *this, *entity.second );
+}
+
+// -----------------------------------------------------------------------------
+// Name: HlaTacticalObjectClass::Unregister
+// Created: AHC 2012-09-06
+// -----------------------------------------------------------------------------
+void HlaTacticalObjectClass::Unregister( ClassListener_ABC& listener )
+{
+    pListeners_->Unregister( listener );
 }

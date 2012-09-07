@@ -11,6 +11,7 @@
 #define plugins_hla_HLATACTICALOBJECTCLASS_H_
 
 #include "HlaClass_ABC.h"
+#include "RemoteAgentSubject_ABC.h"
 #include "rpr/ForceIdentifier.h"
 
 #include <hla/ObjectRegistration_ABC.h>
@@ -41,6 +42,7 @@ namespace hla
     class Federate_ABC;
     class ClassBuilder_ABC;
     class TacticalObject_ABC;
+    class ClassListenerComposite;
 
 // =============================================================================
 /** @class  HlaClass
@@ -49,6 +51,7 @@ namespace hla
 // Created: AGE 2008-02-22
 // =============================================================================
 class HlaTacticalObjectClass : public HlaClass_ABC
+                             , public RemoteAgentSubject_ABC
                              , private ::hla::ObjectRegistration_ABC< HlaObject_ABC >
 {
 public:
@@ -61,6 +64,8 @@ public:
 
     //! @name Operations
     //@{
+    virtual void Register( ClassListener_ABC& listener );
+    virtual void Unregister( ClassListener_ABC& listener );
     void Created( TacticalObject_ABC& object, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type );
     virtual void Divest(const std::string& objectID );
     virtual void Acquire(const std::string& objectID );
@@ -95,6 +100,7 @@ private:
     std::auto_ptr< ::hla::Class< HlaObject_ABC > > hlaClass_;
     T_Entities localEntities_;
     T_Entities remoteEntities_;
+    std::auto_ptr< ClassListenerComposite > pListeners_;
     //@}
 };
 

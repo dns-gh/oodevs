@@ -19,6 +19,7 @@
 #include "NetnRemoteCallsignListener.h"
 #include "AutomatTypeResolver.h"
 #include "EquipmentUpdater.h"
+#include "RemoteTacticalObjectController.h"
 #include "protocol/Simulation.h"
 #include "dispatcher/Model_ABC.h"
 #include "dispatcher/StaticModel.h"
@@ -71,7 +72,7 @@ SimulationFacade::SimulationFacade( xml::xisubstream xis, const ContextFactory_A
                                     const dispatcher::StaticModel& staticModel, const UnitTypeResolver_ABC& unitTypeResolver,
                                     RemoteAgentSubject_ABC& remoteAgentSubject, const ComponentTypes_ABC& componentTypes, CallsignResolver_ABC& callsignResolver,
                                     dispatcher::Logger_ABC& logger, const ExtentResolver_ABC& extent, AgentSubject_ABC& subject, const LocalAgentResolver_ABC& localResolver,
-                                    const SideResolver_ABC& sideResolver )
+                                    const SideResolver_ABC& sideResolver, const rpr::EntityTypeResolver_ABC& objectEntityTypeResolver, RemoteTacticalObjectSubject_ABC& remoteTacticalSubject )
     : sideResolver_( sideResolver )
     , pFormationHandler_          ( new FormationContextHandler( messageController, contextFactory, publisher ) )
     , pAutomatHandler_            ( new AutomatContextHandler( messageController, contextFactory, publisher ) )
@@ -84,6 +85,7 @@ SimulationFacade::SimulationFacade( xml::xisubstream xis, const ContextFactory_A
     , pEquipmentUpdater_          ( new EquipmentUpdater( remoteAgentSubject, *pUnitHandler_, publisher, contextFactory, componentTypeResolver, componentTypes, messageController ) )
     , pRemoteAgentController_     ( new RemoteAgentController( remoteAgentSubject, *pAutomatHandler_, *pUnitHandler_, sideResolver_, unitTypeResolver, logger, extent, subject ) )
     , pNetnRemoteCallsignListener_( new NetnRemoteCallsignListener( callsignResolver, remoteAgentSubject, *pUnitHandler_ ) )
+    , pRemoteTacticalObjectController_( new RemoteTacticalObjectController( extent, sideResolver_, objectEntityTypeResolver, publisher, remoteTacticalSubject ) )
 {
     // NOTHING
 }

@@ -11,6 +11,7 @@
 #define plugins_hla_FederateFacade_h
 
 #include "RemoteAgentSubject_ABC.h"
+#include "RemoteTacticalObjectSubject_ABC.h"
 #include "Federate_ABC.h"
 #include "AgentListener_ABC.h"
 #include "TacticalObjectListener_ABC.h"
@@ -64,6 +65,7 @@ namespace hla
 // =============================================================================
 class FederateFacade : public RemoteAgentSubject_ABC
                      , public Federate_ABC
+                     , public RemoteTacticalObjectSubject_ABC
                      , private AgentListener_ABC
                      , private TacticalObjectListener_ABC
                      , private tools::MessageObserver< sword::ControlEndTick >
@@ -83,6 +85,8 @@ public:
     //@{
     virtual void Register( ClassListener_ABC& listener );
     virtual void Unregister( ClassListener_ABC& listener );
+    virtual void RegisterTactical( ClassListener_ABC& listener );
+    virtual void UnregisterTactical( ClassListener_ABC& listener );
     //@}
 
     //! @name Operations

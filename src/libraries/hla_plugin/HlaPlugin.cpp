@@ -254,7 +254,9 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
                     static_cast< NETN_InteractionBuilder_ABC* >( new NETNv1_InteractionBuilder( logger_, *pFederate_ ) ):
                     static_cast< NETN_InteractionBuilder_ABC* >( new NETNv2_InteractionBuilder( logger_, *pFederate_ ) ) );
             pInteractionBuilder_.reset( new InteractionBuilder( logger_, *pFederate_, *pNetnInteractionBuilder_ ) );
-            pSimulationFacade_.reset( new SimulationFacade( *pXis_, *pContextFactory_, *pMessageController_, simulationPublisher_, dynamicModel_, *pComponentTypeResolver_, staticModel_, *pUnitTypeResolver_, *pFederate_, *pComponentTypes_, *pCallsignResolver_, logger_, *pExtentResolver_, *pSubject_, *pLocalAgentResolver_, *pSideResolver_ ) );
+            pSimulationFacade_.reset( new SimulationFacade( *pXis_, *pContextFactory_, *pMessageController_, simulationPublisher_, dynamicModel_,
+                    *pComponentTypeResolver_, staticModel_, *pUnitTypeResolver_, *pFederate_, *pComponentTypes_, *pCallsignResolver_, logger_,
+                    *pExtentResolver_, *pSubject_, *pLocalAgentResolver_, *pSideResolver_, *pEntityObjectTypeResolver_, *pFederate_ ) );
             pRemoteAgentResolver_.reset( new RemoteAgentResolver( *pFederate_, *pSimulationFacade_ ) );
             pDetonationFacade_.reset( new DetonationFacade( simulationPublisher_, *pMessageController_, *pRemoteAgentResolver_, *pLocalAgentResolver_, *pContextFactory_, *pMunitionTypeResolver_, *pFederate_, pXis_->attribute< std::string >( "name", "SWORD" ), *pInteractionBuilder_ ) );
             pSideChecker_.reset( new SideChecker( *pSubject_, *pFederate_, *pRemoteAgentResolver_ ) );

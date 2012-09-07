@@ -78,6 +78,7 @@ private:
     virtual void UniqueIdChanged( const std::string& identifier, const std::string& uniqueId );
     virtual void CallsignChanged( const std::string& identifier, const std::string& callsign );
     virtual void EmbeddedUnitListChanged( const std::string& identifier, const std::vector< std::string >& units );
+    virtual void PerimeterChanged( const std::string& identifier, const std::vector< rpr::PerimeterPoint >& perimeter );
     void DoCheck();
     //@}
 
@@ -297,6 +298,15 @@ void LocationOwnershipPolicy::OwnershipState::CallsignChanged( const std::string
 // Created: AHC 2010-05-29
 // -----------------------------------------------------------------------------
 void LocationOwnershipPolicy::OwnershipState::EmbeddedUnitListChanged( const std::string& /*identifier*/, const std::vector< std::string >& /*units*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocationOwnershipPolicy::OwnershipState::PerimeterChanged
+// Created: AHC 2010-09-07
+// -----------------------------------------------------------------------------
+void LocationOwnershipPolicy::OwnershipState::PerimeterChanged( const std::string& /*identifier*/, const std::vector< rpr::PerimeterPoint >& /*perimeter*/ )
 {
     // NOTHING
 }

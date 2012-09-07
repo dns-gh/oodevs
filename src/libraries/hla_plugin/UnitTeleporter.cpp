@@ -281,3 +281,12 @@ void UnitTeleporter::EmbeddedUnitListChanged( const std::string& identifier, con
         message.Send( publisher_ );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: UnitTeleporter::PerimeterChanged
+// Created: AHC 2010-09-07
+// -----------------------------------------------------------------------------
+void UnitTeleporter::PerimeterChanged( const std::string& /*identifier*/, const std::vector< rpr::PerimeterPoint >& /*perimeter*/ )
+{
+    // NOTHING
+}

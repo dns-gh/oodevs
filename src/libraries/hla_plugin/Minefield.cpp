@@ -56,6 +56,11 @@ void ReadWorldLocation( ::hla::Deserializer_ABC& deserializer, const std::string
     loc.Deserialize( deserializer );
     listener.Moved( identifier, loc.Latitude(), loc.Longitude() );
 }
+void ReadPerimeter( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, std::vector< rpr::PerimeterPoint >& loc )
+{
+    deserializer >> loc;
+    listener.PerimeterChanged( identifier, loc );
+}
 }
 
 // -----------------------------------------------------------------------------
@@ -167,7 +172,7 @@ void Minefield::RegisterAttributes()
     attributes_->Register( "MinefieldLocation", boost::bind( &ReadWorldLocation, _1, _2, _3, boost::ref( center_ ) ), center_);
     //attributes_->Register( "MinefieldOrientation" ); // FIXME AHC
     attributes_->Register( "MineTypes", boost::bind( &ReadNothing, _1, _2, _3 ), Wrapper< std::vector< rpr::EntityType > >( mineTypes_ ) );
-    attributes_->Register( "PerimeterPointCoordinates", boost::bind( &ReadNothing, _1, _2, _3 ), Wrapper< std::vector< rpr::PerimeterPoint > >( perimeter_ ) );
+    attributes_->Register( "PerimeterPointCoordinates", boost::bind( &ReadPerimeter, _1, _2, _3, boost::ref( perimeter_ ) ), Wrapper< std::vector< rpr::PerimeterPoint > >( perimeter_ ) );
     attributes_->Register( "ProtocolMode", boost::bind( &ReadNothing, _1, _2, _3 ), Wrapper< uint8 >( 0 ) ); // HearbeatMode
     attributes_->Register( "State", boost::bind( &ReadNothing, _1, _2, _3 ), Wrapper< bool >( false ) ); // FIXME AHC
     attributes_->Register( "ActiveStatus", boost::bind( &ReadNothing, _1, _2, _3 ), Wrapper< bool >( true ) ); // FIXME AHC
