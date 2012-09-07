@@ -315,8 +315,8 @@ void RadarType::ReadTime( xml::xistream& xis, bool& bIsPCTime )
 // -----------------------------------------------------------------------------
 bool RadarType::CanAcquire( const wrapper::View& perceiver, const wrapper::View& target ) const
 {
-    const MT_Vector2D locationPerceiver( perceiver[ "movement/location/x" ], perceiver[ "movement/location/y" ] );
-    const MT_Vector2D locationTarget( target[ "movement/location/x" ], target[ "movement/location/y" ] );
+    const MT_Vector2D locationPerceiver( perceiver[ "movement/position/x" ], perceiver[ "movement/position/y" ] );
+    const MT_Vector2D locationTarget( target[ "movement/position/x" ], target[ "movement/position/y" ] );
     if( locationPerceiver.Distance( locationTarget ) > rRadius_ )
         return false;
     if( !detectableActivities_[ GET_HOOK( GetConsumptionMode )( target ) ] )

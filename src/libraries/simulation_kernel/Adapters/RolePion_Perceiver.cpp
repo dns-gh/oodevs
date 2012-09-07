@@ -135,11 +135,6 @@ namespace
         boost::function< void( int ) > disable_;
         std::map< std::string, boost::shared_ptr< ListenerHelper > > identifiers_;
     };
-    int EnableLocalizedRadar( PHY_RoleInterface_Perceiver& perceiver, const PHY_RadarClass& radarClass, const core::Model& node )
-    {
-        const TER_Localisation& localization = node[ "localization" ].GetUserData< TER_Localisation >();
-        return perceiver.EnableRadarOnLocalisation( radarClass, localization );
-    }
     int EnableFlyingShell( PHY_RoleInterface_Perceiver& perceiver, const core::Model& node )
     {
         const TER_Localisation& localization = node[ "localization" ].GetUserData< TER_Localisation >();
@@ -221,7 +216,6 @@ RolePion_Perceiver::RolePion_Perceiver( const Sink& sink, MIL_Agent_ABC& pion, c
     , bExternalCanPerceive_          ( true )
     , bExternalMustUpdateVisionCones_( false )
     , bRadarStateHasChanged_         ( true )
-    , pPerceptionRadar_              ( 0 )
     , pPerceptionFlyingShell_        ( 0 )
 {
     static unsigned int nNbr = 0; // $$$$ MCO 2012-08-14: size_t ?
@@ -230,12 +224,6 @@ RolePion_Perceiver::RolePion_Perceiver( const Sink& sink, MIL_Agent_ABC& pion, c
     entity[ "perceptions/max-agent-perception-distance" ] = 0;
     entity[ "perceptions/max-theoretical-agent-perception-distance" ] = 0;
     AddListener< ToggleListener >( "perceptions/record-mode/activated", boost::bind( &RolePion_Perceiver::EnableRecordMode, this ), boost::bind( &RolePion_Perceiver::DisableRecordMode, this ) );
-    AddListener< ToggleListener >( "perceptions/radars/radar/activated", boost::bind( &RolePion_Perceiver::EnableRadar, this, boost::ref( PHY_RadarClass::radar_ ) ), boost::bind( &RolePion_Perceiver::DisableRadar, this, boost::ref( PHY_RadarClass::radar_ ) ) );
-    AddListener< ToggleListener >( "perceptions/radars/tapping/activated", boost::bind( &RolePion_Perceiver::EnableRadar, this, boost::ref( PHY_RadarClass::tapping_ ) ), boost::bind( &RolePion_Perceiver::DisableRadar, this, boost::ref( PHY_RadarClass::tapping_ ) ) );
-    AddListener< ToggleListener >( "perceptions/radars/tapping-radar/activated", boost::bind( &RolePion_Perceiver::EnableRadar, this, boost::ref( PHY_RadarClass::tappingRadar_ ) ), boost::bind( &RolePion_Perceiver::DisableRadar, this, boost::ref( PHY_RadarClass::tappingRadar_ ) ) );
-    AddListener< IdentifiedToggleListener >( "perceptions/localized-radars/radar", boost::bind( &EnableLocalizedRadar, boost::ref( *this ), boost::cref( PHY_RadarClass::radar_ ), _1 ), boost::bind( &RolePion_Perceiver::DisableRadarOnLocalisation, this, boost::ref( PHY_RadarClass::radar_ ), _1 ) );
-    AddListener< IdentifiedToggleListener >( "perceptions/localized-radars/tapping", boost::bind( &EnableLocalizedRadar, boost::ref( *this ), boost::cref( PHY_RadarClass::tapping_ ), _1 ), boost::bind( &RolePion_Perceiver::DisableRadarOnLocalisation, this, boost::ref( PHY_RadarClass::tapping_ ), _1 ) );
-    AddListener< IdentifiedToggleListener >( "perceptions/localized-radars/tapping-radar", boost::bind( &EnableLocalizedRadar, boost::ref( *this ), boost::cref( PHY_RadarClass::tappingRadar_ ), _1 ), boost::bind( &RolePion_Perceiver::DisableRadarOnLocalisation, this, boost::ref( PHY_RadarClass::tappingRadar_ ), _1 ) );
     AddListener< IdentifiedToggleListener >( "perceptions/flying-shell", boost::bind( &EnableFlyingShell, boost::ref( *this ), _1 ), boost::bind( &RolePion_Perceiver::DisableFlyingShellDetection, this, _1 ) );
     listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/agents" ] ), boost::bind( &::NotifyPerception< MIL_Agent_ABC, bool >, _1, boost::ref( notifications_ ) ) ) );
     listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/agents-in-zone" ] ), boost::bind( &::NotifyPerception< MIL_Agent_ABC, bool >, _1, boost::ref( notifications_ ) ) ) );
@@ -555,66 +543,36 @@ bool RolePion_Perceiver::IsUsingActiveRadar( const PHY_RadarClass& radarClass ) 
 // Name: RolePion_Perceiver::EnableRadarOnLocalisation
 // Created: NLD 2005-05-02
 // -----------------------------------------------------------------------------
-int RolePion_Perceiver::EnableRadarOnLocalisation( const PHY_RadarClass& radarClass, const TER_Localisation& localisation )
+int RolePion_Perceiver::EnableRadarOnLocalisation( const PHY_RadarClass& /*radarClass*/, const TER_Localisation& /*localisation*/ )
 {
-    if( !pPerceptionRadar_ )
-    {
-        pPerceptionRadar_ = new PHY_PerceptionRadar( *this );
-        activePerceptions_.push_back( pPerceptionRadar_ );
-        bRadarStateHasChanged_ = true;
-    }
-    return pPerceptionRadar_->EnableRadar( radarClass, localisation );
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RolePion_Perceiver::DisableRadarOnLocalisation
 // Created: NLD 2005-05-02
 // -----------------------------------------------------------------------------
-void RolePion_Perceiver::DisableRadarOnLocalisation( const PHY_RadarClass& radarClass, int id )
+void RolePion_Perceiver::DisableRadarOnLocalisation( const PHY_RadarClass& /*radarClass*/, int /*id*/ )
 {
-   if( !pPerceptionRadar_ )
-        return;
-    pPerceptionRadar_->DisableRadar( radarClass, id );
-    if( !pPerceptionRadar_->HasRadarToHandle() )
-    {
-        activePerceptions_.erase( std::find( activePerceptions_.begin(), activePerceptions_.end(), pPerceptionRadar_ ) );
-        delete pPerceptionRadar_;
-        pPerceptionRadar_ = 0;
-        bRadarStateHasChanged_ = true;
-    }
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RolePion_Perceiver::EnableRadar
 // Created: NLD 2005-05-02
 // -----------------------------------------------------------------------------
-void RolePion_Perceiver::EnableRadar( const PHY_RadarClass& radarClass )
+void RolePion_Perceiver::EnableRadar( const PHY_RadarClass& /*radarClass*/ )
 {
-    if( !pPerceptionRadar_ )
-    {
-        pPerceptionRadar_ = new PHY_PerceptionRadar( *this );
-        activePerceptions_.push_back( pPerceptionRadar_ );
-        bRadarStateHasChanged_ = true;
-    }
-    return pPerceptionRadar_->EnableRadar( radarClass );
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RolePion_Perceiver::DisableRadar
 // Created: NLD 2005-05-02
 // -----------------------------------------------------------------------------
-void RolePion_Perceiver::DisableRadar( const PHY_RadarClass& radarClass )
+void RolePion_Perceiver::DisableRadar( const PHY_RadarClass& /*radarClass*/ )
 {
-    if( !pPerceptionRadar_ )
-        return;
-    pPerceptionRadar_->DisableRadar( radarClass );
-    if( !pPerceptionRadar_->HasRadarToHandle() )
-    {
-        activePerceptions_.erase( std::find( activePerceptions_.begin(), activePerceptions_.end(), pPerceptionRadar_ ) );
-        delete pPerceptionRadar_;
-        pPerceptionRadar_      = 0;
-        bRadarStateHasChanged_ = true;
-    }
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
@@ -692,7 +650,6 @@ namespace
 void RolePion_Perceiver::DisableAllPerceptions()
 {
     activePerceptions_.clear();
-    Reset( pPerceptionRadar_ );
     Reset( pPerceptionFlyingShell_ );
 }
 

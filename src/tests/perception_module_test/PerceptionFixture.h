@@ -60,6 +60,13 @@ namespace perception
             entity[ "perceptions/urban" ];
             entity[ "perceptions/reco" ];
             entity[ "perceptions/recognition-point" ];
+            entity[ "perceptions/radars/acquisitions" ];
+            entity[ "perceptions/radars/radar/activated" ] = false;
+            entity[ "perceptions/radars/tapping/activated" ] = false;
+            entity[ "perceptions/radars/tapping-radar/activated" ] = false;
+            entity[ "perceptions/localized-radars/radar" ];
+            entity[ "perceptions/localized-radars/tapping" ];
+            entity[ "perceptions/localized-radars/tapping-radar" ];
             entity[ "perceptions/record-mode/activated" ] = false;
             core::Model& component = entity[ "components"].AddElement();
             component[ "type/sensor-rotation-angle" ] = 3;

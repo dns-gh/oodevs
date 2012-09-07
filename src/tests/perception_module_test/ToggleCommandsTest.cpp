@@ -108,7 +108,8 @@ BOOST_FIXTURE_TEST_CASE( activated_radar_localization_is_forwarded_to_effect, sw
     const int localization = 0;
     core::Model& radar = model[ "entities" ][ identifier ][ "perceptions/localized-radars/tapping" ];
     ExpectEffect( radar, sword::test::MakeModel( perceptionId,
-                            sword::test::MakeModel( "localization", sword::test::MakeUserData( &localization ) ) ) );
+                            sword::test::MakeModel( "localization", sword::test::MakeUserData( &localization ) )
+                                                  ( "identifier", perceptionId ) ) );
     commands.Start( "toggle localized radar",
         core::MakeModel( "identifier", identifier )
                        ( "radar-class", tapping )

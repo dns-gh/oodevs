@@ -60,7 +60,10 @@ void ToggleLocalizedRadarCommand::Execute( const wrapper::View& model ) const
     const wrapper::View& radar = model[ "entities" ][ identifier_ ][ "perceptions/localized-radars"][ radarClass_ ];
     wrapper::Effect effect( radar );
     if( isActivated_ )
+    {
         effect[ perceptionId_ ][ "localization" ].SetUserData( localization_ );
+        effect[ perceptionId_ ][ "identifier" ] = perceptionId_;
+    }
     else
         effect[ perceptionId_ ].MarkForRemove();
     effect.Post();

@@ -21,7 +21,6 @@
 
 class DEC_KS_Perception;
 class PHY_Perception_ABC;
-class PHY_PerceptionRadar;
 class PHY_PerceptionFlyingShell;
 class TER_Agent_ABC;
 class TER_Object_ABC;
@@ -229,7 +228,6 @@ private:
     T_SurfaceAgentMap surfacesAgent_;
     T_SurfaceObjectMap surfacesObject_;
 
-    PHY_PerceptionRadar*            pPerceptionRadar_;
     PHY_PerceptionFlyingShell*      pPerceptionFlyingShell_;
     T_PerceptionVector              activePerceptions_;
 

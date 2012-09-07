@@ -29,6 +29,7 @@
 #include "PerceptionRecoPoint.h"
 #include "PerceptionRecoLocalisation.h"
 #include "PerceptionRecoUrbanBlock.h"
+#include "PerceptionRadar.h"
 #include "ListInCircleVisitor.h"
 #include "wrapper/View.h"
 #include "wrapper/Hook.h"
@@ -184,13 +185,6 @@ namespace
     typedef std::map< T_SurfaceObjectKeyPair, PerceptionSurfaceObject > T_SurfaceObjectMap;
     typedef T_SurfaceObjectMap::const_iterator                          CIT_SurfaceObjectMap;
 
-    typedef std::set< const RadarType* > T_RadarSet;
-    typedef T_RadarSet::const_iterator   CIT_RadarSet;
-
-    typedef std::map< const RadarClass*, T_RadarSet > T_RadarsPerClassMap;
-    typedef T_RadarsPerClassMap::const_iterator       CIT_RadarsPerClassMap;
-
-
     // -----------------------------------------------------------------------------
     // Name: RolePion_Perceiver::CanPerceive
     // Created: NLD 2004-08-20
@@ -299,28 +293,6 @@ namespace
         UpdatePerceptionDataComposantes( entity, surfacesAgent, surfacesObject, vMainPerceptionDirection, rotation, rMaxAgentPerceptionDistance );
     }
 
-    // -----------------------------------------------------------------------------
-    // Name: RolePion_Perceiver::PrepareRadarData
-    // Created: NLD 2005-05-02
-    // -----------------------------------------------------------------------------
-    void PrepareRadarData( const wrapper::View& entity, T_RadarsPerClassMap& radars )
-    {
-        for( std::size_t i = 0; i < entity[ "components" ].GetSize(); ++i )
-        {
-            const wrapper::View& component = entity[ "components" ].GetElement( i );
-            if( !GET_HOOK( CanComponentPerceive )( entity, component ) )
-                break;
-            for( std::size_t j = 0; j < component[ "radars" ].GetSize(); ++j )
-            {
-                const wrapper::View& radar = component[ "radars" ].GetElement( j );
-                const RadarType* radarType = RadarType::Find( static_cast< std::string >( radar[ "type" ] ) );
-                if( !radarType )
-                    throw std::runtime_error( "unknown radar type " + static_cast< std::string >( radar[ "type" ] ) );
-                radars[ &radarType->GetClass() ].insert( radarType );
-            }
-        }
-    }
-
     const float maxBlockPerceptionDistance = 100.f; // Distance under which we consider urban blocks for perception.
 
     struct UrbanObjectVisitor : private boost::noncopyable
@@ -425,13 +397,12 @@ namespace
     // Name: RolePion_Perceiver::Update
     // Created: NLD 2004-08-30
     // -----------------------------------------------------------------------------
-    void Update( const wrapper::View& model, const wrapper::View& entity, T_SurfaceAgentMap& surfacesAgent, T_SurfaceObjectMap& surfacesObject, T_RadarsPerClassMap& radars )
+    void Update( const wrapper::View& model, const wrapper::View& entity, T_SurfaceAgentMap& surfacesAgent, T_SurfaceObjectMap& surfacesObject )
     {
         double rMaxAgentPerceptionDistance = 0;
         MT_Vector2D vMainPerceptionDirection;
         UpdatePeriphericalVisionState( model, entity );
         PreparePerceptionData        ( entity, surfacesAgent, surfacesObject, rMaxAgentPerceptionDistance, vMainPerceptionDirection );
-        PrepareRadarData             ( entity, radars );
         {
             wrapper::Effect effect( entity[ "perceptions/max-theoretical-agent-perception-distance" ] );
             effect = rMaxAgentPerceptionDistance;
@@ -478,6 +449,7 @@ namespace
         AddActiveListPerception< PerceptionRecoPoint >( "recognition-point", activePerceptions, model, entity, observer );
         AddActiveListPerception< PerceptionRecoLocalisation >( "reco", activePerceptions, model, entity, observer );
         AddActiveListPerception< PerceptionRecoUrbanBlock >( "urban", activePerceptions, model, entity, observer );
+        activePerceptions.push_back( boost::shared_ptr< PerceptionRadar >( new PerceptionRadar( entity, observer ) ) );
         return activePerceptions;
     }
 }
@@ -489,12 +461,12 @@ namespace
 void RolePion_Perceiver::ExecutePerceptions( const wrapper::View& model, const wrapper::View& entity ) const
 {
     PerceptionObserver observer( entity );
-    T_PerceptionVector activePerceptions = CreateActivePerceptions( model, entity, observer );
-    T_RadarsPerClassMap radars;
     T_SurfaceAgentMap surfacesAgent;
     T_SurfaceObjectMap surfacesObject;
 
-    Update( model, entity, surfacesAgent, surfacesObject, radars );
+    Update( model, entity, surfacesAgent, surfacesObject );
+
+    T_PerceptionVector activePerceptions = CreateActivePerceptions( model, entity, observer );
 
     if( CanPerceive( entity ) )
     {
@@ -572,14 +544,12 @@ template< typename Target, typename Constructor >
 const PerceptionLevel& RolePion_Perceiver::ComputePerception( const wrapper::View& model, const wrapper::View& entity, const Target& target, Constructor surfaceConstructor ) const
 {
     NullObserver observer;
-    T_PerceptionVector activePerceptions = CreateActivePerceptions( model, entity, observer );
-    T_RadarsPerClassMap radars;
     T_SurfaceAgentMap surfacesAgent;
     T_SurfaceObjectMap surfacesObject;
     double maxDistance;
     MT_Vector2D vMainPerceptionDirection;
     PreparePerceptionData( entity, surfacesAgent, surfacesObject, maxDistance, vMainPerceptionDirection );
-    PrepareRadarData( entity, radars );
+    T_PerceptionVector activePerceptions = CreateActivePerceptions( model, entity, observer );
     if( !CanPerceive( entity ) )
         return PerceptionLevel::notSeen_;
     Constructor::result_type surfaces = surfaceConstructor( surfacesAgent, surfacesObject );
@@ -617,10 +587,7 @@ const PerceptionLevel& RolePion_Perceiver::ComputePerception( const wrapper::Vie
 // -----------------------------------------------------------------------------
 bool RolePion_Perceiver::HasRadar( const wrapper::View& entity, size_t radarType ) const
 {
-    const RadarClass* radar = RadarClass::Find( radarType );
-    if( !radar )
-        throw std::runtime_error( "Invalid radar in AgentHasTappingRadar" );
-    T_RadarsPerClassMap radars;
-    PrepareRadarData( entity, radars );
-    return !radars[ radar ].empty();
+    NullObserver observer;
+    PerceptionRadar perceptionRadar( entity, observer );
+    return perceptionRadar.HasRadar( entity, radarType );
 }

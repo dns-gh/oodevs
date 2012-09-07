@@ -18,6 +18,9 @@
     <Filter Include="Source Files\Perceptions\Computers">
       <UniqueIdentifier>{6bd64d1d-9b2b-4680-a872-66450438aa0b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Perceptions\Radar">
+      <UniqueIdentifier>{ff6a7bf4-08f6-4e09-857d-5ef5bb556d5d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\perception_module\ModuleFacade.h">
@@ -164,6 +167,12 @@
     <ClInclude Include="..\..\src\libraries\perception_module\PerceptionRecoLocalisation.h">
       <Filter>Source Files\Perceptions</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\perception_module\PerceptionRadar.h">
+      <Filter>Source Files\Perceptions\Radar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\perception_module\PerceptionRadarData.h">
+      <Filter>Source Files\Perceptions\Radar</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\perception_module\PerceptionCommand.cpp">
@@ -276,6 +285,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\perception_module\PerceptionRecoLocalisation.cpp">
       <Filter>Source Files\Perceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\perception_module\PerceptionRadarData.cpp">
+      <Filter>Source Files\Perceptions\Radar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\perception_module\PerceptionRadar.cpp">
+      <Filter>Source Files\Perceptions\Radar</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

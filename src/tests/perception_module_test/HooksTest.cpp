@@ -78,15 +78,25 @@ BOOST_FIXTURE_TEST_CASE( get_perception_hook_between_two_points_returns_max_perc
 
 BOOST_FIXTURE_TEST_CASE( agent_has_radar_hook_checks_if_one_component_has_radar_type, sword::perception::ConfigurationFixture )
 {
+    core::Model perceptions;
+    perceptions = core::MakeModel( "radars/acquisitions", core::MakeModel() )
+                                 ( "radars/radar/activated", false )
+                                 ( "radars/tapping/activated", false )
+                                 ( "radars/tapping-radar/activated", false )
+                                 ( "localized-radars/radar", core::MakeModel() )
+                                 ( "localized-radars/tapping", core::MakeModel() )
+                                 ( "localized-radars/tapping-radar", core::MakeModel() );
     {
         core::Model entity;
         entity[ "components" ].AddElement()[ "radars" ].AddElement()[ "type" ] = "my-radar";
+        entity[ "perceptions" ] = perceptions;
         MOCK_EXPECT( CanComponentPerceive ).returns( true );
         BOOST_CHECK( AgentHasRadar( core::Convert( &entity ), 0 ) );
     }
     {
         core::Model entity;
         entity[ "components" ].AddElement()[ "radars" ];
+        entity[ "perceptions" ] = perceptions;
         MOCK_EXPECT( CanComponentPerceive ).returns( true );
         BOOST_CHECK( !AgentHasRadar( core::Convert( &entity ), 0 ) );
     }
