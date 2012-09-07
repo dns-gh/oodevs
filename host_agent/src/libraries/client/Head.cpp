@@ -218,8 +218,11 @@ void Head::Unregister()
 // -----------------------------------------------------------------------------
 void Head::ParseRoot()
 {
-    install_ = boost::make_shared< Package >( pool_, fs_, MakePath( root_, install_dir ), true );
-    install_->Parse();
+    {
+        QMutexLocker lock( &access_ );
+        install_ = boost::make_shared< Package >( pool_, fs_, MakePath( root_, install_dir ), true );
+        install_->Parse();
+    }
     items_.Fill( install_->GetProperties() );
     emit ProgressVisible( false );
 }
@@ -251,5 +254,6 @@ void Head::OnModifiedItems()
 void Head::OnRemove()
 {
     const std::vector< size_t > removed = items_.Remove();
+    QMutexLocker lock( &access_ );
     install_->Uninstall( io_async_, MakePath( root_, tmp_dir ), removed );
 }

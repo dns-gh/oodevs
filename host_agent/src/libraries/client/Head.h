@@ -19,6 +19,7 @@
 #include <QFileInfo>
 #include <QLabel>
 #include <QMainWindow>
+#include <QMutex>
 #include <QProgressBar>
 #include <QSortFilterProxyModel>
 
@@ -86,6 +87,7 @@ private:
     QProgressBar progress_;
     QLabel count_;
     QAsync async_;
+    QMutex access_;
     runtime::Async io_async_;
 };
 }
