@@ -33,6 +33,9 @@
     <macrodef name="update_deps">
         <attribute name="platform"/>
         <sequential>
+            <update name="vcredist"
+                package="vcredist_@{platform}"
+                todir="${root.dir}/out/@{platform}"/>
             <update name="cloud"
                     package="sword_cloud_@{platform}_bin"
                     todir="${root.dir}/out/@{platform}/cloud"/>
@@ -44,7 +47,6 @@
     </macrodef>
 
     <target name="configure">
-        <update name="vcredist" package="vcredist"/>
         <update_deps platform="${platform}"/>
         <if>
             <isset property="sub_platform"/>
