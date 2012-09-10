@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_DotationConsumptions.h"
 #include "PHY_DotationType.h"
+#include "PHY_DotationCategory.h"
 #include "PHY_DotationConsumption.h"
 #include "PHY_DotationGroupContainer.h"
 #include <xeumeuleu/xml.hpp>
@@ -64,10 +65,13 @@ PHY_DotationConsumptions::~PHY_DotationConsumptions()
 // Name: PHY_DotationConsumptions::RegisterConsumptionReservations
 // Created: NLD 2004-08-16
 // -----------------------------------------------------------------------------
-bool PHY_DotationConsumptions::RegisterConsumptionReservations( PHY_DotationGroupContainer& container ) const
+bool PHY_DotationConsumptions::RegisterConsumptionReservations( PHY_DotationGroupContainer& container, bool isTransported ) const
 {
     for( CIT_DotationConsumptionMap it = dotationConsumptions_.begin(); it != dotationConsumptions_.end(); ++it )
     {
+        // transported units do not consume fuel
+        if( isTransported && it->first->GetType() == *PHY_DotationType::carburant_ )
+            continue;   
         const double rConsumption = it->second->GetConsumption();
         if( container.AddConsumptionReservation( *it->first, rConsumption ) < rConsumption )
             return false;

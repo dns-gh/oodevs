@@ -26,6 +26,7 @@
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
+#include "Entities/Agents/Roles/Transported/PHY_RolePion_Transported.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Dotations/PHY_Dotation.h"
@@ -248,10 +249,11 @@ class sConsumptionReservation : public ::OnComponentFunctor_ABC
 {
 
 public:
-    sConsumptionReservation( const PHY_ConsumptionType& consumptionMode, PHY_DotationGroupContainer& dotations )
+    sConsumptionReservation( const PHY_ConsumptionType& consumptionMode, PHY_DotationGroupContainer& dotations, bool isTransported )
         : consumptionMode_( consumptionMode )
         , dotations_      ( dotations )
         , bReservationOK_ ( true )
+        , bIsTransported_ ( isTransported )
     {
     }
 
@@ -261,12 +263,13 @@ public:
             return;
         const PHY_DotationConsumptions* pConsumptions = composante.GetDotationConsumptions( consumptionMode_ );
         if( pConsumptions )
-            bReservationOK_ = pConsumptions->RegisterConsumptionReservations( dotations_ );
+            bReservationOK_ = pConsumptions->RegisterConsumptionReservations( dotations_, bIsTransported_ );
     }
 
-    const PHY_ConsumptionType&        consumptionMode_;
-          PHY_DotationGroupContainer& dotations_;
-          bool                        bReservationOK_;
+    const PHY_ConsumptionType& consumptionMode_;
+    PHY_DotationGroupContainer& dotations_;
+    bool bReservationOK_;
+    bool bIsTransported_;
 };
 
 // -----------------------------------------------------------------------------
@@ -275,14 +278,15 @@ public:
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Dotations::SetConsumptionMode( const PHY_ConsumptionType& consumptionMode )
 {
-
     if( pCurrentConsumptionMode_ && consumptionMode < *pCurrentConsumptionMode_  )
         return true;
 
     assert( pDotations_ );
     pDotations_->CancelConsumptionReservations();
 
-    sConsumptionReservation func( consumptionMode, *pDotations_ );
+    bool bIsTransported = pion_->GetRole< transport::PHY_RolePion_Transported >().IsTransported();
+
+    sConsumptionReservation func( consumptionMode, *pDotations_, bIsTransported );
     std::auto_ptr< OnComponentComputer_ABC > dotationComputer( pion_->GetAlgorithms().onComponentFunctorComputerFactory_->Create( func ) );
     pion_->Execute( *dotationComputer );
 
@@ -298,7 +302,7 @@ bool PHY_RolePion_Dotations::SetConsumptionMode( const PHY_ConsumptionType& cons
         pDotations_->CancelConsumptionReservations();
     if( pCurrentConsumptionMode_ )
     {
-        sConsumptionReservation funcRollback( *pCurrentConsumptionMode_, *pDotations_ );
+        sConsumptionReservation funcRollback( *pCurrentConsumptionMode_, *pDotations_, bIsTransported );
         std::auto_ptr< OnComponentComputer_ABC > dotationComputer( pion_->GetAlgorithms().onComponentFunctorComputerFactory_->Create( funcRollback ) );
         pion_->Execute( *dotationComputer );
         assert( funcRollback.bReservationOK_ );
