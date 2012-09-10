@@ -269,21 +269,22 @@ ADN_FireClass_Data::FireClassInfos* ADN_FireClass_Data::FireClassInfos::CreateCo
 {
     FireClassInfos* pCopy = new FireClassInfos();
     pCopy->injuryInfos_.CopyFrom( injuryInfos_ );
-    pCopy->modifUrbanBlocks_ = modifUrbanBlocks_;
+    for( size_t i = 0; i < modifUrbanBlocks_.size(); ++i )
+        pCopy->modifUrbanBlocks_[i]->CopyFrom( *modifUrbanBlocks_[i] );
     pCopy->strName_ = strName_.GetData();
     pCopy->initialHeat_ = initialHeat_.GetData();
     pCopy->maxHeat_ = maxHeat_.GetData();
     pCopy->increaseRate_ = increaseRate_.GetData();
     pCopy->decreaseRate_ = decreaseRate_.GetData();
     pCopy->isSurface_ = isSurface_.GetData();
-    for( uint n = 0; n < agents_.size(); ++n )
-        pCopy->agents_[ n ]->CopyFrom( *agents_[ n ] );
+    for( size_t i = 0; i < agents_.size(); ++i )
+        pCopy->agents_[i]->CopyFrom( *agents_[i] );
 
-    for( uint i=0; i<weatherEffects_.size(); ++i )
+    for( size_t i = 0; i < weatherEffects_.size(); ++i )
         pCopy->weatherEffects_[i]->CopyFrom( *weatherEffects_[i] );
 
-    for( uint n = 0; n < surfaceInfos_.size(); ++n )
-        pCopy->surfaceInfos_[ n ]->CopyFrom( *surfaceInfos_[ n ] );
+    for( size_t i = 0; i < surfaceInfos_.size(); ++i )
+        pCopy->surfaceInfos_[i]->CopyFrom( *surfaceInfos_[i] );
     return pCopy;
 }
 
