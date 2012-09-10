@@ -66,12 +66,14 @@ node "BEH_Manoeuvre_Pion_GestionDestruction"
                     Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, 1, emptyTable )
                 else
                     local mission = DEC_GetMission( myself ) 
-                    local pointRegroupement = mission.pointRegroupement_
-                    if pointRegroupement then
-                        Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, { pointRegroupement, eProgressionDefaut, eTypeItiRepli, 0, 0, 0, 0, } )
-                        self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtat = v[1] end
-                    else
-                        self.eEtat = eActionEffectuee
+                    if mission then 
+                        local pointRegroupement = mission.pointRegroupement_
+                        if pointRegroupement then
+                            Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, { pointRegroupement, eProgressionDefaut, eTypeItiRepli, 0, 0, 0, 0, } )
+                            self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtat = v[1] end
+                        else
+                            self.eEtat = eActionEffectuee
+                        end
                     end
                 end
 
