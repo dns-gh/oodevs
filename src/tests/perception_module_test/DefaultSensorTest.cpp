@@ -23,11 +23,9 @@ struct MIL_Report
 BOOST_FIXTURE_TEST_CASE( agents_in_list_are_identified_with_default_sensor, PerceptionCommandFixture )
 {
     const SWORD_Model* other = core::Convert( &model[ "entities/other" ] );
-    model[ "entities/other" ] = core::MakeModel( "pion", core::MakeUserData( reinterpret_cast< MIL_Agent_ABC* >( 43 ) ) )
-                                               ( "movement", core::MakeModel
-                                                    ( "position", core::MakeModel
-                                                        ( "x", 5 )
-                                                        ( "y", 5 ) ) )
+    model[ "entities/other" ] = core::MakeModel( "pion", 43 )
+                                               ( "movement/position/x", 5 )
+                                               ( "movement/position/y", 5 )
                                                ( "is-dead", false )
                                                ( "identifier", 1337u );
     const SWORD_Model* perceiver = core::Convert( &entity );

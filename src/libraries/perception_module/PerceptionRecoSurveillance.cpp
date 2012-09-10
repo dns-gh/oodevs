@@ -12,7 +12,6 @@
 #include "PerceptionObserver_ABC.h"
 #include "ListInCircleVisitor.h"
 #include "VisionObject.h"
-#include "wrapper/View.h"
 #include "wrapper/Hook.h"
 #include "MT_Tools/MT_Vector2D.h"
 #include <boost/bind.hpp>
@@ -23,8 +22,8 @@ using namespace sword::perception;
 
 DECLARE_HOOK( CanBeSeen, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) )
 DECLARE_HOOK( GetVisionObject, unsigned char, ( const MT_Vector2D* point ) )
-DECLARE_HOOK( IsPointInsideLocalisation, bool, ( const TER_Localisation* localisation, const MT_Vector2D* point ) )
-DECLARE_HOOK( GetAgentListWithinLocalisation, void, ( const SWORD_Model* root, const TER_Localisation* localization,
+DECLARE_HOOK( IsPointInsideLocalisation, bool, ( const SWORD_Model* localisation, const MT_Vector2D* point ) )
+DECLARE_HOOK( GetAgentListWithinLocalisation, void, ( const SWORD_Model* root, const SWORD_Model* localization,
                                                       void (*callback)( const SWORD_Model* agent, void* userData ), void* userData ) )
 
 // -----------------------------------------------------------------------------
@@ -32,7 +31,7 @@ DECLARE_HOOK( GetAgentListWithinLocalisation, void, ( const SWORD_Model* root, c
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
 PerceptionRecoSurveillanceReco::PerceptionRecoSurveillanceReco( const wrapper::View& perception, unsigned int currentTimeStep )
-    : localisation_             ( static_cast< const TER_Localisation* >( perception[ "localization" ].GetUserData() ) )
+    : localisation_             ( perception[ "localization" ] )
     , currentTimeStep_          ( currentTimeStep )
     , nForestDetectionTimeStep_ ( perception[ "forest-detection-time-step" ] )
     , nUrbanDetectionTimeStep_  ( perception[ "urban-detection-time-step" ] )

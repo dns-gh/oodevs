@@ -19,7 +19,7 @@ namespace
         RadarFixture()
         {
             core::Model& other = model[ "entities/13337" ];
-            other = core::MakeModel( "pion", core::MakeUserData( reinterpret_cast< MIL_Agent_ABC* >( 43 ) ) )
+            other = core::MakeModel( "pion", 43 )
                                    ( "movement/position/x", 5 )
                                    ( "movement/position/y", 5 )
                                    ( "movement/height", 5 )
@@ -78,9 +78,8 @@ BOOST_FIXTURE_TEST_CASE( radar_sensor_acquire_targets_and_waits_ticks_before_not
 BOOST_FIXTURE_TEST_CASE( localized_radar_sensor_acquire_targets_and_waits_ticks_before_notifying_detection_recognition_or_identification, RadarFixture )
 {
     core::Model& other = model[ "entities/13337" ];
-    const TER_Localisation* localization = reinterpret_cast< const TER_Localisation* >( 0xCAFE );
     entity[ "perceptions/sensor/activated" ] = false;
-    entity[ "perceptions/localized-radars/radar/421/localization" ].SetUserData( localization );
+    entity[ "perceptions/localized-radars/radar/421/localization" ];
     entity[ "perceptions/localized-radars/radar/421/perception-id" ] = 421u;
     ExpectEffect( entity[ "perceptions/radars/acquisitions" ],
                         sword::test::MakeModel( "my-radar/13337", sword::test::MakeModel( "first-step", 0u )

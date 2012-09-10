@@ -21,16 +21,16 @@
 using namespace sword;
 using namespace sword::perception;
 
-DECLARE_HOOK( GetAgentListWithinLocalisation, void, ( const SWORD_Model* root, const TER_Localisation* localization,
+DECLARE_HOOK( GetAgentListWithinLocalisation, void, ( const SWORD_Model* root, const SWORD_Model* localization,
                                                       void (*callback)( const SWORD_Model* agent, void* userData ), void* userData ) )
 DECLARE_HOOK( CanBeSeen, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) )
 DECLARE_HOOK( GetVisionObject, unsigned char, ( const MT_Vector2D* point ) )
 
 namespace
 {
-    void AddLocalization( std::vector< const TER_Localisation* >& localizations, const std::string& /*key*/, const wrapper::View& perception )
+    void AddLocalization( std::vector< wrapper::View >& localizations, const std::string& /*key*/, const wrapper::View& perception )
     {
-        localizations.push_back( reinterpret_cast< const TER_Localisation* >( perception[ "localization" ].GetUserData() ) );
+        localizations.push_back( perception[ "localization" ] );
     }
 }
 
@@ -66,7 +66,7 @@ void PerceptionAlat::Execute( const wrapper::View& model, const wrapper::View& p
     // Recherche des pions dans la localisation
     Perception_ABC::T_AgentPtrVector agentsDetected;
     ListInCircleVisitor< wrapper::View > agentVisitor( agentsDetected );
-    BOOST_FOREACH( const TER_Localisation* localisation, localisations_ )
+    BOOST_FOREACH( const wrapper::View& localisation, localisations_ )
         GET_HOOK( GetAgentListWithinLocalisation )( model, localisation, &ListInCircleVisitor< const SWORD_Model* >::Add, &agentVisitor );
 
     // Enregistrement des pions vus

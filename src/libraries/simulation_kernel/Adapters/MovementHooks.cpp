@@ -88,11 +88,11 @@ namespace
         BOOST_FOREACH( TER_Agent_ABC* agent, agents )
             callback( core::Convert( &rootNode[ "entities" ][ static_cast< const PHY_RoleInterface_Location* >( agent )->GetAgent().GetID() ] ), userData );
     }
-    DEFINE_HOOK( GetAgentListWithinLocalisation, void, ( const SWORD_Model* root, const TER_Localisation* localization, void (*callback)( const SWORD_Model* agent, void* userData ), void* userData ) ) \
+    DEFINE_HOOK( GetAgentListWithinLocalisation, void, ( const SWORD_Model* root, const SWORD_Model* localization, void (*callback)( const SWORD_Model* agent, void* userData ), void* userData ) ) \
     {
         const core::Model& rootNode = *core::Convert( root );
         TER_Agent_ABC::T_AgentPtrVector agentsDetected;
-        TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( *localization, agentsDetected );
+        TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( *core::Convert( localization )->GetUserData< const TER_Localisation* >(), agentsDetected );
         BOOST_FOREACH( TER_Agent_ABC* agent, agentsDetected )
             callback( core::Convert( &rootNode[ "entities" ][ static_cast< const PHY_RoleInterface_Location* >( agent )->GetAgent().GetID() ] ), userData );
     }

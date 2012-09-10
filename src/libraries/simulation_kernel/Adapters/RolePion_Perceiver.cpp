@@ -154,6 +154,18 @@ namespace
             notifications.push_back( notifier );
         }
     }
+    void NotifyAgentPerception( const core::Model& effect, std::vector< T_Notification >& notifications )
+    {
+        for( std::size_t i = 0; i < effect.GetSize(); ++i )
+        {
+            const core::Model& notification = effect.GetElement( i );
+            MIL_Agent_ABC& target = *notification[ "target" ].GetUserData< MIL_Agent_ABC* >();
+            const PHY_PerceptionLevel& level = PHY_PerceptionLevel::FindPerceptionLevel( notification[ "level" ] );
+            const bool recorded = notification[ "recorded" ];
+            T_Notification notifier = boost::bind( static_cast< bool(DEC_KS_Perception::*)( MIL_Agent_ABC&, const PHY_PerceptionLevel&, bool ) >(&DEC_KS_Perception::NotifyPerception), _1, boost::ref( target ), boost::ref( level ), recorded );
+            notifications.push_back( notifier );
+        }
+    }
     void NotifyFlowPerception( const core::Model& effect, std::vector< T_Notification >& notifications )
     {
         for( std::size_t i = 0; i < effect.GetSize(); ++i )
@@ -225,8 +237,8 @@ RolePion_Perceiver::RolePion_Perceiver( const Sink& sink, MIL_Agent_ABC& pion, c
     entity[ "perceptions/max-theoretical-agent-perception-distance" ] = 0;
     AddListener< ToggleListener >( "perceptions/record-mode/activated", boost::bind( &RolePion_Perceiver::EnableRecordMode, this ), boost::bind( &RolePion_Perceiver::DisableRecordMode, this ) );
     AddListener< IdentifiedToggleListener >( "perceptions/flying-shell", boost::bind( &EnableFlyingShell, boost::ref( *this ), _1 ), boost::bind( &RolePion_Perceiver::DisableFlyingShellDetection, this, _1 ) );
-    listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/agents" ] ), boost::bind( &::NotifyPerception< MIL_Agent_ABC, bool >, _1, boost::ref( notifications_ ) ) ) );
-    listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/agents-in-zone" ] ), boost::bind( &::NotifyPerception< MIL_Agent_ABC, bool >, _1, boost::ref( notifications_ ) ) ) );
+    listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/agents" ] ), boost::bind( &::NotifyAgentPerception, _1, boost::ref( notifications_ ) ) ) );
+    listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/agents-in-zone" ] ), boost::bind( &::NotifyAgentPerception, _1, boost::ref( notifications_ ) ) ) );
     listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/objects" ] ), boost::bind( &::NotifyPerception< MIL_Object_ABC, void >, _1, boost::ref( notifications_ ) ) ) );
     listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/population-concentrations" ] ), boost::bind( &::NotifyPerception< MIL_PopulationConcentration, bool >, _1, boost::ref( notifications_ ) ) ) );
     listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/population-flows" ] ), boost::bind( &::NotifyFlowPerception, _1, boost::ref( notifications_ ) ) ) );

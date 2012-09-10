@@ -11,12 +11,10 @@
 #define SWORD_PERCEPTION_PERCEPTION_RADAR_DATA_H
 
 #include "Perception_ABC.h"
-//#include "simulation_terrain/TER_Agent_ABC.h"
+#include <module_api/Model.h>
 #include <set>
 #include <map>
 #include <boost/noncopyable.hpp>
-
-class TER_Localisation;
 
 namespace sword
 {
@@ -39,7 +37,7 @@ class PerceptionRadarData : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef std::set< const TER_Localisation* > T_ZoneSet;
+    typedef std::set< const SWORD_Model* > T_ZoneSet;
     //@}
 
 public:

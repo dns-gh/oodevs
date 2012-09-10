@@ -25,11 +25,8 @@ ToggleRecoCommand::ToggleRecoCommand( ModuleFacade& /*module*/, const wrapper::V
     {
         effect_[ perceptionId ][ "perception-id" ] = perceptionId;
         effect_[ perceptionId ][ "localization" ] = parameters[ "localization" ];
-        if( parameters[ "has-growth-speed" ] )
-        {
-            effect_[ perceptionId ][ "has-growth-speed" ] = true;
-            effect_[ perceptionId ][ "growth-speed" ] = parameters[ "growth-speed" ];
-        }
+        effect_[ perceptionId ][ "has-growth-speed" ] = parameters[ "has-growth-speed" ];
+        effect_[ perceptionId ][ "growth-speed" ] = parameters[ "growth-speed" ];
         effect_[ perceptionId ][ "radius" ] = 0;
         effect_[ perceptionId ][ "max-radius-reached" ] = false;
     }

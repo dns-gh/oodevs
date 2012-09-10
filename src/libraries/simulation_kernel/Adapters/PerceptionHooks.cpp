@@ -391,16 +391,12 @@ namespace
     {
         return urbanObject->Retrieve< UrbanPhysicalCapacity >() != 0;
     }
-    DEFINE_HOOK( CanUrbanBlockBeSeen, bool, ( const SWORD_Model* perceiver, const MIL_UrbanObject_ABC* urbanBlock ) )
+    DEFINE_HOOK( CanUrbanBlockBeSeen, bool, ( const SWORD_Model* perceiver, const SWORD_Model* urbanBlock ) )
     {
-        boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge = GET_PION( perceiver ).GetArmy().GetKnowledge().GetKnowledgeUrbanContainer().GetKnowledgeUrban( *urbanBlock );
+        boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge = GET_PION( perceiver ).GetArmy().GetKnowledge().GetKnowledgeUrbanContainer().GetKnowledgeUrban( *core::Convert( urbanBlock )->GetUserData< const MIL_UrbanObject_ABC* >() );
         if( pKnowledge )
             return pKnowledge->GetCurrentRecceProgress() >= ( 1. - MIL_Random::rand_ii( MIL_Random::ePerception ) );
         return false;
-    }
-    DEFINE_HOOK( GetUrbanBlockLocalization, const TER_Localisation*, ( const MIL_UrbanObject_ABC* urbanBlock ) )
-    {
-        return &urbanBlock->GetLocalisation();
     }
     DEFINE_HOOK( IsPostureStationed, bool, ( const SWORD_Model* entity ) )
     {
@@ -564,44 +560,44 @@ namespace
         const core::Model& rootNode = *core::Convert( model );
         return core::Convert( &rootNode[ "entities" ][ transporter->GetID() ] );
     }
-    DEFINE_HOOK( GetVisionObjectsInSurface, void, ( const TER_Localisation* localisation, unsigned int& emptySurface, unsigned int& forestSurface, unsigned int& urbanSurface ) )
+    DEFINE_HOOK( GetVisionObjectsInSurface, void, ( const SWORD_Model* localisation, unsigned int& emptySurface, unsigned int& forestSurface, unsigned int& urbanSurface ) )
     {
-        MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetVisionObjectsInSurface( *localisation, emptySurface, forestSurface, urbanSurface );
+        MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetVisionObjectsInSurface( *core::Convert( localisation )->GetUserData< const TER_Localisation* >(), emptySurface, forestSurface, urbanSurface );
     }
     DEFINE_HOOK( GetVisionObject, unsigned char, ( const MT_Vector2D* point ) )
     {
         return MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetVisionObject( *point );
     }
-    DEFINE_HOOK( IsPointInsideLocalisation, bool, ( const TER_Localisation* localisation, const MT_Vector2D* point ) )
+    DEFINE_HOOK( IsPointInsideLocalisation, bool, ( const SWORD_Model* localisation, const MT_Vector2D* point ) )
     {
-        return localisation->IsInside( *point );
+        return core::Convert( localisation )->GetUserData< const TER_Localisation* >()->IsInside( *point );
     }
-    DEFINE_HOOK( IsLocalizationInsideCircle, bool, ( const TER_Localisation* localization, const MT_Vector2D* center, double radius ) )
+    DEFINE_HOOK( IsLocalizationInsideCircle, bool, ( const SWORD_Model* localization, const MT_Vector2D* center, double radius ) )
     {
         const TER_Localisation circle( *center, radius );
-        const T_PointVector& pointLocalisationFinale = localization->GetPoints();
+        const T_PointVector& pointLocalisationFinale = core::Convert( localization )->GetUserData< const TER_Localisation* >()->GetPoints();
         bool result = true;
         for( CIT_PointVector it = pointLocalisationFinale.begin(); result && it != pointLocalisationFinale.end(); ++it )
             result = circle.IsInside( *it );
         return result;
     }
-    DEFINE_HOOK( IsKnowledgeObjectInsidePerception, bool, ( const TER_Localisation* localization, const MT_Vector2D* center, double radius, const DEC_Knowledge_Object* object ) )
+    DEFINE_HOOK( IsKnowledgeObjectInsidePerception, bool, ( const SWORD_Model* localization, const MT_Vector2D* center, double radius, const DEC_Knowledge_Object* object ) )
     {
         const TER_Localisation& knowledgeLocalization = object->GetLocalisation();
         const TER_Localisation circle( *center, radius );
-        return localization->IsIntersecting( knowledgeLocalization ) && circle.IsIntersecting( knowledgeLocalization );
+        return core::Convert( localization )->GetUserData< const TER_Localisation* >()->IsIntersecting( knowledgeLocalization ) && circle.IsIntersecting( knowledgeLocalization );
     }
-    DEFINE_HOOK( IsObjectIntersectingLocalization, bool, ( const TER_Localisation* localization, const MIL_Object_ABC* object ) )
+    DEFINE_HOOK( IsObjectIntersectingLocalization, bool, ( const SWORD_Model* localization, const MIL_Object_ABC* object ) )
     {
-        return localization->IsIntersecting( object->GetLocalisation() );
+        return core::Convert( localization )->GetUserData< const TER_Localisation* >()->IsIntersecting( object->GetLocalisation() );
     }
     DEFINE_HOOK( IsKnowledgeObjectIntersectingWithCircle, bool, ( const MT_Vector2D* center, double radius, const DEC_Knowledge_Object* object ) )
     {
         return object->GetLocalisation().Intersect2DWithCircle( *center, radius );
     }
-    DEFINE_HOOK( GetLocalizationRadius, double, ( const TER_Localisation* localization ) )
+    DEFINE_HOOK( GetLocalizationRadius, double, ( const SWORD_Model* localization ) )
     {
-        const MT_Rect& boundingBox = localization->GetBoundingBox();
+        const MT_Rect& boundingBox = core::Convert( localization )->GetUserData< const TER_Localisation* >()->GetBoundingBox();
         return boundingBox.GetCenter().Distance( boundingBox.GetPointUpLeft() );
     }
 }
@@ -649,7 +645,6 @@ void PerceptionHooks::Initialize( core::Facade& facade )
     REGISTER_HOOK( GetUrbanObjectStructuralState, facade );
     REGISTER_HOOK( HasUrbanObjectArchitecture, facade );
     REGISTER_HOOK( CanUrbanBlockBeSeen, facade );
-    REGISTER_HOOK( GetUrbanBlockLocalization, facade );
     REGISTER_HOOK( IsPostureStationed, facade );
     REGISTER_HOOK( AppendAddedKnowledge, facade );
     REGISTER_HOOK( IsInCity, facade );

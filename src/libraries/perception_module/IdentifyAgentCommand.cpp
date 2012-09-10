@@ -9,14 +9,13 @@
 
 #include "IdentifyAgentCommand.h"
 #include "PerceptionLevel.h"
-#include "wrapper/View.h"
 #include "wrapper/Effect.h"
 #include "wrapper/Hook.h"
 
 using namespace sword;
 using namespace sword::perception;
 
-DECLARE_HOOK( GetAgentListWithinLocalisation, void, ( const SWORD_Model* root, const TER_Localisation* localization,
+DECLARE_HOOK( GetAgentListWithinLocalisation, void, ( const SWORD_Model* root, const SWORD_Model* localization,
                                                       void (*callback)( const SWORD_Model* agent, void* userData ), void* userData ) )
 
 // -----------------------------------------------------------------------------
@@ -25,7 +24,7 @@ DECLARE_HOOK( GetAgentListWithinLocalisation, void, ( const SWORD_Model* root, c
 // -----------------------------------------------------------------------------
 IdentifyAgentCommand::IdentifyAgentCommand( ModuleFacade& /*module*/, const wrapper::View& parameters, const wrapper::View& /*model*/, size_t /*identifier*/ )
     : identifier_  ( parameters[ "identifier" ] )
-    , localization_( static_cast< const TER_Localisation* >( parameters[ "localization" ].GetUserData() ) )
+    , localization_( parameters[ "localization" ] )
 {
     // NOTHING
 }
@@ -48,7 +47,7 @@ struct AgentVisitor : private boost::noncopyable
     static void Add( const SWORD_Model* agent, void* userData )
     {
         wrapper::Node notification = static_cast< AgentVisitor* >( userData )->effect_.AddElement();
-        notification[ "target" ] = reinterpret_cast< size_t >( wrapper::View( agent )[ "pion" ].GetUserData() );
+        notification[ "target" ] = wrapper::View( agent )[ "pion" ];
         notification[ "level" ] = PerceptionLevel::identified_.GetID();
         notification[ "recorded" ] = static_cast< AgentVisitor* >( userData )->recordMode_;
     }

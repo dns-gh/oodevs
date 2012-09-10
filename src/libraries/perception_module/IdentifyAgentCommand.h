@@ -10,10 +10,9 @@
 #ifndef SWORD_PERCEPTION_IDENTIFY_AGENT_COMMAND_H
 #define SWORD_PERCEPTION_IDENTIFY_AGENT_COMMAND_H
 
+#include "wrapper/View.h"
 #include <boost/noncopyable.hpp>
 #include <string>
-
-class TER_Localisation;
 
 namespace sword
 {
@@ -51,7 +50,7 @@ private:
     //! @name Member data
     //@{
     const size_t identifier_;
-    const TER_Localisation* localization_;
+    const wrapper::View localization_;
     //@}
 
 };

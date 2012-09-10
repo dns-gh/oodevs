@@ -12,8 +12,7 @@
 
 #include "PerceptionWithLocation.h"
 #include "PerceptionLocalisation.h"
-
-class TER_Localisation;
+#include "wrapper/View.h"
 
 namespace sword
 {
@@ -33,7 +32,7 @@ private:
     PerceptionRecoSurveillanceReco& operator = ( const PerceptionRecoSurveillanceReco& );
 
 private:
-    const TER_Localisation* localisation_;
+    const wrapper::View localisation_;
     const unsigned int currentTimeStep_;
     const unsigned int nForestDetectionTimeStep_;
     const unsigned int nUrbanDetectionTimeStep_;

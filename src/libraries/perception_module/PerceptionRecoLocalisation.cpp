@@ -11,7 +11,6 @@
 #include "PerceptionLevel.h"
 #include "PerceptionObserver_ABC.h"
 #include "ListInCircleVisitor.h"
-#include "wrapper/View.h"
 #include "wrapper/Hook.h"
 #include "wrapper/Effect.h"
 #include "wrapper/Event.h"
@@ -22,9 +21,9 @@ using namespace sword;
 using namespace sword::perception;
 
 DECLARE_HOOK( CanBeSeen, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) )
-DECLARE_HOOK( IsPointInsideLocalisation, bool, ( const TER_Localisation* localisation, const MT_Vector2D* point ) )
-DECLARE_HOOK( GetLocalizationRadius, double, ( const TER_Localisation* localization ) )
-DECLARE_HOOK( GetAgentListWithinLocalisation, void, ( const SWORD_Model* root, const TER_Localisation* localization,
+DECLARE_HOOK( IsPointInsideLocalisation, bool, ( const SWORD_Model* localisation, const MT_Vector2D* point ) )
+DECLARE_HOOK( GetLocalizationRadius, double, ( const SWORD_Model* localization ) )
+DECLARE_HOOK( GetAgentListWithinLocalisation, void, ( const SWORD_Model* root, const SWORD_Model* localization,
                                                       void (*callback)( const SWORD_Model* agent, void* userData ), void* userData ) )
 DECLARE_HOOK( GetAgentListWithinCircle, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* agent, void* userData ), void* userData ) )
 
@@ -33,7 +32,7 @@ DECLARE_HOOK( GetAgentListWithinCircle, void, ( const SWORD_Model* root, const M
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
 PerceptionRecoLocalisationReco::PerceptionRecoLocalisationReco( const wrapper::View& perception, const wrapper::View& entity )
-    : localisation_    ( static_cast< const TER_Localisation* >( perception[ "localization" ].GetUserData() ) )
+    : localisation_    ( perception[ "localization" ] )
     , bShouldUseRadius_( perception[ "has-growth-speed" ] )
     , rRadius_         ( GET_HOOK( GetLocalizationRadius )( localisation_ ) )
     , rCurrentRadius_  ( perception[ "radius" ] )

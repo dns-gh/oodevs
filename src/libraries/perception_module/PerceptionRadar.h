@@ -14,8 +14,6 @@
 #include "PerceptionRadarData.h"
 #include <boost/shared_ptr.hpp>
 
-class TER_Localisation;
-
 namespace sword
 {
 namespace perception
@@ -52,7 +50,7 @@ private:
     typedef std::set< const RadarType* > T_RadarSet;
     typedef std::map< int, T_RadarSet > T_RadarTypesMap;
     typedef std::map< const RadarType*, T_Data > T_RadarDataMap;
-    typedef std::map< int, const TER_Localisation* > T_RadarIdMap;
+    typedef std::map< int, wrapper::View > T_RadarIdMap;
     //@}
 
 private:

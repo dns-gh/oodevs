@@ -14,18 +14,17 @@ using namespace sword::perception;
 
 BOOST_FIXTURE_TEST_CASE( localization_reco_sensor_recognized_all_agents_in_location_depending_growing_speed, PerceptionCommandFixture )
 {
-    const TER_Localisation* localization = reinterpret_cast< const TER_Localisation* >( 1337 );
     const std::size_t perceptionId = 42;
     entity[ "perceptions/sensor/activated" ] = false;
     core::Model& perception = entity[ "perceptions/reco" ][ perceptionId ];
-    perception = core::MakeModel( "localization", core::MakeUserData( localization ) )
+    perception = core::MakeModel( "localization", 43 )
                                 ( "perception-id", perceptionId )
                                 ( "growth-speed", 2 )
                                 ( "has-growth-speed", true )
                                 ( "radius", 0 )
                                 ( "max-radius-reached", false );
     const SWORD_Model* other = core::Convert( &model[ "entities/other" ] );
-    model[ "entities/other" ] = core::MakeModel( "pion", core::MakeUserData( reinterpret_cast< MIL_Agent_ABC* >( 43 ) ) )
+    model[ "entities/other" ] = core::MakeModel( "pion", 43 )
                                                ( "movement/position/x", 5 )
                                                ( "movement/position/y", 5 );
     MOCK_EXPECT( GetLocalizationRadius ).once().returns( 100 );

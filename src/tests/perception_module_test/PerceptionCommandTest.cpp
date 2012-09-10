@@ -20,7 +20,7 @@ BOOST_FIXTURE_TEST_CASE( perception_command_identifies_at_least_itself, Percepti
     ExpectEffect( entity[ "perceptions/notifications/urban-blocks" ], sword::test::MakeModel() );
     ExpectEffect( entity[ "perceptions/notifications/agents" ], sword::test::MakeModel()
                                                                  [ sword::test::MakeModel( "level", 3 )
-                                                                                         ( "target", reinterpret_cast< size_t >( agent ) )
+                                                                                         ( "target", 1337 )
                                                                                          ( "recorded", false ) ] );
     commands.Post( "perception", core::MakeModel( "identifier", identifier ) );
     commands.Execute();
@@ -30,14 +30,13 @@ BOOST_FIXTURE_TEST_CASE( perception_command_identifies_its_transporter, Percepti
 {
     const size_t transporterId = 1342;
     const SWORD_Model* transporter = core::Convert( &model[ "entities" ][ transporterId ] );
-    const MIL_Agent_ABC* transporterPion = reinterpret_cast< MIL_Agent_ABC* >( 1818 );
-    model[ "entities" ][ transporterId ][ "pion" ].SetUserData( transporterPion );
+    model[ "entities" ][ transporterId ][ "pion" ] = 1818;
     MOCK_RESET( GetTransporter );
     MOCK_EXPECT( GetTransporter ).returns( transporter );
     ExpectNotifications( "agents", sword::test::MakeModel()
                                        [ sword::test::MakeModel( mock::any ) ]
                                        [ sword::test::MakeModel( "level", 3 )
-                                                               ( "target", reinterpret_cast< size_t >( transporterPion ) )
+                                                               ( "target", 1818 )
                                                                ( "recorded", false ) ] );
     commands.Post( "perception", core::MakeModel( "identifier", identifier ) );
     commands.Execute();

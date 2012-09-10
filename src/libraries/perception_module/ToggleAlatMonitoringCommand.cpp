@@ -16,9 +16,7 @@
 using namespace sword;
 using namespace sword::perception;
 
-class TER_Localisation;
-
-DECLARE_HOOK( GetVisionObjectsInSurface, void, ( const TER_Localisation* localisation, unsigned int& emptySurface, unsigned int& forestSurface, unsigned int& urbanSurface ) )
+DECLARE_HOOK( GetVisionObjectsInSurface, void, ( const SWORD_Model* localisation, unsigned int& emptySurface, unsigned int& forestSurface, unsigned int& urbanSurface ) )
 DECLARE_HOOK( ConvertSecondsToSim, double, ( double seconds ) )
 
 namespace
@@ -42,7 +40,7 @@ ToggleAlatMonitoringCommand::ToggleAlatMonitoringCommand( ModuleFacade& /*module
         unsigned int nForestSurface = 0;
         unsigned int nEmptySurface  = 0;
         unsigned int nUrbanSurface  = 0;
-        GET_HOOK( GetVisionObjectsInSurface )( reinterpret_cast< const TER_Localisation* >( parameters[ "localization" ].GetUserData() ), nEmptySurface, nForestSurface, nUrbanSurface );
+        GET_HOOK( GetVisionObjectsInSurface )( parameters[ "localization" ], nEmptySurface, nForestSurface, nUrbanSurface );
         effect_[ perceptionId ][ "forest-detection-time-step" ] = currentTimeStep + static_cast< unsigned int >( nForestSurface * rForestSurveillanceTime_ );
         effect_[ perceptionId ][ "empty-detection-time-step" ] = currentTimeStep + static_cast< unsigned int >( nEmptySurface * rEmptySurveillanceTime_ );
         effect_[ perceptionId ][ "urban-detection-time-step" ] = currentTimeStep + static_cast< unsigned int >( nUrbanSurface * rUrbanSurveillanceTime_ );

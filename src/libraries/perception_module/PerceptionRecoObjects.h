@@ -13,8 +13,7 @@
 #include "PerceptionWithLocation.h"
 #include "PerceptionLocalisation.h"
 #include "MT_Tools/MT_Vector2D.h"
-
-class TER_Localisation;
+#include "wrapper/View.h"
 
 namespace sword
 {
@@ -30,14 +29,13 @@ public:
     bool IsInside        ( const DEC_Knowledge_Object& knowledge )         const;
     void GetObjectsInside( const wrapper::View&, Perception_ABC::T_ObjectVector& ) const;
 
-
 private:
     PerceptionRecoObjectsReco& operator = ( const PerceptionRecoObjectsReco& );
 
 private:
-    const MT_Vector2D       vCenter_;
-    const TER_Localisation* localisation_;
-    const double            rCurrentSize_;
+    const MT_Vector2D   vCenter_;
+    const wrapper::View localisation_;
+    const double        rCurrentSize_;
 };
 
 // =============================================================================

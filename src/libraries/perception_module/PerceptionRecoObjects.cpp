@@ -11,7 +11,6 @@
 #include "PerceptionLevel.h"
 #include "PerceptionObserver_ABC.h"
 #include "ListInCircleVisitor.h"
-#include "wrapper/View.h"
 #include "wrapper/Hook.h"
 #include "wrapper/Effect.h"
 #include "wrapper/Event.h"
@@ -21,9 +20,9 @@ using namespace sword;
 using namespace sword::perception;
 
 DECLARE_HOOK( CanObjectBePerceived, bool, ( const MIL_Object_ABC* object ) )
-DECLARE_HOOK( IsLocalizationInsideCircle, bool, ( const TER_Localisation* localization, const MT_Vector2D* center, double radius ) )
-DECLARE_HOOK( IsKnowledgeObjectInsidePerception, bool, ( const TER_Localisation* localization, const MT_Vector2D* center, double radius, const DEC_Knowledge_Object* object ) )
-DECLARE_HOOK( IsObjectIntersectingLocalization, bool, ( const TER_Localisation* localization, const MIL_Object_ABC* object ) )
+DECLARE_HOOK( IsLocalizationInsideCircle, bool, ( const SWORD_Model* localization, const MT_Vector2D* center, double radius ) )
+DECLARE_HOOK( IsKnowledgeObjectInsidePerception, bool, ( const SWORD_Model* localization, const MT_Vector2D* center, double radius, const DEC_Knowledge_Object* object ) )
+DECLARE_HOOK( IsObjectIntersectingLocalization, bool, ( const SWORD_Model* localization, const MIL_Object_ABC* object ) )
 DECLARE_HOOK( GetObjectListWithinCircle, void, ( const MT_Vector2D& vCenter, double rRadius, void (*callback)( MIL_Object_ABC* object, void* userData ), void* userData ) )
 
 // -----------------------------------------------------------------------------
@@ -32,7 +31,7 @@ DECLARE_HOOK( GetObjectListWithinCircle, void, ( const MT_Vector2D& vCenter, dou
 // -----------------------------------------------------------------------------
 PerceptionRecoObjectsReco::PerceptionRecoObjectsReco( const wrapper::View& perception, const wrapper::View& entity )
     : vCenter_     ( perception[ "center/x" ], perception[ "center/y" ] )
-    , localisation_( static_cast< boost::shared_ptr< TER_Localisation >* >( perception[ "localization" ].GetUserData() )->get() )
+    , localisation_( perception[ "localization" ] )
     , rCurrentSize_( static_cast< double >( perception[ "radius" ] ) + perception[ "growth-speed" ] )
 {
     if( perception[ "max-radius-reached" ] )

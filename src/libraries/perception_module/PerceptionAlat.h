@@ -13,8 +13,6 @@
 #include "Perception_ABC.h"
 #include <vector>
 
-class TER_Localisation;
-
 namespace sword
 {
 namespace perception
@@ -42,7 +40,7 @@ public:
 private:
     //! @name Member data
     //@{
-    std::vector< const TER_Localisation* > localisations_;
+    std::vector< wrapper::View > localisations_;
     PerceptionObserver_ABC& observer_;
     //@}
 };

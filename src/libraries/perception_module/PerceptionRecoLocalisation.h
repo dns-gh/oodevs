@@ -12,8 +12,7 @@
 
 #include "PerceptionWithLocation.h"
 #include "PerceptionLocalisation.h"
-
-class TER_Localisation;
+#include "wrapper/View.h"
 
 namespace sword
 {
@@ -33,8 +32,8 @@ private:
     PerceptionRecoLocalisationReco& operator = ( const PerceptionRecoLocalisationReco& );
 
 private:
-    const TER_Localisation* localisation_;
-    const bool              bShouldUseRadius_;
+    const wrapper::View localisation_;
+    const bool          bShouldUseRadius_;
 
 public:
     double rRadius_;

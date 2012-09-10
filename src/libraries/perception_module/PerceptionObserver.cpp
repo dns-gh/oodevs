@@ -71,7 +71,7 @@ void PerceptionObserver::NotifyPerception( const wrapper::View& agent, const Per
 void PerceptionObserver::NotifyPerception( const wrapper::View& agent, const PerceptionLevel& level, bool perceptionRecorded )
 {
     wrapper::Node notification = agentNotifications_.AddElement();
-    notification[ "target" ] = reinterpret_cast< size_t >( agent[ "pion" ].GetUserData() );
+    notification[ "target" ] = agent[ "pion" ];
     notification[ "level" ] = level.GetID();
     notification[ "recorded" ] = perceptionRecorded;
 }

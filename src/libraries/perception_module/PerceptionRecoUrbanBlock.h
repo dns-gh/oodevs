@@ -12,10 +12,8 @@
 
 #include "PerceptionWithLocation.h"
 #include "PerceptionLocalisation.h"
+#include "wrapper/View.h"
 #include <boost/shared_ptr.hpp>
-
-class MIL_UrbanObject_ABC;
-class TER_Localisation;
 
 namespace sword
 {
@@ -36,8 +34,8 @@ private:
     PerceptionRecoUrbanBlockReco& operator = ( const PerceptionRecoUrbanBlockReco& );
 
 private:
-    const MIL_UrbanObject_ABC* pUrbanBlock_;
-    const TER_Localisation* localisation_;
+    const wrapper::View pUrbanBlock_;
+    const wrapper::View localisation_;
 };
 
 // =============================================================================

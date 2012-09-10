@@ -16,11 +16,10 @@ BOOST_FIXTURE_TEST_CASE( perception_reco_object_sensor_identifies_all_objects_in
 {
     const double growthSpeed = 2;
     const std::size_t perceptionId = 42;
-    boost::shared_ptr< TER_Localisation > localization;
     MIL_Object_ABC* object = reinterpret_cast< MIL_Object_ABC* >( 666 );
     entity[ "perceptions/sensor/activated" ] = false;
     core::Model& perception = entity[ "perceptions/object-detection" ][ perceptionId ];
-    perception = core::MakeModel( "localization", core::MakeUserData( localization ) )
+    perception = core::MakeModel( "localization", core::MakeModel() )
                                 ( "perception-id", perceptionId )
                                 ( "growth-speed", growthSpeed )
                                 ( "center", core::MakeModel( "x", 10 )

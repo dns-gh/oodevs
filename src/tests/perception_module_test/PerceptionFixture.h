@@ -13,8 +13,6 @@
 #include "ConfigurationFixture.h"
 #include "MT_Tools/MT_Vector2D.h"
 
-class MIL_Agent_ABC;
-
 namespace sword
 {
 namespace perception
@@ -27,7 +25,6 @@ namespace perception
             , theoreticalDistance  ( 120 )
             , position             ( 0, 1 )
             , direction            ( 1, 0 )
-            , agent                ( reinterpret_cast< MIL_Agent_ABC* >( 1337 ) )
             , entity               ( model[ "entities" ][ identifier ] )
         {
             model[ "tick" ] = 0;
@@ -36,7 +33,7 @@ namespace perception
             entity[ "is-underground" ] = false;
             entity[ "is-transported" ] = false;
             entity[ "is-prisoner" ] = false;
-            entity[ "pion" ].SetUserData( agent );
+            entity[ "pion" ] = 1337;
             entity[ "perceptions/max-agent-perception-distance" ] = maxPerceptionDistance;
             entity[ "perceptions/max-theoretical-agent-perception-distance" ] = theoreticalDistance;
             entity[ "perceptions/peripherical-vision/next-tick" ] = 1;
@@ -80,7 +77,6 @@ namespace perception
         const double theoreticalDistance;
         const MT_Vector2D position;
         const MT_Vector2D direction;
-        const MIL_Agent_ABC* agent;
         core::Model& entity;
     };
 }

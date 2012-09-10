@@ -24,7 +24,6 @@ class MIL_PopulationFlow;
 class PHY_ComposantePion;
 class PHY_Volume;
 class DEC_Knowledge_Object;
-class TER_Localisation;
 
 #define REGISTERED_HOOKS( APPLY ) \
     APPLY( InitializePerceptionTypes, 1, void, ( const char* xml ) ) \
@@ -35,7 +34,7 @@ class TER_Localisation;
 
 #define USED_HOOKS( APPLY ) \
     APPLY( GetAgentListWithinCircle, 5, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* agent, void* userData ), void* userData ) ) \
-    APPLY( GetAgentListWithinLocalisation, 4, void, ( const SWORD_Model* root, const TER_Localisation* localization, void (*callback)( const SWORD_Model* agent, void* userData ), void* userData ) ) \
+    APPLY( GetAgentListWithinLocalisation, 4, void, ( const SWORD_Model* root, const SWORD_Model* localization, void (*callback)( const SWORD_Model* agent, void* userData ), void* userData ) ) \
     APPLY( GetObjectListWithinCircle, 4, void, ( const MT_Vector2D& vCenter, double rRadius, void (*callback)( MIL_Object_ABC* object, void* userData ), void* userData ) ) \
     APPLY( GetConcentrationListWithinCircle, 4, void, ( const MT_Vector2D& vCenter, double rRadius, void (*callback)( const MIL_PopulationConcentration* concentration, void* userData ), void* userData ) ) \
     APPLY( GetFlowListWithinCircle, 4, void, ( const MT_Vector2D& vCenter, double rRadius, void (*callback)( const MIL_PopulationFlow* flow, void* userData ), void* userData ) ) \
@@ -114,19 +113,18 @@ class TER_Localisation;
     APPLY( GetUrbanObjectOccupation, 1, double, ( const MIL_UrbanObject_ABC* urbanObject ) ) \
     APPLY( GetUrbanObjectStructuralState, 1, double, ( const MIL_UrbanObject_ABC* urbanObject ) ) \
     APPLY( HasUrbanObjectArchitecture, 1, bool, ( const MIL_UrbanObject_ABC* urbanObject ) ) \
-    APPLY( CanUrbanBlockBeSeen, 2, bool, ( const SWORD_Model* perceiver, const MIL_UrbanObject_ABC* urbanBlock ) ) \
-    APPLY( GetUrbanBlockLocalization, 1, const TER_Localisation*, ( const MIL_UrbanObject_ABC* urbanBlock ) ) \
+    APPLY( CanUrbanBlockBeSeen, 2, bool, ( const SWORD_Model* perceiver, const SWORD_Model* urbanBlock ) ) \
     APPLY( IsPostureStationed, 1, bool, ( const SWORD_Model* entity ) ) \
     APPLY( CanComponentPerceive, 2, bool, ( const SWORD_Model* entity, const SWORD_Model* component ) ) \
     APPLY( GetTransporter, 2, const SWORD_Model*, ( const SWORD_Model* model, const SWORD_Model* agent ) ) \
-    APPLY( GetVisionObjectsInSurface, 4, void, ( const TER_Localisation* localisation, unsigned int& emptySurface, unsigned int& forestSurface, unsigned int& urbanSurface ) ) \
+    APPLY( GetVisionObjectsInSurface, 4, void, ( const SWORD_Model* localisation, unsigned int& emptySurface, unsigned int& forestSurface, unsigned int& urbanSurface ) ) \
     APPLY( GetVisionObject, 1, unsigned char, ( const MT_Vector2D* point ) ) \
-    APPLY( IsPointInsideLocalisation, 2, bool, ( const TER_Localisation* localisation, const MT_Vector2D* point ) ) \
-    APPLY( IsLocalizationInsideCircle, 3, bool, ( const TER_Localisation* localization, const MT_Vector2D* center, double radius ) ) \
-    APPLY( IsKnowledgeObjectInsidePerception, 4, bool, ( const TER_Localisation* localization, const MT_Vector2D* center, double radius, const DEC_Knowledge_Object* object ) ) \
-    APPLY( IsObjectIntersectingLocalization, 2, bool, ( const TER_Localisation* localization, const MIL_Object_ABC* object ) ) \
+    APPLY( IsPointInsideLocalisation, 2, bool, ( const SWORD_Model* localisation, const MT_Vector2D* point ) ) \
+    APPLY( IsLocalizationInsideCircle, 3, bool, ( const SWORD_Model* localization, const MT_Vector2D* center, double radius ) ) \
+    APPLY( IsKnowledgeObjectInsidePerception, 4, bool, ( const SWORD_Model* localization, const MT_Vector2D* center, double radius, const DEC_Knowledge_Object* object ) ) \
+    APPLY( IsObjectIntersectingLocalization, 2, bool, ( const SWORD_Model* localization, const MIL_Object_ABC* object ) ) \
     APPLY( IsKnowledgeObjectIntersectingWithCircle, 3, bool, ( const MT_Vector2D* center, double radius, const DEC_Knowledge_Object* object ) ) \
-    APPLY( GetLocalizationRadius, 1, double, ( const TER_Localisation* localization ) )
+    APPLY( GetLocalizationRadius, 1, double, ( const SWORD_Model* localization ) )
 
 #define REGISTERED_AND_USED_HOOKS( APPLY ) \
     APPLY( IsUsingActiveRadar, 1, bool, ( const SWORD_Model* entity ) ) \

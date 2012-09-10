@@ -216,7 +216,7 @@ BOOST_FIXTURE_TEST_CASE( activating_object_detection_forwards_localization_and_s
                                                                           ( "perception-id", perceptionId )
                                                                           ( "center/x", 1 )
                                                                           ( "center/y", 2 )
-                                                                          ( "localization", mock::any ) ) );
+                                                                          ( "localization", 43 ) ) );
     commands.Start( "toggle object detection",
         core::MakeModel( "identifier", identifier )
                        ( "activated", true )
@@ -224,7 +224,7 @@ BOOST_FIXTURE_TEST_CASE( activating_object_detection_forwards_localization_and_s
                        ( "growth-speed", speed )
                        ( "center/x", 1 )
                        ( "center/y", 2 )
-                       ( "localization", core::MakeUserData( boost::shared_ptr< TER_Localisation >() ) ) );
+                       ( "localization", 43 ) );
     commands.Execute();
 }
 
