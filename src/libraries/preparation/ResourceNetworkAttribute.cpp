@@ -263,6 +263,15 @@ void ResourceNetworkAttribute::NotifyDeleted( const kernel::UrbanObject_ABC& obj
 }
 
 // -----------------------------------------------------------------------------
+// Name: ResourceNetworkAttribute::NotifyUpdated
+// Created: LDC 2012-09-10
+// -----------------------------------------------------------------------------
+void ResourceNetworkAttribute::NotifyUpdated( const kernel::ResourceNetwork_ABC::Deletion& deletion )
+{
+    RemoveLinks( deletion.isUrban_, deletion.id_, deletion.resource_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ResourceNetworkAttribute::GetInvalidResources
 // Created: JSR 2012-06-28
 // -----------------------------------------------------------------------------

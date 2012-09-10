@@ -20,6 +20,7 @@ namespace kernel
     class Controllers;
     class Object_ABC;
     class ResourceNetworkType;
+    class ResourceNetwork_ABC;
     class UrbanObject_ABC;
 }
 
@@ -39,6 +40,7 @@ class ResourceNetworkAttribute : public kernel::ResourceNetwork_ABC
                                , public tools::Observer_ABC
                                , public tools::ElementObserver_ABC< kernel::Object_ABC >
                                , public tools::ElementObserver_ABC< kernel::UrbanObject_ABC >
+                               , public tools::ElementObserver_ABC< kernel::ResourceNetwork_ABC::Deletion >
 {
 public:
     //! @name Types
@@ -66,6 +68,7 @@ public:
     void Update( const kernel::ResourceNetwork_ABC::T_ResourceNodes& nodes );
     virtual void NotifyDeleted( const kernel::Object_ABC& object );
     virtual void NotifyDeleted( const kernel::UrbanObject_ABC& object );
+    virtual void NotifyUpdated( const kernel::ResourceNetwork_ABC::Deletion& deletion );
     const std::set< std::string >& GetInvalidResources() const;
     bool CleanLinksToDeletedUrbanBlocks();
     //@}
