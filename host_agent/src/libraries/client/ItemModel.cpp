@@ -71,7 +71,7 @@ QString PrettySize( uint64_t n )
     if( n < gb )
         return QString( "%1 MB" ).arg( n / mb );
     if( n < tb )
-        return QString( "%1 GB" ).arg( n / mb );
+        return QString( "%1 GB" ).arg( n / gb );
     return QString( "%1 TB" ).arg( n / tb );
 }
 }
