@@ -296,7 +296,7 @@
     </target>
 
     <target name="library.dis_plugin" depends="library.dispatcher,library.rpr" description="build dis_plugin static library">
-        <build-lib name="dis_plugin" pattern="lib${ant.project.name}_dis_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4"/>
+        <build-lib name="dis_plugin" pattern="lib${ant.project.name}_dis_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4"></build-lib>
     </target>
 
     <target name="library.dis_plugin_dll" depends="library.dis_plugin,library.dispatcher,library.tic" description="build dis_plugin dynamic library">
@@ -1010,7 +1010,8 @@
                   lib${ant.project.name}_crossbow_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt,
-                  lib${ant.project.name}_logistic_plugin-${platform}-mt">
+                  lib${ant.project.name}_logistic_plugin-${platform}-mt"
+            failonwarning="true">
             <defineset define="QT3_SUPPORT"/>
         </build-test>
     </target>
