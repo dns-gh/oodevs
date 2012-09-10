@@ -10,7 +10,6 @@
 !define ROOT  "..\out\${PLATFORM}"
 !define CLOUD "${ROOT}\cloud"
 !define SWORD "${ROOT}\sword"
-!define DIST  "..\dist"
 
 !if ${PLATFORM} == "vc100_x64"
 !define PRG $PROGRAMFILES64
@@ -111,9 +110,10 @@ Section $(^Name)
     SetOutPath "$INSTDIR\www"
     File /r /x ".svn" "${CLOUD}\www\*.ttml"
     File /r /x ".svn" "${CLOUD}\www\img"
-    File "${DIST}\sword_client_${PLATFORM}_setup.exe"
     !ifdef SUB_PLATFORM
         FILE "..\out\${SUB_PLATFORM}\sword_client_${SUB_PLATFORM}_setup.exe"
+    !else
+        File "${DISTDIR}\sword_client_${PLATFORM}_setup.exe"
     !endif
 
 

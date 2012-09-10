@@ -58,7 +58,6 @@
 
     <target name="package">
         <sequential>
-            <nsis dir="${src.dir}" name="cloud_client"/>
             <if>
                 <isset property="sub_platform"/>
                 <then>
@@ -72,6 +71,7 @@
                     </nsis>
                 </then>
                 <else>
+                    <nsis dir="${src.dir}" name="cloud_client"/>
                     <nsis dir="${src.dir}" name="cloud_server"/>
                 </else>
             </if>
