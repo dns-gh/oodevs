@@ -103,6 +103,7 @@ Section $(^Name)
     File "${SWORD}\*_module.dll"
 
     ; website
+    RmDir /r "$INSTDIR\www"
     SetOutPath "$INSTDIR\www\js"
     File /r /x ".svn" "${CLOUD}\www\js\*.js"
     SetOutPath "$INSTDIR\www\css"
