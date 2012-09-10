@@ -10,11 +10,13 @@
 #include "clients_gui_pch.h"
 #include "StandardModel.h"
 #include "moc_StandardModel.cpp"
+#include "DragAndDropObserver_ABC.h"
 
 using namespace gui;
 
 const QString StandardModel::showValue_ = "show";
 const QString StandardModel::hideValue_ = "hide";
+const QString StandardModel::mimeTypeStr_ = "sword/varianttype";
 
 // -----------------------------------------------------------------------------
 // Name: StandardModel constructor
@@ -24,6 +26,7 @@ StandardModel::StandardModel( kernel::Controllers& controllers, QSortFilterProxy
     : QStandardItemModel( parent )
     , controllers_( controllers )
     , proxy_( proxy )
+    , dragAndDropObserver_( 0 )
 {
     proxy.setSourceModel( this );
 }
@@ -47,6 +50,15 @@ bool StandardModel::setData( const QModelIndex& index, const QVariant& value, in
     if( ret && role == Qt::EditRole )
         emit DataChanged( index, value );
     return ret;
+}
+
+// -----------------------------------------------------------------------------
+// Name: StandardModel::SetDragAndDropObserver
+// Created: JSR 2012-09-07
+// -----------------------------------------------------------------------------
+void StandardModel::SetDragAndDropObserver( DragAndDropObserver_ABC* dragAndDropObserver )
+{
+    dragAndDropObserver_ = dragAndDropObserver;
 }
 
 // -----------------------------------------------------------------------------
@@ -93,4 +105,103 @@ void StandardModel::ApplyFilter( boost::function< bool ( QStandardItem* ) > func
         if( childItem )
             childItem->setData( ( ::HasAnyChildVisible( childItem, func ) ) ? StandardModel::showValue_ : StandardModel::hideValue_, StandardModel::FilterRole );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: StandardModel::mimeTypes
+// Created: JSR 2012-09-06
+// -----------------------------------------------------------------------------
+QStringList StandardModel::mimeTypes() const
+{
+     // $$$$ JSR 2012-09-07: TODO gérer différents mimeTypes? (entity, agenttype, automattype)
+    QStringList mimeTypes;
+    if( dragAndDropObserver_ )
+        mimeTypes << mimeTypeStr_ << dragAndDropObserver_->AdditionalMimeTypes();
+    return mimeTypes;
+}
+
+// -----------------------------------------------------------------------------
+// Name: StandardModel::*mimeData
+// Created: JSR 2012-09-06
+// -----------------------------------------------------------------------------
+QMimeData* StandardModel::mimeData( const QModelIndexList& indexes ) const
+{
+    if( !dragAndDropObserver_ )
+        return 0;
+    QMimeData* mimeData = new QMimeData();
+    QByteArray encodedData;
+    QDataStream stream( &encodedData, QIODevice::WriteOnly );
+    foreach( QModelIndex index, indexes )
+    {
+        if( index.isValid() )
+        {
+            QStandardItem* item = itemFromIndex( index.model() == this ? index : proxy_.mapToSource( index ) );
+            if( item)
+                stream << reinterpret_cast< unsigned int >( item->data( DataRole ).value< kernel::VariantPointer >().ptr_ );
+        }
+    }
+    mimeData->setData( mimeTypeStr_, encodedData );
+    return mimeData;
+}
+
+// -----------------------------------------------------------------------------
+// Name: StandardModel::flags
+// Created: JSR 2012-09-06
+// -----------------------------------------------------------------------------
+Qt::ItemFlags StandardModel::flags(const QModelIndex& index) const
+{
+    const Qt::ItemFlags defaultFlags = QStandardItemModel::flags( index );
+    // $$$$ JSR 2012-09-07: TODO add a virtual method for non draggable/droppable elements? or manage it in dragEnterEvent?
+    if( !index.isValid() || !dragAndDropObserver_ )
+        return defaultFlags;
+    return Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled | defaultFlags;
+}
+
+// -----------------------------------------------------------------------------
+// Name: StandardModel::dropMimeData
+// Created: JSR 2012-09-06
+// -----------------------------------------------------------------------------
+bool StandardModel::dropMimeData( const QMimeData* data, Qt::DropAction action, int /*row*/, int /*column*/, const QModelIndex& parent )
+{
+    if( action == Qt::IgnoreAction )
+        return true;
+    if( !dragAndDropObserver_ || !parent.isValid() )
+        return false;
+    QStandardItem* item = itemFromIndex( parent.model() == this ? parent : proxy_.mapToSource( parent ) );
+    if( !item )
+        return false;
+    // TODO encapsuler tout ça dans une classe intermédiaire, ou bien faire des helpers
+    QStringList additionalMimeTypes = dragAndDropObserver_->AdditionalMimeTypes();
+    QStringList formats = data->formats();
+    foreach( QString format, formats )
+    {
+        if( format == mimeTypeStr_ )
+        {
+            QByteArray encodedData = data->data( format );
+            QDataStream stream( &encodedData, QIODevice::ReadOnly );
+            while( !stream.atEnd() )
+            {
+                unsigned int ptr = 0;
+                stream >> ptr;
+                if( ptr )
+                    dragAndDropObserver_->Drop( format, reinterpret_cast< void* >( ptr ), *item );
+            }
+        }
+        else if( additionalMimeTypes.contains( format ) )
+        {
+            // old dnd version, to be removed when porting to QT4 is finished
+            QByteArray encodedData = data->data( format );
+            dragAndDropObserver_->Drop( format, reinterpret_cast< void* >( encodedData.data() ), *item );
+        }
+    }
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: StandardModel::supportedDropActions
+// Created: JSR 2012-09-06
+// -----------------------------------------------------------------------------
+Qt::DropActions StandardModel::supportedDropActions() const
+{
+    return Qt::CopyAction | Qt::MoveAction;
 }

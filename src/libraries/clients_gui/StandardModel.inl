@@ -263,6 +263,8 @@ template< typename T >
 inline
 T* StandardModel::GetDataFromIndex( const QModelIndex& index ) const
 {
+    if( !index.isValid() )
+        return 0;
     QStandardItem* item = itemFromIndex( index.model() == this ? index : proxy_.mapToSource( index ) );
     if( !item )
         return 0;

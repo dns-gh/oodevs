@@ -205,6 +205,7 @@
     <ClCompile Include="..\..\src\applications\preparation_app\RemoveBlocksDialog.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\SymbolDialog.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\SymbolEditor.cpp" />
+    <ClCompile Include="..\..\src\applications\preparation_app\TacticalTreeView.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\TemplatesPanel.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\TemplateListView.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\ActivityTimePrototype.cpp" />
@@ -757,6 +758,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\applications\preparation_app\TacticalTreeView.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\ToolbarContainer.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\TrafficabilityPrototype.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\UndergroundPrototype.h" />

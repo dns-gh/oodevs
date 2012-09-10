@@ -39,7 +39,7 @@
 
 #include "clients_gui/HierarchyTreeView.h"
 #include "clients_gui/EntityTreeView.h"
-#include "clients_gui/TacticalTreeView.h"
+#include "TacticalTreeView.h"
 #include "EntityTreeView.h"
 
 #include "PreparationProfile.h"
@@ -77,7 +77,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
         parent->addDockWidget( Qt::RightDockWidgetArea, dockWidget );
 
         // Tactical
-        gui::TacticalTreeView* tacticalTreeView = new gui::TacticalTreeView( controllers, PreparationProfile::GetProfile(), modelBuilder, icons, tabWidget );
+        TacticalTreeView* tacticalTreeView = new TacticalTreeView( controllers, PreparationProfile::GetProfile(), modelBuilder, icons, model, tabWidget );
         tabWidget->addTab( tacticalTreeView, "Tactical" );
         // Communication
         gui::CommunicationTreeView* communicationTreeView = new gui::CommunicationTreeView( controllers, PreparationProfile::GetProfile(), modelBuilder, icons, tabWidget );
@@ -97,6 +97,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
         tabWidget->addTab( objectTreeView, "Object" );
     }
 */
+
 
 
     // Properties panel

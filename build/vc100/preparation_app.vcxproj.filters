@@ -529,6 +529,9 @@
     <ClCompile Include="..\..\src\applications\preparation_app\BypassPrototype.cpp">
       <Filter>Source Files\Panels\Creation</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\TacticalTreeView.cpp">
+      <Filter>Source Files\TreeView</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\preparation_app\Application.h">
@@ -728,6 +731,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\BypassPrototype.h">
       <Filter>Source Files\Panels\Creation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\TacticalTreeView.h">
+      <Filter>Source Files\TreeView</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

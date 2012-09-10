@@ -20,6 +20,7 @@
 #include "clients_kernel/GhostPrototype.h"
 #include "clients_kernel/Moveable_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_gui/StandardModel.h"
 #include "clients_gui/ValuedDragObject.h"
 
 using namespace kernel;
@@ -56,6 +57,16 @@ GhostsLayer::~GhostsLayer()
 // -----------------------------------------------------------------------------
 bool GhostsLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& /*point*/ ) const
 {
+    // QT4 version (temp)
+    const QMimeData* mimeData = event->mimeData();
+    QStringList formats = mimeData->formats();
+    foreach( QString format, formats )
+    {
+        if( format == gui::StandardModel::mimeTypeStr_ && selectedGhost_ )
+            return true;
+    }
+
+    // QT3 version
     return ( gui::ValuedDragObject::Provides< const GhostPrototype >( event ) && ( selectedAutomat_ || selectedFormation_ ) ) ||
            ( gui::ValuedDragObject::Provides< const GhostPositions >( event ) && selectedGhost_ ) ||
            ( gui::ValuedDragObject::Provides< const Entity_ABC >    ( event ) && selectedGhost_ ) ||
@@ -118,6 +129,25 @@ bool GhostsLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Po
 // -----------------------------------------------------------------------------
 bool GhostsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& point )
 {
+    // QT4 temp : to be done with DragAndDropObserver_ABC
+    const QMimeData* mimeData = event->mimeData();
+    QStringList formats = mimeData->formats();
+    foreach( QString format, formats )
+    {
+        if( format == gui::StandardModel::mimeTypeStr_ )
+        {
+            if( !selectedGhost_ )
+                return false;
+            const kernel::Positions& positions = selectedGhost_->Get< Positions >();
+            if( const kernel::Moveable_ABC* moveable = dynamic_cast< const kernel::Moveable_ABC* >( &positions ) )
+            {
+                const_cast< kernel::Moveable_ABC* >( moveable )->Move( point );
+                return true;
+            }
+            return false;
+        }
+    }
+
     // Create ghost from creation panel
     if( const GhostPrototype* droppedItem = gui::ValuedDragObject::GetValue< const GhostPrototype >( event ) )
     {

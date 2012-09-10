@@ -65,6 +65,10 @@ RichTreeView::RichTreeView( kernel::Controllers& controllers, QWidget* parent /*
     // $$$$ ABR 2012-08-17: TODO: May be use a custom proxy model for place pc in top of automat
     proxyModel_->setDynamicSortFilter( true );
     //proxyModel_.setSortRole( Qt::UserRole );
+
+    QPalette p = palette();
+    p.setColor( QPalette::Inactive, QPalette::Highlight, Qt::lightGray );
+    setPalette( p );
 }
 
 // -----------------------------------------------------------------------------

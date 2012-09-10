@@ -24,6 +24,7 @@
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/Tools.h"
+#include "clients_gui/StandardModel.h"
 #include "clients_gui/ValuedDragObject.h"
 
 using namespace kernel;
@@ -116,6 +117,16 @@ void AgentsLayer::AfterSelection()
 // -----------------------------------------------------------------------------
 bool AgentsLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& ) const
 {
+    // QT4 version (temp)
+    const QMimeData* mimeData = event->mimeData();
+    QStringList formats = mimeData->formats();
+    foreach( QString format, formats )
+    {
+        if( format == gui::StandardModel::mimeTypeStr_ && ( selectedAutomat_ || selectedAgent_ || selectedFormation_ ) )
+            return true;
+    }
+
+    // QT3 version
     return ( gui::ValuedDragObject::Provides< const AgentPositions >   ( event ) && selectedAgent_ )
         || ( gui::ValuedDragObject::Provides< const AgentType >        ( event ) && selectedAutomat_ )
         || ( gui::ValuedDragObject::Provides< const AutomatType >      ( event ) && ( selectedFormation_ || selectedAutomat_ ) )
@@ -172,6 +183,42 @@ bool AgentsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::
 // -----------------------------------------------------------------------------
 bool AgentsLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point )
 {
+    // QT4 temp : to be done with DragAndDropObserver_ABC
+    const QMimeData* mimeData = event->mimeData();
+    QStringList formats = mimeData->formats();
+    foreach( QString format, formats )
+    {
+        if( format == gui::StandardModel::mimeTypeStr_ )
+        {
+            QByteArray encodedData = mimeData->data( format );
+            QDataStream stream( &encodedData, QIODevice::ReadOnly );
+            while( !stream.atEnd() )
+            {
+                unsigned int ptr = 0;
+                stream >> ptr;
+                if( ptr )
+                {
+                    kernel::SafePointer< kernel::Entity_ABC >* safePtr = reinterpret_cast< kernel::SafePointer< kernel::Entity_ABC >* >( ptr );
+                    if( safePtr && *safePtr )
+                    {
+                        kernel::Entity_ABC* entity = safePtr->ConstCast();
+                        if( ( dynamic_cast< kernel::Agent_ABC* >( entity) || dynamic_cast< kernel::Automat_ABC* >( entity) || dynamic_cast< kernel::Formation_ABC* >( entity) ) && world_.IsInside( point ) )
+                        {
+                            kernel::Moveable_ABC* position = dynamic_cast< kernel::Moveable_ABC* >( entity->Retrieve< kernel::Positions >() );
+                            if( position )
+                            {
+                                position->Move( point );
+                                draggingPoint_ = point;
+                            }
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // QT3
     if( AgentPositions* position = gui::ValuedDragObject::GetValue< AgentPositions >( event ) )
     {
         if( !selectedAgent_ )

@@ -17,6 +17,7 @@
 
 namespace gui
 {
+class DragAndDropObserver_ABC;
 
 // =============================================================================
 /** @class  StandardModel
@@ -38,6 +39,7 @@ public:
     //@{
     static const QString showValue_;
     static const QString hideValue_;
+    static const QString mimeTypeStr_;
     //@}
 
 signals:
@@ -56,6 +58,8 @@ public:
     //! @name Operations
     //@{
     virtual bool setData ( const QModelIndex& index, const QVariant& value, int role = Qt::EditRole );
+
+    void SetDragAndDropObserver( DragAndDropObserver_ABC* dragAndDropObserver );
 
     void Purge();
     template< typename T >
@@ -99,6 +103,15 @@ public:
     void ApplyFilter( boost::function< bool ( QStandardItem* ) > func );
     //@}
 
+    //! @name Drag and Drop
+    //@{
+    virtual Qt::ItemFlags flags( const QModelIndex& index ) const;
+    virtual QStringList mimeTypes() const;
+    virtual QMimeData* mimeData( const QModelIndexList& indexes ) const;
+    virtual bool dropMimeData( const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent );
+    virtual Qt::DropActions supportedDropActions() const;
+    //@}
+
 private:
     //! @name helpers
     //@{
@@ -109,6 +122,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     QSortFilterProxyModel& proxy_;
+    DragAndDropObserver_ABC* dragAndDropObserver_;
     //@}
 };
 

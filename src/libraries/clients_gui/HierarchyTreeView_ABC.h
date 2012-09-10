@@ -11,12 +11,20 @@
 #define __HierarchyTreeView_ABC_h_
 
 #include "EntityTreeView_ABC.h"
+#include "DragAndDropObserver_ABC.h"
 
 namespace kernel
 {
     class Controllers;
     class Hierarchies;
     class Profile_ABC;
+    class Agent_ABC;
+    class Automat_ABC;
+    class Formation_ABC;
+    class Ghost_ABC;
+    class KnowledgeGroup_ABC;
+    class AgentType;
+    class AutomatType;
 }
 
 namespace gui
@@ -31,6 +39,7 @@ namespace gui
 // Created: ABR 2012-08-10
 // =============================================================================
 class HierarchyTreeView_ABC : public EntityTreeView_ABC
+                            , public DragAndDropObserver_ABC
 {
     Q_OBJECT
 
@@ -57,6 +66,22 @@ protected:
     //! @name Operations
     //@{
     virtual Qt::ItemFlags ItemSpecificFlags( const kernel::Entity_ABC& entity ) const;
+    //@}
+
+private:
+    //! @name Drag n drop
+    //@{
+    virtual bool CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const;
+    virtual QStringList AdditionalMimeTypes() const;
+    virtual void Drop( const QString& mimeType, void* data, QStandardItem& target );
+    virtual void dragMoveEvent( QDragMoveEvent *pEvent );
+    virtual void Drop( const kernel::Agent_ABC& /*item*/, const kernel::Entity_ABC& /*target*/ ) {}
+    virtual void Drop( const kernel::Automat_ABC& /*item*/, const kernel::Entity_ABC& /*target*/ ) {}
+    virtual void Drop( const kernel::Formation_ABC& /*item*/, const kernel::Entity_ABC& /*target*/ ) {}
+    virtual void Drop( const kernel::Ghost_ABC& /*item*/, const kernel::Entity_ABC& /*target*/ ) {}
+    virtual void Drop( const kernel::KnowledgeGroup_ABC& /*item*/, const kernel::Entity_ABC& /*target*/ ) {}
+    virtual void Drop( const kernel::AgentType& /*item*/, kernel::Entity_ABC& /*target*/ ) {}
+    virtual void Drop( const kernel::AutomatType& /*item*/, kernel::Entity_ABC& /*target*/ ) {}
     //@}
 
 protected slots:

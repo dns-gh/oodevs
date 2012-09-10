@@ -1440,6 +1440,9 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\TacticalTreeView.h">
       <Filter>Source Files\MVC\View</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\DragAndDropObserver_ABC.h">
+      <Filter>Source Files\MVC\Model</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\clients_gui\HierarchyListView.inl">

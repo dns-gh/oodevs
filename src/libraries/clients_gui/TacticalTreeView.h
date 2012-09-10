@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __TacticalTreeView_h_
-#define __TacticalTreeView_h_
+#ifndef __gui_TacticalTreeView_h_
+#define __gui_TacticalTreeView_h_
 
 #include "HierarchyTreeView.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -49,4 +49,4 @@ public:
 
 }
 
-#endif // __TacticalTreeView_h_
+#endif // __gui_TacticalTreeView_h_
