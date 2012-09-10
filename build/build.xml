@@ -166,9 +166,10 @@
         <attribute name="name"/>
         <attribute name="libs" default=""/>
         <attribute name="depends" default=""/>
+        <attribute name="failonwarning" default="false"/>
         <element name="cc-elements" optional="true" implicit="true"/>
         <sequential>
-            <build-lib name="@{name}_plugin_dll" outtype="shared" depends="@{depends}" pattern="@{name}_plugin-${platform}-mt@{suffix}" suffix="-gd" libs="@{libs}">
+            <build-lib name="@{name}_plugin_dll" outtype="shared" depends="@{depends}" pattern="@{name}_plugin-${platform}-mt@{suffix}" suffix="-gd" libs="@{libs}" failonwarning="@{failonwarning}">
                 <syslibset libs="shell32,user32"/>
                 <defineset define="QT3_SUPPORT"/>
                 <linkerarg value="/FIXED:NO"/>
