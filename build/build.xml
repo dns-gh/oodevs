@@ -447,7 +447,8 @@
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
                   lib${ant.project.name}_actions-${platform}-mt@{suffix},
                   lib${ant.project.name}_logistic_plugin-${platform}-mt@{suffix},
-                  lib${ant.project.name}_tools-${platform}-mt@{suffix}">
+                  lib${ant.project.name}_tools-${platform}-mt@{suffix}"
+                  failonwarning="true">
             <defineset define="LOGISTIC_PLUGIN_DLL_EXPORTS"/>
         </build-plugin>
     </target>
