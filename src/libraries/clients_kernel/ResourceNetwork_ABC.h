@@ -79,6 +79,13 @@ public:
     typedef std::map< std::string, ResourceNode > T_ResourceNodes;
     typedef T_ResourceNodes::iterator            IT_ResourceNodes;
     typedef T_ResourceNodes::const_iterator     CIT_ResourceNodes;
+
+    struct Deletion
+    {
+        std::string resource_;
+        unsigned int id_;
+        bool isUrban_;
+    };
     //@}
 
 public:
@@ -102,26 +109,8 @@ public:
         }
         return it->second;
     }
-    virtual void RemoveNode( const std::string& resource, bool urban, unsigned int id )
+    virtual void RemoveNode( const std::string& resource )
     {
-        IT_ResourceNodes it = resourceNodes_.find( resource );
-        if( it == resourceNodes_.end() )
-            return;
-        for( IT_ResourceNodes it = resourceNodes_.begin(); it != resourceNodes_.end(); ++it )
-        {
-            T_ResourceLinks& links = it->second.links_;
-            if( !links.empty() )
-            {
-                IT_ResourceLinks link = links.begin();
-                while( link != links.end() )
-                {
-                    if( link->id_ == id && link->urban_ == urban )
-                        link = links.erase( link );
-                    else
-                        ++link;
-                }
-            }
-        }
         resourceNodes_.erase( resource );
     }
     void Select( bool selected ) { selected_ = selected; }
@@ -136,10 +125,12 @@ public:
             return 0;
         return &it->second;
     }
-    void RemoveLinks( bool urban, unsigned int id )
+    void RemoveLinks( bool urban, unsigned int id, const std::string& resource = std::string() )
     {
         for( IT_ResourceNodes it = resourceNodes_.begin(); it != resourceNodes_.end(); ++it )
         {
+            if( !resource.empty() && resource != it->first )
+                continue;
             T_ResourceLinks& links = it->second.links_;
             if( !links.empty() )
             {

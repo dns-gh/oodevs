@@ -492,14 +492,19 @@ void ResourceLinksDialog_ABC::OnRemoveNode( int resourceId )
     int index = 0;
     kernel::Entity_ABC* selected = selected_.front();
     ResourceNetwork_ABC& resourceNetwork = selected->Get< ResourceNetwork_ABC >();
-    while( it.HasMoreElements() ) // $$$$ LDC RC WTF? Why not resources_.Get or Find( resourceId) ????
+    while( it.HasMoreElements() ) // $$$$ LDC RC WTF? Why not resources_.Get or Find( resourceId ) ????
     {
         const ResourceNetworkType& resource = it.NextElement();
         if( index++ == resourceId )
         {
             bool isUrban = ( dynamic_cast< kernel::UrbanObject_ABC* >( selected ) != 0 );
-            resourceNetwork.RemoveNode( resource.GetName(), isUrban, selected->GetId() );
+            resourceNetwork.RemoveNode( resource.GetName() );
             controllers_.controller_.Update( resourceNetwork );
+            ResourceNetwork_ABC::Deletion deletion;
+            deletion.resource_ = resource.GetName();
+            deletion.isUrban_ = isUrban;
+            deletion.id_ = selected->GetId();
+            controllers_.controller_.Update( deletion );
             break;
         }
     }
