@@ -3,22 +3,79 @@
     <property environment="env"/>
     <property name="env.PONEY_HOME" value="//install/masa/common/dev/common/poney"/>
     <import file="${env.PONEY_HOME}/poney.xml"/>
+    <var name="repositories" value="${repositories},${sword.repository}"/>
+    <property name="branch" value="trunk"/>
 
-    <target name="configure" description="retrieve dependencies">
-        <update name="vcredist" package="vcredist"/>
-    </target>
+    <propertyregex property="sub_platform" input="${platform}" regexp="(\w+)_x64" select="\1"/>
 
-    <target name="package">
-        <nsis dir="${src.dir}" name="cloud_client"/>
-        <nsis dir="${src.dir}" name="cloud_server"/>
-        <zip destfile="${dist.dir}/sword_cloud_${platform}_debug.zip">
+    <target name="binaries">
+        <zip destfile="${dist.dir}/sword_cloud_${platform}_bin.zip">
             <mappedresources>
-                <fileset dir="../../host_agent/out/${platform}/RelWithDebInfo" includes="**/*.pdb"/>
+                <fileset dir="../../host_agent/out/${platform}/RelWithDebInfo"
+                    includes="**/cloud_*.pdb **/cloud_*.exe"/>
                 <flattenmapper/>
-           </mappedresources>
+            </mappedresources>
+            <mappedresources>
+                <fileset dir="../../node/out/${platform}"
+                    includes="node.exe"/>
+            </mappedresources>
+            <mappedresources>
+                <fileset dir="../../node" includes="www/"/>
+            </mappedresources>
+            <mappedresources>
+                <fileset dir="../../proxy/out/${platform}"
+                    includes="proxy.exe"/>
+                <flattenmapper/>
+            </mappedresources>
         </zip>
     </target>
 
-    <target name="all" depends="configure,package" />
+    <macrodef name="update_deps">
+        <attribute name="platform"/>
+        <sequential>
+            <update name="cloud"
+                    package="sword_cloud_@{platform}_bin"
+                    todir="${root.dir}/out/@{platform}/cloud"/>
+            <update name="sword"
+                    version="Defense/releases/internal/${branch}"
+                    package="SWORD_binaries_@{platform}_${branch}"
+                    todir="${root.dir}/out/@{platform}/sword"/>
+        </sequential>
+    </macrodef>
+
+    <target name="configure">
+        <update name="vcredist" package="vcredist"/>
+        <update_deps platform="${platform}"/>
+        <if>
+            <isset property="sub_platform"/>
+            <then>
+                <update_deps platform="${sub_platform}"/>
+            </then>
+        </if>
+    </target>
+
+    <target name="package">
+        <sequential>
+            <nsis dir="${src.dir}" name="cloud_client"/>
+            <if>
+                <isset property="sub_platform"/>
+                <then>
+                    <nsis dir="${src.dir}"
+                          name="cloud_client"
+                          todir="${root.dir}/out/${sub_platform}">
+                        <arg value="/DPLATFORM=${sub_platform}"/>
+                    </nsis>
+                    <nsis dir="${src.dir}" name="cloud_server">
+                        <arg value="/DSUB_PLATFORM=${sub_platform}"/>
+                    </nsis>
+                </then>
+                <else>
+                    <nsis dir="${src.dir}" name="cloud_server"/>
+                </else>
+            </if>
+        </sequential>
+    </target>
+
+    <target name="setup" depends="configure,package"/>
 
 </project>

@@ -7,12 +7,10 @@
 ;
 ; ------------------------------------------------------------------------------
 
-!define HOST_AGENT "..\..\host_agent"
-!define PROXY "..\..\proxy"
-!define NODE "..\..\node"
-!define SWORD "${NODE}\out\${PLATFORM}"
-!define OUT "..\out\${PLATFORM}"
-!define EXTERNAL "..\external"
+!define ROOT  "..\out\${PLATFORM}"
+!define CLOUD "${ROOT}\cloud"
+!define SWORD "${ROOT}\sword"
+!define DIST  "..\dist"
 
 !if ${PLATFORM} == "vc100_x64"
 !define PRG $PROGRAMFILES64
@@ -64,9 +62,9 @@ Section $(^Name)
     SetOutPath "$INSTDIR\bin"
 
     ; cloud applications
-    File "${HOST_AGENT}\out\${PLATFORM}\RelWithDebInfo\cloud_server.exe"
-    File "${NODE}\out\${PLATFORM}\node.exe"
-    File "${PROXY}\out\${PLATFORM}\proxy.exe"
+    File "${CLOUD}\cloud_server.exe"
+    File "${CLOUD}\node.exe"
+    File "${CLOUD}\proxy.exe"
 
     ; sword applications
     File "${SWORD}\directia-${PLATFORM}-mt-4_6.dll"
@@ -107,12 +105,17 @@ Section $(^Name)
 
     ; website
     SetOutPath "$INSTDIR\www\js"
-    File /r /x ".svn" "${NODE}\www\js\*.js"
+    File /r /x ".svn" "${CLOUD}\www\js\*.js"
     SetOutPath "$INSTDIR\www\css"
-    File /r /x ".svn" "${NODE}\www\css\*.css"
+    File /r /x ".svn" "${CLOUD}\www\css\*.css"
     SetOutPath "$INSTDIR\www"
-    File /r /x ".svn" "${NODE}\www\*.ttml"
-    File /r /x ".svn" "${NODE}\www\img"
+    File /r /x ".svn" "${CLOUD}\www\*.ttml"
+    File /r /x ".svn" "${CLOUD}\www\img"
+    File "${DIST}\sword_client_${PLATFORM}_setup.exe"
+    !ifdef SUB_PLATFORM
+        FILE "..\out\${SUB_PLATFORM}\sword_client_${SUB_PLATFORM}_setup.exe"
+    !endif
+
 
     ; shortcuts
     CreateDirectory "$SMPROGRAMS\$(^Name)"
@@ -123,7 +126,7 @@ Section $(^Name)
 
     ; VCRedist
     SetOutPath $TEMP
-    File "${OUT}\vcredist_${PLATFORM}.exe"
+    File "${ROOT}\vcredist_${PLATFORM}.exe"
     nsExec::Exec '"vcredist_${PLATFORM}.exe" /S /NCRC'
     Delete "vcredist_${PLATFORM}.exe"
 

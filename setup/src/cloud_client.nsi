@@ -7,11 +7,7 @@
 ;
 ; ------------------------------------------------------------------------------
 
-!define HOST_AGENT "..\..\host_agent"
-!define NODE "..\..\node"
-!define SWORD "${NODE}\out\${PLATFORM}"
-!define OUT "..\out\${PLATFORM}"
-!define EXTERNAL "..\external"
+!define ROOT "..\out\${PLATFORM}"
 
 !if ${PLATFORM} == "vc100_x64"
 !define PRG $PROGRAMFILES64
@@ -60,9 +56,9 @@ Section $(^Name)
     SetOutPath "$INSTDIR\bin"
 
     ; client application
-    File "${HOST_AGENT}\out\${PLATFORM}\RelWithDebInfo\cloud_client.exe"
-    File "${SWORD}\QtCore4.dll"
-    File "${SWORD}\QtGui4.dll"
+    File "${ROOT}\cloud\cloud_client.exe"
+    File "${ROOT}\sword\QtCore4.dll"
+    File "${ROOT}\sword\QtGui4.dll"
 
     ; shortcuts
     CreateDirectory "$SMPROGRAMS\$(^Name)"
@@ -73,7 +69,7 @@ Section $(^Name)
 
     ; VCRedist
     SetOutPath $TEMP
-    File "${OUT}\vcredist_${PLATFORM}.exe"
+    File "${ROOT}\vcredist_${PLATFORM}.exe"
     nsExec::Exec '"vcredist_${PLATFORM}.exe" /S /NCRC'
     Delete "vcredist_${PLATFORM}.exe"
 
