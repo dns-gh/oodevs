@@ -121,6 +121,13 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
       <AdditionalDependencies>libeay32.lib;ssleay32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent />
+    <ClCompile>
+      <TreatWarningAsError>false</TreatWarningAsError>
+    </ClCompile>
+    <PostBuildEvent>
+      <Command>cd $(RunDir)
+$(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_directory=../../data/tests/$(ProjectName)  --temp_directory=../../out/tmp</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
     <ClCompile />
@@ -128,6 +135,13 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
       <AdditionalDependencies>libeay32.lib;ssleay32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent />
+    <ClCompile>
+      <TreatWarningAsError>false</TreatWarningAsError>
+    </ClCompile>
+    <PostBuildEvent>
+      <Command>cd $(RunDir)
+$(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_directory=../../data/tests/$(ProjectName)  --temp_directory=../../out/tmp</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\tests\plugins_test\BmlTest.cpp" />
