@@ -10,6 +10,7 @@
 session_template = Handlebars.compile $("#session_template").html()
 session_error_template = Handlebars.compile $("#session_error_template").html()
 session_settings_template = Handlebars.compile $("#session_settings_template").html()
+session_redirect_template = Handlebars.compile $("#session_redirect_template").html()
 
 session_plugins = {}
 init_plugins = ->
@@ -404,8 +405,18 @@ class SessionItemView extends Backbone.View
             data.start_time = start.toUTCString()
             data.duration = ms_to_duration duration
         $(@el).html session_template data
-        for it in $(@el).find ".link"
-            $(it).attr "href", "sword://" + window.location.hostname + ":" + @model.get("port") + "/"
+        $(@el).find(".link").click =>
+            next = "sword://" + window.location.hostname + ":" + @model.get("port") + "/"
+            if convert_to_boolean $.cookie "redirect"
+                return load_url next
+            msg = $ session_redirect_template id: @model.id
+            msg.modal "show"
+            msg.find(".redirect").click =>
+                if msg.find("#redirect_#{@model.id}").is ":checked"
+                    $.cookie "redirect", true, expires: 120
+                msg.modal "hide"
+                load_url next
+            return
         return
 
     delete: (evt) =>

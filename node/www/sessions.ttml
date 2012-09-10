@@ -364,3 +364,30 @@
         </div>
     </div>
 </script>
+<!-- Session Redirect Template -->
+<script type="text/template" id="session_redirect_template">
+    <div class="modal fade in modal_redirect">
+        <div class="modal-header" style="text-align:center">
+            <h4> To open this link, you need a Sword Client </h4>
+        </div>
+        <form class="modal-body form-horizontal">
+            <div class="control-group">
+                <div class="controls">
+                    <a class="btn btn-success redirect">
+                        <img alt="" width="32" height="32" src="img/tango/32x32/categories/applications-other.png" />
+                        Run Client
+                    </a>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <a class="btn btn-info" href="/sword_client_vc100_setup.exe">
+                        <img alt="" width="32" height="32" src="img/tango/32x32/apps/system-installer.png" />
+                        Get Client
+                    </a>
+                </div>
+            </div>
+            [[ template "input_checkbox" sub "id" "redirect_{{id}}" "label" "Remember my choice" ]]
+        </form>
+    </div>
+</script>
