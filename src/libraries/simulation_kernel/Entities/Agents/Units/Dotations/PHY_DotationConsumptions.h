@@ -45,7 +45,7 @@ public:
 
     //! @name Operations
     //@{
-    bool RegisterConsumptionReservations( PHY_DotationGroupContainer& container ) const;
+    bool RegisterConsumptionReservations( PHY_DotationGroupContainer& container, bool isTransported ) const;
     //@}
 
 private:
