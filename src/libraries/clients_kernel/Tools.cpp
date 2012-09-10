@@ -37,7 +37,7 @@ QDateTime tools::IsoStringToQTime( const std::string& text )
 // -----------------------------------------------------------------------------
 QDateTime tools::BoostTimeToQTime( const boost::posix_time::ptime& btime )
 {
-    return QDateTime::fromString( boost::posix_time::to_iso_string( btime ).c_str(), Qt::ISODate );
+    return IsoStringToQTime( boost::posix_time::to_iso_string( btime ) );
 }
 
 // -----------------------------------------------------------------------------
