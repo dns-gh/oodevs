@@ -19,10 +19,10 @@
                             [[ if ne .user.type "user" ]]
                             [[ template "node_sidebar_item" sub "name" "Uploads"  "item" "uploads"  "pg" .url.pg "img" "status/software-update-available" ]]
                             [[ template "node_sidebar_item" sub "name" "Users"    "item" "users"    "pg" .url.pg "img" "apps/system-users" ]]
+                            [[ end ]]
                             <li>
                                 <a href="/sword_client_vc100_setup.exe"><img alt="" width="32" height="32" src="img/tango/32x32/apps/system-installer.png" /> Get Client </a>
                             </li>
-                            [[ end ]]
                         </ul>
                     </div>
                     [[ if eq .url.pg "sessions" ]]
