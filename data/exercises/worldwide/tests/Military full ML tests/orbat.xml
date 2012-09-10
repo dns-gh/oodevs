@@ -233,11 +233,13 @@
             </limit>
           </automat>
           <automat engaged="true" id="927" knowledge-group="321" name="MILITARY.Engineer company" symbol="symbols/sfgpucect" type="MILITARY.Engineer company">
-            <unit command-post="true" id="928" name="MILITARY.Engineer platoon" position="29TNF3805151400" type="MILITARY.Engineer platoon"/>
+            <unit command-post="true" id="928" name="MILITARY.Engineer platoon" position="29TNF3805951395" type="MILITARY.Engineer platoon"/>
             <unit command-post="false" id="929" name="MILITARY.Engineer platoon" position="29TNF3786251261" type="MILITARY.Engineer platoon"/>
             <unit command-post="false" id="930" name="MILITARY.Engineer platoon" position="29TNF3803951233" type="MILITARY.Engineer platoon"/>
             <unit command-post="false" id="931" name="MILITARY.Engineer platoon" position="29TNF3791151452" type="MILITARY.Engineer platoon"/>
             <unit command-post="false" id="934" name="MILITARY.Engineer platoon" position="29TNF3816651364" type="MILITARY.Engineer platoon"/>
+            <unit command-post="false" id="984" name="MILITARY.Infantry platoon" position="29TNF3791951361" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="985" name="MILITARY.Infantry platoon" position="29TNF3810051347" type="MILITARY.Infantry platoon"/>
           </automat>
           <lima name="Phase line 372">
             <point>29TNF3257758436</point>
@@ -595,4 +597,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="1381533720" -->
+<!-- signature="0741259720" -->

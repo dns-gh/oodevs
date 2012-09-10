@@ -6,10 +6,10 @@
   </meta>
   <profiles file="profiles.xml"/>
   <orbat file="orbat.xml"/>
-  <urbanstate file="urbanstate.xml"/>
   <weather file="weather.xml"/>
   <model dataset="ada" physical="worldwide-ML"/>
+  <urban file="urban.xml"/>
   <settings file="settings.xml"/>
   <terrain name="Portoshima"/>
 </exercise>
-<!-- signature="0444746480" -->
+<!-- signature="0150189511" -->
