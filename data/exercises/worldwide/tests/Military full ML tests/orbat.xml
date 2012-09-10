@@ -56,6 +56,71 @@
             </crossing-site>
           </attributes>
         </object>
+        <object id="965" name="Anti-tank Ditch [965]" type="anti tank obstacle">
+          <shape type="polygone">
+            <points>
+              <point>29TNF3691751289</point>
+              <point>29TNF3738651277</point>
+              <point>29TNF3735151012</point>
+              <point>29TNF3702651024</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+            <mine density="0"/>
+          </attributes>
+        </object>
+        <object id="966" name="Anti-tank Ditch [966]" type="anti tank obstacle">
+          <shape type="polygone">
+            <points>
+              <point>29TNF3754550852</point>
+              <point>29TNF3756450663</point>
+              <point>29TNF3786650759</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+            <mine density="0"/>
+          </attributes>
+        </object>
+        <object id="967" name="Anti-tank Ditch [967]" type="anti tank obstacle">
+          <shape type="polygone">
+            <points>
+              <point>29TNF3812650998</point>
+              <point>29TNF3812750823</point>
+              <point>29TNF3844750766</point>
+              <point>29TNF3836550990</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+            <mine density="0"/>
+          </attributes>
+        </object>
+        <object id="968" name="Dike [968]" type="dyke">
+          <shape type="ligne">
+            <points>
+              <point>29TNF3715250532</point>
+              <point>29TNF3791550286</point>
+            </points>
+          </shape>
+          <attributes>
+            <altitude-modifier height="10"/>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+        <object id="969" name="Dike [969]" type="dyke">
+          <shape type="ligne">
+            <points>
+              <point>29TNF3862650464</point>
+              <point>29TNF3839750146</point>
+            </points>
+          </shape>
+          <attributes>
+            <altitude-modifier height="10"/>
+            <construction completion="1"/>
+          </attributes>
+        </object>
       </objects>
       <tactical>
         <formation id="318" level="ii" name="Formation [318]" symbol="symbols/sfgpucim">
@@ -167,6 +232,13 @@
               <point>29TNF3787950732</point>
             </limit>
           </automat>
+          <automat engaged="true" id="927" knowledge-group="321" name="MILITARY.Engineer company" symbol="symbols/sfgpucect" type="MILITARY.Engineer company">
+            <unit command-post="true" id="928" name="MILITARY.Engineer platoon" position="29TNF3805151400" type="MILITARY.Engineer platoon"/>
+            <unit command-post="false" id="929" name="MILITARY.Engineer platoon" position="29TNF3786251261" type="MILITARY.Engineer platoon"/>
+            <unit command-post="false" id="930" name="MILITARY.Engineer platoon" position="29TNF3803951233" type="MILITARY.Engineer platoon"/>
+            <unit command-post="false" id="931" name="MILITARY.Engineer platoon" position="29TNF3791151452" type="MILITARY.Engineer platoon"/>
+            <unit command-post="false" id="934" name="MILITARY.Engineer platoon" position="29TNF3816651364" type="MILITARY.Engineer platoon"/>
+          </automat>
           <lima name="Phase line 372">
             <point>29TNF3257758436</point>
             <point>29TNF3451257933</point>
@@ -264,6 +336,14 @@
             <point>29TNF3509360035</point>
             <point>29TNF3469659663</point>
             <point>29TNF3415858299</point>
+          </limit>
+          <limit name="Limit 932">
+            <point>29TNF3729352017</point>
+            <point>29TNF3718549446</point>
+          </limit>
+          <limit name="Limit 933">
+            <point>29TNF3915552274</point>
+            <point>29TNF3864049422</point>
           </limit>
         </formation>
       </tactical>
@@ -515,4 +595,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="1403488241" -->
+<!-- signature="1381533720" -->

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="platoon.combat.support.engineer.tasks.DegagerObstacles" source-version="1.0.0" knowledge-class="platoon.combat.support.engineer.tasks.knowledges.DegagerObstacles">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.tasks.Remove" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.Remove">
+    <description>To remove a set of sword objects.&#xD;
+The visits the obstacles and removes them one by one. Order of visit is user defined (the order is the 'entities' list order).</description>
     <parameters>
-        <parameter name="obstacles">
-            <description>Les éléments à dégager.</description>
+        <parameter name="entities">
+            <description>The set of entities to remove (objects such as obstacles, intallations, bridges etc.).</description>
             <type>
                 <list>
                     <class name="properties.Removable"/>
@@ -10,14 +12,14 @@
             </type>
         </parameter>
         <parameter name="meetingPoint" nullable="true">
-            <description>Point de regroupement vers lequel se déplacera l'unité en fin de mission.</description>
+            <description>The meeting position to reach upon works termination.</description>
             <type>
                 <class name="properties.Reachable"/>
             </type>
         </parameter>
     </parameters>
     <stages>
-        <stage label="Dégager obstacles" permanent="false">
+        <stage label="moving to obstacles">
             <skills>
                 <skill name="agent.skills.RemoveWithReinforcement" main="true">
                     <parameter name="avoidObstacles">
@@ -27,14 +29,13 @@
                     </parameter>
                     <parameter name="entities">
                         <value>
-                            <parameter>obstacles</parameter>
+                            <parameter>entities</parameter>
                         </value>
                     </parameter>
                 </skill>
             </skills>
         </stage>
-        <stage label="Déplacement vers le point de regroupement" disable-when-done="true">
-            <description>Se déplace vers le position de regroupement afin de s'éloigner de l'obstacle.</description>
+        <stage label="moving to meeting position" disable-when-done="true">
             <skills>
                 <skill name="agent.skills.MoveToward" main="true">
                     <parameter name="entities">

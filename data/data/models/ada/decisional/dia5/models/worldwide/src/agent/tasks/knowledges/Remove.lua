@@ -3,8 +3,8 @@ local result =
     fillParameters = function( self, companyTask, params, entity, retrogradeContext, objectif, taskName )
         local obstacles = companyTask:getObstaclesPlan( params, entity, taskName )
         local meetingPoint = companyTask:getFinalMeetingPoint( params )
-        if next(obstacles) then
-            return { obstacles = obstacles, meetingPoint = meetingPoint }
+        if next( obstacles ) then
+            return { entities = obstacles, meetingPoint = meetingPoint }
         else
             return nil
         end
@@ -24,6 +24,6 @@ local result =
 }
 
 local t = initTaskKnowledge( result )
-taskKnowledge["agent.tasks.knowledges.ClearObstacles"] = t
+taskKnowledge[ "agent.tasks.knowledges.Remove" ] = t
 
 return result
