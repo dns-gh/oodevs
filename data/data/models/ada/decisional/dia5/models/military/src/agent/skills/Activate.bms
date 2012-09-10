@@ -1,24 +1,27 @@
 -- **************************************************************************** 
--- $$$$
+-- Activate
 -- ****************************************************************************
 rootnode
 {
     connections = { skill.links.Activate },
 
-    done = function( self, params, additionnalParams )
+    -- -------------------------------------------------------------------------------- 
+    -- Feedbacks
+    -- --------------------------------------------------------------------------------
+    done = function( self, params, additionnalParams ) -- from skill.links.Activate connection
         Feedback( self.feedbacks.done )
-    end;
+    end,
 
-    failed = function( self, params, additionnalParams )
-        Feedback( self.feedbacks.failed )
-    end;
-
+    -- -------------------------------------------------------------------------------- 
+    -- Element activation or send a done feedback if no elements to activate
+    -- --------------------------------------------------------------------------------
     activate = function( self )
         local Activate = Activate
-        if ( not self.params.entities ) or ( #self.params.entities == 0 ) then
+
+        if( not self.params.entities ) or ( #self.params.entities == 0 ) then
             Feedback( self.feedbacks.done )
         else
-           Activate( skill.links.Activate, 1, {entities = self.params.entities, positions = self.params.positions})
+            Activate( skill.links.Activate, 1, {entities = self.params.entities, positions = self.params.positions } )
         end
     end
 }

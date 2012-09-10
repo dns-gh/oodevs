@@ -55,7 +55,7 @@ rootnode
         end
 
         Activate( skill.links.remove, 1, { entities  = { self.params.obstacles[ self.nextTargetIndex ] }, 
-                                          positions = self.params.positions } )
+                                           positions = self.params.positions } )
         self.report = nil
         self.alltry = false
     end
