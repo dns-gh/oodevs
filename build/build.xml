@@ -993,7 +993,7 @@
     <target name="test" depends="generate-license,scripts_test,adaptation_test,tools_test,3a_test,plugins_test,hla_plugin_test,web_control_plugin_test,
                                  shield_test,clients_test,exercises_test,data_migrations_test,dispatcher_test,application.simulation_kernel_test,
                                  application.integration_decisionnal_test,checkpoint_test,protocol_test,positions_plugin_test,
-                                 actions_test,launcher_test,reports_test,flood_test" description="run all tests"/>
+                                 actions_test,launcher_test,reports_test,flood_test,client_proxy_test" description="run all tests"/>
 
     <target name="3a_test" depends="library.3a">
         <build-test name="3a" depends="xerces,terrain,boost,protobuf" libs="lib${ant.project.name}_3a-${platform}-mt@{suffix},lib${ant.project.name}_protocol-${platform}-mt"/>
@@ -1088,6 +1088,15 @@
                   lib${ant.project.name}_MT_Tools-${platform}-mt,
                   lib${ant.project.name}_protocol-${platform}-mt">
             <defineset define="QT3_SUPPORT"/>
+        </build-test>
+    </target>
+
+    <target name="client_proxy_test" depends="library.client_proxy,library.protocol,library.tools,library.MT_Tools">
+        <build-test name="client_proxy" depends="boost,protobuf"
+            libs="lib${ant.project.name}_tools-${platform}-mt,
+                  lib${ant.project.name}_client_proxy-${platform}-mt,
+                  lib${ant.project.name}_MT_Tools-${platform}-mt,
+                  lib${ant.project.name}_protocol-${platform}-mt">
         </build-test>
     </target>
 
