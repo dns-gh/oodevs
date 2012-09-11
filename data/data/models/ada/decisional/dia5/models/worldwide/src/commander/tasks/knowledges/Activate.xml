@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.tasks.knowledges.Remove" source-version="1.0.0" extends="commander.tasks.knowledges.CompanyTask">
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.tasks.knowledges.Activate" source-version="1.0.0" extends="commander.tasks.knowledges.CompanyTask">
     <description>The knowledge of the 'Remove' mission. This knowledge is used by the commander agent to perform this mission</description>
     <methods>
         <method name="getObstaclesPlan">

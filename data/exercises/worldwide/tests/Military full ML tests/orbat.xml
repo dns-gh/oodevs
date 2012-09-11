@@ -121,6 +121,65 @@
             <construction completion="1"/>
           </attributes>
         </object>
+        <object id="1017" name="Abatis [1,017]" type="abattis">
+          <shape type="polygone">
+            <points>
+              <point>29TNF3754451935</point>
+              <point>29TNF3751651873</point>
+              <point>29TNF3761551871</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="false" type="reserved"/>
+            <construction completion="1"/>
+            <mine density="1"/>
+          </attributes>
+        </object>
+        <object id="1018" name="Abatis [1,018]" type="abattis">
+          <shape type="polygone">
+            <points>
+              <point>29TNF3736451758</point>
+              <point>29TNF3747351759</point>
+              <point>29TNF3745251654</point>
+              <point>29TNF3740851687</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="false" type="reserved"/>
+            <construction completion="1"/>
+            <mine density="1"/>
+          </attributes>
+        </object>
+        <object id="1019" name="Abatis [1,019]" type="abattis">
+          <shape type="polygone">
+            <points>
+              <point>29TNF3771551812</point>
+              <point>29TNF3768151781</point>
+              <point>29TNF3778351754</point>
+              <point>29TNF3781451800</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="false" type="reserved"/>
+            <construction completion="1"/>
+            <mine density="1"/>
+          </attributes>
+        </object>
+        <object id="1020" name="Abatis [1,020]" type="abattis">
+          <shape type="polygone">
+            <points>
+              <point>29TNF3730651610</point>
+              <point>29TNF3728251557</point>
+              <point>29TNF3736551517</point>
+              <point>29TNF3744051592</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="false" type="reserved"/>
+            <construction completion="1"/>
+            <mine density="1"/>
+          </attributes>
+        </object>
       </objects>
       <tactical>
         <formation id="318" level="ii" name="Formation [318]" symbol="symbols/sfgpucim">
@@ -597,4 +656,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="0741259720" -->
+<!-- signature="1561080097" -->

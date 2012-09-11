@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.tasks.Activate" source-version="1.0.0">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.tasks.Activate" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.Activate">
     <description>To activate a set of Sword tactical ojects. The agent chooses a position to activate each of the issued elements. Upon reaching a position, the agent activates the corresponding object. Upon action termination, the agents decides to move to the next one. When all entities have been activated, the agent moves to the 'meetingPosition' and the mission terminates.</description>
     <parameters>
         <parameter name="objects">
