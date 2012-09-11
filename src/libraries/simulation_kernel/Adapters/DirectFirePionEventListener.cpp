@@ -216,13 +216,13 @@ void DirectFirePionEventListener::Update( const core::Model& event )
             results->IncRef();
         }
         target.GetRole< PHY_RoleInterface_Composantes >().ApplyDirectFire( component, *category, *results );
-        HandleCollateralDamage( results, pion, target );
+        HandleCollateralDamage( results, pion, target ); // $$$$ MCO 2012-09-10: move to a separate listener
     }
-    NotifyFirerPerception( pion, target );
+    NotifyFirerPerception( pion, target ); // $$$$ MCO 2012-09-10: move to a separate listener
     if( event[ "use-ph" ] )
     {
         target.GetRole< PHY_RoleInterface_ActiveProtection >().UseAmmunition( *category );
-        UrbanObjectApplyDirectFire( target, *category, event[ "missed" ] );
+        UrbanObjectApplyDirectFire( target, *category, event[ "missed" ] ); // $$$$ MCO 2012-09-10: move to a separate listener
     }
 }
 
