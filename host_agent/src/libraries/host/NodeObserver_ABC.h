@@ -20,13 +20,13 @@ namespace host
 struct NodeObserver_ABC
 {
     //! @name Constructors/Destructors
-    //@{    
+    //@{
     NodeObserver_ABC() {}
     virtual ~NodeObserver_ABC() {}
     //@}
 
     //! @name Public methods
-    //@{    
+    //@{
     virtual void Notify( const Node_ABC& node ) const = 0;
     //@}
 };
