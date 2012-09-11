@@ -120,6 +120,17 @@
     </message>
 </context>
 <context>
+    <name>EngineerConstruction</name>
+    <message>
+        <source>Altitude modifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Density</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FragOrder</name>
     <message>
         <source>Entity &apos;%1&apos; (id: %2) cannot execute fragmentary order &apos;%3&apos; (id: %4)</source>

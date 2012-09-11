@@ -163,7 +163,6 @@ EngineerConstruction::~EngineerConstruction()
 // -----------------------------------------------------------------------------
 void EngineerConstruction::ReadParameter( xml::xistream& xis, const CoordinateConverter_ABC& converter, const kernel::EntityResolver_ABC& entities, Controller& controller )
 {
-    std::string name = xis.attribute< std::string >( "name" );
     std::string type = xis.attribute< std::string >( "type" );
     if( type == "obstacletype" )
         AddParameter( *new ObstacleType( xis ) );
@@ -173,6 +172,16 @@ void EngineerConstruction::ReadParameter( xml::xistream& xis, const CoordinateCo
         AddParameter( *new Automat( xis, entities, controller ) );
     else if( type == "string" )
         AddParameter( *new String( OrderParameter( tools::translate( "Parameter", "Name" ).toAscii().constData(), "string", true ), xis ) );
+    else if(type=="quantity")
+    {
+        std::string identifier = xis.attribute( "identifier", std::string() );
+        if( identifier == "altitude_modifier" )
+        {
+            Numeric* numeric = new Numeric( OrderParameter( tools::translate( "EngineerConstruction", "Altitude modifier" ).toAscii().constData(), "integer", true ), xis );
+            numeric->SetKeyName( identifier );
+            AddParameter( *numeric );
+        }
+    }
     else if( type == "Integer" )
     {
         std::string identifier = xis.attribute( "identifier", std::string() );
@@ -185,6 +194,12 @@ void EngineerConstruction::ReadParameter( xml::xistream& xis, const CoordinateCo
         else if( identifier == "ActivationTime" )
         {
             Numeric* numeric = new Numeric( OrderParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activation time:" ).toAscii().constData(), "integer", true ), xis );
+            numeric->SetKeyName( identifier );
+            AddParameter( *numeric );
+        }
+        else if( identifier == "density" )
+        {
+            Numeric* numeric = new Numeric( OrderParameter( tools::translate( "EngineerConstruction", "Density" ).toAscii().constData(), "integer", true ), xis );
             numeric->SetKeyName( identifier );
             AddParameter( *numeric );
         }
