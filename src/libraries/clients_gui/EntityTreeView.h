@@ -18,6 +18,10 @@
 namespace kernel
 {
     class Controllers;
+    class Inhabitant_ABC;
+    class Object_ABC;
+    class Population_ABC;
+    class UrbanObject_ABC;
     class Profile_ABC;
 }
 

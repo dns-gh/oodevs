@@ -100,6 +100,13 @@
     </message>
 </context>
 <context>
+    <name>CommunicationTreeView</name>
+    <message>
+        <source>Change knowledge group</source>
+        <translation>Changer de groupe de connaissance</translation>
+    </message>
+</context>
+<context>
     <name>CsvExport</name>
     <message>
         <source>Automat</source>
@@ -2450,6 +2457,45 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Change hierarchy level</source>
         <translation>Changer le niveau hiérarchique</translation>
+    </message>
+</context>
+<context>
+    <name>TacticalTreeView</name>
+    <message>
+        <source>Create side</source>
+        <translation>Créer un camp</translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translation>Renommer</translation>
+    </message>
+    <message>
+        <source>Change superior</source>
+        <translation>Changer de supérieur</translation>
+    </message>
+    <message>
+        <source>Change hierarchy level</source>
+        <translation>Changer le niveau hiérarchique</translation>
+    </message>
+    <message>
+        <source>Engage</source>
+        <translation>Embrayer</translation>
+    </message>
+    <message>
+        <source>Disengage</source>
+        <translation>Débrayer</translation>
+    </message>
+    <message>
+        <source>Change automat type</source>
+        <translation>Changer le type d&apos;automate</translation>
+    </message>
+    <message>
+        <source>Replace by a new automat</source>
+        <translation>Remplacer par un nouvel automate</translation>
+    </message>
+    <message>
+        <source>Create formation</source>
+        <translation>Créer une formation</translation>
     </message>
 </context>
 <context>

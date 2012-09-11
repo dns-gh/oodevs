@@ -196,6 +196,8 @@ void EntityTreeView_ABC::contextMenuEvent( QContextMenuEvent* event )
         kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( indexAt( event->pos() ) );
         if( entity )
             entity->ContextMenu( controllers_.actions_, event->globalPos() );
+        else
+            ContextMenuRequested( event->globalPos() );
     }
 }
 

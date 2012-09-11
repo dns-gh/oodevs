@@ -55,7 +55,7 @@ namespace
 // Name: ChangeAutomatTypeDialog constructor
 // Created: JSR 2012-06-29
 // -----------------------------------------------------------------------------
-ChangeAutomatTypeDialog::ChangeAutomatTypeDialog( QWidget* parent, kernel::Controllers& controllers, const kernel::AgentTypes& list, ModelBuilder& builder, gui::ItemFactory_ABC& factory, kernel::Entity_ABC& entity, const std::string& typeName )
+ChangeAutomatTypeDialog::ChangeAutomatTypeDialog( QWidget* parent, kernel::Controllers& controllers, const kernel::AgentTypes& list, gui::ModelObserver_ABC& builder, gui::ItemFactory_ABC& factory, kernel::Entity_ABC& entity, const std::string& typeName )
     : QDialog( parent )
     , controllers_( controllers )
     , builder_    ( builder )

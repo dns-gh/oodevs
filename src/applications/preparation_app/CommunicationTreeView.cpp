@@ -1,0 +1,261 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2012 MASA Group
+//
+// *****************************************************************************
+
+#include "preparation_app_pch.h"
+#include "CommunicationTreeView.h"
+#include "moc_CommunicationTreeView.cpp"
+#include "clients_gui/ChangeSuperiorDialog.h"
+#include "clients_gui/ModelObserver_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Ghost_ABC.h"
+#include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Team_ABC.h"
+#include "preparation/AutomatCommunications.h"
+#include "preparation/KnowledgeGroupCommunications.h" // LTO
+
+// TODO factoriser avec gaming
+// TODO voir CommunicationListView::Display
+// TODO voir les Drops
+
+// -----------------------------------------------------------------------------
+// Name: CommunicationTreeView constructor
+// Created: JSR 2012-09-11
+// -----------------------------------------------------------------------------
+CommunicationTreeView::CommunicationTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, const gui::EntitySymbols& symbols, QWidget* parent )
+    : gui::HierarchyTreeView< kernel::CommunicationHierarchies >( controllers, profile, modelObserver, symbols, parent )
+    , changeSuperiorDialog_( 0 )
+{
+    controllers_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CommunicationTreeView destructor
+// Created: JSR 2012-09-11
+// -----------------------------------------------------------------------------
+CommunicationTreeView::~CommunicationTreeView()
+{
+    controllers_.Unregister( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CommunicationTreeView::LessThan
+// Created: JSR 2012-09-11
+// -----------------------------------------------------------------------------
+bool CommunicationTreeView::LessThan( const QModelIndex& left, const QModelIndex& right, bool& valid ) const
+{
+    kernel::Entity_ABC* entity1 = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( left );
+    kernel::Entity_ABC* entity2 = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( right );
+    if( !entity1 || !entity2 )
+        return false;
+    valid = true;
+    return entity2->GetId() < entity1->GetId();
+}
+
+// -----------------------------------------------------------------------------
+// Name: CommunicationTreeView::CanChangeSuperior
+// Created: JSR 2012-09-11
+// -----------------------------------------------------------------------------
+bool CommunicationTreeView::CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const
+{
+    const kernel::Automat_ABC*        automat   = dynamic_cast< const kernel::Automat_ABC* >       ( &entity );
+    const kernel::Formation_ABC*      formation = dynamic_cast< const kernel::Formation_ABC* >     ( &entity );
+    const kernel::Ghost_ABC*          ghost     = dynamic_cast< const kernel::Ghost_ABC* >         ( &entity );
+    const kernel::KnowledgeGroup_ABC* group     = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &superior );
+    if( ghost && ghost->GetGhostType() != eGhostType_Automat )
+        return false;
+    if( ( automat || ghost || formation ) && group )
+        return &entity.Get< kernel::TacticalHierarchies >().GetTop() == &superior.Get< kernel::CommunicationHierarchies >().GetTop();
+    else if( const kernel::KnowledgeGroup_ABC* knowledgegroup = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &entity ) )
+    {
+        const kernel::Entity_ABC* com = &knowledgegroup->Get< kernel::CommunicationHierarchies >().GetTop();
+        const kernel::Entity_ABC* team = dynamic_cast< const kernel::Entity_ABC* >( &superior );
+        if( com && com == team )
+            return true;
+        else if( group && ( knowledgegroup != group ) )
+            return com == &superior.Get< kernel::CommunicationHierarchies >().GetTop();
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: CommunicationTreeView::DoChangeSuperior
+// Created: JSR 2012-09-11
+// -----------------------------------------------------------------------------
+void CommunicationTreeView::DoChangeSuperior( kernel::Entity_ABC& entity, kernel::Entity_ABC& superior )
+{
+    kernel::Automat_ABC* automat = dynamic_cast< kernel::Automat_ABC* >( &entity );
+    kernel::Formation_ABC* formation = dynamic_cast< kernel::Formation_ABC* >( &entity );
+    kernel::Ghost_ABC* ghost = dynamic_cast< kernel::Ghost_ABC* >( &entity );
+    kernel::KnowledgeGroup_ABC* kg = dynamic_cast< kernel::KnowledgeGroup_ABC* >( &entity );
+    if( automat )
+        Drop( *automat, superior );
+    else if( formation )
+        Drop( *formation, superior );
+    else if( ghost )
+        Drop( *ghost, superior );
+    else if( kg )
+        Drop( *kg, superior );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CommunicationTreeView::OnCreateCommunication
+// Created: JSR 2012-09-11
+// -----------------------------------------------------------------------------
+void CommunicationTreeView::OnCreateCommunication()
+{
+    modelObserver_.CreateCommunication();
+}
+
+// -----------------------------------------------------------------------------
+// Name: CommunicationTreeView::OnChangeKnowledgeGroup
+// Created: JSR 2012-09-11
+// -----------------------------------------------------------------------------
+void CommunicationTreeView::OnChangeKnowledgeGroup()
+{
+    QModelIndexList list = selectionModel()->selectedIndexes();
+    if( list.size() == 1)
+    {
+        kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( list.front() );
+        if( entity )
+        {
+            if( !changeSuperiorDialog_ )
+                changeSuperiorDialog_ = new gui::ChangeSuperiorDialog( this, controllers_, *this, true );
+            changeSuperiorDialog_->Show( *entity );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: CommunicationTreeView::NotifyUpdated
+// Created: JSR 2012-09-11
+// -----------------------------------------------------------------------------
+// void CommunicationTreeView::NotifyUpdated( const kernel::Entity_ABC& )
+// {
+// 
+// }
+// 
+// -----------------------------------------------------------------------------
+// Name: CommunicationTreeView::NotifyDeleted
+// Created: JSR 2012-09-11
+// -----------------------------------------------------------------------------
+// void CommunicationTreeView::NotifyDeleted( const kernel::KnowledgeGroup_ABC& )
+// {
+// 
+// }
+
+// -----------------------------------------------------------------------------
+// Name: CommunicationTreeView::NotifyContextMenu
+// Created: JSR 2012-09-11
+// -----------------------------------------------------------------------------
+void CommunicationTreeView::NotifyContextMenu( const kernel::Team_ABC& /*agent*/, kernel::ContextMenu& menu )
+{
+    if( !isVisible() )
+        return;
+    menu.InsertItem( "Creation", tools::translate( "CommunicationListView", "Create knowledge group" ), this, SLOT( OnCreateCommunication() ) );
+
+}
+
+// -----------------------------------------------------------------------------
+// Name: CommunicationTreeView::NotifyContextMenu
+// Created: JSR 2012-09-11
+// -----------------------------------------------------------------------------
+void CommunicationTreeView::NotifyContextMenu( const kernel::Automat_ABC& /*agent*/, kernel::ContextMenu& menu )
+{
+    if( !isVisible() )
+        return;
+    menu.InsertItem( "Command", tr( "Change knowledge group" ), this, SLOT( OnChangeKnowledgeGroup() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CommunicationTreeView::NotifyContextMenu
+// Created: JSR 2012-09-11
+// -----------------------------------------------------------------------------
+void CommunicationTreeView::NotifyContextMenu( const kernel::KnowledgeGroup_ABC& /*knowledgegroup*/, kernel::ContextMenu& menu )
+{
+    if( !isVisible() )
+        return;
+    menu.InsertItem( "Creation", tools::translate( "CommunicationListView", "Create sub knowledge group" ), this, SLOT( OnCreateCommunication() ) );
+    menu.InsertItem( "Command", tr( "Change knowledge group" ), this, SLOT( OnChangeKnowledgeGroup() ) );
+}
+
+namespace
+{
+    void Update( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& group )
+    {
+        if( const kernel::Automat_ABC* automat = dynamic_cast< const kernel::Automat_ABC* > ( &entity ) )
+        {
+            kernel::CommunicationHierarchies& hierarchy = const_cast< kernel::CommunicationHierarchies& >( automat->Get< kernel::CommunicationHierarchies >() );
+            if( &hierarchy.GetTop() == &group.Get< kernel::CommunicationHierarchies >().GetTop() )
+                static_cast< AutomatCommunications& >( hierarchy ).ChangeSuperior( const_cast< kernel::Entity_ABC& >( group ) );
+        }
+        else if( const kernel::Formation_ABC* formation = dynamic_cast< const kernel::Formation_ABC* > ( &entity ) )
+        {
+            tools::Iterator< const kernel::Entity_ABC& > children = formation->Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
+            while( children.HasMoreElements() )
+                Update( children.NextElement(), group );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: CommunicationTreeView::Drop
+// Created: JSR 2012-09-11
+// -----------------------------------------------------------------------------
+void CommunicationTreeView::Drop( const kernel::Automat_ABC& item, const kernel::Entity_ABC& target )
+{
+    const kernel::KnowledgeGroup_ABC* group = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &target );
+    if( group )
+        ::Update( item, target );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CommunicationTreeView::Drop
+// Created: JSR 2012-09-11
+// -----------------------------------------------------------------------------
+void CommunicationTreeView::Drop( const kernel::Formation_ABC& item, const kernel::Entity_ABC& target )
+{
+    const kernel::KnowledgeGroup_ABC* group = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &target );
+    if( group )
+        ::Update( item, target );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CommunicationTreeView::Drop
+// Created: JSR 2012-09-11
+// -----------------------------------------------------------------------------
+void CommunicationTreeView::Drop( const kernel::Ghost_ABC& item, const kernel::Entity_ABC& target )
+{
+    const kernel::KnowledgeGroup_ABC* group = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &target );
+    if( group && item.GetGhostType() == eGhostType_Automat )
+        ::Update( item, target );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CommunicationTreeView::Drop
+// Created: JSR 2012-09-11
+// -----------------------------------------------------------------------------
+void CommunicationTreeView::Drop( const kernel::KnowledgeGroup_ABC& item, const kernel::Entity_ABC& target )
+{
+    kernel::CommunicationHierarchies& com = const_cast< kernel::CommunicationHierarchies& >( item.Get< kernel::CommunicationHierarchies >() );
+    if( const kernel::KnowledgeGroup_ABC* group = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &target ) )
+    { // moving a knowledgegroup under knowledgegroup
+        if( group && group != &item )
+        {
+            if( &com.GetTop() == &target.Get< kernel::CommunicationHierarchies >().GetTop() )
+                static_cast< AutomatCommunications& >( com ).ChangeSuperior( const_cast< kernel::Entity_ABC& >( target ) );
+        }
+    }
+    else if( const kernel::Team_ABC* team = dynamic_cast< const kernel::Team_ABC* >( &target ) )
+    { // moving knowledgegroup under side
+        if( &com.GetTop() == team )
+            static_cast< KnowledgeGroupCommunications& >( com ).ChangeSuperior( const_cast< kernel::Entity_ABC& >( target ) );
+    }
+}

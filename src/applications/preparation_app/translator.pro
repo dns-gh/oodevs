@@ -7,6 +7,7 @@ Application.cpp \
 ChangeAutomatTypeDialog.cpp \
 ColorEditor.cpp \
 CommunicationListView.cpp \
+CommunicationTreeView.cpp \
 CsvExport.cpp \
 DockContainer.cpp \
 DotationsEditor.cpp \
@@ -71,6 +72,7 @@ SuccessFactorList.cpp \
 SymbolDialog.cpp \
 SymbolEditor.cpp \
 TacticalListView.cpp \
+TacticalTreeView.cpp \
 TemplateListView.cpp \
 TemplatesPanel.cpp \
 TerrainExportDialog.cpp \

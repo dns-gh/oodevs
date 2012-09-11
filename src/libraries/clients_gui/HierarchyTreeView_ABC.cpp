@@ -76,6 +76,15 @@ void HierarchyTreeView_ABC::ActivateSelection( bool activate )
 }
 
 // -----------------------------------------------------------------------------
+// Name: HierarchyTreeView_ABC::IsActivated
+// Created: JSR 2012-09-11
+// -----------------------------------------------------------------------------
+bool HierarchyTreeView_ABC::IsActivated() const
+{
+    return activated_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: HierarchyTreeView_ABC::InternalNotifyCreated
 // Created: ABR 2012-08-17
 // -----------------------------------------------------------------------------

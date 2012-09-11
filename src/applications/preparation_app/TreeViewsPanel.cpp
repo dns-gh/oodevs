@@ -13,12 +13,13 @@
 #include "ModelBuilder.h"
 #include "TacticalTreeView.h"
 #include "PreparationProfile.h"
-// #include "CommunicationTreeView.h"
+#include "CommunicationTreeView.h"
 // #include "ObjectTreeView.h"
 // #include "PopulationTreeView.h"
 // #include "LogisticTreeView.h"
 // #include "InhabitantTreeView.h"
 // #include "UrbanTreeView.h"
+#include "clients_gui/EntityTreeView.h"
 #include "clients_gui/SearchTreeView.h"
 #include "clients_gui/GlProxy.h"
 #include "clients_gui/AggregateToolbar.h"
@@ -71,19 +72,20 @@ TreeViewsPanel::TreeViewsPanel( kernel::Controllers& controllers, gui::ItemFacto
         Configure( searchTreeView, treeViews, aggregateToolbar );
         addTab( searchTreeView, tools::translate( "DockContainer","Urban" ) );
     }
+    */
     // Crowds
     {
-        gui::SearchTreeView_ABC* searchTreeView = new gui::SearchTreeView< PopulationTreeView >( this, controllers, factory, modelBuilder );
+        gui::SearchTreeView_ABC* searchTreeView = new gui::SearchTreeView< gui::PopulationTreeView >( this, controllers, PreparationProfile::GetProfile(), modelBuilder );
         Configure( searchTreeView, treeViews, aggregateToolbar, ePreparationMode_Terrain );
         addTab( searchTreeView, tools::translate( "DockContainer","Crowds" ) );
     }
     // Populations
     {
-        gui::SearchTreeView_ABC* searchTreeView = new gui::SearchTreeView< InhabitantTreeView >( this, controllers, factory, modelBuilder );
+        gui::SearchTreeView_ABC* searchTreeView = new gui::SearchTreeView< gui::InhabitantTreeView >( this, controllers, PreparationProfile::GetProfile(), modelBuilder );
         Configure( searchTreeView, treeViews, aggregateToolbar, ePreparationMode_Terrain );
         addTab( searchTreeView, tools::translate( "DockContainer","Populations" ) );
     }
-*/
+
 }
 
 // -----------------------------------------------------------------------------
@@ -107,22 +109,22 @@ void TreeViewsPanel::CreateUnitTabWidget( QTabWidget* parent, QTabWidget* tabWid
     std::vector< gui::HierarchyTreeView_ABC* >& trees = first ? firstUnitViews_ : secondUnitViews_;
     // Tactical
     {
-        gui::SearchTreeView_ABC* searchTreeView = new gui::SearchTreeView< TacticalTreeView >( tabWidget, controllers, PreparationProfile::GetProfile(), modelBuilder, icons, model );
+        gui::SearchTreeView_ABC* searchTreeView = new gui::SearchTreeView< TacticalTreeView >( tabWidget, controllers, PreparationProfile::GetProfile(), modelBuilder, icons, model, staticModel.types_, factory );
         trees.push_back( static_cast< gui::HierarchyTreeView_ABC* >( searchTreeView->GetRichTreeView() ) );
         connect( trees.back(), SIGNAL( TreeViewFocusIn( gui::HierarchyTreeView_ABC* ) ), SLOT( FocusIn( gui::HierarchyTreeView_ABC* ) ) );
         Configure( searchTreeView, treeViews, aggregateToolbar, ePreparationMode_Terrain );
         parent->addTab( searchTreeView, tools::translate( "DockContainer","Tactical" ) );
     }
-/*
+
     // Communication
     {
-        gui::SearchTreeView_ABC* searchTreeView = new gui::SearchTreeView< CommunicationTreeView >( tabWidget, controllers, factory, icons, modelBuilder );
+        gui::SearchTreeView_ABC* searchTreeView = new gui::SearchTreeView< CommunicationTreeView >( tabWidget, controllers, PreparationProfile::GetProfile(), modelBuilder, icons );
         trees.push_back( static_cast< gui::HierarchyTreeView_ABC* >( searchTreeView->GetRichTreeView() ) );
         connect( trees.back(), SIGNAL( TreeViewFocusIn( gui::HierarchyTreeView_ABC* ) ), SLOT( FocusIn( gui::HierarchyTreeView_ABC* ) ) );
         Configure( searchTreeView, treeViews, aggregateToolbar, ePreparationMode_Terrain );
         parent->addTab( searchTreeView, tools::translate( "DockContainer","Communication" ) );
     }
-    // Logistic
+/*    // Logistic
     {
         gui::SearchTreeView_ABC* searchTreeView = new gui::SearchTreeView< LogisticTreeView >( tabWidget, controllers, factory, PreparationProfile::GetProfile(), icons, modelBuilder );
         trees.push_back( static_cast< gui::HierarchyTreeView_ABC* >( searchTreeView->GetRichTreeView() ) );

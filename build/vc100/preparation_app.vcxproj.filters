@@ -535,6 +535,9 @@
     <ClCompile Include="..\..\src\applications\preparation_app\TreeViewsPanel.cpp">
       <Filter>Source Files\Panels</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\CommunicationTreeView.cpp">
+      <Filter>Source Files\TreeView</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\preparation_app\Application.h">
@@ -734,9 +737,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\BypassPrototype.h">
       <Filter>Source Files\Panels\Creation</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\preparation_app\TacticalTreeView.h">
-      <Filter>Source Files\TreeView</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -999,6 +999,12 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\TreeViewsPanel.h">
       <Filter>Source Files\Panels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\CommunicationTreeView.h">
+      <Filter>Source Files\TreeView</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\TacticalTreeView.h">
+      <Filter>Source Files\TreeView</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

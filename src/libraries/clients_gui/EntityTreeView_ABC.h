@@ -87,6 +87,7 @@ protected:
     //@{
     virtual bool IsTypeRejected( const kernel::Entity_ABC& entity ) const;
     virtual Qt::ItemFlags ItemSpecificFlags( const kernel::Entity_ABC& entity ) const;
+    virtual void ContextMenuRequested( const QPoint& /*where*/ ) {}
     //@}
 
 protected slots:

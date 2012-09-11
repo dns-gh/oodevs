@@ -12,6 +12,8 @@
 
 namespace kernel
 {
+    class Automat_ABC;
+    class AutomatType;
     class Entity_ABC;
 }
 
@@ -37,6 +39,11 @@ public:
     //! @name Operations
     //@{
     virtual void OnRename( kernel::Entity_ABC& entity, const QString& newName ) = 0;
+    virtual void CreateCommunication() = 0;
+    virtual void CreateTeam() = 0;
+    virtual void ClearSelection() = 0;
+    virtual void CreateFormation( int level ) = 0;
+    virtual kernel::Automat_ABC* ReplaceAutomat( kernel::Entity_ABC& original, const kernel::AutomatType& type ) = 0;
     //@}
 };
 

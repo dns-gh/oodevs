@@ -24,7 +24,7 @@ namespace
             : QItemDelegate( parent )
             , dataModel_( dataModel )
             , commandPost_( MAKE_PIXMAP( commandpost ) )
-            , lock_                ( MAKE_PIXMAP( lock ) )
+            , lock_( MAKE_PIXMAP( lock ) )
         {
             // NOTHING
         }

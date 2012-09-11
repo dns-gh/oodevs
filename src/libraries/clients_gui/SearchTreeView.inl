@@ -116,7 +116,7 @@ namespace gui
     SearchTreeView< BaseTreeView >::SearchTreeView( QWidget* parent, _1& first )
         : SearchTreeView_ABC( parent )
     {
-        treeView_ = new BaseTreeView( this, first );
+        treeView_ = new BaseTreeView( first, this );
         CreateGUI();
     }
 
@@ -129,7 +129,7 @@ namespace gui
     SearchTreeView< BaseTreeView >::SearchTreeView( QWidget* parent, _1& first, _2& second )
         : SearchTreeView_ABC( parent )
     {
-        treeView_ = new BaseTreeView( this, first, second );
+        treeView_ = new BaseTreeView( first, second, this );
         CreateGUI();
     }
 
@@ -142,7 +142,7 @@ namespace gui
     SearchTreeView< BaseTreeView >::SearchTreeView( QWidget* parent, _1& first, _2& second, _3& third )
         : SearchTreeView_ABC( parent )
     {
-        treeView_ = new BaseTreeView( this, first, second, third );
+        treeView_ = new BaseTreeView( first, second, third, this );
         CreateGUI();
     }
 
@@ -155,7 +155,7 @@ namespace gui
     SearchTreeView< BaseTreeView >::SearchTreeView( QWidget* parent, _1& first, _2& second, _3& third, _4& fourth )
         : SearchTreeView_ABC( parent )
     {
-        treeView_ = new BaseTreeView( this, first, second, third, fourth );
+        treeView_ = new BaseTreeView( first, second, third, fourth, this );
         CreateGUI();
     }
 
@@ -168,7 +168,7 @@ namespace gui
     SearchTreeView< BaseTreeView >::SearchTreeView( QWidget* parent, _1& first, _2& second, _3& third, _4& fourth, _5& fifth )
         : SearchTreeView_ABC( parent )
     {
-        treeView_ = new BaseTreeView( this, first, second, third, fourth, fifth );
+        treeView_ = new BaseTreeView( first, second, third, fourth, fifth, this );
         CreateGUI();
     }
 
@@ -181,7 +181,7 @@ namespace gui
     SearchTreeView< BaseTreeView >::SearchTreeView( QWidget* parent, _1& first, _2& second, _3& third, _4& fourth, _5& fifth, _6& sixth )
         : SearchTreeView_ABC( parent )
     {
-        treeView_ = new BaseTreeView( this, first, second, third, fourth, fifth, sixth );
+        treeView_ = new BaseTreeView( first, second, third, fourth, fifth, sixth, this );
         CreateGUI();
     }
 
@@ -194,7 +194,7 @@ namespace gui
     SearchTreeView< BaseTreeView >::SearchTreeView( QWidget* parent, _1& first, _2& second, _3& third, _4& fourth, _5& fifth, _6& sixth, _7& seventh )
         : SearchTreeView_ABC( parent )
     {
-        treeView_ = new BaseTreeView( this, first, second, third, fourth, fifth, sixth, seventh );
+        treeView_ = new BaseTreeView( first, second, third, fourth, fifth, sixth, seventh, this );
         CreateGUI();
     }
 

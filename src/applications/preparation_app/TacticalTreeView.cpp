@@ -9,16 +9,25 @@
 
 #include "preparation_app_pch.h"
 #include "TacticalTreeView.h"
+#include "moc_TacticalTreeView.cpp"
+#include "ChangeAutomatTypeDialog.h"
+#include "clients_gui/ModelObserver_ABC.h"
+#include "clients_gui/ChangeSuperiorDialog.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/AutomatDecisions_ABC.h"
+#include "clients_kernel/ContextMenu.h"
+#include "clients_kernel/EntityType.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Positions.h"
+#include "ENT/ENT_Tr_Gen.h"
 #include "preparation/AgentsModel.h"
 #include "preparation/EntityCommunications.h"
+#include "preparation/Formation.h"
 #include "preparation/Model.h"
 #include "preparation/TacticalHierarchies.h"
 
@@ -26,9 +35,13 @@
 // Name: TacticalTreeView constructor
 // Created: JSR 2012-09-07
 // -----------------------------------------------------------------------------
-TacticalTreeView::TacticalTreeView( QWidget* parent,kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, const gui::EntitySymbols& symbols, Model& model )
+TacticalTreeView::TacticalTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, const gui::EntitySymbols& symbols, Model& model, const kernel::AgentTypes& agentTypes, gui::ItemFactory_ABC& factory, QWidget* parent /* = 0 */ )
     : gui::TacticalTreeView( controllers, profile, modelObserver, symbols, parent )
     , model_( model )
+    , agentTypes_( agentTypes )
+    , factory_( factory )
+    , contextMenuEntity_( controllers )
+    , changeSuperiorDialog_( 0 )
 {
     // NOTHING
 }
@@ -40,6 +53,20 @@ TacticalTreeView::TacticalTreeView( QWidget* parent,kernel::Controllers& control
 TacticalTreeView::~TacticalTreeView()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalTreeView::ContextMenuRequested
+// Created: JSR 2012-09-11
+// -----------------------------------------------------------------------------
+void TacticalTreeView::ContextMenuRequested( const QPoint& where )
+{
+    if( !isVisible() )
+        return;
+    modelObserver_.ClearSelection();
+    kernel::ContextMenu* menu = new kernel::ContextMenu( this );
+    menu->insertItem( tr( "Create side" ), this, SLOT( OnCreateTeam() ) );
+    menu->exec( where );
 }
 
 namespace
@@ -196,4 +223,212 @@ void TacticalTreeView::Drop( const kernel::AutomatType& item, kernel::Entity_ABC
         setFocus();
         result->Select( controllers_.actions_ );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalTreeView::OnCreateTeam
+// Created: JSR 2012-09-11
+// -----------------------------------------------------------------------------
+void TacticalTreeView::OnCreateTeam()
+{
+    modelObserver_.CreateTeam();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalTreeView::NotifyContextMenu
+// Created: JSR 2012-09-11
+// -----------------------------------------------------------------------------
+void TacticalTreeView::NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
+{
+    contextMenuEntity_ = &entity;
+    if( !isVisible() || !IsActivated() )
+        return;
+    menu.InsertItem( "Command", tr( "Rename" ), this, SLOT( OnRename() ), false, 4 );
+    if( entity.Get< kernel::TacticalHierarchies >().GetSuperior() != 0 )
+        menu.InsertItem( "Command", tr( "Change superior" ), this, SLOT( OnChangeSuperior() ), false, 1 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalTreeView::NotifyContextMenu
+// Created: JSR 2012-09-11
+// -----------------------------------------------------------------------------
+void TacticalTreeView::NotifyContextMenu( const kernel::Team_ABC& team, kernel::ContextMenu& menu )
+{
+    contextMenuEntity_ = &team;
+    if( !isVisible() || !IsActivated() )
+        return;
+    AddFormationMenu( menu, eNatureLevel_xxxxx );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalTreeView::NotifyContextMenu
+// Created: JSR 2012-09-11
+// -----------------------------------------------------------------------------
+void TacticalTreeView::NotifyContextMenu( const kernel::Formation_ABC& formation, kernel::ContextMenu& menu )
+{
+    contextMenuEntity_ = &formation;
+    if( !isVisible() || !IsActivated() )
+        return;
+    if( formation.GetLevel() > eNatureLevel_c )
+        AddFormationMenu( menu, static_cast< E_NatureLevel >( formation.GetLevel() ) );
+
+    kernel::ContextMenu* subMenu = menu.SubMenu( "Helpers", tr( "Change hierarchy level" ), false, 4 );
+    for( int level = static_cast< int >( eNatureLevel_xxxxx ); level > 0; level-- )
+        subMenu->insertItem( ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( level ), ENT_Tr_ABC::eToTr ).c_str(), this, SLOT( OnChangeLevel( int ) ), 0, level );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalTreeView::NotifyContextMenu
+// Created: JSR 2012-09-11
+// -----------------------------------------------------------------------------
+void TacticalTreeView::NotifyContextMenu( const kernel::Automat_ABC& automat, kernel::ContextMenu& menu )
+{
+    contextMenuEntity_ = &automat;
+    if( !isVisible() || !IsActivated() )
+        return;
+    if( const kernel::AutomatDecisions_ABC* decisions = automat.Retrieve< kernel::AutomatDecisions_ABC >() )
+    {
+        if( ! decisions->IsEmbraye() )
+            menu.InsertItem( "Helpers", tr( "Engage" ), this, SLOT( Engage() ), false, 0 );
+        else if( decisions->CanBeOrdered() )
+            menu.InsertItem( "Helpers", tr( "Disengage" ), this, SLOT( Disengage() ), false, 0 );
+    }
+    menu.InsertItem( "Command", tr( "Change automat type" ), this, SLOT( ChangeAutomatType() ), false, 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalTreeView::NotifyContextMenu
+// Created: JSR 2012-09-11
+// -----------------------------------------------------------------------------
+void TacticalTreeView::NotifyContextMenu( const kernel::Ghost_ABC& ghost, kernel::ContextMenu& menu )
+{
+    if( ghost.GetGhostType() != eGhostType_Automat || !isVisible() || !IsActivated() )
+        return;
+    contextMenuEntity_ = &ghost;
+    menu.InsertItem( "Command", tr( "Replace by a new automat" ), this, SLOT( ChangeAutomatType() ), false, 6 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalTreeView::DoChangeSuperior
+// Created: JSR 2012-09-11
+// -----------------------------------------------------------------------------
+void TacticalTreeView::DoChangeSuperior( kernel::Entity_ABC& entity, kernel::Entity_ABC& superior )
+{
+    kernel::Agent_ABC* agent = dynamic_cast< kernel::Agent_ABC* >( &entity );
+    kernel::Automat_ABC* automat = dynamic_cast< kernel::Automat_ABC* >( &entity );
+    kernel::Formation_ABC* formation = dynamic_cast< kernel::Formation_ABC* >( &entity );
+    kernel::Ghost_ABC* ghost = dynamic_cast< kernel::Ghost_ABC* >( &entity );
+    kernel::KnowledgeGroup_ABC* kg = dynamic_cast< kernel::KnowledgeGroup_ABC* >( &entity );
+    if( agent )
+        Drop( *agent, superior );
+    else if( automat )
+        Drop( *automat, superior );
+    else if( formation )
+        Drop( *formation, superior );
+    else if( ghost )
+        Drop( *ghost, superior );
+    else if( kg )
+        Drop( *kg, superior );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalTreeView::AddFormationMenu
+// Created: JSR 2012-09-11
+// -----------------------------------------------------------------------------
+void TacticalTreeView::AddFormationMenu( kernel::ContextMenu& menu, E_NatureLevel root )
+{
+    kernel::ContextMenu* subMenu = menu.SubMenu( "Command", tr( "Create formation" ), false, 3 );
+    for( int level = static_cast< int >( root ); level > 0; level-- )
+        subMenu->insertItem( ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( level ), ENT_Tr_ABC::eToTr ).c_str(), this, SLOT( OnCreateFormation( int ) ), 0, level );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalTreeView::OnCreateFormation
+// Created: JSR 2012-09-11
+// -----------------------------------------------------------------------------
+void TacticalTreeView::OnCreateFormation( int level )
+{
+    modelObserver_.CreateFormation( level );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalTreeView::OnChangeLevel
+// Created: JSR 2012-09-11
+// -----------------------------------------------------------------------------
+void TacticalTreeView::OnChangeLevel( int levelId )
+{
+    if( contextMenuEntity_ )
+    {
+        if( contextMenuEntity_->GetTypeName() != kernel::Formation_ABC::typeName_ )
+            return;
+        static_cast< Formation* >( contextMenuEntity_.ConstCast() )->SetLevel( static_cast< E_NatureLevel >( levelId ) );
+        if( kernel::TacticalHierarchies* pTactical = contextMenuEntity_.ConstCast()->Retrieve< kernel::TacticalHierarchies >() )
+        {
+            pTactical->UpdateSymbolUpward();
+            controllers_.controller_.Update( *pTactical );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalTreeView::OnRename
+// Created: JSR 2012-09-11
+// -----------------------------------------------------------------------------
+void TacticalTreeView::OnRename()
+{
+    //TODO
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalTreeView::OnChangeSuperior
+// Created: JSR 2012-09-11
+// -----------------------------------------------------------------------------
+void TacticalTreeView::OnChangeSuperior()
+{
+    if( contextMenuEntity_ )
+    {
+        if( !changeSuperiorDialog_ )
+            changeSuperiorDialog_ = new gui::ChangeSuperiorDialog( this, controllers_, *this, false );
+        changeSuperiorDialog_->Show( *contextMenuEntity_.ConstCast() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalTreeView::Engage
+// Created: JSR 2012-09-11
+// -----------------------------------------------------------------------------
+void TacticalTreeView::Engage()
+{
+    if( contextMenuEntity_ )
+        if( kernel::AutomatDecisions_ABC* decisions = contextMenuEntity_.ConstCast()->Retrieve< kernel::AutomatDecisions_ABC >() )
+            decisions->Engage();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalTreeView::Disengage
+// Created: JSR 2012-09-11
+// -----------------------------------------------------------------------------
+void TacticalTreeView::Disengage()
+{
+    if( contextMenuEntity_ )
+        if( kernel::AutomatDecisions_ABC* decisions = contextMenuEntity_.ConstCast()->Retrieve< kernel::AutomatDecisions_ABC >() )
+            decisions->Disengage();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalTreeView::ChangeAutomatType
+// Created: JSR 2012-09-11
+// -----------------------------------------------------------------------------
+void TacticalTreeView::ChangeAutomatType()
+{
+    std::string typeName = "";
+    if( !contextMenuEntity_ )
+        return;
+    if( contextMenuEntity_->GetTypeName() == kernel::Automat_ABC::typeName_ )
+        typeName = contextMenuEntity_->Get< kernel::EntityType< kernel::AutomatType > >().GetType().GetName();
+    else if( contextMenuEntity_->GetTypeName() == kernel::Ghost_ABC::typeName_ )
+        typeName = static_cast< const kernel::Ghost_ABC& >( *contextMenuEntity_ ).GetType();
+    else
+        return;
+    ChangeAutomatTypeDialog( this, controllers_, agentTypes_, modelObserver_, factory_, *contextMenuEntity_.ConstCast(), typeName );
 }

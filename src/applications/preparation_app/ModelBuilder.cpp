@@ -509,3 +509,31 @@ void ModelBuilder::OnRename( kernel::Entity_ABC& entity, const QString& newName 
     Rename< Ghost >( &entity, newName, controllers_, property_ );
     Rename< kernel::UrbanObject >( &entity, newName, controllers_, property_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ModelBuilder::CreateCommunication
+// Created: JSR 2012-09-11
+// -----------------------------------------------------------------------------
+void ModelBuilder::CreateCommunication()
+{
+    OnCreateCommunication();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelBuilder::CreateTeam
+// Created: JSR 2012-09-11
+// -----------------------------------------------------------------------------
+void ModelBuilder::CreateTeam()
+{
+    OnCreate();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelBuilder::CreateFormation
+// Created: JSR 2012-09-11
+// -----------------------------------------------------------------------------
+void ModelBuilder::CreateFormation( int level )
+{
+    OnCreateFormation( level );
+}
+
