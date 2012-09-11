@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MovementCallbackEventListener.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include <core/Facade.h>
 #include <core/Model.h>
@@ -47,6 +48,6 @@ MovementCallbackEventListener::~MovementCallbackEventListener()
 void MovementCallbackEventListener::Notify( const core::Model& callback )
 {
     const unsigned int entity = callback[ "entity" ];
-    DEC_Decision_ABC& role = model_[ "entities" ][ entity ][ "roles/DEC_Decision_ABC" ].GetUserData< DEC_Decision_ABC >();
+    DEC_Decision_ABC& role = model_[ "entities" ][ entity ][ "pion" ].GetUserData< MIL_AgentPion >().GetRole< DEC_Decision_ABC >();
     role.Callback< unsigned int >( callback[ "id" ], callback[ "code" ] );
 }

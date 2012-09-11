@@ -220,6 +220,8 @@ void Sink::ApplyEffects()
     facade_->ApplyEffects();
 }
 
+SWORD_USER_DATA_EXPORT( boost::shared_ptr< DEC_Knowledge_Agent > )
+
 namespace
 {
     void UpdateKnowledge( const core::Model& entity, core::Model& knowledge, boost::shared_ptr< DEC_Knowledge_Agent > agent )

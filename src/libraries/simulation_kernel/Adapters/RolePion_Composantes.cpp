@@ -28,23 +28,14 @@ BOOST_CLASS_EXPORT_IMPLEMENT( sword::RolePion_Composantes )
 
 using namespace sword;
 
-namespace sword
+// -----------------------------------------------------------------------------
+// Name: RolePion_Composantes constructor
+// Created: MCO 2012-09-06
+// -----------------------------------------------------------------------------
+RolePion_Composantes::RolePion_Composantes()
+    : entity_( 0 )
 {
-    template< typename Archive >
-    void save_construct_data( Archive& archive, const sword::RolePion_Composantes* role, const unsigned int /*version*/ )
-    {
-        const MIL_Agent_ABC* const pion = &role->pion_;
-        const core::Model* const entity = &role->entity_;
-        archive << pion << entity;
-    }
-    template< typename Archive >
-    void load_construct_data( Archive& archive, sword::RolePion_Composantes* role, const unsigned int /*version*/ )
-    {
-        MIL_Agent_ABC* pion;
-        core::Model* entity;
-        archive >> pion >> entity;
-        ::new( role )sword::RolePion_Composantes( *pion, *entity );
-    }
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -52,11 +43,9 @@ namespace sword
 // Created: SLI 2012-03-22
 // -----------------------------------------------------------------------------
 RolePion_Composantes::RolePion_Composantes( MIL_Agent_ABC& pion, core::Model& entity )
-    : PHY_RolePion_Composantes( pion, false ) // $$$$ MCO 2012-05-04: false => don't init in PHY_RolePion_Composantes because NotifyComposanteAdded in this sub-class won't be called
-    , pion_  ( pion )
-    , entity_( entity )
+    : PHY_RolePion_Composantes( pion, false )
+    , entity_( &entity[ "components" ] )
 {
-    entity[ "components" ];
     pion.GetType().GetUnitType().InstanciateComposantes( *this );
     DistributeCommanders();
 }
@@ -77,7 +66,8 @@ RolePion_Composantes::~RolePion_Composantes()
 template< typename Archive >
 void RolePion_Composantes::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< PHY_RolePion_Composantes >( *this );
+    file & boost::serialization::base_object< PHY_RolePion_Composantes >( *this )
+        & entity_;
 }
 
 namespace
@@ -100,13 +90,15 @@ namespace
     }
 }
 
+SWORD_USER_DATA_EXPORT( PHY_ComposantePion* )
+
 // -----------------------------------------------------------------------------
 // Name: RolePion_Composantes::NotifyComposanteAdded
 // Created: SLI 2012-03-22
 // -----------------------------------------------------------------------------
 void RolePion_Composantes::NotifyComposanteAdded( PHY_ComposantePion& composante, std::map< const PHY_DotationCategory*, double >* dotations )
 {
-    core::Model& component = entity_[ "components" ].AddElement();
+    core::Model& component = entity_->AddElement();
     component[ "component" ].SetUserData( &composante );
     component[ "major" ] = composante.IsMajor();
     component[ "volume" ] = composante.GetType().GetVolume().GetID();
@@ -128,7 +120,7 @@ void RolePion_Composantes::NotifyComposanteAdded( PHY_ComposantePion& composante
 std::map< const PHY_DotationCategory*, double > RolePion_Composantes::NotifyComposanteRemoved( PHY_ComposantePion& composante )
 {
     T_Components::iterator it = components_.find( &composante );
-    entity_[ "components" ].RemoveElement( *it->second );
+    entity_->RemoveElement( *it->second );
     components_.erase( it );
     return PHY_RolePion_Composantes::NotifyComposanteRemoved( composante );
 }
