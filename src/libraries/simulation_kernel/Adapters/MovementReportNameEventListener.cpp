@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MovementReportNameEventListener.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 #include "RoleAction_Moving.h"
 #include <core/Facade.h>
 #include <core/Model.h>
@@ -47,6 +48,6 @@ MovementReportNameEventListener::~MovementReportNameEventListener()
 void MovementReportNameEventListener::Notify( const core::Model& report )
 {
     const unsigned int entity = report[ "entity" ];
-    RoleAction_Moving& role = model_[ "entities" ][ entity ][ "roles/RoleAction_Moving" ].GetUserData< RoleAction_Moving >();
+    RoleAction_Moving& role = model_[ "entities" ][ entity ].GetUserData< MIL_AgentPion >().GetRole< RoleAction_Moving >();
     role.SendRC( report[ "code" ], report[ "name" ] );
 }

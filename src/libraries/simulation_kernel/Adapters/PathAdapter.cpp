@@ -312,7 +312,7 @@ void PathAdapter::InitializePathKnowledges( const core::Model& entity, const MIL
                     if( const MIL_Object_ABC* pObject = knowledge.GetObjectKnown() )
                     {
                         TerrainData data;
-                        double rMaxSpeed = entity[ "roles/RoleAction_Moving" ].GetUserData< RoleAction_Moving >().GetSpeedWithReinforcement( data, *pObject );
+                        double rMaxSpeed = entity.GetUserData< MIL_AgentPion >().GetRole< RoleAction_Moving >().GetSpeedWithReinforcement( data, *pObject );
                         if( rMaxSpeed == 0 || rMaxSpeed == std::numeric_limits< double >::max() )
                             continue;
                     }
