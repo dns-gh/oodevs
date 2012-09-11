@@ -63,7 +63,7 @@ std::string Parameter_ABC::GetType() const
 // Name: Parameter_ABC::SetKeyName
 // Created: LDC 2012-09-05
 // -----------------------------------------------------------------------------
-void Parameter_ABC::SetKeyName( const std::string& identifier )
+void Parameter_ABC::SetKeyName( const std::string& /*identifier*/ )
 {
     // NOTHING
 }
