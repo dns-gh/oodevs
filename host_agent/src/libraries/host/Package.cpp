@@ -221,11 +221,14 @@ bool ItemOrder( const Package_ABC::T_Item& lhs, const Package_ABC::T_Item& rhs )
     return lhs->GetChecksum() < rhs->GetChecksum();
 }
 
-bool IsItemData( size_t offset, const Path& item )
+bool BeginWith( const Path& prefix, const Path& path )
 {
-    Path::const_iterator it = item.begin();
-    std::advance( it, offset );
-    return *it != "sessions";
+    for( Path::const_iterator a = prefix.begin(), b = path.begin(); a != prefix.end(); ++a, ++b )
+        if( b == path.end() )
+            return false;
+        else if( *a != *b )
+            return false;
+    return true;
 }
 
 struct Item : Package_ABC::Item_ABC
@@ -330,11 +333,17 @@ struct Item : Package_ABC::Item_ABC
             action_ = "update";
     }
 
+    FileSystem_ABC::T_Predicate IsItemFile( const Path& root )
+    {
+        if( !IsExercise() )
+            return FileSystem_ABC::T_Predicate();
+        return !boost::bind( &BeginWith, root / "sessions", _1 );
+    }
+
     void MakeChecksum( const FileSystem_ABC& system )
     {
-        const Path root = root_ / GetSuffix();
         size_t read;
-        checksum_ = system.Checksum( root, IsExercise() ? boost::bind( &IsItemData, std::distance( root.begin(), root.end() ), _1 ) : FileSystem_ABC::T_Predicate(), read );
+        checksum_ = system.Checksum( root_ / GetSuffix(), IsItemFile( root_ ), read );
         size_ = read;
     }
 
@@ -410,7 +419,7 @@ struct Item : Package_ABC::Item_ABC
     {
         std::ostream& io = dst.SetName( Utf8Convert( name_ ) );
         FileSystem_ABC::T_Packer packer = fs.Pack( io );
-        packer->Pack( root_ );
+        packer->Pack( root_, IsItemFile( GetSuffix() ) );
     }
 
 protected:

@@ -63,7 +63,12 @@ struct Packer_ABC : public boost::noncopyable
 
     //! @name Methods
     //@{
-    virtual void Pack( const Path& input ) = 0;
+    typedef boost::function< bool( const Path& ) > T_Predicate;
+    //@}
+
+    //! @name Methods
+    //@{
+    virtual void Pack( const Path& input, const T_Predicate& predicate ) = 0;
     //@}
 };
 

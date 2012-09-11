@@ -389,7 +389,7 @@ void CopyBlocks( cpplog::BaseLogger& log, Archive* src, Archive* dst )
     }
 }
 
-void TransferArchive( cpplog::BaseLogger& log, Archive* dst, Archive* src, const Path& root, bool pack )
+void TransferArchive( cpplog::BaseLogger& log, Archive* dst, Archive* src, const Path& root, const Packer_ABC::T_Predicate& predicate, bool pack )
 {
     const size_t diff = std::distance( root.begin(), root.end() );
     boost::shared_ptr< ArchiveEntry > ptr( archive_entry_new(), archive_entry_free );
@@ -405,8 +405,10 @@ void TransferArchive( cpplog::BaseLogger& log, Archive* dst, Archive* src, const
         Path next;
         if( pack )
         {
-            archive_read_disk_descend( src );
             next = StripPathPrefix( archive_entry_pathname_w( entry ), diff );
+            if( predicate && !predicate( next ) )
+                continue;
+            archive_read_disk_descend( src );
             if( next.empty() )
                 continue;
         }
@@ -414,8 +416,8 @@ void TransferArchive( cpplog::BaseLogger& log, Archive* dst, Archive* src, const
         {
             next = root / archive_entry_pathname_w( entry );
         }
-        archive_entry_update_pathname_utf8( entry, runtime::Utf8Convert( next ).c_str() );
 
+        archive_entry_update_pathname_utf8( entry, runtime::Utf8Convert( next ).c_str() );
         err = archive_write_header( dst, entry );
         if( err != ARCHIVE_OK )
             CheckArchiveCode( log, dst, err );
@@ -474,7 +476,7 @@ struct Unpacker : public Unpacker_ABC
               | ARCHIVE_EXTRACT_FFLAGS;
         archive_write_disk_set_options( dst.get(), flags );
         archive_write_disk_set_standard_lookup( dst.get() );
-        TransferArchive( log_, dst.get(), src.get(), output_, false );
+        TransferArchive( log_, dst.get(), src.get(), output_, Packer_ABC::T_Predicate(), false );
         archive_write_close( dst.get() );
     }
 
@@ -528,13 +530,13 @@ struct Packer : public Packer_ABC
         return size;
     }
 
-    void Pack( const Path& input )
+    void Pack( const Path& input, const T_Predicate& predicate )
     {
         boost::shared_ptr< Archive > src( archive_read_disk_new(), archive_read_free );
         int err = archive_read_disk_open( src.get(), runtime::Utf8Convert( input ).c_str() );
         if( err != ARCHIVE_OK )
             throw std::runtime_error( archive_error_string( src.get() ) );
-        TransferArchive( log_, dst_.get(), src.get(), input, true );
+        TransferArchive( log_, dst_.get(), src.get(), input, predicate, true );
     }
 
     cpplog::BaseLogger& log_;
