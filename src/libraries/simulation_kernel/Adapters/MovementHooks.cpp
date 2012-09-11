@@ -10,7 +10,6 @@
 #include "simulation_kernel_pch.h"
 #include "MovementHooks.h"
 #include "Hook.h"
-#include "RolePion_Decision.h"
 #include "PathAdapter.h"
 #include "PathPointAdapter.h"
 #include "KnowledgeCache.h"
@@ -20,11 +19,13 @@
 #include "LocationComputer_ABC.h"
 #include "LocationComputerFactory_ABC.h"
 #include "Entities/MIL_Army_ABC.h"
+#include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
 #include "Entities/Agents/Roles/Terrain/PHY_RoleInterface_TerrainAnalysis.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Orders/MIL_Fuseau.h"
@@ -566,5 +567,4 @@ void MovementHooks::Initialize( core::Facade& facade )
     REGISTER_HOOK( VisitKnowledgeObjects, facade );
     PathAdapter::Initialize( facade );
     PathPointAdapter::Initialize( facade );
-    RolePion_Decision::Initialize( facade );
 }

@@ -21,6 +21,7 @@
 #include "RolePion_Location.h"
 #include "RoleAction_Moving.h"
 #include "RolePion_Perceiver.h"
+#include "RolePion_Decision.h"
 #include "RolePion_Composantes.h"
 #include "ReportEventListener.h"
 #include "MovementReportNameEventListener.h"
@@ -172,6 +173,7 @@ Sink::Sink( AgentFactory_ABC& factory, unsigned int gcPause, unsigned int gcMult
     listeners_.push_back( new ExternalPerceptionEventListener( *model_, *facade_, factory ) );
     listeners_.push_back( new AlatMonitoringEventListener( *model_, *facade_, factory ) );
     MovementHooks::Initialize( *facade_ );
+    RolePion_Decision::Initialize( *facade_ );
     FireHooks::Initialize( *facade_ );
     PerceptionHooks::Initialize( *facade_ );
     USE_HOOK( InitializePathClass, *facade_ );
