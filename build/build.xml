@@ -438,7 +438,8 @@
     </target>
 
     <target name="library.logistic_plugin" depends="library.dispatcher,library.reports" description="build logistic_plugin static library">
-        <build-lib name="logistic_plugin" depends="qt4" pattern="lib${ant.project.name}_logistic_plugin-${platform}-mt@{suffix}" suffix="-gd">
+        <build-lib name="logistic_plugin" depends="qt4" pattern="lib${ant.project.name}_logistic_plugin-${platform}-mt@{suffix}" suffix="-gd"
+            failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
