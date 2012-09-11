@@ -131,8 +131,9 @@ public:
 
     //! @name Node_ABC methods
     //@{
-    virtual Tree GetInstall() const;
-    virtual Tree DeleteInstall( const std::vector< size_t >& list );
+    virtual Tree GetInstall     () const;
+    virtual Tree DeleteInstall  ( const std::vector< size_t >& list );
+    virtual void DownloadInstall( size_t item, web::Chunker_ABC& dst );
     //@}
 
     //! @name Node_ABC methods

@@ -91,6 +91,7 @@ private:
     void GetCache        ( Reply_ABC& reply, const Request_ABC& request );
     void DeleteCache     ( Reply_ABC& reply, const Request_ABC& request );
     void InstallFromCache( Reply_ABC& reply, const Request_ABC& request );
+    void DownloadInstall ( Reply_ABC& reply, const Request_ABC& request );
     //@}
 
     //! @name Session Methods

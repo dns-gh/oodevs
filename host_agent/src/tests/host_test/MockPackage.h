@@ -30,6 +30,7 @@ namespace mocks
         MOCK_METHOD( LinkExercise, 1 );
         MOCK_METHOD( LinkItem, 1 );
         MOCK_METHOD( UnlinkItem, 2 );
+        MOCK_METHOD( Download, 2 );
     };
 
     MOCK_BASE_CLASS( MockPackageFactory, host::PackageFactory_ABC )

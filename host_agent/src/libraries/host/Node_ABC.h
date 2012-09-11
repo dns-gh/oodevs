@@ -37,6 +37,7 @@ namespace runtime
 
 namespace web
 {
+    struct Chunker_ABC;
 namespace node
 {
     struct Config;
@@ -96,8 +97,9 @@ struct Node_ABC : public boost::noncopyable
 
     //! @name Install methods
     //@{
-    virtual Tree GetInstall() const = 0;
-    virtual Tree DeleteInstall( const std::vector< size_t >& list ) = 0;
+    virtual Tree GetInstall     () const = 0;
+    virtual Tree DeleteInstall  ( const std::vector< size_t >& list ) = 0;
+    virtual void DownloadInstall( size_t item, web::Chunker_ABC& dst ) = 0;
     //@}
 
     //! @name Cache methods

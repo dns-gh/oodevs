@@ -16,6 +16,7 @@
 #include "runtime/PropertyTree.h"
 #include "runtime/Utf8.h"
 #include "web/Configs.h"
+#include "web/HttpException.h"
 #include "web/Plugins.h"
 
 #include <boost/foreach.hpp>
@@ -339,6 +340,18 @@ Tree NodeController::DeleteInstall( const Uuid& id, const std::vector< size_t >&
 {
     T_Node node = nodes_.Get( id );
     return node ? node->DeleteInstall( list ) : Tree();
+}
+
+// -----------------------------------------------------------------------------
+// Name: NodeController::DownloadInstall
+// Created: BAX 2012-09-11
+// -----------------------------------------------------------------------------
+void NodeController::DownloadInstall( const Uuid& id, size_t item, web::Chunker_ABC& dst )
+{
+    T_Node node = nodes_.Get( id );
+    if( !node )
+        throw web::HttpException( web::NOT_FOUND );
+    node->DownloadInstall( item, dst );
 }
 
 // -----------------------------------------------------------------------------

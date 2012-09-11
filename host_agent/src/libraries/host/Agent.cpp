@@ -250,6 +250,15 @@ Tree Agent::DeleteInstall( const Uuid& id, const std::vector< size_t >& list )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Agent::DownloadInstall
+// Created: BAX 2012-09-11
+// -----------------------------------------------------------------------------
+void Agent::DownloadInstall( const Uuid& id, size_t item, web::Chunker_ABC& dst )
+{
+    return nodes_.DownloadInstall( id, item, dst );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Agent::UploadCache
 // Created: BAX 2012-05-11
 // -----------------------------------------------------------------------------

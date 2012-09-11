@@ -72,8 +72,9 @@ public:
 
     //! @name Install Methods
     //@{
-    virtual Tree GetInstall   ( const Uuid& id ) const;
-    virtual Tree DeleteInstall( const Uuid& id, const std::vector< size_t >& list  );
+    virtual Tree GetInstall     ( const Uuid& id ) const;
+    virtual Tree DeleteInstall  ( const Uuid& id, const std::vector< size_t >& list  );
+    virtual void DownloadInstall( const Uuid& id, size_t item, web::Chunker_ABC& dst );
     //@}
 
     //! @name Cache Methods

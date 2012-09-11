@@ -264,6 +264,7 @@ void Controller::DoGet( Reply_ABC& rpy, Request_ABC& request )
         if( uri == "/get_cache" )          return GetCache        ( rpy, request );
         if( uri == "/delete_cache" )       return DeleteCache     ( rpy, request );
         if( uri == "/install_from_cache" ) return InstallFromCache( rpy, request );
+        if( uri == "/download_install" )   return DownloadInstall ( rpy, request );
         // sessions
         if( uri == "/list_sessions" )      return ListSessions   ( rpy, request );
         if( uri == "/count_sessions" )     return CountSessions  ( rpy, request );
@@ -548,6 +549,18 @@ void Controller::InstallFromCache( Reply_ABC& rpy, const Request_ABC& request )
     if( node.is_nil() )
         throw HttpException( web::BAD_REQUEST );
     ListDispatch( rpy, request, node, boost::bind( &Agent_ABC::InstallFromCache, &agent_, _1, _2 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controller::InstallFromCache
+// Created: BAX 2012-05-24
+// -----------------------------------------------------------------------------
+void Controller::DownloadInstall( Reply_ABC& rpy, const Request_ABC& request )
+{
+    const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "id" );
+    const size_t id = RequireParameter< size_t >( "item", request );
+    boost::shared_ptr< Chunker_ABC > chunker = MakeChunker( rpy );
+    agent_.DownloadInstall( node, id, *chunker );
 }
 
 // -----------------------------------------------------------------------------

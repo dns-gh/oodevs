@@ -33,6 +33,7 @@ namespace mocks
         MOCK_METHOD( Update, 2 );
         MOCK_METHOD( GetInstall, 1 );
         MOCK_METHOD( DeleteInstall, 2 );
+        MOCK_METHOD( DownloadInstall, 3 );
         MOCK_METHOD( GetCache, 1 );
         MOCK_METHOD( UploadCache, 2 );
         MOCK_METHOD( DeleteCache, 1 );

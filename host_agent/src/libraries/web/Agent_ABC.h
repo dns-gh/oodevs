@@ -78,8 +78,9 @@ struct Agent_ABC : public boost::noncopyable
 
     //! @name Install Methods
     //@{
-    virtual Tree GetInstall   ( const Uuid& id ) const = 0;
-    virtual Tree DeleteInstall( const Uuid& id, const std::vector< size_t >& list  ) = 0;
+    virtual Tree GetInstall     ( const Uuid& id ) const = 0;
+    virtual Tree DeleteInstall  ( const Uuid& id, const std::vector< size_t >& list  ) = 0;
+    virtual void DownloadInstall( const Uuid& id, size_t item, Chunker_ABC& dst ) = 0;
     //@}
 
     //! @name Cache Methods

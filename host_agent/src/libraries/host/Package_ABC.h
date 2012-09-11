@@ -27,6 +27,11 @@ namespace runtime
     struct Async;
 }
 
+namespace web
+{
+    struct Chunker_ABC;
+}
+
 namespace host
 {
     typedef boost::filesystem::path Path;
@@ -69,6 +74,7 @@ struct Package_ABC : public boost::noncopyable
     virtual Tree LinkExercise( const std::string& name ) = 0;
     virtual Tree LinkItem( const Tree& tree ) = 0;
     virtual void UnlinkItem( runtime::Async& async, const Tree& tree ) = 0;
+    virtual void Download( size_t item, web::Chunker_ABC& dst ) = 0;
     //@}
 };
 

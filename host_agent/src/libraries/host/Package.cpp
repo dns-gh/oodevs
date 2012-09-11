@@ -13,6 +13,8 @@
 #include "runtime/FileSystem_ABC.h"
 #include "runtime/PropertyTree.h"
 #include "runtime/Utf8.h"
+#include "web/Chunker_ABC.h"
+#include "web/HttpException.h"
 
 #include <boost/bind.hpp>
 #include <boost/filesystem/operations.hpp>
@@ -53,6 +55,7 @@ struct Package_ABC::Item_ABC : public boost::noncopyable
     virtual void        Reinstall( const FileSystem_ABC& system ) = 0;
     virtual void        Link( Tree& tree, const Package_ABC& ref, bool recurse ) = 0;
     virtual void        Unlink( Async& async, const FileSystem_ABC& system ) = 0;
+    virtual void        Download( const FileSystem_ABC& fs, web::Chunker_ABC& dst ) = 0;
 };
 
 namespace
@@ -401,6 +404,13 @@ struct Item : Package_ABC::Item_ABC
     void Unlink( Async& async, const FileSystem_ABC& system )
     {
         meta_.Unlink( async, system, root_ );
+    }
+
+    void Download( const FileSystem_ABC& fs, web::Chunker_ABC& dst )
+    {
+        std::ostream& io = dst.SetName( Utf8Convert( name_ ) );
+        FileSystem_ABC::T_Packer packer = fs.Pack( io );
+        packer->Pack( root_ );
     }
 
 protected:
@@ -930,4 +940,16 @@ size_t Package::GetSize() const
     BOOST_FOREACH( const T_Items::value_type& item, items_ )
         sum += item->GetSize();
     return sum;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Package::Download
+// Created: BAX 2012-09-11
+// -----------------------------------------------------------------------------
+void Package::Download( size_t id, web::Chunker_ABC& dst )
+{
+    T_Item item = Find( id, false );
+    if( !item )
+        throw web::HttpException( web::NOT_FOUND );
+    item->Download( system_, dst );
 }

@@ -72,6 +72,7 @@ namespace
         // install
         MOCK_METHOD( GetInstall, 1 );
         MOCK_METHOD( DeleteInstall, 2 );
+        MOCK_METHOD( DownloadInstall, 3 );
         // cache
         MOCK_METHOD( UploadCache, 2 );
         MOCK_METHOD( GetCache, 1 );

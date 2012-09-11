@@ -478,6 +478,16 @@ Tree Node::InstallFromCache( const std::vector< size_t >& list )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Node::DownloadInstall
+// Created: BAX 2012-09-11
+// -----------------------------------------------------------------------------
+void Node::DownloadInstall( size_t item, web::Chunker_ABC& dst )
+{
+    boost::shared_lock< boost::shared_mutex > lock( access_ );
+    install_->Download( item, dst );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Node::GetExercises
 // Created: BAX 2012-05-31
 // -----------------------------------------------------------------------------
