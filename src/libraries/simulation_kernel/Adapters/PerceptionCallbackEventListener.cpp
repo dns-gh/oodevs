@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "PerceptionCallbackEventListener.h"
-#include "Entities/Agents/MIL_AgentPion.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include <core/Facade.h>
 #include <core/Model.h>
@@ -48,6 +47,6 @@ PerceptionCallbackEventListener::~PerceptionCallbackEventListener()
 void PerceptionCallbackEventListener::Notify( const core::Model& callback )
 {
     const unsigned int entity = callback[ "entity" ];
-    DEC_Decision_ABC& role = model_[ "entities" ][ entity ][ "pion" ].GetUserData< MIL_AgentPion >().GetRole< DEC_Decision_ABC >();
+    DEC_Decision_ABC& role = model_[ "entities" ][ entity ][ "roles/DEC_Decision_ABC" ].GetUserData< DEC_Decision_ABC >();
     role.CallbackPerception( callback[ "perception" ] );
 }

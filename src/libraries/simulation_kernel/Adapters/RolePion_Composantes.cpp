@@ -100,8 +100,6 @@ namespace
     }
 }
 
-SWORD_USER_DATA_EXPORT( PHY_ComposantePion* )
-
 // -----------------------------------------------------------------------------
 // Name: RolePion_Composantes::NotifyComposanteAdded
 // Created: SLI 2012-03-22

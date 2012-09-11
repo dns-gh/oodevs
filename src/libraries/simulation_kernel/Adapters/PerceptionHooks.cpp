@@ -32,7 +32,6 @@
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/Roles/Communications/PHY_RoleInterface_Communications.h"
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
-#include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
@@ -83,7 +82,7 @@ using namespace sword;
 using namespace dotation;
 using namespace transport;
 
-#define GET_ROLE( node, role ) (*core::Convert( node ))[ "pion" ].GetUserData< MIL_AgentPion >().GetRole< role >()
+#define GET_ROLE( node, role ) (*core::Convert( node ))[ "roles/" #role ].GetUserData< role >()
 #define GET_PION( node ) (*core::Convert( node ))[ "pion" ].GetUserData< MIL_AgentPion >()
 
 namespace

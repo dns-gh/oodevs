@@ -44,7 +44,7 @@
 
 using namespace sword;
 
-#define GET_ROLE( node, role ) (*core::Convert( node ))[ "pion" ].GetUserData< MIL_AgentPion >().GetRole< role >()
+#define GET_ROLE( node, role ) (*core::Convert( node ))[ "roles/" #role ].GetUserData< role >()
 #define GET_PION( node ) (*core::Convert( node ))[ "pion" ].GetUserData< MIL_AgentPion >()
 
 namespace
