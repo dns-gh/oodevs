@@ -250,7 +250,8 @@ void ParametersLayer::Start( ShapeHandler_ABC& handler, const Location_ABC& loca
 // -----------------------------------------------------------------------------
 void ParametersLayer::Reset()
 {
-    NotifyDone();
+    if( !current_ || current_ && current_->IsValid() )
+        handler_ = 0;
     delete current_;
     current_ = 0;
     cursors_->SelectTool( QCursor(), false );
