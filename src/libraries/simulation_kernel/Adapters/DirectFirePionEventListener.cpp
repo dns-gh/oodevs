@@ -164,6 +164,31 @@ namespace
             role.NotifyExternalPerception( pion, PHY_PerceptionLevel::recognized_ );
         }
     }
+    void HandleCollateralDamage( PHY_FireResults_Pion* results, const MIL_AgentPion& pion, const MIL_Agent_ABC& target ) // $$$$ MCO 2012-09-05: move to a separate listener
+    {
+        // handle direct-indirect fire on populations
+        const PHY_RoleInterface_Location& firerLocation = pion.GetRole< PHY_RoleInterface_Location >();
+        const PHY_RoleInterface_Location& targetLocation = target.GetRole< PHY_RoleInterface_Location >();
+        const MT_Vector2D firerPosition ( firerLocation.GetPosition().rX_, firerLocation.GetPosition().rY_ );
+        const MT_Vector2D targetPosition( targetLocation.GetPosition().rX_, targetLocation.GetPosition().rY_ );
+        TER_PopulationConcentration_ABC::T_PopulationConcentrationVector concentrations;
+        TER_World::GetWorld().GetPopulationManager().GetConcentrationManager()
+                             .GetListIntersectingLine( firerPosition, targetPosition, concentrations );
+        for( TER_PopulationConcentration_ABC::CIT_PopulationConcentrationVector itConcentration = concentrations.begin();
+            itConcentration != concentrations.end(); ++itConcentration )
+        {
+            MIL_PopulationConcentration* pElement = static_cast< MIL_PopulationConcentration* >( *itConcentration );
+            pElement->ApplyFire( 1, *results, true );
+        }
+        TER_PopulationFlow_ABC::T_PopulationFlowVector flows;
+        TER_World::GetWorld().GetPopulationManager().GetFlowManager()
+                             .GetListIntersectingLine( firerPosition, targetPosition, flows );
+        for( TER_PopulationFlow_ABC::CIT_PopulationFlowVector itFlow = flows.begin(); itFlow != flows.end(); ++itFlow )
+        {
+            MIL_PopulationFlow* pElement = static_cast< MIL_PopulationFlow* >( *itFlow );
+            pElement->ApplyFire( 1, *results, true );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -191,29 +216,7 @@ void DirectFirePionEventListener::Update( const core::Model& event )
             results->IncRef();
         }
         target.GetRole< PHY_RoleInterface_Composantes >().ApplyDirectFire( component, *category, *results );
-
-        // handle direct-indirect fire on populations
-        const PHY_RoleInterface_Location& firerLocation = pion.GetRole< PHY_RoleInterface_Location >();
-        const PHY_RoleInterface_Location& targetLocation = target.GetRole< PHY_RoleInterface_Location >();
-        const MT_Vector2D firerPosition ( firerLocation.GetPosition().rX_, firerLocation.GetPosition().rY_ );
-        const MT_Vector2D targetPosition( targetLocation.GetPosition().rX_, targetLocation.GetPosition().rY_ );
-        TER_PopulationConcentration_ABC::T_PopulationConcentrationVector concentrations;
-        TER_World::GetWorld().GetPopulationManager().GetConcentrationManager()
-                             .GetListIntersectingLine( firerPosition, targetPosition, concentrations );
-        for( TER_PopulationConcentration_ABC::CIT_PopulationConcentrationVector itConcentration = concentrations.begin();
-            itConcentration != concentrations.end(); ++itConcentration )
-        {
-            MIL_PopulationConcentration* pElement = static_cast< MIL_PopulationConcentration* >( *itConcentration );
-            pElement->ApplyFire( 1, *results, true );
-        }
-        TER_PopulationFlow_ABC::T_PopulationFlowVector flows;
-        TER_World::GetWorld().GetPopulationManager().GetFlowManager()
-                             .GetListIntersectingLine( firerPosition, targetPosition, flows );
-        for( TER_PopulationFlow_ABC::CIT_PopulationFlowVector itFlow = flows.begin(); itFlow != flows.end(); ++itFlow )
-        {
-            MIL_PopulationFlow* pElement = static_cast< MIL_PopulationFlow* >( *itFlow );
-            pElement->ApplyFire( 1, *results, true );
-        }
+        HandleCollateralDamage( results, pion, target );
     }
     NotifyFirerPerception( pion, target );
     if( event[ "use-ph" ] )
