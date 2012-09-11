@@ -92,8 +92,9 @@ public:
     void Update();
     void TransferComposante( PHY_RoleInterface_Composantes& newRole );
 
-    template< typename T > void ApplyOnWeapons( T& t ) const;
-    template< typename T > void ApplyOnHumanProtection( T& t ) const;
+    template< typename T > void ApplyOnWeapons( T& functor ) const;
+    template< typename T > void ApplyOnWeapons( const T& functor ) const;
+    template< typename T > void ApplyOnHumanProtection( T& functor ) const;
     //@}
 
     //! @name Logistic - Maintenance
@@ -257,7 +258,9 @@ public:
     //! @name Operations
     //@{
     template< typename T > void ApplyOnSensors( T& func ) const;
+    template< typename T > void ApplyOnSensors( const T& func ) const;
     template< typename T > void ApplyOnRadars ( T& func ) const;
+    template< typename T > void ApplyOnRadars ( const T& func ) const;
 
     void Execute( firing::WeaponAvailabilityComputer_ABC& algorithm ) const;
 

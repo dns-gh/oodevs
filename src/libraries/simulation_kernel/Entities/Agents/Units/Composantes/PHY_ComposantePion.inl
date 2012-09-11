@@ -21,7 +21,17 @@ inline void PHY_ComposantePion::ApplyOnWeapons( T& functor ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::FillFireData
+// Name: void PHY_ComposantePion::ApplyOnWeapons
+// Created: MCO 2012-09-05
+// -----------------------------------------------------------------------------
+template< typename T > void PHY_ComposantePion::ApplyOnWeapons( const T& functor ) const
+{
+    for( CIT_WeaponVector itWeapon = weapons_.begin(); itWeapon != weapons_.end(); ++itWeapon )
+        functor( *this, **itWeapon );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::ApplyOnHumanProtection
 // Created: NLD 2006-08-07
 // -----------------------------------------------------------------------------
 template< typename T >
@@ -43,11 +53,31 @@ void PHY_ComposantePion::ApplyOnSensors( T& func ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::ApplyOnSensors
+// Created: MCO 2012-09-05
+// -----------------------------------------------------------------------------
+template< typename T >
+void PHY_ComposantePion::ApplyOnSensors( const T& func ) const
+{
+    for( CIT_SensorVector itSensor = sensors_.begin(); itSensor != sensors_.end(); ++itSensor )
+        func( **itSensor );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::ApplyOnRadars
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
 template< typename T > inline
 void PHY_ComposantePion::ApplyOnRadars( T& func ) const
+{
+    GetType().ApplyOnRadars( func );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::ApplyOnRadars
+// Created: MCO 2012-09-05
+// -----------------------------------------------------------------------------
+template< typename T > void PHY_ComposantePion::ApplyOnRadars( const T& func ) const
 {
     GetType().ApplyOnRadars( func );
 }

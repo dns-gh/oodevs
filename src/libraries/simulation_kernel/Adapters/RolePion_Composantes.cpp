@@ -115,18 +115,9 @@ void RolePion_Composantes::NotifyComposanteAdded( PHY_ComposantePion& composante
     component[ "sensors" ];
     component[ "type/sensor-rotation-angle" ] = composante.GetType().GetSensorRotationAngle(); // $$$$ MCO 2012-07-09: type/ ?!
     components_[ &composante ] = &component;
-    {
-        boost::function< void( const PHY_Sensor& ) > visitor = boost::bind( &AddSensor, boost::ref( component[ "sensors" ] ), _1 );
-        composante.ApplyOnSensors( visitor );
-    }
-    {
-        boost::function< void( const PHY_RadarType& ) > visitor = boost::bind( &AddRadar, boost::ref( component[ "radars" ] ), _1 );
-        composante.ApplyOnRadars( visitor );
-    }
-    {
-        boost::function< void( const PHY_ComposantePion&, const PHY_Weapon& ) > visitor = boost::bind( &AddWeapon, boost::ref( component[ "weapons" ] ), _2 );
-        composante.ApplyOnWeapons( visitor );
-    }
+    composante.ApplyOnSensors( boost::bind( &AddSensor, boost::ref( component[ "sensors" ] ), _1 ) );
+    composante.ApplyOnRadars( boost::bind( &AddRadar, boost::ref( component[ "radars" ] ), _1 ) );
+    composante.ApplyOnWeapons( boost::bind( &AddWeapon, boost::ref( component[ "weapons" ] ), _2 ) );
     PHY_RolePion_Composantes::NotifyComposanteAdded( composante, dotations );
 }
 
