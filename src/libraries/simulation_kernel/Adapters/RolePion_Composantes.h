@@ -35,7 +35,7 @@ public:
     //@}
 
     //! @name Operations
-    //@{    
+    //@{
     virtual void NotifyComposanteAdded   ( PHY_ComposantePion& composante, std::map< const PHY_DotationCategory*, double >* dotations );
     virtual std::map< const PHY_DotationCategory*, double > NotifyComposanteRemoved ( PHY_ComposantePion& composante );
 
