@@ -39,15 +39,15 @@ std::string NormalizePath( std::string path )
 class TemporaryDirectory: private boost::noncopyable
 {
 public:
-    TemporaryDirectory(const std::string& namePrefix, const std::string& basePath)
+    TemporaryDirectory( const std::string& namePrefix, const std::string& basePath )
     {
-        const std::string suffix = boost::lexical_cast<std::string>( rand() );
+        const std::string suffix = boost::lexical_cast< std::string >( rand() );
         const std::string name = namePrefix + suffix;
-        const bfs::path path = bfs::path( basePath ) / bfs::path( name );
-        if( bfs::exists(path) )
+        const bfs::path path = bfs::path( basePath ) / name;
+        if( bfs::exists( path ) )
             bfs::remove_all( path );
         bfs::create_directories( path );
-        path_ = bfs::path( NormalizePath( path.string() ));
+        path_ = bfs::path( NormalizePath( path.string() ) );
     }
 
     ~TemporaryDirectory()
@@ -75,62 +75,62 @@ class SimpleNameResolver : public NameResolver_ABC
 public:
     virtual void GetAgentName( int id, std::string& name ) const
     {
-        name = "agent_" + boost::lexical_cast<std::string>( id );
+        name = "agent_" + boost::lexical_cast< std::string >( id );
     }
 
     virtual void GetAutomatName( int id, std::string& name ) const
     {
-        name = "automat_" + boost::lexical_cast<std::string>( id );
+        name = "automat_" + boost::lexical_cast< std::string >( id );
     }
 
     virtual void GetFormationName( int id, std::string& name ) const
     {
-        name = "formation_" + boost::lexical_cast<std::string>( id );
+        name = "formation_" + boost::lexical_cast< std::string >( id );
     }
 
     virtual void GetSupplykName( const sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus& eSupply, std::string& name ) const
     {
-        name = "supply_" + boost::lexical_cast<std::string>( eSupply );
+        name = "supply_" + boost::lexical_cast< std::string >( eSupply );
     }
 
     virtual void GetRankName( const sword::EnumHumanRank& eRank, std::string& name ) const
     {
-        name = "rank_" + boost::lexical_cast<std::string>( eRank );
+        name = "rank_" + boost::lexical_cast< std::string >( eRank );
     }
 
     virtual void GetWoundName( const sword::EnumHumanWound& eWound, std::string& name ) const
     {
-        name = "wound_" + boost::lexical_cast<std::string>( eWound );
+        name = "wound_" + boost::lexical_cast< std::string >( eWound );
     }
 
     virtual void GetMedicalName( const sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus& eMedical, std::string& name ) const
     {
-        name = "medical_" + boost::lexical_cast<std::string>( eMedical );
+        name = "medical_" + boost::lexical_cast< std::string >( eMedical );
     }
 
     virtual void GetMaintenanceName( const sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus& eMaintenance, std::string& name ) const
     {
-        name = "medical_" + boost::lexical_cast<std::string>( eMaintenance );
+        name = "medical_" + boost::lexical_cast< std::string >( eMaintenance );
     }
 
     virtual void GetFuneralName( const sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus& eFuneral, std::string& name ) const
     {
-        name = "funeral_" + boost::lexical_cast<std::string>( eFuneral );
+        name = "funeral_" + boost::lexical_cast< std::string >( eFuneral );
     }
 
     virtual void GetEquipmentName( const sword::EquipmentType& equipmentType, std::string& name ) const
     {
-        name = "equipment_" + boost::lexical_cast<std::string>( equipmentType.id() );
+        name = "equipment_" + boost::lexical_cast< std::string >( equipmentType.id() );
     }
 
     virtual void GetBreakdownName( const sword::BreakdownType& breakdownType, std::string& name ) const
     {
-        name = "breakdown_" + boost::lexical_cast<std::string>( breakdownType.id() );
+        name = "breakdown_" + boost::lexical_cast< std::string >( breakdownType.id() );
     }
 
     virtual void GetResourceName( const sword::ResourceType& resourceType, std::string& name ) const
     {
-        name = "resource_" + boost::lexical_cast<std::string>( resourceType.id() );
+        name = "resource_" + boost::lexical_cast< std::string >( resourceType.id() );
     }
 };
 
@@ -150,9 +150,9 @@ void ListDir( const bfs::path& path, T_FileList& files )
 {
     files.clear();
     bfs::recursive_directory_iterator end;
-    for( bfs::recursive_directory_iterator entry(path) ; entry != end ; ++entry)
+    for( bfs::recursive_directory_iterator entry(path) ; entry != end ; ++entry )
     {
-        if( bfs::is_regular_file( entry->status() ))
+        if( bfs::is_regular_file( entry->status() ) )
             files.push_back( NormalizePath( entry->path().string() ) );
     }
     std::sort( files.begin(), files.end() );
@@ -164,7 +164,7 @@ void CheckRegexps( const T_FileList& regexps, const T_FileList& files )
     for( size_t i = 0; i != files.size(); ++i )
     {
         boost::regex re( regexps[i], boost::regex::perl );
-        BOOST_CHECK( boost::regex_match( files[i], re ));
+        BOOST_CHECK( boost::regex_match( files[i], re ) );
     }
 }
 
