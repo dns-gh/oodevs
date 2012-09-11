@@ -227,9 +227,9 @@ BOOST_FIXTURE_TEST_CASE( session_converts, Fixture )
     stats.push_back( boost::bind( &EqualValue, _1, "clients", "" ) );
 
     T_Constraints items;
-    items.push_back( boost::bind( &EqualTree, _1, "model",    "{\"name\":\"a\",\"checksum\":\"c\"}" ) );
-    items.push_back( boost::bind( &EqualTree, _1, "terrain",  "{\"name\":\"a\",\"checksum\":\"c\"}" ) );
-    items.push_back( boost::bind( &EqualTree, _1, "exercise", "{\"name\":\"a\",\"checksum\":\"c\"}" ) );
+    items.push_back( boost::bind( &EqualTree, _1, "model",    "{\"id\":\"0\",\"name\":\"a\",\"checksum\":\"c\"}" ) );
+    items.push_back( boost::bind( &EqualTree, _1, "terrain",  "{\"id\":\"0\",\"name\":\"a\",\"checksum\":\"c\"}" ) );
+    items.push_back( boost::bind( &EqualTree, _1, "exercise", "{\"id\":\"0\",\"name\":\"a\",\"checksum\":\"c\"}" ) );
 
     Tree src = session->GetProperties();
     Check( base, src );
