@@ -104,7 +104,7 @@ namespace
 // Name: RolePion_Composantes::NotifyComposanteAdded
 // Created: SLI 2012-03-22
 // -----------------------------------------------------------------------------
-void RolePion_Composantes::NotifyComposanteAdded( PHY_ComposantePion& composante, std::map< const PHY_DotationCategory*, double >* dotations  )
+void RolePion_Composantes::NotifyComposanteAdded( PHY_ComposantePion& composante, std::map< const PHY_DotationCategory*, double >* dotations )
 {
     core::Model& component = entity_[ "components" ].AddElement();
     component[ "component" ].SetUserData( &composante );
