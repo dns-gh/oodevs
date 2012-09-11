@@ -1708,11 +1708,10 @@
                 <elements/>
                 <fileset dir="${out.dir}" includes="content.xml"/>
             </zip>
-            <concurrent seconds="60">
-                <copy file="${out.dir}/@{file}" todir="${dist.dir}"/>
-            </concurrent>
             <delete file="${out.dir}/content.xml"/>
-            <delete file="${out.dir}/@{file}"/>
+            <concurrent seconds="60">
+                <move file="${out.dir}/@{file}" todir="${dist.dir}" overwrite="false"/>
+            </concurrent>
         </sequential>
     </macrodef>
 
@@ -1780,7 +1779,7 @@
                 <include name="9_cases/**"/>
                 <include name="tests/Pathfind/**"/>
                 <include name="tests/TestPlanExercise/**"/>
-				 <include name="tests/TestPlanExercise-ML/**"/>
+                <include name="tests/TestPlanExercise-ML/**"/>
             </zipfileset>
         </pack>
     </target>
