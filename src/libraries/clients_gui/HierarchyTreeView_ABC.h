@@ -52,6 +52,7 @@ public:
 
     //! @name Operations
     //@{
+    void ActivateSelection( bool activate );
     //@}
 
 protected:
@@ -66,6 +67,7 @@ protected:
     //! @name Operations
     //@{
     virtual Qt::ItemFlags ItemSpecificFlags( const kernel::Entity_ABC& entity ) const;
+    virtual void focusInEvent( QFocusEvent* event );
     //@}
 
 private:
@@ -84,6 +86,9 @@ private:
     virtual void Drop( const kernel::AutomatType& /*item*/, kernel::Entity_ABC& /*target*/ ) {}
     //@}
 
+signals:
+    void TreeViewFocusIn( gui::HierarchyTreeView_ABC* );
+
 protected slots:
     //! @name Slots
     //@{
@@ -95,6 +100,7 @@ private:
     //@{
     const EntitySymbols& symbols_;
     QTimer* timer_;
+    bool activated_;
     std::set< const kernel::Entity_ABC* > waitingSymbols_;
     //@}
 };

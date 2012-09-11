@@ -21,7 +21,7 @@ namespace kernel
 
 namespace gui
 {
-    class SearchListView_ABC;
+    class SearchTreeView_ABC;
 
 // =============================================================================
 /** @class  RichTreeView
@@ -58,13 +58,23 @@ public:
 
     //! @name Filters/Sort
     //@{
-    virtual void CreateFilters( SearchListView_ABC& searchListView );
+    virtual void CreateFilters( SearchTreeView_ABC& searchTreeView );
     virtual bool LessThan( const QModelIndex& left, const QModelIndex& right, bool& valid ) const;
+    void ApplyFilter( boost::function< bool ( QStandardItem* ) > func )
+    {
+        // TODO
+        /*for( Q3ListViewItemIterator it = firstChild(); it.current(); ++it )
+        {
+            ValuedListItem* item = static_cast< ValuedListItem* >( it.current() );
+            item->setVisible( HasAnyChildVisible( item, func ) );
+        }*/
+    }
     //@}
 
 public slots:
     //! @name Search
     //@{
+    void LockDragAndDrop( bool lock );
     void SearchAndSelect( const QString& searchedText );
     void SearchAndSelectNext();
     //@}
@@ -72,12 +82,6 @@ public slots:
 protected:
     //! @name Helpers
     //@{
-    //@}
-
-private:
-    //! @name Search helpers
-    //@{
-    bool MatchItem() const;
     //@}
 
 protected:

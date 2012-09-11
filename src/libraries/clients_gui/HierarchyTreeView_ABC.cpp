@@ -31,6 +31,7 @@ HierarchyTreeView_ABC::HierarchyTreeView_ABC( kernel::Controllers& controllers, 
     : EntityTreeView_ABC( controllers, profile, modelObserver, parent )
     , symbols_( symbols )
     , timer_( new QTimer( this ) )
+    , activated_( true )
 {
     timer_->setSingleShot( true );
     connect( timer_, SIGNAL( timeout() ), this, SLOT( OnTimeOut() ) );
@@ -50,6 +51,28 @@ HierarchyTreeView_ABC::HierarchyTreeView_ABC( kernel::Controllers& controllers, 
 HierarchyTreeView_ABC::~HierarchyTreeView_ABC()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: HierarchyTreeView_ABC::ActivateSelection
+// Created: JSR 2012-09-10
+// -----------------------------------------------------------------------------
+void HierarchyTreeView_ABC::ActivateSelection( bool activate )
+{
+    if( activate && !activated_ )
+    {
+        activated_ = true;
+        SetContextMenuBlocked( false );
+        setSelectionMode( QAbstractItemView::SingleSelection );
+    }
+    else if( !activate && activated_ )
+    {
+        activated_ = false;
+        //ClearSelection();
+        clearSelection();
+        setSelectionMode( QAbstractItemView::NoSelection );
+        SetContextMenuBlocked( true );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -303,4 +326,14 @@ void HierarchyTreeView_ABC::dragMoveEvent( QDragMoveEvent *pEvent )
         }
     }
     pEvent->ignore();
+}
+
+// -----------------------------------------------------------------------------
+// Name: HierarchyListView_ABC::focusInEvent
+// Created: LGY 2012-06-29
+// -----------------------------------------------------------------------------
+void HierarchyTreeView_ABC::focusInEvent( QFocusEvent* event )
+{
+    EntityTreeView_ABC::focusInEvent( event );
+    emit TreeViewFocusIn( this );
 }

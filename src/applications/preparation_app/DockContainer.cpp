@@ -28,6 +28,7 @@
 #include "clients_gui/ListView.h"
 #include "clients_gui/RichDockWidget.h"
 #include "clients_gui/SearchListView.h"
+#include "clients_gui/SearchTreeView.h"
 #include "clients_gui/TerrainProfiler.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -44,6 +45,8 @@
 
 #include "PreparationProfile.h"
 
+//#define USE_TREEVIEWS // temp, before QT4 port is complete
+
 // -----------------------------------------------------------------------------
 // Name: DockContainer constructor
 // Created: LGY 2012-01-04
@@ -59,8 +62,13 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
 {
     // Agent list panel
     {
+#ifdef USE_TREEVIEWS
+        gui::RichDockWidget* pListDockWnd = new OrbatDockWidget( controllers, parent, "orbat", tools::translate( "DockContainer", "ORBAT" ),
+                                                                 automats, formation, icons, modelBuilder, factory, model, staticModel, treeViews_, symbols );
+#else
         gui::RichDockWidget* pListDockWnd = new OrbatDockWidget( controllers, parent, "orbat", tools::translate( "DockContainer", "ORBAT" ),
                                                                  automats, formation, icons, modelBuilder, factory, model, staticModel, listViews_, symbols );
+#endif
         pListDockWnd->SetModes( ePreparationMode_Default | ePreparationMode_LivingArea, ePreparationMode_None, true );
         parent->addDockWidget( Qt::LeftDockWidgetArea, pListDockWnd );
     }
@@ -170,9 +178,15 @@ DockContainer::~DockContainer()
 // -----------------------------------------------------------------------------
 void DockContainer::Purge()
 {
+#ifdef USE_TREEVIEWS
+    for( std::vector< gui::SearchTreeView_ABC* >::iterator it = treeViews_.begin(); it != treeViews_.end(); ++it )
+        if( *it )
+            ( *it )->Purge();
+#else
     for( std::vector< gui::SearchListView_ABC* >::iterator it = listViews_.begin(); it != listViews_.end(); ++it )
         if( *it )
             ( *it )->Purge();
+#endif
     pCreationPanel_->Purge();
 }
 
@@ -182,9 +196,15 @@ void DockContainer::Purge()
 // -----------------------------------------------------------------------------
 void DockContainer::BlockCreationOnListViews( bool enable )
 {
+#ifdef USE_TREEVIEWS
+    for( std::vector< gui::SearchTreeView_ABC* >::iterator it = treeViews_.begin(); it != treeViews_.end(); ++it )
+        if( *it && ( *it )->GetRichTreeView() )
+            ( *it )->GetRichTreeView()->SetCreationBlocked( enable );
+#else
     for( std::vector< gui::SearchListView_ABC* >::iterator it = listViews_.begin(); it != listViews_.end(); ++it )
         if( *it && ( *it )->GetRichListView() )
             ( *it )->GetRichListView()->SetCreationBlocked( enable );
+#endif
 }
 
 // -----------------------------------------------------------------------------
@@ -193,9 +213,15 @@ void DockContainer::BlockCreationOnListViews( bool enable )
 // -----------------------------------------------------------------------------
 void DockContainer::Load()
 {
+#ifdef USE_TREEVIEWS
+    for( std::vector< gui::SearchTreeView_ABC* >::iterator it = treeViews_.begin(); it != treeViews_.end(); ++it )
+        if( *it )
+            ( *it )->Load();
+#else
     for( std::vector< gui::SearchListView_ABC* >::iterator it = listViews_.begin(); it != listViews_.end(); ++it )
         if( *it )
             ( *it )->Load();
+#endif
     pCreationPanel_->Load();
     pUsagesPanel_->Initialize();
 }

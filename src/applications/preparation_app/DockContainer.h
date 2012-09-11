@@ -24,6 +24,7 @@ namespace gui
     class EntitySymbols;
     class ItemFactory_ABC;
     class SearchListView_ABC;
+    class SearchTreeView_ABC;
     class SymbolIcons;
     class ColorStrategy_ABC;
     class ParametersLayer;
@@ -88,6 +89,7 @@ private:
     //! @name Member data
     //@{
     std::vector< gui::SearchListView_ABC* > listViews_;
+    std::vector< gui::SearchTreeView_ABC* > treeViews_;
     CreationPanels*                         pCreationPanel_;
     LivingAreaPanel*                        pLivingAreaPanel_;
     gui::TerrainProfiler*                   terrainProfiler_;
