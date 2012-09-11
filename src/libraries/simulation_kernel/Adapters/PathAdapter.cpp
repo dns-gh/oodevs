@@ -160,7 +160,7 @@ boost::shared_ptr< PathAdapter > PathAdapter::Remove( boost::shared_ptr< movemen
 PathAdapter::PathAdapter( const core::Model& entity, boost::shared_ptr< movement::Path_ABC > path )
     : path_        ( path )
     , altitudeData_( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData() )
-    , weight_      ( entity[ "roles/PHY_RoleInterface_Composantes" ].GetUserData< PHY_RoleInterface_Composantes >().GetMajorComponentWeight() ) // $$$$ MCO 2012-05-23: read from entity model
+    , weight_      ( entity[ "pion" ].GetUserData< MIL_AgentPion >().GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight() ) // $$$$ MCO 2012-05-23: read from model
     , slope_       ( entity[ "movement/max-slope" ] )
     , height_      ( entity[ "pion" ].GetUserData< MIL_AgentPion >().GetType().GetUnitType().GetCrossingHeight() ) // $$$$ MCO 2012-05-23: read from model
 {
