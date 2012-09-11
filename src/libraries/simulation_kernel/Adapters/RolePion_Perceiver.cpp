@@ -58,20 +58,22 @@ namespace sword
     template< typename Archive >
     void save_construct_data( Archive& archive, const RolePion_Perceiver* role, const unsigned int /*version*/ )
     {
+        const core::Model* model = &role->model_;
         const Sink* sink = &role->sink_;
         MIL_Agent_ABC* const pion = &role->owner_;
         const core::Model* const entity = &role->entity_;
-        archive << sink << pion << entity;
+        archive << model << sink << pion << entity;
     }
 
     template< typename Archive >
     void load_construct_data( Archive& archive, RolePion_Perceiver* role, const unsigned int /*version*/ )
     {
+        core::Model* model;
         Sink* sink;
         MIL_Agent_ABC* pion;
         core::Model* entity;
-        archive >> sink >> pion >> entity;
-        ::new( role )RolePion_Perceiver( *sink, *pion, *entity );
+        archive >> model >> sink >> pion >> entity;
+        ::new( role )RolePion_Perceiver( *sink, *model, *pion, *entity );
     }
 }
 
@@ -216,11 +218,11 @@ void RolePion_Perceiver::Initialize( core::Facade& facade )
 // Name: RolePion_Perceiver constructor
 // Created: NLD 2004-08-19
 // -----------------------------------------------------------------------------
-RolePion_Perceiver::RolePion_Perceiver( const Sink& sink, MIL_Agent_ABC& pion, core::Model& entity )
+RolePion_Perceiver::RolePion_Perceiver( const Sink& sink, const core::Model& model, MIL_Agent_ABC& pion, core::Model& entity )
     : sink_                          ( sink )
+    , model_                         ( model )
     , facade_                        ( sink.GetFacade() )
     , owner_                         ( pion )
-    , model_                         ( sink.GetModel() )
     , entity_                        ( entity )
     , bHasChanged_                   ( true )
     , bExternalMustChangePerception_ ( false )

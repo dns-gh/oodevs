@@ -59,10 +59,12 @@ namespace sword
     template< typename Archive >
     void save_construct_data( Archive& archive, const sword::RolePion_Decision* role, const unsigned int /*version*/ )
     {
+        const core::Model* model = &role->model_;
+        const sword::Sink* sink = &role->sink_;
         unsigned int gcPause = role->gcPause_;
         unsigned int gcMult = role->gcMult_;
-        const sword::Sink* sink = &role->sink_;
         archive << role->pEntity_
+                << model
                 << sink
                 << gcPause
                 << gcMult;
@@ -72,14 +74,16 @@ namespace sword
     void load_construct_data( Archive& archive, sword::RolePion_Decision* role, const unsigned int /*version*/ )
     {
         MIL_AgentPion* pion;
+        core::Model* model;
         Sink* sink;
         unsigned int gcPause;
         unsigned int gcMult;
         archive >> pion
+                >> model
                 >> sink
                 >> gcPause
                 >> gcMult;
-        ::new( role )sword::RolePion_Decision( *pion, gcPause, gcMult, *sink );
+        ::new( role )sword::RolePion_Decision( *pion, *model, gcPause, gcMult, *sink );
     }
 }
 
@@ -148,11 +152,11 @@ void RolePion_Decision::Initialize( core::Facade& facade )
 // Name: RolePion_Decision constructor
 // Created: SLI 2012-02-01
 // -----------------------------------------------------------------------------
-RolePion_Decision::RolePion_Decision( MIL_AgentPion& pion, unsigned int gcPause, unsigned int gcMult, const Sink& sink )
+RolePion_Decision::RolePion_Decision( MIL_AgentPion& pion, const core::Model& model, unsigned int gcPause, unsigned int gcMult, const Sink& sink )
     : DEC_RolePion_Decision( pion, gcPause, gcMult )
     , sink_  ( sink )
+    , model_ ( model )
     , facade_( sink.GetFacade() )
-    , model_ ( sink.GetModel() )
 {
     RegisterFunctions();
 }

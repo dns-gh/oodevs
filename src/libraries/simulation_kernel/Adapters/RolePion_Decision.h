@@ -38,7 +38,7 @@ public:
 
     //! @name Constructors/Destructor
     //@{
-             RolePion_Decision( MIL_AgentPion& pion, unsigned int gcPause, unsigned int gcMult, const Sink& sink );
+             RolePion_Decision( MIL_AgentPion& pion, const core::Model& model, unsigned int gcPause, unsigned int gcMult, const Sink& sink );
     virtual ~RolePion_Decision();
     //@}
 
@@ -92,8 +92,8 @@ private:
     //! @name Member data
     //@{
     const Sink& sink_;
+    const core::Model& model_;
     core::Facade& facade_;
-    core::Model& model_;
     //@}
 };
 

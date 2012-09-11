@@ -324,15 +324,6 @@ void Sink::UpdateModel( unsigned int tick, int duration )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Sink::GetModel
-// Created: SLI 2012-02-02
-// -----------------------------------------------------------------------------
-core::Model& Sink::GetModel() const
-{
-    return *model_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: Sink::GetFacade
 // Created: SLI 2012-02-02
 // -----------------------------------------------------------------------------
@@ -353,14 +344,14 @@ MIL_AgentPion& Sink::Configure( MIL_AgentPion& pion, const MT_Vector2D& vPositio
     pion.RegisterRole( *new sword::RolePion_Location( pion, entity ) );
     try
     {
-        pion.RegisterRole( *new sword::RolePion_Decision( pion, gcPause_, gcMult_, *this ) );
+        pion.RegisterRole( *new sword::RolePion_Decision( pion, *model_, gcPause_, gcMult_, *this ) );
     }
     catch( MT_ScipioException& e )
     {
         e.SendToLogger();
     }
     pion.RegisterRole( *new sword::RoleAction_Moving( pion ) );
-    pion.RegisterRole( *new sword::RolePion_Perceiver( *this, pion, entity ) );
+    pion.RegisterRole( *new sword::RolePion_Perceiver( *this, *model_, pion, entity ) );
     pion.RegisterRole( *new sword::RolePion_Composantes( pion, entity ) );
     pion.RegisterRole( *new sword::RoleAdapter( pion, entity ) );
     tools::Resolver< MIL_AgentPion >::Register( pion.GetID(), pion );

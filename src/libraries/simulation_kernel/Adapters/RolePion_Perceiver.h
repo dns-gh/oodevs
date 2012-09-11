@@ -65,7 +65,7 @@ public:
 
     //! @name Constructors/Destructor
     //@{
-             RolePion_Perceiver( const Sink& sink, MIL_Agent_ABC& pion, core::Model& entity );
+             RolePion_Perceiver( const Sink& sink, const core::Model& model, MIL_Agent_ABC& pion, core::Model& entity );
     virtual ~RolePion_Perceiver();
     //@}
 
@@ -216,9 +216,9 @@ private:
     //! @name Member data
     //@{
     const Sink& sink_;
+    const core::Model& model_;
     core::Facade& facade_;
     MIL_Agent_ABC& owner_;
-    core::Model& model_;
     core::Model& entity_;
     T_Listeners listeners_;
     MT_Vector2D lastPerceiverPosition_;

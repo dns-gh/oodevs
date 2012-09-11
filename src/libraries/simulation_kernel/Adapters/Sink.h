@@ -58,7 +58,6 @@ public:
 
     //! @name Getters
     //@{
-    core::Model& GetModel() const; // $$$$ MCO : get rid of this because model can now be serialized in RolePion_Decision
     core::Facade& GetFacade() const;
     //@}
 
