@@ -22,6 +22,12 @@
     <property name="version.version" value="0.0.0.${svn.revision}"/><!-- required for version extension -->
     <property name="masalife.version" value="2011-1.1.x/sword"/>
 
+    <condition property="failonwarning">
+        <not>
+            <isset property="is-vc80"/>
+        </not>
+    </condition>
+
     <!-- local extensions -->
     <import file="protobuf.xml" />
 
@@ -448,7 +454,7 @@
                   lib${ant.project.name}_actions-${platform}-mt@{suffix},
                   lib${ant.project.name}_logistic_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_tools-${platform}-mt@{suffix}"
-                  failonwarning="true">
+                  failonwarning="${failonwarning}">
             <defineset define="LOGISTIC_PLUGIN_DLL_EXPORTS"/>
         </build-plugin>
     </target>
@@ -1023,7 +1029,7 @@
                   lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt,
                   lib${ant.project.name}_logistic_plugin-${platform}-mt"
-            failonwarning="true">
+            failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-test>
     </target>
