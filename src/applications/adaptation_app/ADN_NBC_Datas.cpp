@@ -260,12 +260,14 @@ ADN_NBC_Datas::NbcAgentInfos::NbcAgentInfos()
     , liquidInfos_( "liquide" )
     , category_( "chemical" )
     , bGazPresent_( false )
+    , bLiquidPresent_( false )
     , gazInfos_()
 {
     strName_.SetDataName( "le nom d'" );
     strName_.SetParentNode( *this );
     liquidInfos_.SetParentNode( *this );
     bGazPresent_.SetParentNode( *this );
+    bLiquidPresent_.SetParentNode( *this );
     gazInfos_.SetParentNode( *this );
 }
 
