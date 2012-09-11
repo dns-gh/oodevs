@@ -1131,7 +1131,8 @@
                   lib${ant.project.name}_MT_Tools-${platform}-mt,
                   lib${ant.project.name}_ENT-${platform}-mt,
                   lib${ant.project.name}_tools-${platform}-mt,
-                  lib${ant.project.name}_protocol-${platform}-mt">
+                  lib${ant.project.name}_protocol-${platform}-mt"
+            failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
             <syslibset libs="shell32"/>
         </build-test>
