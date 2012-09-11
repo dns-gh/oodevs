@@ -12,7 +12,7 @@
                     <p>Please change your password</p>
                 </div>
                 <form action="login" method="post" class="form-horizontal update_login">
-                    [[ template "input_text" sub "id" "current"      "label" "Current"      "class" "input-xlarge" ]]
+                    [[ template "input_text" sub "id" "current"      "label" "Current"      "class" "input-xlarge" "type" "password" ]]
                     [[ template "input_text" sub "id" "password"     "label" "New Password" "class" "input-xlarge" "type" "password" ]]
                     [[ template "input_text" sub "id" "password_bis" "label" "Confirm"      "class" "input-xlarge" "type" "password" ]]
                     <div class="update_login_action">
