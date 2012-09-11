@@ -19,6 +19,17 @@
 
 using namespace actions::gui;
 
+namespace
+{
+    const int turnDegrees = 360;
+    int AddHalfTurn( int nDegrees )
+    {
+        if( nDegrees < 0 )
+            nDegrees = nDegrees % turnDegrees + turnDegrees;
+        return ( nDegrees + turnDegrees / 2 ) % turnDegrees;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ParamDirection constructor
 // Created: ABR 2012-01-04
@@ -49,12 +60,12 @@ QWidget* ParamDirection::BuildInterface( QWidget* parent )
 {
     Param_ABC::BuildInterface( parent );
     QHBoxLayout* layout = new QHBoxLayout( group_ );
-    QDial* dial = new QDial( 0, 359, 1, 0, parent );
+    QDial* dial = new QDial( 0, turnDegrees - 1, 1, 0, parent );
     layout->addWidget( dial );
     dial->setWrapping( true );
     dial->setMaximumSize( 50, 50 );
     connect( dial, SIGNAL( valueChanged( int ) ), SLOT( OnValueChanged( int ) ) );
-    dial->setValue( value_ );
+    dial->setValue( AddHalfTurn( value_ ) );
     layout->addWidget( dial, Qt::AlignCenter );
     return group_;
 }
@@ -77,5 +88,5 @@ void ParamDirection::CommitTo( actions::ParameterContainer_ABC& action ) const
 // -----------------------------------------------------------------------------
 void ParamDirection::OnValueChanged( int value )
 {
-    value_ = value + ( value > 180 ? -180 : 180 );
+    value_ = AddHalfTurn( value );
 }
