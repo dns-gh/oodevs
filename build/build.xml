@@ -749,7 +749,8 @@
     </target>
 
     <target name="application.loadtester_app" depends="library.protocol,library.tools" description="build Sword load testing executable">
-        <build-app name="loadtester_app" subsystem="console" depends="boost,protobuf"
+        <build-app name="loadtester_app" subsystem="console"
+                   depends="boost,protobuf" failonwarning="${failonwarning}"
                    libs="lib${ant.project.name}_protocol-${platform}-mt,
                          lib${ant.project.name}_MT_Tools-${platform}-mt,
                          lib${ant.project.name}_tools-${platform}-mt">
