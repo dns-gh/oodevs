@@ -206,6 +206,7 @@ Sink::~Sink()
 // -----------------------------------------------------------------------------
 void Sink::ExecuteCommands()
 {
+    assert( facade_.get() );
     facade_->ExecuteCommands();
 }
 
@@ -215,6 +216,7 @@ void Sink::ExecuteCommands()
 // -----------------------------------------------------------------------------
 void Sink::ApplyEffects()
 {
+    assert( facade_.get() );
     facade_->ApplyEffects();
 }
 
@@ -331,6 +333,7 @@ void Sink::UpdateModel( unsigned int tick, int duration )
 // -----------------------------------------------------------------------------
 core::Facade& Sink::GetFacade() const
 {
+    assert( facade_.get() );
     return *facade_;
 }
 
@@ -361,6 +364,7 @@ MIL_AgentPion& Sink::Configure( MIL_AgentPion& pion, const MT_Vector2D& vPositio
     {
         core::Model parameters;
         parameters[ "identifier" ] = pion.GetID();
+        assert( facade_.get() );
         facade_->StartCommand( "compute height", parameters );
         facade_->StartCommand( "perception", parameters );
     }
@@ -406,5 +410,6 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
 // -----------------------------------------------------------------------------
 std::auto_ptr< flood::FloodModel_ABC > Sink::CreateFloodModel() const
 {
+    assert( facade_.get() );
     return std::auto_ptr< flood::FloodModel_ABC >( new sword::FloodModel( *facade_ ) );
 }
