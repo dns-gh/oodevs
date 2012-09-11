@@ -279,10 +279,8 @@ BOOST_FIXTURE_TEST_CASE( object_colliding_with_path_makes_command_send_blocked_b
     MOCK_EXPECT( ObjectIsOnBorder ).returns( false );
     MOCK_EXPECT( NotifyMovingOutsideObject ).once();
     ExpectEffect( entity[ "movement" ] );
-    ExpectEffect( entity[ "movement" ] ); // $$$$ _RC_ SLI 2012-04-19: ????
     ExpectCallbackEvent( sword::movement::PathWalker::eBlockedByObject );
     ExpectMovementEvent( weldValue + 1 );
-    ExpectMovementEvent( weldValue + 1 ); // $$$$ _RC_ SLI 2012-04-19: ????
     Step( 2, true, true );
     MOCK_EXPECT( CancelPathFindJob ).once();
 }

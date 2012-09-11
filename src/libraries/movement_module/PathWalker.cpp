@@ -540,8 +540,6 @@ int PathWalker::Move( boost::shared_ptr< PathResult > pPath, const wrapper::View
 
         if( !moveTryResult )
         {
-            if( pathSet_ == eBlockedByObject )
-                PostMovement( entity ); // $$$$ VPR : Replaced by Apply
             PostMovement( entity );
             return pathSet_;
         }
