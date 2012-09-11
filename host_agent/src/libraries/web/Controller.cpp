@@ -13,6 +13,7 @@
 #include "runtime/PropertyTree.h"
 #include "runtime/Utf8.h"
 #include "Agent_ABC.h"
+#include "Chunker_ABC.h"
 #include "Configs.h"
 #include "HttpException.h"
 #include "Request_ABC.h"
@@ -29,15 +30,6 @@
 #include <boost/xpressive/xpressive.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
-
-#ifdef _MSC_VER
-#   pragma warning( push )
-#   pragma warning( disable : 4702 )
-#endif
-#include <boost/iostreams/stream.hpp>
-#ifdef _MSC_VER
-#   pragma warning( pop )
-#endif
 
 using namespace web;
 using namespace property_tree;
@@ -682,53 +674,6 @@ void Controller::RestoreSession( Reply_ABC& rpy, const Request_ABC& request )
     WriteHttpReply( rpy, agent_.RestoreSession( node, GetId( request ) ) );
 }
 
-namespace
-{
-static const std::string crlf = "\r\n";
-
-struct Sink : public boost::iostreams::sink
-{
-    Sink( Reply_ABC& res )
-        : res_  ( &res )
-        , write_( false)
-    {
-        // NOTHING
-    }
-
-    virtual ~Sink()
-    {
-        if( !write_ )
-            return;
-        std::stringstream chunk;
-        chunk << 0 << crlf << crlf;
-        WriteChunk( chunk );
-    }
-
-    void WriteChunk( const std::stringstream& chunk )
-    {
-        const std::string data = chunk.str();
-        res_->Write( data.c_str(), data.size() );
-    }
-
-    std::streamsize write( const void* data, size_t size )
-    {
-        if( !size )
-            return 0;
-        write_ = true;
-        std::stringstream chunk;
-        chunk << std::hex << size << crlf;
-        chunk.write( reinterpret_cast< const char* >( data ), size );
-        chunk << crlf;
-        WriteChunk( chunk );
-        return size;
-    }
-
-private:
-    Reply_ABC* res_;
-    bool write_;
-};
-}
-
 // -----------------------------------------------------------------------------
 // Name: Controller::DownloadSession
 // Created: BAX 2012-08-06
@@ -736,15 +681,8 @@ private:
 void Controller::DownloadSession( Reply_ABC& rpy, const Request_ABC& request )
 {
     const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
-    rpy.SetStatus( web::OK );
-    rpy.SetHeader( "Content-Type", "application/zip" );
-    rpy.SetHeader( "Content-Disposition", "attachment; filename=session.zip" );
-    rpy.SetHeader( "Transfer-Encoding", "chunked" );
-    rpy.SetHeader( "Connection", "Close" );
-    rpy.WriteHeaders();
-    boost::iostreams::stream< Sink > output( rpy );
-    agent_.DownloadSession( node, GetId( request ), output );
-    output.flush();
+    boost::shared_ptr< Chunker_ABC > chunker = MakeChunker( rpy );
+    agent_.DownloadSession( node, GetId( request ), *chunker );
 }
 
 // -----------------------------------------------------------------------------

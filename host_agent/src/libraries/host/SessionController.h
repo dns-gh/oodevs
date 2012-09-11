@@ -73,7 +73,7 @@ public:
     virtual T_Session   Update    ( const Uuid& node, const Uuid& id, const Tree& cfg ) const;
     virtual T_Session   Archive   ( const Uuid& node, const Uuid& id ) const;
     virtual T_Session   Restore   ( const Uuid& node, const Uuid& id ) const;
-    virtual void        Download  ( const Uuid& node, const Uuid& id, std::ostream& dst ) const;
+    virtual void        Download  ( const Uuid& node, const Uuid& id, web::Chunker_ABC& dst ) const;
     virtual T_Session   Replay    ( const Uuid& node, const Uuid& id );
     virtual void        NotifyNode( const Uuid& node );
     //@}

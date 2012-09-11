@@ -19,6 +19,8 @@
 #include "runtime/Runtime_ABC.h"
 #include "runtime/Scoper.h"
 #include "runtime/Utf8.h"
+#include "web/Agent_ABC.h"
+#include "web/Chunker_ABC.h"
 #include "web/Client_ABC.h"
 #include "web/HttpException.h"
 
@@ -846,10 +848,11 @@ bool Session::Restore()
 // Name: Session::Download
 // Created: BAX 2012-08-06
 // -----------------------------------------------------------------------------
-bool Session::Download( std::ostream& dst ) const
+bool Session::Download( web::Chunker_ABC& dst ) const
 {
     boost::shared_lock< boost::shared_mutex > lock( access_ );
-    FileSystem_ABC::T_Packer packer = deps_.system.Pack( dst );
+    std::ostream& sink = dst.SetName( cfg_.name );
+    FileSystem_ABC::T_Packer packer = deps_.system.Pack( sink );
     packer->Pack( paths_.root );
     packer->Pack( GetOutput() );
     return true;

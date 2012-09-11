@@ -353,7 +353,7 @@ SessionController::T_Session SessionController::Restore( const Uuid& node, const
 // Name: SessionController::Download
 // Created: BAX 2012-08-06
 // -----------------------------------------------------------------------------
-void SessionController::Download( const Uuid& node, const Uuid& id, std::ostream& dst ) const
+void SessionController::Download( const Uuid& node, const Uuid& id, web::Chunker_ABC& dst ) const
 {
     Dispatch( node, id, boost::bind( &Session_ABC::Download, _1, boost::ref( dst ) ) );
 }

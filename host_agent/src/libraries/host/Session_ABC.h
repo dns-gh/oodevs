@@ -28,6 +28,7 @@ namespace uuids
 
 namespace web
 {
+    struct Chunker_ABC;
 namespace session
 {
     struct Config;
@@ -89,7 +90,7 @@ struct Session_ABC : public boost::noncopyable
     virtual bool  Update( const Tree& cfg ) = 0;
     virtual bool  Archive() = 0;
     virtual bool  Restore() = 0;
-    virtual bool  Download( std::ostream& dst ) const = 0;
+    virtual bool  Download( web::Chunker_ABC& dst ) const = 0;
     virtual T_Ptr Replay() = 0;
     virtual void  AttachReplay( const Session_ABC& replay ) = 0;
     virtual void  DetachReplay( const Session_ABC& replay ) = 0;

@@ -159,7 +159,7 @@ public:
     virtual bool  Update( const Tree& cfg );
     virtual bool  Archive();
     virtual bool  Restore();
-    virtual bool  Download( std::ostream& dst ) const;
+    virtual bool  Download( web::Chunker_ABC& dst ) const;
     virtual T_Ptr Replay();
     virtual void  AttachReplay( const Session_ABC& replay );
     virtual void  DetachReplay( const Session_ABC& replay );

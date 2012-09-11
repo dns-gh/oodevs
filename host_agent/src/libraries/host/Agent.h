@@ -97,7 +97,7 @@ public:
     virtual Tree                UpdateSession  ( const Uuid& node, const Uuid& id, const Tree& cfg ) const;
     virtual Tree                ArchiveSession ( const Uuid& node, const Uuid& id ) const;
     virtual Tree                RestoreSession ( const Uuid& node, const Uuid& id ) const;
-    virtual void                DownloadSession( const Uuid& node, const Uuid& id, std::ostream& dst ) const;
+    virtual void                DownloadSession( const Uuid& node, const Uuid& id, web::Chunker_ABC& dst ) const;
     virtual Tree                ReplaySession  ( const Uuid& node, const Uuid& id ) const;
     //@}
 

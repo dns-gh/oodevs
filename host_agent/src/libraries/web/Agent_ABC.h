@@ -27,6 +27,7 @@ namespace filesystem
 
 namespace web
 {
+    struct Chunker_ABC;
     typedef boost::filesystem::path Path;
     typedef boost::property_tree::ptree Tree;
     typedef boost::uuids::uuid Uuid;
@@ -102,7 +103,7 @@ struct Agent_ABC : public boost::noncopyable
     virtual Tree                UpdateSession  ( const Uuid& node, const Uuid& id, const Tree& cfg ) const = 0;
     virtual Tree                ArchiveSession ( const Uuid& node, const Uuid& id ) const = 0;
     virtual Tree                RestoreSession ( const Uuid& node, const Uuid& id ) const = 0;
-    virtual void                DownloadSession( const Uuid& node, const Uuid& id, std::ostream& dst ) const = 0;
+    virtual void                DownloadSession( const Uuid& node, const Uuid& id, Chunker_ABC& dst ) const = 0;
     virtual Tree                ReplaySession  ( const Uuid& node, const Uuid& id ) const = 0;
     //@}
 
