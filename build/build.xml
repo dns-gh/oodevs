@@ -1084,7 +1084,8 @@
                   lib${ant.project.name}_flood-${platform}-mt,
                   lib${ant.project.name}_meteo-${platform}-mt,
                   lib${ant.project.name}_geostore-${platform}-mt,
-                  lib${ant.project.name}_protocol-${platform}-mt">
+                  lib${ant.project.name}_protocol-${platform}-mt"
+            failonwarning="${failonwarning}">
             <syslibset libs="gdi32"/>
             <defineset define="QT3_SUPPORT"/>
         </build-test>
