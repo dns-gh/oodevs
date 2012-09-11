@@ -152,11 +152,10 @@ void RolePion_Decision::Initialize( core::Facade& facade )
 // Name: RolePion_Decision constructor
 // Created: SLI 2012-02-01
 // -----------------------------------------------------------------------------
-RolePion_Decision::RolePion_Decision( MIL_AgentPion& pion, const core::Model& model, unsigned int gcPause, unsigned int gcMult, const Sink& sink )
+RolePion_Decision::RolePion_Decision( MIL_AgentPion& pion, const core::Model& model, unsigned int gcPause, unsigned int gcMult, Sink& sink )
     : DEC_RolePion_Decision( pion, gcPause, gcMult )
-    , sink_  ( sink )
-    , model_ ( model )
-    , facade_( sink.GetFacade() )
+    , sink_ ( sink )
+    , model_( model )
 {
     RegisterFunctions();
 }
@@ -208,7 +207,7 @@ void RolePion_Decision::save( Archive& archive, const unsigned int ) const
 template< typename Result, typename Function >
 void RolePion_Decision::RegisterCommand( const std::string& name, Function fun )
 {
-    RegisterFunction( name, boost::function< Result >( boost::bind( fun, boost::ref( facade_ ), boost::ref( GetPion() ) ) ) );
+    RegisterFunction( name, boost::function< Result >( boost::bind( fun, boost::ref( sink_ ), boost::ref( GetPion() ) ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -218,7 +217,7 @@ void RolePion_Decision::RegisterCommand( const std::string& name, Function fun )
 template< typename Result, typename Function, typename Arg1 >
 void RolePion_Decision::RegisterCommand( const std::string& name, Function fun, Arg1 arg1 )
 {
-    RegisterFunction( name, boost::function< Result >( boost::bind( fun, boost::ref( facade_ ), boost::ref( GetPion() ), arg1 ) ) );
+    RegisterFunction( name, boost::function< Result >( boost::bind( fun, boost::ref( sink_ ), boost::ref( GetPion() ), arg1 ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -228,7 +227,7 @@ void RolePion_Decision::RegisterCommand( const std::string& name, Function fun, 
 template< typename Result, typename Function, typename Arg1, typename Arg2 >
 void RolePion_Decision::RegisterCommand( const std::string& name, Function fun, Arg1 arg1, Arg2 arg2 )
 {
-    RegisterFunction( name, boost::function< Result >( boost::bind( fun, boost::ref( facade_ ), boost::ref( GetPion() ), arg1, arg2 ) ) );
+    RegisterFunction( name, boost::function< Result >( boost::bind( fun, boost::ref( sink_ ), boost::ref( GetPion() ), arg1, arg2 ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -238,7 +237,7 @@ void RolePion_Decision::RegisterCommand( const std::string& name, Function fun, 
 template< typename Result, typename Function, typename Arg1, typename Arg2, typename Arg3 >
 void RolePion_Decision::RegisterCommand( const std::string& name, Function fun, Arg1 arg1, Arg2 arg2, Arg3 arg3 )
 {
-    RegisterFunction( name, boost::function< Result >( boost::bind( fun, boost::ref( facade_ ), boost::ref( GetPion() ), arg1, arg2, arg3 ) ) );
+    RegisterFunction( name, boost::function< Result >( boost::bind( fun, boost::ref( sink_ ), boost::ref( GetPion() ), arg1, arg2, arg3 ) ) );
 }
 
 namespace core
@@ -402,16 +401,16 @@ namespace
     }
 
     template< typename T >
-    unsigned int StartAction( core::Facade& facade, MIL_AgentPion& pion, const std::string& command, T arg )
+    unsigned int StartAction( Sink& sink, MIL_AgentPion& pion, const std::string& command, T arg )
     {
         core::Model parameters;
         parameters[ "identifier" ] = pion.GetID();
         parameters[ "parameters" ].AddElement().SetUserData( arg );
-        return facade.StartCommand( command, parameters );
+        return sink.StartCommand( command, parameters );
     }
-    unsigned int StopAction( core::Facade& facade, PHY_Actor& actor, unsigned int command )
+    unsigned int StopAction( Sink& sink, PHY_Actor& actor, unsigned int command )
     {
-        facade.StopCommand( command );
+        sink.StopCommand( command );
         actor.UnregisterAction( command );
         return 0u;
     }
@@ -425,22 +424,22 @@ void RolePion_Decision::RegisterControlActions()
 {
     RegisterCommand< unsigned int( unsigned int ) >( "DEC__StopAction", &StopAction, _1 );
     RegisterFunction( "DEC_PauseAction",
-        boost::function< void( unsigned int ) >( boost::bind( &core::Facade::PauseCommand, &facade_, _1 ) ) );
+        boost::function< void( unsigned int ) >( boost::bind( &Sink::PauseCommand, &sink_, _1 ) ) );
     RegisterFunction( "DEC_ReprendAction",
-        boost::function< void( unsigned int ) >( boost::bind( &core::Facade::ResumeCommand, &facade_, _1 ) ) );
+        boost::function< void( unsigned int ) >( boost::bind( &Sink::ResumeCommand, &sink_, _1 ) ) );
 }
 
 namespace
 {
-    void Orientate( core::Facade& facade, MIL_AgentPion& pion, boost::shared_ptr< MT_Vector2D > direction )
+    void Orientate( Sink& sink, MIL_AgentPion& pion, boost::shared_ptr< MT_Vector2D > direction )
     {
         core::Model parameters;
         parameters[ "identifier" ] = pion.GetID();
         parameters[ "direction/x" ] = direction->rX_;
         parameters[ "direction/y" ] = direction->rY_;
-        facade.PostCommand( "orientate", parameters );
+        sink.PostCommand( "orientate", parameters );
     }
-    unsigned int StartTirDirect( core::Facade& facade, MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Agent > pEnemy, double percentage, int firingMode, int ammoDotationClass )
+    unsigned int StartTirDirect( Sink& sink, MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Agent > pEnemy, double percentage, int firingMode, int ammoDotationClass )
     {
         core::Model parameters;
         parameters[ "identifier" ] = pion.GetID();
@@ -448,7 +447,7 @@ namespace
         parameters[ "percentage" ] = percentage;
         parameters[ "mode" ] = firingMode;
         parameters[ "dotation" ] = ammoDotationClass;
-        return facade.StartCommand( "direct fire command", parameters );
+        return sink.StartCommand( "direct fire command", parameters );
     }
 }
 
@@ -461,7 +460,7 @@ void RolePion_Decision::RegisterActions()
     RegisterCommand< unsigned int( boost::shared_ptr< DEC_Path_ABC > ) >( "DEC_StartDeplacement", &StartAction< boost::shared_ptr< DEC_Path_ABC > >, "move", _1 );
     RegisterCommand< void( boost::shared_ptr< MT_Vector2D > ) >( "DEC_Orientate", &Orientate, _1 );
     RegisterFunction( "DEC_StartTirDirect",
-        boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Agent >, double, int, int ) >( boost::bind( &StartTirDirect, boost::ref( facade_ ), boost::ref( GetPion() ), _1, _2, _3, _4 ) ) );
+        boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Agent >, double, int, int ) >( boost::bind( &StartTirDirect, boost::ref( sink_ ), boost::ref( GetPion() ), _1, _2, _3, _4 ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -570,24 +569,24 @@ void RolePion_Decision::RegisterItinerary()
 
 namespace
 {
-    void TogglePerception( core::Facade& facade, MIL_AgentPion& pion, const std::string& perception, bool isActivated )
+    void TogglePerception( Sink& sink, MIL_AgentPion& pion, const std::string& perception, bool isActivated )
     {
         core::Model parameters;
         parameters[ "identifier" ] = pion.GetID();
         parameters[ "perception" ] = perception;
         parameters[ "activated" ] = isActivated;
-        facade.PostCommand( "toggle perception", parameters );
+        sink.PostCommand( "toggle perception", parameters );
     }
-    void ToggleRadar( core::Facade& facade, MIL_AgentPion& pion, bool isActivated, int radar )
+    void ToggleRadar( Sink& sink, MIL_AgentPion& pion, bool isActivated, int radar )
     {
         core::Model parameters;
         parameters[ "identifier" ] = pion.GetID();
         parameters[ "activated" ] = isActivated;
         parameters[ "radar-class" ] = radar;
-        facade.PostCommand( "toggle radar", parameters );
+        sink.PostCommand( "toggle radar", parameters );
     }
     template< typename T >
-    int EnableLocalizedRadar( core::Facade& facade, MIL_AgentPion& pion, int radar, T localisation ) // $$$$ _RC_ SLI 2012-03-28: DRY with ToggleRadar
+    int EnableLocalizedRadar( Sink& sink, MIL_AgentPion& pion, int radar, T localisation ) // $$$$ _RC_ SLI 2012-03-28: DRY with ToggleRadar
     {
         if( !localisation )
             throw std::runtime_error( __FUNCTION__ ": invalid localization parameter while enabling radar." );
@@ -598,25 +597,25 @@ namespace
         parameters[ "radar-class" ] = radar;
         parameters[ "perception-id" ] = perceptionId;
         parameters[ "localization" ].SetUserData( localisation );
-        facade.PostCommand( "toggle localized radar", parameters );
+        sink.PostCommand( "toggle localized radar", parameters );
         return perceptionId;
     }
-    int EnableLocalizedRadarOnPoint( core::Facade& facade, MIL_AgentPion& pion, int radar, boost::shared_ptr< MT_Vector2D > point )
+    int EnableLocalizedRadarOnPoint( Sink& sink, MIL_AgentPion& pion, int radar, boost::shared_ptr< MT_Vector2D > point )
     {
         if( !point )
             throw std::runtime_error( __FUNCTION__ ": invalid localization parameter while enabling radar." );
-        return EnableLocalizedRadar< boost::shared_ptr< TER_Localisation > >( facade, pion, radar, boost::make_shared< TER_Localisation >( TER_Localisation::ePoint, boost::assign::list_of( *point ) ) );
+        return EnableLocalizedRadar< boost::shared_ptr< TER_Localisation > >( sink, pion, radar, boost::make_shared< TER_Localisation >( TER_Localisation::ePoint, boost::assign::list_of( *point ) ) );
     }
-    void DisableLocalizedRadar( core::Facade& facade, MIL_AgentPion& pion, int radar, int perceptionId )
+    void DisableLocalizedRadar( Sink& sink, MIL_AgentPion& pion, int radar, int perceptionId )
     {
         core::Model parameters;
         parameters[ "identifier" ] = pion.GetID();
         parameters[ "activated" ] = false;
         parameters[ "radar-class" ] = radar;
         parameters[ "perception-id" ] = perceptionId;
-        facade.PostCommand( "toggle localized radar", parameters );
+        sink.PostCommand( "toggle localized radar", parameters );
     }
-    int EnableLocalizedDetectionId( core::Facade& facade, MIL_AgentPion& pion, const std::string& perception, const core::Model& localisation, int perceptionId )
+    int EnableLocalizedDetectionId( Sink& sink, MIL_AgentPion& pion, const std::string& perception, const core::Model& localisation, int perceptionId )
     {
         if( !localisation )
             throw std::runtime_error( __FUNCTION__ ": invalid localization parameter while enabling localized detection." );
@@ -626,29 +625,29 @@ namespace
         parameters[ "perception" ] = perception;
         parameters[ "perception-id" ] = perceptionId;
         parameters[ "localization" ] = localisation;
-        facade.PostCommand( "toggle localized perception", parameters );
+        sink.PostCommand( "toggle localized perception", parameters );
         return perceptionId;
     }
-    int EnableLocalizedDetection( core::Facade& facade, MIL_AgentPion& pion, const std::string& perception, const TER_Localisation* localisation )
+    int EnableLocalizedDetection( Sink& sink, MIL_AgentPion& pion, const std::string& perception, const TER_Localisation* localisation )
     {
         core::Model parameter;
         parameter.SetUserData( localisation );
-        return EnableLocalizedDetectionId( facade, pion, perception, parameter, GET_HOOK( GetPerceptionId )() );
+        return EnableLocalizedDetectionId( sink, pion, perception, parameter, GET_HOOK( GetPerceptionId )() );
     }
-    int EnableUrbanLocalizedDetection( core::Facade& facade, MIL_AgentPion& pion, const std::string& perception, const MIL_UrbanObject_ABC* block )
+    int EnableUrbanLocalizedDetection( Sink& sink, MIL_AgentPion& pion, const std::string& perception, const MIL_UrbanObject_ABC* block )
     {
         core::Model parameter;
         parameter.SetUserData( block->GetLocalisation() );
         parameter[ "block" ].SetUserData( block );
-        return EnableLocalizedDetectionId( facade, pion, perception, parameter, GET_HOOK( GetPerceptionId )() );
+        return EnableLocalizedDetectionId( sink, pion, perception, parameter, GET_HOOK( GetPerceptionId )() );
     }
-    int EnableAlatLocalizedDetection( core::Facade& facade, MIL_AgentPion& pion, const std::string& perception, const TER_Localisation* localisation )
+    int EnableAlatLocalizedDetection( Sink& sink, MIL_AgentPion& pion, const std::string& perception, const TER_Localisation* localisation )
     {
         core::Model parameter;
         parameter.SetUserData( localisation );
-        return EnableLocalizedDetectionId( facade, pion, perception, parameter, 0 );
+        return EnableLocalizedDetectionId( sink, pion, perception, parameter, 0 );
     }
-    int EnableAlatMonitoring( core::Facade& facade, MIL_AgentPion& pion, const TER_Localisation* localisation )
+    int EnableAlatMonitoring( Sink& sink, MIL_AgentPion& pion, const TER_Localisation* localisation )
     {
         if( !localisation )
             throw std::runtime_error( __FUNCTION__ ": invalid localization parameter while enabling ALAT monitoring detection." );
@@ -658,19 +657,19 @@ namespace
         parameters[ "activated" ] = true;
         parameters[ "perception-id" ] = perceptionId;
         parameters[ "localization" ].SetUserData( localisation );
-        facade.PostCommand( "toggle alat monitoring", parameters );
+        sink.PostCommand( "toggle alat monitoring", parameters );
         return perceptionId;
     }
-    void DisableLocalizedDetection( core::Facade& facade, MIL_AgentPion& pion, const std::string& perception, int perceptionId )
+    void DisableLocalizedDetection( Sink& sink, MIL_AgentPion& pion, const std::string& perception, int perceptionId )
     {
         core::Model parameters;
         parameters[ "identifier" ] = pion.GetID();
         parameters[ "activated" ] = false;
         parameters[ "perception" ] = perception;
         parameters[ "perception-id" ] = perceptionId;
-        facade.PostCommand( "toggle localized perception", parameters );
+        sink.PostCommand( "toggle localized perception", parameters );
     }
-    int EnableRecoOnLocation( core::Facade& facade, MIL_AgentPion& pion, const TER_Localisation* localisation, boost::optional< float > growthSpeed )
+    int EnableRecoOnLocation( Sink& sink, MIL_AgentPion& pion, const TER_Localisation* localisation, boost::optional< float > growthSpeed )
     {
         if( !localisation )
             throw std::runtime_error( __FUNCTION__ ": invalid localization parameter while enabling reco on location detection." );
@@ -682,18 +681,18 @@ namespace
         parameters[ "has-growth-speed" ] = static_cast< bool >( growthSpeed );
         parameters[ "growth-speed" ] = growthSpeed ? *growthSpeed : 0;
         parameters[ "localization" ].SetUserData( localisation );
-        facade.PostCommand( "toggle reco", parameters );
+        sink.PostCommand( "toggle reco", parameters );
         return perceptionId;
     }
-    void DisableIdentifiedCommand( core::Facade& facade, MIL_AgentPion& pion, const std::string& command, int perceptionId )
+    void DisableIdentifiedCommand( Sink& sink, MIL_AgentPion& pion, const std::string& command, int perceptionId )
     {
         core::Model parameters;
         parameters[ "identifier" ] = pion.GetID();
         parameters[ "activated" ] = false;
         parameters[ "perception-id" ] = perceptionId;
-        facade.PostCommand( command, parameters );
+        sink.PostCommand( command, parameters );
     }
-    int EnableObjectDetection( core::Facade& facade, MIL_AgentPion& pion, boost::shared_ptr< TER_Localisation > localisation, const MT_Vector2D* center, double speed )
+    int EnableObjectDetection( Sink& sink, MIL_AgentPion& pion, boost::shared_ptr< TER_Localisation > localisation, const MT_Vector2D* center, double speed )
     {
         if( !localisation )
             throw std::runtime_error( __FUNCTION__ ": invalid localization parameter while enabling object detection on location." );
@@ -706,10 +705,10 @@ namespace
         parameters[ "center/y" ] = center->rY_;
         parameters[ "growth-speed" ] = speed;
         parameters[ "localization" ].SetUserData( localisation );
-        facade.PostCommand( "toggle object detection", parameters );
+        sink.PostCommand( "toggle object detection", parameters );
         return perceptionId;
     }
-    int EnableRecognitionPoint( core::Facade& facade, MIL_AgentPion& pion, MT_Vector2D* center, double size, double growthSpeed )
+    int EnableRecognitionPoint( Sink& sink, MIL_AgentPion& pion, MT_Vector2D* center, double size, double growthSpeed )
     {
         if( !center )
             throw std::runtime_error( __FUNCTION__ ": invalid center parameter while enabling recognition on point." );
@@ -722,32 +721,32 @@ namespace
         parameters[ "center/y" ] = center->rY_;
         parameters[ "growth-speed" ] = MIL_Tools::ConvertSpeedMosToSim( growthSpeed );
         parameters[ "max-radius" ] = size;
-        facade.PostCommand( "toggle recognition point", parameters );
+        sink.PostCommand( "toggle recognition point", parameters );
         return perceptionId;
     }
     template< typename T >
-    void SwitchVisionMode( core::Facade& facade, MIL_AgentPion& pion, const std::string& mode, T location )
+    void SwitchVisionMode( Sink& sink, MIL_AgentPion& pion, const std::string& mode, T location )
     {
         core::Model parameters;
         parameters[ "identifier" ] = pion.GetID();
         parameters[ "mode" ] = mode;
         parameters[ "location/x" ] = location->rX_;
         parameters[ "location/y" ] = location->rY_;
-        facade.PostCommand( "vision", parameters );
+        sink.PostCommand( "vision", parameters );
     }
     bool IsPointVisible( MIL_AgentPion& pion, const core::Model& model, MT_Vector2D* pPt )
     {
         const core::Model& entity = model[ "entities" ][ pion.GetID() ];
         return GET_HOOK( IsPointVisible )( core::Convert( &model ), core::Convert( &entity ), pPt );
     }
-    void IdentifyAllAgentsInZone( core::Facade& facade, MIL_AgentPion& pion, const TER_Localisation* localization )
+    void IdentifyAllAgentsInZone( Sink& sink, MIL_AgentPion& pion, const TER_Localisation* localization )
     {
         if( !localization )
             throw std::runtime_error( __FUNCTION__ ": invalid localization parameter while identifying all agents in zone." );
         core::Model parameters;
         parameters[ "identifier" ] = pion.GetID();
         parameters[ "localization" ].SetUserData( localization );
-        facade.PostCommand( "identify all agents in zone", parameters );
+        sink.PostCommand( "identify all agents in zone", parameters );
     }
     bool AgentHasRadar( const core::Model& model, const DEC_Decision_ABC* agent, int typeRadar )
     {

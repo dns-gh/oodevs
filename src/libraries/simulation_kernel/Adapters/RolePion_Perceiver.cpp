@@ -218,10 +218,9 @@ void RolePion_Perceiver::Initialize( core::Facade& facade )
 // Name: RolePion_Perceiver constructor
 // Created: NLD 2004-08-19
 // -----------------------------------------------------------------------------
-RolePion_Perceiver::RolePion_Perceiver( const Sink& sink, const core::Model& model, MIL_Agent_ABC& pion, core::Model& entity )
+RolePion_Perceiver::RolePion_Perceiver( Sink& sink, const core::Model& model, MIL_Agent_ABC& pion, core::Model& entity )
     : sink_                          ( sink )
     , model_                         ( model )
-    , facade_                        ( sink.GetFacade() )
     , owner_                         ( pion )
     , entity_                        ( entity )
     , bHasChanged_                   ( true )
@@ -480,7 +479,7 @@ int RolePion_Perceiver::EnableRecoLocalisation( const TER_Localisation& /*locali
 int RolePion_Perceiver::EnableRecoLocalisation( const TER_Localisation& localisation, float rGrowthSpeed, DEC_Decision_ABC& /*callerAgent*/ )  // $$$$ _RC_ SLI 2012-08-28: Remove this, only for PHY_ActionControlZone
 {
     const int perceptionId = GET_HOOK( GetPerceptionId )();
-    facade_.PostCommand( "toggle reco", core::MakeModel( "identifier", owner_.GetID() )
+    sink_.PostCommand( "toggle reco", core::MakeModel( "identifier", owner_.GetID() )
                                                        ( "activated", true )
                                                        ( "perception-id", perceptionId )
                                                        ( "has-growth-speed", true )
@@ -505,7 +504,7 @@ int RolePion_Perceiver::EnableRecoUrbanBlock( MIL_UrbanObject_ABC* /*pUrbanBlock
 int RolePion_Perceiver::EnableControlLocalisation( const TER_Localisation& localisation, DEC_Decision_ABC& /*callerAgent*/ ) // $$$$ _RC_ SLI 2012-08-28: Remove this, only for PHY_ActionControlZone
 {
     const int perceptionId = GET_HOOK( GetPerceptionId )();
-    facade_.PostCommand( "toggle reco", core::MakeModel( "identifier", owner_.GetID() )
+    sink_.PostCommand( "toggle reco", core::MakeModel( "identifier", owner_.GetID() )
                                                        ( "activated", true )
                                                        ( "perception-id", perceptionId )
                                                        ( "has-growth-speed", false )
@@ -519,7 +518,7 @@ int RolePion_Perceiver::EnableControlLocalisation( const TER_Localisation& local
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::DisableRecoLocalisation( int id ) // $$$$ _RC_ SLI 2012-08-28: Remove this, only for PHY_ActionControlZone
 {
-    facade_.PostCommand( "toggle reco", core::MakeModel( "identifier", owner_.GetID() )
+    sink_.PostCommand( "toggle reco", core::MakeModel( "identifier", owner_.GetID() )
                                                        ( "activated", false )
                                                        ( "perception-id", id ) );
 }
@@ -853,7 +852,7 @@ void RolePion_Perceiver::NotifyPerceptionUrban( const MIL_UrbanObject_ABC& /*obj
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::NotifyExternalPerception( MIL_Agent_ABC& agent, const PHY_PerceptionLevel& level )
 {
-    facade_.PostCommand( "external perception", core::MakeModel( "identifier", owner_.GetID() )
+    sink_.PostCommand( "external perception", core::MakeModel( "identifier", owner_.GetID() )
                                                                ( "level", level.GetID() )
                                                                ( "target", reinterpret_cast< size_t >( &agent ) ) );
 }

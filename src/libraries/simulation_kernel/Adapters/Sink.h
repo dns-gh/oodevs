@@ -45,6 +45,12 @@ public:
     virtual void ExecuteCommands();
     virtual void ApplyEffects();
     virtual void UpdateModel( unsigned int tick, int duration );
+
+    void PostCommand( const std::string& type, const core::Model& parameters );
+    std::size_t StartCommand( const std::string& type, const core::Model& parameters );
+    void PauseCommand( std::size_t command );
+    void ResumeCommand( std::size_t command );
+    void StopCommand( std::size_t command );
     //@}
 
     //! @name Factory
@@ -54,11 +60,6 @@ public:
     virtual MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name );
 
     virtual std::auto_ptr< flood::FloodModel_ABC > CreateFloodModel() const;
-    //@}
-
-    //! @name Getters
-    //@{
-    core::Facade& GetFacade() const;
     //@}
 
     //! @name CheckPoint

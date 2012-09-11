@@ -328,13 +328,53 @@ void Sink::UpdateModel( unsigned int tick, int duration )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Sink::GetFacade
-// Created: SLI 2012-02-02
+// Name: Sink::PostCommand
+// Created: MCO 2012-09-11
 // -----------------------------------------------------------------------------
-core::Facade& Sink::GetFacade() const
+void Sink::PostCommand( const std::string& type, const core::Model& parameters )
 {
     assert( facade_.get() );
-    return *facade_;
+    facade_->PostCommand( type, parameters );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Sink::StartCommand
+// Created: MCO 2012-09-11
+// -----------------------------------------------------------------------------
+std::size_t Sink::StartCommand( const std::string& type, const core::Model& parameters )
+{
+    assert( facade_.get() );
+    return facade_->StartCommand( type, parameters );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Sink::PauseCommand
+// Created: MCO 2012-09-11
+// -----------------------------------------------------------------------------
+void Sink::PauseCommand( std::size_t command )
+{
+    assert( facade_.get() );
+    facade_->PauseCommand( command );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Sink::ResumeCommand
+// Created: MCO 2012-09-11
+// -----------------------------------------------------------------------------
+void Sink::ResumeCommand( std::size_t command )
+{
+    assert( facade_.get() );
+    facade_->ResumeCommand( command );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Sink::StopCommand
+// Created: MCO 2012-09-11
+// -----------------------------------------------------------------------------
+void Sink::StopCommand( std::size_t command )
+{
+    assert( facade_.get() );
+    facade_->StopCommand( command );
 }
 
 // -----------------------------------------------------------------------------
