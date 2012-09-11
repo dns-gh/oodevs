@@ -216,6 +216,8 @@ void Sink::ApplyEffects()
     facade_->ApplyEffects();
 }
 
+SWORD_USER_DATA_EXPORT( boost::shared_ptr< DEC_Knowledge_Agent > )
+
 namespace
 {
     void UpdateKnowledge( const core::Model& entity, core::Model& knowledge, boost::shared_ptr< DEC_Knowledge_Agent > agent )
@@ -235,7 +237,7 @@ namespace
             component[ "volume" ] = composantes[ i ].GetType().GetVolume().GetID();
             component[ "score" ] = composantes[ i ].GetMajorScore();
             component[ "major" ] = composantes[ i ].IsMajor();
-            component[ "component" ].SetUserData( components2.GetElement( i )[ "component" ].GetData() );
+            component[ "component" ] = components2.GetElement( i )[ "component" ];
             component[ "weapons" ] = components2.GetElement( i )[ "weapons" ]; // $$$$ MCO 2012-07-02: could be a link because that info is 'static'
         }
     }
