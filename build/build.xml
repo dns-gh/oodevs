@@ -874,7 +874,7 @@
     </target>
 
     <target name="application.xml_signature_app" description="build application">
-        <build-app name="xml_signature_app" subsystem="console" depends="boost" libs="tools">
+        <build-app name="xml_signature_app" subsystem="console" depends="boost" libs="tools" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-app>
     </target>
