@@ -37,7 +37,6 @@ integration.isTask = function( self )
          orderType == "platoon.tasks.Orienter" or
          orderType == "platoon.tasks.RejoindreAToutPrix" or
          orderType == "platoon.tasks.DeposerUnite" or
-         orderType == "security.behaviors.tasks.StopAndGoToGarage" or
          orderType == "Rep_OrderConduite_Interrompre" or
          orderType == "Rep_OrderConduite_AttendreSePoster" or
          orderType == "Rep_OrderConduite_RecupererTransporteurs" or
@@ -116,9 +115,13 @@ integration.mustBePropagate = function( self )
          orderType == "Rep_OrderConduite_ModifierPrioritesBlesses" or
          orderType == "Rep_OrderConduite_RejoindrePointLancement" or
          orderType == "Rep_OrderConduite_ROEM_ArreterSilenceRadar" or
-         orderType == "Mount" or -- WW
-         orderType == "Dismount" -- WW
-         
+         orderType == "Mount" or                        -- WW
+         orderType == "Dismount" or                     -- WW
+         orderType == "DeactivateRadioCommunication" or -- WW
+         orderType == "ActivateRadioCommunication" or   -- WW
+         orderType == "ActivateNBCProtection" or        -- WW
+         orderType == "DeactivateNBCProtection" or      -- WW
+         orderType == "ChangeAttitude"                  -- WW    
 end
 
 integration.setAutomatFragOrder = function( self )
