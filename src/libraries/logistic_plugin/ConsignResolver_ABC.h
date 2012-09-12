@@ -53,7 +53,7 @@ public:
     const NameResolver_ABC& GetNameResolver() const;
     virtual void InitHeader() = 0;
     virtual void AddToLineIndex( int number ) { curLineIndex_ += number; }
-    static void SetMaxLinesInFile( int maxLines ) { maxLinesInFile_ = maxLines; }
+    void SetMaxLinesInFile( int maxLines ) { maxLinesInFile_ = maxLines; }
     int GetConsignCount() const;
     //@}
 
@@ -101,7 +101,7 @@ protected:
     std::ofstream output_;
     std::map< int, ConsignData_ABC* > consignsData_;
     int curLineIndex_;
-    static int maxLinesInFile_;
+    int maxLinesInFile_;
     boost::gregorian::date today_;
     //@}
 };

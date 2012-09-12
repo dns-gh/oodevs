@@ -25,14 +25,12 @@ namespace
     const int maxFileDaysToRemove = 20;
 }
 
-int ConsignResolver_ABC::maxLinesInFile_( 50000 );
-
 // -----------------------------------------------------------------------------
 // Name: ConsignResolver_ABC constructor
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
 ConsignResolver_ABC::ConsignResolver_ABC( const std::string& name, const NameResolver_ABC& nameResolver )
-    : name_( name ), curTick_( 0 ), nameResolver_( nameResolver ), curLineIndex_( 0 )
+    : name_( name ), curTick_( 0 ), nameResolver_( nameResolver ), curLineIndex_( 0 ), maxLinesInFile_( 50000 )
 {
     // NOTHING
 }

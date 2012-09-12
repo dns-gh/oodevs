@@ -138,7 +138,8 @@ int LogisticPlugin::GetConsignCount( E_LogisticType eLogisticType ) const
 // -----------------------------------------------------------------------------
 void LogisticPlugin::SetMaxLinesInFile( int maxLines )
 {
-    ConsignResolver_ABC::SetMaxLinesInFile( maxLines );
+    for( IT_ConsignResolvers r = resolvers_.begin(); r != resolvers_.end(); ++r )
+        (*r)->SetMaxLinesInFile( maxLines );
 }
 
 
