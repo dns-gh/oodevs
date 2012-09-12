@@ -381,7 +381,6 @@ void CheckEgypt( bool& sentinel, const Tree& item, size_t size )
     sentinel = true;
     BOOST_CHECK_EQUAL( Get< std::string >( item, ".type" ), "exercise" );
     BOOST_CHECK_EQUAL( Get< Path >( item, ".name" ), Path( "worldwide/Egypt" ) );
-    BOOST_CHECK_EQUAL( Get< std::string >( item, ".date" ), "2012-09-12 11:42:51" );
     BOOST_CHECK_EQUAL( Get< std::string >( item, ".checksum" ), "1A741642" );
     BOOST_CHECK_EQUAL( Get< size_t >( item, ".size" ), size );
     BOOST_CHECK_EQUAL( Get< std::string >( item, ".package" ), "Egypt" );
