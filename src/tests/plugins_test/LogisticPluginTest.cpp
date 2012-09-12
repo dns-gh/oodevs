@@ -11,6 +11,8 @@
 #include "logistic_plugin/NameResolver_ABC.h"
 #include "logistic_plugin/LogisticPlugin.h"
 #include "protocol/Protocol.h"
+#include <boost/date_time/gregorian/gregorian.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/noncopyable.hpp>
@@ -20,8 +22,11 @@
 #include <fstream>
 #include <string>
 
+
 using namespace plugins::logistic;
 namespace bfs = boost::filesystem;
+namespace bpt = boost::posix_time;
+namespace bg = boost::gregorian;
 
 namespace
 {
@@ -110,7 +115,7 @@ public:
 
     virtual void GetMaintenanceName( const sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus& eMaintenance, std::string& name ) const
     {
-        name = "medical_" + boost::lexical_cast< std::string >( eMaintenance );
+        name = "maintenance_" + boost::lexical_cast< std::string >( eMaintenance );
     }
 
     virtual void GetFuneralName( const sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus& eFuneral, std::string& name ) const
@@ -187,26 +192,417 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
     TemporaryDirectory tempDir( "testlogisticplugin-", ::GetTestTempDirectory() );
     boost::shared_ptr<LogisticPlugin> plugin = CreateLogisticPlugin( tempDir.path() );
 
-    sword::SimToClient m1;
-    sword::LogMaintenanceHandlingCreation* maint1
-        = m1.mutable_message()->mutable_log_maintenance_handling_creation();
-    maint1->mutable_request()->set_id( 7 );
-    maint1->mutable_unit()->set_id( 8 );
-    maint1->set_tick( 9 );
-    maint1->mutable_equipement()->set_id( 10 );
-    maint1->mutable_breakdown()->set_id( 11 );
+    {
+        bg::date day1( bg::from_string( "2001/05/17" ) );
 
-    plugin->Receive( m1 );
+        {
+            sword::SimToClient m;
+            sword::ControlBeginTick* tickMsg = m.mutable_message()->mutable_control_begin_tick();
+            tickMsg->set_current_tick( 200 );
+            tickMsg->mutable_date_time()->set_data( "GDH1" );
+            plugin->Receive( m, day1 );
+        }
+
+        {
+            sword::SimToClient m;
+            sword::LogMaintenanceHandlingCreation* maint = m.mutable_message()->mutable_log_maintenance_handling_creation();
+            maint->mutable_request()->set_id( 7 );
+            maint->mutable_unit()->set_id( 8 );
+            maint->mutable_equipement()->set_id( 10 );
+            maint->mutable_breakdown()->set_id( 11 );
+            plugin->Receive( m, day1 );
+        }
+        BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Maintenance ), 1 );
+
+        {
+            sword::SimToClient m;
+            sword::ControlBeginTick* tickMsg = m.mutable_message()->mutable_control_begin_tick();
+            tickMsg->set_current_tick( 300 );
+            tickMsg->mutable_date_time()->set_data( "GDH2" );
+            plugin->Receive( m, day1 );
+        }
+
+        {
+            sword::SimToClient m;
+            sword::LogMaintenanceHandlingCreation* maint = m.mutable_message()->mutable_log_maintenance_handling_creation();
+            maint->mutable_request()->set_id( 17 );
+            maint->mutable_unit()->set_id( 18 );
+            maint->mutable_equipement()->set_id( 20 );
+            maint->mutable_breakdown()->set_id( 21 );
+            plugin->Receive( m, day1 );
+        }
+        BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Maintenance ), 2 );
+
+        {
+            sword::SimToClient m;
+            sword::LogMaintenanceHandlingUpdate* maint = m.mutable_message()->mutable_log_maintenance_handling_update();
+            maint->mutable_request()->set_id( 7 );
+            maint->mutable_unit()->set_id( 8 );
+            maint->mutable_provider()->set_id( 12 );
+            maint->set_state( static_cast< sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus >( 0 ) );
+            maint->set_current_state_end_tick( 30 );
+            plugin->Receive( m, day1 );
+        }
+        BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Maintenance ), 2 );
+
+        {
+            sword::SimToClient m;
+            sword::LogMaintenanceHandlingDestruction* maint = m.mutable_message()->mutable_log_maintenance_handling_destruction();
+            maint->mutable_request()->set_id( 7 );
+            plugin->Receive( m, day1 );
+        }
+        BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Maintenance ), 1 );
+
+        {
+            sword::SimToClient m;
+            sword::LogMaintenanceHandlingDestruction* maint = m.mutable_message()->mutable_log_maintenance_handling_destruction();
+            maint->mutable_request()->set_id( 17 );
+            plugin->Receive( m, day1 );
+        }
+        BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Maintenance ), 0 );
+    }
+
+    {
+        bg::date day1( bg::from_string( "2002/01/25" ) );
+        bg::date day2( bg::from_string( "2002/01/26" ) );
+        bg::date day3( bg::from_string( "2002/01/27" ) );
+
+        {
+            sword::SimToClient m;
+            sword::LogMedicalHandlingCreation* medic = m.mutable_message()->mutable_log_medical_handling_creation();
+            medic->mutable_request()->set_id( 7 );
+            medic->mutable_unit()->set_id( 8 );
+            medic->set_rank( static_cast< sword::EnumHumanRank >( 0 ) );
+            medic->set_wound( static_cast< sword::EnumHumanWound >( 0 ) );
+            medic->set_nbc_contaminated( true );
+            medic->set_mental_wound( false );
+            plugin->Receive( m, day1 );
+        }
+        BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Medical ), 1 );
+
+        {
+            sword::SimToClient m;
+            sword::LogMedicalHandlingUpdate* medic = m.mutable_message()->mutable_log_medical_handling_update();
+            medic->mutable_request()->set_id( 7 );
+            medic->mutable_unit()->set_id( 8 );
+            medic->mutable_provider()->set_id( 12 );
+            medic->set_state( static_cast< sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus >( 0 ) );
+            medic->set_current_state_end_tick( 30 );
+            plugin->Receive( m, day1 );
+        }
+        BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Medical ), 1 );
+
+        {
+            sword::SimToClient m;
+            sword::LogMedicalHandlingUpdate* medic = m.mutable_message()->mutable_log_medical_handling_update();
+            medic->mutable_request()->set_id( 7 );
+            medic->set_state( static_cast< sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus >( 1 ) );
+            medic->set_current_state_end_tick( 40 );
+            plugin->Receive( m, day2 );
+        }
+        BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Medical ), 1 );
+
+        {
+            sword::SimToClient m;
+            sword::LogMedicalHandlingUpdate* medic = m.mutable_message()->mutable_log_medical_handling_update();
+            medic->mutable_request()->set_id( 7 );
+            medic->set_state( static_cast< sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus >( 2 ) );
+            medic->set_current_state_end_tick( 50 );
+            plugin->Receive( m, day3 );
+        }
+        BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Medical ), 1 );
+
+        {
+            sword::SimToClient m;
+            sword::LogMedicalHandlingDestruction* medic = m.mutable_message()->mutable_log_medical_handling_destruction();
+            medic->mutable_request()->set_id( 7 );
+            plugin->Receive( m, day3 );
+        }
+        BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Medical ), 0 );
+    }
+
+    {
+        bg::date day1( bg::from_string( "2005/02/20" ) );
+        plugin->SetMaxLinesInFile( 3 );
+
+        {
+            sword::SimToClient m;
+            sword::LogFuneralHandlingCreation* funeral = m.mutable_message()->mutable_log_funeral_handling_creation();
+            funeral->mutable_request()->set_id( 7 );
+            funeral->mutable_unit()->set_id( 8 );
+            funeral->set_rank( static_cast< sword::EnumHumanRank >( 0 ) );
+            plugin->Receive( m, day1 );
+        }
+        BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Funeral ), 1 );
+
+        for( int i = 0; i < 5; ++i )
+        {
+            sword::SimToClient m;
+            sword::LogFuneralHandlingUpdate* funeral = m.mutable_message()->mutable_log_funeral_handling_update();
+            funeral->mutable_request()->set_id( 7 );
+            funeral->mutable_handling_unit()->mutable_automat()->set_id( 8 );
+            funeral->mutable_convoying_unit()->set_id( 9 );
+            funeral->mutable_packaging_resource()->set_id( 10 );
+            funeral->set_state( static_cast< sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus >( i ) );
+            funeral->set_current_state_end_tick( i * 100 );
+            plugin->Receive( m, day1 );
+        }
+        BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Funeral ), 1 );
+
+        {
+            sword::SimToClient m;
+            sword::LogFuneralHandlingDestruction* funeral = m.mutable_message()->mutable_log_funeral_handling_destruction();
+            funeral->mutable_request()->set_id( 7 );
+            plugin->Receive( m, day1 );
+        }
+        BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Funeral ), 0 );
+    }
+
+    {
+        bg::date day1( bg::from_string( "2008/09/21" ) );
+        bg::date day2( bg::from_string( "2008/09/22" ) );
+        plugin->SetMaxLinesInFile( 3 );
+
+        {
+            sword::SimToClient m;
+            sword::LogSupplyHandlingCreation* supply = m.mutable_message()->mutable_log_supply_handling_creation();
+            supply->mutable_request()->set_id( 7 );
+            supply->mutable_supplier()->mutable_automat()->set_id( 8 );
+            supply->mutable_transporters_provider()->mutable_automat()->set_id( 9 );
+            plugin->Receive( m, day1 );
+        }
+        BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Supply ), 1 );
+
+        {
+            sword::SimToClient m;
+            sword::LogSupplyHandlingUpdate* supply = m.mutable_message()->mutable_log_supply_handling_update();
+            supply->mutable_request()->set_id( 7 );
+            supply->mutable_convoyer()->set_id( 10 );
+            supply->set_state( static_cast< sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus >( 0 ) );
+            supply->set_current_state_end_tick( 100 );
+            {
+                sword::SupplyRecipientResourcesRequest* req = supply->mutable_requests()->add_requests();
+                req->mutable_recipient()->set_id( 11 );
+                {
+                    sword::SupplyResourceRequest* res = req->add_resources();
+                    res->mutable_resource()->set_id( 0 );
+                    res->set_convoyed( 100 );
+                    res->set_granted( 200 );
+                    res->set_requested( 300 );
+                }
+                {
+                    sword::SupplyResourceRequest* res = req->add_resources();
+                    res->mutable_resource()->set_id( 1 );
+                    res->set_convoyed( 110 );
+                    res->set_granted( 210 );
+                    res->set_requested( 310 );
+                }
+            }
+            {
+                sword::SupplyRecipientResourcesRequest* req = supply->mutable_requests()->add_requests();
+                req->mutable_recipient()->set_id( 12 );
+                {
+                    sword::SupplyResourceRequest* res = req->add_resources();
+                    res->mutable_resource()->set_id( 3 );
+                    res->set_convoyed( 50 );
+                    res->set_granted( 75 );
+                    res->set_requested( 120 );
+                }
+            }
+            plugin->Receive( m, day1 );
+        }
+        BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Supply ), 1 );
+
+        {
+            sword::SimToClient m;
+            sword::LogSupplyHandlingUpdate* supply = m.mutable_message()->mutable_log_supply_handling_update();
+            supply->mutable_request()->set_id( 8 );
+            supply->mutable_convoyer()->set_id( 10 );
+            supply->set_state( static_cast< sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus >( 0 ) );
+            supply->set_current_state_end_tick( 100 );
+            {
+                sword::SupplyRecipientResourcesRequest* req = supply->mutable_requests()->add_requests();
+                req->mutable_recipient()->set_id( 13 );
+                {
+                    sword::SupplyResourceRequest* res = req->add_resources();
+                    res->mutable_resource()->set_id( 0 );
+                    res->set_convoyed( 100 );
+                    res->set_granted( 200 );
+                    res->set_requested( 300 );
+                }
+            }
+            plugin->Receive( m, day1 );
+        }
+        BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Supply ), 2 );
+
+        {
+            sword::SimToClient m;
+            sword::LogSupplyHandlingUpdate* supply = m.mutable_message()->mutable_log_supply_handling_update();
+            supply->mutable_request()->set_id( 7 );
+            supply->mutable_convoyer()->set_id( 10 );
+            supply->set_state( static_cast< sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus >( 1 ) );
+            supply->set_current_state_end_tick( 200 );
+            {
+                sword::SupplyRecipientResourcesRequest* req = supply->mutable_requests()->add_requests();
+                req->mutable_recipient()->set_id( 14 );
+                {
+                    sword::SupplyResourceRequest* res = req->add_resources();
+                    res->mutable_resource()->set_id( 3 );
+                    res->set_convoyed( 50 );
+                    res->set_granted( 75 );
+                    res->set_requested( 120 );
+                }
+            }
+            plugin->Receive( m, day2 );
+        }
+        BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Supply ), 2 );
+
+        {
+            sword::SimToClient m;
+            sword::LogSupplyHandlingUpdate* supply = m.mutable_message()->mutable_log_supply_handling_update();
+            supply->mutable_request()->set_id( 8 );
+            supply->mutable_convoyer()->set_id( 10 );
+            supply->set_state( static_cast< sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus >( 1 ) );
+            supply->set_current_state_end_tick( 200 );
+            {
+                sword::SupplyRecipientResourcesRequest* req = supply->mutable_requests()->add_requests();
+                req->mutable_recipient()->set_id( 17 );
+                {
+                    sword::SupplyResourceRequest* res = req->add_resources();
+                    res->mutable_resource()->set_id( 3 );
+                    res->set_convoyed( 80 );
+                    res->set_granted( 85 );
+                    res->set_requested( 180 );
+                }
+            }
+            {
+                sword::SupplyRecipientResourcesRequest* req = supply->mutable_requests()->add_requests();
+                req->mutable_recipient()->set_id( 18 );
+                {
+                    sword::SupplyResourceRequest* res = req->add_resources();
+                    res->mutable_resource()->set_id( 4 );
+                    res->set_convoyed( 21 );
+                    res->set_granted( 23 );
+                    res->set_requested( 24 );
+                }
+            }
+            plugin->Receive( m, day2 );
+        }
+        BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Supply ), 2 );
+
+        {
+            sword::SimToClient m;
+            sword::LogSupplyHandlingDestruction* supply = m.mutable_message()->mutable_log_supply_handling_destruction();
+            supply->mutable_request()->set_id( 7 );
+            plugin->Receive( m, day2 );
+        }
+        BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Supply ), 1 );
+
+        {
+            sword::SimToClient m;
+            sword::LogSupplyHandlingDestruction* supply = m.mutable_message()->mutable_log_supply_handling_destruction();
+            supply->mutable_request()->set_id( 8 );
+            plugin->Receive( m, day2 );
+        }
+        BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Supply ), 0 );
+    }
 
     T_FileList files;
     ListDir( tempDir.path(), files );
 
     T_FileList expecteds;
-    expecteds.push_back( "^.*/maintenance\\.\\d{8}\\.\\d\\.csv$" );
+    expecteds.push_back( "^.*/funeral\\.20050220\\.0\\.csv$" );
+    expecteds.push_back( "^.*/funeral\\.20050220\\.1\\.csv$" );
+    expecteds.push_back( "^.*/maintenance\\.20010517\\.0\\.csv$" );
+    expecteds.push_back( "^.*/medical\\.20020126\\.0\\.csv$" );
+    expecteds.push_back( "^.*/medical\\.20020127\\.0\\.csv$" );
+    expecteds.push_back( "^.*/supply\\.20080921\\.0\\.csv$" );
+    expecteds.push_back( "^.*/supply\\.20080921\\.1\\.csv$" );
+    expecteds.push_back( "^.*/supply\\.20080922\\.0\\.csv$" );
+    expecteds.push_back( "^.*/supply\\.20080922\\.1\\.csv$" );
     CheckRegexps( expecteds, files );
 
-    T_Lines expectedLines;
-    expectedLines.push_back( "request id ; tick ; GDH ; unit ; provider ; equipment ; breakdown ; state ; state end tick" );
-    expectedLines.push_back( "7 ; 0 ;  ; agent_8 ;  ; equipment_10 ; breakdown_11 ;  ; " );
-    CheckFileContent( expectedLines, files[0] );
+    if( files.size() > 0 )
+    {
+        T_Lines expectedLines;
+        expectedLines.push_back( "request id ; tick ; GDH ; unit ; handling unit ; conveying unit ; rank ; packaging resource ; state ; state end tick" );
+        expectedLines.push_back( "7 ; 300 ; GDH2 ; agent_8 ;  ;  ; rank_0 ;  ;  ; " );
+        expectedLines.push_back( "7 ; 300 ; GDH2 ; agent_8 ; automat_8 ; agent_9 ; rank_0 ; resource_10 ; funeral_0 ; " );
+        expectedLines.push_back( "7 ; 300 ; GDH2 ; agent_8 ; automat_8 ; agent_9 ; rank_0 ; resource_10 ; funeral_1 ; 100" );
+        CheckFileContent( expectedLines, files[ 0 ] );
+    }
+
+    if( files.size() > 1 )
+    {
+        T_Lines expectedLines;
+        expectedLines.push_back( "request id ; tick ; GDH ; unit ; handling unit ; conveying unit ; rank ; packaging resource ; state ; state end tick" );
+        expectedLines.push_back( "7 ; 300 ; GDH2 ; agent_8 ; automat_8 ; agent_9 ; rank_0 ; resource_10 ; funeral_2 ; 200" );
+        expectedLines.push_back( "7 ; 300 ; GDH2 ; agent_8 ; automat_8 ; agent_9 ; rank_0 ; resource_10 ; funeral_3 ; 300" );
+        expectedLines.push_back( "7 ; 300 ; GDH2 ; agent_8 ; automat_8 ; agent_9 ; rank_0 ; resource_10 ; funeral_4 ; 400" );
+        CheckFileContent( expectedLines, files[ 1 ] );
+    }
+
+    if( files.size() > 2 )
+    {
+        T_Lines expectedLines;
+        expectedLines.push_back( "request id ; tick ; GDH ; unit ; provider ; equipment ; breakdown ; state ; state end tick" );
+        expectedLines.push_back( "7 ; 200 ; GDH1 ; agent_8 ;  ; equipment_10 ; breakdown_11 ;  ; " );
+        expectedLines.push_back( "17 ; 300 ; GDH2 ; agent_18 ;  ; equipment_20 ; breakdown_21 ;  ; " );
+        expectedLines.push_back( "7 ; 300 ; GDH2 ; agent_8 ; agent_12 ; equipment_10 ; breakdown_11 ; maintenance_0 ; 30" );
+        CheckFileContent( expectedLines, files[ 2 ] );
+    }
+
+    if( files.size() > 3 )
+    {
+        T_Lines expectedLines;
+        expectedLines.push_back( "request id ; tick ; GDH ; unit ; provider ; rank ; wound ; nbc ; mental ; state ; state end tick" );
+        expectedLines.push_back( "7 ; 300 ; GDH2 ; agent_8 ; agent_12 ; rank_0 ; wound_0 ; yes ; no ; medical_1 ; 40" );
+        CheckFileContent( expectedLines, files[ 3 ] );
+    }
+
+    if( files.size() > 4 )
+    {
+        T_Lines expectedLines;
+        expectedLines.push_back( "request id ; tick ; GDH ; unit ; provider ; rank ; wound ; nbc ; mental ; state ; state end tick" );
+        expectedLines.push_back( "7 ; 300 ; GDH2 ; agent_8 ; agent_12 ; rank_0 ; wound_0 ; yes ; no ; medical_2 ; 50" );
+        CheckFileContent( expectedLines, files[ 4 ] );
+    }
+
+    if( files.size() > 5 )
+    {
+        T_Lines expectedLines;
+        expectedLines.push_back( "request id ; tick ; GDH ; recipient ; provider ; transport provider ; conveyor ; state ; state end tick ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed" );
+        expectedLines.push_back( "7 ; 300 ; GDH2 ;  ; automat_8 ; automat_9 ;  ;  ; " );
+        expectedLines.push_back( "7 ; 300 ; GDH2 ; automat_11 ; automat_8 ; automat_9 ; agent_10 ; supply_0 ; 100 ; resource_0 ; 300 ; 200 ; 100 ; resource_1 ; 310 ; 210 ; 110" );
+        expectedLines.push_back( "7 ; 300 ; GDH2 ; automat_12 ; automat_8 ; automat_9 ; agent_10 ; supply_0 ; 100 ; resource_3 ; 120 ; 75 ; 50" );
+        CheckFileContent( expectedLines, files[ 5 ] );
+    }
+
+    if( files.size() > 6 )
+    {
+        T_Lines expectedLines;
+        expectedLines.push_back( "request id ; tick ; GDH ; recipient ; provider ; transport provider ; conveyor ; state ; state end tick ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed" );
+        expectedLines.push_back( "8 ; 300 ; GDH2 ; automat_13 ;  ;  ; agent_10 ; supply_0 ; 100 ; resource_0 ; 300 ; 200 ; 100" );
+        CheckFileContent( expectedLines, files[ 6 ] );
+    }
+
+    if( files.size() > 7 )
+    {
+        T_Lines expectedLines;
+        expectedLines.push_back( "request id ; tick ; GDH ; recipient ; provider ; transport provider ; conveyor ; state ; state end tick ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed" );
+        expectedLines.push_back( "7 ; 300 ; GDH2 ; automat_11 ; automat_8 ; automat_9 ; agent_10 ; supply_1 ; 200 ; resource_0 ; 300 ; 200 ; 100 ; resource_1 ; 310 ; 210 ; 110" );
+        expectedLines.push_back( "7 ; 300 ; GDH2 ; automat_12 ; automat_8 ; automat_9 ; agent_10 ; supply_1 ; 200" );
+        expectedLines.push_back( "7 ; 300 ; GDH2 ; automat_14 ; automat_8 ; automat_9 ; agent_10 ; supply_1 ; 200 ; resource_3 ; 120 ; 75 ; 50" );
+        CheckFileContent( expectedLines, files[ 7 ] );
+    }
+
+    if( files.size() > 8 )
+    {
+        T_Lines expectedLines;
+        expectedLines.push_back( "request id ; tick ; GDH ; recipient ; provider ; transport provider ; conveyor ; state ; state end tick ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed" );
+        expectedLines.push_back( "8 ; 300 ; GDH2 ; automat_13 ;  ;  ; agent_10 ; supply_1 ; 200 ; resource_0 ; 300 ; 200 ; 100" );
+        expectedLines.push_back( "8 ; 300 ; GDH2 ; automat_17 ;  ;  ; agent_10 ; supply_1 ; 200 ; resource_3 ; 180 ; 85 ; 80" );
+        expectedLines.push_back( "8 ; 300 ; GDH2 ; automat_18 ;  ;  ; agent_10 ; supply_1 ; 200 ; resource_4 ; 24 ; 23 ; 21" );
+        CheckFileContent( expectedLines, files[ 8 ] );
+    }
 }
