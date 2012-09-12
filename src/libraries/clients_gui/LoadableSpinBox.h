@@ -36,6 +36,7 @@ public:
     //@{
     int value() const;
     void setSuffix( const QString& );
+    void setSpecialValueText( const QString& );
     void setValue( int );
     //@}
 };

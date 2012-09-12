@@ -26,9 +26,9 @@ BypassPrototype_ABC::BypassPrototype_ABC( QWidget* parent )
 {
     QGridLayout* layout = new QGridLayout( this, 0, 2 );
     layout->addWidget( new QLabel( tools::translate( "gui::ByPassPrototype_ABC", "Value:" ) ) );
-    bypassConstructionPercentage_ = new LoadableSpinBox( 1, 100, 1, 0 );
+    bypassConstructionPercentage_ = new LoadableSpinBox( 0, 100, 1, 0 );
+    bypassConstructionPercentage_->setSpecialValueText( QString::null );
     bypassConstructionPercentage_->setSuffix( kernel::Units::percentage.AsString() );
-    bypassConstructionPercentage_->setValue( 100 );
     layout->addWidget( bypassConstructionPercentage_ );
 }
 
@@ -58,4 +58,3 @@ void BypassPrototype_ABC::SetLoader( ObjectPrototypeLoader_ABC* loader )
 {
     bypassConstructionPercentage_->SetLoader( loader );
 }
-
