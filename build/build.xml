@@ -527,7 +527,8 @@
 
     <target name="modules.perception_module_dll" depends="library.wrapper,modules.perception_module" description="build perception module dll">
         <build-lib name="perception_module_dll" outtype="shared" pattern="perception_module" depends="boost,xerces"
-                   libs="perception_module@{suffix},wrapper@{suffix}"/>
+            libs="perception_module@{suffix},wrapper@{suffix}"
+            failonwarning="${failonwarning}"/>
     </target>
 
     <target name="modules.perception_module_test" depends="modules.perception_module_dll">
