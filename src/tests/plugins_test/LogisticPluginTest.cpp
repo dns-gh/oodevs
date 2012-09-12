@@ -163,16 +163,6 @@ void ListDir( const bfs::path& path, T_FileList& files )
     std::sort( files.begin(), files.end() );
 }
 
-void CheckRegexps( const T_FileList& regexps, const T_FileList& files )
-{
-    BOOST_CHECK_EQUAL( regexps.size(), files.size() );
-    for( size_t i = 0; i != files.size(); ++i )
-    {
-        boost::regex re( regexps[i], boost::regex::perl );
-        BOOST_CHECK( boost::regex_match( files[i], re ) );
-    }
-}
-
 typedef std::vector< std::string > T_Lines;
 void CheckFileContent( T_Lines expected, const std::string& path )
 {
@@ -183,6 +173,26 @@ void CheckFileContent( T_Lines expected, const std::string& path )
         lines.push_back(line);
 
     BOOST_CHECK_EQUAL_COLLECTIONS( expected.begin(), expected.end(), lines.begin(), lines.end() );
+}
+
+struct LogFile
+{
+    LogFile( const std::string& r, const T_Lines& l ): regexp( r ), lines( l ) {}
+
+    std::string regexp;
+    T_Lines lines;
+};
+
+void CheckRegexps( const std::vector< LogFile >& logFiles, const T_FileList& files )
+{
+    BOOST_CHECK_EQUAL( logFiles.size(), files.size() );
+    for( size_t i = 0; i != files.size(); ++i )
+    {
+        boost::regex re( logFiles[i].regexp, boost::regex::perl );
+        BOOST_CHECK( boost::regex_match( files[i], re ) );
+
+        CheckFileContent( logFiles[i].lines, files[i] );
+    }
 }
 
 }  // namespace
@@ -510,99 +520,82 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
     T_FileList files;
     ListDir( tempDir.path(), files );
 
-    T_FileList expecteds;
-    expecteds.push_back( "^.*/funeral\\.20050220\\.0\\.csv$" );
-    expecteds.push_back( "^.*/funeral\\.20050220\\.1\\.csv$" );
-    expecteds.push_back( "^.*/maintenance\\.20010517\\.0\\.csv$" );
-    expecteds.push_back( "^.*/medical\\.20020126\\.0\\.csv$" );
-    expecteds.push_back( "^.*/medical\\.20020127\\.0\\.csv$" );
-    expecteds.push_back( "^.*/supply\\.20080921\\.0\\.csv$" );
-    expecteds.push_back( "^.*/supply\\.20080921\\.1\\.csv$" );
-    expecteds.push_back( "^.*/supply\\.20080922\\.0\\.csv$" );
-    expecteds.push_back( "^.*/supply\\.20080922\\.1\\.csv$" );
-    CheckRegexps( expecteds, files );
+    std::vector< LogFile > expecteds;
 
-    if( files.size() > 0 )
     {
         T_Lines expectedLines;
         expectedLines.push_back( "request id ; tick ; GDH ; unit ; handling unit ; conveying unit ; rank ; packaging resource ; state ; state end tick" );
         expectedLines.push_back( "7 ; 300 ; GDH2 ; agent_8 ;  ;  ; rank_0 ;  ;  ; " );
         expectedLines.push_back( "7 ; 300 ; GDH2 ; agent_8 ; automat_8 ; agent_9 ; rank_0 ; resource_10 ; funeral_0 ; " );
         expectedLines.push_back( "7 ; 300 ; GDH2 ; agent_8 ; automat_8 ; agent_9 ; rank_0 ; resource_10 ; funeral_1 ; 100" );
-        CheckFileContent( expectedLines, files[ 0 ] );
+        expecteds.push_back( LogFile( "^.*/funeral\\.20050220\\.0\\.csv$", expectedLines ) );
     }
 
-    if( files.size() > 1 )
     {
         T_Lines expectedLines;
         expectedLines.push_back( "request id ; tick ; GDH ; unit ; handling unit ; conveying unit ; rank ; packaging resource ; state ; state end tick" );
         expectedLines.push_back( "7 ; 300 ; GDH2 ; agent_8 ; automat_8 ; agent_9 ; rank_0 ; resource_10 ; funeral_2 ; 200" );
         expectedLines.push_back( "7 ; 300 ; GDH2 ; agent_8 ; automat_8 ; agent_9 ; rank_0 ; resource_10 ; funeral_3 ; 300" );
         expectedLines.push_back( "7 ; 300 ; GDH2 ; agent_8 ; automat_8 ; agent_9 ; rank_0 ; resource_10 ; funeral_4 ; 400" );
-        CheckFileContent( expectedLines, files[ 1 ] );
+        expecteds.push_back( LogFile( "^.*/funeral\\.20050220\\.1\\.csv$", expectedLines ) );
     }
 
-    if( files.size() > 2 )
     {
         T_Lines expectedLines;
         expectedLines.push_back( "request id ; tick ; GDH ; unit ; provider ; equipment ; breakdown ; state ; state end tick" );
         expectedLines.push_back( "7 ; 200 ; GDH1 ; agent_8 ;  ; equipment_10 ; breakdown_11 ;  ; " );
         expectedLines.push_back( "17 ; 300 ; GDH2 ; agent_18 ;  ; equipment_20 ; breakdown_21 ;  ; " );
         expectedLines.push_back( "7 ; 300 ; GDH2 ; agent_8 ; agent_12 ; equipment_10 ; breakdown_11 ; maintenance_0 ; 30" );
-        CheckFileContent( expectedLines, files[ 2 ] );
+        expecteds.push_back( LogFile( "^.*/maintenance\\.20010517\\.0\\.csv$", expectedLines ) );
     }
 
-    if( files.size() > 3 )
     {
         T_Lines expectedLines;
         expectedLines.push_back( "request id ; tick ; GDH ; unit ; provider ; rank ; wound ; nbc ; mental ; state ; state end tick" );
         expectedLines.push_back( "7 ; 300 ; GDH2 ; agent_8 ; agent_12 ; rank_0 ; wound_0 ; yes ; no ; medical_1 ; 40" );
-        CheckFileContent( expectedLines, files[ 3 ] );
+        expecteds.push_back( LogFile( "^.*/medical\\.20020126\\.0\\.csv$", expectedLines ) );
     }
 
-    if( files.size() > 4 )
     {
         T_Lines expectedLines;
         expectedLines.push_back( "request id ; tick ; GDH ; unit ; provider ; rank ; wound ; nbc ; mental ; state ; state end tick" );
         expectedLines.push_back( "7 ; 300 ; GDH2 ; agent_8 ; agent_12 ; rank_0 ; wound_0 ; yes ; no ; medical_2 ; 50" );
-        CheckFileContent( expectedLines, files[ 4 ] );
+        expecteds.push_back( LogFile( "^.*/medical\\.20020127\\.0\\.csv$", expectedLines ) );
     }
 
-    if( files.size() > 5 )
     {
         T_Lines expectedLines;
         expectedLines.push_back( "request id ; tick ; GDH ; recipient ; provider ; transport provider ; conveyor ; state ; state end tick ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed" );
         expectedLines.push_back( "7 ; 300 ; GDH2 ;  ; automat_8 ; automat_9 ;  ;  ; " );
         expectedLines.push_back( "7 ; 300 ; GDH2 ; automat_11 ; automat_8 ; automat_9 ; agent_10 ; supply_0 ; 100 ; resource_0 ; 300 ; 200 ; 100 ; resource_1 ; 310 ; 210 ; 110" );
         expectedLines.push_back( "7 ; 300 ; GDH2 ; automat_12 ; automat_8 ; automat_9 ; agent_10 ; supply_0 ; 100 ; resource_3 ; 120 ; 75 ; 50" );
-        CheckFileContent( expectedLines, files[ 5 ] );
+        expecteds.push_back( LogFile( "^.*/supply\\.20080921\\.0\\.csv$", expectedLines ) );
     }
 
-    if( files.size() > 6 )
     {
         T_Lines expectedLines;
         expectedLines.push_back( "request id ; tick ; GDH ; recipient ; provider ; transport provider ; conveyor ; state ; state end tick ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed" );
         expectedLines.push_back( "8 ; 300 ; GDH2 ; automat_13 ;  ;  ; agent_10 ; supply_0 ; 100 ; resource_0 ; 300 ; 200 ; 100" );
-        CheckFileContent( expectedLines, files[ 6 ] );
+        expecteds.push_back( LogFile( "^.*/supply\\.20080921\\.1\\.csv$", expectedLines ) );
     }
 
-    if( files.size() > 7 )
     {
         T_Lines expectedLines;
         expectedLines.push_back( "request id ; tick ; GDH ; recipient ; provider ; transport provider ; conveyor ; state ; state end tick ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed" );
         expectedLines.push_back( "7 ; 300 ; GDH2 ; automat_11 ; automat_8 ; automat_9 ; agent_10 ; supply_1 ; 200 ; resource_0 ; 300 ; 200 ; 100 ; resource_1 ; 310 ; 210 ; 110" );
         expectedLines.push_back( "7 ; 300 ; GDH2 ; automat_12 ; automat_8 ; automat_9 ; agent_10 ; supply_1 ; 200" );
         expectedLines.push_back( "7 ; 300 ; GDH2 ; automat_14 ; automat_8 ; automat_9 ; agent_10 ; supply_1 ; 200 ; resource_3 ; 120 ; 75 ; 50" );
-        CheckFileContent( expectedLines, files[ 7 ] );
+        expecteds.push_back( LogFile( "^.*/supply\\.20080922\\.0\\.csv$", expectedLines ) );
     }
 
-    if( files.size() > 8 )
     {
         T_Lines expectedLines;
         expectedLines.push_back( "request id ; tick ; GDH ; recipient ; provider ; transport provider ; conveyor ; state ; state end tick ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed" );
         expectedLines.push_back( "8 ; 300 ; GDH2 ; automat_13 ;  ;  ; agent_10 ; supply_1 ; 200 ; resource_0 ; 300 ; 200 ; 100" );
         expectedLines.push_back( "8 ; 300 ; GDH2 ; automat_17 ;  ;  ; agent_10 ; supply_1 ; 200 ; resource_3 ; 180 ; 85 ; 80" );
         expectedLines.push_back( "8 ; 300 ; GDH2 ; automat_18 ;  ;  ; agent_10 ; supply_1 ; 200 ; resource_4 ; 24 ; 23 ; 21" );
-        CheckFileContent( expectedLines, files[ 8 ] );
+        expecteds.push_back( LogFile( "^.*/supply\\.20080922\\.1\\.csv$", expectedLines ) );
     }
+
+    CheckRegexps( expecteds, files );
 }
