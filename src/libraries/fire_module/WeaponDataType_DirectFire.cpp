@@ -21,7 +21,7 @@
 using namespace sword;
 using namespace sword::fire;
 
-DECLARE_HOOK( GetVolumeId, unsigned int, ( const char* type ) )
+DECLARE_HOOK( GetVolumeId, size_t, ( const char* type ) )
 DECLARE_HOOK( GetDistance, double, ( const SWORD_Model* firer, const SWORD_Model* target ) )
 DECLARE_HOOK( GetFireRandomNumber, double, ( double min, double max ) )
 
@@ -44,7 +44,7 @@ void WeaponDataType_DirectFire::InitializePH( xml::xistream& xis )
 {
     std::string targetType;
     xis >> xml::attribute( "target", targetType );
-    unsigned int id = GET_HOOK( GetVolumeId )( targetType.c_str() );
+    std::size_t id = GET_HOOK( GetVolumeId )( targetType.c_str() );
     if( phs_.size() <= id )
         phs_.resize( id + 1 );
     MT_InterpolatedFunction< double >& phFunction = phs_[ id ]; // $$$$ MCO 2012-04-30: how to handle unknown type ?

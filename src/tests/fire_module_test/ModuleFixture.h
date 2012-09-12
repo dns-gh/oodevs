@@ -44,7 +44,7 @@
     APPLY( IsTemporarilyBlocked, 2, bool, ( const SWORD_Model* entity, std::size_t nUrbanCoefficient ) ) \
     APPLY( GetFireRandomInteger, 2, size_t, ( size_t min, size_t max ) ) \
     APPLY( GetFireRandomNumber, 2, double, ( double min, double max ) ) \
-    APPLY( GetVolumeId, 1, unsigned int, ( const char* type ) ) \
+    APPLY( GetVolumeId, 1, size_t, ( const char* type ) ) \
     APPLY( CanComponentBeFiredAt, 1, bool, ( const SWORD_Model* component ) ) \
     APPLY( GetPhModificator, 3, double, ( const SWORD_Model* firer, const SWORD_Model* target, const char* launcher ) ) \
     APPLY( GetPhModificator2, 1, double, ( const char* launcher ) ) \

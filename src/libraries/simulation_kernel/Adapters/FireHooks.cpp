@@ -143,7 +143,7 @@ namespace
         using namespace dotation;
         return (unsigned int)GET_ROLE( firer, PHY_RoleInterface_Dotations ).AddFireReservation( *category, nNbrAmmoToFire );
     }
-    DEFINE_HOOK( GetVolumeId, unsigned int, ( const char* type ) )
+    DEFINE_HOOK( GetVolumeId, size_t, ( const char* type ) )
     {
         const PHY_Volume::T_VolumeMap& volumes = PHY_Volume::GetVolumes();
         PHY_Volume::CIT_VolumeMap it = volumes.find( type );
