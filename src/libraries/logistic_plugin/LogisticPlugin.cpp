@@ -120,8 +120,8 @@ void LogisticPlugin::Receive( const sword::SimToClient& message, const bg::date&
 // -----------------------------------------------------------------------------
 int LogisticPlugin::GetConsignCount( E_LogisticType eLogisticType ) const
 {
-    int resolverIndex = static_cast< int >( eLogisticType );
-    if( resolverIndex < static_cast< int >( resolvers_.size() ) )
+    size_t resolverIndex = static_cast< size_t >( eLogisticType );
+    if( resolverIndex < resolvers_.size() )
     {
         const ConsignResolver_ABC* pResolver = resolvers_[ resolverIndex ];
         if( pResolver )
