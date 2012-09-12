@@ -226,7 +226,8 @@
                   lib${ant.project.name}_actions-${platform}-mt@{suffix},
                   lib${ant.project.name}_crossbow_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
-                  lib${ant.project.name}_tools-${platform}-mt@{suffix}">
+                  lib${ant.project.name}_tools-${platform}-mt@{suffix}"
+            failonwarning="${failonwarning}">
             <defineset define="CROSSBOW_PLUGIN_DLL_EXPORTS"/>
         </build-plugin>
     </target>
