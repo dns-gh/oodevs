@@ -159,6 +159,7 @@ integration.getROE = function()
 end
 
 integration.setCompanyROE = function( etatROE )
+   DEC_Trace( "etatROE = "..tostring( etatROE ) )
    DEC_Automate_ChangeEtatROE( etatROE )
    integration.CR_ROE ( etatROE )
 end
