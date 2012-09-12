@@ -19,11 +19,11 @@ namespace
         {}
         void TogglePerception( bool isActivated )
         {
-            commands.Start( "toggle perception",
+            StartCommand( "toggle perception",
                 core::MakeModel( "identifier", identifier )
                                ( "perception", "my_perception" )
                                ( "activated", isActivated ) );
-            commands.Execute();
+            ExecuteCommands();
         }
         const size_t identifier;
     };
@@ -71,11 +71,11 @@ namespace
             core::Model& radar = model[ "entities" ][ identifier ][ "perceptions/radars" ][ radarName ][ "activated" ];
             radar = false;
             ExpectEffect( radar, sword::test::MakeModel( true ) );
-            int command = commands.Start( "toggle radar",
+            int command = StartCommand( "toggle radar",
                 core::MakeModel( "identifier", identifier )
                                ( "radar-class", radarClass )
                                ( "activated", isActivated ) );
-            commands.Execute();
+            ExecuteCommands();
             commands.Stop( command );
         }
         const size_t identifier;
@@ -94,7 +94,7 @@ BOOST_FIXTURE_TEST_CASE( toggle_radar_command_notify_error_log_if_radar_class_is
     model[ "entities" ][ identifier ][ "perceptions/radars/unknown/activated" ] = false;
     const int unknwownRadar = 3;
     MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR, mock::any );
-    commands.Start( "toggle radar",
+    StartCommand( "toggle radar",
         core::MakeModel( "identifier", identifier )
                        ( "radar-class", unknwownRadar )
                        ( "activated", true ) );
@@ -110,13 +110,13 @@ BOOST_FIXTURE_TEST_CASE( activated_radar_localization_is_forwarded_to_effect, sw
     ExpectEffect( radar, sword::test::MakeModel( perceptionId,
                             sword::test::MakeModel( "localization", sword::test::MakeUserData( &localization ) )
                                                   ( "perception-id", perceptionId ) ) );
-    commands.Start( "toggle localized radar",
+    StartCommand( "toggle localized radar",
         core::MakeModel( "identifier", identifier )
                        ( "radar-class", tapping )
                        ( "activated", true )
                        ( "perception-id", perceptionId )
                        ( "localization", sword::test::MakeUserData( &localization ) ) );
-    commands.Execute();
+    ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( deactivated_radar_resets_localization, sword::perception::ModuleFixture )
@@ -127,12 +127,12 @@ BOOST_FIXTURE_TEST_CASE( deactivated_radar_resets_localization, sword::perceptio
     core::Model& radar = model[ "entities" ][ identifier ][ "perceptions/localized-radars/tapping" ];
     radar[ perceptionId ];
     ExpectEffect( radar, sword::test::MakeModel( perceptionId, sword::test::MarkForRemove() ) );
-    commands.Start( "toggle localized radar",
+    StartCommand( "toggle localized radar",
         core::MakeModel( "identifier", identifier )
                        ( "radar-class", tapping )
                        ( "activated", false )
                        ( "perception-id", perceptionId ) );
-    commands.Execute();
+    ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( activating_localized_detection_localization_is_forwarded_to_effect, sword::perception::ModuleFixture )
@@ -143,13 +143,13 @@ BOOST_FIXTURE_TEST_CASE( activating_localized_detection_localization_is_forwarde
     core::Model& perception = model[ "entities" ][ identifier ][ "perceptions/my-perception" ];
     ExpectEffect( perception, sword::test::MakeModel( perceptionId,
                                 sword::test::MakeModel( "localization", sword::test::MakeUserData( &localization ) ) ) );
-    commands.Start( "toggle localized perception",
+    StartCommand( "toggle localized perception",
         core::MakeModel( "identifier", identifier )
                        ( "activated", true )
                        ( "perception", "my-perception" )
                        ( "perception-id", perceptionId )
                        ( "localization", sword::test::MakeUserData( &localization ) ) );
-    commands.Execute();
+    ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( deactivating_localized_perception_removes_perception_node_and_sends_event, sword::perception::ModuleFixture )
@@ -160,12 +160,12 @@ BOOST_FIXTURE_TEST_CASE( deactivating_localized_perception_removes_perception_no
     perception[ perceptionId ];
     ExpectEffect( perception, sword::test::MakeModel( perceptionId, sword::test::MarkForRemove() ) );
     ExpectEvent( "my-perception disabled", sword::test::MakeModel( "entity", identifier ) );
-    commands.Start( "toggle localized perception",
+    StartCommand( "toggle localized perception",
         core::MakeModel( "identifier", identifier )
                        ( "activated", false )
                        ( "perception", "my-perception" )
                        ( "perception-id", perceptionId ) );
-    commands.Execute();
+    ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( activating_reco_forwards_localization_and_growth_speed_to_effect, sword::perception::ModuleFixture )
@@ -180,14 +180,14 @@ BOOST_FIXTURE_TEST_CASE( activating_reco_forwards_localization_and_growth_speed_
                                                                                     ( "max-radius-reached", false )
                                                                                     ( "perception-id", perceptionId )
                                                                                     ( "localization", sword::test::MakeUserData( &localization ) ) ) );
-    commands.Start( "toggle reco",
+    StartCommand( "toggle reco",
         core::MakeModel( "identifier", identifier )
                        ( "activated", true )
                        ( "perception-id", perceptionId )
                        ( "has-growth-speed", true )
                        ( "growth-speed", 31 )
                        ( "localization", sword::test::MakeUserData( &localization ) ) );
-    commands.Execute();
+    ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( deactivating_reco_resets_localization, sword::perception::ModuleFixture )
@@ -196,11 +196,11 @@ BOOST_FIXTURE_TEST_CASE( deactivating_reco_resets_localization, sword::perceptio
     const size_t perceptionId = 1337;
     core::Model& reco = model[ "entities" ][ identifier ][ "perceptions/reco" ];
     ExpectEffect( reco, sword::test::MakeModel( perceptionId, sword::test::MarkForRemove() ) );
-    commands.Start( "toggle reco",
+    StartCommand( "toggle reco",
         core::MakeModel( "identifier", identifier )
                        ( "activated", false )
                        ( "perception-id", perceptionId ) );
-    commands.Execute();
+    ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( activating_object_detection_forwards_localization_and_speed_to_effect, sword::perception::ModuleFixture )
@@ -217,7 +217,7 @@ BOOST_FIXTURE_TEST_CASE( activating_object_detection_forwards_localization_and_s
                                                                           ( "center/x", 1 )
                                                                           ( "center/y", 2 )
                                                                           ( "localization", 43 ) ) );
-    commands.Start( "toggle object detection",
+    StartCommand( "toggle object detection",
         core::MakeModel( "identifier", identifier )
                        ( "activated", true )
                        ( "perception-id", perceptionId )
@@ -225,7 +225,7 @@ BOOST_FIXTURE_TEST_CASE( activating_object_detection_forwards_localization_and_s
                        ( "center/x", 1 )
                        ( "center/y", 2 )
                        ( "localization", 43 ) );
-    commands.Execute();
+    ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( deactivating_object_detection_resets_localization, sword::perception::ModuleFixture )
@@ -234,11 +234,11 @@ BOOST_FIXTURE_TEST_CASE( deactivating_object_detection_resets_localization, swor
     const size_t perceptionId = 1337;
     core::Model& object = model[ "entities" ][ identifier ][ "perceptions/object-detection" ];
     ExpectEffect( object, sword::test::MakeModel( perceptionId, sword::test::MarkForRemove() ) );
-    commands.Start( "toggle object detection",
+    StartCommand( "toggle object detection",
         core::MakeModel( "identifier", identifier )
                        ( "activated", false )
                        ( "perception-id", perceptionId ) );
-    commands.Execute();
+    ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( activating_recognition_point_forwards_center_and_speed_to_effect, sword::perception::ModuleFixture )
@@ -256,7 +256,7 @@ BOOST_FIXTURE_TEST_CASE( activating_recognition_point_forwards_center_and_speed_
                                                   ( "max-radius-reached", false )
                                                   ( "center/x", 1 )
                                                   ( "center/y", 2 ) ) );
-    commands.Start( "toggle recognition point",
+    StartCommand( "toggle recognition point",
         core::MakeModel( "identifier", identifier )
                        ( "activated", true )
                        ( "perception-id", perceptionId )
@@ -264,7 +264,7 @@ BOOST_FIXTURE_TEST_CASE( activating_recognition_point_forwards_center_and_speed_
                        ( "max-radius", size )
                        ( "center/x", 1 )
                        ( "center/y", 2 ) );
-    commands.Execute();
+    ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( deactivating_recognition_point, sword::perception::ModuleFixture )
@@ -273,11 +273,11 @@ BOOST_FIXTURE_TEST_CASE( deactivating_recognition_point, sword::perception::Modu
     const size_t perceptionId = 1337;
     core::Model& object = model[ "entities" ][ identifier ][ "perceptions/recognition-point" ];
     ExpectEffect( object, sword::test::MakeModel( perceptionId, sword::test::MarkForRemove() ) );
-    commands.Start( "toggle recognition point",
+    StartCommand( "toggle recognition point",
         core::MakeModel( "identifier", identifier )
                        ( "activated", false )
                        ( "perception-id", perceptionId ) );
-    commands.Execute();
+    ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( activating_alat_monitoring_localization_computes_vision_objects_steps, sword::perception::ModuleFixture )
@@ -293,12 +293,12 @@ BOOST_FIXTURE_TEST_CASE( activating_alat_monitoring_localization_computes_vision
                                                       ( "empty-detection-time-step", mock::any )
                                                       ( "urban-detection-time-step", mock::any ) ) );
     MOCK_EXPECT( GetVisionObjectsInSurface ).once();
-    commands.Start( "toggle alat monitoring",
+    StartCommand( "toggle alat monitoring",
         core::MakeModel( "identifier", identifier )
                        ( "activated", true )
                        ( "perception-id", perceptionId )
                        ( "localization", sword::test::MakeUserData( &localization ) ) );
-    commands.Execute();
+    ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( deactivating_alat_monitoring_perception_removes_perception_node, sword::perception::ModuleFixture )
@@ -308,9 +308,9 @@ BOOST_FIXTURE_TEST_CASE( deactivating_alat_monitoring_perception_removes_percept
     core::Model& perception = model[ "entities" ][ identifier ][ "perceptions/alat/monitoring" ];
     perception[ perceptionId ];
     ExpectEffect( perception, sword::test::MakeModel( perceptionId, sword::test::MarkForRemove() ) );
-    commands.Start( "toggle alat monitoring",
+    StartCommand( "toggle alat monitoring",
         core::MakeModel( "identifier", identifier )
                        ( "activated", false )
                        ( "perception-id", perceptionId ) );
-    commands.Execute();
+    ExecuteCommands();
 }

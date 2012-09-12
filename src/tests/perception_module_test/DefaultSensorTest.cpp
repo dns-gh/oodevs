@@ -49,8 +49,8 @@ BOOST_FIXTURE_TEST_CASE( agents_in_list_are_identified_with_default_sensor, Perc
                                                                ( "level", 3 ) // identified
                                                                ( "recorded", false ) ]
                                        [ sword::test::MakeModel( mock::any ) ] );
-    commands.Post( "perception", core::MakeModel( "identifier", identifier ) );
-    commands.Execute();
+    PostCommand( "perception", core::MakeModel( "identifier", identifier ) );
+    ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( objects_in_list_are_identified_with_default_sensor, PerceptionCommandFixture )
@@ -68,8 +68,8 @@ BOOST_FIXTURE_TEST_CASE( objects_in_list_are_identified_with_default_sensor, Per
     ExpectNotifications( "objects", sword::test::MakeModel()[ sword::test::MakeModel( "target", 42 )
                                                                                     ( "level", 3 ) // identified
                                                                                     ( "recorded", false ) ] );
-    commands.Post( "perception", core::MakeModel( "identifier", identifier ) );
-    commands.Execute();
+    PostCommand( "perception", core::MakeModel( "identifier", identifier ) );
+    ExecuteCommands();
 }
 
 namespace
@@ -104,8 +104,8 @@ BOOST_FIXTURE_TEST_CASE( population_flows_in_list_are_identified_with_default_se
                                                                                            [ sword::test::MakeModel( "x", 2. )( "y", 0. ) ] ) ] );
     ExpectEvent( "report", sword::test::MakeModel( "entity", identifier )
                                                  ( "code", MIL_Report::eReport_CiviliansEncountered ) );
-    commands.Post( "perception", core::MakeModel( "identifier", identifier ) );
-    commands.Execute();
+    PostCommand( "perception", core::MakeModel( "identifier", identifier ) );
+    ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( population_concentrations_in_list_are_identified_with_default_sensor, PerceptionCommandFixture )
@@ -124,6 +124,6 @@ BOOST_FIXTURE_TEST_CASE( population_concentrations_in_list_are_identified_with_d
                                                                                                       ( "recorded", false ) ] );
     ExpectEvent( "report", sword::test::MakeModel( "entity", identifier )
                                                  ( "code", MIL_Report::eReport_CiviliansEncountered ) );
-    commands.Post( "perception", core::MakeModel( "identifier", identifier ) );
-    commands.Execute();
+    PostCommand( "perception", core::MakeModel( "identifier", identifier ) );
+    ExecuteCommands();
 }

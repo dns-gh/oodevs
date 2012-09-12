@@ -18,7 +18,7 @@ namespace
         FireFixture()
         {
             ExpectCallback( 4 );
-            commands.Start( "direct fire command",
+            StartCommand( "direct fire command",
                 core::MakeModel( "identifier", 42 )
                     ( "enemy", 51 )
                     ( "percentage", 7 )
@@ -38,21 +38,21 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_impossible_if_target_knowle
 {
     target[ "valid" ] = false;
     ExpectCallback( 0 );
-    commands.Execute();
+    ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_enemy_destroyed_if_target_is_dead, FireFixture )
 {
     target[ "dead" ] = true;
     ExpectCallback( 1 );
-    commands.Execute();
+    ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_temporary_blocked_when_blocked_with_default_coefficient, FireFixture )
 {
     MOCK_EXPECT( IsTemporarilyBlocked ).once().with( firer, 100u ).returns( true );
     ExpectCallback( 6 );
-    commands.Execute();
+    ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_temporary_blocked_when_blocked_with_custom_coefficient, FireFixture )
@@ -63,21 +63,21 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_temporary_blocked_when_bloc
                           "</decisional>", 10 );
     MOCK_EXPECT( IsTemporarilyBlocked ).once().with( firer, 42u ).returns( true );
     ExpectCallback( 6 );
-    commands.Execute();
+    ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_no_capacity_if_target_has_no_component_when_not_blockable, FireFixture )
 {
     MOCK_EXPECT( IsTemporarilyBlocked ).once().returns( false );
     ExpectCallback( 2 );
-    commands.Execute();
+    ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_no_capacity_if_target_has_no_component, FireFixture )
 {
     MOCK_EXPECT( IsTemporarilyBlocked ).once().returns( false );
     ExpectCallback( 2 );
-    commands.Execute();
+    ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_no_capacity_if_firer_has_no_weapon, FireFixture )
@@ -85,7 +85,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_no_capacity_if_firer_has_no
     entity[ "components" ].AddElement()[ "weapons" ];
     MOCK_EXPECT( IsTemporarilyBlocked ).once().returns( false );
     ExpectCallback( 2 );
-    commands.Execute();
+    ExecuteCommands();
 }
 
 namespace
@@ -110,7 +110,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_no_capacity_if_firer_cannot
 {
     MOCK_EXPECT( CanFire ).with( mock::any, mock::any, 0, 0 ).returns( false );
     ExpectCallback( 2 );
-    commands.Execute();
+    ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_no_ammunition_when_out_of_dotation, WeaponFixture )
@@ -118,7 +118,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_no_ammunition_when_out_of_d
     MOCK_EXPECT( CanFire ).returns( true );
     MOCK_EXPECT( HasDotation ).once().with( firer, ammo_1 ).returns( false );
     ExpectCallback( 3 );
-    commands.Execute();
+    ExecuteCommands();
 }
 
 namespace
@@ -142,7 +142,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_enemy_destroyed_when_enemy_
             ( "enemy", 43 )
             ( "report", true )
             ( "paused", false ) );
-    commands.Execute();
+    ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_enemy_destroyed_when_no_component_can_be_found_to_fire_at, FiringFixture )
@@ -155,7 +155,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_enemy_destroyed_when_no_com
             ( "enemy", 43 )
             ( "report", true )
             ( "paused", false ) );
-    commands.Execute();
+    ExecuteCommands();
 }
 
 namespace
@@ -200,7 +200,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_running_and_no_hit_when_fir
             ( "running", true )
             ( "use-ph", true )
             ( "missed", true ) );
-    commands.Execute();
+    ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_running_and_hit_when_firing_at_enemy, OneAtOneFiringFixture )
@@ -224,7 +224,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_running_and_hit_when_firing
             ( "running", true )
             ( "use-ph", true )
             ( "missed", false ) );
-    commands.Execute();
+    ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_running_and_no_hit_when_weapon_not_ready, OneAtOneFiringFixture )
@@ -250,7 +250,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_running_and_no_hit_when_wea
             ( "missed", false ) );
 
     ExpectCallback( 4 );
-    commands.Start( "direct fire command",
+    StartCommand( "direct fire command",
         core::MakeModel( "identifier", 42 )
             ( "enemy", 51 )
             ( "percentage", 7 )
@@ -258,7 +258,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_running_and_no_hit_when_wea
             ( "dotation", 0 ) );
     ExpectCallback( 4 );
 
-    commands.Execute();
+    ExecuteCommands();
 
     ExpectCallback( 5 );
     ExpectEvent( "direct fire pion", sword::test::MakeModel( "entity", 42 )( "running", false ) );

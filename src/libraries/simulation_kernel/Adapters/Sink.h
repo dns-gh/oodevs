@@ -44,6 +44,7 @@ public:
     //@{
     virtual void ExecuteCommands();
     virtual void ApplyEffects();
+    virtual void ExecutePerceptions();
     virtual void UpdateModel( unsigned int tick, int duration );
 
     void PostCommand( const std::string& type, const core::Model& parameters );

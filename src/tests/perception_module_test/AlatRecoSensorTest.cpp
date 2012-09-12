@@ -30,6 +30,6 @@ BOOST_FIXTURE_TEST_CASE( alat_reco_sensor_recognized_all_agents_in_location_depe
                                                             ( "level", 2 ) // recognized
                                                             ( "recorded", false ) ]
                                     [ sword::test::MakeModel( mock::any ) ] );
-    commands.Post( "perception", core::MakeModel( "identifier", identifier ) );
-    commands.Execute();
+    PostCommand( "perception", core::MakeModel( "identifier", identifier ) );
+    ExecuteCommands();
 }

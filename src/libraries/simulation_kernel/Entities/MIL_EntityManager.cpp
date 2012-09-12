@@ -674,6 +674,7 @@ void MIL_EntityManager::UpdateKnowledges()
     try
     {
         int currentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+        sink_->ExecutePerceptions();
         armyFactory_->Apply( boost::bind( &MIL_Army_ABC::UpdateKnowledges, _1, boost::ref( currentTimeStep ) ) );
         populationFactory_->Apply( boost::bind( &MIL_Population::UpdateKnowledges, _1 ) );
         armyFactory_->Apply( boost::bind( &MIL_Army_ABC::CleanKnowledges, _1 ) );

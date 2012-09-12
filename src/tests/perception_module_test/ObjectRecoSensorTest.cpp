@@ -39,6 +39,6 @@ BOOST_FIXTURE_TEST_CASE( perception_reco_object_sensor_identifies_all_objects_in
                                     [ sword::test::MakeModel( "target", 666 )
                                                             ( "level", 3 ) // identified
                                                             ( "recorded", false ) ] );
-    commands.Post( "perception", core::MakeModel( "identifier", identifier ) );
-    commands.Execute();
+    PostCommand( "perception", core::MakeModel( "identifier", identifier ) );
+    ExecuteCommands();
 }

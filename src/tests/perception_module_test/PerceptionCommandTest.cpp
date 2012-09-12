@@ -22,8 +22,8 @@ BOOST_FIXTURE_TEST_CASE( perception_command_identifies_at_least_itself, Percepti
                                                                  [ sword::test::MakeModel( "level", 3 )
                                                                                          ( "target", 1337 )
                                                                                          ( "recorded", false ) ] );
-    commands.Post( "perception", core::MakeModel( "identifier", identifier ) );
-    commands.Execute();
+    PostCommand( "perception", core::MakeModel( "identifier", identifier ) );
+    ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( perception_command_identifies_its_transporter, PerceptionCommandFixture )
@@ -38,8 +38,8 @@ BOOST_FIXTURE_TEST_CASE( perception_command_identifies_its_transporter, Percepti
                                        [ sword::test::MakeModel( "level", 3 )
                                                                ( "target", 1818 )
                                                                ( "recorded", false ) ] );
-    commands.Post( "perception", core::MakeModel( "identifier", identifier ) );
-    commands.Execute();
+    PostCommand( "perception", core::MakeModel( "identifier", identifier ) );
+    ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( perception_command_identifies_urban_objects_in_list, PerceptionCommandFixture )
@@ -51,15 +51,15 @@ BOOST_FIXTURE_TEST_CASE( perception_command_identifies_urban_objects_in_list, Pe
     ExpectNotifications( "urban-blocks", sword::test::MakeModel()
                                              [ sword::test::MakeModel( "level", 3 )
                                                                      ( "target", reinterpret_cast< size_t >( urbanObject ) ) ] );
-    commands.Post( "perception", core::MakeModel( "identifier", identifier ) );
-    commands.Execute();
+    PostCommand( "perception", core::MakeModel( "identifier", identifier ) );
+    ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( perception_command_updates_next_peripherical_vision_step, PerceptionCommandFixture )
 {
     ExpectNotifications();
-    commands.Post( "perception", core::MakeModel( "identifier", identifier ) );
-    commands.Execute();
+    PostCommand( "perception", core::MakeModel( "identifier", identifier ) );
+    ExecuteCommands();
     mock::verify();
     model[ "tick" ] = 1;
     ExpectEffect( entity[ "perceptions/peripherical-vision" ], sword::test::MakeModel( "next-tick", 13 )
@@ -68,15 +68,15 @@ BOOST_FIXTURE_TEST_CASE( perception_command_updates_next_peripherical_vision_ste
     ExpectEffect( entity[ "perceptions/max-theoretical-agent-perception-distance" ] );
     ExpectEffect( entity[ "perceptions/main-perception-direction" ] );
     ExpectNotifications();
-    commands.Post( "perception", core::MakeModel( "identifier", identifier ) );
-    commands.Execute();
+    PostCommand( "perception", core::MakeModel( "identifier", identifier ) );
+    ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( perception_command_with_direction_vision_uses_movement_direction_as_main_perception_direction, PerceptionCommandFixture )
 {
     ExpectNotifications();
-    commands.Post( "perception", core::MakeModel( "identifier", identifier ) );
-    commands.Execute();
+    PostCommand( "perception", core::MakeModel( "identifier", identifier ) );
+    ExecuteCommands();
     mock::verify();
     model[ "tick" ] = 1;
     entity[ "perceptions/vision/mode" ] = "direction";
@@ -88,15 +88,15 @@ BOOST_FIXTURE_TEST_CASE( perception_command_with_direction_vision_uses_movement_
     ExpectEffect( entity[ "perceptions/main-perception-direction" ], sword::test::MakeModel( "x", 42. )
                                                                                            ( "y", 43. ) );
     ExpectNotifications();
-    commands.Post( "perception", core::MakeModel( "identifier", identifier ) );
-    commands.Execute();
+    PostCommand( "perception", core::MakeModel( "identifier", identifier ) );
+    ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( perception_command_with_location_vision_mode_computes_location_direction_as_main_perception_direction, PerceptionCommandFixture )
 {
     ExpectNotifications();
-    commands.Post( "perception", core::MakeModel( "identifier", identifier ) );
-    commands.Execute();
+    PostCommand( "perception", core::MakeModel( "identifier", identifier ) );
+    ExecuteCommands();
     mock::verify();
     model[ "tick" ] = 1;
     entity[ "perceptions/vision/mode" ] = "location";
@@ -108,6 +108,6 @@ BOOST_FIXTURE_TEST_CASE( perception_command_with_location_vision_mode_computes_l
     ExpectEffect( entity[ "perceptions/main-perception-direction" ], sword::test::MakeModel( "x", 0 )
                                                                                            ( "y", -1 ) );
     ExpectNotifications();
-    commands.Post( "perception", core::MakeModel( "identifier", identifier ) );
-    commands.Execute();
+    PostCommand( "perception", core::MakeModel( "identifier", identifier ) );
+    ExecuteCommands();
 }

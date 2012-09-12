@@ -39,12 +39,12 @@ BOOST_FIXTURE_TEST_CASE( simple_flood_propagation, sword::propagation::ModuleFix
             if( std::abs( i ) != 2 || std::abs( j ) != 2 )
                 MOCK_EXPECT( GetAltitude ).once().with( i * 100.f, j * 100.f ).returns( 0 );
 
-    commands.Post( "flood command", core::MakeModel( "center", core::MakeModel( "x", 0.f )
+    PostCommand( "flood command", core::MakeModel( "center", core::MakeModel( "x", 0.f )
                                                                               ( "y", 0.f ) )
                                                    ( "depth", 50 )
                                                    ( "radius", 200 )
                                                    ( "identifier", identifier ) );
-    commands.Execute();
+    ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( flood_propagation, sword::propagation::ModuleFixture )
@@ -93,10 +93,10 @@ BOOST_FIXTURE_TEST_CASE( flood_propagation, sword::propagation::ModuleFixture )
     MOCK_EXPECT( GetAltitude ).once().with( -200, 100.f ).returns( 0 );
     MOCK_EXPECT( GetAltitude ).once().with( -100, 200.f ).returns( 0 );
 
-    commands.Post( "flood command", core::MakeModel( "center", core::MakeModel( "x", 0.f )
+    PostCommand( "flood command", core::MakeModel( "center", core::MakeModel( "x", 0.f )
                                                                               ( "y", 0.f ) )
                                                    ( "depth", 50 )
                                                    ( "radius", 200 )
                                                    ( "identifier", identifier ) );
-    commands.Execute();
+    ExecuteCommands();
 }

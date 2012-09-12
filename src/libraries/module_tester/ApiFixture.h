@@ -322,6 +322,19 @@ namespace core
         {
             BOOST_FAIL( message );
         }
+        void PostCommand( const std::string& name, const Model& parameters )
+        {
+            commands.Post( "default", name, parameters );
+        }
+        size_t StartCommand( const std::string& name, const Model& parameters )
+        {
+            return commands.Start( "default", name, parameters );
+        }
+        void ExecuteCommands()
+        {
+            commands.Execute( "default" );
+        }
+
         core::Model model;
         core::Commands commands;
         core::Hooks hooks;

@@ -34,6 +34,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void ExecutePerceptions() = 0;
     virtual void ExecuteCommands() = 0;
     virtual void ApplyEffects() = 0;
     virtual void UpdateModel( unsigned int tick, int duration ) = 0;

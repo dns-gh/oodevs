@@ -13,21 +13,21 @@
 BOOST_FIXTURE_TEST_CASE( orientate_command_changes_the_direction, sword::movement::ModuleFixture )
 {
     const int identifier = 77;
-    commands.Start( "orientate",
+    StartCommand( "orientate",
         core::MakeModel( "identifier", identifier )
             ( "direction/x", 12 )
             ( "direction/y", 42 ) );
     ExpectEffect( model[ "entities" ][ identifier ][ "movement" ], sword::test::MakeModel( "direction/x", 12 )
                                                                                          ( "direction/y", 42 ) );
-    commands.Execute();
+    ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( paused_orientate_command_does_nothing, sword::movement::ModuleFixture )
 {
     commands.Pause(
-        commands.Start( "orientate",
+        StartCommand( "orientate",
             core::MakeModel( "identifier", 77 )
                 ( "direction/x", 12 )
                 ( "direction/y", 42 ) ) );
-    commands.Execute();
+    ExecuteCommands();
 }

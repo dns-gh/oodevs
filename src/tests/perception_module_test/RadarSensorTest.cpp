@@ -43,8 +43,8 @@ namespace
                                                                     ( "level", identificationLevel )
                                                                     ( "recorded", false ) ]
                                             [ sword::test::MakeModel( mock::any ) ] );
-            commands.Post( "perception", core::MakeModel( "identifier", identifier ) );
-            commands.Execute();
+            PostCommand( "perception", core::MakeModel( "identifier", identifier ) );
+            ExecuteCommands();
             model[ "tick" ] = model[ "tick" ] + 1;
         }
     };

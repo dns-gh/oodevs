@@ -23,8 +23,8 @@ BOOST_FIXTURE_TEST_CASE( identify_all_agents_in_zone_command_notifies_perception
                           [ sword::test::MakeModel( "level", 3 )
                                                   ( "target", 43 )
                                                   ( "recorded", false ) ] );
-    commands.Start( "identify all agents in zone",
+    StartCommand( "identify all agents in zone",
         core::MakeModel( "identifier", identifier )
                        ( "localization", core::MakeModel() ) );
-    commands.Execute();
+    ExecuteCommands();
 }

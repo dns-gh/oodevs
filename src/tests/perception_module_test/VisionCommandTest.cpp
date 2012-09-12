@@ -18,12 +18,12 @@ BOOST_FIXTURE_TEST_CASE( vision_command_changes_mode_to_direction, sword::percep
     ExpectEffect( vision, sword::test::MakeModel( "mode", "direction" )
                                                 ( "location/x", 0.1 )
                                                 ( "location/y", 0.2 ) );
-    commands.Start( "vision",
+    StartCommand( "vision",
         core::MakeModel( "identifier", identifier )
                        ( "mode", "direction" )
                        ( "location/x", 0.1 )
                        ( "location/y", 0.2 ) );
-    commands.Execute();
+    ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( vision_command_changes_mode_to_location, sword::perception::ModuleFixture )
@@ -34,12 +34,12 @@ BOOST_FIXTURE_TEST_CASE( vision_command_changes_mode_to_location, sword::percept
     ExpectEffect( vision, sword::test::MakeModel( "mode", "location" )
                                                 ( "location/x", 0.1 )
                                                 ( "location/y", 0.2 ) );
-    commands.Start( "vision",
+    StartCommand( "vision",
         core::MakeModel( "identifier", identifier )
                        ( "mode", "location" )
                        ( "location/x", 0.1 )
                        ( "location/y", 0.2 ) );
-    commands.Execute();
+    ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( vision_command_changes_mode_to_normal_and_uses_current_movement_direction, sword::perception::ModuleFixture )
@@ -53,17 +53,17 @@ BOOST_FIXTURE_TEST_CASE( vision_command_changes_mode_to_normal_and_uses_current_
     ExpectEffect( vision, sword::test::MakeModel( "mode", "normal" )
                                                 ( "location/x", 0.1 )
                                                 ( "location/y", 0.2 ) );
-    commands.Start( "vision",
+    StartCommand( "vision",
         core::MakeModel( "identifier", identifier )
                        ( "mode", "normal" ) );
-    commands.Execute();
+    ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( unknown_vision_mode_sends_error_log, sword::perception::ModuleFixture )
 {
     MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR, mock::any );
-    commands.Start( "vision",
+    StartCommand( "vision",
         core::MakeModel( "identifier", 2 )
                        ( "mode", "unknown" ) );
-    commands.Execute();
+    ExecuteCommands();
 }

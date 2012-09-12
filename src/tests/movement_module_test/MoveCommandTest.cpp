@@ -21,7 +21,7 @@ namespace
         {
             boost::shared_ptr< sword::movement::Path_ABC > path = CreatePathParameter( points.back().first );
             ComputePathfind( path, points );
-            return commands.Start( "move",
+            return StartCommand( "move",
                 core::MakeModel( "identifier", identifier )
                                ( "parameters", core::MakeModel()[ core::MakeUserData( path ) ] ) );
         }
@@ -35,7 +35,7 @@ namespace
             MOCK_EXPECT( HasResources ).returns( hasResources );
             MOCK_EXPECT( GetObjectListWithinCircle );
             MOCK_EXPECT( UpdateObjectsToAvoid ).returns( obstaclesChange );
-            commands.Execute();
+            ExecuteCommands();
             mock::verify();
             mock::reset();
         }
@@ -94,7 +94,7 @@ BOOST_FIXTURE_TEST_CASE( moving_on_canceled_path_sends_not_allowed_callback_and_
     boost::shared_ptr< sword::movement::Path_ABC > path = CreateSimplePath();
     ExpectEvent( "movement report" );
     ComputeUntrafficablePathfind( path );
-    command = commands.Start( "move",
+    command = StartCommand( "move",
         core::MakeModel( "identifier", identifier )
             ( "parameters", core::MakeModel()[ core::MakeUserData( path ) ] ) );
     mock::verify();
@@ -109,7 +109,7 @@ BOOST_FIXTURE_TEST_CASE( moving_on_impossible_path_sends_not_allowed_callback_an
     boost::shared_ptr< sword::movement::Path_ABC > path = CreateSimplePath();
     ExpectEvent( "movement report" );
     ComputeImpossiblePathfind( path );
-    command = commands.Start( "move",
+    command = StartCommand( "move",
         core::MakeModel( "identifier", identifier )
             ( "parameters",  core::MakeModel()[ core::MakeUserData( path ) ] ) );
     mock::verify();
@@ -141,7 +141,7 @@ BOOST_FIXTURE_TEST_CASE( movement_command_in_paused_execution_only_sends_paused_
 {
     commands.Pause( command );
     ExpectCallbackEvent( sword::movement::PathWalker::ePaused );
-    commands.Execute();
+    ExecuteCommands();
     MOCK_EXPECT( CancelPathFindJob ).once();
 }
 
@@ -184,7 +184,7 @@ BOOST_FIXTURE_TEST_CASE( stopping_command_cancels_pathfind_job, StartedFixture )
     MOCK_EXPECT( CancelPathFindJob ).once();
     commands.Stop( command );
     mock::verify();
-    commands.Execute();
+    ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( movement_without_resources_sends_out_of_gas_report_and_not_enough_fuel_callback, StartedFixture )

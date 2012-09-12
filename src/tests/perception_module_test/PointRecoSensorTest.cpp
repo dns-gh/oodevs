@@ -39,8 +39,8 @@ BOOST_FIXTURE_TEST_CASE( perception_reco_point_sensor_recognizes_all_agents_in_g
                                                             ( "level", 2 ) // recognized
                                                             ( "recorded", false ) ]
                                     [ sword::test::MakeModel( mock::any ) ] );
-    commands.Post( "perception", core::MakeModel( "identifier", identifier ) );
-    commands.Execute();
+    PostCommand( "perception", core::MakeModel( "identifier", identifier ) );
+    ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( perception_reco_point_sensor_identifies_all_objects_in_growing_circle_and_growth_speed, PerceptionCommandFixture )
@@ -66,6 +66,6 @@ BOOST_FIXTURE_TEST_CASE( perception_reco_point_sensor_identifies_all_objects_in_
                                     [ sword::test::MakeModel( "target", 666 )
                                                             ( "level", 3 ) // identified
                                                             ( "recorded", false ) ] );
-    commands.Post( "perception", core::MakeModel( "identifier", identifier ) );
-    commands.Execute();
+    PostCommand( "perception", core::MakeModel( "identifier", identifier ) );
+    ExecuteCommands();
 }

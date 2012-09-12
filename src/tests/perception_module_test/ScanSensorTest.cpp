@@ -37,6 +37,6 @@ BOOST_FIXTURE_TEST_CASE( agents_in_list_are_recognized_with_scan_sensor, Percept
                                                                ( "level", 2 ) // recognized
                                                                ( "recorded", false ) ]
                                        [ sword::test::MakeModel( mock::any ) ] );
-    commands.Post( "perception", core::MakeModel( "identifier", identifier ) );
-    commands.Execute();
+    PostCommand( "perception", core::MakeModel( "identifier", identifier ) );
+    ExecuteCommands();
 }

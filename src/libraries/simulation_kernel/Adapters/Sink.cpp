@@ -142,6 +142,21 @@ namespace
         xos << xis;
         GET_HOOK( InitializeDecisional )( xos.str().c_str(), MIL_AgentServer::GetWorkspace().GetTickDuration() ) ;
     }
+    // $$$$ _RC_ SLI 2012-09-11: hard coded
+    const std::string configuration = "<core>"
+                                      "  <modules>"
+                                      "    <module>movement_module</module>"
+                                      "    <module>perception_module</module>"
+                                      "    <module>fire_module</module>"
+                                      "    <module>propagation_module</module>"
+                                      "  </modules>"
+                                      "  <phases default='actions'>"
+                                      "    <phase name='perceptions'>"
+                                      "      <command name='perception'/>"
+                                      "    </phase>"
+                                      "    <phase name='actions'/>"
+                                      "  </phases>"
+                                      "</core>";
 }
 
 // -----------------------------------------------------------------------------
@@ -152,12 +167,7 @@ Sink::Sink( AgentFactory_ABC& factory, unsigned int gcPause, unsigned int gcMult
     : factory_( factory )
     , gcPause_( gcPause )
     , gcMult_ ( gcMult )
-    , modules_( "<modules>"
-                "  <module>movement_module</module>"
-                "  <module>perception_module</module>"
-                "  <module>fire_module</module>"
-                "  <module>propagation_module</module>"
-                "</modules>" )
+    , modules_( configuration )
     , logger_ ( new CoreLogger() )
     , model_  ( new core::Model() )
     , facade_ ( new core::Facade( modules_, *logger_, *model_ ) )
@@ -198,6 +208,16 @@ Sink::Sink( AgentFactory_ABC& factory, unsigned int gcPause, unsigned int gcMult
 Sink::~Sink()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Sink::ExecutePerceptions
+// Created: SLI 2012-09-11
+// -----------------------------------------------------------------------------
+void Sink::ExecutePerceptions()
+{
+    facade_->ExecuteCommands( "perceptions" );
+    ApplyEffects();
 }
 
 // -----------------------------------------------------------------------------
