@@ -81,7 +81,7 @@ integration.isTask = function( self )
 end
 
 integration.mustBePropagate = function( self )
-  DEC_Trace( "orderType = "..tostring( orderType ) )
+  local orderType = self.source:GetType()
   return orderType == "platoon.combat.support.air.tasks.ModifierAltitude" or
          orderType == "platoon.combat.support.engineer.tasks.ActiverObstacles" or
          orderType == "platoon.tasks.Embarquer" or 
@@ -116,7 +116,9 @@ integration.mustBePropagate = function( self )
          orderType == "Rep_OrderConduite_ModifierPrioritesBlesses" or
          orderType == "Rep_OrderConduite_RejoindrePointLancement" or
          orderType == "Rep_OrderConduite_ROEM_ArreterSilenceRadar" or
-         orderType == "Rep_OrderConduite_ROEM_PasserEnSilenceRadar"
+         orderType == "Mount" or -- WW
+         orderType == "Dismount" -- WW
+         
 end
 
 integration.setAutomatFragOrder = function( self )
