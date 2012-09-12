@@ -137,6 +137,15 @@ bool MedicalResolver::IsManageable( const sword::SimToClient& message )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MedicalResolver::IsEmptyLineMessage
+// Created: MMC 2012-09-11
+// -----------------------------------------------------------------------------
+bool MedicalResolver::IsEmptyLineMessage( const sword::SimToClient& message )
+{
+    return message.message().has_log_medical_handling_destruction();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MedicalResolver::ManageMessage
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------

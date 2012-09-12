@@ -27,6 +27,14 @@ namespace xml
     class xistream;
 }
 
+namespace boost
+{
+    namespace gregorian
+    {
+        class date;
+    }
+}
+
 namespace plugins
 {
 namespace logistic
@@ -53,9 +61,24 @@ public:
     virtual ~LogisticPlugin();
     //@}
 
+    //! @name Types
+    //@{
+    enum E_LogisticType
+    {
+        eLogisticType_Maintenance,
+        eLogisticType_Supply,
+        eLogisticType_Funeral,
+        eLogisticType_Medical,
+        eNbrLogisticType
+    };
+    //@}
+
     //! @name Operations
     //@{
     virtual void Receive( const sword::SimToClient& message );
+    virtual void Receive( const sword::SimToClient& message, const boost::gregorian::date& today );
+    virtual int GetConsignCount( E_LogisticType eLogisticType ) const;
+    virtual void SetMaxLinesInFile( int maxLines );
     //@}
 
 private:
@@ -68,9 +91,9 @@ private:
 private:
     //! @name Member data
     //@{
-    std::vector< ConsignResolver_ABC* > resolvers_;
+    std::vector< ConsignResolver_ABC* >         resolvers_;
     boost::scoped_ptr< QApplication >           localAppli_;
-    boost::shared_ptr<const NameResolver_ABC> nameResolver_;
+    boost::shared_ptr<const NameResolver_ABC>   nameResolver_;
     //@}
 };
 

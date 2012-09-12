@@ -26,6 +26,10 @@
 #include <QtGui/qapplication.h>
 #pragma warning( pop )
 #include <xeumeuleu/xml.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
+
+namespace bpt = boost::posix_time;
+namespace bg = boost::gregorian;
 
 namespace plugins 
 {
@@ -50,7 +54,7 @@ LogisticPlugin::LogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>&
     , localAppli_ ( !qApp ? new QApplication( localAppliArgc, localAppliArgv ) : 0 )
 {
     QLocale locale = tools::readLocale();
-    if( localeStr != 0)
+    if( localeStr != 0 )
         locale = QLocale( localeStr );
     if( qApp )
     {
@@ -59,10 +63,11 @@ LogisticPlugin::LogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>&
     }
     ENT_Tr::InitTranslations();
 
-    resolvers_.push_back( new MaintenanceResolver( maintenanceFile, *nameResolver ));
-    resolvers_.push_back( new SupplyResolver( supplyFile, *nameResolver ));
-    resolvers_.push_back( new FuneralResolver( funeralFile, *nameResolver ));
-    resolvers_.push_back( new MedicalResolver( medicalFile, *nameResolver ));
+    resolvers_.resize( eNbrLogisticType );
+    resolvers_[ eLogisticType_Maintenance ] = new MaintenanceResolver( maintenanceFile, *nameResolver );
+    resolvers_[ eLogisticType_Supply ]      = new SupplyResolver( supplyFile, *nameResolver );
+    resolvers_[ eLogisticType_Funeral ]     = new FuneralResolver( funeralFile, *nameResolver );
+    resolvers_[ eLogisticType_Medical ]     = new MedicalResolver( medicalFile, *nameResolver );
     for( IT_ConsignResolvers r = resolvers_.begin(); r != resolvers_.end(); ++r )
         (*r)->InitHeader();
 }
@@ -83,16 +88,57 @@ LogisticPlugin::~LogisticPlugin()
 // -----------------------------------------------------------------------------
 void LogisticPlugin::Receive( const sword::SimToClient& message )
 {
+    Receive( message, bpt::second_clock::local_time().date() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticPlugin::Receive
+// Created: MMC 2012-09-11
+// -----------------------------------------------------------------------------
+void LogisticPlugin::Receive( const sword::SimToClient& message, const bg::date& today )
+{
     if( message.message().has_control_begin_tick() )
     {
         int currentTick = message.message().control_begin_tick().current_tick();
         std::string simTime = message.message().control_begin_tick().date_time().data();        
         for( IT_ConsignResolvers r = resolvers_.begin(); r != resolvers_.end(); ++r )
-            (*r)->SetTime( currentTick, simTime );
+            (*r)->SetTime( currentTick, simTime, today );
     }
-    for( IT_ConsignResolvers r = resolvers_.begin(); r != resolvers_.end(); ++r )
-        if( (*r)->Receive( message ))
-            break;
+    else
+    {
+        bool received = false;
+        for( IT_ConsignResolvers r = resolvers_.begin(); r != resolvers_.end(); ++r )
+        {
+            (*r)->SetToday( today );
+            if( !received )
+                received = (*r)->Receive( message );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticPlugin::GetConsignCount
+// Created: MMC 2012-09-11
+// -----------------------------------------------------------------------------
+int LogisticPlugin::GetConsignCount( E_LogisticType eLogisticType ) const
+{
+    int resolverIndex = static_cast< int >( eLogisticType );
+    if( resolverIndex < resolvers_.size() )
+    {
+        const ConsignResolver_ABC* pResolver = resolvers_[ resolverIndex ];
+        if( pResolver )
+            return pResolver->GetConsignCount();
+    }
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticPlugin::SetMaxLinesInFile
+// Created: MMC 2012-09-11
+// -----------------------------------------------------------------------------
+void LogisticPlugin::SetMaxLinesInFile( int maxLines )
+{
+    ConsignResolver_ABC::SetMaxLinesInFile( maxLines );
 }
 
 

@@ -23,8 +23,9 @@ namespace
     const int maxFileIndex = 1000;
     const int maxFileIndexToRemove = 20;
     const int maxFileDaysToRemove = 20;
-    const int maxLines = 50000;
 }
+
+int ConsignResolver_ABC::maxLinesInFile_( 50000 );
 
 // -----------------------------------------------------------------------------
 // Name: ConsignResolver_ABC constructor
@@ -54,7 +55,8 @@ bool ConsignResolver_ABC::Receive( const sword::SimToClient& message )
 {
     if( !IsManageable( message ) )
         return false;
-    CheckOutputFile();
+    if( !IsEmptyLineMessage( message ) )
+        CheckOutputFile();
     if( output_.is_open() )
         ManageMessage( message );
     return true;
@@ -105,13 +107,12 @@ void ConsignResolver_ABC::AppendDateWithExtension( std::string& fileName, const 
 // -----------------------------------------------------------------------------
 void ConsignResolver_ABC::SetNewFile()
 {
-    bg::date today = bpt::second_clock::local_time().date();
     std::string newFileName;
     int fileIndex = 0;
     while( fileIndex < maxFileIndex )
     {
         newFileName = name_ ;
-        AppendDateWithExtension( newFileName, today, fileIndex );
+        AppendDateWithExtension( newFileName, today_, fileIndex );
         try
         {
             if( !bfs::exists( newFileName ) )
@@ -124,7 +125,7 @@ void ConsignResolver_ABC::SetNewFile()
         ++fileIndex;
     }
     curLineIndex_ = 0;
-    fileDate_ = today;
+    fileDate_ = today_;
     fileName_ = newFileName;
 }
 
@@ -134,12 +135,11 @@ void ConsignResolver_ABC::SetNewFile()
 // -----------------------------------------------------------------------------
 void ConsignResolver_ABC::RemoveOldFiles()
 {
-    bg::date today = bpt::second_clock::local_time().date();
     for( int before = 2; before < maxFileDaysToRemove; ++before )
         for( int index = 0; index < maxFileIndexToRemove; ++index )
         {
             std::string fileDayBeforeYesterday( name_ );
-            AppendDateWithExtension( fileDayBeforeYesterday, today - bg::days( before ), index );
+            AppendDateWithExtension( fileDayBeforeYesterday, today_ - bg::days( before ), index );
             try
             {
                 if( bfs::exists( fileDayBeforeYesterday ) )
@@ -190,8 +190,7 @@ void ConsignResolver_ABC::OpenFile()
 // -----------------------------------------------------------------------------
 void ConsignResolver_ABC::CheckOutputFile()
 {
-    bg::date today = bpt::second_clock::local_time().date();
-    if( fileDate_ != today || curLineIndex_ > maxLines )
+    if( fileDate_ != today_ || curLineIndex_ >= maxLinesInFile_ )
     {
         SetNewFile();
         OpenFile();
@@ -203,10 +202,11 @@ void ConsignResolver_ABC::CheckOutputFile()
 // Name: ConsignResolver_ABC::SetTime
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-void ConsignResolver_ABC::SetTime( int tick, const std::string& simTime )
+void ConsignResolver_ABC::SetTime( int tick, const std::string& simTime, const boost::gregorian::date& today )
 {
     curTick_ = tick;
     simTime_ = simTime;
+    today_ = today;
 }
 
 // -----------------------------------------------------------------------------
@@ -219,6 +219,15 @@ void ConsignResolver_ABC::GetSimTime( std::string& simTime, std::string& tick ) 
         simTime = simTime_;
     if( curTick_ >= 0 )
         tick = boost::lexical_cast< std::string >( curTick_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ConsignResolver_ABC::GetSimTime
+// Created: MMC 2012-09-02
+// -----------------------------------------------------------------------------
+void ConsignResolver_ABC::SetToday( const boost::gregorian::date& today )
+{
+    today_ = today;
 }
 
 // -----------------------------------------------------------------------------
@@ -239,4 +248,13 @@ void ConsignResolver_ABC::SetHeader( const ConsignData_ABC& consign )
     std::stringstream header;
     consign >> header;
     header_ = header.str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ConsignResolver_ABC::SetHeader
+// Created: MMC 2012-09-11
+// -----------------------------------------------------------------------------
+int ConsignResolver_ABC::GetConsignCount() const
+{
+    return static_cast< int >( consignsData_.size() );
 }

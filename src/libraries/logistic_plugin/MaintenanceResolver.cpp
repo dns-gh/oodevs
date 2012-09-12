@@ -128,6 +128,15 @@ bool MaintenanceResolver::IsManageable( const sword::SimToClient& message )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MaintenanceResolver::IsEmptyLineMessage
+// Created: MMC 2012-09-11
+// -----------------------------------------------------------------------------
+bool MaintenanceResolver::IsEmptyLineMessage( const sword::SimToClient& message )
+{
+    return message.message().has_log_maintenance_handling_destruction();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MaintenanceResolver::ManageMessage
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------

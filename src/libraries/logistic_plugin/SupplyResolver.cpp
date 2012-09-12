@@ -200,6 +200,15 @@ bool SupplyResolver::IsManageable( const sword::SimToClient& message )
 }
 
 // -----------------------------------------------------------------------------
+// Name: SupplyResolver::IsEmptyLineMessage
+// Created: MMC 2012-09-11
+// -----------------------------------------------------------------------------
+bool SupplyResolver::IsEmptyLineMessage( const sword::SimToClient& message )
+{
+    return message.message().has_log_supply_handling_destruction();
+}
+
+// -----------------------------------------------------------------------------
 // Name: SupplyResolver::ManageMessage
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------

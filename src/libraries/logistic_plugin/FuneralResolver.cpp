@@ -137,6 +137,15 @@ bool FuneralResolver::IsManageable( const sword::SimToClient& message )
 }
 
 // -----------------------------------------------------------------------------
+// Name: FuneralResolver::IsEmptyLineMessage
+// Created: MMC 2012-09-11
+// -----------------------------------------------------------------------------
+bool FuneralResolver::IsEmptyLineMessage( const sword::SimToClient& message )
+{
+    return message.message().has_log_funeral_handling_destruction();
+}
+
+// -----------------------------------------------------------------------------
 // Name: FuneralResolver::ManageMessage
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------

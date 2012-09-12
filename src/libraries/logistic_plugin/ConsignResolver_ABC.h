@@ -47,11 +47,14 @@ public:
     //! @name Operations
     //@{
     bool Receive( const sword::SimToClient& message );
-    void SetTime( int tick, const std::string& simTime );
+    void SetTime( int tick, const std::string& simTime, const boost::gregorian::date& today );
     void GetSimTime( std::string& simTime, std::string& tick ) const;
+    void SetToday( const boost::gregorian::date& today );
     const NameResolver_ABC& GetNameResolver() const;
     virtual void InitHeader() = 0;
     virtual void AddToLineIndex( int number ) { curLineIndex_ += number; }
+    static void SetMaxLinesInFile( int maxLines ) { maxLinesInFile_ = maxLines; }
+    int GetConsignCount() const;
     //@}
 
 protected:
@@ -60,6 +63,7 @@ protected:
     //@{
     virtual bool IsManageable( const sword::SimToClient& ) { return false; }
     virtual void ManageMessage( const sword::SimToClient& ) {}
+    virtual bool IsEmptyLineMessage( const sword::SimToClient& ) = 0;
     ConsignData_ABC& ConsignResolver_ABC::GetConsign( int requestId );
     virtual ConsignData_ABC* CreateConsignData( int requestId ) = 0;
     virtual void DestroyConsignData( int requestId );
@@ -97,6 +101,8 @@ protected:
     std::ofstream output_;
     std::map< int, ConsignData_ABC* > consignsData_;
     int curLineIndex_;
+    static int maxLinesInFile_;
+    boost::gregorian::date today_;
     //@}
 };
 }
