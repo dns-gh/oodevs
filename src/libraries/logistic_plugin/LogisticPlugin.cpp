@@ -102,16 +102,14 @@ void LogisticPlugin::Receive( const sword::SimToClient& message, const bg::date&
         int currentTick = message.message().control_begin_tick().current_tick();
         std::string simTime = message.message().control_begin_tick().date_time().data();        
         for( IT_ConsignResolvers r = resolvers_.begin(); r != resolvers_.end(); ++r )
-            (*r)->SetTime( currentTick, simTime, today );
+            (*r)->SetTime( currentTick, simTime );
     }
     else
     {
-        bool received = false;
         for( IT_ConsignResolvers r = resolvers_.begin(); r != resolvers_.end(); ++r )
         {
-            (*r)->SetToday( today );
-            if( !received )
-                received = (*r)->Receive( message );
+            if( (*r)->Receive( message, today ) )
+                break;
         }
     }
 }

@@ -46,10 +46,9 @@ public:
 
     //! @name Operations
     //@{
-    bool Receive( const sword::SimToClient& message );
-    void SetTime( int tick, const std::string& simTime, const boost::gregorian::date& today );
+    bool Receive( const sword::SimToClient& message, const boost::gregorian::date& today );
+    void SetTime( int tick, const std::string& simTime );
     void GetSimTime( std::string& simTime, std::string& tick ) const;
-    void SetToday( const boost::gregorian::date& today );
     const NameResolver_ABC& GetNameResolver() const;
     virtual void InitHeader() = 0;
     virtual void AddToLineIndex( int number ) { curLineIndex_ += number; }
@@ -82,9 +81,9 @@ protected:
     //! @name Helpers
     //@{
     void AppendDateWithExtension( std::string& fileName, const boost::gregorian::date& d, int fileIndex );
-    void CheckOutputFile();
-    void SetNewFile();
-    void RemoveOldFiles();
+    void CheckOutputFile( const boost::gregorian::date& today );
+    void SetNewFile( const boost::gregorian::date& today );
+    void RemoveOldFiles( const boost::gregorian::date& today );
     void OpenFile();
     void SetHeader( const ConsignData_ABC& consign );
     //@}
@@ -102,7 +101,6 @@ protected:
     std::map< int, ConsignData_ABC* > consignsData_;
     int curLineIndex_;
     int maxLinesInFile_;
-    boost::gregorian::date today_;
     //@}
 };
 }

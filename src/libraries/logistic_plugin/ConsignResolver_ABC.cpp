@@ -49,12 +49,12 @@ ConsignResolver_ABC::~ConsignResolver_ABC()
 // Name: ConsignResolver_ABC::Receive
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-bool ConsignResolver_ABC::Receive( const sword::SimToClient& message )
+bool ConsignResolver_ABC::Receive( const sword::SimToClient& message, const boost::gregorian::date& today )
 {
     if( !IsManageable( message ) )
         return false;
     if( !IsEmptyLineMessage( message ) )
-        CheckOutputFile();
+        CheckOutputFile( today );
     if( output_.is_open() )
         ManageMessage( message );
     return true;
@@ -103,14 +103,14 @@ void ConsignResolver_ABC::AppendDateWithExtension( std::string& fileName, const 
 // Name: ConsignResolver_ABC::SetNewFile
 // Created: MMC 2012-08-27
 // -----------------------------------------------------------------------------
-void ConsignResolver_ABC::SetNewFile()
+void ConsignResolver_ABC::SetNewFile( const boost::gregorian::date& today )
 {
     std::string newFileName;
     int fileIndex = 0;
     while( fileIndex < maxFileIndex )
     {
         newFileName = name_ ;
-        AppendDateWithExtension( newFileName, today_, fileIndex );
+        AppendDateWithExtension( newFileName, today, fileIndex );
         try
         {
             if( !bfs::exists( newFileName ) )
@@ -123,7 +123,7 @@ void ConsignResolver_ABC::SetNewFile()
         ++fileIndex;
     }
     curLineIndex_ = 0;
-    fileDate_ = today_;
+    fileDate_ = today;
     fileName_ = newFileName;
 }
 
@@ -131,13 +131,13 @@ void ConsignResolver_ABC::SetNewFile()
 // Name: ConsignResolver_ABC::RemoveOldFiles
 // Created: MMC 2012-08-27
 // -----------------------------------------------------------------------------
-void ConsignResolver_ABC::RemoveOldFiles()
+void ConsignResolver_ABC::RemoveOldFiles( const boost::gregorian::date& today )
 {
     for( int before = 2; before < maxFileDaysToRemove; ++before )
         for( int index = 0; index < maxFileIndexToRemove; ++index )
         {
             std::string fileDayBeforeYesterday( name_ );
-            AppendDateWithExtension( fileDayBeforeYesterday, today_ - bg::days( before ), index );
+            AppendDateWithExtension( fileDayBeforeYesterday, today - bg::days( before ), index );
             try
             {
                 if( bfs::exists( fileDayBeforeYesterday ) )
@@ -186,13 +186,13 @@ void ConsignResolver_ABC::OpenFile()
 // Name: ConsignResolver_ABC::CheckOutputFile
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-void ConsignResolver_ABC::CheckOutputFile()
+void ConsignResolver_ABC::CheckOutputFile( const boost::gregorian::date& today )
 {
-    if( fileDate_ != today_ || curLineIndex_ >= maxLinesInFile_ )
+    if( fileDate_ != today || curLineIndex_ >= maxLinesInFile_ )
     {
-        SetNewFile();
+        SetNewFile( today );
         OpenFile();
-        RemoveOldFiles();
+        RemoveOldFiles( today );
     }
 }
 
@@ -200,11 +200,10 @@ void ConsignResolver_ABC::CheckOutputFile()
 // Name: ConsignResolver_ABC::SetTime
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-void ConsignResolver_ABC::SetTime( int tick, const std::string& simTime, const boost::gregorian::date& today )
+void ConsignResolver_ABC::SetTime( int tick, const std::string& simTime )
 {
     curTick_ = tick;
     simTime_ = simTime;
-    today_ = today;
 }
 
 // -----------------------------------------------------------------------------
@@ -217,15 +216,6 @@ void ConsignResolver_ABC::GetSimTime( std::string& simTime, std::string& tick ) 
         simTime = simTime_;
     if( curTick_ >= 0 )
         tick = boost::lexical_cast< std::string >( curTick_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConsignResolver_ABC::GetSimTime
-// Created: MMC 2012-09-02
-// -----------------------------------------------------------------------------
-void ConsignResolver_ABC::SetToday( const boost::gregorian::date& today )
-{
-    today_ = today;
 }
 
 // -----------------------------------------------------------------------------
