@@ -343,7 +343,8 @@ struct Item : Package_ABC::Item_ABC
     void MakeChecksum( const FileSystem_ABC& system )
     {
         size_t read;
-        checksum_ = system.Checksum( root_ / GetSuffix(), IsItemFile( root_ ), read );
+        const Path root = root_ / GetSuffix();
+        checksum_ = system.Checksum( root, IsItemFile( root ), read );
         size_ = read;
     }
 

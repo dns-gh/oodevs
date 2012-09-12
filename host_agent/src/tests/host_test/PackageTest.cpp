@@ -10,6 +10,7 @@
 #include "host_test.h"
 
 #include "host/Package.h"
+#include "runtime/FileSystem.h"
 #include "runtime/PropertyTree.h"
 #include "runtime/Async.h"
 
@@ -21,6 +22,7 @@
 #include <set>
 
 #include "MockFileSystem.h"
+#include "MockLog.h"
 #include "MockPool.h"
 
 using namespace host;
@@ -369,4 +371,38 @@ BOOST_FIXTURE_TEST_CASE( package_reinstall_silently, Fixture )
 
     MOCK_EXPECT( system.WriteFile ).once().with( boost::bind( &EndWith, "metadata.tag", _1 ), mock::any ).returns( true );
     install.Install( async, install.GetPath() / GetFileIndex(), cache, boost::assign::list_of( 2 ) );
+}
+
+namespace
+{
+void CheckEgypt( bool& sentinel, const Tree& item, size_t size )
+{
+    BOOST_CHECK( !sentinel );
+    sentinel = true;
+    BOOST_CHECK_EQUAL( Get< std::string >( item, ".type" ), "exercise" );
+    BOOST_CHECK_EQUAL( Get< Path >( item, ".name" ), Path( "worldwide/Egypt" ) );
+    BOOST_CHECK_EQUAL( Get< std::string >( item, ".date" ), "2012-09-12 11:42:51" );
+    BOOST_CHECK_EQUAL( Get< std::string >( item, ".checksum" ), "1A741642" );
+    BOOST_CHECK_EQUAL( Get< size_t >( item, ".size" ), size );
+    BOOST_CHECK_EQUAL( Get< std::string >( item, ".package" ), "Egypt" );
+    BOOST_CHECK_EQUAL( Get< std::string >( item, ".version" ), "trunk" );
+}
+}
+
+BOOST_AUTO_TEST_CASE( package_checksum_skip_unwanted_data )
+{
+    MockPool pool;
+    MockLog log;
+    runtime::FileSystem fs( log );
+    const Path root = BOOST_RESOLVE( "packages" );
+    Package pkg( pool, fs, root, true );
+    pkg.Parse();
+
+    BOOST_CHECK_EQUAL( pkg.CountExercises(), size_t( 1 ) );
+    const size_t size = 44040;
+    BOOST_CHECK_EQUAL( pkg.GetSize(), size );
+    const Tree tree = pkg.GetProperties();
+    const std::vector< std::string > tokens = boost::assign::list_of( "items" );
+    bool sentinel = false;
+    Walk( tree, tokens.begin(), tokens.end(), boost::bind( &CheckEgypt, boost::ref( sentinel ), _1, size ) );
 }

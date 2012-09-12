@@ -1,0 +1,37 @@
+[2012-09-12 10:53:38] <Dispatcher> <info> Starting dispatcher server on port 50320
+[2012-09-12 10:53:38] <Dispatcher> <info> Cannot load note file : E:\build\host_agent_msvc64\nodes\0\_\3\exercises\worldwide\Egypt\sessions\634735b2-58fd-4d43-b219-5739bfb0e540\notes.csv
+[2012-09-12 10:53:38] <Dispatcher> <info> Plugin 'web_control' loaded (file: web_control_plugin)
+[2012-09-12 10:53:38] <Dispatcher> <info> Recorder enabled - data stored in E:\build\host_agent_msvc64\nodes\0\_\3\exercises\worldwide\Egypt\sessions\634735b2-58fd-4d43-b219-5739bfb0e540\record
+[2012-09-12 10:53:38] <Dispatcher> <info> Connected to '127.0.0.1:50321'
+[2012-09-12 10:53:38] <Dispatcher> <info> **** Time tick 0 - Memory: 86.0742 MB / 613.121 MB (VM)
+[2012-09-12 10:53:40] <Dispatcher> <info> Dispatcher - Initializing model
+[2012-09-12 10:53:40] <Dispatcher> <info> Loading profiles
+[2012-09-12 10:53:40] <Dispatcher> <info> New profile loaded : 'Supervisor'
+[2012-09-12 10:53:40] <Dispatcher> <info> New profile loaded : 'Blue'
+[2012-09-12 10:53:40] <Dispatcher> <info> Dispatcher - Model initialized
+[2012-09-12 10:53:41] <Dispatcher> <info> **** Time tick 2 - Memory: 216.188 MB / 734.066 MB (VM)
+[2012-09-12 10:53:42] <Dispatcher> <info> **** Time tick 3 - Memory: 217.188 MB / 735.066 MB (VM)
+[2012-09-12 10:53:43] <Dispatcher> <info> **** Time tick 4 - Memory: 218.191 MB / 736.066 MB (VM)
+[2012-09-12 10:53:44] <Dispatcher> <info> **** Time tick 5 - Memory: 221.195 MB / 739.066 MB (VM)
+[2012-09-12 10:53:45] <Dispatcher> <info> **** Time tick 6 - Memory: 224.203 MB / 742.066 MB (VM)
+[2012-09-12 10:53:46] <Dispatcher> <info> **** Time tick 7 - Memory: 225.203 MB / 743.066 MB (VM)
+[2012-09-12 10:53:47] <Dispatcher> <info> **** Time tick 8 - Memory: 226.207 MB / 744.066 MB (VM)
+[2012-09-12 10:53:48] <Dispatcher> <info> **** Time tick 9 - Memory: 228.211 MB / 746.066 MB (VM)
+[2012-09-12 10:53:49] <Dispatcher> <info> **** Time tick 10 - Memory: 228.211 MB / 746.066 MB (VM)
+[2012-09-12 10:53:50] <Dispatcher> <info> **** Time tick 11 - Memory: 228.211 MB / 746.066 MB (VM)
+[2012-09-12 10:53:52] <Dispatcher> <info> **** Time tick 12 - Memory: 228.211 MB / 746.066 MB (VM)
+[2012-09-12 10:53:53] <Dispatcher> <info> **** Time tick 13 - Memory: 228.211 MB / 746.066 MB (VM)
+[2012-09-12 10:53:53] <Dispatcher> <info> **** Time tick 14 - Memory: 229.211 MB / 747.066 MB (VM)
+[2012-09-12 10:53:55] <Dispatcher> <info> **** Time tick 15 - Memory: 231.215 MB / 749.066 MB (VM)
+[2012-09-12 10:53:56] <Dispatcher> <info> **** Time tick 16 - Memory: 231.215 MB / 749.066 MB (VM)
+[2012-09-12 10:53:57] <Dispatcher> <info> **** Time tick 17 - Memory: 231.215 MB / 749.066 MB (VM)
+[2012-09-12 10:53:58] <Dispatcher> <info> **** Time tick 18 - Memory: 231.215 MB / 749.066 MB (VM)
+[2012-09-12 10:53:59] <Dispatcher> <info> **** Time tick 19 - Memory: 232.219 MB / 750.066 MB (VM)
+[2012-09-12 10:54:00] <Dispatcher> <info> **** Time tick 20 - Memory: 232.219 MB / 750.066 MB (VM)
+[2012-09-12 10:54:01] <Dispatcher> <info> **** Time tick 21 - Memory: 233.219 MB / 751.066 MB (VM)
+[2012-09-12 10:54:02] <Dispatcher> <info> **** Time tick 22 - Memory: 235.223 MB / 753.066 MB (VM)
+[2012-09-12 10:54:03] <Dispatcher> <info> **** Time tick 23 - Memory: 235.223 MB / 753.066 MB (VM)
+[2012-09-12 10:54:04] <Dispatcher> <info> **** Time tick 24 - Memory: 235.223 MB / 753.066 MB (VM)
+[2012-09-12 10:54:05] <Dispatcher> <info> **** Time tick 25 - Memory: 235.223 MB / 753.066 MB (VM)
+[2012-09-12 10:54:06] <Dispatcher> <info> **** Time tick 26 - Memory: 235.223 MB / 753.066 MB (VM)
+[2012-09-12 10:54:07] <Dispatcher> <info> **** Time tick 27 - Memory: 235.223 MB / 753.066 MB (VM)

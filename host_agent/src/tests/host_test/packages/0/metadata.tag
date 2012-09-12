@@ -1,0 +1,4 @@
+{
+    "package": "Egypt",
+    "version": "trunk"
+}
