@@ -520,7 +520,7 @@
     </target>
 
     <target name="modules.perception_module" description="build perception module">
-        <build-lib name="perception_module">
+        <build-lib name="perception_module" failonwarning="${failonwarning}">
             <includepath path="${libraries.dir}/simulation_kernel"/>
         </build-lib>
     </target>
