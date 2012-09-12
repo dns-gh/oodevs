@@ -113,8 +113,7 @@
         <resource name="agent.resources.ActivationCapacity"/>
         <resource name="agent.resources.TransportationCapacity"/>
     </resources>
-    <default-task label="Prise en compte des ordres de conduite et de la sauvegarde." permanent="true">
-        <description>Gestion par défaut des ordres de conduite et de la sauvegarde.</description>
+    <default-task permanent="true">
         <goal>
             <description>Gestion et affectation des ordres de conduite et de la sauvegarde</description>
         </goal>
