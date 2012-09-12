@@ -66,6 +66,15 @@ void LoadableSpinBox::setSuffix( const QString& str )
 }
 
 // -----------------------------------------------------------------------------
+// Name: LoadableSpinBox::setSpecialValueText
+// Created: LGY 2012-09-12
+// -----------------------------------------------------------------------------
+void LoadableSpinBox::setSpecialValueText( const QString& str )
+{
+    GetDefaultValueWidget()->setSpecialValueText( str );
+}
+
+// -----------------------------------------------------------------------------
 // Name: LoadableSpinBox::setValue
 // Created: BCI 2011-05-12
 // -----------------------------------------------------------------------------
