@@ -107,10 +107,8 @@ void LogisticPlugin::Receive( const sword::SimToClient& message, const bg::date&
     else
     {
         for( IT_ConsignResolvers r = resolvers_.begin(); r != resolvers_.end(); ++r )
-        {
             if( (*r)->Receive( message, today ) )
                 break;
-        }
     }
 }
 

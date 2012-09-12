@@ -8,29 +8,20 @@
 // *****************************************************************************
 
 #include "ConsignResolver_ABC.h"
-#include <boost/filesystem/operations.hpp>
-#include <boost/date_time/posix_time/posix_time.hpp>
 #include "clients_kernel/Tools.h"
+#include <boost/filesystem/operations.hpp>
+#include <boost/regex.hpp>
 
 using namespace plugins::logistic;
-namespace bpt = boost::posix_time;
 namespace bfs = boost::filesystem;
 namespace bg = boost::gregorian;
-
-
-namespace
-{
-    const int maxFileIndex = 1000;
-    const int maxFileIndexToRemove = 20;
-    const int maxFileDaysToRemove = 20;
-}
 
 // -----------------------------------------------------------------------------
 // Name: ConsignResolver_ABC constructor
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
 ConsignResolver_ABC::ConsignResolver_ABC( const std::string& name, const NameResolver_ABC& nameResolver )
-    : name_( name ), curTick_( 0 ), nameResolver_( nameResolver ), curLineIndex_( 0 ), maxLinesInFile_( 50000 )
+    : name_( name ), curTick_( 0 ), nameResolver_( nameResolver ), curFileIndex_( 0 ), curLineIndex_( 0 ), maxLinesInFile_( 50000 ), daysBeforeToKeep_( 1 )
 {
     // NOTHING
 }
@@ -105,26 +96,59 @@ void ConsignResolver_ABC::AppendDateWithExtension( std::string& fileName, const 
 // -----------------------------------------------------------------------------
 void ConsignResolver_ABC::SetNewFile( const boost::gregorian::date& today )
 {
-    std::string newFileName;
-    int fileIndex = 0;
-    while( fileIndex < maxFileIndex )
+    if( today != fileDate_ )
     {
-        newFileName = name_ ;
-        AppendDateWithExtension( newFileName, today, fileIndex );
-        try
-        {
-            if( !bfs::exists( newFileName ) )
-                break;
-        }
-        catch( ... )
-        {
-            break;
-        }
-        ++fileIndex;
+        if( fileDate_ == boost::gregorian::date() )
+            InitFileIndex( today );
+        else
+            curFileIndex_ = 0;
     }
+    std::string newFileName( name_ );
+    AppendDateWithExtension( newFileName, today, curFileIndex_++ );
     curLineIndex_ = 0;
     fileDate_ = today;
     fileName_ = newFileName;
+}
+
+boost::regex GetFileRegex( const std::string& name, const std::string& dateRegex )
+{
+    std::stringstream streamRegex;
+    streamRegex << name << "\\." << dateRegex << "\\.\\d+\\.csv$";
+    return boost::regex( streamRegex.str() );
+}
+
+bool MatchARegex( const std::string str, const std::vector< boost::regex >& regexList )
+{
+    for( std::vector< boost::regex >::const_iterator it = regexList.begin(); it != regexList.end(); ++it )
+        if( boost::regex_match( str, *it ) )
+            return true;
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ConsignResolver_ABC::InitFileIndex
+// Created: MMC 2012-09-12
+// -----------------------------------------------------------------------------
+void ConsignResolver_ABC::InitFileIndex( const boost::gregorian::date& today )
+{
+    bfs::path curPath( name_ );
+    std::string baseName = curPath.filename().string();
+    boost::regex todayRegex( GetFileRegex( baseName, to_iso_string( today ) ) );
+
+    bfs::directory_iterator end;
+    for( bfs::directory_iterator dir_it( curPath.remove_filename() ) ; dir_it != end ; ++dir_it )
+    {
+        if( bfs::is_regular_file( dir_it->status() ) )
+        {
+            std::string fileName = dir_it->path().filename().string();
+            if( boost::regex_match( fileName, todayRegex ) )
+            {
+                int curIndex = boost::lexical_cast< int >( fileName.erase( fileName.size() - std::string( ".csv" ).size() ).erase( 0, baseName.size() + 10 ) );
+                if( ++curIndex > curFileIndex_ )
+                    curFileIndex_ = curIndex;
+            }
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -133,21 +157,27 @@ void ConsignResolver_ABC::SetNewFile( const boost::gregorian::date& today )
 // -----------------------------------------------------------------------------
 void ConsignResolver_ABC::RemoveOldFiles( const boost::gregorian::date& today )
 {
-    for( int before = 2; before < maxFileDaysToRemove; ++before )
-        for( int index = 0; index < maxFileIndexToRemove; ++index )
+    bfs::path curPath( name_ );
+    std::string baseName = curPath.filename().string();
+
+    boost::regex fileRegex( GetFileRegex( baseName, "\\d{8}" ) );
+    std::vector< boost::regex > keepFilesRegex;
+    for( int i = 0; i <= daysBeforeToKeep_; ++i )
+        keepFilesRegex.push_back( GetFileRegex( baseName, to_iso_string( today - bg::days( i ) ) ) );
+
+    std::vector< bfs::path > filesToRemove;
+    bfs::directory_iterator end;
+    for( bfs::directory_iterator dir_it( curPath.remove_filename() ) ; dir_it != end ; ++dir_it )
+    {
+        if( bfs::is_regular_file( dir_it->status() ) )
         {
-            std::string fileDayBeforeYesterday( name_ );
-            AppendDateWithExtension( fileDayBeforeYesterday, today - bg::days( before ), index );
-            try
-            {
-                if( bfs::exists( fileDayBeforeYesterday ) )
-                    bfs::remove( fileDayBeforeYesterday );
-            }
-            catch( ... )
-            {
-                // NOTHING
-            }
+            std::string fileName = dir_it->path().filename().string();
+            if( boost::regex_match( fileName, fileRegex ) && !MatchARegex( fileName, keepFilesRegex ) )
+                filesToRemove.push_back( dir_it->path() );
         }
+    }
+    for( std::vector< bfs::path >::const_iterator it = filesToRemove.begin(); it != filesToRemove.end(); ++it )
+        bfs::remove( *it );
 }
 
 // -----------------------------------------------------------------------------

@@ -80,6 +80,7 @@ protected:
 
     //! @name Helpers
     //@{
+    void InitFileIndex( const boost::gregorian::date& today );
     void AppendDateWithExtension( std::string& fileName, const boost::gregorian::date& d, int fileIndex );
     void CheckOutputFile( const boost::gregorian::date& today );
     void SetNewFile( const boost::gregorian::date& today );
@@ -99,8 +100,10 @@ protected:
     std::string fileName_;
     std::ofstream output_;
     std::map< int, ConsignData_ABC* > consignsData_;
+    int curFileIndex_;
     int curLineIndex_;
     int maxLinesInFile_;
+    const int daysBeforeToKeep_;
     //@}
 };
 }
