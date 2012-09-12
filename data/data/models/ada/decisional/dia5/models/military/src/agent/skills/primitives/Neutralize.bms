@@ -28,13 +28,22 @@ rootnode
             self.targets[ entity ] = true
         end
     end,
+
     -- --------------------------------------------------------------------------------
     -- Try to neutralize each element
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        local positions
+        if self.params.positions == NIL then
+            positions = queries.getPositionsToNeutralize[ "execute" ]( 
+              { elementsToNeutralize = self.params.entities, dynamic = true } )
+        else
+            positions = self.params.positions
+        end
+
         for _, entity in pairs( self.params.entities ) do
             Activate( skill.nodes.NeutralizeElement, entity:neutralizationPriority(),
-                { entity = entity, positions = self.params.positions } )
+                                                   { entity = entity, positions = positions } )
         end
     end
 }
