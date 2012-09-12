@@ -531,7 +531,7 @@
     </target>
 
     <target name="modules.perception_module_test" depends="modules.perception_module_dll">
-        <build-test name="perception_module" depends="boost" libs="perception_module@{suffix},core@{suffix}">
+        <build-test name="perception_module" depends="boost" libs="perception_module@{suffix},core@{suffix}" failonwarning="${failonwarning}">
             <includepath path="${libraries.dir}/simulation_kernel"/>
             <compilerarg value="-Zm500"/>
         </build-test>
