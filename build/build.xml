@@ -211,7 +211,7 @@
     </target>
 
     <target name="library.crossbow_plugin" depends="library.MT_Tools,library.tools,library.protocol" description="build crossbow dispatcher plugin static library">
-        <build-lib name="crossbow_plugin" pattern="lib${ant.project.name}_crossbow_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4">
+        <build-lib name="crossbow_plugin" pattern="lib${ant.project.name}_crossbow_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>

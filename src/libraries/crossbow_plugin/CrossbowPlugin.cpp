@@ -80,7 +80,7 @@ public:
 
     void Run()
     {
-        while ( true )
+        for( ;; )
         {
             crossbow_.UpdateListeners();
             boost::this_thread::sleep( boost::posix_time::milliseconds( frequency_ ) );
