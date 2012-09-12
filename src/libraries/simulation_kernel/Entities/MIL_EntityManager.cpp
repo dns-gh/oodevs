@@ -512,6 +512,7 @@ void MIL_EntityManager::Finalize()
     armyFactory_->Finalize();
     MIL_AgentServer::GetWorkspace().GetResourceNetworkModel().Finalize();
     inhabitantFactory_->Finalize();
+    sink_->UpdateModel( time_.GetCurrentTick(), time_.GetTickDuration() );
     UpdateStates();
 }
 
