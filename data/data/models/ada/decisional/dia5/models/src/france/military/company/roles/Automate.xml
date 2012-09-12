@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <role xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.roles.Automate" source-version="1.0.0" extends="sword.military.company.roles.Company">
-	<skills>
-		<skill name="france.military.company.skills.Escort"/>
-		<skill name="france.military.company.combat.support.art.skills.IlluminationTirSynchronise"/>
-	</skills>
+    <skills>
+        <skill name="france.military.company.skills.Escort"/>
+        <skill name="france.military.company.combat.support.art.skills.IlluminationTirSynchronise"/>
+        <skill name="france.military.company.skills.Appuyer"/>
+    </skills>
 </role>

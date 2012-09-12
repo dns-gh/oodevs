@@ -1,7 +1,22 @@
 return
 {
     getEntitiesToSupport = function( self, params )
-        return integration.getEntitiesFromAutomatCommunication( params.objective, "none", true)
+        local entitiesToSupport = integration.filterPionWithEchelon( integration.getEntitiesFromAutomatCommunication( params.objective, "none", true), eEtatEchelon_First )
+        if next(entitiesToSupport) then
+            return entitiesToSupport
+        else
+            return integration.getEntitiesFromAutomatCommunication( params.objective, "none", true)
+        end
+    end,
+    
+        
+    getEntitiesToFollow = function( self, params )
+        local entitiesToFollow = integration.filterPionWithEchelon( integration.getEntitiesFromAutomat( meKnowledge, "none", true ), eEtatEchelon_First )
+         if next(entitiesToFollow) then
+          return entitiesToFollow
+        else -- par défaut on renvoit le PC
+          return {integration.query.getPCUnit()}
+        end
     end,
 
     getDirection = function( self, params )
