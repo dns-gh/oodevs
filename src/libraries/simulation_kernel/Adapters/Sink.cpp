@@ -226,7 +226,6 @@ void Sink::ExecutePerceptions()
 // -----------------------------------------------------------------------------
 void Sink::ExecuteCommands()
 {
-    assert( facade_.get() );
     facade_->ExecuteCommands();
 }
 
@@ -236,7 +235,6 @@ void Sink::ExecuteCommands()
 // -----------------------------------------------------------------------------
 void Sink::ApplyEffects()
 {
-    assert( facade_.get() );
     facade_->ApplyEffects();
 }
 
@@ -353,7 +351,6 @@ void Sink::UpdateModel( unsigned int tick, int duration )
 // -----------------------------------------------------------------------------
 void Sink::PostCommand( const std::string& type, const core::Model& parameters )
 {
-    assert( facade_.get() );
     facade_->PostCommand( type, parameters );
 }
 
@@ -363,7 +360,6 @@ void Sink::PostCommand( const std::string& type, const core::Model& parameters )
 // -----------------------------------------------------------------------------
 std::size_t Sink::StartCommand( const std::string& type, const core::Model& parameters )
 {
-    assert( facade_.get() );
     return facade_->StartCommand( type, parameters );
 }
 
@@ -373,7 +369,6 @@ std::size_t Sink::StartCommand( const std::string& type, const core::Model& para
 // -----------------------------------------------------------------------------
 void Sink::PauseCommand( std::size_t command )
 {
-    assert( facade_.get() );
     facade_->PauseCommand( command );
 }
 
@@ -383,7 +378,6 @@ void Sink::PauseCommand( std::size_t command )
 // -----------------------------------------------------------------------------
 void Sink::ResumeCommand( std::size_t command )
 {
-    assert( facade_.get() );
     facade_->ResumeCommand( command );
 }
 
@@ -393,7 +387,6 @@ void Sink::ResumeCommand( std::size_t command )
 // -----------------------------------------------------------------------------
 void Sink::StopCommand( std::size_t command )
 {
-    assert( facade_.get() );
     facade_->StopCommand( command );
 }
 
@@ -424,7 +417,6 @@ MIL_AgentPion& Sink::Configure( MIL_AgentPion& pion, const MT_Vector2D& vPositio
     {
         core::Model parameters;
         parameters[ "identifier" ] = pion.GetID();
-        assert( facade_.get() );
         facade_->StartCommand( "compute height", parameters );
         facade_->StartCommand( "perception", parameters );
     }
