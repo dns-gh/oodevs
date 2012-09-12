@@ -83,6 +83,8 @@ public:
 
     void WriteODB( xml::xostream& xos ) const;
     void WriteKnowledges( xml::xostream& xos ) const;
+    void WriteWeather( xml::xostream& xos ) const;
+    void WriteUrban( xml::xostream& xos ) const;
     //@}
 
     //! @name Simulation management

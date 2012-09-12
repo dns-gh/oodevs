@@ -39,6 +39,7 @@ public:
     {
         ar & boost::serialization::base_object< MIL_Object >( *this );
     }
+    virtual void WriteUrban( xml::xostream& xos ) const = 0;
     //@}
 
     //! @name Accessors

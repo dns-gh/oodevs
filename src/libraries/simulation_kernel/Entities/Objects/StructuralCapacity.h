@@ -77,6 +77,7 @@ public:
     //@{
     template< typename Archive >
     void serialize( Archive& file, const unsigned int );
+    void WriteUrban( xml::xostream& xos ) const;
     //@}
 
 private:

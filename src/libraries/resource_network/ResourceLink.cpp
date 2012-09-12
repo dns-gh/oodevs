@@ -19,11 +19,11 @@ using namespace resource;
 // Created: JSR 2010-11-17
 // -----------------------------------------------------------------------------
 ResourceLink::ResourceLink()
-    : target_    ( 0 )
-    , kind_      ( eTargetKindUrban )
-    , capacity_  ( 0 )
-    , flow_      ( 0 )
-    , oldFlow_   ( 0 )
+    : target_( 0 )
+    , kind_( eTargetKindUrban )
+    , capacity_( 0 )
+    , flow_( 0 )
+    , oldFlow_( 0 )
     , needUpdate_( true )
 {
     // NOTHING
@@ -34,11 +34,11 @@ ResourceLink::ResourceLink()
 // Created: JSR 2010-08-13
 // -----------------------------------------------------------------------------
 ResourceLink::ResourceLink( unsigned int target, ETargetKind kind, int capacity )
-    : target_    ( target )
-    , kind_      ( kind )
-    , capacity_  ( capacity )
-    , flow_      ( 0 )
-    , oldFlow_   ( 0 )
+    : target_( target )
+    , kind_( kind )
+    , capacity_( capacity )
+    , flow_( 0 )
+    , oldFlow_( 0 )
     , needUpdate_( true )
 {
     // NOTHING
@@ -49,11 +49,11 @@ ResourceLink::ResourceLink( unsigned int target, ETargetKind kind, int capacity 
 // Created: JSR 2010-08-13
 // -----------------------------------------------------------------------------
 ResourceLink::ResourceLink( const ResourceLink& from )
-    : target_    ( from.target_ )
-    , kind_      ( from.kind_ )
-    , capacity_  ( from.capacity_ )
-    , flow_      ( from.flow_ )
-    , oldFlow_   ( 0 )
+    : target_( from.target_ )
+    , kind_( from.kind_ )
+    , capacity_( from.capacity_ )
+    , flow_( from.flow_ )
+    , oldFlow_( 0 )
     , needUpdate_( true )
 {
     // NOTHING
@@ -180,4 +180,20 @@ void ResourceLink::Serialize( sword::ResourceNetwork_Link& msg ) const
     msg.mutable_object()->set_id( target_ );
     msg.set_capacity( capacity_ );
     msg.set_flow( flow_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceLink::WriteODB
+// Created: NPT 2012-09-11
+// -----------------------------------------------------------------------------
+void ResourceLink::WriteODB( xml::xostream& xos, const ResourceTools_ABC& tools )
+{
+    unsigned int targetId = target_;
+    bool isUrban = tools.ConvertIdToUrbanId( targetId );
+    std::string kind( isUrban ? "urban-object" : "terrain-object" );
+    xos << xml::start( "link" )
+            << xml::attribute( "kind", kind )
+            << xml::attribute( "target", targetId )
+            << xml::attribute( "capacity", capacity_ )
+        << xml::end;
 }

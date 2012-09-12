@@ -55,7 +55,7 @@ public:
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
-    //@}
+    virtual void WriteUrban( xml::xostream& xos ) const;
 
     //! @name ODB
     //@{
@@ -101,6 +101,11 @@ private:
     void ReadResourceNetworks( xml::xistream& xis );
     void ReadStructuralState( xml::xistream& xis );
     void ReadPoint( xml::xistream& xis, T_PointVector& vector );
+    void WriteLocalisation( xml::xostream& xos ) const;
+    void WriteColor( xml::xostream& xos ) const;
+    template< typename T >
+    void WriteCapacity( xml::xostream& xos ) const;
+    void WritePointVector( xml::xostream& xos, const T_PointVector& vector ) const;
     template < typename T >
     void SendCapacity( sword::UrbanAttributes& msg ) const;
     template < typename T >

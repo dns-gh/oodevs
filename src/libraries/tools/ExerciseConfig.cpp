@@ -363,6 +363,15 @@ std::string ExerciseConfig::GetWeatherFile() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetWeatherFileName
+// Created: NPT 2012-09-06
+// -----------------------------------------------------------------------------
+std::string ExerciseConfig::GetWeatherFileName() const
+{
+    return weather_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ExerciseConfig::GetOrbatFile
 // Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------

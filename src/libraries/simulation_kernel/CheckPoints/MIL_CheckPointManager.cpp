@@ -24,6 +24,7 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/convenience.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
+#include <tools/XmlCrc32Signature.h>
 #include <direct.h>
 
 namespace bpt = boost::posix_time;
@@ -283,11 +284,33 @@ bool MIL_CheckPointManager::SaveOrbatCheckPoint( const std::string& name )
     try
     {
         const MIL_Config& config = MIL_AgentServer::GetWorkspace().GetConfig();
-        xml::xofstream xos( config.BuildCheckpointChildFile( config.GetOrbatFileName(), name ) );
-        MIL_AgentServer::GetWorkspace().WriteODB( xos );
+        std::string filename = config.BuildCheckpointChildFile( config.GetOrbatFileName(), name );
+        {
+            xml::xofstream xos( filename );
+            MIL_AgentServer::GetWorkspace().WriteODB( xos );
+        }
+        tools::WriteXmlCrc32Signature( filename );
 
-        xml::xofstream xosKnowledge ( config.BuildCheckpointChildFile( config.GetKnowledgesFileName(), name ) );
-        MIL_AgentServer::GetWorkspace().WriteKnowledges( xosKnowledge );
+        filename = config.BuildCheckpointChildFile( config.GetKnowledgesFileName(), name );
+        {
+            xml::xofstream xosKnowledge( filename );
+            MIL_AgentServer::GetWorkspace().WriteKnowledges( xosKnowledge );
+        }
+        tools::WriteXmlCrc32Signature( filename );
+
+        filename = config.BuildCheckpointChildFile( config.GetWeatherFileName(), name );
+        {
+            xml::xofstream xosWeather( filename );
+            MIL_AgentServer::GetWorkspace().WriteWeather( xosWeather );
+        }
+        tools::WriteXmlCrc32Signature( filename );
+
+        filename = config.BuildCheckpointChildFile( config.GetUrbanFileName(), name );
+        {
+            xml::xofstream xosUrban( filename );
+            MIL_AgentServer::GetWorkspace().WriteUrban( xosUrban );
+        }
+        tools::WriteXmlCrc32Signature( filename );
     }
     catch( xml::exception& e )
     {

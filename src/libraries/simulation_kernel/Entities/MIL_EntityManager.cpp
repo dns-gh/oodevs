@@ -418,6 +418,25 @@ void MIL_EntityManager::ReadUrban( xml::xistream& xis, std::vector< const MIL_Ur
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::WriteUrban
+// Created: NPT 2012-09-06
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::WriteUrban( xml::xostream& xos ) const
+{
+    tools::SchemaWriter schemaWriter;
+    xos << xml::start( "urban" );
+    schemaWriter.WriteSchema( xos, "exercise", "urban" );
+    if( cities_.size() != 0 )
+    {
+        xos << xml::start( "urban-objects" );
+        for( CIT_Cities it = cities_.begin(); it != cities_.end(); it++ )
+            ( *it )->WriteUrban( xos );
+        xos << xml::end;
+    }
+    xos << xml::end;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::ReadCity
 // Created: JSR 2012-08-03
 // -----------------------------------------------------------------------------
@@ -2250,6 +2269,21 @@ unsigned int MIL_EntityManager::ConvertUrbanIdToSimId( unsigned int urbanId )
     }
     MT_LOG_WARNING_MSG( "Cannot find urban object with id " << urbanId );
     return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::ConvertIdToUrbanId
+// Created: NPT 2012-09-12
+// -----------------------------------------------------------------------------
+bool MIL_EntityManager::ConvertIdToUrbanId( unsigned int& id ) const
+{
+    MIL_UrbanObject_ABC* urban = dynamic_cast< MIL_UrbanObject_ABC* >( FindObject( id ) );
+    if( urban )
+    {
+        id = urban->GetUrbanId();
+        return true;
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

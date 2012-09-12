@@ -129,6 +129,7 @@ public:
     MIL_Population* FindPopulation( MIL_UrbanObject_ABC* urbanObject ) const;
     const tools::Resolver< MIL_Army_ABC >& MIL_EntityManager::GetArmies() const;
     unsigned int ConvertUrbanIdToSimId( unsigned int urbanId );
+    bool ConvertIdToUrbanId( unsigned int& id ) const;
     void Accept( KnowledgesVisitor_ABC& visitor ) const;
     //@}
 
@@ -207,8 +208,9 @@ public:
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_EntityManager* role, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_EntityManager* role, const unsigned int /*version*/ );
 
-    void WriteODB( xml::xostream& xos ) const;
+    void WriteODB       ( xml::xostream& xos ) const;
     void WriteKnowledges( xml::xostream& xos ) const;
+    void WriteUrban     ( xml::xostream& xos ) const;
     //@}
 
 private:

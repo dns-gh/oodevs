@@ -49,6 +49,7 @@ public:
     //! @name CheckPoints
     //@{
     template< typename Archive > void serialize( Archive&, const unsigned int );
+    virtual void Serialize( xml::xostream& xos ) const;
     //@}
 
 private:

@@ -410,6 +410,24 @@ void MIL_AgentServer::WriteKnowledges( xml::xostream& xos ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::WriteWeather
+// Created: NPT 2012-09-06
+// -----------------------------------------------------------------------------
+void MIL_AgentServer::WriteWeather( xml::xostream& xos ) const
+{
+    GetWorkspace().GetMeteoDataManager().WriteWeather( xos );
+}
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::WriteUrban
+// Created: NPT 2012-09-06
+// -----------------------------------------------------------------------------
+void MIL_AgentServer::WriteUrban( xml::xostream& xos ) const
+{
+    assert( pEntityManager_ );
+    pEntityManager_->WriteUrban( xos );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AgentServer::SendControlInformation
 // Created: AGE 2007-08-10
 // -----------------------------------------------------------------------------

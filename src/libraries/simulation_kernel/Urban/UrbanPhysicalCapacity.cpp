@@ -193,6 +193,34 @@ void UrbanPhysicalCapacity::serialize( Archive& file, const unsigned int )
 }
 
 // -----------------------------------------------------------------------------
+// Name: UrbanPhysicalCapacity::WriteUrban
+// Created: NPT 2012-09-11
+// -----------------------------------------------------------------------------
+void UrbanPhysicalCapacity::WriteUrban( xml::xostream& xos ) const
+{
+    xos << xml::start( "physical" )
+            << xml::start( "architecture" )
+                << xml::attribute( "height", height_ )
+                << xml::attribute( "floor-number", floorNumber_ )
+                << xml::attribute( "roof-shape", roofShape_ )
+                << xml::attribute( "material", material_ )
+                << xml::attribute( "occupation", occupation_ )
+                << xml::attribute( "trafficability", trafficability_ )
+                << xml::attribute( "parking-floors", parkingFloors_ )
+            << xml::end
+            << xml::start( "usages" );
+            for( std::map< std::string, float >::const_iterator it = motivations_.begin(); it != motivations_.end(); ++it )
+            {
+                xos << xml::start( "usage" )
+                        << xml::attribute( "type", it->first )
+                        << xml::attribute( "proportion", it->second )
+                    << xml::end;
+            }
+   xos      << xml::end
+        << xml::end;
+}
+
+// -----------------------------------------------------------------------------
 // Name: UrbanPhysicalCapacity::ReadXml
 // Created: JSR 2012-08-01
 // -----------------------------------------------------------------------------

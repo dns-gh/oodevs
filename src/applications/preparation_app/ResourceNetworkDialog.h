@@ -38,7 +38,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void DoValidate();
+    virtual void DoValidate( kernel::Entity_ABC* element = 0 );
     virtual bool DoGenerateProduction();
     virtual void NotifyModeChanged( int newMode, bool useDefault, bool firstChangeToSavedMode );
     bool IsNetworkValid( const kernel::ResourceNetwork_ABC::ResourceNode& node, unsigned int id, const std::string& resource, std::set< unsigned int >& array );

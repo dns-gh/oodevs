@@ -49,11 +49,17 @@ ResourceNetworkDialog::~ResourceNetworkDialog()
 // Name: ResourceNetworkDialog::DoValidate
 // Created: JSR 2010-09-08
 // -----------------------------------------------------------------------------
-void ResourceNetworkDialog::DoValidate()
+void ResourceNetworkDialog::DoValidate( kernel::Entity_ABC* element /*= 0*/ )
 {
     if( selected_.size() != 1 )
         return;
-    static_cast< ResourceNetworkAttribute& >( selected_.front()->Get< ResourceNetwork_ABC >() ).Update( resourceNodes_ );
+    if( element )
+    {
+        kernel::ResourceNetwork_ABC& network = element->Get< kernel::ResourceNetwork_ABC >();
+        static_cast< ResourceNetworkAttribute& >( network ).Update( network.GetResourceNodes() );
+    }
+    else
+        static_cast< ResourceNetworkAttribute& >( selected_.front()->Get< ResourceNetwork_ABC >() ).Update( resourceNodes_ );
 }
 
 // -----------------------------------------------------------------------------

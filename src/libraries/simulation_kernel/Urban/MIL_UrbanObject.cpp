@@ -16,6 +16,7 @@
 #include "Entities/Objects/InfrastructureCapacity.h"
 #include "Entities/Objects/MaterialAttribute.h"
 #include "Entities/Objects/MedicalCapacity.h"
+#include "Entities/Objects/MedicalTreatmentAttribute.h"
 #include "Entities/Objects/ResourceNetworkCapacity.h"
 #include "Entities/Objects/StructuralCapacity.h"
 #include "Entities/Objects/MIL_ObjectBuilder_ABC.h"
@@ -353,6 +354,59 @@ void MIL_UrbanObject::ReadPoint( xml::xistream& xis, T_PointVector& vector )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_UrbanObject::WriteLocalisation
+// Created: NPT 2012-09-06
+// -----------------------------------------------------------------------------
+void MIL_UrbanObject::WriteLocalisation( xml::xostream& xos ) const
+{
+    xos << xml::start( "footprint" );
+        WritePointVector( xos, GetLocalisation().GetPoints() );
+    xos << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_UrbanObject::WriteColor
+// Created: NPT 2012-09-06
+// -----------------------------------------------------------------------------
+void MIL_UrbanObject::WriteColor( xml::xostream& xos ) const
+{
+    xos << xml::start( "color" )
+            << xml::attribute( "red", color_.red_ )
+            << xml::attribute( "green", color_.green_ )
+            << xml::attribute( "blue", color_.blue_ )
+            << xml::attribute( "alpha", color_.alpha_ )
+        << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_UrbanObject::WriteCapacity
+// Created: NPT 2012-09-11
+// -----------------------------------------------------------------------------
+template< typename T >
+void MIL_UrbanObject::WriteCapacity( xml::xostream& xos ) const
+{
+    const T* capacity = Retrieve< T >();
+    if( capacity )
+        capacity->WriteUrban( xos );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_UrbanObject::WritePoint
+// Created: NPT 2012-09-06
+// -----------------------------------------------------------------------------
+void MIL_UrbanObject::WritePointVector( xml::xostream& xos , const T_PointVector& vector ) const
+{
+    for( CIT_PointVector it = vector.begin(); it != vector.end(); it++ )
+    {
+        std::string stringCoord;
+        TER_World::GetWorld().SimToMosMgrsCoord( ( *it ), stringCoord );
+        xos << xml::start( "point" )
+                << xml::attribute( "location", stringCoord )
+            << xml::end;
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_UrbanObject::load
 // Created: JSR 2010-07-20
 // -----------------------------------------------------------------------------
@@ -388,6 +442,36 @@ void MIL_UrbanObject::save( MIL_CheckPointOutArchive& file, const unsigned int )
          << color_.alpha_
          << inhabitants_
          << livingAreas_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_UrbanObject::WriteUrban
+// Created: NPT 2012-09-06
+// -----------------------------------------------------------------------------
+void MIL_UrbanObject::WriteUrban( xml::xostream& xos ) const
+{
+    xos << xml::start( "urban-object" )
+        << xml::attribute( "id", nUrbanId_ )
+        << xml::attribute( "name", name_ );
+    WriteColor( xos );
+    WriteCapacity< UrbanPhysicalCapacity >( xos );
+    if( IsBlock() )
+    {
+        WriteLocalisation( xos );
+        WriteCapacity< InfrastructureCapacity >( xos );
+        WriteCapacity< ResourceNetworkCapacity >( xos );
+        WriteCapacity< StructuralCapacity >( xos );
+        if( const MedicalTreatmentAttribute* attr = RetrieveAttribute< MedicalTreatmentAttribute >() )
+            attr->WriteODB( xos );
+    }
+    if( Count() )
+    {
+        xos << xml::start( "urban-objects" );
+        for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+            it->second->WriteUrban( xos );
+        xos     << xml::end;
+    }
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------

@@ -42,7 +42,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void DoValidate();
+    virtual void DoValidate( kernel::Entity_ABC* element = 0 );
     //@}
 
 private:

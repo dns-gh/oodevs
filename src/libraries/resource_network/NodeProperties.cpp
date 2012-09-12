@@ -388,3 +388,13 @@ double NodeProperties::AddToStock( unsigned long resourceId, double quantity )
         return element->AddToStock( quantity );
     return 0.;
 }
+
+// -----------------------------------------------------------------------------
+// Name: NodeProperties::WriteODB
+// Created: NPT 2012-09-11
+// -----------------------------------------------------------------------------
+void NodeProperties::WriteODB( xml::xostream& xos ) const
+{
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        it->second->WriteODB( xos, *tools_ );
+}

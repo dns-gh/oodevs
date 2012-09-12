@@ -74,7 +74,7 @@ private slots:
 private:
     //! @name Helpers
     //@{
-    virtual void DoValidate() = 0;
+    virtual void DoValidate( kernel::Entity_ABC* element = 0 ) = 0;
     virtual void BeforeSelection();
     virtual void AfterSelection();
     virtual void MultipleSelect( const std::vector< const kernel::UrbanObject_ABC* >& elements );
@@ -98,7 +98,7 @@ protected:
     std::vector< kernel::Entity_ABC* > selected_;
     Q3ListBoxItem* selectedItem_;
     const tools::StringResolver< kernel::ResourceNetworkType >& resources_;
-    kernel::ResourceNetwork_ABC* sourceNode_;
+    kernel::Entity_ABC* sourceNode_;
     unsigned int id_;
     kernel::ResourceNetwork_ABC::T_ResourceNodes resourceNodes_;
     Q3VBox* pMainLayout_;
