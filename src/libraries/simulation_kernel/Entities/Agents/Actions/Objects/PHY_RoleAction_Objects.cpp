@@ -201,7 +201,8 @@ int PHY_RoleAction_Objects::Destroy( boost::shared_ptr< DEC_Knowledge_Object >& 
         if( pCapacity )
         {
             const PHY_DotationCategory* pDotationCategory  = pCapacity->GetDotationCategory();
-            dataComputer.RecoverDotations( *pDotationCategory, nDotationRecovered );
+            if( pDotationCategory )
+                dataComputer.RecoverDot1ations( *pDotationCategory, nDotationRecovered );
         }
     }
     if( attribute.GetState() == 0. )
