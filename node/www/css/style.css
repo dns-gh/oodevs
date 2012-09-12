@@ -31,7 +31,6 @@ body{padding-top:60px;padding-bottom:40px;}
 .footer{text-align:center;}
 .navbar .brand{cursor:default;}
 .navbar .brand:hover{color:inherit;}
-select{width:224px;}
 .pull-right .label{float:left;margin-top:11px;}
 .sub_header td{padding-top:24px;font-weight:bold;border-top:0;}
 .ufirst{text-transform:capitalize;}
@@ -61,10 +60,10 @@ select{width:224px;}
 .package_header .remove_all{float:right;margin-right:6px;margin-top:6px;}
 .masa_header{text-align:center;}
 .sign_in,form.update_login{margin-left:180px;}
-.sign_in_action,.update_login_action{margin-left:160px;}
+.sign_in_action,.update_login_action{margin-left:180px;}
 .sign_in_action a{width:254px;}
 .update_login_header{text-align:center;margin-bottom:24px;font-weight:bold;}
-.update_login_action .cancel{width:95px;}
+.update_login_action .cancel{width:91px;}
 .checkbox,.radio{cursor:pointer;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:-moz-none;-o-user-select:none;user-select:none;display:table;}
 .checkbox_addon label.add-on{margin-left:0;margin-bottom:0;width:22px;}
 .checkbox_addon input[type=checkbox]{position:relative;top:-3px;}
