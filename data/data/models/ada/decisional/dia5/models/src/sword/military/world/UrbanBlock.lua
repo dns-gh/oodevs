@@ -168,7 +168,7 @@ return
     {
         dependencies = "none",
         method = function( self, objective )
-            return meKnowledge:computeSupportCapability( objective, self ) > 0
+            return meKnowledge:computeSupportCapability( objective, self ) > 0 and integration.isElementInAOR( self )
         end
     },
     predicate "isSearched"

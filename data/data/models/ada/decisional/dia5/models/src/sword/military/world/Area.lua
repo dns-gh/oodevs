@@ -35,6 +35,9 @@ return
     neutralizationEfficiency = function( self, objective )
          return self:proximityLevel() / 100
     end,
+    supportEfficiency = function( self, objective ) -- here objective is the element that is supported
+        return integration.normalizedInversedDistance( objective, self ) / 100
+    end,
     isReconnoitred = function( self ) 
         return self:reconnaissanceLevel() >= 60
     end,
@@ -143,6 +146,17 @@ return
         dependencies = "none",
         method = function( self )
             return self:NBCrecoLevel() == 100
+        end
+    },
+    predicate "isSupportingFor"
+    {
+        dependencies = "none",
+        method = function( self, objective )
+            if integration.isPointInUrbanBlockTrafficable( self, true ) and integration.isElementInAOR( self ) then
+                return true
+            else
+                return false
+            end
         end
     },
 
