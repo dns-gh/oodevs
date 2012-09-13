@@ -20,7 +20,6 @@ integration.firingRangeToSupport = function()
 end
 
 integration.getPositionToSupportFriend = function( friendToSupport )
-    local position
     local rangeDistance = DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition() / 2  -- indirect fire case
     if rangeDistance <= 0 then -- direct fire case
         rangeDistance = DEC_Tir_PorteeMaxPourTirer( 0.7 ) / 2
