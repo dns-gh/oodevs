@@ -72,7 +72,7 @@ namespace
     private:
         virtual void NotifyChanged( const core::Model& model )
         {
-            model_ = const_cast< core::Model* >( &model );
+            model_ = &model;
             message_ = Message();
             serializer_( *message_, model );
         }
@@ -81,7 +81,7 @@ namespace
             model_ = 0;
         }
     private:
-        core::Model* model_;
+        const core::Model* model_;
         mutable boost::optional< Message > message_;
         Serializer serializer_;
     };
