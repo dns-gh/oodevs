@@ -10,82 +10,57 @@
 #include "Chunker_ABC.h"
 
 #include "Reply_ABC.h"
+#include "runtime/Io.h"
 
 #include <boost/make_shared.hpp>
 #include <boost/shared_ptr.hpp>
-#include <sstream>
-
-#ifdef _MSC_VER
-#   pragma warning( push )
-#   pragma warning( disable : 4702 )
-#endif
-#include <boost/iostreams/stream.hpp>
-#ifdef _MSC_VER
-#   pragma warning( pop )
-#endif
 
 using namespace web;
 
+#ifdef _MSC_VER
+#include <stdarg.h>
 namespace
 {
-static const std::string crlf = "\r\n";
-
-// -----------------------------------------------------------------------------
-// Name: Sink
-// Created: BAX 2012-09-11
-// -----------------------------------------------------------------------------
-struct Sink : public boost::iostreams::sink
+int vsnprintf( char* str, size_t size, const char* format, va_list list )
 {
-    Sink( Reply_ABC& res )
-        : res_  ( &res )
-        , write_( false)
-    {
-        // NOTHING
-    }
+    if( size == 0 )
+        return 0;
+    if( size > INT_MAX )
+        return -1;
+    memset( str, 0, size );
+    int rpy = _vsnprintf( str, size - 1, format, list );
+    if( rpy == -1 )
+        rpy = static_cast< int >( size );
+    return rpy;
+}
 
-    virtual ~Sink()
-    {
-        if( !write_ )
-            return;
-        std::stringstream chunk;
-        chunk << 0 << crlf << crlf;
-        WriteChunk( chunk );
-    }
+int snprintf( char* str, size_t size, const char* format, ...)
+{
+    va_list list;
+    va_start( list, format );
+    int rpy = vsnprintf( str, size, format, list );
+    va_end( list );
+    return rpy;
+}
+}
+#endif
 
-    void WriteChunk( const std::stringstream& chunk )
-    {
-        const std::string data = chunk.str();
-        res_->Write( data.c_str(), data.size() );
-    }
-
-    std::streamsize write( const void* data, size_t size )
-    {
-        if( !size )
-            return 0;
-        write_ = true;
-        std::stringstream chunk;
-        chunk << std::hex << size << crlf;
-        chunk.write( reinterpret_cast< const char* >( data ), size );
-        chunk << crlf;
-        WriteChunk( chunk );
-        return size;
-    }
-
-private:
-    // we save res_ as a pointer as boost::iostreams copy it everywhere
-    Reply_ABC* res_;
-    bool write_;
-};
+namespace
+{
+const size_t prolog_size = 64;
+const size_t buffer_size = 1<<20;
 
 // -----------------------------------------------------------------------------
 // Name: Chunker
 // Created: BAX 2012-09-11
 // -----------------------------------------------------------------------------
-struct Chunker : public Chunker_ABC
+struct Chunker : public Chunker_ABC, public io::Writer_ABC
 {
     Chunker( Reply_ABC& rpy )
-        : rpy_( rpy )
-        , io_ ( rpy )
+        : rpy_       ( rpy )
+        , raw_buffer_( calloc( sizeof *buffer_, prolog_size*2 + buffer_size ), free )
+        , buffer_    ( reinterpret_cast< char* >( raw_buffer_.get() ) )
+        , fill_      ( 0 )
     {
         rpy_.SetStatus( web::OK );
         rpy_.SetHeader( "Content-Type", "application/zip" );
@@ -95,18 +70,50 @@ struct Chunker : public Chunker_ABC
 
     ~Chunker()
     {
-        io_.flush();
+        Flush( true );
     }
 
-    std::ostream& SetName( const std::string& name )
+    io::Writer_ABC& SetName( const std::string& name )
     {
         rpy_.SetHeader( "Content-Disposition", "attachment; filename=\"" + name + ".zip\"" );
         rpy_.WriteHeaders();
-        return io_;
+        return *this;
+    }
+
+    void Flush( bool last )
+    {
+        const int prolog = snprintf( &buffer_[0], prolog_size, "%x\r\n", fill_ );
+        memmove( &buffer_[prolog_size - prolog], &buffer_[0], prolog );
+        const char* fmt = last ? "\r\n0\r\n\r\n" : "\r\n";
+        const int epilog = snprintf( &buffer_[prolog_size + fill_], prolog_size, fmt );
+        rpy_.Write( &buffer_[prolog_size - prolog], prolog + fill_ + epilog );
+        fill_ = 0;
+    }
+
+    bool Write( const void* data, size_t size )
+    {
+        const char* ptr = reinterpret_cast< const char* >( data );
+        while( size )
+        {
+            const size_t step = std::min( size, buffer_size - fill_ );
+            if( !step )
+            {
+                Flush( false );
+                continue;
+            }
+
+            memcpy( &buffer_[prolog_size + fill_], ptr, step );
+            ptr   += step;
+            fill_ += step;
+            size  -= step;
+        }
+        return true;
     }
 
     Reply_ABC& rpy_;
-    boost::iostreams::stream< Sink > io_;
+    boost::shared_ptr< void > raw_buffer_;
+    char* buffer_;
+    size_t fill_;
 };
 }
 

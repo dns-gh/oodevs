@@ -10,8 +10,9 @@
 #include "FileSystem.h"
 
 #include "cpplog/cpplog.hpp"
-#include "Utf8.h"
+#include "Io.h"
 #include "Scoper.h"
+#include "Utf8.h"
 
 #include <boost/bind.hpp>
 #include <boost/filesystem.hpp>
@@ -500,9 +501,9 @@ namespace
 {
 struct Packer : public Packer_ABC
 {
-    Packer( cpplog::BaseLogger& log, std::ostream& stream )
+    Packer( cpplog::BaseLogger& log, io::Writer_ABC& writer )
         : log_   ( log )
-        , stream_( stream )
+        , writer_( writer )
         , dst_   ( archive_write_new(), archive_write_free )
     {
         archive_write_set_format_zip( dst_.get() );
@@ -526,7 +527,7 @@ struct Packer : public Packer_ABC
     {
         Packer& it = *reinterpret_cast< Packer* >( userdata );
         const char* src = reinterpret_cast< const char* >( data );
-        it.stream_.write( src, size );
+        it.writer_.Write( src, size );
         return size;
     }
 
@@ -540,7 +541,7 @@ struct Packer : public Packer_ABC
     }
 
     cpplog::BaseLogger& log_;
-    std::ostream& stream_;
+    io::Writer_ABC& writer_;
     boost::shared_ptr< Archive > dst_;
 };
 }
@@ -549,7 +550,7 @@ struct Packer : public Packer_ABC
 // Name: FileSystem::Pack
 // Created: BAX 2012-08-06
 // -----------------------------------------------------------------------------
-FileSystem_ABC::T_Packer FileSystem::Pack( std::ostream& dst ) const
+FileSystem_ABC::T_Packer FileSystem::Pack( io::Writer_ABC& dst ) const
 {
     return boost::make_shared< Packer >( boost::ref( log_ ), boost::ref( dst ) );
 }

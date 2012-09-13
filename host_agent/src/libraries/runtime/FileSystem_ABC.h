@@ -24,6 +24,11 @@ namespace filesystem
 }
 }
 
+namespace io
+{
+    struct Writer_ABC;
+}
+
 namespace runtime
 {
     typedef boost::filesystem::path Path;
@@ -109,7 +114,7 @@ struct FileSystem_ABC : public boost::noncopyable
     virtual void Glob( const Path& path, const Path& name, const T_Predicate& predicate ) const = 0;
     virtual void Walk( const Path& path, bool recurse, const T_Predicate& predicate ) const = 0;
     virtual T_Unpacker Unpack( const Path& output, std::istream& src ) const = 0;
-    virtual T_Packer Pack( std::ostream& dst ) const = 0;
+    virtual T_Packer Pack( io::Writer_ABC& dst ) const = 0;
     virtual std::string Checksum( const Path& root, const T_Predicate& predicate, size_t& read ) const = 0;
     virtual Path MakeAnyPath( const Path& root ) const = 0;
     virtual std::time_t GetLastWrite( const Path& file ) const = 0;

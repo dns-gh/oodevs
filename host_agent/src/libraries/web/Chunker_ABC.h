@@ -11,12 +11,16 @@
 #define CHUNKER_ABC_H
 
 #include <boost/noncopyable.hpp>
-#include <iosfwd>
 #include <string>
 
 namespace boost
 {
     template< typename T > class shared_ptr;
+}
+
+namespace io
+{
+    struct Writer_ABC;
 }
 
 namespace web
@@ -34,7 +38,7 @@ struct Chunker_ABC : public boost::noncopyable
 {
              Chunker_ABC() {}
     virtual ~Chunker_ABC() {}
-    virtual std::ostream& SetName( const std::string& name ) = 0;
+    virtual io::Writer_ABC& SetName( const std::string& name ) = 0;
 };
 
 boost::shared_ptr< Chunker_ABC > MakeChunker( Reply_ABC& rpy );
