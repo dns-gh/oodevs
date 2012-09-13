@@ -37,8 +37,6 @@
         <skill name="france.military.platoon.combat.support.nrbc.skills.AnimerPlotDecontamination"/>
         <skill name="france.military.platoon.combat.support.nrbc.skills.DecontaminerZone"/>
         <skill name="france.military.platoon.combat.support.nrbc.skills.Reconnaitre"/>
-        <skill name="france.military.platoon.combat.support.art.skills.Engager"/>
-        <skill name="france.military.platoon.combat.support.art.skills.Desengager"/>
         <skill name="sword.military.platoon.coercition.skills.SwitchToSpeed"/>
         <skill name="france.military.platoon.combat.support.circu.skills.AppuyerMouvement"/>
         <skill name="france.military.platoon.combat.support.circu.skills.ConstruireZone"/>
