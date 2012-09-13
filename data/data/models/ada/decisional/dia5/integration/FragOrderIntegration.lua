@@ -32,7 +32,7 @@ integration.isTask = function( self )
          orderType == "france.military.platoon.tasks.Illuminer" or
          orderType == "france.military.platoon.combat.support.art.tasks.UtiliserALR" or
          orderType == "france.military.platoon.tasks.Observer" or
-         orderType == "Rep_OrderConduite_OrienterCapteurs" or
+         orderType == "france.military.platoon.tasks.Orienter" or
          orderType == "france.military.platoon.tasks.RejoindreAToutPrix" or
          orderType == "france.military.platoon.tasks.DeposerUnite" or
          orderType == "security.behaviors.tasks.StopAndGoToGarage" or
@@ -186,13 +186,8 @@ integration.startFragOrderTask = function( self )
         end
   elseif orderType == "france.military.platoon.tasks.Observer" then
     mission.objective = CreateKnowledge( integration.ontology.types.point, self.source:GetpointCible_() )
-  elseif orderType == "Rep_OrderConduite_OrienterCapteurs" then
-    local objective = CreateKnowledge( integration.ontology.types.point, self.source:GetpointCible_() )
-    if objective and objective:getPosition() then
-        DEC_Perception_VisionVerrouilleeSurPointPtr( objective:getPosition() )
-    end
-    integration.cleanFragOrder( self )
-    return
+  elseif orderType == "france.military.platoon.tasks.Orienter" then
+    mission.objective = CreateKnowledge( integration.ontology.types.point, self.source:GetpointCible_() )
   elseif orderType == "Rep_OrderConduite_SauvegardeContreBatterie" then
     orderType = "france.military.platoon.combat.support.art.tasks.AssurerMiseEnOeuvre"
     mission.firePositions = {CreateKnowledge( integration.ontology.types.point, self.source:GetpointCible_() )}
