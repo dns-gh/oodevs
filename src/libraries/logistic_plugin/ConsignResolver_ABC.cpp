@@ -110,18 +110,6 @@ void ConsignResolver_ABC::SetNewFile( const boost::gregorian::date& today )
     fileName_ = newFileName;
 }
 
-namespace
-{
-
-boost::regex GetFileRegex( const std::string& name, const std::string& dateRegex )
-{
-    std::stringstream streamRegex;
-    streamRegex << name << "\\." << dateRegex << "\\.(\\d+)\\.csv$";
-    return boost::regex( streamRegex.str() );
-}
-
-}  // namespace
-
 // -----------------------------------------------------------------------------
 // Name: ConsignResolver_ABC::InitFileIndex
 // Created: MMC 2012-09-12
@@ -129,8 +117,8 @@ boost::regex GetFileRegex( const std::string& name, const std::string& dateRegex
 void ConsignResolver_ABC::InitFileIndex( const boost::gregorian::date& today )
 {
     bfs::path curPath( name_ );
-    std::string baseName = curPath.filename().string();
-    boost::regex todayRegex( GetFileRegex( baseName, to_iso_string( today ) ) );
+    boost::regex todayRegex(
+        curPath.filename().string() + "\\." + to_iso_string( today ) + "\\.(\\d+)\\.csv$");
 
     boost::smatch m;
     bfs::directory_iterator end;
@@ -138,8 +126,7 @@ void ConsignResolver_ABC::InitFileIndex( const boost::gregorian::date& today )
     {
         if( bfs::is_regular_file( dir_it->status() ) )
         {
-            std::string fileName = dir_it->path().filename().string();
-            
+            const std::string fileName = dir_it->path().filename().string();
             if(boost::regex_match( fileName, m, todayRegex ) )
             {
                 const int curIndex = boost::lexical_cast< int >( m.str( 1 ) ) + 1;
@@ -157,9 +144,8 @@ void ConsignResolver_ABC::InitFileIndex( const boost::gregorian::date& today )
 void ConsignResolver_ABC::RemoveOldFiles( const boost::gregorian::date& today )
 {
     bfs::path curPath( name_ );
-    std::string baseName = curPath.filename().string();
-
-    boost::regex fileRegex( GetFileRegex( baseName, "(\\d{8})" ) );
+    boost::regex fileRegex(
+        curPath.filename().string() + "\\.(\\d{8})\\.\\d+\\.csv$");
     const std::string minDate = to_iso_string( today - bg::days( daysBeforeToKeep_ ) );
 
     boost::smatch m;
@@ -169,7 +155,7 @@ void ConsignResolver_ABC::RemoveOldFiles( const boost::gregorian::date& today )
     {
         if( bfs::is_regular_file( dir_it->status() ) )
         {
-            std::string fileName = dir_it->path().filename().string();
+            const std::string fileName = dir_it->path().filename().string();
             // ISO date lexicographic order matches the chronological one
             if( boost::regex_match( fileName, m, fileRegex ) && m.str(1) < minDate)
                 filesToRemove.push_back( dir_it->path() );
