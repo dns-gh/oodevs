@@ -2015,7 +2015,13 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int 
          >> nRandomBreakdownsNextTimeStep_
          >> cities_;
 
-    CreateQuadTreeForCheckpoint();
+    MIL_AgentServer::GetWorkspace().GetUrbanCache().CreateQuadTree(
+        cities_,
+        geometry::Rectangle2d(
+            geometry::Point2d( 0, 0 ),
+            geometry::Point2d(
+                MIL_AgentServer::GetWorkspace().GetConfig().GetTerrainWidth(),
+                MIL_AgentServer::GetWorkspace().GetConfig().GetTerrainHeight() ) ) );
 
     armyFactory_.reset( armyFactory );
     formationFactory_.reset( formationFactory );
@@ -2034,17 +2040,6 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int 
     MT_LOG_INFO_MSG( MT_FormatString( " => %d inhabitants", inhabitantFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d objects"    , pObjectManager_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d objects"    , MIL_AgentServer::GetWorkspace().GetUrbanCache().GetUrbanBlocks().size() ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::CreateQuadTreeForCheckpoint
-// Created: JSR 2012-08-03
-// -----------------------------------------------------------------------------
-void MIL_EntityManager::CreateQuadTreeForCheckpoint()
-{
-    //privé
-    geometry::Rectangle2d extent( geometry::Point2d( 0, 0 ), geometry::Point2d( MIL_AgentServer::GetWorkspace().GetConfig().GetTerrainWidth(), MIL_AgentServer::GetWorkspace().GetConfig().GetTerrainHeight() ) );
-    MIL_AgentServer::GetWorkspace().GetUrbanCache().CreateQuadTree( cities_, extent );
 }
 
 // -----------------------------------------------------------------------------

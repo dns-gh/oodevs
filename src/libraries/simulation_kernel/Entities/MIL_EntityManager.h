@@ -157,7 +157,6 @@ public:
     void Update();
     void Clean();
     void Finalize();
-    void CreateQuadTreeForCheckpoint(); //temporaire
     //@}
 
     //! @external helper
