@@ -4619,7 +4619,7 @@
     <fragorder available-without-mission="true" dia-type="platoon.tasks.Observer" id="390" name="Pion Observer">
       <parameter dia-name="pointCible_" name="Objectif" optional="false" type="Point"/>
     </fragorder>
-    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_OrienterCapteurs" id="391" name="Pion Orienter Capteurs">
+    <fragorder available-without-mission="true" dia-type="france.military.platoon.tasks.Orienter" id="391" name="Pion Orienter Capteurs">
       <parameter dia-name="pointCible_" name="Face a" optional="false" type="Point"/>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="platoon.combat.support.art.tasks.AppliquerFeux" id="392" name="Pion Appliquer Feux">
@@ -4660,4 +4660,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ROEM_ArreterSilenceRadar" id="28801" name="ROEM Arreter Silence Radar"/>
   </fragorders>
 </missions>
-<!-- signature="1294359260" -->
+<!-- signature="3946643271" -->
