@@ -350,3 +350,12 @@ unsigned int Population::GetDeadHumans() const
     }
     return nbr;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Population::GetOrder
+// Created: NPT 2012-09-13
+// -----------------------------------------------------------------------------
+const Order_ABC* Population::GetOrder() const
+{
+    return order_.get();
+}

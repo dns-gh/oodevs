@@ -12,12 +12,16 @@
 #include "actions/ActionFactory.h"
 #include "actions/ActionParameterFactory.h"
 #include "actions/ActionsModel.h"
+#include "actions/Mission.h"
+#include "actions/ActionsFilter_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/CoordinateConverter.h"
 #include "clients_kernel/Time_ABC.h"
 #include "dispatcher/AgentKnowledgeConverter.h"
 #include "dispatcher/ModelAdapter.h"
 #include "dispatcher/Model_ABC.h"
+#include "dispatcher/Agent.h"
+#include "dispatcher/Population.h"
 #include "dispatcher/ObjectKnowledgeConverter.h"
 #include "protocol/Protocol.h"
 #include "protocol/ServerPublisher_ABC.h"
@@ -149,4 +153,34 @@ void ActionsLogger::Log( const sword::FragOrder& message )
 {
     if( message.has_type() && message.type().id() != 0 )
         LogAction( message );
+}
+
+namespace
+{
+    struct CheckPointFilter : public actions::ActionsFilter_ABC
+                            , private boost::noncopyable
+    {
+        virtual bool Allows( const actions::Action_ABC& action ) const
+        {
+            if( const actions::Mission* m = dynamic_cast< const actions::Mission* >( &action ) )
+            {
+                const kernel::Entity_ABC& entity = m->GetEntity();
+                if( const dispatcher::Agent* agent = dynamic_cast< const dispatcher::Agent* >( &entity ) )
+                    return agent->GetOrder() != 0;
+                else if( const dispatcher::Population* population = dynamic_cast< const dispatcher::Population* >( &entity ) )
+                    return population->GetOrder() != 0;
+            }
+            return false;
+        }
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsLogger::SaveCheckpointActiveMissions
+// Created: NPT 2012-09-12
+// -----------------------------------------------------------------------------
+void ActionsLogger::SaveCheckpointActiveMissions( std::string name )
+{
+    CheckPointFilter filter;
+    actions_->Save( config_.BuildOnLocalCheckpointChildFile( name, "current.ord" ), &filter );
 }

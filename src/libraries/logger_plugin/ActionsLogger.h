@@ -78,6 +78,11 @@ public:
     void Log( const sword::FragOrder& message );
     //@}
 
+    //! @name Checkpoint
+    //@{
+    void SaveCheckpointActiveMissions( std::string name );
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{

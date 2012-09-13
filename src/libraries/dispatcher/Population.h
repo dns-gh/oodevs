@@ -30,6 +30,7 @@ namespace sword
 namespace dispatcher
 {
     class Model_ABC;
+    class Order_ABC;
     class PopulationOrder;
     class Team_ABC;
 
@@ -83,6 +84,7 @@ public:
     virtual unsigned int GetWoundedHumans() const;
     virtual unsigned int GetContaminatedHumans() const;
     virtual unsigned int GetDeadHumans() const;
+    virtual const Order_ABC* GetOrder() const;
     //@}
 
 private:
