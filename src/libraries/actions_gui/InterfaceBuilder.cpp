@@ -221,6 +221,15 @@ kernel::Entity_ABC& InterfaceBuilder::GetCurrentEntity() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: InterfaceBuilder::HasCurrentEntity
+// Created: MMC 2012-09-13
+// -----------------------------------------------------------------------------
+bool InterfaceBuilder::HasCurrentEntity() const
+{
+    return entity_ != 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: InterfaceBuilder::GetControllers
 // Created: ABR 2012-01-05
 // -----------------------------------------------------------------------------

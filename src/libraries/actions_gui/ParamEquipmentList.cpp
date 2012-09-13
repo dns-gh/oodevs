@@ -65,7 +65,7 @@ namespace
 QWidget* ParamEquipmentList::BuildInterface( QWidget* parent )
 {
     Param_ABC::BuildInterface( parent );
-    kernel::MaintenanceStates_ABC* maintenance =  builder_.GetCurrentEntity().Retrieve< kernel::MaintenanceStates_ABC >();
+    kernel::MaintenanceStates_ABC* maintenance = builder_.HasCurrentEntity() ? builder_.GetCurrentEntity().Retrieve< kernel::MaintenanceStates_ABC >() : 0;
     QGridLayout* layout = new QGridLayout( group_ );
     {
         baseList_ = CreateList( parent );

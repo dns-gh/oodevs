@@ -74,6 +74,7 @@ public:
     virtual ParamInterface_ABC& GetParamInterface() const;
     virtual ::gui::ParametersLayer& GetParameterLayer() const;
     virtual kernel::Entity_ABC& GetCurrentEntity() const;
+    virtual bool HasCurrentEntity() const;
     virtual kernel::Controllers& GetControllers() const;
     virtual kernel::AgentKnowledgeConverter_ABC* GetAgentKnowledgeConverter() const;
     virtual kernel::ObjectKnowledgeConverter_ABC* GetObjectKnowledgeConverter() const;
