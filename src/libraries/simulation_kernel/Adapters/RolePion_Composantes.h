@@ -30,6 +30,7 @@ class RolePion_Composantes : public PHY_RolePion_Composantes
 public:
     //! @name Constructors/Destructor
     //@{
+             RolePion_Composantes();
              RolePion_Composantes( MIL_Agent_ABC& pion, core::Model& entity );
     virtual ~RolePion_Composantes();
     //@}
@@ -43,15 +44,6 @@ public:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    template< typename Archive >
-    friend void save_construct_data( Archive& archive, const sword::RolePion_Composantes* role, const unsigned int /*version*/ );
-    template< typename Archive >
-    friend void load_construct_data( Archive& archive, sword::RolePion_Composantes* role, const unsigned int /*version*/ );
-    //@}
-
-private:
     //! @name Types
     //@{
     typedef std::map< PHY_ComposantePion*, core::Model* > T_Components;
@@ -60,8 +52,7 @@ private:
 private:
     //! @name Member data
     //@{
-    MIL_Agent_ABC& pion_;
-    core::Model& entity_;
+    core::Model* entity_;
     T_Components components_;
     //@}
 };

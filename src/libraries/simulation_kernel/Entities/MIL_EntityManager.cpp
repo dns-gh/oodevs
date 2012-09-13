@@ -179,21 +179,26 @@ logistic::LogisticHierarchy_ABC* TaskerToLogisticHierarchy( MIL_EntityManager& m
 // =============================================================================
 
 template< typename Archive >
-void save_construct_data( Archive& /*archive*/, const MIL_EntityManager* /*entities*/, const unsigned int /*version*/ )
+void save_construct_data( Archive& archive, const MIL_EntityManager* manager, const unsigned int /*version*/ )
 {
     //@TODO MGD work on serialization to avoid singleton and add test for all entities
     //const AutomateFactory_ABC* const automateFactory = &factory->automateFactory_;
     //archive << armyFactory_
     //        << formationFactory_
     //        <<
+    const Sink_ABC* sink = manager->sink_.get();
+    archive << sink;
 }
 
 template< typename Archive >
-void load_construct_data( Archive& /*archive*/, MIL_EntityManager* role, const unsigned int /*version*/ )
+void load_construct_data( Archive& archive, MIL_EntityManager* manager, const unsigned int /*version*/ )
 {
-    ::new( role )MIL_EntityManager( MIL_Singletons::GetTime(), MIL_EffectManager::GetEffectManager(),
+    Sink_ABC* sink;
+    archive >> sink;
+    std::auto_ptr< Sink_ABC > pSink( sink );
+    ::new( manager )MIL_EntityManager( MIL_Singletons::GetTime(), MIL_EffectManager::GetEffectManager(),
                                     MIL_Singletons::GetProfiler(),
-                                    MIL_AgentServer::GetWorkspace().GetConfig().IsLegacy(),
+                                    pSink,
                                     MIL_AgentServer::GetWorkspace().GetConfig().ReadGCParameter_setPause(),
                                     MIL_AgentServer::GetWorkspace().GetConfig().ReadGCParameter_setStepMul() );
 }
@@ -227,6 +232,40 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , sink_                         ( isLegacy ? std::auto_ptr< sword::Sink_ABC >( new sword::legacy::Sink( *agentFactory_, gcPause, gcMult ) )
                                                : std::auto_ptr< sword::Sink_ABC >( new sword::Sink( *agentFactory_, gcPause, gcMult, pObjectManager_->GetDangerousObjects() ) ) )
     , pFloodModel_                  ( sink_->CreateFloodModel() )
+    , automateFactory_              ( new AutomateFactory( *idManager_, gcPause, gcMult ) )
+    , formationFactory_             ( new FormationFactory( *automateFactory_ ) )
+    , knowledgeGroupFactory_        ( new KnowledgeGroupFactory() )
+    , armyFactory_                  ( new ArmyFactory( *automateFactory_, *sink_, *formationFactory_, *pObjectManager_, *populationFactory_, *inhabitantFactory_, *knowledgeGroupFactory_ ) )
+    , gcPause_                      ( gcPause )
+    , gcMult_                       ( gcMult )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager constructor
+// Created: MCO 2012-09-12
+// -----------------------------------------------------------------------------
+MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ProfilerMgr& profiler, std::auto_ptr< sword::Sink_ABC > sink, unsigned int gcPause, unsigned int gcMult )
+    : time_                         ( time )
+    , effectManager_                ( effects )
+    , profilerManager_              ( profiler )
+    , nRandomBreakdownsNextTimeStep_( 0  )
+    , rKnowledgesTime_              ( 0. )
+    , rAutomatesDecisionTime_       ( 0. )
+    , rPionsDecisionTime_           ( 0. )
+    , rPopulationsDecisionTime_     ( 0. )
+    , rActionsTime_                 ( 0. )
+    , rEffectsTime_                 ( 0. )
+    , rStatesTime_                  ( 0. )
+    , idManager_                    ( new MIL_IDManager() )
+    , missionController_            ( new MissionController() )
+    , inhabitantFactory_            ( new InhabitantFactory() )
+    , populationFactory_            ( new PopulationFactory( *missionController_, gcPause, gcMult ) )
+    , agentFactory_                 ( new AgentFactory( *idManager_, *missionController_ ) )
+    , sink_                         ( sink )
+    , pFloodModel_                  ( sink_->CreateFloodModel() )
+    , pObjectManager_               ( new MIL_ObjectManager( *pFloodModel_ ) )
     , automateFactory_              ( new AutomateFactory( *idManager_, gcPause, gcMult ) )
     , formationFactory_             ( new FormationFactory( *automateFactory_ ) )
     , knowledgeGroupFactory_        ( new KnowledgeGroupFactory() )
@@ -1991,19 +2030,15 @@ bool MIL_EntityManager::IsInhabitantsEvacuated( const TER_Localisation& localisa
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    sink_.reset();
     ArmyFactory_ABC * armyFactory;
     FormationFactory_ABC * formationFactory;
     AutomateFactory_ABC * automateFactory;
     AgentFactory_ABC * agentFactory;
-    Sink_ABC* sink;
     PopulationFactory_ABC * populationFactory;
     InhabitantFactory_ABC * inhabitantFactory;
     KnowledgeGroupFactory_ABC * knowledgeGroupFactory; // LTO
     MIL_ObjectManager* objectManager;
     MissionController_ABC* missionController;
-    file >> sink;
-    sink_.reset( sink );
     file //>> effectManager_  // Effets liés aux actions qui ne sont pas sauvegardés
          >> knowledgeGroupFactory; // LTO
     knowledgeGroupFactory_.reset( knowledgeGroupFactory );
@@ -2062,7 +2097,6 @@ void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const unsigned int
     const ArmyFactory_ABC * const tempArmy = armyFactory_.get();
     const FormationFactory_ABC * const tempFormationFactory = formationFactory_.get();
     const AgentFactory_ABC * const tempAgentFactory = agentFactory_.get();
-    const Sink_ABC * const tempSink = sink_.get();
     const AutomateFactory_ABC * const tempAutomateFactory = automateFactory_.get();
     const PopulationFactory_ABC * const populationFactory = populationFactory_.get();
     const InhabitantFactory_ABC * const inhabitantFactory = inhabitantFactory_.get();
@@ -2070,9 +2104,8 @@ void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const unsigned int
     const MIL_ObjectManager* const objectManager = pObjectManager_.get();
     const MissionController_ABC* const missionController = missionController_.get();
 
-    file << tempSink
          //<< effectManager_  // Effets liés aux actions qui ne sont pas sauvegardés
-         << knowledgeGroupFactory; // LTO
+    file << knowledgeGroupFactory; // LTO
     file << tempArmy
          << tempFormationFactory
          << tempAgentFactory

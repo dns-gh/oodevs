@@ -11,19 +11,6 @@
 #include "RoleAdapter.h"
 #include "RoleAction_Moving.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
-#include "Entities/Agents/Roles/Terrain/PHY_RoleInterface_TerrainAnalysis.h"
-#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
-#include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
-#include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
-#include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
-#include "Entities/Agents/Roles/Communications/PHY_RoleInterface_Communications.h"
-#include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
-#include "Entities/Agents/Roles/Population/PHY_RoleInterface_Population.h"
-#include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
-#include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
-#include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Network/NET_ASN_Tools.h"
@@ -124,6 +111,8 @@ namespace
     }
 }
 
+SWORD_USER_DATA_EXPORT( MIL_AgentPion* )
+
 // -----------------------------------------------------------------------------
 // Name: RoleAdapter constructor
 // Created: SLI 2012-01-16
@@ -135,20 +124,6 @@ RoleAdapter::RoleAdapter( MIL_AgentPion& pion, core::Model& entity )
     senders_.push_back( MakeModelSender< client::UnitPathFind >( entity_[ "movement/path/points" ], boost::bind( &Serialize< client::UnitPathFind >, _1, pion.GetID(), _2 ) ) );
     senders_.push_back( MakeModelSender< client::UnitEnvironmentType >( entity_[ "movement/environment" ], boost::bind( &Serialize< client::UnitEnvironmentType >, _1, pion.GetID(), _2 ) ) ); // $$$$ MCO 2012-09-13: move the two listeners to RoleAction_Moving
     entity_[ "pion" ].SetUserData( &pion ); // $$$$ MCO 2012-09-13: move all initializations into Sink::CreateEntity
-    entity_[ "roles/RoleAction_Moving" ].SetUserData( &pion.GetRole< RoleAction_Moving >() );
-    entity_[ "roles/PHY_RoleInterface_TerrainAnalysis" ].SetUserData( &pion.GetRole< PHY_RoleInterface_TerrainAnalysis >() );
-    entity_[ "roles/PHY_RoleInterface_Composantes" ].SetUserData( &pion.GetRole< PHY_RoleInterface_Composantes >() );
-    entity_[ "roles/DEC_Decision_ABC" ].SetUserData( &pion.GetRole< DEC_Decision_ABC >() );
-    entity_[ "roles/PHY_RoleInterface_Perceiver" ].SetUserData( &pion.GetRole< PHY_RoleInterface_Perceiver >() );
-    entity_[ "roles/RoleInterface_Posture" ].SetUserData( &pion.GetRole< PHY_RoleInterface_Posture >() );
-    entity_[ "roles/PHY_RoleInterface_UrbanLocation" ].SetUserData( &pion.GetRole< PHY_RoleInterface_UrbanLocation >() );
-    entity_[ "roles/PHY_RoleInterface_Dotations" ].SetUserData( &pion.GetRole< dotation::PHY_RoleInterface_Dotations >() );
-    entity_[ "roles/PHY_RoleInterface_Communications" ].SetUserData( &pion.GetRole< PHY_RoleInterface_Communications >() );
-    entity_[ "roles/PHY_RoleInterface_Posture" ].SetUserData( &pion.GetRole< PHY_RoleInterface_Posture >() );
-    entity_[ "roles/PHY_RoleInterface_Population" ].SetUserData( &pion.GetRole< PHY_RoleInterface_Population >() );
-    entity_[ "roles/PHY_RoleAction_Loading" ].SetUserData( &pion.GetRole< transport::PHY_RoleAction_Loading >() );
-    entity_[ "roles/PHY_RoleInterface_Transported" ].SetUserData( &pion.GetRole< transport::PHY_RoleInterface_Transported >() );
-    entity_[ "roles/PHY_RoleInterface_HumanFactors" ].SetUserData( &pion.GetRole< PHY_RoleInterface_HumanFactors >() );
     entity_[ "movement/speed" ] = 0;
     entity_[ "movement/direction/x" ] = 0;
     entity_[ "movement/direction/y" ] = 1;

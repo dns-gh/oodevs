@@ -205,6 +205,8 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
 
+    MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ProfilerMgr& profiler, std::auto_ptr< sword::Sink_ABC > sink, unsigned int gcPause, unsigned int gcMult );
+
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_EntityManager* role, const unsigned int /*version*/ );

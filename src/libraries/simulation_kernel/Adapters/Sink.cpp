@@ -70,28 +70,30 @@ template< typename Archive >
 void save_construct_data( Archive& archive, const Sink* sink, const unsigned int /*version*/ )
 {
     const AgentFactory_ABC* factory = &sink->factory_;
+    const core::Model* model = sink->model_.get();
     archive << factory
+            << model
             << sink->gcPause_
             << sink->gcMult_
             << sink->dangerousObjects_
-            << sink->elements_
-            << sink->model_;
+            << sink->elements_;
 }
 
 template< typename Archive >
 void load_construct_data( Archive& archive, Sink* sink, const unsigned int /*version*/ )
 {
     AgentFactory_ABC* factory;
+    core::Model* model;
     unsigned int gcPause;
     unsigned int gcMult;
     std::vector< unsigned int > dangerousObjects;
     archive >> factory
+            >> model
             >> gcPause
             >> gcMult
             >> dangerousObjects;
-    ::new( sink )Sink( *factory, gcPause, gcMult, dangerousObjects );
-    archive >> sink->elements_
-            >> sink->model_;
+    ::new( sink )Sink( *factory, std::auto_ptr< core::Model >( model ), gcPause, gcMult, dangerousObjects );
+    archive >> sink->elements_;
 }
 }
 
@@ -173,16 +175,52 @@ Sink::Sink( AgentFactory_ABC& factory, unsigned int gcPause, unsigned int gcMult
     , model_           ( new core::Model() )
     , facade_          ( new core::Facade( modules_, *logger_, *model_ ) )
 {
+    Initialize();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Sink constructor
+// Created: MCO 2012-09-12
+// -----------------------------------------------------------------------------
+Sink::Sink( AgentFactory_ABC& factory, std::auto_ptr< core::Model > model, unsigned int gcPause, unsigned int gcMult,
+            const std::vector< unsigned int >& dangerousObjects )
+    : factory_         ( factory )
+    , gcPause_         ( gcPause )
+    , gcMult_          ( gcMult )
+    , dangerousObjects_( dangerousObjects )
+    , modules_         ( configuration )
+    , logger_          ( new CoreLogger() )
+    , model_           ( model )
+    , facade_          ( new core::Facade( modules_, *logger_, *model_ ) )
+{
+    Initialize();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Sink destructor
+// Created: SBO 2011-06-06
+// -----------------------------------------------------------------------------
+Sink::~Sink()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Sink::Initialize
+// Created: MCO 2012-09-12
+// -----------------------------------------------------------------------------
+void Sink::Initialize()
+{
     listeners_.push_back( new ReportEventListener( *model_, *facade_ ) );
     listeners_.push_back( new MovementReportNameEventListener( *model_, *facade_ ) );
     listeners_.push_back( new MovementCallbackEventListener( *model_, *facade_ ) );
     listeners_.push_back( new PerceptionCallbackEventListener( *model_, *facade_ ) );
     listeners_.push_back( new MovementEventListener( *model_, *facade_ ) );
     listeners_.push_back( new MovementReportEventListener( *model_, *facade_ ) );
-    listeners_.push_back( new DirectFirePionEventListener( *model_, *facade_, factory ) );
-    listeners_.push_back( new DirectFirePionAttackEventListener( *model_, *facade_, factory ) );
-    listeners_.push_back( new ExternalPerceptionEventListener( *model_, *facade_, factory ) );
-    listeners_.push_back( new AlatMonitoringEventListener( *model_, *facade_, factory ) );
+    listeners_.push_back( new DirectFirePionEventListener( *model_, *facade_, factory_ ) );
+    listeners_.push_back( new DirectFirePionAttackEventListener( *model_, *facade_, factory_ ) );
+    listeners_.push_back( new ExternalPerceptionEventListener( *model_, *facade_, factory_ ) );
+    listeners_.push_back( new AlatMonitoringEventListener( *model_, *facade_, factory_ ) );
     MovementHooks::Initialize( *facade_ );
     RolePion_Decision::Initialize( *facade_ );
     FireHooks::Initialize( *facade_ );
@@ -200,15 +238,6 @@ Sink::Sink( AgentFactory_ABC& factory, unsigned int gcPause, unsigned int gcMult
     MIL_AgentServer::GetWorkspace().GetConfig().GetLoader().LoadPhysicalFile( "resources", boost::bind( &::InitializeDotations, _1 ) );
     MIL_AgentServer::GetWorkspace().GetConfig().GetLoader().LoadPhysicalFile( "weapon-systems", boost::bind( &::InitializeWeaponSystems, _1 ) );
     MIL_AgentServer::GetWorkspace().GetConfig().GetLoader().LoadPhysicalFile( "decisional", boost::bind( &::InitializeDecisional, _1 ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Sink destructor
-// Created: SBO 2011-06-06
-// -----------------------------------------------------------------------------
-Sink::~Sink()
-{
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -238,6 +267,8 @@ void Sink::ApplyEffects()
 {
     facade_->ApplyEffects();
 }
+
+SWORD_USER_DATA_EXPORT( boost::shared_ptr< DEC_Knowledge_Agent > )
 
 namespace
 {

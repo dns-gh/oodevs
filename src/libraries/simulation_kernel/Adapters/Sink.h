@@ -77,8 +77,16 @@ public:
     //@}
 
 private:
+    //! @name Constructors/Destructor
+    //@{
+    Sink( AgentFactory_ABC& factory, std::auto_ptr< core::Model > model, unsigned int gcPause, unsigned int gcMult,
+          const std::vector< unsigned int >& dangerousObjects );
+    //@}
+
     //! @name Helpers
     //@{
+    void Initialize();
+
     MIL_AgentPion& Configure( MIL_AgentPion& pion, const MT_Vector2D& position );
     //@}
 
@@ -91,7 +99,7 @@ private:
     const std::vector< unsigned int > dangerousObjects_;
     xml::xistringstream modules_;
     std::auto_ptr< core::Logger_ABC > logger_;
-    boost::shared_ptr< core::Model > model_;
+    std::auto_ptr< core::Model > model_;
     std::auto_ptr< core::Facade > facade_;
     boost::ptr_vector< core::EventListener_ABC > listeners_;
     //@}

@@ -567,6 +567,10 @@ void RolePion_Decision::RegisterItinerary()
     RegisterMethod( "Getpoint_", &PathPointAdapter::GetPos );
 }
 
+SWORD_USER_DATA_EXPORT( const MIL_UrbanObject_ABC* )
+SWORD_USER_DATA_EXPORT( const TER_Localisation* )
+SWORD_USER_DATA_EXPORT( boost::shared_ptr< TER_Localisation > )
+
 namespace
 {
     void TogglePerception( Sink& sink, MIL_AgentPion& pion, const std::string& perception, bool isActivated )
