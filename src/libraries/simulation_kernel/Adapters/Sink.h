@@ -14,6 +14,7 @@
 #include <xeumeuleu/xml.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
+#include <vector>
 
 namespace core
 {
@@ -36,7 +37,8 @@ class Sink : public Sink_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Sink( AgentFactory_ABC& factory, unsigned int gcPause, unsigned int gcMult );
+             Sink( AgentFactory_ABC& factory, unsigned int gcPause, unsigned int gcMult,
+                   const std::vector< unsigned int >& dangerousObjects );
     virtual ~Sink();
     //@}
 
@@ -86,6 +88,7 @@ private:
     AgentFactory_ABC& factory_;
     const unsigned int gcPause_;
     const unsigned int gcMult_;
+    const std::vector< unsigned int > dangerousObjects_;
     xml::xistringstream modules_;
     std::auto_ptr< core::Logger_ABC > logger_;
     boost::shared_ptr< core::Model > model_;

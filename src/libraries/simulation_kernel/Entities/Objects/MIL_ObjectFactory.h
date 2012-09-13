@@ -66,8 +66,8 @@ public:
     //! @name Accessors
     //@{
     static const MIL_ObjectType_ABC& FindType( const std::string& type );
-    static const void FindDangerousIDs( std::vector< unsigned int >& dangerousIDs, const MIL_ObjectFilter& filter );
-    static const double GetMaxAvoidanceDistance();
+    std::vector< unsigned int > GetDangerousObjects();
+    double GetMaxAvoidanceDistance() const;
     //@}
 
 private:

@@ -54,19 +54,19 @@ const MIL_ObjectType_ABC& MIL_ObjectFactory::FindType( const std::string& type )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_ObjectFactory::FindDangerousIDs
+// Name: MIL_ObjectFactory::GetDangerousObjects
 // Created: CMA 2011-11-28
 // -----------------------------------------------------------------------------
-const void MIL_ObjectFactory::FindDangerousIDs( std::vector< unsigned int >& dangerousIDs, const MIL_ObjectFilter& filter )
+std::vector< unsigned int > MIL_ObjectFactory::GetDangerousObjects()
 {
-    MIL_ObjectLoader::GetLoader().GetDangerousIDs( dangerousIDs, filter );
+    return MIL_ObjectLoader::GetLoader().GetDangerousObjects();
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectFactory::GetMaxAvoidanceDistance
 // Created: CMA 2012-04-25
 // -----------------------------------------------------------------------------
-const double MIL_ObjectFactory::GetMaxAvoidanceDistance()
+double MIL_ObjectFactory::GetMaxAvoidanceDistance() const
 {
     return MIL_ObjectLoader::GetLoader().GetMaxAvoidanceDistance();
 }

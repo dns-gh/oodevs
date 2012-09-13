@@ -17,13 +17,6 @@
 #include "Tools/MIL_Tools.h"
 #include "simulation_terrain/TER_PathFindManager.h"
 #include "simulation_terrain/TER_World.h"
-#include "Entities/Objects/MIL_ObjectFactory.h"
-#include "Entities/Objects/MIL_ObjectType_ABC.h"
-#include "Entities/Objects/MIL_ObjectFilter.h"
-#include "Entities/Objects/AttritionCapacity.h"
-#include "Entities/Objects/ContaminationCapacity.h"
-#include "Entities/Objects/InterferenceCapacity.h"
-#include "Entities/Objects/AvoidanceCapacity.h"
 #include "Tools/MIL_Config.h"
 #include "tools/Loader_ABC.h"
 #include "tools/Codec.h"
@@ -36,27 +29,23 @@
 // Name: DEC_PathFind_Manager constructor
 // Created: NLD 2003-08-14
 // -----------------------------------------------------------------------------
-DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_Config& config )
+DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_Config& config, double maxAvoidanceDistance,
+                                            const std::vector< unsigned int >& dangerousObjects )
     : nMaxComputationDuration_( std::numeric_limits< unsigned int >::max() )
     , nMaxEndConnections_     ( 8 )
     , rDistanceThreshold_     ( 0. )
     , treatedRequests_        ( 0 )
 {
-    std::vector< unsigned int > dangerousObjects;
-    MIL_DangerousObjectFilter filter;
-    MIL_ObjectFactory::FindDangerousIDs( dangerousObjects, filter );
-    double rMinEndConnectionLength = MIL_ObjectFactory::GetMaxAvoidanceDistance();
-
     const std::string fileLoaded = config.GetLoader().LoadPhysicalFile( "pathfinder", boost::bind( &DEC_PathFind_Manager::ReadPathfind, this, _1, dangerousObjects ) );
     config.AddFileToCRC( fileLoaded );
 
     bUseInSameThread_ = config.GetPathFinderThreads() == 0;
     MT_LOG_INFO_MSG( MT_FormatString( "Starting %d pathfind thread(s)", config.GetPathFinderThreads() ) );
     if( bUseInSameThread_ ) // juste one "thread" that will never start
-        pathFindThreads_.push_back( & TER_World::GetWorld().GetPathFindManager().CreatePathFinderThread( *this, nMaxEndConnections_, rMinEndConnectionLength, true ) );
+        pathFindThreads_.push_back( & TER_World::GetWorld().GetPathFindManager().CreatePathFinderThread( *this, nMaxEndConnections_, maxAvoidanceDistance, true ) );
     else
         for( unsigned int i = 0; i < config.GetPathFinderThreads(); ++i )
-            pathFindThreads_.push_back( & TER_World::GetWorld().GetPathFindManager().CreatePathFinderThread( *this, nMaxEndConnections_, rMinEndConnectionLength ) );
+            pathFindThreads_.push_back( & TER_World::GetWorld().GetPathFindManager().CreatePathFinderThread( *this, nMaxEndConnections_, maxAvoidanceDistance ) );
 }
 
 // -----------------------------------------------------------------------------

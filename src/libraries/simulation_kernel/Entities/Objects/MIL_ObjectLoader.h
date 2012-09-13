@@ -66,8 +66,8 @@ public:
     //! @name Accessors
     //@{
     const MIL_ObjectType_ABC& GetType( const std::string& type ) const;
-    const void GetDangerousIDs( std::vector< unsigned int >& dangerousIDs, const MIL_ObjectFilter& filter ) const;
-    const double GetMaxAvoidanceDistance() const;
+    std::vector< unsigned int > GetDangerousObjects() const;
+    double GetMaxAvoidanceDistance() const;
     //@}
 
     //! @name Singleton

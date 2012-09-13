@@ -18,6 +18,7 @@
 #include <boost/thread/condition.hpp>
 #pragma warning( pop )
 #include <deque>
+#include <vector>
 
 class DEC_Path_ABC;
 class TER_PathFinderThread;
@@ -36,7 +37,8 @@ class DEC_PathFind_Manager : private tools::thread::MessageQueue_ABC< boost::sha
                            , private boost::noncopyable
 {
 public:
-    explicit DEC_PathFind_Manager( MIL_Config& config );
+             DEC_PathFind_Manager( MIL_Config& config, double maxAvoidanceDistance,
+                                   const std::vector< unsigned int >& dangerousObjects );
     virtual ~DEC_PathFind_Manager();
 
     //! @name Main

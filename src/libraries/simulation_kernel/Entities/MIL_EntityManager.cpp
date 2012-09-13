@@ -223,10 +223,10 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , inhabitantFactory_            ( new InhabitantFactory() )
     , populationFactory_            ( new PopulationFactory( *missionController_, gcPause, gcMult ) )
     , agentFactory_                 ( new AgentFactory( *idManager_, *missionController_ ) )
+    , pObjectManager_               ( new MIL_ObjectManager() )
     , sink_                         ( isLegacy ? std::auto_ptr< sword::Sink_ABC >( new sword::legacy::Sink( *agentFactory_, gcPause, gcMult ) )
-                                               : std::auto_ptr< sword::Sink_ABC >( new sword::Sink( *agentFactory_, gcPause, gcMult ) ) )
+                                               : std::auto_ptr< sword::Sink_ABC >( new sword::Sink( *agentFactory_, gcPause, gcMult, pObjectManager_->GetDangerousObjects() ) ) )
     , pFloodModel_                  ( sink_->CreateFloodModel() )
-    , pObjectManager_               ( new MIL_ObjectManager( *pFloodModel_ ) )
     , automateFactory_              ( new AutomateFactory( *idManager_, gcPause, gcMult ) )
     , formationFactory_             ( new FormationFactory( *automateFactory_ ) )
     , knowledgeGroupFactory_        ( new KnowledgeGroupFactory() )
@@ -559,7 +559,7 @@ void MIL_EntityManager::InitializeArmies( xml::xistream& xis )
         >> xml::list( boost::bind( &ArmyFactory_ABC::Create, boost::ref( *armyFactory_ ), _2, _3 ) )
         >> xml::end;
 
-    pObjectManager_->FinalizeObjects();
+    pObjectManager_->FinalizeObjects( *pFloodModel_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -821,7 +821,7 @@ void MIL_EntityManager::UpdateStates()
     automateFactory_->Apply( boost::bind( &MIL_Automate::UpdateNetwork, _1 ) );
     sink_->Apply( boost::bind( &MIL_AgentPion::UpdateNetwork, _1 ) );
     populationFactory_->Apply( boost::bind( &MIL_Population::UpdateNetwork, _1 ) );
-    pObjectManager_->UpdateStates();
+    pObjectManager_->UpdateStates( *pFloodModel_ );
     inhabitantFactory_->Apply( boost::bind( &MIL_Inhabitant::UpdateState, _1 ) ); // $$$$ LDC: Must be done after pObjectManager_ because otherwise objects are destroyed too early
     inhabitantFactory_->Apply( boost::bind( &MIL_Inhabitant::UpdateNetwork, _1 ) );
     rStatesTime_ = profiler_.Stop();
@@ -1325,7 +1325,7 @@ void MIL_EntityManager::OnReceiveUnitCreationRequest( const UnitCreationRequest&
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveObjectMagicAction( const ObjectMagicAction& message, unsigned int nCtx )
 {
-    pObjectManager_->OnReceiveObjectMagicAction( message, nCtx, *armyFactory_ );
+    pObjectManager_->OnReceiveObjectMagicAction( message, nCtx, *armyFactory_, *pFloodModel_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -2032,14 +2032,15 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int 
             geometry::Point2d(
                 MIL_AgentServer::GetWorkspace().GetConfig().GetTerrainWidth(),
                 MIL_AgentServer::GetWorkspace().GetConfig().GetTerrainHeight() ) ) );
-
     armyFactory_.reset( armyFactory );
     formationFactory_.reset( formationFactory );
     agentFactory_.reset( agentFactory );
     automateFactory_.reset( automateFactory );
     populationFactory_.reset( populationFactory );
     inhabitantFactory_.reset( inhabitantFactory );
+    pFloodModel_ = sink_->CreateFloodModel();
     pObjectManager_.reset( objectManager );
+    pObjectManager_->FinalizeObjects( *pFloodModel_ );
     missionController_.reset( missionController );
     missionController_->Initialize( *sink_, *populationFactory );
     sink_->Apply( boost::bind( &MIL_AgentPion::Register, _1, boost::ref( *missionController_ ) ) );
@@ -2449,10 +2450,28 @@ void MIL_EntityManager::Accept( KnowledgesVisitor_ABC& visitor ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: std::set< MIL_Object_ABC* > MIL_EntityManager::GetUniversalObjects
+// Name: MIL_EntityManager::GetUniversalObjects
 // Created: LDC 2012-01-26
 // -----------------------------------------------------------------------------
 const std::set< MIL_Object_ABC* >& MIL_EntityManager::GetUniversalObjects() const
 {
     return pObjectManager_->GetUniversalObjects();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::GetDangerousObjects
+// Created: LGY 2012-09-13
+// -----------------------------------------------------------------------------
+std::vector< unsigned int > MIL_EntityManager::GetDangerousObjects() const
+{
+    return pObjectManager_->GetDangerousObjects();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::GetMaxAvoidanceDistance
+// Created: LGY 2012-09-13
+// -----------------------------------------------------------------------------
+double MIL_EntityManager::GetMaxAvoidanceDistance() const
+{
+    return pObjectManager_->GetMaxAvoidanceDistance();
 }

@@ -42,24 +42,11 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_ObjectManager )
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectManager constructor
-// Created: LGY 2012-06-13
-// -----------------------------------------------------------------------------
-MIL_ObjectManager::MIL_ObjectManager()
-    : pFloodModel_( 0 )
-    , builder_    ( 0 )
-    , nbObjects_  ( 0 )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ObjectManager constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-MIL_ObjectManager::MIL_ObjectManager( const flood::FloodModel_ABC& floodModel )
-    : pFloodModel_( &floodModel )
-    , builder_    ( new MIL_ObjectFactory() )
-    , nbObjects_  ( 0 )
+MIL_ObjectManager::MIL_ObjectManager()
+    : builder_  ( new MIL_ObjectFactory() )
+    , nbObjects_( 0 )
 {
     // NOTHING
 }
@@ -82,7 +69,6 @@ void MIL_ObjectManager::load( MIL_CheckPointInArchive& file, const unsigned int 
 {
     //todo
     file >> objects_;
-    builder_.reset( new MIL_ObjectFactory() );
     for( CIT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
     {
         if( dynamic_cast< MIL_UrbanObject_ABC* >( it->second ) == 0 )
@@ -90,7 +76,6 @@ void MIL_ObjectManager::load( MIL_CheckPointInArchive& file, const unsigned int 
         if( it->second->IsUniversal() )
             universalObjects_.insert( it->second );
     }
-    FinalizeObjects();
 }
 
 // -----------------------------------------------------------------------------
@@ -125,7 +110,7 @@ void MIL_ObjectManager::ProcessEvents()
 // Name: MIL_ObjectManager::UpdateStates
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_ObjectManager::UpdateStates()
+void MIL_ObjectManager::UpdateStates( const flood::FloodModel_ABC& floodModel )
 {
     for( IT_ObjectMap it = objects_.begin(); it != objects_.end(); )
     {
@@ -140,8 +125,8 @@ void MIL_ObjectManager::UpdateStates()
                     altitude->ResetAltitude( localisation );
                     for( IT_ObjectMap obj = objects_.begin(); obj != objects_.end(); ++obj )
                         if( FloodAttribute* flood = obj->second->RetrieveAttribute< FloodAttribute >() )
-                            if( pFloodModel_ && localisation.IsIntersecting( flood->GetLocalisation() ) )
-                                flood->GenerateFlood( *pFloodModel_ );
+                            if( localisation.IsIntersecting( flood->GetLocalisation() ) )
+                                flood->GenerateFlood( floodModel );
                 }
                 object.SendDestruction();
             }
@@ -216,7 +201,8 @@ MIL_Object_ABC& MIL_ObjectManager::CreateObject( xml::xistream& xis, MIL_Army_AB
 // Name: MIL_ObjectManager::CreateObject
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-sword::ObjectMagicActionAck_ErrorCode MIL_ObjectManager::CreateObject( const sword::MissionParameters& message, const tools::Resolver< MIL_Army_ABC >& armies )
+sword::ObjectMagicActionAck_ErrorCode MIL_ObjectManager::CreateObject( const sword::MissionParameters& message, const tools::Resolver< MIL_Army_ABC >& armies,
+                                                                       const flood::FloodModel_ABC& floodModel )
 {
     if( !( message.elem_size() == 4 || message.elem_size() == 5 ) ) // type, location, name, team, attributes
         return sword::ObjectMagicActionAck::error_invalid_specific_attributes;
@@ -239,8 +225,8 @@ sword::ObjectMagicActionAck_ErrorCode MIL_ObjectManager::CreateObject( const swo
         const TER_Localisation& localisation = pObject->GetLocalisation();
         for( IT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
             if( FloodAttribute* flood = it->second->RetrieveAttribute< FloodAttribute >() )
-                if( pFloodModel_ && localisation.IsIntersecting( flood->GetLocalisation() ) )
-                    flood->GenerateFlood( *pFloodModel_ );
+                if( localisation.IsIntersecting( flood->GetLocalisation() ) )
+                    flood->GenerateFlood( floodModel );
     }
     RegisterObject( pObject );
     return errorCode;
@@ -377,7 +363,7 @@ void MIL_ObjectManager::ReadUrbanState( xml::xistream& xis )
 // Name: MIL_ObjectManager::FinalizeObjects
 // Created: JSR 2011-05-20
 // -----------------------------------------------------------------------------
-void MIL_ObjectManager::FinalizeObjects()
+void MIL_ObjectManager::FinalizeObjects( const flood::FloodModel_ABC& floodModel )
 {
     // $$$$ _RC_ JSR 2011-11-04: TODO passer par une interface? (attention, respecter l'ordre, floods en derniers)
     for( IT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
@@ -389,8 +375,7 @@ void MIL_ObjectManager::FinalizeObjects()
     }
     for( IT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
         if( FloodAttribute* flood = it->second->RetrieveAttribute< FloodAttribute >() )
-            if( pFloodModel_ )
-                flood->GenerateFlood( *pFloodModel_ );
+            flood->GenerateFlood( floodModel );
 }
 
 // -----------------------------------------------------------------------------
@@ -417,12 +402,13 @@ void MIL_ObjectManager::SendFullState()
 // Name: MIL_ObjectManager::OnReceiveObjectMagicAction
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicAction& msg, unsigned int nCtx, const tools::Resolver< MIL_Army_ABC >& armies )
+void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicAction& msg, unsigned int nCtx, const tools::Resolver< MIL_Army_ABC >& armies,
+                                                    const flood::FloodModel_ABC& floodModel )
 {
     sword::ObjectMagicActionAck_ErrorCode nErrorCode = sword::ObjectMagicActionAck::no_error;
 
     if( msg.type() == sword::ObjectMagicAction::create )
-        nErrorCode = CreateObject( msg.parameters(), armies );
+        nErrorCode = CreateObject( msg.parameters(), armies, floodModel );
     else if( msg.type() == sword::ObjectMagicAction::destroy )
     {
         MIL_Object_ABC* pObject = Find( msg.object().id() );
@@ -481,4 +467,22 @@ void MIL_ObjectManager::OnReceiveChangeResourceLinks( const sword::MagicAction& 
 const std::set< MIL_Object_ABC* >& MIL_ObjectManager::GetUniversalObjects() const
 {
     return universalObjects_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectManager::GetDangerousObjects
+// Created: LGY 2012-09-13
+// -----------------------------------------------------------------------------
+std::vector< unsigned int > MIL_ObjectManager::GetDangerousObjects() const
+{
+    return builder_->GetDangerousObjects();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectManager::GetMaxAvoidanceDistance
+// Created: LGY 2012-09-13
+// -----------------------------------------------------------------------------
+double MIL_ObjectManager::GetMaxAvoidanceDistance() const
+{
+    return builder_->GetMaxAvoidanceDistance();
 }

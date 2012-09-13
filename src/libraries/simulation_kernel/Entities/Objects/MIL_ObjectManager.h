@@ -51,7 +51,6 @@ class MIL_ObjectManager : private boost::noncopyable
 {
 public:
              MIL_ObjectManager();
-    explicit MIL_ObjectManager( const flood::FloodModel_ABC& floodModel );
     virtual ~MIL_ObjectManager();
 
     //! @name CheckPoints
@@ -65,7 +64,7 @@ public:
     //! @name Operations
     //@{
     void ProcessEvents();
-    void UpdateStates ();
+    void UpdateStates( const flood::FloodModel_ABC& floodModel );
     unsigned long Count() const;
 
     MIL_Object_ABC& CreateObject( xml::xistream& xis, MIL_Army_ABC* army );
@@ -81,14 +80,17 @@ public:
     MIL_Object_ABC* Find( unsigned int nID ) const;
     const MIL_ObjectType_ABC& FindType( const std::string& type ) const;
     const std::set< MIL_Object_ABC* >& GetUniversalObjects() const;
+    std::vector< unsigned int > GetDangerousObjects() const;
+    double GetMaxAvoidanceDistance() const;
     //@}
 
     //! @name Network
     //@{
-    void FinalizeObjects();
+    void FinalizeObjects( const flood::FloodModel_ABC& floodModel );
     void SendCreation();
     void SendFullState();
-    void OnReceiveObjectMagicAction( const sword::ObjectMagicAction& asnMsg, unsigned int nCtx, const tools::Resolver< MIL_Army_ABC >& armies );
+    void OnReceiveObjectMagicAction( const sword::ObjectMagicAction& asnMsg, unsigned int nCtx, const tools::Resolver< MIL_Army_ABC >& armies,
+                                     const flood::FloodModel_ABC& floodModel );
     void OnReceiveChangeResourceLinks( const sword::MagicAction& message, unsigned int nCtx );
     //@}
 
@@ -112,13 +114,13 @@ private:
 private:
     //! @name Tools
     //@{
-    sword::ObjectMagicActionAck_ErrorCode CreateObject( const sword::MissionParameters& asn, const tools::Resolver< MIL_Army_ABC >& armies );
+    sword::ObjectMagicActionAck_ErrorCode CreateObject( const sword::MissionParameters& asn, const tools::Resolver< MIL_Army_ABC >& armies,
+                                                        const flood::FloodModel_ABC& floodModel );
     //@}
 
 private:
     //! @name
     //@{
-    const flood::FloodModel_ABC* pFloodModel_;
     T_ObjectMap objects_;
     T_ObjectSet universalObjects_;
     unsigned int nbObjects_;

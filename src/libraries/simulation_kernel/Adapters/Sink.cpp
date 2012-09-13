@@ -74,6 +74,7 @@ void save_construct_data( Archive& archive, const Sink* sink, const unsigned int
     archive << factory
             << sink->gcPause_
             << sink->gcMult_
+            << sink->dangerousObjects_
             << sink->elements_
             << sink->model_;
 }
@@ -84,10 +85,12 @@ void load_construct_data( Archive& archive, Sink* sink, const unsigned int /*ver
     AgentFactory_ABC* factory;
     unsigned int gcPause;
     unsigned int gcMult;
+    std::vector< unsigned int > dangerousObjects;
     archive >> factory
             >> gcPause
-            >> gcMult;
-    ::new( sink )Sink( *factory, gcPause, gcMult );
+            >> gcMult
+            >> dangerousObjects;
+    ::new( sink )Sink( *factory, gcPause, gcMult, dangerousObjects );
     archive >> sink->elements_
             >> sink->model_;
 }
@@ -103,11 +106,8 @@ namespace
     DECLARE_HOOK( InitializeDecisional, void, ( const char* xml, double tickDuration ) )
     DECLARE_HOOK( InitializeRadarType, void, ( const char* xml ) )
 
-    void InitializePathfinder( xml::xistream& xis )
+    void InitializePathfinder( xml::xistream& xis, const std::vector< unsigned int >& dangerousObjects )
     {
-        MIL_DangerousObjectFilter filter;
-        std::vector< unsigned int > dangerousObjects;
-        MIL_ObjectFactory::FindDangerousIDs( dangerousObjects, filter );
         xml::xostringstream xos;
         xos << xis;
         GET_HOOK( InitializePathClass )( xos.str().c_str(), dangerousObjects.empty() ? 0 : &dangerousObjects[0], dangerousObjects.size() );
@@ -163,14 +163,16 @@ namespace
 // Name: Sink constructor
 // Created: SBO 2011-06-06
 // -----------------------------------------------------------------------------
-Sink::Sink( AgentFactory_ABC& factory, unsigned int gcPause, unsigned int gcMult )
-    : factory_( factory )
-    , gcPause_( gcPause )
-    , gcMult_ ( gcMult )
-    , modules_( configuration )
-    , logger_ ( new CoreLogger() )
-    , model_  ( new core::Model() )
-    , facade_ ( new core::Facade( modules_, *logger_, *model_ ) )
+Sink::Sink( AgentFactory_ABC& factory, unsigned int gcPause, unsigned int gcMult,
+            const std::vector< unsigned int >& dangerousObjects )
+    : factory_         ( factory )
+    , gcPause_         ( gcPause )
+    , gcMult_          ( gcMult )
+    , dangerousObjects_( dangerousObjects )
+    , modules_         ( configuration )
+    , logger_          ( new CoreLogger() )
+    , model_           ( new core::Model() )
+    , facade_          ( new core::Facade( modules_, *logger_, *model_ ) )
 {
     listeners_.push_back( new ReportEventListener( *model_, *facade_ ) );
     listeners_.push_back( new MovementReportNameEventListener( *model_, *facade_ ) );
@@ -193,7 +195,7 @@ Sink::Sink( AgentFactory_ABC& factory, unsigned int gcPause, unsigned int gcMult
     USE_HOOK( InitializeWeaponSystems, *facade_ );
     USE_HOOK( InitializeDecisional, *facade_ );
     facade_->Resolve();
-    MIL_AgentServer::GetWorkspace().GetConfig().GetLoader().LoadPhysicalFile( "pathfinder", boost::bind( &::InitializePathfinder, _1 ) );
+    MIL_AgentServer::GetWorkspace().GetConfig().GetLoader().LoadPhysicalFile( "pathfinder", boost::bind( &::InitializePathfinder, _1, boost::cref( dangerousObjects_ ) ) );
     MIL_AgentServer::GetWorkspace().GetConfig().GetLoader().LoadPhysicalFile( "sensors", boost::bind( &::InitializePerception, _1 ) );
     MIL_AgentServer::GetWorkspace().GetConfig().GetLoader().LoadPhysicalFile( "launchers", boost::bind( &::InitializeLaunchers, _1 ) );
     MIL_AgentServer::GetWorkspace().GetConfig().GetLoader().LoadPhysicalFile( "resources", boost::bind( &::InitializeDotations, _1 ) );

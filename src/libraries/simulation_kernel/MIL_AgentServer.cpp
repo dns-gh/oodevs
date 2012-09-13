@@ -93,6 +93,8 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
         pEntityManager_->Finalize();
         Resume( nextPause_ );
     }
+    if( !config_.IsDataTestMode() )
+        pPathFindManager_ = new DEC_PathFind_Manager( config_, pEntityManager_->GetMaxAvoidanceDistance(), pEntityManager_->GetDangerousObjects() );
     timerManager_.Register( *this );
     MT_LOG_STARTUP_MESSAGE( "-------------------------" );
     MT_LOG_STARTUP_MESSAGE( "---- SIM Initialized ----" );
@@ -143,8 +145,6 @@ void MIL_AgentServer::ReadStaticData()
     PHY_MeteoDataManager::Initialize();
     MIL_EntityManager::Initialize( config_, *this );
     pAgentServer_ = new NET_AgentServer( config_, *this, *this );
-    if( !config_.IsDataTestMode() )
-        pPathFindManager_ = new DEC_PathFind_Manager( config_ );
 }
 
 //-----------------------------------------------------------------------------

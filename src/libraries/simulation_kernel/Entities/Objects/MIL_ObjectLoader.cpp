@@ -296,20 +296,23 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_ObjectLoader::GetDangerousIDs
+// Name: MIL_ObjectLoader::GetDangerousObjects
 // Created: CMA 2011-11-28
 // -----------------------------------------------------------------------------
-const void MIL_ObjectLoader::GetDangerousIDs( std::vector< unsigned int >& dangerousIDs, const MIL_ObjectFilter& filter ) const
+std::vector< unsigned int > MIL_ObjectLoader::GetDangerousObjects() const
 {
+    std::vector< unsigned int > dangerousIDs;
+    MIL_DangerousObjectFilter filter;
     AvoidableObjectInserter functor( dangerousIDs, filter );
     ApplyOnPrototypes( functor );
+    return dangerousIDs;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectLoader::GetMaxAvoidanceDistance
 // Created: CMA 2012-04-25
 // -----------------------------------------------------------------------------
-const double MIL_ObjectLoader::GetMaxAvoidanceDistance() const
+double MIL_ObjectLoader::GetMaxAvoidanceDistance() const
 {
     double maxDistance = 0.;
     AvoidableObjectDistance functor( maxDistance );
