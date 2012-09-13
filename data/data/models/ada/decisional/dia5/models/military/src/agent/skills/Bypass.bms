@@ -35,21 +35,22 @@ rootnode
     end,
 
     -- -------------------------------------------------------------------------------- 
-    -- Node begins: store each objective in a table
+    -- Node begins
     -- --------------------------------------------------------------------------------
     create = function( self )
         self.nextTargetIndex = 1
         self.report = nil
         self.elementToRemove = nil
-        self.obstacles = queries.getObstaclesAroundMe[ "execute" ]({ distance = 100 })
+        self.obstacles = queries.getObstaclesAroundMe[ "execute" ]( { distance = 100 } ) -- $$$ MIA ??? A virer
     end,
 
     -- -------------------------------------------------------------------------------- 
     -- Select the more interesting position and move toward it to remove obstacle ennemy. 
-    -- The more interesting is the first in the table $$$$ MIA à voir
     -- --------------------------------------------------------------------------------
     activate = function( self )
         local Activate = Activate
+
+        -- If no entities issued, the skill get obstacle encountered on path once the agent is moving
         if self.params.entities == NIL then
             local obstacles = queries.getObstaclesOnPath[ "execute" ]()
             if #obstacles > 0 then
@@ -57,10 +58,10 @@ rootnode
             end
         else 
             self.obstacles = self.params.entities
-        end    
+        end
 
         if #self.obstacles < 1 then
-            Feedback( self.feedbacks.done ) -- no obstacles to remove
+            Feedback( self.feedbacks.done ) -- no obstacles to bypass
             return
         end
 

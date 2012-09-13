@@ -14,7 +14,7 @@ rootnode
         Feedback( self.feedbacks.elementBypassed, { element = params.entity } )
         self.targets[ params.entity ] = nil
         if not next( self.targets ) then
-          Feedback( self.feedbacks.done )
+            Feedback( self.feedbacks.done )
         end
     end,
 
@@ -116,8 +116,8 @@ node "bypassElement"
         -- Moving toward a removing position
         for _, position in pairs( self.params.positions )  do
             Activate( skill.links.moveAndTakePosition, 
-                position:removalEfficiency( self.params.entity ),
-                                { entity = position, pathType = self.eTypeIti } )
+                      position:removalEfficiency( self.params.entity ),
+                                  { entity = position, pathType = self.eTypeIti } )
         end
         self.arrived = false
     end

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.tasks.Remove" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.Remove">
     <description>To remove a set of sword objects.&#xD;
-The visits the obstacles and removes them one by one. Order of visit is user defined (the order is the 'entities' list order).</description>
+The agent visits the obstacles and removes them one by one. Order of visit is user defined (the order is the 'entities' list order).&#xD;
+&#xD;
+ In sword, removing an obstacle is to deconstruct it (the construction level decreases) and make it disappear.</description>
     <parameters>
         <parameter name="entities">
             <description>The set of entities to remove (objects such as obstacles, intallations, bridges etc.).</description>

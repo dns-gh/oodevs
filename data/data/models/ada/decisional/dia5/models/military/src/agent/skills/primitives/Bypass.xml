@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.skills.primitives.Bypass" source-version="1.0.0">
-    <description>Contourner ou brécher un objet tactique</description>
+    <description>To breach or bypass an obstacle. </description>
     <parameters>
         <parameter name="entities">
-            <description>Les éléments à contourner</description>
+            <description>The elements to bypass.</description>
             <type>
                 <list>
                     <class name="properties.Bypassable"/>
@@ -11,7 +11,7 @@
             </type>
         </parameter>
         <parameter name="positions">
-            <description>Positions permettant de contourner les éléments.</description>
+            <description>The possible positions to occupy to apply the bypass effect.</description>
             <type>
                 <list>
                     <class name="properties.Bypassing"/>
@@ -19,6 +19,7 @@
             </type>
         </parameter>
         <parameter name="avoidObstacles">
+            <description>Define if the agent uses a path allowing to avoid encountered obstacles.</description>
             <type>
                 <simple name="boolean"/>
             </type>
@@ -27,9 +28,6 @@
             </default>
         </parameter>
     </parameters>
-    <goal>
-        <description>Contourner les éléments.</description>
-    </goal>
     <links>
         <link name="moveAndTakePosition" skill="agent.skills.actions.MoveAndTakePosition">
             <description>Lien vers le skill MoveAndTakePosition</description>
