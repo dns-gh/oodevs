@@ -52,8 +52,6 @@ public:
     bool IsCreationBlocked() const;
     void SetContextMenuBlocked( bool contextMenuBlocked );
     bool IsContextMenuBlocked() const;
-    void SetDragAndDropBlocked( bool dragAndDropBlocked );
-    bool IsDragAndDropBlocked() const;
     //@}
 
     //! @name Filters/Sort
@@ -92,7 +90,6 @@ protected:
     QString searchedText_;
     bool creationBlocked_;
     bool contextMenuBlocked_;
-    bool dndBlocked_;
     //@}
 };
 

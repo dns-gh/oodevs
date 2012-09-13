@@ -61,6 +61,7 @@ protected:
     //@{
     void InternalNotifyCreated( const kernel::Hierarchies& hierarchy );
     void InternalNotifyUpdated( const kernel::Hierarchies& hierarchy );
+    QStandardItem* AddItem( QStandardItem* parent, const kernel::Entity_ABC& entity );
     void UpdateBackgroundColor( QStandardItem& entityItem, const kernel::Entity_ABC& entity );
     void UpdateSymbol( QStandardItem& entityItem, const kernel::Entity_ABC& entity );
     //@}

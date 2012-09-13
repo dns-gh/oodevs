@@ -134,7 +134,7 @@ namespace
     }
 
     // -----------------------------------------------------------------------------
-    // Name: StandardModel::FindSafeItem
+    // Name: StandardModel::RecFindSafeItem
     // Created: ABR 2012-08-16
     // -----------------------------------------------------------------------------
     template< typename T >

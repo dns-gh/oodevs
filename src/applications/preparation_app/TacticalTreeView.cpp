@@ -376,7 +376,12 @@ void TacticalTreeView::OnChangeLevel( int levelId )
 // -----------------------------------------------------------------------------
 void TacticalTreeView::OnRename()
 {
-    //TODO
+    if( contextMenuEntity_ )
+    {
+        QStandardItem* item = dataModel_.FindSafeItem( *contextMenuEntity_ );
+        if( item )
+            edit( proxyModel_->mapFromSource( item->index() ) );
+    }
 }
 
 // -----------------------------------------------------------------------------

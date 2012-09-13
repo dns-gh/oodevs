@@ -98,17 +98,41 @@ void HierarchyTreeView_ABC::InternalNotifyCreated( const kernel::Hierarchies& hi
     {
         QStandardItem* superiorItem = dataModel_.FindSafeItem( *superior );
         if( !superiorItem )
-            superiorItem = dataModel_.AddRootSafeItem( dataModel_.rowCount(), 0, superior->GetName(), superior->GetTooltip(), *superior, ItemSpecificFlags( *superior ) );
-        entityItem = dataModel_.AddChildSafeItem( superiorItem, superiorItem->rowCount(), 0, entity.GetName(), entity.GetTooltip(), entity, ItemSpecificFlags( entity ) );
+            superiorItem = AddItem( 0, *superior );
+        entityItem = AddItem( superiorItem, entity );
     }
     else                // Root item
-        entityItem = dataModel_.AddRootSafeItem( dataModel_.rowCount(), 0, entity.GetName(), entity.GetTooltip(), entity, ItemSpecificFlags( entity ) );
+        entityItem = AddItem( 0, entity );
 
     if( entityItem )
     {
         UpdateBackgroundColor( *entityItem, entity );
         UpdateSymbol( *entityItem, entity );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: HierarchyTreeView_ABC::AddItem
+// Created: JSR 2012-09-12
+// -----------------------------------------------------------------------------
+QStandardItem* HierarchyTreeView_ABC::AddItem( QStandardItem* parent, const kernel::Entity_ABC& entity )
+{
+    QStandardItem* ret;
+    if( parent )
+    {
+        int row = parent->rowCount();
+        ret = dataModel_.AddChildSafeItem( parent, row, 0, entity.GetName(), entity.GetTooltip(), entity, ItemSpecificFlags( entity ) );
+        for( int col = 1; col < dataModel_.columnCount(); ++col )
+            dataModel_.AddChildItem( parent, row, col );
+    }
+    else
+    {
+        int row = dataModel_.rowCount();
+        ret = dataModel_.AddRootSafeItem( row, 0, entity.GetName(), entity.GetTooltip(), entity, ItemSpecificFlags( entity ) );
+        for( int col = 1; col < dataModel_.columnCount(); ++col )
+            dataModel_.AddRootItem( row, col );
+    }
+    return ret;
 }
 
 // -----------------------------------------------------------------------------

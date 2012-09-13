@@ -17,6 +17,20 @@ using namespace gui;
 
 namespace
 {
+    bool IsCommandPost( const kernel::Entity_ABC& entity )
+    {
+        if( const kernel::CommandPostAttributes_ABC* pAttributes = entity.Retrieve< kernel::CommandPostAttributes_ABC >() )
+            return pAttributes->IsCommandPost();
+        return false;
+    }
+
+    bool IsEngaged( const kernel::Entity_ABC& entity )
+    {
+        if( const kernel::AutomatDecisions_ABC* decisions = entity.Retrieve< kernel::AutomatDecisions_ABC >() )
+            return decisions->IsEmbraye();
+        return false;
+    }
+
     class TacticalItemDelegate : public QItemDelegate
     {
     public:
@@ -37,19 +51,17 @@ namespace
         virtual void paint( QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index ) const
         {
             QItemDelegate::paint( painter, option, index );
-            kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( index );
-            if( entity )
+            if( index.column() == 1 )
             {
-                if( const kernel::CommandPostAttributes_ABC* pAttributes = entity->Retrieve< kernel::CommandPostAttributes_ABC >() )
+                QModelIndex item = dataModel_.GetMainModelIndex( index );
+                kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( item );
+                if( entity )
                 {
-                    if( pAttributes->IsCommandPost() )
+                    if( IsCommandPost( *entity ) )
                         DrawPixmap( painter, option.rect, commandPost_ );
-                }
-                else if( const kernel::AutomatDecisions_ABC* decisions = entity->Retrieve< kernel::AutomatDecisions_ABC >() )
-                {
-                    if( decisions->IsEmbraye() )
-                        DrawPixmap( painter, option.rect, lock_ );
-                }
+                    else if( IsEngaged( *entity ) )
+                            DrawPixmap( painter, option.rect, lock_ );
+                 }
             }
         }
 
@@ -78,6 +90,11 @@ namespace
 TacticalTreeView::TacticalTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, const EntitySymbols& symbols, QWidget* parent /*= 0*/ )
     : HierarchyTreeView< kernel::TacticalHierarchies >( controllers, profile, modelObserver, symbols, parent )
 {
+    dataModel_.setColumnCount( 2 );
+    header()->setStretchLastSection( false );
+    header()->setResizeMode( 0, QHeaderView::Stretch );
+    header()->setResizeMode( 1, QHeaderView::Fixed );
+    header()->resizeSection( 1, 24 );
     setItemDelegate( new TacticalItemDelegate( dataModel_, this ) );
 }
 
@@ -88,16 +105,6 @@ TacticalTreeView::TacticalTreeView( kernel::Controllers& controllers, const kern
 TacticalTreeView::~TacticalTreeView()
 {
     // NOTHING
-}
-
-namespace
-{
-    bool IsCommandPost( const kernel::Entity_ABC& entity )
-    {
-        if( const kernel::CommandPostAttributes_ABC* pAttributes = entity.Retrieve< kernel::CommandPostAttributes_ABC >() )
-            return pAttributes->IsCommandPost();
-        return false;
-    }
 }
 
 // -----------------------------------------------------------------------------

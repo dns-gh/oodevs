@@ -144,7 +144,7 @@ void EntityTreeView_ABC::NotifySelectionChanged( const std::vector< const kernel
         if( *it && !IsTypeRejected( **it ) )
             if( QStandardItem* item = dataModel_.FindSafeItem( **it ) )
             {
-                selectionModel()->select( proxyModel_->mapFromSource( item->index() ), QItemSelectionModel::Select );
+                selectionModel()->select( proxyModel_->mapFromSource( item->index() ), QItemSelectionModel::Select | QItemSelectionModel::Rows );
                 scrollTo( proxyModel_->mapFromSource( item->index() ) );
             }
     }

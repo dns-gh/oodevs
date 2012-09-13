@@ -78,6 +78,8 @@ public:
 
     QStandardItem* AddRootIconItem( int row, int col, const QPixmap& pixmap, Qt::ItemFlags flags = 0 );
     QStandardItem* AddChildIconItem( QStandardItem* parent, int row, int col, const QPixmap& pixmap, Qt::ItemFlags flags = 0 );
+
+    QModelIndex GetMainModelIndex( const QModelIndex& index ) const;
     //@}
 
     //! @name Accessors
@@ -105,6 +107,7 @@ public:
 
     //! @name Drag and Drop
     //@{
+    void LockDragAndDrop( bool lock );
     virtual Qt::ItemFlags flags( const QModelIndex& index ) const;
     virtual QStringList mimeTypes() const;
     virtual QMimeData* mimeData( const QModelIndexList& indexes ) const;
@@ -123,6 +126,7 @@ private:
     kernel::Controllers& controllers_;
     QSortFilterProxyModel& proxy_;
     DragAndDropObserver_ABC* dragAndDropObserver_;
+    bool dndLocked_;
     //@}
 };
 

@@ -127,24 +127,6 @@ bool RichTreeView::IsContextMenuBlocked() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: RichTreeView::SetDragAndDropBlocked
-// Created: ABR 2012-08-14
-// -----------------------------------------------------------------------------
-void RichTreeView::SetDragAndDropBlocked( bool dragAndDropBlocked )
-{
-    dndBlocked_ = dragAndDropBlocked;
-}
-
-// -----------------------------------------------------------------------------
-// Name: RichTreeView::IsDragAndDropBlocked
-// Created: ABR 2012-08-14
-// -----------------------------------------------------------------------------
-bool RichTreeView::IsDragAndDropBlocked() const
-{
-    return dndBlocked_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: RichTreeView::CreateFilters
 // Created: ABR 2012-08-14
 // -----------------------------------------------------------------------------
@@ -169,7 +151,7 @@ bool RichTreeView::LessThan( const QModelIndex& /*left*/, const QModelIndex& /*r
 // -----------------------------------------------------------------------------
 void RichTreeView::LockDragAndDrop( bool lock )
 {
-    dndBlocked_ = lock;
+    dataModel_.LockDragAndDrop( lock );
 }
 
 // -----------------------------------------------------------------------------
@@ -251,7 +233,7 @@ void RichTreeView::SearchAndSelectNext()
                 const QModelIndex& modelIndex = list.at( i );
                 if( proxyModel_->flags( modelIndex ) & ( Qt::ItemIsSelectable | Qt::ItemIsEnabled ) && CompareIndices( modelIndex, selected ) > 0 )
                 {
-                    selectionModel()->select( modelIndex, QItemSelectionModel::ClearAndSelect );
+                    selectionModel()->select( modelIndex, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows );
                     return;
                 }
             }
@@ -261,7 +243,7 @@ void RichTreeView::SearchAndSelectNext()
         const QModelIndex& modelIndex = list.at( i );
         if( proxyModel_->flags( modelIndex ) & ( Qt::ItemIsSelectable | Qt::ItemIsEnabled ) )
         {
-            selectionModel()->select( modelIndex, QItemSelectionModel::ClearAndSelect );
+            selectionModel()->select( modelIndex, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows );
             return;
         }
     }

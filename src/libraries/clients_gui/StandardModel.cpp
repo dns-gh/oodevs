@@ -27,6 +27,7 @@ StandardModel::StandardModel( kernel::Controllers& controllers, QSortFilterProxy
     , controllers_( controllers )
     , proxy_( proxy )
     , dragAndDropObserver_( 0 )
+    , dndLocked_( false )
 {
     proxy.setSourceModel( this );
 }
@@ -108,6 +109,24 @@ void StandardModel::ApplyFilter( boost::function< bool ( QStandardItem* ) > func
 }
 
 // -----------------------------------------------------------------------------
+// Name: StandardModel::GetMainModelIndex
+// Created: JSR 2012-09-12
+// -----------------------------------------------------------------------------
+QModelIndex StandardModel::GetMainModelIndex( const QModelIndex& index ) const
+{
+    return index.model()->index( index.row(), 0, index.parent() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: StandardModel::LockDragAndDrop
+// Created: JSR 2012-09-13
+// -----------------------------------------------------------------------------
+void StandardModel::LockDragAndDrop( bool lock )
+{
+    dndLocked_ = lock;
+}
+
+// -----------------------------------------------------------------------------
 // Name: StandardModel::mimeTypes
 // Created: JSR 2012-09-06
 // -----------------------------------------------------------------------------
@@ -115,7 +134,7 @@ QStringList StandardModel::mimeTypes() const
 {
      // $$$$ JSR 2012-09-07: TODO gérer différents mimeTypes? (entity, agenttype, automattype)
     QStringList mimeTypes;
-    if( dragAndDropObserver_ )
+    if( dragAndDropObserver_ && !dndLocked_ )
         mimeTypes << mimeTypeStr_ << dragAndDropObserver_->AdditionalMimeTypes();
     return mimeTypes;
 }
@@ -126,7 +145,7 @@ QStringList StandardModel::mimeTypes() const
 // -----------------------------------------------------------------------------
 QMimeData* StandardModel::mimeData( const QModelIndexList& indexes ) const
 {
-    if( !dragAndDropObserver_ )
+    if( !dragAndDropObserver_ || dndLocked_)
         return 0;
     QMimeData* mimeData = new QMimeData();
     QByteArray encodedData;
@@ -152,7 +171,7 @@ Qt::ItemFlags StandardModel::flags(const QModelIndex& index) const
 {
     const Qt::ItemFlags defaultFlags = QStandardItemModel::flags( index );
     // $$$$ JSR 2012-09-07: TODO add a virtual method for non draggable/droppable elements? or manage it in dragEnterEvent?
-    if( !index.isValid() || !dragAndDropObserver_ )
+    if( !index.isValid() || !dragAndDropObserver_ || dndLocked_)
         return defaultFlags;
     return Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled | defaultFlags;
 }
@@ -165,7 +184,7 @@ bool StandardModel::dropMimeData( const QMimeData* data, Qt::DropAction action, 
 {
     if( action == Qt::IgnoreAction )
         return true;
-    if( !dragAndDropObserver_ || !parent.isValid() )
+    if( !dragAndDropObserver_ || !parent.isValid() || dndLocked_ )
         return false;
     QStandardItem* item = itemFromIndex( parent.model() == this ? parent : proxy_.mapToSource( parent ) );
     if( !item )
@@ -203,5 +222,5 @@ bool StandardModel::dropMimeData( const QMimeData* data, Qt::DropAction action, 
 // -----------------------------------------------------------------------------
 Qt::DropActions StandardModel::supportedDropActions() const
 {
-    return Qt::CopyAction | Qt::MoveAction;
+    return Qt::CopyAction;
 }
