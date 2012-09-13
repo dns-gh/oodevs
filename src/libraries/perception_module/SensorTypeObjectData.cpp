@@ -128,8 +128,8 @@ double SensorTypeObjectData::GetPopulationFactor( double rDensity ) const
 // -----------------------------------------------------------------------------
 double SensorTypeObjectData::GetSourceFactor( const wrapper::View& source ) const
 {
-    const unsigned int nOldPostureIdx = GET_HOOK( GetLastPostureIdentifier )( source );
-    const unsigned int nCurPostureIdx = GET_HOOK( GetCurrentPostureIdentifier )( source );
+    const std::size_t nOldPostureIdx = GET_HOOK( GetLastPostureIdentifier )( source );
+    const std::size_t nCurPostureIdx = GET_HOOK( GetCurrentPostureIdentifier )( source );
     assert( postureSourceFactors_.size() > nOldPostureIdx );
     assert( postureSourceFactors_.size() > nCurPostureIdx );
     double rModificator =     postureSourceFactors_[ nOldPostureIdx ] + GET_HOOK( GetPostureCompletionPercentage )( source )

@@ -10,6 +10,7 @@
 #include "View.h"
 #include <module_api/Model.h>
 #include <boost/lexical_cast.hpp>
+#include <boost/numeric/conversion/cast.hpp>
 
 using namespace sword::wrapper;
 
@@ -125,9 +126,9 @@ View View::operator[]( const char* key ) const
 // Name: View::operator[]
 // Created: SLI 2012-01-19
 // -----------------------------------------------------------------------------
-View View::operator[]( unsigned int key ) const
+View View::operator[]( std::size_t key ) const
 {
-    const SWORD_Model* child = ::SWORD_GetChildInt( model_, key );
+    const SWORD_Model* child = ::SWORD_GetChildInt( model_, boost::numeric_cast< unsigned int >( key ) );
     if( !child )
         throw std::runtime_error( "could not retrieve child parameter '" + boost::lexical_cast< std::string >( key ) + "'" );
     return child;

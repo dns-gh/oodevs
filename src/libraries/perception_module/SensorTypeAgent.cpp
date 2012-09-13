@@ -272,7 +272,7 @@ void SensorTypeAgent::ReadTerrainModifier( xml::xistream& xis )
     xis >> xml::attribute( "value", rFactor );
     if( rFactor < 0 || rFactor > 1 )
         xis.error( "terrain-modifier: value not in [0..1]" );
-    environmentFactors_.insert( std::pair< unsigned, double >( GET_HOOK( GetEnvironmentAssociation )( terrainType.c_str() ), rFactor ) );
+    environmentFactors_.insert( std::pair< std::size_t, double >( GET_HOOK( GetEnvironmentAssociation )( terrainType.c_str() ), rFactor ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -340,8 +340,8 @@ double SensorTypeAgent::GetPopulationFactor( double rDensity ) const
 // -----------------------------------------------------------------------------
 double SensorTypeAgent::GetSourceFactor( const wrapper::View& source ) const
 {
-    const unsigned int nOldPostureIdx = GET_HOOK( GetLastPostureIdentifier )( source );
-    const unsigned int nCurPostureIdx = GET_HOOK( GetCurrentPostureIdentifier )( source );
+    const std::size_t nOldPostureIdx = GET_HOOK( GetLastPostureIdentifier )( source );
+    const std::size_t nCurPostureIdx = GET_HOOK( GetCurrentPostureIdentifier )( source );
 
     assert( postureSourceFactors_.size() > nOldPostureIdx );
     assert( postureSourceFactors_.size() > nCurPostureIdx );
@@ -361,8 +361,8 @@ double SensorTypeAgent::GetTargetFactor( const wrapper::View& target ) const
     if( IsLimitedToSensors( target ) )
         return 0;
 
-    const unsigned int nOldPostureIdx = GET_HOOK( GetLastPostureIdentifier )( target );
-    const unsigned int nCurPostureIdx = GET_HOOK( GetCurrentPostureIdentifier )( target );
+    const std::size_t nOldPostureIdx = GET_HOOK( GetLastPostureIdentifier )( target );
+    const std::size_t nCurPostureIdx = GET_HOOK( GetCurrentPostureIdentifier )( target );
 
     assert( postureTargetFactors_.size() > nOldPostureIdx );
     assert( postureTargetFactors_.size() > nCurPostureIdx );

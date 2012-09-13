@@ -12,7 +12,7 @@
 
 BOOST_FIXTURE_TEST_CASE( vision_command_changes_mode_to_direction, sword::perception::ModuleFixture )
 {
-    const size_t identifier = 3;
+    const unsigned int identifier = 3;
     core::Model& vision = model[ "entities" ][ identifier ][ "perceptions/vision" ];
     vision[ "mode" ] = "normal";
     ExpectEffect( vision, sword::test::MakeModel( "mode", "direction" )
@@ -28,7 +28,7 @@ BOOST_FIXTURE_TEST_CASE( vision_command_changes_mode_to_direction, sword::percep
 
 BOOST_FIXTURE_TEST_CASE( vision_command_changes_mode_to_location, sword::perception::ModuleFixture )
 {
-    const size_t identifier = 3;
+    const unsigned int identifier = 3;
     core::Model& vision = model[ "entities" ][ identifier ][ "perceptions/vision" ];
     vision[ "mode" ] = "normal";
     ExpectEffect( vision, sword::test::MakeModel( "mode", "location" )
@@ -44,7 +44,7 @@ BOOST_FIXTURE_TEST_CASE( vision_command_changes_mode_to_location, sword::percept
 
 BOOST_FIXTURE_TEST_CASE( vision_command_changes_mode_to_normal_and_uses_current_movement_direction, sword::perception::ModuleFixture )
 {
-    const size_t identifier = 3;
+    const unsigned int identifier = 3;
     core::Model& entity = model[ "entities" ][ identifier ];
     entity[ "movement/direction/x" ] = 0.1;
     entity[ "movement/direction/y" ] = 0.2;

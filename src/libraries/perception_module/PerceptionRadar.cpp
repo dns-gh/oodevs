@@ -146,7 +146,7 @@ void PerceptionRadar::Execute( const wrapper::View& model, const wrapper::View& 
 // Name: PerceptionRadar::HasRadar
 // Created: SLI 2012-08-30
 // -----------------------------------------------------------------------------
-bool PerceptionRadar::HasRadar( const wrapper::View& entity, unsigned int radarType ) const
+bool PerceptionRadar::HasRadar( const wrapper::View& entity, std::size_t radarType ) const
 {
     const RadarClass* radar = RadarClass::Find( radarType );
     if( !radar )

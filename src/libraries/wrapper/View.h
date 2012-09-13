@@ -51,7 +51,7 @@ public:
 
     View operator[]( const std::string& key ) const;
     View operator[]( const char* key ) const;
-    View operator[]( unsigned int key ) const;
+    View operator[]( std::size_t key ) const;
 
     std::size_t GetSize() const;
     View GetElement( std::size_t index ) const;

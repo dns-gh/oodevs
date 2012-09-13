@@ -98,9 +98,9 @@ Node Node::operator[]( const char* key )
 // Name: Node::operator[]
 // Created: SLI 2012-01-19
 // -----------------------------------------------------------------------------
-Node Node::operator[]( unsigned int key )
+Node Node::operator[]( size_t key )
 {
-    SWORD_Model* child = ::SWORD_SetChildInt( node_, key );
+    SWORD_Model* child = ::SWORD_SetChildInt( node_, boost::numeric_cast< unsigned int >( key ) );
     if( !child )
         throw std::runtime_error( "could not retrieve child parameter '" + boost::lexical_cast< std::string >( key ) + "'" );
     return Node( child );

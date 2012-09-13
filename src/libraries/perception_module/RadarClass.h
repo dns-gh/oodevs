@@ -43,7 +43,7 @@ public:
     static       void             Initialize     ();
     static       void             Terminate      ();
     static const RadarClass*  Find           ( const std::string& strName );
-    static const RadarClass*  Find           ( unsigned int nID );
+    static const RadarClass*  Find           ( std::size_t nID );
     static const T_RadarClassMap& GetRadarClasses();
     static       std::size_t      GetNbrClasses  ();
     //@}

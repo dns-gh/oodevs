@@ -72,7 +72,7 @@ namespace perception
             sensor[ "type" ] = "sensor-type";
             component[ "radars" ].AddElement()[ "type" ] = "my-radar";
         }
-        const size_t identifier;
+        const unsigned int identifier;
         const double maxPerceptionDistance;
         const double theoreticalDistance;
         const MT_Vector2D position;

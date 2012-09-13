@@ -71,7 +71,7 @@ const RadarClass* RadarClass::Find( const std::string& strClass )
 // Name: RadarClass::Find
 // Created: NLD 2005-05-02
 // -----------------------------------------------------------------------------
-const RadarClass* RadarClass::Find( unsigned int nID )
+const RadarClass* RadarClass::Find( std::size_t nID )
 {
     for( CIT_RadarClassMap it = radarClasses_.begin(); it != radarClasses_.end(); ++it )
         if( it->second->GetID() == nID )

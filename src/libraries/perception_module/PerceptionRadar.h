@@ -38,7 +38,7 @@ public:
     //! @name Operations
     //@{
     virtual void Execute( const wrapper::View& model, const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const T_AgentPtrVector& perceivableAgents );
-    bool HasRadar( const wrapper::View& entity, unsigned int radarType ) const;
+    bool HasRadar( const wrapper::View& entity, std::size_t radarType ) const;
     //@}
 
 private:

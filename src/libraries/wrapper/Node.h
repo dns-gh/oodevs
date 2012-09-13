@@ -51,7 +51,7 @@ public:
 
     Node operator[]( const std::string& key );
     Node operator[]( const char* key );
-    Node operator[]( unsigned int key );
+    Node operator[]( size_t key );
 
     Node AddElement();
     Node& MarkForRemove();

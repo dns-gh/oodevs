@@ -80,7 +80,7 @@ public:
     //! @name Types
     //@{
     typedef std::vector< double > T_FactorVector;
-    typedef std::map< unsigned, double > T_FactorMap;
+    typedef std::map< std::size_t, double > T_FactorMap;
     //@}
 
 private:
