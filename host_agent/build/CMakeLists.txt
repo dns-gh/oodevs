@@ -169,7 +169,8 @@ target_link_libraries( host_test
     runtime
     web
 )
-add_test_target( host_test host )
+add_test_target( host_test host
+   "--data_directory=${root_dir}/src/tests/host_test" )
 
 ################################################################################
 # web_test
