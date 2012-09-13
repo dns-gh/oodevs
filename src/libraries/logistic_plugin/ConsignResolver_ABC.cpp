@@ -12,9 +12,26 @@
 #include <boost/filesystem/operations.hpp>
 #include <boost/regex.hpp>
 
-using namespace plugins::logistic;
 namespace bfs = boost::filesystem;
 namespace bg = boost::gregorian;
+
+namespace plugins
+{
+namespace logistic
+{
+
+std::string EscapeRegex( const std::string& s )
+{
+    std::string escaped;
+    escaped.reserve( 2*s.size() );
+    for( size_t i = 0; i != s.size(); ++i )
+    {
+        if( !std::isalnum( s[i] ))
+            escaped.push_back( '\\' );
+        escaped.push_back( s[i] );
+    }
+    return escaped;
+}
 
 // -----------------------------------------------------------------------------
 // Name: ConsignResolver_ABC constructor
@@ -118,7 +135,7 @@ void ConsignResolver_ABC::InitFileIndex( const boost::gregorian::date& today )
 {
     const bfs::path curPath( name_ );
     boost::regex todayRegex(
-        curPath.filename().string() + "\\." + to_iso_string( today ) + "\\.(\\d+)\\.csv$");
+        EscapeRegex( curPath.filename().string() ) + "\\." + to_iso_string( today ) + "\\.(\\d+)\\.csv$");
 
     boost::smatch m;
     bfs::directory_iterator end;
@@ -145,7 +162,7 @@ void ConsignResolver_ABC::RemoveOldFiles( const boost::gregorian::date& today )
 {
     const bfs::path curPath( name_ );
     boost::regex fileRegex(
-        curPath.filename().string() + "\\.(\\d{8})\\.\\d+\\.csv$");
+        EscapeRegex( curPath.filename().string() ) + "\\.(\\d{8})\\.\\d+\\.csv$");
     const std::string minDate = to_iso_string( today - bg::days( daysBeforeToKeep_ ) );
 
     boost::smatch m;
@@ -270,3 +287,6 @@ int ConsignResolver_ABC::GetConsignCount() const
 {
     return static_cast< int >( consignsData_.size() );
 }
+
+}  // namespace logistic
+}  // namespace plugins

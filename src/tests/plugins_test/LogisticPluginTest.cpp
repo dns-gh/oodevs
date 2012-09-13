@@ -641,3 +641,10 @@ BOOST_AUTO_TEST_CASE( TestLogisticPluginRestart )
     }
     CheckRegexps( expected, files );
 }
+
+BOOST_AUTO_TEST_CASE( TestEscapeRegex )
+{
+    BOOST_CHECK_EQUAL( "", EscapeRegex( "" ));
+    BOOST_CHECK_EQUAL( "abC123", EscapeRegex( "abC123" ));
+    BOOST_CHECK_EQUAL( "a\\^bc\\{12\\}3\\*\\\\", EscapeRegex( "a^bc{12}3*\\" ));
+}
