@@ -120,14 +120,6 @@ boost::regex GetFileRegex( const std::string& name, const std::string& dateRegex
     return boost::regex( streamRegex.str() );
 }
 
-bool MatchARegex( const std::string str, const std::vector< boost::regex >& regexList )
-{
-    for( std::vector< boost::regex >::const_iterator it = regexList.begin(); it != regexList.end(); ++it )
-        if( boost::regex_match( str, *it ) )
-            return true;
-    return false;
-}
-
 }  // namespace
 
 // -----------------------------------------------------------------------------
@@ -167,11 +159,10 @@ void ConsignResolver_ABC::RemoveOldFiles( const boost::gregorian::date& today )
     bfs::path curPath( name_ );
     std::string baseName = curPath.filename().string();
 
-    boost::regex fileRegex( GetFileRegex( baseName, "\\d{8}" ) );
-    std::vector< boost::regex > keepFilesRegex;
-    for( int i = 0; i <= daysBeforeToKeep_; ++i )
-        keepFilesRegex.push_back( GetFileRegex( baseName, to_iso_string( today - bg::days( i ) ) ) );
+    boost::regex fileRegex( GetFileRegex( baseName, "(\\d{8})" ) );
+    const std::string minDate = to_iso_string( today - bg::days( daysBeforeToKeep_ ) );
 
+    boost::smatch m;
     std::vector< bfs::path > filesToRemove;
     bfs::directory_iterator end;
     for( bfs::directory_iterator dir_it( curPath.remove_filename() ) ; dir_it != end ; ++dir_it )
@@ -179,7 +170,8 @@ void ConsignResolver_ABC::RemoveOldFiles( const boost::gregorian::date& today )
         if( bfs::is_regular_file( dir_it->status() ) )
         {
             std::string fileName = dir_it->path().filename().string();
-            if( boost::regex_match( fileName, fileRegex ) && !MatchARegex( fileName, keepFilesRegex ) )
+            // ISO date lexicographic order matches the chronological one
+            if( boost::regex_match( fileName, m, fileRegex ) && m.str(1) < minDate)
                 filesToRemove.push_back( dir_it->path() );
         }
     }
