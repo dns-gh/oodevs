@@ -148,8 +148,9 @@ void ConsignResolver_ABC::InitFileIndex( const boost::gregorian::date& today )
             std::string fileName = dir_it->path().filename().string();
             if( boost::regex_match( fileName, todayRegex ) )
             {
-                int curIndex = boost::lexical_cast< int >( fileName.erase( fileName.size() - std::string( ".csv" ).size() ).erase( 0, baseName.size() + 10 ) );
-                if( ++curIndex > curFileIndex_ )
+                const int curIndex = boost::lexical_cast< int >( fileName.erase( 
+                    fileName.size() - std::string( ".csv" ).size() ).erase( 0, baseName.size() + 10 ) ) + 1;
+                if( curIndex > curFileIndex_ )
                     curFileIndex_ = curIndex;
             }
         }
