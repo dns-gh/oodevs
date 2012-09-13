@@ -116,13 +116,13 @@ void ConsignResolver_ABC::SetNewFile( const boost::gregorian::date& today )
 // -----------------------------------------------------------------------------
 void ConsignResolver_ABC::InitFileIndex( const boost::gregorian::date& today )
 {
-    bfs::path curPath( name_ );
+    const bfs::path curPath( name_ );
     boost::regex todayRegex(
         curPath.filename().string() + "\\." + to_iso_string( today ) + "\\.(\\d+)\\.csv$");
 
     boost::smatch m;
     bfs::directory_iterator end;
-    for( bfs::directory_iterator dir_it( curPath.remove_filename() ) ; dir_it != end ; ++dir_it )
+    for( bfs::directory_iterator dir_it( curPath.parent_path() ) ; dir_it != end ; ++dir_it )
     {
         if( bfs::is_regular_file( dir_it->status() ) )
         {
@@ -143,7 +143,7 @@ void ConsignResolver_ABC::InitFileIndex( const boost::gregorian::date& today )
 // -----------------------------------------------------------------------------
 void ConsignResolver_ABC::RemoveOldFiles( const boost::gregorian::date& today )
 {
-    bfs::path curPath( name_ );
+    const bfs::path curPath( name_ );
     boost::regex fileRegex(
         curPath.filename().string() + "\\.(\\d{8})\\.\\d+\\.csv$");
     const std::string minDate = to_iso_string( today - bg::days( daysBeforeToKeep_ ) );
@@ -151,7 +151,7 @@ void ConsignResolver_ABC::RemoveOldFiles( const boost::gregorian::date& today )
     boost::smatch m;
     std::vector< bfs::path > filesToRemove;
     bfs::directory_iterator end;
-    for( bfs::directory_iterator dir_it( curPath.remove_filename() ) ; dir_it != end ; ++dir_it )
+    for( bfs::directory_iterator dir_it( curPath.parent_path() ) ; dir_it != end ; ++dir_it )
     {
         if( bfs::is_regular_file( dir_it->status() ) )
         {
