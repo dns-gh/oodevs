@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "RoleAdapter.h"
-#include "RoleAction_Moving.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
