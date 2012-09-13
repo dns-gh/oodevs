@@ -228,7 +228,10 @@ integration.startFragOrderTask = function( self )
         end
         integration.cleanFragOrder( self )
         return
-
+    -- WW    
+    elseif orderType == "agent.frago.Observe" then
+        mission.target = CreateKnowledge( integration.ontology.types.point, self.source:GetpointCible_() )
+        
     -- ----------------------------------------------------------------------------
     -- Counter battery selfprotection
     -- ----------------------------------------------------------------------------
