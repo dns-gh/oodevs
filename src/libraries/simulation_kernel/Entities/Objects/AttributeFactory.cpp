@@ -67,7 +67,6 @@ namespace
         static void Add( Object& object, xml::xistream& xis )
         {
             InitializeDotation< ImprovableCapacity, MineAttribute >( object );
-            InitializeDotation< BuildableCapacity, MineAttribute >( object );
             object.GetAttribute< MineAttribute >().Load( xis );
         }
     };
@@ -77,7 +76,6 @@ namespace
     {
         static void Add( Object& object, xml::xistream& xis )
         {
-            InitializeDotation< ImprovableCapacity, ConstructionAttribute >( object );
             InitializeDotation< BuildableCapacity, ConstructionAttribute >( object );
             object.GetAttribute< ConstructionAttribute >().Load( xis );
         }
