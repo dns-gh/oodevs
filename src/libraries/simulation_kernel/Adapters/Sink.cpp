@@ -394,11 +394,11 @@ void Sink::StopCommand( std::size_t command )
 // Name: Sink::Configure
 // Created: SLI 2012-01-13
 // -----------------------------------------------------------------------------
-MIL_AgentPion& Sink::Configure( MIL_AgentPion& pion, const MT_Vector2D& vPosition )
+MIL_AgentPion& Sink::Configure( MIL_AgentPion& pion, const MT_Vector2D& position )
 {
     core::Model& entity = (*model_)[ "entities" ][ pion.GetID() ];
-    entity[ "movement/position/x" ] = vPosition.rX_;
-    entity[ "movement/position/y" ] = vPosition.rY_;
+    entity[ "movement/position/x" ] = position.rX_;
+    entity[ "movement/position/y" ] = position.rY_;
     pion.RegisterRole( *new sword::RolePion_Location( pion, entity ) );
     try
     {
@@ -413,7 +413,7 @@ MIL_AgentPion& Sink::Configure( MIL_AgentPion& pion, const MT_Vector2D& vPositio
     pion.RegisterRole( *new sword::RolePion_Composantes( pion, entity ) );
     pion.RegisterRole( *new sword::RoleAdapter( pion, entity ) );
     tools::Resolver< MIL_AgentPion >::Register( pion.GetID(), pion );
-    pion.GetRole< PHY_RoleInterface_UrbanLocation >().MagicMove( vPosition );
+    pion.GetRole< PHY_RoleInterface_UrbanLocation >().MagicMove( position );
     {
         core::Model parameters;
         parameters[ "identifier" ] = pion.GetID();

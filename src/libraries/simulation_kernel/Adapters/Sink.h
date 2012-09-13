@@ -77,7 +77,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    MIL_AgentPion& Configure( MIL_AgentPion& pion, const MT_Vector2D& vPosition );
+    MIL_AgentPion& Configure( MIL_AgentPion& pion, const MT_Vector2D& position );
     //@}
 
 private:
