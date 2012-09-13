@@ -41,7 +41,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( sword::RoleAdapter )
 namespace
 {
     template< typename Message, typename Serializer >
-    class ModelSender : public network::NetworkMessageSender_ABC, private core::ModelListener_ABC
+    class ModelSender : public network::NetworkMessageSender_ABC, private core::ModelListener_ABC // $$$$ MCO 2012-09-13: factorize with ListenerHelper
     {
     public:
         ModelSender( core::Model& model, Serializer serializer )
@@ -132,8 +132,8 @@ RoleAdapter::RoleAdapter( MIL_AgentPion& pion, core::Model& entity )
     , entity_( entity )
 {
     senders_.push_back( MakeModelSender< client::UnitPathFind >( entity_[ "movement/path/points" ], boost::bind( &Serialize< client::UnitPathFind >, _1, pion.GetID(), _2 ) ) );
-    senders_.push_back( MakeModelSender< client::UnitEnvironmentType >( entity_[ "movement/environment" ], boost::bind( &Serialize< client::UnitEnvironmentType >, _1, pion.GetID(), _2 ) ) );
-    entity_[ "pion" ].SetUserData( &pion );
+    senders_.push_back( MakeModelSender< client::UnitEnvironmentType >( entity_[ "movement/environment" ], boost::bind( &Serialize< client::UnitEnvironmentType >, _1, pion.GetID(), _2 ) ) ); // $$$$ MCO 2012-09-13: move the two listeners to RoleAction_Moving
+    entity_[ "pion" ].SetUserData( &pion ); // $$$$ MCO 2012-09-13: move all initializations into Sink::CreateEntity
     entity_[ "roles/RoleAction_Moving" ].SetUserData( &pion.GetRole< RoleAction_Moving >() );
     entity_[ "roles/PHY_RoleInterface_TerrainAnalysis" ].SetUserData( &pion.GetRole< PHY_RoleInterface_TerrainAnalysis >() );
     entity_[ "roles/PHY_RoleInterface_Composantes" ].SetUserData( &pion.GetRole< PHY_RoleInterface_Composantes >() );
