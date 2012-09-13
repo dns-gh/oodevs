@@ -27,8 +27,7 @@ namespace gui
 // Created: JSR 2012-09-11
 // =============================================================================
 class CommunicationTreeView : public gui::HierarchyTreeView< kernel::CommunicationHierarchies >
-                            //, public tools::ElementObserver_ABC< kernel::Entity_ABC >
-                            //, public tools::ElementObserver_ABC< kernel::KnowledgeGroup_ABC >
+                            , public tools::ElementObserver_ABC< kernel::KnowledgeGroup_ABC >
                             , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
                             , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC > // LTO
                             , public kernel::ContextMenuObserver_ABC< kernel::KnowledgeGroup_ABC > // LTO
@@ -63,8 +62,10 @@ private slots:
 private:
     //! @name Helpers
     //@{
-    //virtual void NotifyUpdated( const kernel::Entity_ABC& );
-    //virtual void NotifyDeleted( const kernel::KnowledgeGroup_ABC& );
+    virtual void NotifyCreated( const kernel::Entity_ABC& entity );
+    virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
+    virtual void NotifyCreated( const kernel::KnowledgeGroup_ABC& kg );
+    virtual void NotifyDeleted( const kernel::KnowledgeGroup_ABC& kg );
     virtual void NotifyContextMenu( const kernel::Team_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::ContextMenu& menu );
     // LTO begin
@@ -74,6 +75,9 @@ private:
     virtual void Drop( const kernel::Formation_ABC& item, const kernel::Entity_ABC& target );
     virtual void Drop( const kernel::Ghost_ABC& item, const kernel::Entity_ABC& target );
     virtual void Drop( const kernel::KnowledgeGroup_ABC& item, const kernel::Entity_ABC& target );
+
+    void UpdateFonts( const kernel::KnowledgeGroup_ABC& kg, bool deleted );
+    void UpdateLongName( const kernel::Entity_ABC& entity );
     //@}
 
 private:

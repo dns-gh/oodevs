@@ -13,6 +13,9 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/DictionaryExtensions.h"
 #include "clients_gui/ValuedListItem.h"
+#pragma warning( push, 0 )
+#include <QtGui/qstandarditemmodel.h>
+#pragma warning( pop )
 
 namespace gui
 {
@@ -43,6 +46,18 @@ public:
             return false;
         }
         item.setText( 0, longName.c_str() );
+        return true;
+    }
+
+    static bool SetItemLongName( const kernel::Entity_ABC& entity, QStandardItem& item )
+    {
+        std::string longName = GetEntityLongName( entity );
+        if( longName.empty() )
+        {
+            item.setText( entity.GetName() );
+            return false;
+        }
+        item.setText( longName.c_str() );
         return true;
     }
 };

@@ -11,6 +11,7 @@
 #include "CommunicationTreeView.h"
 #include "moc_CommunicationTreeView.cpp"
 #include "clients_gui/ChangeSuperiorDialog.h"
+#include "clients_gui/LongNameHelper.h"
 #include "clients_gui/ModelObserver_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -22,8 +23,6 @@
 #include "preparation/KnowledgeGroupCommunications.h" // LTO
 
 // TODO factoriser avec gaming
-// TODO voir CommunicationListView::Display
-// TODO voir les Drops
 
 // -----------------------------------------------------------------------------
 // Name: CommunicationTreeView constructor
@@ -134,22 +133,81 @@ void CommunicationTreeView::OnChangeKnowledgeGroup()
 }
 
 // -----------------------------------------------------------------------------
+// Name: CommunicationTreeView::NotifyCreated
+// Created: JSR 2012-09-13
+// -----------------------------------------------------------------------------
+void CommunicationTreeView::NotifyCreated( const kernel::Entity_ABC& entity )
+{
+    gui::HierarchyTreeView< kernel::CommunicationHierarchies >::ElementObserver_ABC< kernel::Entity_ABC >::NotifyCreated( entity );
+    UpdateLongName( entity );
+}
+
+// -----------------------------------------------------------------------------
 // Name: CommunicationTreeView::NotifyUpdated
 // Created: JSR 2012-09-11
 // -----------------------------------------------------------------------------
-// void CommunicationTreeView::NotifyUpdated( const kernel::Entity_ABC& )
-// {
-// 
-// }
-// 
+void CommunicationTreeView::NotifyUpdated( const kernel::Entity_ABC& entity )
+{
+    gui::HierarchyTreeView< kernel::CommunicationHierarchies >::ElementObserver_ABC< kernel::Entity_ABC >::NotifyUpdated( entity );
+    UpdateLongName( entity );
+}
+
 // -----------------------------------------------------------------------------
 // Name: CommunicationTreeView::NotifyDeleted
-// Created: JSR 2012-09-11
+// Created: JSR 2012-09-13
 // -----------------------------------------------------------------------------
-// void CommunicationTreeView::NotifyDeleted( const kernel::KnowledgeGroup_ABC& )
-// {
-// 
-// }
+void CommunicationTreeView::NotifyDeleted( const kernel::KnowledgeGroup_ABC& kg )
+{
+    UpdateFonts( kg, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CommunicationTreeView::NotifyCreated
+// Created: JSR 2012-09-13
+// -----------------------------------------------------------------------------
+void CommunicationTreeView::NotifyCreated( const kernel::KnowledgeGroup_ABC& kg )
+{
+    UpdateFonts( kg, false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CommunicationTreeView::UpdateLongName
+// Created: JSR 2012-09-13
+// -----------------------------------------------------------------------------
+void CommunicationTreeView::UpdateLongName( const kernel::Entity_ABC& entity )
+{
+    QStandardItem* item = dataModel_.FindSafeItem( entity );
+    if( item )
+        item->setEditable( !gui::LongNameHelper::SetItemLongName( entity, *item ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CommunicationTreeView::UpdateFonts
+// Created: JSR 2012-09-13
+// -----------------------------------------------------------------------------
+void CommunicationTreeView::UpdateFonts( const kernel::KnowledgeGroup_ABC& kg, bool deleted )
+{
+    const kernel::Entity_ABC& top = kg.Get< kernel::CommunicationHierarchies >().GetTop();
+    const kernel::CommunicationHierarchies& teamHierarchy = top.Get< kernel::CommunicationHierarchies >();
+    tools::Iterator< const kernel::Entity_ABC& > it = teamHierarchy.CreateSubordinateIterator();
+    bool bold = true;
+    while( it.HasMoreElements() )
+    {
+        const kernel::Entity_ABC* entity = &it.NextElement();
+        const kernel::KnowledgeGroup_ABC* group = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( entity );
+        if( group && ( !deleted || group != &kg ) )
+        {
+            QStandardItem* item = dataModel_.FindSafeItem( *entity );
+            if( item )
+            {
+                QFont font = item->font();
+                font.setBold( bold );
+                item->setFont( font );
+            }
+            bold = false;
+        }
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: CommunicationTreeView::NotifyContextMenu

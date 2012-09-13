@@ -105,10 +105,7 @@ void HierarchyTreeView_ABC::InternalNotifyCreated( const kernel::Hierarchies& hi
         entityItem = AddItem( 0, entity );
 
     if( entityItem )
-    {
-        UpdateBackgroundColor( *entityItem, entity );
-        UpdateSymbol( *entityItem, entity );
-    }
+        UpdateItem( *entityItem, entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -145,8 +142,7 @@ void HierarchyTreeView_ABC::InternalNotifyUpdated( const kernel::Hierarchies& hi
     QStandardItem* entityItem = dataModel_.FindSafeItem( entity );
     if( entityItem )
     {
-        UpdateBackgroundColor( *entityItem, entity );
-        UpdateSymbol( *entityItem, entity );
+        UpdateItem( *entityItem, entity );
 
         // Update superior if needed
         const kernel::Entity_ABC* newSuperior = hierarchy.GetSuperior();
@@ -168,6 +164,17 @@ void HierarchyTreeView_ABC::InternalNotifyUpdated( const kernel::Hierarchies& hi
     }
     else
         throw std::exception( __FUNCTION__ "Error, entity not found." );
+}
+
+// -----------------------------------------------------------------------------
+// Name: HierarchyTreeView_ABC::UpdateItem
+// Created: JSR 2012-09-13
+// -----------------------------------------------------------------------------
+void HierarchyTreeView_ABC::UpdateItem( QStandardItem& entityItem, const kernel::Entity_ABC& entity )
+{
+    UpdateBackgroundColor( entityItem, entity );
+    UpdateSymbol( entityItem, entity );
+    AdditionalUpdateItem( entityItem, entity );
 }
 
 void HierarchyTreeView_ABC::UpdateBackgroundColor( QStandardItem& entityItem, const kernel::Entity_ABC& entity )

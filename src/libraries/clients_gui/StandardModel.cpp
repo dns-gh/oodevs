@@ -140,7 +140,7 @@ QStringList StandardModel::mimeTypes() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: StandardModel::*mimeData
+// Name: StandardModel::mimeData
 // Created: JSR 2012-09-06
 // -----------------------------------------------------------------------------
 QMimeData* StandardModel::mimeData( const QModelIndexList& indexes ) const
