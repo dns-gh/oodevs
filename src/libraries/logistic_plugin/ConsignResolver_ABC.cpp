@@ -110,6 +110,9 @@ void ConsignResolver_ABC::SetNewFile( const boost::gregorian::date& today )
     fileName_ = newFileName;
 }
 
+namespace
+{
+
 boost::regex GetFileRegex( const std::string& name, const std::string& dateRegex )
 {
     std::stringstream streamRegex;
@@ -124,6 +127,8 @@ bool MatchARegex( const std::string str, const std::vector< boost::regex >& rege
             return true;
     return false;
 }
+
+}  // namespace
 
 // -----------------------------------------------------------------------------
 // Name: ConsignResolver_ABC::InitFileIndex
