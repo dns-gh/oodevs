@@ -50,10 +50,10 @@ struct UserController_ABC : public boost::noncopyable
 
     //! @name Methods
     //@{
-    virtual Tree                Login          ( const std::string& user, const std::string& password, const std::string& source ) = 0;
-    virtual Tree                IsAuthenticated( const std::string& token, const std::string& source ) = 0;
+    virtual Tree                Login          ( const std::string& user, const std::string& password ) = 0;
+    virtual Tree                IsAuthenticated( const std::string& token ) = 0;
     virtual void                Logout         ( const std::string& token ) = 0;
-    virtual Tree                UpdateLogin    ( const std::string& user, const std::string& current, const std::string& password, const std::string& source ) = 0;
+    virtual Tree                UpdateLogin    ( const std::string& user, const std::string& current, const std::string& password ) = 0;
     virtual std::vector< Tree > ListUsers      ( const Uuid& node, int offset, int limit ) const = 0;
     virtual size_t              CountUsers     ( const Uuid& node ) const = 0;
     virtual Tree                GetUser        ( const Uuid& node, int id ) const = 0;

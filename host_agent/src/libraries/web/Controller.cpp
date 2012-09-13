@@ -782,28 +782,13 @@ void Controller::UploadCache( Reply_ABC& rpy, Request_ABC& request )
     WriteHttpReply( rpy, *reply );
 }
 
-namespace
-{
-// -----------------------------------------------------------------------------
-// Name: GetSource
-// Created: BAX 2012-07-02
-// -----------------------------------------------------------------------------
-std::string GetSource( const Request_ABC& request )
-{
-    const boost::optional< std::string > opt = request.GetHeader( "Remote-Address" );
-    if( opt == boost::none )
-        return request.GetRemoteIp();
-    return *opt;
-}
-}
-
 // -----------------------------------------------------------------------------
 // Name: Controller::UserIsAuthenticated
 // Created: BAX 2012-07-02
 // -----------------------------------------------------------------------------
 void Controller::UserIsAuthenticated( Reply_ABC& rpy, const Request_ABC& request )
 {
-    WriteHttpReply( rpy, users_.IsAuthenticated( request.GetSid(), GetSource( request ) ) );
+    WriteHttpReply( rpy, users_.IsAuthenticated( request.GetSid() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -815,7 +800,7 @@ void Controller::UserLogin( Reply_ABC& rpy, Request_ABC& request )
     const Tree tree = request.ParseBodyAsJson();
     const std::string username = RequireParameter< std::string >( "username", tree );
     const std::string password = RequireParameter< std::string >( "password", tree );
-    WriteHttpReply( rpy, users_.Login( username, password, GetSource( request ) ) );
+    WriteHttpReply( rpy, users_.Login( username, password ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -840,7 +825,7 @@ void Controller::UserUpdateLogin( Reply_ABC& rpy, Request_ABC& request )
     const std::string password = RequireParameter< std::string >( "password", tree );
     if( password.empty() || username.empty() )
         return WriteHttpReply( rpy, BAD_REQUEST );
-    WriteHttpReply( rpy, users_.UpdateLogin( username, current, password, GetSource( request ) ) );
+    WriteHttpReply( rpy, users_.UpdateLogin( username, current, password ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -901,7 +886,7 @@ void Controller::CreateUser( Reply_ABC& rpy, Request_ABC& request )
         throw HttpException( BAD_REQUEST );
     if( secure_ )
     {
-        const Tree user = users_.IsAuthenticated( request.GetSid(), GetSource( request ) );
+        const Tree user = users_.IsAuthenticated( request.GetSid() );
         const boost::optional< std::string > opt = user.get_optional< std::string >( "type" );
         UserType current = opt == boost::none ? USER_TYPE_COUNT : ConvertUserType( *opt );
         if( current > type )
@@ -957,7 +942,7 @@ void Controller::Authenticate( const Request_ABC& request, UserType required )
 {
     if( !secure_ )
         return;
-    const Tree user = users_.IsAuthenticated( request.GetSid(), GetSource( request ) );
+    const Tree user = users_.IsAuthenticated( request.GetSid() );
     ValidateType( user, required );
 }
 
@@ -982,7 +967,7 @@ web::Uuid Controller::AuthenticateNode( const Request_ABC& request, UserType req
     if( !secure_ )
         return MaybeUuid( optional );
 
-    const Tree user = users_.IsAuthenticated( request.GetSid(), GetSource( request ) );
+    const Tree user = users_.IsAuthenticated( request.GetSid() );
     const UserType type = ValidateType( user, required );
     if( type == USER_TYPE_ADMINISTRATOR )
         return MaybeUuid( optional );

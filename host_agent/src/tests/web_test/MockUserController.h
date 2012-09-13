@@ -16,10 +16,10 @@ namespace mocks
 {
     MOCK_BASE_CLASS( MockUserController, web::UserController_ABC )
     {
-        MOCK_METHOD( Login, 3 );
-        MOCK_METHOD( IsAuthenticated, 2 );
+        MOCK_METHOD( Login, 2 );
+        MOCK_METHOD( IsAuthenticated, 1 );
         MOCK_METHOD( Logout, 1 );
-        MOCK_METHOD( UpdateLogin, 4 );
+        MOCK_METHOD( UpdateLogin, 3 );
         MOCK_METHOD( ListUsers, 3 );
         MOCK_METHOD( CountUsers, 1 );
         MOCK_METHOD( GetUser, 2 );

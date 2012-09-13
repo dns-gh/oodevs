@@ -28,6 +28,8 @@ using namespace host;
 using web::HttpException;
 using web::UserType;
 
+static const int expiration_limit_days = 15;
+
 // -----------------------------------------------------------------------------
 // Name: UserController::UserController
 // Created: BAX 2012-06-28
@@ -97,7 +99,6 @@ void MakeTables( Sql_ABC& db )
         "CREATE TABLE IF NOT EXISTS tokens ("
         "  id       INTEGER PRIMARY KEY"
         ", id_users INTEGER"
-        ", source   TEXT NOT NULL"
         ", token    TEXT UNIQUE NOT NULL"
         ", created  DATE"
         ")" ) );
@@ -284,20 +285,18 @@ Tree MakeToken( const std::string& sid, int id, const std::string& username,
 // Name: CreateToken
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-std::string CreateToken( const UuidFactory_ABC& uuids, Sql_ABC& db, Transaction& tr, int user, const std::string& source )
+std::string CreateToken( const UuidFactory_ABC& uuids, Sql_ABC& db, Transaction& tr, int user )
 {
     std::string token = boost::lexical_cast< std::string >( uuids.Create() );
     boost::algorithm::erase_all( token, "-" );
     Sql_ABC::T_Statement st = db.Prepare( tr,
         "INSERT INTO tokens ("
         "            id_users "
-        ",           source "
         ",           token "
         ",           created "
-        ") VALUES  ( ?, ?, ?, DATE('now') ) "
+        ") VALUES  ( ?, ?, DATE('now') ) "
         );
     st->Bind( user );
-    st->Bind( source );
     st->Bind( token );
     Execute( *st );
     return token;
@@ -324,20 +323,21 @@ void DeleteTokenWithUserId( Sql_ABC& db, Transaction& tr, int id )
 void DeleteTokenWithToken( Sql_ABC& db, Transaction& tr, const std::string& token )
 {
     Sql_ABC::T_Statement st = db.Prepare( tr,
-        "SELECT id_users "
-        "FROM   tokens "
-        "WHERE  token = ? "
+        "DELETE FROM tokens "
+        "WHERE       token = ? "
         );
     st->Bind( token );
-    while( st->Next() )
-        DeleteTokenWithUserId( db, tr, st->ReadInt() );
+    Execute( *st );
 }
 
-bool FetchUser( Sql_ABC& db, Transaction& tr, const std::string& username, const std::string& source,
-                int& id, std::string& hash, std::string& name, std::string& type, std::string& node,
-                bool& temporary, std::string& lang, std::string& token )
+// -----------------------------------------------------------------------------
+// Name: FetchUser
+// Created: BAX 2012-07-04
+// -----------------------------------------------------------------------------
+bool FetchUser( Sql_ABC& db, Transaction& tr, const std::string& username,
+                int& id, std::string& hash, std::string& name, std::string& type,
+                std::string& node, bool& temporary, std::string& lang )
 {
-    token.clear();
     Sql_ABC::T_Statement st = db.Prepare( tr,
         "SELECT     users.id "
         ",          users.hash "
@@ -346,14 +346,9 @@ bool FetchUser( Sql_ABC& db, Transaction& tr, const std::string& username, const
         ",          users.node "
         ",          users.temporary "
         ",          users.language "
-        ",          tokens.token "
         "FROM       users "
-        "LEFT JOIN  tokens "
-        "ON         users.id = tokens.id_users "
-        "AND        tokens.source  = ? "
         "WHERE      users.username = ? "
         );
-    st->Bind( source );
     st->Bind( username );
     bool valid = st->Next();
     if( !valid )
@@ -368,8 +363,6 @@ bool FetchUser( Sql_ABC& db, Transaction& tr, const std::string& username, const
         st->SkipNull();
     temporary = st->ReadBool();
     lang = st->ReadText();
-    if( st->IsColumnDefined() )
-        token = st->ReadText();
     return true;
 }
 }
@@ -378,22 +371,20 @@ bool FetchUser( Sql_ABC& db, Transaction& tr, const std::string& username, const
 // Name: UserController::Login
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-Tree UserController::Login( const std::string& username, const std::string& password, const std::string& source )
+Tree UserController::Login( const std::string& username, const std::string& password )
 {
     try
     {
         Sql_ABC::T_Transaction tr = db_.Begin();
-        int id; std::string hash, name, type, node, lang, token; bool temporary;
-        bool valid = FetchUser( db_, *tr, username, source, id, hash, name, type, node, temporary, lang, token );
+        int id; std::string hash, name, type, node, lang; bool temporary;
+        bool valid = FetchUser( db_, *tr, username, id, hash, name, type, node, temporary, lang );
         if( !valid )
             throw HttpException( web::NOT_FOUND );
 
         if( !crypt_.Validate( password, hash ) )
             throw HttpException( web::UNAUTHORIZED );
 
-        if( !token.empty() )
-            DeleteTokenWithToken( db_, *tr, token );
-        const std::string sid = CreateToken( uuids_, db_, *tr, id, source );
+        const std::string sid = CreateToken( uuids_, db_, *tr, id );
         db_.Commit( *tr );
         return MakeToken( sid, id, username, name, type, node, temporary, lang );
     }
@@ -409,11 +400,21 @@ Tree UserController::Login( const std::string& username, const std::string& pass
 // Name: UserController::IsAuthenticated
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-Tree UserController::IsAuthenticated( const std::string& token, const std::string& source )
+Tree UserController::IsAuthenticated( const std::string& token )
+{
+    return IsAuthenticated( token, boost::none );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserController::IsAuthenticated
+// Created: BAX 2012-09-12
+// -----------------------------------------------------------------------------
+Tree UserController::IsAuthenticated( const std::string& token, const boost::optional< std::string >& now )
 {
     try
     {
         Sql_ABC::T_Transaction tr = db_.Begin( false );
+        const std::string date = now == boost::none ? "DATE( ?2 )" : "?2";
         Sql_ABC::T_Statement st = db_.Prepare( *tr,
             "SELECT users.id "
             ",      users.username "
@@ -424,13 +425,15 @@ Tree UserController::IsAuthenticated( const std::string& token, const std::strin
             ",      users.language "
             "FROM   tokens "
             "JOIN   users "
-            "ON     users.id      = tokens.id_users "
-            "WHERE  tokens.source = ? "
-            "AND    tokens.token  = ? "
+            "ON     users.id     = tokens.id_users "
+            "WHERE  tokens.token = ?1 "
+            "AND    julianday( tokens.created ) <= julianday( " + date + " ) "
+            "AND    julianday( " + date + " )   <  julianday( tokens.created ) + ?3 "
             "LIMIT  1 "
             );
-        st->Bind( source );
         st->Bind( token );
+        st->Bind( now == boost::none ? "now" : *now );
+        st->Bind( expiration_limit_days );
         if( st->Next() )
             return MakeToken( token, *st );
     }
@@ -440,6 +443,15 @@ Tree UserController::IsAuthenticated( const std::string& token, const std::strin
         LOG_ERROR( log_ ) << "[sql] Unable to authenticate token";
     }
     throw HttpException( web::INTERNAL_SERVER_ERROR );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserController::IsAuthenticated
+// Created: BAX 2012-09-12
+// -----------------------------------------------------------------------------
+int UserController::GetExpirationLimitDays() const
+{
+    return expiration_limit_days;
 }
 
 // -----------------------------------------------------------------------------
@@ -466,13 +478,13 @@ void UserController::Logout( const std::string& token )
 // Created: BAX 2012-07-05
 // -----------------------------------------------------------------------------
 Tree UserController::UpdateLogin( const std::string& username, const std::string& current,
-                                  const std::string& password, const std::string& source )
+                                  const std::string& password )
 {
     try
     {
         Sql_ABC::T_Transaction tr = db_.Begin();
-        int id; std::string hash, name, type, node, lang, token; bool temporary;
-        bool valid = FetchUser( db_, *tr, username, source, id, hash, name, type, node, temporary, lang, token );
+        int id; std::string hash, name, type, node, lang; bool temporary;
+        bool valid = FetchUser( db_, *tr, username, id, hash, name, type, node, temporary, lang );
         if( !valid )
             throw HttpException( web::NOT_FOUND );
 
@@ -490,7 +502,7 @@ Tree UserController::UpdateLogin( const std::string& username, const std::string
         st->Bind( false );
         st->Bind( id );
         Execute( *st );
-        const std::string sid = CreateToken( uuids_, db_, *tr, id, source );
+        const std::string sid = CreateToken( uuids_, db_, *tr, id );
         db_.Commit( *tr );
         return MakeToken( sid, id, username, name, type, node, false, lang );
     }
@@ -668,6 +680,8 @@ Tree UserController::DeleteUser( const Uuid& node, const std::string& token, int
             "LEFT JOIN  tokens "
             "ON         tokens.id_users = users.id "
             "AND        tokens.token    = ? "
+            "AND        julianday( tokens.created ) <= julianday( DATE( 'now' ) ) "
+            "AND        julianday( DATE( 'now' ) )  <  julianday( tokens.created ) + ? "
             "WHERE      users.id        = ? ";
         if( node.is_nil() )
             sql += "AND users.node IS NULL ";
@@ -676,6 +690,7 @@ Tree UserController::DeleteUser( const Uuid& node, const std::string& token, int
         Sql_ABC::T_Transaction tr = db_.Begin();
         Sql_ABC::T_Statement st = db_.Prepare( *tr, sql );
         st->Bind( token );
+        st->Bind( expiration_limit_days );
         st->Bind( id );
         if( !node.is_nil() )
             Bind( *st, node );
@@ -743,9 +758,12 @@ Tree UserController::UpdateUser( const Uuid& node, const std::string& token,
                 "SELECT id "
                 "FROM   tokens "
                 "WHERE  id_users = ? "
-                "AND    token    = ? " );
+                "AND    token    = ? "
+                "AND    julianday( tokens.created ) <= julianday( DATE( 'now' ) ) "
+                "AND    julianday( DATE( 'now' ) )  <  julianday( tokens.created ) + ? " );
             st->Bind( id );
             st->Bind( token );
+            st->Bind( expiration_limit_days );
             const bool found = st->Next();
             // you cannot update your password without your current password
             if( found )
@@ -762,7 +780,7 @@ Tree UserController::UpdateUser( const Uuid& node, const std::string& token,
         }
         st.reset();
         std::string dummy, type, tnode, lang;
-        bool done = FetchUser( db_, *tr, username, dummy, id, dummy, dummy, type, tnode, temporary, lang, dummy );
+        bool done = FetchUser( db_, *tr, username, id, dummy, dummy, type, tnode, temporary, lang );
         if( !done )
             throw HttpException( web::INTERNAL_SERVER_ERROR );
 

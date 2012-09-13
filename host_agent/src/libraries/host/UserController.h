@@ -47,16 +47,22 @@ struct UserController : public web::UserController_ABC
 
     //! @name UserController_ABC Methods
     //@{
-    virtual Tree                Login          ( const std::string& user, const std::string& password, const std::string& source );
-    virtual Tree                IsAuthenticated( const std::string& token, const std::string& source );
+    virtual Tree                Login          ( const std::string& user, const std::string& password );
+    virtual Tree                IsAuthenticated( const std::string& token );
     virtual void                Logout         ( const std::string& token );
-    virtual Tree                UpdateLogin    ( const std::string& user, const std::string& current, const std::string& password, const std::string& source );
+    virtual Tree                UpdateLogin    ( const std::string& user, const std::string& current, const std::string& password );
     virtual std::vector< Tree > ListUsers      ( const Uuid& node, int offset, int limit ) const;
     virtual size_t              CountUsers     ( const Uuid& node ) const;
     virtual Tree                GetUser        ( const Uuid& node, int id ) const;
     virtual Tree                CreateUser     ( const Uuid& node, const std::string& username, const std::string& name, const std::string& password, web::UserType type, bool temporary );
     virtual Tree                DeleteUser     ( const Uuid& node, const std::string& token, int id );
     virtual Tree                UpdateUser     ( const Uuid& node, const std::string& token, int id, const std::string& user, const std::string& name, bool temporary, const boost::optional< std::string >& password );
+    //@}
+
+    //! @name UserController_ABC Methods
+    //@{
+    virtual Tree IsAuthenticated( const std::string& token, const boost::optional< std::string >& now );
+    virtual int  GetExpirationLimitDays() const;
     //@}
 
 private:
