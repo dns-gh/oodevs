@@ -76,11 +76,9 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     config_.AddFileToCRC( config_.GetExerciseFile() );
     config_.GetLoader().LoadFile( config_.GetSettingsFile(), boost::bind( &tools::ExerciseSettings::Load, settings_, _1 ) );
     ReadStaticData();
-    // TODO tester les checkpoints
     if( config_.HasCheckpoint() )
     {
         MIL_CheckPointManager::LoadCheckPoint( config_ );
-        // TODO créer le quadtree, et associer les villes a l'urbancache
         SendControlInformation();
     }
     else
