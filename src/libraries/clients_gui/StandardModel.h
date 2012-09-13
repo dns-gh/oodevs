@@ -95,7 +95,7 @@ public:
     template< typename T >
     T* FindSafeData( const T& value );
 
-    QStandardItem* FindItem( const QString& text );
+    QStandardItem* FindItem( const QString& text, QStandardItem* root = 0 );
     template< typename T >
     QStandardItem* FindSafeItem( const T& value );
     //@}

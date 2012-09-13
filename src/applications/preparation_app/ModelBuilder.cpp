@@ -75,8 +75,9 @@ ModelBuilder::ModelBuilder( kernel::Controllers& controllers, Model& model )
     , selectedAutomat_( controllers )
     , selectedFormation_( controllers )
     , selectedGhost_( controllers )
-    , toDelete_( controllers )
+    , selectedObject_( controllers )
     , selectedUrbanObject_( controllers )
+    , toDelete_( controllers )
     , confirmation_( new ConfirmationBox( tr( "Confirmation" ), boost::bind( &ModelBuilder::OnConfirmDeletion, this, _1 ) ) )
     , property_    ( tr( "Info/Name" ) )
 {
@@ -182,7 +183,8 @@ void ModelBuilder::NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::
 {
     // TODO gérer suivant les modes
     if( entity.GetTypeName() == kernel::UrbanObject_ABC::typeName_ )
-        return;    if( &entity != &model_.teams_.GetNoSideTeam() )
+        return;
+    if( &entity != &model_.teams_.GetNoSideTeam() )
     {
         toDelete_ = &entity;
         menu.InsertItem( "Command", tr( "Delete" ), this, SLOT( OnDelete() ), false, 5 );
@@ -369,6 +371,7 @@ void ModelBuilder::ClearSelection()
     selectedAutomat_ = 0;
     selectedFormation_ = 0;
     selectedGhost_ = 0;
+    selectedObject_ = 0;
     selectedUrbanObject_ = 0;
 }
 
@@ -460,6 +463,16 @@ void ModelBuilder::Select( const kernel::Ghost_ABC& element )
     selectedGhost_ = &element;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ModelBuilder::Select
+// Created: JSR 2012-09-13
+// -----------------------------------------------------------------------------
+void ModelBuilder::Select( const kernel::Object_ABC& element )
+{
+    ClearSelection();
+    selectedObject_ = &element;
+}
+
 namespace
 {
     template< typename Concrete, typename T >
@@ -491,6 +504,8 @@ void ModelBuilder::OnRename( Q3ListViewItem*, int, const QString& text )
         Rename< KnowledgeGroup >( selectedGroup_.ConstCast(), text, controllers_, property_ );
     else if( selectedGhost_ )
         Rename< Ghost >( selectedGhost_.ConstCast(), text, controllers_, property_ );
+    else if( selectedObject_ )
+        Rename< Object >( selectedObject_.ConstCast(), text, controllers_, property_ );
     else if( selectedUrbanObject_ )
         Rename< kernel::UrbanObject >( selectedUrbanObject_.ConstCast(), text, controllers_, property_ );
 }
@@ -507,6 +522,7 @@ void ModelBuilder::OnRename( kernel::Entity_ABC& entity, const QString& newName 
     Rename< Formation >( &entity, newName, controllers_, property_ );
     Rename< KnowledgeGroup >( &entity, newName, controllers_, property_ );
     Rename< Ghost >( &entity, newName, controllers_, property_ );
+    Rename< Object >( &entity, newName, controllers_, property_ );
     Rename< kernel::UrbanObject >( &entity, newName, controllers_, property_ );
 }
 

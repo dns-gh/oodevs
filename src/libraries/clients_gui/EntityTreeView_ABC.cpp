@@ -89,7 +89,7 @@ void EntityTreeView_ABC::NotifyCreated( const kernel::Team_ABC& team )
 // Name: EntityTreeView_ABC::NotifyDeleted
 // Created: ABR 2012-08-16
 // -----------------------------------------------------------------------------
-void EntityTreeView_ABC::NotifyDeleted( const kernel::Team_ABC& /* team */ )
+void EntityTreeView_ABC::NotifyDeleted( const kernel::Entity_ABC& /* team */ )
 {
     dataModel_.PurgeObsoleteSafeItem< kernel::Entity_ABC >();
 }

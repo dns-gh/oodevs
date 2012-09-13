@@ -14,7 +14,7 @@
 #include "TacticalTreeView.h"
 #include "PreparationProfile.h"
 #include "CommunicationTreeView.h"
-// #include "ObjectTreeView.h"
+ #include "clients_gui/ObjectTreeView.h"
 // #include "PopulationTreeView.h"
 // #include "LogisticTreeView.h"
 // #include "InhabitantTreeView.h"
@@ -59,13 +59,14 @@ TreeViewsPanel::TreeViewsPanel( kernel::Controllers& controllers, gui::ItemFacto
 
         addTab( widget, tools::translate( "DockContainer", "Units" ) );
     }
-/*
+
     // Objects
     {
-        gui::SearchTreeView_ABC* searchTreeView = new gui::SearchTreeView< ObjectTreeView >( this, controllers, factory, modelBuilder );
+        gui::SearchTreeView_ABC* searchTreeView = new gui::SearchTreeView< gui::ObjectTreeView >( this, controllers, PreparationProfile::GetProfile(), modelBuilder );
         Configure( searchTreeView, treeViews, aggregateToolbar, ePreparationMode_Terrain );
         addTab( searchTreeView, tools::translate( "DockContainer","Objects" ) );
     }
+    /*
     // Urban
     {
         gui::SearchTreeView_ABC* searchTreeView = new gui::SearchTreeView< UrbanTreeView >( this, controllers, factory, modelBuilder, symbols, staticModel, model.urban_ );

@@ -214,9 +214,9 @@ T* StandardModel::FindSafeData( const T& value )
 // Created: ABR 2012-08-16
 // -----------------------------------------------------------------------------
 inline
-QStandardItem* StandardModel::FindItem( const QString& text )
+QStandardItem* StandardModel::FindItem( const QString& text, QStandardItem* root /*= 0*/ )
 {
-    return RecFindItem( invisibleRootItem(), text );
+    return RecFindItem( root ? root : invisibleRootItem(), text );
 }
 
 // -----------------------------------------------------------------------------

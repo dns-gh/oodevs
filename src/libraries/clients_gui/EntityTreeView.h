@@ -68,7 +68,6 @@ private:
 #include "EntityTreeView.inl"
 
 typedef EntityTreeView< kernel::Inhabitant_ABC > InhabitantTreeView;
-typedef EntityTreeView< kernel::Object_ABC >     ObjectTreeView;
 typedef EntityTreeView< kernel::Population_ABC > PopulationTreeView;
 typedef EntityTreeView< kernel::UrbanObject_ABC> UrbanTreeView;
 

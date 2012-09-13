@@ -59,7 +59,7 @@ public:
     //! @name Element_Observer_ABC< kernel::Entity_ABC >
     //@{
     virtual void NotifyCreated( const kernel::Team_ABC& team );
-    virtual void NotifyDeleted( const kernel::Team_ABC& team );
+    virtual void NotifyDeleted( const kernel::Entity_ABC& team );
     //@}
 
     //! @name Element_Observer_ABC< kernel::Entity_ABC >

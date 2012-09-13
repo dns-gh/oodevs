@@ -904,6 +904,9 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\SearchTreeView.cpp">
       <Filter>Source Files\MVC\View</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\ObjectTreeView.cpp">
+      <Filter>Source Files\MVC\View</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -1445,6 +1448,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\DragAndDropObserver_ABC.h">
       <Filter>Source Files\MVC\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ObjectTreeView.h">
+      <Filter>Source Files\MVC\View</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
