@@ -80,6 +80,7 @@ private:
     void CheckSuccessFactors();
     void CheckLogisticBase();
     void CheckLogisticFormation();
+    void CheckLogisticSubordinates();
     void CheckUrban();
     void CheckOrbat();
     void CheckFiles();

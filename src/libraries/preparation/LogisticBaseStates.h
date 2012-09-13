@@ -57,6 +57,8 @@ public:
     virtual void SetDotation( const kernel::DotationType& type, unsigned int quantity );
     bool HasLogisticBaseSuperior() const;
     void SerializeQuotas( xml::xostream& xos ) const;
+
+    bool CleanBadSubordinates();
     //@}
 
 private:

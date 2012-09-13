@@ -28,6 +28,7 @@ enum E_ConsistencyCheck
     eNoLogisticFormation             = 0x0006 << 4,
     eLogisticBaseNotSameTeam         = 0x0007 << 4,
     eStockInvalidDotation            = 0x0008 << 4,
+    eBadLogisticSubordinate          = 0x0009 << 4,
 
     eProfileMask                     = 0x000f << 8,
     eProfileUniqueness               = 0x0001 << 8,

@@ -13,26 +13,25 @@
 #include "Dotation.h"
 #include "DotationsItem.h"
 #include "LogisticLevelAttritube.h"
-#include "clients_kernel/DotationType.h"
-#include "clients_kernel/Viewport_ABC.h"
-#include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/Positions.h"
-#include "clients_kernel/Controllers.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/DotationType.h"
+#include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Ghost_ABC.h"
+#include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/LogisticLevel.h"
+#include "clients_kernel/Positions.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Viewport_ABC.h"
 #include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
-
-using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: LogisticBaseStates constructor
 // Created: AHC 2010-09-29
 // -----------------------------------------------------------------------------
-LogisticBaseStates::LogisticBaseStates( Controllers& controllers, Entity_ABC& entity,
-                                        const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver, PropertiesDictionary& dico, bool canHaveQuotas /*=true*/, bool isVisible /*=true*/ )
+LogisticBaseStates::LogisticBaseStates( kernel::Controllers& controllers, kernel::Entity_ABC& entity,
+                                        const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver, kernel::PropertiesDictionary& dico, bool canHaveQuotas /*=true*/, bool isVisible /*=true*/ )
     : kernel::EntityHierarchies< LogisticHierarchiesBase >( controllers.controller_, entity, 0 )
     , controllers_  ( controllers )
     , entity_       ( entity )
@@ -176,7 +175,7 @@ void LogisticBaseStates::SetSuperiorInternal( kernel::Entity_ABC* superior )
 // Name: MaintenanceStates::SetLogisticSuperior
 // Created: LGY 2011-10-12
 // -----------------------------------------------------------------------------
-void LogisticBaseStates::SetLogisticSuperior( const LogisticBaseSuperior& superior )
+void LogisticBaseStates::SetLogisticSuperior( const kernel::LogisticBaseSuperior& superior )
 {
     const kernel::Entity_ABC* tmp = superior;
     kernel::EntityHierarchies< LogisticHierarchiesBase >::SetSuperior( const_cast< kernel::Entity_ABC* >( tmp ) );
@@ -239,6 +238,26 @@ void LogisticBaseStates::SerializeQuotas( xml::xostream& xos ) const
         }
     }
     xos << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticBaseStates::CleanBadSubordinates
+// Created: LDC 2012-09-13
+// -----------------------------------------------------------------------------
+bool LogisticBaseStates::CleanBadSubordinates()
+{
+    tools::Iterator< const kernel::Entity_ABC& > it = CreateSubordinateIterator();
+    std::vector< const kernel::Entity_ABC* > badEntities;
+    while( it.HasMoreElements() )
+    {
+        const kernel::Entity_ABC& entity = it.NextElement();
+        const kernel::Formation_ABC* formation = dynamic_cast< const kernel::Formation_ABC* >( &entity );
+        if( formation && formation->GetLogisticLevel() != kernel::LogisticLevel::logistic_base_ )
+            badEntities.push_back( &entity );
+    }
+    for( std::vector< const kernel::Entity_ABC* >::const_iterator it = badEntities.begin(); it != badEntities.end(); ++it )
+        RemoveSubordinate( **it );
+    return !badEntities.empty();
 }
 
 // -----------------------------------------------------------------------------

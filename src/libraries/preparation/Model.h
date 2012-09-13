@@ -102,6 +102,8 @@ public:
     void SaveTerrain( const tools::ExerciseConfig& config, bool saveUrban = true );
     void AppendLoadingError( E_ConsistencyCheck type, const std::string& error );
     const T_LoadingErrors& GetLoadingErrors() const;
+    bool HasConsistencyErrorsOnLoad() const;
+    void SetConsistencyErrorsOnLoad();
     void ClearLoadingErrors();
     void Purge();
     QString GetName() const;
@@ -137,6 +139,7 @@ private:
     kernel::ResourceNetworkSelectionObserver& resourceObserver_;
     QString name_;
     bool loaded_;
+    bool consistencyErrorsOnLoad_;
     T_LoadingErrors loadingErrors_;
     //@}
 

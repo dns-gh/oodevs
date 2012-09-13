@@ -152,6 +152,7 @@ bool ModelConsistencyChecker::CheckConsistency()
     CheckLogisticInitialization();
     CheckLogisticBase();
     CheckLogisticFormation();
+    CheckLogisticSubordinates();
 
     CheckProfileUniqueness();
     CheckProfileInitialization();
@@ -778,6 +779,30 @@ void ModelConsistencyChecker::CheckLogisticFormation()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ModelConsistencyChecker::CheckLogisticSubordinates
+// Created: LDC 2012-09-13
+// -----------------------------------------------------------------------------
+void ModelConsistencyChecker::CheckLogisticSubordinates()
+{
+    Iterator< const Automat_ABC& > it = model_.GetAutomatResolver().CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const Automat_ABC& automat = it.NextElement();
+        const kernel::AutomatType& type = automat.GetType();
+        if( !type.HasLogistics() )
+            continue;
+        if( automat.GetLogisticLevel() != kernel::LogisticLevel::logistic_base_ )
+            continue;
+        LogisticBaseStates* hierarchy = const_cast< LogisticBaseStates* >( static_cast< const LogisticBaseStates* >( automat.Retrieve< LogisticHierarchiesBase >() ) );
+        if( hierarchy->CleanBadSubordinates() )
+        {
+            AddError( eBadLogisticSubordinate, &automat );
+            const_cast< Model& >( model_ ).SetConsistencyErrorsOnLoad();
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: ModelConsistencyChecker::CheckUrban
 // Created: JSR 2012-06-28
 // -----------------------------------------------------------------------------
@@ -808,7 +833,10 @@ void ModelConsistencyChecker::CheckUrban()
     for( std::set< std::string >::const_iterator itNetwork = unknownNetworks.begin(); itNetwork != unknownNetworks.end(); ++ itNetwork )
         AddError( eUnknownResourceNetwork, 0, *itNetwork );
     if( model_.urban_.TakeLinkErrors() )
+    {
         AddError( eDeletedUrbanBlocks, 0, "" );
+        const_cast< Model& >( model_ ).SetConsistencyErrorsOnLoad();
+    }
 }
 
 // -----------------------------------------------------------------------------
