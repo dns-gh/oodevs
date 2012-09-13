@@ -2547,9 +2547,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\Legacy\RolePion_Decision.cpp">
       <Filter>Source Files\Adapters\Legacy</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\ListenerHelper.cpp">
-      <Filter>Source Files\Adapters</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\CoreLogger.cpp">
       <Filter>Source Files\Adapters</Filter>
     </ClCompile>
@@ -2636,6 +2633,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Urban\UrbanPhysicalCapacity.cpp">
       <Filter>Source Files\Urban</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\ListenerHelper.cpp">
+      <Filter>Source Files\Adapters\Roles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -5093,9 +5093,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\Legacy\NullRoleAdapter.h">
       <Filter>Source Files\Adapters\Legacy</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\ListenerHelper.h">
-      <Filter>Source Files\Adapters</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Sensors\PHY_SensorTypeAgent_ABC.h">
       <Filter>Source Files\Entities\Agents\Units\Sensors\Types</Filter>
     </ClInclude>
@@ -5374,6 +5371,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Urban\UrbanPhysicalCapacity.h">
       <Filter>Source Files\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\ListenerHelper.h">
+      <Filter>Source Files\Adapters\Roles</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
