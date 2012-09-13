@@ -157,6 +157,7 @@ public:
     void Update();
     void Clean();
     void Finalize();
+    void Synchronize();
     //@}
 
     //! @external helper

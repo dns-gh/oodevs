@@ -531,8 +531,18 @@ void MIL_EntityManager::Finalize()
     armyFactory_->Finalize();
     MIL_AgentServer::GetWorkspace().GetResourceNetworkModel().Finalize();
     inhabitantFactory_->Finalize();
-    sink_->UpdateModel( time_.GetCurrentTick(), time_.GetTickDuration() );
+    Synchronize();
     UpdateStates();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::Synchronize
+// Created: MCO 2012-09-13
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::Synchronize()
+{
+    sink_->UpdateModel( time_.GetCurrentTick(), time_.GetTickDuration() );
+    sink_->ApplyEffects();
 }
 
 // -----------------------------------------------------------------------------

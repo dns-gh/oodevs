@@ -129,7 +129,7 @@ namespace
         }
         virtual void SendFullState( client::UnitAttributes& message )
         {
-            NET_ASN_Tools::WritePoint( *pPosition_, *message().mutable_position() ); // $$$$ MCO : should we use position_ e.g. read from model ?
+            NET_ASN_Tools::WritePoint( *pPosition_, *message().mutable_position() );
         }
     private:
         void Changed()
@@ -170,7 +170,7 @@ namespace
         }
         virtual void SendFullState( client::UnitAttributes& message )
         {
-            NET_ASN_Tools::WriteDirection( vDirection_, *message().mutable_direction() ); // $$$$ MCO : should we use direction_ e.g. read from model ?
+            NET_ASN_Tools::WriteDirection( vDirection_, *message().mutable_direction() );
         }
     private:
         void Changed()

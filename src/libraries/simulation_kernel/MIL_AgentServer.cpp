@@ -79,6 +79,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     if( config_.HasCheckpoint() )
     {
         MIL_CheckPointManager::LoadCheckPoint( config_ );
+        pEntityManager_->Synchronize();
         SendControlInformation();
     }
     else
