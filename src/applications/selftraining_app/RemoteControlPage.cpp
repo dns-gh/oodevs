@@ -129,6 +129,7 @@ void RemoteControlPage::OnLanguageChanged()
     gameButton_->setText(   tools::translate( "RemoteControlPage", "Start game" ) );
     replayButton_->setText( tools::translate( "RemoteControlPage", "Start replay" ) );
     stopButton_->setText(   tools::translate( "RemoteControlPage", "Stop running session" ) );
+    LauncherClientPage::OnLanguageChanged();
 }
 
 // -----------------------------------------------------------------------------
