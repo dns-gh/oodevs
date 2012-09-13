@@ -72,7 +72,6 @@ void SupplyConsignData::operator>>( std::stringstream& output ) const
 const ConsignData_ABC& SupplyConsignData::ManageMessage( const ::sword::LogSupplyHandlingCreation& msg, ConsignResolver_ABC& resolver )
 {
     const NameResolver_ABC& nameResolver = resolver.GetNameResolver();
-    resolver.GetSimTime( simTime_, tick_ );
     if( msg.has_tick() )
         creationTick_ = boost::lexical_cast< std::string >( msg.tick() );
     if( msg.has_supplier() )
@@ -116,7 +115,6 @@ const ConsignData_ABC& SupplyConsignData::ManageMessage( const ::sword::LogSuppl
 const ConsignData_ABC& SupplyConsignData::ManageMessage( const ::sword::LogSupplyHandlingUpdate& msg, ConsignResolver_ABC& resolver )
 {
     const NameResolver_ABC& nameResolver = resolver.GetNameResolver();
-    resolver.GetSimTime( simTime_, tick_ );
     if( msg.has_current_state_end_tick() )
     {
         int entTick = msg.current_state_end_tick();

@@ -40,6 +40,13 @@ public:
     virtual void operator>>( std::ofstream& output ) const { std::stringstream line; *this >> line; output << line.str(); }
     //@}
 
+public:
+    //! @name Member data
+    //@{
+    std::string tick_;
+    std::string simTime_;
+    //@}
+
 protected:
     //! @name Member data
     //@{

@@ -72,7 +72,9 @@ protected:
     {
         if( msg.has_request() )
         {
-            static_cast< T& >( GetConsign( static_cast< int >( msg.request().id() ) ) ).ManageMessage( msg, *this ) >> output;
+            ConsignData_ABC& consignData = GetConsign( static_cast< int >( msg.request().id() ) );
+            GetSimTime( consignData.simTime_, consignData.tick_ );
+            static_cast< T& >( consignData ).ManageMessage( msg, *this ) >> output;
             output.flush();
         }
     }

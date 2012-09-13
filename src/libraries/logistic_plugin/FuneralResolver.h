@@ -42,7 +42,6 @@ public:
 public:
     //! @name Member data
     //@{
-    std::string tick_;
     std::string creationTick_;
     std::string stateEndTick_;
     std::string unitId_;
@@ -50,7 +49,6 @@ public:
     std::string conveyingUnitId_;
     std::string packagingResourceId_;
     std::string stateId_;
-    std::string simTime_;
     std::string unit_;
     std::string handlingUnit_;
     std::string conveyingUnit_;

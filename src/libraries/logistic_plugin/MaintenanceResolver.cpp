@@ -37,7 +37,6 @@ void MaintenanceConsignData::operator>>( std::stringstream& output ) const
 const ConsignData_ABC& MaintenanceConsignData::ManageMessage( const ::sword::LogMaintenanceHandlingCreation& msg, ConsignResolver_ABC& resolver )
 {
     const NameResolver_ABC& nameResolver = resolver.GetNameResolver();
-    resolver.GetSimTime( simTime_, tick_ );
     if( msg.has_tick() )
         creationTick_ = boost::lexical_cast< std::string >( msg.tick() );
     if( msg.has_unit() )
@@ -68,7 +67,6 @@ const ConsignData_ABC& MaintenanceConsignData::ManageMessage( const ::sword::Log
 const ConsignData_ABC& MaintenanceConsignData::ManageMessage( const ::sword::LogMaintenanceHandlingUpdate& msg, ConsignResolver_ABC& resolver )
 {
     const NameResolver_ABC& nameResolver = resolver.GetNameResolver();
-    resolver.GetSimTime( simTime_, tick_ );
     if( msg.has_current_state_end_tick() )
     {
         int entTick = msg.current_state_end_tick();

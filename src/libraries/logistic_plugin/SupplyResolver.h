@@ -64,7 +64,6 @@ public:
 public:
     //! @name Member data
     //@{
-    std::string tick_;
     std::string creationTick_;
     std::string stateEndTick_;
     std::map< int, std::string > recipientAutomats_;
@@ -73,7 +72,6 @@ public:
     std::string transportProviderId_;
     std::string conveyorId_;
     std::string stateId_;
-    std::string simTime_;
     std::string recipientAutomat_;
     std::string provider_;
     std::string transportProvider_;
