@@ -855,7 +855,9 @@ bool Session::Download( web::Chunker_ABC& dst ) const
     std::ostream& sink = dst.SetName( cfg_.name );
     FileSystem_ABC::T_Packer packer = deps_.system.Pack( sink );
     packer->Pack( paths_.root, runtime::Packer_ABC::T_Predicate() );
-    packer->Pack( GetOutput(), runtime::Packer_ABC::T_Predicate() );
+    const Path output = GetOutput();
+    if( deps_.system.IsDirectory( output ) )
+        packer->Pack( output, runtime::Packer_ABC::T_Predicate() );
     return true;
 }
 
