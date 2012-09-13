@@ -25,6 +25,7 @@ using namespace frontend;
 ProcessWrapper::ProcessWrapper( ProcessObserver_ABC& observer, boost::shared_ptr< SpawnCommand > process )
     : observer_( observer )
     , process_( process )
+    , stop_( false )
 {
     // NOTHING
 }
@@ -71,6 +72,9 @@ void ProcessWrapper::Run( bool start )
             if( start )
                 process_->Start();
             while( process_->Wait() ) {}
+            if( !stop_ )
+                observer_.NotifyError( "Simulation stop", process_->GetCommanderEndpoint() );
+            stop_ = false;
             process_.reset();
         }
         catch( std::exception& e )
@@ -124,7 +128,8 @@ void ProcessWrapper::Stop( bool forceProcessStop /*= true*/ )
 {
     if( process_.get() )
     {
-        process_->Stop( forceProcessStop);
+        stop_ = true;
+        process_->Stop( forceProcessStop );
         while( process_->Wait() ) {}
     }
 }

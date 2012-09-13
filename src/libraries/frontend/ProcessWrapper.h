@@ -64,6 +64,7 @@ private:
     ProcessObserver_ABC& observer_;
     boost::shared_ptr< SpawnCommand > process_;
     std::auto_ptr< boost::thread > thread_;
+    bool stop_;
     //@}
 };
 
