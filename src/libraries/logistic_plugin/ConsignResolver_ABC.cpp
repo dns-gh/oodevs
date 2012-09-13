@@ -177,7 +177,16 @@ void ConsignResolver_ABC::RemoveOldFiles( const boost::gregorian::date& today )
         }
     }
     for( std::vector< bfs::path >::const_iterator it = filesToRemove.begin(); it != filesToRemove.end(); ++it )
-        bfs::remove( *it );
+    {
+        try
+        {
+            bfs::remove( *it );
+        }
+        catch( ... )
+        {
+            // NOTHING
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
