@@ -34,7 +34,7 @@ integration.isTask = function( self )
          orderType == "platoon.tasks.Illuminer" or
          orderType == "platoon.combat.support.art.tasks.UtiliserALR" or
          orderType == "platoon.tasks.Observer" or
-         orderType == "platoon.tasks.Orienter" or
+         orderType == "Rep_OrderConduite_OrienterCapteurs" or
          orderType == "platoon.tasks.RejoindreAToutPrix" or
          orderType == "platoon.tasks.DeposerUnite" or
          orderType == "Rep_OrderConduite_Interrompre" or
@@ -221,8 +221,13 @@ integration.startFragOrderTask = function( self )
     -- ----------------------------------------------------------------------------
     elseif orderType == "platoon.tasks.Observer" then
         mission.objective = CreateKnowledge( integration.ontology.types.point, self.source:GetpointCible_() )
-    elseif orderType == "platoon.tasks.Orienter" then
-        mission.objective = CreateKnowledge( integration.ontology.types.point, self.source:GetpointCible_() )
+    elseif orderType == "Rep_OrderConduite_OrienterCapteurs" then
+        local objective = CreateKnowledge( integration.ontology.types.point, self.source:GetpointCible_() )
+        if objective and objective:getPosition() then
+            DEC_Perception_VisionVerrouilleeSurPointPtr( objective:getPosition() )
+        end
+        integration.cleanFragOrder( self )
+        return
 
     -- ----------------------------------------------------------------------------
     -- Counter battery selfprotection
@@ -419,9 +424,23 @@ integration.startFragOrderTask = function( self )
         integration.cleanFragOrder( self )
         return
     elseif orderType == "Rep_OrderConduite_Pion_Engager" then
-        orderType = "platoon.combat.support.art.tasks.Engager"
+        if myself.isEngaged then
+            meKnowledge:RC( eRC_AlreadyEngaged )
+        else
+            meKnowledge:RC( eRC_Engaged )
+            myself.isEngaged = true
+        end
+        integration.cleanFragOrder( self )
+        return
     elseif orderType == "Rep_OrderConduite_Pion_Desengager" then
-        orderType = "platoon.combat.support.art.tasks.Desengager"
+        if myself.isEngaged then
+            meKnowledge:RC( eRC_Disengaged )
+            myself.isEngaged = false
+        else
+            meKnowledge:RC( eRC_AlreadyDisengaged )
+        end
+        integration.cleanFragOrder( self )
+        return
     
     -- ----------------------------------------------------------------------------
     -- LOG

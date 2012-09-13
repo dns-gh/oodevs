@@ -33,8 +33,6 @@
         <skill name="platoon.combat.support.nrbc.skills.AnimerPlotDecontamination"/>
         <skill name="platoon.combat.support.nrbc.skills.DecontaminerZone"/>
         <skill name="platoon.combat.support.nrbc.skills.Reconnaitre"/>
-        <skill name="platoon.combat.support.art.skills.Engager"/>
-        <skill name="platoon.combat.support.art.skills.Desengager"/>
         <skill name="agent.skills.SwitchToSafety"/>
         <skill name="platoon.combat.support.circu.skills.AppuyerMouvement"/>
         <skill name="platoon.combat.support.circu.skills.ConstruireZone"/>
