@@ -116,7 +116,7 @@ namespace
 boost::regex GetFileRegex( const std::string& name, const std::string& dateRegex )
 {
     std::stringstream streamRegex;
-    streamRegex << name << "\\." << dateRegex << "\\.\\d+\\.csv$";
+    streamRegex << name << "\\." << dateRegex << "\\.(\\d+)\\.csv$";
     return boost::regex( streamRegex.str() );
 }
 
@@ -140,16 +140,17 @@ void ConsignResolver_ABC::InitFileIndex( const boost::gregorian::date& today )
     std::string baseName = curPath.filename().string();
     boost::regex todayRegex( GetFileRegex( baseName, to_iso_string( today ) ) );
 
+    boost::smatch m;
     bfs::directory_iterator end;
     for( bfs::directory_iterator dir_it( curPath.remove_filename() ) ; dir_it != end ; ++dir_it )
     {
         if( bfs::is_regular_file( dir_it->status() ) )
         {
             std::string fileName = dir_it->path().filename().string();
-            if( boost::regex_match( fileName, todayRegex ) )
+            
+            if(boost::regex_match( fileName, m, todayRegex ) )
             {
-                const int curIndex = boost::lexical_cast< int >( fileName.erase( 
-                    fileName.size() - std::string( ".csv" ).size() ).erase( 0, baseName.size() + 10 ) ) + 1;
+                const int curIndex = boost::lexical_cast< int >( m.str( 1 ) ) + 1;
                 if( curIndex > curFileIndex_ )
                     curFileIndex_ = curIndex;
             }

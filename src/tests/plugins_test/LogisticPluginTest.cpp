@@ -599,3 +599,45 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
 
     CheckRegexps( expecteds, files );
 }
+
+namespace
+{
+
+void PushFuneralMessage( LogisticPlugin* plugin )
+{
+    sword::SimToClient m;
+    sword::LogFuneralHandlingCreation* funeral = m.mutable_message()->mutable_log_funeral_handling_creation();
+    funeral->mutable_request()->set_id( 7 );
+    funeral->mutable_unit()->set_id( 8 );
+    funeral->set_rank( static_cast< sword::EnumHumanRank >( 0 ) );
+    plugin->Receive( m,  bg::from_string( "2005/02/20" ) );
+}
+
+} // namespace
+
+BOOST_AUTO_TEST_CASE( TestLogisticPluginRestart )
+{
+    TemporaryDirectory tempDir( "testlogisticplugin-", ::GetTestTempDirectory() );
+    boost::shared_ptr<LogisticPlugin> plugin = CreateLogisticPlugin( tempDir.path() );
+
+    plugin->SetMaxLinesInFile( 1 );
+    for( int i = 0; i < 2; ++i )
+        PushFuneralMessage( plugin.get() );
+
+    // Recreate it on multiple files
+    plugin = CreateLogisticPlugin( tempDir.path() );
+    PushFuneralMessage( plugin.get() );
+  
+    T_FileList files;
+    ListDir( tempDir.path(), files );
+    std::vector< LogFile > expected;
+    {
+        T_Lines expectedLines;
+        expectedLines.push_back( "request id ; tick ; GDH ; unit ; handling unit ; conveying unit ; rank ; packaging resource ; state ; state end tick" );
+        expectedLines.push_back( "7 ; 0 ;  ; agent_8 ;  ;  ; rank_0 ;  ;  ; " );
+        expected.push_back( LogFile( "^.*/funeral\\.20050220\\.0\\.csv$", expectedLines ) );
+        expected.push_back( LogFile( "^.*/funeral\\.20050220\\.1\\.csv$", expectedLines ) );
+        expected.push_back( LogFile( "^.*/funeral\\.20050220\\.2\\.csv$", expectedLines ) );
+    }
+    CheckRegexps( expected, files );
+}
