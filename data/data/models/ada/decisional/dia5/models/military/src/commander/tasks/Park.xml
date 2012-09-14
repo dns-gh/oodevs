@@ -37,7 +37,7 @@
         </parameter>
     </parameters>
     <stages>
-        <stage label="Progression vers point d'embarquement" disable-when-done="true">
+        <stage label="Progression vers point de stationnement" disable-when-done="true">
             <skills>
                 <skill name="commander.skills.Lead" main="true">
                     <parameter name="noCoordination">
