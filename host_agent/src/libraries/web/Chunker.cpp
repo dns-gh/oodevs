@@ -48,7 +48,7 @@ int snprintf( char* str, size_t size, const char* format, ...)
 namespace
 {
 const size_t prolog_size = 64;
-const size_t buffer_size = 1<<20;
+const size_t buffer_size = 1<<18;
 
 // -----------------------------------------------------------------------------
 // Name: Chunker
