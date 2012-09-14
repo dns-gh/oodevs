@@ -19,8 +19,7 @@
 #include <boost/property_tree/xml_parser.hpp>
 
 #ifdef _MSC_VER
-#   pragma warning( push )
-#   pragma warning( disable : 4512 )
+#   pragma warning( push, 0 )
 #endif
 #include <boost/property_tree/json_parser.hpp>
 #ifdef _MSC_VER
