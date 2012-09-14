@@ -178,7 +178,7 @@ void CommunicationTreeView::UpdateLongName( const kernel::Entity_ABC& entity )
 {
     QStandardItem* item = dataModel_.FindSafeItem( entity );
     if( item )
-        item->setEditable( !gui::LongNameHelper::SetItemLongName( entity, *item ) );
+        item->setEditable( !gui::longname::SetItemLongName( entity, *item ) );
 }
 
 // -----------------------------------------------------------------------------

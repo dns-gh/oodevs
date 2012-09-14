@@ -27,7 +27,7 @@ namespace
 {
     QString GetDisplayName( const Entity_ABC& entity )
     {
-        std::string longName = gui::LongNameHelper::GetEntityLongName( entity );
+        std::string longName = gui::longname::GetEntityLongName( entity );
         if( longName.empty() )
             return entity.GetName();
         return longName.c_str();

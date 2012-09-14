@@ -89,7 +89,7 @@ void CommunicationListView::NotifyUpdated( const kernel::Entity_ABC& entity )
     if( item )
     {
         item->SetNamed( entity );
-        item->setRenameEnabled( 0, !gui::LongNameHelper::SetItemLongName( entity, *item ) );
+        item->setRenameEnabled( 0, !gui::longname::SetItemLongName( entity, *item ) );
     }
 }
 
@@ -134,7 +134,7 @@ void CommunicationListView::Display( const kernel::Entity_ABC& entity, gui::Valu
         color = QColor( controllers_.options_.GetOption( "Color/Phantom", QString( "" ) ).To< QString >() );
     item->SetBackgroundColor( color );
     gui::HierarchyListView< kernel::CommunicationHierarchies >::Display( entity, item );
-    item->setRenameEnabled( 0, !gui::LongNameHelper::SetItemLongName( entity, *item ) );
+    item->setRenameEnabled( 0, !gui::longname::SetItemLongName( entity, *item ) );
     item->SetBold( false );
     if( const KnowledgeGroup_ABC* kg = dynamic_cast< const KnowledgeGroup_ABC* >( &entity ) )
     {

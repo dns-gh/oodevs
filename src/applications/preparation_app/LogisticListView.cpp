@@ -52,7 +52,7 @@ void LogisticListView::NotifyUpdated( const kernel::Entity_ABC& entity )
 {
     gui::ValuedListItem* item = gui::FindItem( &entity, firstChild() );
     if( item )
-        item->setRenameEnabled( 0, !gui::LongNameHelper::SetItemLongName( entity, *item ) );
+        item->setRenameEnabled( 0, !gui::longname::SetItemLongName( entity, *item ) );
 }
 
 // -----------------------------------------------------------------------------

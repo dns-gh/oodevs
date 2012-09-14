@@ -19,7 +19,10 @@
 namespace gui
 {
 
-std::string LongNameHelper::GetEntityLongName( const kernel::Entity_ABC& entity )
+namespace longname
+{
+
+std::string GetEntityLongName( const kernel::Entity_ABC& entity )
 {
     const kernel::DictionaryExtensions* dico = entity.Retrieve< kernel::DictionaryExtensions >();
     if( dico && dico->IsEnabled() )
@@ -27,9 +30,9 @@ std::string LongNameHelper::GetEntityLongName( const kernel::Entity_ABC& entity 
     return std::string();
 }
 
-bool LongNameHelper::SetItemLongName( const kernel::Entity_ABC& entity, gui::ValuedListItem& item )
+bool SetItemLongName( const kernel::Entity_ABC& entity, gui::ValuedListItem& item )
 {
-    std::string longName = LongNameHelper::GetEntityLongName( entity );
+    std::string longName = longname::GetEntityLongName( entity );
     if( longName.empty() )
     {
         item.setText( 0, entity.GetName() );
@@ -39,9 +42,9 @@ bool LongNameHelper::SetItemLongName( const kernel::Entity_ABC& entity, gui::Val
     return true;
 }
 
-bool LongNameHelper::SetItemLongName( const kernel::Entity_ABC& entity, QStandardItem& item )
+bool SetItemLongName( const kernel::Entity_ABC& entity, QStandardItem& item )
 {
-    std::string longName = LongNameHelper::GetEntityLongName( entity );
+    std::string longName = longname::GetEntityLongName( entity );
     if( longName.empty() )
     {
         item.setText( entity.GetName() );
@@ -51,4 +54,5 @@ bool LongNameHelper::SetItemLongName( const kernel::Entity_ABC& entity, QStandar
     return true;
 }
 
+}  // namespace longname
 }  // namespace gui

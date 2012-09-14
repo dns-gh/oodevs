@@ -93,7 +93,7 @@ ValuedListItem* LogisticListView::FindOrCreateOrReplace( const Entity_ABC* entit
             item = MoveSubTree( *item, typeItem );
     }
     UpdateItem( item );
-    item->setRenameEnabled( 0, renamable_ && !LongNameHelper::SetItemLongName( *entity, *item ) );
+    item->setRenameEnabled( 0, renamable_ && !longname::SetItemLongName( *entity, *item ) );
     return item;
 }
 
@@ -285,7 +285,7 @@ void LogisticListView::NotifyCreated( const Team_ABC& team )
     ValuedListItem* teamItem = HierarchyListView_ABC::CreateItem( this );
     teamItem->SetNamed( static_cast< const Entity_ABC& >( team ) );
     teamItem->setDragEnabled( false );
-    teamItem->setRenameEnabled( 0, renamable_ && !LongNameHelper::SetItemLongName( team, *teamItem ) );
+    teamItem->setRenameEnabled( 0, renamable_ && !longname::SetItemLongName( team, *teamItem ) );
 
     ValuedListItem* typeItem = HierarchyListView_ABC::CreateItem( teamItem );
     typeItem->Set( &LogisticLevel::none_, tools::translate( "gui::LogisticListView", "Unsupported units" ) );

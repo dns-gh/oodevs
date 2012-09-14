@@ -68,7 +68,7 @@ void UserProfileUnitRights::Display( const kernel::Entity_ABC& entity, gui::Valu
     item->SetBackgroundColor( color );
 
     T_Parent::Display( entity, item );
-    LongNameHelper::SetItemLongName( entity, *item );
+    longname::SetItemLongName( entity, *item );
 }
 
 // -----------------------------------------------------------------------------
@@ -108,7 +108,7 @@ void UserProfileUnitRights::NotifyUpdated( const Entity_ABC& entity )
     if( ValuedListItem* item = FindItem( &entity, firstChild() ) )
     {
         item->SetNamed( entity );
-        LongNameHelper::SetItemLongName( entity, *item );
+        longname::SetItemLongName( entity, *item );
     }
 }
 

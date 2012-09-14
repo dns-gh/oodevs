@@ -112,7 +112,7 @@ namespace
 
         virtual void operator()( const Entity_ABC& entity ) const
         {
-            if( !gui::LongNameHelper::GetEntityLongName( entity ).empty() )
+            if( !gui::longname::GetEntityLongName( entity ).empty() )
                 entities_.push_back( &entity );
         }
 
@@ -122,7 +122,7 @@ namespace
 
     bool CompareLongName( const Entity_ABC& entity1, const Entity_ABC& entity2 )
     {
-        return gui::LongNameHelper::GetEntityLongName( entity1 ) == gui::LongNameHelper::GetEntityLongName( entity2 );
+        return gui::longname::GetEntityLongName( entity1 ) == gui::longname::GetEntityLongName( entity2 );
     }
 
     bool CompareName( const Entity_ABC& entity1, const Entity_ABC& entity2 )

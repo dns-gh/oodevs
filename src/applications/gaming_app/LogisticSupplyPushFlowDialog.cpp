@@ -881,7 +881,7 @@ namespace
 {
     QString GetDisplayName( const kernel::Entity_ABC& entity )
     {
-        std::string longName = LongNameHelper::GetEntityLongName( entity );
+        std::string longName = longname::GetEntityLongName( entity );
         return longName.empty() ? entity.GetName() : longName.c_str();
     }
 }

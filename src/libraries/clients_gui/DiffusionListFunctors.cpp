@@ -102,7 +102,7 @@ void DiffusionListReceiversExtractor::operator()( const kernel::Entity_ABC& agen
     if( !dico->GetValue( "TypePC" ).empty() && dico->GetValue( "TypePC" ) != "PasCorresp" )
     {
         targets_.push_back( &agent );
-        const std::string longName = LongNameHelper::GetEntityLongName( agent );
+        const std::string longName = longname::GetEntityLongName( agent );
         targetsNames_ << ( longName.empty() ? agent.GetName() : longName.c_str() );
     }
 }
@@ -153,7 +153,7 @@ void DiffusionListEmittersExtractor::operator()( const kernel::Entity_ABC& agent
     if( attribute->IsActive( dico->GetExtensions() ) )
     {
         targets_.push_back( &agent );
-        const std::string longName = LongNameHelper::GetEntityLongName( agent );
+        const std::string longName = longname::GetEntityLongName( agent );
         targetsNames_ << ( longName.empty() ? agent.GetName() : longName.c_str() );
     }
 }

@@ -24,21 +24,16 @@ namespace gui
 
 class ValuedListItem;
 
-// =============================================================================
-/** @class  LongNameHelper
-    @brief  LongNameHelper
-*/
-// Created: ABR 2011-09-19
-// =============================================================================
-class LongNameHelper
+namespace longname
 {
-public:
-    static std::string GetEntityLongName( const kernel::Entity_ABC& entity );
-   
-    static bool SetItemLongName( const kernel::Entity_ABC& entity, gui::ValuedListItem& item );
 
-    static bool SetItemLongName( const kernel::Entity_ABC& entity, QStandardItem& item );
-};
+std::string GetEntityLongName( const kernel::Entity_ABC& entity );
+
+bool SetItemLongName( const kernel::Entity_ABC& entity, gui::ValuedListItem& item );
+
+bool SetItemLongName( const kernel::Entity_ABC& entity, QStandardItem& item );
+
+}  // namespace longname
 
 }
 
