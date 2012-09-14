@@ -117,6 +117,7 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\LinkInterpreter_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ListView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\LogisticListView.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\LongNameHelper.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ModalDialog.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\NatureEditionCategory.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\NatureEditionWidget.cpp" />

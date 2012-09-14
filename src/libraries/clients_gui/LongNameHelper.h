@@ -10,15 +10,19 @@
 #ifndef __LongNameHelper_h_
 #define __LongNameHelper_h_
 
-#include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/DictionaryExtensions.h"
-#include "clients_gui/ValuedListItem.h"
-#pragma warning( push, 0 )
-#include <QtGui/qstandarditemmodel.h>
-#pragma warning( pop )
+#include <string>
+
+class QStandardItem;
+
+namespace kernel
+{
+class Entity_ABC;
+}
 
 namespace gui
 {
+
+class ValuedListItem;
 
 // =============================================================================
 /** @class  LongNameHelper
@@ -29,37 +33,11 @@ namespace gui
 class LongNameHelper
 {
 public:
-    static std::string GetEntityLongName( const kernel::Entity_ABC& entity )
-    {
-        const kernel::DictionaryExtensions* dico = entity.Retrieve< kernel::DictionaryExtensions >();
-        if( dico && dico->IsEnabled() )
-            return dico->GetValue( "NomLong" );
-        return std::string();
-    }
+    static std::string GetEntityLongName( const kernel::Entity_ABC& entity );
+   
+    static bool SetItemLongName( const kernel::Entity_ABC& entity, gui::ValuedListItem& item );
 
-    static bool SetItemLongName( const kernel::Entity_ABC& entity, gui::ValuedListItem& item )
-    {
-        std::string longName = GetEntityLongName( entity );
-        if( longName.empty() )
-        {
-            item.setText( 0, entity.GetName() );
-            return false;
-        }
-        item.setText( 0, longName.c_str() );
-        return true;
-    }
-
-    static bool SetItemLongName( const kernel::Entity_ABC& entity, QStandardItem& item )
-    {
-        std::string longName = GetEntityLongName( entity );
-        if( longName.empty() )
-        {
-            item.setText( entity.GetName() );
-            return false;
-        }
-        item.setText( longName.c_str() );
-        return true;
-    }
+    static bool SetItemLongName( const kernel::Entity_ABC& entity, QStandardItem& item );
 };
 
 }

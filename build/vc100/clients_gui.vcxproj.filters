@@ -906,6 +906,8 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\ObjectTreeView.cpp">
       <Filter>Source Files\MVC\View</Filter>
+    <ClCompile Include="..\..\src\libraries\clients_gui\LongNameHelper.cpp">
+      <Filter>Source Files\Tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
