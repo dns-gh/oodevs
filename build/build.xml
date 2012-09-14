@@ -1058,7 +1058,8 @@
         <build-test name="web_control_plugin" depends="boost,protobuf,xerces"
             libs="mongoose@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
-                  lib${ant.project.name}_web_control_plugin-${platform}-mt@{suffix}">
+                  lib${ant.project.name}_web_control_plugin-${platform}-mt@{suffix}"
+            failonwarning="${failonwarning}">
             <syslibset libs="shell32,user32,wsock32"/>
             <compilerarg value="-Zm200"/>
         </build-test>
