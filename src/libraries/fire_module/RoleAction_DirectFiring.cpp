@@ -143,7 +143,7 @@ namespace
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
 int RoleAction_DirectFiring::FirePion( const wrapper::View& model, const wrapper::View& entity, const wrapper::View& target,
-    DirectFireData::E_FiringMode nFiringMode, double rPercentageComposantesToUse, DirectFireData::E_ComposanteFiringType nComposanteFiringType,
+    DirectFireData::E_FiringMode nFiringMode, double rPercentageComposantesToUse, DirectFireData::E_ComposanteFiringType firingType,
     bool bFireOnlyOnMajorComposantes, bool mustReport, int ammoDotationClass ) const
 {
     if( ! target[ "valid" ] )
@@ -151,7 +151,7 @@ int RoleAction_DirectFiring::FirePion( const wrapper::View& model, const wrapper
     if( target[ "dead" ] )
         return eEnemyDestroyed;
     // Firers
-    DirectFireData data( module_, entity, nComposanteFiringType, nFiringMode, rPercentageComposantesToUse, ammoDotationClass );
+    DirectFireData data( module_, entity, firingType, nFiringMode, rPercentageComposantesToUse, ammoDotationClass );
     if( data.CanFire( entity ) )
     {
         const wrapper::View& components = entity[ "components" ];

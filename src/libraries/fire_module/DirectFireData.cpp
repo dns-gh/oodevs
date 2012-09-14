@@ -53,10 +53,10 @@ std::size_t DirectFireData::nUrbanCoefficient_ = 100;
 // Name: DirectFireData constructor
 // Created: NLD 2004-10-05
 // -----------------------------------------------------------------------------
-DirectFireData::DirectFireData( ModuleFacade& module, const wrapper::View& firer, E_ComposanteFiringType nComposanteFiringType, E_FiringMode nFiringMode, double rPercentageComposantesToUse, int ammoDotationClass )
+DirectFireData::DirectFireData( ModuleFacade& module, const wrapper::View& firer, E_ComposanteFiringType firingType, E_FiringMode nFiringMode, double rPercentageComposantesToUse, int ammoDotationClass )
     : module_                     ( module )
     , firer_                      ( firer )
-    , nComposanteFiringType_      ( nComposanteFiringType )
+    , firingType_      ( firingType )
     , nFiringMode_                ( nFiringMode )
     , rPercentageComposantesToUse_( rPercentageComposantesToUse )
     , ammoDotationClass_          ( ammoDotationClass )
@@ -115,7 +115,7 @@ bool DirectFireData::CanFire( const wrapper::View& firer )
 void DirectFireData::ApplyOnWeapon( const wrapper::View& model, const wrapper::View& component, const wrapper::View& weapon )
 {
     const Weapon w( module_, model, weapon );
-    if( ! w.CanDirectFire( component, nComposanteFiringType_, ammoDotationClass_ ) )
+    if( ! w.CanDirectFire( component, firingType_, ammoDotationClass_ ) )
         return;
     if( ! w.HasDotation( firer_ ) )
         bHasWeaponsAndNoAmmo_ = true;

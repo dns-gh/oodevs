@@ -95,7 +95,7 @@ namespace
         pion.Execute( *dotationComputer );
         return dotationComputer->GetDotationValue( *category );
     }
-    DEFINE_HOOK( CanFire, bool, ( const SWORD_Model* component, const char* dotation, int nComposanteFiringType, int ammoDotationClass ) )
+    DEFINE_HOOK( CanFire, bool, ( const SWORD_Model* component, const char* dotation, int firingType, int ammoDotationClass ) )
     {
         const PHY_ComposantePion& compFirer = (*core::Convert( component ))[ "component" ].GetUserData< PHY_ComposantePion >();
         if( !compFirer.CanFire() )

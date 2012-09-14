@@ -194,9 +194,9 @@ bool Weapon::operator==( const Weapon& rhs ) const
 // Name: Weapon::CanDirectFire
 // Created: MCO 2012-06-21
 // -----------------------------------------------------------------------------
-bool Weapon::CanDirectFire( const wrapper::View& component, int nComposanteFiringType, int ammoDotationClass ) const
+bool Weapon::CanDirectFire( const wrapper::View& component, int firingType, int ammoDotationClass ) const
 {
-    return type_->CanDirectFire( component, nComposanteFiringType, ammoDotationClass );
+    return type_->CanDirectFire( component, firingType, ammoDotationClass );
 }
 
 // -----------------------------------------------------------------------------

@@ -60,7 +60,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    DirectFireData( ModuleFacade& module, const wrapper::View& firer, E_ComposanteFiringType nComposanteFiringType,
+    DirectFireData( ModuleFacade& module, const wrapper::View& firer, E_ComposanteFiringType firingType,
         E_FiringMode nFiringMode = eFiringModeNormal, double rPercentageComposantesToUse = 1.,
         int ammoDotationClass = -1 );
     //@}
@@ -132,7 +132,7 @@ private:
     ModuleFacade& module_;
     const wrapper::View firer_;
     const int ammoDotationClass_;
-    const E_ComposanteFiringType nComposanteFiringType_;
+    const E_ComposanteFiringType firingType_;
     const E_FiringMode           nFiringMode_;
     const double                 rPercentageComposantesToUse_;
           T_ComposanteWeaponsMap composantesWeapons_;
