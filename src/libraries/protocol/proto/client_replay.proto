@@ -46,6 +46,12 @@ message TimeTableRequest {
     required TimeRange tick_range = 1;
 }
 
+/** @struct ForceRefreshDataRequest
+    @brief Force replayer to refresh data
+*/
+message ForceRefreshDataRequest {
+}
+
 /** @struct ClientToReplay
     @brief Wraps available messages going from client to replay
 
@@ -71,6 +77,8 @@ message ClientToReplay {
         optional ControlResume           control_resume             = 5;
         //! A message to request datetime information
         optional TimeTableRequest        time_table_request         = 6;
+        //! A message to force data reload
+        optional ForceRefreshDataRequest force_refresh_data_request = 7;
     }
     /** @property context
         @brief Identifies the request matching the response.

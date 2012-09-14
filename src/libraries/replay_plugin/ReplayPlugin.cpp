@@ -133,6 +133,8 @@ void ReplayPlugin::OnReceive( const std::string& , const sword::ClientToReplay& 
         skipToFrame_ = wrapper.message().control_skip_to_tick().tick();
     else if( wrapper.message().has_time_table_request() )
         RequestTimeTable( wrapper.message().time_table_request().tick_range() );
+    else if( wrapper.message().has_force_refresh_data_request() )
+        ReloadAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -221,4 +223,13 @@ void ReplayPlugin::RequestTimeTable( const sword::TimeTableRequest_TimeRange& ms
         loader_.FillTimeTable( asn(), beginTick, endTick );
         asn.Send( clients_ );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReplayPlugin::ReloadAll
+// Created: MMC 2012-09-14
+// -----------------------------------------------------------------------------
+void ReplayPlugin::ReloadAll()
+{
+    loader_.ReloadAll();
 }

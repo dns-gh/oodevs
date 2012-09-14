@@ -232,18 +232,30 @@ void MessageLoader::FillTimeTable( sword::TimeTable& msg, unsigned int beginTick
 // -----------------------------------------------------------------------------
 void MessageLoader::ScanData()
 {
+    ScanDataFolders( false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MessageLoader::ScanDataFolders
+// Created: JSR 2010-10-27
+// -----------------------------------------------------------------------------
+void MessageLoader::ScanDataFolders( bool forceAdd )
+{
     const bfs::path dir( config_.GetRecordDirectory() );
     for( ;; )
     {
         if( bfs::exists( dir ) )
+        {
+            boost::mutex::scoped_lock lock( dataAccessMutex_ );
             for( bfs::directory_iterator it( dir ); it !=  bfs::directory_iterator(); ++it )
                 try
                 {
                     bool doAdd = false;
+                    if( !forceAdd )
                     {
-                        boost::mutex::scoped_lock lock( dataAccessMutex_ );
-                        doAdd = !( !disk_.get() && initReady_ && it->path().filename().string() == currentFolderName )
-                                && bfs::is_directory( it->status() ) && fragmentsInfos_.find( it->path().filename().string() ) == fragmentsInfos_.end();
+                        bool skipCurrentFolder = !disk_.get() && initReady_ && it->path().filename().string() == currentFolderName;
+                        doAdd = !skipCurrentFolder
+                            && bfs::is_directory( it->status() ) && fragmentsInfos_.find( it->path().filename().string() ) == fragmentsInfos_.end();
                         if( !disk_.get() && initReady_ && doAdd  )
                         {
                             T_FragmentsInfos::iterator itToDelete = fragmentsInfos_.find( currentFolderName );
@@ -254,13 +266,14 @@ void MessageLoader::ScanData()
                             }
                         }
                     }
-                    if( doAdd )
+                    if( doAdd || ( forceAdd && bfs::is_directory( it->status() ) ) )
                         AddFolder( it->path().filename().string() );
                 }
                 catch( const std::exception & )
                 {
                     // NOTHING
                 }
+        }
         if( !initReady_ )
         {
             boost::lock_guard< boost::mutex > lock( initMutex_ );
@@ -525,4 +538,18 @@ void MessageLoader::LoadSimToClientMessage( char*& input, MessageHandler_ABC& ha
     }
     handler.Receive( message );
     input += messageSize;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MessageLoader::ReloadAllFragmentsInfos
+// Created: MMC 2012-09-14
+// -----------------------------------------------------------------------------
+void MessageLoader::ReloadAllFragmentsInfos()
+{
+    {
+        boost::mutex::scoped_lock lock( dataAccessMutex_ );
+        fragmentsInfos_.clear();
+        currentOpenFolder_.clear();
+    }
+    ScanDataFolders( true );
 }

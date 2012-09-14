@@ -2747,6 +2747,10 @@ This data can&apos;t be projected.</source>
         <source>Tick %L1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ReportFilterOptions</name>

@@ -74,9 +74,15 @@ void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
             pTimeTableButton->setIconSet( MAKE_ICON( tic_temps ) );
             pTimeTableButton->setTextLabel( tr( "Time table" ) );
             addWidget( pTimeTableButton );
+            addSeparator();
+            QToolButton* pRefreshButton = new QToolButton( this );
+            pRefreshButton->setIconSet( MAKE_ICON( refresh ) );
+            pRefreshButton->setTextLabel( tr( "Refresh" ) );
+            addWidget( pRefreshButton );
             connect( slider_, SIGNAL( sliderReleased() ), SLOT( OnSliderReleased() ) );
             connect( slider_, SIGNAL( valueChanged( int ) ), SLOT( OnSliderMoved( int ) ) );
             connect( pTimeTableButton, SIGNAL( clicked() ), SLOT( OnTimeTable() ) );
+            connect( pRefreshButton, SIGNAL( clicked() ), SLOT( OnRefresh() ) );
         }
         userMove_ = false;
         slider_->setMaxValue( maxTick_ );
@@ -168,3 +174,13 @@ void ReplayerToolbar::OnTimeTable()
 {
     TimeTableRequestDialog( this, network_, maxTick_ ).exec();
 }
+
+// -----------------------------------------------------------------------------
+// Name: ReplayerToolbar::OnRefresh
+// Created: MMC 2012-09-14
+// -----------------------------------------------------------------------------
+void ReplayerToolbar::OnRefresh()
+{
+    replay::ForceRefreshDataRequest reload;
+    reload.Send( network_ );
+};

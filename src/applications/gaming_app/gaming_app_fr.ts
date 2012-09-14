@@ -2750,6 +2750,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Time table</source>
         <translation>Table de temps</translation>
     </message>
+    <message>
+        <source>Refresh</source>
+        <translation>Mettre à jour</translation>
+    </message>
 </context>
 <context>
     <name>ReportFilterOptions</name>

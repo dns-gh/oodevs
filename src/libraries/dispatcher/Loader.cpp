@@ -132,3 +132,12 @@ void Loader::FillTimeTable( sword::TimeTable& msg, unsigned int beginTick, unsig
 {
     loader_->FillTimeTable( msg, beginTick, endTick );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Loader::ReloadAll
+// Created: MMC 2012-09-14
+// -----------------------------------------------------------------------------
+void Loader::ReloadAll()
+{
+    loader_->ReloadAllFragmentsInfos();
+}

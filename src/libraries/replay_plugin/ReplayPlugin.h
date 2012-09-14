@@ -79,6 +79,7 @@ private:
     void SkipToFrame( unsigned int frame );
     void RequestTimeTable( const sword::TimeTableRequest_TimeRange& msg );
     void SendReplayInfo( dispatcher::ClientPublisher_ABC& client );
+    void ReloadAll();
     //@}
 
 private:

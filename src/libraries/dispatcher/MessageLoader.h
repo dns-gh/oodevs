@@ -53,6 +53,7 @@ public:
     virtual unsigned int GetFirstTick() const;
     unsigned int FindKeyFrame( unsigned int frameNumber );
     void FillTimeTable( sword::TimeTable& msg, unsigned int beginTick, unsigned int endTick ) const;
+    void ReloadAllFragmentsInfos();
     //@}
 
 private:
@@ -75,6 +76,7 @@ private:
     //! @name Helpers
     //@{
     void ScanData();
+    void ScanDataFolders( bool );
     void AddFolder( const std::string& folderName );
     bool OpenFile( std::ifstream& stream, const std::string& folder, const std::string& file ) const;
     bool SwitchToFragment( unsigned int& frameNumber );

@@ -56,6 +56,7 @@ private slots:
     void OnSliderMoved( int );
     void OnSliderReleased();
     void OnTimeTable();
+    void OnRefresh();
     //@}
 
 private:
