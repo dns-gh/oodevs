@@ -11,6 +11,7 @@
 #include "StandardModel.h"
 #include "moc_StandardModel.cpp"
 #include "DragAndDropObserver_ABC.h"
+#include "ItemDecorationGetter_ABC.h"
 #include "StandardModelVisitor_ABC.h"
 
 using namespace gui;
@@ -29,6 +30,7 @@ StandardModel::StandardModel( kernel::Controllers& controllers, QSortFilterProxy
     , proxy_( proxy )
     , dragAndDropObserver_( 0 )
     , dndLocked_( false )
+    , decorationGetter_( 0 )
 {
     proxy.setSourceModel( this );
 }
@@ -43,6 +45,18 @@ StandardModel::~StandardModel()
 }
 
 // -----------------------------------------------------------------------------
+// Name: StandardModel::data
+// Created: JSR 2012-09-14
+// -----------------------------------------------------------------------------
+QVariant StandardModel::data( const QModelIndex &index, int role /*= Qt::DisplayRole*/ ) const
+{
+    if( role == Qt::DecorationRole && decorationGetter_ )
+        if( const QPixmap* p = decorationGetter_->GetDecoration( index ) )
+            return *p;
+    return QStandardItemModel::data( index, role );
+}
+
+// -----------------------------------------------------------------------------
 // Name: StandardModel::setData
 // Created: JSR 2012-08-31
 // -----------------------------------------------------------------------------
@@ -52,6 +66,15 @@ bool StandardModel::setData( const QModelIndex& index, const QVariant& value, in
     if( ret && role == Qt::EditRole )
         emit DataChanged( index, value );
     return ret;
+}
+
+// -----------------------------------------------------------------------------
+// Name: StandardModel::SetDecorationGetter
+// Created: JSR 2012-09-14
+// -----------------------------------------------------------------------------
+void StandardModel::SetDecorationGetter( ItemDecorationGetter_ABC* decorationGetter )
+{
+    decorationGetter_ = decorationGetter;
 }
 
 // -----------------------------------------------------------------------------

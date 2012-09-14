@@ -18,6 +18,7 @@
 namespace gui
 {
 class DragAndDropObserver_ABC;
+class ItemDecorationGetter_ABC;
 class StandardModelVisitor_ABC;
 
 // =============================================================================
@@ -58,8 +59,10 @@ public:
 
     //! @name Operations
     //@{
+    virtual QVariant data( const QModelIndex &index, int role = Qt::DisplayRole ) const;
     virtual bool setData ( const QModelIndex& index, const QVariant& value, int role = Qt::EditRole );
 
+    void SetDecorationGetter( ItemDecorationGetter_ABC* decorationGetter );
     void SetDragAndDropObserver( DragAndDropObserver_ABC* dragAndDropObserver );
 
     void Accept( StandardModelVisitor_ABC& visitor, QStandardItem* root = 0 );
@@ -130,6 +133,7 @@ private:
     QSortFilterProxyModel& proxy_;
     DragAndDropObserver_ABC* dragAndDropObserver_;
     bool dndLocked_;
+    ItemDecorationGetter_ABC* decorationGetter_;
     //@}
 };
 

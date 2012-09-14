@@ -20,6 +20,7 @@
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Hierarchies.h"
 #include "clients_kernel/Options.h"
+#include "clients_kernel/TacticalHierarchies.h"
 
 using namespace gui;
 
@@ -30,12 +31,9 @@ using namespace gui;
 HierarchyTreeView_ABC::HierarchyTreeView_ABC( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, const EntitySymbols& symbols, QWidget* parent /*= 0*/ )
     : EntityTreeView_ABC( controllers, profile, modelObserver, parent )
     , symbols_( symbols )
-    , timer_( new QTimer( this ) )
     , activated_( true )
 {
-    timer_->setSingleShot( true );
-    connect( timer_, SIGNAL( timeout() ), this, SLOT( OnTimeOut() ) );
-
+    dataModel_.SetDecorationGetter( this );
     EnableDragAndDrop( true );
 }
 
@@ -168,7 +166,6 @@ void HierarchyTreeView_ABC::InternalNotifyUpdated( const kernel::Hierarchies& hi
 void HierarchyTreeView_ABC::UpdateItem( QStandardItem& entityItem, const kernel::Entity_ABC& entity )
 {
     UpdateBackgroundColor( entityItem, entity );
-    UpdateSymbol( entityItem, entity );
     AdditionalUpdateItem( entityItem, entity );
 }
 
@@ -182,20 +179,31 @@ void HierarchyTreeView_ABC::UpdateBackgroundColor( QStandardItem& entityItem, co
 }
 
 // -----------------------------------------------------------------------------
-// Name: HierarchyTreeView_ABC::UpdateSymbol
-// Created: JSR 2012-08-30
+// Name: HierarchyTreeView_ABC::GetDecoration
+// Created: JSR 2012-09-14
 // -----------------------------------------------------------------------------
-void HierarchyTreeView_ABC::UpdateSymbol( QStandardItem& entityItem, const kernel::Entity_ABC& entity )
+const QPixmap* HierarchyTreeView_ABC::GetDecoration( const QModelIndex &index )
 {
-    QPixmap pixmap = symbols_.GetSymbol( entity );
-    if( pixmap.isNull() )
+    const kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( index );
+    if( entity )
     {
-        if( !timer_->isActive() )
-            timer_->start( 500 );
-        waitingSymbols_.insert( &entity );
-        return;
+        const kernel::Symbol_ABC* symbol = entity->Retrieve< kernel::TacticalHierarchies >();
+        if( symbol )
+        {
+            const std::string symbolName = symbol->GetSymbol();
+            const std::string levelName  = symbol->GetLevel();
+            if( !symbolName.empty() || !levelName.empty() )
+            {
+                const QPixmap& pixmap = symbols_.GetSymbol( *entity, symbolName, levelName );
+                if( !pixmap.isNull() )
+                    return &pixmap;
+                const_cast< HierarchyTreeView_ABC* >( this )->doItemsLayout();
+                static const QPixmap emptyPixmap( 32, 32 );
+                return &emptyPixmap;
+            }
+        }
     }
-    entityItem.setData( pixmap, Qt::DecorationRole );
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -205,22 +213,6 @@ void HierarchyTreeView_ABC::UpdateSymbol( QStandardItem& entityItem, const kerne
 Qt::ItemFlags HierarchyTreeView_ABC::ItemSpecificFlags( const kernel::Entity_ABC& /*entity*/ ) const
 {
     return Qt::ItemIsEditable;
-}
-
-// -----------------------------------------------------------------------------
-// Name: HierarchyTreeView_ABC::OnTimeOut
-// Created: JSR 2012-08-30
-// -----------------------------------------------------------------------------
-void HierarchyTreeView_ABC::OnTimeOut()
-{
-    std::set< const kernel::Entity_ABC* > localWaitingSymbols;
-    std::swap( localWaitingSymbols, waitingSymbols_);
-    for( std::set< const kernel::Entity_ABC* >::const_iterator it = localWaitingSymbols.begin(); it != localWaitingSymbols.end(); ++it )
-    {
-        QStandardItem* entityItem = dataModel_.FindSafeItem( **it );
-        if( entityItem )
-            UpdateSymbol( *entityItem, **it );
-    }
 }
 
 // -----------------------------------------------------------------------------

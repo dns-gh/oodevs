@@ -144,7 +144,7 @@ bool RichTreeView::IsContextMenuBlocked() const
 // Name: RichTreeView::CreateFilters
 // Created: ABR 2012-08-14
 // -----------------------------------------------------------------------------
-void RichTreeView::CreateFilters( SearchTreeView_ABC& searchTreeView )
+void RichTreeView::CreateFilters( SearchTreeView_ABC& /*searchTreeView*/ )
 {
     // NOTHING
     // $$$$ ABR 2012-08-14: TODO for urban, nothing here, cf existing list view.

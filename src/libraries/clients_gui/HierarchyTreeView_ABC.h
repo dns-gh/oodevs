@@ -11,6 +11,7 @@
 #define __HierarchyTreeView_ABC_h_
 
 #include "EntityTreeView_ABC.h"
+#include "ItemDecorationGetter_ABC.h"
 
 namespace kernel
 {
@@ -38,6 +39,7 @@ namespace gui
 // Created: ABR 2012-08-10
 // =============================================================================
 class HierarchyTreeView_ABC : public EntityTreeView_ABC
+                            , public ItemDecorationGetter_ABC
 {
     Q_OBJECT
 
@@ -62,12 +64,12 @@ protected:
     QStandardItem* AddItem( QStandardItem* parent, const kernel::Entity_ABC& entity );
     void UpdateItem( QStandardItem& entityItem, const kernel::Entity_ABC& entity );
     void UpdateBackgroundColor( QStandardItem& entityItem, const kernel::Entity_ABC& entity );
-    void UpdateSymbol( QStandardItem& entityItem, const kernel::Entity_ABC& entity );
     virtual void AdditionalUpdateItem( QStandardItem& /*entityItem*/, const kernel::Entity_ABC& /*entity*/ ) {}
     //@}
 
     //! @name Operations
     //@{
+    virtual const QPixmap* GetDecoration( const QModelIndex &index );
     virtual Qt::ItemFlags ItemSpecificFlags( const kernel::Entity_ABC& entity ) const;
     virtual void focusInEvent( QFocusEvent* event );
     //@}
@@ -91,19 +93,11 @@ private:
 signals:
     void TreeViewFocusIn( gui::HierarchyTreeView_ABC* );
 
-protected slots:
-    //! @name Slots
-    //@{
-    void OnTimeOut();
-    //@}
-
 private:
     //! @name Member data
     //@{
     const EntitySymbols& symbols_;
-    QTimer* timer_;
     bool activated_;
-    std::set< const kernel::Entity_ABC* > waitingSymbols_;
     //@}
 };
 

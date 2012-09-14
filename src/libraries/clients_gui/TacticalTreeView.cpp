@@ -48,7 +48,7 @@ TacticalTreeView::TacticalTreeView( kernel::Controllers& controllers, const kern
     header()->setResizeMode( 0, QHeaderView::Stretch );
     header()->setResizeMode( 1, QHeaderView::Fixed );
     header()->resizeSection( 1, 24 );
-    setItemDelegate( new ItemPixmapDelegate( dataModel_, boost::bind( &TacticalTreeView::GetEntityPixmap, this, _1 ), this ) );
+    setItemDelegateForColumn( 1, new ItemPixmapDelegate( dataModel_, boost::bind( &TacticalTreeView::GetEntityPixmap, this, _1 ), this ) );
 }
 
 // -----------------------------------------------------------------------------
