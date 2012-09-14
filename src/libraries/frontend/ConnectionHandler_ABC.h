@@ -10,6 +10,8 @@
 #ifndef __ConnectionHandler_ABC_h_
 #define __ConnectionHandler_ABC_h_
 
+#include <string>
+
 namespace frontend
 {
 // =============================================================================

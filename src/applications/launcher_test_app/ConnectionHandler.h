@@ -10,8 +10,9 @@
 #ifndef __LAUNCHER_TEST_APP_CONNECTIONHANDLER_H__
 #define __LAUNCHER_TEST_APP_CONNECTIONHANDLER_H__
 
-#include <string>
 #include "frontend/ConnectionHandler_ABC.h"
+#include <boost/noncopyable.hpp>
+#include <string>
 
 namespace boost
 {
@@ -26,7 +27,8 @@ namespace launcher_test_app
 */
 // Created: AHC 2011-05-27
 // =============================================================================
-class ConnectionHandler : public frontend::ConnectionHandler_ABC
+class ConnectionHandler : public frontend::ConnectionHandler_ABC,
+                          private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

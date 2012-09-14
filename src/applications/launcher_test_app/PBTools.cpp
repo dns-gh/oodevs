@@ -13,9 +13,10 @@
 #include <iostream>
 #include <boost/bind.hpp>
 #include <boost/ref.hpp>
-#include <google/protobuf/message.h>
+// warning 4244: conversion from 'google::protobuf::uint32' to 'google::protobuf::uint8', possible loss of data
 #pragma warning( push )
-#pragma warning( disable: 4244 )
+#pragma warning( disable: 4244 4244 )
+#include <google/protobuf/message.h>
 #include <google/protobuf/descriptor.h>
 #pragma warning( pop )
 #include <xeumeuleu/xml.hpp>
@@ -311,7 +312,6 @@ void PBTools::FromXML(xml::xistream& xis, google::protobuf::Message& msg)
 void PBTools::FieldFromXML(xml::xistream& xis, google::protobuf::Message& msg, std::map<std::string, int>& indexMap)
 {
     const google::protobuf::Descriptor* pDescriptor = msg.GetDescriptor();
-    const google::protobuf::Reflection* pReflection = msg.GetReflection();
     std::string fieldName;
     xis >> xml::attribute("name", fieldName);
     const google::protobuf::FieldDescriptor* fieldDesc = pDescriptor->FindFieldByLowercaseName(fieldName);

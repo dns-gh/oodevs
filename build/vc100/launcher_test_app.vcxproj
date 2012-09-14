@@ -59,7 +59,7 @@
       <ProgramDataBaseFileName>$(IntDir)$(ProjectName)_d.pdb</ProgramDataBaseFileName>
       <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <TreatWarningAsError>false</TreatWarningAsError>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <AdditionalDependencies>QtCored4.lib;QtGuid4.lib;Qt3Supportd4.lib;xerces-c_3D.lib;libprotobufd.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -84,7 +84,7 @@
       <ProgramDataBaseFileName>$(IntDir)$(ProjectName).pdb</ProgramDataBaseFileName>
       <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <TreatWarningAsError>false</TreatWarningAsError>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <AdditionalDependencies>QtCore4.lib;QtGui4.lib;Qt3Support4.lib;xerces-c_3.lib;libprotobuf.lib;%(AdditionalDependencies)</AdditionalDependencies>

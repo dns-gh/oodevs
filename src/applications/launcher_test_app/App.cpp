@@ -13,7 +13,10 @@
 #include "PBTools.h"
 
 #include "protocol/LauncherSenders.h"
+#pragma warning( push )
+#pragma warning( disable: 4127 )
 #include "shield/proto/AdminToLauncher.pb.h"
+#pragma warning( pop )
 
 #include <iostream>
 #pragma warning( push )

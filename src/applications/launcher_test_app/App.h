@@ -14,7 +14,10 @@
 #include <list>
 #include <fstream>
 #include <boost/thread.hpp>
+#pragma warning( push )
+#pragma warning( disable: 4127 )
 #include <QtGui/qapplication.h>
+#pragma warning( pop )
 
 #include "clients_kernel/Controllers.h"
 #include "frontend/LauncherClient.h"
