@@ -144,7 +144,7 @@ namespace
 // -----------------------------------------------------------------------------
 int RoleAction_DirectFiring::FirePion( const wrapper::View& model, const wrapper::View& entity, const wrapper::View& target,
     DirectFireData::E_FiringMode nFiringMode, double rPercentageComposantesToUse, DirectFireData::E_ComposanteFiringType nComposanteFiringType,
-    DirectFireData::E_ComposanteFiredType nComposanteFiredType, bool mustReport, int ammoDotationClass ) const
+    bool bFireOnlyOnMajorComposantes, bool mustReport, int ammoDotationClass ) const
 {
     if( ! target[ "valid" ] )
         return eImpossible;
@@ -176,7 +176,7 @@ int RoleAction_DirectFiring::FirePion( const wrapper::View& model, const wrapper
     }
     NotifyAttacking( entity, target, mustReport, false );
     const wrapper::View& targets = model[ "entities" ][ static_cast< unsigned int >( target[ "identifier" ] ) ][ "components" ];
-    T_ComposanteVector compTargets = GetComposantesAbleToBeFired( targets, nComposanteFiredType == DirectFireData::eFireOnlyOnMajorComposantes, nNbrWeaponsUsable );
+    T_ComposanteVector compTargets = GetComposantesAbleToBeFired( targets, bFireOnlyOnMajorComposantes, nNbrWeaponsUsable );
     if( compTargets.empty() )
         return eEnemyDestroyed;
     assert( compTargets.size() == nNbrWeaponsUsable );

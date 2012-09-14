@@ -43,8 +43,8 @@ public:
     //int  FirePopulation         ( unsigned int nTargetKnowledgeID, const PHY_AmmoDotationClass* dotationClass );
     //void FirePopulationSuspended( unsigned int nTargetKnowledgeID );
 
-    int  FirePion               ( const wrapper::View& model, const wrapper::View& entity, const wrapper::View& target, DirectFireData::E_FiringMode nFiringMode, double rPercentageComposantesToUse, DirectFireData::E_ComposanteFiringType nComposanteFiringType, DirectFireData::E_ComposanteFiredType nComposanteFiredType, bool mustReport, int ammoDotationClass ) const;
-    void FirePionSuspended      ( const wrapper::View& entity, const wrapper::View& target, bool mustReport ) const;
+    int  FirePion( const wrapper::View& model, const wrapper::View& entity, const wrapper::View& target, DirectFireData::E_FiringMode nFiringMode, double rPercentageComposantesToUse, DirectFireData::E_ComposanteFiringType nComposanteFiringType, bool bFireOnlyOnMajorComposantes, bool mustReport, int ammoDotationClass ) const;
+    void FirePionSuspended( const wrapper::View& entity, const wrapper::View& target, bool mustReport ) const;
     //int  IlluminatePion         ( boost::shared_ptr< DEC_Knowledge_Agent > pEnemy );
     //void IlluminatePionSuspended( boost::shared_ptr< DEC_Knowledge_Agent > pEnemy );
 
