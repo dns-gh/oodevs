@@ -1157,7 +1157,7 @@
     </target>
 
     <target name="flood_test" depends="library.flood">
-        <build-test name="flood" depends="boost" libs="lib${ant.project.name}_flood-${platform}-mt"/>
+        <build-test name="flood" depends="boost" libs="lib${ant.project.name}_flood-${platform}-mt" failonwarning="${failonwarning}"/>
     </target>
 
     <target name="positions_plugin_test" depends="library.protocol,library.positions_plugin">
