@@ -53,10 +53,10 @@ std::size_t DirectFireData::nUrbanCoefficient_ = 100;
 // Name: DirectFireData constructor
 // Created: NLD 2004-10-05
 // -----------------------------------------------------------------------------
-DirectFireData::DirectFireData( ModuleFacade& module, const wrapper::View& firer, E_ComposanteFiringType firingType, E_FiringMode nFiringMode, double rPercentageComposantesToUse, int ammoDotationClass )
+DirectFireData::DirectFireData( ModuleFacade& module, const wrapper::View& firer, int firingType, E_FiringMode nFiringMode, double rPercentageComposantesToUse, int ammoDotationClass )
     : module_                     ( module )
     , firer_                      ( firer )
-    , firingType_      ( firingType )
+    , firingType_                 ( firingType )
     , nFiringMode_                ( nFiringMode )
     , rPercentageComposantesToUse_( rPercentageComposantesToUse )
     , ammoDotationClass_          ( ammoDotationClass )

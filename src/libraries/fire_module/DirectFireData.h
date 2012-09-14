@@ -37,13 +37,6 @@ class DirectFireData : boost::noncopyable
 public:
     //! @name Types
     //@{
-    enum E_ComposanteFiringType
-    {
-        eFireUsingAllComposantes,
-        eFireUsingOnlyComposantesLoadable,
-        eFireUsingOnlyComposantesCarrier
-    };
-
     enum E_ComposanteFiredType
     {
         eFireOnAllComposantes,
@@ -60,7 +53,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    DirectFireData( ModuleFacade& module, const wrapper::View& firer, E_ComposanteFiringType firingType,
+    DirectFireData( ModuleFacade& module, const wrapper::View& firer, int firingType,
         E_FiringMode nFiringMode = eFiringModeNormal, double rPercentageComposantesToUse = 1.,
         int ammoDotationClass = -1 );
     //@}
@@ -132,7 +125,7 @@ private:
     ModuleFacade& module_;
     const wrapper::View firer_;
     const int ammoDotationClass_;
-    const E_ComposanteFiringType firingType_;
+    const int firingType_;
     const E_FiringMode           nFiringMode_;
     const double                 rPercentageComposantesToUse_;
           T_ComposanteWeaponsMap composantesWeapons_;
