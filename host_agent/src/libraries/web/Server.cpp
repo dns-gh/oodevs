@@ -27,6 +27,10 @@ using runtime::Pool_ABC;
 
 namespace
 {
+// -----------------------------------------------------------------------------
+// Name: GetStatusCode
+// Created: BAX 2012-09-14
+// -----------------------------------------------------------------------------
 int GetStatusCode( HttpStatus status )
 {
     switch( status )
@@ -42,6 +46,10 @@ int GetStatusCode( HttpStatus status )
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: GetStatusMessage
+// Created: BAX 2012-09-14
+// -----------------------------------------------------------------------------
 const char* GetStatusMessage( HttpStatus status )
 {
     switch( status )
@@ -57,6 +65,10 @@ const char* GetStatusMessage( HttpStatus status )
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: SendHttp
+// Created: BAX 2012-09-14
+// -----------------------------------------------------------------------------
 void SendHttp( mg_connection* link, HttpStatus status, const char* reason, const char* msg )
 {
     const size_t len = strlen( msg );
@@ -69,11 +81,19 @@ void SendHttp( mg_connection* link, HttpStatus status, const char* reason, const
         GetStatusCode( status ), reason, len, msg );
 }
 
+// -----------------------------------------------------------------------------
+// Name: SendError
+// Created: BAX 2012-09-14
+// -----------------------------------------------------------------------------
 void SendError( mg_connection* link, HttpStatus status, const char* msg )
 {
     SendHttp( link, status, GetStatusMessage( status ), msg );
 }
 
+// -----------------------------------------------------------------------------
+// Name: GetParameter
+// Created: BAX 2012-09-14
+// -----------------------------------------------------------------------------
 boost::optional< std::string > GetParameter( const std::string& query, const std::string& name )
 {
     std::vector< char > buffer( std::max< size_t >( 1, query.size() ) );
@@ -83,6 +103,10 @@ boost::optional< std::string > GetParameter( const std::string& query, const std
     return std::string( &buffer[0] );
 }
 
+// -----------------------------------------------------------------------------
+// Name: GetSid
+// Created: BAX 2012-09-14
+// -----------------------------------------------------------------------------
 std::string GetSid( mg_connection* link, const std::string& query )
 {
     char dst[UINT8_MAX];
@@ -95,6 +119,10 @@ std::string GetSid( mg_connection* link, const std::string& query )
 
 struct WebRequest : public Request_ABC
 {
+    // -----------------------------------------------------------------------------
+    // Name: WebRequest::WebRequest
+    // Created: BAX 2012-09-14
+    // -----------------------------------------------------------------------------
     WebRequest( mg_connection* link, const mg_request_info* info )
         : link_ ( link )
         , uri_  ( info->uri )
@@ -104,21 +132,37 @@ struct WebRequest : public Request_ABC
         // NOTHING
     }
 
+    // -----------------------------------------------------------------------------
+    // Name: WebRequest::~WebRequest
+    // Created: BAX 2012-09-14
+    // -----------------------------------------------------------------------------
     virtual ~WebRequest()
     {
         // NOTHING
     }
 
+    // -----------------------------------------------------------------------------
+    // Name: WebRequest::GetUri
+    // Created: BAX 2012-09-14
+    // -----------------------------------------------------------------------------
     virtual std::string GetUri() const
     {
         return uri_;
     }
 
+    // -----------------------------------------------------------------------------
+    // Name: WebRequest::GetParameter
+    // Created: BAX 2012-09-14
+    // -----------------------------------------------------------------------------
     virtual boost::optional< std::string > GetParameter( const std::string& name ) const
     {
         return ::GetParameter( query_, name );
     }
 
+    // -----------------------------------------------------------------------------
+    // Name: WebRequest::GetHeader
+    // Created: BAX 2012-09-14
+    // -----------------------------------------------------------------------------
     virtual boost::optional< std::string > GetHeader( const std::string& name ) const
     {
         const char* reply = mg_get_header( link_, name.c_str() );
@@ -127,21 +171,37 @@ struct WebRequest : public Request_ABC
         return reply;
     }
 
+    // -----------------------------------------------------------------------------
+    // Name: WebRequest::GetSid
+    // Created: BAX 2012-09-14
+    // -----------------------------------------------------------------------------
     virtual std::string GetSid() const
     {
         return sid_;
     }
 
+    // -----------------------------------------------------------------------------
+    // Name: WebRequest::RegisterMime
+    // Created: BAX 2012-09-14
+    // -----------------------------------------------------------------------------
     virtual void RegisterMime( const std::string& name, const MimeHandler& handler )
     {
         throw std::runtime_error( "unsupported action" );
     }
 
+    // -----------------------------------------------------------------------------
+    // Name: WebRequest::ParseBodyAsMime
+    // Created: BAX 2012-09-14
+    // -----------------------------------------------------------------------------
     virtual void ParseBodyAsMime()
     {
         throw std::runtime_error( "unsupported action" );
     }
 
+    // -----------------------------------------------------------------------------
+    // Name: WebRequest::ParseBodyAsJson
+    // Created: BAX 2012-09-14
+    // -----------------------------------------------------------------------------
     virtual Tree ParseBodyAsJson()
     {
         throw std::runtime_error( "unsupported action" );
@@ -156,6 +216,10 @@ protected:
 
 struct BodyWebRequest : public WebRequest, public io::Reader_ABC
 {
+    // -----------------------------------------------------------------------------
+    // Name: BodyWebRequest::BodyWebRequest
+    // Created: BAX 2012-09-14
+    // -----------------------------------------------------------------------------
     BodyWebRequest( Pool_ABC& pool, mg_connection* link, const mg_request_info* info )
         : WebRequest( link, info )
         , info_     ( info )
@@ -169,11 +233,19 @@ struct BodyWebRequest : public WebRequest, public io::Reader_ABC
             size_ = boost::lexical_cast< size_t >( *opt );
     }
 
+    // -----------------------------------------------------------------------------
+    // Name: BodyWebRequest::~BodyWebRequest
+    // Created: BAX 2012-09-14
+    // -----------------------------------------------------------------------------
     ~BodyWebRequest()
     {
         // NOTHING
     }
 
+    // -----------------------------------------------------------------------------
+    // Name: BodyWebRequest::SetupReader
+    // Created: BAX 2012-09-14
+    // -----------------------------------------------------------------------------
     void SetupReader()
     {
         reader_ = boost::make_shared< MimeReader >();
@@ -181,6 +253,10 @@ struct BodyWebRequest : public WebRequest, public io::Reader_ABC
             reader_->PutHeader( info_->http_headers[idx].name, info_->http_headers[idx].value );
     }
 
+    // -----------------------------------------------------------------------------
+    // Name: BodyWebRequest::RegisterMime
+    // Created: BAX 2012-09-14
+    // -----------------------------------------------------------------------------
     virtual void RegisterMime( const std::string& name, const MimeHandler& handler )
     {
         if( !reader_ )
@@ -188,6 +264,10 @@ struct BodyWebRequest : public WebRequest, public io::Reader_ABC
         reader_->Register( name, handler );
     }
 
+    // -----------------------------------------------------------------------------
+    // Name: BodyWebRequest::Read(
+    // Created: BAX 2012-09-14
+    // -----------------------------------------------------------------------------
     size_t Read( void* dst, size_t size )
     {
         const size_t next = size_ ? std::min( size, size_ - read_ ) : size;
@@ -196,11 +276,19 @@ struct BodyWebRequest : public WebRequest, public io::Reader_ABC
         return len;
     }
 
+    // -----------------------------------------------------------------------------
+    // Name: BodyWebRequest::ParseBodyAsMime
+    // Created: BAX 2012-09-14
+    // -----------------------------------------------------------------------------
     virtual void ParseBodyAsMime()
     {
         reader_->Parse( pool_, *this );
     }
 
+    // -----------------------------------------------------------------------------
+    // Name: BodyWebRequest::ParseBodyAsJson
+    // Created: BAX 2012-09-14
+    // -----------------------------------------------------------------------------
     virtual Tree ParseBodyAsJson()
     {
         return property_tree::FromJson( *this );
@@ -216,27 +304,47 @@ private:
 
 struct Reply : public Reply_ABC
 {
+    // -----------------------------------------------------------------------------
+    // Name: Reply::Reply
+    // Created: BAX 2012-09-14
+    // -----------------------------------------------------------------------------
     Reply( mg_connection* link )
         : link_( link )
     {
         // NOTHING
     }
 
+    // -----------------------------------------------------------------------------
+    // Name: Reply::~Reply
+    // Created: BAX 2012-09-14
+    // -----------------------------------------------------------------------------
     ~Reply()
     {
         // NOTHING
     }
 
+    // -----------------------------------------------------------------------------
+    // Name: Reply::SetHeader
+    // Created: BAX 2012-09-14
+    // -----------------------------------------------------------------------------
     void SetHeader( const std::string& key, const std::string& value )
     {
         headers_.insert( std::make_pair( key, value ) );
     }
 
+    // -----------------------------------------------------------------------------
+    // Name: Reply::SetStatus
+    // Created: BAX 2012-09-14
+    // -----------------------------------------------------------------------------
     void SetStatus( HttpStatus code )
     {
         status_ = code;
     }
 
+    // -----------------------------------------------------------------------------
+    // Name: Reply::WriteHeaders
+    // Created: BAX 2012-09-14
+    // -----------------------------------------------------------------------------
     void WriteHeaders()
     {
         mg_printf( link_, "HTTP/1.1 %d %s\r\n", GetStatusCode( status_ ), GetStatusMessage( status_ ) );
@@ -245,11 +353,19 @@ struct Reply : public Reply_ABC
         mg_printf( link_, "\r\n" );
     }
 
+    // -----------------------------------------------------------------------------
+    // Name: Reply::Write
+    // Created: BAX 2012-09-14
+    // -----------------------------------------------------------------------------
     void Write( const void* data, size_t size )
     {
         mg_write( link_, data, size );
     }
 
+    // -----------------------------------------------------------------------------
+    // Name: Reply::WriteContent
+    // Created: BAX 2012-09-14
+    // -----------------------------------------------------------------------------
     void WriteContent( const std::string& data )
     {
         Write( data.c_str(), data.size() );
@@ -265,6 +381,10 @@ private:
 
 struct Server::Private : public boost::noncopyable
 {
+    // -----------------------------------------------------------------------------
+    // Name: Private::Private
+    // Created: BAX 2012-09-14
+    // -----------------------------------------------------------------------------
     Private( Pool_ABC& pool, Observer_ABC& observer, int port )
         : port_    ( boost::lexical_cast< std::string >( port ) )
         , pool_    ( pool )
@@ -274,11 +394,19 @@ struct Server::Private : public boost::noncopyable
         // NOTHING
     }
 
+    // -----------------------------------------------------------------------------
+    // Name: Private::~Private
+    // Created: BAX 2012-09-14
+    // -----------------------------------------------------------------------------
     ~Private()
     {
         // NOTHING
     }
 
+    // -----------------------------------------------------------------------------
+    // Name: Private::Listen
+    // Created: BAX 2012-09-14
+    // -----------------------------------------------------------------------------
     void Listen()
     {
         std::vector< const char* > options = boost::assign::list_of
@@ -290,6 +418,10 @@ struct Server::Private : public boost::noncopyable
         context_.reset( ptr, mg_stop );
     }
 
+    // -----------------------------------------------------------------------------
+    // Name: Private::OnHttpRequest
+    // Created: BAX 2012-09-14
+    // -----------------------------------------------------------------------------
     static void* OnHttpRequest( mg_event event, mg_connection* link, const mg_request_info* info )
     {
         if( event != MG_NEW_REQUEST )
@@ -299,6 +431,10 @@ struct Server::Private : public boost::noncopyable
         return link;
     }
 
+    // -----------------------------------------------------------------------------
+    // Name: Private::Notify
+    // Created: BAX 2012-09-14
+    // -----------------------------------------------------------------------------
     void Notify( mg_connection* link, const mg_request_info* info )
     {
         if( !strcmp( info->request_method, "GET" ) )
@@ -309,6 +445,10 @@ struct Server::Private : public boost::noncopyable
             SendError( link, web::BAD_REQUEST, "invalid request" );
     }
 
+    // -----------------------------------------------------------------------------
+    // Name: Private::Get
+    // Created: BAX 2012-09-14
+    // -----------------------------------------------------------------------------
     void Get( mg_connection* link, const mg_request_info* info )
     {
         WebRequest req( link, info );
@@ -316,6 +456,10 @@ struct Server::Private : public boost::noncopyable
         observer_.DoGet( rpy, req );
     }
 
+    // -----------------------------------------------------------------------------
+    // Name: Private::Post
+    // Created: BAX 2012-09-14
+    // -----------------------------------------------------------------------------
     void Post( mg_connection* link, const mg_request_info* info )
     {
         BodyWebRequest req( pool_, link, info );
@@ -323,6 +467,7 @@ struct Server::Private : public boost::noncopyable
         observer_.DoPost( rpy, req );
     }
 
+private:
     const std::string port_;
     Pool_ABC& pool_;
     Observer_ABC& observer_;

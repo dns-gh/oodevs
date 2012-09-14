@@ -40,11 +40,19 @@ struct MimeReader::Part : boost::noncopyable
     const MimeReader::Handler handler_;
 };
 
+// -----------------------------------------------------------------------------
+// Name: MimeReader::MimeReader
+// Created: BAX 2012-09-14
+// -----------------------------------------------------------------------------
 MimeReader::MimeReader()
 {
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: MimeReader::~MimeReader
+// Created: BAX 2012-09-14
+// -----------------------------------------------------------------------------
 MimeReader::~MimeReader()
 {
     // NOTHING
@@ -52,6 +60,10 @@ MimeReader::~MimeReader()
 
 namespace
 {
+// -----------------------------------------------------------------------------
+// Name: Unquote
+// Created: BAX 2012-09-14
+// -----------------------------------------------------------------------------
 void Unquote( std::string& val )
 {
     if( val.empty() )
@@ -64,6 +76,10 @@ void Unquote( std::string& val )
 
 typedef std::map< std::string, std::string > T_Optionals;
 
+// -----------------------------------------------------------------------------
+// Name: ReadMimeValue
+// Created: BAX 2012-09-14
+// -----------------------------------------------------------------------------
 bool ReadMimeValue( const std::string& data, std::string& value, T_Optionals& opt )
 {
     std::vector< std::string > tokens;
@@ -88,6 +104,10 @@ bool ReadMimeValue( const std::string& data, std::string& value, T_Optionals& op
     return true;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ReadMimeHeader
+// Created: BAX 2012-09-14
+// -----------------------------------------------------------------------------
 bool ReadMimeHeader( const std::string& data, std::string& key, std::string& val, T_Optionals& opt )
 {
     const size_t next = data.find_first_of( ":" );
@@ -99,6 +119,10 @@ bool ReadMimeHeader( const std::string& data, std::string& key, std::string& val
     return ReadMimeValue( data.substr( next+1 ), val, opt );
 }
 
+// -----------------------------------------------------------------------------
+// Name: SkipSpaces
+// Created: BAX 2012-09-14
+// -----------------------------------------------------------------------------
 int SkipSpaces( StreamBuffer& buf )
 {
     int skip = 0;
@@ -113,6 +137,10 @@ int SkipSpaces( StreamBuffer& buf )
     return skip;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ReadMimeLine
+// Created: BAX 2012-09-14
+// -----------------------------------------------------------------------------
 std::string ReadMimeLine( StreamBuffer& buf )
 {
     std::string rpy = buf.GetLine();
@@ -123,6 +151,10 @@ std::string ReadMimeLine( StreamBuffer& buf )
     return rpy;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ParseHeaders
+// Created: BAX 2012-09-14
+// -----------------------------------------------------------------------------
 std::string ParseHeaders( StreamBuffer& buf )
 {
     std::string rpy;
@@ -145,6 +177,10 @@ std::string ParseHeaders( StreamBuffer& buf )
     return rpy;
 }
 
+// -----------------------------------------------------------------------------
+// Name: IsSpaceOnly
+// Created: BAX 2012-09-14
+// -----------------------------------------------------------------------------
 bool IsSpaceOnly( const std::string& line )
 {
     for( size_t i = 0; i < line.size(); ++i )
@@ -153,6 +189,10 @@ bool IsSpaceOnly( const std::string& line )
     return true;
 }
 
+// -----------------------------------------------------------------------------
+// Name: IsDelimiterLine
+// Created: BAX 2012-09-14
+// -----------------------------------------------------------------------------
 bool IsDelimiterLine( const std::string& line, const std::string& delimiter )
 {
     if( !boost::starts_with( line, delimiter ) )
@@ -160,15 +200,23 @@ bool IsDelimiterLine( const std::string& line, const std::string& delimiter )
     return IsSpaceOnly( line.substr( delimiter.size(), line.size() - 1 ) );
 }
 
+// -----------------------------------------------------------------------------
+// Name: IsName
+// Created: BAX 2012-09-14
+// -----------------------------------------------------------------------------
 template< typename T >
 bool IsName( const std::string& name, T part )
 {
     return !name.empty() && name == part->name_;
 }
 
-// naive string search function (use boyer-moore instead..)
+// -----------------------------------------------------------------------------
+// Name: FindNeedle
+// Created: BAX 2012-09-14
+// -----------------------------------------------------------------------------
 size_t FindNeedle( const char* haystack, size_t hsize, const char* needle, size_t nsize )
 {
+    // naive string search function (use boyer-moore instead..)
     const char first = needle[0];
     const char* ptr = haystack;
     if( hsize < nsize )
@@ -185,6 +233,10 @@ size_t FindNeedle( const char* haystack, size_t hsize, const char* needle, size_
     return hsize;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ParseData
+// Created: BAX 2012-09-14
+// -----------------------------------------------------------------------------
 void ParseData( StreamBuffer& buf, const std::string& boundary, io::Writer_ABC* io )
 {
     const std::string end = "\r\n--" + boundary;
@@ -210,12 +262,20 @@ void ParseData( StreamBuffer& buf, const std::string& boundary, io::Writer_ABC* 
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: HandleRead
+// Created: BAX 2012-09-14
+// -----------------------------------------------------------------------------
 void HandleRead( const MimeReader::Handler& handler, io::Pipe_ABC& pipe )
 {
     handler( pipe );
     pipe.Close();
 }
 
+// -----------------------------------------------------------------------------
+// Name: ParsePart
+// Created: BAX 2012-09-14
+// -----------------------------------------------------------------------------
 template< typename T >
 void ParsePart( StreamBuffer& buf, const std::string& boundary, const T& part, Pool_ABC& pool )
 {
@@ -226,6 +286,10 @@ void ParsePart( StreamBuffer& buf, const std::string& boundary, const T& part, P
     pipe->Close();
 }
 
+// -----------------------------------------------------------------------------
+// Name: NextPart
+// Created: BAX 2012-09-14
+// -----------------------------------------------------------------------------
 template< typename T >
 typename T::value_type NextPart( T& data, const std::string& name )
 {
@@ -239,6 +303,10 @@ typename T::value_type NextPart( T& data, const std::string& name )
 }
 }
 
+// -----------------------------------------------------------------------------
+// Name: MimeReader::PutHeader
+// Created: BAX 2012-09-14
+// -----------------------------------------------------------------------------
 void MimeReader::PutHeader( const std::string& name, const std::string& value )
 {
     std::vector< char > data;
@@ -256,16 +324,28 @@ void MimeReader::PutHeader( const std::string& name, const std::string& value )
     boundary_ = it->second;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MimeReader::IsValid
+// Created: BAX 2012-09-14
+// -----------------------------------------------------------------------------
 bool MimeReader::IsValid() const
 {
     return !boundary_.empty();
 }
 
+// -----------------------------------------------------------------------------
+// Name: MimeReader::Register
+// Created: BAX 2012-09-14
+// -----------------------------------------------------------------------------
 void MimeReader::Register( const std::string& name, const Handler& handler )
 {
     parts_.push_back( boost::make_shared< Part >( name, handler ) );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MimeReader::Parse
+// Created: BAX 2012-09-14
+// -----------------------------------------------------------------------------
 void MimeReader::Parse( Pool_ABC& pool, io::Reader_ABC& src )
 {
     StreamBuffer buf( src );

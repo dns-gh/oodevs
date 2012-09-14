@@ -56,6 +56,10 @@ const size_t buffer_size = 1<<18;
 // -----------------------------------------------------------------------------
 struct Chunker : public Chunker_ABC, public io::Writer_ABC
 {
+    // -----------------------------------------------------------------------------
+    // Name: Chunker::Chunker
+    // Created: BAX 2012-09-14
+    // -----------------------------------------------------------------------------
     Chunker( Reply_ABC& rpy )
         : rpy_   ( rpy )
         , buffer_( prolog_size*2 + buffer_size )
@@ -67,11 +71,19 @@ struct Chunker : public Chunker_ABC, public io::Writer_ABC
         rpy_.SetHeader( "Connection", "Close" );
     }
 
+    // -----------------------------------------------------------------------------
+    // Name: Chunker::~Chunker
+    // Created: BAX 2012-09-14
+    // -----------------------------------------------------------------------------
     ~Chunker()
     {
         Flush( true );
     }
 
+    // -----------------------------------------------------------------------------
+    // Name: Chunker::SetName
+    // Created: BAX 2012-09-14
+    // -----------------------------------------------------------------------------
     io::Writer_ABC& SetName( const std::string& name )
     {
         rpy_.SetHeader( "Content-Disposition", "attachment; filename=\"" + name + ".zip\"" );
@@ -79,6 +91,10 @@ struct Chunker : public Chunker_ABC, public io::Writer_ABC
         return *this;
     }
 
+    // -----------------------------------------------------------------------------
+    // Name: Chunker::Flush
+    // Created: BAX 2012-09-14
+    // -----------------------------------------------------------------------------
     void Flush( bool last )
     {
         const int prolog = snprintf( &buffer_[0], prolog_size, "%x\r\n", fill_ );
@@ -89,6 +105,10 @@ struct Chunker : public Chunker_ABC, public io::Writer_ABC
         fill_ = 0;
     }
 
+    // -----------------------------------------------------------------------------
+    // Name: Chunker::Write
+    // Created: BAX 2012-09-14
+    // -----------------------------------------------------------------------------
     size_t Write( const void* data, size_t size )
     {
         const char* ptr = reinterpret_cast< const char* >( data );
