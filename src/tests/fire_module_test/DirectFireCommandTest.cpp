@@ -24,6 +24,7 @@ namespace
                     ( "percentage", 7 )
                     ( "mode", 0 )
                     ( "type", 0 )
+                    ( "major", true )
                     ( "dotation", 0 ) );
             mock::verify();
         }

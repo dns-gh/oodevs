@@ -27,7 +27,7 @@ DirectFireCommand::DirectFireCommand( ModuleFacade& module, const wrapper::View&
     , rPercentageComposantesToUse_( std::max( 0., std::min< double >( 1., parameters[ "percentage" ] ) ) )
     , nFiringMode_                ( static_cast< DirectFireData::E_FiringMode >( static_cast< int >( parameters[ "mode" ] ) ) )
     , firingType_                 ( parameters[ "type" ] )
-    , major_                      ( true )
+    , major_                      ( parameters[ "major" ] )
     , ammoDotationClass_          ( parameters[ "dotation" ] )
     , mustReport_                 ( true )
 {

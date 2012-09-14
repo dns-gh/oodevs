@@ -439,7 +439,7 @@ namespace
         parameters[ "direction/y" ] = direction->rY_;
         sink.PostCommand( "orientate", parameters );
     }
-    unsigned int StartTirDirect( Sink& sink, MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Agent > pEnemy, double percentage, int firingMode, int firingType, int ammoDotationClass )
+    unsigned int StartTirDirect( Sink& sink, MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Agent > pEnemy, double percentage, int firingMode, int firingType, int ammoDotationClass, bool bFireOnlyOnMajorComposantes )
     {
         core::Model parameters;
         parameters[ "identifier" ] = pion.GetID();
@@ -447,6 +447,7 @@ namespace
         parameters[ "percentage" ] = percentage;
         parameters[ "mode" ] = firingMode;
         parameters[ "type" ] = firingType;
+        parameters[ "major" ] = bFireOnlyOnMajorComposantes;
         parameters[ "dotation" ] = ammoDotationClass;
         return sink.StartCommand( "direct fire command", parameters );
     }
@@ -461,11 +462,13 @@ void RolePion_Decision::RegisterActions()
     RegisterCommand< unsigned int( boost::shared_ptr< DEC_Path_ABC > ) >( "DEC_StartDeplacement", &StartAction< boost::shared_ptr< DEC_Path_ABC > >, "move", _1 );
     RegisterCommand< void( boost::shared_ptr< MT_Vector2D > ) >( "DEC_Orientate", &Orientate, _1 );
     RegisterFunction( "DEC_StartTirDirect",
-        boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Agent >, double, int, int ) >( boost::bind( &StartTirDirect, boost::ref( sink_ ), boost::ref( GetPion() ), _1, _2, _3, 0, _4 ) ) ); // $$$$ MCO 2012-09-14: 0 => eFireUsingAllComposantes
+        boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Agent >, double, int, int ) >( boost::bind( &StartTirDirect, boost::ref( sink_ ), boost::ref( GetPion() ), _1, _2, _3, 0, _4, false ) ) ); // $$$$ MCO 2012-09-14: 0 => eFireUsingAllComposantes
     RegisterFunction( "DEC_StartTirDirectDebarques",
-        boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Agent >, double, int ) >( boost::bind( &StartTirDirect, boost::ref( sink_ ), boost::ref( GetPion() ), _1, _2, _3, 1, -1 ) ) ); // $$$$ MCO 2012-09-14: 1 => eFireUsingOnlyComposantesLoadable
+        boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Agent >, double, int ) >( boost::bind( &StartTirDirect, boost::ref( sink_ ), boost::ref( GetPion() ), _1, _2, _3, 1, -1, false ) ) ); // $$$$ MCO 2012-09-14: 1 => eFireUsingOnlyComposantesLoadable
     RegisterFunction( "DEC_StartTirDirectTransporteurs",
-        boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Agent >, double, int ) >( boost::bind( &StartTirDirect, boost::ref( sink_ ), boost::ref( GetPion() ), _1, _2, _3, 2, -1 ) ) ); // $$$$ MCO 2012-09-14: 2 = eFireUsingOnlyComposantesCarrier
+        boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Agent >, double, int ) >( boost::bind( &StartTirDirect, boost::ref( sink_ ), boost::ref( GetPion() ), _1, _2, _3, 2, -1, false ) ) ); // $$$$ MCO 2012-09-14: 2 = eFireUsingOnlyComposantesCarrier
+    RegisterFunction( "DEC__StartTirDirectSurComposantesMajeures",
+        boost::function< unsigned int( int, boost::shared_ptr< DEC_Knowledge_Agent >, double, int ) >( boost::bind( &StartTirDirect, boost::ref( sink_ ), boost::ref( GetPion() ), _2, _3, 0, _4, _1, true ) ) ); // $$$$ MCO 2012-09-14: 0 => eFireUsingAllComposantes
 }
 
 // -----------------------------------------------------------------------------
