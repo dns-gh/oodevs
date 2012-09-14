@@ -433,10 +433,10 @@ void TransferArchive( cpplog::BaseLogger& log, Archive* dst, Archive* src, const
 
 struct Unpacker : public Unpacker_ABC
 {
-    Unpacker( cpplog::BaseLogger& log, const Path& output, std::istream& stream )
+    Unpacker( cpplog::BaseLogger& log, const Path& output, io::Reader_ABC& src )
         : log_   ( log )
         , output_( output )
-        , stream_( stream )
+        , src_   ( src )
         , buffer_( UINT16_MAX )
     {
         // NOTHING
@@ -450,14 +450,9 @@ struct Unpacker : public Unpacker_ABC
     static __LA_SSIZE_T Read( Archive* /*arc*/, void* userdata, const void** buffer )
     {
         Unpacker* it = reinterpret_cast< Unpacker* >( userdata );
-        __LA_SSIZE_T fill = 0;
-        *buffer = &it->buffer_[0];
-        while( fill < 1 && !it->stream_.eof() )
-        {
-            it->stream_.read( &it->buffer_[ fill ], it->buffer_.size() - fill );
-            fill += static_cast< __LA_SSIZE_T >( it->stream_.gcount() );
-        }
-        return fill;
+        void* dst = &it->buffer_[0];
+        *buffer = dst;
+        return it->src_.Read( dst, it->buffer_.size() );
     }
 
     void Unpack()
@@ -483,7 +478,7 @@ struct Unpacker : public Unpacker_ABC
 
     cpplog::BaseLogger& log_;
     const Path output_;
-    std::istream& stream_;
+    io::Reader_ABC& src_;
     std::vector< char > buffer_;
 };
 }
@@ -492,7 +487,7 @@ struct Unpacker : public Unpacker_ABC
 // Name: FileSystem::Unpack
 // Created: BAX 2012-05-11
 // -----------------------------------------------------------------------------
-FileSystem_ABC::T_Unpacker FileSystem::Unpack( const Path& output, std::istream& src ) const
+FileSystem_ABC::T_Unpacker FileSystem::Unpack( const Path& output, io::Reader_ABC& src ) const
 {
     return boost::make_shared< Unpacker >( boost::ref( log_ ), output, boost::ref( src ) );
 }
