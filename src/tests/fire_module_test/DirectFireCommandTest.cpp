@@ -24,7 +24,7 @@ namespace
                     ( "percentage", 7 )
                     ( "mode", 0 )
                     ( "type", 0 )
-                    ( "major", true )
+                    ( "major", false )
                     ( "dotation", 0 ) );
             mock::verify();
         }
@@ -258,6 +258,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_running_and_no_hit_when_wea
             ( "percentage", 7 )
             ( "mode", 0 )
             ( "type", 0 )
+            ( "major", false )
             ( "dotation", 0 ) );
     ExpectCallback( 4 );
 
