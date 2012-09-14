@@ -13,13 +13,18 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/property_tree/ptree.hpp>
 
+namespace io
+{
+    struct Reader_ABC;
+}
+
 namespace property_tree
 {
     typedef boost::property_tree::ptree T_Tree;
 
     std::string ToJson( const T_Tree& T_Tree, bool isPretty = false );
     T_Tree FromJson( const std::string& data );
-    T_Tree FromJson( std::istream& stream );
+    T_Tree FromJson( io::Reader_ABC& stream );
     std::string ToXml( const T_Tree& tree );
     T_Tree FromXml( const std::string& data );
 

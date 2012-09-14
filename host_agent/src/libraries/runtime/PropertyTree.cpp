@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "PropertyTree.h"
+#include "Io.h"
 
 #ifndef BOOST_SPIRIT_THREADSAFE
 #error BOOST_SPIRIT_THREADSAFE define is required
@@ -82,22 +83,16 @@ namespace json_parser
 namespace
 {
 template< typename T >
-Tree Read( std::istream& data, const T& functor )
+Tree Read( const std::string& text, const T& functor )
 {
     Tree tree;
+    std::stringstream data( text );
     if( data.peek() != std::iostream::traits_type::eof() )
         try
         {
             functor( data, tree );
         } catch( ... ) {}
     return tree;
-}
-
-template< typename T >
-Tree Read( const std::string& data, const T& functor )
-{
-    std::istringstream stream( data );
-    return Read( stream, functor );
 }
 
 template< typename T >
@@ -135,9 +130,14 @@ Tree property_tree::FromJson( const std::string& data )
 // Name: FromJson
 // Created: BAX 2012-08-27
 // -----------------------------------------------------------------------------
-Tree property_tree::FromJson( std::istream& stream )
+Tree property_tree::FromJson( io::Reader_ABC& src )
 {
-    return Read( stream, boost::bind( &boost::property_tree::read_json< Tree >, _1, _2 ) );
+    std::vector< char > buffer( 1<<12 );
+    std::string data;
+    size_t len;
+    while( (len = src.Read( &buffer[0], buffer.size() ) ) > 0 )
+        data.append( &buffer[0], len );
+    return Read( data, boost::bind( &boost::property_tree::read_json< Tree >, _1, _2 ) );
 }
 
 // -----------------------------------------------------------------------------
