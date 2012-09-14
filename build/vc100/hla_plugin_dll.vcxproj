@@ -103,6 +103,7 @@
     </Link>
     <ClCompile>
       <PreprocessorDefinitions>HLA_PLUGIN_DLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
@@ -114,6 +115,7 @@
     </Link>
     <ClCompile>
       <PreprocessorDefinitions>HLA_PLUGIN_DLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
@@ -125,6 +127,7 @@
     </Link>
     <ClCompile>
       <PreprocessorDefinitions>HLA_PLUGIN_DLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
@@ -136,6 +139,7 @@
     </Link>
     <ClCompile>
       <PreprocessorDefinitions>HLA_PLUGIN_DLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
