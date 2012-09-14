@@ -436,7 +436,8 @@
     </target>
 
     <target name="library.logger_plugin" depends="library.dispatcher,library.reports" description="build logger_plugin static library">
-        <build-lib name="logger_plugin" depends="qt4" pattern="lib${ant.project.name}_logger_plugin-${platform}-mt@{suffix}" suffix="-gd">
+        <build-lib name="logger_plugin" depends="qt4" pattern="lib${ant.project.name}_logger_plugin-${platform}-mt@{suffix}" suffix="-gd"
+                   failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
