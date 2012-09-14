@@ -11,6 +11,7 @@
 #include "StandardModel.h"
 #include "moc_StandardModel.cpp"
 #include "DragAndDropObserver_ABC.h"
+#include "StandardModelVisitor_ABC.h"
 
 using namespace gui;
 
@@ -60,6 +61,25 @@ bool StandardModel::setData( const QModelIndex& index, const QVariant& value, in
 void StandardModel::SetDragAndDropObserver( DragAndDropObserver_ABC* dragAndDropObserver )
 {
     dragAndDropObserver_ = dragAndDropObserver;
+}
+
+// -----------------------------------------------------------------------------
+// Name: StandardModel::Accept
+// Created: JSR 2012-09-14
+// -----------------------------------------------------------------------------
+void StandardModel::Accept( StandardModelVisitor_ABC& visitor, QStandardItem* root /*= 0*/ )
+{
+    if( root == 0)
+        root = invisibleRootItem();
+    for( int row = 0; row < root->rowCount(); ++row )
+    {
+        QStandardItem* childItem = root->child( row, 0 );
+        if( childItem )
+        {
+            visitor.Visit( *childItem );
+            Accept( visitor, childItem );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------

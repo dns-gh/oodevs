@@ -56,15 +56,6 @@ void ObjectTreeView::NotifyCreated( const kernel::Object_ABC& object )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectTreeView::NotifyUpdated
-// Created: JSR 2012-09-13
-// -----------------------------------------------------------------------------
-void ObjectTreeView::NotifyUpdated( const kernel::Object_ABC& object )
-{
-
-}
-
-// -----------------------------------------------------------------------------
 // Name: ObjectTreeView::NotifyDeleted
 // Created: JSR 2012-09-13
 // -----------------------------------------------------------------------------

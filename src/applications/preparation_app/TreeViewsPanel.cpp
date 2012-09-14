@@ -14,11 +14,11 @@
 #include "TacticalTreeView.h"
 #include "PreparationProfile.h"
 #include "CommunicationTreeView.h"
- #include "clients_gui/ObjectTreeView.h"
+#include "UrbanTreeView.h"
+#include "clients_gui/ObjectTreeView.h"
 // #include "PopulationTreeView.h"
 // #include "LogisticTreeView.h"
 // #include "InhabitantTreeView.h"
-// #include "UrbanTreeView.h"
 #include "clients_gui/EntityTreeView.h"
 #include "clients_gui/SearchTreeView.h"
 #include "clients_gui/GlProxy.h"
@@ -34,7 +34,7 @@
 // -----------------------------------------------------------------------------
 TreeViewsPanel::TreeViewsPanel( kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons,
                                 ModelBuilder& modelBuilder, Model& model, std::vector< gui::SearchTreeView_ABC* >& treeViews,
-                                gui::SymbolIcons& /*symbols*/, StaticModel& staticModel, const gui::AggregateToolbar& aggregateToolbar )
+                                gui::SymbolIcons& symbols, StaticModel& staticModel, const gui::AggregateToolbar& aggregateToolbar )
     : QTabWidget()
 {
     {
@@ -66,14 +66,12 @@ TreeViewsPanel::TreeViewsPanel( kernel::Controllers& controllers, gui::ItemFacto
         Configure( searchTreeView, treeViews, aggregateToolbar, ePreparationMode_Terrain );
         addTab( searchTreeView, tools::translate( "DockContainer","Objects" ) );
     }
-    /*
     // Urban
     {
-        gui::SearchTreeView_ABC* searchTreeView = new gui::SearchTreeView< UrbanTreeView >( this, controllers, factory, modelBuilder, symbols, staticModel, model.urban_ );
+        gui::SearchTreeView_ABC* searchTreeView = new gui::SearchTreeView< UrbanTreeView >( this, controllers, PreparationProfile::GetProfile(), modelBuilder, symbols /*, staticModel, model.urban_*/ );
         Configure( searchTreeView, treeViews, aggregateToolbar );
         addTab( searchTreeView, tools::translate( "DockContainer","Urban" ) );
     }
-    */
     // Crowds
     {
         gui::SearchTreeView_ABC* searchTreeView = new gui::SearchTreeView< gui::PopulationTreeView >( this, controllers, PreparationProfile::GetProfile(), modelBuilder );

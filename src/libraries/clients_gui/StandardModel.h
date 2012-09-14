@@ -18,6 +18,7 @@
 namespace gui
 {
 class DragAndDropObserver_ABC;
+class StandardModelVisitor_ABC;
 
 // =============================================================================
 /** @class  StandardModel
@@ -60,6 +61,8 @@ public:
     virtual bool setData ( const QModelIndex& index, const QVariant& value, int role = Qt::EditRole );
 
     void SetDragAndDropObserver( DragAndDropObserver_ABC* dragAndDropObserver );
+
+    void Accept( StandardModelVisitor_ABC& visitor, QStandardItem* root = 0 );
 
     void Purge();
     template< typename T >

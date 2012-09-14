@@ -11,7 +11,6 @@
 #define __HierarchyTreeView_ABC_h_
 
 #include "EntityTreeView_ABC.h"
-#include "DragAndDropObserver_ABC.h"
 
 namespace kernel
 {
@@ -39,7 +38,6 @@ namespace gui
 // Created: ABR 2012-08-10
 // =============================================================================
 class HierarchyTreeView_ABC : public EntityTreeView_ABC
-                            , public DragAndDropObserver_ABC
 {
     Q_OBJECT
 

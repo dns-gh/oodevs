@@ -114,6 +114,7 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\HelpSystem.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\HierarchyTreeView_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\HtmlEditor.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\ItemPixmapDelegate.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\LinkInterpreter_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ListView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\LogisticListView.cpp" />
@@ -652,6 +653,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ItemPixmapDelegate.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\LanguageChangeObserver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\LogisticListView.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
@@ -1036,6 +1038,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\libraries\clients_gui\StandardModelVisitor_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\TacticalTreeView.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\Tools.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\TrafficabilityPrototype_ABC.h" />

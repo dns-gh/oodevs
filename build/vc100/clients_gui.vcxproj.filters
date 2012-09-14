@@ -910,6 +910,9 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\LongNameHelper.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\ItemPixmapDelegate.cpp">
+      <Filter>Source Files\MVC\View</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -1453,6 +1456,12 @@
       <Filter>Source Files\MVC\Model</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\ObjectTreeView.h">
+      <Filter>Source Files\MVC\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\StandardModelVisitor_ABC.h">
+      <Filter>Source Files\MVC\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ItemPixmapDelegate.h">
       <Filter>Source Files\MVC\View</Filter>
     </ClInclude>
   </ItemGroup>

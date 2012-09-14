@@ -36,12 +36,7 @@ HierarchyTreeView_ABC::HierarchyTreeView_ABC( kernel::Controllers& controllers, 
     timer_->setSingleShot( true );
     connect( timer_, SIGNAL( timeout() ), this, SLOT( OnTimeOut() ) );
 
-    dataModel_.SetDragAndDropObserver( this );
-    setDragEnabled( true );
-    setAcceptDrops( true );
-    setDropIndicatorShown( true );
-    setAutoScroll( true );
-    setAutoExpandDelay( 500 );
+    EnableDragAndDrop( true );
 }
 
 // -----------------------------------------------------------------------------

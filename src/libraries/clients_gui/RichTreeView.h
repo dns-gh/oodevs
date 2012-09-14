@@ -12,6 +12,7 @@
 
 #include <QtGui/qtreeview.h>
 #include "clients_kernel/ReadOnlyModable.h"
+#include "DragAndDropObserver_ABC.h"
 #include "StandardModel.h"
 
 namespace kernel
@@ -31,6 +32,7 @@ namespace gui
 // =============================================================================
 class RichTreeView : public QTreeView
                    , public kernel::ReadOnlyModable
+                   , public DragAndDropObserver_ABC
 {
    Q_OBJECT
 
@@ -44,6 +46,9 @@ public:
     //! @name Operations
     //@{
     void Purge();
+    void EnableDragAndDrop( bool enable );
+    virtual QStringList AdditionalMimeTypes() const { return QStringList(); }
+    virtual void Drop( const QString& /*mimeType*/, void* /*data*/, QStandardItem& /*target*/ ) {}
     //@}
 
     //! @name Locks

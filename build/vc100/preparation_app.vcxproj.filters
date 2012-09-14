@@ -538,6 +538,9 @@
     <ClCompile Include="..\..\src\applications\preparation_app\CommunicationTreeView.cpp">
       <Filter>Source Files\TreeView</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\UrbanTreeView.cpp">
+      <Filter>Source Files\TreeView</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\preparation_app\Application.h">
@@ -1004,6 +1007,9 @@
       <Filter>Source Files\TreeView</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\TacticalTreeView.h">
+      <Filter>Source Files\TreeView</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\UrbanTreeView.h">
       <Filter>Source Files\TreeView</Filter>
     </CustomBuild>
   </ItemGroup>

@@ -1,0 +1,70 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2012 MASA Group
+//
+// *****************************************************************************
+
+#ifndef __UrbanTreeView_h_
+#define __UrbanTreeView_h_
+
+#include "clients_gui/EntityTreeView_ABC.h"
+
+namespace kernel
+{
+    class UrbanObject_ABC;
+}
+
+namespace gui
+{
+    class SymbolIcons;
+}
+
+// =============================================================================
+/** @class  UrbanTreeView
+    @brief  UrbanTreeView
+*/
+// Created: JSR 2012-09-14
+// =============================================================================
+class UrbanTreeView: public gui::EntityTreeView_ABC
+                   , public tools::ElementObserver_ABC< kernel::UrbanObject_ABC >
+{
+    Q_OBJECT
+public:
+    //! @name Constructors/Destructor
+    //@{
+             UrbanTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, gui::SymbolIcons& symbols, QWidget* parent = 0 );
+    virtual ~UrbanTreeView();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void NotifyCreated( const kernel::UrbanObject_ABC& object );
+    virtual void NotifyUpdated( const kernel::UrbanObject_ABC& object );
+    virtual void NotifyCreated( const kernel::Team_ABC& team );
+    virtual void NotifyModeChanged( int newMode );
+    //@}
+
+protected slots:
+    //! @name Slots
+    //@{
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    virtual bool IsTypeRejected( const kernel::Entity_ABC& entity ) const;
+    virtual bool LessThan( const QModelIndex& left, const QModelIndex& right, bool& valid ) const;
+    const QPixmap* GetEntityPixmap( const kernel::Entity_ABC& entity );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    gui::SymbolIcons& symbols_;
+    //@}
+};
+
+#endif // __UrbanTreeView_h_

@@ -41,9 +41,17 @@ public:
     //@}
 
 public:
-    //! @name Filters/Sort
+    //! @name Operations
     //@{
+    const QPixmap* GetEntityPixmap( const kernel::Entity_ABC& entity );
     virtual bool LessThan( const QModelIndex& left, const QModelIndex& right, bool& valid ) const;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    QPixmap commandPost_;
+    QPixmap lock_;
     //@}
 };
 

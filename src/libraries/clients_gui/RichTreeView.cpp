@@ -91,6 +91,20 @@ void RichTreeView::Purge()
 }
 
 // -----------------------------------------------------------------------------
+// Name: RichTreeView::EnableDragAndDrop
+// Created: JSR 2012-09-14
+// -----------------------------------------------------------------------------
+void RichTreeView::EnableDragAndDrop( bool enable )
+{
+    dataModel_.SetDragAndDropObserver( enable? this : 0 );
+    setDragEnabled( enable );
+    setAcceptDrops( enable );
+    setDropIndicatorShown( enable );
+    setAutoScroll( enable );
+    setAutoExpandDelay( 500 );
+}
+
+// -----------------------------------------------------------------------------
 // Name: RichTreeView::SetCreationBlocked
 // Created: ABR 2012-08-14
 // -----------------------------------------------------------------------------

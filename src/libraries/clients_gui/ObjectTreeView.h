@@ -29,7 +29,6 @@ namespace gui
 class ObjectTreeView: public EntityTreeView_ABC
                     , public tools::ElementObserver_ABC< kernel::Object_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -41,7 +40,6 @@ protected:
     //! @name Operations
     //@{
     virtual void NotifyCreated( const kernel::Object_ABC& object );
-    virtual void NotifyUpdated( const kernel::Object_ABC& object );
     virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
     //@}
 
