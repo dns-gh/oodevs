@@ -56,6 +56,7 @@ public:
     //! @name Accessors
     //@{
     const MT_Vector2D& GetPosition() const;
+    boost::shared_ptr< MT_Vector2D > GetPositionPtr() const;
     const MT_Vector2D& GetDirection() const;
     double GetSpeed() const;
     double GetAltitude() const;
@@ -89,7 +90,7 @@ private:
     //! @name Member data
     //@{
     unsigned int nTimeLastUpdate_;
-    MT_Vector2D vPosition_;
+    boost::shared_ptr< MT_Vector2D > vPosition_;
     MT_Vector2D vDirection_;
     double rSpeed_;
     double rAltitude_;

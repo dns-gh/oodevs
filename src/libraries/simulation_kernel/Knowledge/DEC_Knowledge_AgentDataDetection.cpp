@@ -20,6 +20,7 @@
 #include "Entities/MIL_Army_ABC.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Tools/MIL_Tools.h"
+#include "Checkpoints/SerializationTools.h"
 #include "protocol/ClientSenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_AgentDataDetection )
@@ -30,6 +31,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_AgentDataDetection )
 // -----------------------------------------------------------------------------
 DEC_Knowledge_AgentDataDetection::DEC_Knowledge_AgentDataDetection()
     : nTimeLastUpdate_             ( 0 )
+    , vPosition_                   ( new MT_Vector2D() )
     , rSpeed_                      ( std::numeric_limits< double >::max() )
     , rAltitude_                   ( std::numeric_limits< double >::max() )
     , rPopulationDensity_          ( 0. )
@@ -169,9 +171,9 @@ void DEC_Knowledge_AgentDataDetection::DoUpdate( const T& data )
     if( data.GetTimeLastUpdate() <= nTimeLastUpdate_ )
         return;
     const MT_Vector2D& vNewPosition = data.GetPosition();
-    if( vPosition_ != vNewPosition )
+    if( *vPosition_ != vNewPosition )
     {
-        vPosition_ = vNewPosition;
+        vPosition_.reset( new MT_Vector2D( vNewPosition ) );
         bPositionUpdated_ = true;
     }
     const MT_Vector2D& vNewDirection = data.GetDirection();
@@ -245,9 +247,9 @@ void DEC_Knowledge_AgentDataDetection::Extrapolate( const MIL_Agent_ABC& agentKn
 {
     // Pas vraiment d'extrapolation : on prend la position réelle du pion
     const MT_Vector2D& vRealPos = agentKnown.GetRole< PHY_RoleInterface_Location >().GetPosition();
-    if( vRealPos != vPosition_ )
+    if( vRealPos != *vPosition_ )
     {
-        vPosition_ = vRealPos;
+        vPosition_.reset( new MT_Vector2D( vRealPos ) );
         bPositionUpdated_ = true;
     }
 }
@@ -258,7 +260,7 @@ void DEC_Knowledge_AgentDataDetection::Extrapolate( const MIL_Agent_ABC& agentKn
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_AgentDataDetection::SendFullState( sword::UnitKnowledgeUpdate& msg ) const
 {
-    NET_ASN_Tools::WritePoint( vPosition_, *msg.mutable_position() );
+    NET_ASN_Tools::WritePoint( *vPosition_, *msg.mutable_position() );
     NET_ASN_Tools::WriteDirection( vDirection_, *msg.mutable_direction() );
     msg.set_speed( static_cast< int >( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) ) );
     msg.mutable_surrendered_unit()->set_id( pArmySurrenderedTo_ ? pArmySurrenderedTo_->GetID() : 0 );
@@ -274,7 +276,7 @@ void DEC_Knowledge_AgentDataDetection::SendFullState( sword::UnitKnowledgeUpdate
 void DEC_Knowledge_AgentDataDetection::SendChangedState( sword::UnitKnowledgeUpdate& msg ) const
 {
     if( bPositionUpdated_ )
-        NET_ASN_Tools::WritePoint( vPosition_, *msg.mutable_position() );
+        NET_ASN_Tools::WritePoint( *vPosition_, *msg.mutable_position() );
     if( bDirectionUpdated_ )
         NET_ASN_Tools::WriteDirection( vDirection_, *msg.mutable_direction() );
     if( bSpeedUpdated_ )
@@ -366,6 +368,15 @@ const MT_Vector2D& DEC_Knowledge_AgentDataDetection::GetDirection() const
 // Created: NLD 2004-11-09
 // -----------------------------------------------------------------------------
 const MT_Vector2D& DEC_Knowledge_AgentDataDetection::GetPosition() const
+{
+    return *vPosition_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< MT_Vector2D > DEC_Knowledge_AgentDataDetection::GetPositionPtr
+// Created: LDC 2012-09-14
+// -----------------------------------------------------------------------------
+boost::shared_ptr< MT_Vector2D > DEC_Knowledge_AgentDataDetection::GetPositionPtr() const
 {
     return vPosition_;
 }
