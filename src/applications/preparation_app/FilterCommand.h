@@ -57,7 +57,7 @@ private:
     void ComputeArgument();
     void ComputePath();
     std::string ConvertArgumentVariable( const std::string& value ) const;
-    bool IsInputArgument( int index ) const;
+    bool IsInputArgument( size_t index ) const;
     //@}
 
 private slots:

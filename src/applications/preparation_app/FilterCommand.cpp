@@ -151,7 +151,7 @@ void FilterCommand::ReadArgument( xml::xistream& xis )
 // Name: FilterCommand::IsInputArgument
 // Created: ABR 2012-05-29
 // -----------------------------------------------------------------------------
-bool FilterCommand::IsInputArgument( int index ) const
+bool FilterCommand::IsInputArgument( size_t index ) const
 {
     for( CIT_InputArguments it = inputArguments_.begin(); it != inputArguments_.end(); ++it )
         if( it->first == index )
@@ -166,7 +166,7 @@ bool FilterCommand::IsInputArgument( int index ) const
 void FilterCommand::ComputeArgument()
 {
     argumentsLine_.clear();
-    for( int i = 0; i < arguments_.size(); ++i )
+    for( size_t i = 0; i < arguments_.size(); ++i )
     {
         if( IsInputArgument( i ) )
         {
@@ -358,7 +358,7 @@ void FilterCommand::Update()
 {
     for( CIT_InputArguments it = inputArguments_.begin(); it != inputArguments_.end(); ++it )
         it->second->Update();
-    for( int i = 0; i < arguments_.size(); ++i )
+    for( size_t i = 0; i < arguments_.size(); ++i )
         if( IsInputArgument( i ) )
             arguments_[ i ].value_.clear();
     ComputeArgument();
