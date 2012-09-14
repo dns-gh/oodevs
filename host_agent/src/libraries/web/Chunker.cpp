@@ -57,10 +57,9 @@ const size_t buffer_size = 1<<18;
 struct Chunker : public Chunker_ABC, public io::Writer_ABC
 {
     Chunker( Reply_ABC& rpy )
-        : rpy_       ( rpy )
-        , raw_buffer_( calloc( sizeof *buffer_, prolog_size*2 + buffer_size ), free )
-        , buffer_    ( reinterpret_cast< char* >( raw_buffer_.get() ) )
-        , fill_      ( 0 )
+        : rpy_   ( rpy )
+        , buffer_( prolog_size*2 + buffer_size )
+        , fill_  ( 0 )
     {
         rpy_.SetStatus( web::OK );
         rpy_.SetHeader( "Content-Type", "application/zip" );
@@ -111,8 +110,7 @@ struct Chunker : public Chunker_ABC, public io::Writer_ABC
     }
 
     Reply_ABC& rpy_;
-    boost::shared_ptr< void > raw_buffer_;
-    char* buffer_;
+    std::vector< char > buffer_;
     size_t fill_;
 };
 }
