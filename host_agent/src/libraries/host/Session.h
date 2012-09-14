@@ -88,6 +88,8 @@ struct SessionDependencies
     web::Client_ABC& client;
     runtime::Pool_ABC& pool;
     PortFactory_ABC& ports;
+private:
+    SessionDependencies& operator=( const SessionDependencies& );
 };
 
 // -----------------------------------------------------------------------------

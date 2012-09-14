@@ -84,6 +84,8 @@ struct NodeDependencies
     const web::Plugins& plugins;
     runtime::Pool_ABC& pool;
     PortFactory_ABC& ports;
+private:
+    NodeDependencies& operator=( const NodeDependencies& );
 };
 
 // =============================================================================

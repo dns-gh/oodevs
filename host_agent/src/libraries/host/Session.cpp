@@ -28,8 +28,16 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/foreach.hpp>
 #include <boost/make_shared.hpp>
-#include <boost/xpressive/xpressive.hpp>
 #include <boost/uuid/uuid_io.hpp>
+
+#ifdef _MSC_VER
+#   pragma warning( push )
+#   pragma warning( disable : 4702 )
+#endif
+#include <boost/xpressive/xpressive.hpp>
+#ifdef _MSC_VER
+#   pragma warning( pop )
+#endif
 
 using namespace host;
 using namespace property_tree;

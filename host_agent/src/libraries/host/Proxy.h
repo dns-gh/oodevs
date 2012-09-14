@@ -67,6 +67,8 @@ struct Ssl
     bool enabled;
     const Path certificate;
     const Path key;
+private:
+    Ssl& operator=( const Ssl& );
 };
 
 struct Config
@@ -83,6 +85,8 @@ struct Config
     const Path app;
     const int port;
     const Ssl ssl;
+private:
+    Config& operator=( const Config& );
 };
 }
 

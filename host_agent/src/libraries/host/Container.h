@@ -19,16 +19,9 @@
 #include <boost/uuid/uuid.hpp>
 #include <vector>
 
-#ifdef _MSC_VER
-#   pragma warning( push )
-#   pragma warning( disable : 4005 4244 )
-#endif
 #include <boost/thread/locks.hpp>
 #include <boost/thread/shared_mutex.hpp>
 #include <boost/unordered_map.hpp>
-#ifdef _MSC_VER
-#   pragma warning( pop )
-#endif
 
 namespace host
 {
