@@ -30,6 +30,12 @@ const std::string MessageLoader::keyFileName_( "key" );
 const std::string MessageLoader::updateFileName_( "update" );
 boost::mutex MessageLoader::filesAccessMutex_;
 
+
+namespace
+{
+    const std::string currentFolderName( "current" );
+}
+
 // -----------------------------------------------------------------------------
 // Name: MessageLoader constructor
 // Created: AGE 2007-07-09
@@ -236,7 +242,17 @@ void MessageLoader::ScanData()
                     bool doAdd = false;
                     {
                         boost::mutex::scoped_lock lock( dataAccessMutex_ );
-                        doAdd = bfs::is_directory( it->status() ) && fragmentsInfos_.find( it->path().filename().string() ) == fragmentsInfos_.end();
+                        doAdd = !( !disk_.get() && initReady_ && it->path().filename().string() == currentFolderName )
+                                && bfs::is_directory( it->status() ) && fragmentsInfos_.find( it->path().filename().string() ) == fragmentsInfos_.end();
+                        if( !disk_.get() && initReady_ && doAdd  )
+                        {
+                            T_FragmentsInfos::iterator itToDelete = fragmentsInfos_.find( currentFolderName );
+                            if( itToDelete != fragmentsInfos_.end() )
+                            {
+                                fragmentsInfos_.erase( itToDelete );
+                                currentOpenFolder_.clear();
+                            }
+                        }
                     }
                     if( doAdd )
                         AddFolder( it->path().filename().string() );
