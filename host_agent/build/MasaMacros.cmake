@@ -9,7 +9,14 @@
 
 if( MSVC )
     set_property( GLOBAL PROPERTY USE_FOLDERS ON )
-    set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")
+    # 4127 conditional expression is constant
+    # 4505 'function' : unreferenced local function has been removed
+    set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP /wd4127 /wd4505 /WX" )
+    if( CMAKE_CXX_FLAGS MATCHES "/W[0-4]" )
+        string( REGEX REPLACE "/W[0-4]" "/W4" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}" )
+    else()
+        set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4" )
+    endif()
     set( CMAKE_RC_FLAGS "${CMAKE_RC_FLAGS} /nologo" )
     math( EXPR msvc_platform "(${MSVC_VERSION} - 600) / 10" )
     set( msvc_suffix "_x64" )
