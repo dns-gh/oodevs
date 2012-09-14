@@ -1017,7 +1017,7 @@
                                  actions_test,launcher_test,reports_test,flood_test,client_proxy_test" description="run all tests"/>
 
     <target name="3a_test" depends="library.3a">
-        <build-test name="3a" depends="xerces,terrain,boost,protobuf" libs="lib${ant.project.name}_3a-${platform}-mt@{suffix},lib${ant.project.name}_protocol-${platform}-mt"/>
+        <build-test name="3a" depends="xerces,terrain,boost,protobuf" libs="lib${ant.project.name}_3a-${platform}-mt@{suffix},lib${ant.project.name}_protocol-${platform}-mt" failonwarning="${failonwarning}"/>
     </target>
 
     <target name="tools_test" depends="library.tools">
