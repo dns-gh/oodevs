@@ -37,12 +37,6 @@ class DirectFireData : boost::noncopyable
 public:
     //! @name Types
     //@{
-    enum E_ComposanteFiredType
-    {
-        eFireOnAllComposantes,
-        eFireOnlyOnMajorComposantes
-    };
-
     enum E_FiringMode
     {
         eFiringModeNormal, // Chaque composante fait feu avec le meilleur couple ( lanceur / munition )

@@ -27,7 +27,7 @@ DirectFireCommand::DirectFireCommand( ModuleFacade& module, const wrapper::View&
     , rPercentageComposantesToUse_( std::max( 0., std::min< double >( 1., parameters[ "percentage" ] ) ) )
     , nFiringMode_                ( static_cast< DirectFireData::E_FiringMode >( static_cast< int >( parameters[ "mode" ] ) ) )
     , firingType_                 ( parameters[ "type" ] )
-    , nComposanteFiredType_       ( DirectFireData::eFireOnAllComposantes )
+    , major_                      ( true )
     , ammoDotationClass_          ( parameters[ "dotation" ] )
     , mustReport_                 ( true )
 {
@@ -56,8 +56,7 @@ void DirectFireCommand::Execute( const wrapper::View& model ) const
     const wrapper::View& entity = model[ "entities" ][ identifier_ ];
     const unsigned int id = entity[ "knowledges" ];
     const wrapper::View& enemy = model[ "knowledges" ][ id ][ enemy_ ];
-    const bool bFireOnlyOnMajorComposantes = nComposanteFiredType_ == DirectFireData::eFireOnlyOnMajorComposantes;
-    int nResult = role_.FirePion( model, entity, enemy, nFiringMode_, rPercentageComposantesToUse_, firingType_, bFireOnlyOnMajorComposantes, mustReport_, ammoDotationClass_ );
+    int nResult = role_.FirePion( model, entity, enemy, nFiringMode_, rPercentageComposantesToUse_, firingType_, major_, mustReport_, ammoDotationClass_ );
     PostCallback( nResult );
     mustReport_ = false;
 }

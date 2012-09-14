@@ -61,7 +61,7 @@ private:
     const double rPercentageComposantesToUse_;
     const DirectFireData::E_FiringMode nFiringMode_;
     const int firingType_;
-    const DirectFireData::E_ComposanteFiredType nComposanteFiredType_;
+    const bool major_;
     const int ammoDotationClass_;
     mutable bool mustReport_;
     //@}
