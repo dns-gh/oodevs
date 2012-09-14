@@ -14,8 +14,9 @@
 #include <boost/bind.hpp>
 #include <boost/ref.hpp>
 // warning 4244: conversion from 'google::protobuf::uint32' to 'google::protobuf::uint8', possible loss of data
+// warning 4267: conversion from 'size_t' to 'type', possible loss of data
 #pragma warning( push )
-#pragma warning( disable: 4244 4244 )
+#pragma warning( disable: 4244 4267 )
 #include <google/protobuf/message.h>
 #include <google/protobuf/descriptor.h>
 #pragma warning( pop )

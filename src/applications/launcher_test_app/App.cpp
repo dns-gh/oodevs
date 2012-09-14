@@ -19,8 +19,9 @@
 #pragma warning( pop )
 
 #include <iostream>
+// warning 4100: unreferenced formal parameter
 #pragma warning( push )
-#pragma warning( disable: 4127 4512 )
+#pragma warning( disable: 4127 4512 4100 )
 #include <boost/program_options.hpp>
 #pragma warning( pop )
 #include <xeumeuleu/xml.h>
