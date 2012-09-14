@@ -258,6 +258,13 @@ namespace
     {
         return MT_Vector2D( vector[ "x" ], vector[ "y" ] );
     }
+    void NotifyCones( const wrapper::View& entity, const T_SurfaceAgentMap& surfacesAgent )
+    {
+        wrapper::Effect effect( entity[ "perceptions/cones" ] );
+        BOOST_FOREACH( const T_SurfaceAgentMap::value_type& surface, surfacesAgent )
+            surface.second.NotifyCone( effect );
+        effect.Post();
+    }
 
     // -----------------------------------------------------------------------------
     // Name: RolePion_Perceiver::ComputeMainPerceptionDirection
@@ -465,6 +472,7 @@ void RolePion_Perceiver::ExecutePerceptions( const wrapper::View& model, const w
     T_SurfaceObjectMap surfacesObject;
 
     Update( model, entity, surfacesAgent, surfacesObject );
+    NotifyCones( entity, surfacesAgent );
 
     T_PerceptionVector activePerceptions = CreateActivePerceptions( model, entity, observer );
 

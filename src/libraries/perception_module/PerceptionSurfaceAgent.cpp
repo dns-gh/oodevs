@@ -9,10 +9,12 @@
 
 #include "PerceptionSurfaceAgent.h"
 #include "SensorTypeAgent.h"
+#include "SensorType.h"
 #include "TargetPerceptionVisitor_ABC.h"
 #include "PerceptionLevel.h"
 #include "wrapper/Hook.h"
 #include "wrapper/View.h"
+#include "wrapper/Effect.h"
 #include <boost/foreach.hpp>
 
 DECLARE_HOOK( IsKnown, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) )
@@ -186,4 +188,24 @@ void PerceptionSurfaceAgent::TransferPerception( std::map< std::size_t, std::pai
     perceptionsBuffer_.clear();
     for( std::map< std::size_t, std::pair< unsigned int, double > >::const_iterator it = urbanPerceptionMap.begin(); it != urbanPerceptionMap.end(); ++it )
         perceptionsBuffer_[ it->first ] = it->second.first;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PerceptionSurfaceAgent::NotifyCone
+// Created: SLI 2012-09-13
+// -----------------------------------------------------------------------------
+void PerceptionSurfaceAgent::NotifyCone( wrapper::Effect& effect ) const
+{
+    wrapper::Node cone = effect.AddElement();
+    cone[ "origin/x" ] = vOrigin_.rX_;
+    cone[ "origin/y" ] = vOrigin_.rY_;
+    cone[ "height" ] = rHeight_;
+    cone[ "sensor" ] = pSensorType_->GetType().GetName();
+    for( CIT_SectorVector itSector = sectors_.begin(); itSector != sectors_.end(); ++itSector )
+    {
+        wrapper::Node sector = cone[ "sectors" ].AddElement();
+        const MT_Vector2D& direction = itSector->GetDirection();
+        sector[ "direction/x" ] = direction.GetX();
+        sector[ "direction/y" ] = direction.GetY();
+    }
 }

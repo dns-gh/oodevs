@@ -37,6 +37,7 @@
 #include "simulation_kernel/PerceptionDistanceComputer_ABC.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "simulation_kernel/VisionConeNotificationHandler_ABC.h"
+#include "Network/NET_ASN_Tools.h"
 #include <core/Convert.h>
 #include <core/Model.h>
 #include <core/MakeModel.h>
@@ -899,8 +900,22 @@ void RolePion_Perceiver::SendDebugState() const
     std::auto_ptr< detection::PerceptionDistanceComputer_ABC > algorithm = owner_.GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer();
     message().set_elongation( static_cast< float >( owner_.Execute( *algorithm ).GetElongationFactor() ) ); //@TODO MGD share
     message().mutable_cones();
-    for( CIT_SurfaceAgentMap it = surfacesAgent_.begin(); it != surfacesAgent_.end(); ++it )
-        it->second.SendFullState( *message().mutable_cones()->add_elem() );
+    const core::Model& cones = entity_[ "perceptions/cones" ];
+    for( std::size_t i = 0; i != cones.GetSize(); ++i )
+    {
+        const core::Model& cone = cones.GetElement( i );
+        sword::VisionCone& msg = *message().mutable_cones()->add_elem();
+        NET_ASN_Tools::WritePoint( MT_Vector2D( cone[ "origin/x" ], cone[ "origin/y" ] ), *msg.mutable_origin() );
+        msg.set_height( cone[ "height" ] );
+        msg.set_sensor( cone[ "sensor" ] );
+        msg.mutable_directions();
+        const core::Model& sectors = cone[ "sectors" ];
+        for( std::size_t j = 0u; j < sectors.GetSize(); ++j )
+        {
+            const core::Model& sector = sectors.GetElement( j );
+            NET_ASN_Tools::WriteDirection( MT_Vector2D( sector[ "direction/x" ], sector[ "direction/y" ] ), *msg.mutable_directions()->add_elem() );
+        }
+    }
     message.Send( NET_Publisher_ABC::Publisher() );
 }
 

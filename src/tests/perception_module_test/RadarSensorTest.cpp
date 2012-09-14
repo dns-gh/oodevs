@@ -35,6 +35,7 @@ namespace
                 ExpectEffect( entity[ "perceptions/max-theoretical-agent-perception-distance" ] );
                 ExpectEffect( entity[ "perceptions/main-perception-direction" ] );
                 ExpectEffect( entity[ "perceptions/radars/acquisitions" ] );
+                ExpectEffect( entity[ "perceptions/cones" ] );
             }
             MOCK_EXPECT( GetConsumptionMode ).once().returns( 0u );
             MOCK_EXPECT( CanBeSeen ).once().returns( true );

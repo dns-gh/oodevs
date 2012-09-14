@@ -32,6 +32,7 @@ namespace perception
             ExpectEffect( entity[ "perceptions/peripherical-vision" ], sword::test::MakeModel( "activated", false ) );
             ExpectEffect( entity[ "perceptions/main-perception-direction" ], sword::test::MakeModel( "x", direction.rX_ )
                                                                                                    ( "y", direction.rY_ ) );
+            ExpectEffect( entity[ "perceptions/cones" ] );
         }
         typedef std::map< std::string, sword::test::ModelBuilder > T_Nofitications;
         void ExpectNotifications( const T_Nofitications& notifications )

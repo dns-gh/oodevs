@@ -27,6 +27,7 @@ namespace sword
 namespace wrapper
 {
     class View;
+    class Effect;
 }
 namespace perception
 {
@@ -60,6 +61,7 @@ public:
     double ComputePerceptionAccuracy( const wrapper::View& perceiver, const MIL_PopulationFlow& target ) const;
     void AddDirection( const MT_Vector2D& vDir );
     void TransferPerception( std::map< std::size_t, std::pair< unsigned int, double > > urbanPerceptionMap ) const;
+    void NotifyCone( wrapper::Effect& effect ) const;
 
     void FinalizePerception();
     //@}

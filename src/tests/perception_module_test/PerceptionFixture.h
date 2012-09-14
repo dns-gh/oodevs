@@ -39,6 +39,7 @@ namespace perception
             entity[ "perceptions/peripherical-vision/next-tick" ] = 1;
             entity[ "perceptions/peripherical-vision/activated" ] = false;
             entity[ "perceptions/vision/mode" ] = "normal";
+            entity[ "perceptions/cones" ];
             entity[ "perceptions/notifications/agents" ];
             entity[ "perceptions/notifications/objects" ];
             entity[ "perceptions/notifications/population-flows" ];

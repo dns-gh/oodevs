@@ -67,6 +67,7 @@ BOOST_FIXTURE_TEST_CASE( perception_command_updates_next_peripherical_vision_ste
     ExpectEffect( entity[ "perceptions/max-agent-perception-distance" ] );
     ExpectEffect( entity[ "perceptions/max-theoretical-agent-perception-distance" ] );
     ExpectEffect( entity[ "perceptions/main-perception-direction" ] );
+    ExpectEffect( entity[ "perceptions/cones" ] );
     ExpectNotifications();
     PostCommand( "perception", core::MakeModel( "identifier", identifier ) );
     ExecuteCommands();
@@ -87,6 +88,7 @@ BOOST_FIXTURE_TEST_CASE( perception_command_with_direction_vision_uses_movement_
     ExpectEffect( entity[ "perceptions/max-theoretical-agent-perception-distance" ] );
     ExpectEffect( entity[ "perceptions/main-perception-direction" ], sword::test::MakeModel( "x", 42. )
                                                                                            ( "y", 43. ) );
+    ExpectEffect( entity[ "perceptions/cones" ] );
     ExpectNotifications();
     PostCommand( "perception", core::MakeModel( "identifier", identifier ) );
     ExecuteCommands();
@@ -107,7 +109,36 @@ BOOST_FIXTURE_TEST_CASE( perception_command_with_location_vision_mode_computes_l
     ExpectEffect( entity[ "perceptions/max-theoretical-agent-perception-distance" ] );
     ExpectEffect( entity[ "perceptions/main-perception-direction" ], sword::test::MakeModel( "x", 0 )
                                                                                            ( "y", -1 ) );
+    ExpectEffect( entity[ "perceptions/cones" ] );
     ExpectNotifications();
+    PostCommand( "perception", core::MakeModel( "identifier", identifier ) );
+    ExecuteCommands();
+}
+
+BOOST_FIXTURE_TEST_CASE( perception_command_updates_vision_cones, PerceptionViewFixture )
+{
+    MOCK_EXPECT( GetUrbanObjectListWithinCircle );
+    MOCK_EXPECT( AppendAddedKnowledge );
+    MOCK_EXPECT( GetAgentListWithinCircle );
+    MOCK_EXPECT( GetObjectListWithinCircle );
+    MOCK_EXPECT( GetConcentrationListWithinCircle );
+    MOCK_EXPECT( GetFlowListWithinCircle );
+    MOCK_EXPECT( GetTransporter ).returns( 0 );
+    ExpectEffect( entity[ "perceptions/max-agent-perception-distance" ] );
+    ExpectEffect( entity[ "perceptions/max-theoretical-agent-perception-distance" ] );
+    ExpectEffect( entity[ "perceptions/peripherical-vision" ] );
+    ExpectEffect( entity[ "perceptions/main-perception-direction" ] );
+    ExpectEffect( entity[ "perceptions/notifications/agents" ] );
+    ExpectEffect( entity[ "perceptions/notifications/objects" ] );
+    ExpectEffect( entity[ "perceptions/notifications/population-flows" ] );
+    ExpectEffect( entity[ "perceptions/notifications/population-concentrations" ] );
+    ExpectEffect( entity[ "perceptions/notifications/urban-blocks" ] );
+    ExpectEffect( entity[ "perceptions/cones" ], sword::test::MakeModel()
+        [ sword::test::MakeModel( "origin/x", 0 )
+                                ( "origin/y", 1 )
+                                ( "height", 0 )
+                                ( "sensor", "sensor-type" )
+                                ( "sectors", sword::test::MakeModel()[ sword::test::MakeModel( "direction/x", 1 )( "direction/y", 0 ) ] ) ] );
     PostCommand( "perception", core::MakeModel( "identifier", identifier ) );
     ExecuteCommands();
 }
