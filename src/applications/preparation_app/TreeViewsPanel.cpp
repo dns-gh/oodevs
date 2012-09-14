@@ -34,7 +34,7 @@
 // -----------------------------------------------------------------------------
 TreeViewsPanel::TreeViewsPanel( kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons,
                                 ModelBuilder& modelBuilder, Model& model, std::vector< gui::SearchTreeView_ABC* >& treeViews,
-                                gui::SymbolIcons& symbols, StaticModel& staticModel, const gui::AggregateToolbar& aggregateToolbar )
+                                gui::SymbolIcons& /*symbols*/, StaticModel& staticModel, const gui::AggregateToolbar& aggregateToolbar )
     : QTabWidget()
 {
     {

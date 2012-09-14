@@ -65,7 +65,7 @@ protected:
     void UpdateItem( QStandardItem& entityItem, const kernel::Entity_ABC& entity );
     void UpdateBackgroundColor( QStandardItem& entityItem, const kernel::Entity_ABC& entity );
     void UpdateSymbol( QStandardItem& entityItem, const kernel::Entity_ABC& entity );
-    virtual void AdditionalUpdateItem( QStandardItem& entityItem, const kernel::Entity_ABC& entity ) {}
+    virtual void AdditionalUpdateItem( QStandardItem& /*entityItem*/, const kernel::Entity_ABC& /*entity*/ ) {}
     //@}
 
     //! @name Operations

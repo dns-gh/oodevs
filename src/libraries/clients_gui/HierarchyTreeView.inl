@@ -57,7 +57,7 @@ void HierarchyTreeView< Hierarchy >::NotifyUpdated( const Hierarchy& hierarchy )
 // -----------------------------------------------------------------------------
 template< typename Hierarchy >
 inline
-void HierarchyTreeView< Hierarchy >::NotifyDeleted( const Hierarchy& hierarchy )
+void HierarchyTreeView< Hierarchy >::NotifyDeleted( const Hierarchy& /*hierarchy*/ )
 {
     dataModel_.PurgeObsoleteSafeItem< kernel::Entity_ABC >();
 }
