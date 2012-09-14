@@ -42,7 +42,7 @@ public:
     virtual bool              TerminateProcess     ( void* hProcess, unsigned uExitCode ) const;
     virtual std::wstring      GetModuleFilename    () const;
     virtual ProcessDescriptor MakeProcess          ( const wchar_t* app, wchar_t* args, const wchar_t* run, const wchar_t* log ) const;
-    virtual unsigned long     GetCurrentProcessIdentifier() const;
+    virtual int               GetCurrentProcessIdentifier() const;
     //@}
 
 private:

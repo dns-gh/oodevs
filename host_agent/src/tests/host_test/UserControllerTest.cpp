@@ -7,6 +7,10 @@
 //
 // *****************************************************************************
 
+#ifdef _MSC_VER
+#   pragma warning( disable : 4244 )
+#endif
+
 #include "host_test.h"
 
 #include "runtime/FileSystem.h"
@@ -17,8 +21,8 @@
 #include "host/UuidFactory.h"
 #include "web/HttpException.h"
 
-#include <boost/foreach.hpp>
 #include <boost/date_time.hpp>
+#include <boost/foreach.hpp>
 #include <boost/uuid/nil_generator.hpp>
 #include <cpplog/cpplog.hpp>
 

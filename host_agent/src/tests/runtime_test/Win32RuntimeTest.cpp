@@ -30,7 +30,7 @@ BOOST_AUTO_TEST_CASE( runtime_process_gets )
     Api api( log );
     Runtime runtime( log, api );
     // Check itself
-    unsigned long pid = api.GetCurrentProcessIdentifier();
+    int pid = api.GetCurrentProcessIdentifier();
     boost::shared_ptr< Process_ABC > ptr = runtime.GetProcess( pid );
     BOOST_CHECK_EQUAL( ptr->GetPid(), pid );
     BOOST_CHECK(ptr->GetName().find("runtime_test") != std::string::npos );

@@ -158,9 +158,13 @@ void ReadLittle( io::Reader_ABC& src, size_t& count, const char* data, size_t si
     std::vector< char > buffer( size );
     size_t len, fill = 0;
     while( fill < size )
-        if( ( len = src.Read( &buffer[fill], size - fill ) ) )
-            fill += len;
-    BOOST_CHECK_EQUAL( std::string( &buffer[0], buffer.size() ), std::string( data, size ) );
+    {
+        len = src.Read( &buffer[fill], size - fill );
+        if( !len )
+            break;
+        fill += len;
+    }
+    BOOST_CHECK_EQUAL( std::string( &buffer[0], buffer.size() ), std::string( data, fill ) );
     ++count;
 }
 }
