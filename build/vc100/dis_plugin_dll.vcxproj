@@ -97,6 +97,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
     <ClCompile>
       <PreprocessorDefinitions>DIS_PLUGIN_DLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <ProgramDatabaseFile>$(RunDir)plugins\dis\$(TargetName)_d.pdb</ProgramDatabaseFile>
@@ -106,6 +107,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
     <ClCompile>
       <PreprocessorDefinitions>DIS_PLUGIN_DLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <ProgramDatabaseFile>$(RunDir)plugins\dis\$(TargetName)_d.pdb</ProgramDatabaseFile>
@@ -115,6 +117,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
     <ClCompile>
       <PreprocessorDefinitions>DIS_PLUGIN_DLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <ProgramDatabaseFile>$(RunDir)plugins\dis\$(TargetName).pdb</ProgramDatabaseFile>
@@ -124,6 +127,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
     <ClCompile>
       <PreprocessorDefinitions>DIS_PLUGIN_DLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <ProgramDatabaseFile>$(RunDir)plugins\dis\$(TargetName).pdb</ProgramDatabaseFile>

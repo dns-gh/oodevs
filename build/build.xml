@@ -317,7 +317,8 @@
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
                   lib${ant.project.name}_rpr-${platform}-mt@{suffix},
                   lib${ant.project.name}_tic-${platform}-mt@{suffix},
-                  lib${ant.project.name}_tools-${platform}-mt@{suffix}">
+                  lib${ant.project.name}_tools-${platform}-mt@{suffix}"
+            failonwarning="${failonwarning}">
             <defineset define="DIS_PLUGIN_DLL_EXPORTS"/>
         </build-plugin>
     </target>
