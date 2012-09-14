@@ -9,6 +9,7 @@
 
 #include "Server.h"
 
+#include "HttpException.h"
 #include "MimeReader.h"
 #include "Observer_ABC.h"
 #include "Request_ABC.h"
@@ -27,44 +28,6 @@ using runtime::Pool_ABC;
 
 namespace
 {
-// -----------------------------------------------------------------------------
-// Name: GetStatusCode
-// Created: BAX 2012-09-14
-// -----------------------------------------------------------------------------
-int GetStatusCode( HttpStatus status )
-{
-    switch( status )
-    {
-        case web::OK:                    return 200;
-        case web::BAD_REQUEST:           return 400;
-        case web::UNAUTHORIZED:          return 401;
-        case web::FORBIDDEN:             return 403;
-        case web::NOT_FOUND:             return 404;
-        default:
-        case web::INTERNAL_SERVER_ERROR: return 500;
-        case web::NOT_IMPLEMENTED:       return 501;
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: GetStatusMessage
-// Created: BAX 2012-09-14
-// -----------------------------------------------------------------------------
-const char* GetStatusMessage( HttpStatus status )
-{
-    switch( status )
-    {
-        case web::OK:                    return "OK";
-        case web::BAD_REQUEST:           return "Bad Request";
-        case web::UNAUTHORIZED:          return "Unauthorized";
-        case web::FORBIDDEN:             return "Forbidden";
-        case web::NOT_FOUND:             return "Not Found";
-        default:
-        case web::INTERNAL_SERVER_ERROR: return "Internal Server Error";
-        case web::NOT_IMPLEMENTED:       return "Not Implemented";
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: SendHttp
 // Created: BAX 2012-09-14

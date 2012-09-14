@@ -84,14 +84,32 @@ static const HttpCode httpCodes[] =
 };
 
 BOOST_STATIC_ASSERT( COUNT_OF( httpCodes ) == HTTP_STATUS_COUNT );
-
-const char* GetStatusMessage( HttpStatus code )
-{
-    if( code < 0 || code >= HTTP_STATUS_COUNT )
-        return "Invalid HTTP status code";
-    return httpCodes[code].text;
 }
 
+// -----------------------------------------------------------------------------
+// Name: web::GetStatusCode
+// Created: BAX 2012-02-28
+// -----------------------------------------------------------------------------
+int web::GetStatusCode( HttpStatus status )
+{
+    if( status < 0 || status >= HTTP_STATUS_COUNT )
+        status = INTERNAL_SERVER_ERROR;
+    return httpCodes[status].code;
+}
+
+// -----------------------------------------------------------------------------
+// Name: web::GetStatusMessage
+// Created: BAX 2012-02-28
+// -----------------------------------------------------------------------------
+const char* web::GetStatusMessage( HttpStatus status )
+{
+    if( status < 0 || status >= HTTP_STATUS_COUNT )
+        status = INTERNAL_SERVER_ERROR;
+    return httpCodes[status].text;
+}
+
+namespace
+{
 // -----------------------------------------------------------------------------
 // Name: WriteHttpReply
 // Created: BAX 2012-02-28

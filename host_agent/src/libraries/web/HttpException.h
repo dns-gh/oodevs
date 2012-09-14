@@ -30,6 +30,9 @@ enum HttpStatus
     HTTP_STATUS_COUNT,
 };
 
+int         GetStatusCode   ( HttpStatus status );
+const char* GetStatusMessage( HttpStatus status );
+
 // -----------------------------------------------------------------------------
 // Name: HttpException struct
 // Created: BAX 2012-04-03
