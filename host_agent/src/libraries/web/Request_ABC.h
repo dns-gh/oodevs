@@ -11,11 +11,18 @@
 
 #include <boost/function.hpp>
 #include <boost/noncopyable.hpp>
-#include <boost/optional.hpp>
-#include <boost/ref.hpp>
 #include <boost/property_tree/ptree_fwd.hpp>
 #include <string>
-#include <vector>
+
+namespace boost
+{
+    template< typename T > class optional;
+}
+
+namespace io
+{
+    struct Reader_ABC;
+}
 
 namespace web
 {
@@ -40,16 +47,14 @@ struct Request_ABC : public boost::noncopyable
     //! @name Operations
     //@{
     virtual std::string GetUri() const = 0;
-    virtual std::vector< std::string > GetParameters() const = 0;
     virtual boost::optional< std::string > GetParameter( const std::string& name ) const = 0;
     virtual boost::optional< std::string > GetHeader( const std::string& name ) const = 0;
-    virtual std::string GetRemoteIp() const = 0;
     virtual std::string GetSid() const = 0;
     //@}
 
     //! @name Mime methods
     //@{
-    typedef boost::function< void( std::istream& ) > MimeHandler;
+    typedef boost::function< void( io::Reader_ABC& ) > MimeHandler;
     virtual void RegisterMime( const std::string& name, const MimeHandler& handler ) = 0;
     virtual void ParseBodyAsMime() = 0;
     virtual Tree ParseBodyAsJson() = 0;

@@ -46,6 +46,7 @@
         <update name="boost"/>
         <update name="cpp-netlib"/>
         <update name="libarchive"/>
+        <update name="mongoose"/>
         <update name="openssl"/>
         <update name="qt"/>
         <update name="sqlite"/>

@@ -758,9 +758,9 @@ void Controller::CountPlugins( Reply_ABC& rpy, const Request_ABC& request )
 
 namespace
 {
-void OnUploadCache( boost::optional< Tree >& reply, Agent_ABC& agent, const Uuid& id, std::istream& stream )
+void OnUploadCache( boost::optional< Tree >& reply, Agent_ABC& agent, const Uuid& id, io::Reader_ABC& src )
 {
-    reply = agent.UploadCache( id, stream );
+    reply = agent.UploadCache( id, src );
 }
 }
 

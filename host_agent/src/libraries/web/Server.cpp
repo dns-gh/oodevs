@@ -9,142 +9,130 @@
 
 #include "Server.h"
 
-#include "AsyncStream.h"
-#include "cpplog/cpplog.hpp"
-#include "HttpException.h"
 #include "MimeReader.h"
 #include "Observer_ABC.h"
 #include "Request_ABC.h"
 #include "Reply_ABC.h"
-#include "runtime/Async.h"
-#include "runtime/Pool_ABC.h"
+#include "runtime/Io.h"
 #include "runtime/PropertyTree.h"
 
-#include <boost/bind.hpp>
+#include <boost/assign/list_of.hpp>
 #include <boost/foreach.hpp>
-#include <boost/lexical_cast.hpp>
-#include <boost/xpressive/xpressive.hpp>
+#include <boost/make_shared.hpp>
 
-#ifdef _MSC_VER
-#   pragma warning( push )
-#   pragma warning( disable : 4100 4127 4244 4345 4512 )
-#endif
-#include <boost/asio/deadline_timer.hpp>
-#include <boost/network/include/http/server.hpp>
-#include <boost/network/utils/thread_pool.hpp>
-#ifdef _MSC_VER
-#   pragma warning( pop )
-#endif
+#include <mongoose/mongoose.h>
 
 using namespace web;
-using runtime::Async;
 using runtime::Pool_ABC;
 
 namespace
 {
-struct Handler;
-typedef boost::network::http::async_server< Handler > HttpServer;
-typedef std::map< std::string, std::string > T_Parameters;
-typedef boost::asio::deadline_timer Timer;
-const int timeout_seconds = 10;
-
-T_Parameters ParseParameters( const std::string& input )
+int GetStatusCode( HttpStatus status )
 {
-    std::vector< std::string > tokens;
-    boost::algorithm::split( tokens, input, boost::is_any_of( "&" ) );
-    size_t pos;
-    T_Parameters reply;
-    BOOST_FOREACH( const std::string& item, tokens )
-        if( ( pos = item.find( '=' ) ) != std::string::npos )
-            reply.insert( std::make_pair( item.substr( 0, pos ),
-                          boost::network::uri::decoded( item.substr( pos+1 ) ) ) );
-    return reply;
+    switch( status )
+    {
+        case web::OK:                    return 200;
+        case web::BAD_REQUEST:           return 400;
+        case web::UNAUTHORIZED:          return 401;
+        case web::FORBIDDEN:             return 403;
+        case web::NOT_FOUND:             return 404;
+        default:
+        case web::INTERNAL_SERVER_ERROR: return 500;
+        case web::NOT_IMPLEMENTED:       return 501;
+    }
 }
 
-T_Parameters ParseParameters( const boost::network::uri::uri& uri )
+const char* GetStatusMessage( HttpStatus status )
 {
-    T_Parameters reply;
-    boost::network::uri::query_map( uri, reply );
-    BOOST_FOREACH( T_Parameters::value_type& value, reply )
-        value.second = boost::network::uri::decoded( value.second );
-    return reply;
+    switch( status )
+    {
+        case web::OK:                    return "OK";
+        case web::BAD_REQUEST:           return "Bad Request";
+        case web::UNAUTHORIZED:          return "Unauthorized";
+        case web::FORBIDDEN:             return "Forbidden";
+        case web::NOT_FOUND:             return "Not Found";
+        default:
+        case web::INTERNAL_SERVER_ERROR: return "Internal Server Error";
+        case web::NOT_IMPLEMENTED:       return "Not Implemented";
+    }
 }
 
-T_Parameters ParseHeaders( const HttpServer::request& request )
+void SendHttp( mg_connection* link, HttpStatus status, const char* reason, const char* msg )
 {
-    T_Parameters reply;
-    BOOST_FOREACH( const HttpServer::request::header_type& header, request.headers )
-        reply.insert( std::make_pair(
-                      boost::algorithm::to_lower_copy( header.name ),
-                      header.value ) );
-    return reply;
+    const size_t len = strlen( msg );
+    mg_printf( link,
+        "HTTP/1.1 %d %s\r\n"
+        "Content-Type: text/plain\r\n"
+        "Content-Length: %d\r\n"
+        "Connection: close\r\n\r\n"
+        "%s",
+        GetStatusCode( status ), reason, len, msg );
 }
 
-template< typename T >
-boost::optional< typename T::mapped_type > FindFrom( const T& data, const typename T::key_type& key )
+void SendError( mg_connection* link, HttpStatus status, const char* msg )
 {
-    typename T::const_iterator it = data.find( key );
-    if( it == data.end() )
+    SendHttp( link, status, GetStatusMessage( status ), msg );
+}
+
+boost::optional< std::string > GetParameter( const std::string& query, const std::string& name )
+{
+    std::vector< char > buffer( std::max< size_t >( 1, query.size() ) );
+    const int len = mg_get_var( query.c_str(), query.size(), name.c_str(), &buffer[0], buffer.size() );
+    if( len == -1 )
         return boost::none;
-    return it->second;
+    return std::string( &buffer[0] );
 }
 
-std::string FindSid( const T_Parameters& headers, const T_Parameters& parameters )
+std::string GetSid( mg_connection* link, const std::string& query )
 {
-    boost::optional< std::string > opt = FindFrom( headers, "cookie" );
-    if( opt != boost::none )
-        if( ( opt = FindFrom( ParseParameters( *opt ), "sid" ) ) != boost::none )
-            return *opt;
-    if( ( opt = FindFrom( parameters, "sid" ) ) != boost::none )
-        return *opt;
-    return std::string();
+    char dst[UINT8_MAX];
+    const int len = mg_get_cookie( link, "sid", dst, sizeof dst );
+    if( len )
+        return std::string( dst );
+    const boost::optional< std::string > opt = GetParameter( query, "sid" );
+    return opt == boost::none ? std::string() : *opt;
 }
 
-const boost::xpressive::sregex portRegex = boost::xpressive::sregex::compile( ":\\d+$" );
-
-class WebRequest : public Request_ABC
+struct WebRequest : public Request_ABC
 {
-public:
-    WebRequest( const HttpServer::request& request )
-        : request_   ( request )
-        , uri_       ( "http://" + request_.source + request_.destination )
-        , headers_   ( ParseHeaders( request ) )
-        , parameters_( ParseParameters( uri_ ) )
-        , source_    ( boost::xpressive::regex_replace( request_.source, portRegex, "" ) )
-        , sid_       ( FindSid( headers_, parameters_ ) )
+    WebRequest( mg_connection* link, const mg_request_info* info )
+        : link_ ( link )
+        , uri_  ( info->uri )
+        , query_( info->query_string ? info->query_string : std::string() )
+        , sid_  ( ::GetSid( link_, query_ ) )
     {
         // NOTHING
     }
 
-    ~WebRequest()
+    virtual ~WebRequest()
     {
         // NOTHING
     }
 
     virtual std::string GetUri() const
     {
-        return uri_.path();
-    }
-
-    virtual std::vector< std::string > GetParameters() const
-    {
-        std::vector< std::string > list;
-        BOOST_FOREACH( const T_Parameters::value_type& v, parameters_ )
-            list.push_back( v.first );
-        return list;
+        return uri_;
     }
 
     virtual boost::optional< std::string > GetParameter( const std::string& name ) const
     {
-        return FindFrom( parameters_, name );
+        return ::GetParameter( query_, name );
     }
 
     virtual boost::optional< std::string > GetHeader( const std::string& name ) const
     {
-        return FindFrom( headers_, boost::to_lower_copy( name ) );
+        const char* reply = mg_get_header( link_, name.c_str() );
+        if( !reply )
+            return boost::none;
+        return reply;
     }
 
-    virtual void RegisterMime( const std::string& /*name*/, const MimeHandler& /*handler*/ )
+    virtual std::string GetSid() const
+    {
+        return sid_;
+    }
+
+    virtual void RegisterMime( const std::string& name, const MimeHandler& handler )
     {
         throw std::runtime_error( "unsupported action" );
     }
@@ -159,75 +147,22 @@ public:
         throw std::runtime_error( "unsupported action" );
     }
 
-    virtual std::string GetRemoteIp() const
-    {
-        return source_;
-    }
-
-    virtual std::string GetSid() const
-    {
-        return sid_;
-    }
-
-    virtual const HttpServer::request& GetRequest() const
-    {
-        return request_;
-    }
-
-private:
-    const HttpServer::request& request_;
-    const boost::network::uri::uri uri_;
-    const T_Parameters headers_;
-    const T_Parameters parameters_;
-    const std::string source_;
+protected:
+    mg_connection*    link_;
+    const std::string uri_;
+    const std::string query_;
     const std::string sid_;
 };
 
-template< void (*Callback)( HttpServer::connection_ptr, size_t, AsyncStream&, Timer& deadline ) >
-void OnReadBody( HttpServer::connection::input_range range, boost::system::error_code error, size_t size,
-                 HttpServer::connection_ptr link, size_t left, AsyncStream& async, Timer& deadline )
+struct BodyWebRequest : public WebRequest, public io::Reader_ABC
 {
-    if( error )
-        return async.CloseWrite();
-    if( size > 0 )
-        async.Write( range.begin(), size );
-    left -= size;
-    if( left > 0 )
-        Callback( link, left, async, deadline );
-    else
-        async.CloseWrite();
-}
-
-void OnTimeout( AsyncStream& async, const boost::system::error_code& e )
-{
-    if( e != boost::asio::error::operation_aborted )
-        async.CloseWrite();
-}
-
-void ReadBody( HttpServer::connection_ptr link, size_t left, AsyncStream& async, Timer& deadline )
-{
-    try
-    {
-        if( deadline.expires_from_now( boost::posix_time::seconds( timeout_seconds ) ) > 0 )
-            deadline.async_wait( boost::bind( &OnTimeout, async, _1 ) );
-        link->read( boost::bind( &OnReadBody< ReadBody >, _1, _2, _3, link, left, async, boost::ref( deadline ) ) );
-    }
-    catch( ... )
-    {
-        async.CloseWrite();
-    }
-}
-
-class BodyWebRequest : public WebRequest
-{
-public:
-    BodyWebRequest( Pool_ABC& pool, HttpServer& server, const HttpServer::request& request, HttpServer::connection_ptr link )
-        : WebRequest( request )
+    BodyWebRequest( Pool_ABC& pool, mg_connection* link, const mg_request_info* info )
+        : WebRequest( link, info )
+        , info_     ( info )
         , pool_     ( pool )
-        , link_     ( link )
         , reader_   ()
-        , deadline_ ( server.get_service() )
         , size_     ( 0 )
+        , read_     ( 0 )
     {
         const boost::optional< std::string > opt = GetHeader( "Content-Length" );
         if( opt != boost::none )
@@ -242,10 +177,8 @@ public:
     void SetupReader()
     {
         reader_ = boost::make_shared< MimeReader >();
-        BOOST_FOREACH( const boost::network::http::request_header_narrow& item, GetRequest().headers )
-            reader_->PutHeader( item.name, item.value );
-        if( !reader_->IsValid() )
-            size_ = 0;
+        for( int idx = 0; idx < info_->num_headers; ++idx )
+            reader_->PutHeader( info_->http_headers[idx].name, info_->http_headers[idx].value );
     }
 
     virtual void RegisterMime( const std::string& name, const MimeHandler& handler )
@@ -255,220 +188,145 @@ public:
         reader_->Register( name, handler );
     }
 
-    void ParseBody( const AsyncStream::Handler& handler )
+    size_t Read( void* dst, size_t size )
     {
-        deadline_.async_wait( boost::bind( &OnTimeout, boost::ref( stream_ ), _1 ) );
-        ReadBody( link_, size_, stream_, deadline_ );
-        stream_.Read( handler );
+        const size_t next = size_ ? std::min( size, size_ - read_ ) : size;
+        const int len = mg_read( link_, dst, next );
+        read_ += len;
+        return len;
     }
 
     virtual void ParseBodyAsMime()
     {
-        ParseBody( boost::bind( &MimeReader::Parse, reader_, boost::ref( pool_ ), _1 ) );
+        reader_->Parse( pool_, *this );
     }
 
     virtual Tree ParseBodyAsJson()
     {
-        Tree dst;
-        ParseBody( boost::bind( &BodyWebRequest::ParseJsonStream, this, boost::ref( dst ), _1 ) );
-        return dst;
-    }
-
-    void ParseJsonStream( Tree& dst, std::istream& src )
-    {
-        dst = property_tree::FromJson( src );
-    }
-
-    virtual boost::optional< std::string > GetParameter( const std::string& name ) const
-    {
-        const boost::optional< std::string > opt = WebRequest::GetParameter( name );
-        if( opt != boost::none )
-            return opt;
-        return FindFrom( form_, name );
+        return property_tree::FromJson( *this );
     }
 
 private:
+    const mg_request_info* info_;
     Pool_ABC& pool_;
-    AsyncStream stream_;
-    HttpServer::connection_ptr link_;
-    boost::shared_ptr< MimeReader > reader_;
-    Timer deadline_;
     size_t size_;
-    T_Parameters form_;
+    size_t read_;
+    boost::shared_ptr< MimeReader > reader_;
 };
-
-template< typename T >
-void SetError( HttpServer::connection_ptr link, T error, const std::string& message )
-{
-    link->set_status( error );
-    link->write( message );
-}
-
-HttpServer::connection::status_t Convert( HttpStatus status )
-{
-    switch( status )
-    {
-        case web::OK:                    return HttpServer::connection::ok;
-        case web::BAD_REQUEST:           return HttpServer::connection::bad_request;
-        case web::UNAUTHORIZED:          return HttpServer::connection::unauthorized;
-        case web::FORBIDDEN:             return HttpServer::connection::forbidden;
-        case web::NOT_FOUND:             return HttpServer::connection::not_found;
-        default:
-        case web::INTERNAL_SERVER_ERROR: return HttpServer::connection::internal_server_error;
-        case web::NOT_IMPLEMENTED:       return HttpServer::connection::not_implemented;
-    }
-}
 
 struct Reply : public Reply_ABC
 {
-    Reply( HttpServer::connection_ptr link )
-        : link_   ( link )
-        , headers_()
+    Reply( mg_connection* link )
+        : link_( link )
     {
         // NOTHING
     }
 
-    virtual ~Reply()
+    ~Reply()
     {
         // NOTHING
     }
 
     void SetHeader( const std::string& key, const std::string& value )
     {
-        boost::network::http::response_header_narrow header;
-        header.name = key;
-        header.value = value;
-        headers_.push_back( header );
+        headers_.insert( std::make_pair( key, value ) );
     }
 
     void SetStatus( HttpStatus code )
     {
-        link_->set_status( Convert( code ) );
+        status_ = code;
     }
 
     void WriteHeaders()
     {
-        link_->set_headers( boost::make_iterator_range( headers_.begin(), headers_.end() ) );
-    }
-
-    void WriteContent( const std::string& data )
-    {
-        link_->write( data );
+        mg_printf( link_, "HTTP/1.1 %d %s\r\n", GetStatusCode( status_ ), GetStatusMessage( status_ ) );
+        BOOST_FOREACH( const T_Headers::value_type& value, headers_ )
+            mg_printf( link_, "%s: %s\r\n", value.first.c_str(), value.second.c_str() );
+        mg_printf( link_, "\r\n" );
     }
 
     void Write( const void* data, size_t size )
     {
-        const char* text = reinterpret_cast< const char* >( data );
-        boost::shared_ptr< std::string > output = boost::make_shared< std::string >( text, size );
-        link_->write( boost::asio::buffer( *output ), boost::bind( &Reply::OnWriteEnd, this, output, _1 ) );
+        mg_write( link_, data, size );
     }
 
-    void OnWriteEnd( boost::shared_ptr< std::string > /*output*/, const boost::system::error_code& /*ec*/ )
+    void WriteContent( const std::string& data )
     {
-        // NOTHING
+        Write( data.c_str(), data.size() );
     }
 
 private:
-     HttpServer::connection_ptr link_;
-     std::vector< boost::network::http::response_header_narrow > headers_;
-};
-
-struct Context : public boost::noncopyable
-{
-    Context( Async& async, Observer_ABC& observer )
-        : async_   ( async )
-        , observer_( observer )
-        , server_  ( 0 )
-    {
-        // NOTHING
-    }
-
-    ~Context()
-    {
-        // NOTHING
-    }
-
-    void SetServer( HttpServer* server )
-    {
-        server_ = server;
-    }
-
-    void Serve( const HttpServer::request& request, HttpServer::connection_ptr link )
-    {
-        if( request.method == "GET" )
-            async_.Post( boost::bind( &Context::Get, this, boost::cref( request ), link ) );
-        else if( request.method == "POST" )
-            async_.Go( boost::bind( &Context::Post, this, boost::cref( request ), link ) );
-        else
-            SetError( link, link->bad_request, "Invalid request method" );
-    }
-
-private:
-    void Get( const HttpServer::request& request, HttpServer::connection_ptr link )
-    {
-        WebRequest req( request );
-        Reply rpy( link );
-        observer_.DoGet( rpy, req );
-    }
-
-    void Post( const HttpServer::request& request, HttpServer::connection_ptr link )
-    {
-        BodyWebRequest req( async_.GetPool(), *server_, request, link );
-        Reply rpy( link );
-        return observer_.DoPost( rpy, req );
-    }
-
-private:
-    Async& async_;
-    Observer_ABC& observer_;
-    HttpServer* server_;
-};
-
-struct Handler
-{
-    explicit Handler( Context* context ) : context_( context )
-    {
-        // NOTHING
-    }
-
-    ~Handler()
-    {
-        // NOTHING
-    }
-
-    void operator()( const HttpServer::request& request, HttpServer::connection_ptr link )
-    {
-        context_->Serve( request, link );
-    }
-
-private:
-    Context* context_;
+    typedef std::map< std::string, std::string > T_Headers;
+    mg_connection* link_;
+    T_Headers headers_;
+    HttpStatus status_;
 };
 }
 
 struct Server::Private : public boost::noncopyable
 {
     Private( Pool_ABC& pool, Observer_ABC& observer, int port )
-        : threads_( 8 )
-        , async_  ( pool )
-        , context_( async_, observer )
-        , handler_( &context_ )
-        , server_ ( "0.0.0.0", boost::lexical_cast< std::string >( port ), handler_, threads_ )
+        : port_    ( boost::lexical_cast< std::string >( port ) )
+        , pool_    ( pool )
+        , observer_( observer )
+        , context_ ()
     {
-        context_.SetServer( &server_ );
+        // NOTHING
     }
 
     ~Private()
     {
-        server_.stop();
-        async_.Join();
+        // NOTHING
     }
 
-    boost::network::utils::thread_pool threads_;
-    Async async_;
-    Context context_;
-    Handler handler_;
-    HttpServer server_;
+    void Listen()
+    {
+        std::vector< const char* > options = boost::assign::list_of
+            ( "enable_directory_listing" )( "false" )
+            ( "listening_ports" )( port_.c_str() )( 0 );
+        mg_context* ptr = mg_start( &Private::OnHttpRequest, this, &options[0] );
+        if( !ptr )
+            throw std::runtime_error( "unable to start web server" );
+        context_.reset( ptr, mg_stop );
+    }
+
+    static void* OnHttpRequest( mg_event event, mg_connection* link, const mg_request_info* info )
+    {
+        if( event != MG_NEW_REQUEST )
+            return 0;
+        Private* server = reinterpret_cast< Private* >( info->user_data );
+        server->Notify( link, info );
+        return link;
+    }
+
+    void Notify( mg_connection* link, const mg_request_info* info )
+    {
+        if( !strcmp( info->request_method, "GET" ) )
+            Get( link, info );
+        else if( !strcmp( info->request_method, "POST" ) )
+            Post( link, info );
+        else
+            SendError( link, web::BAD_REQUEST, "invalid request" );
+    }
+
+    void Get( mg_connection* link, const mg_request_info* info )
+    {
+        WebRequest req( link, info );
+        Reply rpy( link );
+        observer_.DoGet( rpy, req );
+    }
+
+    void Post( mg_connection* link, const mg_request_info* info )
+    {
+        BodyWebRequest req( pool_, link, info );
+        Reply rpy( link );
+        observer_.DoPost( rpy, req );
+    }
+
+    const std::string port_;
+    Pool_ABC& pool_;
+    Observer_ABC& observer_;
+    boost::shared_ptr< mg_context > context_;
 };
 
 // -----------------------------------------------------------------------------
@@ -496,6 +354,5 @@ Server::~Server()
 // -----------------------------------------------------------------------------
 void Server::Listen()
 {
-    private_->server_.listen();
-    private_->async_.Go( boost::bind( &HttpServer::run_only, &private_->server_ ) );
+    private_->Listen();
 }
