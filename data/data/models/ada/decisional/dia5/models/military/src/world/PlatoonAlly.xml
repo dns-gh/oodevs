@@ -1477,6 +1477,9 @@ This implementation returns 'true' if the units to transport has the &quot;getTr
         <method name="launchDREB">
             <description>Envoie des fumigènes pour se protéger d'une ou plusieurs entités dangereuses.</description>
         </method>
+        <method name="allowCarriers">
+            <description>Laisser les transporteurs sans délai.</description>
+        </method>
     </methods>
     <predicates>
         <predicate name="isCommandingFor">

@@ -963,6 +963,9 @@ return
     launchDREB = function( self )
         return integration.launchDREB()
     end,
+    allowCarriers = function( self )
+        integration.allowCarriers()
+    end,
     sendMessage = masalife.brain.integration.startStopAction( 
     { 
         start = function( self, message )
