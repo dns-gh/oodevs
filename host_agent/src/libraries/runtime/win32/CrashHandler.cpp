@@ -138,7 +138,6 @@ LONG WINAPI TopLevelFilter( PEXCEPTION_POINTERS exception )
 {
     MakeDump( exception, MiniDumpNormal );
     ExitProcess( INT_MAX );
-    return EXCEPTION_EXECUTE_HANDLER;
 }
 }
 

@@ -14,18 +14,18 @@
 #error BOOST_SPIRIT_THREADSAFE define is required
 #endif
 
-#ifdef _MSC_VER
-#   pragma warning( push )
-#   pragma warning( disable : 4100 4512 )
-#endif
-#include <boost/property_tree/json_parser.hpp>
-#ifdef _MSC_VER
-#pragma warning( pop )
-#endif
-
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
 #include <boost/property_tree/xml_parser.hpp>
+
+#ifdef _MSC_VER
+#   pragma warning( push )
+#   pragma warning( disable : 4512 )
+#endif
+#include <boost/property_tree/json_parser.hpp>
+#ifdef _MSC_VER
+#   pragma warning( pop )
+#endif
 
 using namespace property_tree;
 typedef T_Tree Tree;

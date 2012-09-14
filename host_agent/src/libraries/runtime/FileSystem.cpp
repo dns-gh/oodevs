@@ -212,7 +212,7 @@ int OpenDescriptor( const Path& path )
 {
 #ifdef _MSC_VER
     int fd;
-    errno_t err = _wsopen_s( &fd, path.wstring().c_str(), O_WRONLY | O_CREAT | O_EXCL | O_BINARY, _SH_DENYRW, _S_IREAD | _S_IWRITE );
+    _wsopen_s( &fd, path.wstring().c_str(), O_WRONLY | O_CREAT | O_EXCL | O_BINARY, _SH_DENYRW, _S_IREAD | _S_IWRITE );
     return fd;
 #else
     return open( Utf8Convert( path ).c_str(), O_WRONLY | O_CREAT | O_EXCL | O_BINARY );
@@ -385,7 +385,7 @@ void CopyBlocks( cpplog::BaseLogger& log, Archive* src, Archive* dst )
         if( err != ARCHIVE_OK )
             AbortArchive( log, src );
         __LA_SSIZE_T len = archive_write_data( dst, buffer, size );
-        if( len != size )
+        if( len != static_cast< __LA_SSIZE_T >( size ) )
             AbortArchive( log, dst );
     }
 }

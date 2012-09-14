@@ -7,6 +7,10 @@
 //
 // *****************************************************************************
 
+#ifdef _MSC_VER
+#   pragma warning( disable : 4702 )
+#endif
+
 #include "Pool.h"
 
 #include <boost/make_shared.hpp>
