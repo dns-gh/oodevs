@@ -187,7 +187,7 @@ boost::shared_ptr< MT_Vector2D > DEC_KnowledgeAgentFunctions::GetPositionPtr( bo
 {
     boost::shared_ptr< MT_Vector2D > pos;
     if( pKnowledge.get() && pKnowledge->IsValid() )
-        pos = pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Location >().GetSharedPosition();
+        pos = pKnowledge->GetPositionPtr();
     return pos;
 }
 

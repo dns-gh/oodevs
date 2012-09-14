@@ -109,6 +109,7 @@ public:
     unsigned int GetGroupID() const;
     double GetAltitude() const;
     const MT_Vector2D& GetPosition() const;
+    boost::shared_ptr< MT_Vector2D > GetPositionPtr() const;
     const MT_Vector2D& GetDirection() const;
     double GetSpeed() const;
     double GetOperationalState() const;

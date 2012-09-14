@@ -856,6 +856,15 @@ const MT_Vector2D& DEC_Knowledge_Agent::GetPosition() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< MT_Vector2D > DEC_Knowledge_Agent::GetPositionPtr
+// Created: JSR 2012-09-14
+// -----------------------------------------------------------------------------
+boost::shared_ptr< MT_Vector2D > DEC_Knowledge_Agent::GetPositionPtr() const
+{
+    return dataDetection_.GetPositionPtr();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Agent::GetPosition
 // Created: MGD 2010-05-05
 // -----------------------------------------------------------------------------
