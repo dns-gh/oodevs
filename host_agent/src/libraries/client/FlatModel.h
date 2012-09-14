@@ -143,7 +143,7 @@ struct FlatModel : public QAbstractItemModel
     // Name: FlatModel::index
     // Created: BAX 2012-09-06
     // -----------------------------------------------------------------------------
-    virtual QModelIndex index( int row, int col, const QModelIndex& parent = QModelIndex() ) const
+    virtual QModelIndex index( int row, int col, const QModelIndex& /*parent*/ = QModelIndex() ) const
     {
         if( row < 0 || row >= items_.size() )
             return QModelIndex();

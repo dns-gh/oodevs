@@ -26,10 +26,6 @@
 
 using namespace runtime;
 
-#ifdef _MSC_VER
-#   pragma warning( disable : 4127 )
-#endif
-
 #define DAEMON_ERROR( MSG ) do {\
     LOG_ERROR( log_ ) << "[daemon] " << api_.GetLastError();\
     LOG_ERROR( log_ ) << "[daemon] " << ( MSG );\

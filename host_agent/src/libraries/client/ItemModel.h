@@ -41,6 +41,8 @@ private:
     const QString   checksum_;
     const size_t    size_;
     Qt::CheckState  check_state_;
+
+    Item& operator=( const Item& );
 };
 
 class ItemModel : public FlatModel< gui::Item >

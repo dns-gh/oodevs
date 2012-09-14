@@ -139,7 +139,7 @@ QVariant Item::Data( int col, int role )
 // Name: Item::SetData
 // Created: BAX 2012-09-06
 // -----------------------------------------------------------------------------
-bool Item::SetData( int col, const QVariant& value, int role )
+bool Item::SetData( int /*col*/, const QVariant& value, int role )
 {
     if( role != Qt::CheckStateRole )
         return false;
