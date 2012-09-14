@@ -2213,7 +2213,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="objective" name="Site de decontamination" optional="false" type="ObjectKnowledge"/>
-      <parameter dia-name="destination" name="Point de regroupement" optional="false" type="Polygon"/>
+      <parameter dia-name="destination" name="Zone de regroupement" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.tasks.Interdire" dia-type="france.military.company.tasks.Interdire" id="1017" mrt-dia-behavior="france.military.company.tasks.Interdire" name="AUTOMATE MELEE Interdire" package="defence" symbol="IdInterdire_Point">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3499,4 +3499,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ROEM_ArreterSilenceRadar" id="28801" name="Arreter Silence Radar"/>
   </fragorders>
 </missions>
-<!-- signature="3477830366" -->
+<!-- signature="2672797189" -->
