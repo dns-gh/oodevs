@@ -423,7 +423,8 @@
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
                   lib${ant.project.name}_actions-${platform}-mt@{suffix},
                   lib${ant.project.name}_timeline_plugin-${platform}-mt@{suffix},
-                  lib${ant.project.name}_tools-${platform}-mt@{suffix}">
+                  lib${ant.project.name}_tools-${platform}-mt@{suffix}"
+            failonwarning="${failonwarning}">
             <defineset define="TIMELINE_PLUGIN_DLL_EXPORTS"/>
         </build-plugin>
     </target>
