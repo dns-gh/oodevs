@@ -28,6 +28,7 @@
                 <xsl:when test=".='ration'"><xsl:attribute name="logistic-supply-class">Unite vivre</xsl:attribute></xsl:when>
                 <xsl:when test=".='agent extincteur'"><xsl:attribute name="logistic-supply-class">Unite vivre</xsl:attribute></xsl:when>
                 <xsl:when test=".='energie'"><xsl:attribute name="logistic-supply-class">Unite vivre</xsl:attribute></xsl:when>
+                <xsl:when test=".='funeraire'"><xsl:attribute name="logistic-supply-class">Funeraire</xsl:attribute></xsl:when>
             </xsl:choose>
         </xsl:if>        
         <xsl:copy>
