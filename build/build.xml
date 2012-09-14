@@ -1160,7 +1160,8 @@
 
     <target name="positions_plugin_test" depends="library.protocol,library.positions_plugin">
         <build-test name="positions_plugin" depends="boost,protobuf"
-            libs="lib${ant.project.name}_positions_plugin-${platform}-mt,lib${ant.project.name}_protocol-${platform}-mt"/>
+            libs="lib${ant.project.name}_positions_plugin-${platform}-mt,lib${ant.project.name}_protocol-${platform}-mt"
+            failonwarning="${failonwarning}"/>
     </target>
 
     <macrodef name="run-one-simulation">
