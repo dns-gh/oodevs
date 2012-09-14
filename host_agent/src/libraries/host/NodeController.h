@@ -94,7 +94,7 @@ public:
 
     //! @name Cache Methods
     //@{
-    virtual Tree    UploadCache     ( const Uuid& id, std::istream& src ) const;
+    virtual Tree    UploadCache     ( const Uuid& id, io::Reader_ABC& src ) const;
     virtual Tree    GetCache        ( const Uuid& id ) const;
     virtual Tree    DeleteCache     ( const Uuid& id );
     virtual Tree    InstallFromCache( const Uuid& id, const std::vector< size_t >& list );

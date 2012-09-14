@@ -214,9 +214,9 @@ BOOST_FIXTURE_TEST_CASE( node_cache, Fixture )
     mock::reset( system );
     MOCK_EXPECT( system.MakeAnyPath ).returns( "" );
 
-    std::stringstream stream;
+    NilReader src;
     boost::shared_ptr< MockUnpack > unpack = boost::make_shared< MockUnpack >();
-    MOCK_EXPECT( system.Unpack ).once().with( mock::any, boost::ref( stream ) ).returns( unpack );
+    MOCK_EXPECT( system.Unpack ).once().with( mock::any, mock::same( src ) ).returns( unpack );
     MOCK_EXPECT( unpack->Unpack ).once();
 
     MOCK_EXPECT( packages.Make ).once().with( mock::any, false ).returns( cache );
@@ -234,7 +234,7 @@ BOOST_FIXTURE_TEST_CASE( node_cache, Fixture )
     MOCK_EXPECT( system.IsDirectory ).returns( true );
     MOCK_EXPECT( system.Rename ).returns( true );
     MOCK_EXPECT( system.Remove ).returns( true );
-    node->UploadCache( stream );
+    node->UploadCache( src );
     BOOST_CHECK_EQUAL( ToJson( node->GetCache() ), expected );
     MOCK_EXPECT( cache->GetPath ).once().returns( "" );
     BOOST_CHECK_EQUAL( ToJson( node->DeleteCache() ), expected );

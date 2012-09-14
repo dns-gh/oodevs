@@ -28,6 +28,11 @@ namespace uuids
 }
 }
 
+namespace io
+{
+    struct Reader_ABC;
+}
+
 namespace web
 {
     struct Chunker_ABC;
@@ -93,7 +98,7 @@ struct NodeController_ABC : public boost::noncopyable
 
     //! @name Cache Methods
     //@{
-    virtual Tree    UploadCache     ( const Uuid& id, std::istream& src ) const = 0;
+    virtual Tree    UploadCache     ( const Uuid& id, io::Reader_ABC& src ) const = 0;
     virtual Tree    GetCache        ( const Uuid& id ) const = 0;
     virtual Tree    DeleteCache     ( const Uuid& id ) = 0;
     virtual Tree    InstallFromCache( const Uuid& id, const std::vector< size_t >& list ) = 0;

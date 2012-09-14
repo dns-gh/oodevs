@@ -368,7 +368,7 @@ void ParseInline( const T& packages, U& dst, const Path& path, U reference = U()
 // Name: Node::UploadCache
 // Created: BAX 2012-05-14
 // -----------------------------------------------------------------------------
-void Node::UploadCache( std::istream& src )
+void Node::UploadCache( io::Reader_ABC& src )
 {
     const Path output = deps_.system.MakeAnyPath( root_ );
     boost::shared_ptr< Package_ABC > next;

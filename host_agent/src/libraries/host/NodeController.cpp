@@ -368,7 +368,7 @@ Tree NodeController::GetCache( const Uuid& id ) const
 // Name: NodeController::UploadCache
 // Created: BAX 2012-05-11
 // -----------------------------------------------------------------------------
-Tree NodeController::UploadCache( const Uuid& id, std::istream& src ) const
+Tree NodeController::UploadCache( const Uuid& id, io::Reader_ABC& src ) const
 {
     T_Node node = nodes_.Get( id );
     if( !node )

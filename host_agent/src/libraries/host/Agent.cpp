@@ -262,7 +262,7 @@ void Agent::DownloadInstall( const Uuid& id, size_t item, web::Chunker_ABC& dst 
 // Name: Agent::UploadCache
 // Created: BAX 2012-05-11
 // -----------------------------------------------------------------------------
-Tree Agent::UploadCache( const Uuid& id, std::istream& src )
+Tree Agent::UploadCache( const Uuid& id, io::Reader_ABC& src )
 {
     return Tree( nodes_.UploadCache( id, src ) );
 }

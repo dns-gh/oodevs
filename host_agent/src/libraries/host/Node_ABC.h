@@ -30,6 +30,11 @@ namespace uuids
 }
 }
 
+namespace io
+{
+    struct Reader_ABC;
+}
+
 namespace runtime
 {
     struct Async;
@@ -104,7 +109,7 @@ struct Node_ABC : public boost::noncopyable
 
     //! @name Cache methods
     //@{
-    virtual void UploadCache( std::istream& src ) = 0;
+    virtual void UploadCache( io::Reader_ABC& src ) = 0;
     virtual Tree GetCache() const = 0;
     virtual Tree DeleteCache() = 0;
     virtual Tree InstallFromCache( const std::vector< size_t >& list ) = 0;

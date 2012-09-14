@@ -343,9 +343,9 @@ BOOST_FIXTURE_TEST_CASE( agent_upload_cache, Fixture<> )
 {
     Tree tree;
     tree.put( "some", "data" );
-    std::istringstream stream;
-    MOCK_EXPECT( nodes.UploadCache ).once().with( defaultNode, boost::ref( stream ) ).returns( tree );
-    CheckTree( boost::bind( &Agent_ABC::UploadCache, &agent, defaultNode, boost::ref( stream ) ), ToJson( tree ) );
+    NilReader src;
+    MOCK_EXPECT( nodes.UploadCache ).once().with( defaultNode, mock::same( src ) ).returns( tree );
+    CheckTree( boost::bind( &Agent_ABC::UploadCache, &agent, defaultNode, boost::ref( src ) ), ToJson( tree ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_get_cache, Fixture<> )

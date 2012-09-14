@@ -138,7 +138,7 @@ public:
 
     //! @name Node_ABC methods
     //@{
-    virtual void UploadCache( std::istream& src );
+    virtual void UploadCache( io::Reader_ABC& src );
     virtual Tree GetCache() const;
     virtual Tree DeleteCache();
     virtual Tree InstallFromCache( const std::vector< size_t >& list );

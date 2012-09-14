@@ -217,10 +217,10 @@ BOOST_FIXTURE_TEST_CASE( node_controller_stops, Fixture<> )
 BOOST_FIXTURE_TEST_CASE( node_controller_upload_cache, Fixture<> )
 {
     Reload();
-    std::istringstream stream;
-    MOCK_EXPECT( idle->UploadCache ).once().with( boost::ref( stream ) );
+    NilReader src;
+    MOCK_EXPECT( idle->UploadCache ).once().with( mock::same( src ) );
     MOCK_EXPECT( idle->GetCache ).once().returns( Tree() );
-    Tree tree = control.UploadCache( idIdle, stream );
+    Tree tree = control.UploadCache( idIdle, src );
     BOOST_CHECK_EQUAL( ToJson( tree ), "{}" );
 }
 
