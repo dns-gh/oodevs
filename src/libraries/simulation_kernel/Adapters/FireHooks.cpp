@@ -100,9 +100,9 @@ namespace
         const PHY_ComposantePion& compFirer = (*core::Convert( component ))[ "component" ].GetUserData< PHY_ComposantePion >();
         if( !compFirer.CanFire() )
             return false;
-        if( nComposanteFiringType == 1 && !compFirer.CanBeLoaded() ) // $$$$ MCO 2012-04-30: eFireUsingOnlyComposantesLoadable
+        if( firingType == 1 && !compFirer.CanBeLoaded() ) // $$$$ MCO 2012-04-30: eFireUsingOnlyComposantesLoadable
             return false;
-        if( nComposanteFiringType == 2 && !compFirer.CanTransportHumans() ) // $$$$ MCO 2012-04-30: eFireUsingOnlyComposantesCarrier
+        if( firingType == 2 && !compFirer.CanTransportHumans() ) // $$$$ MCO 2012-04-30: eFireUsingOnlyComposantesCarrier
             return false;
         const PHY_DotationCategory* category = GetDotationCategory( dotation );
         if( ! category )
