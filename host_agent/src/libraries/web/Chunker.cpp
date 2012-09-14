@@ -84,7 +84,7 @@ struct Chunker : public Chunker_ABC, public io::Writer_ABC
     {
         const int prolog = snprintf( &buffer_[0], prolog_size, "%x\r\n", fill_ );
         memmove( &buffer_[prolog_size - prolog], &buffer_[0], prolog );
-        const char* fmt = last ? "\r\n0\r\n\r\n" : "\r\n";
+        const char* fmt  = last && fill_ ? "\r\n0\r\n\r\n" : "\r\n";
         const int epilog = snprintf( &buffer_[prolog_size + fill_], prolog_size, fmt );
         rpy_.Write( &buffer_[prolog_size - prolog], prolog + fill_ + epilog );
         fill_ = 0;
