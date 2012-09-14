@@ -1024,7 +1024,8 @@
         <build-test name="tools" depends="boost,xerces,xalan,qt4"
             libs="lib${ant.project.name}_tools-${platform}-mt@{suffix},
                   tools,
-                  lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix}"/>
+                  lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix}"
+            failonwarning="${failonwarning}"/>
     </target>
 
     <target name="plugins_test" depends="library.hla_plugin,library.tic,library.script_plugin,library.bml_plugin,library.crossbow_plugin,library.timeline_plugin,web_control_plugin_test,library.logistic_plugin">
