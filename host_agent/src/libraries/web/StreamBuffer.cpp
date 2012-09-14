@@ -10,8 +10,9 @@
 #define __STDC_LIMIT_MACROS
 #include "StreamBuffer.h"
 
+#include "runtime/Io.h"
+
 #include <cstring>
-#include <istream>
 #include <stdexcept>
 #include <stdint.h>
 
@@ -21,11 +22,12 @@ using namespace web;
 // Name: StreamBuffer::StreamBuffer
 // Created: BAX 2012-05-03
 // -----------------------------------------------------------------------------
-StreamBuffer::StreamBuffer( std::istream& src )
+StreamBuffer::StreamBuffer( io::Reader_ABC& src )
     : src_   ( src )
     , skip_  ( 0 )
     , size_  ( 0 )
     , buffer_( UINT16_MAX )
+    , eof_   ( false )
 {
     // NOTHING
 }
@@ -43,9 +45,10 @@ StreamBuffer::~StreamBuffer()
 // Name: StreamBuffer::Eof
 // Created: BAX 2012-05-03
 // -----------------------------------------------------------------------------
-bool StreamBuffer::Eof() const
+bool StreamBuffer::Eof()
 {
-    return !size_ && src_.eof();
+    FillAtLeast( 1 );
+    return !size_ && eof_;
 }
 
 // -----------------------------------------------------------------------------
@@ -124,15 +127,14 @@ void StreamBuffer::FillAtLeast( size_t size )
 {
     if( size_ >= size )
         return;
-    if( src_.eof() )
+    if( eof_ )
         return;
     if( skip_ )
         memmove( &buffer_[0], &buffer_[skip_], size_ );
     skip_ = 0;
-    if( src_.eof() )
-        return;
-    src_.read( &buffer_[size_], buffer_.size() - size_ );
-    size_ += static_cast< size_t >( src_.gcount() );
+    const size_t len = src_.Read( &buffer_[size_], buffer_.size() - size_ );
+    size_ += len;
+    eof_   = !len;
 }
 
 // -----------------------------------------------------------------------------

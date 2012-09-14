@@ -9,7 +9,7 @@
 
 #include "web_test.h"
 
-#include <web/StreamBuffer.h>
+#include "web/StreamBuffer.h"
 
 using namespace web;
 
@@ -18,11 +18,14 @@ namespace
     struct Fixture
     {
         Fixture()
-            : buffer( stream )
+            : src   ( stream )
+            , buffer( src )
         {
             // NOTHING
         }
+
         std::stringstream stream;
+        StreamReader src;
         StreamBuffer buffer;
     };
 }

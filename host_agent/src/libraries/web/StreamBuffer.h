@@ -14,6 +14,11 @@
 #include <string>
 #include <vector>
 
+namespace io
+{
+    struct Reader_ABC;
+}
+
 namespace web
 {
 // =============================================================================
@@ -27,13 +32,13 @@ class StreamBuffer : public boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit StreamBuffer( std::istream& src );
+    explicit StreamBuffer( io::Reader_ABC& src );
     virtual ~StreamBuffer();
     //@}
 
     //! @name Methods
     //@{
-    bool        Eof() const;
+    bool        Eof();
     char        Peek();
     char        Get();
     size_t      Peek( char** dst );
@@ -50,10 +55,11 @@ private:
     //@}
 
 private:
-    std::istream& src_;
+    io::Reader_ABC& src_;
     std::vector< char > buffer_;
     size_t skip_;
     size_t size_;
+    bool eof_;
 };
 }
 
