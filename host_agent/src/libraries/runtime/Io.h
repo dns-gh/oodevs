@@ -30,7 +30,7 @@ struct Writer_ABC : public boost::noncopyable
 
     //! @name Methods
     //@{
-    virtual bool Write( const void* data, size_t size ) = 0;
+    virtual size_t Write( const void* data, size_t size ) = 0;
     //@}
 };
 }

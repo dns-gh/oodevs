@@ -89,12 +89,13 @@ struct Chunker : public Chunker_ABC, public io::Writer_ABC
         fill_ = 0;
     }
 
-    bool Write( const void* data, size_t size )
+    size_t Write( const void* data, size_t size )
     {
         const char* ptr = reinterpret_cast< const char* >( data );
-        while( size )
+        size_t left = size;
+        while( left )
         {
-            const size_t step = std::min( size, buffer_size - fill_ );
+            const size_t step = std::min( left, buffer_size - fill_ );
             if( !step )
             {
                 Flush( false );
@@ -104,9 +105,9 @@ struct Chunker : public Chunker_ABC, public io::Writer_ABC
             memcpy( &buffer_[prolog_size + fill_], ptr, step );
             ptr   += step;
             fill_ += step;
-            size  -= step;
+            left  -= step;
         }
-        return true;
+        return size;
     }
 
     Reply_ABC& rpy_;
