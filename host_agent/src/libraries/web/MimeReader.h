@@ -14,6 +14,11 @@
 #include <boost/shared_ptr.hpp>
 #include <vector>
 
+namespace io
+{
+    struct Reader_ABC;
+}
+
 namespace runtime
 {
     struct Pool_ABC;
@@ -27,12 +32,12 @@ public:
      MimeReader();
     ~MimeReader();
 
-    typedef boost::function< void( std::istream& ) > Handler;
+    typedef boost::function< void( io::Reader_ABC& ) > Handler;
 
     void PutHeader( const std::string& name, const std::string& value );
     bool IsValid() const;
     void Register( const std::string& name, const Handler& handler );
-    void Parse( runtime::Pool_ABC& pool, std::istream& src );
+    void Parse( runtime::Pool_ABC& pool, io::Reader_ABC& src );
 
 private:
     struct Part;

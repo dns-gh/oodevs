@@ -9,42 +9,20 @@
 
 #include "MimeReader.h"
 
-#include "AsyncStream.h"
-#include "runtime/Pool_ABC.h"
 #include "StreamBuffer.h"
+#include "runtime/Async.h"
+#include "runtime/Io.h"
+#include "runtime/Pool_ABC.h"
 
 #include <boost/algorithm/string.hpp>
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
-#include <boost/iostreams/stream_buffer.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/noncopyable.hpp>
-#include <boost/thread/future.hpp>
 #include <map>
 
 using namespace web;
 using runtime::Pool_ABC;
-
-namespace
-{
-template< typename T >
-struct PartReader : boost::noncopyable
-{
-    PartReader( T part, Pool_ABC& pool )
-        : async_ ( part->async_ )
-        , future_( pool.Go( boost::bind( &AsyncStream::Read, &async_, part->handler_ ) ) )
-    {
-        // NOTHING
-    }
-    ~PartReader()
-    {
-        async_.CloseWrite();
-        future_.wait();
-    }
-    AsyncStream& async_;
-    Pool_ABC::Future future_;
-};
-}
 
 struct MimeReader::Part : boost::noncopyable
 {
@@ -60,7 +38,6 @@ struct MimeReader::Part : boost::noncopyable
     }
     const std::string name_;
     const MimeReader::Handler handler_;
-    AsyncStream async_;
 };
 
 MimeReader::MimeReader()
@@ -208,8 +185,7 @@ size_t FindNeedle( const char* haystack, size_t hsize, const char* needle, size_
     return hsize;
 }
 
-template< typename T >
-void ParseData( StreamBuffer& buf, const std::string& boundary, const T& part = T() )
+void ParseData( StreamBuffer& buf, const std::string& boundary, io::Writer_ABC* io )
 {
     const std::string end = "\r\n--" + boundary;
     while( !buf.Eof() )
@@ -220,25 +196,34 @@ void ParseData( StreamBuffer& buf, const std::string& boundary, const T& part = 
         if( next != read )
         {
             // consume all until delimiter
-            if( part )
-                part->async_.Write( ptr, next );
+            if( io )
+                io->Write( ptr, next );
             buf.Skip( next + 2 );
             return;
         }
         // eat last chunk if not big enough to contain a delimiter
         const size_t skip = read <= end.size() ? read : read - end.size();
         // consume all except potentially truncated boundary
-        if( part )
-            part->async_.Write( ptr, skip );
+        if( io )
+            io->Write( ptr, skip );
         buf.Skip( skip );
     }
+}
+
+void HandleRead( const MimeReader::Handler& handler, io::Pipe_ABC& pipe )
+{
+    handler( pipe );
+    pipe.Close();
 }
 
 template< typename T >
 void ParsePart( StreamBuffer& buf, const std::string& boundary, const T& part, Pool_ABC& pool )
 {
-    PartReader< T > reader( part, pool );
-    ParseData( buf, boundary, part );
+    boost::shared_ptr< io::Pipe_ABC > pipe = io::MakePipe();
+    runtime::Async async( pool );
+    async.Go( boost::bind( &HandleRead, boost::cref( part->handler_ ), boost::ref( *pipe ) ) );
+    ParseData( buf, boundary, pipe.get() );
+    pipe->Close();
 }
 
 template< typename T >
@@ -281,7 +266,7 @@ void MimeReader::Register( const std::string& name, const Handler& handler )
     parts_.push_back( boost::make_shared< Part >( name, handler ) );
 }
 
-void MimeReader::Parse( Pool_ABC& pool, std::istream& src )
+void MimeReader::Parse( Pool_ABC& pool, io::Reader_ABC& src )
 {
     StreamBuffer buf( src );
     const std::string end = "--" + boundary_;
@@ -296,6 +281,6 @@ void MimeReader::Parse( Pool_ABC& pool, std::istream& src )
         if( part )
             ParsePart( buf, boundary_, part, pool );
         else
-            ParseData< T_Part >( buf, boundary_ );
+            ParseData( buf, boundary_, 0 );
     }
 }
