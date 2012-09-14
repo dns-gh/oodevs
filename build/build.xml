@@ -348,7 +348,8 @@
     </target>
 
     <target name="library.order_plugin" depends="library.dispatcher" description="build order_plugin static library">
-        <build-lib name="order_plugin" pattern="lib${ant.project.name}_order_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4">
+        <build-lib name="order_plugin" pattern="lib${ant.project.name}_order_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4"
+                   failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
