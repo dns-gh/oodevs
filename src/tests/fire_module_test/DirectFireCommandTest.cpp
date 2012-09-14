@@ -23,6 +23,7 @@ namespace
                     ( "enemy", 51 )
                     ( "percentage", 7 )
                     ( "mode", 0 )
+                    ( "type", 0 )
                     ( "dotation", 0 ) );
             mock::verify();
         }
@@ -255,6 +256,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_running_and_no_hit_when_wea
             ( "enemy", 51 )
             ( "percentage", 7 )
             ( "mode", 0 )
+            ( "type", 0 )
             ( "dotation", 0 ) );
     ExpectCallback( 4 );
 
