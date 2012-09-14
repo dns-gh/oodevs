@@ -464,6 +464,8 @@ void RolePion_Decision::RegisterActions()
         boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Agent >, double, int, int ) >( boost::bind( &StartTirDirect, boost::ref( sink_ ), boost::ref( GetPion() ), _1, _2, _3, 0, _4 ) ) ); // $$$$ MCO 2012-09-14: 0 => eFireUsingAllComposantes
     RegisterFunction( "DEC_StartTirDirectDebarques",
         boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Agent >, double, int ) >( boost::bind( &StartTirDirect, boost::ref( sink_ ), boost::ref( GetPion() ), _1, _2, _3, 1, -1 ) ) ); // $$$$ MCO 2012-09-14: 1 => eFireUsingOnlyComposantesLoadable
+    RegisterFunction( "DEC_StartTirDirectTransporteurs",
+        boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Agent >, double, int ) >( boost::bind( &StartTirDirect, boost::ref( sink_ ), boost::ref( GetPion() ), _1, _2, _3, 2, -1 ) ) ); // $$$$ MCO 2012-09-14: 2 = eFireUsingOnlyComposantesCarrier
 }
 
 // -----------------------------------------------------------------------------

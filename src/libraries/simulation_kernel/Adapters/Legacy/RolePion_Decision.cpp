@@ -20,6 +20,7 @@
 #include "Entities/Agents/Actions/Moving/PHY_ActionMove.h"
 #include "Entities/Agents/Actions/Firing/DirectFiring/PHY_ActionDirectFirePion.h"
 #include "Entities/Agents/Actions/Firing/DirectFiring/PHY_ActionDirectFirePionUsingOnlyLoadable.h"
+#include "Entities/Agents/Actions/Firing/DirectFiring/PHY_ActionDirectFirePionUsingOnlyCarrier.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( sword::legacy::RolePion_Decision )
 
@@ -131,6 +132,8 @@ void RolePion_Decision::RegisterActions()
         boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Agent >, double, int, int ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionDirectFirePion, boost::shared_ptr< DEC_Knowledge_Agent >, double, int, int >, boost::ref( GetPion() ), _1, _2, _3, _4 ) ) );
     RegisterFunction( "DEC_StartTirDirectDebarques",
         boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Agent >, double, int ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionDirectFirePionUsingOnlyLoadable, boost::shared_ptr< DEC_Knowledge_Agent >, double, int >, boost::ref( GetPion() ), _1, _2, _3 ) ) );
+    RegisterFunction( "DEC_StartTirDirectTransporteurs",
+        boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Agent >, double, int ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionDirectFirePionUsingOnlyCarrier, boost::shared_ptr< DEC_Knowledge_Agent >, double, int >, boost::ref( GetPion() ), _1, _2, _3 ) ) );
 }
 
 // -----------------------------------------------------------------------------
