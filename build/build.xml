@@ -368,7 +368,8 @@
     </target>
 
     <target name="library.positions_plugin" depends="library.dispatcher" description="build positions saver dispatcher plugin static library">
-        <build-lib name="positions_plugin" pattern="lib${ant.project.name}_positions_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4">
+        <build-lib name="positions_plugin" pattern="lib${ant.project.name}_positions_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4"
+                   failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
