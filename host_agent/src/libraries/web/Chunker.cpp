@@ -47,7 +47,7 @@ int snprintf( char* str, size_t size, const char* format, ...)
 
 namespace
 {
-const size_t prolog_size = 64;
+const size_t header_size = 64;
 const size_t buffer_size = 1<<18;
 
 // -----------------------------------------------------------------------------
@@ -62,7 +62,7 @@ struct Chunker : public Chunker_ABC, public io::Writer_ABC
     // -----------------------------------------------------------------------------
     Chunker( Reply_ABC& rpy )
         : rpy_   ( rpy )
-        , buffer_( prolog_size*2 + buffer_size )
+        , buffer_( header_size*2 + buffer_size )
         , fill_  ( 0 )
     {
         rpy_.SetStatus( web::OK );
@@ -97,11 +97,11 @@ struct Chunker : public Chunker_ABC, public io::Writer_ABC
     // -----------------------------------------------------------------------------
     void Flush( bool last )
     {
-        const int prolog = snprintf( &buffer_[0], prolog_size, "%x\r\n", fill_ );
-        memmove( &buffer_[prolog_size - prolog], &buffer_[0], prolog );
+        const int header = snprintf( &buffer_[0], header_size, "%x\r\n", fill_ );
+        memmove( &buffer_[header_size - header], &buffer_[0], header );
         const char* fmt  = last && fill_ ? "\r\n0\r\n\r\n" : "\r\n";
-        const int epilog = snprintf( &buffer_[prolog_size + fill_], prolog_size, fmt );
-        rpy_.Write( &buffer_[prolog_size - prolog], prolog + fill_ + epilog );
+        const int footer = snprintf( &buffer_[header_size + fill_], header_size, fmt );
+        rpy_.Write( &buffer_[header_size - header], header + fill_ + footer );
         fill_ = 0;
     }
 
@@ -122,7 +122,7 @@ struct Chunker : public Chunker_ABC, public io::Writer_ABC
                 continue;
             }
 
-            memcpy( &buffer_[prolog_size + fill_], ptr, step );
+            memcpy( &buffer_[header_size + fill_], ptr, step );
             ptr   += step;
             fill_ += step;
             left  -= step;
