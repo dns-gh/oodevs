@@ -147,7 +147,7 @@ struct WebRequest : public Request_ABC
     // Name: WebRequest::RegisterMime
     // Created: BAX 2012-09-14
     // -----------------------------------------------------------------------------
-    virtual void RegisterMime( const std::string& name, const MimeHandler& handler )
+    virtual void RegisterMime( const std::string& /*name*/, const MimeHandler& /*handler*/ )
     {
         throw std::runtime_error( "unsupported action" );
     }

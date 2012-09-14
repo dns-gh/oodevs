@@ -13,8 +13,7 @@
 #include "Client_ABC.h"
 
 #ifdef _MSC_VER
-#   pragma warning( push )
-#   pragma warning( disable : 4100 4127 4244 4267 4503 4512 )
+#   pragma warning( push, 0 )
 #   undef _SCL_SECURE_NO_WARNINGS
 #endif
 #define BOOST_NETWORK_ENABLE_HTTPS

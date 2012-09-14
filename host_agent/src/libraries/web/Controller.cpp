@@ -68,8 +68,8 @@ namespace
 // -----------------------------------------------------------------------------
 struct HttpCode
 {
-    const int code;
-    const char* text;
+    int code;
+    char* text;
 };
 
 static const HttpCode httpCodes[] =
