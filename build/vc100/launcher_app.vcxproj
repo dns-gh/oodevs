@@ -77,6 +77,9 @@
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>tools.lib;psapi.lib;$(libXerces);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <ClCompile>
+      <TreatWarningAsError>true</TreatWarningAsError>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
     <Link>
@@ -85,6 +88,9 @@
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>tools.lib;psapi.lib;$(libXerces);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <ClCompile>
+      <TreatWarningAsError>true</TreatWarningAsError>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
     <Link>
@@ -92,6 +98,9 @@
       <LargeAddressAware>true</LargeAddressAware>
       <AdditionalDependencies>tools_d.lib;psapi.lib;$(libXerces);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <ClCompile>
+      <TreatWarningAsError>true</TreatWarningAsError>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
     <Link>
@@ -99,6 +108,9 @@
       <LargeAddressAware>true</LargeAddressAware>
       <AdditionalDependencies>tools_d.lib;psapi.lib;$(libXerces);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <ClCompile>
+      <TreatWarningAsError>true</TreatWarningAsError>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\applications\launcher_app\LauncherService.cpp" />
