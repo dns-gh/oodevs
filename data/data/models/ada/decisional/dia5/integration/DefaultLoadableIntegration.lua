@@ -244,3 +244,7 @@ end
 integration.isSurrendered = function( )
     return DEC_Agent_EstRendu( myself )
 end
+
+integration.allowCarriers = function( )
+    DEC_LaisserTransporteursSansDelai( )
+end

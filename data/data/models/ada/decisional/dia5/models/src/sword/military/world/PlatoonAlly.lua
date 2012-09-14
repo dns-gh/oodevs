@@ -958,5 +958,8 @@ return
     end,
     launchDREB = function( self )
         return integration.launchDREB()
+    end,
+    allowCarriers = function( self )
+        integration.allowCarriers()
     end
 }

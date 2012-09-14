@@ -61,6 +61,7 @@ node "HideInUndergroundNetwork"
     activate = function( self )
     -- si le réseau n'est pas activé on arrete la mission. Sinon, on garde le skill activé pour le débarquement.
         if self.params.undergroundNetwork:EnterInIt() then
+            meKnowledge:allowCarriers() -- les transporteurs ne rentrent pas
             Feedback( self.feedbacks.inside )
         end
     end
