@@ -74,7 +74,7 @@ std::string GetSid( mg_connection* link, const std::string& query )
 {
     char dst[UINT8_MAX];
     const int len = mg_get_cookie( link, "sid", dst, sizeof dst );
-    if( len )
+    if( len > 0 )
         return std::string( dst );
     const boost::optional< std::string > opt = GetParameter( query, "sid" );
     return opt == boost::none ? std::string() : *opt;
