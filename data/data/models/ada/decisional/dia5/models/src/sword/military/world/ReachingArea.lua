@@ -34,7 +34,7 @@ return
         dependencies = "none",
         method = function( self, objective )
             return meKnowledge:
-                   computeMovementCapability( objective, self ) > 0
+                   computeMovementCapability( objective, self ) > 0 and integration.isElementInAOR( self.proxy )
         end
     },
     predicate "isApproachingFor"

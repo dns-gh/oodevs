@@ -99,8 +99,11 @@ queryImplementation "getPositionsToCover"
                         local dirDanger = DEC_GetDirectionDanger( mission )
  
                         local positionSurete = DEC_Geometrie_PositionTranslateDir( meKnowledge:getPosition(), dirDanger, - distanceToFindOpenFieldPositions )
-
-                        AddPoint( positionSurete, result, newResult )
+                        if DEC_Geometrie_EstPointDansFuseau( positionSurete ) then
+                            AddPoint( positionSurete, result, newResult )
+                        else
+                            AddPoint( DEC_Geometrie_CalculerPointProcheLocalisationNonClippeeDansFuseau( DEC_Geometrie_ConvertirPointEnLocalisation( positionSurete ) ), result, newResult ) 
+                        end
                     end
                 end
                 -- Add unit position 
