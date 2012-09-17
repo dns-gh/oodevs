@@ -23,7 +23,6 @@ enum E_ForceRatioState
 };
 enum E_RulesOfEngagementState
 {
-    eRoeStateNone,
     eRoeStateFreeFire,
     eRoeStateRestrictedFire,
     eRoeStateFireByOrder
