@@ -1846,6 +1846,15 @@ ADN_Composantes_Data::ComposanteInfos* ADN_Composantes_Data::ComposanteInfos::Cr
     pCopy->ptrSize_ = ptrSize_.GetData();
     pCopy->rWeight_ = rWeight_.GetData();
     pCopy->rMaxSpeed_ = rMaxSpeed_.GetData();
+    pCopy->strCodeEMAT6_ = strCodeEMAT6_.GetData();
+    pCopy->strCodeEMAT8_ = strCodeEMAT8_.GetData();
+    pCopy->strCodeLFRIL_ = strCodeLFRIL_.GetData();
+    pCopy->strCodeNNO_ = strCodeNNO_.GetData();
+    pCopy->strNativeCountry_ = strNativeCountry_.GetData();
+    pCopy->strStartingCountry_ = strStartingCountry_.GetData();
+    pCopy->strStartingDate_ = strStartingDate_.GetData();
+    pCopy->strInformationOrigin_ = strInformationOrigin_.GetData();
+    pCopy->equipmentCategory_ = equipmentCategory_.GetData();
 
     for( int iTerrain = 0; iTerrain < eNbrLocation; ++iTerrain )
     {
