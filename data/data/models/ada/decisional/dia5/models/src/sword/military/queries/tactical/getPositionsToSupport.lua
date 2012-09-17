@@ -19,6 +19,16 @@ local AddPointKnowledge = function( points, result, newResult, knowledges )
     end
 end
 
+local AddCoverPositions = function( length, knowledges, objective )
+    local compartments = {}
+    if DEC_Agent_AutomateEstEmbraye() then
+        compartments = DEC_Geometrie_DecoupeFuseauEnTroncons( length )
+        for _, compartment in pairs ( compartments ) do            
+            knowledges[ #knowledges + 1 ] = CreateKnowledge( sword.military.world.Area, compartment )
+        end
+    end
+end
+
 queryImplementation "getPositionsToSupport" 
 { 
     [ "execute" ] = function ( params )
@@ -31,12 +41,9 @@ queryImplementation "getPositionsToSupport"
         local DEC_Connaissances_BlocUrbainDansCercle = DEC_Connaissances_BlocUrbainDansCercle
         local DEC_Geometrie_CalculerLocalisationsBU = DEC_Geometrie_CalculerLocalisationsBU
         if ( knowledgeManager.bCanCallStaticQuery or params.dynamic ) then
-           local rangeDistanceMax = DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition() / 2 -- indirect fire case
-           local rangeDistanceMin = DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition() / 3
-           if rangeDistanceMax <= 0 then -- direct fire case
-               rangeDistanceMax = DEC_Tir_PorteeMaxPourTirer( 0.7 ) / 2
-               rangeDistanceMin = DEC_Tir_PorteeMaxPourTirer( 0.8 ) / 2
-           end
+           local rangeDistance = integration.firingRangeToSupport( self )
+           local rangeDistanceMin = rangeDistance[1]
+           local rangeDistanceMax = rangeDistance[2]
             -- Pour toutes les connaissances, garder celles qui sont bonnes pour soutenir
             for _, objective in pairs ( params.elementsToSupport ) do
                 local foundAPositionForThisObjective = false
@@ -51,6 +58,7 @@ queryImplementation "getPositionsToSupport"
                         AddPointKnowledge( DEC_Geometrie_CalculerLocalisationsBU( bu ), result, newResult, knowledges )
                     end
                 end
+                AddCoverPositions( rangeDistanceMin, knowledges, objective )
 
                 -- Verify that position are good to support unit
                 for _, element in pairs ( knowledges ) do
@@ -64,8 +72,13 @@ queryImplementation "getPositionsToSupport"
                 
                  -- si pas de position
                 if not foundAPositionForThisObjective then
-                    newResult[ #newResult + 1 ] = CreateProxyKnowledge( 
+                    local lastOption = CreateProxyKnowledge( 
                        sword.military.world.SupportingArea, objective, {distanceMin = rangeDistanceMin , distanceMax = rangeDistanceMax } )
+                    if integration.isElementInAOR( lastOption.proxy ) then
+                        newResult[ #newResult + 1 ] = lastOption
+                    else
+                        newResult[ #newResult + 1 ] = integration.query.getNearestPositionInAOR( lastOption.proxy )                          
+                    end
                 end
             end
             

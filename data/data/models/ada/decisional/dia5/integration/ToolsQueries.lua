@@ -487,3 +487,9 @@ integration.query.getPositionsToSupport = function( retrogradeWay, friendToSuppo
     end
     return positions
 end
+
+integration.query.getNearestPositionInAOR = function( objective )
+    local target = objective:getPosition()
+    local simPos = DEC_Geometrie_CalculerPointProcheLocalisationNonClippeeDansFuseau( DEC_Geometrie_ConvertirPointEnLocalisation( target ) )
+    return CreateKnowledge( sword.military.world.Point, simPos )
+end

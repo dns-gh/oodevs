@@ -96,7 +96,7 @@ return
         dependencies = "none",
         method = function( self, objective )
             return meKnowledge:
-                   computeMovementCapability( objective, self ) > 0
+                   computeMovementCapability( objective, self ) > 0 and integration.isElementInAOR( self )
         end
     },
     predicate "isObservingFor"
@@ -120,7 +120,7 @@ return
         dependencies = "none",
         method = function( self, objective )
             return meKnowledge:
-                   computeProtectionCapability( objective, self ) > 0
+                   computeProtectionCapability( objective, self ) > 0 and integration.isElementInAOR( self )
         end
     },
     predicate "isFleeingFor"
@@ -128,7 +128,7 @@ return
         dependencies = "none",
         method = function( self, objective )
             return meKnowledge:
-                   computeProtectionCapability( objective, self ) > 0
+                   computeProtectionCapability( objective, self ) > 0 and integration.isElementInAOR( self )
         end
     },
     predicate "isApproachingFor"
@@ -152,14 +152,14 @@ return
         -- and can make importante attrition on it.
         dependencies = "none",
         method = function( self, objective )
-            return meKnowledge:computeDestructionCapability( objective, self ) > 0
+            return meKnowledge:computeDestructionCapability( objective, self ) > 0 and integration.isElementInAOR( self )
         end
     },
     predicate "isNeutralizingFor"
     {
         dependencies = "none",
         method = function( self, objective )
-            return meKnowledge:computeNeutralisationCapability( objective, self ) > 0
+            return meKnowledge:computeNeutralisationCapability( objective, self ) > 0 and integration.isElementInAOR( self )
         end
     },
     predicate "isReinforcingFor"
@@ -174,14 +174,14 @@ return
     {
         dependencies = "none",
         method = function( self, objective )
-            return ( meKnowledge:computeSupportCapability( objective, self ) > 0 ) and integration.isElementInAOR( self )
+            return ( meKnowledge:computeSupportCapability( objective, self ) > 0 ) and integration.isElementInAOR( self ) and self:supportEfficiency( objective ) > 0.8 
         end
     },
     predicate "isReconnoitringFor"
     {
         dependencies = "none",
         method = function( self, objective )
-            return meKnowledge:computeReconnaissanceCapability( objective, self ) > 0
+            return meKnowledge:computeReconnaissanceCapability( objective, self ) > 0 and integration.isElementInAOR( self )
         end
     },
     predicate "isSearched"

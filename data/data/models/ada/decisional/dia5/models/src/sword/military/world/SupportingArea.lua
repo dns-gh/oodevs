@@ -23,7 +23,7 @@ return
     {
         dependencies = "none",
         method = function( self, objective )
-            return meKnowledge:computeSupportCapability( objective, self ) > 0 and integration.isElementInAOR( self.proxy )
+            return meKnowledge:computeSupportCapability( objective, self ) > 0 and integration.isElementInAOR( self.proxy ) and self:supportEfficiency( objective ) > 0.8 
         end
     },
     computeSupportCapabilityFor = function( self, platoon, objective )

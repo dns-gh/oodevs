@@ -81,7 +81,7 @@ return
         dependencies = "none",
         method = function( self, objective )
              return meKnowledge:
-                   computeMovementCapability( objective, self ) > 0
+                   computeMovementCapability( objective, self ) > 0 and integration.isElementInAOR( self )
         end
     },
     predicate "isObservingFor"
@@ -123,7 +123,7 @@ return
         dependencies = "none",
         method = function( self, objective )
             return meKnowledge:computeDestructionCapability( objective, self ) > 0
-                   and meKnowledge:computePerceptionCapability( objective, self ) > 0 
+                   and meKnowledge:computePerceptionCapability( objective, self ) > 0 and integration.isElementInAOR( self )
         end
     },
     predicate "isNeutralizingFor"
@@ -131,7 +131,7 @@ return
         dependencies = "none",
         method = function( self, objective )
             return meKnowledge:computeNeutralisationCapability( objective, self ) > 0
-                   and meKnowledge:computePerceptionCapability( objective, self ) > 0 
+                   and meKnowledge:computePerceptionCapability( objective, self ) > 0  and integration.isElementInAOR( self )
         end
     },
     predicate "isSearched"
@@ -152,7 +152,7 @@ return
     {
         dependencies = "none",
         method = function( self, objective )
-            if integration.isPointInUrbanBlockTrafficable( self, true ) and integration.isElementInAOR( self ) then
+            if ( meKnowledge:computeSupportCapability( objective, self ) > 0 ) and integration.isElementInAOR( self ) and self:supportEfficiency( objective ) > 0.8 then
                 return true
             else
                 return false
@@ -240,6 +240,17 @@ return
         start = integration.startControlArea,
         stop = integration.stopControlArea
     } ),
+    computeSupportCapabilityFor = function( self, platoon, objective )
+        if not self.trafficableComputed then
+          self.trafficableComputed = { trafficable = platoon:canDismount() 
+          or 100 == integration.isPointInUrbanBlockTrafficable( self, true ) }
+        end
+        if self.trafficableComputed.trafficable then 
+            return self:getProximity( objective ) 
+        else 
+            return 0 
+        end
+    end,
     computePerceptionCapabilityFor = function( self, platoon, objectif )
         if 0 == integration.isPointInUrbanBlockTrafficable( self, true ) then
             return self:getProximity( objectif ) -- hypothèse simplificatrice

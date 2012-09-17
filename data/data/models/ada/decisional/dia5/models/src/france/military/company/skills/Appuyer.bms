@@ -6,7 +6,6 @@ rootnode
 
     activate = function( self )
             self.entitiesToSupport = integration.filterPionWithEchelon( integration.getEntitiesFromAutomatCommunication( self.params.company, "none", true), eEtatEchelon_First )
-            -- DEC_Trace( "self.entitiesToSupport : " .. tostringr( self.entitiesToSupport )  )
             Activate( skill.nodes.Lead , 1, { companyTask = self.params.companyTask,
                                      mainTask = self.params.mainTask, supportTask = self.params.supportTask,
                                      defaultTask = self.params.defaultTask, taskForSupporting = self.params.taskForSupporting, self.entitiesToSupport } )
@@ -17,7 +16,6 @@ node "Lead"
 {
     connections = { skill.links.lead },
     create = function ( self )
-        DEC_Trace( "----------" )
         self.bInit = true
     end,
     activate = function( self )

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.coercition.skills.EngageFriendsEnemies" source-version="1.0.0">
+    <parameters>
+        <parameter name="friends">
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Supportable"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <modifiers/>
+    <links>
+        <link name="engage" skill="sword.military.platoon.coercition.skills.Engage"/>
+    </links>
+    <resources/>
+</skill>

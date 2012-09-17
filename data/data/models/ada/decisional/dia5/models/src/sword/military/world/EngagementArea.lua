@@ -23,7 +23,7 @@ return
     {
         dependencies = "none",
         method = function( self, objective )
-            return self.proxy == objective
+            return self.proxy == objective and integration.isElementInAOR( self )
         end
     },
     predicate "isNeutralizingFor"

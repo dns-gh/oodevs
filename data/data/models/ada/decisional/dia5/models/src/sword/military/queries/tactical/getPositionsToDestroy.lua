@@ -34,7 +34,14 @@ queryImplementation "getPositionsToDestroy"
         -- Open terrain, no position, get a tracking position as a destroying position
         if not next( newResult ) then
             for _, objective in pairs( params.elementsToDestroy ) do
-                newResult[ #newResult + 1 ] = CreateProxyKnowledge( sword.military.world.EngagementArea, objective )
+                if objective:isValid() then
+                    local lastOption = CreateProxyKnowledge( sword.military.world.EngagementArea, objective )
+                    if integration.isElementInAOR( lastOption.proxy ) then
+                        newResult[ #newResult + 1 ] = lastOption
+                    else
+                        newResult[ #newResult + 1 ] = integration.query.getNearestPositionInAOR( lastOption.proxy )                          
+                    end
+                end
             end
         end
         return newResult

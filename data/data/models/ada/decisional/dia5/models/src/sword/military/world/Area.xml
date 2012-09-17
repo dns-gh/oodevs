@@ -199,6 +199,23 @@
                 </type>
             </return>
         </method>
+        <method name="computeSupportCapabilityFor">
+            <argument name="entity">
+                <type>
+                    <class name="sword.military.world.PlatoonAlly"/>
+                </type>
+            </argument>
+            <argument name="position">
+                <type>
+                    <class name="sword.military.knowledge.decisional.Positionable"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
         <method name="computePerceptionCapabilityFor">
             <description>__INTEGRATION</description>
             <argument name="entity">

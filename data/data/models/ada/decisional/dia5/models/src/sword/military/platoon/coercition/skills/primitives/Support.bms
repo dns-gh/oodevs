@@ -84,7 +84,7 @@ node "SupportElement"
         
         --If the old bestPosition is still good
         if self.bestPosition then
-            if self.bestPosition:supportEfficiency( self.params.entity ) > 0.8 then
+         --   if self.bestPosition:supportEfficiency( self.params.entity ) > 0.8 then
                 for i=1, #self.positions do
                      Activate( skill.links.moveAndTakePosition,
                                self.efficiencies[self.positions[i]], { entity = self.positions[i] } )
@@ -92,7 +92,7 @@ node "SupportElement"
                 if not self.bestPosition:isReached() then
                     return
                 end
-            end
+   --         end
         end
         -- If the bestPosition is not enought good for supporting the entity
         self.efficiencies = {}
@@ -102,6 +102,7 @@ node "SupportElement"
             local position = self.positions[i]
             local efficiency = position:supportEfficiency( self.params.entity )
             self.efficiencies[position] = efficiency
+            --DEC_Trace( "Efficiencies pour le point " .. tostring(i) .. " = " .. tostring( self.efficiencies[position] ))
             if( efficiency > self.maxEfficiency ) then
                 self.maxEfficiency = efficiency
                 self.bestPosition = position

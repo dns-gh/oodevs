@@ -184,6 +184,7 @@ function InitMePlatoon( strKnowledgeType, knowledgeSource, groupName )
     masalife.brain.knowledge.me.body = CreateKnowledge( strKnowledgeType, knowledgeSource )
     meKnowledge = masalife.brain.knowledge.me.body
     myself.engineerObjectsOnPath = {}
+    myself.enemyToEngage = {{}, {}}
     RegisterTaskListener()
     RegisterDoneTaskListener()
     InitKnowledgeManager()
