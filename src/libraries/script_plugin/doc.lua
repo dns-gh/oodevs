@@ -191,7 +191,7 @@ Recorder =
 Trace            = function( strMessage ) end
 Command          = function( tParameters, strCommand ) end
 Message          = function( tParameters ) end
-Display          = function( tParameters ) end -- display client side message
+Display          = function( tParameters or string ) end -- display client side message : Display ( { message = "Hello" } ) or Display( "Hello" )
 ClearDisplay     = function( tParameters ) end -- clears client side displayed message
 Dialog           = function( tParameters ) end
 Briefing         = function( tParameters ) end
@@ -203,7 +203,8 @@ PromptNextPhase  = function( tParameters ) end
 -- ex: id://agent/10
 Select           = function( tParameters ) end
 SetFilter        = function( tParameters ) end
-Center           = function( tParameters ) end -- id://protocol/value or loc://utmCoordinates
+Center           = function( tParameters or string ) end -- { target = id://protocol/value } or { coordinates = {x,y} or call directly 
+-- Command( {coordinates={}}, "/center \"35RPQ7945105674\"" )
 
 ClearFilter      = function( tParameters ) end
 Zoom             = function( tParameters ) end

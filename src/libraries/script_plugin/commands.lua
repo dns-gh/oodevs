@@ -1,9 +1,28 @@
 require "table"
 require "math"
+require "debug"
 
 -- Command Helpers
+
+local function ReportError( text )
+    Trace( text )
+    Trace( debug.traceback() )
+end
+
+local function CheckTable( t, params )
+    if( type( t ) ~= "table" ) then
+        ReportError( "Bad parameter type: "..type( t ) )
+    end
+    for _, param in ipairs( params ) do
+        if not t[param] then
+            ReportError( "Parameter "..tostring( param ).." is nil" )
+        end
+    end
+end
+
 function Command( t, command )
     Trace( command )
+    CheckTable( t, {} )
     local profile = t.profile or "";
     if t.client == nil then
         clients:SendCommandToAll( profile, command )
@@ -13,11 +32,18 @@ function Command( t, command )
 end
 
 function Message( t )
+    CheckTable( t, { "message" } )
     Command( t, "/text \"" .. t.message .. "\"" )
 end
 
 function Display( t )
-    Command( t, "/display \"" .. t.message .. "\"" )
+    local ttype = type( t )
+    if( ttype == "string" ) then
+        Command( {}, "/display \"" .. t .. "\"" )
+    else
+        CheckTable( t, { "message" } )
+        Command( t, "/display \"" .. t.message .. "\"" )
+    end
 end
 
 function ClearDisplay( t )
@@ -25,19 +51,23 @@ function ClearDisplay( t )
 end
 
 function Dialog( t )
+    CheckTable( t, { "buttons", "id", "message" } )
+    CheckTable( t.buttons, {} )
     local buttonString = table.concat( t.buttons, "|" )
     Command( t, "/prompt " .. t.id .. " \"" .. t.message .. "\" \"" .. buttonString .. "\"" )
 end
 
 function Briefing( t )
+    CheckTable( t, { "id", "file" } )
     Command( t, "/briefing " .. t.id .. " \"" .. t.file .. "\"" )
 end
 
 function PhaseName( phase )
-    return "Next" .. scriptName .. phase
+    return "Next" .. tostring( scriptName ) .. tostring( phase )
 end
 
 function PromptNextPhase( t )
+    CheckTable( t, { "id", "phase" } )
     t.id = PhaseName( t.phase )
     t.message = t.message or "Skip to next phase"
     t.buttons = t.buttons or { "Next" }
@@ -58,15 +88,27 @@ function WaitForUserPhase( phase )
 end
 
 function Center( t )
-    local target = t.target or "\"loc://" .. table.concat( t.coordinates, "," ) .. "\""
-    Command( t, "/center " .. target )
+    local ttype = type( t )
+    if( ttype == "string" ) then
+        Command( {}, "/center \"loc://" .. table.concat( coord:UtmPosition( t ), "," ) .. "\"" )
+    elseif( ttype == "table" ) then
+        if not t.target and ( type( t.coordinates ) ~= "table" ) then
+            ReportError( "Bad argument for Center: expecting string or table with target or coordinates." )
+        end
+        local target = t.target or "\"loc://" .. table.concat( t.coordinates, "," ) .. "\""
+        Command( t, "/center " .. target )
+    else
+        ReportError( "Unexpected argument type for Center: "..ttype )
+    end
 end
 
 function Select( t )
+    CheckTable( t, { "target" } )
     Command( t, "/center " .. t.target .. "#select" )
 end
 
 function SetFilter( t )
+    CheckTable( t, { "target" } )
     Command( t, "/center " .. t.target .. "#filter" )
 end
 
@@ -75,10 +117,12 @@ function ClearFilter( t )
 end
 
 function Launch( t )
+    CheckTable( t, { "target" } )
     Command( t, "/launch " .. t.target )
 end
 
 function Zoom( t )
+    CheckTable( t, { "width" } )
     Command( t, "/zoom " .. t.width )
 end
 
@@ -102,11 +146,13 @@ function ChangeOptionByName( t )
         end
     end
 
+    CheckTable( t, { "value", "name" } )
     local type, value = Format( t.value )
     Command( t, "/option " .. type .. t.name .. " " .. value )
 end
 
 function ChangeOptions( t )
+    CheckTable( t, { "profile", "client" } )
     for k, v in pairs( t ) do
         if k ~= "profile" and k ~= "client" then
             ChangeOptionByName( { profile = t.profile, client = t.client, name = k, value = v } )
@@ -115,6 +161,8 @@ function ChangeOptions( t )
 end
 
 function MergeTables( lhs, rhs )
+    CheckTable( lhs, {} )
+    CheckTable( rhs, {} )
     local result = {}
     for k, v in pairs( lhs ) do result[ k ] = v end
     for k, v in pairs( rhs ) do result[ k ] = v end
@@ -157,6 +205,7 @@ function SetDock( t )
             Command( t, "/dock " .. action .. " " .. table.concat( t[action], " " ) )
         end
     end
+    CheckTable( t, {} )
     Apply( t, "hide" )
     Apply( t, "show" )
 end
