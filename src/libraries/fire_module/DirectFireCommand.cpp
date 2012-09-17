@@ -20,16 +20,10 @@ using namespace sword::fire;
 // Created: MCO 2012-03-19
 // -----------------------------------------------------------------------------
 DirectFireCommand::DirectFireCommand( ModuleFacade& module, const wrapper::View& parameters, const wrapper::View& /*model*/, std::size_t identifier )
-    : commandIdentifier_          ( identifier )
-    , identifier_                 ( parameters[ "identifier" ] )
-    , enemy_                      ( parameters[ "enemy" ] )
-    , role_                       ( module )
-    , rPercentageComposantesToUse_( std::max( 0., std::min< double >( 1., parameters[ "percentage" ] ) ) )
-    , nFiringMode_                ( static_cast< DirectFireData::E_FiringMode >( static_cast< int >( parameters[ "mode" ] ) ) )
-    , firingType_                 ( parameters[ "type" ] )
-    , major_                      ( parameters[ "major" ] )
-    , ammoDotationClass_          ( parameters[ "dotation" ] )
-    , mustReport_                 ( true )
+    : commandIdentifier_( identifier )
+    , identifier_       ( parameters[ "identifier" ] )
+    , role_             ( module )
+    , mustReport_       ( true )
 {
     PostCallback( role_.GetInitialReturnCode() );
 }
@@ -51,12 +45,13 @@ DirectFireCommand::~DirectFireCommand()
 // Name: DirectFireCommand::Execute
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-void DirectFireCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::View& model ) const
+void DirectFireCommand::Execute( const wrapper::View& parameters, const wrapper::View& model ) const
 {
     const wrapper::View& entity = model[ "entities" ][ identifier_ ];
     const unsigned int id = entity[ "knowledges" ];
-    const wrapper::View& enemy = model[ "knowledges" ][ id ][ enemy_ ];
-    int nResult = role_.FirePion( model, entity, enemy, nFiringMode_, rPercentageComposantesToUse_, firingType_, major_, mustReport_, ammoDotationClass_ );
+    const unsigned int enemy = parameters[ "enemy" ];
+    const wrapper::View& target = model[ "knowledges" ][ id ][ enemy ];
+    int nResult = role_.FirePion( model, entity, target, parameters, mustReport_ );
     PostCallback( nResult );
     mustReport_ = false;
 }
@@ -65,12 +60,13 @@ void DirectFireCommand::Execute( const wrapper::View& /*parameters*/, const wrap
 // Name: DirectFireCommand::ExecutePaused
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-void DirectFireCommand::ExecutePaused( const wrapper::View& /*parameters*/, const wrapper::View& model ) const
+void DirectFireCommand::ExecutePaused( const wrapper::View& parameters, const wrapper::View& model ) const
 {
     const wrapper::View& entity = model[ "entities" ][ identifier_ ];
     const unsigned int id = entity[ "knowledges" ];
-    const wrapper::View& enemy = model[ "knowledges" ][ id ][ enemy_ ];
-    role_.FirePionSuspended( entity, enemy, !mustReport_ );
+    const unsigned int enemy = parameters[ "enemy" ];
+    const wrapper::View& target = model[ "knowledges" ][ id ][ enemy ];
+    role_.FirePionSuspended( entity, target, !mustReport_ );
     mustReport_ = true;
 }
 

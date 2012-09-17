@@ -21,7 +21,7 @@ namespace
             StartCommand( "direct fire command",
                 core::MakeModel( "identifier", 42 )
                     ( "enemy", 51 )
-                    ( "percentage", 7 )
+                    ( "percentage", 0.07 )
                     ( "mode", 0 )
                     ( "type", 0 )
                     ( "major", false )
@@ -110,7 +110,7 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_no_capacity_if_firer_cannot_fire, WeaponFixture )
 {
-    MOCK_EXPECT( CanFire ).with( mock::any, mock::any, 0, 0 ).returns( false );
+    MOCK_EXPECT( CanFire ).returns( false );
     ExpectCallback( 2 );
     ExecuteCommands();
 }
@@ -150,7 +150,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_enemy_destroyed_when_enemy_
 BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_enemy_destroyed_when_no_component_can_be_found_to_fire_at, FiringFixture )
 {
     core::Model& component_2 = model[ "entities" ][ 43 ][ "components" ].AddElement();
-    MOCK_EXPECT( CanComponentBeFiredAt ).once().with( core::Convert( &component_2 ), false ).returns( false );
+    MOCK_EXPECT( CanComponentBeFiredAt ).once().with( core::Convert( &component_2 ), mock::any ).returns( false );
     ExpectCallback( 1 );
     ExpectEvent( "direct fire pion attack",
         sword::test::MakeModel( "entity", 42 )
@@ -171,7 +171,7 @@ namespace
         {
             component_1[ "weapons" ];
             MOCK_EXPECT( GetDistance ).with( firer, enemy ).returns( 500 );
-            MOCK_EXPECT( CanComponentBeFiredAt ).with( core::Convert( &component_2 ), false ).returns( true );
+            MOCK_EXPECT( CanComponentBeFiredAt ).with( core::Convert( &component_2 ), mock::any ).returns( true );
             component_2[ "volume" ] = volume_1;
             component_2[ "component" ].SetUserData( &data );
         }
@@ -255,7 +255,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_running_and_no_hit_when_wea
     StartCommand( "direct fire command",
         core::MakeModel( "identifier", 42 )
             ( "enemy", 51 )
-            ( "percentage", 7 )
+            ( "percentage", 0.07 )
             ( "mode", 0 )
             ( "type", 0 )
             ( "major", false )

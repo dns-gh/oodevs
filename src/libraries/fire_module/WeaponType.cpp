@@ -481,9 +481,9 @@ double WeaponType::GetReloadingDuration() const
 // Name: WeaponType::CanDirectFire
 // Created: MCO 2012-06-21
 // -----------------------------------------------------------------------------
-bool WeaponType::CanDirectFire( const wrapper::View& component, int firingType, int ammoDotationClass ) const
+bool WeaponType::CanDirectFire( const wrapper::View& component, const wrapper::View& parameters ) const
 {
-    return pDirectFireData_.get() && dotation_->CanFire( component, firingType, ammoDotationClass );
+    return pDirectFireData_.get() && dotation_->CanFire( component, parameters );
 }
 
 // -----------------------------------------------------------------------------

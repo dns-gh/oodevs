@@ -34,7 +34,7 @@
 #define USED_HOOKS( APPLY ) \
     APPLY( HasDotation, 2, bool, ( const SWORD_Model* entity, const char* dotation ) ) \
     APPLY( GetDotationValue, 2, double, ( const SWORD_Model* entity, const char* dotation ) ) \
-    APPLY( CanFire, 4, bool, ( const SWORD_Model* component, const char* dotation, int firingType, int ammoDotationClass ) ) \
+    APPLY( CanFire, 3, bool, ( const SWORD_Model* component, const char* dotation, const SWORD_Model* parameters ) ) \
     APPLY( CanComponentFire, 1, bool, ( const SWORD_Model* component ) ) \
     APPLY( GetWeaponReloadingDuration, 2, double, ( const SWORD_Model* firer, double rDuration ) ) \
     APPLY( ReserveAmmunition, 3, unsigned int, ( const SWORD_Model* firer, const char* dotation, double nNbrAmmoToFire ) ) \
@@ -45,7 +45,7 @@
     APPLY( GetFireRandomInteger, 2, size_t, ( size_t min, size_t max ) ) \
     APPLY( GetFireRandomNumber, 2, double, ( double min, double max ) ) \
     APPLY( GetVolumeId, 1, size_t, ( const char* type ) ) \
-    APPLY( CanComponentBeFiredAt, 2, bool, ( const SWORD_Model* component, bool majorOnly ) ) \
+    APPLY( CanComponentBeFiredAt, 2, bool, ( const SWORD_Model* component, const SWORD_Model* parameters ) ) \
     APPLY( GetPhModificator, 3, double, ( const SWORD_Model* firer, const SWORD_Model* target, const char* launcher ) ) \
     APPLY( GetPhModificator2, 1, double, ( const char* launcher ) ) \
     APPLY( EvaluateDangerosity, 2, double, ( const SWORD_Model* agent, const SWORD_Model* target ) ) \

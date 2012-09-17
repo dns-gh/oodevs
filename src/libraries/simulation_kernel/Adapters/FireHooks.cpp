@@ -95,14 +95,16 @@ namespace
         pion.Execute( *dotationComputer );
         return dotationComputer->GetDotationValue( *category );
     }
-    DEFINE_HOOK( CanFire, bool, ( const SWORD_Model* component, const char* dotation, int firingType, int ammoDotationClass ) )
+    DEFINE_HOOK( CanFire, bool, ( const SWORD_Model* component, const char* dotation, const SWORD_Model* parameters ) )
     {
         const PHY_ComposantePion& compFirer = (*core::Convert( component ))[ "component" ].GetUserData< PHY_ComposantePion >();
         if( !compFirer.CanFire() )
             return false;
-        if( firingType == 1 && !compFirer.CanBeLoaded() ) // $$$$ MCO 2012-04-30: eFireUsingOnlyComposantesLoadable
+        const core::Model& param = (*core::Convert( parameters ));
+        const int type = param[ "type" ];
+        if( type == 1 && !compFirer.CanBeLoaded() ) // $$$$ MCO 2012-04-30: eFireUsingOnlyComposantesLoadable
             return false;
-        if( firingType == 2 && !compFirer.CanTransportHumans() ) // $$$$ MCO 2012-04-30: eFireUsingOnlyComposantesCarrier
+        if( type == 2 && !compFirer.CanTransportHumans() ) // $$$$ MCO 2012-04-30: eFireUsingOnlyComposantesCarrier
             return false;
         const PHY_DotationCategory* category = GetDotationCategory( dotation );
         if( ! category )
@@ -110,6 +112,7 @@ namespace
             MT_LOG_ERROR_MSG( "Unknown dotation category in CanFire hook implementation : " << dotation );
             return false;
         }
+        const int ammoDotationClass = param[ "dotation" ];
         const PHY_AmmoDotationClass* pAmmoDotationClass = 0;
         if( ammoDotationClass != -1 ) // $$$$ LDC FIXME Varargs hidden here...
            pAmmoDotationClass = PHY_AmmoDotationClass::Find( ammoDotationClass );
@@ -121,10 +124,10 @@ namespace
     {
         return (*core::Convert( component ))[ "component" ].GetUserData< PHY_ComposantePion >().CanFire();
     }
-    DEFINE_HOOK( CanComponentBeFiredAt, bool, ( const SWORD_Model* component, bool majorOnly ) )
+    DEFINE_HOOK( CanComponentBeFiredAt, bool, ( const SWORD_Model* component, const SWORD_Model* parameters ) )
     {
         const core::Model& comp = (*core::Convert( component ))[ "component" ];
-        if( majorOnly && ! comp[ "major" ] )
+        if( (*core::Convert( parameters ))[ "major" ] && ! comp[ "major" ] )
             return false;
         return comp.GetUserData< PHY_ComposantePion >().CanBeFired();
     }

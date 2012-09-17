@@ -53,19 +53,16 @@ std::size_t DirectFireData::nUrbanCoefficient_ = 100;
 // Name: DirectFireData constructor
 // Created: NLD 2004-10-05
 // -----------------------------------------------------------------------------
-DirectFireData::DirectFireData( ModuleFacade& module, const wrapper::View& firer, int firingType, E_FiringMode nFiringMode, double rPercentageComposantesToUse, int ammoDotationClass )
-    : module_                     ( module )
-    , firer_                      ( firer )
-    , firingType_                 ( firingType )
-    , nFiringMode_                ( nFiringMode )
-    , rPercentageComposantesToUse_( rPercentageComposantesToUse )
-    , ammoDotationClass_          ( ammoDotationClass )
-    , bHasWeaponsReady_           ( true )
-    , bHasWeaponsNotReady_        ( false )
-    , bHasWeaponsAndNoAmmo_       ( false )
-    , bTemporarilyBlocked_        ( false )
+DirectFireData::DirectFireData( ModuleFacade& module, const wrapper::View& firer, const wrapper::View& parameters )
+    : module_              ( module )
+    , firer_               ( firer )
+    , parameters_          ( parameters )
+    , bHasWeaponsReady_    ( true )
+    , bHasWeaponsNotReady_ ( false )
+    , bHasWeaponsAndNoAmmo_( false )
+    , bTemporarilyBlocked_ ( false )
 {
-    assert( rPercentageComposantesToUse_  >= 0. && rPercentageComposantesToUse_ <= 1. );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -74,27 +71,22 @@ DirectFireData::DirectFireData( ModuleFacade& module, const wrapper::View& firer
 // -----------------------------------------------------------------------------
 unsigned int DirectFireData::GetNbrWeaponsUsable() const
 {
-    if( nFiringMode_ == eFiringModeFree )
+    if( parameters_[ "mode" ] == static_cast< int >( eFiringModeFree ) )
     {
         unsigned int nNbrWeaponsUsable = 0;
         for( CIT_ComposanteWeaponsMap itData = composantesWeapons_.begin(); itData != composantesWeapons_.end(); ++itData )
             nNbrWeaponsUsable += itData->second.GetNbrWeaponsUsable();
         return nNbrWeaponsUsable;
     }
-    else if( nFiringMode_ == eFiringModeNormal )
-    {
-        unsigned int nNbrUsedComposantes = 0;
-        for( CIT_ComposanteWeaponsMap itData = composantesWeapons_.begin(); itData != composantesWeapons_.end(); ++itData )
-            if( itData->second.IsFiring() )
-                ++nNbrUsedComposantes;
-        unsigned int nNbrComps = static_cast< unsigned int >( composantesWeapons_.size() * rPercentageComposantesToUse_ );
-        if( nNbrComps == 0 && ! composantesWeapons_.empty() )
-            nNbrComps = 1;
-        if( nNbrComps >= nNbrUsedComposantes )
-            return nNbrComps - nNbrUsedComposantes;
-        return 0;
-    }
-    assert( false );
+    unsigned int nNbrUsedComposantes = 0;
+    for( CIT_ComposanteWeaponsMap itData = composantesWeapons_.begin(); itData != composantesWeapons_.end(); ++itData )
+        if( itData->second.IsFiring() )
+            ++nNbrUsedComposantes;
+    unsigned int nNbrComps = static_cast< unsigned int >( composantesWeapons_.size() * parameters_[ "percentage" ] );
+    if( nNbrComps == 0 && ! composantesWeapons_.empty() )
+        nNbrComps = 1;
+    if( nNbrComps >= nNbrUsedComposantes )
+        return nNbrComps - nNbrUsedComposantes;
     return 0;
 }
 
@@ -115,7 +107,7 @@ bool DirectFireData::CanFire( const wrapper::View& firer )
 void DirectFireData::ApplyOnWeapon( const wrapper::View& model, const wrapper::View& component, const wrapper::View& weapon )
 {
     const Weapon w( module_, model, weapon );
-    if( ! w.CanDirectFire( component, firingType_, ammoDotationClass_ ) )
+    if( ! w.CanDirectFire( component, parameters_ ) )
         return;
     if( ! w.HasDotation( firer_ ) )
         bHasWeaponsAndNoAmmo_ = true;
@@ -210,13 +202,10 @@ bool DirectFireData::GetUnusedFirerWeapon( const SWORD_Model*& pUnusedFirer, con
 // -----------------------------------------------------------------------------
 void DirectFireData::ReleaseWeapon( const SWORD_Model* firer, const Weapon& weapon )
 {
-    switch( nFiringMode_ )
-    {
-        case eFiringModeNormal : RemoveFirer ( firer ); break;
-        case eFiringModeFree   : RemoveWeapon( firer, weapon ); break;
-        default:
-            assert( false );
-    }
+    if( parameters_[ "mode" ] == static_cast< int >( eFiringModeNormal ) )
+        RemoveFirer( firer );
+    else
+        RemoveWeapon( firer, weapon );
 }
 
 // -----------------------------------------------------------------------------

@@ -56,13 +56,7 @@ private:
     //@{
     const size_t commandIdentifier_;
     const unsigned int identifier_;
-    const unsigned int enemy_;
     const RoleAction_DirectFiring role_;
-    const double rPercentageComposantesToUse_;
-    const DirectFireData::E_FiringMode nFiringMode_;
-    const int firingType_;
-    const bool major_;
-    const int ammoDotationClass_;
     mutable bool mustReport_;
     //@}
 };

@@ -59,7 +59,7 @@ public:
     unsigned int GetNbrAmmoPerBurst() const;
     double GetBurstDuration() const;
     double GetReloadingDuration() const;
-    bool CanDirectFire( const wrapper::View& component, int firingType, int ammoDotationClass ) const;
+    bool CanDirectFire( const wrapper::View& component, const wrapper::View& parameters ) const;
     bool CanIndirectFire( const wrapper::View& entity, const wrapper::View& component, const std::string& type, const MT_Vector2D* target ) const;
     bool HasDotation( const wrapper::View& firer ) const;
     const DotationCategory& GetDotation() const;

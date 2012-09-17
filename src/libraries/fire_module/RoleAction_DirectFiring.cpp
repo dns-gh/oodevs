@@ -20,7 +20,7 @@
 using namespace sword;
 using namespace sword::fire;
 
-DECLARE_HOOK( CanComponentBeFiredAt, bool, ( const SWORD_Model* component, bool majorOnly ) )
+DECLARE_HOOK( CanComponentBeFiredAt, bool, ( const SWORD_Model* component, const SWORD_Model* parameters ) )
 DECLARE_HOOK( GetFireRandomInteger, size_t, ( size_t min, size_t max ) )
 
 // -----------------------------------------------------------------------------
@@ -104,13 +104,13 @@ namespace
 // Name: RoleAction_DirectFiring::GetComposantesAbleToBeFired
 // Created: MCO 2012-06-15
 // -----------------------------------------------------------------------------
-RoleAction_DirectFiring::T_ComposanteVector RoleAction_DirectFiring::GetComposantesAbleToBeFired( const wrapper::View& components, bool bFireOnlyOnMajorComposantes, unsigned int nNbrWeaponsUsable ) const
+RoleAction_DirectFiring::T_ComposanteVector RoleAction_DirectFiring::GetComposantesAbleToBeFired( const wrapper::View& components, const wrapper::View& parameters, unsigned int nNbrWeaponsUsable ) const
 {
     T_ComposanteVector availableTargets;
     for( std::size_t c = 0; c < components.GetSize(); ++c )
     {
         const wrapper::View& fired = components.GetElement( c );
-        if( GET_HOOK( CanComponentBeFiredAt )( fired, bFireOnlyOnMajorComposantes ) )
+        if( GET_HOOK( CanComponentBeFiredAt )( fired, parameters ) )
             availableTargets.push_back( fired );
     }
     if( availableTargets.empty() )
@@ -142,16 +142,15 @@ namespace
 // Name: RoleAction_DirectFiring::FirePion
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-int RoleAction_DirectFiring::FirePion( const wrapper::View& model, const wrapper::View& entity, const wrapper::View& target,
-    DirectFireData::E_FiringMode nFiringMode, double rPercentageComposantesToUse, int firingType,
-    bool bFireOnlyOnMajorComposantes, bool mustReport, int ammoDotationClass ) const
+int RoleAction_DirectFiring::FirePion( const wrapper::View& model, const wrapper::View& entity,
+    const wrapper::View& target, const wrapper::View& parameters, bool mustReport ) const
 {
     if( ! target[ "valid" ] )
         return eImpossible;
     if( target[ "dead" ] )
         return eEnemyDestroyed;
     // Firers
-    DirectFireData data( module_, entity, firingType, nFiringMode, rPercentageComposantesToUse, ammoDotationClass );
+    DirectFireData data( module_, entity, parameters );
     if( data.CanFire( entity ) )
     {
         const wrapper::View& components = entity[ "components" ];
@@ -176,7 +175,7 @@ int RoleAction_DirectFiring::FirePion( const wrapper::View& model, const wrapper
     }
     NotifyAttacking( entity, target, mustReport, false );
     const wrapper::View& targets = model[ "entities" ][ static_cast< unsigned int >( target[ "identifier" ] ) ][ "components" ];
-    T_ComposanteVector compTargets = GetComposantesAbleToBeFired( targets, bFireOnlyOnMajorComposantes, nNbrWeaponsUsable );
+    T_ComposanteVector compTargets = GetComposantesAbleToBeFired( targets, parameters, nNbrWeaponsUsable );
     if( compTargets.empty() )
         return eEnemyDestroyed;
     assert( compTargets.size() == nNbrWeaponsUsable );

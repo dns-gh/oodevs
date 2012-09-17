@@ -43,7 +43,7 @@ public:
     //int  FirePopulation         ( unsigned int nTargetKnowledgeID, const PHY_AmmoDotationClass* dotationClass );
     //void FirePopulationSuspended( unsigned int nTargetKnowledgeID );
 
-    int  FirePion( const wrapper::View& model, const wrapper::View& entity, const wrapper::View& target, DirectFireData::E_FiringMode nFiringMode, double rPercentageComposantesToUse, int firingType, bool bFireOnlyOnMajorComposantes, bool mustReport, int ammoDotationClass ) const;
+    int  FirePion( const wrapper::View& model, const wrapper::View& entity, const wrapper::View& target, const wrapper::View& parameters, bool mustReport ) const;
     void FirePionSuspended( const wrapper::View& entity, const wrapper::View& target, bool mustReport ) const;
     //int  IlluminatePion         ( boost::shared_ptr< DEC_Knowledge_Agent > pEnemy );
     //void IlluminatePionSuspended( boost::shared_ptr< DEC_Knowledge_Agent > pEnemy );
@@ -80,7 +80,7 @@ private:
     //@{
     //MIL_Population* GetPopulationTarget( unsigned int nTargetKnowledgeID );
     void FirePion( DirectFireData& firerWeapons, const wrapper::View& entity, const wrapper::View& target, const T_ComposanteVector& compTargets ) const;
-    T_ComposanteVector GetComposantesAbleToBeFired( const wrapper::View& components, bool bFireOnlyOnMajorComposantes, unsigned int nNbrWeaponsUsable ) const;
+    T_ComposanteVector GetComposantesAbleToBeFired( const wrapper::View& components, const wrapper::View& parameters, unsigned int nNbrWeaponsUsable ) const;
     //@}
 
 private:
