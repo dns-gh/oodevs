@@ -18,7 +18,6 @@
 #include "Decision/DEC_Gen_Object.h"
 #include "DotationComputer_ABC.h"
 #include "DotationComputerFactory_ABC.h"
-#include "Entities/MIL_EntityManager.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationStock.h"
@@ -41,6 +40,7 @@
 #include "Entities/Objects/ExtinguishableCapacity.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Objects/ResourceNetworkCapacity.h"
+#include "Entities/Objects/MIL_ObjectFactory.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
@@ -596,7 +596,7 @@ void PHY_RoleAction_Objects::StopOccupyingObject( const boost::shared_ptr< DEC_K
 // -----------------------------------------------------------------------------
 bool PHY_RoleAction_Objects::CanConstructWithReinforcement( const std::string& strType, const TER_Localisation* localisation, bool bWithLoaded ) const
 {
-    const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObjectType( strType );
+    const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetObjectFactory().FindType( strType );
     PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( owner_, eConstruct, type, localisation, bWithLoaded );
     return capabilityComputer.HasCapability();
 }
@@ -607,7 +607,7 @@ bool PHY_RoleAction_Objects::CanConstructWithReinforcement( const std::string& s
 // -----------------------------------------------------------------------------
 bool PHY_RoleAction_Objects::CanConstructWithoutReinforcement( const std::string& objectType, const TER_Localisation* localisation, bool bWithLoaded ) const
 {
-    const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObjectType( objectType );
+    const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetObjectFactory().FindType( objectType );
     PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( owner_, eConstruct, type, localisation, bWithLoaded, false );
     return capabilityComputer.HasCapability();
 }
@@ -658,7 +658,7 @@ bool PHY_RoleAction_Objects::CanMineWithReinforcement( const MIL_ObjectType_ABC&
 // -----------------------------------------------------------------------------
 bool PHY_RoleAction_Objects::CanMineTypeWithReinforcement( const std::string& strType, const TER_Localisation* localisation ) const
 {
-    const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObjectType( strType );
+    const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetObjectFactory().FindType( strType );
     PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( owner_, eMine, type, localisation, false );
     return capabilityComputer.HasCapability();
 }
@@ -669,7 +669,7 @@ bool PHY_RoleAction_Objects::CanMineTypeWithReinforcement( const std::string& st
 // -----------------------------------------------------------------------------
 bool PHY_RoleAction_Objects::CanDestroyTypeWithReinforcement( const std::string& strType, const TER_Localisation* localisation ) const
 {
-    const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObjectType( strType );
+    const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetObjectFactory().FindType( strType );
     PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( owner_, eDestroy, type, localisation, false );
     return capabilityComputer.HasCapability();
 }
@@ -680,7 +680,7 @@ bool PHY_RoleAction_Objects::CanDestroyTypeWithReinforcement( const std::string&
 // -----------------------------------------------------------------------------
 bool PHY_RoleAction_Objects::CanBypassTypeWithReinforcement( const std::string& strType, const TER_Localisation* localisation  ) const
 {
-    const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObjectType( strType );
+    const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetObjectFactory().FindType( strType );
     PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( owner_, eBypass, type, localisation, false );
     return capabilityComputer.HasCapability();
 }
@@ -692,7 +692,7 @@ bool PHY_RoleAction_Objects::CanBypassTypeWithReinforcement( const std::string& 
 bool PHY_RoleAction_Objects::EnoughtDotationForBuilding( const std::string& objectType, MIL_Agent_ABC& pion, bool bWithLoaded ) const
 {
     bool result = false;
-    const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObjectType( objectType );
+    const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetObjectFactory().FindType( objectType );
     const BuildableCapacity* capacity = type.GetCapacity< BuildableCapacity >();
     if ( capacity == 0   )
         return true;
@@ -732,7 +732,7 @@ std::pair< const PHY_DotationCategory*, double > PHY_RoleAction_Objects::GetAgen
     if( !object )
         throw std::runtime_error( "Invalid DEC_Gen_Object" );
 
-    const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObjectType( object->GetTypeName() );
+    const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetObjectFactory().FindType( object->GetTypeName() );
     const BuildableCapacity* capacity = type.GetCapacity< BuildableCapacity >();
     const PHY_DotationCategory* pDotationCategory = capacity ? capacity->GetDotationCategory() : 0;
     if ( pDotationCategory == 0 )

@@ -90,7 +90,8 @@ class MIL_EntityManager : public MIL_EntityManager_ABC
                         , public MIL_EntityManagerStaticMethods
 {
 public:
-             MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ProfilerMgr& profiler, bool isLegacy, unsigned int gcPause, unsigned int gcMult );
+             MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ObjectFactory& objectFactory,
+                                MIL_ProfilerMgr& profiler, bool isLegacy, unsigned int gcPause, unsigned int gcMult );
     virtual ~MIL_EntityManager();
 
     //! @name Factory
@@ -123,7 +124,7 @@ public:
     virtual boost::shared_ptr< MIL_KnowledgeGroup > FindKnowledgeGroupFromParents( unsigned int nID );
     virtual MIL_AgentPion*      FindAgentPion     ( unsigned int nID ) const;
     virtual MIL_Object_ABC*     FindObject        ( unsigned int nID ) const;
-    virtual const MIL_ObjectType_ABC& FindObjectType( const std::string& type ) const;
+
     virtual const std::set< MIL_Object_ABC* >& GetUniversalObjects() const;
 
     MIL_Population* FindPopulation( MIL_UrbanObject_ABC* urbanObject ) const;
@@ -131,8 +132,6 @@ public:
     unsigned int ConvertUrbanIdToSimId( unsigned int urbanId );
     bool ConvertIdToUrbanId( unsigned int& id ) const;
     void Accept( KnowledgesVisitor_ABC& visitor ) const;
-    std::vector< unsigned int > GetDangerousObjects() const;
-    double GetMaxAvoidanceDistance() const;
     //@}
 
     //! @name Stats
@@ -205,7 +204,7 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
 
-    MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ProfilerMgr& profiler, std::auto_ptr< sword::Sink_ABC > sink, unsigned int gcPause, unsigned int gcMult );
+    MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ObjectFactory& objectFactory, MIL_ProfilerMgr& profiler, std::auto_ptr< sword::Sink_ABC > sink, unsigned int gcPause, unsigned int gcMult );
 
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;

@@ -11,6 +11,7 @@
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Objects/MIL_BurningCells.h"
 #include "Entities/Objects/ResourceTools.h"
+#include "Entities/Objects/MIL_ObjectFactory.h"
 #include "Entities/Orders/MIL_TacticalLineManager.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "MT_Tools/MT_FormatString.h"
@@ -70,6 +71,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     , pBurningCells_        ( new MIL_BurningCells() )
     , pResourceNetworkModel_( new resource::ResourceNetworkModel() )
     , pProcessMonitor_      ( new ProcessMonitor() )
+    , pObjectFactory_       ( new MIL_ObjectFactory() )
 {
     assert( !pTheAgentServer_ );
     pTheAgentServer_ = this;
@@ -78,7 +80,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     ReadStaticData();
     if( config_.HasCheckpoint() )
     {
-        MIL_CheckPointManager::LoadCheckPoint( config_ );
+        MIL_CheckPointManager::LoadCheckPoint( config_, *pObjectFactory_ );
         pEntityManager_->Synchronize();
         SendControlInformation();
     }
@@ -86,7 +88,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     {
         // $$$$ NLD 2007-01-11: A nettoyer - pb pEntityManager_ instancié par checkpoint
         pMeteoDataManager_ = new PHY_MeteoDataManager( config_ );
-        pEntityManager_ = new MIL_EntityManager( *this, *pEffectManager_, *pProfilerMgr_, config_.IsLegacy(), config_.ReadGCParameter_setPause(), config.ReadGCParameter_setStepMul() );
+        pEntityManager_ = new MIL_EntityManager( *this, *pEffectManager_, *pObjectFactory_, *pProfilerMgr_, config_.IsLegacy(), config_.ReadGCParameter_setPause(), config.ReadGCParameter_setStepMul() );
         pCheckPointManager_ = new MIL_CheckPointManager( config_ );
         pEntityManager_->ReadODB( config_ );
         pEntityManager_->LoadUrbanModel( config_ );
@@ -94,7 +96,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
         Resume( nextPause_ );
     }
     if( !config_.IsDataTestMode() )
-        pPathFindManager_ = new DEC_PathFind_Manager( config_, pEntityManager_->GetMaxAvoidanceDistance(), pEntityManager_->GetDangerousObjects() );
+        pPathFindManager_ = new DEC_PathFind_Manager( config_, pObjectFactory_->GetMaxAvoidanceDistance(), pObjectFactory_->GetDangerousObjects() );
     timerManager_.Register( *this );
     MT_LOG_STARTUP_MESSAGE( "-------------------------" );
     MT_LOG_STARTUP_MESSAGE( "---- SIM Initialized ----" );
@@ -143,7 +145,7 @@ void MIL_AgentServer::ReadStaticData()
     ReadTerData();
     pWorkspaceDIA_ = new DEC_Workspace( config_ );
     PHY_MeteoDataManager::Initialize();
-    MIL_EntityManager::Initialize( config_, *this );
+    MIL_EntityManager::Initialize( config_, *this, *pObjectFactory_ );
     pAgentServer_ = new NET_AgentServer( config_, *this, *this );
 }
 
@@ -576,4 +578,13 @@ unsigned int MIL_AgentServer::RealTimeToTick( unsigned int rt ) const
 unsigned int MIL_AgentServer::TickToRealTime( unsigned int tick ) const
 {
     return nTimeStepDuration_ * tick - nSimTime_ + nRealTime_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::GetObjectFactory
+// Created: LGY 2012-09-14
+// -----------------------------------------------------------------------------
+MIL_ObjectFactory& MIL_AgentServer::GetObjectFactory() const
+{
+    return *pObjectFactory_;
 }

@@ -72,6 +72,7 @@
 #include "Objects/MIL_MedicalTreatmentType.h"
 #include "Objects/MIL_NbcAgentType.h"
 #include "Objects/MIL_ObjectFactory.h"
+#include "Objects/MIL_ObjectManager.h"
 #include "Objects/MIL_Object_ABC.h"
 #include "Orders/MIL_LimaFunction.h"
 #include "Orders/MIL_Report.h"
@@ -125,7 +126,7 @@ MIL_EntityManagerStaticMethods::~MIL_EntityManagerStaticMethods()
 // Name: MIL_EntityManagerStaticMethods::Initialize
 // Created: RPD 2010-02-07
 // -----------------------------------------------------------------------------
-void MIL_EntityManagerStaticMethods::Initialize( MIL_Config& config, const MIL_Time_ABC& time )
+void MIL_EntityManagerStaticMethods::Initialize( MIL_Config& config, const MIL_Time_ABC& time, MIL_ObjectFactory& objectFactory )
 {
     // Static types
     PHY_ComposanteState          ::Initialize();
@@ -164,13 +165,13 @@ void MIL_EntityManagerStaticMethods::Initialize( MIL_Config& config, const MIL_T
     InitializeType< PHY_DotationType               >( config, "resources"          );
     InitializeType< PHY_ResourceNetworkType        >( config, "resource-networks"  );
     InitializeType< MIL_FireClass                  >( config, "fires"              );
-    InitializeType< MIL_ObjectFactory              >( config, "objects"            );
     InitializeType< PHY_BreakdownType              >( config, "breakdowns"         );
     InitializeType< PHY_LauncherType               >( config, "launchers"          );
     InitializeType< PHY_ActiveProtection           >( config, "active-protections" );
-    InitializeWeapons    ( config, time );
-    InitializeSensors    ( config, time );
-    InitializeComposantes( config, time );
+    InitializeObjects( config, objectFactory );
+    InitializeSensors( config, time, objectFactory );
+    InitializeWeapons( config, time );
+    InitializeComposantes( config, time, objectFactory );
     InitializeType< MIL_AgentTypePion              >( config, "units"              );
     InitializeType< MIL_AutomateType               >( config, "automats"           );
     InitializeType< MIL_KnowledgeGroupType         >( config, "knowledge-groups"   );
@@ -187,13 +188,23 @@ void MIL_EntityManagerStaticMethods::Initialize( MIL_Config& config, const MIL_T
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_EntityManagerStaticMethods::InitializeObjects
+// Created: LGY 2012-09-14
+// -----------------------------------------------------------------------------
+void MIL_EntityManagerStaticMethods::InitializeObjects( MIL_Config& config, MIL_ObjectFactory& objectFactory )
+{
+    const std::string fileLoaded = config.GetLoader().LoadPhysicalFile( "objects", boost::bind( &MIL_ObjectFactory::Initialize, &objectFactory, _1 ) );
+    config.AddFileToCRC( fileLoaded );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_EntityManagerStaticMethods::InitializeSensors
 // Created: RPD 2010-02-07
 // -----------------------------------------------------------------------------
-void MIL_EntityManagerStaticMethods::InitializeSensors( MIL_Config& config, const MIL_Time_ABC& time )
+void MIL_EntityManagerStaticMethods::InitializeSensors( MIL_Config& config, const MIL_Time_ABC& time, const ObjectTypeResolver_ABC& resolver )
 {
     MT_LOG_INFO_MSG( "Initializing sensor types" );
-    const std::string fileLoaded = config.GetLoader().LoadPhysicalFile( "sensors", boost::bind( &MIL_EntityManagerStaticMethods::LoadSensors, _1, boost::cref( time ) ) );
+    const std::string fileLoaded = config.GetLoader().LoadPhysicalFile( "sensors", boost::bind( &MIL_EntityManagerStaticMethods::LoadSensors, _1, boost::cref( time ), boost::cref( resolver ) ) );
     config.AddFileToCRC( fileLoaded );
 }
 
@@ -212,12 +223,12 @@ void MIL_EntityManagerStaticMethods::InitializeFuneral( MIL_Config& config, cons
 // Name: MIL_EntityManagerStaticMethods::LoadSensors
 // Created: LDC 2010-12-02
 // -----------------------------------------------------------------------------
-void MIL_EntityManagerStaticMethods::LoadSensors( xml::xistream& xis, const MIL_Time_ABC& time )
+void MIL_EntityManagerStaticMethods::LoadSensors( xml::xistream& xis, const MIL_Time_ABC& time, const ObjectTypeResolver_ABC& resolver )
 {
     xis >> xml::start( "sensors" );
     PHY_PerceptionRecoSurveillance::Initialize( xis );
     PHY_PerceptionFlyingShell     ::Initialize( xis );
-    PHY_SensorType                ::Initialize( xis );
+    PHY_SensorType                ::Initialize( xis, resolver );
     PHY_RadarType                 ::Initialize( xis, time );
     xis >> xml::end;
 }
@@ -248,9 +259,9 @@ void MIL_EntityManagerStaticMethods::LoadMedical( xml::xistream& xis )
 // Name: MIL_EntityManagerStaticMethods::InitializeComposantes
 // Created: RPD 2010-02-07
 // -----------------------------------------------------------------------------
-void MIL_EntityManagerStaticMethods::InitializeComposantes( MIL_Config& config, const MIL_Time_ABC& time )
+void MIL_EntityManagerStaticMethods::InitializeComposantes( MIL_Config& config, const MIL_Time_ABC& time, const ObjectTypeResolver_ABC& resolver )
 {
-    const std::string fileLoaded = config.GetLoader().LoadPhysicalFile( "components", boost::bind( &PHY_ComposanteTypePion::Initialize, boost::cref( time ), _1 ) );
+    const std::string fileLoaded = config.GetLoader().LoadPhysicalFile( "components", boost::bind( &PHY_ComposanteTypePion::Initialize, boost::cref( time ), _1, boost::cref( resolver ) ) );
     config.AddFileToCRC( fileLoaded );
 }
 

@@ -19,6 +19,8 @@
 #include <boost/archive/shared_ptr_helper.hpp>
 #pragma warning( pop )
 
+class ObjectTypeResolver_ABC;
+
 // =============================================================================
 /** @class  MIL_CheckPointInArchive
     @brief  MIL_CheckPointInArchive
@@ -30,20 +32,34 @@ class  MIL_CheckPointInArchive : public boost::archive::binary_iarchive_impl<MIL
 {
 public:
 
-             MIL_CheckPointInArchive(std::istream & is, unsigned int flags = 0) : boost::archive::binary_iarchive_impl<MIL_CheckPointInArchive, std::istream::char_type, std::istream::traits_type>(is, flags)
+             MIL_CheckPointInArchive(std::istream & is, const ObjectTypeResolver_ABC& resolver, unsigned int flags = 0)
+                 : boost::archive::binary_iarchive_impl<MIL_CheckPointInArchive, std::istream::char_type, std::istream::traits_type>(is, flags)
+                 , resolver_( resolver )
              {}
-             MIL_CheckPointInArchive(std::streambuf & bsb, unsigned int flags = 0) : boost::archive::binary_iarchive_impl<MIL_CheckPointInArchive, std::istream::char_type, std::istream::traits_type>(bsb, flags)
+             MIL_CheckPointInArchive(std::streambuf & bsb, const ObjectTypeResolver_ABC& resolver, unsigned int flags = 0)
+                 : boost::archive::binary_iarchive_impl<MIL_CheckPointInArchive, std::istream::char_type, std::istream::traits_type>(bsb, flags)
+                 , resolver_( resolver )
              {}
     virtual ~MIL_CheckPointInArchive(){}
 
-private:
+public:
+    //! @name Operations
+    //@{
+    const ObjectTypeResolver_ABC& GetObjectTypeResolver() const;
+    //@}
 
+private:
     //! @name Copy/Assignment
     //@{
     MIL_CheckPointInArchive( const MIL_CheckPointInArchive& );            //!< Copy constructor
     MIL_CheckPointInArchive& operator=( const MIL_CheckPointInArchive& ); //!< Assignment operator
     //@}
 
+private:
+    //! @name Member Data
+    //@{
+    const ObjectTypeResolver_ABC& resolver_;
+    //@}
 };
 
 BOOST_SERIALIZATION_REGISTER_ARCHIVE( MIL_CheckPointInArchive );

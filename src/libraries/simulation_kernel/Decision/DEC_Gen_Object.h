@@ -22,6 +22,7 @@ namespace sword
 }
 
 class MIL_EntityManager_ABC;
+class ObjectTypeResolver_ABC;
 class MIL_Automate;
 
 // =============================================================================
@@ -43,8 +44,10 @@ public:
     //! @name Constructors/Destructor
     //@{
              DEC_Gen_Object();
-             DEC_Gen_Object( const sword::PlannedWork& asn, const MIL_EntityManager_ABC& entityManager );
-             DEC_Gen_Object( const sword::PlannedWork& asn, const MIL_EntityManager_ABC& entityManager, unsigned int identifier );
+             DEC_Gen_Object( const sword::PlannedWork& asn, const MIL_EntityManager_ABC& entityManager,
+                             const ObjectTypeResolver_ABC& resolver );
+             DEC_Gen_Object( const sword::PlannedWork& asn, const MIL_EntityManager_ABC& entityManager, unsigned int identifier,
+                             const ObjectTypeResolver_ABC& resolver );
              DEC_Gen_Object( std::string type, TER_Localisation* location, bool preliminary );
              DEC_Gen_Object( const DEC_Gen_Object& rhs );
     virtual ~DEC_Gen_Object();

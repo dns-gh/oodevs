@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Agent_PathClass.h"
 #include "Decision/DEC_PathType.h"
+#include "MIL_AgentServer.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Objects/MIL_ObjectFactory.h"
@@ -197,7 +198,7 @@ void DEC_Agent_PathClass::ReadObject( xml::xistream& xis )
     std::string strType( xis.attribute< std::string >( "type", std::string() ) );
     try
     {
-        const MIL_ObjectType_ABC& objectType = MIL_ObjectFactory::FindType( strType );
+        const MIL_ObjectType_ABC& objectType = MIL_AgentServer::GetWorkspace().GetObjectFactory().FindType( strType );
         unsigned int id = objectType.GetID();
         if( objectCosts_.size() <= id )
             objectCosts_.resize( id + 1, 0 );

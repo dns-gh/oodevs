@@ -23,6 +23,7 @@ class MIL_Agent_ABC;
 class PHY_PerceptionLevel;
 class PHY_SensorTypeObjectData;
 class PHY_SensorType;
+class ObjectTypeResolver_ABC;
 
 // =============================================================================
 // @class  PHY_SensorTypeObject
@@ -31,13 +32,13 @@ class PHY_SensorType;
 class PHY_SensorTypeObject : private boost::noncopyable
 {
 public:
-     PHY_SensorTypeObject( const PHY_SensorType& type, xml::xistream& xis );
+             PHY_SensorTypeObject( const PHY_SensorType& type, xml::xistream& xis, const ObjectTypeResolver_ABC& resolver );
     virtual ~PHY_SensorTypeObject();
 
     //! @name Accessors
     //@{
-          double        GetMaxDistance() const;
-    const PHY_SensorType& GetType()        const;
+    double GetMaxDistance() const;
+    const PHY_SensorType& GetType() const;
     //@}
 
     //! @name Operations
@@ -48,20 +49,20 @@ public:
 
     //! @name Helpers
     //@{
-    void ReadObject( xml::xistream& xis );
+    void ReadObject( xml::xistream& xis, const ObjectTypeResolver_ABC& resolver );
     //@}
 
 private:
     //! @name Types
     //@{
     typedef std::vector< const PHY_SensorTypeObjectData* > T_ObjectDataVector;
-    typedef T_ObjectDataVector::iterator                   CIT_ObjectDataVector;
+    typedef T_ObjectDataVector::iterator                 CIT_ObjectDataVector;
     //@}
 
 private:
     const PHY_SensorType& type_;
-    T_ObjectDataVector    objectData_;
-    double              rMaxDistance_;
+    T_ObjectDataVector objectData_;
+    double             rMaxDistance_;
 };
 
 #endif // __PHY_SensorTypeObject_h_

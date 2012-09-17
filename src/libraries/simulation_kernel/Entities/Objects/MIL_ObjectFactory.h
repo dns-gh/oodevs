@@ -10,6 +10,8 @@
 #ifndef __MIL_ObjectFactory_h_
 #define __MIL_ObjectFactory_h_
 
+#include "ObjectTypeResolver_ABC.h"
+
 namespace xml
 {
     class xistream;
@@ -37,7 +39,7 @@ class TER_Localisation;
 */
 // Created: JCR 2008-06-02
 // =============================================================================
-class MIL_ObjectFactory
+class MIL_ObjectFactory : public ObjectTypeResolver_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -48,7 +50,7 @@ public:
 
     //! @name Methods
     //@{
-    static void Initialize( xml::xistream& xis );
+    void Initialize( xml::xistream& xis );
     //@}
 
     //! @name Operations
@@ -65,16 +67,19 @@ public:
 
     //! @name Accessors
     //@{
-    static const MIL_ObjectType_ABC& FindType( const std::string& type );
     std::vector< unsigned int > GetDangerousObjects();
     double GetMaxAvoidanceDistance() const;
     //@}
 
-private:
-    //! @name Copy/Assignment
+    //! @name Resolver
     //@{
-    MIL_ObjectFactory( const MIL_ObjectFactory& );            //!< Copy constructor
-    MIL_ObjectFactory& operator=( const MIL_ObjectFactory& ); //!< Assignment operator
+    virtual const MIL_ObjectType_ABC& FindType( const std::string& type ) const;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    std::auto_ptr< MIL_ObjectLoader > pObjectLoader_;
     //@}
 };
 

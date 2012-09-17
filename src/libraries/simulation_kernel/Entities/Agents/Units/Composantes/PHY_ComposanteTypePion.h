@@ -48,6 +48,7 @@ class PHY_SensorType;
 class PHY_Weapon;
 class PHY_WeaponType;
 class PHY_MaterialCompositionType;
+class ObjectTypeResolver_ABC;
 
 // =============================================================================
 // @class  PHY_ComposanteTypePion
@@ -56,12 +57,12 @@ class PHY_MaterialCompositionType;
 class PHY_ComposanteTypePion : public PHY_ComposanteType_ABC
 {
 public:
-             PHY_ComposanteTypePion( const MIL_Time_ABC& time, const std::string& strName, xml::xistream& xis );
+             PHY_ComposanteTypePion( const MIL_Time_ABC& time, const std::string& strName, xml::xistream& xis, const ObjectTypeResolver_ABC& resolver );
     virtual ~PHY_ComposanteTypePion();
 
     //! @name Static initialization
     //@{
-    static void Initialize( const MIL_Time_ABC& time, xml::xistream& xis );
+    static void Initialize( const MIL_Time_ABC& time, xml::xistream& xis, const ObjectTypeResolver_ABC& resolver );
     static void Terminate();
 
     static const PHY_ComposanteTypePion* Find( const std::string& strName );
@@ -283,7 +284,7 @@ private:
     void InitializeLogisticMaintenance    ( xml::xistream& xis );
     void InitializeLogisticMedical        ( xml::xistream& xis );
     void InitializeLogisticSupply         ( xml::xistream& xis );
-    void InitializeObjects                ( xml::xistream& xis );
+    void InitializeObjects                ( xml::xistream& xis, const ObjectTypeResolver_ABC& resolver );
     void InitializeProtections            ( xml::xistream& xis );
     void InitializeRadars                 ( xml::xistream& xis );
     void InitializeRandomBreakdownTypes   ( xml::xistream& xis );
@@ -300,7 +301,7 @@ private:
     //! @name Helpers
     //@{
     struct LoadingWrapper;
-    static void ReadElement      ( xml::xistream& xis, const MIL_Time_ABC& time );
+    static void ReadElement      ( xml::xistream& xis, const MIL_Time_ABC& time, const ObjectTypeResolver_ABC& resolver );
     void InitializeBreakdownTypes( xml::xistream& xis );
     void ReadWeaponSystem        ( xml::xistream& xis );
     void ReadHumanProtection     ( xml::xistream& xis );
@@ -309,7 +310,7 @@ private:
     void ReadTransportCrew       ( xml::xistream& xis );
     void ReadTransportUnit       ( xml::xistream& xis );
     void ReadTransportCrowd      ( xml::xistream& xis );
-    void ReadObject              ( xml::xistream& xis );
+    void ReadObject              ( xml::xistream& xis, const ObjectTypeResolver_ABC& resolver );
     void ReadConsumption         ( xml::xistream& xis );
     void ReadMaintenance         ( xml::xistream& xis );
     void ReadTowing              ( xml::xistream& xis );

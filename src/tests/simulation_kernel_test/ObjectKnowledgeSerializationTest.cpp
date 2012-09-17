@@ -13,6 +13,7 @@
 #include "MockMIL_Time_ABC.h"
 #include "MockNET_Publisher_ABC.h"
 #include "StubTER_World.h"
+#include "MockObjectTypeResolver.h"
 #include "simulation_kernel/Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "simulation_kernel/Entities/Objects/MIL_ObjectLoader.h"
 #include "simulation_kernel/Entities/Objects/Object.h"
@@ -108,7 +109,9 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectKnowledge_Serialization, ObjectKnowledgeSer
 #endif
     }
     {
-        MIL_CheckPointInArchive* in = new MIL_CheckPointInArchive( s );
+        MockObjectTypeResolver resolver;
+        MOCK_EXPECT( resolver.FindType ).exactly( 2 ).returns( boost::cref( type ) );
+        MIL_CheckPointInArchive* in = new MIL_CheckPointInArchive( s, resolver );
         DEC_Knowledge_Object reloaded;
         ( *in ) >> reloaded;
         MOCK_EXPECT( publisher.Send ).once(); // object knowledge destruction

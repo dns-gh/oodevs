@@ -22,6 +22,7 @@
 // Created: JCR 2008-04-21
 // -----------------------------------------------------------------------------
 MIL_ObjectFactory::MIL_ObjectFactory()
+    : pObjectLoader_( new MIL_ObjectLoader() )
 {
     // NOTHING
 }
@@ -41,16 +42,16 @@ MIL_ObjectFactory::~MIL_ObjectFactory()
 // -----------------------------------------------------------------------------
 void MIL_ObjectFactory::Initialize( xml::xistream& xis )
 {
-    MIL_ObjectLoader::GetLoader().Initialize( xis );
+    pObjectLoader_->Initialize( xis );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectFactory::FindType
-// Created: JCR 2008-06-06
+// Created: LGY 2012-09-17
 // -----------------------------------------------------------------------------
-const MIL_ObjectType_ABC& MIL_ObjectFactory::FindType( const std::string& type )
+const MIL_ObjectType_ABC& MIL_ObjectFactory::FindType( const std::string& type ) const
 {
-    return MIL_ObjectLoader::GetLoader().GetType( type );
+    return pObjectLoader_->GetType( type );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,7 +60,7 @@ const MIL_ObjectType_ABC& MIL_ObjectFactory::FindType( const std::string& type )
 // -----------------------------------------------------------------------------
 std::vector< unsigned int > MIL_ObjectFactory::GetDangerousObjects()
 {
-    return MIL_ObjectLoader::GetLoader().GetDangerousObjects();
+    return pObjectLoader_->GetDangerousObjects();
 }
 
 // -----------------------------------------------------------------------------
@@ -68,7 +69,7 @@ std::vector< unsigned int > MIL_ObjectFactory::GetDangerousObjects()
 // -----------------------------------------------------------------------------
 double MIL_ObjectFactory::GetMaxAvoidanceDistance() const
 {
-    return MIL_ObjectLoader::GetLoader().GetMaxAvoidanceDistance();
+    return pObjectLoader_->GetMaxAvoidanceDistance();
 }
 
 // -----------------------------------------------------------------------------
@@ -77,7 +78,7 @@ double MIL_ObjectFactory::GetMaxAvoidanceDistance() const
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectFactory::BuildObject( xml::xistream& xis, MIL_Army_ABC* army )
 {
-    return MIL_ObjectLoader::GetLoader().CreateObject( xis, army );
+    return pObjectLoader_->CreateObject( xis, army );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,7 +87,7 @@ MIL_Object_ABC* MIL_ObjectFactory::BuildObject( xml::xistream& xis, MIL_Army_ABC
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectFactory::BuildObject( const sword::MissionParameters& msg, MIL_Army_ABC* army, sword::ObjectMagicActionAck_ErrorCode& value )
 {
-    return MIL_ObjectLoader::GetLoader().CreateObject( msg, army, value );
+    return pObjectLoader_->CreateObject( msg, army, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,7 +97,7 @@ MIL_Object_ABC* MIL_ObjectFactory::BuildObject( const sword::MissionParameters& 
 MIL_Object_ABC* MIL_ObjectFactory::BuildObject( const std::string& name, const std::string& type, MIL_Army_ABC* army, const TER_Localisation& localisation,
                                                 sword::ObstacleType_DemolitionTargetType obstacleType, unsigned int externalIdentifier, unsigned int forcedId /*=0*/, double density /*=0.*/ )
 {
-    return MIL_ObjectLoader::GetLoader().CreateObject( name, type, army, localisation, obstacleType == sword::ObstacleType_DemolitionTargetType_reserved, externalIdentifier, forcedId, density );
+    return pObjectLoader_->CreateObject( name, type, army, localisation, obstacleType == sword::ObstacleType_DemolitionTargetType_reserved, externalIdentifier, forcedId, density );
 }
 
 // -----------------------------------------------------------------------------
@@ -105,7 +106,7 @@ MIL_Object_ABC* MIL_ObjectFactory::BuildObject( const std::string& name, const s
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectFactory::BuildObject( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC* army )
 {
-    return MIL_ObjectLoader::GetLoader().CreateObject( builder, army );
+    return pObjectLoader_->CreateObject( builder, army );
 }
 
 // -----------------------------------------------------------------------------
@@ -114,7 +115,7 @@ MIL_Object_ABC* MIL_ObjectFactory::BuildObject( const MIL_ObjectBuilder_ABC& bui
 // -----------------------------------------------------------------------------
 MIL_UrbanObject_ABC* MIL_ObjectFactory::BuildUrbanObject( xml::xistream& xis, MIL_UrbanObject_ABC* parent )
 {
-    return MIL_ObjectLoader::GetLoader().CreateUrbanObject( xis, parent );
+    return pObjectLoader_->CreateUrbanObject( xis, parent );
 }
 
 // -----------------------------------------------------------------------------
@@ -123,5 +124,5 @@ MIL_UrbanObject_ABC* MIL_ObjectFactory::BuildUrbanObject( xml::xistream& xis, MI
 // -----------------------------------------------------------------------------
 void MIL_ObjectFactory::Update( const std::string& capacity, xml::xistream& xis, MIL_Object_ABC& object ) const
 {
-    return MIL_ObjectLoader::GetLoader().Update( capacity, xis, object );
+    return pObjectLoader_->Update( capacity, xis, object );
 }

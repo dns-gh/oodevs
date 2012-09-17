@@ -44,6 +44,7 @@
 #include "Decision/DEC_Decision_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Orders/MIL_OrderTypeParameter.h"
+#include "Entities/Objects/MIL_ObjectFactory.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Network/NET_AsnException.h"
@@ -90,6 +91,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
 {
     MIL_MissionParameter_ABC* ptr = 0;
     MIL_EntityManager_ABC& entityManager = MIL_AgentServer::GetWorkspace().GetEntityManager();
+    const ObjectTypeResolver_ABC& objectTypeResolver = MIL_AgentServer::GetWorkspace().GetObjectFactory();
     if( message.has_booleanvalue() )
         ptr = new MIL_BoolParameter( message.booleanvalue() );
     else if( message.has_areal() )
@@ -127,9 +129,9 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
     else if( message.has_plannedwork() )
     {
         if( message.has_external_identifier() )
-            ptr = new MIL_PlannedWorkParameter( message.plannedwork(), entityManager, message.external_identifier() );
+            ptr = new MIL_PlannedWorkParameter( message.plannedwork(), entityManager, message.external_identifier(), objectTypeResolver );
         else
-            ptr = new MIL_PlannedWorkParameter( message.plannedwork(), entityManager );
+            ptr = new MIL_PlannedWorkParameter( message.plannedwork(), entityManager, objectTypeResolver );
     }
     else if( message.has_resourcetype() )
         ptr = new MIL_DotationTypeParameter( message.resourcetype() );

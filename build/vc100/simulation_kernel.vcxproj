@@ -952,6 +952,7 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\CapacityRetriever.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\FireForbiddenCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractWithSideCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ObjectTypeResolver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\TrafficabilityAttribute.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\TrafficabilityCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\UrbanDestructionCapacity.h" />

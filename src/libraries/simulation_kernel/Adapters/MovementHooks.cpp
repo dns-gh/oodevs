@@ -33,7 +33,6 @@
 #include "Entities/Objects/MIL_ObjectFilter.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
-#include "Entities/Objects/MIL_ObjectLoader.h"
 #include "Entities/Orders/MIL_Fuseau.h"
 #include "Entities/Orders/MIL_AutomateOrderManager.h"
 #include "Entities/Orders/MIL_LimaFunction.h"
@@ -181,7 +180,7 @@ namespace
     }
     DEFINE_HOOK( FindObjectType, unsigned int, ( const char* type ) )
     {
-        return MIL_ObjectFactory::FindType( type ).GetID();
+        return  MIL_AgentServer::GetWorkspace().GetObjectFactory().FindType( type ).GetID();
     }
     DEFINE_HOOK( IsNullAutomateFuseau, bool, ( const SWORD_Model* entity ) )
     {

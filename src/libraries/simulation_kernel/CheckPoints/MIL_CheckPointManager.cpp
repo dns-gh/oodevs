@@ -71,7 +71,7 @@ MIL_CheckPointManager::~MIL_CheckPointManager()
 // Name: MIL_CheckPointManager::LoadCheckPoint
 // Created: JVT 03-07-23
 //-----------------------------------------------------------------------------
-void MIL_CheckPointManager::LoadCheckPoint( const MIL_Config& config )
+void MIL_CheckPointManager::LoadCheckPoint( const MIL_Config& config, const ObjectTypeResolver_ABC& resolver )
 {
     MT_LOG_STARTUP_MESSAGE( "------------------------------" );
     MT_LOG_STARTUP_MESSAGE( "----  Loading Checkpoint  ----" );
@@ -82,7 +82,7 @@ void MIL_CheckPointManager::LoadCheckPoint( const MIL_Config& config )
     std::ifstream file( config.BuildCheckpointChildFile( "data" ).c_str(), std::ios::in | std::ios::binary );
     if( !file || !file.is_open() )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Cannot open file '%s'", config.BuildCheckpointChildFile( "data" ).c_str() ) );
-    MIL_CheckPointInArchive* pArchive = new MIL_CheckPointInArchive( file );
+    MIL_CheckPointInArchive* pArchive = new MIL_CheckPointInArchive( file, resolver );
     MIL_AgentServer::GetWorkspace().load( *pArchive );
     file.close();
 #ifndef _DEBUG //$$$$ boost + nedmalloc + binary_ioarchive + std::locale = crash

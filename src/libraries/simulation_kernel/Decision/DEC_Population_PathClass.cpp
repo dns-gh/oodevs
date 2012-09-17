@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Population_PathClass.h"
+#include "MIL_AgentServer.h"
 #include "Entities/Objects/MIL_ObjectFactory.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "MT_Tools/MT_ScipioException.h"
@@ -140,7 +141,7 @@ void DEC_Population_PathClass::ReadObject( xml::xistream& xis )
     std::string strType( xis.attribute< std::string >( "type", std::string() ) );
     try
     {
-        const MIL_ObjectType_ABC& objectType = MIL_ObjectFactory::FindType( strType );
+        const MIL_ObjectType_ABC& objectType = MIL_AgentServer::GetWorkspace().GetObjectFactory().FindType( strType );
         unsigned int id = objectType.GetID();
         if( objectCosts_.size() <= id )
             objectCosts_.resize( id + 1, 0 );

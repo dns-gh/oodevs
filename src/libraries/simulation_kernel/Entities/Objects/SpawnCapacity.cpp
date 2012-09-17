@@ -13,7 +13,6 @@
 #include "ChildObjectAttribute.h"
 #include "Object.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
-#include "MIL_ObjectLoader.h"
 #include "MIL_ObjectManipulator_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "MIL_Singletons.h"

@@ -28,8 +28,9 @@ MIL_PlannedWorkParameter::MIL_PlannedWorkParameter()
 // Name: MIL_PlannedWorkParameter constructor
 // Created: LDC 2009-06-04
 // -----------------------------------------------------------------------------
-MIL_PlannedWorkParameter::MIL_PlannedWorkParameter( const sword::PlannedWork& asn, const MIL_EntityManager_ABC& entityManager )
-    : pGenObject_( new DEC_Gen_Object( asn, entityManager ) )
+MIL_PlannedWorkParameter::MIL_PlannedWorkParameter( const sword::PlannedWork& asn, const MIL_EntityManager_ABC& entityManager,
+                                                    const ObjectTypeResolver_ABC& resolver )
+    : pGenObject_( new DEC_Gen_Object( asn, entityManager, resolver ) )
     , identifier_( 0u )
 {
     // NOTHING
@@ -39,8 +40,9 @@ MIL_PlannedWorkParameter::MIL_PlannedWorkParameter( const sword::PlannedWork& as
 // Name: MIL_PlannedWorkParameter constructor
 // Created: LGY 2011-10-25
 // -----------------------------------------------------------------------------
-MIL_PlannedWorkParameter::MIL_PlannedWorkParameter( const sword::PlannedWork& asn, const MIL_EntityManager_ABC& entityManager, unsigned int identifier )
-    : pGenObject_( new DEC_Gen_Object( asn, entityManager, identifier ) )
+MIL_PlannedWorkParameter::MIL_PlannedWorkParameter( const sword::PlannedWork& asn, const MIL_EntityManager_ABC& entityManager,
+                                                    unsigned int identifier, const ObjectTypeResolver_ABC& resolver )
+    : pGenObject_( new DEC_Gen_Object( asn, entityManager, identifier, resolver ) )
     , identifier_( identifier )
 {
     // NOTHING

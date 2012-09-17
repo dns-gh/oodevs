@@ -13,6 +13,7 @@
 #include "MockDEC_KnowledgeResolver_ABC.h"
 #include "MockMIL_EntityManager_ABC.h"
 #include "MockMIL_ObjectType_ABC.h"
+#include "MockObjectTypeResolver.h"
 #include "MockArmy.h"
 #include "StubMIL_Object_ABC.h"
 #include "StubMIL_PopulationType.h"
@@ -561,9 +562,10 @@ BOOST_AUTO_TEST_CASE( TestMIL_PlannedWorkParameter )
     in.set_activity_time( 2 );
     MockMIL_EntityManager_ABC entityManager;
     MockMIL_ObjectType_ABC objectType;
-    MOCK_EXPECT( entityManager.FindObjectType ).returns( boost::cref( objectType ) );
+    MockObjectTypeResolver resolver;
+    MOCK_EXPECT( resolver.FindType ).returns( boost::cref( objectType ) );
     MOCK_EXPECT( objectType.GetPointSize ).returns( 250. );
-    MIL_PlannedWorkParameter param( in, entityManager );
+    MIL_PlannedWorkParameter param( in, entityManager, resolver );
     in.mutable_position()->mutable_coordinates()->Clear();
     MissionParameter_Value out;
     BOOST_CHECK_EQUAL( true, param.ToElement( out ) );

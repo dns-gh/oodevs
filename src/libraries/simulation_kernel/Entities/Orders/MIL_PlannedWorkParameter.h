@@ -14,6 +14,7 @@
 
 class DEC_Gen_Object;
 class MIL_EntityManager_ABC;
+class ObjectTypeResolver_ABC;
 class MIL_CheckPointInArchive;
 class MIL_CheckPointOutArchive;
 
@@ -29,8 +30,10 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_PlannedWorkParameter();
-             MIL_PlannedWorkParameter( const sword::PlannedWork& asn, const MIL_EntityManager_ABC& entityManager );
-             MIL_PlannedWorkParameter( const sword::PlannedWork& asn, const MIL_EntityManager_ABC& entityManager, unsigned int identifier );
+             MIL_PlannedWorkParameter( const sword::PlannedWork& asn, const MIL_EntityManager_ABC& entityManager,
+                                       const ObjectTypeResolver_ABC& resolver );
+             MIL_PlannedWorkParameter( const sword::PlannedWork& asn, const MIL_EntityManager_ABC& entityManager, unsigned int identifier,
+                                       const ObjectTypeResolver_ABC& resolver );
     explicit MIL_PlannedWorkParameter( boost::shared_ptr< DEC_Gen_Object > param );
     virtual ~MIL_PlannedWorkParameter();
     //@}

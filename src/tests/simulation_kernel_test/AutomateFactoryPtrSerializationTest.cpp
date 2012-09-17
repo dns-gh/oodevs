@@ -1,6 +1,7 @@
 #include "simulation_kernel_test_pch.h"
 #include "AutomateFactory.h"
 #include "simulation_kernel/Tools/MIL_IDManager.h"
+#include "MockObjectTypeResolver.h"
 
 // -----------------------------------------------------------------------------
 // Name: VerifyAutomateFactoryPtr_Serialization
@@ -20,7 +21,8 @@ BOOST_AUTO_TEST_CASE( VerifyAutomateFactoryPtr_Serialization )
 #endif
     }
     {
-        MIL_CheckPointInArchive* in = new MIL_CheckPointInArchive( s );
+        MockObjectTypeResolver resolver;
+        MIL_CheckPointInArchive* in = new MIL_CheckPointInArchive( s, resolver );
         AutomateFactory_ABC* factory = 0;
         ( *in ) >> factory;
         BOOST_CHECK( factory );

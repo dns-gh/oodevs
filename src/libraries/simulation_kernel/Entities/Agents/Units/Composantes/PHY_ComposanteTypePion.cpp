@@ -29,13 +29,13 @@
 #include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Agents/Units/Weapons/PHY_WeaponType.h"
-#include "Entities/Objects/MIL_ObjectFactory.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/BuildableCapacity.h"
 #include "Entities/Objects/BypassableCapacity.h"
 #include "Entities/Objects/MobilityCapacity.h"
+#include "Entities/Objects/ObjectTypeResolver_ABC.h"
 #include "PHY_ComposanteTypeObjectData.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/Codec.h"
@@ -46,9 +46,9 @@ PHY_ComposanteTypePion::T_ComposanteTypeMap PHY_ComposanteTypePion::composantesT
 
 struct PHY_ComposanteTypePion::LoadingWrapper
 {
-    void ReadElement( xml::xistream& xis, const MIL_Time_ABC& time )
+    void ReadElement( xml::xistream& xis, const MIL_Time_ABC& time, const ObjectTypeResolver_ABC& resolver )
     {
-        PHY_ComposanteTypePion::ReadElement( xis , time);
+        PHY_ComposanteTypePion::ReadElement( xis, time, resolver );
     }
 };
 
@@ -74,12 +74,12 @@ bool PHY_ComposanteTypePion::sNTICapability::CanRepair( const PHY_Breakdown& bre
 // Name: PHY_ComposanteTypePion::Initialize
 // Created: NLD 2004-08-04
 // -----------------------------------------------------------------------------
-void PHY_ComposanteTypePion::Initialize( const MIL_Time_ABC& time, xml::xistream& xis )
+void PHY_ComposanteTypePion::Initialize( const MIL_Time_ABC& time, xml::xistream& xis, const ObjectTypeResolver_ABC& resolver )
 {
     MT_LOG_INFO_MSG( "Initializing composante types" );
     LoadingWrapper loader;
     xis >> xml::start( "equipments" )
-            >> xml::list( "equipment", loader, &LoadingWrapper::ReadElement, time )
+            >> xml::list( "equipment", loader, &LoadingWrapper::ReadElement, time, resolver )
         >> xml::end;
 }
 
@@ -87,7 +87,7 @@ void PHY_ComposanteTypePion::Initialize( const MIL_Time_ABC& time, xml::xistream
 // Name: PHY_ComposanteTypePion::ReadElement
 // Created: ABL 2007-07-20
 // -----------------------------------------------------------------------------
-void PHY_ComposanteTypePion::ReadElement( xml::xistream& xis, const MIL_Time_ABC& time )
+void PHY_ComposanteTypePion::ReadElement( xml::xistream& xis, const MIL_Time_ABC& time, const ObjectTypeResolver_ABC& resolver )
 {
     std::set< unsigned int > ids_;
     std::string strComposanteType;
@@ -95,7 +95,7 @@ void PHY_ComposanteTypePion::ReadElement( xml::xistream& xis, const MIL_Time_ABC
     PHY_ComposanteTypePion*& pComposanteType = composantesTypes_[ strComposanteType ];
     if( pComposanteType )
         xis.error( "Composante type '" + strComposanteType + "' already registered" );
-    pComposanteType = new PHY_ComposanteTypePion( time, strComposanteType, xis );
+    pComposanteType = new PHY_ComposanteTypePion( time, strComposanteType, xis, resolver );
 
     if( !ids_.insert( pComposanteType->GetMosID().id() ).second )
         xis.error( "Composante ID already used" );
@@ -117,7 +117,7 @@ void PHY_ComposanteTypePion::Terminate()
 // Created: NLD 2004-08-04
 // Modified: JVT 2004-10-20
 // -----------------------------------------------------------------------------
-PHY_ComposanteTypePion::PHY_ComposanteTypePion( const MIL_Time_ABC& time, const std::string& strName, xml::xistream& xis )
+PHY_ComposanteTypePion::PHY_ComposanteTypePion( const MIL_Time_ABC& time, const std::string& strName, xml::xistream& xis, const ObjectTypeResolver_ABC& resolver )
     : PHY_ComposanteType_ABC                     ( strName, xis )
     , time_                                      ( time )
     , speeds_                                    ( xis, time.GetTickDuration() )
@@ -172,7 +172,7 @@ PHY_ComposanteTypePion::PHY_ComposanteTypePion( const MIL_Time_ABC& time, const 
     InitializeSensors         ( xis );
     InitializeRadars          ( xis );
     InitializeTransport       ( xis );
-    InitializeObjects         ( xis );
+    InitializeObjects         ( xis, resolver );
     InitializeConsumptions    ( xis );
     InitializeLogistic        ( xis );
     InitializeBreakdownTypes  ( xis );
@@ -496,10 +496,10 @@ void PHY_ComposanteTypePion::ReadTransportCrowd( xml::xistream& xis )
 // Name: PHY_ComposanteTypePion::InitializeObjects
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
-void PHY_ComposanteTypePion::InitializeObjects( xml::xistream& xis )
+void PHY_ComposanteTypePion::InitializeObjects( xml::xistream& xis, const ObjectTypeResolver_ABC& resolver )
 {
     xis >> xml::start( "objects" )
-            >> xml::list( "object", *this, &PHY_ComposanteTypePion::ReadObject )
+            >> xml::list( "object", *this, &PHY_ComposanteTypePion::ReadObject, resolver )
         >> xml::end;
 }
 
@@ -507,13 +507,13 @@ void PHY_ComposanteTypePion::InitializeObjects( xml::xistream& xis )
 // Name: PHY_ComposanteTypePion::ReadObject
 // Created: ABL 2007-07-20
 // -----------------------------------------------------------------------------
-void PHY_ComposanteTypePion::ReadObject( xml::xistream& xis )
+void PHY_ComposanteTypePion::ReadObject( xml::xistream& xis, const ObjectTypeResolver_ABC& resolver )
 {
     std::string strType( xml::attribute( xis, "type", std::string() ) );
 
     try
     {
-        const MIL_ObjectType_ABC& objectType = MIL_ObjectFactory::FindType( strType );
+        const MIL_ObjectType_ABC& objectType = resolver.FindType( strType );
         if( objectData_.size() <= objectType.GetID() )
             objectData_.resize( objectType.GetID() + 1, 0 );
         const PHY_ComposanteTypeObjectData*& pObject = objectData_[ objectType.GetID() ];

@@ -18,9 +18,9 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Objects/AnimatorAttribute.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
-#include "Entities/Objects/MIL_ObjectLoader.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
+#include "Entities/Objects/MIL_ObjectFactory.h"
 #include "Entities/Objects/PopulationAttribute.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Populations/MIL_Population.h"
@@ -241,7 +241,7 @@ void MIL_PopulationFlow::Move( const MT_Vector2D& destination )
         {
             if( pBlockingObject_ )
             {
-                const std::string name = MIL_ObjectLoader::GetLoader().GetType( pBlockingObject_->GetType().GetName() ).GetRealName();
+                const std::string name = MIL_AgentServer::GetWorkspace().GetObjectFactory().FindType( pBlockingObject_->GetType().GetName() ).GetRealName();
                 SendRC( MIL_Report::eReport_DifficultMovementProgression, name );
             }
         }

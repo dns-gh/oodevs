@@ -21,7 +21,6 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Automates/MIL_Automate.h"
-#include "Entities/Objects/MIL_ObjectFactory.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/AvoidanceCapacity.h"
@@ -34,6 +33,7 @@
 #include "Entities/Objects/FloodAttribute.h"
 #include "Entities/Objects/ObstacleAttribute.h"
 #include "Entities/Objects/TrafficabilityAttribute.h"
+#include "Entities/Objects/MIL_ObjectFactory.h"
 #include "Entities/Objects/MineAttribute.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -180,7 +180,7 @@ void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const unsigned i
     file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this );
     std::string name;
     file >> name;
-    pObjectType_ = &MIL_ObjectFactory::FindType( name );
+    pObjectType_ = &file.GetObjectTypeResolver().FindType( name );
     file >> const_cast< MIL_Army_ABC*& >( pArmyKnowing_ )
          >> pObjectKnown_
          >> const_cast< unsigned int& >( objectId_ )

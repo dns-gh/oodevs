@@ -127,6 +127,10 @@
       <AdditionalIncludeDirectories>../../src/libraries/simulation_kernel;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
+    <PostBuildEvent>
+      <Command>cd $(RunDir)
+$(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_directory=../../data/tests/$(ProjectName)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
     <ClCompile />
@@ -152,6 +156,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\Fixture.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockObjectTypeResolver.h" />
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\simulation_kernel_test_pch.h" />
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockAgent.h" />
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockAgentFactory.h" />
@@ -231,7 +236,6 @@
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\HumanTest.cpp" />
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\MissionParametersTest.cpp" />
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\SimpleBrainTest.cpp" />
-    <ClCompile Include="..\..\src\tests\simulation_kernel_test\FactoriesTest.cpp" />
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\AutomateFactoryPtrSerializationTest.cpp" />
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\NetworkBufferedPercentageValueTest.cpp" />
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\SerializationTest.cpp" />

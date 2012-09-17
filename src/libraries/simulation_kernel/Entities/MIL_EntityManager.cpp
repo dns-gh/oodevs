@@ -69,6 +69,8 @@
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 #include "Entities/Specialisations/LOG/LogisticLink_ABC.h"
+#include "Entities/Objects/MIL_ObjectManager.h"
+#include "Entities/Objects/MIL_ObjectFactory.h"
 #include "flood/FloodModel.h"
 #include "Inhabitants/MIL_InhabitantType.h"
 #include "Inhabitants/MIL_Inhabitant.h"
@@ -81,7 +83,6 @@
 #include "Objects/MIL_FireClass.h"
 #include "Objects/MIL_MedicalTreatmentType.h"
 #include "Objects/MIL_NbcAgentType.h"
-#include "Objects/MIL_ObjectManager.h"
 #include "Objects/MIL_Object_ABC.h"
 #include "Orders/MIL_LimaFunction.h"
 #include "Orders/MIL_Report.h"
@@ -197,11 +198,12 @@ void load_construct_data( Archive& archive, MIL_EntityManager* manager, const un
     archive >> sink;
     std::auto_ptr< Sink_ABC > pSink( sink );
     ::new( manager )MIL_EntityManager( MIL_Singletons::GetTime(), MIL_EffectManager::GetEffectManager(),
-                                    MIL_Singletons::GetProfiler(),
-                                    pSink,
-                                    MIL_AgentServer::GetWorkspace().GetConfig().ReadGCParameter_setPause(),
-                                    MIL_AgentServer::GetWorkspace().GetConfig().ReadGCParameter_setStepMul() );
-}
+                                       MIL_AgentServer::GetWorkspace().GetObjectFactory(),
+                                       MIL_Singletons::GetProfiler(),
+                                       pSink,
+                                       MIL_AgentServer::GetWorkspace().GetConfig().ReadGCParameter_setPause(),
+                                       MIL_AgentServer::GetWorkspace().GetConfig().ReadGCParameter_setStepMul() );
+    }
 
 // =============================================================================
 // INITIALIZATION
@@ -211,7 +213,8 @@ void load_construct_data( Archive& archive, MIL_EntityManager* manager, const un
 // Name: MIL_EntityManager constructor
 // Created: NLD 2004-08-10
 // -----------------------------------------------------------------------------
-MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ProfilerMgr& profiler, bool isLegacy, unsigned int gcPause, unsigned int gcMult )
+MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ObjectFactory& objectFactory,
+                                      MIL_ProfilerMgr& profiler, bool isLegacy, unsigned int gcPause, unsigned int gcMult )
     : time_                         ( time )
     , effectManager_                ( effects )
     , profilerManager_              ( profiler )
@@ -228,9 +231,9 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , inhabitantFactory_            ( new InhabitantFactory() )
     , populationFactory_            ( new PopulationFactory( *missionController_, gcPause, gcMult ) )
     , agentFactory_                 ( new AgentFactory( *idManager_, *missionController_ ) )
-    , pObjectManager_               ( new MIL_ObjectManager() )
+    , pObjectManager_               ( new MIL_ObjectManager( objectFactory ) )
     , sink_                         ( isLegacy ? std::auto_ptr< sword::Sink_ABC >( new sword::legacy::Sink( *agentFactory_, gcPause, gcMult ) )
-                                               : std::auto_ptr< sword::Sink_ABC >( new sword::Sink( *agentFactory_, gcPause, gcMult, pObjectManager_->GetDangerousObjects() ) ) )
+                                               : std::auto_ptr< sword::Sink_ABC >( new sword::Sink( *agentFactory_, gcPause, gcMult, objectFactory.GetDangerousObjects() ) ) )
     , pFloodModel_                  ( sink_->CreateFloodModel() )
     , automateFactory_              ( new AutomateFactory( *idManager_, gcPause, gcMult ) )
     , formationFactory_             ( new FormationFactory( *automateFactory_ ) )
@@ -246,7 +249,8 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
 // Name: MIL_EntityManager constructor
 // Created: MCO 2012-09-12
 // -----------------------------------------------------------------------------
-MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ProfilerMgr& profiler, std::auto_ptr< sword::Sink_ABC > sink, unsigned int gcPause, unsigned int gcMult )
+MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ObjectFactory& objectFactory,
+                                      MIL_ProfilerMgr& profiler, std::auto_ptr< sword::Sink_ABC > sink, unsigned int gcPause, unsigned int gcMult )
     : time_                         ( time )
     , effectManager_                ( effects )
     , profilerManager_              ( profiler )
@@ -262,8 +266,8 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , missionController_            ( new MissionController() )
     , inhabitantFactory_            ( new InhabitantFactory() )
     , populationFactory_            ( new PopulationFactory( *missionController_, gcPause, gcMult ) )
+    , pObjectManager_               ( new MIL_ObjectManager( objectFactory ) )
     , agentFactory_                 ( new AgentFactory( *idManager_, *missionController_ ) )
-    , pObjectManager_               ( new MIL_ObjectManager() )
     , sink_                         ( sink )
     , pFloodModel_                  ( sink_->CreateFloodModel() )
     , automateFactory_              ( new AutomateFactory( *idManager_, gcPause, gcMult ) )
@@ -722,15 +726,6 @@ MIL_Object_ABC* MIL_EntityManager::CreateObject( const std::string& /*type*/, MI
 MIL_Object_ABC* MIL_EntityManager::FindObject( unsigned int nID ) const
 {
     return pObjectManager_->Find( nID );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::FindObjectType
-// Created: JCR 2008-06-03
-// -----------------------------------------------------------------------------
-const MIL_ObjectType_ABC& MIL_EntityManager::FindObjectType( const std::string& type ) const
-{
-    return pObjectManager_->FindType( type );
 }
 
 // -----------------------------------------------------------------------------
@@ -2489,22 +2484,4 @@ void MIL_EntityManager::Accept( KnowledgesVisitor_ABC& visitor ) const
 const std::set< MIL_Object_ABC* >& MIL_EntityManager::GetUniversalObjects() const
 {
     return pObjectManager_->GetUniversalObjects();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::GetDangerousObjects
-// Created: LGY 2012-09-13
-// -----------------------------------------------------------------------------
-std::vector< unsigned int > MIL_EntityManager::GetDangerousObjects() const
-{
-    return pObjectManager_->GetDangerousObjects();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::GetMaxAvoidanceDistance
-// Created: LGY 2012-09-13
-// -----------------------------------------------------------------------------
-double MIL_EntityManager::GetMaxAvoidanceDistance() const
-{
-    return pObjectManager_->GetMaxAvoidanceDistance();
 }

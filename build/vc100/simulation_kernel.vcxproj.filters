@@ -5375,5 +5375,8 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\ListenerHelper.h">
       <Filter>Source Files\Adapters\Roles</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ObjectTypeResolver_ABC.h">
+      <Filter>Source Files\Entities\Objects</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

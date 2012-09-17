@@ -10,10 +10,12 @@
 // *****************************************************************************
 
 #include "Entities/Orders/MIL_Fuseau.h"
+#include "MIL_AgentServer.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
+#include "Entities/Objects/MIL_ObjectFactory.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Tools/MIL_Tools.h"
 #include "Decision/DEC_Objective.h"
@@ -275,7 +277,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeObstaclePosition(
         throw std::runtime_error( "Compute obstacle position with null center" );
     boost::shared_ptr< MT_Vector2D > pResultPos ( new MT_Vector2D( *pCenter ) );
 
-    const MIL_ObjectType_ABC& object = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObjectType( type );
+    const MIL_ObjectType_ABC& object = MIL_AgentServer::GetWorkspace().GetObjectFactory().FindType( type );
     const TerrainHeuristicCapacity* pCapacity = object.GetCapacity< TerrainHeuristicCapacity >();
     if ( pCapacity )
     {

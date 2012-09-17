@@ -70,11 +70,6 @@ public:
     double GetMaxAvoidanceDistance() const;
     //@}
 
-    //! @name Singleton
-    //@{
-    static MIL_ObjectLoader& GetLoader();
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{

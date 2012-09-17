@@ -11,9 +11,6 @@
     <Filter Include="Source Files\Entities">
       <UniqueIdentifier>{f4fef232-0647-421f-8009-649139c6b4d7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\factories">
-      <UniqueIdentifier>{8f2b43dd-384c-4e99-9f9f-dc76a6525704}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\mock">
       <UniqueIdentifier>{70dbd4d9-e08b-49e1-a965-8c063d49ed5c}</UniqueIdentifier>
     </Filter>
@@ -223,6 +220,9 @@
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\TestPk.h">
       <Filter>Source Files\Firing</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockObjectTypeResolver.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\simulation_kernel_test_pch.cpp">
@@ -254,9 +254,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\SimpleBrainTest.cpp">
       <Filter>Source Files\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\tests\simulation_kernel_test\FactoriesTest.cpp">
-      <Filter>Source Files\factories</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\AutomateFactoryPtrSerializationTest.cpp">
       <Filter>Source Files\Serialization</Filter>

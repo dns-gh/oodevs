@@ -15,8 +15,8 @@
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
-#include "Entities/Objects/MIL_ObjectFactory.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
+#include "Entities/Objects/ObjectTypeResolver_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
@@ -25,24 +25,24 @@
 // Name: PHY_SensorTypeObject constructor
 // Created: NLD 2004-08-06
 // -----------------------------------------------------------------------------
-PHY_SensorTypeObject::PHY_SensorTypeObject( const PHY_SensorType& type, xml::xistream& xis )
+PHY_SensorTypeObject::PHY_SensorTypeObject( const PHY_SensorType& type, xml::xistream& xis, const ObjectTypeResolver_ABC& resolver )
     : type_        ( type )
     , rMaxDistance_( 0 )
 {
-    xis >> xml::list( "object", *this, &PHY_SensorTypeObject::ReadObject );
+    xis >> xml::list( "object", *this, &PHY_SensorTypeObject::ReadObject, resolver );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeObject::ReadObject
 // Created: ABL 2007-07-25
 // -----------------------------------------------------------------------------
-void PHY_SensorTypeObject::ReadObject( xml::xistream& xis )
+void PHY_SensorTypeObject::ReadObject( xml::xistream& xis, const ObjectTypeResolver_ABC& resolver )
 {
     std::string strType;
     xis >> xml::attribute( "type", strType );
     try
     {
-        const MIL_ObjectType_ABC& objectType = MIL_ObjectFactory::FindType( strType );
+        const MIL_ObjectType_ABC& objectType = resolver.FindType( strType );
         if( objectData_.size() <= objectType.GetID() )
             objectData_.resize( objectType.GetID() + 1, 0 );
         const PHY_SensorTypeObjectData* pObjectData = new PHY_SensorTypeObjectData( xis );

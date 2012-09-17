@@ -24,6 +24,7 @@
 #include "Entities/Agents/Units/Weapons/PHY_WeaponType.h"
 #include "StubPHY_RoleInterface_Dotation.h"
 #include "WeaponAvailabilityComputer_ABC.h"
+#include "MockObjectTypeResolver.h"
 #include <xeumeuleu/xml.hpp>
 
 class TestIndirectFireModifier : public tools::Role_ABC
@@ -70,7 +71,8 @@ public:
     {
         xml::xistringstream xisComposanteTypePion( "<bla name='composanteTypePion' id='1' protection='protection1' weight='1' size='Big'><speeds max='8'></speeds><weapon-systems/><sensors/><transports/><objects/><consumptions/></bla>" );
         xisComposanteTypePion.start( "bla" );
-        PHY_ComposanteTypePion type( time_, "composanteTypePion", xisComposanteTypePion );
+        MockObjectTypeResolver resolver;
+        PHY_ComposanteTypePion type( time_, "composanteTypePion", xisComposanteTypePion, resolver );
         role_.reset( new PHY_RolePion_Composantes( pion_, false ) );
         firer_.reset( new PHY_ComposantePion( time_, type, *role_, 1, true, true, true ) );
         weapon_.reset( new PHY_Weapon( time_, *PHY_WeaponType::FindWeaponType( "gun", "ammo" ), true ) );

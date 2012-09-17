@@ -12,7 +12,6 @@
 #include "BuildableCapacity.h"
 #include "FloodAttribute.h"
 #include "MIL_AgentServer.h"
-#include "MIL_ObjectFactory.h"
 #include "MIL_ObjectType_ABC.h"
 #include "ObstacleAttribute.h"
 #include "ResourceNetworkCapacity.h"
@@ -28,6 +27,7 @@
 #include "Entities/Objects/LodgingAttribute.h"
 #include "Entities/Objects/LogisticAttribute.h"
 #include "Entities/Objects/MineAttribute.h"
+#include "Entities/Objects/ObjectTypeResolver_ABC.h"
 #include "Entities/Objects/TimeLimitedAttribute.h"
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
@@ -164,7 +164,7 @@ void MIL_Object_ABC::load( MIL_CheckPointInArchive& file, const unsigned int )
     idManager_.Lock( id_ );
     std::string type;
     file >> type;
-    pType_ = &MIL_ObjectFactory::FindType( type );
+    pType_ = &file.GetObjectTypeResolver().FindType( type );
     file >> pArmy_
          >> bMarkedForDestruction_
          >> bReadyForDeletion_;

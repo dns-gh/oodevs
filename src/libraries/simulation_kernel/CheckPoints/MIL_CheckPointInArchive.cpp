@@ -23,3 +23,12 @@ template class detail::archive_serializer_map<MIL_CheckPointInArchive>;
 
 } // namespace archive
 } // namespace boost
+
+// -----------------------------------------------------------------------------
+// Name: MIL_CheckPointInArchive::GetObjectTypeResolver
+// Created: LGY 2012-09-17
+// -----------------------------------------------------------------------------
+const ObjectTypeResolver_ABC& MIL_CheckPointInArchive::GetObjectTypeResolver() const
+{
+    return resolver_;
+}

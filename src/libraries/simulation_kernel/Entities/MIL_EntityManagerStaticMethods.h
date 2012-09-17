@@ -14,6 +14,8 @@
 #include <xeumeuleu/xml.hpp>
 
 class MIL_Time_ABC;
+class MIL_ObjectFactory;
+class ObjectTypeResolver_ABC;
 
 // =============================================================================
 /** @class  MIL_EntityManagerStaticMethods
@@ -32,13 +34,13 @@ public:
 
     //! @name static Initialization
     //@{
-    static void Initialize( MIL_Config& config, const MIL_Time_ABC& time );
+    static void Initialize( MIL_Config& config, const MIL_Time_ABC& time, MIL_ObjectFactory& objectFactory );
     //@}
 
 private:
     //! @name Helpers
     //@{
-    static void LoadSensors( xml::xistream& xis, const MIL_Time_ABC& time );
+    static void LoadSensors( xml::xistream& xis, const MIL_Time_ABC& time, const ObjectTypeResolver_ABC& resolver );
     static void LoadMedical( xml::xistream& xis );
     //@}
 
@@ -46,12 +48,13 @@ protected:
     //! @name static Type Initializations
     //@{
 
-    static void InitializeFuneral    ( MIL_Config& config, const MIL_Time_ABC& time );
-    static void InitializeMedical    ( MIL_Config& config );
+    static void InitializeFuneral         ( MIL_Config& config, const MIL_Time_ABC& time );
+    static void InitializeMedical         ( MIL_Config& config );
     static void InitializeMedicalTreatment( MIL_Config& config, const MIL_Time_ABC& time );
-    static void InitializeComposantes( MIL_Config& config, const MIL_Time_ABC& time );
-    static void InitializeWeapons    ( MIL_Config& config, const MIL_Time_ABC& time );
-    static void InitializeSensors    ( MIL_Config& config, const MIL_Time_ABC& time );
+    static void InitializeComposantes     ( MIL_Config& config, const MIL_Time_ABC& time, const ObjectTypeResolver_ABC& resolver );
+    static void InitializeWeapons         ( MIL_Config& config, const MIL_Time_ABC& time );
+    static void InitializeObjects         ( MIL_Config& config, MIL_ObjectFactory& objectFactory );
+    static void InitializeSensors         ( MIL_Config& config, const MIL_Time_ABC& time, const ObjectTypeResolver_ABC& resolver );
     //@}
 };
 

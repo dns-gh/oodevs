@@ -52,7 +52,6 @@ public:
     virtual       MIL_Population*     FindPopulation    ( unsigned int nID ) const = 0;
     virtual       MIL_Object_ABC*     FindObject        ( unsigned int nID ) const = 0;
     virtual boost::shared_ptr< MIL_KnowledgeGroup > FindKnowledgeGroup( unsigned int nID ) const = 0;
-    virtual const MIL_ObjectType_ABC& FindObjectType    ( const std::string& type ) const = 0;
 
     virtual MIL_Object_ABC* CreateObject( const std::string& type, MIL_Army_ABC* army, const TER_Localisation& localisation ) = 0;
     virtual MIL_Object_ABC* CreateObject( MIL_Army_ABC* army, const MIL_ObjectBuilder_ABC& builder ) = 0;

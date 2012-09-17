@@ -37,10 +37,8 @@ namespace xml
 class MIL_Army_ABC;
 class TER_Localisation;
 class MIL_Object_ABC;
-class MIL_ObjectType_ABC;
 class MIL_ObjectBuilder_ABC;
 class MIL_ObjectFactory;
-class MIL_UrbanObject_ABC;
 class MIL_UrbanObject_ABC;
 
 // =============================================================================
@@ -50,7 +48,7 @@ class MIL_UrbanObject_ABC;
 class MIL_ObjectManager : private boost::noncopyable
 {
 public:
-             MIL_ObjectManager();
+    explicit MIL_ObjectManager( MIL_ObjectFactory& factory );
     virtual ~MIL_ObjectManager();
 
     //! @name CheckPoints
@@ -59,6 +57,8 @@ public:
 
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_ObjectManager* role, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_ObjectManager* role, const unsigned int /*version*/ );
     //@}
 
     //! @name Operations
@@ -78,10 +78,7 @@ public:
     void WriteODB( xml::xostream& xos ) const;
     void ReadUrbanState( xml::xistream& xis );
     MIL_Object_ABC* Find( unsigned int nID ) const;
-    const MIL_ObjectType_ABC& FindType( const std::string& type ) const;
     const std::set< MIL_Object_ABC* >& GetUniversalObjects() const;
-    std::vector< unsigned int > GetDangerousObjects() const;
-    double GetMaxAvoidanceDistance() const;
     //@}
 
     //! @name Network
@@ -124,7 +121,7 @@ private:
     T_ObjectMap objects_;
     T_ObjectSet universalObjects_;
     unsigned int nbObjects_;
-    std::auto_ptr< MIL_ObjectFactory > builder_;
+    MIL_ObjectFactory& factory_;
     //@}
 };
 

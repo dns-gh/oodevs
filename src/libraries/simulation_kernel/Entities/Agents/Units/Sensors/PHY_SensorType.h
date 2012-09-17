@@ -22,6 +22,7 @@ namespace xml
 class PHY_SensorTypeObject;
 class PHY_SensorTypeAgent;
 class PHY_Sensor;
+class ObjectTypeResolver_ABC;
 
 // =============================================================================
 // @class  PHY_SensorType
@@ -32,11 +33,11 @@ class PHY_SensorType : private boost::noncopyable
 public:
     //! @name Manager
     //@{
-    static void Initialize( xml::xistream& xis );
-    static void Terminate ();
+    static void Initialize( xml::xistream& xis, const ObjectTypeResolver_ABC& resolver);
+    static void Terminate();
 
     static const PHY_SensorType* FindSensorType( const std::string& strType );
-    static const PHY_SensorType* FindSensorType( const unsigned int         nID     );
+    static const PHY_SensorType* FindSensorType( const unsigned int nID );
     //@}
 
     //! @name Instanciation
@@ -49,7 +50,7 @@ public:
     const PHY_SensorTypeObject* GetTypeObject() const;
     const PHY_SensorTypeAgent*  GetTypeAgent () const;
     const std::string&          GetName      () const;
-          unsigned int                  GetID        () const;
+          unsigned int                  GetID() const;
     const unsigned int GetDelay() const;
     //@}
 
@@ -61,19 +62,19 @@ private:
     //@}
 
 private:
-     PHY_SensorType( const std::string& strName, xml::xistream& xis );
+     PHY_SensorType( const std::string& strName, xml::xistream& xis, const ObjectTypeResolver_ABC& resolver );
     ~PHY_SensorType();
 
     //! @name Helpers
     //@{
     struct LoadingWrapper;
-    static void ReadSensor  ( xml::xistream& xis );
+    static void ReadSensor  ( xml::xistream& xis, const ObjectTypeResolver_ABC& resolver );
     void newSensorTypeAgent ( xml::xistream& xis );
-    void newSensorTypeObject( xml::xistream& xis );
+    void newSensorTypeObject( xml::xistream& xis, const ObjectTypeResolver_ABC& resolver );
     //@}
 
 private:
-    const unsigned int                  nID_;
+    const unsigned int          nID_;
     const std::string           strName_;
     const PHY_SensorTypeObject* pTypeObject_;
     const PHY_SensorTypeAgent*  pTypeAgent_;
@@ -81,7 +82,7 @@ private:
 
 private:
     static T_SensorTypeMap sensorTypes_;
-    static unsigned int            nNextID_;
+    static unsigned int nNextID_;
 };
 
 #endif // __PHY_SensorType_h_

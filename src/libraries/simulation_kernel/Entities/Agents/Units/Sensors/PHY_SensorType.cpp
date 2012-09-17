@@ -20,13 +20,13 @@
 #include <xeumeuleu/xml.hpp>
 
 PHY_SensorType::T_SensorTypeMap PHY_SensorType::sensorTypes_;
-unsigned int                            PHY_SensorType::nNextID_ = 0;
+unsigned int PHY_SensorType::nNextID_ = 0;
 
 struct PHY_SensorType::LoadingWrapper
 {
-    void ReadSensor( xml::xistream& xis )
+    void ReadSensor( xml::xistream& xis, const ObjectTypeResolver_ABC& resolver )
     {
-        PHY_SensorType::ReadSensor( xis );
+        PHY_SensorType::ReadSensor( xis, resolver );
     }
 };
 
@@ -34,12 +34,12 @@ struct PHY_SensorType::LoadingWrapper
 // Name: PHY_SensorType::Initialize
 // Created: NLD 2004-08-06
 // -----------------------------------------------------------------------------
-void PHY_SensorType::Initialize( xml::xistream& xis )
+void PHY_SensorType::Initialize( xml::xistream& xis, const ObjectTypeResolver_ABC& resolver )
 {
     LoadingWrapper loader;
 
     xis >> xml::start( "sensors" )
-            >> xml::list( "sensor", loader, &LoadingWrapper::ReadSensor )
+            >> xml::list( "sensor", loader, &LoadingWrapper::ReadSensor, resolver )
         >> xml::end;
 }
 
@@ -47,7 +47,7 @@ void PHY_SensorType::Initialize( xml::xistream& xis )
 // Name: PHY_SensorType::ReadSensor
 // Created: ABL 2007-07-25
 // -----------------------------------------------------------------------------
-void PHY_SensorType::ReadSensor( xml::xistream& xis )
+void PHY_SensorType::ReadSensor( xml::xistream& xis, const ObjectTypeResolver_ABC& resolver )
 {
     std::string strSensorName;
     xis >> xml::attribute( "name", strSensorName );
@@ -55,7 +55,7 @@ void PHY_SensorType::ReadSensor( xml::xistream& xis )
     const PHY_SensorType*& pSensorType = sensorTypes_[ strSensorName ];
     if( pSensorType )
         xis.error( "Unknown sensor type" );
-    pSensorType = new PHY_SensorType( strSensorName, xis );
+    pSensorType = new PHY_SensorType( strSensorName, xis, resolver );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,7 +73,7 @@ void PHY_SensorType::Terminate()
 // Name: PHY_SensorType constructor
 // Created: NLD 2004-08-06
 // -----------------------------------------------------------------------------
-PHY_SensorType::PHY_SensorType( const std::string& strName, xml::xistream& xis )
+PHY_SensorType::PHY_SensorType( const std::string& strName, xml::xistream& xis, const ObjectTypeResolver_ABC& resolver )
     : nID_        ( nNextID_++ )
     , strName_    ( strName )
     , pTypeObject_( 0 )
@@ -81,7 +81,7 @@ PHY_SensorType::PHY_SensorType( const std::string& strName, xml::xistream& xis )
 {
     std::string time;
     xis >> xml::list( "unit-detection", *this, &PHY_SensorType::newSensorTypeAgent )
-        >> xml::list( "object-detection", *this, &PHY_SensorType::newSensorTypeObject )
+        >> xml::list( "object-detection", *this, &PHY_SensorType::newSensorTypeObject, resolver )
         >> xml::attribute( "detection-delay", time );
     tools::DecodeTime( time, delay_ );
     delay_ = static_cast< unsigned int>( MIL_Tools::ConvertSecondsToSim( delay_ ) );
@@ -100,9 +100,9 @@ void PHY_SensorType::newSensorTypeAgent( xml::xistream& xis )
 // Name: PHY_SensorType::newSensorTypeObject
 // Created: ABL 2007-07-25
 // -----------------------------------------------------------------------------
-void PHY_SensorType::newSensorTypeObject( xml::xistream& xis )
+void PHY_SensorType::newSensorTypeObject( xml::xistream& xis, const ObjectTypeResolver_ABC& resolver )
 {
-    pTypeObject_ = new PHY_SensorTypeObject( *this, xis );
+    pTypeObject_ = new PHY_SensorTypeObject( *this, xis, resolver );
 }
 
 // -----------------------------------------------------------------------------

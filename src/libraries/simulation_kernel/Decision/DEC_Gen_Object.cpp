@@ -10,10 +10,11 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Gen_Object.h"
 #include "MIL_AgentServer.h"
-#include "Entities/MIL_EntityManager.h"
+#include "Entities/MIL_EntityManager_ABC.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Objects/CapacityRetriever.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
+#include "Entities/Objects/MIL_ObjectFactory.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_AsnException.h"
 #include "protocol/Protocol.h"
@@ -31,11 +32,11 @@ DEC_Gen_Object::DEC_Gen_Object()
 
 namespace
 {
-    void SetLocationSize( const MIL_EntityManager_ABC& entityManager, const std::string& type, TER_Localisation& localisation )
+    void SetLocationSize( const ObjectTypeResolver_ABC& resolver, const std::string& type, TER_Localisation& localisation )
     {
         if( !type.empty() && localisation.GetType() == TER_Localisation::ePoint )
         {
-            const MIL_ObjectType_ABC& objectType = entityManager.FindObjectType( type );
+            const MIL_ObjectType_ABC& objectType = resolver.FindType( type );
             localisation.Reset( localisation, objectType.GetPointSize() );
         }
     }
@@ -45,8 +46,9 @@ namespace
 // Name: DEC_Gen_Object constructor
 // Created: NLD 2007-05-14
 // -----------------------------------------------------------------------------
-DEC_Gen_Object::DEC_Gen_Object( const sword::PlannedWork& msg, const MIL_EntityManager_ABC& entityManager )
-    : type_              ( &entityManager.FindObjectType( msg.type() )? msg.type(): "" )
+DEC_Gen_Object::DEC_Gen_Object( const sword::PlannedWork& msg, const MIL_EntityManager_ABC& entityManager,
+                                const ObjectTypeResolver_ABC& resolver )
+    : type_              ( &resolver.FindType( msg.type() )? msg.type(): "" )
     , identifier_        ( 0u )
     , pObstacleType_     ( msg.has_type_obstacle() ? msg.type_obstacle() : sword::ObstacleType_DemolitionTargetType_preliminary )
     , rDensity_          ( msg.has_density() ? msg.density() : 0. )
@@ -63,7 +65,7 @@ DEC_Gen_Object::DEC_Gen_Object( const sword::PlannedWork& msg, const MIL_EntityM
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
     if( !NET_ASN_Tools::ReadLocation( msg.position(), localisation_ ) )
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
-    SetLocationSize( entityManager, type_, localisation_ );
+    SetLocationSize( resolver, type_, localisation_ );
     if( msg.combat_train().id() != 0 )
     {
         pTC2_ = entityManager.FindAutomate( msg.combat_train().id() );
@@ -76,8 +78,9 @@ DEC_Gen_Object::DEC_Gen_Object( const sword::PlannedWork& msg, const MIL_EntityM
 // Name: DEC_Gen_Object constructor
 // Created: LGY 2011-10-25
 // -----------------------------------------------------------------------------
-DEC_Gen_Object::DEC_Gen_Object( const sword::PlannedWork& msg, const MIL_EntityManager_ABC& entityManager, unsigned int identifier )
-    : type_              ( &entityManager.FindObjectType( msg.type() )? msg.type(): "" )
+DEC_Gen_Object::DEC_Gen_Object( const sword::PlannedWork& msg, const MIL_EntityManager_ABC& entityManager, unsigned int identifier,
+                                const ObjectTypeResolver_ABC& resolver )
+    : type_              ( &resolver.FindType( msg.type() )? msg.type(): "" )
     , identifier_        ( identifier )
     , pObstacleType_     ( msg.has_type_obstacle() ? msg.type_obstacle() : sword::ObstacleType_DemolitionTargetType_preliminary )
     , rDensity_          ( msg.has_density() ? msg.density() : 0. )
@@ -94,7 +97,7 @@ DEC_Gen_Object::DEC_Gen_Object( const sword::PlannedWork& msg, const MIL_EntityM
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
     if( !NET_ASN_Tools::ReadLocation( msg.position(), localisation_ ) )
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
-    SetLocationSize( entityManager, type_, localisation_ );
+    SetLocationSize( resolver, type_, localisation_ );
     if( msg.combat_train().id() != 0 )
     {
         pTC2_ = entityManager.FindAutomate( msg.combat_train().id() );
@@ -207,7 +210,7 @@ bool DEC_Gen_Object::HasCapacity( const std::string& capacity ) const
 {
     if( type_.empty() )
         return false;
-    const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObjectType( type_ );
+    const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetObjectFactory().FindType( type_ );
     return CapacityRetriever::RetrieveCapacity( type, capacity ) != 0;
 }
 

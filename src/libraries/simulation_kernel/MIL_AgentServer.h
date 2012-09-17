@@ -47,6 +47,7 @@ class PHY_MeteoDataManager;
 class ProcessMonitor;
 class MIL_BurningCells;
 class MIL_UrbanCache;
+class MIL_ObjectFactory;
 
 //*****************************************************************************
 // Created: DFT 02-02-28
@@ -125,6 +126,7 @@ public:
     MIL_Config& GetConfig();
     MIL_BurningCells& GetBurningCells() const;
     tools::ExerciseSettings& GetSettings() const;
+    MIL_ObjectFactory& GetObjectFactory() const;
     //@}
 
     //! @name Workspace management
@@ -200,6 +202,7 @@ private:
     resource::ResourceTools_ABC* pResourceTools_;
     MIL_BurningCells* pBurningCells_;
     ProcessMonitor* pProcessMonitor_;
+    std::auto_ptr< MIL_ObjectFactory > pObjectFactory_;
     //@}
 
 private:
