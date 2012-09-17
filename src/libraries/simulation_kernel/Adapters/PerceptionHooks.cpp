@@ -507,18 +507,6 @@ namespace
             return false;
         return GET_PION( perceiver ).GetKnowledge().GetKnowledgePopulationPerceptionContainer().GetKnowledgePopulationPerception( concentration->GetPopulation() ) == 0;
     }
-    DEFINE_HOOK( IsAgentIdentified, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) )
-    {
-        return GET_PION( perceiver ).GetKnowledge().IsIdentified( GET_PION( target ) );
-    }
-    DEFINE_HOOK( IsObjectIdentified, bool, ( const SWORD_Model* perceiver, const MIL_Object_ABC* object ) )
-    {
-        return GET_PION( perceiver ).GetKnowledge().IsIdentified( *object );
-    }
-    DEFINE_HOOK( IsPopulationConcentrationIdentified, bool, ( const SWORD_Model* perceiver, const MIL_PopulationConcentration* concentration ) )
-    {
-        return GET_PION( perceiver ).GetKnowledge().IsIdentified( *concentration );
-    }
     DEFINE_HOOK( ConvertSecondsToSim, double, ( double seconds ) )
     {
         return MIL_Tools::ConvertSecondsToSim( seconds );
@@ -666,9 +654,6 @@ void PerceptionHooks::Initialize( core::Facade& facade )
     REGISTER_HOOK( IsAgentNewlyPerceived, facade );
     REGISTER_HOOK( IsPopulationFlowNewlyPerceived, facade );
     REGISTER_HOOK( IsPopulationConcentrationNewlyPerceived, facade );
-    REGISTER_HOOK( IsAgentIdentified, facade );
-    REGISTER_HOOK( IsObjectIdentified, facade );
-    REGISTER_HOOK( IsPopulationConcentrationIdentified, facade );
     REGISTER_HOOK( ConvertSecondsToSim, facade );
     REGISTER_HOOK( GetConsumptionTypeSize, facade );
     REGISTER_HOOK( FindConsumptionType, facade );

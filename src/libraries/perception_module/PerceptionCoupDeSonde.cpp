@@ -20,7 +20,6 @@ using namespace sword;
 using namespace sword::perception;
 
 DECLARE_HOOK( BelongsToKnowledgeGroup, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) )
-DECLARE_HOOK( IsAgentIdentified, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) )
 DECLARE_HOOK( GetAgentListWithinCircle, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* agent, void* userData ), void* userData ) )
 DECLARE_HOOK( CanBeSeen, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) )
 
@@ -68,7 +67,7 @@ const PerceptionLevel& PerceptionCoupDeSonde::Compute( const wrapper::View& perc
 // -----------------------------------------------------------------------------
 const PerceptionLevel& PerceptionCoupDeSonde::Compute( const wrapper::View& perceiver, const SurfacesAgent_ABC& /*surfaces*/, const wrapper::View& target ) const
 {
-    if( GET_HOOK( BelongsToKnowledgeGroup )( perceiver, target ) || GET_HOOK( IsAgentIdentified )( perceiver, target ) )
+    if( GET_HOOK( BelongsToKnowledgeGroup )( perceiver, target ) )
         return PerceptionLevel::recognized_;
 
     const MT_Vector2D vSourcePos( perceiver[ "movement/position/x" ], perceiver[ "movement/position/y" ] );

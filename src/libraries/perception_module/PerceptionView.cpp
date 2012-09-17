@@ -43,9 +43,6 @@ DECLARE_HOOK( IsCivilian, bool, ( const SWORD_Model* agent ) )
 DECLARE_HOOK( IsAgentNewlyPerceived, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target, int level ) )
 DECLARE_HOOK( IsPopulationFlowNewlyPerceived, bool, ( const SWORD_Model* perceiver, const MIL_PopulationFlow* flow, int level ) )
 DECLARE_HOOK( IsPopulationConcentrationNewlyPerceived, bool, ( const SWORD_Model* perceiver, const MIL_PopulationConcentration* concentration, int level ) )
-DECLARE_HOOK( IsAgentIdentified, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) )
-DECLARE_HOOK( IsObjectIdentified, bool, ( const SWORD_Model* perceiver, const MIL_Object_ABC* object ) )
-DECLARE_HOOK( IsPopulationConcentrationIdentified, bool, ( const SWORD_Model* perceiver, const MIL_PopulationConcentration* concentration ) )
 DECLARE_HOOK( IsObjectUniversal, bool, ( const MIL_Object_ABC* object ) )
 DECLARE_HOOK( GetPerceptionRandom, double, () )
 
@@ -92,7 +89,7 @@ const PerceptionLevel& PerceptionView::Compute( const wrapper::View& perceiver, 
 const PerceptionLevel& PerceptionView::Compute( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const wrapper::View& target ) const
 {
     TransferPerception( perceiver, surfaces );
-    if( GET_HOOK( BelongsToKnowledgeGroup )( perceiver, target ) || GET_HOOK( IsAgentIdentified )( perceiver, target ) )
+    if( GET_HOOK( BelongsToKnowledgeGroup )( perceiver, target ) )
         return PerceptionLevel::identified_;
 
     if( !IsEnabled( perceiver ) )
@@ -189,9 +186,6 @@ const PerceptionLevel& PerceptionView::Compute( const wrapper::View& perceiver, 
         return PerceptionLevel::notSeen_;
 
     if( GET_HOOK( IsObjectUniversal )( &target ) )
-        return PerceptionLevel::identified_;
-
-    if( GET_HOOK( IsObjectIdentified )( perceiver, &target ) )
         return PerceptionLevel::identified_;
 
     PerceptionComputer< SurfacesObjectVisitor_ABC, PerceptionSurfaceObject, MIL_Object_ABC > computer( perceiver, target );
@@ -293,8 +287,6 @@ const PerceptionLevel& PerceptionView::Compute( const wrapper::View& perceiver, 
     if( !IsEnabled( perceiver ) || !GET_HOOK( CanPopulationConcentrationBePerceived )( &target ) )
         return PerceptionLevel::notSeen_;
 
-    if( GET_HOOK( IsPopulationConcentrationIdentified )( perceiver, &target ) )
-        return PerceptionLevel::identified_;
     PerceptionComputer< SurfacesAgentVisitor_ABC, PerceptionSurfaceAgent, MIL_PopulationConcentration > computer( perceiver, target );
     surfaces.Apply( computer );
     return computer.GetLevel();

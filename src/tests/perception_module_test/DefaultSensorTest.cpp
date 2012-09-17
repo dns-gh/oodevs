@@ -36,7 +36,6 @@ BOOST_FIXTURE_TEST_CASE( agents_in_list_are_identified_with_default_sensor, Perc
     MOCK_EXPECT( IsAgentPerceptionDistanceHacked ).once().with( perceiver, other ).returns( false );
     MOCK_EXPECT( CanBeSeen ).once().with( perceiver, other ).returns( true );
     MOCK_EXPECT( IsAgentNewlyPerceived ).returns( true );
-    MOCK_EXPECT( IsAgentIdentified ).once().with( perceiver, other ).returns( false );
     MOCK_EXPECT( IsKnown ).once().with( perceiver, other ).returns( true );
     MOCK_EXPECT( GetSignificantVolume ).once().returns( significantVolume );
     MOCK_EXPECT( GetVolumeIdentifierFromInstance ).once().with( significantVolume ).returns( 0u );
@@ -62,7 +61,6 @@ BOOST_FIXTURE_TEST_CASE( objects_in_list_are_identified_with_default_sensor, Per
     MOCK_EXPECT( IsObjectPerceptionDistanceHacked ).once().with( perceiver, object ).returns( false );
     MOCK_EXPECT( CanObjectBePerceived ).once().with( object ).returns( true );
     MOCK_EXPECT( IsObjectUniversal ).once().with( object ).returns( false );
-    MOCK_EXPECT( IsObjectIdentified ).once().with( perceiver, object ).returns( false );
     MOCK_EXPECT( GetObjectType ).once().returns( 0u );
     MOCK_EXPECT( ObjectIntersectWithCircle ).once().returns( true );
     ExpectNotifications( "objects", sword::test::MakeModel()[ sword::test::MakeModel( "target", 42 )
@@ -117,7 +115,6 @@ BOOST_FIXTURE_TEST_CASE( population_concentrations_in_list_are_identified_with_d
     MOCK_EXPECT( IsPopulationConcentrationPerceptionDistanceHacked ).once().with( perceiver, concentration ).returns( false );
     MOCK_EXPECT( CanPopulationConcentrationBePerceived ).once().with( concentration ).returns( true );
     MOCK_EXPECT( PopulationConcentrationIntersectWithCircle ).once().returns( true );
-    MOCK_EXPECT( IsPopulationConcentrationIdentified ).once().with( perceiver, concentration ).returns( false );
     MOCK_EXPECT( IsPopulationConcentrationNewlyPerceived ).once().with( perceiver, concentration, mock::any ).returns( true );
     ExpectNotifications( "population-concentrations", sword::test::MakeModel()[ sword::test::MakeModel( "target", 42 )
                                                                                                       ( "level", 3 ) // identified

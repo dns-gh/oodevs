@@ -64,9 +64,6 @@ class DEC_Knowledge_Object;
     APPLY( IsAgentNewlyPerceived, 3, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target, int level ) ) \
     APPLY( IsPopulationFlowNewlyPerceived, 3, bool, ( const SWORD_Model* perceiver, const MIL_PopulationFlow* flow, int level ) ) \
     APPLY( IsPopulationConcentrationNewlyPerceived, 3, bool, ( const SWORD_Model* perceiver, const MIL_PopulationConcentration* concentration, int level ) ) \
-    APPLY( IsAgentIdentified, 2, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) ) \
-    APPLY( IsObjectIdentified, 2, bool, ( const SWORD_Model* perceiver, const MIL_Object_ABC* object ) ) \
-    APPLY( IsPopulationConcentrationIdentified, 2, bool, ( const SWORD_Model* perceiver, const MIL_PopulationConcentration* concentration ) ) \
     APPLY( ConvertSecondsToSim, 1, double, ( double seconds ) ) \
     APPLY( GetConsumptionTypeSize, 0, size_t, () ) \
     APPLY( FindConsumptionType, 3, void, ( const char* consumptionType, void(*callback)( unsigned int identifier, void* userData ), void* userData ) ) \

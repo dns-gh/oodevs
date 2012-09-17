@@ -28,7 +28,6 @@ BOOST_FIXTURE_TEST_CASE( agents_in_list_are_recognized_with_scan_sensor, Percept
     MOCK_EXPECT( GetAgentListWithinCircle ).once();
     MOCK_EXPECT( GetAgentListWithinCircle ).once().with( mock::any, mock::any, scanLength, mock::any, mock::any ).calls( boost::bind( boost::apply< void >(), _4, other, _5 ) );
     MOCK_EXPECT( BelongsToKnowledgeGroup ).with( perceiver, other ).returns( false );
-    MOCK_EXPECT( IsAgentIdentified ).once().with( perceiver, other ).returns( false );
     MOCK_EXPECT( CanBeSeen ).once().with( perceiver, other ).returns( true );
     entity[ "perceptions/drill-blow/width" ] = scanWidth;
     entity[ "perceptions/drill-blow/length" ] = scanLength;
