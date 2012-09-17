@@ -150,7 +150,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_enemy_destroyed_when_enemy_
 BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_enemy_destroyed_when_no_component_can_be_found_to_fire_at, FiringFixture )
 {
     core::Model& component_2 = model[ "entities" ][ 43 ][ "components" ].AddElement();
-    MOCK_EXPECT( CanComponentBeFiredAt ).once().with( core::Convert( &component_2 ) ).returns( false );
+    MOCK_EXPECT( CanComponentBeFiredAt ).once().with( core::Convert( &component_2 ), false ).returns( false );
     ExpectCallback( 1 );
     ExpectEvent( "direct fire pion attack",
         sword::test::MakeModel( "entity", 42 )
@@ -171,7 +171,7 @@ namespace
         {
             component_1[ "weapons" ];
             MOCK_EXPECT( GetDistance ).with( firer, enemy ).returns( 500 );
-            MOCK_EXPECT( CanComponentBeFiredAt ).with( core::Convert( &component_2 ) ).returns( true );
+            MOCK_EXPECT( CanComponentBeFiredAt ).with( core::Convert( &component_2 ), false ).returns( true );
             component_2[ "volume" ] = volume_1;
             component_2[ "component" ].SetUserData( &data );
         }

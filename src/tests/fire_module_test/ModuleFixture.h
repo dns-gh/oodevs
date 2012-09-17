@@ -45,7 +45,7 @@
     APPLY( GetFireRandomInteger, 2, size_t, ( size_t min, size_t max ) ) \
     APPLY( GetFireRandomNumber, 2, double, ( double min, double max ) ) \
     APPLY( GetVolumeId, 1, size_t, ( const char* type ) ) \
-    APPLY( CanComponentBeFiredAt, 1, bool, ( const SWORD_Model* component ) ) \
+    APPLY( CanComponentBeFiredAt, 2, bool, ( const SWORD_Model* component, bool majorOnly ) ) \
     APPLY( GetPhModificator, 3, double, ( const SWORD_Model* firer, const SWORD_Model* target, const char* launcher ) ) \
     APPLY( GetPhModificator2, 1, double, ( const char* launcher ) ) \
     APPLY( EvaluateDangerosity, 2, double, ( const SWORD_Model* agent, const SWORD_Model* target ) ) \

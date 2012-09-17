@@ -121,9 +121,12 @@ namespace
     {
         return (*core::Convert( component ))[ "component" ].GetUserData< PHY_ComposantePion >().CanFire();
     }
-    DEFINE_HOOK( CanComponentBeFiredAt, bool, ( const SWORD_Model* component ) )
+    DEFINE_HOOK( CanComponentBeFiredAt, bool, ( const SWORD_Model* component, bool majorOnly ) )
     {
-        return (*core::Convert( component ))[ "component" ].GetUserData< PHY_ComposantePion >().CanBeFired();
+        const core::Model& comp = (*core::Convert( component ))[ "component" ];
+        if( majorOnly && ! comp[ "major" ] )
+            return false;
+        return comp.GetUserData< PHY_ComposantePion >().CanBeFired();
     }
     DEFINE_HOOK( GetWeaponReloadingDuration, double, ( const SWORD_Model* firer, double rDuration ) )
     {

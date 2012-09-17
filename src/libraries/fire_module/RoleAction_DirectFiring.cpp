@@ -20,7 +20,7 @@
 using namespace sword;
 using namespace sword::fire;
 
-DECLARE_HOOK( CanComponentBeFiredAt, bool, ( const SWORD_Model* component ) )
+DECLARE_HOOK( CanComponentBeFiredAt, bool, ( const SWORD_Model* component, bool majorOnly ) )
 DECLARE_HOOK( GetFireRandomInteger, size_t, ( size_t min, size_t max ) )
 
 // -----------------------------------------------------------------------------
@@ -110,7 +110,7 @@ RoleAction_DirectFiring::T_ComposanteVector RoleAction_DirectFiring::GetComposan
     for( std::size_t c = 0; c < components.GetSize(); ++c )
     {
         const wrapper::View& fired = components.GetElement( c );
-        if( ( ! bFireOnlyOnMajorComposantes || fired[ "major" ] ) && GET_HOOK( CanComponentBeFiredAt )( fired ) )
+        if( GET_HOOK( CanComponentBeFiredAt )( fired, bFireOnlyOnMajorComposantes ) )
             availableTargets.push_back( fired );
     }
     if( availableTargets.empty() )
