@@ -396,8 +396,10 @@ void Node::UploadCache( io::Reader_ABC& src )
         throw;
     }
 
-    boost::lock_guard< boost::shared_mutex > lock( access_ );
+    boost::upgrade_lock< boost::shared_mutex > lock( access_ );
     next->Identify( *install_ );
+
+    boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );
     next.swap( cache_ );
     cache_size_ = cache_->GetSize();
     if( next )
@@ -416,7 +418,7 @@ void Node::ParsePackages( const Path& cache )
     install_size_ = install_->GetSize();
     if( cache.empty() )
         return;
-    ParseInline( deps_.packages, cache_,   root_ / cache, install_ );
+    ParseInline( deps_.packages, cache_, root_ / cache, install_ );
     cache_size_ = cache_->GetSize();
 }
 
@@ -462,9 +464,11 @@ Tree Node::DeleteInstall( const std::vector< size_t >& ids )
 Tree Node::DeleteCache()
 {
     boost::shared_ptr< Package_ABC > next;
-    boost::lock_guard< boost::shared_mutex > lock( access_ );
+    boost::upgrade_lock< boost::shared_mutex > lock( access_ );
     if( !cache_ )
         return Tree();
+
+    boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );
     next.swap( cache_ );
     async_.Go( boost::bind( &FileSystem_ABC::Remove, &deps_.system, next->GetPath() ) );
     cache_size_ = 0;
@@ -477,9 +481,11 @@ Tree Node::DeleteCache()
 // -----------------------------------------------------------------------------
 Tree Node::InstallFromCache( const std::vector< size_t >& list )
 {
-    boost::lock_guard< boost::shared_mutex > lock( access_ );
+    boost::upgrade_lock< boost::shared_mutex > lock( access_ );
     if( !cache_ )
         return Tree();
+
+    boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );
     install_->Install( async_, root_, *cache_, list );
     num_exercises_ = install_->CountExercises();
     install_size_ = install_->GetSize();
@@ -587,7 +593,7 @@ Node_ABC::T_Token Node::StartSession( const boost::posix_time::ptime& start, boo
 {
     const bool force = start == boost::posix_time::not_a_date_time;
 
-    boost::unique_lock< boost::shared_mutex > lock( access_ );
+    boost::upgrade_lock< boost::shared_mutex > lock( access_ );
     if( !first_time && !cfg_.sessions.reset )
         return T_Token();
     if( !force && cfg_.sessions.max_parallel )
@@ -596,11 +602,13 @@ Node_ABC::T_Token Node::StartSession( const boost::posix_time::ptime& start, boo
     if( !force && cfg_.sessions.max_play )
         if( num_play_ >= cfg_.sessions.max_play )
             throw web::HttpException( web::FORBIDDEN );
-
-    ++num_parallel_;
-    if( !force )
-        ++num_play_;
-    lock.unlock();
+    {
+        boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );
+        ++num_parallel_;
+        if( !force )
+            ++num_play_;
+    }
+    lock.unlock(); // release everything
 
     if( !force )
         deps_.observer.Notify( *this );
