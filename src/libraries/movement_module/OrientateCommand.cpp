@@ -18,10 +18,7 @@ using namespace sword::movement;
 // Name: OrientateCommand constructor
 // Created: MCO 2012-03-09
 // -----------------------------------------------------------------------------
-OrientateCommand::OrientateCommand( ModuleFacade& /*module*/, const wrapper::View& parameters, const wrapper::View& /*model*/, size_t /*identifier*/ )
-    : identifier_( parameters[ "identifier" ] )
-    , x_         ( parameters[ "direction/x" ] )
-    , y_         ( parameters[ "direction/y" ] )
+OrientateCommand::OrientateCommand( ModuleFacade& /*module*/, const wrapper::View& /*parameters*/, const wrapper::View& /*model*/, size_t /*identifier*/ )
 {
     // NOTHING
 }
@@ -30,11 +27,11 @@ OrientateCommand::OrientateCommand( ModuleFacade& /*module*/, const wrapper::Vie
 // Name: OrientateCommand::Execute
 // Created: MCO 2012-03-09
 // -----------------------------------------------------------------------------
-void OrientateCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::View& model ) const
+void OrientateCommand::Execute( const wrapper::View& parameters, const wrapper::View& model ) const
 {
-    wrapper::Effect effect( model[ "entities" ][ identifier_ ][ "movement" ] );
-    effect[ "direction/x" ] = x_;
-    effect[ "direction/y" ] = y_;
+    const unsigned int identifier = parameters[ "identifier" ];
+    wrapper::Effect effect( model[ "entities" ][ identifier ][ "movement" ] );
+    effect[ "direction" ] = parameters[ "direction" ];
     effect.Post();
 }
 
