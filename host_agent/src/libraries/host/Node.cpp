@@ -250,14 +250,23 @@ std::string MakeOption( const std::string& option, const T& value )
 bool Node::Start( const Path& app, const Path& web, const std::string& type,
                   int host, bool weak )
 {
-    boost::lock_guard< boost::shared_mutex > lock( access_ );
+    // ensure we have a non-exclusive path if current node does not need
+    // to restart
+    boost::upgrade_lock< boost::shared_mutex > lock( access_ );
     if( stopped_ && weak )
         return false;
 
-    bool modified = stopped_;
-    stopped_ = false;
-    if( process_  && process_->IsAlive() )
-        return modified;
+    const bool previous = stopped_;
+    const bool alive = process_ && process_->IsAlive();
+    if( alive && !stopped_ )
+        return false;
+    if( stopped_ )
+    {
+        boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );
+        stopped_ = false;
+    }
+    if( alive )
+        return previous;
 
     std::vector< std::string > args = boost::assign::list_of< std::string >
 #ifdef _DEBUG
@@ -274,8 +283,9 @@ bool Node::Start( const Path& app, const Path& web, const std::string& type,
     T_Process ptr = deps_.runtime.Start( Utf8Convert( app ), args, std::string(),
                                          Utf8Convert( root_ / ( type + ".log" ) ) );
     if( !ptr )
-        return modified;
+        return previous;
 
+    boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );
     process_ = ptr;
     return true;
 }
