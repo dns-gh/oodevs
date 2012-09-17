@@ -35,8 +35,7 @@ class VisionCommand : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             VisionCommand( ModuleFacade& module, const wrapper::View& parameters, const wrapper::View& model, size_t identifier );
-    virtual ~VisionCommand();
+    VisionCommand( ModuleFacade& module, const wrapper::View& parameters, const wrapper::View& model, size_t identifier );
     //@}
 
     //! @name Operations

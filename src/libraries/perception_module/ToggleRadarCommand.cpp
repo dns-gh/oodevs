@@ -25,15 +25,6 @@ ToggleRadarCommand::ToggleRadarCommand( ModuleFacade& /*module*/, const wrapper:
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: ToggleRadarCommand destructor
-// Created: SLI 2012-03-20
-// -----------------------------------------------------------------------------
-ToggleRadarCommand::~ToggleRadarCommand()
-{
-    // NOTHING
-}
-
 namespace
 {
     std::string FindRadar( unsigned int radarClass, size_t entity )

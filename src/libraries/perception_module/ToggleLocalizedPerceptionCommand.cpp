@@ -25,15 +25,6 @@ ToggleLocalizedPerceptionCommand::ToggleLocalizedPerceptionCommand( ModuleFacade
 }
 
 // -----------------------------------------------------------------------------
-// Name: ToggleLocalizedPerceptionCommand destructor
-// Created: SLI 2012-03-20
-// -----------------------------------------------------------------------------
-ToggleLocalizedPerceptionCommand::~ToggleLocalizedPerceptionCommand()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: ToggleLocalizedPerceptionCommand::Execute
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------

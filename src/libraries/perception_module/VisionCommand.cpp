@@ -23,15 +23,6 @@ VisionCommand::VisionCommand( ModuleFacade& /*module*/, const wrapper::View& /*p
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: VisionCommand destructor
-// Created: SLI 2012-03-29
-// -----------------------------------------------------------------------------
-VisionCommand::~VisionCommand()
-{
-    // NOTHING
-}
-
 namespace
 {
     std::string CheckMode( const wrapper::View& mode )

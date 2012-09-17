@@ -24,15 +24,6 @@ TogglePerceptionCommand::TogglePerceptionCommand( ModuleFacade& /*module*/, cons
 }
 
 // -----------------------------------------------------------------------------
-// Name: TogglePerceptionCommand destructor
-// Created: SLI 2012-03-20
-// -----------------------------------------------------------------------------
-TogglePerceptionCommand::~TogglePerceptionCommand()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: TogglePerceptionCommand::Execute
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------

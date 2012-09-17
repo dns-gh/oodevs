@@ -37,15 +37,6 @@ ToggleAlatMonitoringCommand::ToggleAlatMonitoringCommand( ModuleFacade& /*module
 }
 
 // -----------------------------------------------------------------------------
-// Name: ToggleAlatMonitoringCommand destructor
-// Created: SLI 2012-07-26
-// -----------------------------------------------------------------------------
-ToggleAlatMonitoringCommand::~ToggleAlatMonitoringCommand()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: ToggleAlatMonitoringCommand::Execute
 // Created: SLI 2012-07-26
 // -----------------------------------------------------------------------------

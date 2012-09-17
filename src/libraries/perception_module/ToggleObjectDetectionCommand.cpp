@@ -24,15 +24,6 @@ ToggleObjectDetectionCommand::ToggleObjectDetectionCommand( ModuleFacade& /*modu
 }
 
 // -----------------------------------------------------------------------------
-// Name: ToggleObjectDetectionCommand destructor
-// Created: SLI 2012-03-20
-// -----------------------------------------------------------------------------
-ToggleObjectDetectionCommand::~ToggleObjectDetectionCommand()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: ToggleObjectDetectionCommand::Execute
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------

@@ -24,15 +24,6 @@ ToggleRecoCommand::ToggleRecoCommand( ModuleFacade& /*module*/, const wrapper::V
 }
 
 // -----------------------------------------------------------------------------
-// Name: ToggleRecoCommand destructor
-// Created: SLI 2012-03-20
-// -----------------------------------------------------------------------------
-ToggleRecoCommand::~ToggleRecoCommand()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: ToggleRecoCommand::Execute
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------

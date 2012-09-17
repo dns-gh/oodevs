@@ -35,8 +35,7 @@ class TogglePerceptionCommand : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             TogglePerceptionCommand( ModuleFacade& module, const wrapper::View& parameters, const wrapper::View& model, size_t identifier );
-    virtual ~TogglePerceptionCommand();
+    TogglePerceptionCommand( ModuleFacade& module, const wrapper::View& parameters, const wrapper::View& model, size_t identifier );
     //@}
 
     //! @name Operations

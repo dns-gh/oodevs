@@ -27,15 +27,6 @@ IdentifyAgentCommand::IdentifyAgentCommand( ModuleFacade& /*module*/, const wrap
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: IdentifyAgentCommand destructor
-// Created: SLI 2012-03-29
-// -----------------------------------------------------------------------------
-IdentifyAgentCommand::~IdentifyAgentCommand()
-{
-    // NOTHING
-}
-
 struct AgentVisitor : private boost::noncopyable
 {
     AgentVisitor( wrapper::Effect& effect, bool recordMode )

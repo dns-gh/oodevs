@@ -34,8 +34,7 @@ class ToggleRecoCommand : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             ToggleRecoCommand( ModuleFacade& module, const wrapper::View& parameters, const wrapper::View& model, size_t identifier );
-    virtual ~ToggleRecoCommand();
+    ToggleRecoCommand( ModuleFacade& module, const wrapper::View& parameters, const wrapper::View& model, size_t identifier );
     //@}
 
     //! @name Operations

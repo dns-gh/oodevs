@@ -24,15 +24,6 @@ ToggleRecognitionPointCommand::ToggleRecognitionPointCommand( ModuleFacade& /*mo
 }
 
 // -----------------------------------------------------------------------------
-// Name: ToggleRecognitionPointCommand destructor
-// Created: SLI 2012-03-20
-// -----------------------------------------------------------------------------
-ToggleRecognitionPointCommand::~ToggleRecognitionPointCommand()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: ToggleRecognitionPointCommand::Execute
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------

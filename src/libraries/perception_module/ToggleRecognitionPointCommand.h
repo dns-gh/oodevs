@@ -34,8 +34,7 @@ class ToggleRecognitionPointCommand : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             ToggleRecognitionPointCommand( ModuleFacade& module, const wrapper::View& parameters, const wrapper::View& model, size_t identifier );
-    virtual ~ToggleRecognitionPointCommand();
+    ToggleRecognitionPointCommand( ModuleFacade& module, const wrapper::View& parameters, const wrapper::View& model, size_t identifier );
     //@}
 
     //! @name Operations

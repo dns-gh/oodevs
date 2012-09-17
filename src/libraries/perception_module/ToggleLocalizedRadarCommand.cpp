@@ -43,15 +43,6 @@ ToggleLocalizedRadarCommand::ToggleLocalizedRadarCommand( ModuleFacade& /*module
 }
 
 // -----------------------------------------------------------------------------
-// Name: ToggleLocalizedRadarCommand destructor
-// Created: SLI 2012-03-20
-// -----------------------------------------------------------------------------
-ToggleLocalizedRadarCommand::~ToggleLocalizedRadarCommand()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: ToggleLocalizedRadarCommand::Execute
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
