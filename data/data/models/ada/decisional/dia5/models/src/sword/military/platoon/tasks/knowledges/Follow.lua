@@ -5,9 +5,12 @@ local result =
     end,
 
     fillParameters = function( self, companyTask, params )
-        local objectives = companyTask:getEntitiesToSupport( params )
-        if next( objectives ) then
-             return { objective = objectives[next( objectives )] }
+        local defaultObjectives = companyTask:getEntitiesToFollow( params )
+        local secondaryObjectives = companyTask:getEntitiesToSupport( params )
+        if next( defaultObjectives ) then
+             return { objective = defaultObjectives[next( defaultObjectives )] }
+        elseif next( secondaryObjectives ) then
+             return { objective = secondaryObjectives[next( secondaryObjectives )] }
         end
     end
 }
