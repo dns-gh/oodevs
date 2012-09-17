@@ -46,4 +46,5 @@ public:
 
 }
 }
+
 #endif // SWORD_PERCEPTION_TOGGLE_RECCO_COMMAND_H

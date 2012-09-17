@@ -47,4 +47,5 @@ public:
 
 }
 }
+
 #endif // SWORD_PERCEPTION_TOGGLE_RADAR_COMMAND_H

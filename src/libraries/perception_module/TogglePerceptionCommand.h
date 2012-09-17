@@ -47,4 +47,5 @@ public:
 
 }
 }
+
 #endif // SWORD_PERCEPTION_TOGGLE_PERCEPTION_COMMAND_H
