@@ -71,12 +71,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    MIL_ObjectLoader( const MIL_ObjectLoader& );            //!< Copy constructor
-    MIL_ObjectLoader& operator=( const MIL_ObjectLoader& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
     typedef std::map< std::string, boost::shared_ptr< ObjectPrototype > > T_Prototypes;
@@ -88,7 +82,6 @@ private:
     void ReadObjectPrototype( xml::xistream& xis );
     void ReadCapacity( const std::string& capacity, xml::xistream& xis, ObjectPrototype& prototype );
     void ReadAttributes( const std::string& attribute, xml::xistream& xis, Object& object ) const;
-    sword::ObjectMagicActionAck_ErrorCode InitializeLocation( Object& object, const sword::Location& asn ) const;
     //@}
 
     template< class UnaryFunction >

@@ -216,19 +216,6 @@ void MIL_ObjectLoader::ReadAttributes( const std::string& attribute, xml::xistre
     attributes_->Create( object, attribute, xis );
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_ObjectLoader::InitializeLocation
-// Created: JCR 2008-06-18
-// -----------------------------------------------------------------------------
-sword::ObjectMagicActionAck_ErrorCode MIL_ObjectLoader::InitializeLocation( Object& object, const sword::Location& asn ) const
-{
-    TER_Localisation location;
-    if( ! NET_ASN_Tools::ReadLocation( asn, location ) )
-        return sword::ObjectMagicActionAck::error_invalid_specific_attributes;
-    object.Initialize( location );
-    return sword::ObjectMagicActionAck::no_error;
-}
-
 namespace
 {
     class AvoidableObjectInserter : boost::noncopyable
