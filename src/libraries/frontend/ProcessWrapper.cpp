@@ -22,10 +22,11 @@ using namespace frontend;
 // Name: ProcessWrapper constructor
 // Created: SBO 2008-10-14
 // -----------------------------------------------------------------------------
-ProcessWrapper::ProcessWrapper( ProcessObserver_ABC& observer, boost::shared_ptr< SpawnCommand > process )
+ProcessWrapper::ProcessWrapper( ProcessObserver_ABC& observer, boost::shared_ptr< SpawnCommand > process, bool sendError )
     : observer_( observer )
     , process_( process )
     , stop_( false )
+    , sendError_( sendError )
 {
     // NOTHING
 }
@@ -72,7 +73,7 @@ void ProcessWrapper::Run( bool start )
             if( start )
                 process_->Start();
             while( process_->Wait() ) {}
-            if( !stop_ )
+            if( !stop_ && sendError_ )
                 observer_.NotifyError( "Simulation stop", process_->GetCommanderEndpoint() );
             stop_ = false;
             process_.reset();

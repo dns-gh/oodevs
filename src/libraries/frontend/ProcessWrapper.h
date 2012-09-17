@@ -35,7 +35,7 @@ class ProcessWrapper : public Process_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ProcessWrapper( ProcessObserver_ABC& observer, boost::shared_ptr< SpawnCommand > process );
+             ProcessWrapper( ProcessObserver_ABC& observer, boost::shared_ptr< SpawnCommand > process, bool sendError = false );
     virtual ~ProcessWrapper();
     //@}
 
@@ -65,6 +65,7 @@ private:
     boost::shared_ptr< SpawnCommand > process_;
     std::auto_ptr< boost::thread > thread_;
     bool stop_;
+    bool sendError_;
     //@}
 };
 

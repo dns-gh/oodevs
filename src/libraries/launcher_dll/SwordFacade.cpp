@@ -63,7 +63,7 @@ void SwordFacade::Start( frontend::ProcessObserver_ABC& observer, boost::shared_
 {
     if( ! config.GetTestMode() )
     {
-        boost::shared_ptr< frontend::ProcessWrapper > wrapper( new frontend::ProcessWrapper( observer, command ) );
+        boost::shared_ptr< frontend::ProcessWrapper > wrapper( new frontend::ProcessWrapper( observer, command, true ) );
         if( attach )
             wrapper->Attach();
         else
