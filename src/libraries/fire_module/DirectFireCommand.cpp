@@ -51,7 +51,7 @@ DirectFireCommand::~DirectFireCommand()
 // Name: DirectFireCommand::Execute
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-void DirectFireCommand::Execute( const wrapper::View& model ) const
+void DirectFireCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::View& model ) const
 {
     const wrapper::View& entity = model[ "entities" ][ identifier_ ];
     const unsigned int id = entity[ "knowledges" ];
@@ -65,7 +65,7 @@ void DirectFireCommand::Execute( const wrapper::View& model ) const
 // Name: DirectFireCommand::ExecutePaused
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-void DirectFireCommand::ExecutePaused( const wrapper::View& model ) const
+void DirectFireCommand::ExecutePaused( const wrapper::View& /*parameters*/, const wrapper::View& model ) const
 {
     const wrapper::View& entity = model[ "entities" ][ identifier_ ];
     const unsigned int id = entity[ "knowledges" ];

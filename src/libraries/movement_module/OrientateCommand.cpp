@@ -30,7 +30,7 @@ OrientateCommand::OrientateCommand( ModuleFacade& /*module*/, const wrapper::Vie
 // Name: OrientateCommand::Execute
 // Created: MCO 2012-03-09
 // -----------------------------------------------------------------------------
-void OrientateCommand::Execute( const wrapper::View& model ) const
+void OrientateCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::View& model ) const
 {
     wrapper::Effect effect( model[ "entities" ][ identifier_ ][ "movement" ] );
     effect[ "direction/x" ] = x_;
@@ -42,7 +42,7 @@ void OrientateCommand::Execute( const wrapper::View& model ) const
 // Name: OrientateCommand::ExecutePaused
 // Created: NLD 2004-09-13
 // -----------------------------------------------------------------------------
-void OrientateCommand::ExecutePaused( const wrapper::View& /*model*/ ) const
+void OrientateCommand::ExecutePaused( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
 {
     // NOTHING
 }

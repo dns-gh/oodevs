@@ -132,7 +132,7 @@ bool MoveCommand::AvoidObstacles( const wrapper::View& entity, const MT_Vector2D
 // Name: MoveCommand::Execute
 // Bypassd: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-void MoveCommand::Execute( const wrapper::View& model ) const
+void MoveCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::View& model ) const
 {
     const wrapper::View& entity = model[ "entities" ][ identifier_ ];
     const wrapper::View& movement = entity[ "movement" ];
@@ -181,7 +181,7 @@ void MoveCommand::Execute( const wrapper::View& model ) const
 // Name: MoveCommand::ExecutePaused
 // Bypassd: NLD 2004-09-13
 // -----------------------------------------------------------------------------
-void MoveCommand::ExecutePaused( const wrapper::View& /*model*/ ) const
+void MoveCommand::ExecutePaused( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
 {
     if( pMainPath_.get() )
     {

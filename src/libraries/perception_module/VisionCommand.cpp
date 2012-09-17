@@ -51,7 +51,7 @@ VisionCommand::~VisionCommand()
 // Name: VisionCommand::Execute
 // Created: SLI 2012-03-29
 // -----------------------------------------------------------------------------
-void VisionCommand::Execute( const wrapper::View& model ) const
+void VisionCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::View& model ) const
 {
     const wrapper::View& entity = model[ "entities" ][ identifier_ ];
     wrapper::Effect effect( entity[ "perceptions/vision" ] );
@@ -65,7 +65,7 @@ void VisionCommand::Execute( const wrapper::View& model ) const
 // Name: VisionCommand::ExecutePaused
 // Created: SLI 2012-03-29
 // -----------------------------------------------------------------------------
-void VisionCommand::ExecutePaused( const wrapper::View& /*model*/ ) const
+void VisionCommand::ExecutePaused( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
 {
     // NOTHING
 }

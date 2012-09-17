@@ -62,7 +62,7 @@ ToggleLocalizedRadarCommand::~ToggleLocalizedRadarCommand()
 // Name: ToggleLocalizedRadarCommand::Execute
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-void ToggleLocalizedRadarCommand::Execute( const wrapper::View& /*model*/ ) const
+void ToggleLocalizedRadarCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
 {
     effect_.Post();
 }
@@ -71,7 +71,7 @@ void ToggleLocalizedRadarCommand::Execute( const wrapper::View& /*model*/ ) cons
 // Name: ToggleLocalizedRadarCommand::ExecutePaused
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-void ToggleLocalizedRadarCommand::ExecutePaused( const wrapper::View& /*model*/ ) const
+void ToggleLocalizedRadarCommand::ExecutePaused( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
 {
     // NOTHING
 }

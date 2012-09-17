@@ -45,7 +45,7 @@ ToggleLocalizedPerceptionCommand::~ToggleLocalizedPerceptionCommand()
 // Name: ToggleLocalizedPerceptionCommand::Execute
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-void ToggleLocalizedPerceptionCommand::Execute( const wrapper::View& /*model*/ ) const
+void ToggleLocalizedPerceptionCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
 {
     if( !isActivated_ )
     {
@@ -60,7 +60,7 @@ void ToggleLocalizedPerceptionCommand::Execute( const wrapper::View& /*model*/ )
 // Name: ToggleLocalizedPerceptionCommand::ExecutePaused
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-void ToggleLocalizedPerceptionCommand::ExecutePaused( const wrapper::View& /*model*/ ) const
+void ToggleLocalizedPerceptionCommand::ExecutePaused( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
 {
     // NOTHING
 }

@@ -24,7 +24,8 @@ namespace detail
     template< typename T, typename C = void >
     struct Command
     {
-        static void Create( void** command, const SWORD_Model* parameters, const SWORD_Model* model, size_t identifier, void* context )
+        static void Create( void** command,
+            const SWORD_Model* parameters, const SWORD_Model* model, size_t identifier, void* context )
         {
             try
             {
@@ -43,12 +44,13 @@ namespace detail
         {
             delete static_cast< T* >( command );
         }
-        static void Execute( const void* command, const SWORD_Model* model, void* /*context*/ )
+        static void Execute( const void* command,
+            const SWORD_Model* parameters, const SWORD_Model* model, void* /*context*/ )
         {
             try
             {
                 if( command )
-                    static_cast< const T* >( command )->Execute( model );
+                    static_cast< const T* >( command )->Execute( parameters, model );
             }
             catch( std::exception& e )
             {
@@ -59,12 +61,13 @@ namespace detail
                 ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Unknown error while executing command" );
             }
         }
-        static void ExecutePaused( const void* command, const SWORD_Model* model, void* /*context*/ )
+        static void ExecutePaused( const void* command,
+            const SWORD_Model* parameters, const SWORD_Model* model, void* /*context*/ )
         {
             try
             {
                 if( command )
-                    static_cast< const T* >( command )->ExecutePaused( model );
+                    static_cast< const T* >( command )->ExecutePaused( parameters, model );
             }
             catch( std::exception& e )
             {
@@ -80,7 +83,8 @@ namespace detail
     template< typename T >
     struct Command< T, void >
     {
-        static void Create( void** command, const SWORD_Model* parameters, const SWORD_Model* model, size_t identifier, void* /*userData*/ )
+        static void Create( void** command,
+            const SWORD_Model* parameters, const SWORD_Model* model, size_t identifier, void* /*userData*/ )
         {
             try
             {
@@ -99,12 +103,13 @@ namespace detail
         {
             delete static_cast< T* >( command );
         }
-        static void Execute( const void* command, const SWORD_Model* model, void* /*userData*/ )
+        static void Execute( const void* command,
+            const SWORD_Model* parameters, const SWORD_Model* model, void* /*userData*/ )
         {
             try
             {
                 if( command )
-                    static_cast< const T* >( command )->Execute( model );
+                    static_cast< const T* >( command )->Execute( parameters, model );
             }
             catch( std::exception& e )
             {
@@ -115,12 +120,13 @@ namespace detail
                 ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Unknown error while executing command" );
             }
         }
-        static void ExecutePaused( const void* command, const SWORD_Model* model, void* /*userData*/ )
+        static void ExecutePaused( const void* command,
+            const SWORD_Model* parameters, const SWORD_Model* model, void* /*userData*/ )
         {
             try
             {
                 if( command )
-                    static_cast< const T* >( command )->ExecutePaused( model );
+                    static_cast< const T* >( command )->ExecutePaused( parameters, model );
             }
             catch( std::exception& e )
             {

@@ -39,7 +39,7 @@ TogglePerceptionCommand::~TogglePerceptionCommand()
 // Name: TogglePerceptionCommand::Execute
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-void TogglePerceptionCommand::Execute( const wrapper::View& model ) const
+void TogglePerceptionCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::View& model ) const
 {
     const wrapper::View& perception = model[ "entities" ][ identifier_ ][ "perceptions"][ perception_ ][ "activated" ];
     if( perception == isActivated_ )
@@ -53,7 +53,7 @@ void TogglePerceptionCommand::Execute( const wrapper::View& model ) const
 // Name: TogglePerceptionCommand::ExecutePaused
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-void TogglePerceptionCommand::ExecutePaused( const wrapper::View& /*model*/ ) const
+void TogglePerceptionCommand::ExecutePaused( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
 {
     // NOTHING
 }

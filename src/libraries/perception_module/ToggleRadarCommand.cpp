@@ -53,7 +53,7 @@ ToggleRadarCommand::~ToggleRadarCommand()
 // Name: ToggleRadarCommand::Execute
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-void ToggleRadarCommand::Execute( const wrapper::View& model ) const
+void ToggleRadarCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::View& model ) const
 {
     const wrapper::View& radar = model[ "entities" ][ identifier_ ][ "perceptions/radars" ][ radarClass_ ][ "activated" ];
     if( radar == isActivated_ )
@@ -67,7 +67,7 @@ void ToggleRadarCommand::Execute( const wrapper::View& model ) const
 // Name: ToggleRadarCommand::ExecutePaused
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-void ToggleRadarCommand::ExecutePaused( const wrapper::View& /*model*/ ) const
+void ToggleRadarCommand::ExecutePaused( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
 {
     // NOTHING
 }

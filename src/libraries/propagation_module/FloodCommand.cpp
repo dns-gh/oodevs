@@ -43,7 +43,7 @@ FloodCommand::~FloodCommand()
 // Name: FloodCommand::Execute
 // Created: LGY 2012-06-12
 // -----------------------------------------------------------------------------
-void FloodCommand::Execute( const wrapper::View& /*model*/ ) const
+void FloodCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
 {
     wrapper::Event flood( "flood event" );
     flood[ "identifier" ] = identifier_;
@@ -55,7 +55,7 @@ void FloodCommand::Execute( const wrapper::View& /*model*/ ) const
 // Name: FloodCommand::ExecutePaused
 // Created: LGY 2012-06-12
 // -----------------------------------------------------------------------------
-void FloodCommand::ExecutePaused( const wrapper::View& /*model*/ ) const
+void FloodCommand::ExecutePaused( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
 {
     // NOTHING
 }

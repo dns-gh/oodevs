@@ -47,7 +47,7 @@ ToggleRecoCommand::~ToggleRecoCommand()
 // Name: ToggleRecoCommand::Execute
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-void ToggleRecoCommand::Execute( const wrapper::View& /*model*/ ) const
+void ToggleRecoCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
 {
     effect_.Post();
 }
@@ -56,7 +56,7 @@ void ToggleRecoCommand::Execute( const wrapper::View& /*model*/ ) const
 // Name: ToggleRecoCommand::ExecutePaused
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-void ToggleRecoCommand::ExecutePaused( const wrapper::View& /*model*/ ) const
+void ToggleRecoCommand::ExecutePaused( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
 {
     // NOTHING
 }

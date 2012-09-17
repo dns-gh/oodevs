@@ -59,7 +59,7 @@ struct AgentVisitor : private boost::noncopyable
 // Name: IdentifyAgentCommand::Execute
 // Created: SLI 2012-03-29
 // -----------------------------------------------------------------------------
-void IdentifyAgentCommand::Execute( const wrapper::View& model ) const
+void IdentifyAgentCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::View& model ) const
 {
     const wrapper::View& entity = model[ "entities" ][ identifier_ ];
     wrapper::Effect effect( entity[ "perceptions/notifications/agents-in-zone" ] );
@@ -72,7 +72,7 @@ void IdentifyAgentCommand::Execute( const wrapper::View& model ) const
 // Name: IdentifyAgentCommand::ExecutePaused
 // Created: SLI 2012-03-29
 // -----------------------------------------------------------------------------
-void IdentifyAgentCommand::ExecutePaused( const wrapper::View& /*model*/ ) const
+void IdentifyAgentCommand::ExecutePaused( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
 {
     // NOTHING
 }

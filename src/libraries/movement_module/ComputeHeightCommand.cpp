@@ -31,7 +31,7 @@ ComputeHeightCommand::ComputeHeightCommand( ModuleFacade& /*module*/, const wrap
 // Name: ComputeHeightCommand::Execute
 // Created: MCO 2012-03-12
 // -----------------------------------------------------------------------------
-void ComputeHeightCommand::Execute( const wrapper::View& model ) const
+void ComputeHeightCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::View& model ) const
 {
     const wrapper::View& entity = model[ "entities" ][ identifier_ ];
     wrapper::Effect effect( entity[ "movement" ] );
@@ -43,7 +43,7 @@ void ComputeHeightCommand::Execute( const wrapper::View& model ) const
 // Name: ComputeHeightCommand::ExecutePaused
 // Created: MCO 2012-03-12
 // -----------------------------------------------------------------------------
-void ComputeHeightCommand::ExecutePaused( const wrapper::View& /*model*/ ) const
+void ComputeHeightCommand::ExecutePaused( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
 {
     // NOTHING
 }

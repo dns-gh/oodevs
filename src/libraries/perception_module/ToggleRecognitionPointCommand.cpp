@@ -47,7 +47,7 @@ ToggleRecognitionPointCommand::~ToggleRecognitionPointCommand()
 // Name: ToggleRecognitionPointCommand::Execute
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-void ToggleRecognitionPointCommand::Execute( const wrapper::View& /*model*/ ) const
+void ToggleRecognitionPointCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
 {
     effect_.Post();
 }
@@ -56,7 +56,7 @@ void ToggleRecognitionPointCommand::Execute( const wrapper::View& /*model*/ ) co
 // Name: ToggleRecognitionPointCommand::ExecutePaused
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-void ToggleRecognitionPointCommand::ExecutePaused( const wrapper::View& /*model*/ ) const
+void ToggleRecognitionPointCommand::ExecutePaused( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
 {
     // NOTHING
 }

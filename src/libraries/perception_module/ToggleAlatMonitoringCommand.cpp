@@ -63,7 +63,7 @@ ToggleAlatMonitoringCommand::~ToggleAlatMonitoringCommand()
 // Name: ToggleAlatMonitoringCommand::Execute
 // Created: SLI 2012-07-26
 // -----------------------------------------------------------------------------
-void ToggleAlatMonitoringCommand::Execute( const wrapper::View& /*model*/ ) const
+void ToggleAlatMonitoringCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
 {
     effect_.Post();
 }
@@ -72,7 +72,7 @@ void ToggleAlatMonitoringCommand::Execute( const wrapper::View& /*model*/ ) cons
 // Name: ToggleAlatMonitoringCommand::ExecutePaused
 // Created: SLI 2012-07-26
 // -----------------------------------------------------------------------------
-void ToggleAlatMonitoringCommand::ExecutePaused( const wrapper::View& /*model*/ ) const
+void ToggleAlatMonitoringCommand::ExecutePaused( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
 {
     // NOTHING
 }

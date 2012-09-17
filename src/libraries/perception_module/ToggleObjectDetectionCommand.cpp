@@ -47,7 +47,7 @@ ToggleObjectDetectionCommand::~ToggleObjectDetectionCommand()
 // Name: ToggleObjectDetectionCommand::Execute
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-void ToggleObjectDetectionCommand::Execute( const wrapper::View& /*model*/ ) const
+void ToggleObjectDetectionCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
 {
     effect_.Post();
 }
@@ -56,7 +56,7 @@ void ToggleObjectDetectionCommand::Execute( const wrapper::View& /*model*/ ) con
 // Name: ToggleObjectDetectionCommand::ExecutePaused
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-void ToggleObjectDetectionCommand::ExecutePaused( const wrapper::View& /*model*/ ) const
+void ToggleObjectDetectionCommand::ExecutePaused( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
 {
     // NOTHING
 }

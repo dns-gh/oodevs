@@ -31,7 +31,7 @@ ExternalPerceptionCommand::ExternalPerceptionCommand( ModuleFacade& /*module*/, 
 // Name: ExternalPerceptionCommand::Execute
 // Created: SLI 2012-03-16
 // -----------------------------------------------------------------------------
-void ExternalPerceptionCommand::Execute( const wrapper::View& /*model*/ ) const
+void ExternalPerceptionCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
 {
     wrapper::Event event( "external perception" );
     event[ "identifier" ] = identifier_;
@@ -44,7 +44,7 @@ void ExternalPerceptionCommand::Execute( const wrapper::View& /*model*/ ) const
 // Name: ExternalPerceptionCommand::ExecutePaused
 // Created: SLI 2012-03-16
 // -----------------------------------------------------------------------------
-void ExternalPerceptionCommand::ExecutePaused( const wrapper::View& /*model*/ ) const
+void ExternalPerceptionCommand::ExecutePaused( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
 {
     // NOTHING
 }

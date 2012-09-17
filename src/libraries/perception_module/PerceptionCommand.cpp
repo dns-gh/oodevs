@@ -28,7 +28,7 @@ PerceptionCommand::PerceptionCommand( ModuleFacade& /*module*/, const wrapper::V
 // Name: PerceptionCommand::Execute
 // Created: SLI 2012-03-16
 // -----------------------------------------------------------------------------
-void PerceptionCommand::Execute( const wrapper::View& model ) const
+void PerceptionCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::View& model ) const
 {
     RolePion_Perceiver().ExecutePerceptions( model, model[ "entities" ][ identifier_ ] );
 }
@@ -37,7 +37,7 @@ void PerceptionCommand::Execute( const wrapper::View& model ) const
 // Name: PerceptionCommand::ExecutePaused
 // Created: SLI 2012-03-16
 // -----------------------------------------------------------------------------
-void PerceptionCommand::ExecutePaused( const wrapper::View& /*model*/ ) const
+void PerceptionCommand::ExecutePaused( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
 {
     // NOTHING
 }
