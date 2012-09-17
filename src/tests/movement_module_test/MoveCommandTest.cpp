@@ -23,7 +23,7 @@ namespace
             ComputePathfind( path, points );
             return StartCommand( "move",
                 core::MakeModel( "identifier", identifier )
-                               ( "parameters", core::MakeModel()[ core::MakeUserData( path ) ] ) );
+                               ( "path", core::MakeUserData( path ) ) );
         }
         void Step( double currentSpeed, bool hasResources, bool canMove )
         {
@@ -96,7 +96,7 @@ BOOST_FIXTURE_TEST_CASE( moving_on_canceled_path_sends_not_allowed_callback_and_
     ComputeUntrafficablePathfind( path );
     command = StartCommand( "move",
         core::MakeModel( "identifier", identifier )
-            ( "parameters", core::MakeModel()[ core::MakeUserData( path ) ] ) );
+            ( "path", core::MakeUserData( path ) ) );
     mock::verify();
     mock::reset();
     ExpectCallbackEvent( sword::movement::PathWalker::eNotAllowed );
@@ -111,7 +111,7 @@ BOOST_FIXTURE_TEST_CASE( moving_on_impossible_path_sends_not_allowed_callback_an
     ComputeImpossiblePathfind( path );
     command = StartCommand( "move",
         core::MakeModel( "identifier", identifier )
-            ( "parameters",  core::MakeModel()[ core::MakeUserData( path ) ] ) );
+            ( "path", core::MakeUserData( path ) ) );
     mock::verify();
     mock::reset();
     ExpectCallbackEvent( sword::movement::PathWalker::eNotAllowed );
