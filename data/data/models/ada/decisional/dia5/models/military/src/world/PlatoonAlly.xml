@@ -1480,6 +1480,14 @@ This implementation returns 'true' if the units to transport has the &quot;getTr
         <method name="allowCarriers">
             <description>Laisser les transporteurs sans délai.</description>
         </method>
+        <method name="isTranported">
+            <description>Returns 'true' if the agent is being transported by another agent, 'false' otherwise.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
     </methods>
     <predicates>
         <predicate name="isCommandingFor">

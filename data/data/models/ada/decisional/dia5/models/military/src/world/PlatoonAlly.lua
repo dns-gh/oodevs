@@ -364,6 +364,9 @@ return
     isPoisoned = function( self )
         return integration.isPoisoned( self )
     end,
+    isTranported = function( self )
+      return integration.meKnowledgeIsTranported( self )
+    end,
     isAgentNBC = function( self )
         return integration.isAgentNBC( self )
     end,
