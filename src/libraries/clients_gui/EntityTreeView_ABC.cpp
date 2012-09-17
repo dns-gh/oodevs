@@ -155,14 +155,14 @@ void EntityTreeView_ABC::NotifySelectionChanged( const std::vector< const kernel
 // Name: EntityTreeView_ABC::OnSelect
 // Created: ABR 2012-08-16
 // -----------------------------------------------------------------------------
-void EntityTreeView_ABC::OnSelect( const QItemSelection& selected, const QItemSelection& /* deselected */ )
+void EntityTreeView_ABC::OnSelect( const QItemSelection& /*selected*/, const QItemSelection& /* deselected */ )
 {
     if( blockSelect_ )
         return;
 
-    QModelIndexList selectedIndexes = selected.indexes();
+    QModelIndexList indexes = selectedIndexes();
     kernel::ActionController::T_Selectables list;
-    for( QModelIndexList::const_iterator it = selectedIndexes.constBegin(); it != selectedIndexes.constEnd(); ++it )
+    for( QModelIndexList::const_iterator it = indexes.constBegin(); it != indexes.constEnd(); ++it )
     {
         kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( *it );
         if( entity )
@@ -205,7 +205,7 @@ void EntityTreeView_ABC::contextMenuEvent( QContextMenuEvent* event )
 // Name: EntityTreeView_ABC::IsTypeRejected
 // Created: ABR 2012-08-16
 // -----------------------------------------------------------------------------
-bool EntityTreeView_ABC::IsTypeRejected( const kernel::Entity_ABC& entity ) const
+bool EntityTreeView_ABC::IsTypeRejected( const kernel::Entity_ABC& /*entity*/ ) const
 {
     return false;
 }
@@ -214,7 +214,7 @@ bool EntityTreeView_ABC::IsTypeRejected( const kernel::Entity_ABC& entity ) cons
 // Name: EntityTreeView_ABC::ItemSpecificFlags
 // Created: JSR 2012-08-31
 // -----------------------------------------------------------------------------
-Qt::ItemFlags EntityTreeView_ABC::ItemSpecificFlags( const kernel::Entity_ABC& entity ) const
+Qt::ItemFlags EntityTreeView_ABC::ItemSpecificFlags( const kernel::Entity_ABC& /*entity*/ ) const
 {
     return 0;
 }

@@ -190,7 +190,11 @@ QMimeData* StandardModel::mimeData( const QModelIndexList& indexes ) const
 {
     if( !dragAndDropObserver_ || dndLocked_)
         return 0;
-    QMimeData* mimeData = new QMimeData();
+    bool overriden = false;
+    QMimeData* mimeData = dragAndDropObserver_->MimeData( indexes, overriden );
+    if( overriden )
+        return mimeData;
+    mimeData = new QMimeData();
     QByteArray encodedData;
     QDataStream stream( &encodedData, QIODevice::WriteOnly );
     foreach( QModelIndex index, indexes )
@@ -213,10 +217,9 @@ QMimeData* StandardModel::mimeData( const QModelIndexList& indexes ) const
 Qt::ItemFlags StandardModel::flags(const QModelIndex& index) const
 {
     const Qt::ItemFlags defaultFlags = QStandardItemModel::flags( index );
-    // $$$$ JSR 2012-09-07: TODO add a virtual method for non draggable/droppable elements? or manage it in dragEnterEvent?
     if( !index.isValid() || !dragAndDropObserver_ || dndLocked_)
-        return defaultFlags;
-    return Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled | defaultFlags;
+        return defaultFlags & ~( Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled );
+    return defaultFlags;
 }
 
 // -----------------------------------------------------------------------------

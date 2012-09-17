@@ -212,7 +212,7 @@ const QPixmap* HierarchyTreeView_ABC::GetDecoration( const QModelIndex &index )
 // -----------------------------------------------------------------------------
 Qt::ItemFlags HierarchyTreeView_ABC::ItemSpecificFlags( const kernel::Entity_ABC& /*entity*/ ) const
 {
-    return Qt::ItemIsEditable;
+    return Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled;
 }
 
 // -----------------------------------------------------------------------------

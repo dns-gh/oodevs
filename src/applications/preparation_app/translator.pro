@@ -82,6 +82,7 @@ UnitStateTableResource.cpp \
 UrbanColorEditor.cpp \
 UrbanInfosDockWidget.cpp \
 UrbanListView.cpp \
+UrbanTreeView.cpp \
 UsagesDockWidget.cpp \
 UserProfileList.cpp \
 UserProfileRights_ABC.cpp \

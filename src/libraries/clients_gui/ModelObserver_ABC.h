@@ -44,6 +44,7 @@ public:
     virtual void ClearSelection() = 0;
     virtual void CreateFormation( int level ) = 0;
     virtual kernel::Automat_ABC* ReplaceAutomat( kernel::Entity_ABC& original, const kernel::AutomatType& type ) = 0;
+    virtual void CreateCityOrDistrict( kernel::Entity_ABC* parent ) = 0;
     //@}
 };
 

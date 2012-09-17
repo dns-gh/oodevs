@@ -2710,6 +2710,13 @@ This data can&apos;t be projected.</source>
     </message>
 </context>
 <context>
+    <name>UrbanTreeView</name>
+    <message>
+        <source>Create city</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>UsagesDockWidget</name>
     <message>
         <source>Usages</source>

@@ -70,10 +70,10 @@ public:
     virtual void ClearSelection();
     virtual void CreateFormation( int level );
     virtual kernel::Automat_ABC* ReplaceAutomat( kernel::Entity_ABC& original, const kernel::AutomatType& type );
+    virtual void CreateCityOrDistrict( kernel::Entity_ABC* parent );
     bool CanCreateLine() const;
     void CreateLimit( const T_PointVector& points );
     void CreateLima( const T_PointVector& points );
-    void CreateCityOrDistrict( kernel::Entity_ABC* parent );
     void DeleteBlocks( const std::vector< const kernel::UrbanObject_ABC* >& urbanObjects );
     void DeleteEntity( const kernel::Entity_ABC& entity );
     //@}

@@ -2711,6 +2711,13 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
 </context>
 <context>
+    <name>UrbanTreeView</name>
+    <message>
+        <source>Create city</source>
+        <translation>Créer une ville</translation>
+    </message>
+</context>
+<context>
     <name>UsagesDockWidget</name>
     <message>
         <source>Usages</source>
