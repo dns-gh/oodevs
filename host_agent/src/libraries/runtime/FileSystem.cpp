@@ -418,7 +418,7 @@ void TransferArchive( cpplog::BaseLogger& log, Archive* dst, Archive* src, const
             next = root / archive_entry_pathname_w( entry );
         }
 
-        archive_entry_update_pathname_utf8( entry, runtime::Utf8Convert( next ).c_str() );
+        archive_entry_copy_pathname_w( entry, next.wstring().c_str() );
         err = archive_write_header( dst, entry );
         if( err != ARCHIVE_OK )
             CheckArchiveCode( log, dst, err );
@@ -529,7 +529,7 @@ struct Packer : public Packer_ABC
     void Pack( const Path& input, const T_Predicate& predicate )
     {
         boost::shared_ptr< Archive > src( archive_read_disk_new(), archive_read_free );
-        int err = archive_read_disk_open( src.get(), runtime::Utf8Convert( input ).c_str() );
+        int err = archive_read_disk_open_w( src.get(), input.wstring().c_str() );
         if( err != ARCHIVE_OK )
             throw std::runtime_error( archive_error_string( src.get() ) );
         TransferArchive( log_, dst_.get(), src.get(), input, predicate, true );
