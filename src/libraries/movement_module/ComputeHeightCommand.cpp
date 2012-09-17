@@ -21,8 +21,7 @@ DECLARE_HOOK( ComputeHeight, double, ( const SWORD_Model* entity ) )
 // Name: ComputeHeightCommand constructor
 // Created: MCO 2012-03-12
 // -----------------------------------------------------------------------------
-ComputeHeightCommand::ComputeHeightCommand( ModuleFacade& /*module*/, const wrapper::View& parameters, const wrapper::View& /*model*/, size_t /*identifier*/ )
-    : identifier_( parameters[ "identifier" ] )
+ComputeHeightCommand::ComputeHeightCommand( ModuleFacade& /*module*/, const wrapper::View& /*parameters*/, const wrapper::View& /*model*/, size_t /*identifier*/ )
 {
     // NOTHING
 }
@@ -31,9 +30,10 @@ ComputeHeightCommand::ComputeHeightCommand( ModuleFacade& /*module*/, const wrap
 // Name: ComputeHeightCommand::Execute
 // Created: MCO 2012-03-12
 // -----------------------------------------------------------------------------
-void ComputeHeightCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::View& model ) const
+void ComputeHeightCommand::Execute( const wrapper::View& parameters, const wrapper::View& model ) const
 {
-    const wrapper::View& entity = model[ "entities" ][ identifier_ ];
+    const unsigned int identifier = parameters[ "identifier" ];
+    const wrapper::View& entity = model[ "entities" ][ identifier ];
     wrapper::Effect effect( entity[ "movement" ] );
     effect[ "height" ] = GET_HOOK( ComputeHeight )( entity );
     effect.Post();
