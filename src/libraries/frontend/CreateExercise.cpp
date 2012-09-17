@@ -118,6 +118,7 @@ namespace frontend
     {
         ::Copy( from, to, from, to, 0, -1 );
     }
+
     void CreateExercise( const tools::GeneralConfig& config, const std::string& name, const std::string& terrain, const std::string& model, const std::string& physical /*= ""*/ )
     {
         const std::string dir = config.GetExerciseDir( name );
@@ -126,33 +127,39 @@ namespace frontend
         CreateExerciseXml( filename, terrain, model, physical, false );
         tools::WriteXmlCrc32Signature( filename );
     }
+
     void EditExerciseParameters( const tools::GeneralConfig& config, const std::string& name, const std::string& terrain, const std::string& model, const std::string& physical /*= ""*/ )
     {
         const std::string filename( ( bfs::path( config.GetExerciseDir( name ) ) / "exercise.xml" ).string() );
         CreateExerciseXml( filename, terrain, model, physical, true );
         tools::WriteXmlCrc32Signature( filename );
     }
+
+    void CreateExerciseFileCopy( const bfs::path& dirFrom, const bfs::path& dirTo, const ExerciseCopyParameters& params )
+    {
+        const std::string filenameFrom( ( dirFrom / "exercise.xml" ).string() );
+        const std::string filenameTo( ( dirTo / "exercise.xml" ).string() );
+        xml::xifstream xis( filenameFrom );
+        xml::xofstream xos( filenameTo );
+        xis >> xml::start( "exercise" );
+        xos << xml::start( "exercise" );
+        tools::SchemaWriter().WriteExerciseSchema( xos, "exercise" );
+        CopyXmlFields( xis, xos, "meta;population;propagations;profiles;orbat;urbanstate;weather;urban;scores;success" );
+        xos << xml::start( "terrain" ) << xml::attribute( "name", params.terrain_ ) << xml::end
+            << xml::start( "model" ) << xml::attribute( "dataset", params.model_ ) << xml::attribute( "physical", params.physical_ ) << xml::end;
+        xis >> xml::end;
+        xos << xml::end;
+        tools::WriteXmlCrc32Signature( filenameTo );
+    }
+
     void CreateExerciseAsCopyOf( const tools::GeneralConfig& config, const ExerciseCopyParameters& params )
     {
         const bfs::path dirFrom = bfs::path( config.GetExerciseDir( params.from_ )  );
         const bfs::path dirTo = bfs::path( config.GetExerciseDir( params.to_ ) );
         bfs::create_directories( dirTo );
         // Copy exercise.xml and linked file
-        {
-            const std::string filenameFrom( ( dirFrom / "exercise.xml" ).string() );
-            const std::string filenameTo( ( dirTo / "exercise.xml" ).string() );
-            xml::xifstream xis( filenameFrom );
-            xml::xofstream xos( filenameTo );
-            xis >> xml::start( "exercise" );
-            xos << xml::start( "exercise" );
-            tools::SchemaWriter().WriteExerciseSchema( xos, "exercise" );
-            CopyXmlFields( xis, xos, "meta;population;propagations;profiles;orbat;urbanstate;weather;urban;scores;success" );
-            xos << xml::start( "terrain" ) << xml::attribute( "name", params.terrain_ ) << xml::end
-                << xml::start( "model" ) << xml::attribute( "dataset", params.model_ ) << xml::attribute( "physical", params.physical_ ) << xml::end;
-            xis >> xml::end;
-            xos << xml::end;
-            tools::WriteXmlCrc32Signature( filenameTo );
-        }
+        CreateExerciseFileCopy( dirFrom, dirTo, params );
+
         // Copy checked path
         for( Q3ListViewItemIterator iterator = params.iterator_; iterator.current(); ++iterator )
         {
@@ -167,6 +174,45 @@ namespace frontend
                 bfs::path from( dirFrom / file );
                 bfs::path to( dirTo / file );
                 ::Copy( from, to, from, to, ( item->childCount() != 0 ) ? &params.iterator_ : 0 );
+            }
+        }
+    }
+
+    // -----------------------------------------------------------------------------
+    // Name: CreateExercise::CreateExerciseAsCopyOfCheckpoint
+    // Created: NPT 2012-09-17
+    // -----------------------------------------------------------------------------
+    void CreateExerciseAsCopyOfCheckpoint( const tools::GeneralConfig& config, const ExerciseCopyParameters& params )
+    {
+        const bfs::path dirExerciseFrom = bfs::path( config.GetExerciseDir( params.from_ ) );
+        const bfs::path dirCheckpointFrom = bfs::path( params.checkpoint_ );
+        const bfs::path dirTo = bfs::path( config.GetExerciseDir( params.to_ ) );
+        bfs::create_directories( dirTo );
+
+        //copy basic files of the exercise directory
+        bfs::directory_iterator end ;
+        for( bfs::directory_iterator itExercise( dirExerciseFrom ); itExercise != end ; ++itExercise )
+        {
+            if ( !bfs::is_directory( *itExercise ) )
+            {
+                bfs::path from( itExercise->path() );
+                bfs::path to( dirTo / itExercise->path().filename() );
+                bfs::copy_file( from, to );
+            }
+        }
+
+        // Copy exercise.xml
+        CreateExerciseFileCopy( dirExerciseFrom, dirTo, params );
+
+        //copy basic files of the checkpoint directory
+        for( bfs::directory_iterator itCheckpoint( dirCheckpointFrom ); itCheckpoint != end ; ++itCheckpoint )
+        {
+            const std::string filename = itCheckpoint->path().filename().string();
+            if ( !bfs::is_directory( *itCheckpoint ) && filename != "CRCs.xml" && filename != "data" && filename != "MetaData.xml" && filename != "scores.xml" && filename != "timeline.ord" )
+            {
+                bfs::path from( itCheckpoint->path() );
+                bfs::path to( dirTo / filename );
+                bfs::copy_file( from, to, bfs::copy_option::overwrite_if_exists );
             }
         }
     }

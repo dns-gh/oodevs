@@ -139,15 +139,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Content to copy:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Terrain:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Model:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Content to copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Checkpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Session:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No session</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -15,6 +15,11 @@
 
 class ScenarioEditPage;
 
+namespace frontend
+{
+    class CheckpointList;
+}
+
 namespace tools
 {
     class GeneralConfig;
@@ -57,6 +62,9 @@ private slots:
     //! @name Slots
     //@{
     void OnSelectionChanged( Q3ListBoxItem* item );
+    void OnSessionSelected( const QString& session );
+    void OnCheckpointSelected( const QString& checkpoint );
+    void CurrentTabChanged( int );
     //@}
 
 private:
@@ -70,11 +78,19 @@ private:
     QComboBox*                  editModelList_;
     Q3GroupBox*                 saveAsGroupBox_;
     Q3ListBox*                  exerciseList_;
+    Q3ListBox*                  sessionList_;
+    frontend::CheckpointList*   checkpointList_;
+
+    QTabWidget*                 copyTab_;
     Q3ListView*                 contentList_;
+    QWidget*                    checkpointCopyPanel_;
 
     QLabel*                     createLabel_;
     QLabel*                     copyLabel_;
-    QLabel*                     copyContentLabel_;
+    QLabel*                     sessionLabel_;
+
+    std::string session_;
+    std::string checkpoint_;
     //@}
 };
 

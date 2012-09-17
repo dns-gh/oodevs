@@ -28,6 +28,7 @@ namespace frontend
 
         std::string from_;
         std::string to_;
+        std::string checkpoint_;
         std::string terrain_;
         std::string model_;
         std::string physical_;
@@ -41,6 +42,7 @@ namespace frontend
     void EditExerciseParameters( const tools::GeneralConfig& config, const std::string& name,
                          const std::string& terrain, const std::string& model, const std::string& physical = "" );
     void CreateExerciseAsCopyOf( const tools::GeneralConfig& config, const ExerciseCopyParameters& parameters );
+    void CreateExerciseAsCopyOfCheckpoint( const tools::GeneralConfig& config, const ExerciseCopyParameters& params );
 }
 
 #endif // __CreateExercise_h_

@@ -147,8 +147,20 @@
         <translation>Exercice à copier:</translation>
     </message>
     <message>
-        <source>Content to copy:</source>
-        <translation type="unfinished"></translation>
+        <source>Content to copy</source>
+        <translation>Contenu à copier</translation>
+    </message>
+    <message>
+        <source>Checkpoint</source>
+        <translation>Sauvegarde</translation>
+    </message>
+    <message>
+        <source>Session:</source>
+        <translation>Session :</translation>
+    </message>
+    <message>
+        <source>No session</source>
+        <translation>Pas de session</translation>
     </message>
 </context>
 <context>
