@@ -11,8 +11,6 @@
 #define SWORD_PROPAGATION_FLOOD_COMMAND_H
 
 #include <boost/noncopyable.hpp>
-#include <geometry/Types.h>
-#include <memory>
 
 namespace sword
 {
@@ -24,6 +22,7 @@ namespace wrapper
 namespace propagation
 {
     class FloodModel;
+
 // =============================================================================
 /** @class  FloodCommand
     @brief  Flood command
@@ -44,16 +43,6 @@ public:
     //@{
     void Execute( const wrapper::View& parameters, const wrapper::View& model ) const;
     void ExecutePaused( const wrapper::View& parameters, const wrapper::View& model ) const;
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    const unsigned int identifier_;
-    const unsigned int depth_;
-    const unsigned int radius_;
-    const geometry::Point2f center_;
-    std::auto_ptr< FloodModel > model_;
     //@}
 };
 

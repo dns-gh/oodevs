@@ -89,15 +89,16 @@ BOOST_FIXTURE_TEST_CASE( toggle_radar_command_activates_radars_class, RadarFixtu
     ToggleRadar( true, 2, "tapping-radar" );
 }
 
-BOOST_FIXTURE_TEST_CASE( toggle_radar_command_notify_error_log_if_radar_class_is_unknown, RadarFixture )
+BOOST_FIXTURE_TEST_CASE( toggle_radar_command_notifies_error_log_if_radar_class_is_unknown, RadarFixture )
 {
     model[ "entities" ][ identifier ][ "perceptions/radars/unknown/activated" ] = false;
     const int unknwownRadar = 3;
-    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR, mock::any );
     StartCommand( "toggle radar",
         core::MakeModel( "identifier", identifier )
                        ( "radar-class", unknwownRadar )
                        ( "activated", true ) );
+    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR, mock::any );
+    ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( activated_radar_localization_is_forwarded_to_effect, sword::perception::ModuleFixture )

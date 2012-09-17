@@ -11,7 +11,7 @@
 #include "FloodModel.h"
 #include "wrapper/Event.h"
 #include "wrapper/View.h"
-#include <boost//foreach.hpp>
+#include <geometry/Types.h>
 
 using namespace sword;
 using namespace sword::propagation;
@@ -20,12 +20,7 @@ using namespace sword::propagation;
 // Name: FloodCommand constructor
 // Created: LGY 2012-06-12
 // -----------------------------------------------------------------------------
-FloodCommand::FloodCommand( const wrapper::View& parameters, const wrapper::View& /*model*/, size_t /*identifier*/ )
-    : identifier_( parameters[ "identifier" ] )
-    , depth_     ( parameters[ "depth" ] )
-    , radius_    ( parameters[ "radius" ] )
-    , center_    ( parameters[ "center" ][ "x" ], parameters[ "center" ][ "y" ] )
-    , model_     ( new FloodModel() )
+FloodCommand::FloodCommand( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/, size_t /*identifier*/ )
 {
     // NOTHING
 }
@@ -43,11 +38,12 @@ FloodCommand::~FloodCommand()
 // Name: FloodCommand::Execute
 // Created: LGY 2012-06-12
 // -----------------------------------------------------------------------------
-void FloodCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
+void FloodCommand::Execute( const wrapper::View& parameters, const wrapper::View& /*model*/ ) const
 {
     wrapper::Event flood( "flood event" );
-    flood[ "identifier" ] = identifier_;
-    model_->Generate( center_, flood, depth_, radius_ );
+    flood[ "identifier" ] = parameters[ "identifier" ];
+    const geometry::Point2f center( parameters[ "center/x" ], parameters[ "center/y" ] );
+    FloodModel().Generate( center, flood, parameters[ "depth" ], parameters[ "radius" ] );
     flood.Post();
 }
 
