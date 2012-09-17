@@ -39,7 +39,6 @@ private:
 public:
     bool bIncludeNormalizedConsumption_;
     bool bIncludeThreshold_;
-    bool bQtyDecimal_;
 };
 
 #endif // __ADN_Composantes_Dotations_GUI_h_

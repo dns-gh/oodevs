@@ -46,7 +46,7 @@ public:
         ADN_TableItem_Double*    pItemLogThreshold  = new ADN_TableItem_Double( &tab_, pObj );
         ADN_TableItem_Double*    pItemNormalizedConsumption  = new ADN_TableItem_Double( &tab_, pObj );
 
-        pItemQty->GetValidator().setRange( 0, INT_MAX );
+        pItemQty->GetValidator().setRange( 1, INT_MAX );
         pItemLogThreshold->GetValidator().setRange( 0, 100, 2 );
         pItemNormalizedConsumption->GetValidator().setRange( 0.001, INT_MAX, 3 );
 
@@ -188,7 +188,7 @@ void ADN_Composantes_Dotations_GUI::AddNewDotation( ADN_Equipement_Data::Categor
 {
     CategoryInfos* pNewInfo = new CategoryInfos( category.parentResource_ );
     pNewInfo->ptrCategory_ = &category;
-    pNewInfo->rNbr_ = bQtyDecimal_? 0.001 : 1;
+    pNewInfo->rNbr_ = 1;
 
     ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
     pCTable->AddItem( pNewInfo );
