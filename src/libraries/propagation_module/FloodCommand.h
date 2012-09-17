@@ -35,7 +35,6 @@ public:
     //! @name Constructors/Destructor
     //@{
     FloodCommand( const wrapper::View& parameters, const wrapper::View& model, size_t identifier );
-    ~FloodCommand();
     //@}
 
 public:
