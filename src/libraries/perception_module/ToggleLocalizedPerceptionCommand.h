@@ -10,7 +10,6 @@
 #ifndef SWORD_PERCEPTION_TOGGLE_LOCALIZED_PERCEPTION_COMMAND_H
 #define SWORD_PERCEPTION_TOGGLE_LOCALIZED_PERCEPTION_COMMAND_H
 
-#include "wrapper/Effect.h"
 #include <boost/noncopyable.hpp>
 
 namespace sword
@@ -42,15 +41,6 @@ public:
     //@{
     void Execute( const wrapper::View& parameters, const wrapper::View& model ) const;
     void ExecutePaused( const wrapper::View& parameters, const wrapper::View& model ) const;
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    const std::size_t identifier_;
-    const std::string perception_;
-    const bool isActivated_;
-    wrapper::Effect effect_;
     //@}
 };
 

@@ -10,7 +10,6 @@
 #ifndef SWORD_PERCEPTION_TOGGLE_ALAT_MONITORING_COMMAND_H
 #define SWORD_PERCEPTION_TOGGLE_ALAT_MONITORING_COMMAND_H
 
-#include "wrapper/Effect.h"
 #include <boost/noncopyable.hpp>
 
 namespace xml
@@ -59,12 +58,6 @@ private:
     //@{
     struct LoadingWrapper;
     static void ReadAlatTime( xml::xistream& xis );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    wrapper::Effect effect_;
     //@}
 };
 

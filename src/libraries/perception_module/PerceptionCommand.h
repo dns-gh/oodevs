@@ -42,12 +42,6 @@ public:
     void Execute( const wrapper::View& parameters, const wrapper::View& model ) const;
     void ExecutePaused( const wrapper::View& parameters, const wrapper::View& model ) const;
     //@}
-
-private:
-    //! @name Member data
-    //@{
-    const unsigned int identifier_;
-    //@}
 };
 
 }

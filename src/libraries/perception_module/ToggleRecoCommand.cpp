@@ -9,6 +9,7 @@
 
 #include "ToggleRecoCommand.h"
 #include "wrapper/View.h"
+#include "wrapper/Effect.h"
 
 using namespace sword;
 using namespace sword::perception;
@@ -17,21 +18,9 @@ using namespace sword::perception;
 // Name: ToggleRecoCommand constructor
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-ToggleRecoCommand::ToggleRecoCommand( ModuleFacade& /*module*/, const wrapper::View& parameters, const wrapper::View& model, size_t /*identifier*/ )
-    : effect_( model[ "entities" ][ static_cast< std::size_t >( parameters[ "identifier" ] ) ][ "perceptions/reco" ] )
+ToggleRecoCommand::ToggleRecoCommand( ModuleFacade& /*module*/, const wrapper::View& /*parameters*/, const wrapper::View& /*model*/, size_t /*identifier*/ )
 {
-    const std::size_t perceptionId = parameters[ "perception-id" ];
-    if( parameters[ "activated" ] )
-    {
-        effect_[ perceptionId ][ "perception-id" ] = perceptionId;
-        effect_[ perceptionId ][ "localization" ] = parameters[ "localization" ];
-        effect_[ perceptionId ][ "has-growth-speed" ] = parameters[ "has-growth-speed" ];
-        effect_[ perceptionId ][ "growth-speed" ] = parameters[ "growth-speed" ];
-        effect_[ perceptionId ][ "radius" ] = 0;
-        effect_[ perceptionId ][ "max-radius-reached" ] = false;
-    }
-    else
-        effect_[ perceptionId ].MarkForRemove();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -47,9 +36,23 @@ ToggleRecoCommand::~ToggleRecoCommand()
 // Name: ToggleRecoCommand::Execute
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-void ToggleRecoCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
+void ToggleRecoCommand::Execute( const wrapper::View& parameters, const wrapper::View& model ) const
 {
-    effect_.Post();
+    const std::size_t identifier = parameters[ "identifier" ];
+    wrapper::Effect effect( model[ "entities" ][ identifier ][ "perceptions/reco" ] );
+    const std::size_t perceptionId = parameters[ "perception-id" ];
+    if( parameters[ "activated" ] )
+    {
+        effect[ perceptionId ][ "perception-id" ] = perceptionId;
+        effect[ perceptionId ][ "localization" ] = parameters[ "localization" ];
+        effect[ perceptionId ][ "has-growth-speed" ] = parameters[ "has-growth-speed" ];
+        effect[ perceptionId ][ "growth-speed" ] = parameters[ "growth-speed" ];
+        effect[ perceptionId ][ "radius" ] = 0;
+        effect[ perceptionId ][ "max-radius-reached" ] = false;
+    }
+    else
+        effect[ perceptionId ].MarkForRemove();
+    effect.Post();
 }
 
 // -----------------------------------------------------------------------------

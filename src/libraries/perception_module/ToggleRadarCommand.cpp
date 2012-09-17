@@ -16,26 +16,11 @@
 using namespace sword;
 using namespace sword::perception;
 
-namespace
-{
-    std::string FindRadar( unsigned int radarClass, size_t entity )
-    {
-         const RadarClass* found = RadarClass::Find( radarClass );
-         if( !found )
-             throw std::runtime_error( "could not find radar class '" + boost::lexical_cast< std::string >( radarClass )
-                                     + "' for entity '" + boost::lexical_cast< std::string >( entity ) + "'" );
-         return found->GetName();
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: ToggleRadarCommand constructor
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-ToggleRadarCommand::ToggleRadarCommand( ModuleFacade& /*module*/, const wrapper::View& parameters, const wrapper::View& /*model*/, size_t /*identifier*/ )
-    : identifier_ ( parameters[ "identifier" ] )
-    , radarClass_ ( FindRadar( parameters[ "radar-class" ], identifier_ ) )
-    , isActivated_( parameters[ "activated" ] )
+ToggleRadarCommand::ToggleRadarCommand( ModuleFacade& /*module*/, const wrapper::View& /*parameters*/, const wrapper::View& /*model*/, size_t /*identifier*/ )
 {
     // NOTHING
 }
@@ -49,17 +34,32 @@ ToggleRadarCommand::~ToggleRadarCommand()
     // NOTHING
 }
 
+namespace
+{
+    std::string FindRadar( unsigned int radarClass, size_t entity )
+    {
+         const RadarClass* found = RadarClass::Find( radarClass );
+         if( !found )
+             throw std::runtime_error( "could not find radar class '" + boost::lexical_cast< std::string >( radarClass )
+                                     + "' for entity '" + boost::lexical_cast< std::string >( entity ) + "'" );
+         return found->GetName();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ToggleRadarCommand::Execute
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-void ToggleRadarCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::View& model ) const
+void ToggleRadarCommand::Execute( const wrapper::View& parameters, const wrapper::View& model ) const
 {
-    const wrapper::View& radar = model[ "entities" ][ identifier_ ][ "perceptions/radars" ][ radarClass_ ][ "activated" ];
-    if( radar == isActivated_ )
+    const size_t identifier = parameters[ "identifier" ];
+    const std::string radarClass = FindRadar( parameters[ "radar-class" ], identifier );
+    const bool isActivated = parameters[ "activated" ];
+    const wrapper::View& radar = model[ "entities" ][ identifier ][ "perceptions/radars" ][ radarClass ][ "activated" ];
+    if( radar == isActivated )
         return;
     wrapper::Effect effect( radar );
-    effect = isActivated_;
+    effect = isActivated;
     effect.Post();
 }
 

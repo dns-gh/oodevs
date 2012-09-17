@@ -10,7 +10,6 @@
 #ifndef SWORD_PERCEPTION_TOGGLE_RECOGNITION_POINT_COMMAND_H
 #define SWORD_PERCEPTION_TOGGLE_RECOGNITION_POINT_COMMAND_H
 
-#include "wrapper/Effect.h"
 #include <boost/noncopyable.hpp>
 
 namespace sword
@@ -43,12 +42,6 @@ public:
     //@{
     void Execute( const wrapper::View& parameters, const wrapper::View& model ) const;
     void ExecutePaused( const wrapper::View& parameters, const wrapper::View& model ) const;
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    wrapper::Effect effect_;
     //@}
 };
 

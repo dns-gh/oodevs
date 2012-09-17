@@ -18,8 +18,7 @@ using namespace sword::perception;
 // Name: PerceptionCommand constructor
 // Created: SLI 2012-03-16
 // -----------------------------------------------------------------------------
-PerceptionCommand::PerceptionCommand( ModuleFacade& /*module*/, const wrapper::View& parameters, const wrapper::View& /*model*/, size_t /*identifier*/ )
-    : identifier_( parameters[ "identifier" ] )
+PerceptionCommand::PerceptionCommand( ModuleFacade& /*module*/, const wrapper::View& /*parameters*/, const wrapper::View& /*model*/, size_t /*identifier*/ )
 {
     // NOTHING
 }
@@ -28,9 +27,10 @@ PerceptionCommand::PerceptionCommand( ModuleFacade& /*module*/, const wrapper::V
 // Name: PerceptionCommand::Execute
 // Created: SLI 2012-03-16
 // -----------------------------------------------------------------------------
-void PerceptionCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::View& model ) const
+void PerceptionCommand::Execute( const wrapper::View& parameters, const wrapper::View& model ) const
 {
-    RolePion_Perceiver().ExecutePerceptions( model, model[ "entities" ][ identifier_ ] );
+    const unsigned int identifier = parameters[ "identifier" ];
+    RolePion_Perceiver().ExecutePerceptions( model, model[ "entities" ][ identifier ] );
 }
 
 // -----------------------------------------------------------------------------

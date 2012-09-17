@@ -10,6 +10,7 @@
 #include "ToggleLocalizedRadarCommand.h"
 #include "RadarClass.h"
 #include "wrapper/View.h"
+#include "wrapper/Effect.h"
 #include <boost/lexical_cast.hpp>
 
 using namespace sword;
@@ -36,17 +37,9 @@ namespace
 // Name: ToggleLocalizedRadarCommand constructor
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-ToggleLocalizedRadarCommand::ToggleLocalizedRadarCommand( ModuleFacade& /*module*/, const wrapper::View& parameters, const wrapper::View& model, size_t /*identifier*/ )
-    : effect_( GetTarget( parameters, model ) )
+ToggleLocalizedRadarCommand::ToggleLocalizedRadarCommand( ModuleFacade& /*module*/, const wrapper::View& /*parameters*/, const wrapper::View& /*model*/, size_t /*identifier*/ )
 {
-    const std::size_t perceptionId = parameters[ "perception-id" ];
-    if( parameters[ "activated" ] )
-    {
-        effect_[ perceptionId ][ "localization" ] = parameters[ "localization" ];
-        effect_[ perceptionId ][ "perception-id" ] = perceptionId;
-    }
-    else
-        effect_[ perceptionId ].MarkForRemove();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -62,9 +55,18 @@ ToggleLocalizedRadarCommand::~ToggleLocalizedRadarCommand()
 // Name: ToggleLocalizedRadarCommand::Execute
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-void ToggleLocalizedRadarCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
+void ToggleLocalizedRadarCommand::Execute( const wrapper::View& parameters, const wrapper::View& model ) const
 {
-    effect_.Post();
+    wrapper::Effect effect( GetTarget( parameters, model ) );
+    const std::size_t perceptionId = parameters[ "perception-id" ];
+    if( parameters[ "activated" ] )
+    {
+        effect[ perceptionId ][ "localization" ] = parameters[ "localization" ];
+        effect[ perceptionId ][ "perception-id" ] = perceptionId;
+    }
+    else
+        effect[ perceptionId ].MarkForRemove();
+    effect.Post();
 }
 
 // -----------------------------------------------------------------------------

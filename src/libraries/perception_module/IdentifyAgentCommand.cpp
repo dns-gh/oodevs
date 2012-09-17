@@ -22,9 +22,7 @@ DECLARE_HOOK( GetAgentListWithinLocalisation, void, ( const SWORD_Model* root, c
 // Name: IdentifyAgentCommand constructor
 // Created: SLI 2012-03-29
 // -----------------------------------------------------------------------------
-IdentifyAgentCommand::IdentifyAgentCommand( ModuleFacade& /*module*/, const wrapper::View& parameters, const wrapper::View& /*model*/, size_t /*identifier*/ )
-    : identifier_  ( parameters[ "identifier" ] )
-    , localization_( parameters[ "localization" ] )
+IdentifyAgentCommand::IdentifyAgentCommand( ModuleFacade& /*module*/, const wrapper::View& /*parameters*/, const wrapper::View& /*model*/, size_t /*identifier*/ )
 {
     // NOTHING
 }
@@ -59,12 +57,13 @@ struct AgentVisitor : private boost::noncopyable
 // Name: IdentifyAgentCommand::Execute
 // Created: SLI 2012-03-29
 // -----------------------------------------------------------------------------
-void IdentifyAgentCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::View& model ) const
+void IdentifyAgentCommand::Execute( const wrapper::View& parameters, const wrapper::View& model ) const
 {
-    const wrapper::View& entity = model[ "entities" ][ identifier_ ];
+    const size_t identifier = parameters[ "identifier" ];
+    const wrapper::View& entity = model[ "entities" ][ identifier ];
     wrapper::Effect effect( entity[ "perceptions/notifications/agents-in-zone" ] );
     AgentVisitor visitor( effect, entity[ "perceptions/record-mode/activated" ] );
-    GET_HOOK( GetAgentListWithinLocalisation )( model, localization_, &AgentVisitor::Add, &visitor );
+    GET_HOOK( GetAgentListWithinLocalisation )( model, parameters[ "localization" ], &AgentVisitor::Add, &visitor );
     effect.Post();
 }
 

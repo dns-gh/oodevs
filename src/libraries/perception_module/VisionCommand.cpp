@@ -14,26 +14,11 @@
 using namespace sword;
 using namespace sword::perception;
 
-namespace
-{
-    std::string CheckMode( const wrapper::View& mode )
-    {
-        const std::string result = mode;
-        if( result == "normal" || result == "direction" || result == "location" )
-            return result;
-        throw std::runtime_error( "unknown vision mode '" + result + "'" );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: VisionCommand constructor
 // Created: SLI 2012-03-29
 // -----------------------------------------------------------------------------
-VisionCommand::VisionCommand( ModuleFacade& /*module*/, const wrapper::View& parameters, const wrapper::View& /*model*/, size_t /*identifier*/ )
-    : identifier_( parameters[ "identifier" ] )
-    , mode_      ( CheckMode( parameters[ "mode" ] ) )
-    , x_         ( mode_ == "normal" ? 0. : parameters[ "location/x" ] )
-    , y_         ( mode_ == "normal" ? 1. : parameters[ "location/y" ] )
+VisionCommand::VisionCommand( ModuleFacade& /*module*/, const wrapper::View& /*parameters*/, const wrapper::View& /*model*/, size_t /*identifier*/ )
 {
     // NOTHING
 }
@@ -47,17 +32,32 @@ VisionCommand::~VisionCommand()
     // NOTHING
 }
 
+namespace
+{
+    std::string CheckMode( const wrapper::View& mode )
+    {
+        const std::string result = mode;
+        if( result == "normal" || result == "direction" || result == "location" )
+            return result;
+        throw std::runtime_error( "unknown vision mode '" + result + "'" );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: VisionCommand::Execute
 // Created: SLI 2012-03-29
 // -----------------------------------------------------------------------------
-void VisionCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::View& model ) const
+void VisionCommand::Execute( const wrapper::View& parameters, const wrapper::View& model ) const
 {
-    const wrapper::View& entity = model[ "entities" ][ identifier_ ];
+    const size_t identifier = parameters[ "identifier" ];
+    const std::string mode = CheckMode( parameters[ "mode" ] );
+    const double x = ( mode == "normal" ? 0. : parameters[ "location/x" ] );
+    const double y = ( mode == "normal" ? 1. : parameters[ "location/y" ] );
+    const wrapper::View& entity = model[ "entities" ][ identifier ];
     wrapper::Effect effect( entity[ "perceptions/vision" ] );
-    effect[ "mode" ] = mode_;
-    effect[ "location/x" ] = mode_ == "normal" ? entity[ "movement/direction/x" ] : x_;
-    effect[ "location/y" ] = mode_ == "normal" ? entity[ "movement/direction/y" ] : y_;
+    effect[ "mode" ] = mode;
+    effect[ "location/x" ] = mode == "normal" ? entity[ "movement/direction/x" ] : x;
+    effect[ "location/y" ] = mode == "normal" ? entity[ "movement/direction/y" ] : y;
     effect.Post();
 }
 

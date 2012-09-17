@@ -9,6 +9,7 @@
 
 #include "ToggleRecognitionPointCommand.h"
 #include "wrapper/View.h"
+#include "wrapper/Effect.h"
 
 using namespace sword;
 using namespace sword::perception;
@@ -17,21 +18,9 @@ using namespace sword::perception;
 // Name: ToggleRecognitionPointCommand constructor
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-ToggleRecognitionPointCommand::ToggleRecognitionPointCommand( ModuleFacade& /*module*/, const wrapper::View& parameters, const wrapper::View& model, size_t /*identifier*/ )
-    : effect_( model[ "entities" ][ static_cast< std::size_t >( parameters[ "identifier" ] ) ][ "perceptions/recognition-point" ] )
+ToggleRecognitionPointCommand::ToggleRecognitionPointCommand( ModuleFacade& /*module*/, const wrapper::View& /*parameters*/, const wrapper::View& /*model*/, size_t /*identifier*/ )
 {
-    const std::size_t perceptionId = parameters[ "perception-id" ];
-    if( parameters[ "activated" ] )
-    {
-        effect_[ perceptionId ][ "growth-speed" ] = parameters[ "growth-speed" ];
-        effect_[ perceptionId ][ "perception-id" ] = parameters[ "perception-id" ];
-        effect_[ perceptionId ][ "center" ] = parameters[ "center" ];
-        effect_[ perceptionId ][ "max-radius" ] = parameters[ "max-radius" ];
-        effect_[ perceptionId ][ "radius" ] = 0;
-        effect_[ perceptionId ][ "max-radius-reached" ] = false;
-    }
-    else
-        effect_[ perceptionId ].MarkForRemove();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -47,9 +36,23 @@ ToggleRecognitionPointCommand::~ToggleRecognitionPointCommand()
 // Name: ToggleRecognitionPointCommand::Execute
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-void ToggleRecognitionPointCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
+void ToggleRecognitionPointCommand::Execute( const wrapper::View& parameters, const wrapper::View& model ) const
 {
-    effect_.Post();
+    const std::size_t identifier = parameters[ "identifier" ];
+    wrapper::Effect effect( model[ "entities" ][ identifier ][ "perceptions/recognition-point" ] );
+    const std::size_t perceptionId = parameters[ "perception-id" ];
+    if( parameters[ "activated" ] )
+    {
+        effect[ perceptionId ][ "growth-speed" ] = parameters[ "growth-speed" ];
+        effect[ perceptionId ][ "perception-id" ] = parameters[ "perception-id" ];
+        effect[ perceptionId ][ "center" ] = parameters[ "center" ];
+        effect[ perceptionId ][ "max-radius" ] = parameters[ "max-radius" ];
+        effect[ perceptionId ][ "radius" ] = 0;
+        effect[ perceptionId ][ "max-radius-reached" ] = false;
+    }
+    else
+        effect[ perceptionId ].MarkForRemove();
+    effect.Post();
 }
 
 // -----------------------------------------------------------------------------

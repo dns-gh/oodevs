@@ -19,10 +19,7 @@ using namespace sword::perception;
 // Name: ExternalPerceptionCommand constructor
 // Created: SLI 2012-03-16
 // -----------------------------------------------------------------------------
-ExternalPerceptionCommand::ExternalPerceptionCommand( ModuleFacade& /*module*/, const wrapper::View& parameters, const wrapper::View& /*model*/, size_t /*identifier*/ )
-    : identifier_( parameters[ "identifier" ] )
-    , level_     ( parameters[ "level" ] )
-    , target_    ( parameters[ "target" ] )
+ExternalPerceptionCommand::ExternalPerceptionCommand( ModuleFacade& /*module*/, const wrapper::View& /*parameters*/, const wrapper::View& /*model*/, size_t /*identifier*/ )
 {
     // NOTHING
 }
@@ -31,12 +28,12 @@ ExternalPerceptionCommand::ExternalPerceptionCommand( ModuleFacade& /*module*/, 
 // Name: ExternalPerceptionCommand::Execute
 // Created: SLI 2012-03-16
 // -----------------------------------------------------------------------------
-void ExternalPerceptionCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
+void ExternalPerceptionCommand::Execute( const wrapper::View& parameters, const wrapper::View& /*model*/ ) const
 {
     wrapper::Event event( "external perception" );
-    event[ "identifier" ] = identifier_;
-    event[ "level" ] = level_;
-    event[ "target" ] = target_;
+    event[ "identifier" ] = parameters[ "identifier" ];
+    event[ "level" ] = parameters[ "level" ];
+    event[ "target" ] = parameters[ "target" ];
     event.Post();
 }
 

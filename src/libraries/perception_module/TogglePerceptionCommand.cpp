@@ -18,10 +18,7 @@ using namespace sword::perception;
 // Name: TogglePerceptionCommand constructor
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-TogglePerceptionCommand::TogglePerceptionCommand( ModuleFacade& /*module*/, const wrapper::View& parameters, const wrapper::View& /*model*/, size_t /*identifier*/ )
-    : identifier_ ( parameters[ "identifier" ] )
-    , perception_ ( parameters[ "perception" ] )
-    , isActivated_( parameters[ "activated" ] )
+TogglePerceptionCommand::TogglePerceptionCommand( ModuleFacade& /*module*/, const wrapper::View& /*parameters*/, const wrapper::View& /*model*/, size_t /*identifier*/ )
 {
     // NOTHING
 }
@@ -39,13 +36,16 @@ TogglePerceptionCommand::~TogglePerceptionCommand()
 // Name: TogglePerceptionCommand::Execute
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-void TogglePerceptionCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::View& model ) const
+void TogglePerceptionCommand::Execute( const wrapper::View& parameters, const wrapper::View& model ) const
 {
-    const wrapper::View& perception = model[ "entities" ][ identifier_ ][ "perceptions"][ perception_ ][ "activated" ];
-    if( perception == isActivated_ )
+    const size_t identifier = parameters[ "identifier" ];
+    const std::string perceptionId = parameters[ "perception" ];
+    const bool isActivated = parameters[ "activated" ];
+    const wrapper::View& perception = model[ "entities" ][ identifier ][ "perceptions"][ perceptionId ][ "activated" ];
+    if( perception == isActivated )
         return;
     wrapper::Effect effect( perception );
-    effect = isActivated_;
+    effect = isActivated;
     effect.Post();
 }
 

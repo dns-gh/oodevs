@@ -44,14 +44,6 @@ public:
     void Execute( const wrapper::View& parameters, const wrapper::View& model ) const;
     void ExecutePaused( const wrapper::View& parameters, const wrapper::View& model ) const;
     //@}
-
-private:
-    //! @name Member data
-    //@{
-    const size_t identifier_;
-    const std::string radarClass_;
-    const bool isActivated_;
-    //@}
 };
 
 }
