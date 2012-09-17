@@ -51,13 +51,13 @@ void VisionCommand::Execute( const wrapper::View& parameters, const wrapper::Vie
 {
     const size_t identifier = parameters[ "identifier" ];
     const std::string mode = CheckMode( parameters[ "mode" ] );
-    const double x = ( mode == "normal" ? 0. : parameters[ "location/x" ] );
-    const double y = ( mode == "normal" ? 1. : parameters[ "location/y" ] );
     const wrapper::View& entity = model[ "entities" ][ identifier ];
     wrapper::Effect effect( entity[ "perceptions/vision" ] );
     effect[ "mode" ] = mode;
-    effect[ "location/x" ] = mode == "normal" ? entity[ "movement/direction/x" ] : x;
-    effect[ "location/y" ] = mode == "normal" ? entity[ "movement/direction/y" ] : y;
+    if( mode == "normal" )
+        effect[ "location" ] = entity[ "movement/direction" ];
+    else
+        effect[ "location" ] = parameters[ "location" ];
     effect.Post();
 }
 
