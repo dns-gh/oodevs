@@ -364,14 +364,10 @@ void CheckArchiveCode( cpplog::BaseLogger& log, Archive* arc, int err )
         LOG_WARN( log ) << "[archive] " << archive_error_string( arc );
 }
 
-Path StripPathPrefix( const Path& input, size_t diff )
+const wchar_t* StripPathPrefix( const wchar_t* input, size_t diff )
 {
-    Path rpy;
-    Path::const_iterator it = input.begin();
-    std::advance( it, diff );
-    for( ; it != input.end(); ++it )
-        rpy /= *it;
-    return rpy;
+    input += diff;
+    return *input == L'/' ? ++input : input;
 }
 
 void CopyBlocks( cpplog::BaseLogger& log, Archive* src, Archive* dst )
@@ -392,8 +388,9 @@ void CopyBlocks( cpplog::BaseLogger& log, Archive* src, Archive* dst )
 
 void TransferArchive( cpplog::BaseLogger& log, Archive* dst, Archive* src, const Path& root, const Packer_ABC::T_Predicate& predicate, bool pack )
 {
-    const size_t diff = std::distance( root.begin(), root.end() );
+    const size_t diff = root.generic_wstring().size();
     boost::shared_ptr< ArchiveEntry > ptr( archive_entry_new(), archive_entry_free );
+    Path next;
     for( ;; )
     {
         ArchiveEntry* entry = ptr.get();
@@ -403,7 +400,6 @@ void TransferArchive( cpplog::BaseLogger& log, Archive* dst, Archive* src, const
         if( err != ARCHIVE_OK )
             CheckArchiveCode( log, src, err );
 
-        Path next;
         if( pack )
         {
             next = StripPathPrefix( archive_entry_pathname_w( entry ), diff );
@@ -529,7 +525,7 @@ struct Packer : public Packer_ABC
     void Pack( const Path& input, const T_Predicate& predicate )
     {
         boost::shared_ptr< Archive > src( archive_read_disk_new(), archive_read_free );
-        int err = archive_read_disk_open_w( src.get(), input.wstring().c_str() );
+        int err = archive_read_disk_open_w( src.get(), input.generic_wstring().c_str() );
         if( err != ARCHIVE_OK )
             throw std::runtime_error( archive_error_string( src.get() ) );
         TransferArchive( log_, dst_.get(), src.get(), input, predicate, true );
