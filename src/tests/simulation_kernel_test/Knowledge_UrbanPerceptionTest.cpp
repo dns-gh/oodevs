@@ -10,7 +10,7 @@
 #include "simulation_kernel_test_pch.h"
 #include "simulation_kernel/Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "simulation_kernel/Knowledge/DEC_Knowledge_UrbanPerception.h"
-#include "simulation_kernel/Entities/Objects/MIL_ObjectLoader.h"
+#include "simulation_kernel/Entities/Objects/MIL_ObjectFactory.h"
 #include "simulation_kernel/Urban/MIL_UrbanObject.h"
 #include "Fixture.h"
 #include "MockMIL_Time_ABC.h"
@@ -41,17 +41,17 @@ BOOST_AUTO_TEST_CASE( Knowledge_UrbanPerceptionTest_Update )
 {
     WorldInitialize( "worldwide/Paris" );
     {
-        MIL_ObjectLoader loader;
+        MIL_ObjectFactory factory;
         {
             xml::xistringstream xis( "<objects>"
                 "    <object type='urban block'/>"
                 "</objects>" );
-            BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
+            BOOST_CHECK_NO_THROW( factory.Initialize( xis ) );
         }
         MIL_EffectManager effectManager;
         FixturePion pion( effectManager );
         flux >> xml::start( "urban-object" );
-        std::auto_ptr< MIL_UrbanObject_ABC > pObject( loader.CreateUrbanObject( flux, 0 ) );
+        std::auto_ptr< MIL_UrbanObject_ABC > pObject( factory.CreateUrbanObject( flux, 0 ) );
         flux >> xml::end;
 
         {

@@ -11,7 +11,7 @@
 #include "MockArmy.h"
 #include "simulation_kernel/Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "simulation_kernel/Entities/Agents/Roles/Urban/PHY_RolePion_UrbanLocation.h"
-#include "simulation_kernel/Entities/Objects/MIL_ObjectLoader.h"
+#include "simulation_kernel/Entities/Objects/MIL_ObjectFactory.h"
 #include "simulation_kernel/Entities/Objects/MIL_Object_ABC.h"
 #include "simulation_kernel/Knowledge/DEC_Knowledge_Urban.h"
 #include "simulation_kernel/Knowledge/DEC_Knowledge_UrbanPerception.h"
@@ -46,19 +46,19 @@ BOOST_AUTO_TEST_CASE( Knowledge_UrbanTest_Update )
 {
     WorldInitialize( "worldwide/Paris" );
     {
-        MIL_ObjectLoader loader;
+        MIL_ObjectFactory factory;
         {
             xml::xistringstream xis( "<objects>"
                 "    <object type='urban block'/>"
                 "</objects>" );
-            BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
+            BOOST_CHECK_NO_THROW( factory.Initialize( xis ) );
         }
         MockArmy army;
         MIL_EffectManager effectManager;
         MockNET_Publisher_ABC publisher;
         FixturePion pion( effectManager );
         flux >> xml::start( "urban-object" );
-        std::auto_ptr< MIL_UrbanObject_ABC > pObject( loader.CreateUrbanObject( flux, 0 ) );
+        std::auto_ptr< MIL_UrbanObject_ABC > pObject( factory.CreateUrbanObject( flux, 0 ) );
         flux >> xml::end;
         PHY_RolePion_UrbanLocation* urbanRole = new PHY_RolePion_UrbanLocation( *pion.pPion_ );
         urbanRole->NotifyMovingInsideObject( *pObject);

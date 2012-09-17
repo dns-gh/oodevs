@@ -192,7 +192,7 @@ unsigned long MIL_ObjectManager::Count() const
 // -----------------------------------------------------------------------------
 MIL_Object_ABC& MIL_ObjectManager::CreateObject( xml::xistream& xis, MIL_Army_ABC* army )
 {
-    MIL_Object_ABC* pObject = factory_.BuildObject( xis, army );
+    MIL_Object_ABC* pObject = factory_.CreateObject( xis, army );
     if( !pObject )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown object" ); //@TODO MGD propagate reference
     RegisterObject( pObject );
@@ -221,7 +221,7 @@ sword::ObjectMagicActionAck_ErrorCode MIL_ObjectManager::CreateObject( const swo
             return sword::ObjectMagicActionAck::error_invalid_party;
     }
     sword::ObjectMagicActionAck_ErrorCode errorCode = sword::ObjectMagicActionAck::no_error;
-    MIL_Object_ABC* pObject = factory_.BuildObject( message, pArmy, errorCode );
+    MIL_Object_ABC* pObject = factory_.CreateObject( message, pArmy, errorCode );
     if( pObject && pObject->RetrieveAttribute< AltitudeModifierAttribute >() )
     {
         const TER_Localisation& localisation = pObject->GetLocalisation();
@@ -240,7 +240,7 @@ sword::ObjectMagicActionAck_ErrorCode MIL_ObjectManager::CreateObject( const swo
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectManager::CreateObject( const std::string& type, MIL_Army_ABC* army, const TER_Localisation& localisation )
 {
-    MIL_Object_ABC* pObject = factory_.BuildObject( "", type, army, localisation, sword::ObstacleType_DemolitionTargetType_preliminary, 0u );
+    MIL_Object_ABC* pObject = factory_.CreateObject( "", type, army, localisation, sword::ObstacleType_DemolitionTargetType_preliminary, 0u, 0u );
     RegisterObject( pObject );
     return pObject;
 }
@@ -251,7 +251,7 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( const std::string& type, MIL_Ar
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectManager::CreateObject( const std::string& type, MIL_Army_ABC* army, const TER_Localisation& localisation, unsigned int forcedId )
 {
-    MIL_Object_ABC* pObject = factory_.BuildObject( "", type, army, localisation, sword::ObstacleType_DemolitionTargetType_preliminary, 0u, forcedId );
+    MIL_Object_ABC* pObject = factory_.CreateObject( "", type, army, localisation, sword::ObstacleType_DemolitionTargetType_preliminary, 0u, forcedId );
     RegisterObject( pObject );
     return pObject;
 }
@@ -265,7 +265,7 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC* army, const std::
 {
     if( pLocalisation )
     {
-        MIL_Object_ABC* pObject = factory_.BuildObject( name, type, army, *pLocalisation, obstacleType, externalIdentifier, 0, density );
+        MIL_Object_ABC* pObject = factory_.CreateObject( name, type, army, *pLocalisation, obstacleType == sword::ObstacleType_DemolitionTargetType_reserved, externalIdentifier, 0, density );
         RegisterObject( pObject );
         return pObject;
     }
@@ -278,7 +278,7 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC* army, const std::
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC* army, const MIL_ObjectBuilder_ABC& builder )
 {
-    MIL_Object_ABC* pObject = factory_.BuildObject( builder, army );
+    MIL_Object_ABC* pObject = factory_.CreateObject( builder, army );
     RegisterObject( pObject );
     return pObject;
 }
@@ -289,7 +289,7 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC* army, const MIL_O
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectManager::CreateUrbanObject( xml::xistream& xis, MIL_UrbanObject_ABC* parent )
 {
-    MIL_UrbanObject_ABC* pObject = factory_.BuildUrbanObject( xis, parent );
+    MIL_UrbanObject_ABC* pObject = factory_.CreateUrbanObject( xis, parent );
     if( pObject->IsBlock() )
     {
         const UrbanPhysicalCapacity* pPhysical = pObject->Retrieve< UrbanPhysicalCapacity >();

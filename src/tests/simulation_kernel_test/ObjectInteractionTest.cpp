@@ -11,7 +11,7 @@
 #include "simulation_kernel/Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "simulation_kernel/Decision/DEC_Model.h"
 #include "simulation_kernel/Entities/MIL_Army_ABC.h"
-#include "simulation_kernel/Entities/Objects/MIL_ObjectLoader.h"
+#include "simulation_kernel/Entities/Objects/MIL_ObjectFactory.h"
 #include "simulation_kernel/Entities/Objects/MIL_Object_ABC.h"
 #include "simulation_kernel/Entities/Objects/Object.h"
 #include "simulation_kernel/Entities/Objects/MIL_ObjectType_ABC.h"
@@ -53,13 +53,13 @@ using namespace sword;
 
 namespace
 {
-    MIL_Object_ABC* CreateObject( const MIL_ObjectType_ABC& type, MockArmy& army, MIL_ObjectLoader& loader )
+    MIL_Object_ABC* CreateObject( const MIL_ObjectType_ABC& type, MockArmy& army, MIL_ObjectFactory& factory )
     {
         MIL_Object_ABC* pObject = 0;
         MockBuilder builder;
         MOCK_EXPECT( builder.GetType ).once().returns( boost::cref( type ) );
         MOCK_EXPECT( builder.Build ).once();
-        BOOST_CHECK_NO_THROW( pObject = loader.CreateObject( builder, &army ); );
+        BOOST_CHECK_NO_THROW( pObject = factory.CreateObject( builder, &army ); );
         mock::verify( builder );
         BOOST_REQUIRE( pObject != 0 );
         return pObject;
@@ -81,6 +81,7 @@ namespace
         {
             TER_World::DestroyWorld();
         }
+        MIL_ObjectFactory factory;
     };
 }
 
@@ -94,20 +95,19 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Contamination_NoNBC, ObjectCapacityFixture )
 {
-    MIL_ObjectLoader loader;
     {
         xml::xistringstream xis( "<objects>"
                                  "   <object type='object'>"
                                  "       <contamination type='nbc' max-toxic='1'/>"
                                  "   </object>"
                                  "</objects>" );
-        BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
+        BOOST_CHECK_NO_THROW( factory.Initialize( xis ) );
     }
-    const MIL_ObjectType_ABC& type = loader.GetType( "object" );
+    const MIL_ObjectType_ABC& type = factory.FindType( "object" );
 
     MockArmy army;
     MOCK_EXPECT( army.RegisterObject ).once();
-    std::auto_ptr< MIL_Object_ABC > pObject( CreateObject( type, army, loader ) );
+    std::auto_ptr< MIL_Object_ABC > pObject( CreateObject( type, army, factory ) );
     CheckCapacity< ContaminationCapacity >( *pObject );
 
     MT_Vector2D position;
@@ -133,20 +133,19 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Contamination_NoNBC, O
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Contamination_NBC, ObjectCapacityFixture )
 {
-    MIL_ObjectLoader loader;
     {
         xml::xistringstream xis( "<objects>"
                                  "    <object type='object'>"
                                  "        <contamination type='nbc' max-toxic='1'/>"
                                  "    </object>"
                                  "</objects>" );
-        BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
+        BOOST_CHECK_NO_THROW( factory.Initialize( xis ) );
     }
-    const MIL_ObjectType_ABC& type = loader.GetType( "object" );
+    const MIL_ObjectType_ABC& type = factory.FindType( "object" );
 
     MockArmy army;
     MOCK_EXPECT( army.RegisterObject ).once();
-    std::auto_ptr< MIL_Object_ABC > pObject( CreateObject( type, army, loader ) );
+    std::auto_ptr< MIL_Object_ABC > pObject( CreateObject( type, army, factory ) );
     CheckCapacity< ContaminationCapacity >( *pObject );
 
     // The following lines are used to force the Instanciation of attributes
@@ -176,20 +175,19 @@ Instanciate the object and test if the interaction mechanism is triggered
 BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Protection, ObjectCapacityFixture )
 {
     //@TODO test à renforcer après le merge
-    MIL_ObjectLoader loader;
     {
         xml::xistringstream xis( "<objects>"
                                  "    <object type='implantationArea'>"
                                  "        <protection max-size='1' geniePrepared='false'/>"
                                  "    </object>"
                                  "</objects>" );
-        BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
+        BOOST_CHECK_NO_THROW( factory.Initialize( xis ) );
     }
-    const MIL_ObjectType_ABC& type = loader.GetType( "implantationArea" );
+    const MIL_ObjectType_ABC& type = factory.FindType( "implantationArea" );
 
     MockArmy army;
     MOCK_EXPECT( army.RegisterObject ).once();
-    std::auto_ptr< MIL_Object_ABC > pObject( CreateObject( type, army, loader ) );
+    std::auto_ptr< MIL_Object_ABC > pObject( CreateObject( type, army, factory ) );
     CheckCapacity< ProtectionCapacity >( *pObject );
 
     //First add
@@ -221,20 +219,19 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Protection, ObjectCapa
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_InteractIfEquipped, ObjectCapacityFixture )
 {
-    MIL_ObjectLoader loader;
     {
         xml::xistringstream xis( "<objects>"
                                  "    <object geometry='line' type='itineraire logistique'>"
                                  "        <supply-route/>"
                                  "    </object>"
                                  "</objects>" );
-        BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
+        BOOST_CHECK_NO_THROW( factory.Initialize( xis ) );
     }
-    const MIL_ObjectType_ABC& type = loader.GetType( "itineraire logistique" );
+    const MIL_ObjectType_ABC& type = factory.FindType( "itineraire logistique" );
 
     MockArmy army;
     MOCK_EXPECT( army.RegisterObject ).once();
-    std::auto_ptr< MIL_Object_ABC > pObject( CreateObject( type, army, loader ) );
+    std::auto_ptr< MIL_Object_ABC > pObject( CreateObject( type, army, factory ) );
     CheckCapacity< InteractIfEquippedCapacity >( *pObject );
 
     MockAgent agent;
@@ -255,20 +252,19 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_InteractIfEquipped, Ob
 BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Supply, ObjectCapacityFixture )
 {
     //@TODO test à renforcer après le merge
-    MIL_ObjectLoader loader;
     {
         xml::xistringstream xis( "<objects>"
                                  "    <object type='plot ravitaillement'>"
                                  "        <supply/>"
                                  "    </object>"
                                  "</objects>" );
-        BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
+        BOOST_CHECK_NO_THROW( factory.Initialize( xis ) );
     }
-    const MIL_ObjectType_ABC& type = loader.GetType( "plot ravitaillement" );
+    const MIL_ObjectType_ABC& type = factory.FindType( "plot ravitaillement" );
 
     MockArmy army;
     MOCK_EXPECT( army.RegisterObject ).once();
-    std::auto_ptr< MIL_Object_ABC > pObject( CreateObject( type, army, loader ) );
+    std::auto_ptr< MIL_Object_ABC > pObject( CreateObject( type, army, factory ) );
     CheckCapacity< SupplyCapacity >( *pObject );
 
     //First add
@@ -291,19 +287,18 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Supply, ObjectCapacity
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Detection, ObjectCapacityFixture )
 {
-    MIL_ObjectLoader loader;
     {
         xml::xistringstream xis( "<objects>"
                                  "    <object geometry='point' type='checkpoint'>"
                                  "        <detection/>"
                                  "    </object>"
                                  "</objects>" );
-        loader.Initialize( xis );
+        factory.Initialize( xis );
     }
-    const MIL_ObjectType_ABC& type = loader.GetType( "checkpoint" );
+    const MIL_ObjectType_ABC& type = factory.FindType( "checkpoint" );
     MockArmy army;
     MOCK_EXPECT( army.RegisterObject ).once();
-    std::auto_ptr< MIL_Object_ABC > object( CreateObject( type, army, loader ) );
+    std::auto_ptr< MIL_Object_ABC > object( CreateObject( type, army, factory ) );
     CheckCapacity< DetectionCapacity >( *object );
     BOOST_CHECK_NO_THROW( static_cast< Object& >( *object ).GetAttribute< AnimatorAttribute >() );
 
@@ -329,7 +324,6 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Detection, ObjectCapac
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Detection2, ObjectCapacityFixture )
 {
-    MIL_ObjectLoader loader;
     {
         xml::xistringstream xis(
             "<objects>"
@@ -344,12 +338,12 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Detection2, ObjectCapa
                 "</object>"
             "</objects>"
             );
-        BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
+        BOOST_CHECK_NO_THROW( factory.Initialize( xis ) );
     }
-    const MIL_ObjectType_ABC& type = loader.GetType( "sensors" );
+    const MIL_ObjectType_ABC& type = factory.FindType( "sensors" );
     MockArmy army;
     MOCK_EXPECT( army.RegisterObject ).once();
-    std::auto_ptr< MIL_Object_ABC > object( CreateObject( type, army, loader ) );
+    std::auto_ptr< MIL_Object_ABC > object( CreateObject( type, army, factory ) );
     CheckCapacity< DetectionCapacity >( *object );
 
     MockAgent intruder;
@@ -383,7 +377,6 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Detection2, ObjectCapa
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Mine, ObjectCapacityFixture )
 {
-    MIL_ObjectLoader loader;
     {
         xml::xistringstream xis( "<objects>"
                 "<object id='288' name='mines [288]' type='mines'>"
@@ -400,14 +393,14 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Mine, ObjectCapacityFi
                 "</object>"
             "</objects>"
         );
-        loader.Initialize( xis );
+        factory.Initialize( xis );
     }
     MockMIL_Time_ABC time;
     MOCK_EXPECT( time.GetRealTime ).once().returns( 3u );
-    const MIL_ObjectType_ABC& type = loader.GetType( "mines" );
+    const MIL_ObjectType_ABC& type = factory.FindType( "mines" );
     MockArmy army;
     MOCK_EXPECT( army.RegisterObject ).once();
-    std::auto_ptr< MIL_Object_ABC > object( CreateObject( type, army, loader ) );
+    std::auto_ptr< MIL_Object_ABC > object( CreateObject( type, army, factory ) );
 
     BOOST_CHECK_NO_THROW( static_cast< Object& >( *object ).GetAttribute< ObstacleAttribute >() );
     BOOST_CHECK_NO_THROW( static_cast< Object& >( *object ).GetAttribute< TimeLimitedAttribute >() );
@@ -425,20 +418,19 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_InteractionAttitudeModifier, Objec
     MockNET_Publisher_ABC mockPublisher;
     MOCK_EXPECT( mockPublisher.Send ).at_least( 1 );
     MIL_PopulationAttitude::Initialize();
-    MIL_ObjectLoader loader;
     {
         xml::xistringstream xis( "<objects>"
                                  "    <object id='1' name='zone paralysante' type='paralyzing area'>"
                                  "        <attitude-modifier attitude='agressive'/>"
                                  "    </object>"
                                 "</objects>" );
-        loader.Initialize( xis );
+        factory.Initialize( xis );
     }
 
-    const MIL_ObjectType_ABC& type = loader.GetType( "paralyzing area" );
+    const MIL_ObjectType_ABC& type = factory.FindType( "paralyzing area" );
     MockArmy army;
     MOCK_EXPECT( army.RegisterObject ).once();
-    std::auto_ptr< MIL_Object_ABC > object( CreateObject( type, army, loader ) );
+    std::auto_ptr< MIL_Object_ABC > object( CreateObject( type, army, factory ) );
 
     xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
     xis.start( "main" );
@@ -466,20 +458,19 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_InteractionPerception, ObjectCapac
     MockNET_Publisher_ABC mockPublisher;
     MOCK_EXPECT( mockPublisher.Send ).at_least( 1 );
     MIL_PopulationAttitude::Initialize();
-    MIL_ObjectLoader loader;
     {
         xml::xistringstream xis( "<objects>"
                                  "    <object id='1' name='zone aveuglante' type='blinding area'>"
                                  "        <perception blinded='true'/>"
                                  "    </object>"
                                  "</objects>" );
-        loader.Initialize( xis );
+        factory.Initialize( xis );
     }
 
-    const MIL_ObjectType_ABC& type = loader.GetType( "blinding area" );
+    const MIL_ObjectType_ABC& type = factory.FindType( "blinding area" );
     MockArmy army;
     MOCK_EXPECT( army.RegisterObject ).once();
-    std::auto_ptr< MIL_Object_ABC > object( CreateObject( type, army, loader ) );
+    std::auto_ptr< MIL_Object_ABC > object( CreateObject( type, army, factory ) );
 
     xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
     xis.start( "main" );
@@ -507,20 +498,19 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_InteractionScattering, ObjectCapac
     MockNET_Publisher_ABC mockPublisher;
     MOCK_EXPECT( mockPublisher.Send ).at_least( 1 );
     MIL_PopulationAttitude::Initialize();
-    MIL_ObjectLoader loader;
     {
         xml::xistringstream xis( "<objects>"
                                  "    <object id='1' name='zone dispercante' type='scattering area'>"
                                  "        <scattering human-by-time-step='30'/>"
                                  "    </object>"
                                  "</objects>" );
-        loader.Initialize( xis );
+        factory.Initialize( xis );
     }
 
-    const MIL_ObjectType_ABC& type = loader.GetType( "scattering area" );
+    const MIL_ObjectType_ABC& type = factory.FindType( "scattering area" );
     MockArmy army;
     MOCK_EXPECT( army.RegisterObject ).once();
-    std::auto_ptr< MIL_Object_ABC > object( CreateObject( type, army, loader ) );
+    std::auto_ptr< MIL_Object_ABC > object( CreateObject( type, army, factory ) );
 
     xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
     xis.start( "main" );

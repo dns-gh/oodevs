@@ -10,7 +10,7 @@
 #include "simulation_kernel_test_pch.h"
 #include "MockArmy.h"
 #include "MockBuilder.h"
-#include "simulation_kernel/Entities/Objects/MIL_ObjectLoader.h"
+#include "simulation_kernel/Entities/Objects/MIL_ObjectFactory.h"
 #include "simulation_kernel/Entities/Objects/Object.h"
 #include "simulation_kernel/Entities/MIL_Army_ABC.h"
 #include "simulation_kernel/Entities/Objects/MIL_ObjectBuilder_ABC.h"
@@ -27,7 +27,7 @@
 BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Instance )
 {
     WorldInitialize( "worldwide/Paris" );
-    MIL_ObjectLoader loader;
+    MIL_ObjectFactory factory;
     {
         xml::xistringstream xis(
             "<objects>"
@@ -37,9 +37,9 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Instance )
             "       </constructor>"
             "   </object>"
             "</objects>" );
-        BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
+        BOOST_CHECK_NO_THROW( factory.Initialize( xis ) );
     }
-    const MIL_ObjectType_ABC& type = loader.GetType( "object" );
+    const MIL_ObjectType_ABC& type = factory.FindType( "object" );
 
     MockArmy army;
     MOCK_EXPECT( army.RegisterObject ).once();
@@ -48,7 +48,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Instance )
         MockBuilder builder;
         MOCK_EXPECT( builder.GetType ).once().returns( boost::cref( type ) );
         MOCK_EXPECT( builder.Build ).once();
-        BOOST_CHECK_NO_THROW( pObject.reset( loader.CreateObject( builder, &army ) ) );
+        BOOST_CHECK_NO_THROW( pObject.reset( factory.CreateObject( builder, &army ) ) );
         mock::verify( builder );
     }
 

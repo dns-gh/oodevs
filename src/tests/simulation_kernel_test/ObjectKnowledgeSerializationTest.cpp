@@ -15,7 +15,7 @@
 #include "StubTER_World.h"
 #include "MockObjectTypeResolver.h"
 #include "simulation_kernel/Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
-#include "simulation_kernel/Entities/Objects/MIL_ObjectLoader.h"
+#include "simulation_kernel/Entities/Objects/MIL_ObjectFactory.h"
 #include "simulation_kernel/Entities/Objects/Object.h"
 #include "simulation_kernel/Knowledge/DEC_Knowledge_Object.h"
 #include "simulation_kernel/Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
@@ -69,7 +69,7 @@ BOOST_CLASS_EXPORT( ArmySerializationProxy )
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( VerifyObjectKnowledge_Serialization, ObjectKnowledgeSerializationFixture )
 {
-    MIL_ObjectLoader loader;
+    MIL_ObjectFactory factory;
     {
         xml::xistringstream xis( "<objects>"
                                  "    <object type='object'>"
@@ -78,9 +78,9 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectKnowledge_Serialization, ObjectKnowledgeSer
                                  "        </constructor>"
                                  "    </object>"
                                  "</objects>" );
-        loader.Initialize( xis );
+        factory.Initialize( xis );
     }
-    const MIL_ObjectType_ABC& type = loader.GetType( "object" );
+    const MIL_ObjectType_ABC& type = factory.FindType( "object" );
 
     ArmySerializationProxy army;
     std::auto_ptr< MIL_Object_ABC > pObject;
@@ -89,7 +89,7 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectKnowledge_Serialization, ObjectKnowledgeSer
         MOCK_EXPECT( builder.GetType ).once().returns( boost::cref( type ) );
         MOCK_EXPECT( builder.Build ).once();
         MOCK_EXPECT( army.RegisterObject ).once();
-        pObject.reset( loader.CreateObject( builder, &army ) );
+        pObject.reset( factory.CreateObject( builder, &army ) );
         mock::verify( builder );
         mock::verify( army );
     }

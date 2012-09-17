@@ -486,7 +486,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_ObjectFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_ObjectFilter.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_ObjectInteraction.cpp" />
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_ObjectLoader.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\objects\MIL_ObjectManager.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_ObjectManipulator.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\Object.cpp" />
@@ -1325,7 +1324,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_ObjectFactory.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_ObjectFilter.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_ObjectInteraction.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_ObjectLoader.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\objects\MIL_ObjectManager.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_ObjectManipulator.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_ObjectManipulator_ABC.h" />

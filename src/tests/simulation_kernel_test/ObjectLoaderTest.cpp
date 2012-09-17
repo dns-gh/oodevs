@@ -11,7 +11,7 @@
 #include "simulation_kernel/Entities/MIL_Army_ABC.h"
 #include "simulation_kernel/Entities/Objects/BuildableCapacity.h"
 #include "simulation_kernel/Entities/Objects/ImprovableCapacity.h"
-#include "simulation_kernel/Entities/Objects/MIL_ObjectLoader.h"
+#include "simulation_kernel/Entities/Objects/MIL_ObjectFactory.h"
 #include "simulation_kernel/Entities/Objects/MIL_ObjectType_ABC.h"
 #include "simulation_kernel/Entities/Objects/SpawnCapacity.h"
 #include <xeumeuleu/xml.hpp>
@@ -22,10 +22,10 @@
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( VerifyEmptyObjectDefinition )
 {
-    MIL_ObjectLoader loader;
+    MIL_ObjectFactory factory;
     xml::xistringstream xis( "<objects/>" );
-    loader.Initialize( xis );
-    BOOST_CHECK_THROW( loader.GetType( "fake" ), std::runtime_error );
+    factory.Initialize( xis );
+    BOOST_CHECK_THROW( factory.FindType( "fake" ), std::runtime_error );
 }
 
 // -----------------------------------------------------------------------------
@@ -34,15 +34,15 @@ BOOST_AUTO_TEST_CASE( VerifyEmptyObjectDefinition )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Constructor )
 {
-    MIL_ObjectLoader loader;
+    MIL_ObjectFactory factory;
     xml::xistringstream xis( "<objects>"
                              "    <object type='object'>"
                              "        <constructor unit-type='raw' default-consumption-mode='EnTravaux'/>"
                              "    </object>"
                              "</objects>" );
-    BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
+    BOOST_CHECK_NO_THROW( factory.Initialize( xis ) );
 
-    const MIL_ObjectType_ABC& type = loader.GetType( "object" );
+    const MIL_ObjectType_ABC& type = factory.FindType( "object" );
     BOOST_CHECK( type.GetCapacity< BuildableCapacity >() == 0 );
     BOOST_CHECK( type.GetCapacity< ImprovableCapacity >() == 0 );
 }
@@ -53,7 +53,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Constructor )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_ConstructorBuildable )
 {
-    MIL_ObjectLoader loader;
+    MIL_ObjectFactory factory;
     xml::xistringstream xis( "<objects>"
                              "    <object type='object'>"
                              "        <constructor unit-type='raw' default-consumption-mode='EnTravaux'>"
@@ -61,9 +61,9 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_ConstructorBuildable )
                              "        </constructor>"
                              "    </object>"
                              "</objects>" );
-    BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
+    BOOST_CHECK_NO_THROW( factory.Initialize( xis ) );
 
-    const MIL_ObjectType_ABC& type = loader.GetType( "object" );
+    const MIL_ObjectType_ABC& type = factory.FindType( "object" );
     BOOST_CHECK( type.GetCapacity< BuildableCapacity >() != 0 );
     BOOST_CHECK( type.GetCapacity< ImprovableCapacity >() == 0 );
 }
@@ -74,7 +74,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_ConstructorBuildable )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_ConstructorImprovable )
 {
-    MIL_ObjectLoader loader;
+    MIL_ObjectFactory factory;
     xml::xistringstream xis( "<objects>"
                              "    <object type='object'>"
                              "        <constructor unit-type='raw' default-consumption-mode='EnTravaux'>"
@@ -83,9 +83,9 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_ConstructorImprovable )
                              "        </constructor>"
                              "    </object>"
                              "</objects>" );
-    BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
+    BOOST_CHECK_NO_THROW( factory.Initialize( xis ) );
 
-    const MIL_ObjectType_ABC& type = loader.GetType( "object" );
+    const MIL_ObjectType_ABC& type = factory.FindType( "object" );
     BOOST_CHECK( type.GetCapacity< BuildableCapacity >() != 0 );
     BOOST_CHECK( type.GetCapacity< ImprovableCapacity >() != 0 );
 }
@@ -96,14 +96,14 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_ConstructorImprovable )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Spawn )
 {
-    MIL_ObjectLoader loader;
+    MIL_ObjectFactory factory;
     xml::xistringstream xis( "<objects>"
                              "    <object type='object'>"
                              "        <spawn object='toto' action-range='10' nbc='false'/>"
                              "    </object>"
                              "</objects>" );
-    BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
+    BOOST_CHECK_NO_THROW( factory.Initialize( xis ) );
 
-    const MIL_ObjectType_ABC& type = loader.GetType( "object" );
+    const MIL_ObjectType_ABC& type = factory.FindType( "object" );
     BOOST_CHECK( type.GetCapacity< SpawnCapacity >() != 0 );
 }

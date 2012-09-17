@@ -1317,9 +1317,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_ObjectInteraction.cpp">
       <Filter>Source Files\Entities\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_ObjectLoader.cpp">
-      <Filter>Source Files\Entities\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\objects\MIL_ObjectManager.cpp">
       <Filter>Source Files\Entities\Objects</Filter>
     </ClCompile>
@@ -3699,9 +3696,6 @@
       <Filter>Source Files\Entities\Objects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_ObjectInteraction.h">
-      <Filter>Source Files\Entities\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_ObjectLoader.h">
       <Filter>Source Files\Entities\Objects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\objects\MIL_ObjectManager.h">

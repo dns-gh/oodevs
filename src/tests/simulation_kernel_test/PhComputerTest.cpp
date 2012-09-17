@@ -19,7 +19,7 @@
 #include "Entities/Agents/Roles/Urban/PHY_RolePion_UrbanLocation.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
-#include "Entities/Objects/MIL_ObjectLoader.h"
+#include "Entities/Objects/MIL_ObjectFactory.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Urban/MIL_UrbanObject.h"
 #include "Fixture.h"
@@ -61,18 +61,18 @@ namespace
                              "    <object type='urban block'/>"
                              "</objects>" )
         {
-            loader.Initialize( xis );
+            factory.Initialize( xis );
             xml::xistringstream xisCity( "<urban-object name='city' id='2'/>" );
             xml::xistringstream xisDistrict( "<urban-object name='district' id='1'/>" );
             xml::xistringstream xisBlock( "<urban-object name='test' id='0'/>" );
             xisCity >> xml::start( "urban-object" );
-            city.reset( loader.CreateUrbanObject( xisCity, 0 ) );
+            city.reset( factory.CreateUrbanObject( xisCity, 0 ) );
             xisCity >> xml::end;
             xisDistrict >> xml::start( "urban-object" );
-            district.reset( loader.CreateUrbanObject( xisDistrict, city.get() ) );
+            district.reset( factory.CreateUrbanObject( xisDistrict, city.get() ) );
             xisDistrict >> xml::end;
             xisBlock >> xml::start( "urban-object" );
-            urbanBlock.reset( loader.CreateUrbanObject( xisBlock, district.get() ) );
+            urbanBlock.reset( factory.CreateUrbanObject( xisBlock, district.get() ) );
             xisBlock >> xml::end;
             TER_Localisation localisation( TER_Localisation::ePolygon, vertices );
             urbanBlock->UpdateLocalisation( localisation );
@@ -85,7 +85,7 @@ namespace
         std::auto_ptr< MIL_UrbanObject_ABC > district;
         std::auto_ptr< MIL_UrbanObject_ABC > urbanBlock;
         xml::xistringstream xis;
-        MIL_ObjectLoader loader;
+        MIL_ObjectFactory factory;
     };
 }
 

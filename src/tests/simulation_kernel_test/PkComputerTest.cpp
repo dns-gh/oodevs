@@ -15,7 +15,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationNature.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
-#include "Entities/Objects/MIL_ObjectLoader.h"
+#include "Entities/Objects/MIL_ObjectFactory.h"
 #include "Urban/MIL_UrbanObject.h"
 #include "StubTER_World.h"
 #include <xeumeuleu/xml.hpp>
@@ -45,26 +45,26 @@ BOOST_FIXTURE_TEST_CASE( PkComputerUrbanProtectionTest, TestPK )
         "   </physical>"
         "</urban-object>" );
 
-    MIL_ObjectLoader loader;
+    MIL_ObjectFactory factory;
     {
         xml::xistringstream xis(
             "<objects>"
             "    <object type='urban block'/>"
             "</objects>" );
-        BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
+        BOOST_CHECK_NO_THROW( factory.Initialize( xis ) );
     }
     MockAgent firer;
     xisCity >> xml::start( "urban-object" );
     std::auto_ptr< MIL_UrbanObject_ABC > city;
-    city.reset( loader.CreateUrbanObject( xisCity, 0 ) );
+    city.reset( factory.CreateUrbanObject( xisCity, 0 ) );
     xisCity >> xml::end;
     xisDistrict >> xml::start( "urban-object" );
     std::auto_ptr< MIL_UrbanObject_ABC > district;
-    district.reset( loader.CreateUrbanObject( xisDistrict, city.get() ) );
+    district.reset( factory.CreateUrbanObject( xisDistrict, city.get() ) );
     xisDistrict >> xml::end;
     xisModel >> xml::start( "urban-object" );
     std::auto_ptr< MIL_UrbanObject_ABC > urbanBlock;
-    urbanBlock.reset( loader.CreateUrbanObject( xisModel, district.get() ) );
+    urbanBlock.reset( factory.CreateUrbanObject( xisModel, district.get() ) );
     xisModel >> xml::end;
     PHY_RolePion_UrbanLocation* urbanRole = new PHY_RolePion_UrbanLocation( firer );
 
