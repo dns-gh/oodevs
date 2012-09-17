@@ -24,24 +24,14 @@ DECLARE_HOOK( ConvertSecondsToSim, double, ( double seconds ) )
 SensorType::T_SensorTypeMap SensorType::sensorTypes_;
 unsigned int SensorType::nNextID_ = 0;
 
-struct SensorType::LoadingWrapper
-{
-    void ReadSensor( xml::xistream& xis )
-    {
-        SensorType::ReadSensor( xis );
-    }
-};
-
 // -----------------------------------------------------------------------------
 // Name: SensorType::Initialize
 // Created: NLD 2004-08-06
 // -----------------------------------------------------------------------------
 void SensorType::Initialize( xml::xistream& xis )
 {
-    LoadingWrapper loader;
-
     xis >> xml::start( "sensors" )
-            >> xml::list( "sensor", loader, &LoadingWrapper::ReadSensor )
+            >> xml::list( "sensor", &ReadSensor )
         >> xml::end;
 }
 

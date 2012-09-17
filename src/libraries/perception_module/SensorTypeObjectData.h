@@ -65,17 +65,17 @@ private:
 private:
     //! @name Tools
     //@{
-    static void InitializeFactors( const std::string& strTagName, T_FactorVector& factors, xml::xistream& xis );
+    void InitializeFactors( const std::string& strTagName, T_FactorVector& factors, xml::xistream& xis );
     double GetPopulationFactor        ( double rDensity ) const;
     double GetSourceFactor            ( const wrapper::View& source ) const;
     void     InitializePopulationFactors( xml::xistream& xis );
     template< typename Object >
     const PerceptionLevel& ComputePerception( const wrapper::View& perceiver, const Object& target, bool(*intersectWithCircle) ( const Object& object, const MT_Vector2D& center, double radius ) ) const;
     //@}
-    //! @name Hepers
+
+    //! @name Helpers
     //@{
-    struct LoadingWrapper;
-    static void ReadPosture( xml::xistream& xis, T_FactorVector& factors );
+    void ReadPosture( xml::xistream& xis, T_FactorVector& factors ) const;
     //@}
 
 private:

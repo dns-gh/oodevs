@@ -28,23 +28,14 @@ DECLARE_HOOK( GetCollidingPopulationDensity, double, ( const SWORD_Model* entity
 DECLARE_HOOK( ObjectIntersectWithCircle, bool, ( const MIL_Object_ABC& object, const MT_Vector2D& center, double radius ) )
 DECLARE_HOOK( KnowledgeObjectIntersectWithCircle, bool, ( const DEC_Knowledge_Object& object, const MT_Vector2D& center, double radius ) )
 
-struct SensorTypeObjectData::LoadingWrapper
-{
-    void ReadPosture( xml::xistream& xis, SensorTypeObjectData::T_FactorVector& factors )
-    {
-        SensorTypeObjectData::ReadPosture( xis, factors );
-    }
-};
-
 // -----------------------------------------------------------------------------
 // Name: SensorTypeObjectData::InitializeFactors
 // Created: NLD 2004-08-06
 // -----------------------------------------------------------------------------
 void SensorTypeObjectData::InitializeFactors( const std::string& strTagName, T_FactorVector& factors, xml::xistream& xis )
 {
-    LoadingWrapper loader;
     xis >> xml::start( strTagName )
-            >> xml::list( "distance-modifier", loader, &LoadingWrapper::ReadPosture, factors )
+            >> xml::list( "distance-modifier", *this, &SensorTypeObjectData::ReadPosture, factors )
         >> xml::end;
 }
 
@@ -52,7 +43,7 @@ void SensorTypeObjectData::InitializeFactors( const std::string& strTagName, T_F
 // Name: SensorTypeObjectData::ReadPosture
 // Created: ABL 2007-07-25
 // -----------------------------------------------------------------------------
-void SensorTypeObjectData::ReadPosture( xml::xistream& xis, T_FactorVector& factors )
+void SensorTypeObjectData::ReadPosture( xml::xistream& xis, T_FactorVector& factors ) const
 {
     std::string postureType;
     double rFactor = 0;

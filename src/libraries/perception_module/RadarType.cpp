@@ -29,14 +29,6 @@ DECLARE_HOOK( IsUsingActiveRadar, bool, ( const SWORD_Model* entity ) )
 RadarType::T_RadarTypeMap RadarType::radarTypes_;
 unsigned int RadarType::nNextID_ = 0;
 
-struct RadarType::LoadingWrapper
-{
-    void ReadRadar( xml::xistream& xis )
-    {
-        RadarType::ReadRadar( xis );
-    }
-};
-
 namespace
 {
     template< typename T >
@@ -60,10 +52,8 @@ namespace
 // -----------------------------------------------------------------------------
 void RadarType::Initialize( xml::xistream& xis )
 {
-    LoadingWrapper loader;
-
     xis >> xml::start( "radars" )
-            >> xml::list( "radar", loader, &LoadingWrapper::ReadRadar )
+            >> xml::list( "radar", &ReadRadar )
         >> xml::end;
 }
 

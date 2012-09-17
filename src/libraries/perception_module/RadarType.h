@@ -87,7 +87,6 @@ private:
 
     //! @name Helpers
     //@{
-    struct LoadingWrapper;
     static void ReadRadar( xml::xistream& xis );
     //@}
 

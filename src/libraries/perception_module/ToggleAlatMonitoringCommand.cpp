@@ -71,23 +71,14 @@ void ToggleAlatMonitoringCommand::ExecutePaused( const wrapper::View& /*paramete
     // NOTHING
 }
 
-struct ToggleAlatMonitoringCommand::LoadingWrapper
-{
-    void ReadAlatTime( xml::xistream& xis )
-    {
-        ToggleAlatMonitoringCommand::ReadAlatTime( xis );
-    }
-};
-
 // -----------------------------------------------------------------------------
 // Name: ToggleAlatMonitoringCommand::Initialize
 // Created: NLD 2004-11-17
 // -----------------------------------------------------------------------------
 void ToggleAlatMonitoringCommand::Initialize( xml::xistream& xis )
 {
-    LoadingWrapper loader;
     xis >> xml::start( "alat-monitoring-times" )
-            >> xml::list( "alat-monitoring-time", loader, &LoadingWrapper::ReadAlatTime )
+            >> xml::list( "alat-monitoring-time", &ReadAlatTime )
         >> xml::end;
 }
 
