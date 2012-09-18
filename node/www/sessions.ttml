@@ -333,16 +333,34 @@
             <div class="session_content">
                 <div class="span5">
                     <div class="shift_right">
-                        <div><span class="item_label">Model</span> {{model.name}}</div>
-                        <div><span class="item_label">Terrain</span> {{terrain.name}}</div>
-                        <div><span class="item_label">Exercise</span> {{exercise.name}}</div>
+                        <div class="item">
+                            <span>Model</span>
+                            {{model.name}}
+                        </div>
+                        <div class="item">
+                            <span>Terrain</span>
+                            {{terrain.name}}
+                        </div>
+                        <div class="item">
+                            <span>Exercise</span>
+                            {{exercise.name}}
+                        </div>
                     </div>
                 </div>
                 <div>
                     {{#if start_time}}
-                    <div><span class="item_label">Start</span> {{start_time}}</div>
-                    <div><span class="item_label">Duration</span> {{duration}}</div>
-                    <div><span class="item_label">Clients</span> {{clients.length}} connected</div>
+                    <div class="item">
+                        <span>Start</span>
+                        {{start_time}}
+                    </div>
+                    <div class="item">
+                        <span>Duration</span>
+                        {{duration}}
+                    </div>
+                    <div class="item">
+                        <span>Clients</span>
+                        {{clients.length}} connected
+                    </div>
                     {{/if}}
                 </div>
             </div>
