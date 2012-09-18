@@ -25,11 +25,13 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers, QWidget* par
                                   gui::EntitySymbols& icons, ModelBuilder& modelBuilder, gui::ItemFactory_ABC& factory,
                                   Model& model, StaticModel& staticModel, std::vector< gui::SearchListView_ABC* >& listViews, gui::SymbolIcons& symbols )
     : gui::RichDockWidget( controllers, parent, objectName, windowTitle )
-    , expandIcon_  ( QIcon( "resources/images/preparation/double_arrow_right.png" ) )
-    , collapseIcon_( QIcon( "resources/images/preparation/double_arrow_left.png" ) )
-    , expanded_    ( false )
-    , oldMinWith_  ( 0 )
-    , oldMaxWith_  ( 0 )
+    , expandIcon_    ( QIcon( "resources/images/preparation/double_arrow_right.png" ) )
+    , collapseIcon_  ( QIcon( "resources/images/preparation/double_arrow_left.png" ) )
+    , expanded_      ( false )
+    , oldMinWith_    ( 0 )
+    , oldMaxWith_    ( 0 )
+    , pListViewPanel_( 0 )
+    , pTreeViewPanel_( 0 )
 {
     QGridLayout* toolbarBox = new QGridLayout();
     gui::AggregateToolbar* aggregateToolbar = new gui::AggregateToolbar( controllers.controller_, automats, formation );
