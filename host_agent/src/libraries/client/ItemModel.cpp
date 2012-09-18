@@ -11,11 +11,15 @@
 #include "Helpers.h"
 
 #include "runtime/PropertyTree.h"
+
 #include <boost/foreach.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/static_assert.hpp>
-#include <QDebug>
+
+#include <QApplication>
+#include <QPainter>
 #include <QPixmap>
+#include <QStyledItemDelegate>
 
 using namespace gui;
 using namespace property_tree;
@@ -26,6 +30,7 @@ enum ItemColumn
     ITEM_COL_NAME,
     ITEM_COL_PACKAGE,
     ITEM_COL_VERSION,
+    ITEM_COL_STATUS,
     ITEM_COL_DATE,
     ITEM_COL_CHECKSUM,
     ITEM_COL_SIZE,
@@ -38,6 +43,7 @@ static const QString item_headers[] =
     "Name",
     "Package",
     "Version",
+    "Status",
     "Date",
     "Checksum",
     "Size",
@@ -80,12 +86,13 @@ QString PrettySize( uint64_t n )
 // Name: Item::Item
 // Created: BAX 2012-09-06
 // -----------------------------------------------------------------------------
-Item::Item( const Tree& tree )
+Item::Item( const Tree& tree, int status )
     : id_         ( Get< size_t >( tree, "id" ) )
     , type_       ( QGet( tree, "type" ) )
     , name_       ( QGet( tree, "name" ) )
     , package_    ( QGet( tree, "package" ) )
     , version_    ( QGet( tree, "version" ) )
+    , status_     ( status )
     , date_       ( QDateTime::fromString( QGet( tree, "date" ), Qt::ISODate ) )
     , checksum_   ( QGet( tree, "checksum" ) )
     , size_       ( Get< uint64_t >( tree, "size" ) )
@@ -103,6 +110,18 @@ Item::~Item()
     // NOTHING
 }
 
+namespace
+{
+QVariant ConvertStatus( int status )
+{
+    if( status < 0 )
+        return "Missing";
+    if( status < 100 )
+        return status;
+    return "Complete";
+}
+}
+
 // -----------------------------------------------------------------------------
 // Name: Item::Data
 // Created: BAX 2012-09-06
@@ -115,6 +134,13 @@ QVariant Item::Data( int col, int role )
             if( !col ) return QPixmap( ":/drive-harddisk.png" );
             break;
 
+        case Qt::UserRole:
+            switch( col )
+            {
+                case ITEM_COL_STATUS:
+                    return status_;
+            }
+
         case Qt::DisplayRole:
             switch( col )
             {
@@ -122,6 +148,7 @@ QVariant Item::Data( int col, int role )
                 case ITEM_COL_NAME:     return name_;
                 case ITEM_COL_PACKAGE:  return package_;
                 case ITEM_COL_VERSION:  return version_;
+                case ITEM_COL_STATUS:   return ConvertStatus( status_ );
                 case ITEM_COL_DATE:     return date_.toString( "yyyy-MM-dd hh:mm:ss" );
                 case ITEM_COL_CHECKSUM: return "0x" + checksum_;
                 case ITEM_COL_SIZE:     return PrettySize( size_ );
@@ -174,6 +201,51 @@ bool Item::Equal( size_t id ) const
     return id_ == id;
 }
 
+namespace
+{
+struct ItemProgressDelegate : public QStyledItemDelegate
+{
+    ItemProgressDelegate( QWidget* parent )
+        : QStyledItemDelegate( parent )
+    {
+        // NOTHING
+    }
+
+    virtual ~ItemProgressDelegate()
+    {
+        // NOTHING
+    }
+
+    virtual void paint( QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index ) const
+    {
+        const int status = index.data( Qt::UserRole ).toInt();
+        if( status < 0 || status >= 100 )
+            return QStyledItemDelegate::paint( painter, option, index );
+        painter->save();
+        QApplication::style()->drawControl( QStyle::CE_ItemViewItem, &option, painter );
+        QStyleOptionProgressBarV2 tmp;
+        tmp.direction     = option.direction;
+        tmp.fontMetrics   = option.fontMetrics;
+        tmp.palette       = option.palette;
+        tmp.rect          = option.rect;
+        tmp.state         = option.state;
+        tmp.minimum       = 0;
+        tmp.maximum       = 100;
+        tmp.progress      = status;
+        tmp.text          = QString( "%1%" ).arg( tmp.progress );
+        tmp.textAlignment = Qt::AlignRight;
+        tmp.textVisible   = true;
+        if( tmp.state & QStyle::State_Selected )
+        {
+            painter->fillRect(tmp.rect, tmp.palette.highlight());
+            painter->setPen(tmp.palette.highlightedText().color());
+        }
+        QApplication::style()->drawControl( QStyle::CE_ProgressBar, &tmp, painter );
+        painter->restore();
+   }
+};
+}
+
 // -----------------------------------------------------------------------------
 // Name: ItemModel::ItemModel
 // Created: BAX 2012-09-06
@@ -192,6 +264,30 @@ ItemModel::ItemModel()
 ItemModel::~ItemModel()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ItemModel::Setup
+// Created: BAX 2012-09-17
+// -----------------------------------------------------------------------------
+void ItemModel::Setup( QAbstractItemView* view )
+{
+    proxy_.setSourceModel( this );
+    proxy_.setDynamicSortFilter( true );
+    proxy_.setFilterKeyColumn( -1 );
+    proxy_.setFilterCaseSensitivity( Qt::CaseInsensitive );
+    proxy_.setSortCaseSensitivity( Qt::CaseInsensitive );
+    view->setItemDelegateForColumn( ITEM_COL_STATUS, new ItemProgressDelegate( view ) );
+    view->setModel( &proxy_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ItemModel::GetModel
+// Created: BAX 2012-09-17
+// -----------------------------------------------------------------------------
+QAbstractItemModel* ItemModel::GetModel()
+{
+    return &proxy_;
 }
 
 // -----------------------------------------------------------------------------
@@ -215,7 +311,7 @@ void ItemModel::Fill( const Tree& tree )
     typedef std::pair< Tree::const_assoc_iterator, Tree::const_assoc_iterator > Range;
     Range range = tree.get_child( "items" ).equal_range( "" );
     for( Tree::const_assoc_iterator it = range.first; it != range.second; ++it )
-        Append( boost::make_shared< gui::Item >( it->second ) );
+        Append( boost::make_shared< gui::Item >( it->second, 100 ) );
 }
 
 namespace

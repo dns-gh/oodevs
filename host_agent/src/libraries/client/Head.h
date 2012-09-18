@@ -89,7 +89,6 @@ private:
     QString url_;
     boost::shared_ptr< host::Package_ABC > install_;
     ItemModel items_;
-    QSortFilterProxyModel proxy_;
     QProgressBar progress_;
     QLabel count_;
     QAsync async_;

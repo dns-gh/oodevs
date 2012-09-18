@@ -12,6 +12,8 @@
 #include "FlatModel.h"
 #include <boost/property_tree/ptree_fwd.hpp>
 #include <QDateTime>
+#include <QSortFilterProxyModel>
+#include <QAbstractItemView>
 
 namespace gui
 {
@@ -22,7 +24,7 @@ namespace gui
 {
 struct Item
 {
-     Item( const Tree& tree );
+     Item( const Tree& tree, int status );
     ~Item();
 
     QVariant Data( int col, int role );
@@ -39,7 +41,9 @@ private:
     const QString   version_;
     const QDateTime date_;
     const QString   checksum_;
-    const size_t    size_;
+
+    int             status_; // <0 missing, [0,100[ downloading, >100 complete
+    size_t          size_;
     Qt::CheckState  check_state_;
 
     Item& operator=( const Item& );
@@ -54,6 +58,8 @@ public:
     ~ItemModel();
     virtual Qt::ItemFlags flags( const QModelIndex& idx ) const;
     void Fill( const Tree& tree );
+    void Setup( QAbstractItemView* view );
+    QAbstractItemModel* GetModel();
 
 public slots:
     void Toggle();
@@ -61,6 +67,7 @@ public slots:
 
 private:
     Qt::CheckState toggle_;
+    QSortFilterProxyModel proxy_;
 };
 }
 
