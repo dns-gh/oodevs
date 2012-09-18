@@ -72,16 +72,16 @@ void Score::Send( dispatcher::ClientPublisher_ABC& publisher, int context ) cons
 // Name: Score::Size
 // Created: SBO 2011-05-16
 // -----------------------------------------------------------------------------
-unsigned int Score::Size() const
+std::size_t Score::Size() const
 {
-    return (unsigned int) values_.size();
+    return values_.size();
 }
 
 // -----------------------------------------------------------------------------
 // Name: Score::GetValue
 // Created: SBO 2011-05-16
 // -----------------------------------------------------------------------------
-float Score::GetValue( unsigned int index ) const
+float Score::GetValue( std::size_t index ) const
 {
     return values_.at( index );
 }

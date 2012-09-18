@@ -57,8 +57,8 @@ public:
 
     //! @name Accessors
     //@{
-    unsigned int Size() const;
-    float GetValue( unsigned int index ) const;
+    std::size_t Size() const;
+    float GetValue( std::size_t index ) const;
     //@}
 
     //! @name Operations
