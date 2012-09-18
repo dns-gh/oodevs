@@ -8,14 +8,14 @@
 --
 -- Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
 ------------------------------------------------------------------------------- 
- integration.setStealth = function( beStealth )
+integration.setStealth = function( beStealth )
     local stealthFactor = beStealth and 0 or 1
     myself.lastStealth = myself.lastStealth or 1
     if stealthFactor == 1 and myself.lastStealth == 0 then 
-        myself.wantedVisible = true -- Ask to become visible. It will be effective 2 ticks later if no order to stay unvisible is given (see OnNewTick method in CRTaskListener).
+        myself.wantedVisible = true -- Ask to become visible. It will be effective 2 ticks later if no order to stay invisible is given (see OnNewTick method in CRTaskListener).
         return
     end
-    if stealthFactor == 0 then -- Become unvisible
+    if stealthFactor == 0 then -- Become invisible
         if myself.lastStealth == 1 then
             DEC_Perception_Furtivite( stealthFactor )
             myself.lastStealth = stealthFactor
