@@ -10,18 +10,18 @@
     <stages>
         <stage>
             <skills>
-                <skill name="commander.skills.Lead" main="true">
-                    <parameter name="companyTask">
+                <skill name="company.skills.Appuyer" main="true">
+                    <parameter name="company">
                         <value>
-                            <string>company.combat.tasks.Appuyer</string>
+                            <parameter>objective</parameter>
                         </value>
                     </parameter>
-                    <parameter name="mainTasks">
+                    <parameter name="mainTask">
                         <value>
                             <string>platoon.tasks.Appuyer</string>
                         </value>
                     </parameter>
-                    <parameter name="supportTasks">
+                    <parameter name="supportTask">
                         <value>
                             <string>platoon.tasks.Appuyer;platoon.combat.support.engineer.tasks.AppuiMobilite</string>
                         </value>
@@ -34,6 +34,16 @@
                     <parameter name="taskForSupporting">
                         <value>
                             <string>platoon.tasks.Appuyer</string>
+                        </value>
+                    </parameter>
+                    <parameter name="followTask">
+                        <value>
+                            <string>platoon.tasks.Suivre</string>
+                        </value>
+                    </parameter>
+                    <parameter name="companyTask">
+                        <value>
+                            <string>company.combat.tasks.Appuyer</string>
                         </value>
                     </parameter>
                 </skill>

@@ -3,5 +3,6 @@
     <skills>
         <skill name="company.skills.Escort"/>
         <skill name="company.combat.support.art.skills.IlluminationTirSynchronise"/>
+        <skill name="company.skills.Appuyer"/>
     </skills>
 </role>
