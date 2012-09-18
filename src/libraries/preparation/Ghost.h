@@ -33,7 +33,11 @@ namespace xml
     class xistream;
 }
 
-class IdManager;
+namespace tools
+{
+    class IdManager;
+}
+
 class LogisticBaseStates;
 class Model;
 class StaticModel;
@@ -52,9 +56,9 @@ class Ghost : public kernel::EntityImplementation< kernel::Ghost_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Ghost( kernel::Controller& controller, const Model& model, IdManager& idManager, const kernel::CoordinateConverter_ABC& converter, const kernel::GhostPrototype& prototype );
-             Ghost( kernel::Controller& controller, const Model& model, IdManager& idManager, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis, kernel::SymbolFactory& symbolsFactory );
-             Ghost( kernel::Controller& controller, const Model& model, IdManager& idManager, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis, kernel::Entity_ABC& parent, E_GhostType ghostType );
+             Ghost( kernel::Controller& controller, const Model& model, tools::IdManager& idManager, const kernel::CoordinateConverter_ABC& converter, const kernel::GhostPrototype& prototype );
+             Ghost( kernel::Controller& controller, const Model& model, tools::IdManager& idManager, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis, kernel::SymbolFactory& symbolsFactory );
+             Ghost( kernel::Controller& controller, const Model& model, tools::IdManager& idManager, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis, kernel::Entity_ABC& parent, E_GhostType ghostType );
     virtual ~Ghost();
     //@}
 

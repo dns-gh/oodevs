@@ -10,9 +10,9 @@
 #include "messenger_plugin_pch.h"
 #include "ClientObjectsModel.h"
 #include "ClientObject.h"
-#include "IdManager.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/MessengerSenders.h"
+#include "tools/IdManager.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace plugins::messenger;
@@ -22,7 +22,7 @@ using namespace sword;
 // Name: ClientObjectsModel constructor
 // Created: JSR 2010-10-15
 // -----------------------------------------------------------------------------
-ClientObjectsModel::ClientObjectsModel( dispatcher::ClientPublisher_ABC& clients, IdManager& idManager )
+ClientObjectsModel::ClientObjectsModel( dispatcher::ClientPublisher_ABC& clients, tools::IdManager& idManager )
     : clients_  ( clients )
     , idManager_( idManager )
 {
@@ -66,7 +66,7 @@ void ClientObjectsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publish
     {
         try
         {
-            std::auto_ptr< ClientObject > clientObject( new ClientObject( idManager_.NextId(), message ) );
+            std::auto_ptr< ClientObject > clientObject( new ClientObject( idManager_.GetNextId(), message ) );
             Register( clientObject->GetID(), *clientObject );
             clientObject->SendCreation( clients_ );
             clientObject.release();

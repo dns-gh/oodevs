@@ -20,7 +20,7 @@
 #include "FormationModel.h"
 #include "GhostFactory.h"
 #include "GhostModel.h"
-#include "IdManager.h"
+#include "tools/IdManager.h"
 #include "KnowledgeGroupFactory.h" // LTO
 #include "LimitsModel.h"
 #include "WeatherModel.h"
@@ -68,7 +68,7 @@ Model::Model( Controllers& controllers, const ::StaticModel& staticModel )
     : EntityResolverFacade( static_cast< Model_ABC& >( *this ) )
     , controllers_          ( controllers )
     , staticModel_          ( staticModel )
-    , idManager_            ( *new IdManager() )
+    , idManager_            ( *new tools::IdManager() )
     , teamFactory_          ( *new TeamFactory( controllers, *this, staticModel, idManager_ ) )
     , knowledgeGroupFactory_( *new KnowledgeGroupFactory( controllers, staticModel, idManager_ ) )
     , formationFactory_     ( *new FormationFactory( controllers, staticModel, idManager_, symbolsFactory_ ) )
@@ -398,7 +398,7 @@ QString Model::GetName() const
 // Name: Model::GetIdManager
 // Created: ABR 2011-06-22
 // -----------------------------------------------------------------------------
-IdManager& Model::GetIdManager() const
+tools::IdManager& Model::GetIdManager() const
 {
     return idManager_;
 }

@@ -30,7 +30,7 @@
 // Name: TeamFactory constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-TeamFactory::TeamFactory( kernel::Controllers& controllers, Model& model, const ::StaticModel& staticModel, IdManager& idManager )
+TeamFactory::TeamFactory( kernel::Controllers& controllers, Model& model, const ::StaticModel& staticModel, tools::IdManager& idManager )
     : controllers_( controllers )
     , model_      ( model )
     , staticModel_( staticModel )

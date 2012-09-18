@@ -9,7 +9,7 @@
 
 #include "preparation_pch.h"
 #include "Population.h"
-#include "IdManager.h"
+#include "tools/IdManager.h"
 #include "clients_kernel/PopulationType.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
@@ -23,7 +23,7 @@ using namespace kernel;
 // Name: Population constructor
 // Created: SBO 2006-11-08
 // -----------------------------------------------------------------------------
-Population::Population( const PopulationType& type, int number, Controller& controller, IdManager& idManager )
+Population::Population( const PopulationType& type, int number, Controller& controller, tools::IdManager& idManager )
     : EntityImplementation< Population_ABC >( controller, idManager.GetNextId(), "" )
     , healthy_         ( number )
     , wounded_         ( 0 )
@@ -45,7 +45,7 @@ Population::Population( const PopulationType& type, int number, Controller& cont
 // Name: Population constructor
 // Created: SBO 2006-11-08
 // -----------------------------------------------------------------------------
-Population::Population( xml::xistream& xis, const kernel::PopulationType& type, Controller& controller, IdManager& idManager )
+Population::Population( xml::xistream& xis, const kernel::PopulationType& type, Controller& controller, tools::IdManager& idManager )
     : EntityImplementation< Population_ABC >( controller, xis.attribute< int >( "id" ), xis.attribute< std::string >( "name" ).c_str() )
     , armedIndividuals_( 0, Units::percentage )
     , repartition_     ( new PopulationRepartition() )

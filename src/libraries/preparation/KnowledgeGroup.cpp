@@ -9,7 +9,7 @@
 
 #include "preparation_pch.h"
 #include "KnowledgeGroup.h"
-#include "IdManager.h"
+#include "tools/IdManager.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/KnowledgeGroupType.h" // LTO
 #include "clients_kernel/PropertiesDictionary.h"
@@ -21,7 +21,7 @@ using namespace kernel;
 // Name: KnowledgeGroup constructor
 // Created: AGE 2005-09-21
 // -----------------------------------------------------------------------------
-KnowledgeGroup::KnowledgeGroup( Controller& controller, IdManager& idManager, tools::Resolver_ABC< KnowledgeGroupType, std::string >& types )
+KnowledgeGroup::KnowledgeGroup( Controller& controller, tools::IdManager& idManager, tools::Resolver_ABC< KnowledgeGroupType, std::string >& types )
     : EntityImplementation< KnowledgeGroup_ABC >( controller, idManager.GetNextId(), "" )
     , type_( ResolveType( "Standard", types ) )
 {
@@ -35,7 +35,7 @@ KnowledgeGroup::KnowledgeGroup( Controller& controller, IdManager& idManager, to
 // Name: KnowledgeGroup constructor
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-KnowledgeGroup::KnowledgeGroup( xml::xistream& xis, Controller& controller, IdManager& idManager, tools::Resolver_ABC< KnowledgeGroupType, std::string >& types )
+KnowledgeGroup::KnowledgeGroup( xml::xistream& xis, Controller& controller, tools::IdManager& idManager, tools::Resolver_ABC< KnowledgeGroupType, std::string >& types )
     : EntityImplementation< KnowledgeGroup_ABC >( controller, xis.attribute< unsigned int >( "id" ), "" )
     , type_( ResolveType( xis.attribute< std::string >( "type" ), types ) )
 {

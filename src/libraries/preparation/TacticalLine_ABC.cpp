@@ -10,7 +10,7 @@
 #include "preparation_pch.h"
 #include "TacticalLine_ABC.h"
 #include "TacticalLinePositions.h"
-#include "IdManager.h"
+#include "tools/IdManager.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
@@ -20,7 +20,7 @@
 // Name: TacticalLine_ABC constructor
 // Created: APE 2004-04-14
 // -----------------------------------------------------------------------------
-TacticalLine_ABC::TacticalLine_ABC( kernel::Controller& controller, const QString& baseName, IdManager& idManager )
+TacticalLine_ABC::TacticalLine_ABC( kernel::Controller& controller, const QString& baseName, tools::IdManager& idManager )
     : kernel::EntityImplementation< kernel::TacticalLine_ABC >( controller, idManager.GetNextId(), "" )
 {
     RegisterSelf( *this );
@@ -31,7 +31,7 @@ TacticalLine_ABC::TacticalLine_ABC( kernel::Controller& controller, const QStrin
 // Name: TacticalLine_ABC constructor
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-TacticalLine_ABC::TacticalLine_ABC( kernel::Controller& controller, xml::xistream& xis, IdManager& idManager )
+TacticalLine_ABC::TacticalLine_ABC( kernel::Controller& controller, xml::xistream& xis, tools::IdManager& idManager )
     : kernel::EntityImplementation< kernel::TacticalLine_ABC >( controller, idManager.GetNextId(), "" )
 {
     RegisterSelf( *this );

@@ -19,7 +19,7 @@ using namespace kernel;
 // Name: Lima constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-Lima::Lima( Controller& controller, IdManager& idManager )
+Lima::Lima( Controller& controller, tools::IdManager& idManager )
     : TacticalLine_ABC( controller, tools::translate( "Lima", "Phase line" ), idManager )
     , controller_     ( controller )
 {
@@ -30,7 +30,7 @@ Lima::Lima( Controller& controller, IdManager& idManager )
 // Name: Lima constructor
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-Lima::Lima( kernel::Controller& controller, xml::xistream& xis, IdManager& idManager )
+Lima::Lima( kernel::Controller& controller, xml::xistream& xis, tools::IdManager& idManager )
     : TacticalLine_ABC( controller, xis, idManager )
     , controller_( controller )
 {

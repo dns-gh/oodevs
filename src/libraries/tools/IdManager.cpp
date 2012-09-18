@@ -7,8 +7,10 @@
 //
 // *****************************************************************************
 
-#include "preparation_pch.h"
-#include "IdManager.h"
+#include "tools_pch.h"
+#include "tools/IdManager.h"
+
+using namespace tools;
 
 // -----------------------------------------------------------------------------
 // Name: IdManager constructor

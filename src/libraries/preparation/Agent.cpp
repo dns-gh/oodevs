@@ -9,7 +9,7 @@
 
 #include "preparation_pch.h"
 #include "Agent.h"
-#include "IdManager.h"
+#include "tools/IdManager.h"
 #include "AgentHierarchies.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/AgentNature.h"
@@ -34,7 +34,7 @@ using namespace kernel;
 // Name: Agent constructor
 // Created: SBO 2006-09-01
 // -----------------------------------------------------------------------------
-Agent::Agent( const AgentType& type, Controller& controller, IdManager& idManager )
+Agent::Agent( const AgentType& type, Controller& controller, tools::IdManager& idManager )
     : EntityImplementation< Agent_ABC >( controller, idManager.GetNextId(), type.GetName().c_str() )
     , type_                ( type )
     , symbolPath_          ( type_.GetSymbol() )
@@ -60,7 +60,7 @@ namespace
 // Name: Agent constructor
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-Agent::Agent( xml::xistream& xis, Controller& controller, IdManager& idManager, const AgentType& type, const kernel::SymbolFactory& symbolFactory )
+Agent::Agent( xml::xistream& xis, Controller& controller, tools::IdManager& idManager, const AgentType& type, const kernel::SymbolFactory& symbolFactory )
     : EntityImplementation< Agent_ABC >( controller, xis.attribute< unsigned long >( "id" ), ReadName( xis ) )
     , type_           ( type )
     , symbolPath_     ( type_.GetSymbol() )

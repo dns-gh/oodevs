@@ -32,7 +32,10 @@ namespace xml
     class xistream;
 }
 
-class IdManager;
+namespace tools
+{
+    class IdManager;
+}
 
 // =============================================================================
 /** @class  Agent
@@ -48,8 +51,8 @@ class Agent : public kernel::EntityImplementation< kernel::Agent_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Agent( const kernel::AgentType& type, kernel::Controller& controller, IdManager& idManager );
-             Agent( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, const kernel::AgentType& type, const kernel::SymbolFactory& symbolFactory );
+             Agent( const kernel::AgentType& type, kernel::Controller& controller, tools::IdManager& idManager );
+             Agent( xml::xistream& xis, kernel::Controller& controller, tools::IdManager& idManager, const kernel::AgentType& type, const kernel::SymbolFactory& symbolFactory );
     virtual ~Agent();
     //@}
 

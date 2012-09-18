@@ -97,7 +97,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\messenger_plugin\MessengerPlugin.cpp" />
-    <ClCompile Include="..\..\src\libraries\messenger_plugin\IdManager.cpp" />
     <ClCompile Include="..\..\src\libraries\messenger_plugin\Model.cpp" />
     <ClCompile Include="..\..\src\libraries\messenger_plugin\Drawing.cpp" />
     <ClCompile Include="..\..\src\libraries\messenger_plugin\DrawingProxy.cpp" />
@@ -116,7 +115,6 @@
     <ClInclude Include="..\..\src\libraries\messenger_plugin\messenger_plugin_pch.h" />
     <ClInclude Include="..\..\src\libraries\messenger_plugin\MessengerPlugin.h" />
     <ClInclude Include="..\..\src\libraries\messenger_plugin\Entity_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\messenger_plugin\IdManager.h" />
     <ClInclude Include="..\..\src\libraries\messenger_plugin\Model.h" />
     <ClInclude Include="..\..\src\libraries\messenger_plugin\Drawing.h" />
     <ClInclude Include="..\..\src\libraries\messenger_plugin\DrawingProxy.h" />

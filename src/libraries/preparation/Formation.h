@@ -27,7 +27,10 @@ namespace xml
     class xistream;
 }
 
-class IdManager;
+namespace tools
+{
+    class IdManager;
+}
 
 // =============================================================================
 /** @class  Formation
@@ -42,8 +45,8 @@ class Formation : public kernel::EntityImplementation< kernel::Formation_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Formation( kernel::Controller& controller, E_NatureLevel level, IdManager& idManager );
-             Formation( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager );
+             Formation( kernel::Controller& controller, E_NatureLevel level, tools::IdManager& idManager );
+             Formation( xml::xistream& xis, kernel::Controller& controller, tools::IdManager& idManager );
     virtual ~Formation();
     //@}
 

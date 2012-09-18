@@ -7,10 +7,13 @@
 //
 // *****************************************************************************
 
-#ifndef __IdManager_h_
-#define __IdManager_h_
+#ifndef __kernel_IdManager_h_
+#define __kernel_IdManager_h_
 
 #include <boost/noncopyable.hpp>
+
+namespace tools
+{
 
 // =============================================================================
 /** @class  IdManager
@@ -41,4 +44,6 @@ private:
     //@}
 };
 
-#endif // __IdManager_h_
+} //! namespace kernel
+
+#endif // __kernel_IdManager_h_

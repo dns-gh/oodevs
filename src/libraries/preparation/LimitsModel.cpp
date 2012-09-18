@@ -23,7 +23,7 @@
 // Name: LimitsModel constructor
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-LimitsModel::LimitsModel( kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, IdManager& idManager )
+LimitsModel::LimitsModel( kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, tools::IdManager& idManager )
     : controllers_( controllers )
     , converter_( converter )
     , idManager_( idManager )

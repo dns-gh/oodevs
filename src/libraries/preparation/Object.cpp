@@ -9,7 +9,7 @@
 
 #include "preparation_pch.h"
 #include "Object.h"
-#include "IdManager.h"
+#include "tools/IdManager.h"
 #include "ObjectPositions.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
@@ -25,7 +25,7 @@ using namespace kernel;
 // Name: Object::Object
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
-Object::Object( Controller& controller, const CoordinateConverter_ABC& converter, const ObjectType& type, const QString& name, IdManager& idManager )
+Object::Object( Controller& controller, const CoordinateConverter_ABC& converter, const ObjectType& type, const QString& name, tools::IdManager& idManager )
     : EntityImplementation< Object_ABC >( controller, idManager.GetNextId(), "" )
     , converter_( converter )
     , type_     ( type )
@@ -41,7 +41,7 @@ Object::Object( Controller& controller, const CoordinateConverter_ABC& converter
 // Name: Object constructor
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-Object::Object( xml::xistream& xis, Controller& controller, const CoordinateConverter_ABC& converter, const kernel::ObjectType& type, IdManager& idManager )
+Object::Object( xml::xistream& xis, Controller& controller, const CoordinateConverter_ABC& converter, const kernel::ObjectType& type, tools::IdManager& idManager )
     : EntityImplementation< Object_ABC >( controller, xis.attribute< unsigned long >( "id" ), xis.attribute< std::string >( "name" ).c_str() )
     , converter_( converter )
     , type_     ( type )

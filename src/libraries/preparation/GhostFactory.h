@@ -27,7 +27,11 @@ namespace xml
     class xistream;
 }
 
-class IdManager;
+namespace tools
+{
+    class IdManager;
+}
+
 class Model;
 class MT_Vector2D;
 class StaticModel;
@@ -44,7 +48,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              GhostFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel,
-                           IdManager& idManager, kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory, kernel::SymbolFactory& symbolsFactory );
+                           tools::IdManager& idManager, kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory, kernel::SymbolFactory& symbolsFactory );
     virtual ~GhostFactory();
     //@}
 
@@ -69,7 +73,7 @@ private:
      kernel::Controllers&               controllers_;
      Model&                             model_;
      const StaticModel&                 staticModel_;
-     IdManager&                         idManager_;
+     tools::IdManager&                  idManager_;
      kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory_;
      kernel::SymbolFactory&             symbolsFactory_;
     //@}

@@ -23,11 +23,15 @@ namespace dispatcher
     class ClientPublisher_ABC;
 }
 
+namespace tools
+{
+    class IdManager;
+}
+
 namespace plugins
 {
 namespace messenger
 {
-    class IdManager;
     class Note;
 
 // =============================================================================
@@ -43,7 +47,7 @@ class NotesModel : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             NotesModel( const dispatcher::Config& config, dispatcher::ClientPublisher_ABC& clients, IdManager& idManager, const std::string& file );
+             NotesModel( const dispatcher::Config& config, dispatcher::ClientPublisher_ABC& clients, tools::IdManager& idManager, const std::string& file );
     virtual ~NotesModel();
     //@}
 
@@ -89,7 +93,7 @@ private:
     //@{
     const dispatcher::Config&        config_;
     dispatcher::ClientPublisher_ABC& clients_;
-    IdManager&                       idManager_;
+    tools::IdManager&                idManager_;
     const std::string                fileName_;
     std::list< unsigned int >        headNotes_;
     std::string                      currentTime_;

@@ -13,9 +13,9 @@
 #include "ADN_Data_ABC.h"
 #include "ADN_Types.h"
 #include "ADN_Enums.h"
-#include "IdentifierFactory.h"
 #include "ADN_Drawings_Data.h"
 #include "ADN_MissionGenObjectTypes_Infos.h"
+#include "tools/IdManager.h"
 
 enum E_EntityType;
 
@@ -245,7 +245,7 @@ public:
     T_StringList toDeleteMissionSheets_;
 
 private:
-    static IdentifierFactory idFactory_;
+    static tools::IdManager idFactory_;
 };
 
 #endif // __ADN_Missions_Data_h_

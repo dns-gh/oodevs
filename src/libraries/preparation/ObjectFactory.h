@@ -19,9 +19,13 @@ namespace kernel
     class PropertiesDictionary;
 }
 
+namespace tools
+{
+    class IdManager;
+}
+
 class Model;
 class StaticModel;
-class IdManager;
 class ObjectAttributeFactory_ABC;
 
 // =============================================================================
@@ -36,7 +40,7 @@ class ObjectFactory : public ObjectFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel, IdManager& idManager );
+             ObjectFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel, tools::IdManager& idManager );
     virtual ~ObjectFactory();
     //@}
 
@@ -59,7 +63,7 @@ private:
     kernel::Controllers& controllers_;
     Model& model_;
     const StaticModel& staticModel_;
-    IdManager& idManager_;
+    tools::IdManager& idManager_;
     std::auto_ptr< ObjectAttributeFactory_ABC > factory_;
     //@}
 };

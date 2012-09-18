@@ -27,11 +27,15 @@ namespace dispatcher
     class CompositeRegistrable;
 }
 
+namespace tools
+{
+    class IdManager;
+}
+
 namespace plugins
 {
 namespace messenger
 {
-    class IdManager;
     class TacticalLinesModel;
     class DrawingsModel;
     class NotesModel;
@@ -79,7 +83,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< IdManager > idManager_;
+    std::auto_ptr< tools::IdManager > idManager_;
     std::auto_ptr< kernel::CoordinateConverter_ABC > converter_;
     //@}
 

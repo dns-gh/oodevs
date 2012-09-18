@@ -24,7 +24,10 @@ namespace xml
     class xistream;
 }
 
-class IdManager;
+namespace tools
+{
+    class IdManager;
+}
 
 // =============================================================================
 /** @class  Inhabitant
@@ -38,8 +41,8 @@ class Inhabitant : public kernel::EntityImplementation< kernel::Inhabitant_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Inhabitant( const kernel::InhabitantType& type, int number, const QString& name, kernel::Controller& controller, IdManager& idManager );
-             Inhabitant( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager );
+             Inhabitant( const kernel::InhabitantType& type, int number, const QString& name, kernel::Controller& controller, tools::IdManager& idManager );
+             Inhabitant( xml::xistream& xis, kernel::Controller& controller, tools::IdManager& idManager );
     virtual ~Inhabitant();
     //@}
 

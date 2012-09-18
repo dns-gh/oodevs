@@ -9,7 +9,6 @@
 // *****************************************************************************
 
 #include "clients_test_pch.h"
-#include "preparation/IdManager.h"
 #include "preparation/KnowledgeGroup.h"
 #include "preparation/KnowledgeGroupCommunications.h"
 #include "preparation/KnowledgeGroupsModel.h"
@@ -20,6 +19,7 @@
 #include "clients_kernel/KnowledgeGroupFactory_ABC.h"
 #include "clients_kernel/KnowledgeGroupType.h"
 #include "clients_kernel/Team_ABC.h"
+#include "tools/IdManager.h"
 #include "XmlChecks.h"
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push, 0 )
@@ -237,7 +237,7 @@ BOOST_AUTO_TEST_CASE( WriteKnowledgeGroupTest )
     int argc = 1;
     char* argv = "";
     QApplication app( argc, &argv );
-    IdManager idManager;
+    tools::IdManager idManager;
     MockKnowledgeGroupTypeResolver types;
     std::auto_ptr< kernel::KnowledgeGroupType > standardType( MakeKnowledgeGroupType() );
     MOCK_EXPECT( types.Find ).with( mock::any ).returns( standardType.get() );

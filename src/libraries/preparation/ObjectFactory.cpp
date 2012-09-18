@@ -188,7 +188,7 @@ namespace
 // Name: ObjectFactory constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-ObjectFactory::ObjectFactory( Controllers& controllers, Model& model, const ::StaticModel& staticModel, IdManager& idManager )
+ObjectFactory::ObjectFactory( Controllers& controllers, Model& model, const ::StaticModel& staticModel, tools::IdManager& idManager )
     : controllers_( controllers )
     , model_      ( model )
     , staticModel_( staticModel )

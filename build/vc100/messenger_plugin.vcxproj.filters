@@ -31,9 +31,6 @@
     <ClCompile Include="..\..\src\libraries\messenger_plugin\MessengerPlugin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\messenger_plugin\IdManager.cpp">
-      <Filter>Source Files\Model</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\messenger_plugin\Model.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
@@ -82,9 +79,6 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\messenger_plugin\Entity_ABC.h">
-      <Filter>Source Files\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\messenger_plugin\IdManager.h">
       <Filter>Source Files\Model</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\messenger_plugin\Model.h">

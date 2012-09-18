@@ -9,7 +9,7 @@
 
 #include "preparation_pch.h"
 #include "Automat.h"
-#include "IdManager.h"
+#include "tools/IdManager.h"
 #include "clients_kernel/Tools.h"
 #include "LogisticLevelAttritube.h"
 #include "clients_kernel/Controller.h"
@@ -28,7 +28,7 @@ using namespace kernel;
 // Name: Automat constructor
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-Automat::Automat( const AutomatType& type, Controller& controller, IdManager& idManager, const QString& name )
+Automat::Automat( const AutomatType& type, Controller& controller, tools::IdManager& idManager, const QString& name )
     : EntityImplementation< Automat_ABC >( controller, idManager.GetNextId(), "" )
 {
     name_ = name.isEmpty() ? type.GetName().c_str() : name;
@@ -39,7 +39,7 @@ Automat::Automat( const AutomatType& type, Controller& controller, IdManager& id
 // Name: Automat constructor
 // Created: SBO 2006-10-09
 // -----------------------------------------------------------------------------
-Automat::Automat( xml::xistream& xis, Controller& controller, IdManager& idManager )
+Automat::Automat( xml::xistream& xis, Controller& controller, tools::IdManager& idManager )
     : EntityImplementation< Automat_ABC >( controller, xis.attribute< unsigned long >( "id" ), xis.attribute< std::string >( "name" ).c_str() )
 {
     RegisterSelf( *this );

@@ -22,7 +22,7 @@
 #include <tools/XmlCrc32Signature.h>
 #include <boost/bind.hpp>
 
-IdentifierFactory ADN_Categories_Data::idFactory_;
+tools::IdManager ADN_Categories_Data::idFactory_;
 // =============================================================================
 // AttritionEffectOnHuman
 // =============================================================================
@@ -46,7 +46,6 @@ ADN_Categories_Data::ADN_Categories_Data()
     vDotationNatures_.SetItemTypeName( "la nature de dotation" );
     vLogisticSupplyClasses_.SetNodeName( "la liste des categories logistiques pour les dotations" );
     vLogisticSupplyClasses_.SetItemTypeName( "la categorie logistique" );
-    idFactory_.Reserve( 0 );
 }
 
 //-----------------------------------------------------------------------------
@@ -255,11 +254,11 @@ void ADN_Categories_Data::ReadNature( xml::xistream& input )
     if( found != vDotationNatures_.end() )
         throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).toAscii().constData(), tools::translate( "Categories_Data", "Categories - Duplicated resource nature type name '%1'" ).arg( strName.c_str() ).toAscii().constData() );
     if( !id )
-        id = idFactory_.Create();
+        id = idFactory_.GetNextId();
     helpers::ResourceNatureInfos* pNew = new helpers::ResourceNatureInfos( strName, id );
     pNew->strName_.SetDataName( "le nom de la nature de dotation" );
     vDotationNatures_.AddItem( pNew );
-    idFactory_.Reserve( id );
+    idFactory_.Lock( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -276,11 +275,11 @@ void ADN_Categories_Data::ReadLogisticSupplyClass( xml::xistream& input )
     if( found != vLogisticSupplyClasses_.end() )
         throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).toAscii().constData(), tools::translate( "Categories_Data", "Categories - Duplicated resource logistic category '%1'" ).arg( strName.c_str() ).toAscii().constData() );
     if( !id )
-        id = idFactory_.Create();
+        id = idFactory_.GetNextId();
     helpers::LogisticSupplyClass* pNew = new helpers::LogisticSupplyClass( strName, id );
     pNew->strName_.SetDataName( "le nom de la categorie logistic de dotation" );
     vLogisticSupplyClasses_.AddItem( pNew );
-    idFactory_.Reserve( id );
+    idFactory_.Lock( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -403,5 +402,5 @@ void ADN_Categories_Data::WriteLogisticSupplyClasses( xml::xostream& output )
 // -----------------------------------------------------------------------------
 unsigned long ADN_Categories_Data::GetNewIdentifier()
 {
-    return idFactory_.Create();
+    return idFactory_.GetNextId();
 }

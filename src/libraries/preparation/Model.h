@@ -26,6 +26,7 @@ namespace kernel
 namespace tools
 {
     class ExerciseConfig;
+    class IdManager;
 }
 
 namespace gui
@@ -45,7 +46,6 @@ class FormationModel;
 class FormationFactory_ABC;
 class GhostFactory_ABC;
 class GhostModel;
-class IdManager;
 class LimitsModel;
 class WeatherModel;
 class ProfilesModel;
@@ -106,7 +106,7 @@ public:
     void SetExerciseValidity( bool valid );
     void Purge();
     QString GetName() const;
-    IdManager& GetIdManager() const;
+    tools::IdManager& GetIdManager() const;
     kernel::SymbolFactory& GetSymbolsFactory() const;
     bool IsLoaded() const;
     //@}
@@ -122,7 +122,7 @@ private:
     //! @name Member data
     //@{
     const StaticModel& staticModel_;
-    IdManager& idManager_;
+    tools::IdManager& idManager_;
     kernel::Controllers& controllers_;
     TeamFactory_ABC& teamFactory_;
     kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory_; // LTO

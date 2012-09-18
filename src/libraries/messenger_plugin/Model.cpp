@@ -9,7 +9,6 @@
 
 #include "messenger_plugin_pch.h"
 #include "Model.h"
-#include "IdManager.h"
 #include "TacticalLinesModel.h"
 #include "DrawingsModel.h"
 #include "NotesModel.h"
@@ -22,6 +21,7 @@
 #include "tools/Loader_ABC.h"
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
+#include "tools/IdManager.h"
 #include <tools/XmlCrc32Signature.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
@@ -36,7 +36,7 @@ using namespace plugins::messenger;
 // -----------------------------------------------------------------------------
 Model::Model( const dispatcher::Config& config, dispatcher::ClientPublisher_ABC& clients, dispatcher::CompositeRegistrable& registrables )
     : config_       ( config )
-    , idManager_    ( new IdManager() )
+    , idManager_    ( new tools::IdManager() )
     , converter_    ( new kernel::CoordinateConverter( config ) )
     , tacticalLines_( *new TacticalLinesModel( clients, *idManager_, *converter_ ) )
     , drawings_     ( *new DrawingsModel( config, clients, *idManager_, *converter_ ) )

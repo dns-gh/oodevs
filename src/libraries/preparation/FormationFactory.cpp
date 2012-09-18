@@ -32,7 +32,7 @@
 // Name: FormationFactory constructor
 // Created: SBO 2006-09-19
 // -----------------------------------------------------------------------------
-FormationFactory::FormationFactory( kernel::Controllers& controllers, const ::StaticModel& staticModel, IdManager& idManager, kernel::SymbolFactory& symbolsFactory )
+FormationFactory::FormationFactory( kernel::Controllers& controllers, const ::StaticModel& staticModel, tools::IdManager& idManager, kernel::SymbolFactory& symbolsFactory )
     : controllers_   ( controllers )
     , staticModel_   ( staticModel )
     , idManager_     ( idManager )

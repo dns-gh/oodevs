@@ -133,7 +133,7 @@ struct UrbanModel::QuadTreeTraits
 // Name: UrbanModel constructor
 // Created: SLG 2009-10-20
 // -----------------------------------------------------------------------------
-UrbanModel::UrbanModel( kernel::Controllers& controllers, const ::StaticModel& staticModel, const tools::Resolver< kernel::Object_ABC >& objects, IdManager& idManager )
+UrbanModel::UrbanModel( kernel::Controllers& controllers, const ::StaticModel& staticModel, const tools::Resolver< kernel::Object_ABC >& objects, tools::IdManager& idManager )
     : controllers_        ( controllers )
     , staticModel_        ( staticModel )
     , objects_            ( objects )

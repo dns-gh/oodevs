@@ -22,7 +22,7 @@ ADN_ResourceNetworks_Data::ResourceNetworkInfos::ResourceNetworkInfos()
     , strName_    ( "" )
     , strColor_   ( "0xffffff" )
     , nProduction_( 0 )
-    , ptrCategory_( ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetNetworkUsableDotation(), 0, "" )
+    , ptrCategory_( ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetNetworkUsableDotation(), 0 )
 {
     strColor_.SetParentNode( *this );
     nProduction_.SetParentNode( *this );
@@ -94,7 +94,7 @@ void ADN_ResourceNetworks_Data::ResourceNetworkInfos::ReadArchive( xml::xistream
     {
         ADN_Equipement_Data::T_CategoryInfos_Vector& categories = ( *itDotation )->GetCategories();
         for( ADN_Equipement_Data::IT_CategoryInfos_Vector itCat = categories.begin(); itCat != categories.end(); ++itCat )
-            if( ( *itCat )->nMosId_ == id )
+            if( ( *itCat )->nMosId_ == id && ( *itCat )->bNetworkUsable_.GetData() )
             {
                 ptrCategory_ = *itCat;
                 break;

@@ -17,9 +17,13 @@ namespace kernel
     class Controllers;
 }
 
+namespace tools
+{
+    class IdManager;
+}
+
 class Model;
 class StaticModel;
-class IdManager;
 
 // =============================================================================
 /** @class  TeamFactory
@@ -32,7 +36,7 @@ class TeamFactory : public TeamFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             TeamFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel, IdManager& idManager );
+             TeamFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel, tools::IdManager& idManager );
     virtual ~TeamFactory();
     //@}
 
@@ -49,7 +53,7 @@ private:
     kernel::Controllers& controllers_;
     Model& model_;
     const StaticModel& staticModel_;
-    IdManager& idManager_;
+    tools::IdManager& idManager_;
     //@}
 };
 

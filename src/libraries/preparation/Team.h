@@ -25,7 +25,10 @@ namespace xml
     class xistream;
 }
 
-class IdManager;
+namespace tools
+{
+    class IdManager;
+}
 
 // =============================================================================
 /** @class  Team
@@ -40,8 +43,8 @@ class Team : public kernel::Team
 public:
     //! @name Constructors/Destructor
     //@{
-             Team( kernel::Controllers& controllers, IdManager& idManager );
-             Team( xml::xistream& xis, kernel::Controllers& controllers, IdManager& idManager );
+             Team( kernel::Controllers& controllers, tools::IdManager& idManager );
+             Team( xml::xistream& xis, kernel::Controllers& controllers, tools::IdManager& idManager );
     virtual ~Team();
     //@}
 };

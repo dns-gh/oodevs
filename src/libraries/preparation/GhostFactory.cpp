@@ -41,7 +41,7 @@
 // Created: ABR 2011-10-14
 // -----------------------------------------------------------------------------
 GhostFactory::GhostFactory( kernel::Controllers& controllers, Model& model, const ::StaticModel& staticModel,
-                            IdManager& idManager, kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory, kernel::SymbolFactory& symbolsFactory )
+                            tools::IdManager& idManager, kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory, kernel::SymbolFactory& symbolsFactory )
     : controllers_          ( controllers )
     , model_                ( model )
     , staticModel_          ( staticModel )

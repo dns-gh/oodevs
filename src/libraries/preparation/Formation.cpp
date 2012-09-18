@@ -10,7 +10,7 @@
 #include "preparation_pch.h"
 #include "Formation.h"
 #include "FormationHierarchies.h"
-#include "IdManager.h"
+#include "tools/IdManager.h"
 #include "LogisticBaseStates.h"
 #include "LogisticLevelAttritube.h"
 #include "clients_kernel/Controller.h"
@@ -30,7 +30,7 @@ using namespace kernel;
 // Name: Formation constructor
 // Created: SBO 2006-09-19
 // -----------------------------------------------------------------------------
-Formation::Formation( kernel::Controller& controller, E_NatureLevel level, IdManager& idManager )
+Formation::Formation( kernel::Controller& controller, E_NatureLevel level, tools::IdManager& idManager )
     : EntityImplementation< Formation_ABC >( controller, idManager.GetNextId(), "" )
     , level_( level )
 {
@@ -42,7 +42,7 @@ Formation::Formation( kernel::Controller& controller, E_NatureLevel level, IdMan
 // Name: Formation constructor
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-Formation::Formation( xml::xistream& xis, Controller& controller, IdManager& idManager )
+Formation::Formation( xml::xistream& xis, Controller& controller, tools::IdManager& idManager )
     : EntityImplementation< Formation_ABC >( controller, 0, "" )
 {
     std::string level, name;

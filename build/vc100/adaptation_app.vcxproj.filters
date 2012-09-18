@@ -463,9 +463,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Tr_Gen.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\IdentifierFactory.cpp">
-      <Filter>Source Files\Tools</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_DataException.cpp">
       <Filter>Source Files\Tools\Exceptions</Filter>
     </ClCompile>
@@ -1318,9 +1315,6 @@
       <Filter>Source Files\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Tr.h">
-      <Filter>Source Files\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\IdentifierFactory.h">
       <Filter>Source Files\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ObjectCreator_ABC.h">
