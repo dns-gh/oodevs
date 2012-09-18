@@ -13,6 +13,7 @@
 #include "ADN_Data_ABC.h"
 #include "ADN_Types.h"
 #include "ADN_Enums.h"
+#include "tools/IdManager.h"
 
 // =============================================================================
 /** @class  ADN_NBC_Datas
@@ -82,9 +83,9 @@ public:
     class NbcAgentInfos : public ADN_Ref_ABC
                         , public ADN_DataTreeNode_ABC
     {
-
     public:
                  NbcAgentInfos();
+                 NbcAgentInfos( unsigned int id );
         virtual ~NbcAgentInfos() {}
 
         virtual std::string GetNodeName();
@@ -97,9 +98,9 @@ public:
         void WriteArchive( xml::xostream& output );
 
     public:
+        ADN_Type_Int nId_;
         ADN_Type_String strName_;
         ADN_Type_String category_;
-        int nMosId_;
         NbcIntoxInfos liquidInfos_;
         ADN_Type_Bool bGazPresent_;
         ADN_Type_Bool bLiquidPresent_;
@@ -120,8 +121,6 @@ public:
 
     T_NbcAgentInfos_Vector& GetNbcAgentVector();
 
-    int GetNextId();
-
 public:
     ADN_Type_Double rNbcSuitMaxSpeedMultiplier_;
     ADN_Type_Double rNbcSuitReloadSpeedMultiplier_;
@@ -135,8 +134,10 @@ private:
     void WriteArchive( xml::xostream& output );
 
 private:
-    int nNextId_;
     T_NbcAgentInfos_Vector vNbcAgent_;
+
+private:
+    static tools::IdManager idManager_;
 };
 
 // -----------------------------------------------------------------------------

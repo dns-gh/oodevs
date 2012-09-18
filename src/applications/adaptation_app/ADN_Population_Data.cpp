@@ -26,6 +26,8 @@
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
 
+tools::IdManager ADN_Population_Data::idManager_;
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Population_Data::FireEffectProtectionInfos::FireEffectProtectionInfos
 // Created: SBO 2005-10-24
@@ -511,6 +513,7 @@ void ADN_Population_Data::UrbanEffectInfos::WriteArchive( xml::xostream& output 
 ADN_Population_Data::PopulationInfos::PopulationInfos()
     : ADN_Ref_ABC()
     , ADN_DataTreeNode_ABC()
+    , nId_                  ( ADN_Population_Data::idManager_.GetNextId() )
     , ptrModel_             ( ADN_Workspace::GetWorkspace().GetModels().GetData().GetPopulationModelsInfos(), 0 )
     , rConcentrationDensity_( 0. )
     , rMoveDensity_         ( 0. )
@@ -521,6 +524,38 @@ ADN_Population_Data::PopulationInfos::PopulationInfos()
     , vSpeedEffectInfos_    ()
     , vFireEffectInfos_     ()
     , vFireEffectRoeInfos_  ()
+{
+    Initialize();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationInfos::PopulationInfos
+// Created: APE 2004-12-02
+// -----------------------------------------------------------------------------
+ADN_Population_Data::PopulationInfos::PopulationInfos( unsigned int id )
+    : ADN_Ref_ABC()
+    , ADN_DataTreeNode_ABC()
+    , nId_                  ( id )
+    , ptrModel_             ( ADN_Workspace::GetWorkspace().GetModels().GetData().GetPopulationModelsInfos(), 0 )
+    , rConcentrationDensity_( 0. )
+    , rMoveDensity_         ( 0. )
+    , rMoveSpeed_           ( 0. )
+    , repartition_          ( tools::translate( "Population_Data", "Crowd" ) )
+    , armedIndividuals_     ( 0 )
+    , decontaminationDelay_ ( "300s" )
+    , vSpeedEffectInfos_    ()
+    , vFireEffectInfos_     ()
+    , vFireEffectRoeInfos_  ()
+{
+    Initialize();
+    ADN_Population_Data::idManager_.Lock( id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::PopulationInfos::Initialize
+// Created: ABR 2012-09-18
+// -----------------------------------------------------------------------------
+void ADN_Population_Data::PopulationInfos::Initialize()
 {
     for( int i = 0; i < eNbrPopulationAttitude; ++i )
     {
@@ -544,7 +579,6 @@ ADN_Population_Data::PopulationInfos::PopulationInfos()
     }
     this->BindExistenceTo( &ptrModel_ );
 }
-
 // -----------------------------------------------------------------------------
 // Name: PopulationInfos::~PopulationInfos
 // Created: APE 2004-12-02
@@ -705,13 +739,13 @@ void ADN_Population_Data::PopulationInfos::ReadUrbanEffect( xml::xistream& input
 // Name: PopulationInfos::WriteArchive
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
-void ADN_Population_Data::PopulationInfos::WriteArchive( xml::xostream& output, int nMosId ) const
+void ADN_Population_Data::PopulationInfos::WriteArchive( xml::xostream& output ) const
 {
     repartition_.CheckNoError( "ADN_Population_Data", strName_.GetData().c_str() );
 
     output << xml::start( "population" )
             << xml::attribute( "name", strName_ )
-            << xml::attribute( "id", nMosId )
+            << xml::attribute( "id", nId_ )
             << xml::attribute( "decisional-model", ptrModel_.GetData()->strName_ )
             << xml::attribute( "concentration-density", rConcentrationDensity_ )
             << xml::attribute( "moving-base-density", rMoveDensity_ )
@@ -830,6 +864,7 @@ void ADN_Population_Data::FilesNeeded( T_StringList& vFiles ) const
 // -----------------------------------------------------------------------------
 void ADN_Population_Data::Reset()
 {
+    idManager_.Reset();
     vPopulation_.Reset();
 }
 
@@ -855,7 +890,7 @@ void ADN_Population_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Population_Data::ReadPopulation( xml::xistream& input )
 {
-    std::auto_ptr<PopulationInfos> spNew( new PopulationInfos() );
+    std::auto_ptr< PopulationInfos > spNew( new PopulationInfos( input.attribute< unsigned int >( "id" ) ) );
     spNew->ReadArchive( input );
     vPopulation_.AddItem( spNew.release() );
 }
@@ -872,9 +907,8 @@ void ADN_Population_Data::WriteArchive( xml::xostream& output )
     output << xml::start( "time-between-nbc-applications" )
             << xml::attribute( "delay", timeBetweenNbcApplication_.GetData() )
            << xml::end;
-    int n = 0;
-    for( CIT_PopulationInfosVector it = vPopulation_.begin(); it != vPopulation_.end(); ++it, ++n )
-        (*it)->WriteArchive( output, n );
+    for( CIT_PopulationInfosVector it = vPopulation_.begin(); it != vPopulation_.end(); ++it )
+        (*it)->WriteArchive( output );
     output << xml::end;
 }
 

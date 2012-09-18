@@ -58,6 +58,7 @@ public:
     {
     public:
                  BreakdownInfo();
+                 BreakdownInfo( unsigned int id );
         virtual ~BreakdownInfo();
 
         virtual std::string GetNodeName();
@@ -100,8 +101,6 @@ public:
     T_BreakdownInfoVector& GetBreakdowns();
     ADN_Breakdowns_Data::BreakdownInfo* FindBreakdown( const std::string& strName );
     QStringList GetBreakdownsThatUse( ADN_Equipement_Data::CategoryInfo& part );
-
-    int GetNextId();
     //@}
 
 private:
@@ -111,9 +110,11 @@ private:
     void WriteArchive( xml::xostream& output );
 
 public:
-    int nNextId_;
     ADN_Type_String strAverageDiagnosticTime_;
     T_BreakdownInfoVector vBreakdowns_;
+
+private:
+    static tools::IdManager idManager_;
 };
 
 #endif // __ADN_Breakdowns_Data_h_

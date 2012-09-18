@@ -507,7 +507,7 @@ void ADN_Equipement_GUI::NetworkUsableActivated( int state )
 
     bool founded = false;
     for( ADN_Equipement_Data::CIT_CategoryInfos_Vector it = networkUsableVector.begin(); it != networkUsableVector.end() && !founded; ++it )
-        if( ( *it )->nMosId_ == current->nMosId_ )
+        if( ( *it )->nId_.GetData() == current->nId_.GetData() )
             founded = true;
 
     if( state == Qt::Checked && !founded )
@@ -524,7 +524,7 @@ void ADN_Equipement_GUI::NetworkUsableActivated( int state )
             if( networkInfo )
             {
                 ADN_Equipement_Data::CategoryInfo* equipmentInfo = networkInfo->ptrCategory_.GetData();
-                if( equipmentInfo && equipmentInfo->nMosId_ == current->nMosId_ )
+                if( equipmentInfo && equipmentInfo->nId_.GetData() == current->nId_.GetData() )
                     associatedResourceNetwork += ((*it)->strName_.GetData() + '\n').c_str();
             }
         }

@@ -18,6 +18,8 @@
 #pragma warning( pop )
 #include <boost/lexical_cast.hpp>
 
+tools::IdManager ADN_People_Data::idManager_;
+
 // -----------------------------------------------------------------------------
 // Name: EventInfos::EventInfos
 // Created: LGY 2011-01-18
@@ -164,6 +166,7 @@ void ADN_People_Data::PeopleInfosConsumption::WriteArchive( xml::xostream& xos )
 ADN_People_Data::PeopleInfos::PeopleInfos()
     : ADN_Ref_ABC()
     , ADN_DataTreeNode_ABC()
+    , nId_                ( ADN_People_Data::idManager_.GetNextId() )
     , ptrModel_           ( ADN_Workspace::GetWorkspace().GetPopulation().GetData().GetPopulation(), 0 )
     , repartition_        ( tools::translate( "People_Data", "Population" ) )
     , securityLossOnFire_ ( 0 )
@@ -174,6 +177,27 @@ ADN_People_Data::PeopleInfos::PeopleInfos()
     BindExistenceTo( &ptrModel_ );
     consumptions_.SetParentNode( *this );
     consumptions_.SetItemTypeName( "une consommation" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PeopleInfos::PeopleInfos
+// Created: SLG 2010-11-22
+// -----------------------------------------------------------------------------
+ADN_People_Data::PeopleInfos::PeopleInfos( unsigned int id )
+    : ADN_Ref_ABC()
+    , ADN_DataTreeNode_ABC()
+    , nId_                ( id )
+    , ptrModel_           ( ADN_Workspace::GetWorkspace().GetPopulation().GetData().GetPopulation(), 0 )
+    , repartition_        ( tools::translate( "People_Data", "Population" ) )
+    , securityLossOnFire_ ( 0 )
+    , securityGainPerHour_( 0 )
+    , healthNeed_         ( 0 )
+    , transferTime_       ( "0h" )
+{
+    BindExistenceTo( &ptrModel_ );
+    consumptions_.SetParentNode( *this );
+    consumptions_.SetItemTypeName( "une consommation" );
+    ADN_People_Data::idManager_.Lock( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -318,14 +342,14 @@ const std::string ADN_People_Data::PeopleInfos::CheckErrors() const
 // Name: PeopleInfos::WriteArchive
 // Created: SLG 2010-11-22
 // -----------------------------------------------------------------------------
-void ADN_People_Data::PeopleInfos::WriteArchive( xml::xostream& output, int mosId ) const
+void ADN_People_Data::PeopleInfos::WriteArchive( xml::xostream& output ) const
 {
     const std::string error = CheckErrors();
     if( error != "" )
         throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).toAscii().constData(), error );
     output << xml::start( "population" )
             << xml::attribute( "name", strName_ )
-            << xml::attribute( "id", mosId )
+            << xml::attribute( "id", nId_ )
             << xml::attribute( "associated-crowd", ptrModel_.GetData()->strName_ );
     if( !strAngryCrowdMission_.GetData().empty() )
         output << xml::attribute( "angry-crowd-mission", strAngryCrowdMission_ );
@@ -402,6 +426,7 @@ ADN_People_Data::~ADN_People_Data()
 // -----------------------------------------------------------------------------
 void ADN_People_Data::Reset()
 {
+    idManager_.Reset();
     vPeople_.Reset();
 }
 
@@ -431,7 +456,7 @@ void ADN_People_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_People_Data::ReadPeople( xml::xistream& input )
 {
-    std::auto_ptr< PeopleInfos > spNew( new PeopleInfos() );
+    std::auto_ptr< PeopleInfos > spNew( new PeopleInfos( input.attribute< unsigned int >( "id" ) ) );
     spNew->ReadArchive( input );
     vPeople_.AddItem( spNew.release() );
 }
@@ -444,9 +469,8 @@ void ADN_People_Data::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "populations" );
     ADN_Tools::AddSchema( output, "Inhabitants" );
-    int n = 0;
-    for( CIT_PeopleInfosVector it = vPeople_.begin(); it != vPeople_.end(); ++it, ++n )
-        ( *it )->WriteArchive( output, n );
+    for( CIT_PeopleInfosVector it = vPeople_.begin(); it != vPeople_.end(); ++it )
+        ( *it )->WriteArchive( output );
     output << xml::end;
 }
 

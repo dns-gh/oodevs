@@ -611,7 +611,10 @@ public:
 
     public:
         ComposanteInfos();
+        ComposanteInfos( unsigned int id );
         ~ComposanteInfos();
+
+        void Initialize();
 
         virtual std::string GetNodeName();
         std::string GetItemName();
@@ -629,9 +632,9 @@ public:
         bool IsValidDatabase() const;
 
     public:
+        ADN_Type_Int    nId_;
         ADN_Type_String strName_;
         ADN_Type_String strAdditionalComments_;
-        ADN_Type_Int nMosId_;
         ADN_Type_String strCodeEMAT6_;
         ADN_Type_String strCodeEMAT8_;
         ADN_Type_String strCodeLFRIL_;
@@ -683,7 +686,7 @@ public:
             ~CmpId(){}
 
             bool operator()( ComposanteInfos* tgtnfos ) const
-            { return tgtnfos->nMosId_.GetData() ==val_; }
+            { return tgtnfos->nId_.GetData() ==val_; }
 
         private:
             int val_;
@@ -705,8 +708,6 @@ public:
     T_ComposanteInfos_Vector& GetComposantes();
     ComposanteInfos* FindComposante( const std::string& strName );
 
-    int GetNextId();
-
     QStringList GetComposantesThatUse( ADN_Radars_Data::RadarInfos& sensor );
     QStringList GetComposantesThatUse( ADN_Sensors_Data::SensorInfos& sensor );
     QStringList GetComposantesThatUse( ADN_Weapons_Data::WeaponInfos& weapon );
@@ -723,9 +724,10 @@ private:
     void WriteArchive( xml::xostream& output );
 
 public:
-    int nNextId_;
-
     T_ComposanteInfos_Vector vComposantes_;
+
+private:
+    static tools::IdManager idManager_;
 };
 
 //-----------------------------------------------------------------------------

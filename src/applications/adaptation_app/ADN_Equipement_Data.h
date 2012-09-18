@@ -44,6 +44,7 @@ public:
     public:
                  CategoryInfo(); // For template usage.
         explicit CategoryInfo( ResourceInfos& parentDotation );
+                 CategoryInfo( ResourceInfos& parentDotation, unsigned int id );
 
         virtual std::string GetNodeName();
         std::string GetItemName();
@@ -56,10 +57,10 @@ public:
         virtual void Initialize();
 
     public:
+        ADN_Type_Int    nId_;
         ResourceInfos&  parentResource_;
         ADN_Type_String strName_;
         ADN_Type_String category_;
-        int             nMosId_;
         ADN_Type_String strCodeEMAT6_;
         ADN_Type_String strCodeEMAT8_;
         ADN_Type_String strCodeLFRIL_;
@@ -161,6 +162,7 @@ public:
 
     public:
         explicit AmmoCategoryInfo( ResourceInfos& parentDotation );
+                 AmmoCategoryInfo( ResourceInfos& parentDotation, unsigned int id );
 
         CategoryInfo* CreateCopy();
 
@@ -236,7 +238,6 @@ public:
     CategoryInfo*           FindEquipementCategory( const std::string& strDotationName, const std::string& strCategoryName );
     CategoryInfo*           FindEquipementCategory( const std::string& strCategoryName );
 
-    int                     GetNextCatId();
     void                    Initialize();
 
     QStringList GetEquipmentsThatUse( ADN_Objects_Data_ObjectInfos& object );
@@ -251,10 +252,11 @@ private:
     void WriteArchive( xml::xostream& );
 
 private:
-    int nNextCatId_;
-
     T_ResourceInfos_Vector resources_;
     T_CategoryInfos_Vector networkUsableResources_;
+
+private:
+    static tools::IdManager idManager_;
 };
 
 // -----------------------------------------------------------------------------

@@ -21,15 +21,13 @@ class LogisticSupplyClass : public ADN_Ref_ABC
 {
 public:
     LogisticSupplyClass();
-    LogisticSupplyClass( const std::string name, int id );
+    LogisticSupplyClass( const std::string& name, int id );
     LogisticSupplyClass* CreateCopy();
     std::string GetItemName() { return strName_.GetData(); }
-    void SetId( int id );
-    int GetId();
 
 public:
     ADN_Type_String strName_;
-    ADN_Type_Int id_;
+    ADN_Type_Int nId_;
 };
 
 typedef ADN_Type_Vector_ABC< LogisticSupplyClass > T_LogisticSupplyClass_Vector;

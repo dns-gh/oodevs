@@ -17,6 +17,8 @@
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
 
+tools::IdManager ADN_NBC_Datas::idManager_;
+
 // -----------------------------------------------------------------------------
 // Name: ADN_NBC_Datas::NbcIntoxInfos
 // Created: SBO 2006-10-30
@@ -256,7 +258,7 @@ ADN_NBC_Datas::NbcAgentInfos::NbcAgentInfos()
     : ADN_Ref_ABC()
     , ADN_DataTreeNode_ABC()
     , strName_()
-    , nMosId_( ADN_Workspace::GetWorkspace().GetNbc().GetData().GetNextId() )
+    , nId_( ADN_NBC_Datas::idManager_.GetNextId() )
     , liquidInfos_( "liquide" )
     , category_( "chemical" )
     , bGazPresent_( false )
@@ -269,6 +271,30 @@ ADN_NBC_Datas::NbcAgentInfos::NbcAgentInfos()
     bGazPresent_.SetParentNode( *this );
     bLiquidPresent_.SetParentNode( *this );
     gazInfos_.SetParentNode( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NbcAgentInfos::NbcAgentInfos
+// Created: AGN 2004-05-06
+// -----------------------------------------------------------------------------
+ADN_NBC_Datas::NbcAgentInfos::NbcAgentInfos( unsigned int id )
+    : ADN_Ref_ABC()
+    , ADN_DataTreeNode_ABC()
+    , strName_()
+    , nId_( id )
+    , liquidInfos_( "liquide" )
+    , category_( "chemical" )
+    , bGazPresent_( false )
+    , bLiquidPresent_( false )
+    , gazInfos_()
+{
+    strName_.SetDataName( "le nom d'" );
+    strName_.SetParentNode( *this );
+    liquidInfos_.SetParentNode( *this );
+    bGazPresent_.SetParentNode( *this );
+    bLiquidPresent_.SetParentNode( *this );
+    gazInfos_.SetParentNode( *this );
+    ADN_NBC_Datas::idManager_.Lock( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -346,7 +372,7 @@ void ADN_NBC_Datas::NbcAgentInfos::WriteArchive( xml::xostream& output )
     output << xml::start( "agent" )
            << xml::attribute( "name", strName_ )
            << xml::attribute( "category", category_ )
-           << xml::attribute( "id", nMosId_ );
+           << xml::attribute( "id", nId_ );
     if( bLiquidPresent_.GetData() )
         liquidInfos_.WriteArchive( output );
     if( bGazPresent_.GetData() )
@@ -360,7 +386,6 @@ void ADN_NBC_Datas::NbcAgentInfos::WriteArchive( xml::xostream& output )
 // -----------------------------------------------------------------------------
 ADN_NBC_Datas::ADN_NBC_Datas()
     : ADN_Data_ABC                  ()
-    , nNextId_                      ( 1 )
     , rContaminationDistance_       ( 0.f )
     , rContaminationQuantityGiven_  ( 0.f )
     , rWindSpeedLimitForSpreading_  ( 0.f )
@@ -394,7 +419,7 @@ void ADN_NBC_Datas::FilesNeeded( T_StringList& vFiles ) const
 // -----------------------------------------------------------------------------
 void ADN_NBC_Datas::Reset()
 {
-    nNextId_ = 1;
+    idManager_.Reset();
     vNbcAgent_.Reset();
 }
 
@@ -404,7 +429,7 @@ void ADN_NBC_Datas::Reset()
 // -----------------------------------------------------------------------------
 void ADN_NBC_Datas::ReadAgent( xml::xistream& input )
 {
-    std::auto_ptr<NbcAgentInfos> spNew( new NbcAgentInfos() );
+    std::auto_ptr< NbcAgentInfos > spNew( new NbcAgentInfos( input.attribute< unsigned int >( "id" ) ) );
     spNew->ReadArchive( input );
     vNbcAgent_.AddItem( spNew.release() );
 }
@@ -452,13 +477,4 @@ void ADN_NBC_Datas::WriteArchive( xml::xostream& output )
         (*itAgent)->WriteArchive( output );
     output << xml::end;
     output << xml::end;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_NBC_Datas::GetNextId
-// Created: AGN 2004-05-06
-// -----------------------------------------------------------------------------
-int ADN_NBC_Datas::GetNextId()
-{
-    return nNextId_++;
 }

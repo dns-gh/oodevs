@@ -174,7 +174,10 @@ public:
     {
     public:
                  UnitInfos();
+                 UnitInfos( unsigned int id );
         virtual ~UnitInfos();
+
+        void Initialize();
 
         virtual std::string GetNodeName();
         std::string GetItemName();
@@ -190,10 +193,10 @@ public:
         void CleanupNature();
 
     public:
+        ADN_Type_Int                                                nId_;
         ADN_Type_Enum<E_AgentTypePion,eNbrAgentTypePion>            eTypeId_;
         ADN_Type_String                                             strName_;
         ADN_TypePtr_InVector_ABC<ADN_Models_Data::ModelInfos>       ptrModel_;
-        ADN_Type_Int                                                nMosId_;
         ADN_Type_Enum<E_NatureLevel,eNbrNatureLevel>                eNatureLevel_;
         ADN_Type_Enum<E_NatureAtlasType,eNbrNatureAtlas>            eNatureAtlas_;
         ADN_Type_String                                             strNature_;
@@ -254,8 +257,6 @@ public:
     T_UnitInfos_Vector& GetUnitsInfos();
     UnitInfos*          FindUnit( const std::string strName );
 
-    int GetNextId();
-
     QStringList GetUnitsThatUse( ADN_Composantes_Data::ComposanteInfos& composante );
     QStringList GetUnitsThatUse( ADN_Models_Data::ModelInfos& model );
     QStringList GetUnitsThatUse( helpers::LogisticSupplyClass& supply );
@@ -266,8 +267,10 @@ private:
     void WriteArchive( xml::xostream& output );
 
 private:
-    int nNextId_;
     T_UnitInfos_Vector  vUnits_;
+
+private:
+    static tools::IdManager idManager_;
 };
 
 //-----------------------------------------------------------------------------

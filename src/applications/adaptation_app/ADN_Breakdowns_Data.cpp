@@ -19,6 +19,8 @@
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
 
+tools::IdManager ADN_Breakdowns_Data::idManager_;
+
 // -----------------------------------------------------------------------------
 // Name: RepairPartInfo::RepairPartInfo
 // Created: APE 2005-03-16
@@ -95,13 +97,27 @@ void ADN_Breakdowns_Data::RepairPartInfo::WriteArchive( xml::xostream& output )
 // Created: APE 2005-03-16
 // -----------------------------------------------------------------------------
 ADN_Breakdowns_Data::BreakdownInfo::BreakdownInfo()
+    : ADN_Ref_ABC          ()
+    , ADN_DataTreeNode_ABC ()
+    , nId_                 ( ADN_Breakdowns_Data::idManager_.GetNextId() )
+    , repairTime_          ( "0s" )
+    , repairTimeVariance_  ( "0s" )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: BreakdownInfo::BreakdownInfo
+// Created: APE 2005-03-16
+// -----------------------------------------------------------------------------
+ADN_Breakdowns_Data::BreakdownInfo::BreakdownInfo( unsigned int id )
 : ADN_Ref_ABC          ()
 , ADN_DataTreeNode_ABC ()
-, nId_                 ( ADN_Workspace::GetWorkspace().GetBreakdowns().GetData().GetNextId() )
+, nId_                 ( id )
 , repairTime_          ( "0s" )
 , repairTimeVariance_  ( "0s" )
 {
-    // NOTHING
+    ADN_Breakdowns_Data::idManager_.Lock( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -201,7 +217,6 @@ void ADN_Breakdowns_Data::BreakdownInfo::WriteArchive( xml::xostream& output )
 // -----------------------------------------------------------------------------
 ADN_Breakdowns_Data::ADN_Breakdowns_Data()
     : ADN_Data_ABC             ()
-    , nNextId_                 ( 1 )
     , strAverageDiagnosticTime_( "0s" )
 {
     // NOTHING
@@ -226,21 +241,12 @@ void ADN_Breakdowns_Data::FilesNeeded( T_StringList& vFiles ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Breakdowns_Data::GetNextId
-// Created: APE 2005-03-18
-// -----------------------------------------------------------------------------
-int ADN_Breakdowns_Data::GetNextId()
-{
-    return nNextId_++;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_Breakdowns_Data::Reset
 // Created: APE 2005-03-17
 // -----------------------------------------------------------------------------
 void ADN_Breakdowns_Data::Reset()
 {
-    nNextId_ = 1;
+    idManager_.Reset();
     vBreakdowns_.Reset();
 }
 
@@ -297,7 +303,7 @@ void ADN_Breakdowns_Data::ReadCategory( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Breakdowns_Data::ReadBreakdown( xml::xistream& input, const E_BreakdownNTI& nti )
 {
-    std::auto_ptr<BreakdownInfo> spNew( new BreakdownInfo() );
+    std::auto_ptr<BreakdownInfo> spNew( new BreakdownInfo( input.attribute< unsigned int >( "id" ) ) );
     spNew->ReadArchive( input );
     spNew->nNTI_ = nti;
     vBreakdowns_.AddItem( spNew.release() );

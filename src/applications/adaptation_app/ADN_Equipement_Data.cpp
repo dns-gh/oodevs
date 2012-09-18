@@ -21,6 +21,7 @@
 #include <memory>
 
 ADN_Equipement_Data::ResourceInfos* gpDummyDotationInfos;
+tools::IdManager ADN_Equipement_Data::idManager_;
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Equipement_Data::CategoryInfo
@@ -33,6 +34,7 @@ ADN_Equipement_Data::ResourceInfos* gpDummyDotationInfos;
 ADN_Equipement_Data::CategoryInfo::CategoryInfo()
     : ADN_Ref_ABC         ( "ADN_Equipement_Data::CategoryInfo" )
     , ADN_DataTreeNode_ABC()
+    , nId_( ADN_Equipement_Data::idManager_.GetNextId() )
     , parentResource_   ( *gpDummyDotationInfos )
     , ptrResourceNature_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), 0 )
     , ptrLogisticSupplyClass_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetLogisticSupplyClasses(), 0 )
@@ -47,10 +49,10 @@ ADN_Equipement_Data::CategoryInfo::CategoryInfo()
 ADN_Equipement_Data::CategoryInfo::CategoryInfo( ResourceInfos& parentDotation )
     : ADN_Ref_ABC         ( "ADN_Equipement_Data::CategoryInfo" )
     , ADN_DataTreeNode_ABC()
+    , nId_                   ( ADN_Equipement_Data::idManager_.GetNextId() )
     , parentResource_        ( parentDotation )
     , strName_               ()
     , category_              ( ENT_Tr::ConvertFromDotationFamily( parentDotation.nType_ ) )
-    , nMosId_                ( ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetNextCatId() )
     , strCodeEMAT6_          ()
     , strCodeEMAT8_          ()
     , strCodeLFRIL_          ()
@@ -65,6 +67,34 @@ ADN_Equipement_Data::CategoryInfo::CategoryInfo( ResourceInfos& parentDotation )
     BindExistenceTo( &ptrResourceNature_ );
     strName_.SetDataName( "le nom d'" );
     strName_.SetParentNode( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CategoryInfo::CategoryInfo
+// Created: APE 2004-11-15
+// -----------------------------------------------------------------------------
+ADN_Equipement_Data::CategoryInfo::CategoryInfo( ResourceInfos& parentDotation, unsigned int id )
+    : ADN_Ref_ABC         ( "ADN_Equipement_Data::CategoryInfo" )
+    , ADN_DataTreeNode_ABC()
+    , nId_                   ( id )
+    , parentResource_        ( parentDotation )
+    , strName_               ()
+    , category_              ( ENT_Tr::ConvertFromDotationFamily( parentDotation.nType_ ) )
+    , strCodeEMAT6_          ()
+    , strCodeEMAT8_          ()
+    , strCodeLFRIL_          ()
+    , strCodeNNO_            ()
+    , ptrResourceNature_     ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), 0 )
+    , ptrLogisticSupplyClass_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetLogisticSupplyClasses(), 0 )
+    , rNbrInPackage_         ( 1. )
+    , rPackageVolume_        ( 1. )
+    , rPackageWeight_        ( 1. )
+    , bNetworkUsable_        ( false )
+{
+    BindExistenceTo( &ptrResourceNature_ );
+    strName_.SetDataName( "le nom d'" );
+    strName_.SetParentNode( *this );
+    ADN_Equipement_Data::idManager_.Lock( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -166,13 +196,13 @@ void ADN_Equipement_Data::CategoryInfo::WriteContent( xml::xostream& output ) co
 {
     output << xml::attribute( "category", category_ )
            << xml::attribute( "name", strName_ )
-           << xml::attribute( "id", nMosId_ )
+           << xml::attribute( "id", nId_ )
            << xml::attribute( "package-size", rNbrInPackage_ )
            << xml::attribute( "package-mass", rPackageWeight_ )
            << xml::attribute( "package-volume", rPackageVolume_ )
            << xml::attribute( "nature", ptrResourceNature_.GetData()->strName_.GetData() )
            << xml::attribute( "logistic-supply-class", ptrLogisticSupplyClass_.GetData()->strName_.GetData() )
-           << xml::attribute( "id-nature", ptrResourceNature_.GetData()->GetId() )
+           << xml::attribute( "id-nature", ptrResourceNature_.GetData()->nId_ )
            << xml::attribute( "codeEMAT6", strCodeEMAT6_ )
            << xml::attribute( "codeEMAT8", strCodeEMAT8_ )
            << xml::attribute( "codeLFRIL", strCodeLFRIL_ )
@@ -470,7 +500,27 @@ ADN_Equipement_Data::AmmoCategoryInfo::AmmoCategoryInfo( ResourceInfos& parentDo
     , attritions_           ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos() )
     , modifUrbanBlocks_     ( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos() )
 {
-    // NOTHING
+    BindExistenceTo( &( indirectAmmoInfos_.objectType_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AmmoCategoryInfo::AmmoCategoryInfo
+// Created: APE 2004-11-16
+// -----------------------------------------------------------------------------
+ADN_Equipement_Data::AmmoCategoryInfo::AmmoCategoryInfo( ResourceInfos& parentDotation, unsigned int id )
+    : CategoryInfo( parentDotation, id )
+    , bIED_                 ( false )
+    , bDirect_              ( false )
+    , bIndirect_            ( false )
+    , bIlluminating_        ( false )
+    , fRange_               ( 0 )
+    , bMaintainIllumination_( false )
+    , bGuided_              ( false )
+    , bMaintainGuidance_    ( false )
+    , fGuidanceRange_       ( 0 )
+    , attritions_           ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos() )
+    , modifUrbanBlocks_     ( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos() )
+{
     BindExistenceTo( &( indirectAmmoInfos_.objectType_ ) );
 }
 
@@ -737,9 +787,9 @@ void ADN_Equipement_Data::ResourceInfos::ReadArchive( xml::xistream& input )
 {
     std::auto_ptr< CategoryInfo > spNew;
     if( strName_.GetData() == "munition" || strName_.GetData() == "explosif" || strName_.GetData() == "mine" )
-        spNew.reset( new AmmoCategoryInfo( *this ) );
+        spNew.reset( new AmmoCategoryInfo( *this, input.attribute< unsigned int >( "id" ) ) );
     else
-        spNew.reset( new CategoryInfo( *this ) );
+        spNew.reset( new CategoryInfo( *this, input.attribute< unsigned int >( "id" ) ) );
     spNew->ReadArchive( input );
     categories_.AddItem( spNew.release() );
 }
@@ -770,7 +820,6 @@ void ADN_Equipement_Data::ResourceInfos::Initialize()
 // -----------------------------------------------------------------------------
 ADN_Equipement_Data::ADN_Equipement_Data()
     : ADN_Data_ABC()
-    , nNextCatId_( 1 )
     , resources_ ()
 {
     for( int n = 0; n < eNbrDotationFamily; ++n )
@@ -801,7 +850,7 @@ void ADN_Equipement_Data::FilesNeeded(T_StringList& files ) const
 // -----------------------------------------------------------------------------
 void ADN_Equipement_Data::Reset()
 {
-    nNextCatId_ = 1;
+    idManager_.Reset();
     for( IT_ResourceInfos_Vector it = resources_.begin(); it != resources_.end(); ++it )
         (*it)->Reset();
 }
@@ -893,15 +942,6 @@ ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Data::FindEquipementCategory( 
             return category;
     }
     return 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Equipement_Data::GetNextCatId
-// Created: APE 2004-12-02
-// -----------------------------------------------------------------------------
-int ADN_Equipement_Data::GetNextCatId()
-{
-    return nNextCatId_++;
 }
 
 // -----------------------------------------------------------------------------

@@ -245,7 +245,7 @@ public:
     T_StringList toDeleteMissionSheets_;
 
 private:
-    static tools::IdManager idFactory_;
+    static tools::IdManager idManager_;
 };
 
 #endif // __ADN_Missions_Data_h_
