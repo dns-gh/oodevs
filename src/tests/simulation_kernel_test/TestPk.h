@@ -10,6 +10,7 @@
 #ifndef __TestPK_h_
 #define __TestPK_h_
 
+#include "SingletonTerminator.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationNature.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationLogisticType.h"
@@ -62,15 +63,8 @@ public:
         PHY_Volume::Initialize( xisVolumes );
     }
 
-    virtual ~TestPK()
-    {
-        PHY_MaterialCompositionType::Terminate();
-        PHY_Protection::Terminate();
-        PHY_Volume::Terminate();
-        PHY_DotationNature::Terminate();
-        PHY_DotationLogisticType::Terminate();
-        PHY_DotationType::Terminate();
-    }
+private:
+    SingletonTerminator terminator_;
 };
 
 #endif // __TestPK_h_

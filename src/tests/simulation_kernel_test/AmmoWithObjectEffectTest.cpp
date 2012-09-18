@@ -1,4 +1,5 @@
 #include "simulation_kernel_test_pch.h"
+#include "SingletonTerminator.h"
 #include "MockAgent.h"
 #include "MockArmy.h"
 #include "MockMIL_EntityManager_ABC.h"
@@ -51,6 +52,7 @@ namespace
 
 BOOST_AUTO_TEST_CASE( TestScramblingAmmo )
 {
+    SingletonTerminator terminator;
     WorldInitialize( "worldwide/Paris" ); // $$$$ because used in asn and in destructor of action!!!
     MockNET_Publisher_ABC mockPublisher;
 
@@ -112,8 +114,6 @@ BOOST_AUTO_TEST_CASE( TestScramblingAmmo )
         MOCK_EXPECT( pion.GetArmy ).once().returns( boost::ref( mockArmy ) );
         effectManager.Update();
         mock::verify( entityManager );
-
-        PHY_IndirectFireDotationClass::Terminate();
     }
 
     TER_World::DestroyWorld();

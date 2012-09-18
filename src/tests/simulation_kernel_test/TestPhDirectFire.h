@@ -10,6 +10,7 @@
 #ifndef __TestPhDirectFire_h_
 #define __TestPhDirectFire_h_
 
+#include "SingletonTerminator.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationNature.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
@@ -28,7 +29,6 @@ class TestPhDirectFire : public tools::Role_ABC
 public:
     typedef TestPhDirectFire RoleInterface;
     TestPhDirectFire( MIL_Time_ABC& time )
-        : time_         ( time )
     {
         xml::xistringstream xisProtection( "<protections><protection name='protection1' type='humain'><neutralization average-time='10s' variance='1s'/></protection></protections>" );
         PHY_Protection::Initialize( xisProtection );
@@ -56,26 +56,16 @@ public:
             "<reloading duration='20s' munition='30'/><direct-fire><hit-probabilities target='Heavy'><hit-probability distance='0' percentage='1'/>"
             "<hit-probability distance='1000' percentage='0.9'/><hit-probability distance='1500' percentage='0.8'/></hit-probabilities></direct-fire>"
             "</weapon-system></weapons>" );
-        PHY_WeaponType::Initialize( time_, xisWeapon );
+        PHY_WeaponType::Initialize( time, xisWeapon );
     }
 
-    virtual ~TestPhDirectFire()
-    {
-        PHY_LauncherType::Terminate();
-        PHY_WeaponType::Terminate();
-        PHY_Protection::Terminate();
-        PHY_Volume::Terminate();
-        PHY_DotationNature::Terminate();
-        PHY_DotationLogisticType::Terminate();
-        PHY_DotationType::Terminate();
-    }
     virtual void Execute() const
     {
         //TO DO
     }
 
 private:
-    MIL_Time_ABC& time_;
+    SingletonTerminator terminator_;
 };
 
 #endif // __TestIndirectFireModifier_h_

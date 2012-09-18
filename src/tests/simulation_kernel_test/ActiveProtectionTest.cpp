@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_test_pch.h"
+#include "SingletonTerminator.h"
 #include "MockAgent.h"
 #include "MockArmy.h"
 #include "MockMIL_EntityManager_ABC.h"
@@ -64,6 +65,7 @@ namespace
 
 BOOST_AUTO_TEST_CASE( ActiveProtectionTest )
 {
+    SingletonTerminator terminator;
     WorldInitialize( "worldwide/Paris" ); // $$$$ because used in asn and in destructor of action!!!
     MockNET_Publisher_ABC mockPublisher;
     {
@@ -146,7 +148,6 @@ BOOST_AUTO_TEST_CASE( ActiveProtectionTest )
         MOCK_EXPECT( mockArmy.IsAFriend ).once().returns( eTristate_False );
         effectManager.Update();
         mock::verify( entityManager );
-        PHY_IndirectFireDotationClass::Terminate();
     }
     TER_World::DestroyWorld();
 }

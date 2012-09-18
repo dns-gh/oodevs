@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_test_pch.h"
 
+#include "SingletonTerminator.h"
 #include "MockLogisticHierarchyOwner_ABC.h"
 #include "MockMIL_AutomateLOG.h"
 #include <xeumeuleu/xml.hpp>
@@ -52,12 +53,8 @@ namespace {
             PHY_DotationType::Initialize( xis );
         }
 
-        ~DotationsFixture()
-        {
-            PHY_DotationType::Terminate();
-            PHY_DotationLogisticType::Terminate();
-            PHY_DotationNature::Terminate();
-        }
+    private:
+        SingletonTerminator terminator_;
     };
 
     void testSuperiors( tools::Iterator< MIL_AutomateLOG& > inputIterator, std::vector< MIL_AutomateLOG* > wantedOutput = std::vector< MIL_AutomateLOG* >() )

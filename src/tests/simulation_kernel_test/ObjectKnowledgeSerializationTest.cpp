@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_test_pch.h"
+#include "SingletonTerminator.h"
 #include "MockArmy.h"
 #include "MockBuilder.h"
 #include "MockMIL_Time_ABC.h"
@@ -52,11 +53,13 @@ namespace
         }
         ~ObjectKnowledgeSerializationFixture()
         {
-            PHY_ConsumptionType::Terminate();
             TER_World::DestroyWorld();
             mock::verify();
         }
         MockMIL_Time_ABC time;
+
+    private:
+        SingletonTerminator terminator_;
     };
 }
 

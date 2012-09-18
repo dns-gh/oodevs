@@ -10,6 +10,7 @@
 #ifndef __TestIndirectFireModifier_h_
 #define __TestIndirectFireModifier_h_
 
+#include "SingletonTerminator.h"
 #include "DotationComputer_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
@@ -57,16 +58,6 @@ public:
         pCapacity_.reset( new PHY_DotationCapacity( *PHY_DotationType::FindDotationCategory( "ammo" ), xisCapacity ) );
         dotationGroupContainer_.AddCapacity( *pCapacity_, 1000. );
     }
-    virtual ~TestIndirectFireModifier()
-    {
-        PHY_LauncherType::Terminate();
-        PHY_WeaponType::Terminate();
-        PHY_Protection::Terminate();
-        PHY_Volume::Terminate();
-        PHY_DotationNature::Terminate();
-        PHY_DotationLogisticType::Terminate();
-        PHY_DotationType::Terminate();
-    }
     virtual void Execute( firing::WeaponAvailabilityComputer_ABC& algo ) const
     {
         xml::xistringstream xisComposanteTypePion( "<bla name='composanteTypePion' id='1' protection='protection1' weight='1' size='Big'><speeds max='8'></speeds><weapon-systems/><sensors/><transports/><objects/><consumptions/></bla>" );
@@ -83,6 +74,7 @@ public:
         algo.SetDotationContainer( dotationGroupContainer_ );
     }
 private:
+    SingletonTerminator terminator_;
     MIL_Time_ABC& time_;
     MIL_EffectManager& effectManager_;
     MIL_Agent_ABC& pion_;

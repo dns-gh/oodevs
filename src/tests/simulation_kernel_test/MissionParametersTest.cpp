@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_test_pch.h"
+#include "SingletonTerminator.h"
 #include "protocol/Protocol.h"
 #include "Fixture.h"
 #include "MockDEC_KnowledgeResolver_ABC.h"
@@ -117,16 +118,16 @@ namespace
             MOCK_EXPECT( army.RegisterKnowledgeGroup );
             MOCK_EXPECT( army.UnregisterKnowledgeGroup );
         }
-        ~KnowledgeFixture()
-        {
-            MIL_KnowledgeGroupType::Terminate();
-        }
+
         MockNET_Publisher_ABC mockPublisher;
         MockArmy army;
         MockDEC_KnowledgeResolver_ABC resolver;
         MockMIL_EntityManager_ABC manager;
         xml::xistringstream group;
         boost::shared_ptr< MIL_KnowledgeGroup > groupArmy;
+
+    private:
+        SingletonTerminator terminator_;
     };
 }
 
@@ -319,6 +320,8 @@ BOOST_AUTO_TEST_CASE( TestMIL_DirectionParameter )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_DotationTypeParameter )
 {
+    SingletonTerminator terminator;
+
     xml::xistringstream xisNat( "<natures>"
                                 "   <nature type='Solid' id='1'/>"
                                 "</natures>" );
@@ -339,10 +342,6 @@ BOOST_AUTO_TEST_CASE( TestMIL_DotationTypeParameter )
     BOOST_CHECK_EQUAL( true, param.ToElement( out ) );
     BOOST_CHECK_EQUAL( true, out.has_resourcetype() );
     BOOST_CHECK_EQUAL( 42u, out.resourcetype().id() );
-
-    PHY_DotationType::Terminate();
-    PHY_DotationNature::Terminate();
-    PHY_DotationLogisticType::Terminate();
 }
 
 // -----------------------------------------------------------------------------

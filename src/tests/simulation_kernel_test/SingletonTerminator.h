@@ -15,6 +15,7 @@ class StubMIL_Time_ABC;
 class SingletonTerminator
 {
 public:
+     SingletonTerminator();
      SingletonTerminator( StubMIL_Time_ABC* time );
     ~SingletonTerminator();
 

@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_test_pch.h"
+#include "SingletonTerminator.h"
 #include "simulation_kernel/Entities/Objects/MedicalCapacity.h"
 #include "simulation_kernel/Entities/Objects/MedicalTreatmentAttribute.h"
 #include "MockMIL_Object_ABC.h"
@@ -21,6 +22,8 @@
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( VerifyMedicalCapacity )
 {
+    SingletonTerminator terminator;
+
     MockMIL_Time_ABC time;
     MOCK_EXPECT( time.GetTickDuration ).returns( 10 );
     MOCK_EXPECT( time.GetCurrentTick ).returns( 1 );
@@ -84,7 +87,6 @@ BOOST_AUTO_TEST_CASE( VerifyMedicalCapacity )
             BOOST_CHECK_EQUAL( 0u, asnAfter.medical_treatment().bed_capacities( 0 ).available_count() );
         }
     }
-    MIL_MedicalTreatmentType::Terminate();
 }
 
 // -----------------------------------------------------------------------------
@@ -93,6 +95,7 @@ BOOST_AUTO_TEST_CASE( VerifyMedicalCapacity )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( VerifyInitialization )
 {
+    SingletonTerminator terminator;
     MockMIL_Time_ABC time;
     MOCK_EXPECT( time.GetTickDuration ).returns( 10 );
     MOCK_EXPECT( time.GetCurrentTick ).returns( 1 );
@@ -132,7 +135,6 @@ BOOST_AUTO_TEST_CASE( VerifyInitialization )
         BOOST_CHECK( asn.medical_treatment().bed_capacities( 0 ).has_baseline_count() );
         BOOST_CHECK_EQUAL( 5u, asn.medical_treatment().bed_capacities( 0 ).baseline_count() );
     }
-    MIL_MedicalTreatmentType::Terminate();
 }
 
 // -----------------------------------------------------------------------------
@@ -141,6 +143,7 @@ BOOST_AUTO_TEST_CASE( VerifyInitialization )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( VerifyMessageOnUpdate )
 {
+    SingletonTerminator terminator;
     MockMIL_Time_ABC time;
     MOCK_EXPECT( time.GetTickDuration ).returns( 10 );
     MOCK_EXPECT( time.GetCurrentTick ).returns( 1 );
@@ -215,7 +218,6 @@ BOOST_AUTO_TEST_CASE( VerifyMessageOnUpdate )
         BOOST_CHECK( asn.medical_treatment().bed_capacities( 1 /*id Wound1*/ ).has_available_count() );
         BOOST_CHECK_EQUAL( 3u, asn.medical_treatment().bed_capacities( 1 /*id Wound2*/ ).available_count() );
     }
-    MIL_MedicalTreatmentType::Terminate();
 }
 /*
 // -----------------------------------------------------------------------------
@@ -224,6 +226,7 @@ BOOST_AUTO_TEST_CASE( VerifyMessageOnUpdate )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( VerifyAsnUpdate )
 {
+    SingletonTerminator terminator;
     MockMIL_Time_ABC time;
     MOCK_EXPECT( time.GetTickDuration ).returns( 10 );
     MOCK_EXPECT( time.GetCurrentTick ).returns( 1 );
@@ -277,5 +280,4 @@ BOOST_AUTO_TEST_CASE( VerifyAsnUpdate )
         sword::ObjectAttributes asn;
         object.GetAttribute< MedicalTreatmentAttribute >().SendFullState( asn );
     }
-    MIL_MedicalTreatmentType::Terminate();
 }*/
