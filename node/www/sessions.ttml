@@ -331,7 +331,7 @@
             {{#is_option status replaying="" waiting=""}}
             {{else}}
             <div class="session_content">
-                <div class="span4">
+                <div class="span5">
                     <div class="shift_right">
                         <div><span class="item_label">Model</span> {{model.name}}</div>
                         <div><span class="item_label">Terrain</span> {{terrain.name}}</div>
