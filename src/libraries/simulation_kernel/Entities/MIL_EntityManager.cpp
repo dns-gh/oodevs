@@ -707,16 +707,6 @@ MIL_Object_ABC* MIL_EntityManager::CreateObject( MIL_Army_ABC* army, const MIL_O
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::CreateObject
-// Created: NLD 2006-10-23
-// -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_EntityManager::CreateObject( const std::string& /*type*/, MIL_Army_ABC* /*army*/, const TER_Localisation& /*localisation*/, const std::string& /*strOption*/, const std::string& /*strExtra*/, double /*rCompletion*/, double /*rMining*/, double /*rBypass*/ )
-{
-    throw std::exception( __FUNCTION__ " not implemented" );
-    // return pObjectManager_->CreateObject( type, army, localisation, strOption, strExtra, rCompletion, rMining, rBypass );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::FindObject
 // Created: NLD 2006-10-23
 // -----------------------------------------------------------------------------
