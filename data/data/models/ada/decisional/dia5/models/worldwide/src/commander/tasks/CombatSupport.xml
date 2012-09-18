@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.tasks.CombatSupport" source-version="1.0.0" knowledge-class="commander.tasks.knowledges.CollectInformation">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.tasks.CombatSupport" source-version="1.0.0" knowledge-class="commander.tasks.knowledges.CombatSupport">
     <description>For the commander agent, to order subordinates to support a friend company. Forward echelon units receive the main task (they support the forward echelon of the supported company), other units (rear echelon) support the forward echelon of the company. </description>
     <parameters>
         <parameter name="objective">
