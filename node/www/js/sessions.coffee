@@ -306,10 +306,7 @@ class SessionList extends Backbone.Collection
         return item
 
     is_parent: (lhs, rhs) =>
-        id = rhs.attributes.replay.root
-        if id?.length
-            return lhs.id == id
-        return false
+        return lhs.id == rhs.attributes.replay.root
 
     comparator: (lhs, rhs) =>
         # group replays together
@@ -326,7 +323,9 @@ class SessionList extends Backbone.Collection
         return @name_compare lhs, rhs
 
     name_compare: (lhs, rhs) =>
-        return text_compare lhs.get("name"), rhs.get("name")
+        rpy = text_compare lhs.get("name"), rhs.get("name")
+        return rpy if rpy
+        return if lhs.id < rhs.id then -1 else +1
 
     status_compare: (lhs, rhs) =>
         a = lhs.get "status"

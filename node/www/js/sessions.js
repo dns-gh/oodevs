@@ -971,12 +971,7 @@
     };
 
     SessionList.prototype.is_parent = function(lhs, rhs) {
-      var id;
-      id = rhs.attributes.replay.root;
-      if (id != null ? id.length : void 0) {
-        return lhs.id === id;
-      }
-      return false;
+      return lhs.id === rhs.attributes.replay.root;
     };
 
     SessionList.prototype.comparator = function(lhs, rhs) {
@@ -1003,7 +998,16 @@
     };
 
     SessionList.prototype.name_compare = function(lhs, rhs) {
-      return text_compare(lhs.get("name"), rhs.get("name"));
+      var rpy;
+      rpy = text_compare(lhs.get("name"), rhs.get("name"));
+      if (rpy) {
+        return rpy;
+      }
+      if (lhs.id < rhs.id) {
+        return -1;
+      } else {
+        return +1;
+      }
     };
 
     SessionList.prototype.status_compare = function(lhs, rhs) {
