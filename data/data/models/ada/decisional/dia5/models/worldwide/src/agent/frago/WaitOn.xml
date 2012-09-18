@@ -17,7 +17,7 @@
     <stages>
         <stage permanent="true">
             <skills>
-                <skill name="agent.skills.MoveToward" priority="1000.0">
+                <skill name="agent.skills.MoveToward" priority="100000.0">
                     <parameter name="entities">
                         <value>
                             <parameter>objectives</parameter>

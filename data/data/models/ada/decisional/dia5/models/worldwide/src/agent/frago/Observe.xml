@@ -12,7 +12,7 @@
     <stages>
         <stage label="observing the target" permanent="true">
             <skills>
-                <skill name="agent.skills.actions.Observe" priority="10000.0">
+                <skill name="agent.skills.actions.Observe" priority="100000.0">
                     <parameter name="entity">
                         <value>
                             <parameter>target</parameter>

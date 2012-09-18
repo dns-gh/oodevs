@@ -12,7 +12,7 @@
     <stages>
         <stage label="moving toward position" disable-when-done="true">
             <skills>
-                <skill name="agent.skills.MoveToward" main="true" priority="10000.0">
+                <skill name="agent.skills.MoveToward" main="true" priority="100000.0">
                     <parameter name="entities">
                         <value>
                             <list>
