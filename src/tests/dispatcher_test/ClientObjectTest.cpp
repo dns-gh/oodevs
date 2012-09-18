@@ -11,8 +11,8 @@
 #include "MockClientPublisher.h"
 #include "messenger_plugin/ClientObject.h"
 #include "messenger_plugin/ClientObjectsModel.h"
-#include "messenger_plugin/IdManager.h"
 #include "protocol/MessengerSenders.h"
+#include "tools/IdManager.h"
 
 using namespace plugins::messenger;
 
@@ -61,7 +61,7 @@ BOOST_AUTO_TEST_CASE( ClientObject_CanBeCreated )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( ClientObject_CanBeCreatedByModel )
 {
-    IdManager idManager;
+    tools::IdManager idManager;
     MockClientPublisher publisher;
     ClientObjectsModel model( publisher, idManager);
     sword::MessengerToClient expected;
@@ -104,7 +104,7 @@ BOOST_AUTO_TEST_CASE( ClientObject_CanBeCreatedByModel )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( ClientObject_ErrorDuplicate )
 {
-    IdManager idManager;
+    tools::IdManager idManager;
     MockClientPublisher publisher;
     ClientObjectsModel model( publisher, idManager);
     sword::MessengerToClient ack;
@@ -134,7 +134,7 @@ BOOST_AUTO_TEST_CASE( ClientObject_ErrorDuplicate )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( ClientObject_CanBeUpdatedByModel )
 {
-    IdManager idManager;
+    tools::IdManager idManager;
     MockClientPublisher publisher;
     ClientObjectsModel model( publisher, idManager);
     sword::MessengerToClient expected;
@@ -183,7 +183,7 @@ BOOST_AUTO_TEST_CASE( ClientObject_CanBeUpdatedByModel )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( ClientObject_CanBeDestroyedByModel )
 {
-    IdManager idManager;
+    tools::IdManager idManager;
     MockClientPublisher publisher;
     ClientObjectsModel model( publisher, idManager);
     sword::MessengerToClient expected;

@@ -40,13 +40,17 @@ namespace xml
     class xostream;
 }
 
+namespace tools
+{
+    class IdManager;
+}
+
 namespace plugins
 {
 namespace messenger
 {
     class Lima;
     class Limit;
-    class IdManager;
     class Entity_ABC;
     class DisplayInfo;
 
@@ -61,7 +65,7 @@ class TacticalLinesModel : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalLinesModel( dispatcher::ClientPublisher_ABC& clients, IdManager& idManager, const kernel::CoordinateConverter_ABC& converter );
+             TacticalLinesModel( dispatcher::ClientPublisher_ABC& clients, tools::IdManager& idManager, const kernel::CoordinateConverter_ABC& converter );
     virtual ~TacticalLinesModel();
     //@}
 
@@ -100,7 +104,7 @@ private:
     //! @name Members
     //@{
     dispatcher::ClientPublisher_ABC& clients_;
-    IdManager& idManager_;
+    tools::IdManager& idManager_;
     const kernel::CoordinateConverter_ABC& converter_;
     tools::Resolver< Limit > limits_;
     tools::Resolver< Lima  > limas_;

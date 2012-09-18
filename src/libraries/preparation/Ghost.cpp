@@ -10,7 +10,7 @@
 #include "preparation_pch.h"
 #include "Ghost.h"
 #include "Dotation.h"
-#include "IdManager.h"
+#include "tools/IdManager.h"
 #include "LogisticBaseStates.h"
 #include "LogisticHierarchiesBase.h"
 #include "LogisticLevelAttritube.h"
@@ -51,7 +51,7 @@ using namespace kernel;
 // Name: Ghost constructor from creation panel
 // Created: ABR 2011-10-18
 // -----------------------------------------------------------------------------
-Ghost::Ghost( kernel::Controller& controller, const Model& model, IdManager& idManager, const kernel::CoordinateConverter_ABC& converter, const GhostPrototype& prototype )
+Ghost::Ghost( kernel::Controller& controller, const Model& model, tools::IdManager& idManager, const kernel::CoordinateConverter_ABC& converter, const GhostPrototype& prototype )
     : EntityImplementation< Ghost_ABC >( controller, idManager.GetNextId(), prototype.name_.c_str() )
     , model_             ( model )
     , converter_         ( converter )
@@ -71,7 +71,7 @@ Ghost::Ghost( kernel::Controller& controller, const Model& model, IdManager& idM
 // Name: Ghost constructor from xml
 // Created: ABR 2011-10-24
 // -----------------------------------------------------------------------------
-Ghost::Ghost( kernel::Controller& controller, const Model& model, IdManager& idManager, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis, kernel::SymbolFactory& symbolsFactory )
+Ghost::Ghost( kernel::Controller& controller, const Model& model, tools::IdManager& idManager, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis, kernel::SymbolFactory& symbolsFactory )
     : EntityImplementation< Ghost_ABC >( controller, xis.attribute< unsigned long >( "id" ), xis.attribute< std::string >( "name", "" ).c_str() )
     , model_             ( model )
     , converter_         ( converter )
@@ -103,7 +103,7 @@ Ghost::Ghost( kernel::Controller& controller, const Model& model, IdManager& idM
 // Name: Ghost constructor from unknown type conversion
 // Created: ABR 2011-10-14
 // -----------------------------------------------------------------------------
-Ghost::Ghost( Controller& controller, const Model& model, IdManager& idManager, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis, kernel::Entity_ABC& parent, E_GhostType ghostType )
+Ghost::Ghost( Controller& controller, const Model& model, tools::IdManager& idManager, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis, kernel::Entity_ABC& parent, E_GhostType ghostType )
     : EntityImplementation< Ghost_ABC >( controller, xis.attribute< unsigned long >( "id" ), xis.attribute< std::string >( "name", "" ).c_str() )
     , model_             ( model )
     , converter_         ( converter )

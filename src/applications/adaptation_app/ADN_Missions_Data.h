@@ -13,8 +13,8 @@
 #include "ADN_Data_ABC.h"
 #include "ADN_Types.h"
 #include "ADN_Enums.h"
-#include "IdentifierFactory.h"
 #include "ADN_Drawings_Data.h"
+#include "tools/IdManager.h"
 
 class ADN_Objects_Data_ObjectInfos;
 
@@ -219,7 +219,7 @@ public:
     T_FragOrder_Vector          fragOrders_;
 
 private:
-    static IdentifierFactory idFactory_;
+    static tools::IdManager idFactory_;
 };
 
 #endif // __ADN_Missions_Data_h_

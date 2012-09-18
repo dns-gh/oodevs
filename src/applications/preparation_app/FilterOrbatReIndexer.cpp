@@ -13,11 +13,11 @@
 
 #include "FilterPartiesListView.h"
 #include "clients_kernel/Tools.h"
-#include "preparation/IdManager.h"
 #include "preparation/Model.h"
 #include "preparation/ModelConsistencyChecker.h"
 #include "preparation/TeamsModel.h"
 #include "tools/ExerciseConfig.h"
+#include "tools/IdManager.h"
 #include <boost/filesystem/operations.hpp>
 #include <xeumeuleu/xml.h>
 

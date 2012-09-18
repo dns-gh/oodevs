@@ -19,7 +19,11 @@ namespace kernel
     class SymbolFactory;
 }
 
-class IdManager;
+namespace tools
+{
+    class IdManager;
+}
+
 class StaticModel;
 
 // =============================================================================
@@ -33,7 +37,7 @@ class FormationFactory : public FormationFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             FormationFactory( kernel::Controllers& controllers, const StaticModel& staticModel, IdManager& idManager, kernel::SymbolFactory& symbolsFactory );
+             FormationFactory( kernel::Controllers& controllers, const StaticModel& staticModel, tools::IdManager& idManager, kernel::SymbolFactory& symbolsFactory );
     virtual ~FormationFactory();
     //@}
 
@@ -48,7 +52,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const StaticModel& staticModel_;
-    IdManager& idManager_;
+    tools::IdManager& idManager_;
     kernel::SymbolFactory& symbolsFactory_;
     //@}
 };

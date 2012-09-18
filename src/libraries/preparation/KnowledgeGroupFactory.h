@@ -20,8 +20,12 @@ namespace kernel
     class KnowledgeGroupFactory_ABC;
 }
 
+namespace tools
+{
+    class IdManager;
+}
+
 class StaticModel;
-class IdManager;
 
 // =============================================================================
 /** @class  KnowledgeGroupFactory
@@ -35,7 +39,7 @@ class KnowledgeGroupFactory : public kernel::KnowledgeGroupFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroupFactory( kernel::Controllers& controllers, const StaticModel& staticModel, IdManager& idManager );
+             KnowledgeGroupFactory( kernel::Controllers& controllers, const StaticModel& staticModel, tools::IdManager& idManager );
     virtual ~KnowledgeGroupFactory();
     //@}
 
@@ -52,7 +56,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    IdManager& idManager_;
+    tools::IdManager& idManager_;
     const StaticModel& staticModel_;
     //@}
 };

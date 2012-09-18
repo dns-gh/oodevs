@@ -11,7 +11,7 @@
 #include "TacticalLinesModel.h"
 #include "Limit.h"
 #include "Lima.h"
-#include "IdManager.h"
+#include "tools/IdManager.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/MessengerSenders.h"
 #include "tools/Iterator.h"
@@ -23,7 +23,7 @@ using namespace plugins::messenger;
 // Name: TacticalLinesModel constructor
 // Created: NLD 2006-11-13
 // -----------------------------------------------------------------------------
-TacticalLinesModel::TacticalLinesModel( dispatcher::ClientPublisher_ABC& clients, IdManager& idManager, const kernel::CoordinateConverter_ABC& converter )
+TacticalLinesModel::TacticalLinesModel( dispatcher::ClientPublisher_ABC& clients, tools::IdManager& idManager, const kernel::CoordinateConverter_ABC& converter )
     : clients_  ( clients )
     , idManager_( idManager )
     , converter_( converter )
@@ -47,7 +47,7 @@ TacticalLinesModel::~TacticalLinesModel()
 // -----------------------------------------------------------------------------
 void TacticalLinesModel::ReadLimit( xml::xistream& xis, const sword::Diffusion& diffusion, const DisplayInfo& info )
 {
-    std::auto_ptr< Limit > limit( new Limit( idManager_.NextId(), xis, diffusion, converter_, info ) );
+    std::auto_ptr< Limit > limit( new Limit( idManager_.GetNextId(), xis, diffusion, converter_, info ) );
     limits_.Register( limit->GetID(), *limit );
     limit.release();
 }
@@ -58,7 +58,7 @@ void TacticalLinesModel::ReadLimit( xml::xistream& xis, const sword::Diffusion& 
 // -----------------------------------------------------------------------------
 void TacticalLinesModel::ReadLima( xml::xistream& xis, const sword::Diffusion& diffusion, const DisplayInfo& info )
 {
-    std::auto_ptr< Lima > lima( new Lima( idManager_.NextId(), xis, diffusion, converter_, info ) );
+    std::auto_ptr< Lima > lima( new Lima( idManager_.GetNextId(), xis, diffusion, converter_, info ) );
     limas_.Register( lima->GetID(), *lima );
     lima.release();
 }
@@ -91,7 +91,7 @@ void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& pu
 {
     plugins::messenger::LimitCreationRequestAck ack;
     ack().set_error_code( sword::TacticalLineAck::no_error );
-    std::auto_ptr< Limit > limit( new Limit( idManager_.NextId(), asn ) );
+    std::auto_ptr< Limit > limit( new Limit( idManager_.GetNextId(), asn ) );
     limits_.Register( limit->GetID(), *limit );
     limit->SendCreation( clients_ );
     limit.release();
@@ -145,7 +145,7 @@ void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& pub
 {
     plugins::messenger::PhaseLineCreationAck ack;
     ack().set_error_code( sword::TacticalLineAck::no_error );
-    std::auto_ptr< Lima > lima( new Lima( idManager_.NextId(), asn ) );
+    std::auto_ptr< Lima > lima( new Lima( idManager_.GetNextId(), asn ) );
     limas_.Register( lima->GetID(), *lima );
     lima->SendCreation( clients_ );
     lima.release();

@@ -43,7 +43,7 @@
 // Created: ABR 2012-06-04
 // -----------------------------------------------------------------------------
 UrbanFactory::UrbanFactory( kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::UrbanObject_ABC >& urbanObjects, const StaticModel& staticModel,
-                            IdManager& idManager, const tools::Resolver< kernel::Object_ABC >& objects, kernel::UrbanDisplayOptions& options )
+                            tools::IdManager& idManager, const tools::Resolver< kernel::Object_ABC >& objects, kernel::UrbanDisplayOptions& options )
     : controllers_   ( controllers )
     , urbanObjects_  ( urbanObjects )
     , staticModel_   ( staticModel )

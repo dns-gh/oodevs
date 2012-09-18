@@ -9,7 +9,7 @@
 
 #include "preparation_pch.h"
 #include "Team.h"
-#include "IdManager.h"
+#include "tools/IdManager.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
@@ -24,7 +24,7 @@ using namespace kernel;
 // Name: Team constructor
 // Created: SBO 2006-08-29
 // -----------------------------------------------------------------------------
-Team::Team( Controllers& controllers, IdManager& idManager )
+Team::Team( Controllers& controllers, tools::IdManager& idManager )
     : EntityImplementation< Team_ABC >( controllers.controller_, idManager.GetNextId(), "" )
     , controllers_( controllers )
 {
@@ -38,7 +38,7 @@ Team::Team( Controllers& controllers, IdManager& idManager )
 // Name: Team constructor
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-Team::Team( xml::xistream& xis, Controllers& controllers, IdManager& idManager )
+Team::Team( xml::xistream& xis, Controllers& controllers, tools::IdManager& idManager )
     : EntityImplementation< Team_ABC >( controllers.controller_, xis.attribute< unsigned long >( "id" ), xis.attribute< std::string >( "name" ).c_str() )
     , controllers_( controllers )
 {

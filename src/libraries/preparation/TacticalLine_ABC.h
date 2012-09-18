@@ -28,7 +28,10 @@ namespace xml
     class xostream;
 }
 
-class IdManager;
+namespace tools
+{
+    class IdManager;
+}
 
 // =============================================================================
 /** @class  TacticalLine_ABC
@@ -44,8 +47,8 @@ class TacticalLine_ABC : public kernel::EntityImplementation< kernel::TacticalLi
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalLine_ABC( kernel::Controller& controller, const QString& baseName, IdManager& idManager );
-             TacticalLine_ABC( kernel::Controller& controller, xml::xistream& xis, IdManager& idManager );
+             TacticalLine_ABC( kernel::Controller& controller, const QString& baseName, tools::IdManager& idManager );
+             TacticalLine_ABC( kernel::Controller& controller, xml::xistream& xis, tools::IdManager& idManager );
     virtual ~TacticalLine_ABC();
     //@}
 

@@ -9,7 +9,7 @@
 
 #include "preparation_pch.h"
 #include "Inhabitant.h"
-#include "IdManager.h"
+#include "tools/IdManager.h"
 #include "clients_kernel/InhabitantType.h"
 #include "clients_kernel/DictionaryExtensions.h"
 #include "clients_kernel/PropertiesDictionary.h"
@@ -20,7 +20,7 @@
 // Name: Inhabitant constructor
 // Created: SLG 2010-11-23
 // -----------------------------------------------------------------------------
-Inhabitant::Inhabitant( const kernel::InhabitantType& type, int number, const QString& name, kernel::Controller& controller, IdManager& idManager )
+Inhabitant::Inhabitant( const kernel::InhabitantType& type, int number, const QString& name, kernel::Controller& controller, tools::IdManager& idManager )
     : kernel::EntityImplementation< kernel::Inhabitant_ABC >( controller, idManager.GetNextId(), "" )
     , type_      ( type )
     , healthNeed_( 0 )
@@ -39,7 +39,7 @@ Inhabitant::Inhabitant( const kernel::InhabitantType& type, int number, const QS
 // Name: Inhabitant constructor
 // Created: SLG 2010-11-23
 // -----------------------------------------------------------------------------
-Inhabitant::Inhabitant( xml::xistream& xis, const kernel::InhabitantType& type, kernel::Controller& controller, IdManager& idManager )
+Inhabitant::Inhabitant( xml::xistream& xis, const kernel::InhabitantType& type, kernel::Controller& controller, tools::IdManager& idManager )
     : kernel::EntityImplementation< kernel::Inhabitant_ABC >( controller, xis.attribute< int >( "id" ), xis.attribute< std::string >( "name" ).c_str() )
     , type_( type )
 {

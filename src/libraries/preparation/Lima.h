@@ -28,8 +28,8 @@ class Lima : public TacticalLine_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             Lima( kernel::Controller& controller, IdManager& idManager );
-             Lima( kernel::Controller& controller, xml::xistream& xis, IdManager& idManager );
+             Lima( kernel::Controller& controller, tools::IdManager& idManager );
+             Lima( kernel::Controller& controller, xml::xistream& xis, tools::IdManager& idManager );
     virtual ~Lima();
     //@}
 

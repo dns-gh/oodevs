@@ -34,6 +34,11 @@ namespace sword
     class ShapeUpdateRequest;
 }
 
+namespace tools
+{
+    class IdManager;
+}
+
 namespace xml
 {
     class xistream;
@@ -46,7 +51,6 @@ namespace messenger
 {
     class Drawing;
     class DrawingProxy;
-    class IdManager;
 
 // =============================================================================
 /** @class  DrawingsModel
@@ -61,7 +65,7 @@ class DrawingsModel : public tools::Resolver< Drawing >
 public:
     //! @name Constructors/Destructor
     //@{
-             DrawingsModel( const dispatcher::Config& config, dispatcher::ClientPublisher_ABC& clients, IdManager& idManager, const kernel::CoordinateConverter_ABC& converter );
+             DrawingsModel( const dispatcher::Config& config, dispatcher::ClientPublisher_ABC& clients, tools::IdManager& idManager, const kernel::CoordinateConverter_ABC& converter );
     virtual ~DrawingsModel();
     //@}
 
@@ -99,7 +103,7 @@ private:
     const dispatcher::Config& config_;
     const kernel::CoordinateConverter_ABC& converter_;
     dispatcher::ClientPublisher_ABC& clients_;
-    IdManager& idManager_;
+    tools::IdManager& idManager_;
     //@}
 };
 

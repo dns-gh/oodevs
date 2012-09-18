@@ -20,7 +20,7 @@ using namespace kernel;
 // Name: Limit constructor
 // Created: APE 2004-04-22
 // -----------------------------------------------------------------------------
-Limit::Limit( Controller& controller, IdManager& idManager )
+Limit::Limit( Controller& controller, tools::IdManager& idManager )
     : TacticalLine_ABC( controller, tools::translate( "Limit", "Limit" ), idManager )
     , controller_( controller )
 {
@@ -31,7 +31,7 @@ Limit::Limit( Controller& controller, IdManager& idManager )
 // Name: Limit constructor
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-Limit::Limit( kernel::Controller& controller, xml::xistream& xis, IdManager& idManager )
+Limit::Limit( kernel::Controller& controller, xml::xistream& xis, tools::IdManager& idManager )
     : TacticalLine_ABC( controller, xis, idManager )
     , controller_( controller )
 {

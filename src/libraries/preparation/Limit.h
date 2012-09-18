@@ -28,8 +28,8 @@ class Limit : public TacticalLine_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             Limit( kernel::Controller& controller, IdManager& idManager );
-             Limit( kernel::Controller& controller, xml::xistream& xis, IdManager& idManager );
+             Limit( kernel::Controller& controller, tools::IdManager& idManager );
+             Limit( kernel::Controller& controller, xml::xistream& xis, tools::IdManager& idManager );
     virtual ~Limit();
     //@}
 

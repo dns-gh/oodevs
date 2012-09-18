@@ -22,7 +22,7 @@
 #include <tools/XmlCrc32Signature.h>
 #include <boost/bind.hpp>
 
-IdentifierFactory ADN_Categories_Data::idFactory_;
+tools::IdManager ADN_Categories_Data::idFactory_;
 // =============================================================================
 // AttritionEffectOnHuman
 // =============================================================================
@@ -43,7 +43,6 @@ ADN_Categories_Data::ADN_Categories_Data()
     vSizes_.SetItemTypeName( "la catégorie de volume" );
     vDotationNatures_.SetNodeName( "la liste des nature de dotations" );
     vDotationNatures_.SetItemTypeName( "la nature de dotation" );
-    idFactory_.Reserve( 0 );
 }
 
 //-----------------------------------------------------------------------------
@@ -238,11 +237,11 @@ void ADN_Categories_Data::ReadNature( xml::xistream& input )
     if( found != vDotationNatures_.end() )
         throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).toAscii().constData(), tools::translate( "Categories_Data", "Categories - Duplicated resource nature type name '%1'" ).arg( strName.c_str() ).toAscii().constData() );
     if ( !id )
-        id = idFactory_.Create();
+        id = idFactory_.GetNextId();
     helpers::ResourceNatureInfos* pNew = new helpers::ResourceNatureInfos( strName, id );
     pNew->strName_.SetDataName( "le nom de la nature de dotation" );
     vDotationNatures_.AddItem( pNew );
-    idFactory_.Reserve( id );
+    idFactory_.Lock( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -329,5 +328,5 @@ void ADN_Categories_Data::WriteDotationNatures( xml::xostream& output )
 // -----------------------------------------------------------------------------
 unsigned long ADN_Categories_Data::GetNewIdentifier()
 {
-    return idFactory_.Create();
+    return idFactory_.GetNextId();
 }

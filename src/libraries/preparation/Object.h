@@ -30,7 +30,10 @@ namespace xml
     class xistream;
 }
 
-class IdManager;
+namespace tools
+{
+    class IdManager;
+}
 
 // =============================================================================
 /** @class  Object
@@ -45,9 +48,9 @@ public:
     //! @name Constructors/Destructor
     //@{
              Object( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
-                     const kernel::ObjectType& type, const QString& name, IdManager& idManager );
+                     const kernel::ObjectType& type, const QString& name, tools::IdManager& idManager );
              Object( xml::xistream& xis, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
-                     const kernel::ObjectType& type, IdManager& idManager );
+                     const kernel::ObjectType& type, tools::IdManager& idManager );
     virtual ~Object();
     //@}
 

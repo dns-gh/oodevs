@@ -10,7 +10,7 @@
 #include "preparation_pch.h"
 #include "UrbanObject.h"
 
-#include "IdManager.h"
+#include "tools/IdManager.h"
 #include "UrbanHierarchies.h"
 #include "clients_kernel/Controllers.h"
 
@@ -18,7 +18,7 @@
 // Name: UrbanObject constructor
 // Created: ABR 2012-06-04
 // -----------------------------------------------------------------------------
-UrbanObject::UrbanObject( kernel::Controllers& controllers, IdManager& idManager, const std::string& name, const kernel::ObjectType& type,
+UrbanObject::UrbanObject( kernel::Controllers& controllers, tools::IdManager& idManager, const std::string& name, const kernel::ObjectType& type,
                           const kernel::AccommodationTypes& accommodations, kernel::UrbanDisplayOptions& options )
     : kernel::UrbanObject( controllers, name, idManager.GetNextId(), type, accommodations, options )
 {
@@ -30,7 +30,7 @@ UrbanObject::UrbanObject( kernel::Controllers& controllers, IdManager& idManager
 // Name: UrbanObject constructor
 // Created: ABR 2012-06-04
 // -----------------------------------------------------------------------------
-UrbanObject::UrbanObject( xml::xistream& xis, kernel::Controllers& controllers, IdManager& idManager, const kernel::ObjectType& type,
+UrbanObject::UrbanObject( xml::xistream& xis, kernel::Controllers& controllers, tools::IdManager& idManager, const kernel::ObjectType& type,
                           const kernel::AccommodationTypes& accommodations, kernel::UrbanDisplayOptions& options )
     : kernel::UrbanObject( xis, controllers, type, accommodations, options )
 {

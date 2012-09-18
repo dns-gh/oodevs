@@ -19,7 +19,7 @@
 #include "ADN_Tools.h"
 #include "ADN_ArmorInfos.h"
 #include "ADN_ResourceNatureInfos.h"
-#include "IdentifierFactory.h"
+#include "tools/IdManager.h"
 
 namespace xml { class xistream; }
 
@@ -80,7 +80,7 @@ private:
     helpers::T_ArmorInfos_Vector vArmors_;
     T_SizeInfos_Vector  vSizes_;
     helpers::T_ResourceNatureInfos_Vector vDotationNatures_;
-    static IdentifierFactory idFactory_;
+    static tools::IdManager idFactory_;
 };
 
 

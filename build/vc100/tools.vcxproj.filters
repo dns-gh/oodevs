@@ -123,6 +123,9 @@
     <ClCompile Include="..\..\src\libraries\tools\ExerciseSettings.cpp">
       <Filter>Source Files\Command line</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\IdManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\tools\App6Symbol.h">
@@ -292,6 +295,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\tools\ExerciseSettings.h">
       <Filter>Source Files\Command line</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\IdManager.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

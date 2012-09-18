@@ -9,13 +9,13 @@
 
 #include "messenger_plugin_pch.h"
 #include "DrawingsModel.h"
-#include "IdManager.h"
 #include "Drawing.h"
 #include "DrawingProxy.h"
 #include "dispatcher/Config.h"
 #include "protocol/MessengerSenders.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "MT_Tools/MT_Logger.h"
+#include "tools/IdManager.h"
 #include <directia/brain/Brain.h>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
@@ -30,7 +30,7 @@ namespace bfs = boost::filesystem;
 // Name: DrawingsModel constructor
 // Created: SBO 2008-06-06
 // -----------------------------------------------------------------------------
-DrawingsModel::DrawingsModel( const dispatcher::Config& config, dispatcher::ClientPublisher_ABC& clients, IdManager& idManager, const kernel::CoordinateConverter_ABC& converter )
+DrawingsModel::DrawingsModel( const dispatcher::Config& config, dispatcher::ClientPublisher_ABC& clients, tools::IdManager& idManager, const kernel::CoordinateConverter_ABC& converter )
     : config_   ( config )
     , converter_( converter )
     , clients_  ( clients )
@@ -135,7 +135,7 @@ void DrawingsModel::ReadFormation( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void DrawingsModel::ReadShape( xml::xistream& xis, const boost::optional< sword::Diffusion >& diffusion )
 {
-    std::auto_ptr< Drawing > drawing( new Drawing( idManager_.NextId(), xis, diffusion, converter_ ) );
+    std::auto_ptr< Drawing > drawing( new Drawing( idManager_.GetNextId(), xis, diffusion, converter_ ) );
     drawing->SendCreation( clients_ );
     Register( drawing->GetId(), *drawing );
     drawing.release();
@@ -213,7 +213,7 @@ void DrawingsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, c
     ack().set_error_code( sword::ShapeRequestAck::no_error );
     try
     {
-        std::auto_ptr< Drawing > drawing( new Drawing( idManager_.NextId(), message, converter_ ) );
+        std::auto_ptr< Drawing > drawing( new Drawing( idManager_.GetNextId(), message, converter_ ) );
         Register( drawing->GetId(), *drawing );
         drawing->SendCreation( clients_ );
         drawing.release();
@@ -315,7 +315,7 @@ boost::shared_ptr< DrawingProxy > DrawingsModel::CreateDrawing( const std::strin
 // -----------------------------------------------------------------------------
 void DrawingsModel::Publish( const Drawing& drawing )
 {
-    std::auto_ptr< Drawing > copy( new Drawing( idManager_.NextId(), drawing ) );
+    std::auto_ptr< Drawing > copy( new Drawing( idManager_.GetNextId(), drawing ) );
     copy->SendCreation( clients_ );
     Register( copy->GetId(), *copy );
     copy.release();
@@ -329,5 +329,5 @@ void DrawingsModel::ReadNamedShape( xml::xistream& xis, std::auto_ptr< Drawing >
 {
     boost::optional< sword::Diffusion > diffusion;
     if( xis.attribute( "name", "" ) == name )
-        result.reset( new Drawing( idManager_.NextId(), xis, diffusion, converter_ ) );
+        result.reset( new Drawing( idManager_.GetNextId(), xis, diffusion, converter_ ) );
 }

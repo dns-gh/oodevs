@@ -26,8 +26,12 @@ namespace xml
     class xistream;
 }
 
+namespace tools
+{
+    class IdManager;
+}
+
 class TacticalLine_ABC;
-class IdManager;
 
 // =============================================================================
 /** @class  LimitsModel
@@ -42,7 +46,7 @@ class LimitsModel : public tools::Resolver< ::TacticalLine_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             LimitsModel( kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, IdManager& idManager );
+             LimitsModel( kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, tools::IdManager& idManager );
     virtual ~LimitsModel();
     //@}
 
@@ -72,7 +76,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const kernel::CoordinateConverter_ABC& converter_;
-    IdManager& idManager_;
+    tools::IdManager& idManager_;
     //@}
 };
 

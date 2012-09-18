@@ -285,7 +285,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Tr.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Tr_Gen.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Weapons_WizardPage.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\IdentifierFactory.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_DataException.cpp">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Disabled</Optimization>
       <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Disabled</Optimization>
@@ -2074,7 +2073,6 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Weapons_WizardPage.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Wizard.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_WizardPage.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\IdentifierFactory.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ObjectCreator_ABC.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_DataException.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Exception_ABC.h" />

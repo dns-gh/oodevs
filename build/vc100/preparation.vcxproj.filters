@@ -139,9 +139,6 @@
     <ClCompile Include="..\..\src\libraries\preparation\EntityCommunications.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\preparation\IdManager.cpp">
-      <Filter>Source Files\Model</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\preparation\Model.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
@@ -580,9 +577,6 @@
       <Filter>Source Files\Model</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\EnumTypes.h">
-      <Filter>Source Files\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\preparation\IdManager.h">
       <Filter>Source Files\Model</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\Model.h">

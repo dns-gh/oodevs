@@ -30,12 +30,16 @@ namespace xml
     class xostream;
 }
 
+namespace tools
+{
+    class IdManager;
+}
+
 namespace plugins
 {
 namespace messenger
 {
 class ClientObject;
-class IdManager;
 
 // =============================================================================
 /** @class  ClientObjectsModel
@@ -48,7 +52,7 @@ class ClientObjectsModel : public tools::Resolver< ClientObject >
 public:
     //! @name Constructors/Destructor
     //@{
-             ClientObjectsModel( dispatcher::ClientPublisher_ABC& clients, IdManager& idManager );
+             ClientObjectsModel( dispatcher::ClientPublisher_ABC& clients, tools::IdManager& idManager );
     virtual ~ClientObjectsModel();
     //@}
 
@@ -73,7 +77,7 @@ private:
     //! @name Member data
     //@{
     dispatcher::ClientPublisher_ABC& clients_;
-    IdManager& idManager_;
+    tools::IdManager& idManager_;
     //@}
 };
 

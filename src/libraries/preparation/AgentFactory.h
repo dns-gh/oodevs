@@ -20,7 +20,11 @@ namespace kernel
     class SymbolFactory;
 }
 
-class IdManager;
+namespace tools
+{
+    class IdManager;
+}
+
 class Model;
 class StaticModel;
 
@@ -35,7 +39,7 @@ class AgentFactory : public AgentFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    AgentFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel, IdManager& idManager, kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory, kernel::SymbolFactory& symbolsFactory );
+    AgentFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel, tools::IdManager& idManager, kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory, kernel::SymbolFactory& symbolsFactory );
     virtual ~AgentFactory();
     //@}
 
@@ -67,7 +71,7 @@ private:
     kernel::Controllers& controllers_;
     Model& model_;
     const StaticModel& static_;
-    IdManager& idManager_;
+    tools::IdManager& idManager_;
     kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory_; // LTO
     kernel::SymbolFactory& symbolsFactory_;
     //@}

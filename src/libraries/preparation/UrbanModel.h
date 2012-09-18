@@ -36,9 +36,9 @@ namespace tools
 {
     class ExerciseConfig;
     class SchemaWriter_ABC;
+    class IdManager;
 }
 
-class IdManager;
 class QProgressDialog;
 class StaticModel;
 class UrbanFactory_ABC;
@@ -65,7 +65,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanModel( kernel::Controllers& controllers, const StaticModel& staticModel, const tools::Resolver< kernel::Object_ABC >& objects, IdManager& idManager );
+             UrbanModel( kernel::Controllers& controllers, const StaticModel& staticModel, const tools::Resolver< kernel::Object_ABC >& objects, tools::IdManager& idManager );
     virtual ~UrbanModel();
     //@}
 

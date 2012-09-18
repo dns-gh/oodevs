@@ -25,7 +25,10 @@ namespace kernel
     class KnowledgeGroupType;
 }
 
-class IdManager;
+namespace tools
+{
+    class IdManager;
+}
 
 // =============================================================================
 /** @class  KnowledgeGroup
@@ -40,8 +43,8 @@ class KnowledgeGroup : public kernel::EntityImplementation< kernel::KnowledgeGro
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroup( kernel::Controller& controller, IdManager& idManager, tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types );
-             KnowledgeGroup( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types );
+             KnowledgeGroup( kernel::Controller& controller, tools::IdManager& idManager, tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types );
+             KnowledgeGroup( xml::xistream& xis, kernel::Controller& controller, tools::IdManager& idManager, tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types );
     virtual ~KnowledgeGroup();
     //@}
 

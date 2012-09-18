@@ -29,7 +29,10 @@ namespace xml
     class xostream;
 }
 
-class IdManager;
+namespace tools
+{
+    class IdManager;
+}
 
 // =============================================================================
 /** @class  Automat
@@ -45,8 +48,8 @@ class Automat : public kernel::EntityImplementation< kernel::Automat_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Automat( const kernel::AutomatType& type, kernel::Controller& controller, IdManager& idManager, const QString& name );
-             Automat( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, const kernel::AutomatType& type );
+             Automat( const kernel::AutomatType& type, kernel::Controller& controller, tools::IdManager& idManager, const QString& name );
+             Automat( xml::xistream& xis, kernel::Controller& controller, tools::IdManager& idManager, const kernel::AutomatType& type );
     virtual ~Automat();
     //@}
 

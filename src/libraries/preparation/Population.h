@@ -30,7 +30,10 @@ namespace xml
     class xistream;
 }
 
-class IdManager;
+namespace tools
+{
+    class IdManager;
+}
 
 // =============================================================================
 /** @class  Population
@@ -46,8 +49,8 @@ class Population : public kernel::EntityImplementation< kernel::Population_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Population( const kernel::PopulationType& type, int number, kernel::Controller& controller, IdManager& idManager );
-             Population( xml::xistream& xis, const kernel::PopulationType& type, kernel::Controller& controller, IdManager& idManager );
+             Population( const kernel::PopulationType& type, int number, kernel::Controller& controller, tools::IdManager& idManager );
+             Population( xml::xistream& xis, const kernel::PopulationType& type, kernel::Controller& controller, tools::IdManager& idManager );
     virtual ~Population();
     //@}
 

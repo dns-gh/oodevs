@@ -21,7 +21,11 @@ namespace kernel
     class UrbanDisplayOptions;
 }
 
-class IdManager;
+namespace tools
+{
+    class IdManager;
+}
+
 class StaticModel;
 
 // =============================================================================
@@ -36,7 +40,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              UrbanFactory( kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::UrbanObject_ABC >& urbanObjects, const StaticModel& staticModel,
-                           IdManager& idManager, const tools::Resolver< kernel::Object_ABC >& objects, kernel::UrbanDisplayOptions& options );
+                           tools::IdManager& idManager, const tools::Resolver< kernel::Object_ABC >& objects, kernel::UrbanDisplayOptions& options );
     virtual ~UrbanFactory();
     //@}
 
@@ -50,12 +54,12 @@ public:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers&                                    controllers_;
-    const tools::Resolver_ABC< kernel::UrbanObject_ABC >&   urbanObjects_;
-    const StaticModel&                                      staticModel_;
-    IdManager&                                              idManager_;
-    const tools::Resolver< kernel::Object_ABC >&            objects_;
-    kernel::UrbanDisplayOptions&                            options_;
+    kernel::Controllers&                                  controllers_;
+    const tools::Resolver_ABC< kernel::UrbanObject_ABC >& urbanObjects_;
+    const StaticModel&                                    staticModel_;
+    tools::IdManager&                                     idManager_;
+    const tools::Resolver< kernel::Object_ABC >&          objects_;
+    kernel::UrbanDisplayOptions&                          options_;
     //@}
 };
 

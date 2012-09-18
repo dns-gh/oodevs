@@ -26,7 +26,7 @@
 // Name: FormationFactory constructor
 // Created: FHD 2009-11-19
 // -----------------------------------------------------------------------------
-KnowledgeGroupFactory::KnowledgeGroupFactory( kernel::Controllers& controllers, const StaticModel& staticModel, IdManager& idManager )
+KnowledgeGroupFactory::KnowledgeGroupFactory( kernel::Controllers& controllers, const StaticModel& staticModel, tools::IdManager& idManager )
     : controllers_( controllers )
     , idManager_( idManager )
     , staticModel_( staticModel )

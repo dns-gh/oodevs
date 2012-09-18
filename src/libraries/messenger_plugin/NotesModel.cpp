@@ -9,13 +9,13 @@
 
 #include "messenger_plugin_pch.h"
 #include "NotesModel.h"
-#include "IdManager.h"
 #include "Note.h"
 #include "dispatcher/Config.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "MT_Tools/MT_Logger.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/MessengerSenders.h"
+#include "tools/IdManager.h"
 #include <boost/bind.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/lexical_cast.hpp>
@@ -34,7 +34,7 @@ namespace
 // Name: NotesModel constructor
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
-NotesModel::NotesModel( const dispatcher::Config& config, dispatcher::ClientPublisher_ABC& clients, IdManager& idManager, const std::string& file )
+NotesModel::NotesModel( const dispatcher::Config& config, dispatcher::ClientPublisher_ABC& clients, tools::IdManager& idManager, const std::string& file )
     : config_   ( config )
     , clients_  ( clients )
     , idManager_( idManager )
@@ -66,7 +66,7 @@ void NotesModel::HandleRequest( const sword::MarkerCreationRequest& message, uns
     messenger::MarkerCreationRequestAck ack;
     ack().set_error_code( sword::MarkerRequestAck::no_error );
     ack.Send( clients_, context );
-    std::auto_ptr< Note > note( new Note( idManager_.NextId(), message, currentTime_ ) );
+    std::auto_ptr< Note > note( new Note( idManager_.GetNextId(), message, currentTime_ ) );
     Register( note->GetId(), *note );
     if( note->GetParent() )
     {
@@ -332,7 +332,7 @@ void NotesModel::ReadNote( const std::string& input, std::vector< unsigned int >
 // -----------------------------------------------------------------------------
 unsigned int NotesModel::CreateNote( std::vector< std::string >& fields, const unsigned int parent )
 {
-    const unsigned int id = idManager_.NextId();
+    const unsigned int id = idManager_.GetNextId();
     boost::algorithm::replace_all( fields[3], "<br>", "\n" );
     std::auto_ptr< Note > note( new Note( id, fields, parent, currentTime_ ) );
     Register( note->GetId(), *note );
