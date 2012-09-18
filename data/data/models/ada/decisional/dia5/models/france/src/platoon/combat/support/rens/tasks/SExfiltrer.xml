@@ -17,9 +17,9 @@
 		</parameter>
 	</parameters>
 	<stages>
-		<stage label="Exfiltration" disable-when-done="true">
+		<stage label="Exfiltration" permanent="true">
 			<skills>
-				<skill name="platoon.combat.support.rens.skills.SExfiltrer" main="true">
+				<skill name="platoon.combat.support.rens.skills.SExfiltrer">
 					<parameter name="byNight">
 						<value>
 							<parameter>byNight</parameter>
