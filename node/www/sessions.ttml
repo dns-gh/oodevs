@@ -325,6 +325,7 @@
             <span class="well session {{{status}}}"></span>
             <div class="session_name">
                 {{name}}
+                <span> :{{port}} </span>
                 <span> {{status}} </span>
             </div>
             {{#is_option status replaying="" waiting=""}}
