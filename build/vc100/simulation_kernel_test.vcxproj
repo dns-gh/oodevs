@@ -196,6 +196,7 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockRolePerceiver.h" />
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockRoleUrbanLocation.h" />
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockToxicAttribute.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\SingletonTerminator.h" />
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubDEC_Decision.h" />
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubDEC_KnowledgeResolver_ABC.h" />
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubMIL_AgentPion.h" />
@@ -241,6 +242,7 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\SerializationTest.cpp" />
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\MIL_IntoxicationEffectTest.cpp" />
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\ScheduleInhabitantTest.cpp" />
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\SingletonTerminator.cpp" />
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\SpeedComputerTest.cpp" />
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\ActiveProtectionTest.cpp">
       <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='release|win32'">false</PreprocessToFile>

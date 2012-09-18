@@ -223,6 +223,9 @@
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockObjectTypeResolver.h">
       <Filter>Source Files\mock</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\SingletonTerminator.h">
+      <Filter>Source Files\stub</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\simulation_kernel_test_pch.cpp">
@@ -311,6 +314,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\MIL_DecontaminationTest.cpp">
       <Filter>Source Files\Algorithms</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\SingletonTerminator.cpp">
+      <Filter>Source Files\stub</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

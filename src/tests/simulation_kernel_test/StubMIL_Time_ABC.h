@@ -11,6 +11,7 @@
 #define __StubMIL_Time_ABC_h_
 
 #include "MIL_Time_ABC.h"
+#include <boost/noncopyable.hpp>
 
 // =============================================================================
 /** @class  StubMIL_Time_ABC

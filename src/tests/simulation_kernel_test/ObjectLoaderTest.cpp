@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_test_pch.h"
 #include "StubMIL_Time_ABC.h"
+#include "SingletonTerminator.h"
 #include "simulation_kernel/Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "simulation_kernel/Entities/Agents/Units/Composantes/PHY_ComposanteState.h"
 #include "simulation_kernel/Entities/Agents/Units/Dotations/PHY_DotationNature.h"
@@ -20,7 +21,6 @@
 #include "simulation_kernel/Entities/Objects/MIL_ObjectFactory.h"
 #include "simulation_kernel/Entities/Objects/MIL_ObjectType_ABC.h"
 #include "simulation_kernel/Entities/Objects/SpawnCapacity.h"
-#include "simulation_kernel/MIL_Singletons.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
@@ -39,7 +39,7 @@ BOOST_AUTO_TEST_CASE( VerifyDangerousObjects )
 {
     // Need time to generate probability tables for protections...
     StubMIL_Time_ABC time;
-    MIL_Singletons::RegisterTime( time );
+    SingletonTerminator timeGuard( &time );
 
     xml::xistringstream xdotationLogisticType(
         "<logistic-supply-classes>"
