@@ -10,6 +10,11 @@
                   <xsl:attribute name="file">DrawingTemplates.xml</xsl:attribute>
               </xsl:element>
           </xsl:if>
+          <xsl:if test="count( ./extensions ) = 0">
+              <xsl:element name="extensions">
+                  <xsl:attribute name="file">Extensions.xml</xsl:attribute>
+              </xsl:element>
+          </xsl:if>
       </xsl:copy>
   </xsl:template>
 
