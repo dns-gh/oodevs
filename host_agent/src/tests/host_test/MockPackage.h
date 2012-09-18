@@ -30,7 +30,8 @@ namespace mocks
         MOCK_METHOD( LinkExercise, 1 );
         MOCK_METHOD( LinkItem, 1 );
         MOCK_METHOD( UnlinkItem, 2 );
-        MOCK_METHOD( Download, 2 );
+        MOCK_METHOD_EXT( Download, 2, void( web::Chunker_ABC&, size_t ), DownloadById );
+        MOCK_METHOD_EXT( Download, 4, void( web::Chunker_ABC&, const std::string&, const std::string&, const std::string& ), DownloadByChecksum );
     };
 
     MOCK_BASE_CLASS( MockPackageFactory, host::PackageFactory_ABC )

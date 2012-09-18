@@ -957,10 +957,36 @@ size_t Package::GetSize() const
 // Name: Package::Download
 // Created: BAX 2012-09-11
 // -----------------------------------------------------------------------------
-void Package::Download( size_t id, web::Chunker_ABC& dst )
+void Package::Download( web::Chunker_ABC& dst, size_t id )
 {
     T_Item item = Find( id, false );
     if( !item )
         throw web::HttpException( web::NOT_FOUND );
     item->Download( system_, dst );
+}
+
+namespace
+{
+// -----------------------------------------------------------------------------
+// Name: Compare
+// Created: BAX 2012-09-10
+// -----------------------------------------------------------------------------
+bool Compare( const Package_ABC::T_Item& item, const std::string& type, const std::string& name, const std::string& checksum )
+{
+    return item->GetType()     == type
+        && item->GetName()     == name
+        && item->GetChecksum() == checksum;
+}
+}
+
+// -----------------------------------------------------------------------------
+// Name: Package::Download
+// Created: BAX 2012-09-18
+// -----------------------------------------------------------------------------
+void Package::Download( web::Chunker_ABC& dst, const std::string& type, const std::string& name, const std::string& checksum )
+{
+    T_Items::const_iterator it = std::find_if( items_.begin(), items_.end(), boost::bind( &Compare, _1, type, name, checksum ) );
+    if( it == items_.end() )
+        throw web::HttpException( web::NOT_FOUND );
+    (*it)->Download( system_, dst );
 }
