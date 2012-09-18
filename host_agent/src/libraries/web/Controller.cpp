@@ -576,9 +576,14 @@ void Controller::InstallFromCache( Reply_ABC& rpy, const Request_ABC& request )
 void Controller::DownloadInstall( Reply_ABC& rpy, const Request_ABC& request )
 {
     const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "id" );
-    const size_t id = RequireParameter< size_t >( "item", request );
+    const boost::optional< std::string > id = request.GetParameter( "item" );
     boost::shared_ptr< Chunker_ABC > chunker = MakeChunker( rpy );
-    agent_.DownloadInstall( node, *chunker, id );
+    if( id != boost::none )
+        return agent_.DownloadInstall( node, *chunker, boost::lexical_cast< size_t >( *id ) );
+    const std::string type = RequireParameter< std::string >( "type", request );
+    const std::string name = RequireParameter< std::string >( "name", request );
+    const std::string checksum = RequireParameter< std::string >( "checksum", request );
+    return agent_.DownloadInstall( node, *chunker, type, name, checksum );
 }
 
 // -----------------------------------------------------------------------------
