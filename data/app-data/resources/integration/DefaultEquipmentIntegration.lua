@@ -679,3 +679,7 @@ integration.isLogisticConvoy = function( platoon )
         return false
     end
 end
+
+integration.meKnowledgeIsTranported = function( self )
+    return DEC_Agent_EstTransporte()
+end
