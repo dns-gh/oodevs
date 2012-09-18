@@ -1034,7 +1034,7 @@ void DEC_AgentFunctions::SetMission( DEC_Decision_ABC* pAgent, boost::shared_ptr
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::HasDotation( const MIL_Agent_ABC& callerAgent, const PHY_DotationCategory* category )
 {
-    return callerAgent.GetRole< dotation::PHY_RoleInterface_Dotations >().GetDotationNumber( *category ) > 0;
+    return category ? callerAgent.GetRole< dotation::PHY_RoleInterface_Dotations >().GetDotationNumber( *category ) > 0 : false;
 }
 
 // -----------------------------------------------------------------------------
