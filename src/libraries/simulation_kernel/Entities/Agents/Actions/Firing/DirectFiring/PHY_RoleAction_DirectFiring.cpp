@@ -281,6 +281,8 @@ int PHY_RoleAction_DirectFiring::FirePopulation( unsigned int nTargetKnowledgeID
             return eRunning;
         if( firerWeapons.HasWeaponsAndNoAmmo() )
             return eNoAmmo;
+        if( firerWeapons.IsTemporarilyBlocked() )
+            return eTemporarilyBlocked;
         return eNoCapacity;
     }
     owner_.NotifyAttacking ( *pTarget );
