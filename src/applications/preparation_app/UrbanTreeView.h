@@ -22,6 +22,8 @@ namespace gui
     class SymbolIcons;
 }
 
+class StaticModel;
+
 // =============================================================================
 /** @class  UrbanTreeView
     @brief  UrbanTreeView
@@ -35,7 +37,7 @@ class UrbanTreeView: public gui::EntityTreeView_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, gui::SymbolIcons& symbols, QWidget* parent = 0 );
+             UrbanTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, gui::SymbolIcons& symbols, const StaticModel& staticModel, QWidget* parent = 0 );
     virtual ~UrbanTreeView();
     //@}
 
@@ -56,6 +58,7 @@ protected slots:
 private:
     //! @name Helpers
     //@{
+    virtual void CreateFilters( gui::SearchTreeView_ABC& searchTreeView );
     virtual void ContextMenuRequested( const QPoint& where );
     virtual bool IsTypeRejected( const kernel::Entity_ABC& entity ) const;
     virtual bool LessThan( const QModelIndex& left, const QModelIndex& right, bool& valid ) const;
@@ -69,6 +72,7 @@ private:
     //! @name Member data
     //@{
     gui::SymbolIcons& symbols_;
+    const StaticModel& staticModel_;
     //@}
 };
 

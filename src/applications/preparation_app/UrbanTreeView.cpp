@@ -13,14 +13,26 @@
 #include "clients_gui/ItemPixmapDelegate.h"
 #include "clients_gui/ModelObserver_ABC.h"
 #include "clients_gui/StandardModelVisitor_ABC.h"
+#include "clients_gui/SearchTreeView.h"
 #include "clients_gui/SymbolIcon.h"
 #include "clients_gui/SymbolIcons.h"
 #include "clients_kernel/ActionController.h"
+#include "clients_kernel/AccommodationType.h"
+#include "clients_kernel/AccommodationTypes.h"
+#include "clients_kernel/Architecture_ABC.h"
 #include "clients_kernel/Hierarchies.h"
 #include "clients_kernel/Infrastructure_ABC.h"
 #include "clients_kernel/InfrastructureType.h"
+#include "clients_kernel/MaterialCompositionType.h"
+#include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/PhysicalAttribute_ABC.h"
+#include "clients_kernel/ResourceNetwork_ABC.h"
+#include "clients_kernel/ResourceNetworkType.h"
+#include "clients_kernel/RoofShapeType.h"
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
+#include "clients_kernel/Usages_ABC.h"
+#include "preparation/StaticModel.h"
 #include "preparation/UrbanHierarchies.h"
 #include "ENT/ENT_Enums_Gen.h"
 #include <boost/bind.hpp>
@@ -29,9 +41,10 @@
 // Name: UrbanTreeView constructor
 // Created: JSR 2012-09-14
 // -----------------------------------------------------------------------------
-UrbanTreeView::UrbanTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, gui::SymbolIcons& symbols, QWidget* parent /*= 0*/ )
+UrbanTreeView::UrbanTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, gui::SymbolIcons& symbols, const StaticModel& staticModel, QWidget* parent /*= 0*/ )
     : gui::EntityTreeView_ABC( controllers, profile, modelObserver, parent )
     , symbols_( symbols )
+    , staticModel_( staticModel )
 {
     dataModel_.setColumnCount( 2 );
     setUniformRowHeights( true );
@@ -70,14 +83,14 @@ void UrbanTreeView::NotifyCreated( const kernel::UrbanObject_ABC& object )
         if( QStandardItem* supItem = dataModel_.FindSafeItem( *superior ) )
         {
             const int row = supItem->rowCount();
-            item = dataModel_.AddChildSafeItem( supItem, row, 0, object.GetName(), object.GetTooltip(), object, Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled );
+            item = dataModel_.AddChildSafeItem( supItem, row, 0, object.GetName(), object.GetTooltip(), static_cast< const kernel::Entity_ABC& >( object ), Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled );
             dataModel_.AddChildItem( supItem, row, 1 );
         }
     }
     else
     {
         const int row = dataModel_.rowCount();
-        item = dataModel_.AddRootSafeItem( row, 0, object.GetName(), object.GetTooltip(), object, Qt::ItemIsDropEnabled );
+        item = dataModel_.AddRootSafeItem( row, 0, object.GetName(), object.GetTooltip(), static_cast< const kernel::Entity_ABC& >( object ), Qt::ItemIsDropEnabled );
         dataModel_.AddRootItem( row, 1 );
     }
     if( item )
@@ -164,6 +177,115 @@ const QPixmap* UrbanTreeView::GetEntityPixmap( const kernel::Entity_ABC& object 
     return 0;
 }
 
+namespace
+{
+    std::string InfrastructureExtractor( const kernel::Entity_ABC& object, bool& valid, bool& empty )
+    {
+        const UrbanHierarchies& urbanHierarchies = static_cast< const UrbanHierarchies& >( object.Get< kernel::Hierarchies >() );
+        if( urbanHierarchies.GetLevel() == eUrbanLevelBlock )
+        {
+            const kernel::Infrastructure_ABC& infra = object.Get< kernel::Infrastructure_ABC >();
+            if( infra.GetType() )
+                return infra.GetType()->GetName();
+            else
+                empty = true;
+        }
+        else
+            valid = false;
+        return "";
+    }
+
+    std::string MaterialExtractor( const kernel::Entity_ABC& object, bool& valid, bool& /* empty */ )
+    {
+        const UrbanHierarchies& urbanHierarchies = static_cast< const UrbanHierarchies& >( object.Get< kernel::Hierarchies >() );
+        if( urbanHierarchies.GetLevel() == eUrbanLevelBlock )
+        {
+            const kernel::PhysicalAttribute_ABC& physical = object.Get< kernel::PhysicalAttribute_ABC >();
+            const kernel::Architecture_ABC& architecture = physical.GetArchitecture();
+            return architecture.GetMaterial().GetName();
+        }
+        valid = false;
+        return "";
+    }
+
+    std::string RoofShapeExtractor( const kernel::Entity_ABC& object, bool& valid, bool& /* empty */ )
+    {
+        const UrbanHierarchies& urbanHierarchies = static_cast< const UrbanHierarchies& >( object.Get< kernel::Hierarchies >() );
+        if( urbanHierarchies.GetLevel() == eUrbanLevelBlock )
+        {
+            const kernel::PhysicalAttribute_ABC& physical = object.Get< kernel::PhysicalAttribute_ABC >();
+            const kernel::Architecture_ABC& architecture = physical.GetArchitecture();
+            return architecture.GetRoofShape().GetName();
+        }
+        else
+            valid = false;
+        return "";
+    }
+
+    std::string UsageExtractor( const kernel::Entity_ABC& object, bool& valid, bool& /* empty */ )
+    {
+        const UrbanHierarchies& urbanHierarchies = static_cast< const UrbanHierarchies& >( object.Get< kernel::Hierarchies >() );
+        std::string result = "";
+        if( urbanHierarchies.GetLevel() == eUrbanLevelBlock )
+        {
+            const kernel::PhysicalAttribute_ABC& physical = object.Get< kernel::PhysicalAttribute_ABC >();
+            const kernel::Usages_ABC& usagesExtension = physical.GetUsages();
+            const kernel::T_Usages& usages = usagesExtension.GetUsages();
+            for( kernel::CIT_Usages it = usages.begin(); it != usages.end(); ++it )
+            {
+                if( it->second == 0 )
+                    continue;
+                result += result.empty() ? it->first : ";" + it->first;
+            }
+        }
+        valid = !result.empty();
+        return result;
+    }
+
+    std::string ResourceNetworkExtractor( const kernel::Entity_ABC& object, bool& valid, bool& empty )
+    {
+        const UrbanHierarchies& urbanHierarchies = static_cast< const UrbanHierarchies& >( object.Get< kernel::Hierarchies >() );
+        std::string result = "";
+        if( urbanHierarchies.GetLevel() == eUrbanLevelBlock )
+        {
+            const kernel::ResourceNetwork_ABC& resourceAttribute = object.Get< kernel::ResourceNetwork_ABC >();
+            const kernel::ResourceNetwork_ABC::T_ResourceNodes& nodes = resourceAttribute.GetResourceNodes();
+            if( nodes.empty() )
+                empty = true;
+            else
+                for( kernel::ResourceNetwork_ABC::CIT_ResourceNodes it = nodes.begin(); it != nodes.end(); ++it )
+                    result += result.empty() ? it->first : ";" + it->first;
+        }
+        else
+            valid = false;
+        return result;
+    }
+
+    double AreaExtractor( const kernel::Entity_ABC& object, bool& valid )
+    {
+        if( const UrbanHierarchies* hierarchy = static_cast< const UrbanHierarchies* >( object.Retrieve< kernel::Hierarchies >() ) )
+            if( hierarchy->GetLevel() == eUrbanLevelBlock )
+                if( const kernel::UrbanPositions_ABC* position = object.Retrieve< kernel::UrbanPositions_ABC >() )
+                    return position->ComputeArea();
+        valid = false;
+        return 0.f;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanTreeView::CreateFilters
+// Created: JSR 2012-09-17
+// -----------------------------------------------------------------------------
+void UrbanTreeView::CreateFilters( gui::SearchTreeView_ABC& searchTreeView )
+{
+    searchTreeView.AddResolverFilter< kernel::InfrastructureType >( tr( "Infrastructure" ), staticModel_.objectTypes_, boost::bind( &::InfrastructureExtractor, _1, _2, _3 ), &kernel::InfrastructureType::GetName, tr( "None" ) );
+    searchTreeView.AddResolverFilter< kernel::AccommodationType >( tr( "Usages" ), staticModel_.accommodationTypes_, boost::bind( &::UsageExtractor, _1, _2, _3 ), &kernel::AccommodationType::GetRole );
+    searchTreeView.AddResolverFilter< kernel::ResourceNetworkType >( tr( "Resource network" ), staticModel_.objectTypes_, boost::bind( &::ResourceNetworkExtractor, _1, _2, _3 ), &kernel::ResourceNetworkType::GetName, tr( "None" ) );
+    searchTreeView.AddResolverFilter< kernel::MaterialCompositionType >( tr( "Material" ), staticModel_.objectTypes_, boost::bind( &::MaterialExtractor, _1, _2, _3 ), &kernel::MaterialCompositionType::GetName );
+    searchTreeView.AddResolverFilter< kernel::RoofShapeType >( tr( "RoofShape" ), staticModel_.objectTypes_, boost::bind( &::RoofShapeExtractor, _1, _2, _3 ), &kernel::RoofShapeType::GetName );
+    searchTreeView.AddNumericFilter< double, gui::RichDoubleSpinBox >( tr( "Area" ), boost::bind( &::AreaExtractor, _1, _2 ), 0, 10000000 ); // $$$$ ABR 2012-06-20: 10 million seems enought for urban blocs area...
+}
+
 // -----------------------------------------------------------------------------
 // Name: UrbanTreeView::ContextMenuRequested
 // Created: JSR 2012-09-17
@@ -216,8 +338,8 @@ QMimeData* UrbanTreeView::MimeData( const QModelIndexList& indexes, bool& overri
     {
         if( index.isValid() )
         {
-            kernel::UrbanObject_ABC* entity = dataModel_.GetDataFromIndex< kernel::UrbanObject_ABC >( index );
-            if( entity )
+            kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( index );
+            if( entity && !IsTypeRejected( *entity ) )
             {
                 UrbanHierarchies& hierarchies = static_cast< UrbanHierarchies& >( entity->Get< kernel::Hierarchies >() );
                 if( level != static_cast< EUrbanLevel >( -1 ) && level != hierarchies.GetLevel() )
@@ -249,8 +371,8 @@ void UrbanTreeView::dragMoveEvent( QDragMoveEvent *pEvent )
     }
     EntityTreeView_ABC::dragMoveEvent( pEvent );
     QPoint position = viewport()->mapFromParent( pEvent->pos() );
-    kernel::UrbanObject_ABC* target = dataModel_.GetDataFromIndex< kernel::UrbanObject_ABC >( indexAt( pEvent->pos() ) );
-    if( !target )
+    kernel::Entity_ABC* target = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( indexAt( pEvent->pos() ) );
+    if( !target || IsTypeRejected( *target ))
     {
         pEvent->ignore();
         return;
@@ -268,15 +390,18 @@ void UrbanTreeView::dragMoveEvent( QDragMoveEvent *pEvent )
         {
             int ptr = 0;
             stream >> ptr;
-            kernel::SafePointer< const kernel::UrbanObject_ABC >* safePtr = reinterpret_cast< kernel::SafePointer< const kernel::UrbanObject_ABC >* >( ptr );
-            if( safePtr && *safePtr )
+            kernel::SafePointer< const kernel::Entity_ABC >* safePtr = reinterpret_cast< kernel::SafePointer< const kernel::Entity_ABC >* >( ptr );
+            if( safePtr )
             {
-                const kernel::UrbanObject_ABC* entity = *safePtr;
-                EUrbanLevel level = static_cast< const UrbanHierarchies& >( entity->Get< kernel::Hierarchies >() ).GetLevel();
-                if( ( level == eUrbanLevelBlock && levelTarget == eUrbanLevelDistrict ) || ( level == eUrbanLevelDistrict && levelTarget == eUrbanLevelCity ) )
+                const kernel::Entity_ABC* entity = *safePtr;
+                if( entity && !IsTypeRejected( *entity ) )
                 {
-                    pEvent->accept();
-                    return;
+                    EUrbanLevel level = static_cast< const UrbanHierarchies& >( entity->Get< kernel::Hierarchies >() ).GetLevel();
+                    if( ( level == eUrbanLevelBlock && levelTarget == eUrbanLevelDistrict ) || ( level == eUrbanLevelDistrict && levelTarget == eUrbanLevelCity ) )
+                    {
+                        pEvent->accept();
+                        return;
+                    }
                 }
             }
         }
@@ -292,15 +417,17 @@ void UrbanTreeView::Drop( const QString& mimeType, void* data, QStandardItem& ta
 {
     if( IsReadOnly() )
         return;
-    kernel::Entity_ABC* entityTarget = dataModel_.GetDataFromItem< kernel::UrbanObject_ABC >( target );
+    kernel::Entity_ABC* entityTarget = dataModel_.GetDataFromItem< kernel::Entity_ABC >( target );
     if( !entityTarget )
         return;
     if( mimeType == gui::StandardModel::mimeTypeStr_ )
     {
-        kernel::SafePointer< kernel::UrbanObject_ABC >* safePtr = reinterpret_cast< kernel::SafePointer< kernel::UrbanObject_ABC >* >( data );
-        if( !safePtr || !*safePtr )
+        kernel::SafePointer< kernel::Entity_ABC >* safePtr = reinterpret_cast< kernel::SafePointer< kernel::Entity_ABC >* >( data );
+        if( !safePtr )
             return;
-        kernel::UrbanObject_ABC* object = safePtr->ConstCast();
+        kernel::Entity_ABC* object = safePtr->ConstCast();
+        if( !object || IsTypeRejected( *object ) )
+            return;
         UrbanHierarchies& hierarchies = static_cast< UrbanHierarchies& >( object->Get< kernel::Hierarchies >() );
         kernel::Entity_ABC* superior = const_cast< kernel::Entity_ABC* >( hierarchies.GetSuperior() );
         if( !superior || superior == entityTarget )
@@ -314,7 +441,7 @@ void UrbanTreeView::Drop( const QString& mimeType, void* data, QStandardItem& ta
         for( QList< QStandardItem *>::iterator it = rowItems.begin(); it != rowItems.end(); ++it )
             delete *it;
         static_cast< UrbanHierarchies& >( object->Get< kernel::Hierarchies >() ).ChangeSuperior( *entityTarget );
-        NotifyCreated( *object );
+        NotifyCreated( static_cast< kernel::UrbanObject_ABC& >( *object ) );
         tools::Iterator< const kernel::Entity_ABC& > subIt = hierarchies.CreateSubordinateIterator();
         while( subIt.HasMoreElements() )
         {

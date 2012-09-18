@@ -114,40 +114,38 @@ void StandardModel::Purge()
     // $$$$ ABR 2012-08-14: TODO
 }
 
-namespace
-{
-    bool HasAnyChildVisible( QStandardItem* root, boost::function< bool ( QStandardItem* ) > func )
-    {
-        // $$$$ ABR 2012-08-16: TODO: Not tested yet, need to test it on gaming
-        if( !root )
-            return false;
 
-        bool isVisible = func( root );
-        for( int row = 0; row < root->rowCount(); ++row )
+// -----------------------------------------------------------------------------
+// Name: StandardModel::HasAnyChildVisible
+// Created: JSR 2012-09-18
+// -----------------------------------------------------------------------------
+bool StandardModel::HasAnyChildVisible( QStandardItem& root, T_FilterFunction func )
+{
+    bool isVisible = func( root, *this );
+    for( int row = 0; row < root.rowCount(); ++row )
+    {
+        QStandardItem* childItem = root.child( row, 0 );
+        if( childItem )
         {
-            QStandardItem* childItem = root->child( row, 0 );
-            if( childItem )
-            {
-                bool childVisible = HasAnyChildVisible( childItem, func );
-                childItem->setData( childVisible ? StandardModel::showValue_ : StandardModel::hideValue_, StandardModel::FilterRole );
-                isVisible = isVisible || childVisible;
-            }
+            bool childVisible = HasAnyChildVisible( *childItem, func );
+            childItem->setData( childVisible ? StandardModel::showValue_ : StandardModel::hideValue_, StandardModel::FilterRole );
+            isVisible = isVisible || childVisible;
         }
-        return isVisible;
     }
+    return isVisible;
 }
 
 // -----------------------------------------------------------------------------
 // Name: StandardModel::function< bool
 // Created: ABR 2012-08-17
 // -----------------------------------------------------------------------------
-void StandardModel::ApplyFilter( boost::function< bool ( QStandardItem* ) > func )
+void StandardModel::ApplyFilter( T_FilterFunction func )
 {
     for( int row = 0; row < rowCount(); ++row )
     {
         QStandardItem* childItem = item( row, 0 );
         if( childItem )
-            childItem->setData( ( ::HasAnyChildVisible( childItem, func ) ) ? StandardModel::showValue_ : StandardModel::hideValue_, StandardModel::FilterRole );
+            childItem->setData( ( HasAnyChildVisible( *childItem, func ) ) ? StandardModel::showValue_ : StandardModel::hideValue_, StandardModel::FilterRole );
     }
 }
 

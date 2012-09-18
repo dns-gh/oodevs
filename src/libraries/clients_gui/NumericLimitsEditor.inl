@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+#include "StandardModel.h"
+
 namespace gui
 {
 
@@ -114,5 +116,25 @@ bool NumericLimitsEditor< NumericType, SpinBox >::ApplyFilter( ValuedListItem* i
     }
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: NumericLimitsEditor::ApplyFilter
+// Created: JSR 2012-09-17
+// -----------------------------------------------------------------------------
+template< typename NumericType, typename SpinBox >
+bool NumericLimitsEditor< NumericType, SpinBox >::ApplyFilter( QStandardItem& item, StandardModel& model ) const
+{
+    kernel::Entity_ABC* entity = model.GetDataFromItem< kernel::Entity_ABC >( item );
+    if( entity )
+    {
+        bool valid = true;
+        NumericType extractedValue = extractor_( *entity, valid );
+        if( !valid )
+            return false;
+        return extractedValue >= minSpin_->value() && extractedValue <=  maxSpin_->value();
+    }
+    return false;
+}
+
 
 } //! namespace gui

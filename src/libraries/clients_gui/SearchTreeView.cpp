@@ -10,8 +10,6 @@
 #include "clients_gui_pch.h"
 #include "SearchTreeView.h"
 #include "moc_SearchTreeView.cpp"
-
-#include "CheckComboBox.h"
 #include "RichTreeView.h"
 #include <boost/bind.hpp>
 
@@ -139,19 +137,18 @@ void SearchTreeView_ABC::OnClearFilters()
 // Name: SearchTreeView_ABC::ApplyAllFilter
 // Created: ABR 2012-06-19
 // -----------------------------------------------------------------------------
-bool SearchTreeView_ABC::ApplyAllFilter( QStandardItem* item ) const
+bool SearchTreeView_ABC::ApplyAllFilter( QStandardItem& item, StandardModel& model ) const
 {
-   /* bool result = true;
+    bool result = true;
     for( std::vector< CheckComboBox* >::const_iterator it = combos_.begin(); it != combos_.end(); ++it )
         if( *it )
-            result = result && ( *it )->ApplyFilter( item );
+            result = result && ( *it )->ApplyFilter( item, model );
 
     for( std::vector< NumericLimitsEditor_ABC* >::const_iterator it = numericLimits_.begin(); it != numericLimits_.end(); ++it )
         if( *it )
-            result = result && ( *it )->ApplyFilter( item );
+            result = result && ( *it )->ApplyFilter( item, model );
 
-    return result;*/
-    return true;
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -163,5 +160,5 @@ void SearchTreeView_ABC::OnFiltersChanged( QWidget* )
     RichTreeView* treeView = GetRichTreeView();
     if( !treeView )
         return;
-    treeView->ApplyFilter( boost::bind( &SearchTreeView_ABC::ApplyAllFilter, this, _1 ) );
+    treeView->ApplyFilter( boost::bind( &SearchTreeView_ABC::ApplyAllFilter, this, _1, _2 ) );
 }

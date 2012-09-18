@@ -27,7 +27,7 @@ QStandardItem* StandardModel::AddChildItem( QStandardItem* root, int row, int co
     QStandardItem* item = new QStandardItem();
     item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable | flags );
     root->setChild( row, col, item );
-    //item->setData( *new QVariant( showValue_ ), FilterRole ); // $$$$ ABR 2012-08-17: Default filter entry, anything but show will be hide
+    item->setData( *new QVariant( showValue_ ), FilterRole ); // $$$$ ABR 2012-08-17: Default filter entry, anything but show will be hide
     return item;
 }
 

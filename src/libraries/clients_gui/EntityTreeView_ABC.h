@@ -101,7 +101,7 @@ protected slots:
 private:
     //! @name Helpers
     //@{
-    bool ApplyProfileFilter( QStandardItem* item ) const;
+    bool ApplyProfileFilter( QStandardItem& item, StandardModel& model ) const;
     //@}
 
 protected:

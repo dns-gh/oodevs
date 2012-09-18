@@ -73,7 +73,7 @@ protected:
 private:
     //! @name Helpers
     //@{
-    bool ApplyAllFilter( QStandardItem* item ) const;
+    bool ApplyAllFilter( QStandardItem& item, StandardModel& model ) const;
     //@}
 
 protected slots:

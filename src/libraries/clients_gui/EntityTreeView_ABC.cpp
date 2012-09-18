@@ -112,11 +112,9 @@ void EntityTreeView_ABC::NotifyUpdated( const kernel::Entity_ABC& entity )
 // Name: EntityTreeView_ABC::ApplyProfileFilter
 // Created: ABR 2012-08-17
 // -----------------------------------------------------------------------------
-bool EntityTreeView_ABC::ApplyProfileFilter( QStandardItem* item ) const
+bool EntityTreeView_ABC::ApplyProfileFilter( QStandardItem& item, StandardModel& /*model*/ ) const
 {
-    if( !item )
-        return false;
-    kernel::Entity_ABC* entity = dataModel_.GetDataFromItem< kernel::Entity_ABC >( *item );
+    kernel::Entity_ABC* entity = dataModel_.GetDataFromItem< kernel::Entity_ABC >( item );
     if( entity )
         return profile_.IsVisible( *entity );
     return false;
@@ -128,7 +126,7 @@ bool EntityTreeView_ABC::ApplyProfileFilter( QStandardItem* item ) const
 // -----------------------------------------------------------------------------
 void EntityTreeView_ABC::NotifyUpdated( const kernel::Profile_ABC& /* profile */ )
 {
-    dataModel_.ApplyFilter( boost::bind( &EntityTreeView_ABC::ApplyProfileFilter, this, _1 ) );
+    dataModel_.ApplyFilter( boost::bind( &EntityTreeView_ABC::ApplyProfileFilter, this, _1, _2 ) );
 }
 
 // -----------------------------------------------------------------------------

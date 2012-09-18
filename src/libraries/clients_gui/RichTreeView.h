@@ -18,6 +18,7 @@
 namespace kernel
 {
     class Controllers;
+    class Entity_ABC;
 }
 
 namespace gui
@@ -64,15 +65,7 @@ public:
     //@{
     virtual void CreateFilters( SearchTreeView_ABC& searchTreeView );
     virtual bool LessThan( const QModelIndex& left, const QModelIndex& right, bool& valid ) const;
-    void ApplyFilter( boost::function< bool ( QStandardItem* ) > func )
-    {
-        // TODO
-        /*for( Q3ListViewItemIterator it = firstChild(); it.current(); ++it )
-        {
-            ValuedListItem* item = static_cast< ValuedListItem* >( it.current() );
-            item->setVisible( HasAnyChildVisible( item, func ) );
-        }*/
-    }
+    void ApplyFilter( StandardModel::T_FilterFunction func );
     //@}
 
 public slots:

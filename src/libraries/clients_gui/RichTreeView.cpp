@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "RichTreeView.h"
 #include "moc_RichTreeView.cpp"
+#include "StandardModelVisitor_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 
 using namespace gui;
@@ -54,18 +55,11 @@ RichTreeView::RichTreeView( kernel::Controllers& controllers, QWidget* parent /*
     , dataModel_( controllers, *proxyModel_, this )
 {
     setSortingEnabled( true );
-    //setModel( &dataModel_ ); // $$$$ ABR 2012-08-17: To remove when proxy
 
-    // $$$$ ABR 2012-08-17: Does work for now hide everything without any call to ApplyFilter
-    //dataModel_.SetProxyModel( proxyModel_ );
-    //proxyModel_.setSourceModel( &dataModel_ );
-    //proxyModel_.setFilterRole( StandardModel::FilterRole );
-    //proxyModel_.setFilterRegExp( StandardModel::showValue_ );
     setModel( proxyModel_ );
-
-    // $$$$ ABR 2012-08-17: TODO: May be use a custom proxy model for place pc in top of automat
+    proxyModel_->setFilterRole( StandardModel::FilterRole );
+    proxyModel_->setFilterRegExp( StandardModel::showValue_ );
     proxyModel_->setDynamicSortFilter( true );
-    //proxyModel_.setSortRole( Qt::UserRole );
 
     QPalette p = palette();
     p.setColor( QPalette::Inactive, QPalette::Highlight, Qt::lightGray );
@@ -157,6 +151,15 @@ void RichTreeView::CreateFilters( SearchTreeView_ABC& /*searchTreeView*/ )
 bool RichTreeView::LessThan( const QModelIndex& /*left*/, const QModelIndex& /*right*/, bool& /*valid*/ ) const
 {
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: RichTreeView::function< bool
+// Created: JSR 2012-09-18
+// -----------------------------------------------------------------------------
+void RichTreeView::ApplyFilter( StandardModel::T_FilterFunction func )
+{
+    dataModel_.ApplyFilter( func );
 }
 
 // -----------------------------------------------------------------------------

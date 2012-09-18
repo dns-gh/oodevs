@@ -11,6 +11,7 @@
 #include "CheckComboBox.h"
 #include "moc_CheckComboBox.cpp"
 #include "ValuedListItem.h"
+#include "StandardModel.h"
 #pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )
@@ -335,6 +336,43 @@ bool CheckComboBox::ApplyFilter( ValuedListItem* item ) const
                 for( QStringList::const_iterator it = items.constBegin(); !result && it != items.constEnd(); ++it )
                     result = result || ( *it == noneText_ ) ? empty : extractedText == it->toUtf8().constData();
         }
+    }
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: CheckComboBox::ApplyFilter
+// Created: JSR 2012-09-18
+// -----------------------------------------------------------------------------
+bool CheckComboBox::ApplyFilter( QStandardItem& item, StandardModel& model ) const
+{
+    QStringList items = CheckedItems();
+    if( items.empty() )
+        return true;
+    bool result = false;
+    kernel::Entity_ABC* entity = model.GetDataFromItem< kernel::Entity_ABC >( item );
+    if( entity )
+    {
+        bool valid = true;
+        bool empty = false;
+        std::string extractedText = extractor_( *entity, valid, empty );
+        if( !valid )
+            return false;
+
+        // $$$$ ABR 2012-06-19: TODO Make allText_ check action check and uncheck every item ( if( *it == allText_ ) )
+
+        if( extractedText.find( ';' ) != std::string::npos )    // Multiple result
+        {
+            std::vector< std::string > extractedVector;
+            boost::split( extractedVector, extractedText, boost::algorithm::is_any_of( ";" ) );
+
+            for( QStringList::const_iterator it = items.constBegin(); !result && it != items.constEnd(); ++it )
+                for( std::vector< std::string >::const_iterator extractedIt = extractedVector.begin(); !result && extractedIt != extractedVector.end(); ++extractedIt )
+                    result = result || ( *it == noneText_ ) ? empty : *extractedIt == it->toUtf8().constData();
+        }
+        else                                                    // Single result
+            for( QStringList::const_iterator it = items.constBegin(); !result && it != items.constEnd(); ++it )
+                result = result || ( *it == noneText_ ) ? empty : extractedText == it->toUtf8().constData();
     }
     return result;
 }

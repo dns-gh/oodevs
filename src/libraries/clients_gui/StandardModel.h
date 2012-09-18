@@ -35,6 +35,7 @@ public:
     //! @name Types
     //@{
     enum E_InternalRole{ DataRole = Qt::UserRole, FilterRole = Qt::UserRole + 1, SortRole = Qt::UserRole + 2 };
+    typedef boost::function< bool ( QStandardItem&, StandardModel& ) > T_FilterFunction;
     //@}
 
     //! @name Static values
@@ -108,7 +109,7 @@ public:
 
     //! @name Filters
     //@{
-    void ApplyFilter( boost::function< bool ( QStandardItem* ) > func );
+    void ApplyFilter( T_FilterFunction func );
     //@}
 
     //! @name Drag and Drop
@@ -124,6 +125,7 @@ public:
 private:
     //! @name helpers
     //@{
+    bool HasAnyChildVisible( QStandardItem& root, T_FilterFunction func );
     //@}
 
 private:

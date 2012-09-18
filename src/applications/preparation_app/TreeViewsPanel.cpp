@@ -68,7 +68,7 @@ TreeViewsPanel::TreeViewsPanel( kernel::Controllers& controllers, gui::ItemFacto
     }
     // Urban
     {
-        gui::SearchTreeView_ABC* searchTreeView = new gui::SearchTreeView< UrbanTreeView >( this, controllers, PreparationProfile::GetProfile(), modelBuilder, symbols /*, staticModel, model.urban_*/ );
+        gui::SearchTreeView_ABC* searchTreeView = new gui::SearchTreeView< UrbanTreeView >( this, controllers, PreparationProfile::GetProfile(), modelBuilder, symbols, staticModel/*, model.urban_*/ );
         Configure( searchTreeView, treeViews, aggregateToolbar );
         addTab( searchTreeView, tools::translate( "DockContainer","Urban" ) );
     }

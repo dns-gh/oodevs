@@ -23,6 +23,7 @@ namespace kernel
 namespace gui
 {
     class ValuedListItem;
+    class StandardModel;
 
 // =============================================================================
 /** @class  CheckComboModel
@@ -113,6 +114,7 @@ public:
     //! @name Filters
     //@{
     bool ApplyFilter( ValuedListItem* item ) const;
+    bool ApplyFilter( QStandardItem& item, StandardModel& model ) const;
     void SetItemsCheckState( Qt::CheckState state );
     void SetExtractor( T_Extractor extractor );
     //@}

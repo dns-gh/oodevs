@@ -31,7 +31,7 @@ namespace gui
             combo->SetNoneText( noneText );
         combo->FillFromEnum< EnumType >( maxValue, converter );
         // Connection
-        connect( combo, SIGNAL( CheckedItemsChanged( const QStringTree& ) ), signalMapper_, SLOT( map() ) );
+        connect( combo, SIGNAL( CheckedItemsChanged( const QStringList& ) ), signalMapper_, SLOT( map() ) );
         signalMapper_->setMapping( combo, static_cast< QWidget* >( combo ) );
         // Layout
         filtersLayout_->addWidget( label );
@@ -58,7 +58,7 @@ namespace gui
             combo->SetNoneText( noneText );
         combo->FillFromResolver< KernelType, Identifier >( resolver, converter );
         // Connection
-        connect( combo, SIGNAL( CheckedItemsChanged( const QStringTree& ) ), signalMapper_, SLOT( map() ) );
+        connect( combo, SIGNAL( CheckedItemsChanged( const QStringList& ) ), signalMapper_, SLOT( map() ) );
         signalMapper_->setMapping( combo, static_cast< QWidget* >( combo ) );
         // Layout
         filtersLayout_->addWidget( label );
