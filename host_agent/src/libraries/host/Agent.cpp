@@ -197,7 +197,7 @@ Tree Agent::DeleteNode( const Uuid& id )
     // destroy objects outside the lock
     BOOST_FOREACH( SessionController_ABC::T_Session ptr, invalid )
         sessions_.Delete( id, ptr->GetId() );
-    return Tree( ptr->GetProperties() );
+    return ptr->GetProperties();
 }
 
 // -----------------------------------------------------------------------------
@@ -228,7 +228,7 @@ Tree Agent::UpdateNode( const Uuid& id, const Tree& cfg )
     if( !ptr )
         throw HttpException( web::NOT_FOUND );
     sessions_.NotifyNode( id );
-    return Tree( ptr->GetProperties() );
+    return ptr->GetProperties();
 }
 
 // -----------------------------------------------------------------------------
@@ -237,7 +237,7 @@ Tree Agent::UpdateNode( const Uuid& id, const Tree& cfg )
 // -----------------------------------------------------------------------------
 Tree Agent::GetInstall( const Uuid& id ) const
 {
-    return Tree( nodes_.GetInstall( id ) );
+    return nodes_.GetInstall( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -246,7 +246,7 @@ Tree Agent::GetInstall( const Uuid& id ) const
 // -----------------------------------------------------------------------------
 Tree Agent::DeleteInstall( const Uuid& id, const std::vector< size_t >& list )
 {
-    return Tree( nodes_.DeleteInstall( id, list ) );
+    return nodes_.DeleteInstall( id, list );
 }
 
 // -----------------------------------------------------------------------------
@@ -264,7 +264,7 @@ void Agent::DownloadInstall( const Uuid& id, size_t item, web::Chunker_ABC& dst 
 // -----------------------------------------------------------------------------
 Tree Agent::UploadCache( const Uuid& id, io::Reader_ABC& src )
 {
-    return Tree( nodes_.UploadCache( id, src ) );
+    return nodes_.UploadCache( id, src );
 }
 
 // -----------------------------------------------------------------------------
@@ -273,7 +273,7 @@ Tree Agent::UploadCache( const Uuid& id, io::Reader_ABC& src )
 // -----------------------------------------------------------------------------
 Tree Agent::GetCache( const Uuid& id ) const
 {
-    return Tree( nodes_.GetCache( id ) );
+    return nodes_.GetCache( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -282,7 +282,7 @@ Tree Agent::GetCache( const Uuid& id ) const
 // -----------------------------------------------------------------------------
 Tree Agent::DeleteCache( const Uuid& id )
 {
-    return Tree( nodes_.DeleteCache( id ) );
+    return nodes_.DeleteCache( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -291,7 +291,7 @@ Tree Agent::DeleteCache( const Uuid& id )
 // -----------------------------------------------------------------------------
 Tree Agent::InstallFromCache( const Uuid& id, const std::vector< size_t >& list )
 {
-    return Tree( nodes_.InstallFromCache( id, list ) );
+    return nodes_.InstallFromCache( id, list );
 }
 
 // -----------------------------------------------------------------------------
