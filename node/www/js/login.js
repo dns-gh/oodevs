@@ -276,9 +276,9 @@
 
   $(".sign_out").click(function() {
     return ajax("/api/logout", {}, function() {
-      return location.reload();
+      return load_url(get_url(window.location.pathname));
     }, function() {
-      return location.reload();
+      return load_url(get_url(window.location.pathname));
     });
   });
 

@@ -190,8 +190,8 @@ parse_parameters = ->
 
 $(".sign_out").click ->
     ajax "/api/logout", {},
-        ->  location.reload(),
-        ->  location.reload()
+        ->  load_url get_url window.location.pathname,
+        ->  load_url get_url window.location.pathname
 
 toggle_input_error = (el, txt, reset) ->
     root = el.parents ".control-group"
