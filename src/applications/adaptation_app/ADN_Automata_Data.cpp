@@ -18,6 +18,7 @@
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_Tr.h"
 
+tools::IdManager ADN_Automata_Data::idManager_;
 
 // -----------------------------------------------------------------------------
 // Name: UnitInfos::UnitInfos
@@ -104,6 +105,7 @@ void ADN_Automata_Data::UnitInfos::WriteArchive( xml::xostream& output, const AD
 ADN_Automata_Data::AutomatonInfos::AutomatonInfos()
 : ADN_Ref_ABC()
 , ADN_DataTreeNode_ABC()
+, nId_( ADN_Automata_Data::idManager_.GetNextId() )
 , ptrUnit_( ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos(), 0 )
 , ptrModel_( ADN_Workspace::GetWorkspace().GetModels().GetData().GetAutomataModelsInfos(), 0 )
 , bStrengthRatioFeedbackTime_( false )
@@ -111,6 +113,24 @@ ADN_Automata_Data::AutomatonInfos::AutomatonInfos()
 {
     BindExistenceTo( &ptrUnit_ );
     BindExistenceTo( &ptrModel_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatonInfos::AutomatonInfos
+// Created: APE 2004-12-02
+// -----------------------------------------------------------------------------
+ADN_Automata_Data::AutomatonInfos::AutomatonInfos( unsigned int id )
+    : ADN_Ref_ABC()
+    , ADN_DataTreeNode_ABC()
+    , nId_( id )
+    , ptrUnit_( ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos(), 0 )
+    , ptrModel_( ADN_Workspace::GetWorkspace().GetModels().GetData().GetAutomataModelsInfos(), 0 )
+    , bStrengthRatioFeedbackTime_( false )
+    , strengthRatioFeedbackTime_( "0s" )
+{
+    BindExistenceTo( &ptrUnit_ );
+    BindExistenceTo( &ptrModel_ );
+    ADN_Automata_Data::idManager_.Lock( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -206,13 +226,13 @@ void ADN_Automata_Data::AutomatonInfos::ReadArchive( xml::xistream& input )
 // Name: AutomatonInfos::WriteArchive
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
-void ADN_Automata_Data::AutomatonInfos::WriteArchive( xml::xostream& output, int nMosId )
+void ADN_Automata_Data::AutomatonInfos::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "automat" )
             << xml::attribute( "name", strName_ )
             << xml::attribute( "type", ADN_Tr::ConvertFromAgentTypeAutomate( nAgentType_.GetData() ) )
             << xml::attribute( "decisional-model", ptrModel_.GetData()->strName_ )
-            << xml::attribute( "id", nMosId );
+            << xml::attribute( "id", nId_ );
     if( bStrengthRatioFeedbackTime_.GetData() )
         output << xml::attribute( "force-ratio-feedback-time", strengthRatioFeedbackTime_ );
     for( IT_UnitInfosVector it = vSubUnits_.begin(); it != vSubUnits_.end(); ++it )
@@ -274,6 +294,7 @@ void ADN_Automata_Data::FilesNeeded( T_StringList& vFiles ) const
 // -----------------------------------------------------------------------------
 void ADN_Automata_Data::Reset()
 {
+    idManager_.Reset();
     vAutomata_.Reset();
 }
 
@@ -294,7 +315,7 @@ void ADN_Automata_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Automata_Data::ReadAutomat( xml::xistream& input )
 {
-    std::auto_ptr<AutomatonInfos> spNew( new AutomatonInfos() );
+    std::auto_ptr< AutomatonInfos > spNew( new AutomatonInfos( input.attribute< unsigned int >( "id" ) ) );
     spNew->ReadArchive( input );
     vAutomata_.AddItem( spNew.release() );
 }
@@ -305,12 +326,10 @@ void ADN_Automata_Data::ReadAutomat( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Automata_Data::WriteArchive( xml::xostream& output )
 {
-    int nMosBaseId = static_cast< int >( ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos().size() + 1 );
     output << xml::start( "automats" );
     ADN_Tools::AddSchema( output, "Automats" );
-    int n = 0;
-    for( IT_AutomatonInfosVector it = vAutomata_.begin(); it != vAutomata_.end(); ++it, ++n )
-        (*it)->WriteArchive( output, nMosBaseId + n );
+    for( IT_AutomatonInfosVector it = vAutomata_.begin(); it != vAutomata_.end(); ++it )
+        (*it)->WriteArchive( output );
     output  << xml::end;
 }
 

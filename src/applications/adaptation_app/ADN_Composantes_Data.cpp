@@ -22,6 +22,8 @@
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
 
+tools::IdManager ADN_Composantes_Data::idManager_;
+
 // -----------------------------------------------------------------------------
 // Name: AmbulanceInfos::AmbulanceInfos
 // Created: APE 2005-03-11
@@ -1742,7 +1744,7 @@ void ADN_Composantes_Data::ConsumptionsInfos::WriteArchive( xml::xostream& outpu
 //-----------------------------------------------------------------------------
 ADN_Composantes_Data::ComposanteInfos::ComposanteInfos()
     : ADN_Ref_ABC()
-    , nMosId_                        ( ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetNextId() )
+    , nId_                           ( ADN_Composantes_Data::idManager_.GetNextId() )
     , equipmentCategory_             ( eAutres )
     , ptrArmor_                      ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos(), 0 )
     , ptrSize_                       ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos(), 0 )
@@ -1768,7 +1770,67 @@ ADN_Composantes_Data::ComposanteInfos::ComposanteInfos()
     , nPowerIndirectFire_            ( 0 )
     , nPowerCloseCombat_             ( 0 )
     , nPowerEngineering_             ( 0 )
-    {
+{
+    Initialize();
+}
+
+//-----------------------------------------------------------------------------
+// Name: ComposanteInfos::ComposanteInfos
+// Created: JDY 03-07-18
+//-----------------------------------------------------------------------------
+ADN_Composantes_Data::ComposanteInfos::ComposanteInfos( unsigned int id )
+    : ADN_Ref_ABC()
+    , nId_                           ( id )
+    , equipmentCategory_             ( eAutres )
+    , ptrArmor_                      ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos(), 0 )
+    , ptrSize_                       ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos(), 0 )
+    , rWeight_                       ( 100 )
+    , vSpeeds_                       ( false )
+    , bTroopEmbarkingTimes_          ( false )
+    , embarkingTimePerPerson_        ( "0s" )
+    , disembarkingTimePerPerson_     ( "0s" )
+    , bCanCarryCargo_                ( false )
+    , rWeightTransportCapacity_      ( 0 )
+    , embarkingTimePerTon_           ( "0s" )
+    , disembarkingTimePerTon_        ( "0s" )
+    , bCanCarryCrowd_                ( false )
+    , nCrowdTransportCapacity_       ( 0 )
+    , crowdEmbarkingTimePerPerson_   ( "0s" )
+    , crowdDisembarkingTimePerPerson_( "0s" )
+    , rMaxSpeed_                     ( 100 )
+    , attritionBreakdowns_           ( "attrition" )
+    , randomBreakdowns_              ( "random" )
+    , bMaxSlope_                     ( false )
+    , rMaxSlope_                     ( 60 )
+    , nPowerDirectFire_              ( 0 )
+    , nPowerIndirectFire_            ( 0 )
+    , nPowerCloseCombat_             ( 0 )
+    , nPowerEngineering_             ( 0 )
+{
+    Initialize();
+    ADN_Composantes_Data::idManager_.Lock( id );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ComposanteInfos::ComposanteInfos
+// Created: JDY 03-07-18
+//-----------------------------------------------------------------------------
+ADN_Composantes_Data::ComposanteInfos::~ComposanteInfos()
+{
+    vSpeeds_.Delete();
+    vWeapons_.Delete();
+    vActiveProtections_.Delete();
+    vSensors_.Delete();
+    vRadars_.Delete();
+    vObjects_.Delete();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Data::ComposanteInfos::Initialize
+// Created: ABR 2012-09-18
+// -----------------------------------------------------------------------------
+void ADN_Composantes_Data::ComposanteInfos::Initialize()
+{
     BindExistenceTo( &ptrArmor_ );
     BindExistenceTo( &ptrSize_ );
 
@@ -1800,20 +1862,6 @@ ADN_Composantes_Data::ComposanteInfos::ComposanteInfos()
         SpeedInfos * pNewSpeedInfos = new SpeedInfos( (E_Location)iTerrain );
         vSpeeds_.AddItem(pNewSpeedInfos);
     }
-}
-
-//-----------------------------------------------------------------------------
-// Name: ComposanteInfos::ComposanteInfos
-// Created: JDY 03-07-18
-//-----------------------------------------------------------------------------
-ADN_Composantes_Data::ComposanteInfos::~ComposanteInfos()
-{
-    vSpeeds_.Delete();
-    vWeapons_.Delete();
-    vActiveProtections_.Delete();
-    vSensors_.Delete();
-    vRadars_.Delete();
-    vObjects_.Delete();
 }
 
 // -----------------------------------------------------------------------------
@@ -2170,7 +2218,7 @@ void ADN_Composantes_Data::ComposanteInfos::WriteArchive( xml::xostream& output 
     output << xml::start( "equipment" )
                << xml::attribute( "comment", strAdditionalComments_ )
                << xml::attribute( "name", strName_ )
-               << xml::attribute( "id", nMosId_ )
+               << xml::attribute( "id", nId_ )
                << xml::attribute( "codeEMAT6", strCodeEMAT6_ )
                << xml::attribute( "codeEMAT8", strCodeEMAT8_ )
                << xml::attribute( "codeLFRIL", strCodeLFRIL_ )
@@ -2298,7 +2346,6 @@ void ADN_Composantes_Data::ComposanteInfos::WriteArchive( xml::xostream& output 
 //-----------------------------------------------------------------------------
 ADN_Composantes_Data::ADN_Composantes_Data()
     : ADN_Data_ABC ()
-    , nNextId_     ( 1 )
     , vComposantes_()
 {
     vComposantes_.SetItemTypeName( "an equipment" );
@@ -2328,7 +2375,7 @@ void ADN_Composantes_Data::FilesNeeded(T_StringList& files) const
 //-----------------------------------------------------------------------------
 void ADN_Composantes_Data::Reset()
 {
-    nNextId_ = 1;
+    idManager_.Reset();
     vComposantes_.Delete();
 }
 
@@ -2338,7 +2385,7 @@ void ADN_Composantes_Data::Reset()
 // -----------------------------------------------------------------------------
 void ADN_Composantes_Data::ReadElement( xml::xistream& input )
 {
-    std::auto_ptr<ComposanteInfos> spNew( new ComposanteInfos() );
+    std::auto_ptr<ComposanteInfos> spNew( new ComposanteInfos( input.attribute< unsigned int >( "id" ) ) );
     spNew->ReadArchive( input );
     vComposantes_.AddItem( spNew.release() );
 }
@@ -2365,15 +2412,6 @@ void ADN_Composantes_Data::WriteArchive( xml::xostream& output )
     for( CIT_ComposanteInfos_Vector it = vComposantes_.begin(); it != vComposantes_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Composantes_Data::GetNextId
-// Created: AGN 2003-11-21
-// -----------------------------------------------------------------------------
-int ADN_Composantes_Data::GetNextId()
-{
-    return nNextId_++;
 }
 
 // -----------------------------------------------------------------------------

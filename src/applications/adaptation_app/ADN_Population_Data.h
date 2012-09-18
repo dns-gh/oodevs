@@ -220,7 +220,10 @@ public:
     {
     public:
                  PopulationInfos();
+                 PopulationInfos( unsigned int id );
         virtual ~PopulationInfos();
+
+        void Initialize();
 
         virtual std::string GetNodeName();
         std::string GetItemName();
@@ -232,9 +235,10 @@ public:
         void ReadAttritionEffect( xml::xistream& input );
         void ReadFireEffect( xml::xistream& input );
         void ReadUrbanEffect( xml::xistream& input );
-        void WriteArchive( xml::xostream& output, int nMosId ) const;
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
+        ADN_Type_Int                                          nId_;
         ADN_Type_String                                       strName_;
         ADN_TypePtr_InVector_ABC<ADN_Models_Data::ModelInfos> ptrModel_;
         ADN_Type_Double                                       rConcentrationDensity_;
@@ -287,6 +291,9 @@ public:
     ReloadingSpeedEffectInfos reloadingSpeedEffectInfos_;
     ADN_Type_Time timeBetweenNbcApplication_;
     ADN_Type_Time decontaminationDelay_;
+
+private:
+    static tools::IdManager idManager_;
 };
 
 // -----------------------------------------------------------------------------

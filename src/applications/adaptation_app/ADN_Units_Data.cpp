@@ -26,6 +26,8 @@
 
 #include <sstream>
 
+tools::IdManager ADN_Units_Data::idManager_;
+
 // =============================================================================
 //
 // =============================================================================
@@ -424,7 +426,7 @@ ADN_Units_Data::UnitInfos::UnitInfos()
     : ADN_Ref_ABC()
     , eTypeId_                          ( static_cast< E_AgentTypePion >( 0 ) )
     , strName_                          ()
-    , nMosId_                           ( ADN_Workspace::GetWorkspace().GetUnits().GetData().GetNextId() )
+    , nId_                              ( ADN_Units_Data::idManager_.GetNextId() )
     , ptrModel_                         ( ADN_Workspace::GetWorkspace().GetModels().GetData().GetUnitModelsInfos(), 0 )
     , eNatureLevel_                     ( static_cast< E_NatureLevel >( 0 ) )
     , nNbOfficer_                       ( 0 )
@@ -461,6 +463,75 @@ ADN_Units_Data::UnitInfos::UnitInfos()
     , nUrbanAreaEfficiency_             ( 50 )
     , bIsCivilian_                      ( false )
     , repartition_                      ( tools::translate( "Units_Data", "Units" ) )
+{
+    Initialize();
+}
+
+//-----------------------------------------------------------------------------
+// Name: ADN_Units_Data::UnitInfos
+// Created: JDY 03-07-25
+//-----------------------------------------------------------------------------
+ADN_Units_Data::UnitInfos::UnitInfos( unsigned int id )
+    : ADN_Ref_ABC()
+    , eTypeId_                          ( static_cast< E_AgentTypePion >( 0 ) )
+    , strName_                          ()
+    , nId_                              ( id )
+    , ptrModel_                         ( ADN_Workspace::GetWorkspace().GetModels().GetData().GetUnitModelsInfos(), 0 )
+    , eNatureLevel_                     ( static_cast< E_NatureLevel >( 0 ) )
+    , nNbOfficer_                       ( 0 )
+    , nNbNCOfficer_                     ( 0 )
+    , decontaminationDelay_             ( "1s" )
+    , vComposantes_                     ()
+    , vPostures_                        ( false )
+    , vPointInfos_                      ( false )
+    , bProbe_                           ( false )
+    , bRanges_                          ( false )
+    , nSensorRange_                     ( 0 )
+    , nEquipmentRange_                  ( 0 )
+    , bStock_                           ( false )
+    , stocks_                           ()
+    , bStrengthRatioFeedbackTime_       ( false )
+    , strengthRatioFeedbackTime_        ( "0s" )
+    , rProbeWidth_                      ( 0 )
+    , rProbeLength_                     ( 0 )
+    , bCanFly_                          ( false )
+    , eCrossingHeight_                  ( static_cast< E_CrossingHeight >( 0 ) )
+    , bIsAutonomous_                    ( false )
+    , bInstallationDelay_               ( false )
+    , installationDelay_                ( "0s" )
+    , uninstallationDelay_              ( "0s" )
+    , nFootprintRadius_                 ( 0 )
+    , rSpeedModifier_                   ( 1 )
+    , nReconEfficiency_                 ( 50 )
+    , nCombatSupportEfficiency_         ( 50 )
+    , nCombatEfficiency_                ( 50 )
+    , nMobilitySupportEfficiency_       ( 50 )
+    , nCounterMobilitySupportEfficiency_( 50 )
+    , nProtectionSupportEfficiency_     ( 50 )
+    , nEngineeringReconEfficiency_      ( 50 )
+    , nUrbanAreaEfficiency_             ( 50 )
+    , bIsCivilian_                      ( false )
+    , repartition_                      ( tools::translate( "Units_Data", "Units" ) ){
+    Initialize();
+    ADN_Units_Data::idManager_.Lock( id );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ADN_Units_Data::UnitInfos
+// Created: JDY 03-07-28
+//-----------------------------------------------------------------------------
+ADN_Units_Data::UnitInfos::~UnitInfos()
+{
+    vComposantes_.Reset();
+    vPostures_.Reset();
+    vPointInfos_.Reset();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_Data::UnitInfos::Initialize
+// Created: ABR 2012-09-18
+// -----------------------------------------------------------------------------
+void ADN_Units_Data::UnitInfos::Initialize()
 {
     BindExistenceTo(&ptrModel_);
 
@@ -509,17 +580,6 @@ ADN_Units_Data::UnitInfos::UnitInfos()
     ADN_UnitSymbols_Data& unitSymbolsData = ADN_Workspace::GetWorkspace().GetUnitSymbols().GetData();
     natureSymbol_.SetVector( unitSymbolsData.GetSymbols() );
     natureSymbol_.SetData( unitSymbolsData.GetSymbol(), false );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ADN_Units_Data::UnitInfos
-// Created: JDY 03-07-28
-//-----------------------------------------------------------------------------
-ADN_Units_Data::UnitInfos::~UnitInfos()
-{
-    vComposantes_.Reset();
-    vPostures_.Reset();
-    vPointInfos_.Reset();
 }
 
 // -----------------------------------------------------------------------------
@@ -794,7 +854,7 @@ void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output ) const
             << xml::attribute( "name", strName_ )
             << xml::attribute( "type", ADN_Tr::ConvertFromAgentTypePion( eTypeId_.GetData() ) )
             << xml::attribute( "decisional-model", ptrModel_.GetData()->strName_ )
-            << xml::attribute( "id", nMosId_ );
+            << xml::attribute( "id", nId_ );
 
     output << xml::start( "nature" )
             << xml::attribute( "level", ENT_Tr::ConvertFromNatureLevel( eNatureLevel_.GetData() ) )
@@ -937,7 +997,6 @@ void ADN_Units_Data::UnitInfos::CleanupNature()
 //-----------------------------------------------------------------------------
 ADN_Units_Data::ADN_Units_Data()
     : ADN_Data_ABC()
-    , nNextId_    ( 1 )
 {
     // NOTHING
 }
@@ -957,7 +1016,7 @@ ADN_Units_Data::~ADN_Units_Data()
 //-----------------------------------------------------------------------------
 void ADN_Units_Data::Reset()
 {
-    nNextId_ = 1;
+    idManager_.Reset();
     vUnits_.Reset();
 }
 
@@ -971,21 +1030,12 @@ void ADN_Units_Data::FilesNeeded(T_StringList& files) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Units_Data::GetNextId
-// Created: APE 2005-03-18
-// -----------------------------------------------------------------------------
-int ADN_Units_Data::GetNextId()
-{
-    return nNextId_++;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_Units_Data::ReadUnit
 // Created: AGE 2007-08-21
 // -----------------------------------------------------------------------------
 void ADN_Units_Data::ReadUnit( xml::xistream& input )
 {
-    std::auto_ptr<UnitInfos> spNew( new UnitInfos() );
+    std::auto_ptr<UnitInfos> spNew( new UnitInfos( input.attribute< unsigned int >( "id" ) ) );
     spNew->ReadArchive( input );
     vUnits_.AddItem( spNew.release() );
 }

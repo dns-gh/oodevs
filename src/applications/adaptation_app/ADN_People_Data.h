@@ -82,7 +82,8 @@ public:
         , public ADN_DataTreeNode_ABC
     {
     public:
-         PeopleInfos();
+        PeopleInfos();
+        PeopleInfos( unsigned int );
         ~PeopleInfos();
 
         virtual std::string GetNodeName();
@@ -91,7 +92,7 @@ public:
         PeopleInfos* CreateCopy();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output, int mosId ) const;
+        void WriteArchive( xml::xostream& output ) const;
 
         typedef std::map< int, boost::shared_ptr< EventInfos > > T_Events;
         typedef T_Events::iterator                              IT_Events;
@@ -103,6 +104,7 @@ public:
         const std::string CheckErrors() const;
 
     public:
+        ADN_Type_Int nId_;
         ADN_Type_String strName_;
         ADN_TypePtr_InVector_ABC<ADN_Population_Data::PopulationInfos> ptrModel_;
         ADN_Type_String strAngryCrowdMission_;
@@ -137,6 +139,9 @@ private:
 
 public:
     T_PeopleInfosVector vPeople_;
+
+private:
+    static tools::IdManager idManager_;
 };
 
 // -----------------------------------------------------------------------------

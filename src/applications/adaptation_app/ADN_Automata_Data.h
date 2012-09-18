@@ -60,6 +60,7 @@ public:
 
     public:
         AutomatonInfos();
+        AutomatonInfos( unsigned int id );
         ~AutomatonInfos();
 
         virtual std::string GetNodeName();
@@ -69,10 +70,11 @@ public:
 
         void ReadArchive( xml::xistream& input );
         void ReadUnit( xml::xistream& input );
-        void WriteArchive( xml::xostream& output, int nMosId );
+        void WriteArchive( xml::xostream& output );
         bool IsValidDatabase() const;
 
     public:
+        ADN_Type_Int                                          nId_;
         ADN_Type_String                                       strName_;
         ADN_Type_Enum<E_AgentTypeAutomate,eNbrAgentTypeAutomate> nAgentType_;
         ADN_TypePtr_InVector_ABC<ADN_Models_Data::ModelInfos> ptrModel_;
@@ -109,6 +111,9 @@ private:
 
 public:
     T_AutomatonInfosVector  vAutomata_;
+
+private:
+    static tools::IdManager idManager_;
 };
 
 

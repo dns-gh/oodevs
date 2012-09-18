@@ -23,7 +23,7 @@
 #include <tools/XmlCrc32Signature.h>
 #include <xeuseuleu/xsl.hpp>
 
-tools::IdManager ADN_Missions_Data::idFactory_;
+tools::IdManager ADN_Missions_Data::idManager_;
 
 // =============================================================================
 // Mission Parameters
@@ -293,7 +293,7 @@ void ADN_Missions_Data::MissionParameter::WriteArchive( xml::xostream& output )
 // Created: SBO 2009-11-16
 // -----------------------------------------------------------------------------
 ADN_Missions_Data::Mission::Mission()
-    : id_( ADN_Missions_Data::idFactory_.GetNextId() )
+    : id_( ADN_Missions_Data::idManager_.GetNextId() )
 {
     symbol_.SetParentNode( *this );
 }
@@ -305,7 +305,7 @@ ADN_Missions_Data::Mission::Mission()
 ADN_Missions_Data::Mission::Mission( unsigned int id )
     : id_( id )
 {
-    ADN_Missions_Data::idFactory_.Lock( id );
+    ADN_Missions_Data::idManager_.Lock( id );
     symbol_.SetParentNode( *this );
 }
 
@@ -333,7 +333,7 @@ std::string ADN_Missions_Data::Mission::GetItemName()
 // -----------------------------------------------------------------------------
 ADN_Missions_Data::Mission* ADN_Missions_Data::Mission::CreateCopy()
 {
-    Mission* newMission              = new Mission( ADN_Missions_Data::idFactory_.GetNextId() );
+    Mission* newMission              = new Mission();
     newMission->strName_             = strName_.GetData();
     newMission->diaType_             = diaType_.GetData();
     newMission->diaBehavior_         = diaBehavior_.GetData();
@@ -474,7 +474,7 @@ void ADN_Missions_Data::Mission::WriteArchive( xml::xostream& output, const std:
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
 ADN_Missions_Data::FragOrder::FragOrder()
-    : id_( ADN_Missions_Data::idFactory_.GetNextId() )
+    : id_( ADN_Missions_Data::idManager_.GetNextId() )
     , isAvailableWithoutMission_( false )
 {
     // NOTHING
@@ -488,7 +488,7 @@ ADN_Missions_Data::FragOrder::FragOrder( unsigned int id )
     : id_                       ( id )
     , isAvailableWithoutMission_( false )
 {
-    ADN_Missions_Data::idFactory_.Lock( id );
+    ADN_Missions_Data::idManager_.Lock( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -515,7 +515,7 @@ std::string ADN_Missions_Data::FragOrder::GetItemName()
 // -----------------------------------------------------------------------------
 ADN_Missions_Data::FragOrder* ADN_Missions_Data::FragOrder::CreateCopy()
 {
-    FragOrder* newFragOrder = new FragOrder( ADN_Missions_Data::idFactory_.GetNextId() );
+    FragOrder* newFragOrder = new FragOrder();
     newFragOrder->strName_ = strName_.GetData();
     newFragOrder->diaType_ = diaType_.GetData();
     newFragOrder->doctrineDescription_ = doctrineDescription_.GetData();
@@ -639,7 +639,7 @@ void ADN_Missions_Data::FilesNeeded( T_StringList& files ) const
 // -----------------------------------------------------------------------------
 void ADN_Missions_Data::Reset()
 {
-    idFactory_.Reset();
+    idManager_.Reset();
     unitMissions_.Reset();
     automatMissions_.Reset();
     populationMissions_.Reset();

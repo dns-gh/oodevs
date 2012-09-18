@@ -92,9 +92,11 @@ void ADN_ResourceNetworks_Data::ResourceNetworkInfos::ReadArchive( xml::xistream
     ADN_Equipement_Data::T_ResourceInfos_Vector& dotations = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotations();
     for( ADN_Equipement_Data::IT_ResourceInfos_Vector itDotation = dotations.begin(); itDotation != dotations.end(); ++itDotation )
     {
+        if( ( *itDotation )->nType_ != eDotationFamily_Energy )
+            continue;
         ADN_Equipement_Data::T_CategoryInfos_Vector& categories = ( *itDotation )->GetCategories();
         for( ADN_Equipement_Data::IT_CategoryInfos_Vector itCat = categories.begin(); itCat != categories.end(); ++itCat )
-            if( ( *itCat )->nMosId_ == id )
+            if( ( *itCat )->nId_ == id )
             {
                 ptrCategory_ = *itCat;
                 break;
@@ -111,7 +113,7 @@ void ADN_ResourceNetworks_Data::ResourceNetworkInfos::WriteArchive( xml::xostrea
     output << xml::start( "resource-network" )
                << xml::attribute( "name", strName_ )
                << xml::start( "resource" )
-                   << xml::attribute( "id", ptrCategory_.GetData()->nMosId_ )
+                   << xml::attribute( "id", ptrCategory_.GetData()->nId_ )
                << xml::end
                << xml::start( "color" )
                    << xml::attribute( "rgb", strColor_ )

@@ -42,7 +42,6 @@ public:
         ADN_Type_String strName_;
     };
 
-    //typedef ADN_Type_String SizeInfos;
     typedef ADN_Type_Vector_ABC< SizeInfos >         T_SizeInfos_Vector;
     typedef T_SizeInfos_Vector::iterator            IT_SizeInfos_Vector;
     typedef T_SizeInfos_Vector::const_iterator     CIT_SizeInfos_Vector;
@@ -80,7 +79,7 @@ private:
     helpers::T_ArmorInfos_Vector vArmors_;
     T_SizeInfos_Vector  vSizes_;
     helpers::T_ResourceNatureInfos_Vector vDotationNatures_;
-    static tools::IdManager idFactory_;
+    static tools::IdManager idManager_;
 };
 
 

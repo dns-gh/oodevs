@@ -22,15 +22,13 @@ class ResourceNatureInfos : public ADN_Ref_ABC
 
 public:
     ResourceNatureInfos();
-    ResourceNatureInfos( const std::string name, int id );
+    ResourceNatureInfos( const std::string& name, int id );
     std::string GetItemName();
-    void SetId( int id );
-    int GetId();
     ResourceNatureInfos* CreateCopy();
 
 public:
     ADN_Type_String strName_;
-    ADN_Type_Int id_;
+    ADN_Type_Int nId_;
 };
 
 typedef ADN_Type_Vector_ABC< ResourceNatureInfos > T_ResourceNatureInfos_Vector;

@@ -22,7 +22,8 @@
 #include <tools/XmlCrc32Signature.h>
 #include <boost/bind.hpp>
 
-tools::IdManager ADN_Categories_Data::idFactory_;
+tools::IdManager ADN_Categories_Data::idManager_;
+
 // =============================================================================
 // AttritionEffectOnHuman
 // =============================================================================
@@ -71,10 +72,10 @@ void ADN_Categories_Data::FilesNeeded(T_StringList& files) const
 //-----------------------------------------------------------------------------
 void ADN_Categories_Data::Reset()
 {
+    idManager_.Reset();
     vArmors_.Reset();
     vSizes_.Reset();
     vDotationNatures_.Reset();
-    idFactory_.Reset();
 }
 
 //-----------------------------------------------------------------------------
@@ -237,11 +238,11 @@ void ADN_Categories_Data::ReadNature( xml::xistream& input )
     if( found != vDotationNatures_.end() )
         throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).toAscii().constData(), tools::translate( "Categories_Data", "Categories - Duplicated resource nature type name '%1'" ).arg( strName.c_str() ).toAscii().constData() );
     if ( !id )
-        id = idFactory_.GetNextId();
+        id = idManager_.GetNextId();
     helpers::ResourceNatureInfos* pNew = new helpers::ResourceNatureInfos( strName, id );
     pNew->strName_.SetDataName( "le nom de la nature de dotation" );
     vDotationNatures_.AddItem( pNew );
-    idFactory_.Lock( id );
+    idManager_.Lock( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -316,7 +317,7 @@ void ADN_Categories_Data::WriteDotationNatures( xml::xostream& output )
         std::string strData( ( *it )->strName_.GetData() );
         output << xml::start( "nature" )
                 << xml::attribute( "type", trim( strData ) )
-                << xml::attribute( "id", ( *it )->id_ )
+                << xml::attribute( "id", ( *it )->nId_ )
                << xml::end;
     }
     output << xml::end;
@@ -328,5 +329,5 @@ void ADN_Categories_Data::WriteDotationNatures( xml::xostream& output )
 // -----------------------------------------------------------------------------
 unsigned long ADN_Categories_Data::GetNewIdentifier()
 {
-    return idFactory_.GetNextId();
+    return idManager_.GetNextId();
 }
