@@ -16,14 +16,14 @@
 
 namespace
 {
-    MIL_Time_ABC* pTime_;
+    const MIL_Time_ABC* pTime_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Singletons::GetTime
 // Created: AGE 2007-08-13
 // -----------------------------------------------------------------------------
-MIL_Time_ABC& MIL_Singletons::GetTime()
+const MIL_Time_ABC& MIL_Singletons::GetTime()
 {
     return pTime_ ? *pTime_ : MIL_AgentServer::GetWorkspace();
 }
@@ -32,7 +32,7 @@ MIL_Time_ABC& MIL_Singletons::GetTime()
 // Name: MIL_Singletons::RegisterTime
 // Created: LDC 2010-01-04
 // -----------------------------------------------------------------------------
-void MIL_Singletons::RegisterTime( MIL_Time_ABC& time )
+void MIL_Singletons::RegisterTime( const MIL_Time_ABC& time )
 {
     if( pTime_ )
         throw std::runtime_error( "Time already registered" );
@@ -43,7 +43,7 @@ void MIL_Singletons::RegisterTime( MIL_Time_ABC& time )
 // Name: MIL_Singletons::UnregisterTime
 // Created: LDC 2010-01-04
 // -----------------------------------------------------------------------------
-void MIL_Singletons::UnregisterTime( MIL_Time_ABC& time )
+void MIL_Singletons::UnregisterTime( const MIL_Time_ABC& time )
 {
     if( &time != pTime_ )
         throw std::runtime_error( "Unregistering wrong time" );

@@ -118,7 +118,7 @@ boost::shared_ptr< DEC_Path_KnowledgeObject_ABC > DEC_Path_KnowledgeObject::New(
 {
     static int lastTick = 0;
     static std::map< std::pair< double, double >, std::map< const DEC_Knowledge_Object*, boost::shared_ptr< DEC_Path_KnowledgeObject_ABC > > > cache;
-    MIL_Time_ABC& time = MIL_Singletons::GetTime(); 
+    const MIL_Time_ABC& time = MIL_Singletons::GetTime(); 
     int currentTick = time.GetCurrentTick();
     if( lastTick != currentTick )
         cache.clear();
