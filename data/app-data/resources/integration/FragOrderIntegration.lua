@@ -29,6 +29,7 @@ integration.isTask = function( self )
          orderType == "platoon.combat.support.engineer.tasks.ActiverObstacles" or
          orderType == "platoon.tasks.Embarquer" or
          orderType == "Mount" or
+         orderType == "GoTo" or
          orderType == "platoon.tasks.Debarquer" or
          orderType == "Dismount" or
          orderType == "platoon.tasks.Illuminer" or
@@ -121,7 +122,8 @@ integration.mustBePropagate = function( self )
          orderType == "ActivateRadioCommunication" or   -- WW
          orderType == "ActivateNBCProtection" or        -- WW
          orderType == "DeactivateNBCProtection" or      -- WW
-         orderType == "ChangeAttitude"                  -- WW    
+         orderType == "ChangeAttitude" or               -- WW
+         orderType == "GoTo"                            -- WW
 end
 
 integration.setAutomatFragOrder = function( self )
@@ -206,6 +208,10 @@ integration.startFragOrderTask = function( self )
     elseif orderType == "platoon.tasks.RejoindreAToutPrix" then
         mission.objectif = CreateKnowledge( integration.ontology.types.point, self.source:GetpointCible_() )
 
+    -- WW
+    elseif orderType == "agent.frago.GoTo" then
+        mission.objective = CreateKnowledge( integration.ontology.types.point, self.source:GetpointCible_() )
+  
     -- ----------------------------------------------------------------------------
     -- Unload units
     -- ----------------------------------------------------------------------------
