@@ -109,7 +109,6 @@ namespace
                      "</knowledge-groups>" )
              , groupArmy (new MIL_KnowledgeGroup )
         {
-            MIL_KnowledgeGroupType::Terminate();
             mock::reset();
             MOCK_EXPECT( mockPublisher.Send );
             MIL_KnowledgeGroupType::InitializeWithTime( group, 0.5f );
