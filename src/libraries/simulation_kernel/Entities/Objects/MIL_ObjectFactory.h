@@ -87,13 +87,6 @@ private:
     void ReadAttributes( const std::string& attribute, xml::xistream& xis, Object& object ) const;
     //@}
 
-    template< class UnaryFunction >
-    void ApplyOnPrototypes( UnaryFunction& functor ) const
-    {
-        for( CIT_Prototypes it = prototypes_.begin(); it != prototypes_.end(); ++it )
-            functor( *it->second );
-    }
-
 private:
     //! @name Member data
     //@{

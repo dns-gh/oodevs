@@ -216,32 +216,6 @@ void MIL_ObjectFactory::ReadAttributes( const std::string& attribute, xml::xistr
     attributes_->Create( object, attribute, xis );
 }
 
-namespace
-{
-    class AvoidableObjectDistance : boost::noncopyable
-    {
-    public:
-        AvoidableObjectDistance( double& maxDistance )
-            : maxDistance_( maxDistance )
-        {
-            // NOTHING
-        }
-
-        void operator()( const ObjectPrototype& prototype )
-        {
-            if( const AvoidanceCapacity* pAvoidanceCapacity = prototype.GetType().GetCapacity< AvoidanceCapacity >() )
-            {
-                const double distance = pAvoidanceCapacity->GetDistance();
-                if( distance > maxDistance_ )
-                    maxDistance_ = distance;
-            }
-        }
-
-    private:
-        double& maxDistance_;
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectFactory::GetDangerousObjects
 // Created: CMA 2011-11-28
@@ -262,8 +236,9 @@ std::vector< unsigned int > MIL_ObjectFactory::GetDangerousObjects() const
 double MIL_ObjectFactory::GetMaxAvoidanceDistance() const
 {
     double maxDistance = 0.;
-    AvoidableObjectDistance functor( maxDistance );
-    ApplyOnPrototypes( functor );
+    for( CIT_Prototypes it = prototypes_.begin(); it != prototypes_.end(); ++it )
+        if( const AvoidanceCapacity* avoidance = it->second->GetType().GetCapacity< AvoidanceCapacity >() )
+            maxDistance = std::max( maxDistance, avoidance->GetDistance() );
     return maxDistance;
 }
 

@@ -113,6 +113,8 @@ BOOST_AUTO_TEST_CASE( VerifyDangerousObjects )
     std::vector< unsigned int > ids = factory.GetDangerousObjects();
     BOOST_CHECK_EQUAL( 1, ids.size() );
     BOOST_CHECK_EQUAL( 1, ids[0] );
+
+    BOOST_CHECK_EQUAL( 50.0, factory.GetMaxAvoidanceDistance() );
 }
 
 // -----------------------------------------------------------------------------
