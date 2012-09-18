@@ -255,7 +255,7 @@ Tree Agent::DeleteInstall( const Uuid& id, const std::vector< size_t >& list )
 // -----------------------------------------------------------------------------
 void Agent::DownloadInstall( const Uuid& id, size_t item, web::Chunker_ABC& dst )
 {
-    return nodes_.DownloadInstall( id, item, dst );
+    return nodes_.DownloadInstall( id, dst, item );
 }
 
 // -----------------------------------------------------------------------------

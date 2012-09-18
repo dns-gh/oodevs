@@ -93,7 +93,8 @@ struct NodeController_ABC : public boost::noncopyable
     //@{
     virtual Tree    GetInstall     ( const Uuid& id ) const = 0;
     virtual Tree    DeleteInstall  ( const Uuid& id, const std::vector< size_t >& list ) = 0;
-    virtual void    DownloadInstall( const Uuid& id, size_t item, web::Chunker_ABC& dst ) = 0;
+    virtual void    DownloadInstall( const Uuid& id, web::Chunker_ABC& dst, size_t item ) = 0;
+    virtual void    DownloadInstall( const Uuid& id, web::Chunker_ABC& dst, const std::string& type, const std::string& name, const std::string& checksum ) = 0;
     //@}
 
     //! @name Cache Methods
