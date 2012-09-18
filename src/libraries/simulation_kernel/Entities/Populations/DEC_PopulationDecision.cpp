@@ -25,6 +25,8 @@
 #include "Decision/DEC_OrdersFunctions.h"
 #include "Decision/DEC_UrbanObjectFunctions.h"
 #include "Decision/DEC_KnowledgeObjectFunctions.h"
+#include "Decision/DEC_KnowledgeAgentFunctions.h"
+#include "Decision/DEC_AgentFunctions.h"
 #include "Entities/Populations/Actions/PHY_Population_ActionMove.h"
 #include "Entities/Populations/Actions/PHY_Population_ActionFireOnPion.h"
 #include "Entities/Populations/Actions/PHY_Population_ActionFireOnPions.h"
@@ -125,6 +127,10 @@ void DEC_PopulationDecision::RegisterUserArchetypeFunctions ( directia::brain::B
     brain[ "DEC_GetTimeInSeconds" ] = &DEC_MiscFunctions::GetTimeInSeconds;
 
     brain[ "DEC_GetDomination" ] = &DEC_PopulationFunctions::GetDominationState;
+
+    brain[ "DEC_ConnaissanceAgent_DangerositeSurPion" ] = &DEC_KnowledgeAgentFunctions::GetDangerosityOnPion;
+    brain[ "DEC_ConnaissanceAgent_DangerositeSurConnaissance" ] = &DEC_KnowledgeAgentFunctions::GetDangerosityOnKnowledge;
+    brain[ "DEC_Agent_RapportDeForceLocal" ] = &DEC_AgentFunctions::GetRapForLocalAgent;
 }
 
 // -----------------------------------------------------------------------------

@@ -27,6 +27,7 @@
 #include "Decision/DEC_LogisticFunctions.h"
 #include "Decision/DEC_ObjectFunctions.h"
 #include "Decision/DEC_FireFunctions.h"
+#include "Decision/DEC_AgentFunctions.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include <boost/serialization/vector.hpp>
 #include <boost/bind.hpp>
@@ -180,6 +181,10 @@ void DEC_AutomateDecision::RegisterUserArchetypeFunctions ( directia::brain::Bra
     // Missions
     brain[ "DEC_DonnerMissionADAAutomate" ] = &DEC_OrdersFunctions::GiveMissionToAutomat;
     brain[ "DEC_Copie_DirectionDanger_Mission" ] = &DEC_MiscFunctions::CopyDirectionDanger;
+
+    brain[ "DEC_ConnaissanceAgent_DangerositeSurPion" ] = &DEC_KnowledgeAgentFunctions::GetDangerosityOnPion;
+    brain[ "DEC_ConnaissanceAgent_DangerositeSurConnaissance" ] = &DEC_KnowledgeAgentFunctions::GetDangerosityOnKnowledge;
+    brain[ "DEC_Agent_RapportDeForceLocal" ] = &DEC_AgentFunctions::GetRapForLocalAgent;
 }
 
 // -----------------------------------------------------------------------------
