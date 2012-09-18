@@ -578,7 +578,7 @@ void Controller::DownloadInstall( Reply_ABC& rpy, const Request_ABC& request )
     const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "id" );
     const size_t id = RequireParameter< size_t >( "item", request );
     boost::shared_ptr< Chunker_ABC > chunker = MakeChunker( rpy );
-    agent_.DownloadInstall( node, id, *chunker );
+    agent_.DownloadInstall( node, *chunker, id );
 }
 
 // -----------------------------------------------------------------------------

@@ -74,7 +74,8 @@ public:
     //@{
     virtual Tree GetInstall     ( const Uuid& id ) const;
     virtual Tree DeleteInstall  ( const Uuid& id, const std::vector< size_t >& list  );
-    virtual void DownloadInstall( const Uuid& id, size_t item, web::Chunker_ABC& dst );
+    virtual void DownloadInstall( const Uuid& id, web::Chunker_ABC& dst, size_t item );
+    virtual void DownloadInstall( const Uuid& id, web::Chunker_ABC& dst, const std::string& type, const std::string& name, const std::string& checksum );
     //@}
 
     //! @name Cache Methods

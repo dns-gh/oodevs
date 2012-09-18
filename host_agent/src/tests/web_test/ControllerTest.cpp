@@ -72,7 +72,8 @@ namespace
         // install
         MOCK_METHOD( GetInstall, 1 );
         MOCK_METHOD( DeleteInstall, 2 );
-        MOCK_METHOD( DownloadInstall, 3 );
+        MOCK_METHOD_EXT( DownloadInstall, 3, void( const web::Uuid& id, web::Chunker_ABC&, size_t ), DownloadInstallById );
+        MOCK_METHOD_EXT( DownloadInstall, 5, void( const web::Uuid& id, web::Chunker_ABC&, const std::string&, const std::string&, const std::string& ), DownloadInstallByChecksum );
         // cache
         MOCK_METHOD( UploadCache, 2 );
         MOCK_METHOD( GetCache, 1 );
