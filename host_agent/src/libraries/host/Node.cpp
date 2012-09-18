@@ -497,10 +497,21 @@ Tree Node::InstallFromCache( const std::vector< size_t >& list )
 // Name: Node::DownloadInstall
 // Created: BAX 2012-09-11
 // -----------------------------------------------------------------------------
-void Node::DownloadInstall( size_t item, web::Chunker_ABC& dst )
+void Node::DownloadInstall( web::Chunker_ABC& dst, size_t item )
 {
     boost::shared_lock< boost::shared_mutex > lock( access_ );
     install_->Download( dst, item );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Node::DownloadInstall
+// Created: BAX 2012-09-18
+// -----------------------------------------------------------------------------
+void Node::DownloadInstall( web::Chunker_ABC& dst, const std::string& type,
+                            const std::string& name, const std::string& checksum )
+{
+    boost::shared_lock< boost::shared_mutex > lock( access_ );
+    install_->Download( dst, type, name, checksum );
 }
 
 // -----------------------------------------------------------------------------

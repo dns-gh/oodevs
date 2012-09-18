@@ -104,7 +104,8 @@ struct Node_ABC : public boost::noncopyable
     //@{
     virtual Tree GetInstall     () const = 0;
     virtual Tree DeleteInstall  ( const std::vector< size_t >& list ) = 0;
-    virtual void DownloadInstall( size_t item, web::Chunker_ABC& dst ) = 0;
+    virtual void DownloadInstall( web::Chunker_ABC& dst, size_t item ) = 0;
+    virtual void DownloadInstall( web::Chunker_ABC& dst, const std::string& type, const std::string& name, const std::string& checksum ) = 0;
     //@}
 
     //! @name Cache methods

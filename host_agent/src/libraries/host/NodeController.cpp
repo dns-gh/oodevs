@@ -351,7 +351,7 @@ void NodeController::DownloadInstall( const Uuid& id, size_t item, web::Chunker_
     T_Node node = nodes_.Get( id );
     if( !node )
         throw web::HttpException( web::NOT_FOUND );
-    node->DownloadInstall( item, dst );
+    node->DownloadInstall( dst, item );
 }
 
 // -----------------------------------------------------------------------------
