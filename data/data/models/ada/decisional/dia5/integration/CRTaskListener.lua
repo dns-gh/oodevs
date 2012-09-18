@@ -111,6 +111,16 @@ function RegisterTaskListener()
         stage = {},
         OnNewTick = function( self )
             myself.newMission = false
+            if myself.stealthTick == 2 then -- I wait 2 ticks
+                DEC_Perception_Furtivite( 1 )  -- I become visible
+                myself.lastStealth = 1
+                myself.wantedVisible = false
+                myself.stealthTick = 0
+            end
+            if myself.wantedVisible then -- I want to be visible, I had to wait
+                myself.stealthTick = myself.stealthTick or 0
+                myself.stealthTick = myself.stealthTick + 1
+            end
         end,
         TaskStarted = function( self, taskName )
             if myself.currentMission == taskName then

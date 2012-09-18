@@ -7,14 +7,24 @@
 -- Refer to the included end-user license agreement for restrictions.
 --
 -- Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
--------------------------------------------------------------------------------
-integration.setStealth = function( beStealth )
+------------------------------------------------------------------------------- 
+ integration.setStealth = function( beStealth )
     local stealthFactor = beStealth and 0 or 1
-    if myself.lastStealth ~= stealthFactor then
-        DEC_Perception_Furtivite( stealthFactor )
-        myself.lastStealth = stealthFactor
+    myself.lastStealth = myself.lastStealth or 1
+    if stealthFactor == 1 and myself.lastStealth == 0 then 
+        myself.wantedVisible = true -- Ask to become visible. It will be effective 2 ticks later if no order to stay unvisible is given (see OnNewTick method in CRTaskListener).
+        return
     end
- end
+    if stealthFactor == 0 then -- Become unvisible
+        if myself.lastStealth == 1 then
+            DEC_Perception_Furtivite( stealthFactor )
+            myself.lastStealth = stealthFactor
+        end
+        myself.wantedVisible = false
+        myself.stealthTick = 0 -- reinit number of ticks for OnNewTick method in CRTaskListener.
+        return
+    end
+end
 
 integration.isStealth = function( self )
     return DEC_Perception_EstFurtif()

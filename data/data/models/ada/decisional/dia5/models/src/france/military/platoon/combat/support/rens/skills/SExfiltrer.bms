@@ -3,10 +3,12 @@ rootnode
 connections = { skill.links.moveToward, skill.nodes.RC },
 
     done = function( self )
+        self.arrived = true
         Feedback( self.feedbacks.done )
     end, 
     
     create = function( self )
+        self.arrived = false
         meKnowledge:becomeStealthy( true )
     end,
 
@@ -14,6 +16,11 @@ connections = { skill.links.moveToward, skill.nodes.RC },
        if self.params.byNight and not integration.isNight() then
             Activate( skill.nodes.RC, 1, { RC = eRC_AttenteConditionFavorablePourInfiltration } )
             return
+       end
+       
+       if self.arrived then
+           Activate( skill.nodes.RC, 1, { RC = eRC_MissionImpossibleReason, information = "Unité exfiltée et postée." } )
+           return
        end
         Activate( skill.links.moveToward, 1, { entities  = { self.params.entity }, infiltrationMode = true } )
         Activate( skill.nodes.RC, 1, { RC = eRC_EnExfiltration } )
@@ -27,6 +34,10 @@ connections = { skill.links.moveToward, skill.nodes.RC },
 node "RC"
 {
     create = function( self )
-        meKnowledge:RC( self.params.RC )
+        if self.params.RC ~= eRC_MissionImpossibleReason then
+            meKnowledge:RC( self.params.RC )
+        else
+            meKnowledge:RC( self.params.RC, self.params.information )
+        end
     end,
 }
