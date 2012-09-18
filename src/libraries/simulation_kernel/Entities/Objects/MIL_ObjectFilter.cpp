@@ -72,14 +72,19 @@ bool MIL_ObjectFilter::Test( const MIL_ObjectType_ABC& type ) const
     return objects_.find( type.GetName() ) != objects_.end();
 }
 
+bool IsDangerousObject( const MIL_ObjectType_ABC& type )
+{
+    return type.GetCapacity< AttritionCapacity >() != 0 ||
+           type.GetCapacity< ContaminationCapacity >() != 0 ||
+           type.GetCapacity< InterferenceCapacity >() != 0 ||
+           type.GetCapacity< AvoidanceCapacity >() != 0;
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_DangerousObjectFilter::Test
 // Created: LDC 2012-02-01
 // -----------------------------------------------------------------------------
 bool MIL_DangerousObjectFilter::Test( const MIL_ObjectType_ABC& type ) const
 {
-    return type.GetCapacity< AttritionCapacity >() != 0 ||
-           type.GetCapacity< ContaminationCapacity >() != 0 ||
-           type.GetCapacity< InterferenceCapacity >() != 0 ||
-           type.GetCapacity< AvoidanceCapacity >() != 0;
+    return IsDangerousObject( type );
 }

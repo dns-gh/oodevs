@@ -218,27 +218,6 @@ void MIL_ObjectFactory::ReadAttributes( const std::string& attribute, xml::xistr
 
 namespace
 {
-    class AvoidableObjectInserter : boost::noncopyable
-    {
-    public:
-        AvoidableObjectInserter( std::vector< unsigned int >& container, const MIL_ObjectFilter& filter )
-            : container_( container )
-            , filter_   ( filter )
-        {
-            // NOTHING
-        }
-
-        void operator()( const ObjectPrototype& prototype )
-        {
-            if( filter_.Test( prototype.GetType() ) )
-                container_.push_back( prototype.GetID() );
-        }
-
-    private:
-        std::vector< unsigned int >& container_;
-        const MIL_ObjectFilter& filter_;
-    };
-
     class AvoidableObjectDistance : boost::noncopyable
     {
     public:
@@ -270,9 +249,9 @@ namespace
 std::vector< unsigned int > MIL_ObjectFactory::GetDangerousObjects() const
 {
     std::vector< unsigned int > dangerousIDs;
-    MIL_DangerousObjectFilter filter;
-    AvoidableObjectInserter functor( dangerousIDs, filter );
-    ApplyOnPrototypes( functor );
+    for( CIT_Prototypes it = prototypes_.begin(); it != prototypes_.end(); ++it )
+        if( IsDangerousObject( *it->second ))
+            dangerousIDs.push_back( it->second->GetID() );
     return dangerousIDs;
 }
 
