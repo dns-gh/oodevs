@@ -4,10 +4,6 @@ return
         return integration.getEntitiesFromAutomatCommunication( params.objective, "none", true)
     end,
 
-    getDirection = function( self, params )
-        return params.direction
-    end,
-
     getSupportingPosition = function( self, params )
         if not myself.leadData.positionsIndex then
             myself.leadData.positionsIndex = 0

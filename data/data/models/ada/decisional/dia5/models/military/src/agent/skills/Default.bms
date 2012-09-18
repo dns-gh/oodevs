@@ -27,11 +27,6 @@ rootnode
     activate = function( self )
         local Activate = Activate
 
-        
-        local stateROE = DEC_Agent_GetEtatROE()
-        DEC_Trace( "stateROE = "..tostring( stateROE ) )
-
-
         -- Debarquement sur magic move
         if integration.shouldDismount() then
             Activate( skill.links.dismount, 1 )

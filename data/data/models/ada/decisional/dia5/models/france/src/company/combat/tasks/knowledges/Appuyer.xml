@@ -11,11 +11,11 @@
             </return>
         </method>
         <method name="getNbrFront">
-          <return>
-            <type>
-              <simple name="numeric"/>
-            </type>
-          </return>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
         </method>
         <method name="getSupportingPosition">
             <return>
@@ -23,13 +23,6 @@
                     <class name="properties.Neutralizing"/>
                     <class name="properties.Destroying"/>
                     <class name="properties.Observing"/>
-                </type>
-            </return>
-        </method>
-        <method name="getDirection">
-            <return>
-                <type>
-                    <class name="properties.Observable"/>
                 </type>
             </return>
         </method>
