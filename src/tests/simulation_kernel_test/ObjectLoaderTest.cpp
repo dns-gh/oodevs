@@ -8,12 +8,19 @@
 // *****************************************************************************
 
 #include "simulation_kernel_test_pch.h"
+#include "StubMIL_Time_ABC.h"
+#include "simulation_kernel/Entities/Agents/Units/Categories/PHY_Protection.h"
+#include "simulation_kernel/Entities/Agents/Units/Composantes/PHY_ComposanteState.h"
+#include "simulation_kernel/Entities/Agents/Units/Dotations/PHY_DotationNature.h"
+#include "simulation_kernel/Entities/Agents/Units/Dotations/PHY_DotationType.h"
+#include "simulation_kernel/Entities/Agents/Units/Dotations/PHY_DotationLogisticType.h"
 #include "simulation_kernel/Entities/MIL_Army_ABC.h"
 #include "simulation_kernel/Entities/Objects/BuildableCapacity.h"
 #include "simulation_kernel/Entities/Objects/ImprovableCapacity.h"
 #include "simulation_kernel/Entities/Objects/MIL_ObjectFactory.h"
 #include "simulation_kernel/Entities/Objects/MIL_ObjectType_ABC.h"
 #include "simulation_kernel/Entities/Objects/SpawnCapacity.h"
+#include "simulation_kernel/MIL_Singletons.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
@@ -26,6 +33,86 @@ BOOST_AUTO_TEST_CASE( VerifyEmptyObjectDefinition )
     xml::xistringstream xis( "<objects/>" );
     factory.Initialize( xis );
     BOOST_CHECK_THROW( factory.FindType( "fake" ), std::runtime_error );
+}
+
+BOOST_AUTO_TEST_CASE( VerifyDangerousObjects )
+{
+    // Need time to generate probability tables for protections...
+    StubMIL_Time_ABC time;
+    MIL_Singletons::RegisterTime( time );
+
+    xml::xistringstream xdotationLogisticType(
+        "<logistic-supply-classes>"
+        "  <logistic-supply-class id='8' type='Class V - Ammunition, explosives, and chemical agents of all types'/>"
+        "</logistic-supply-classes>" );
+    PHY_DotationLogisticType::Initialize( xdotationLogisticType );
+
+    // Segfaults without this
+    PHY_ComposanteState::Initialize();
+
+    xml::xistringstream xdotationNatures(
+        "<natures>"
+        "  <nature id='3' type='Solid'/>"
+        "</natures>" );
+    PHY_DotationNature::Initialize( xdotationNatures );
+
+    xml::xistringstream xprotections( 
+        "<protections>"
+        "  <protection name='HeavyTank' type='materiel'>"
+        "    <neutralization average-time='300s' variance='60s'/>"
+        "    <random-breakdown-probability eva='8' neva='0'/>"
+        "    <attrition-effects>"
+        "      <attrition-effect dead-percentage='15' equipment-state='ReparableAvecEvacuation' injured-percentage='60'/>"
+        "    </attrition-effects>"
+        "  </protection>"
+        "</protections>" );
+    PHY_Protection::Initialize( xprotections );
+
+    xml::xistringstream xdotation(
+        "<resources>"
+        "  <resource category='mine' codeEMAT6='' codeEMAT8='' codeLFRIL='' codeNNO='' id='64' id-nature='3' "
+        "      logistic-supply-class='Class V - Ammunition, explosives, and chemical agents of all types' "
+        "      name='Standard Landmine' nature='Solid' network-usable='false' package-mass='0.005' "
+        "      package-size='1' package-volume='0.005'>"
+        "    <attritions>"
+        "      <attrition destruction='0' protection='HeavyTank' repairable-with-evacuation='0.1' repairable-without-evacuation='0.3'/>"
+        "    </attritions>"
+        "  </resource>"
+        "</resources>" );
+    PHY_DotationType::Initialize( xdotation );
+
+    MIL_ObjectFactory factory;
+    xml::xistringstream xobject(
+        "<objects>"
+        "  <object name='Mine Cluster' point-size='50' type='mines'>"
+        "    <geometries>"
+        "      <geometry symbol='G*MPOMC---****X' type='point'/>"
+        "    </geometries>"
+        "    <activable/>"
+        "    <attrition attrition-surface='0' category='Standard Landmine' ph='1'/>"
+        "      <avoidable distance='50'/>"
+        "      <bypassable bypass-speed='10'/>"
+        "      <constructor default-consumption-mode='EnTravaux' unit-type='raw'>"
+        "        <buildable>"
+        "          <resources>"
+        "            <resource count='10' name='Standard Landmine'/>"
+        "          </resources>"
+        "        </buildable>"
+        "      </constructor>"
+        "    <heuristic>"
+        "      <terrain type='highway' value='1'/>"
+        "    </heuristic>"
+        "    <interaction-height height='1'/>"
+        "    <mobility default-speed='0' max-unit-percentage-speed='0' unit-speed-impact-mode='AuPlusLent'/>"
+        "    <population-filter density='0.1'/>"
+        "    <time-limited/>"
+        "  </object>"
+        "</objects>");
+    BOOST_CHECK_NO_THROW( factory.Initialize( xobject ) );
+
+    std::vector< unsigned int > ids = factory.GetDangerousObjects();
+    BOOST_CHECK_EQUAL( 1, ids.size() );
+    BOOST_CHECK_EQUAL( 1, ids[0] );
 }
 
 // -----------------------------------------------------------------------------
