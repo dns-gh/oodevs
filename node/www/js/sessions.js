@@ -1170,7 +1170,7 @@
       $(this.el).html(session_template(data));
       $(this.el).find(".link").click(function() {
         var msg, next;
-        next = "sword://" + window.location.hostname + ":" + _this.model.get("port") + "/";
+        next = "sword://" + window.location.hostname + "/?sid=" + ($.cookie("sid")) + "&node=" + uuid + "&session=" + _this.model.id;
         if (convert_to_boolean($.cookie("redirect"))) {
           return load_url(next);
         }

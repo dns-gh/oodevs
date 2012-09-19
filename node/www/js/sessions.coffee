@@ -405,7 +405,7 @@ class SessionItemView extends Backbone.View
             data.duration = ms_to_duration duration
         $(@el).html session_template data
         $(@el).find(".link").click =>
-            next = "sword://" + window.location.hostname + ":" + @model.get("port") + "/"
+            next = "sword://#{window.location.hostname}/?sid=#{$.cookie "sid"}&node=#{uuid}&session=#{@model.id}"
             if convert_to_boolean $.cookie "redirect"
                 return load_url next
             msg = $ session_redirect_template id: @model.id
