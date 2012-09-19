@@ -764,6 +764,30 @@ Package_ABC::T_Item Package::Find( const Path& root, const std::string& checksum
 
 namespace
 {
+// -----------------------------------------------------------------------------
+// Name: Compare
+// Created: BAX 2012-09-10
+// -----------------------------------------------------------------------------
+bool Compare( const Package_ABC::T_Item& item, const std::string& type, const std::string& name, const std::string& checksum )
+{
+    return item->GetType()     == type
+        && item->GetName()     == name
+        && item->GetChecksum() == checksum;
+}
+}
+
+// -----------------------------------------------------------------------------
+// Name: Package::Find
+// Created: BAX 2012-09-18
+// -----------------------------------------------------------------------------
+Package_ABC::T_Item Package::Find( const std::string& type, const std::string& name, const std::string& checksum ) const
+{
+    T_Items::const_iterator it = std::find_if( items_.begin(), items_.end(), boost::bind( &Compare, _1, type, name, checksum ) );
+    return it == items_.end() ? T_Item() : *it;
+}
+
+namespace
+{
 void AddItemPath( boost::mutex& access, std::vector< Path >& list, const Path& path )
 {
     boost::lock_guard< boost::mutex > lock( access );
@@ -965,28 +989,14 @@ void Package::Download( web::Chunker_ABC& dst, size_t id )
     item->Download( system_, dst );
 }
 
-namespace
-{
-// -----------------------------------------------------------------------------
-// Name: Compare
-// Created: BAX 2012-09-10
-// -----------------------------------------------------------------------------
-bool Compare( const Package_ABC::T_Item& item, const std::string& type, const std::string& name, const std::string& checksum )
-{
-    return item->GetType()     == type
-        && item->GetName()     == name
-        && item->GetChecksum() == checksum;
-}
-}
-
 // -----------------------------------------------------------------------------
 // Name: Package::Download
 // Created: BAX 2012-09-18
 // -----------------------------------------------------------------------------
 void Package::Download( web::Chunker_ABC& dst, const std::string& type, const std::string& name, const std::string& checksum )
 {
-    T_Items::const_iterator it = std::find_if( items_.begin(), items_.end(), boost::bind( &Compare, _1, type, name, checksum ) );
-    if( it == items_.end() )
+    T_Item item = Find( type, name, checksum );
+    if( !item )
         throw web::HttpException( web::NOT_FOUND );
-    (*it)->Download( system_, dst );
+    item->Download( system_, dst );
 }
