@@ -272,9 +272,9 @@ void CreateExerciceWidget::OnSessionSelected( const QString& session )
 {
     if( Q3ListBoxItem* item = exerciseList_->selectedItem() )
     {
+        session_ = session.toAscii().constData();
         checkpointList_->Update( item->text(), session );
         page_.UpdateEditButton();
-        session_ = session;
     }
 }
 
