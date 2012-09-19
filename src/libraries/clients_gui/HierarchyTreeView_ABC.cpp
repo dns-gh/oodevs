@@ -89,7 +89,7 @@ void HierarchyTreeView_ABC::InternalNotifyCreated( const kernel::Hierarchies& hi
 
     if( superior )      // Child item
     {
-        QStandardItem* superiorItem = dataModel_.FindSafeItem( *superior );
+        QStandardItem* superiorItem = dataModel_.FindDataItem( *superior );
         if( !superiorItem )
             superiorItem = AddItem( 0, *superior );
         entityItem = AddItem( superiorItem, entity );
@@ -132,7 +132,7 @@ QStandardItem* HierarchyTreeView_ABC::AddItem( QStandardItem* parent, const kern
 void HierarchyTreeView_ABC::InternalNotifyUpdated( const kernel::Hierarchies& hierarchy )
 {
     const kernel::Entity_ABC& entity = hierarchy.GetEntity();
-    QStandardItem* entityItem = dataModel_.FindSafeItem( entity );
+    QStandardItem* entityItem = dataModel_.FindDataItem( entity );
     if( entityItem )
     {
         UpdateItem( *entityItem, entity );
@@ -141,7 +141,7 @@ void HierarchyTreeView_ABC::InternalNotifyUpdated( const kernel::Hierarchies& hi
         const kernel::Entity_ABC* newSuperior = hierarchy.GetSuperior();
         if( newSuperior )
         {
-            QStandardItem* newSuperiorItem = dataModel_.FindSafeItem( *newSuperior );
+            QStandardItem* newSuperiorItem = dataModel_.FindDataItem( *newSuperior );
             if( newSuperiorItem )
             {
                 QStandardItem* currentSuperiorItem = entityItem->parent();

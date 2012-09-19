@@ -124,7 +124,7 @@ bool NumericLimitsEditor< NumericType, SpinBox >::ApplyFilter( ValuedListItem* i
 template< typename NumericType, typename SpinBox >
 bool NumericLimitsEditor< NumericType, SpinBox >::ApplyFilter( QStandardItem& item, StandardModel& model ) const
 {
-    kernel::Entity_ABC* entity = model.GetDataFromItem< kernel::Entity_ABC >( item );
+    const kernel::Entity_ABC* entity = model.GetDataFromItem< kernel::Entity_ABC >( item );
     if( entity )
     {
         bool valid = true;

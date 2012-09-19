@@ -26,8 +26,10 @@ QStandardItem* StandardModel::AddChildItem( QStandardItem* root, int row, int co
 {
     QStandardItem* item = new QStandardItem();
     item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable | flags );
+    item->setData( *new QVariant( showValue_ ), FilterRole );
+    item->setData( *new QVariant(), SafeRole );
+    item->setData( *new QVariant(), DataRole );
     root->setChild( row, col, item );
-    item->setData( *new QVariant( showValue_ ), FilterRole ); // $$$$ ABR 2012-08-17: Default filter entry, anything but show will be hide
     return item;
 }
 
@@ -51,6 +53,36 @@ QStandardItem* StandardModel::AddChildTextItem( QStandardItem* root, int row, in
     QStandardItem* item = AddChildItem( root, row, col, flags );
     item->setData( *new QVariant( text ), Qt::DisplayRole );
     item->setData( *new QVariant( tooltip ), Qt::ToolTipRole );
+    return item;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: StandardModel::AddRootDataItem
+// Created: ABR 2012-09-19
+// -----------------------------------------------------------------------------
+template< typename T >
+inline
+QStandardItem* StandardModel::AddRootDataItem( int row, int col, const QString& text, const QString& tooltip, const T& value, Qt::ItemFlags flags /*= 0*/ )
+{
+    return AddRootDataItem( invisibleRootItem(), row, col, text, tooltip, value, flags );
+}
+
+// -----------------------------------------------------------------------------
+// Name: StandardModel::AddChildDataItem
+// Created: ABR 2012-09-19
+// -----------------------------------------------------------------------------
+template< typename T >
+inline
+QStandardItem* StandardModel::AddChildDataItem( QStandardItem* parent, int row, int col, const QString& text, const QString& tooltip, const T& value, Qt::ItemFlags flags /*= 0*/ )
+{
+    QStandardItem* item = AddChildTextItem( root, row, col, text, tooltip, flags );
+
+    QVariant* variant = new QVariant();
+    variant->setValue( kernel::VariantPointer( &value ) );
+    item->setData( *variant, DataRole );
+    item->setData( *new QVariant( false ), SafeRole );
+
     return item;
 }
 
@@ -78,6 +110,7 @@ QStandardItem* StandardModel::AddChildSafeItem( QStandardItem* root, int row, in
     QVariant* variant = new QVariant();
     variant->setValue( kernel::VariantPointer( new kernel::SafePointer< T >( controllers_, &value ) ) );
     item->setData( *variant, DataRole );
+    item->setData( *new QVariant( true ), SafeRole );
 
     return item;
 }
@@ -100,18 +133,17 @@ inline
 QStandardItem* StandardModel::AddChildIconItem( QStandardItem* root, int row, int col, const QPixmap& pixmap , Qt::ItemFlags flags /*= 0*/ )
 {
     QStandardItem* item = AddChildItem( root, row, col, flags );
-    item->setData( pixmap, Qt::DecorationRole ); // $$$$ ABR 2012-08-17: TODO: Test ...
+    item->setData( pixmap, Qt::DecorationRole ); // $$$$ ABR 2012-08-17: To be tested
     return item;
 }
-
 
 namespace
 {
     // -----------------------------------------------------------------------------
-    // Name: StandardModel::FindItem
+    // Name: RecFindTextItem
     // Created: ABR 2012-08-16
     // -----------------------------------------------------------------------------
-    QStandardItem* RecFindItem( QStandardItem* root, const QString& text )
+    QStandardItem* RecFindTextItem( QStandardItem* root, const QString& text )
     {
         if( root == 0 )
             return 0;
@@ -124,7 +156,7 @@ namespace
                     return childItem;
                 else
                 {
-                    QStandardItem* result = RecFindItem( childItem, text );
+                    QStandardItem* result = RecFindTextItem( childItem, text );
                     if( result )
                         return result;
                 }
@@ -134,11 +166,12 @@ namespace
     }
 
     // -----------------------------------------------------------------------------
-    // Name: StandardModel::RecFindSafeItem
+    // Name: RecFindDataItem
     // Created: ABR 2012-08-16
     // -----------------------------------------------------------------------------
     template< typename T >
-    QStandardItem* RecFindSafeItem( QStandardItem* root, const T& value )
+    inline
+        QStandardItem* RecFindDataItem( const StandardModel& model, QStandardItem* root, const T& value )
     {
         if( root == 0 )
             return 0;
@@ -147,12 +180,12 @@ namespace
             QStandardItem* childItem = root->child( row, 0 );
             if( childItem )
             {
-                const kernel::SafePointer< T >* childEntity = static_cast< const kernel::SafePointer< T >* >( childItem->data( StandardModel::DataRole ).value< kernel::VariantPointer >().ptr_ );
-                if( childEntity && *childEntity && *childEntity == &value )
+                const T* concretChildEntity = model.GetDataFromItem< T >( *childItem );
+                if( concretChildEntity == &value )
                     return childItem;
                 else
                 {
-                    QStandardItem* result = RecFindSafeItem( childItem, value );
+                    QStandardItem* result = RecFindDataItem( model, childItem, value );
                     if( result )
                         return result;
                 }
@@ -162,7 +195,7 @@ namespace
     }
 
     // -----------------------------------------------------------------------------
-    // Name: StandardModel::PurgeObsoleteSafePointer
+    // Name: PurgeObsoleteSafePointer
     // Created: ABR 2012-08-16
     // -----------------------------------------------------------------------------
     template< typename T >
@@ -177,12 +210,18 @@ namespace
             {
                 RecPurgeObsoleteSafeItem< T >( childItem );
 
-                const kernel::SafePointer< T >* childEntity = static_cast< const kernel::SafePointer< T >* >( childItem->data( StandardModel::DataRole ).value< kernel::VariantPointer >().ptr_ );
-                if( childEntity && *childEntity == 0 )
+                if( childItem->data( StandardModel::SafeRole ).isValid() && childItem->data( StandardModel::SafeRole ).toBool() &&
+                    childItem->data( StandardModel::DataRole ).isValid() )
                 {
-                    QList< QStandardItem* > rowItems = root->takeRow( row );
-                    for( QList< QStandardItem *>::iterator it = rowItems.begin(); it != rowItems.end(); ++it )
-                        delete *it;
+                    const kernel::SafePointer< T >* childEntity = static_cast< const kernel::SafePointer< T >* >( childItem->data( StandardModel::DataRole ).value< kernel::VariantPointer >().ptr_ );
+                    if( childEntity && *childEntity == 0 )
+                    {
+                        QList< QStandardItem* > rowItems = root->takeRow( row );
+                        for( QList< QStandardItem *>::iterator it = rowItems.begin(); it != rowItems.end(); ++it )
+                            delete *it;
+                    }
+                    else
+                        ++row;
                 }
                 else
                     ++row;
@@ -197,37 +236,33 @@ namespace
 // -----------------------------------------------------------------------------
 template< typename T >
 inline
-T* StandardModel::FindSafeData( const T& value )
+T* StandardModel::FindData( const T& value ) const
 {
-    QStandardItem* item = FindSafeItem( value );
+    QStandardItem* item = FindDataItem( value );
     if( item )
-    {
-        const kernel::SafePointer< T >* safePtr = static_cast< const kernel::SafePointer< T >* >( item->data( DataRole ).value< kernel::VariantPointer >().ptr_ );
-        if( safePtr )
-            return safePtr->ConstCast();
-    }
+        return GetDataFromItem( *item );
     return 0;
 }
 
 // -----------------------------------------------------------------------------
-// Name: StandardModel::FindItem
+// Name: StandardModel::FindTextItem
 // Created: ABR 2012-08-16
 // -----------------------------------------------------------------------------
 inline
-QStandardItem* StandardModel::FindItem( const QString& text, QStandardItem* root /*= 0*/ )
+QStandardItem* StandardModel::FindTextItem( const QString& text, QStandardItem* root /*= 0*/ ) const
 {
-    return RecFindItem( root ? root : invisibleRootItem(), text );
+    return RecFindTextItem( root ? root : invisibleRootItem(), text );
 }
 
 // -----------------------------------------------------------------------------
-// Name: StandardModel::FindSafeItem
+// Name: StandardModel::FindDataItem
 // Created: ABR 2012-08-16
 // -----------------------------------------------------------------------------
 template< typename T >
 inline
-QStandardItem* StandardModel::FindSafeItem( const T& value )
+QStandardItem* StandardModel::FindDataItem( const T& value ) const
 {
-    return RecFindSafeItem( invisibleRootItem(), value );
+    return RecFindDataItem( *this, invisibleRootItem(), value );
 }
 
 // -----------------------------------------------------------------------------
@@ -249,9 +284,17 @@ template< typename T >
 inline
 T* StandardModel::GetDataFromItem( const QStandardItem& item ) const
 {
-    const kernel::SafePointer< T >* safePtr = static_cast< const kernel::SafePointer< T >* >( item.data( DataRole ).value< kernel::VariantPointer >().ptr_ );
-    if( safePtr && *safePtr )
-        return safePtr->ConstCast();
+    if( item.data( SafeRole ).isValid() && item.data( DataRole ).isValid() )
+    {
+        if( item.data( SafeRole ).toBool() )
+        {
+            const kernel::SafePointer< T >* safePtr = static_cast< const kernel::SafePointer< T >* >( item.data( DataRole ).value< kernel::VariantPointer >().ptr_ );
+            if( safePtr && *safePtr )
+                return safePtr->ConstCast();
+        }
+        else
+            return const_cast< T* >( static_cast< const T* >( item.data( DataRole ).value< kernel::VariantPointer >().ptr_ ) );
+    }
     return 0;
 }
 

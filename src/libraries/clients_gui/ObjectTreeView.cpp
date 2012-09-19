@@ -45,11 +45,11 @@ void ObjectTreeView::NotifyCreated( const kernel::Object_ABC& object )
     if( !hierarchies ) // urban block or other object not attached to a side
         return;
     const kernel::Entity_ABC& team = hierarchies->GetTop();
-    QStandardItem* teamItem = dataModel_.FindSafeItem( team );
+    QStandardItem* teamItem = dataModel_.FindDataItem( team );
     if( !teamItem )
         teamItem = dataModel_.AddRootSafeItem( dataModel_.rowCount(), 0, team.GetName(), team.GetTooltip(), team );
     const kernel::ObjectType& type = object.GetType();
-    QStandardItem* typeItem = dataModel_.FindItem( type.GetName().c_str() );
+    QStandardItem* typeItem = dataModel_.FindTextItem( type.GetName().c_str() );
     if( !typeItem )
         typeItem = dataModel_.AddChildTextItem( teamItem, teamItem->rowCount(), 0, type.GetName().c_str(), type.GetName().c_str() );
     dataModel_.AddChildSafeItem( typeItem, typeItem->rowCount(), 0, object.GetName(), object.GetTooltip(), object, Qt::ItemIsEditable );
@@ -67,7 +67,7 @@ void ObjectTreeView::NotifyDeleted( const kernel::Entity_ABC& entity )
         const kernel::TacticalHierarchies* hierarchies = entity.Retrieve< kernel::TacticalHierarchies >();
         if( !hierarchies ) // urban block or other object not attached to a side
             return;
-        QStandardItem* teamItem = dataModel_.FindSafeItem( hierarchies->GetTop() );
+        QStandardItem* teamItem = dataModel_.FindDataItem( hierarchies->GetTop() );
         if( !teamItem )
             return;
         for( int row = 0; row < teamItem->rowCount(); )
@@ -104,8 +104,8 @@ bool ObjectTreeView::IsTypeRejected( const kernel::Entity_ABC& entity ) const
 bool ObjectTreeView::LessThan( const QModelIndex& left, const QModelIndex& right, bool& valid ) const
 {
     valid = true;
-    kernel::Entity_ABC* entity1 = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( left );
-    kernel::Entity_ABC* entity2 = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( right );
+    const kernel::Entity_ABC* entity1 = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( left );
+    const kernel::Entity_ABC* entity2 = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( right );
     if( entity1 && entity2 )
         return entity2->GetId() < entity1->GetId();
     QString txt1 = dataModel_.data( left ).toString();

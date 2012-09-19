@@ -79,8 +79,8 @@ const QPixmap* TacticalTreeView::GetEntityPixmap( const kernel::Entity_ABC& enti
 // -----------------------------------------------------------------------------
 bool TacticalTreeView::LessThan( const QModelIndex& left, const QModelIndex& right, bool& valid ) const
 {
-    kernel::Entity_ABC* entity1 = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( left );
-    kernel::Entity_ABC* entity2 = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( right );
+    const kernel::Entity_ABC* entity1 = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( left );
+    const kernel::Entity_ABC* entity2 = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( right );
     if( !entity1 || !entity2 )
         return false;
     valid = true;

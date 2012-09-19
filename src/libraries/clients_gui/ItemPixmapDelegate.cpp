@@ -43,7 +43,7 @@ void ItemPixmapDelegate::paint( QPainter* painter, const QStyleOptionViewItem& o
 {
     QItemDelegate::paint( painter, option, index );
     if( index.column() == 1 )
-        if( kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( dataModel_.GetMainModelIndex( index ) ) )
+        if( const kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( dataModel_.GetMainModelIndex( index ) ) )
             if( const QPixmap* pixmap = getter_( *entity ) )
                 DrawPixmap( painter, option.rect, *pixmap );
 }

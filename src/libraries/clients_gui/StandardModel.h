@@ -34,7 +34,14 @@ class StandardModel : public QStandardItemModel
 public:
     //! @name Types
     //@{
-    enum E_InternalRole{ DataRole = Qt::UserRole, FilterRole = Qt::UserRole + 1, SortRole = Qt::UserRole + 2 };
+    enum E_InternalRole
+    { 
+        DataRole        = Qt::UserRole,
+        FilterRole      = Qt::UserRole + 1,
+        MimeTypeRole    = Qt::UserRole + 2,
+        SafeRole        = Qt::UserRole + 3
+    };
+
     typedef boost::function< bool ( QStandardItem&, StandardModel& ) > T_FilterFunction;
     //@}
 
@@ -83,6 +90,11 @@ public:
     template< typename T >
     QStandardItem* AddChildSafeItem( QStandardItem* parent, int row, int col, const QString& text, const QString& tooltip, const T& value, Qt::ItemFlags flags = 0 );
 
+    template< typename T >
+    QStandardItem* AddRootDataItem( int row, int col, const QString& text, const QString& tooltip, const T& value, Qt::ItemFlags flags = 0 );
+    template< typename T >
+    QStandardItem* AddChildDataItem( QStandardItem* parent, int row, int col, const QString& text, const QString& tooltip, const T& value, Qt::ItemFlags flags = 0 );
+
     QStandardItem* AddRootIconItem( int row, int col, const QPixmap& pixmap, Qt::ItemFlags flags = 0 );
     QStandardItem* AddChildIconItem( QStandardItem* parent, int row, int col, const QPixmap& pixmap, Qt::ItemFlags flags = 0 );
 
@@ -100,11 +112,11 @@ public:
     //! @name Find
     //@{
     template< typename T >
-    T* FindSafeData( const T& value );
+    T* FindData( const T& value ) const;
 
-    QStandardItem* FindItem( const QString& text, QStandardItem* root = 0 );
+    QStandardItem* FindTextItem( const QString& text, QStandardItem* root = 0 ) const;
     template< typename T >
-    QStandardItem* FindSafeItem( const T& value );
+    QStandardItem* FindDataItem( const T& value ) const;
     //@}
 
     //! @name Filters

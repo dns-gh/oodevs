@@ -350,7 +350,7 @@ bool CheckComboBox::ApplyFilter( QStandardItem& item, StandardModel& model ) con
     if( items.empty() )
         return true;
     bool result = false;
-    kernel::Entity_ABC* entity = model.GetDataFromItem< kernel::Entity_ABC >( item );
+    const kernel::Entity_ABC* entity = model.GetDataFromItem< kernel::Entity_ABC >( item );
     if( entity )
     {
         bool valid = true;

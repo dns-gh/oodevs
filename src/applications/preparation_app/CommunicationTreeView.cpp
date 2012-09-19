@@ -50,8 +50,8 @@ CommunicationTreeView::~CommunicationTreeView()
 // -----------------------------------------------------------------------------
 bool CommunicationTreeView::LessThan( const QModelIndex& left, const QModelIndex& right, bool& valid ) const
 {
-    kernel::Entity_ABC* entity1 = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( left );
-    kernel::Entity_ABC* entity2 = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( right );
+    const kernel::Entity_ABC* entity1 = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( left );
+    const kernel::Entity_ABC* entity2 = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( right );
     if( !entity1 || !entity2 )
         return false;
     valid = true;
@@ -176,7 +176,7 @@ void CommunicationTreeView::NotifyCreated( const kernel::KnowledgeGroup_ABC& kg 
 // -----------------------------------------------------------------------------
 void CommunicationTreeView::UpdateLongName( const kernel::Entity_ABC& entity )
 {
-    QStandardItem* item = dataModel_.FindSafeItem( entity );
+    QStandardItem* item = dataModel_.FindDataItem( entity );
     if( item )
         item->setEditable( !gui::longname::SetItemLongName( entity, *item ) );
 }
@@ -197,7 +197,7 @@ void CommunicationTreeView::UpdateFonts( const kernel::KnowledgeGroup_ABC& kg, b
         const kernel::KnowledgeGroup_ABC* group = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( entity );
         if( group && ( !deleted || group != &kg ) )
         {
-            QStandardItem* item = dataModel_.FindSafeItem( *entity );
+            QStandardItem* item = dataModel_.FindDataItem( *entity );
             if( item )
             {
                 QFont font = item->font();

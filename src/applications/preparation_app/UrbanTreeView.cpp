@@ -80,7 +80,7 @@ void UrbanTreeView::NotifyCreated( const kernel::UrbanObject_ABC& object )
     QStandardItem* item = 0;
     if( superior )
     {
-        if( QStandardItem* supItem = dataModel_.FindSafeItem( *superior ) )
+        if( QStandardItem* supItem = dataModel_.FindDataItem( *superior ) )
         {
             const int row = supItem->rowCount();
             item = dataModel_.AddChildSafeItem( supItem, row, 0, object.GetName(), object.GetTooltip(), static_cast< const kernel::Entity_ABC& >( object ), Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled );
@@ -315,8 +315,8 @@ bool UrbanTreeView::IsTypeRejected( const kernel::Entity_ABC& entity ) const
 // -----------------------------------------------------------------------------
 bool UrbanTreeView::LessThan( const QModelIndex& left, const QModelIndex& right, bool& valid ) const
 {
-    kernel::Entity_ABC* entity1 = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( left );
-    kernel::Entity_ABC* entity2 = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( right );
+    const kernel::Entity_ABC* entity1 = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( left );
+    const kernel::Entity_ABC* entity2 = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( right );
     if( !entity1 || !entity2 )
         return false;
     valid = true;
@@ -338,10 +338,10 @@ QMimeData* UrbanTreeView::MimeData( const QModelIndexList& indexes, bool& overri
     {
         if( index.isValid() )
         {
-            kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( index );
+            const kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( index );
             if( entity && !IsTypeRejected( *entity ) )
             {
-                UrbanHierarchies& hierarchies = static_cast< UrbanHierarchies& >( entity->Get< kernel::Hierarchies >() );
+                const UrbanHierarchies& hierarchies = static_cast< const UrbanHierarchies& >( entity->Get< kernel::Hierarchies >() );
                 if( level != static_cast< EUrbanLevel >( -1 ) && level != hierarchies.GetLevel() )
                 {
                     delete mimeData;
@@ -433,10 +433,10 @@ void UrbanTreeView::Drop( const QString& mimeType, void* data, QStandardItem& ta
         if( !superior || superior == entityTarget )
             return;
         superior->Get< kernel::UrbanPositions_ABC >().ResetConvexHull();
-        QStandardItem* superiorItem = dataModel_.FindSafeItem( *superior );
+        QStandardItem* superiorItem = dataModel_.FindDataItem( *superior );
         if( !superiorItem )
             return;
-        QModelIndex index = dataModel_.indexFromItem( dataModel_.FindSafeItem( *object ) );
+        QModelIndex index = dataModel_.indexFromItem( dataModel_.FindDataItem( *object ) );
         QList< QStandardItem* > rowItems = superiorItem->takeRow( index.row() );
         for( QList< QStandardItem *>::iterator it = rowItems.begin(); it != rowItems.end(); ++it )
             delete *it;

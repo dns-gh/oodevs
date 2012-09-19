@@ -378,7 +378,7 @@ void TacticalTreeView::OnRename()
 {
     if( contextMenuEntity_ )
     {
-        QStandardItem* item = dataModel_.FindSafeItem( *contextMenuEntity_ );
+        QStandardItem* item = dataModel_.FindDataItem( *contextMenuEntity_ );
         if( item )
             edit( proxyModel_->mapFromSource( item->index() ) );
     }

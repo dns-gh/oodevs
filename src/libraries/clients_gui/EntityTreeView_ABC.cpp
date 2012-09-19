@@ -57,7 +57,7 @@ void EntityTreeView_ABC::NotifyActivated( const kernel::Entity_ABC& entity )
 {
     if( IsTypeRejected( entity ) )
         return;
-    QStandardItem* item = dataModel_.FindSafeItem( entity );
+    QStandardItem* item = dataModel_.FindDataItem( entity );
     if( item )
         scrollTo( proxyModel_->mapFromSource( item->index() ) );
 }
@@ -68,7 +68,7 @@ void EntityTreeView_ABC::NotifyActivated( const kernel::Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void EntityTreeView_ABC::OnActivate( const QModelIndex& index )
 {
-    kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( index );
+    const kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( index );
     if( entity )
         entity->Activate( controllers_.actions_ );
 }
@@ -80,7 +80,7 @@ void EntityTreeView_ABC::OnActivate( const QModelIndex& index )
 void EntityTreeView_ABC::NotifyCreated( const kernel::Team_ABC& team )
 {
     const kernel::Entity_ABC& entityTeam = static_cast< const kernel::Entity_ABC& >( team );
-    QStandardItem* teamItem = dataModel_.FindSafeItem( entityTeam );
+    QStandardItem* teamItem = dataModel_.FindDataItem( entityTeam );
     if( !teamItem )
         teamItem = dataModel_.AddRootSafeItem( dataModel_.rowCount(), 0, team.GetName(), team.GetTooltip(), entityTeam );
 }
@@ -100,7 +100,7 @@ void EntityTreeView_ABC::NotifyDeleted( const kernel::Entity_ABC& /* team */ )
 // -----------------------------------------------------------------------------
 void EntityTreeView_ABC::NotifyUpdated( const kernel::Entity_ABC& entity )
 {
-    QStandardItem* item = dataModel_.FindSafeItem( entity );
+    QStandardItem* item = dataModel_.FindDataItem( entity );
     if( item )
     {
         item->setData( *new QVariant( entity.GetName() ), Qt::DisplayRole );
@@ -114,7 +114,7 @@ void EntityTreeView_ABC::NotifyUpdated( const kernel::Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 bool EntityTreeView_ABC::ApplyProfileFilter( QStandardItem& item, StandardModel& /*model*/ ) const
 {
-    kernel::Entity_ABC* entity = dataModel_.GetDataFromItem< kernel::Entity_ABC >( item );
+    const kernel::Entity_ABC* entity = dataModel_.GetDataFromItem< kernel::Entity_ABC >( item );
     if( entity )
         return profile_.IsVisible( *entity );
     return false;
@@ -140,7 +140,7 @@ void EntityTreeView_ABC::NotifySelectionChanged( const std::vector< const kernel
     for( std::vector< const kernel::Entity_ABC* >::const_iterator it = elements.begin(); it != elements.end(); ++it )
     {
         if( *it && !IsTypeRejected( **it ) )
-            if( QStandardItem* item = dataModel_.FindSafeItem( **it ) )
+            if( QStandardItem* item = dataModel_.FindDataItem( **it ) )
             {
                 selectionModel()->select( proxyModel_->mapFromSource( item->index() ), QItemSelectionModel::Select | QItemSelectionModel::Rows );
                 scrollTo( proxyModel_->mapFromSource( item->index() ) );
@@ -162,7 +162,7 @@ void EntityTreeView_ABC::OnSelect( const QItemSelection& /*selected*/, const QIt
     kernel::ActionController::T_Selectables list;
     for( QModelIndexList::const_iterator it = indexes.constBegin(); it != indexes.constEnd(); ++it )
     {
-        kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( *it );
+        const kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( *it );
         if( entity )
             list.push_back( entity );
     }
@@ -191,7 +191,7 @@ void EntityTreeView_ABC::contextMenuEvent( QContextMenuEvent* event )
 {
     if( !IsReadOnly() && event )
     {
-        kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( indexAt( event->pos() ) );
+        const kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( indexAt( event->pos() ) );
         if( entity )
             entity->ContextMenu( controllers_.actions_, event->globalPos() );
         else
