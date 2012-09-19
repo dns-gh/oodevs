@@ -12,6 +12,7 @@
     <consumption>
       <resource need="2" type="eau courante"/>
       <resource need="1" type="electricite"/>
+      <resource need="2" type="nourriture"/>
     </consumption>
   </population>
   <population associated-crowd="Foule standard" id="1" name="popStandard">
@@ -58,6 +59,8 @@
     <consumption>
       <resource need="2" type="eau courante"/>
       <resource need="1" type="electricite"/>
+      <resource need="1" type="carburant"/>
+      <resource need="2" type="nourriture"/>
     </consumption>
   </population>
   <population associated-crowd="Refugies a pied" id="2" name="popRefugie">
@@ -66,7 +69,8 @@
     <safety-level gain-per-hour="0.2" loss-on-fire="0.1"/>
     <health-need people-per-facility="100000"/>
     <consumption>
-      <resource need="5" type="eau courante"/>
+      <resource need="2" type="eau courante"/>
+      <resource need="2" type="nourriture"/>
     </consumption>
   </population>
   <population associated-crowd="Foule mixte" id="3" name="Population active">
@@ -103,6 +107,8 @@
     <consumption>
       <resource need="2" type="eau courante"/>
       <resource need="1" type="electricite"/>
+      <resource need="1" type="carburant"/>
+      <resource need="2" type="nourriture"/>
     </consumption>
   </population>
   <population associated-crowd="Foule de femmes et d'enfants" id="4" name="Population oisive">
@@ -129,6 +135,7 @@
     <consumption>
       <resource need="2" type="eau courante"/>
       <resource need="1" type="electricite"/>
+      <resource need="2" type="nourriture"/>
     </consumption>
   </population>
   <population associated-crowd="Foule de femmes et d'enfants" id="5" name="Population scolaire">
@@ -160,7 +167,8 @@
     <consumption>
       <resource need="2" type="eau courante"/>
       <resource need="1" type="electricite"/>
+      <resource need="2" type="nourriture"/>
     </consumption>
   </population>
 </populations>
-<!-- signature="0682741409" -->
+<!-- signature="0653747626" -->

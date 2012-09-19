@@ -8,7 +8,7 @@
       <preferred-terrains/>
       <avoided-terrains strength="7"/>
       <zone>
-        <outter-tolerance cost-per-meter="1" with-automat="10000" without-automat="1000"/>
+        <outter-tolerance cost-per-meter="0.005" with-automat="10000" without-automat="1000"/>
         <inner-comfort cost-per-meter="0.002" distance="500"/>
       </zone>
       <automat-zone>
@@ -35,7 +35,7 @@
         <object-cost type="continuous pontoon bridge" value="0"/>
         <object-cost type="discontinuous pontoon bridge" value="0"/>
         <object-cost type="firing post" value="0"/>
-        <object-cost type="safe zone" value="0"/>
+        <object-cost type="safe zone" value="10000"/>
         <object-cost type="nbc cloud" value="9000"/>
         <object-cost type="jamming area" value="10"/>
         <object-cost type="rota area" value="9000"/>
@@ -304,7 +304,7 @@
         <object-cost type="continuous pontoon bridge" value="0"/>
         <object-cost type="discontinuous pontoon bridge" value="0"/>
         <object-cost type="firing post" value="0"/>
-        <object-cost type="safe zone" value="0"/>
+        <object-cost type="safe zone" value="10000"/>
         <object-cost type="jamming area" value="10000"/>
         <object-cost type="rota area" value="0"/>
         <object-cost type="landing area" value="10"/>
@@ -377,4 +377,4 @@
     <rule channeling-range="1" cost-out-of-channeling="5000" type="base"/>
   </population-rules>
 </pathfind>
-<!-- signature="2362445324" -->
+<!-- signature="2190681382" -->

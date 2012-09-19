@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
-<templates model-version="4.8.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.1.0/physical/DrawingTemplates.xsd">
+<templates model-version="4.9.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/DrawingTemplates.xsd">
 	<category name="Lignes">
 		<description>Lignes tactiques</description>
-        <template name="-- o --" type="line">
+                <template name="-- o --" type="line">
 			<description>Ligne de niveau equipe</description>
 			<segment>
 				<line stroke="currentColor" x1="0" x2="1" stroke-width="3px"/>
@@ -151,7 +151,7 @@
 			</marker-mid>
 		</template>
 	</category>
-	<category name="Taches" id="tasks">
+	<category name="Taches" hidden="true">
 		<template name="Id_Point" type="point">
 			<segment unit="%">
 				<line stroke="currentColor" x1="0" x2="1" stroke-width="4px"/>
@@ -453,7 +453,7 @@
 			</marker-end>
 		</template>
 	</category>
-	<category name="Objects tactiques graphiques" id="graphics">
+	<category name="Objects tactiques graphiques" hidden="true">
 		<description>Objets et obstacles</description>
 		<template code="G*MPOS----****X" name="Abattis" type="point">
 			<marker-start>
@@ -939,6 +939,5 @@
 		</template>
 	</category>
 </templates>
-<!-- signature="1253111117" -->
-<!-- signature="0476431959" -->
-<!-- signature="2162626926" -->
+<!-- signature="3692567773" -->
+<!-- signature="3604124808" -->

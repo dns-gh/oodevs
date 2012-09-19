@@ -163,7 +163,7 @@
         <value id="2" name="polyvalent"/>
       </parameter>
     </mission>
-    <mission dia-behavior="MIS_Pion_ALAT_Heliporter" dia-type="T_Mission_Pion_ALAT_Heliporter" id="9" name="PION ALAT Heliporter" package="support">
+    <mission dia-behavior="MIS_Pion_ALAT_Heliporter" dia-type="T_Mission_Pion_ALAT_Heliporter" id="9" name="PION ALAT Heliporter Helitransporter" package="support">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -194,24 +194,6 @@
       <parameter dia-name="pointDebarquement_" name="Point debarquement" optional="false" type="Point"/>
       <parameter dia-name="positionRegroupement_" name="Position regroupement" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
-      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
-        <value id="0" name="courte_portee"/>
-        <value id="1" name="moyenne_portee"/>
-        <value id="2" name="longue_portee"/>
-        <value id="3" name="sans_munitions"/>
-      </parameter>
-    </mission>
-    <mission dia-behavior="MIS_Pion_ALAT_Helitransporter" dia-type="T_Mission_Pion_ALAT_Helitransporter" id="11" name="PION ALAT Helitransporter" package="support">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="unitesAHelitransporter_" max-occurs="unbounded" min-occurs="1" name="Unites a helitransporter" optional="false" type="Agent"/>
-      <parameter dia-name="pointDebarquement_" name="Point debarquement" optional="false" type="Point"/>
-      <parameter dia-name="pointEmbarquement_" name="Point embarquement" optional="false" type="Point"/>
-      <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
-      <parameter dia-name="avecMateriel_" name="Avec materiel" optional="false" type="Boolean"/>
       <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
         <value id="0" name="courte_portee"/>
         <value id="1" name="moyenne_portee"/>
@@ -535,7 +517,7 @@
       <parameter dia-name="crossingSite" name="Site de franchissement" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="meetingPoint" name="Destination" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="platoon.tasks.Appuyer" dia-type="platoon.tasks.Appuyer" id="2062" name="PION MELEE Appuyer" package="support" symbol="IdAppuyer_Poly-ligne">
+    <mission dia-behavior="platoon.tasks.Appuyer" dia-type="platoon.tasks.Appuyer" id="2062" name="PION MELEE Appuyer En Mouvement" package="support" symbol="IdAppuyer_Poly-ligne">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1182,7 +1164,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="platoon.combat.support.art.tasks.AssurerMiseEnOeuvre" dia-type="platoon.combat.support.art.tasks.AssurerMiseEnOeuvre" id="2030" name="PION ASS Assurer Mise En Oeuvre" package="attack">
+    <mission dia-behavior="platoon.combat.support.art.tasks.AssurerMiseEnOeuvre" dia-type="platoon.combat.support.art.tasks.AssurerMiseEnOeuvre" id="2030" name="PION ASS Mise En Batterie" package="attack">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1339,7 +1321,7 @@
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Chantiers" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="platoon.combat.support.engineer.tasks.ReprendreTravaux" dia-type="platoon.combat.support.engineer.tasks.ReprendreTravaux" id="2122" name="PION GENIE Reprendre Travaux" package="support">
+    <mission dia-behavior="platoon.combat.support.engineer.tasks.ReprendreTravaux" dia-type="platoon.combat.support.engineer.tasks.ReprendreTravaux" id="2122" name="PION GENIE Reprendre Constructions" package="support">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1366,7 +1348,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="false" type="ObjectKnowledge"/>
-      <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
+      <parameter dia-name="meetingPoint" name="Position de regroupement" optional="true" type="Point"/>
     </mission>
     <mission dia-behavior="platoon.combat.support.engineer.tasks.DepolluerZone" dia-type="platoon.combat.support.engineer.tasks.DepolluerZone" id="2113" name="PION GENIE Depolluer zone" package="support">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -1486,7 +1468,7 @@
       </parameter>
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="A partir de" optional="true" type="Point"/>
     </mission>
-    <mission dia-behavior="platoon.tasks.Interroger" dia-type="platoon.tasks.Interroger" id="2129" name="PION COMMUNES Interroger" package="intelligence">
+    <mission dia-behavior="platoon.tasks.Interroger" dia-type="platoon.tasks.Interroger" id="2129" name="PION COMMUNES Mener Un Entretien" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2031,7 +2013,7 @@
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
-      <parameter dia-name="byNight" name="de nuit" optional="true" type="Boolean"/>
+      <parameter dia-name="byNight" name="Attendre la nuit" optional="true" type="Boolean"/>
     </mission>
     <mission dia-behavior="platoon.combat.support.rens.tasks.ROHUM_RenseignerSur" dia-type="platoon.combat.support.rens.tasks.ROHUM_RenseignerSur" id="2483" name="PION RENS ROHUM Renseigner Sur" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -2039,7 +2021,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="area" name="Zone de recherche" optional="false" type="Polygon"/>
-      <parameter dia-name="byNight" name="de nuit" optional="true" type="Boolean"/>
+      <parameter dia-name="byNight" name="Attendre la nuit" optional="true" type="Boolean"/>
     </mission>
     <mission dia-behavior="platoon.combat.support.rens.tasks.RASIT_RenseignerSur" dia-type="platoon.combat.support.rens.tasks.RASIT_RenseignerSur" id="2484" name="PION RENS RASIT Renseigner Sur" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -2115,7 +2097,7 @@
       <parameter dia-name="objective" name="Zone de brouillage" optional="false" type="Polygon"/>
       <parameter dia-name="meetingPoint" name="Point regroupement" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="platoon.tasks.SeFaireTransporter" dia-type="platoon.tasks.HLADemandeTransport" id="28789" name="AUTOMATE HLA Faire Une Requete de Transport">
+    <mission dia-behavior="platoon.tasks.SeFaireTransporter" dia-type="platoon.tasks.HLADemandeTransport" id="28789" name="HLA Faire Une Requete de Transport">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2125,7 +2107,7 @@
       <parameter dia-name="pointDebarquement" name="Point debarquement" optional="false" type="Point"/>
       <parameter dia-name="heureDebaquement" name="Heure debarquement" optional="false" type="DateTime"/>
     </mission>
-    <mission dia-behavior="platoon.tasks.SeFaireTransporter" dia-type="platoon.tasks.HLAAtterrir" id="28790" name="AUTOMATE HLA Atterrir">
+    <mission dia-behavior="platoon.tasks.SeFaireTransporter" dia-type="platoon.tasks.HLAAtterrir" id="28790" name="HLA Atterrir">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2133,7 +2115,7 @@
       <parameter dia-name="position" name="Point d'embarquement" optional="false" type="Point"/>
       <parameter dia-name="heureEmbarquement" name="Heure embarquement" optional="false" type="DateTime"/>
     </mission>
-    <mission dia-behavior="platoon.tasks.SeFaireTransporter" dia-type="platoon.tasks.HLAEmbarquer" id="28791" name="AUTOMATE HLA Embarquer">
+    <mission dia-behavior="platoon.tasks.SeFaireTransporter" dia-type="platoon.tasks.HLAEmbarquer" id="28791" name="HLA Embarquer">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2141,7 +2123,7 @@
       <parameter dia-name="position" name="Point d'embarquement" optional="false" type="Point"/>
       <parameter dia-name="heureEmbarquement" name="Heure embarquement" optional="false" type="DateTime"/>
     </mission>
-    <mission dia-behavior="platoon.tasks.Stationner" dia-type="platoon.tasks.HLADebarquer" id="28792" name="AUTOMATE HLA Debarquer">
+    <mission dia-behavior="platoon.tasks.Stationner" dia-type="platoon.tasks.HLADebarquer" id="28792" name="HLA Debarquer">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2155,7 +2137,7 @@
       </parameter>
       <parameter dia-name="heureDebarquement" name="Heure debarquement" optional="false" type="DateTime"/>
     </mission>
-    <mission dia-behavior="platoon.tasks.Stationner" dia-type="platoon.tasks.HLADecoller" id="28793" name="AUTOMATE HLA Decoller">
+    <mission dia-behavior="platoon.tasks.Stationner" dia-type="platoon.tasks.HLADecoller" id="28793" name="HLA Decoller">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2175,19 +2157,39 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="zone" name="Zone à observer" optional="false" type="Polygon"/>
-      <parameter dia-name="position" name="Position d'installation" optional="false" type="Point"/>
+      <parameter dia-name="position" name="Position d'installation" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="ObjectKnowledge"/>
+        </choice>
+      </parameter>
     </mission>
     <mission dia-behavior="platoon.combat.support.art.tasks.DefendreUnites" dia-type="platoon.combat.support.art.tasks.DefendreUnites" id="28800" name="PION ASA Defendre Unites" package="defence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="UnitÃ©s Ã  dÃ©fendre" optional="false" type="LocationComposite">
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Unités à défendre" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Agent"/>
           <parameter type="AgentKnowledge"/>
         </choice>
       </parameter>
+    </mission>
+    <mission dia-behavior="platoon.combat.support.air.tasks.Reconnaitre" dia-type="platoon.combat.support.air.tasks.Reconnaitre" id="28802" name="PION JOINT Reconnaitre">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="objectives" name="Itineraire" optional="false" type="Path"/>
+    </mission>
+    <mission dia-behavior="sword.military.platoon.individual.tasks.Ambush" dia-type="sword.military.platoon.individual.tasks.Ambush" id="2067" name="PION ASYMETRIQUE Effectuer Tirs Embusques" package="attack">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="Positions de tir" optional="false" type="Point"/>
+      <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
     </mission>
   </units>
   <automats>
@@ -2524,20 +2526,6 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="itineraire_" name="Itineraire" optional="false" type="Path"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_SoutenirEnMesureDe" dia-type="T_Mission_Automate_SoutenirEnMesureDe" id="300" mrt-dia-behavior="MIS_Automate_MRT_SoutenirEnMesureDe" name="AUTOMATE Soutenir En Mesure De" package="support">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="itineraire_" name="Itineraire" optional="false" type="Path"/>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_SoutenirSurPositionEnMesureDe" dia-type="T_Mission_Automate_SoutenirSurPositionEnMesureDe" id="301" mrt-dia-behavior="MIS_Automate_MRT_SoutenirSurPositionEnMesureDe" name="AUTOMATE Soutenir Sur Position En Mesure De" package="support">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="position_" name="Position" optional="false" type="Polygon"/>
-    </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_SeFaireDecontaminer" dia-type="T_Mission_Automate_SeFaireDecontaminer" id="302" mrt-dia-behavior="MIS_Automate_MRT_SeFaireDecontaminer" name="AUTOMATE Se Faire Decontaminer" package="none">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -2787,7 +2775,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="objective" name="Point d'embarquement" optional="false" type="Point"/>
     </mission>
-    <mission cdt-dia-behavior="company.combat.support.art.tasks.SeDeployer" dia-type="company.combat.support.art.tasks.SeDeployer" id="1008" mrt-dia-behavior="company.combat.support.art.tasks.SeDeployer" name="AUTOMATE ASS TIR Se Deployer" package="none">
+    <mission cdt-dia-behavior="company.combat.support.art.tasks.SeDeployer" dia-type="company.combat.support.art.tasks.SeDeployer" id="1008" mrt-dia-behavior="company.combat.support.art.tasks.SeDeployer" name="AUTOMATE ASS Mise En Batterie" package="none">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -3077,7 +3065,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="echelonNumber" max-value="2" min-value="1" name="Nombre d'echelons" optional="true" type="Integer"/>
     </mission>
-    <mission cdt-dia-behavior="company.combat.tasks.Appuyer" dia-type="company.combat.tasks.Appuyer" id="1031" mrt-dia-behavior="company.combat.tasks.Appuyer" name="AUTOMATE MELEE Appuyer" package="support" symbol="IdAppuyer_Poly-ligne">
+    <mission cdt-dia-behavior="company.combat.tasks.Appuyer" dia-type="company.combat.tasks.Appuyer" id="1031" mrt-dia-behavior="company.combat.tasks.Appuyer" name="AUTOMATE MELEE Appuyer En Mouvement" package="support" symbol="IdAppuyer_Poly-ligne">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -4129,7 +4117,7 @@
         <value id="1" name="discontinu"/>
       </parameter>
     </mission>
-    <mission cdt-dia-behavior="company.tasks.Stationner" dia-type="company.tasks.SeFaireTransporterHLA" id="28762" mrt-dia-behavior="company.tasks.Stationner" name="AUTOMATE HLA Faire Une Requete de Transport">
+    <mission cdt-dia-behavior="company.tasks.Stationner" dia-type="company.tasks.SeFaireTransporterHLA" id="28762" mrt-dia-behavior="company.tasks.Stationner" name="HLA Faire Une Requete de Transport">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -4143,7 +4131,7 @@
       <parameter dia-name="destination" name="Point de debarquement" optional="false" type="Point"/>
       <parameter dia-name="debarkment_time" name="Heure de debarquement" optional="false" type="DateTime"/>
     </mission>
-    <mission cdt-dia-behavior="company.tasks.Stationner" dia-type="company.tasks.AtterrirHLA" id="28763" mrt-dia-behavior="company.tasks.Stationner" name="AUTOMATE HLA Atterrir">
+    <mission cdt-dia-behavior="company.tasks.Stationner" dia-type="company.tasks.AtterrirHLA" id="28763" mrt-dia-behavior="company.tasks.Stationner" name="HLA Atterrir">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -4155,7 +4143,7 @@
       </parameter>
       <parameter dia-name="embarkment_time" name="Heure d'embarquement" optional="false" type="DateTime"/>
     </mission>
-    <mission cdt-dia-behavior="company.tasks.Stationner" dia-type="company.tasks.HLA Decoller" id="28764" mrt-dia-behavior="company.tasks.Stationner" name="AUTOMATE HLA Decoller">
+    <mission cdt-dia-behavior="company.tasks.Stationner" dia-type="company.tasks.HLA Decoller" id="28764" mrt-dia-behavior="company.tasks.Stationner" name="HLA Decoller">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -4251,7 +4239,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="area" name="Zone à renseigner" optional="false" type="Polygon"/>
-      <parameter dia-name="byNight" name="de nuit" optional="true" type="Boolean"/>
+      <parameter dia-name="byNight" name="Attendre la nuit" optional="true" type="Boolean"/>
     </mission>
     <mission cdt-dia-behavior="company.combat.support.art.tasks.RATACAcquerirObjectifs" dia-type="company.combat.support.art.tasks.RATACAcquerirObjectifs" id="28774" mrt-dia-behavior="company.combat.support.art.tasks.RATACAcquerirObjectifs" name="AUTOMATE ASS RATAC Acquerir Objectifs" package="support">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -4323,7 +4311,7 @@
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
-      <parameter dia-name="byNight" name="de nuit" optional="true" type="Boolean"/>
+      <parameter dia-name="byNight" name="Attendre la nuit" optional="true" type="Boolean"/>
     </mission>
     <mission cdt-dia-behavior="company.combat.support.rens.tasks.Appuyer" dia-type="company.combat.support.rens.tasks.Appuyer" id="28782" mrt-dia-behavior="company.combat.support.rens.tasks.Appuyer" name="AUTOMATE RENS ROEM Brouiller">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -4362,7 +4350,7 @@
       <parameter dia-name="area" name="Zone à reconnaitre" optional="false" type="Polygon"/>
       <parameter dia-name="ficelleDeVol" name="Ficelle de vol" optional="true" type="Path"/>
     </mission>
-    <mission cdt-dia-behavior="company.tasks.Stationner" dia-type="company.tasks.EmbarquerHLA" id="28787" mrt-dia-behavior="company.tasks.Stationner" name="AUTOMATE HLA Embarquer">
+    <mission cdt-dia-behavior="company.tasks.Stationner" dia-type="company.tasks.EmbarquerHLA" id="28787" mrt-dia-behavior="company.tasks.Stationner" name="HLA Embarquer">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -4374,7 +4362,7 @@
       </parameter>
       <parameter dia-name="embarkment_time" name="Heure d'embarquement" optional="false" type="DateTime"/>
     </mission>
-    <mission cdt-dia-behavior="company.tasks.Stationner" dia-type="company.tasks.DebarquerHLA" id="28788" mrt-dia-behavior="company.tasks.Stationner" name="AUTOMATE HLA Debarquer">
+    <mission cdt-dia-behavior="company.tasks.Stationner" dia-type="company.tasks.DebarquerHLA" id="28788" mrt-dia-behavior="company.tasks.Stationner" name="HLA Debarquer">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -4386,7 +4374,7 @@
       </parameter>
       <parameter dia-name="debarkment_time" name="Heure de debarquement" optional="false" type="DateTime"/>
     </mission>
-    <mission cdt-dia-behavior="company.tasks.Interroger" dia-type="T_Mission_Automate_AUTOMATE_COMMUNE_Interroger" id="28796" mrt-dia-behavior="company.tasks.Interroger" name="AUTOMATE COMMUNES Interroger">
+    <mission cdt-dia-behavior="company.tasks.Interroger" dia-type="T_Mission_Automate_AUTOMATE_COMMUNE_Interroger" id="28796" mrt-dia-behavior="company.tasks.Interroger" name="AUTOMATE COMMUNES Mener Un Entretien">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -4419,6 +4407,14 @@
         </choice>
       </parameter>
     </mission>
+    <mission cdt-dia-behavior="batallion.tasks.FaireMouvement" dia-type="france.military.batallion.tasks.FaireMouvement" id="99999" mrt-dia-behavior="france.military.batallion.tasks.FaireMouvement" name="ADA Faire Mouvement">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="objective" name="Position de déploiement" optional="false" type="Point"/>
+      <parameter dia-name="objectives" name="Itinéraire" optional="false" type="Path"/>
+    </mission>
   </automats>
   <populations>
     <mission dia-behavior="crowd.tasks.Deteriorer" dia-type="crowd.tasks.Deteriorer" id="3008" name="FOULES Deteriorer" package="attack">
@@ -4428,18 +4424,13 @@
       <parameter dia-name="objectif" name="Unite a suivre" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="crowd.tasks.FaireMouvement" dia-type="crowd.tasks.FaireMouvement" id="3004" name="FOULES COMMUNES Faire Mouvement" package="move">
-      <parameter dia-name="objectifs" max-occurs="unbounded" min-occurs="1" name="Itineraire" optional="false" type="LocationComposite">
-        <choice>
-          <parameter type="Point"/>
-          <parameter type="UrbanKnowledge"/>
-        </choice>
-      </parameter>
+      <parameter dia-name="objectifs" name="Itineraire" optional="false" type="Path"/>
     </mission>
     <mission dia-behavior="crowd.tasks.Agresser" dia-type="crowd.tasks.Agresser" id="3001" name="FOULES Agresser" package="attack">
       <parameter dia-name="objectif" name="Cible" optional="false" type="LocationComposite">
         <choice>
+          <parameter type="Point"/>
           <parameter type="Agent"/>
-          <parameter type="AgentKnowledge"/>
         </choice>
       </parameter>
     </mission>
@@ -4460,11 +4451,11 @@
     </mission>
   </populations>
   <fragorders>
-    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_MettreTenueNBC" id="335" name="Mettre Tenue NBC"/>
-    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_EnleverTenueNBC" id="336" name="Enlever Tenue NBC"/>
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_MettreTenueNBC" id="335" name="Passer En NBC4"/>
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_EnleverTenueNBC" id="336" name="Passer En NBC1"/>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_ArreterSilenceRadio" id="338" name="Arreter Silence Radio"/>
-    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_PasserEnSilenceRadar" id="339" name="Passer En Silence Radar"/>
-    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_ArreterSilenceRadar" id="340" name="Arreter Silence Radar"/>
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_PasserEnSilenceRadar" id="339" name="Desactiver Radar"/>
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_ArreterSilenceRadar" id="340" name="Activer Radar"/>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_RecupererTransporteurs" id="341" name="Recuperer Transporteurs"/>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_AttendreSePoster" id="342" name="Attendre Se Poster"/>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Attendre" id="398" name="Attendre"/>
@@ -4505,7 +4496,6 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_AcquerirObjectif" id="351" name="Acquerir Objectif">
       <parameter dia-name="orderConduiteAcquerirObjectif_" name="Ordre conduite acquerir objectif" optional="false" type="Polygon"/>
     </fragorder>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Brouiller" id="352" name="Brouiller"/>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ChangerPositionDebarquement" id="353" name="Changer Position Debarquement">
       <parameter dia-name="orderConduiteChangerPositionDebarquement_" name="Ordre conduite changer position debarquement" optional="false" type="Point"/>
     </fragorder>
@@ -4517,29 +4507,45 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_ExecuterTir" id="359" name="Pion Executer Tir"/>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_Emettre" id="360" name="Pion Emettre"/>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_StopperEmission" id="361" name="Pion Stopper Emission"/>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_RenforcerEnVSRAM" id="362" name="Pion Renforcer En VSRAM">
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Pion_RenforcerEnVSRAM" id="362" name="Pion Renforcer En VSRAM">
       <parameter dia-name="pionARenforcer_" name="Pion a renforcer" optional="false" type="Agent"/>
       <parameter dia-name="nbrAmbulances_" min-value="1" name="Nbr ambulances" optional="false" type="Integer"/>
     </fragorder>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_TransfererVSRAM" id="363" name="Pion Transferer VSRAM">
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Pion_TransfererVSRAM" id="363" name="Pion Transferer VSRAM">
       <parameter dia-name="pionRenforce_" name="Pion renforce" optional="false" type="Agent"/>
       <parameter dia-name="pionARenforcer_" name="Pion a renforcer" optional="false" type="Agent"/>
       <parameter dia-name="nbrAmbulances_" min-value="1" name="Nbr ambulances" optional="false" type="Integer"/>
     </fragorder>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_ReprendreAuxOrdresVSRAM" id="364" name="Pion Reprendre Aux Ordres VSRAM">
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Pion_ReprendreAuxOrdresVSRAM" id="364" name="Pion Reprendre Aux Ordres VSRAM">
       <parameter dia-name="pionRenforce_" name="Pion renforce" optional="false" type="Agent"/>
       <parameter dia-name="nbrAmbulances_" min-value="1" name="Nbr ambulances" optional="false" type="Integer"/>
     </fragorder>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_RenforcerEnRemorqueurs" id="365" name="Pion Renforcer En Remorqueurs">
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Pion_RenforcerEnEquipements" id="407" name="Pion Renforcer En Equipements">
+      <parameter dia-name="pionRenforce_" name="Pion renforce" optional="false" type="Agent"/>
+      <parameter dia-name="orderConduiteModifierPrioritesReparations_" name="Equipements" optional="false" type="MaintenancePriorities"/>
+      <parameter dia-name="nbrAmbulances_" min-value="1" name="Nbr equipements" optional="false" type="Integer"/>
+    </fragorder>
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Pion_TransfererEquipements" id="408" name="Pion Transferer Equipements">
+      <parameter dia-name="pionRenforce_" name="Pion renforce" optional="false" type="Agent"/>
+      <parameter dia-name="pionARenforcer_" name="Pion a renforcer" optional="false" type="Agent"/>
+      <parameter dia-name="orderConduiteModifierPrioritesReparations_" name="Equipements" optional="false" type="MaintenancePriorities"/>
+      <parameter dia-name="nbrAmbulances_" min-value="1" name="Nbr equipements" optional="false" type="Integer"/>
+    </fragorder>
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Pion_ReprendreAuxOrdresEquipements" id="409" name="Pion Reprendre Aux Ordres Equipements">
+      <parameter dia-name="pionRenforce_" name="Pion renforce" optional="false" type="Agent"/>
+      <parameter dia-name="orderConduiteModifierPrioritesReparations_" name="Equipements" optional="false" type="MaintenancePriorities"/>
+      <parameter dia-name="nbrAmbulances_" min-value="1" name="Nbr equipements" optional="false" type="Integer"/>
+    </fragorder>
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Pion_RenforcerEnRemorqueurs" id="365" name="Pion Renforcer En Remorqueurs">
       <parameter dia-name="pionARenforcer_" name="Pion a renforcer" optional="false" type="Agent"/>
       <parameter dia-name="nbrRemorqueurs_" min-value="1" name="Nbr remorqueurs" optional="false" type="Integer"/>
     </fragorder>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_TransfererRemorqueurs" id="366" name="Pion Transferer Remorqueurs">
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Pion_TransfererRemorqueurs" id="366" name="Pion Transferer Remorqueurs">
       <parameter dia-name="pionRenforce_" name="Pion renforce" optional="false" type="Agent"/>
       <parameter dia-name="pionARenforcer_" name="Pion a renforcer" optional="false" type="Agent"/>
       <parameter dia-name="nbrRemorqueurs_" min-value="1" name="Nbr remorqueurs" optional="false" type="Integer"/>
     </fragorder>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs" id="367" name="Pion Reprendre Aux Ordres Remorqueurs">
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs" id="367" name="Pion Reprendre Aux Ordres Remorqueurs">
       <parameter dia-name="pionRenforce_" name="Pion renforce" optional="false" type="Agent"/>
       <parameter dia-name="nbrRemorqueurs_" min-value="1" name="Nbr remorqueurs" optional="false" type="Integer"/>
     </fragorder>
@@ -4599,10 +4605,6 @@
         <value id="2" name="tir_interdit"/>
       </parameter>
     </fragorder>
-    <fragorder available-without-mission="true" dia-type="platoon.tasks.Illuminer" id="382" name="Illuminer">
-      <parameter dia-name="agentKnowledge_" name="Cible" optional="false" type="AgentKnowledge"/>
-      <parameter dia-name="agent_" name="Tireur Allie" optional="false" type="Agent"/>
-    </fragorder>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Pion_InterdireMunition" id="385" name="Interdire Munition">
       <parameter dia-name="munitions_" name="Ammunitions" optional="false" type="ResourceType"/>
     </fragorder>
@@ -4619,7 +4621,7 @@
     <fragorder available-without-mission="true" dia-type="platoon.tasks.Observer" id="390" name="Pion Observer">
       <parameter dia-name="pointCible_" name="Objectif" optional="false" type="Point"/>
     </fragorder>
-    <fragorder available-without-mission="true" dia-type="france.military.platoon.tasks.Orienter" id="391" name="Pion Orienter Capteurs">
+    <fragorder available-without-mission="true" dia-type="platoon.tasks.Orienter" id="391" name="Pion Orienter Capteurs">
       <parameter dia-name="pointCible_" name="Face a" optional="false" type="Point"/>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="platoon.combat.support.art.tasks.AppliquerFeux" id="392" name="Pion Appliquer Feux">
@@ -4656,8 +4658,8 @@
       <parameter dia-name="pointCible_" name="Cible" optional="false" type="Point"/>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_MiseAFeuIED" id="28799" name="Pion Mise A Feu IED"/>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ROEM_PasserEnSilenceRadar" id="28800" name="ROEM Passer En Silence Radar"/>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ROEM_ArreterSilenceRadar" id="28801" name="ROEM Arreter Silence Radar"/>
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ROEM_PasserEnSilenceRadar" id="28800" name="Passer En Silence Radar"/>
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ROEM_ArreterSilenceRadar" id="28801" name="Arreter Silence Radar"/>
   </fragorders>
 </missions>
-<!-- signature="4010092964" -->
+<!-- signature="0584078067" -->

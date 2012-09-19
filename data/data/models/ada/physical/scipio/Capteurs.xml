@@ -3304,7 +3304,7 @@
       </object-detection>
     </sensor>
     <sensor detection-delay="0h" name="Camera SDTI">
-      <unit-detection angle="15" firer-detection-distance="0" scanning="false">
+      <unit-detection angle="360" firer-detection-distance="0" scanning="false">
         <base-distances close-range="2500">
           <base-distance distance="2500" level="identification"/>
           <base-distance distance="3000" level="recognition"/>
@@ -5560,8 +5560,8 @@
         <object detection-distance="500" type="mines">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
+            <distance-modifier type="Mouvement" value="0.5"/>
+            <distance-modifier type="MouvementDiscret" value="0.9"/>
             <distance-modifier type="Arret" value="1"/>
             <distance-modifier type="PosteReflexe" value="1"/>
             <distance-modifier type="Poste" value="1"/>
@@ -5608,8 +5608,8 @@
         <object detection-distance="500" type="anti tank obstacle">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
+            <distance-modifier type="Mouvement" value="0.5"/>
+            <distance-modifier type="MouvementDiscret" value="0.9"/>
             <distance-modifier type="Arret" value="1"/>
             <distance-modifier type="PosteReflexe" value="1"/>
             <distance-modifier type="Poste" value="1"/>
@@ -5620,8 +5620,8 @@
         <object detection-distance="500" type="mined area (linear)">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
+            <distance-modifier type="Mouvement" value="0.5"/>
+            <distance-modifier type="MouvementDiscret" value="0.9"/>
             <distance-modifier type="Arret" value="1"/>
             <distance-modifier type="PosteReflexe" value="1"/>
             <distance-modifier type="Poste" value="1"/>
@@ -5632,8 +5632,8 @@
         <object detection-distance="500" type="mined area (scattered)">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
+            <distance-modifier type="Mouvement" value="0.5"/>
+            <distance-modifier type="MouvementDiscret" value="0.9"/>
             <distance-modifier type="Arret" value="1"/>
             <distance-modifier type="PosteReflexe" value="1"/>
             <distance-modifier type="Poste" value="1"/>
@@ -7579,4 +7579,4 @@
     </sensor>
   </sensors>
 </sensors>
-<!-- signature="2063400065" -->
+<!-- signature="3456518070" -->

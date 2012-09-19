@@ -6,7 +6,7 @@
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
-        <mission name="PION COMMUNES Interroger"/>
+        <mission name="PION COMMUNES Mener Un Entretien"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="PION COMMUNES Escorter Prisonniers Vers Camp"/>
@@ -59,18 +59,19 @@
         <mission name="PION Faire mouvement dans reseau souterrain"/>
         <mission name="PION Faire mouvement via reseau souterrain"/>
         <mission name="PION Sortir du reseau souterrain"/>
+        <mission name="PION MELEE Appuyer En Mouvement"/>
+        <mission name="PION MELEE Appuyer Sur Position"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -101,24 +102,24 @@
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
-        <mission name="PION MELEE Appuyer">
-          <fragorder name="Pion Appliquer Feux"/>
-        </mission>
         <mission name="PION MELEE Appuyer Sur Position">
           <fragorder name="Pion Appliquer Feux"/>
         </mission>
         <mission name="PION MELEE Interdire foule"/>
         <mission name="PION MELEE Renseigner sur foule"/>
+        <mission name="PION MELEE Appuyer En Mouvement">
+          <fragorder name="Pion Appliquer Feux"/>
+        </mission>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -137,14 +138,10 @@
     </unit>
     <unit dia-type="platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.PIA">
       <missions>
-        <mission name="PION Entrer dans un reseau souterrain"/>
-        <mission name="PION Sortir du reseau souterrain"/>
-        <mission name="PION Faire mouvement dans reseau souterrain"/>
-        <mission name="PION Faire mouvement via reseau souterrain"/>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
-        <mission name="PION COMMUNES Interroger"/>
+        <mission name="PION COMMUNES Mener Un Entretien"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="PION COMMUNES Escorter Prisonniers Vers Camp"/>
@@ -153,7 +150,7 @@
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
-        <mission name="PION MELEE Appuyer"/>
+        <mission name="PION MELEE Appuyer En Mouvement"/>
         <mission name="PION MELEE Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
@@ -186,11 +183,11 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -213,7 +210,7 @@
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
-        <mission name="PION COMMUNES Interroger"/>
+        <mission name="PION COMMUNES Mener Un Entretien"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="PION COMMUNES Escorter Prisonniers Vers Camp"/>
@@ -235,11 +232,11 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -273,11 +270,11 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -308,16 +305,16 @@
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION ASA Defendre"/>
-        <mission name="PION ASA Defendre Unites"/>
         <mission name="PION ASA Surveiller"/>
+        <mission name="PION ASA Defendre Unites"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -354,11 +351,11 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -395,11 +392,11 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -439,11 +436,11 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -496,7 +493,7 @@
         <mission name="PION GENIE Reparer">
           <fragorder name="Abandonner travaux"/>
         </mission>
-        <mission name="PION GENIE Reprendre Travaux">
+        <mission name="PION GENIE Reprendre Constructions">
           <fragorder name="Abandonner travaux"/>
         </mission>
         <mission name="PION GENIE Retablir Itineraire">
@@ -519,11 +516,11 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -558,11 +555,11 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -605,7 +602,7 @@
           <fragorder name="Activer Obstacles"/>
           <fragorder name="Abandonner travaux"/>
         </mission>
-        <mission name="PION GENIE Reprendre Travaux">
+        <mission name="PION GENIE Reprendre Constructions">
           <fragorder name="Abandonner travaux"/>
         </mission>
         <mission name="PION GENIE Retablir Itineraire">
@@ -619,11 +616,11 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -655,16 +652,17 @@
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION GENIE Equiper Exploiter Site Franchissement"/>
         <mission name="PION MELEE Renseigner sur foule"/>
+        <mission name="PION GENIE Executer Variantement"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -700,11 +698,11 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -737,16 +735,17 @@
         <mission name="PION MELEE Animer Poste De Controle"/>
         <mission name="PION MELEE Interdire foule"/>
         <mission name="PION MELEE Renseigner sur foule"/>
+        <mission name="PION GENIE Brecher obstacles"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -789,11 +788,11 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -829,16 +828,17 @@
         <mission name="PION MELEE Animer Poste De Controle"/>
         <mission name="PION MELEE Interdire foule"/>
         <mission name="PION MELEE Renseigner sur foule"/>
+        <mission name="PION GENIE Reconnaitre Site de franchissement"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -872,7 +872,7 @@
           <fragorder name="Activer Obstacles"/>
           <fragorder name="Abandonner travaux"/>
         </mission>
-        <mission name="PION GENIE Reprendre Travaux">
+        <mission name="PION GENIE Reprendre Constructions">
           <fragorder name="Abandonner travaux"/>
         </mission>
         <mission name="PION GENIE Valoriser"/>
@@ -884,11 +884,11 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -927,11 +927,11 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -970,11 +970,11 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1024,11 +1024,11 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1071,8 +1071,8 @@
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1100,11 +1100,11 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1139,20 +1139,20 @@
         <mission name="PION ASYMETRIQUE Renseigner"/>
         <mission name="PION ASYMETRIQUE Se Dissimuler"/>
         <mission name="PION ASYMETRIQUE S'Infiltrer"/>
+        <mission name="PION ASYMETRIQUE Effectuer Tirs Embusques"/>
         <mission name="PION Entrer dans un reseau souterrain"/>
         <mission name="PION Sortir du reseau souterrain"/>
         <mission name="PION Faire mouvement dans reseau souterrain"/>
         <mission name="PION Faire mouvement via reseau souterrain"/>
         <mission name="PION Desactiver Point Du Reseau"/>
-        <mission name="PION MILICE Appui contre mobilite"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1182,13 +1182,12 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1222,7 +1221,7 @@
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1232,7 +1231,7 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Activer Radar"/>
       </fragorders>
     </unit>
     <unit dia-type="platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.Milice">
@@ -1240,7 +1239,7 @@
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
-        <mission name="PION COMMUNES Interroger"/>
+        <mission name="PION COMMUNES Mener Un Entretien"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="PION COMMUNES Escorter Prisonniers Vers Camp"/>
@@ -1266,9 +1265,8 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1296,11 +1294,11 @@
         <mission name="PION ALAT Renseigner Sur Foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1342,11 +1340,11 @@
         <mission name="PION ALAT Renseigner Sur Foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1388,11 +1386,11 @@
         <mission name="PION ALAT Renseigner Sur Foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1432,11 +1430,11 @@
         <mission name="PION ALAT Renseigner Sur Foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1456,10 +1454,7 @@
     </unit>
     <unit dia-type="TransportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\model.bms" masalife="false" name="Patrouille HM">
       <missions>
-        <mission name="PION ALAT Helitransporter">
-          <fragorder name="Changer Position Debarquement"/>
-        </mission>
-        <mission name="PION ALAT Heliporter">
+        <mission name="PION ALAT Heliporter Helitransporter">
           <fragorder name="Changer Position Debarquement"/>
         </mission>
         <mission name="PION ALAT Heliporter Helitransporter Plot Ravitaillement"/>
@@ -1475,11 +1470,11 @@
         <mission name="PION ALAT Renseigner Sur Foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1499,10 +1494,7 @@
     </unit>
     <unit dia-type="GeneralPurposeHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\model.bms" masalife="false" name="Patrouille HM Log">
       <missions>
-        <mission name="PION ALAT Helitransporter">
-          <fragorder name="Changer Position Debarquement"/>
-        </mission>
-        <mission name="PION ALAT Heliporter">
+        <mission name="PION ALAT Heliporter Helitransporter">
           <fragorder name="Changer Position Debarquement"/>
         </mission>
         <mission name="PION ALAT Heliporter Helitransporter Plot Ravitaillement"/>
@@ -1517,11 +1509,11 @@
         <mission name="PION ALAT Renseigner Sur Foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1564,11 +1556,11 @@
         <mission name="PION ALAT Renseigner Sur Foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1598,11 +1590,11 @@
         <mission name="PION Prendre En Compte Prisonniers"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1628,11 +1620,11 @@
         <mission name="PION ALAT Se Faire Decontaminer"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1667,11 +1659,11 @@
         <mission name="PION ALAT Renseigner Sur Foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1691,10 +1683,7 @@
     </unit>
     <unit dia-type="TransportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\Model.bms" masalife="false" name="GLAISE ALFT Patrouille UH">
       <missions>
-        <mission name="PION ALAT Helitransporter">
-          <fragorder name="Changer Position Debarquement"/>
-        </mission>
-        <mission name="PION ALAT Heliporter">
+        <mission name="PION ALAT Heliporter Helitransporter">
           <fragorder name="Changer Position Debarquement"/>
         </mission>
         <mission name="PION ALAT Heliporter Helitransporter Plot Ravitaillement"/>
@@ -1710,11 +1699,11 @@
         <mission name="PION ALAT Aller Se Recompleter"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1755,11 +1744,11 @@
         <mission name="PION ALAT Aller Se Recompleter"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1795,11 +1784,11 @@
         <mission name="PION ALAT Aller Se Recompleter"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1827,11 +1816,11 @@
         <mission name="PION ALAT Aller Se Recompleter"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1869,11 +1858,11 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1894,7 +1883,7 @@
       <missions>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
-        <mission name="PION COMMUNES Interroger"/>
+        <mission name="PION COMMUNES Mener Un Entretien"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="PION COMMUNES Escorter Prisonniers Vers Camp"/>
@@ -1903,25 +1892,27 @@
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
-        <mission name="PION MELEE Appuyer"/>
         <mission name="PION MELEE Appuyer Sur Position"/>
         <mission name="PION MELEE Surveiller"/>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION MELEE Animer Poste De Controle"/>
         <mission name="PION MELEE Interdire foule"/>
         <mission name="PION MELEE Renseigner sur foule"/>
+        <mission name="PION MELEE Freiner"/>
+        <mission name="PION MELEE Interdire"/>
+        <mission name="PION MELEE Appuyer En Mouvement"/>
+        <mission name="PION MELEE Harceler"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1943,7 +1934,7 @@
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
-        <mission name="PION COMMUNES Interroger"/>
+        <mission name="PION COMMUNES Mener Un Entretien"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="PION COMMUNES Escorter Prisonniers Vers Camp"/>
@@ -1960,18 +1951,23 @@
         <mission name="PION Faire mouvement dans reseau souterrain"/>
         <mission name="PION Faire mouvement via reseau souterrain"/>
         <mission name="PION Sortir du reseau souterrain"/>
+        <mission name="PION MELEE Freiner"/>
+        <mission name="PION MELEE Appuyer En Mouvement"/>
+        <mission name="PION MELEE Appuyer Sur Position"/>
+        <mission name="PION MELEE Interdire"/>
+        <mission name="PION MELEE Couvrir"/>
+        <mission name="PION MELEE Harceler"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1992,7 +1988,7 @@
       <missions>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
-        <mission name="PION COMMUNES Interroger"/>
+        <mission name="PION COMMUNES Mener Un Entretien"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="PION COMMUNES Escorter Prisonniers Vers Camp"/>
@@ -2018,13 +2014,12 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -2046,7 +2041,7 @@
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
-        <mission name="PION COMMUNES Interroger"/>
+        <mission name="PION COMMUNES Mener Un Entretien"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="PION COMMUNES Escorter Prisonniers Vers Camp"/>
@@ -2055,7 +2050,6 @@
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
-        <mission name="PION MELEE Appuyer"/>
         <mission name="PION MELEE Boucler"/>
         <mission name="PION MELEE Controler">
           <fragorder name="Abandonner travaux"/>
@@ -2076,18 +2070,19 @@
         <mission name="PION Faire mouvement dans reseau souterrain"/>
         <mission name="PION Faire mouvement via reseau souterrain"/>
         <mission name="PION Sortir du reseau souterrain"/>
+        <mission name="PION MELEE Appuyer En Mouvement"/>
+        <mission name="PION MELEE Appuyer Sur Position"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -2110,7 +2105,7 @@
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
-        <mission name="PION COMMUNES Interroger"/>
+        <mission name="PION COMMUNES Mener Un Entretien"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="PION COMMUNES Escorter Prisonniers Vers Camp"/>
@@ -2119,7 +2114,6 @@
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
-        <mission name="PION MELEE Appuyer"/>
         <mission name="PION MELEE Boucler"/>
         <mission name="PION MELEE Escorter"/>
         <mission name="PION MELEE Intercepter">
@@ -2140,18 +2134,19 @@
         <mission name="PION Faire mouvement dans reseau souterrain"/>
         <mission name="PION Faire mouvement via reseau souterrain"/>
         <mission name="PION Sortir du reseau souterrain"/>
+        <mission name="PION MELEE Appuyer En Mouvement"/>
+        <mission name="PION MELEE Appuyer Sur Position"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -2174,7 +2169,7 @@
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
-        <mission name="PION COMMUNES Interroger"/>
+        <mission name="PION COMMUNES Mener Un Entretien"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="PION COMMUNES Escorter Prisonniers Vers Camp"/>
@@ -2200,18 +2195,19 @@
         <mission name="PION Faire mouvement dans reseau souterrain"/>
         <mission name="PION Faire mouvement via reseau souterrain"/>
         <mission name="PION Sortir du reseau souterrain"/>
+        <mission name="PION MELEE Appuyer En Mouvement"/>
+        <mission name="PION MELEE Appuyer Sur Position"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -2234,7 +2230,7 @@
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
-        <mission name="PION COMMUNES Interroger"/>
+        <mission name="PION COMMUNES Mener Un Entretien"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
         <mission name="PION COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="PION COMMUNES Escorter Prisonniers Vers Camp"/>
@@ -2246,7 +2242,7 @@
         <mission name="PION MELEE Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
-        <mission name="PION MELEE Appuyer"/>
+        <mission name="PION MELEE Appuyer En Mouvement"/>
         <mission name="PION MELEE Appuyer Sur Position"/>
         <mission name="PION MELEE Boucler"/>
         <mission name="PION MELEE Contre Attaquer">
@@ -2279,14 +2275,15 @@
         <mission name="PION MELEE Neutraliser"/>
         <mission name="PION MELEE Renseigner Sur"/>
         <mission name="PION MELEE Tenir"/>
+        <mission name="PION MELEE Eclairer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -2320,7 +2317,7 @@
         <mission name="PION MELEE Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
-        <mission name="PION MELEE Appuyer"/>
+        <mission name="PION MELEE Appuyer En Mouvement"/>
         <mission name="PION MELEE Appuyer Sur Position"/>
         <mission name="PION MELEE Boucler"/>
         <mission name="PION MELEE Contre Attaquer">
@@ -2352,14 +2349,15 @@
         <mission name="PION MELEE Neutraliser"/>
         <mission name="PION MELEE Renseigner Sur"/>
         <mission name="PION MELEE Tenir"/>
+        <mission name="PION MELEE Eclairer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -2402,11 +2400,11 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -2456,11 +2454,11 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -2491,7 +2489,7 @@
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
-        <mission name="PION MELEE Appuyer"/>
+        <mission name="PION MELEE Appuyer En Mouvement"/>
         <mission name="PION MELEE Appuyer Sur Position"/>
         <mission name="PION MELEE Armer PIA"/>
         <mission name="PION MELEE Controler">
@@ -2516,11 +2514,11 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -2553,7 +2551,7 @@
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
-        <mission name="PION MELEE Appuyer"/>
+        <mission name="PION MELEE Appuyer En Mouvement"/>
         <mission name="PION MELEE Interdire foule"/>
         <mission name="PION MELEE Renseigner sur foule"/>
         <mission name="PION MELEE Animer Poste De Controle"/>
@@ -2562,11 +2560,11 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -2600,11 +2598,11 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -2634,16 +2632,17 @@
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
-        <mission name="PION RENS RASIT Renseigner Sur"/>
+        <mission name="PION RENS RASIT Renseigner Sur">
+          <fragorder name="Passer En Silence Radar"/>
+          <fragorder name="Arreter Silence Radar"/>
+        </mission>
         <mission name="PION MELEE Renseigner sur foule"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -2680,11 +2679,11 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -2714,6 +2713,8 @@
         <fragorder name="S'arreter"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Interrompre"/>
       </fragorders>
     </unit>
     <unit dia-type="platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.LOG.Convoi">
@@ -2729,11 +2730,11 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -2771,11 +2772,11 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -2809,26 +2810,22 @@
           <fragorder name="Modifier Priorites Reparations"/>
           <fragorder name="Modifier Priorites Tactiques Reparations"/>
           <fragorder name="Pion Renforcer En Remorqueurs"/>
-          <fragorder name="Pion Transferer Remorqueurs"/>
-          <fragorder name="Pion Reprendre Aux Ordres Remorqueurs"/>
         </mission>
         <mission name="PION LOGISTIQUE Reparer">
           <fragorder name="Modifier Regime Travail Maintenance"/>
           <fragorder name="Modifier Priorites Reparations"/>
           <fragorder name="Modifier Priorites Tactiques Reparations"/>
           <fragorder name="Pion Renforcer En Remorqueurs"/>
-          <fragorder name="Pion Transferer Remorqueurs"/>
-          <fragorder name="Pion Reprendre Aux Ordres Remorqueurs"/>
         </mission>
         <mission name="PION MELEE Renseigner sur foule"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -2844,6 +2841,8 @@
         <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
+        <fragorder name="Pion Reprendre Aux Ordres Remorqueurs"/>
+        <fragorder name="Pion Transferer Remorqueurs"/>
       </fragorders>
     </unit>
     <unit dia-type="platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.LOG.Stock">
@@ -2863,11 +2862,11 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -2904,11 +2903,11 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -2924,6 +2923,9 @@
         <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
+        <fragorder name="Pion Renforcer En Equipements"/>
+        <fragorder name="Pion Transferer Equipements"/>
+        <fragorder name="Pion Reprendre Aux Ordres Equipements"/>
       </fragorders>
     </unit>
     <unit dia-type="platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.LOG.Soutien homme">
@@ -2939,11 +2941,11 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -2971,8 +2973,7 @@
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION LOGISTIQUE Preparer bascule">
           <fragorder name="Pion Renforcer En VSRAM"/>
-          <fragorder name="Pion Reprendre Aux Ordres VSRAM"/>
-          <fragorder name="Pion Transferer VSRAM"/>
+          <fragorder name="Pion Renforcer En Equipements"/>
           <fragorder name="Modifier Priorites Tactiques Blesses"/>
           <fragorder name="Modifier Priorites Blesses"/>
         </mission>
@@ -2981,18 +2982,17 @@
           <fragorder name="Modifier Priorites Blesses"/>
           <fragorder name="Modifier Priorites Tactiques Blesses"/>
           <fragorder name="Pion Renforcer En VSRAM"/>
-          <fragorder name="Pion Transferer VSRAM"/>
-          <fragorder name="Pion Reprendre Aux Ordres VSRAM"/>
+          <fragorder name="Pion Renforcer En Equipements"/>
         </mission>
         <mission name="PION MELEE Renseigner sur foule"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3008,6 +3008,10 @@
         <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
+        <fragorder name="Pion Reprendre Aux Ordres Equipements"/>
+        <fragorder name="Pion Transferer Equipements"/>
+        <fragorder name="Pion Reprendre Aux Ordres VSRAM"/>
+        <fragorder name="Pion Transferer VSRAM"/>
       </fragorders>
     </unit>
     <unit dia-type="platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.LOG.Sante.ACA">
@@ -3031,11 +3035,11 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3070,11 +3074,11 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3109,11 +3113,11 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3148,11 +3152,11 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3187,11 +3191,11 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3228,11 +3232,11 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3268,13 +3272,12 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3289,6 +3292,9 @@
         <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
+        <fragorder name="Pion Reprendre Aux Ordres Equipements"/>
+        <fragorder name="Pion Transferer Equipements"/>
+        <fragorder name="Pion Renforcer En Equipements"/>
       </fragorders>
     </unit>
     <unit dia-type="platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.CIRCU.Patrouille Circulation">
@@ -3325,13 +3331,12 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3367,13 +3372,12 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3388,6 +3392,9 @@
         <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
+        <fragorder name="Pion Transferer Equipements"/>
+        <fragorder name="Pion Renforcer En Equipements"/>
+        <fragorder name="Pion Reprendre Aux Ordres Equipements"/>
       </fragorders>
     </unit>
     <unit dia-type="platoon.terrorism.roles.Individu" file="BMPion.bms" masalife="true" name="Masalife.Individu Isole.Journaliste">
@@ -3396,7 +3403,7 @@
         <mission name="PION COMMUNES Se Faire Decontaminer"/>
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Suivre"/>
-        <mission name="PION COMMUNES Interroger"/>
+        <mission name="PION COMMUNES Mener Un Entretien"/>
         <mission name="PION ASYMETRIQUE Renseigner"/>
         <mission name="PION ASYMETRIQUE S'Infiltrer"/>
       </missions>
@@ -3404,13 +3411,12 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3439,11 +3445,11 @@
         <mission name="PION MELEE Renseigner sur foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3469,11 +3475,11 @@
         <mission name="PION COMMUNES Suivre"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3500,11 +3506,11 @@
         <mission name="PION COMMUNES Suivre"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3530,11 +3536,11 @@
         <mission name="PION COMMUNES Suivre"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3563,13 +3569,16 @@
           <fragorder name="Modifier altitude"/>
         </mission>
         <mission name="PION COMMUNES Se Faire Transporter"/>
+        <mission name="PION JOINT Reconnaitre">
+          <fragorder name="Modifier altitude"/>
+        </mission>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3597,11 +3606,11 @@
         <mission name="PION COMMUNES Se Faire Transporter"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3629,13 +3638,12 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3669,11 +3677,11 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3704,17 +3712,18 @@
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION COMMUNES Decrocher"/>
-        <mission name="PION ASS RATAC Acquerir Objectifs"/>
+        <mission name="PION ASS RATAC Acquerir Objectifs">
+          <fragorder name="Passer En Silence Radar"/>
+          <fragorder name="Arreter Silence Radar"/>
+        </mission>
         <mission name="PION MELEE Renseigner sur foule"/>
         <mission name="PION COMMUNES Se Faire Transporter"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3749,11 +3758,11 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3784,7 +3793,7 @@
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION COMMUNES Decrocher"/>
-        <mission name="PION ASS Assurer Mise En Oeuvre">
+        <mission name="PION ASS Mise En Batterie">
           <fragorder name="Pion Appliquer Feux"/>
           <fragorder name="Pion Engager"/>
           <fragorder name="Pion Desengager"/>
@@ -3797,11 +3806,11 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3841,11 +3850,11 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3875,11 +3884,11 @@
         <mission name="PION MELEE Renseigner sur foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3904,11 +3913,11 @@
         <mission name="PION AIR Faire Mouvement"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3917,7 +3926,6 @@
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -3931,11 +3939,11 @@
         <mission name="PION COMMUNES Stationner"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -3967,11 +3975,11 @@
         <mission name="PION MELEE Renseigner sur foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4000,11 +4008,11 @@
         <mission name="PION MELEE Renseigner sur foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4030,11 +4038,11 @@
         <mission name="PION MELEE Renseigner sur foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4071,11 +4079,11 @@
         <mission name="PION Sortir du reseau souterrain"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4107,11 +4115,11 @@
         <mission name="PION MELEE Renseigner sur foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4138,15 +4146,15 @@
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION RENS ROEM Appuyer"/>
         <mission name="PION RENS ROEM Renseigner Sur">
-          <fragorder name="ROEM Passer En Silence Radar"/>
-          <fragorder name="ROEM Arreter Silence Radar"/>
+          <fragorder name="Passer En Silence Radar"/>
+          <fragorder name="Arreter Silence Radar"/>
         </mission>
         <mission name="PION MELEE Animer Poste De Controle"/>
         <mission name="PION MELEE Renseigner sur foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
@@ -4166,7 +4174,10 @@
     </unit>
     <unit dia-type="platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.RENS.START - STAIR - ELODEE">
       <missions>
-        <mission name="PION RENS ROEM Renseigner Sur"/>
+        <mission name="PION RENS ROEM Renseigner Sur">
+          <fragorder name="Passer En Silence Radar"/>
+          <fragorder name="Arreter Silence Radar"/>
+        </mission>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Se Faire Decontaminer"/>
@@ -4177,11 +4188,9 @@
         <mission name="PION MELEE Renseigner sur foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4216,11 +4225,11 @@
         <mission name="PION S'Infiltrer"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4255,11 +4264,11 @@
         <mission name="PION RENS ROHUM Renseigner Sur"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4296,11 +4305,11 @@
         <mission name="PION Sortir du reseau souterrain"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4321,7 +4330,10 @@
     </unit>
     <unit dia-type="platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.RENS.Pat recherche RASIT">
       <missions>
-        <mission name="PION RENS RASIT Renseigner Sur"/>
+        <mission name="PION RENS RASIT Renseigner Sur">
+          <fragorder name="Passer En Silence Radar"/>
+          <fragorder name="Arreter Silence Radar"/>
+        </mission>
         <mission name="PION RENS SExfiltrer"/>
         <mission name="PION S'Infiltrer"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
@@ -4334,11 +4346,9 @@
         <mission name="PION MELEE Renseigner sur foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4367,11 +4377,11 @@
         <mission name="PION MELEE Renseigner sur foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4399,11 +4409,11 @@
         <mission name="PION COMMUNES Suivre"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4422,7 +4432,10 @@
     </unit>
     <unit dia-type="platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.RENS.Stations Linx">
       <missions>
-        <mission name="PION RENS ROEM Renseigner Sur"/>
+        <mission name="PION RENS ROEM Renseigner Sur">
+          <fragorder name="Passer En Silence Radar"/>
+          <fragorder name="Arreter Silence Radar"/>
+        </mission>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
         <mission name="PION COMMUNES Se Faire Decontaminer"/>
@@ -4433,11 +4446,9 @@
         <mission name="PION MELEE Renseigner sur foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4472,11 +4483,11 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4513,11 +4524,11 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4556,11 +4567,11 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4599,11 +4610,11 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4638,11 +4649,11 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4674,8 +4685,8 @@
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4700,7 +4711,7 @@
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4710,7 +4721,7 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Activer Radar"/>
       </fragorders>
     </unit>
     <unit dia-type="platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.ASS.COBRA">
@@ -4731,11 +4742,11 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4770,16 +4781,17 @@
         <mission name="PION MELEE Renseigner sur foule"/>
         <mission name="PION GENIE Appui Mobilite"/>
         <mission name="PION GENIE Ouvrir Itineraire"/>
+        <mission name="PION GENIE Reconnaitre"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4812,8 +4824,8 @@
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
-        <mission name="AUTOMATE COMMUNES Interroger"/>
-        <mission name="AUTOMATE MELEE Appuyer"/>
+        <mission name="AUTOMATE COMMUNES Mener Un Entretien"/>
+        <mission name="AUTOMATE MELEE Appuyer En Mouvement"/>
         <mission name="AUTOMATE MELEE Appuyer Sur Position"/>
         <mission name="AUTOMATE MELEE Attaquer">
           <fragorder name="Deboucher"/>
@@ -4831,6 +4843,7 @@
         <mission name="AUTOMATE MELEE Detruire"/>
         <mission name="AUTOMATE MELEE Donner Coup Arret">
           <fragorder name="Activer Obstacles"/>
+          <fragorder name="Decrocher"/>
         </mission>
         <mission name="AUTOMATE MELEE Eclairer"/>
         <mission name="AUTOMATE MELEE Fixer"/>
@@ -4866,16 +4879,16 @@
         <mission name="AUTOMATE MELEE Controler foule"/>
         <mission name="AUTOMATE MELEE Canaliser foule"/>
         <mission name="AUTOMATE MELEE Maintenir Le Contact"/>
-        <mission name="AUTOMATE HLA Faire Une Requete de Transport"/>
-        <mission name="AUTOMATE HLA Debarquer"/>
-        <mission name="AUTOMATE HLA Embarquer"/>
+        <mission name="HLA Faire Une Requete de Transport"/>
+        <mission name="HLA Debarquer"/>
+        <mission name="HLA Embarquer"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4907,8 +4920,9 @@
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
-        <mission name="AUTOMATE COMMUNES Interroger"/>
-        <mission name="AUTOMATE MELEE Appuyer"/>
+        <mission name="AUTOMATE COMMUNES Mener Un Entretien"/>
+        <mission name="AUTOMATE MELEE Appuyer En Mouvement"/>
+        <mission name="AUTOMATE MELEE Appuyer Sur Position"/>
         <mission name="AUTOMATE MELEE Controler">
           <fragorder name="Activer Obstacles"/>
         </mission>
@@ -4928,11 +4942,11 @@
         <mission name="AUTOMATE MELEE Interdire foules"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -4960,8 +4974,9 @@
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
-        <mission name="AUTOMATE COMMUNES Interroger"/>
-        <mission name="AUTOMATE MELEE Appuyer"/>
+        <mission name="AUTOMATE COMMUNES Mener Un Entretien"/>
+        <mission name="AUTOMATE MELEE Appuyer En Mouvement"/>
+        <mission name="AUTOMATE MELEE Appuyer Sur Position"/>
         <mission name="AUTOMATE MELEE Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
@@ -4997,15 +5012,18 @@
         <mission name="AUTOMATE MELEE Canaliser foule"/>
         <mission name="AUTOMATE MELEE Controler foule"/>
         <mission name="AUTOMATE MELEE Interdire foules"/>
-        <mission name="AUTOMATE HLA Debarquer"/>
-        <mission name="AUTOMATE HLA Embarquer"/>
+        <mission name="HLA Debarquer"/>
+        <mission name="HLA Embarquer"/>
+        <mission name="AUTOMATE MELEE Donner Coup Arret">
+          <fragorder name="Decrocher"/>
+        </mission>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -5036,17 +5054,17 @@
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
-        <mission name="AUTOMATE COMMUNES Interroger"/>
+        <mission name="AUTOMATE COMMUNES Mener Un Entretien"/>
         <mission name="AUTOMATE MELEE Controler">
           <fragorder name="Activer Obstacles"/>
         </mission>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -5074,8 +5092,8 @@
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
-        <mission name="AUTOMATE COMMUNES Interroger"/>
-        <mission name="AUTOMATE MELEE Appuyer"/>
+        <mission name="AUTOMATE COMMUNES Mener Un Entretien"/>
+        <mission name="AUTOMATE MELEE Appuyer En Mouvement"/>
         <mission name="AUTOMATE MELEE Appuyer Sur Position"/>
         <mission name="AUTOMATE MELEE Couvrir"/>
         <mission name="AUTOMATE MELEE Defendre">
@@ -5091,13 +5109,16 @@
         </mission>
         <mission name="AUTOMATE MELEE Animer Postes De Controle"/>
         <mission name="AUTOMATE MELEE Interdire foules"/>
+        <mission name="AUTOMATE MELEE Donner Coup Arret">
+          <fragorder name="Decrocher"/>
+        </mission>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -5125,8 +5146,9 @@
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
-        <mission name="AUTOMATE COMMUNES Interroger"/>
-        <mission name="AUTOMATE MELEE Appuyer"/>
+        <mission name="AUTOMATE COMMUNES Mener Un Entretien"/>
+        <mission name="AUTOMATE MELEE Appuyer En Mouvement"/>
+        <mission name="AUTOMATE MELEE Appuyer Sur Position"/>
         <mission name="AUTOMATE MELEE Defendre">
           <fragorder name="Activer Obstacles"/>
         </mission>
@@ -5144,11 +5166,11 @@
         <mission name="AUTOMATE MELEE Interdire foules"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -5176,8 +5198,9 @@
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
-        <mission name="AUTOMATE COMMUNES Interroger"/>
-        <mission name="AUTOMATE MELEE Appuyer"/>
+        <mission name="AUTOMATE COMMUNES Mener Un Entretien"/>
+        <mission name="AUTOMATE MELEE Appuyer En Mouvement"/>
+        <mission name="AUTOMATE MELEE Appuyer Sur Position"/>
         <mission name="AUTOMATE MELEE Controler">
           <fragorder name="Activer Obstacles"/>
         </mission>
@@ -5198,11 +5221,11 @@
         <mission name="AUTOMATE MELEE Interdire foules"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -5230,16 +5253,17 @@
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
-        <mission name="AUTOMATE COMMUNES Interroger"/>
+        <mission name="AUTOMATE COMMUNES Mener Un Entretien"/>
         <mission name="AUTOMATE MELEE Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
-        <mission name="AUTOMATE MELEE Appuyer"/>
+        <mission name="AUTOMATE MELEE Appuyer En Mouvement"/>
+        <mission name="AUTOMATE MELEE Appuyer Sur Position"/>
         <mission name="AUTOMATE MELEE Couvrir"/>
         <mission name="AUTOMATE MELEE Donner Coup Arret">
           <fragorder name="Activer Obstacles"/>
+          <fragorder name="Decrocher"/>
         </mission>
-        <mission name="AUTOMATE MELEE Flanc-Garder"/>
         <mission name="AUTOMATE MELEE Freiner">
           <fragorder name="Decrocher"/>
           <fragorder name="Activer Obstacles"/>
@@ -5254,11 +5278,11 @@
         <mission name="AUTOMATE MELEE Interdire foules"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -5295,6 +5319,7 @@
         <mission name="AUTOMATE MELEE Detruire"/>
         <mission name="AUTOMATE MELEE Donner Coup Arret">
           <fragorder name="Activer Obstacles"/>
+          <fragorder name="Decrocher"/>
         </mission>
         <mission name="AUTOMATE MELEE Fixer"/>
         <mission name="AUTOMATE MELEE Flanc-Garder"/>
@@ -5316,14 +5341,14 @@
         <mission name="AUTOMATE MELEE Canaliser foule"/>
         <mission name="AUTOMATE MELEE Controler foule"/>
         <mission name="AUTOMATE MELEE Interdire foules"/>
-        <mission name="AUTOMATE COMMUNES Interroger"/>
+        <mission name="AUTOMATE COMMUNES Mener Un Entretien"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -5339,7 +5364,6 @@
     </automat>
     <automat dia-type="company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.INF.Commando">
       <missions>
-        <mission name="AUTOMATE COMMUNES Decrocher"/>
         <mission name="AUTOMATE COMMUNES Faire Mouvement"/>
         <mission name="AUTOMATE COMMUNES Franchir"/>
         <mission name="AUTOMATE COMMUNES Se Faire Decontaminer"/>
@@ -5351,14 +5375,14 @@
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
-        <mission name="AUTOMATE COMMUNES Interroger"/>
+        <mission name="AUTOMATE COMMUNES Mener Un Entretien"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -5388,7 +5412,7 @@
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
-        <mission name="AUTOMATE MELEE Appuyer"/>
+        <mission name="AUTOMATE MELEE Appuyer En Mouvement"/>
         <mission name="AUTOMATE MELEE Appuyer Sur Position"/>
         <mission name="AUTOMATE MELEE Attaquer">
           <fragorder name="Deboucher"/>
@@ -5405,6 +5429,7 @@
         <mission name="AUTOMATE MELEE Detruire"/>
         <mission name="AUTOMATE MELEE Donner Coup Arret">
           <fragorder name="Activer Obstacles"/>
+          <fragorder name="Decrocher"/>
         </mission>
         <mission name="AUTOMATE MELEE Eclairer"/>
         <mission name="AUTOMATE MELEE Effectuer un raid"/>
@@ -5439,11 +5464,11 @@
         <mission name="AUTOMATE MELEE Organiser accueil colonne refugies"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -5472,12 +5497,15 @@
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
-        <mission name="AUTOMATE MELEE Appuyer"/>
+        <mission name="AUTOMATE MELEE Appuyer En Mouvement"/>
+        <mission name="AUTOMATE MELEE Appuyer Sur Position"/>
         <mission name="AUTOMATE MELEE Controler">
           <fragorder name="Activer Obstacles"/>
         </mission>
         <mission name="AUTOMATE MELEE Couvrir"/>
-        <mission name="AUTOMATE MELEE Donner Coup Arret"/>
+        <mission name="AUTOMATE MELEE Donner Coup Arret">
+          <fragorder name="Decrocher"/>
+        </mission>
         <mission name="AUTOMATE MELEE Eclairer"/>
         <mission name="AUTOMATE MELEE Escorter"/>
         <mission name="AUTOMATE MELEE Flanc-Garder"/>
@@ -5498,11 +5526,11 @@
         <mission name="AUTOMATE MELEE Interdire foules"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -5530,7 +5558,7 @@
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
-        <mission name="AUTOMATE MELEE Appuyer"/>
+        <mission name="AUTOMATE MELEE Appuyer En Mouvement"/>
         <mission name="AUTOMATE MELEE Appuyer Sur Position"/>
         <mission name="AUTOMATE MELEE Attaquer">
           <fragorder name="Deboucher"/>
@@ -5543,6 +5571,7 @@
         </mission>
         <mission name="AUTOMATE MELEE Donner Coup Arret">
           <fragorder name="Activer Obstacles"/>
+          <fragorder name="Decrocher"/>
         </mission>
         <mission name="AUTOMATE MELEE Eclairer"/>
         <mission name="AUTOMATE MELEE Effectuer un raid"/>
@@ -5577,11 +5606,11 @@
         <mission name="AUTOMATE MELEE Interdire foules"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -5630,11 +5659,11 @@
         <mission name="AUTOMATE MELEE Controler foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -5668,11 +5697,11 @@
         <mission name="AUTOMATE MELEE Animer Postes De Controle"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -5700,14 +5729,15 @@
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
         <mission name="AUTOMATE MELEE Animer Postes De Controle"/>
-        <mission name="AUTOMATE RENS RASIT Renseigner Sur"/>
+        <mission name="AUTOMATE RENS RASIT Renseigner Sur">
+          <fragorder name="Arreter Silence Radar"/>
+          <fragorder name="Passer En Silence Radar"/>
+        </mission>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -5765,11 +5795,11 @@
         <mission name="AUTOMATE MELEE Interdire foules"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -5821,11 +5851,11 @@
         <mission name="AUTOMATE MELEE Interdire foules"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -5853,7 +5883,8 @@
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
-        <mission name="AUTOMATE MELEE Appuyer"/>
+        <mission name="AUTOMATE MELEE Appuyer En Mouvement"/>
+        <mission name="AUTOMATE MELEE Appuyer Sur Position"/>
         <mission name="AUTOMATE MELEE Couvrir"/>
         <mission name="AUTOMATE MELEE Controler">
           <fragorder name="Activer Obstacles"/>
@@ -5875,11 +5906,11 @@
         <mission name="AUTOMATE MELEE Interdire foules"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -5923,6 +5954,7 @@
         <mission name="AUTOMATE MELEE Detruire"/>
         <mission name="AUTOMATE MELEE Donner Coup Arret">
           <fragorder name="Activer Obstacles"/>
+          <fragorder name="Decrocher"/>
         </mission>
         <mission name="AUTOMATE MELEE Fixer"/>
         <mission name="AUTOMATE MELEE Flanc-Garder"/>
@@ -5938,11 +5970,11 @@
         <mission name="AUTOMATE MELEE Interdire foules"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -5977,11 +6009,11 @@
         <mission name="AUTOMATE MELEE Interdire foules"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6024,11 +6056,12 @@
         <mission name="AUTOMATE MELEE Canaliser foule"/>
         <mission name="AUTOMATE MELEE Interdire foules"/>
         <mission name="AUTOMATE MELEE Organiser accueil colonne refugies"/>
+        <mission name="AUTOMATE GENIE Brecher Obstacles"/>
       </missions>
       <fragorders>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6059,8 +6092,8 @@
       </missions>
       <fragorders>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6095,8 +6128,8 @@
       </missions>
       <fragorders>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6127,11 +6160,11 @@
         <mission name="AUTOMATE MELEE Interdire foules"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6143,7 +6176,7 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </automat>
-    <automat dia-type="commander.roles.SniperCompany" file="BMAutomatMilitary.bms" masalife="true" name="Masalife.Automate.MonoPion">
+    <automat dia-type="sword.military.company.terrorism.roles.SniperCompany" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.MonoPion">
       <missions>
         <mission name="AUTOMATE COMMUNES Faire Mouvement"/>
         <mission name="AUTOMATE COMMUNES Se Faire Decontaminer"/>
@@ -6151,11 +6184,11 @@
         <mission name="AUTOMATE COMMUNES Suivre"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6188,11 +6221,11 @@
         </mission>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6224,11 +6257,11 @@
         <mission name="AUTOMATE MELEE Animer Postes De Controle"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6267,11 +6300,11 @@
         <mission name="AUTOMATE MELEE Organiser accueil colonne refugies"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6298,11 +6331,11 @@
         <mission name="AUTOMATE NRBC Reconnaitre"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6330,11 +6363,11 @@
         <mission name="AUTOMATE NRBC Decontaminer Zone"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6359,15 +6392,15 @@
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
         <mission name="AUTOMATE ASA Defendre"/>
-        <mission name="AUTOMATE ASA Defendre Unites"/>
         <mission name="AUTOMATE ASA Surveiller"/>
+        <mission name="AUTOMATE ASA Defendre Unites"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6388,8 +6421,6 @@
         <mission name="AUTOMATE ALAT Jalonner"/>
         <mission name="AUTOMATE ALAT Surveiller"/>
         <mission name="AUTOMATE Faire Mouvement"/>
-        <mission name="AUTOMATE Soutenir En Mesure De"/>
-        <mission name="AUTOMATE Soutenir Sur Position En Mesure De"/>
         <mission name="AUTOMATE Suivre"/>
         <mission name="AUTOMATE Se Faire Decontaminer"/>
         <mission name="AUTOMATE Se Recompleter"/>
@@ -6404,18 +6435,16 @@
         <mission name="AUTOMATE ALAT Escorter"/>
         <mission name="AUTOMATE ALAT Recueillir"/>
         <mission name="AUTOMATE Stationner"/>
-        <mission name="AUTOMATE Orienter Refugies"/>
-        <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
         <mission name="AUTOMATE Se Faire Transporter"/>
         <mission name="AUTOMATE ALAT Aller Se Recompleter"/>
         <mission name="AUTOMATE Decrocher"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6448,18 +6477,16 @@
         <mission name="AUTOMATE ALAT Escorter"/>
         <mission name="AUTOMATE ALAT Recueillir"/>
         <mission name="AUTOMATE Stationner"/>
-        <mission name="AUTOMATE Orienter Refugies"/>
-        <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
         <mission name="AUTOMATE Se Faire Transporter"/>
         <mission name="AUTOMATE ALAT Aller Se Recompleter"/>
         <mission name="AUTOMATE Decrocher"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6482,18 +6509,16 @@
         <mission name="AUTOMATE Se Faire Decontaminer"/>
         <mission name="AUTOMATE Se Recompleter"/>
         <mission name="AUTOMATE Stationner"/>
-        <mission name="AUTOMATE Orienter Refugies"/>
-        <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
         <mission name="AUTOMATE Se Faire Transporter"/>
         <mission name="AUTOMATE ALAT Aller Se Recompleter"/>
         <mission name="AUTOMATE Decrocher"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6509,22 +6534,18 @@
     <automat dia-type="Escadrille_Horizon" file="Appui\Rens\Automates\Radint\Esc Horizon\Model.bms" masalife="false" name="Escadrille Horizon">
       <missions>
         <mission name="AUTOMATE Faire Mouvement"/>
-        <mission name="AUTOMATE Soutenir En Mesure De"/>
-        <mission name="AUTOMATE Soutenir Sur Position En Mesure De"/>
         <mission name="AUTOMATE Suivre"/>
         <mission name="AUTOMATE Decrocher"/>
         <mission name="AUTOMATE RENS RADINT Renseigner Sur"/>
         <mission name="AUTOMATE Se Recompleter"/>
-        <mission name="AUTOMATE Orienter Refugies"/>
-        <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
         <mission name="AUTOMATE Se Faire Decontaminer"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6548,15 +6569,13 @@
         <mission name="AUTOMATE Stationner"/>
         <mission name="AUTOMATE Se Faire Transporter"/>
         <mission name="AUTOMATE ALAT Aller Se Recompleter"/>
-        <mission name="AUTOMATE Orienter Refugies"/>
-        <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6591,15 +6610,13 @@
         <mission name="AUTOMATE Stationner"/>
         <mission name="AUTOMATE Se Faire Transporter"/>
         <mission name="AUTOMATE ALAT Aller Se Recompleter"/>
-        <mission name="AUTOMATE Orienter Refugies"/>
-        <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6639,11 +6656,11 @@
         <mission name="AUTOMATE MILICE Appui contre mobilite">
           <fragorder name="Activer Obstacles"/>
         </mission>
-        <mission name="AUTOMATE COMMUNES Interroger"/>
+        <mission name="AUTOMATE COMMUNES Mener Un Entretien"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6674,7 +6691,7 @@
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
-        <mission name="AUTOMATE MELEE Appuyer"/>
+        <mission name="AUTOMATE MELEE Appuyer En Mouvement"/>
         <mission name="AUTOMATE MELEE Appuyer Sur Position"/>
         <mission name="AUTOMATE MELEE Attaquer">
           <fragorder name="Deboucher"/>
@@ -6692,6 +6709,7 @@
         <mission name="AUTOMATE MELEE Detruire"/>
         <mission name="AUTOMATE MELEE Donner Coup Arret">
           <fragorder name="Activer Obstacles"/>
+          <fragorder name="Decrocher"/>
         </mission>
         <mission name="AUTOMATE MELEE Eclairer"/>
         <mission name="AUTOMATE MELEE Effectuer un raid"/>
@@ -6729,11 +6747,11 @@
         <mission name="AUTOMATE MELEE Canaliser foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6748,7 +6766,7 @@
         <fragorder name="Embarquer"/>
       </fragorders>
     </automat>
-    <automat dia-type="commander.roles.SniperCompany" file="BMAutomatMilitary.bms" masalife="true" name="Masalife.Automate.Terroriste">
+    <automat dia-type="sword.military.company.terrorism.roles.SniperCompany" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.Terroriste">
       <missions>
         <mission name="AUTOMATE COMMUNES Faire Mouvement"/>
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Position"/>
@@ -6758,11 +6776,11 @@
         <mission name="AUTOMATE COMMUNES Se Faire Transporter"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6783,11 +6801,11 @@
         <mission name="AUTOMATE COMMUNES Se Faire Decontaminer"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6807,11 +6825,11 @@
         <mission name="AUTOMATE TRANS Commander"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6833,11 +6851,11 @@
         <mission name="AUTOMATE COMMUNES Se Faire Decontaminer"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6858,11 +6876,11 @@
         <mission name="AUTOMATE COMMUNES Se Faire Decontaminer"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6874,7 +6892,7 @@
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
-    <automat dia-type="commander.roles.SniperCompany" file="BMAutomatMilitary.bms" masalife="true" name="Masalife.Automate.JOINT.Groupe Chalands Marine">
+    <automat dia-type="sword.military.company.terrorism.roles.SniperCompany" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.JOINT.Groupe Chalands Marine">
       <missions>
         <mission name="AUTOMATE COMMUNES Faire Mouvement"/>
         <mission name="AUTOMATE COMMUNES Se Faire Transporter"/>
@@ -6884,11 +6902,11 @@
         <mission name="AUTOMATE LOGISTIQUE Transporter Unites"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6900,16 +6918,16 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </automat>
-    <automat dia-type="commander.roles.SniperCompany" file="BMAutomatMilitary.bms" masalife="true" name="Masalife.Automate.JOINT.Groupe Marine">
+    <automat dia-type="sword.military.company.terrorism.roles.SniperCompany" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.JOINT.Groupe Marine">
       <missions>
         <mission name="AUTOMATE COMMUNES Faire Mouvement"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6929,15 +6947,15 @@
         <mission name="AUTOMATE AIR Suivre">
           <fragorder name="Modifier altitude"/>
         </mission>
-        <mission name="AUTOMATE HLA Atterrir"/>
-        <mission name="AUTOMATE HLA Decoller"/>
+        <mission name="HLA Atterrir"/>
+        <mission name="HLA Decoller"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6962,17 +6980,17 @@
         <mission name="AUTOMATE COMMUNES Se Recompleter"/>
         <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE COMMUNES Franchir"/>
-        <mission name="AUTOMATE ASS TIR Se Deployer"/>
+        <mission name="AUTOMATE ASS Mise En Batterie"/>
         <mission name="AUTOMATE MELEE Animer Postes De Controle"/>
         <mission name="AUTOMATE MELEE Canaliser foule"/>
         <mission name="AUTOMATE MELEE Interdire foules"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6998,17 +7016,17 @@
         <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE COMMUNES Franchir"/>
         <mission name="AUTOMATE ASS Reco Et Deploiement"/>
-        <mission name="AUTOMATE ASS TIR Se Deployer"/>
+        <mission name="AUTOMATE ASS Mise En Batterie"/>
         <mission name="AUTOMATE MELEE Animer Postes De Controle"/>
         <mission name="AUTOMATE MELEE Canaliser foule"/>
         <mission name="AUTOMATE MELEE Interdire foules"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -7037,11 +7055,11 @@
         <mission name="AUTOMATE ASS Se Deployer"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -7071,11 +7089,11 @@
         <mission name="AUTOMATE ASS Se Deployer"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -7092,8 +7110,8 @@
     <automat dia-type="company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.RENS.ELGE">
       <missions>
         <mission name="AUTOMATE RENS ROEM Renseigner Sur">
-          <fragorder name="ROEM Passer En Silence Radar"/>
-          <fragorder name="ROEM Arreter Silence Radar"/>
+          <fragorder name="Passer En Silence Radar"/>
+          <fragorder name="Arreter Silence Radar"/>
         </mission>
         <mission name="AUTOMATE COMMUNES Decrocher"/>
         <mission name="AUTOMATE COMMUNES Faire Mouvement"/>
@@ -7105,8 +7123,8 @@
         <mission name="AUTOMATE RENS ROEM Brouiller"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
@@ -7130,11 +7148,11 @@
         <mission name="AUTOMATE COMMUNES Stationner"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -7148,21 +7166,24 @@
     </automat>
     <automat dia-type="company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.RENS.Systeme Linx">
       <missions>
-        <mission name="AUTOMATE RENS ROEM Renseigner Sur"/>
+        <mission name="AUTOMATE RENS ROEM Renseigner Sur">
+          <fragorder name="Passer En Silence Radar"/>
+          <fragorder name="Arreter Silence Radar"/>
+        </mission>
         <mission name="AUTOMATE COMMUNES Decrocher"/>
         <mission name="AUTOMATE COMMUNES Faire Mouvement"/>
         <mission name="AUTOMATE COMMUNES Franchir"/>
         <mission name="AUTOMATE COMMUNES Se Faire Decontaminer"/>
         <mission name="AUTOMATE COMMUNES Se Recompleter"/>
         <mission name="AUTOMATE COMMUNES Stationner"/>
-        <mission name="AUTOMATE RENS Reconnaitre"/>
+        <mission name="AUTOMATE RENS Reconnaitre">
+          <fragorder name="Passer En Silence Radar"/>
+          <fragorder name="Arreter Silence Radar"/>
+        </mission>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -7172,25 +7193,29 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Arreter Silence Radio"/>
       </fragorders>
     </automat>
     <automat dia-type="company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.RENS.START STAIR MROD_ELODEE">
       <missions>
-        <mission name="AUTOMATE RENS ROEM Renseigner Sur"/>
+        <mission name="AUTOMATE RENS ROEM Renseigner Sur">
+          <fragorder name="Passer En Silence Radar"/>
+          <fragorder name="Arreter Silence Radar"/>
+        </mission>
         <mission name="AUTOMATE COMMUNES Decrocher"/>
         <mission name="AUTOMATE COMMUNES Faire Mouvement"/>
         <mission name="AUTOMATE COMMUNES Franchir"/>
         <mission name="AUTOMATE COMMUNES Se Faire Decontaminer"/>
         <mission name="AUTOMATE COMMUNES Se Recompleter"/>
         <mission name="AUTOMATE COMMUNES Stationner"/>
-        <mission name="AUTOMATE RENS Reconnaitre"/>
+        <mission name="AUTOMATE RENS Reconnaitre">
+          <fragorder name="Passer En Silence Radar"/>
+          <fragorder name="Arreter Silence Radar"/>
+        </mission>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -7200,6 +7225,7 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Arreter Silence Radio"/>
       </fragorders>
     </automat>
     <automat dia-type="company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.RENS.SDTI">
@@ -7212,18 +7238,17 @@
         <mission name="AUTOMATE RENS ROIM Reconnaitre"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -7242,11 +7267,11 @@
         <mission name="AUTOMATE RENS Reconnaitre"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -7268,11 +7293,11 @@
         <mission name="AUTOMATE RENS Reconnaitre"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -7297,11 +7322,11 @@
         <mission name="AUTOMATE RENS Reconnaitre"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -7327,14 +7352,15 @@
         <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE COMMUNES Franchir"/>
         <mission name="AUTOMATE ASS Se Deployer"/>
-        <mission name="AUTOMATE ASS RATAC Acquerir Objectifs"/>
+        <mission name="AUTOMATE ASS RATAC Acquerir Objectifs">
+          <fragorder name="Arreter Silence Radar"/>
+          <fragorder name="Passer En Silence Radar"/>
+        </mission>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -7365,11 +7391,11 @@
         <mission name="AUTOMATE MELEE Interdire foules"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -7397,11 +7423,11 @@
         <mission name="AUTOMATE RENS ROEM Brouiller"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -7411,6 +7437,41 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
+      </fragorders>
+    </automat>
+    <automat dia-type="company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.GEN.CCM">
+      <missions>
+        <mission name="AUTOMATE COMMUNES Decrocher"/>
+        <mission name="AUTOMATE COMMUNES Faire Mouvement"/>
+        <mission name="AUTOMATE COMMUNES Franchir"/>
+        <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Position"/>
+        <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
+        <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
+        <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
+        <mission name="AUTOMATE COMMUNES Se Faire Decontaminer"/>
+        <mission name="AUTOMATE COMMUNES Se Faire Transporter"/>
+        <mission name="AUTOMATE COMMUNES Se Recompleter"/>
+        <mission name="AUTOMATE COMMUNES Stationner"/>
+        <mission name="AUTOMATE GENIE Se Deployer"/>
+        <mission name="AUTOMATE GENIE Ouvrir Itineraire"/>
+        <mission name="AUTOMATE GENIE Reconnaitre"/>
+        <mission name="AUTOMATE GENIE Brecher Obstacles"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="S'arreter"/>
+        <fragorder name="Passer En Silence Radio"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Debarquer"/>
+        <fragorder name="Embarquer"/>
       </fragorders>
     </automat>
   </automats>
@@ -7448,4 +7509,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="4220535468" -->
+<!-- signature="2475537906" -->
