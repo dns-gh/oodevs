@@ -57,7 +57,7 @@ public:
     virtual Tree LinkExercise( const std::string& name );
     virtual Tree LinkItem( Item_ABC& item );
     virtual Tree LinkItem( const Tree& tree );
-    virtual void UnlinkItem( runtime::Async& async, const Tree& tree );
+    virtual bool UnlinkItem( runtime::Async& async, const Tree& tree );
     virtual void Download( web::Chunker_ABC& dst, const Item_ABC& item );
     //@}
 

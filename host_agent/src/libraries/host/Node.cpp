@@ -581,8 +581,9 @@ Tree Node::LinkExercise( const Tree& tree ) const
 void Node::UnlinkExercise( const Tree& tree )
 {
     boost::lock_guard< boost::shared_mutex > lock( access_ );
-    install_->UnlinkItem( async_, tree );
-    install_size_ = install_->GetSize();
+    const bool modified = install_->UnlinkItem( async_, tree );
+    if( modified )
+        install_size_ = install_->GetSize();
 }
 
 struct node::Token

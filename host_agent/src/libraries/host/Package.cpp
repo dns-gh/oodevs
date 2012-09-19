@@ -54,7 +54,7 @@ struct Package_ABC::Item_ABC : public boost::noncopyable
     virtual void        Uninstall( Async& async, const FileSystem_ABC& system, const Path& dst ) = 0;
     virtual void        Reinstall( const FileSystem_ABC& system ) = 0;
     virtual void        Link( Tree& tree, const Package_ABC& ref, bool recurse ) = 0;
-    virtual void        Unlink( Async& async, const FileSystem_ABC& system ) = 0;
+    virtual bool        Unlink( Async& async, const FileSystem_ABC& system ) = 0;
     virtual void        Download( const FileSystem_ABC& fs, web::Chunker_ABC& dst ) const = 0;
 };
 
@@ -145,10 +145,10 @@ struct Metadata
         links_++;
     }
 
-    void Unlink( Async& async, const FileSystem_ABC& system, const Path& root )
+    bool Unlink( Async& async, const FileSystem_ABC& system, const Path& root )
     {
         links_--;
-        TryKill( async, system, root );
+        return TryKill( async, system, root );
     }
 
 private:
@@ -163,13 +163,14 @@ private:
 
     Metadata& operator=( const Metadata& );
 
-    void TryKill( Async& async, const FileSystem_ABC& system, const Path& root )
+    bool TryKill( Async& async, const FileSystem_ABC& system, const Path& root )
     {
         if( IsLinked() || IsInstalled() )
-            return;
+            return false;
         const Path next = system.MakeAnyPath( tomb_ );
         system.Rename( root, next / "_" );
         async.Go( boost::bind( &FileSystem_ABC::Remove, &system, next ) );
+        return true;
     }
 
     const std::string package_;
@@ -412,9 +413,9 @@ struct Item : Package_ABC::Item_ABC
         meta_.Link();
     }
 
-    void Unlink( Async& async, const FileSystem_ABC& system )
+    bool Unlink( Async& async, const FileSystem_ABC& system )
     {
-        meta_.Unlink( async, system, root_ );
+        return meta_.Unlink( async, system, root_ );
     }
 
     void Download( const FileSystem_ABC& fs, web::Chunker_ABC& dst ) const
@@ -951,11 +952,15 @@ Tree Package::LinkItem( const Tree& tree )
 
 namespace
 {
-void Unlink( Async& async, const FileSystem_ABC& system, const Tree& src, const std::string& key, const Package_ABC& pkg )
+bool Unlink( Async& async, const FileSystem_ABC& system, const Tree& src, const std::string& key, const Package_ABC& pkg )
 {
-    Package_ABC::T_Item item = pkg.Find( Dependency( key, Get< std::string >( src, key + ".name" ) ), false );
-    if( item )
-        item->Unlink( async, system );
+    const boost::optional< std::string > name = src.get_optional< std::string >( key + ".name" );
+    if( name == boost::none )
+        return false;
+    Package_ABC::T_Item item = pkg.Find( Dependency( key, *name ), false );
+    if( !item )
+        return false;
+    return item->Unlink( async, system );
 }
 
 bool IsOrphaned( const Package_ABC::T_Item& item )
@@ -968,12 +973,15 @@ bool IsOrphaned( const Package_ABC::T_Item& item )
 // Name: Package::UnlinkItem
 // Created: BAX 2012-06-06
 // -----------------------------------------------------------------------------
-void Package::UnlinkItem( Async& async, const Tree& src )
+bool Package::UnlinkItem( Async& async, const Tree& src )
 {
-    Unlink( async, system_, src, "exercise", *this );
-    Unlink( async, system_, src, "terrain", *this );
-    Unlink( async, system_, src, "model", *this );
-    RemoveItems( items_, &IsOrphaned );
+    bool modified = false;
+    modified |= Unlink( async, system_, src, "exercise", *this );
+    modified |= Unlink( async, system_, src, "terrain", *this );
+    modified |= Unlink( async, system_, src, "model", *this );
+    if( modified )
+        RemoveItems( items_, &IsOrphaned );
+    return modified;
 }
 
 // -----------------------------------------------------------------------------
