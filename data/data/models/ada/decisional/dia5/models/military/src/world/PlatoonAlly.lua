@@ -608,7 +608,6 @@ return
     end,
     adoptSafetyAttitude = masalife.brain.integration.startStopAction(
     {
-        start = function( self ) meKnowledge:RC( eRC_AmbianceSurete ) end,
         started = integration.switchOnSafetyMode,
         stop  = integration.switchOffSafetyMode
     } ),

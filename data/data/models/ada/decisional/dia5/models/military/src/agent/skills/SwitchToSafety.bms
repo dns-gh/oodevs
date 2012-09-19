@@ -6,9 +6,6 @@ rootnode
 {
     create  = function( self )
         masalife.brain.knowledge.me.body.safetyAttitude = true
-    end,
-    
-    destroy = function( self ) 
-        masalife.brain.knowledge.me.body.safetyAttitude = false
+        meKnowledge:sendMessage( "Safety posture activated" )
     end
 }
