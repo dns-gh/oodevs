@@ -41,6 +41,7 @@ public:
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
+    int GetValorizationPercentage() const;
     //@}
 
 private:
@@ -67,7 +68,7 @@ private:
 
     kernel::OptionalValue< unsigned int > nDotationValorization_;
     kernel::DotationType*                 valorization_;
-    kernel::OptionalValue< float >        rValorizationPercentage_;
+    kernel::OptionalValue< int >          nValorizationPercentage_;
 
     bool minefield_;
     kernel::OptionalValue< unsigned int > activityTime_;

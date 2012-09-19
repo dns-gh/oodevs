@@ -46,7 +46,7 @@ MineAttribute::~MineAttribute()
 void MineAttribute::Display( kernel::Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "Object", "Information" ) )
-             .Display( tools::translate( "Object", "Mining:" ), rValorizationPercentage_ * Units::percentage );
+             .Display( tools::translate( "Object", "Mining:" ), nValorizationPercentage_ * Units::percentage );
 
     if( ! valorization_ )
         return;
@@ -74,9 +74,18 @@ void MineAttribute::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void MineAttribute::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
 {
-    if( rValorizationPercentage_.IsSet() )
+    if( nValorizationPercentage_.IsSet() )
         displayer.Group( tools::translate( "Object", "Information" ) )
-                 .Display( tools::translate( "Object", "Mining:" ), rValorizationPercentage_ * Units::percentage );
+                 .Display( tools::translate( "Object", "Mining:" ), nValorizationPercentage_ * Units::percentage );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MineAttribute::GetValorizationPercentage
+// Created: NPT 2012-09-19
+// -----------------------------------------------------------------------------
+int MineAttribute::GetValorizationPercentage() const
+{
+    return nValorizationPercentage_;
 }
 
 // -----------------------------------------------------------------------------
@@ -111,10 +120,10 @@ void MineAttribute::UpdateData( const T& message )
 
         if( message.mine().has_dotation()  )
             nDotationValorization_ = message.mine().dotation();
-        if( message.mine().has_percentage()  )
-            rValorizationPercentage_ = float( message.mine().percentage() );
-        if( message.mine().has_density()  )
-            density_ = float( message.mine().density() );
+        if( message.mine().has_percentage() )
+            nValorizationPercentage_ = message.mine().percentage();
+        if( message.mine().has_density() )
+            density_ = message.mine().density();
         controller_.Update( *(MineAttribute_ABC*)this );
     }
 }

@@ -28,7 +28,7 @@ ConstructionAttribute::ConstructionAttribute( kernel::Controller& controller, co
     , resolver_ ( resolver )
     , construction_ ( 0 )
     , nDotationConstruction_ ( 0 )
-    , rConstructionPercentage_ ( 0. )
+    , nConstructionPercentage_ ( 0 )
 {
     // NOTHING
 }
@@ -49,7 +49,7 @@ ConstructionAttribute::~ConstructionAttribute()
 void ConstructionAttribute::Display( kernel::Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "Object", "Information" ) )
-             .Display( tools::translate( "Object", "Construction:" ), rConstructionPercentage_ * Units::percentage );
+             .Display( tools::translate( "Object", "Construction:" ), nConstructionPercentage_ * Units::percentage );
     if( !construction_ )
         return;
     displayer.Group( tools::translate( "Object", "Information" ) )
@@ -108,7 +108,7 @@ void ConstructionAttribute::UpdateData( const T& message )
         if( message.construction().has_dotation()  )
             nDotationConstruction_ = message.construction().dotation();
         if( message.construction().has_percentage()  )
-            rConstructionPercentage_ = float( message.construction().percentage() );
+            nConstructionPercentage_ = message.construction().percentage();
         controller_.Update( *(ConstructionAttribute_ABC*)this );
     }
 }
@@ -119,12 +119,21 @@ void ConstructionAttribute::UpdateData( const T& message )
 // -----------------------------------------------------------------------------
 void ConstructionAttribute::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
-    if( rConstructionPercentage_.IsSet() && viewport.IsVisible( where ) )
+    if( nConstructionPercentage_.IsSet() && viewport.IsVisible( where ) )
     {
         // $$$$ SBO 2007-05-04: hard coded icon positions
         glPushAttrib( GL_CURRENT_BIT );
             glColor3f( 1, 1, 1 );
-            tools.DrawLife( where - geometry::Vector2f( 0.f, tools.GetAdaptiveZoomFactor() * 250.f ), rConstructionPercentage_ / 100.f );
+            tools.DrawLife( where - geometry::Vector2f( 0.f, tools.GetAdaptiveZoomFactor() * 250.f ), nConstructionPercentage_ / 100.f );
         glPopAttrib();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ConstructionAttribute::GetConstructionPercentage
+// Created: NPT 2012-09-19
+// -----------------------------------------------------------------------------
+int ConstructionAttribute::GetConstructionPercentage() const
+{
+    return nConstructionPercentage_;
 }

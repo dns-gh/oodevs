@@ -92,7 +92,7 @@ void CriticalIntelligenceDialog::NotifyContextMenu( const kernel::Agent_ABC& ent
     if( profile_.CanDoMagic( entity ) )
     {
         selected_ = &entity;
-        kernel::ContextMenu* subMenu = menu.SubMenu( "Order", tools::translate( "CriticalIntelligenceDialog", "Magic orders" ) );
+        kernel::ContextMenu* subMenu = menu.SubMenu( "Order", tools::translate( "Magic orders", "Magic orders" ) );
         subMenu->insertItem( tools::translate( "CriticalIntelligenceDialog", "Change critical intelligence" ), this, SLOT( OnShow() ) );
     }
 }
@@ -106,7 +106,7 @@ void CriticalIntelligenceDialog::NotifyContextMenu( const kernel::Population_ABC
     if( profile_.CanDoMagic( entity ) )
     {
         selected_ = &entity;
-        kernel::ContextMenu* subMenu = menu.SubMenu( "Order", tools::translate( "CriticalIntelligenceDialog", "Magic orders" ) );
+        kernel::ContextMenu* subMenu = menu.SubMenu( "Order", tools::translate( "Magic orders", "Magic orders" ) );
         subMenu->insertItem( tools::translate( "CriticalIntelligenceDialog", "Change critical intelligence" ), this, SLOT( OnShow() ) );
     }
 }

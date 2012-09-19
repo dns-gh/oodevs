@@ -91,6 +91,7 @@ ObjectReportPanel.cpp \
 ObjectPanel.cpp \
 ObjectPrototype.cpp \
 ObjectsLayer.cpp \
+ObjectStateDialog.cpp \
 OrbatPanel.cpp \
 OrbatToolbar.cpp \
 PlanificationModePanel.cpp \

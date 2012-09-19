@@ -178,7 +178,7 @@ void EquipmentTransferDialog::NotifyContextMenu( const kernel::Agent_ABC& agent,
     if( profile_.CanDoMagic( agent ) )
     {
         selectedFrom_ = &agent;
-        kernel::ContextMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ), false, 1 );
+        kernel::ContextMenu* subMenu = menu.SubMenu( "Order", tools::translate( "Magic orders", "Magic orders" ), false, 1 );
         subMenu->insertItem( tr( "Equipment transfer" ), this, SLOT( Show() ) );
     }
 }

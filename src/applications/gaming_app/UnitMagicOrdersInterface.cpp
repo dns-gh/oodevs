@@ -94,7 +94,7 @@ void UnitMagicOrdersInterface::NotifyContextMenu( const kernel::Agent_ABC& agent
     selectedEntity_ = &agent;
     if( const MagicOrders* orders = agent.Retrieve< MagicOrders >() )
     {
-        kernel::ContextMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ), false, 1 );
+        kernel::ContextMenu* magicMenu = menu.SubMenu( "Order", tools::translate( "Magic orders", "Magic orders" ), false, 1 );
         int moveId = AddMagic( tr( "Teleport" ), SLOT( Move() ), magicMenu );
         magicMenu->setItemEnabled( moveId, orders->CanMagicMove() );
         AddSurrenderMenu( magicMenu, agent );
@@ -123,7 +123,7 @@ void UnitMagicOrdersInterface::NotifyContextMenu( const kernel::Automat_ABC& age
         return;
 
     selectedEntity_ = &agent;
-    kernel::ContextMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ), false, 1 );
+    kernel::ContextMenu* magicMenu = menu.SubMenu( "Order", tools::translate( "Magic orders", "Magic orders" ), false, 1 );
     int moveId = AddMagic( tr( "Teleport" ), SLOT( Move() ), magicMenu );
     bool bMoveAllowed = false;
     const AutomatDecisions* decisions = static_cast< const AutomatDecisions* >( agent.Retrieve< kernel::AutomatDecisions_ABC >() );
@@ -145,7 +145,7 @@ void UnitMagicOrdersInterface::NotifyContextMenu( const kernel::Formation_ABC& e
     if( !profile_.CanDoMagic( entity ) )
         return;
     selectedEntity_ = &entity;
-    kernel::ContextMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ), false, 1 );
+    kernel::ContextMenu* magicMenu = menu.SubMenu( "Order", tools::translate( "Magic orders", "Magic orders" ), false, 1 );
     FillCommonOrders( magicMenu );
 }
 
@@ -158,7 +158,7 @@ void UnitMagicOrdersInterface::NotifyContextMenu( const kernel::Team_ABC& entity
     if( !profile_.CanDoMagic( entity ) )
         return;
     selectedEntity_ = &entity;
-    kernel::ContextMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ), false, 1 );
+    kernel::ContextMenu* magicMenu = menu.SubMenu( "Order", tools::translate( "Magic orders", "Magic orders" ), false, 1 );
     FillCommonOrders( magicMenu );
 }
 

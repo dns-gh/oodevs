@@ -25,7 +25,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 BypassAttribute::BypassAttribute( Controller& controller )
     : controller_( controller )
-    , rBypassConstructionPercentage_ ( 0 )
+    , nBypassConstructionPercentage_ ( 0 )
 {
     // NOTHING
 }
@@ -46,7 +46,7 @@ BypassAttribute::~BypassAttribute()
 void BypassAttribute::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "Object", "Information" ) )
-                .Display( tools::translate( "Object", "Bypass:" ), rBypassConstructionPercentage_ * Units::percentage );
+                .Display( tools::translate( "Object", "Bypass:" ), nBypassConstructionPercentage_ * Units::percentage );
 }
 
 // -----------------------------------------------------------------------------
@@ -94,7 +94,7 @@ void BypassAttribute::UpdateData( const T& message )
 {
     if( message.has_bypass() )
     {
-        rBypassConstructionPercentage_ = message.bypass().percentage();
+        nBypassConstructionPercentage_ = message.bypass().percentage();
         controller_.Update( *(BypassAttribute_ABC*)this );
     }
 }
@@ -110,7 +110,16 @@ void BypassAttribute::Draw( const geometry::Point2f& where, const Viewport_ABC& 
         // $$$$ SBO 2007-05-04: hard coded icon positions
         glPushAttrib( GL_CURRENT_BIT );
             glColor3f( 1, 1, 1 );
-            tools.DrawLife( where - geometry::Vector2f( 0.f, tools.GetAdaptiveZoomFactor() * 200.f ), rBypassConstructionPercentage_ / 100.f );
+            tools.DrawLife( where - geometry::Vector2f( 0.f, tools.GetAdaptiveZoomFactor() * 200.f ), nBypassConstructionPercentage_ / 100.f );
         glPopAttrib();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: BypassAttribute::GetBypassConstructionPercentage
+// Created: NPT 2012-09-19
+// -----------------------------------------------------------------------------
+int BypassAttribute::GetBypassConstructionPercentage() const
+{
+    return nBypassConstructionPercentage_;
 }

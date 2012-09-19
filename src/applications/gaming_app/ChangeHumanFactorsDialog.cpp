@@ -216,7 +216,7 @@ void ChangeHumanFactorsDialog::DoContextMenu( const kernel::Entity_ABC& entity, 
     if( profile_.CanDoMagic( entity ) && entity.Retrieve< Troops >() )
     {
         selected_ = &entity;
-        kernel::ContextMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ), false, 1 );
+        kernel::ContextMenu* subMenu = menu.SubMenu( "Order", tools::translate( "Magic orders", "Magic orders" ), false, 1 );
         int id = subMenu->insertItem( tr( "Human factors" ), this, SLOT( Show() ) );
         bool isAutonomous = entity.Get< Troops >().GetTotalHumans() == 0;
         subMenu->setItemEnabled( id, !isAutonomous );

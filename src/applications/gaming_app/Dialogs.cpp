@@ -15,6 +15,7 @@
 #include "ChangeHumanFactorsDialog.h"
 #include "ChangeLogisticLinksDialog.h"
 #include "CreateFormationDialog.h"
+#include "CriticalIntelligenceDialog.h"
 #include "EquipmentTransferDialog.h"
 #include "InhabitantChangeAffinitiesDialog.h"
 #include "InhabitantChangeAlertedStateDialog.h"
@@ -26,9 +27,9 @@
 #include "LogisticSupplyPushFlowDialog.h"
 #include "LogisticSupplyRecompletionDialog.h"
 #include "MedicalCapacityUpdateDialog.h"
+#include "ObjectStateDialog.h"
 #include "PopulationChangeAffinitiesDialog.h"
 #include "PopulationChangeHealthStateDialog.h"
-#include "CriticalIntelligenceDialog.h"
 #include "gaming/AgentsModel.h"
 #include "gaming/Model.h"
 #include "gaming/StaticModel.h"
@@ -63,6 +64,7 @@ Dialogs::Dialogs( QWidget* parent, kernel::Controllers& controllers, const Model
     new PopulationChangeHealthStateDialog( parent, controllers, actionsModel, simulation, profile );
     new CriticalIntelligenceDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
     new EquipmentTransferDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
+    new ObjectStateDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
 }
 
 // -----------------------------------------------------------------------------

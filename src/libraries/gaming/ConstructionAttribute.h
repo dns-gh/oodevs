@@ -44,6 +44,7 @@ public:
     virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    int GetConstructionPercentage() const;
     //@}
 
 private:
@@ -67,9 +68,9 @@ private:
     //@{
     kernel::Controller& controller_;
     const tools::Resolver_ABC< kernel::DotationType >& resolver_;
-    kernel::DotationType*                   construction_;
-    kernel::OptionalValue< float >          rConstructionPercentage_;
-    kernel::OptionalValue< unsigned int >   nDotationConstruction_;
+    kernel::DotationType*                              construction_;
+    kernel::OptionalValue< int >                       nConstructionPercentage_;
+    kernel::OptionalValue< unsigned int >              nDotationConstruction_;
     //@}
 };
 

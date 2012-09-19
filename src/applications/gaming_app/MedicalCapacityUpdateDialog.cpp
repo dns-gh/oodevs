@@ -164,7 +164,7 @@ void MedicalCapacityUpdateDialog::NotifyContextMenu( const kernel::Object_ABC& o
     if( profile_.CanDoMagic( object ) && ( object.GetType().HasMedicalCapacity() || object.Retrieve< kernel::MedicalTreatmentAttribute_ABC >() ) )
     {
         selected_ = &object;
-        kernel::ContextMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ), false, 1 );
+        kernel::ContextMenu* subMenu = menu.SubMenu( "Order", tools::translate( "Magic orders", "Magic orders" ), false, 1 );
         subMenu->insertItem( tr( "Update medical capacity" ), this, SLOT( Show() ) );
     }
 }
@@ -178,7 +178,7 @@ void MedicalCapacityUpdateDialog::NotifyContextMenu( const kernel::UrbanObject_A
     if( profile_.CanDoMagic( object ) && object.Retrieve< kernel::MedicalTreatmentAttribute_ABC >() )
     {
         selected_ = &object;
-        kernel::ContextMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
+        kernel::ContextMenu* subMenu = menu.SubMenu( "Order", tools::translate( "Magic orders", "Magic orders" ) );
         subMenu->insertItem( tr( "Update medical capacity" ), this, SLOT( Show() ) );
     }
 }

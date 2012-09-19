@@ -300,10 +300,6 @@
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
-    <message>
-        <source>Magic orders</source>
-        <translation>Actions magiques</translation>
-    </message>
 </context>
 <context>
     <name>ChangeHumanFactorsDialog</name>
@@ -330,10 +326,6 @@
     <message>
         <source>Cancel</source>
         <translation>Annuler</translation>
-    </message>
-    <message>
-        <source>Magic orders</source>
-        <translation>Actions magiques</translation>
     </message>
     <message>
         <source>Change Human Factors</source>
@@ -503,25 +495,10 @@ Reason: %3
     </message>
 </context>
 <context>
-    <name>CreationPanel</name>
-    <message>
-        <source>Apply</source>
-        <translation>Appliquer</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuler</translation>
-    </message>
-</context>
-<context>
     <name>CriticalIntelligenceDialog</name>
     <message>
         <source>Change critical intelligence</source>
         <translation>Modifier le renseignement critique</translation>
-    </message>
-    <message>
-        <source>Magic orders</source>
-        <translation>Actions magiques</translation>
     </message>
 </context>
 <context>
@@ -579,10 +556,6 @@ Reason: %3
 </context>
 <context>
     <name>EquipmentTransferDialog</name>
-    <message>
-        <source>Magic orders</source>
-        <translation>Actions magiques</translation>
-    </message>
     <message>
         <source>Equipment transfer</source>
         <translation>Transfert de composantes</translation>
@@ -1122,13 +1095,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
-    <name>InhabitantChangeAffinitiesDialog</name>
-    <message>
-        <source>Magic orders</source>
-        <translation>Actions magiques</translation>
-    </message>
-</context>
-<context>
     <name>InhabitantChangeAlertedStateDialog</name>
     <message>
         <source>Change alert state</source>
@@ -1145,10 +1111,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Cancel</source>
         <translation>Annuler</translation>
-    </message>
-    <message>
-        <source>Magic orders</source>
-        <translation>Actions magiques</translation>
     </message>
 </context>
 <context>
@@ -1168,10 +1130,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Cancel</source>
         <translation>Annuler</translation>
-    </message>
-    <message>
-        <source>Magic orders</source>
-        <translation>Actions magiques</translation>
     </message>
 </context>
 <context>
@@ -1226,10 +1184,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Cancel</source>
         <translation>Annuler</translation>
-    </message>
-    <message>
-        <source>Magic orders</source>
-        <translation>Actions magiques</translation>
     </message>
     <message>
         <source>Remaining population:</source>
@@ -1304,10 +1258,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
 </context>
 <context>
     <name>KnowledgeGroupMagicOrdersInterface</name>
-    <message>
-        <source>Magic orders</source>
-        <translation>Actions magiques</translation>
-    </message>
     <message>
         <source>Desactivate</source>
         <translation>Désactiver</translation>
@@ -1646,10 +1596,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>militaires du rang</translation>
     </message>
     <message>
-        <source>Magic orders</source>
-        <translation>Actions magiques</translation>
-    </message>
-    <message>
         <source>Partial recompletion</source>
         <translation>Recomplétion partielle</translation>
     </message>
@@ -1660,6 +1606,13 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Partial Recovery</source>
         <translation>Recomplétion partielle</translation>
+    </message>
+</context>
+<context>
+    <name>Magic orders</name>
+    <message>
+        <source>Magic orders</source>
+        <translation>Actions magiques</translation>
     </message>
 </context>
 <context>
@@ -1927,10 +1880,6 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Cancel</source>
         <translation>Annuler</translation>
-    </message>
-    <message>
-        <source>Magic orders</source>
-        <translation>Actions magiques</translation>
     </message>
 </context>
 <context>
@@ -2401,10 +2350,6 @@ Ces données ne peuvent pas être projetées.</translation>
 <context>
     <name>ObjectMagicOrdersInterface</name>
     <message>
-        <source>Magic orders</source>
-        <translation>Actions magiques</translation>
-    </message>
-    <message>
         <source>Build</source>
         <translation>Construire</translation>
     </message>
@@ -2493,6 +2438,33 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
 </context>
 <context>
+    <name>ObjectStateDialog</name>
+    <message>
+        <source>Change object state</source>
+        <translation>Changer l&apos;état de l&apos;objet</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Construction:</source>
+        <translation>Construction:</translation>
+    </message>
+    <message>
+        <source>Mining:</source>
+        <translation>Valorisation:</translation>
+    </message>
+    <message>
+        <source>Bypass:</source>
+        <translation>Contournement:</translation>
+    </message>
+</context>
+<context>
     <name>OrbatPanel</name>
     <message>
         <source>Operational state color</source>
@@ -2541,13 +2513,6 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
 </context>
 <context>
-    <name>PopulationChangeAffinitiesDialog</name>
-    <message>
-        <source>Magic orders</source>
-        <translation>Actions magiques</translation>
-    </message>
-</context>
-<context>
     <name>PopulationChangeHealthStateDialog</name>
     <message>
         <source>Healthy:</source>
@@ -2591,10 +2556,6 @@ Ces données ne peuvent pas être projetées.</translation>
 </context>
 <context>
     <name>PopulationMagicOrdersInterface</name>
-    <message>
-        <source>Magic orders</source>
-        <translation>Actions magiques</translation>
-    </message>
     <message>
         <source>Teleport</source>
         <translation>Téléporter</translation>
@@ -3189,10 +3150,6 @@ Ces données ne peuvent pas être projetées.</translation>
 </context>
 <context>
     <name>UnitMagicOrdersInterface</name>
-    <message>
-        <source>Magic orders</source>
-        <translation>Actions magiques</translation>
-    </message>
     <message>
         <source>Teleport</source>
         <translation>Téléporter</translation>

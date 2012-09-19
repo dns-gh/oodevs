@@ -300,10 +300,6 @@
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Magic orders</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ChangeHumanFactorsDialog</name>
@@ -337,10 +333,6 @@
     </message>
     <message>
         <source>Change Human Factors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Magic orders</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -501,24 +493,9 @@ Reason: %3
     </message>
 </context>
 <context>
-    <name>CreationPanel</name>
-    <message>
-        <source>Apply</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>CriticalIntelligenceDialog</name>
     <message>
         <source>Change critical intelligence</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Magic orders</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -603,10 +580,6 @@ Reason: %3
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Magic orders</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1119,13 +1092,6 @@ Reason: %3
     </message>
 </context>
 <context>
-    <name>InhabitantChangeAffinitiesDialog</name>
-    <message>
-        <source>Magic orders</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>InhabitantChangeAlertedStateDialog</name>
     <message>
         <source>Change alert state</source>
@@ -1141,10 +1107,6 @@ Reason: %3
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Magic orders</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1164,10 +1126,6 @@ Reason: %3
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Magic orders</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1230,10 +1188,6 @@ Reason: %3
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Magic orders</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1301,10 +1255,6 @@ Reason: %3
 </context>
 <context>
     <name>KnowledgeGroupMagicOrdersInterface</name>
-    <message>
-        <source>Magic orders</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Desactivate</source>
         <translation type="unfinished"></translation>
@@ -1651,11 +1601,14 @@ Reason: %3
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Magic orders</source>
+        <source>Partial recompletion</source>
         <translation type="unfinished"></translation>
     </message>
+</context>
+<context>
+    <name>Magic orders</name>
     <message>
-        <source>Partial recompletion</source>
+        <source>Magic orders</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1922,10 +1875,6 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Magic orders</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2393,10 +2342,6 @@ This data can&apos;t be projected.</source>
 <context>
     <name>ObjectMagicOrdersInterface</name>
     <message>
-        <source>Magic orders</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Build</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2485,6 +2430,33 @@ This data can&apos;t be projected.</source>
     </message>
 </context>
 <context>
+    <name>ObjectStateDialog</name>
+    <message>
+        <source>Change object state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Construction:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mining:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bypass:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>OrbatPanel</name>
     <message>
         <source>Operational state color</source>
@@ -2533,13 +2505,6 @@ This data can&apos;t be projected.</source>
     </message>
 </context>
 <context>
-    <name>PopulationChangeAffinitiesDialog</name>
-    <message>
-        <source>Magic orders</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>PopulationChangeHealthStateDialog</name>
     <message>
         <source>Healthy:</source>
@@ -2583,10 +2548,6 @@ This data can&apos;t be projected.</source>
 </context>
 <context>
     <name>PopulationMagicOrdersInterface</name>
-    <message>
-        <source>Magic orders</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Teleport</source>
         <translation type="unfinished"></translation>
@@ -3181,10 +3142,6 @@ This data can&apos;t be projected.</source>
 </context>
 <context>
     <name>UnitMagicOrdersInterface</name>
-    <message>
-        <source>Magic orders</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Teleport</source>
         <translation type="unfinished"></translation>

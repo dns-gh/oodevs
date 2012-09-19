@@ -72,7 +72,7 @@ void KnowledgeGroupMagicOrdersInterface::NotifyContextMenu( const KnowledgeGroup
     if( !profile_.CanDoMagic( entity ) )
         return;
     selectedEntity_ = &entity;
-    kernel::ContextMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ), false, 1 );
+    kernel::ContextMenu* magicMenu = menu.SubMenu( "Order", tools::translate( "Magic orders", "Magic orders" ), false, 1 );
     const KnowledgeGroup& knowledgeGroup = static_cast< const KnowledgeGroup& >( entity );
 
     if( knowledgeGroup.IsActivated() )

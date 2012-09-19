@@ -114,7 +114,7 @@ void ObjectMagicOrdersInterface::NotifyContextMenu( const Object_ABC& entity, Co
     if( !profile_.CanDoMagic( entity ) )
         return;
     selectedEntity_ = &entity;
-    kernel::ContextMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ), false, 1 );
+    kernel::ContextMenu* magicMenu = menu.SubMenu( "Order", tools::translate( "Magic orders", "Magic orders" ), false, 1 );
         AddMagic( tr( "Build" ), SLOT( BuildObject() ), magicMenu );
         AddMagic( tr( "Destroy" ), SLOT( DestroyObject() ), magicMenu );
         if( entity.GetType().CanBeValorized() )
@@ -154,7 +154,7 @@ void ObjectMagicOrdersInterface::NotifyContextMenu( const kernel::UrbanObject_AB
     if( !profile_.CanDoMagic( entity ) )
         return;
     selectedEntity_ = &entity;
-    kernel::ContextMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ), false, 1 );
+    kernel::ContextMenu* magicMenu = menu.SubMenu( "Order", tools::translate( "Magic orders", "Magic orders" ), false, 1 );
     unsigned int value = static_cast< const StructuralStateAttribute* >( entity.Retrieve< kernel::StructuralStateAttribute_ABC >() )->GetValue();
     AddIntValuedMagic( magicMenu, menu, tr( "Change Urban state" ), SLOT( ChangeStructuralState() ), value );
     AddMagic( tr( "Alert" ), SLOT( Alert() ), magicMenu );
