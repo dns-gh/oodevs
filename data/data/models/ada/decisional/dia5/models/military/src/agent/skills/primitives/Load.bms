@@ -7,8 +7,6 @@ rootnode
 {
     connections = { skill.nodes.LoadElement },
 
-    done = function( self ) end,
-
     -- --------------------------------------------------------------------------------
     -- Main effect is reached, all the targets are neutralized
     -- --------------------------------------------------------------------------------
@@ -26,7 +24,7 @@ rootnode
         for _, entity in pairs( self.params.entities ) do
             self.targets[ entity ] = true
         end
-        self.positions = queries.getPositionsToLoad[ "execute" ]( {elementsToLoad = self.params.entities} )
+        self.positions = queries.getPositionsToLoad[ "execute" ]( { elementsToLoad = self.params.entities } )
     end,
 
     -- --------------------------------------------------------------------------------
