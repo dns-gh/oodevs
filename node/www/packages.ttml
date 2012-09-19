@@ -70,6 +70,9 @@
                     [[ if eq .type "exercise" ]]
                     <a class="btn more" data-toggle="button"><i class="icon-th-list"></i> More <span class="caret"></span></a>
                     [[ end ]]
+                    [[/*
+                    <a class="btn" href="/api/download_install?id=[[ .node ]]&item={{id}}"><i class="icon-download"></i> </a>
+                    */]]
                     [[ if ne .user.type "user" ]]
                     <a class="btn delete"><i class="icon-trash"></i> </a>
                     [[ end ]]
@@ -87,9 +90,9 @@
             [[ end ]]
             {{/for_all_items}}
             [[ end ]]
-            [[ template "package_row" sub "user" .user "cols" $cols "type" "model" ]]
-            [[ template "package_row" sub "user" .user "cols" $cols "type" "terrain" ]]
-            [[ template "package_row" sub "user" .user "cols" $cols "type" "exercise" ]]
+            [[ template "package_row" sub "node" .uuid "user" .user "cols" $cols "type" "model" ]]
+            [[ template "package_row" sub "node" .uuid "user" .user "cols" $cols "type" "terrain" ]]
+            [[ template "package_row" sub "node" .uuid "user" .user "cols" $cols "type" "exercise" ]]
         </tbody>
     </table>
 </script>
