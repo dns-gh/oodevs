@@ -128,7 +128,7 @@ namespace
         MOCK_EXPECT( rpy.SetHeader ).once().with( "Content-Length", boost::lexical_cast< std::string >( data.size() ) );
         MOCK_EXPECT( rpy.SetHeader );
         MOCK_EXPECT( rpy.WriteHeaders );
-        MOCK_EXPECT( rpy.WriteContent ).once().with( data );
+        MOCK_EXPECT( rpy.WriteContent ).once().with( data ).returns( static_cast< int >( data.size() ) );
     }
 
     void ExpectList( MockResponse& rpy, HttpStatus status, const std::vector< Tree >& list )
