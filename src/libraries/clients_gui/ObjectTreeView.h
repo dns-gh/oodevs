@@ -26,8 +26,8 @@ namespace gui
 */
 // Created: JSR 2012-09-13
 // =============================================================================
-class ObjectTreeView: public EntityTreeView_ABC
-                    , public tools::ElementObserver_ABC< kernel::Object_ABC >
+class ObjectTreeView : public EntityTreeView_ABC
+                     , public tools::ElementObserver_ABC< kernel::Object_ABC >
 {
 public:
     //! @name Constructors/Destructor

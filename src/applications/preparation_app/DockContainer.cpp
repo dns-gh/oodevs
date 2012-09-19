@@ -73,41 +73,6 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
         parent->addDockWidget( Qt::LeftDockWidgetArea, pListDockWnd );
     }
 
-
-/*
-    // TEST
-    {
-        // $$$$ ABR 2012-08-17: TODO Move all this to ListViewsPanel (after renaming it TreeViewsPanel) when every tree view is operational
-        gui::RichDockWidget* dockWidget = new gui::RichDockWidget( controllers, parent, "TEST", "TEST" );
-        dockWidget->SetModes( ePreparationMode_Default | ePreparationMode_LivingArea, ePreparationMode_None, true );
-        QTabWidget* tabWidget = new QTabWidget();
-        dockWidget->setWidget( tabWidget );
-        parent->addDockWidget( Qt::RightDockWidgetArea, dockWidget );
-
-        // Tactical
-        TacticalTreeView* tacticalTreeView = new TacticalTreeView( controllers, PreparationProfile::GetProfile(), modelBuilder, icons, model, tabWidget );
-        tabWidget->addTab( tacticalTreeView, "Tactical" );
-        // Communication
-        gui::CommunicationTreeView* communicationTreeView = new gui::CommunicationTreeView( controllers, PreparationProfile::GetProfile(), modelBuilder, icons, tabWidget );
-        tabWidget->addTab( communicationTreeView, "Knowledges" );
-        // Logistic
-
-        // Urban
-
-        // Population / Crowd
-        gui::PopulationTreeView* populationTreeView = new gui::PopulationTreeView( controllers, PreparationProfile::GetProfile(), modelBuilder, tabWidget );
-        tabWidget->addTab( populationTreeView, "Crowd" );
-        // Inhabitant
-        gui::InhabitantTreeView* inhabitantTreeView = new gui::InhabitantTreeView( controllers, PreparationProfile::GetProfile(), modelBuilder, tabWidget );
-        tabWidget->addTab( inhabitantTreeView, "Inhabitant" );
-        // Object
-        gui::ObjectTreeView* objectTreeView = new gui::ObjectTreeView( controllers, PreparationProfile::GetProfile(), modelBuilder, tabWidget );
-        tabWidget->addTab( objectTreeView, "Object" );
-    }
-*/
-
-
-
     // Properties panel
     {
         gui::RichDockWidget* pPropertiesDockWnd = new gui::RichDockWidget( controllers, parent, "properties", tools::translate( "DockContainer", "Properties" ) );

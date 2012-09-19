@@ -1808,7 +1808,6 @@ lrelease -verbose %(FullPath)
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">./translator;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">./translator;%(Outputs)</Outputs>
     </CustomBuild>
-    <None Include="..\..\src\libraries\clients_gui\HierarchyDataModel.inl" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="actions.vcxproj">
