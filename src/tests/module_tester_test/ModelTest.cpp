@@ -230,17 +230,6 @@ BOOST_AUTO_TEST_CASE( a_model_accepts_user_data )
     }
 }
 
-BOOST_AUTO_TEST_CASE( a_model_resets_user_data )
-{
-    Model model;
-    model.SetData( boost::make_shared< core::UserData< int > >( 42 ) );
-    model.SetData( boost::make_shared< core::UserData< void* > >( static_cast< void* >( 0 ) ) );
-    {
-        core::Model expected;
-        BOOST_CHECK( model.Check( expected ) );
-    }
-}
-
 BOOST_AUTO_TEST_CASE( a_model_accepts_empty_user_data )
 {
     Model model;

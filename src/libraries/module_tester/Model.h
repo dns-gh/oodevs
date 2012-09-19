@@ -138,10 +138,7 @@ public:
     }
     void SetData( boost::shared_ptr< core::UserData_ABC > data )
     {
-        if( data && data->Get() )
-            data_ = data;
-        else
-            data_.reset();
+        data_ = data;
     }
     Model& MarkForRemove()
     {
