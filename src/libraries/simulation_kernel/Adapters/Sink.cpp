@@ -279,7 +279,7 @@ namespace
         knowledge[ "valid" ] = agent->IsValid();
         knowledge[ "dead" ] = agent->IsDead();
         core::Model& components = knowledge[ "components" ];
-        components.ClearElements();
+        components.Clear();
         const core::Model& components2 = entity[ "components" ];
         const T_KnowledgeComposanteVector& composantes = agent->GetComposantes();
         for( std::size_t i = 0; i < composantes.size(); ++i )
@@ -306,8 +306,8 @@ namespace
     }
     void UpdateKnowledgeGroupBlackBoard( const core::Model& entities, core::Model& knowledges, core::Model& enemies, core::Model& friends, const MIL_KnowledgeGroup& group )
     {
-        enemies.ClearElements();
-        friends.ClearElements();
+        enemies.Clear();
+        friends.Clear();
         typedef DEC_BlackBoard_CanContainKnowledgeAgent::T_KnowledgeAgentMap::value_type T_Agent;
         const DEC_BlackBoard_CanContainKnowledgeAgent& blackboard = group.GetKnowledge().GetKnowledgeAgentContainer();
         BOOST_FOREACH( const T_Agent& agent, blackboard.GetKnowledgeAgents() )
