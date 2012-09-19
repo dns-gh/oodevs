@@ -41,7 +41,7 @@ void EntityTreeView< Entity >::NotifyCreated( const Entity& entity )
 
     const kernel::Entity_ABC& team = entity.Get< kernel::TacticalHierarchies >().GetTop();
 
-    QStandardItem* teamItem = dataModel_.FindSafeItem( team );
+    QStandardItem* teamItem = dataModel_.FindDataItem( team );
     if( !teamItem )
         teamItem = dataModel_.AddRootSafeItem( dataModel_.rowCount(), 0, team.GetName(), team.GetTooltip(), team, ItemSpecificFlags( team ) );
 
