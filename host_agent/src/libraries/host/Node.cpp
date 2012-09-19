@@ -17,6 +17,7 @@
 #include "runtime/Process_ABC.h"
 #include "runtime/PropertyTree.h"
 #include "runtime/Runtime_ABC.h"
+#include "runtime/Scoper.h"
 #include "runtime/Utf8.h"
 #include "web/HttpException.h"
 #include "web/Plugins.h"
@@ -36,6 +37,7 @@ using runtime::Async;
 using runtime::FileSystem_ABC;
 using runtime::Pool_ABC;
 using runtime::Runtime_ABC;
+using runtime::Scoper;
 
 namespace
 {
@@ -497,10 +499,19 @@ Tree Node::InstallFromCache( const std::vector< size_t >& list )
 // Name: Node::DownloadInstall
 // Created: BAX 2012-09-11
 // -----------------------------------------------------------------------------
-void Node::DownloadInstall( web::Chunker_ABC& dst, size_t item )
+void Node::DownloadInstall( web::Chunker_ABC& dst, size_t id )
 {
-    boost::shared_lock< boost::shared_mutex > lock( access_ );
-    install_->Download( dst, item );
+    Package_ABC::T_Item item;
+    Scoper unlink;
+    {
+        boost::upgrade_lock< boost::shared_mutex > lock( access_ );
+        item = install_->Find( id, true );
+        if( !item )
+            throw web::HttpException( web::NOT_FOUND );
+        boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );
+        unlink.Assign( boost::bind( &Node::UnlinkExercise, this, install_->LinkItem( *item ) ) );
+    }
+    install_->Download( dst, *item );
 }
 
 // -----------------------------------------------------------------------------
@@ -510,8 +521,17 @@ void Node::DownloadInstall( web::Chunker_ABC& dst, size_t item )
 void Node::DownloadInstall( web::Chunker_ABC& dst, const std::string& type,
                             const std::string& name, const std::string& checksum )
 {
-    boost::shared_lock< boost::shared_mutex > lock( access_ );
-    install_->Download( dst, type, name, checksum );
+    Package_ABC::T_Item item;
+    Scoper unlink;
+    {
+        boost::upgrade_lock< boost::shared_mutex > lock( access_ );
+        item = install_->Find( type, name, checksum );
+        if( !item )
+            throw web::HttpException( web::NOT_FOUND );
+        boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );
+        unlink.Assign( boost::bind( &Node::UnlinkExercise, this, install_->LinkItem( *item ) ) );
+    }
+    install_->Download( dst, *item );
 }
 
 // -----------------------------------------------------------------------------

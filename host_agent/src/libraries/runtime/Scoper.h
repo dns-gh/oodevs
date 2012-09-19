@@ -28,12 +28,22 @@ struct Scoper : public boost::noncopyable
     {
         // NOTHING
     }
+    Scoper()
+    {
+        // NOTHING
+    }
+    void Assign( const Task& task )
+    {
+        assert( !task_ );
+        task_ = task;
+    }
     ~Scoper()
     {
-        task_();
+        if( task_ )
+            task_();
     }
 private:
-    const Task task_;
+    Task task_;
 };
 }
 

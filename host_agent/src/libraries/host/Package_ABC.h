@@ -73,10 +73,10 @@ struct Package_ABC : public boost::noncopyable
     virtual void Install( runtime::Async& async, const Path& root, const Package_ABC& src, const std::vector< size_t >& ids ) = 0;
     virtual void Uninstall( runtime::Async& async, const Path& root, const std::vector< size_t >& ids ) = 0;
     virtual Tree LinkExercise( const std::string& name ) = 0;
+    virtual Tree LinkItem( Item_ABC& item ) = 0;
     virtual Tree LinkItem( const Tree& tree ) = 0;
     virtual void UnlinkItem( runtime::Async& async, const Tree& tree ) = 0;
-    virtual void Download( web::Chunker_ABC& dst, size_t item ) = 0;
-    virtual void Download( web::Chunker_ABC& dst, const std::string& type, const std::string& name, const std::string& checksum ) = 0;
+    virtual void Download( web::Chunker_ABC& dst, const Item_ABC& item ) = 0;
     //@}
 };
 

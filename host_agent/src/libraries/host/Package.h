@@ -55,10 +55,10 @@ public:
     virtual void Install( runtime::Async& async, const Path& root, const Package_ABC& src, const std::vector< size_t >& ids );
     virtual void Uninstall( runtime::Async& async, const Path& root, const std::vector< size_t >& ids );
     virtual Tree LinkExercise( const std::string& name );
+    virtual Tree LinkItem( Item_ABC& item );
     virtual Tree LinkItem( const Tree& tree );
     virtual void UnlinkItem( runtime::Async& async, const Tree& tree );
-    virtual void Download( web::Chunker_ABC& dst, size_t item );
-    virtual void Download( web::Chunker_ABC& dst, const std::string& type, const std::string& name, const std::string& checksum );
+    virtual void Download( web::Chunker_ABC& dst, const Item_ABC& item );
     //@}
 
 public:

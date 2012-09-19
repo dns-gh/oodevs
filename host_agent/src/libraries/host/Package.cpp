@@ -55,7 +55,7 @@ struct Package_ABC::Item_ABC : public boost::noncopyable
     virtual void        Reinstall( const FileSystem_ABC& system ) = 0;
     virtual void        Link( Tree& tree, const Package_ABC& ref, bool recurse ) = 0;
     virtual void        Unlink( Async& async, const FileSystem_ABC& system ) = 0;
-    virtual void        Download( const FileSystem_ABC& fs, web::Chunker_ABC& dst ) = 0;
+    virtual void        Download( const FileSystem_ABC& fs, web::Chunker_ABC& dst ) const = 0;
 };
 
 namespace
@@ -333,7 +333,7 @@ struct Item : Package_ABC::Item_ABC
             action_ = "update";
     }
 
-    FileSystem_ABC::T_Predicate IsItemFile( const Path& root )
+    FileSystem_ABC::T_Predicate IsItemFile( const Path& root ) const
     {
         if( !IsExercise() )
             return FileSystem_ABC::T_Predicate();
@@ -417,7 +417,7 @@ struct Item : Package_ABC::Item_ABC
         meta_.Unlink( async, system, root_ );
     }
 
-    void Download( const FileSystem_ABC& fs, web::Chunker_ABC& dst )
+    void Download( const FileSystem_ABC& fs, web::Chunker_ABC& dst ) const
     {
         io::Writer_ABC& io = dst.SetName( Utf8Convert( name_ ) );
         FileSystem_ABC::T_Packer packer = fs.Pack( io );
@@ -927,6 +927,17 @@ void Link( Tree& dst, const Tree& src, const std::string& key, const Package& pk
 
 // -----------------------------------------------------------------------------
 // Name: Package::LinkItem
+// Created: BAX 2012-09-19
+// -----------------------------------------------------------------------------
+Tree Package::LinkItem( Item_ABC& item )
+{
+    Tree dst;
+    item.Link( dst, *this, false );
+    return dst;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Package::LinkItem
 // Created: BAX 2012-06-06
 // -----------------------------------------------------------------------------
 Tree Package::LinkItem( const Tree& tree )
@@ -981,22 +992,7 @@ size_t Package::GetSize() const
 // Name: Package::Download
 // Created: BAX 2012-09-11
 // -----------------------------------------------------------------------------
-void Package::Download( web::Chunker_ABC& dst, size_t id )
+void Package::Download( web::Chunker_ABC& dst, const Item_ABC& item )
 {
-    T_Item item = Find( id, false );
-    if( !item )
-        throw web::HttpException( web::NOT_FOUND );
-    item->Download( system_, dst );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Package::Download
-// Created: BAX 2012-09-18
-// -----------------------------------------------------------------------------
-void Package::Download( web::Chunker_ABC& dst, const std::string& type, const std::string& name, const std::string& checksum )
-{
-    T_Item item = Find( type, name, checksum );
-    if( !item )
-        throw web::HttpException( web::NOT_FOUND );
-    item->Download( system_, dst );
+    item.Download( system_, dst) ;
 }

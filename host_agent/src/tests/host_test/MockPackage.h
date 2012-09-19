@@ -29,10 +29,10 @@ namespace mocks
         MOCK_METHOD( GetExercises, 2 );
         MOCK_METHOD( CountExercises, 0 );
         MOCK_METHOD( LinkExercise, 1 );
-        MOCK_METHOD( LinkItem, 1 );
+        MOCK_METHOD_EXT( LinkItem, 1, host::Tree( host::Package_ABC::Item_ABC& ), LinkItemByRef );
+        MOCK_METHOD_EXT( LinkItem, 1, host::Tree( const host::Tree& ), LinkItemByTree );
         MOCK_METHOD( UnlinkItem, 2 );
-        MOCK_METHOD_EXT( Download, 2, void( web::Chunker_ABC&, size_t ), DownloadById );
-        MOCK_METHOD_EXT( Download, 4, void( web::Chunker_ABC&, const std::string&, const std::string&, const std::string& ), DownloadByChecksum );
+        MOCK_METHOD( Download, 2 );
     };
 
     MOCK_BASE_CLASS( MockPackageFactory, host::PackageFactory_ABC )
