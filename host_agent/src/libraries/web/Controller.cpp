@@ -576,6 +576,8 @@ void Controller::InstallFromCache( Reply_ABC& rpy, const Request_ABC& request )
 void Controller::DownloadInstall( Reply_ABC& rpy, const Request_ABC& request )
 {
     const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "id" );
+    if( node.is_nil() )
+        throw HttpException( web::BAD_REQUEST );
     const boost::optional< std::string > id = request.GetParameter( "item" );
     boost::shared_ptr< Chunker_ABC > chunker = MakeChunker( rpy );
     if( id != boost::none )
