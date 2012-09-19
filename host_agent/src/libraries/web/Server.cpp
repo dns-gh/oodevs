@@ -231,11 +231,12 @@ struct BodyWebRequest : public WebRequest, public io::Reader_ABC
     // Name: BodyWebRequest::Read(
     // Created: BAX 2012-09-14
     // -----------------------------------------------------------------------------
-    size_t Read( void* dst, size_t size )
+    int Read( void* dst, size_t size )
     {
         const size_t next = size_ ? std::min( size, size_ - read_ ) : size;
         const int len = mg_read( link_, dst, next );
-        read_ += len;
+        if( len > 0 )
+            read_ += len;
         return len;
     }
 
@@ -320,18 +321,18 @@ struct Reply : public Reply_ABC
     // Name: Reply::Write
     // Created: BAX 2012-09-14
     // -----------------------------------------------------------------------------
-    void Write( const void* data, size_t size )
+    int Write( const void* data, size_t size )
     {
-        mg_write( link_, data, size );
+        return mg_write( link_, data, size );
     }
 
     // -----------------------------------------------------------------------------
     // Name: Reply::WriteContent
     // Created: BAX 2012-09-14
     // -----------------------------------------------------------------------------
-    void WriteContent( const std::string& data )
+    int WriteContent( const std::string& data )
     {
-        Write( data.c_str(), data.size() );
+        return Write( data.c_str(), data.size() );
     }
 
 private:

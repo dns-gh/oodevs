@@ -11,7 +11,6 @@
 
 #include "HttpException.h"
 #include <string>
-#include <vector>
 
 namespace web
 {
@@ -33,8 +32,8 @@ struct Reply_ABC : public boost::noncopyable
     virtual void SetHeader( const std::string& key, const std::string& value ) = 0;
     virtual void SetStatus( HttpStatus code ) = 0;
     virtual void WriteHeaders() = 0;
-    virtual void WriteContent( const std::string& data ) = 0;
-    virtual void Write( const void* data, size_t size ) = 0;
+    virtual int  WriteContent( const std::string& data ) = 0;
+    virtual int  Write( const void* data, size_t size ) = 0;
     //@}
 };
 }

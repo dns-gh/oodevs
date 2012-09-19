@@ -54,8 +54,8 @@ std::string SinkStream( io::Reader_ABC& src )
     std::string reply;
     for(;;)
     {
-        const size_t len = src.Read( &buffer[0], sizeof buffer );
-        if( !len )
+        const int len = src.Read( &buffer[0], sizeof buffer );
+        if( len <= 0 )
             break;
         reply.append( &buffer[0], len );
     }
@@ -156,11 +156,11 @@ namespace
 void ReadLittle( io::Reader_ABC& src, size_t& count, const char* data, size_t size )
 {
     std::vector< char > buffer( size );
-    size_t len, fill = 0;
+    size_t fill = 0;
     while( fill < size )
     {
-        len = src.Read( &buffer[fill], size - fill );
-        if( !len )
+        const int len = src.Read( &buffer[fill], size - fill );
+        if( len <= 0 )
             break;
         fill += len;
     }

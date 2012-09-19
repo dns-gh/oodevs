@@ -35,7 +35,7 @@ struct Writer_ABC : public boost::noncopyable
 
     //! @name Methods
     //@{
-    virtual size_t Write( const void* data, size_t size ) = 0;
+    virtual int Write( const void* data, size_t size ) = 0;
     //@}
 };
 
@@ -55,7 +55,7 @@ struct Reader_ABC : public boost::noncopyable
 
     //! @name Methods
     //@{
-    virtual size_t Read( void* data, size_t size ) = 0;
+    virtual int Read( void* data, size_t size ) = 0;
     //@}
 };
 
@@ -75,8 +75,8 @@ struct Pipe_ABC : public Writer_ABC, public Reader_ABC
 
     //! @name Methods
     //@{
-    virtual size_t Write( const void* data, size_t size ) = 0;
-    virtual size_t Read( void* data, size_t size ) = 0;
+    virtual int  Write( const void* data, size_t size ) = 0;
+    virtual int  Read ( void* data, size_t size ) = 0;
     virtual void Close() = 0;
     //@}
 };

@@ -132,9 +132,11 @@ void StreamBuffer::FillAtLeast( size_t size )
     if( skip_ )
         memmove( &buffer_[0], &buffer_[skip_], size_ );
     skip_ = 0;
-    const size_t len = src_.Read( &buffer_[size_], buffer_.size() - size_ );
+    const int len = src_.Read( &buffer_[size_], buffer_.size() - size_ );
+    eof_ |= len <= 0;
+    if( eof_ )
+        return;
     size_ += len;
-    eof_   = !len;
 }
 
 // -----------------------------------------------------------------------------

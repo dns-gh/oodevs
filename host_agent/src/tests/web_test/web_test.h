@@ -20,10 +20,10 @@ std::string BOOST_RESOLVE( const std::string& filename );
 struct StreamReader : public io::Reader_ABC
 {
     StreamReader( std::istream& src ) : src_( src ) {}
-    size_t Read( void* dst, size_t size )
+    int Read( void* dst, size_t size )
     {
         src_.read( reinterpret_cast< char* >( dst ), size );
-        return static_cast< size_t >( src_.gcount() );
+        return static_cast< int >( src_.gcount() );
     }
     std::istream& src_;
 };

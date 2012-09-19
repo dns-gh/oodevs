@@ -519,8 +519,7 @@ struct Packer : public Packer_ABC
     {
         Packer& it = *reinterpret_cast< Packer* >( userdata );
         const char* src = reinterpret_cast< const char* >( data );
-        it.writer_.Write( src, size );
-        return size;
+        return it.writer_.Write( src, size );
     }
 
     void Pack( const Path& input, const T_Predicate& predicate )

@@ -114,7 +114,7 @@ struct Pipe : public Pipe_ABC
     // Name: Pipe::Write
     // Created: BAX 2012-09-14
     // -----------------------------------------------------------------------------
-    size_t Write( const void* ptr, size_t size )
+    int Write( const void* ptr, size_t size )
     {
         const char* src = reinterpret_cast< const char* >( ptr );
         boost::unique_lock< boost::mutex > lock( access_ );
@@ -122,14 +122,14 @@ struct Pipe : public Pipe_ABC
         read_.notify_one();
         while( !eof_ && !buf_.IsEmpty() )
             write_.wait( lock );
-        return size - buf_.Skip();
+        return static_cast< int >( size - buf_.Skip() );
     }
 
     // -----------------------------------------------------------------------------
     // Name: Pipe::Read
     // Created: BAX 2012-09-14
     // -----------------------------------------------------------------------------
-    size_t Read( void* ptr, size_t size )
+    int Read( void* ptr, size_t size )
     {
         char* dst = reinterpret_cast< char* >( ptr );
         boost::unique_lock< boost::mutex > lock( access_ );
@@ -140,7 +140,7 @@ struct Pipe : public Pipe_ABC
         const size_t read = buf_.Consume( dst, size );
         if( buf_.IsEmpty() )
             write_.notify_one();
-        return read;
+        return static_cast< int >( read );
     }
 
     // -----------------------------------------------------------------------------

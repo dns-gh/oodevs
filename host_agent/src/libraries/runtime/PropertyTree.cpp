@@ -133,7 +133,7 @@ Tree property_tree::FromJson( io::Reader_ABC& src )
 {
     std::vector< char > buffer( 1<<12 );
     std::string data;
-    size_t len;
+    int len;
     while( (len = src.Read( &buffer[0], buffer.size() ) ) > 0 )
         data.append( &buffer[0], len );
     return Read( data, boost::bind( &boost::property_tree::read_json< Tree >, _1, _2 ) );

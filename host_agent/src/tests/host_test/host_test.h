@@ -19,7 +19,7 @@ std::string BOOST_RESOLVE( const std::string& filename );
 
 struct NilReader : public io::Reader_ABC
 {
-    size_t Read( void* /*dst*/, size_t /*size*/ ) { return 0; }
+    int Read( void* /*dst*/, size_t /*size*/ ) { return 0; }
 };
 
 #endif // HOST_TEST_H__

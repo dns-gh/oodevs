@@ -15,6 +15,8 @@
 #include <boost/make_shared.hpp>
 #include <boost/shared_ptr.hpp>
 
+#include <vector>
+
 using namespace web;
 
 #ifdef _MSC_VER
@@ -95,21 +97,25 @@ struct Chunker : public Chunker_ABC, public io::Writer_ABC
     // Name: Chunker::Flush
     // Created: BAX 2012-09-14
     // -----------------------------------------------------------------------------
-    void Flush( bool last )
+    bool Flush( bool last )
     {
         const int header = snprintf( &buffer_[0], header_size, "%x\r\n", fill_ );
         memmove( &buffer_[header_size - header], &buffer_[0], header );
         const char* fmt  = last && fill_ ? "\r\n0\r\n\r\n" : "\r\n";
         const int footer = snprintf( &buffer_[header_size + fill_], header_size, fmt );
-        rpy_.Write( &buffer_[header_size - header], header + fill_ + footer );
+        const size_t next = header + fill_ + footer;
+        const int len = rpy_.Write( &buffer_[header_size - header], next );
+        if( len != next )
+            return false;
         fill_ = 0;
+        return true;
     }
 
     // -----------------------------------------------------------------------------
     // Name: Chunker::Write
     // Created: BAX 2012-09-14
     // -----------------------------------------------------------------------------
-    size_t Write( const void* data, size_t size )
+    int Write( const void* data, size_t size )
     {
         const char* ptr = reinterpret_cast< const char* >( data );
         size_t left = size;
@@ -118,7 +124,9 @@ struct Chunker : public Chunker_ABC, public io::Writer_ABC
             const size_t step = std::min( left, buffer_size - fill_ );
             if( !step )
             {
-                Flush( false );
+                const bool valid = Flush( false );
+                if( !valid )
+                    return -1;
                 continue;
             }
 
@@ -127,7 +135,7 @@ struct Chunker : public Chunker_ABC, public io::Writer_ABC
             fill_ += step;
             left  -= step;
         }
-        return size;
+        return static_cast< int >( size );
     }
 
     Reply_ABC& rpy_;
