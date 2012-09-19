@@ -351,7 +351,15 @@ void NodeController::DownloadInstall( const Uuid& id, web::Chunker_ABC& dst, siz
     T_Node node = nodes_.Get( id );
     if( !node )
         throw web::HttpException( web::NOT_FOUND );
-    node->DownloadInstall( dst, item );
+    try
+    {
+        node->DownloadInstall( dst, item );
+    }
+    catch( const std::exception& err )
+    {
+        LOG_ERROR( log_ ) << "[" << type_ << "] " << err.what();
+        LOG_ERROR( log_ ) << "[" << type_ << "] Unable to download item " << item;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -365,7 +373,16 @@ void NodeController::DownloadInstall( const Uuid& id, web::Chunker_ABC& dst,
     T_Node node = nodes_.Get( id );
     if( !node )
         throw web::HttpException( web::NOT_FOUND );
-    node->DownloadInstall( dst, type, name, checksum );
+    try
+    {
+        node->DownloadInstall( dst, type, name, checksum );
+    }
+    catch( const std::exception& err )
+    {
+        LOG_ERROR( log_ ) << "[" << type_ << "] " << err.what();
+        LOG_ERROR( log_ ) << "[" << type_ << "] Unable to download item "
+                          << type << " " << name << " 0x" << checksum;
+    }
 }
 
 // -----------------------------------------------------------------------------
