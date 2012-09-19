@@ -35,7 +35,7 @@
 				</type>
 			</return>
 		</method>
-		<method name="getObjectivesPei">
+		<method name="getScoutObjectives">
 			<return>
 				<type>
 					<list>

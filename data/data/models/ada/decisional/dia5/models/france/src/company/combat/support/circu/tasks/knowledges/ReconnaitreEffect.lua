@@ -40,7 +40,7 @@ return
         return myself.leadData.fuseaux[myself.leadData.currentReccePosition]
     end,
     
-    getPeiObjectives = function( self, params, entity )
+    getScoutObjectives = function( self, params, entity )
         local positions = {}
         local fuseau = self:getPeiAOR( params )
         -- Ajout du dernier point au bout du sous-fuseau

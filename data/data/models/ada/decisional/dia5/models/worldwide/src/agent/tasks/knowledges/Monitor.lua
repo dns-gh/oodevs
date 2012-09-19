@@ -5,7 +5,7 @@ local result =
     end,
 
     fillParameters = function( self, companyTask, params, entity )
-        local positions = companyTask:getObjectivesPei( params, entity )
+        local positions = companyTask:getScoutObjectives( params, entity )
         local objective = companyTask:getDirection( params, entity, positions[ next( positions ) ] )
         local indexPositions = next( positions )
         if indexPositions and objective then

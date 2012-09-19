@@ -2,7 +2,7 @@
 <class xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.tasks.knowledges.DenyEffect" source-version="1.0.0" extends="commander.tasks.knowledges.DefendEffect">
 	<description>Interface des connaissances de mission de niveau compagnie</description>
 	<methods>
-		<method name="getObjectivesPei">
+		<method name="getScoutObjectives">
 			<return>
 				<type>
 					<list>

@@ -14,7 +14,7 @@ return
         return NIL
     end,
 
-    getObjectivesPei = function( self, params )
+    getScoutObjectives = function( self, params )
         local firstParam = params.objectives[ next( params.objectives ) ]
         -- The objective is an area: each units occupy a sub-area
         if masalife.brain.core.class.isOfType( firstParam, world.Area) then

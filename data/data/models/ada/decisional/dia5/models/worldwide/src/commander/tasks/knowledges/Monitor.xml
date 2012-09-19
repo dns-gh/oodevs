@@ -32,7 +32,7 @@
                 </type>
             </return>
         </method>
-        <method name="getObjectivesPei">
+        <method name="getScoutObjectives">
             <description>Returns the observing positions (the objectives of the scout platoon missions).</description>
             <return>
                 <type>

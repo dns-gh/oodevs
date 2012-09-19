@@ -17,7 +17,7 @@ return
         return params.entities
     end,
 
-    getPeiObjectives = function( self, params )
+    getScoutObjectives = function( self, params )
         return { params.objective }
     end,
 

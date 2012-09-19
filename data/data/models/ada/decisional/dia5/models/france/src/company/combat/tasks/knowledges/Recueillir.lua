@@ -49,7 +49,7 @@ return
         end
     end,
 
-    getObjectivesPei = function( self, params )
+    getScoutObjectives = function( self, params )
         myself.leadData.scoutIndex = myself.leadData.scoutIndex % #self.scoutPositions + 1
         return { self.scoutPositions[myself.leadData.scoutIndex] }
     end,

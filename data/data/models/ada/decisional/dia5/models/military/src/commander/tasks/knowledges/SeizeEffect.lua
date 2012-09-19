@@ -1,7 +1,7 @@
 return
 {   
 
-    getPeiObjectives = function( self, params, entity )     
+    getScoutObjectives = function( self, params, entity )     
         return params.objectives 
     end,
     

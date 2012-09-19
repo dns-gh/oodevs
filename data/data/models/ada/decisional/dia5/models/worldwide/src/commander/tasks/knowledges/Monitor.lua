@@ -1,6 +1,6 @@
 return
 {
-    getObjectivesPei = function( self, params )
+    getScoutObjectives = function( self, params )
         myself.leadData.currentMonitorPosition = myself.leadData.currentMonitorPosition or 0
         myself.leadData.currentMonitorPosition = myself.leadData.currentMonitorPosition % #params.positions + 1
         return { params.positions[ myself.leadData.currentMonitorPosition ] }

@@ -40,7 +40,7 @@
                 </type>
             </return>
         </method>
-        <method name="getObjectivesPei">
+        <method name="getScoutObjectives">
             <description>Returns the objectives for the scouting units.</description>
             <return>
                 <type>

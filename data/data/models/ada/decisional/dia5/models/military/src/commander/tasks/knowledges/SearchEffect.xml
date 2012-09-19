@@ -8,7 +8,7 @@
                 </type>
             </return>
         </method>
-        <method name="getObjectivesPei">
+        <method name="getScoutObjectives">
             <return>
                 <type>
                     <class name="properties.Observing"/>
@@ -38,13 +38,13 @@
                 </type>
             </return>
         </method>
-		<method name="getSealOffPosition">
-			<return>
-				<type>
-					<class name="properties.Reachable"/>
-				</type>
-			</return>
-		</method>
+        <method name="getSealOffPosition">
+            <return>
+                <type>
+                    <class name="properties.Reachable"/>
+                </type>
+            </return>
+        </method>
         <method name="getTotalRecce">
             <return>
                 <type>

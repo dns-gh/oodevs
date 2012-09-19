@@ -14,7 +14,7 @@ return
     -- Partage des objectifs: chaque pion PEI reçoit la position d'un des objectifs de la mission
     -- Si parmi les objectifs il y a des zones,  pions PEI recoivent les barycentres des zones
     
-    getObjectivesPei = function( self, params, entity )
+    getScoutObjectives = function( self, params, entity )
         if not myself.leadData.currentScoutObjective then
             myself.leadData.currentScoutObjective = 0
         end

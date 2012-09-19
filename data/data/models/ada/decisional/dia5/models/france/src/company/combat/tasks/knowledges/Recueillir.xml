@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class xmlns="http://www.masagroup.net/directia/schemas/bm" name="company.combat.tasks.knowledges.Recueillir" source-version="1.0.0" extends="commander.tasks.knowledges.CompanyTask">
     <methods>
-        <method name="getObjectivesPei">
+        <method name="getScoutObjectives">
             <return>
                 <type>
                     <list>

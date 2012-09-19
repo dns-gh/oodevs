@@ -69,7 +69,7 @@ return
         return myself.leadData.fuseaux[myself.leadData.currentReccePosition]
     end,
     
-    getPeiObjectives = function( self, params, entity )
+    getScoutObjectives = function( self, params, entity )
         return self:getObjectives( params, entity )
     end,
     

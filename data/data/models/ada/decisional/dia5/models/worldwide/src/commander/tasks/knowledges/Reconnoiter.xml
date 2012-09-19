@@ -58,7 +58,7 @@
                 </type>
             </return>
         </method>
-        <method name="getPeiObjectives">
+        <method name="getScoutObjectives">
             <description>Returns the sub-objectives for the scouting platoons.</description>
             <return>
                 <type>

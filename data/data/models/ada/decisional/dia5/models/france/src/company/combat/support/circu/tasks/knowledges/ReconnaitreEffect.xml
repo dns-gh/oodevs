@@ -52,7 +52,7 @@
 				</type>
 			</return>
 		</method>
-		<method name="getPeiObjectives">
+		<method name="getScoutObjectives">
 			<return>
 				<type>
 					<list>

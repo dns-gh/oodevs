@@ -14,7 +14,7 @@ return
         return NIL
     end,
     
-    getObjectivesPei = function( self, params )
+    getScoutObjectives = function( self, params )
   
       local firstParam = params.objectives[ next(params.objectives) ]
       

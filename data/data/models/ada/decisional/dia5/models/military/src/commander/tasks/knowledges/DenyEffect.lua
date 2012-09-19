@@ -1,7 +1,7 @@
 return
 {
 
-    getObjectivesPei = function( self, params, entity )
+    getScoutObjectives = function( self, params, entity )
         if not myself.leadData.objIndex then
             myself.leadData.objIndex = 0 
         end
