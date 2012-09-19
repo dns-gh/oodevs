@@ -157,6 +157,10 @@ integration.switchOnSafetyMode = function( self )
     if DEC_Agent_EstEnVol() and myself.altitude then
         DEC_Agent_HauteurDeVol( myself.altitude * 0.2 )
     end
+    if not myself.reportSafetyMode or myself.reportSafetyMode == nil then
+         myself.reportSafetyMode = true
+         integration.pionRC( eRC_AmbianceSurete )
+    end
 end
 
 -- -------------------------------------------------------------------------------- 
@@ -184,8 +188,12 @@ integration.switchOffSafetyMode = function( self )
     if DEC_Agent_EstEnVol() and myself.altitude then
         DEC_Agent_HauteurDeVol( myself.altitude )
     end
-    meKnowledge:RC( eRC_AmbianceVitesse )
+    if myself.reportSafetyMode or myself.reportSafetyMode == nil then
+        myself.reportSafetyMode = false
+        integration.pionRC( eRC_AmbianceVitesse )
+    end
 end
+
 -- -------------------------------------------------------------------------------- 
 -- Switch off cover attitude
 -- @author MIA
@@ -194,7 +202,7 @@ end
 integration.switchOffCoverMode = function( self )
     DEC_Perception_DesactiverCoupsDeSonde()
     myself.speedModulation.switchOnCoverMode = 1
-    meKnowledge:RC( eRC_CouvertureDesactive )
+    integration.pionRC( eRC_CouvertureDesactive )
 end
 -- -------------------------------------------------------------------------------- 
 -- @return The unit can dismount

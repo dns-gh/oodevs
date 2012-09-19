@@ -362,11 +362,12 @@ integration.startFragOrderTask = function( self )
     -- WW base
     elseif orderType =="ChangeAttitude" then
         if self.source:GetorderConduiteChangerAmbiance_() == eAmbianceMission_Surete then
-        orderType = "agent.frago.ActivateSafetyAttitude"
-    else
-        orderType = "agent.frago.DeactivateSafetyAttitude"
-        stopTask( "agent.frago.ActivateSafetyAttitude" )
-    end
+            stopTask( "agent.frago.DeactivateSafetyAttitude" )
+            orderType = "agent.frago.ActivateSafetyAttitude"
+        else
+            stopTask( "agent.frago.ActivateSafetyAttitude" )
+            orderType = "agent.frago.DeactivateSafetyAttitude"
+        end
 
     -- ----------------------------------------------------------------------------
     -- Flying altitude modifier 
