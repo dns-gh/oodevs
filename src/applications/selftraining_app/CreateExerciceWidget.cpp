@@ -241,12 +241,13 @@ void CreateExerciceWidget::OnSelectionChanged( Q3ListBoxItem* item )
     if( !item )
         return;
     std::auto_ptr< xml::xistream > xis= fileLoader_.LoadFile( config_.GetExerciseFile( item->text().toAscii().constData() ) );
-    std::string terrain, physical;
+    std::string terrain, physical, dataSet;
     *xis >> xml::start( "exercise" )
             >> xml::start( "terrain" )
                 >> xml::attribute( "name", terrain )
             >> xml::end
             >> xml::start( "model" )
+                >> xml::attribute( "dataset", dataSet )
                 >> xml::attribute( "physical", physical )
             >> xml::end
          >> xml::end;
@@ -254,12 +255,18 @@ void CreateExerciceWidget::OnSelectionChanged( Q3ListBoxItem* item )
     int index = terrainList.findIndex( terrain.c_str() );
     editTerrainList_->setCurrentItem( index + 1 );
     const QStringList decisionalModels = frontend::commands::ListModels( config_ );
+    int indexModel = 0;
     for( QStringList::const_iterator it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
     {
-        const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).toAscii().constData() );
-        int index = physicalModels.findIndex( QString( physical.c_str() ) );
-        if( index != -1 )
-            editModelList_->setCurrentItem( index + 1 );
+        if( std::strcmp( (*it).toAscii().constData(), dataSet.c_str() ) == 0 )
+        {
+            const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).toAscii().constData() );
+            int index = physicalModels.findIndex( QString( physical.c_str() ) );
+            if( index != -1 )
+                editModelList_->setCurrentItem( indexModel + index + 1 );
+            else
+                indexModel += physicalModels.size();
+        }
     }
     Update();
     page_.UpdateEditButton();
