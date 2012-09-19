@@ -47,8 +47,8 @@ body{padding-top:60px;padding-bottom:40px;}
 .package th:first-child,.package td:first-child{padding-left:20px;}
 .item_briefing{padding-top:20px !important;}
 .briefing_content{margin-top:20px;}
-.item{font-size:small;}
-.item span:first-child{font-style:oblique;float:left;width:64px;}
+.item_label{font-size:small;}
+.item_label span:first-child{font-style:oblique;float:left;width:64px;}
 .package_row .error{position:relative;top:-1px;}
 .action{white-space:nowrap;text-align:right !important;}
 .package_description{position:relative;margin-bottom:10px;}

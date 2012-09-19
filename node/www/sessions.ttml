@@ -333,15 +333,15 @@
             <div class="session_content">
                 <div class="span5">
                     <div class="shift_right">
-                        <div class="item">
+                        <div class="item_label">
                             <span>Model</span>
                             {{model.name}}
                         </div>
-                        <div class="item">
+                        <div class="item_label">
                             <span>Terrain</span>
                             {{terrain.name}}
                         </div>
-                        <div class="item">
+                        <div class="item_label">
                             <span>Exercise</span>
                             {{exercise.name}}
                         </div>
@@ -349,15 +349,15 @@
                 </div>
                 <div>
                     {{#if start_time}}
-                    <div class="item">
+                    <div class="item_label">
                         <span>Start</span>
                         {{start_time}}
                     </div>
-                    <div class="item">
+                    <div class="item_label">
                         <span>Duration</span>
                         {{duration}}
                     </div>
-                    <div class="item">
+                    <div class="item_label">
                         <span>Clients</span>
                         {{clients.length}} connected
                     </div>
