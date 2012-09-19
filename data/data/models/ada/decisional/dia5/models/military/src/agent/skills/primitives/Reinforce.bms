@@ -10,7 +10,7 @@ rootnode
     -- For each objective of the skill, try to reinforce it. 
     -- --------------------------------------------------------------------------------
     done = function( self, params, additionnalParams )
-        if additionnalParams.reason == "arrived" then
+        if additionnalParams.reason == "arrived" or additionnalParams.reason == "posted"  then
             self.arrived = true
         end
         if additionnalParams.state == "reinforced" then
