@@ -87,7 +87,7 @@
         <skill name="agent.skills.ActivateNetwork"/>
         <skill name="agent.skills.Improve"/>
         <skill name="agent.skills.MobilitySupport"/>
-        <skill name="agent.skills.ReactToNBC"/>
+        <skill name="agent.skills.ReactToContamination"/>
         <skill name="agent.skills.ReactToFireArea"/>
         <skill name="agent.skills.GoGetDecontaminated"/>
         <skill name="agent.skills.actions.ApplyMortarFires"/>
@@ -153,7 +153,7 @@
                     </value>
                 </parameter>
             </skill>
-            <skill name="agent.skills.ReactToNBC"/>
+            <skill name="agent.skills.ReactToContamination"/>
             <skill name="agent.skills.ReactToFireArea"/>
         </skills>
     </default-task>

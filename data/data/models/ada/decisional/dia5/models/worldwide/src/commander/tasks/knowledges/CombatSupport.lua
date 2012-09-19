@@ -1,7 +1,23 @@
 return
 {
     getEntitiesToSupport = function( self, params )
-        return integration.getEntitiesFromAutomatCommunication( params.objective, "none", true )
+        local entitiesToSupport = integration.filterPionWithEchelon( 
+          integration.getEntitiesFromAutomatCommunication( params.company, "none", true), eEtatEchelon_First )
+        if next(entitiesToSupport) then
+            return entitiesToSupport
+        else
+            return integration.getEntitiesFromAutomatCommunication( params.company, "none", true)
+        end
+    end,
+
+    getEntitiesToFollow = function( self, params )
+        local entitiesToFollow = integration.filterPionWithEchelon( 
+          integration.getEntitiesFromAutomat( meKnowledge, "none", true ), eEtatEchelon_First )
+         if next(entitiesToFollow) then
+          return entitiesToFollow
+        else -- the command post by default
+          return {integration.query.getPCUnit()}
+        end
     end,
 
     getSupportingPosition = function( self, params )
@@ -13,10 +29,10 @@ return
     end,
 
     getNbrFront = function( self )
-      local nbrEchelon = myself.taskParams.echelonNumber or 0
-      if nbrEchelon == NIL or nbrEchelon == 0 then
-        nbrEchelon = 1 -- default value
-      end
-      return integration.query.getNbrFront( nbrEchelon )
+        local nbrEchelon = myself.taskParams.echelonNumber or 0
+        if nbrEchelon == NIL or nbrEchelon == 0 then
+          nbrEchelon = 1 -- default value
+        end
+        return integration.query.getNbrFront( nbrEchelon )
     end
 }

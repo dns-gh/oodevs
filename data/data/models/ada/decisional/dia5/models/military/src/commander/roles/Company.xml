@@ -22,9 +22,10 @@
         <skill name="commander.skills.LeadGEN"/>
         <skill name="commander.skills.SupportManagerForGen"/>
         <skill name="commander.skills.LeadWithOrder"/>
+        <skill name="commander.skills.CombatSupport"/>
     </skills>
-    <default-task label="Prise en compte des ordres de conduite et de la sauvegarde." permanent="true">
-        <description>Gestion par défaut des ordres de conduite</description>
+    <default-task permanent="true">
+        <description>Defulat behaviors used to manage fragmentary orders.</description>
         <goal>
             <description>Gestion et affectation des ordres de conduite</description>
         </goal>

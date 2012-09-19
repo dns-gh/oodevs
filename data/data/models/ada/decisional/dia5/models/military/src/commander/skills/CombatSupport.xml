@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<skill name="company.skills.Appuyer" source-version="1.0.0" xmlns="http://www.masagroup.net/directia/schemas/bm">
+<skill name="commander.skills.CombatSupport" source-version="1.0.0" xmlns="http://www.masagroup.net/directia/schemas/bm">
     <parameters>
         <parameter name="companyTask">
             <description>La tâche de l'automate à résoudre</description>
