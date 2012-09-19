@@ -105,7 +105,7 @@ struct Chunker : public Chunker_ABC, public io::Writer_ABC
         const int footer = snprintf( &buffer_[header_size + fill_], header_size, fmt );
         const size_t next = header + fill_ + footer;
         const int len = rpy_.Write( &buffer_[header_size - header], next );
-        if( len != next )
+        if( len != static_cast< int >( next ) )
             return false;
         fill_ = 0;
         return true;
