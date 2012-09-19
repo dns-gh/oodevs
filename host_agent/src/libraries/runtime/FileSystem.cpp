@@ -351,8 +351,9 @@ typedef struct archive_entry ArchiveEntry;
 
 void AbortArchive( cpplog::BaseLogger& log, Archive* arc )
 {
-    const std::string err = archive_error_string( arc );
-    LOG_ERROR( log ) << "[archive] " << err;
+    const char* err = archive_error_string( arc );
+    if( err )
+        LOG_ERROR( log ) << "[archive] " << std::string( err );
     throw std::runtime_error( "Operation aborted" );
 }
 
