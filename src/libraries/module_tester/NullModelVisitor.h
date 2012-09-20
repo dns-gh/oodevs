@@ -17,6 +17,12 @@ namespace sword
 {
 namespace test
 {
+// =============================================================================
+/** @class  NullModelVisitor
+    @brief  Null model visitor
+*/
+// Created: MCO 2012-09-20
+// =============================================================================
 class NullModelVisitor : public core::ModelVisitor_ABC
 {
 public:
