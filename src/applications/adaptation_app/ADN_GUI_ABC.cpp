@@ -123,7 +123,8 @@ void ADN_Tabbed_GUI_ABC::ChangeCurrentSubTab( int subTab )
 // -----------------------------------------------------------------------------
 bool ADN_Tabbed_GUI_ABC::SelectItem( const QString& name )
 {
-    if( !( pTabWidget_ && pTabWidget_->currentIndex() >= 0 && pTabWidget_->currentIndex() < vListViews_.size() && vListViews_[ pTabWidget_->currentIndex() ] ) )
+    if( !( pTabWidget_ && pTabWidget_->currentIndex() >= 0 && pTabWidget_->currentIndex() < static_cast< int >( vListViews_.size() )
+        && vListViews_[ pTabWidget_->currentIndex() ] ) )
         return false;
     return vListViews_[ pTabWidget_->currentIndex() ]->SetCurrentItem( name );
 }
@@ -136,7 +137,7 @@ void ADN_Tabbed_GUI_ABC::FindSubTabAndSelectItem( const QString& name, int col /
 {
     if( !pTabWidget_ )
         return;
-    for( int i = 0; i < vListViews_.size(); ++i )
+    for( int i = 0; i < static_cast< int >( vListViews_.size() ); ++i )
     {
         if( vListViews_[ i ]->FindItem( name, col ) != 0 )
         {

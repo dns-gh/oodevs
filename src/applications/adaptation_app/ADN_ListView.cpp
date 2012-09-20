@@ -248,7 +248,7 @@ void ADN_ListView::FillContextMenuWithUsersList( Q3PopupMenu& popupMenu, QString
         QAction* action = new QAction( tr( "Search for '%1' that use" ).arg( userName.toLower() ), &popupMenu );
         connect( action, SIGNAL( triggered() ), &usedByMapper_, SLOT( map() ) );
         popupMenu.addAction( action );
-        usedByMapper_.setMapping( action, usedByInfos_.size() - 1 );
+        usedByMapper_.setMapping( action, static_cast< int >( usedByInfos_.size() ) - 1 );
     }
 }
 

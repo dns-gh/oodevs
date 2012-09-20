@@ -344,9 +344,8 @@ T* ADN_GuiBuilder::AddTableCell( ADN_Table* pParent, void* pData, int nRow, int 
 // Created: APE 2005-04-13
 // -----------------------------------------------------------------------------
 template< class T >
-void ADN_GuiBuilder::SetValidator( T& /*validator*/, E_Validator nValidator )
+void ADN_GuiBuilder::SetValidator( T& /*validator*/, E_Validator /*nValidator*/ )
 {
-    assert( nValidator == eNone );
 }
 
 // -----------------------------------------------------------------------------
