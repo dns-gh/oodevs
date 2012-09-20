@@ -24,12 +24,13 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_InjuredHuman )
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
 PHY_InjuredHuman::PHY_InjuredHuman()
-    : lifeExpectancy_  ( 0 )
-    , injuryCategory_  ( MIL_MedicalTreatmentType::eNone )
-    , injuryID_        ( 0 )
-    , pComposantePion_ ( 0 )
+    : lifeExpectancy_( 0 )
+    , injuryCategory_( MIL_MedicalTreatmentType::eNone )
+    , injuryID_( 0 )
+    , isTreated_( false )
+    , pComposantePion_( 0 )
     , timeOfLastUpdate_( static_cast< float >( MIL_Singletons::GetTime().GetCurrentTick() ) )
-    , treatment_       ( 0 )
+    , treatment_( 0 )
 {
     // NOTHING
 }
@@ -39,13 +40,14 @@ PHY_InjuredHuman::PHY_InjuredHuman()
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
 PHY_InjuredHuman::PHY_InjuredHuman( const PHY_InjuredHuman& rhs )
-    : lifeExpectancy_   ( rhs.lifeExpectancy_ )
-    , injuryCategory_   ( rhs.injuryCategory_ )
-    , injuryID_         ( rhs.injuryID_ )
-    , injuriesList_     ( rhs.injuriesList_ )
-    , pComposantePion_  ( rhs.pComposantePion_ )
-    , timeOfLastUpdate_ ( static_cast< float >( MIL_Singletons::GetTime().GetCurrentTick() ) )
-    , treatment_        ( rhs.treatment_ )
+    : lifeExpectancy_( rhs.lifeExpectancy_ )
+    , injuryCategory_( rhs.injuryCategory_ )
+    , injuryID_( rhs.injuryID_ )
+    , isTreated_( rhs.isTreated_ )
+    , injuriesList_( rhs.injuriesList_ )
+    , pComposantePion_( rhs.pComposantePion_ )
+    , timeOfLastUpdate_( static_cast< float >( MIL_Singletons::GetTime().GetCurrentTick() ) )
+    , treatment_( rhs.treatment_ )
 {
     // NOTHING
 }
@@ -55,12 +57,13 @@ PHY_InjuredHuman::PHY_InjuredHuman( const PHY_InjuredHuman& rhs )
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
 PHY_InjuredHuman::PHY_InjuredHuman( MIL_Injury_ABC& injury , const PHY_ComposantePion& composantePion )
-    : lifeExpectancy_   ( injury.SetLifeExpectancy() )
-    , injuryCategory_   ( injury.GetInjuryCategory() )
-    , injuryID_         ( injury.GetInjuryID() )
-    , pComposantePion_  ( &composantePion )
-    , timeOfLastUpdate_ ( static_cast< float >( MIL_Singletons::GetTime().GetCurrentTick() ) )
-    , treatment_        ( 0 )
+    : lifeExpectancy_( injury.SetLifeExpectancy() )
+    , injuryCategory_( injury.GetInjuryCategory() )
+    , injuryID_( injury.GetInjuryID() )
+    , isTreated_( false )
+    , pComposantePion_( &composantePion )
+    , timeOfLastUpdate_( static_cast< float >( MIL_Singletons::GetTime().GetCurrentTick() ) )
+    , treatment_( 0 )
 {
     AddInjury( injury );
 }
@@ -70,12 +73,13 @@ PHY_InjuredHuman::PHY_InjuredHuman( MIL_Injury_ABC& injury , const PHY_Composant
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
 PHY_InjuredHuman::PHY_InjuredHuman( MIL_Injury_ABC& injury )
-    : lifeExpectancy_   ( injury.SetLifeExpectancy() )
-    , injuryCategory_   ( injury.GetInjuryCategory() )
-    , injuryID_         ( injury.GetInjuryID() )
-    , pComposantePion_  ( 0 )
-    , timeOfLastUpdate_ ( static_cast< float >( MIL_Singletons::GetTime().GetCurrentTick() ) )
-    , treatment_        ( 0 )
+    : lifeExpectancy_( injury.SetLifeExpectancy() )
+    , injuryCategory_( injury.GetInjuryCategory() )
+    , injuryID_( injury.GetInjuryID() )
+    , isTreated_( false )
+    , pComposantePion_( 0 )
+    , timeOfLastUpdate_( static_cast< float >( MIL_Singletons::GetTime().GetCurrentTick() ) )
+    , treatment_( 0 )
 {
     AddInjury( injury );
 }

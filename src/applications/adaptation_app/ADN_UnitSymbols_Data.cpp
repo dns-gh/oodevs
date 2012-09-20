@@ -42,6 +42,7 @@ ADN_UnitSymbols_Data::UnitSymbolInfo::UnitSymbolInfo( const std::string& name, c
     , fileName_( symbol )
     , guiSvgRender_( new gui::SvglRenderer() )
     , symbols_( new gui::GLSymbols( *guiSvgRender_ ) )
+    , template_( 0 )
 {
     std::replace( fileName_.begin(), fileName_.end(), '*', 'f' );
 

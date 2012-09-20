@@ -43,8 +43,16 @@
 //-----------------------------------------------------------------------------
 ADN_Units_GUI::ADN_Units_GUI( ADN_Units_Data& data )
     : ADN_GUI_ABC( "ADN_Units_GUI" )
-    , data_         ( data )
+    , data_( data )
+    , pOfficersEditLine_( 0 )
+    , pNCOfficersEditLine_( 0 )
+    , pTypeCombo_( 0 )
+    , pStockGroup_( 0 )
+    , pStockLogThreshold_( 0 )
+    , pInstallationGroup_( 0 )
     , pSymbolWidget_( 0 )
+    , pNatureGui_( 0 )
+        
 {
     // NOTHING
 }

@@ -470,7 +470,7 @@ void MIL_EntityManager::WriteUrban( xml::xostream& xos ) const
     xos << xml::start( "urban" );
     schemaWriter.WriteSchema( xos, "exercise", "urban" );
     xos     << xml::start( "urban-objects" );
-        for( CIT_Cities it = cities_.begin(); it != cities_.end(); it++ )
+        for( CIT_Cities it = cities_.begin(); it != cities_.end(); ++it )
             ( *it )->WriteUrban( xos );
     xos     << xml::end
         << xml::end;

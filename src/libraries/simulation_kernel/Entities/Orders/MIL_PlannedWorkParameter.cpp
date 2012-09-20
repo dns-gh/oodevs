@@ -20,6 +20,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PlannedWorkParameter )
 // Created: LGY 2011-06-06
 // -----------------------------------------------------------------------------
 MIL_PlannedWorkParameter::MIL_PlannedWorkParameter()
+    : identifier_( 0u )
 {
     // NOTHING
 }

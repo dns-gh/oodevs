@@ -57,6 +57,15 @@ ADN_Equipement_GUI::ADN_Equipement_GUI( ADN_Equipement_Data& data )
     : ADN_Tabbed_GUI_ABC( "ADN_Equipement_GUI" )
     , data_           ( data )
     , pAttritionTable_( 0 )
+    , pAttritionGraph_( 0 )
+    , pArmorCombo_( 0 )
+    , pMaterialCombo_( 0 )
+    , buttonGroup_( 0 )
+    , pExplosiveParametersGroup_( 0 )
+    , pFlareParametersGroup_( 0 )
+    , pEffectParametersGroup_( 0 )
+    , pMineParametersGroup_( 0 )
+    , pSmokeParametersGroup_( 0 )
 {
     // NOTHING
 }

@@ -1087,10 +1087,11 @@ ADN_Missions_Data::MissionType::MissionType()
 // Created: LDC 2010-08-19
 // -----------------------------------------------------------------------------
 ADN_Missions_Data::MissionType::MissionType( const std::string& name )
+        : name_( name )
+        , displayName_( qApp->translate( "ADN_Tr", name.c_str() ).toAscii().constData() )
+        , isAllowed_( false )
 {
-    name_ = name;
-    displayName_ = qApp->translate( "ADN_Tr", name.c_str() ).toAscii().constData();
-    isAllowed_ = false;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

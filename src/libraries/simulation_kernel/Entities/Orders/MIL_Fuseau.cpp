@@ -49,6 +49,27 @@ MIL_Fuseau::MIL_Fuseau( const MT_Vector2D& vOrientationRefPos, const T_PointVect
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Fuseau constructor
+// Created: LDC 2012-09-19
+// -----------------------------------------------------------------------------
+MIL_Fuseau::MIL_Fuseau( const MIL_Fuseau& rhs )
+    : TER_Polygon( rhs )
+    , pLeftLimit_( rhs.pLeftLimit_ )
+    , pRightLimit_( rhs.pRightLimit_ )
+    , pMiddleLimit_( rhs.pMiddleLimit_ )
+    , vStartGlobalDirection_( rhs.vStartGlobalDirection_ )
+    , vEndGlobalDirection_( rhs.vEndGlobalDirection_ )
+    , globalDirectionLine_( vStartGlobalDirection_, vEndGlobalDirection_ )
+{
+    if( pLeftLimit_ )
+        pLeftLimit_->AddRef( *this );
+    if( pRightLimit_ )
+        pRightLimit_->AddRef( *this );
+    if( pMiddleLimit_ )
+        pMiddleLimit_->AddRef( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Fuseau constructor
 // Created: LDC 2012-08-06
 // -----------------------------------------------------------------------------
 MIL_Fuseau::MIL_Fuseau( const T_PointVector& leftLimit, const T_PointVector& rightLimit )

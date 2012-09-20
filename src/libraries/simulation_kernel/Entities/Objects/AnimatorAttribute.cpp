@@ -61,6 +61,7 @@ AnimatorAttribute::~AnimatorAttribute()
 AnimatorAttribute& AnimatorAttribute::operator=( const AnimatorAttribute& rhs )
 {
     maxAnimators_ = rhs.maxAnimators_;
+    animators_ = rhs.animators_;
     return *this;
 }
 

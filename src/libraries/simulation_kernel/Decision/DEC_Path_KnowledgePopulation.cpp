@@ -38,7 +38,10 @@ namespace
 // -----------------------------------------------------------------------------
 DEC_Path_KnowledgePopulation::DEC_Path_KnowledgePopulation( const DEC_Knowledge_Population& knowledge, boost::function< double( unsigned int ) > populationAttitudeCost, bool avoidPolicy )
     : populationAttitudeCost_( populationAttitudeCost )
-    , bAvoidPolicy_          ( avoidPolicy )
+    , bAvoidPolicy_( avoidPolicy )
+    , populationSecurityRange_( 100. )
+    , costOutsideOfPopulation_( 0. )
+        
 {
     elements_.reserve( 10 );
     PopulationPathInserter pathInserter( *this );

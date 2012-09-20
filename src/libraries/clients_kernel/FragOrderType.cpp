@@ -64,11 +64,14 @@ void FragOrderType::ReadParameter( xml::xistream& xis )
 bool FragOrderType::IsAvailableFor( const kernel::Entity_ABC& entity ) const
 {
     const std::string& typeName = entity.GetTypeName();
-    if( 0 == diaType_.find( "Rep_OrderConduite_Pion_" ) )
+    std::string repOrderPion ( "Rep_OrderConduite_Pion_" );
+    std::string repOrderAutomat ( "Rep_OrderConduite_Automate_"  );
+    std::string repOrderPopulation ( "Rep_OrderConduite_Population_"  );
+    if( 0 == diaType_.compare( 0, repOrderPion.size() ,repOrderPion ) )
         return typeName == "agent";
-    if( 0 == diaType_.find( "Rep_OrderConduite_Automate_" ) )
+    if( 0 == diaType_.compare( 0, repOrderAutomat.size(), repOrderAutomat ) )
         return typeName == "automat";
-    if( 0 == diaType_.find( "Rep_OrderConduite_Population_" ) )
+    if( 0 == diaType_.compare( 0, repOrderPopulation.size(), repOrderPopulation) )
         return typeName == "population";
     return true;
 }

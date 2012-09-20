@@ -167,7 +167,7 @@ void DEC_Knowledge_AgentDataDetection::WriteKnowledges( xml::xostream& xos ) con
     if( pArmySurrenderedTo_ )
         xos << xml::attribute( "surrendered-to", pArmySurrenderedTo_->GetID() );
     xos     << xml::start( "vision-volumes" );
-    for( CIT_ComposanteVolumeSet it = visionVolumes_.begin(); it != visionVolumes_.end(); it++ )
+    for( CIT_ComposanteVolumeSet it = visionVolumes_.begin(); it != visionVolumes_.end(); ++it )
     {
         xos     << xml::start( "volume" );
         xos     << xml::attribute( "id", ( *it )->GetID() );

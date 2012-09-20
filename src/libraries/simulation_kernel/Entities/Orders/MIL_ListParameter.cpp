@@ -42,7 +42,7 @@ MIL_ListParameter::MIL_ListParameter( const DEC_KnowledgeResolver_ABC& resolver,
 // -----------------------------------------------------------------------------
 MIL_ListParameter::MIL_ListParameter( const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& paramList )
 {
-    for( std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >::const_iterator it = paramList.begin(); it != paramList.end(); it++ )
+    for( std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >::const_iterator it = paramList.begin(); it != paramList.end(); ++it )
         list_.push_back( *it );
 }
 

@@ -127,7 +127,7 @@ public:
     virtual const std::set< MIL_Object_ABC* >& GetUniversalObjects() const;
 
     MIL_Population* FindPopulation( MIL_UrbanObject_ABC* urbanObject ) const;
-    const tools::Resolver< MIL_Army_ABC >& MIL_EntityManager::GetArmies() const;
+    const tools::Resolver< MIL_Army_ABC >& GetArmies() const;
     unsigned int ConvertUrbanIdToSimId( unsigned int urbanId );
     bool ConvertIdToUrbanId( unsigned int& id ) const;
     void Accept( KnowledgesVisitor_ABC& visitor ) const;

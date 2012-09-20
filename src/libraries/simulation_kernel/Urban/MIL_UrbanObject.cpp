@@ -600,14 +600,14 @@ void MIL_UrbanObject::UpdateState()
 // -----------------------------------------------------------------------------
 const std::vector< boost::shared_ptr< MT_Vector2D > >& MIL_UrbanObject::ComputeLocalisationsInsideBlock() const
 {
-    if( strechedArea_.size() == 0 )
+    if( stretchedArea_.empty() )
     {
         const T_PointVector& points = GetLocalisation().GetPoints();
         const MT_Vector2D barycenter = GetLocalisation().ComputeBarycenter();
         for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
-            strechedArea_.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( *it + MT_Vector2D( *it - barycenter ).Normalize() * stretchOffset_ ) ) );
+            stretchedArea_.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( *it + MT_Vector2D( *it - barycenter ).Normalize() * stretchOffset_ ) ) );
     }
-    return strechedArea_;
+    return stretchedArea_;
 }
 
 // -----------------------------------------------------------------------------

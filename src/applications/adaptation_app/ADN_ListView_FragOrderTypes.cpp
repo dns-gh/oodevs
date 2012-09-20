@@ -67,6 +67,9 @@ namespace
     public:
         ADN_FragOrder_WizardPage( const T_ItemVector& existingItems, const QString& pageTitle, QWidget* pParent = 0 )
             : ADN_WizardPage< FragOrder >( existingItems, pageTitle, pParent )
+            , addForAllUnits_( 0 )
+            , addForAllAutomata_( 0 )
+            , addForAllPops_( 0 )
         {
             // NOTHING
         }

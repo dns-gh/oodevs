@@ -22,8 +22,8 @@
 // -----------------------------------------------------------------------------
 ADN_Health_Data::WoundInfo::WoundInfo()
     : lifeExpectancy_( "0s" )
-    , treatTime_     ( "0s" )
-    , restingTime_   ( "0s" )
+    , treatTime_( "0s" )
+    , restingTime_( "0s" )
 
 {
     // NOTHING
@@ -45,10 +45,10 @@ void ADN_Health_Data::WoundInfo::ReadArchive( xml::xistream& input )
 // Name: WoundInfo::WriteArchive
 // Created: APE 2005-03-22
 // -----------------------------------------------------------------------------
-void ADN_Health_Data::WoundInfo::WriteArchive( xml::xostream& output )
+void ADN_Health_Data::WoundInfo::WriteArchive( xml::xostream& output, int n )
 {
     output << xml::start( "injury" )
-             << xml::attribute( "category", ADN_Tr::ConvertFromDoctorSkills( nType_ ) )
+             << xml::attribute( "category", ADN_Tr::ConvertFromDoctorSkills( static_cast< E_DoctorSkills >( n ) ) )
              << xml::attribute( "life-expectancy", lifeExpectancy_ )
              << xml::attribute( "caring-time",     treatTime_ )
              << xml::attribute( "resting-time",    restingTime_ )
@@ -69,8 +69,7 @@ ADN_Health_Data::ADN_Health_Data()
     , shockRestingTime_        ( "0s" )
     , contaminationRestingTime_( "0s" )
 {
-    for( int n = 0; n < eNbrDoctorSkills; ++n )
-        wounds[n].nType_ = (E_DoctorSkills)n;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -183,7 +182,7 @@ void ADN_Health_Data::WriteArchive( xml::xostream& output )
             << xml::end
             << xml::start( "injuries" );
     for( int n = 0; n < eNbrDoctorSkills; ++n )
-        wounds[n].WriteArchive( output );
+        wounds[n].WriteArchive( output, n );
     output      << xml::start( "injury" )
                     << xml::attribute( "category", "mental" )
                     << xml::attribute( "caring-time", shockTreatTime_ )

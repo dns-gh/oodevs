@@ -322,13 +322,10 @@ void ADN_Project_Data::WorkDirInfos::UseTempDirectory( bool bActivateTemp )
     bTmpActivated_ = bActivateTemp;
     if( bActivateTemp )
     {
-        char *pTempDir = ( char* )malloc( sizeof( char )*_MAX_PATH );
-        int   len;
-        if( ( len = GetTempPath( _MAX_PATH, pTempDir ) ) > _MAX_PATH )
-        {
-            pTempDir = ( char* )realloc( pTempDir, sizeof( char ) * len + 1 );
-            assert( ( int )GetTempPath( len + 1, pTempDir ) <= len + 1 );
-        }
+        char *pTempDir = ( char* )malloc( sizeof( char ) * ( _MAX_PATH + 1 ) );
+        int len = GetTempPath( _MAX_PATH + 1, pTempDir );
+        if( !len )
+            throw std::runtime_error( "Unable to access temp directory" );
         std::string res( pTempDir );
         std::replace( res.begin(), res.end(), '\\', '/' );
         std::stringstream stream;

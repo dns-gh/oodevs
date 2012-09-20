@@ -101,7 +101,7 @@ void DEC_Knowledge_AgentDataRecognition::WriteKnowledges( xml::xostream& xos ) c
     if( rMajorOperationalState_ != std::numeric_limits< double >::max() )
         xos << xml::attribute( "major-op-state", rMajorOperationalState_ );
     unsigned int number = 1;
-    for( CIT_KnowledgeComposanteVector it = composantes_.begin(); it != composantes_.end(); it++ )
+    for( CIT_KnowledgeComposanteVector it = composantes_.begin(); it != composantes_.end(); ++it )
     {
         CIT_KnowledgeComposanteVector itNext = it + 1;
         if( itNext == composantes_.end() || ( it->GetType().GetMosID().id() != itNext->GetType().GetMosID().id() ) )

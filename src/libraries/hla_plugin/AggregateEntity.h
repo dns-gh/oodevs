@@ -97,7 +97,10 @@ private:
     //@{
     struct T_Equipment
     {
-        T_Equipment(){}
+        T_Equipment()
+            : type_( 0 )
+            , available_( 0 )
+        {}
         T_Equipment( unsigned int type, unsigned int available, const rpr::EntityType& entityType )
             : type_      ( type )
             , available_ ( available )

@@ -206,6 +206,8 @@ MIL_AgentTypePion::MIL_AgentTypePion( const std::string& strName, const std::str
 MIL_AgentTypePion::MIL_AgentTypePion( const DEC_Model_ABC* pModel )
     : pModel_   ( pModel )
     , pUnitType_( 0 )
+    , rDistanceAvantLimas_( 0. )
+    , rFeedbackTime_( 0. )
     , pHumanRepartition_( new MIL_HumanRepartition() )
 {
     // NOTHING

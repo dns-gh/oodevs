@@ -25,7 +25,9 @@ namespace bpt = boost::posix_time;
 // Created: JSR 2011-11-22
 // -----------------------------------------------------------------------------
 PHY_Ephemeride::PHY_Ephemeride()
-    : bIsNight_( false )
+    : pDayBase_( 0 )
+    , pNightBase_( 0 )
+    , bIsNight_( false )
 {
         // NOTHING
 }

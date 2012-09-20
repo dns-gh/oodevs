@@ -60,7 +60,7 @@ void PHY_RolePion_TerrainAnalysis::GetCrossroads( std::vector< boost::shared_ptr
     CheckFuseau();
     if( !crossroadsCacheValid_ )
         UpdateCrossroads();
-    for( std::map< MT_Vector2D, boost::shared_ptr< MT_Vector2D > >::const_iterator it = crossroadsBuffer_.begin(); it != crossroadsBuffer_.end(); it++ )
+    for( std::map< MT_Vector2D, boost::shared_ptr< MT_Vector2D > >::const_iterator it = crossroadsBuffer_.begin(); it != crossroadsBuffer_.end(); ++it )
         points.push_back( it->second );
 }
 
@@ -114,7 +114,7 @@ void PHY_RolePion_TerrainAnalysis::UpdateCrossroads()
     }
     //Add new points
     std::vector< boost::shared_ptr< MT_Vector2D > > temp = TER_AnalyzerManager::GetAnalyzerManager().FindCrossroadsWithinCircle( lastPos_, static_cast< float >( range ) );
-    for( std::vector< boost::shared_ptr< MT_Vector2D > >::const_iterator it = temp.begin(); it != temp.end(); it++ )
+    for( std::vector< boost::shared_ptr< MT_Vector2D > >::const_iterator it = temp.begin(); it != temp.end(); ++it )
         crossroadsBuffer_.insert( std::pair< MT_Vector2D, boost::shared_ptr< MT_Vector2D > >( **it, *it ) );
     //Remove outside fuseau
     if( !fuseau_.IsNull() )
@@ -150,7 +150,7 @@ void PHY_RolePion_TerrainAnalysis::UpdateSafety( float radius, float safetyDista
     //Add new points
     std::vector< boost::shared_ptr< MT_Vector2D > > positions;
     TER_AnalyzerManager::GetAnalyzerManager().FindSafetyPositionsWithinCircle( lastPos_, radius, safetyDistance, positions );
-    for( std::vector< boost::shared_ptr< MT_Vector2D > >::const_iterator it = positions.begin(); it != positions.end(); it++ )
+    for( std::vector< boost::shared_ptr< MT_Vector2D > >::const_iterator it = positions.begin(); it != positions.end(); ++it )
         safetyBuffer_.insert( std::pair< MT_Vector2D, boost::shared_ptr< MT_Vector2D > >( **it, *it ) );
     //Remove outside fuseau
     if( !fuseau_.IsNull() )
@@ -179,7 +179,7 @@ void PHY_RolePion_TerrainAnalysis::FindSafetyPositionsWithinCircle( std::vector<
     CheckFuseau();
     if( !safetyCacheValid_ || cacheRadius_ != radius || cacheSafety_ != safetyDistance )
         UpdateSafety( radius, safetyDistance );
-    for( std::map< MT_Vector2D, boost::shared_ptr< MT_Vector2D > >::const_iterator it = safetyBuffer_.begin(); it != safetyBuffer_.end(); it++ )
+    for( std::map< MT_Vector2D, boost::shared_ptr< MT_Vector2D > >::const_iterator it = safetyBuffer_.begin(); it != safetyBuffer_.end(); ++it )
         points.push_back( it->second );
 }
 

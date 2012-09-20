@@ -33,6 +33,9 @@ MIL_AgentType_ABC::MIL_AgentType_ABC( const std::string& strName, const std::str
 // Created: LDC 2009-04-23
 // -----------------------------------------------------------------------------
 MIL_AgentType_ABC::MIL_AgentType_ABC()
+    : nID_         ( 0 )
+    , pNatureLevel_( 0 )
+    , pNatureAtlas_( 0 )
 {
     // NOTHING
 }

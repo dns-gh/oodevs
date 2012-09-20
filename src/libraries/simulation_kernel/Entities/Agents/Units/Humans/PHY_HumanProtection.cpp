@@ -149,7 +149,7 @@ PHY_HumanProtection::~PHY_HumanProtection()
 // Name: PHY_HumanProtection ComputeProtectionValue
 // Created: NLD 2004-08-04
 // -----------------------------------------------------------------------------
-float PHY_HumanProtection::ComputeProtectionValue( int injuryID , int threshold , const std::string type ) const
+float PHY_HumanProtection::ComputeProtectionValue( int injuryID , int threshold , const std::string& type ) const
 {
     MIL_MedicalTreatmentType::Find( injuryID )->GetName();
     float protectionValue = 0;
@@ -229,7 +229,7 @@ const std::string PHY_HumanProtection::GetName() const
 // Name: PHY_SensorType::IsProtectionAgainstThisType
 // Created: NLD 2004-08-12
 // -----------------------------------------------------------------------------
-bool PHY_HumanProtection::IsProtectionAgainstThisType( const std::string type , T_InjuryTypes injuryTypesList ) const
+bool PHY_HumanProtection::IsProtectionAgainstThisType( const std::string& type , T_InjuryTypes injuryTypesList ) const
 {
     for( CIT_InjuryTypes it = injuryTypesList.begin() ; it != injuryTypesList.end() ; ++it)
     {

@@ -30,6 +30,7 @@ PHY_DotationCategory_IndirectFire_ABC& PHY_DotationCategory_IndirectMineFire::Cr
 PHY_DotationCategory_IndirectMineFire::PHY_DotationCategory_IndirectMineFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis,
                                                                               unsigned int nInterventionType, double rDispersionX, double rDispersionY )
     : PHY_DotationCategory_IndirectObjectCreationFire( type, dotationCategory, "mined area (scattered)", nInterventionType, rDispersionX, rDispersionY )
+    , nNbrObjects_( 0 )
 {
     xis >> xml::attribute( "mine-count", nNbrObjects_ );
 }

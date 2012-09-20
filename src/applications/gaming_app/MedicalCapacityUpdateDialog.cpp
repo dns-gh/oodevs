@@ -51,18 +51,6 @@ MedicalCapacityUpdateDialog::Capacity::Capacity( QWidget* parent, const MedicalT
 }
 
 // -----------------------------------------------------------------------------
-// Name: MedicalCapacityUpdateDialog::Capacity
-// Created: JCR 2010-06-28
-// -----------------------------------------------------------------------------
-MedicalCapacityUpdateDialog::Capacity::Capacity( const Capacity& rhs )
-    : name_ ( rhs.name_ )
-    , id_ ( rhs.id_ )
-    , patients_ ( rhs.patients_ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: MedicalCapacityUpdateDialog::Capacity::Update
 // Created: LDC 2010-07-07
 // -----------------------------------------------------------------------------

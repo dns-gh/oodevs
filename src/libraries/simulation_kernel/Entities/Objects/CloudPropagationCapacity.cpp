@@ -24,8 +24,9 @@ BOOST_CLASS_EXPORT_IMPLEMENT( CloudPropagationCapacity )
 // Created: LGY 2011-07-04
 // -----------------------------------------------------------------------------
 CloudPropagationCapacity::CloudPropagationCapacity()
-    : rCurrentCircleRadius_     ( 0.f )
-    , rCurrentPropagationLenght_( 0.f )
+    : time_( 0 )
+    , rCurrentCircleRadius_     ( 0.f )
+    , rCurrentPropagationLength_( 0.f )
 {
     // NOTHING
 }
@@ -37,7 +38,7 @@ CloudPropagationCapacity::CloudPropagationCapacity()
 CloudPropagationCapacity::CloudPropagationCapacity( const CloudPropagationCapacity& capacity )
     : origin_                   ( capacity.origin_ )
     , rCurrentCircleRadius_     ( capacity.rCurrentCircleRadius_ )
-    , rCurrentPropagationLenght_( capacity.rCurrentPropagationLenght_ )
+    , rCurrentPropagationLength_( capacity.rCurrentPropagationLength_ )
 {
     // NOTHING
 }
@@ -143,9 +144,9 @@ bool CloudPropagationCapacity::UpdateLocalisation( double angle, TER_Localisatio
         rCurrentCircleRadius_ += wind.rSpeed_;
     }
     else
-        rCurrentPropagationLenght_ = std::max( rCurrentPropagationLenght_, rCurrentCircleRadius_ ) + wind.rSpeed_;
+        rCurrentPropagationLength_ = std::max( rCurrentPropagationLength_, rCurrentCircleRadius_ ) + wind.rSpeed_;
 
-    if( rCurrentCircleRadius_ >= rCurrentPropagationLenght_ || angle >= MT_PI )
+    if ( rCurrentCircleRadius_ >= rCurrentPropagationLength_ || angle >= MT_PI )
     {
         T_PointVector points;
         points.push_back( origin_ );
@@ -158,8 +159,8 @@ bool CloudPropagationCapacity::UpdateLocalisation( double angle, TER_Localisatio
         const double rInitialAngle = Angle( MT_Vector2D( 0., 1. ), wind.vDirection_ );
         for( double rAngle = 0; rAngle <= MT_PI; rAngle += MT_PI / 8 )
             points.push_back( MT_Vector2D( origin_.rX_ + rCurrentCircleRadius_ * cos( rInitialAngle - rAngle ), origin_.rY_ + rCurrentCircleRadius_ * sin( rInitialAngle - rAngle ) ) );
-        points.push_back( points.back()  + rCurrentPropagationLenght_ * wind.vDirection_.Rotated( -0.5 * angle ) );
-        points.push_back( points.front() + rCurrentPropagationLenght_ * wind.vDirection_.Rotated(  0.5 * angle ) );
+        points.push_back( points.back()  + rCurrentPropagationLength_ * wind.vDirection_.Rotated( -0.5 * angle ) );
+        points.push_back( points.front() + rCurrentPropagationLength_ * wind.vDirection_.Rotated(  0.5 * angle ) );
         newLocalisation.Reset( TER_Localisation::ePolygon, points );
     }
     return true;
@@ -175,6 +176,6 @@ void CloudPropagationCapacity::serialize( Archive& file, const unsigned int )
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
          & origin_
          & rCurrentCircleRadius_
-         & rCurrentPropagationLenght_
+         & rCurrentPropagationLength_
          & time_;
 }

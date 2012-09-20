@@ -18,9 +18,9 @@
 template< class T >
 ADN_Type_Vector_ABC<T>::ADN_Type_Vector_ABC( bool bAutoRef, const char* szName )
     : ADN_Connector_Vector_ABC( szName )
-    , std::vector<T*>         ()
-    , ADN_DataTreeNode_ABC    ()
-    , bAutoRef_               ( bAutoRef )
+    , std::vector<T*>()
+    , ADN_DataTreeNode_ABC()
+    , bAutoRef_( bAutoRef )
 {
     // NOTHING
 }
@@ -32,8 +32,11 @@ ADN_Type_Vector_ABC<T>::ADN_Type_Vector_ABC( bool bAutoRef, const char* szName )
 template <class T>
 ADN_Type_Vector_ABC<T>::ADN_Type_Vector_ABC( const ADN_Type_Vector_ABC& o )
     : ADN_Connector_Vector_ABC()
-    , ADN_DataTreeNode_ABC    ()
-    , std::vector<T*>         ( o )
+    , ADN_DataTreeNode_ABC()
+    , std::vector<T*>( o )
+    , bAutoRef_( o.bAutoRef_ )
+    , strNodeName_( o.strNodeName_ )
+    , strItemTypeName_( o.strItemTypeName_ )
 {
     // NOTHING
 }

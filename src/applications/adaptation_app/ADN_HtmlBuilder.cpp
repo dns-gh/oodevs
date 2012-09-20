@@ -15,7 +15,10 @@
 // Created: APE 2005-04-18
 // -----------------------------------------------------------------------------
 ADN_HtmlBuilder::ADN_HtmlBuilder()
-: strOutput_()
+    : strOutput_()
+    , nTableCols_( 0 )
+    , nTableRows_( 0 )
+    , pStringArray_( 0 )
 {
 }
 

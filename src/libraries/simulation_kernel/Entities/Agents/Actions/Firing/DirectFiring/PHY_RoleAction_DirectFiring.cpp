@@ -216,7 +216,7 @@ int  PHY_RoleAction_DirectFiring::IlluminatePion( boost::shared_ptr< DEC_Knowled
 void PHY_RoleAction_DirectFiring::IlluminatePionSuspended( boost::shared_ptr< DEC_Knowledge_Agent > pEnemy )
 {
     MIL_Agent_ABC* pTarget = pEnemy && pEnemy->IsValid() ? &pEnemy->GetAgentKnown() : 0;
-    if( !pTarget )
+    if( pTarget )
     {
         pTarget->GetRole< PHY_RoleInterface_Illumination >().NotifyStopIlluminatedBy( owner_ );
         owner_.GetRole< PHY_RoleInterface_Illumination >().NotifyStopIlluminate();

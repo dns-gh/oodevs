@@ -880,7 +880,7 @@ ADN_Composantes_Data::SensorInfos::SensorInfos()
 std::string ADN_Composantes_Data::SensorInfos::GetNodeName()
 {
     std::string strResult( "du senseur " );
-    return strResult + ptrSensor_.GetData()->strName_.GetData().c_str();
+    return strResult + ptrSensor_.GetData()->strName_.GetData();
 }
 
 // -----------------------------------------------------------------------------
@@ -889,7 +889,7 @@ std::string ADN_Composantes_Data::SensorInfos::GetNodeName()
 // -----------------------------------------------------------------------------
 std::string ADN_Composantes_Data::SensorInfos::GetItemName()
 {
-    return ptrSensor_.GetData()->strName_.GetData().c_str();
+    return ptrSensor_.GetData()->strName_.GetData();
 }
 
 // -----------------------------------------------------------------------------

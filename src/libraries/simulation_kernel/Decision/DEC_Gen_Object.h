@@ -98,8 +98,8 @@ private:
     const MIL_Automate* pTC2_;
     int altitudeModifier_;
     int timeLimit_;
-    bool mining_;
     int lodging_;
+    bool mining_;
     //@}
 };
 

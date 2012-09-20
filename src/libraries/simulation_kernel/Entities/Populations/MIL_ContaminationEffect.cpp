@@ -30,6 +30,9 @@ MIL_ContaminationEffect::MIL_ContaminationEffect( MIL_PopulationHumans& humans, 
 // Created: JSR 2012-03-07
 // -----------------------------------------------------------------------------
 MIL_ContaminationEffect::MIL_ContaminationEffect()
+    : delay_ ( 0 )
+    , humans_( 0 )
+    , time_  ( 0 )
 {
         // NOTHING
 }

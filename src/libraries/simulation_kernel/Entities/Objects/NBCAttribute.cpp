@@ -233,7 +233,7 @@ NBCAttribute& NBCAttribute::operator=( const NBCAttribute& rhs )
 // -----------------------------------------------------------------------------
 bool NBCAttribute::IsContaminating() const
 {
-    if( agents_.size() == 0 )
+    if( agents_.empty() )
         return false;
     if( nForm_ == eGas )
         return agents_.front()->IsGasContaminating();
@@ -246,7 +246,7 @@ bool NBCAttribute::IsContaminating() const
 // -----------------------------------------------------------------------------
 bool NBCAttribute::IsPoisonous() const
 {
-    if( agents_.size() == 0 )
+    if( agents_.empty() )
         return false;
     if( nForm_ == eGas )
         return agents_.front()->IsGasPoisonous();

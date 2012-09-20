@@ -62,7 +62,7 @@ private:
     MT_Vector2D origin_;
     unsigned int time_;
     double rCurrentCircleRadius_;
-    double rCurrentPropagationLenght_;
+    double rCurrentPropagationLength_;
     //@}
 };
 

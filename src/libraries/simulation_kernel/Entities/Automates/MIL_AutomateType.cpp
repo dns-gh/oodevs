@@ -150,8 +150,8 @@ void MIL_AutomateType::Terminate()
 MIL_AutomateType::MIL_AutomateType( const std::string& strName, xml::xistream& xis )
     : nID_    ( 0 )
     , strName_( strName )
-    , pTypePC_( 0 )
     , pModel_ ( 0 )
+    , pTypePC_( 0 )
 {
     xis >> xml::attribute( "id", nID_ )
         >> xml::list( "unit", *this, &MIL_AutomateType::ReadUnit );
@@ -167,7 +167,9 @@ MIL_AutomateType::MIL_AutomateType( const std::string& strName, xml::xistream& x
 // Created: LDC 2009-04-24
 // -----------------------------------------------------------------------------
 MIL_AutomateType::MIL_AutomateType( const DEC_Model_ABC& model )
-    : pModel_( &model )
+    : nID_( 0 )
+    , pModel_( &model )
+    , pTypePC_( 0 )
 {
     // NOTHING
 }

@@ -47,7 +47,7 @@ public:
 
     //! @name Compilation compatibility
     //@{
-    explicit Position( double ) {}
+    explicit Position( double ) : init_( false ) {}
 
     template< typename T >
     Position& operator+=( const T& ) { return *this; }

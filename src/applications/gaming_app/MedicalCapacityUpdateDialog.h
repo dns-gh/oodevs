@@ -100,13 +100,14 @@ private:
     struct Capacity
     {
         explicit Capacity( QWidget* parent, const MedicalTreatmentCapacity& capacity );
-        Capacity( const Capacity& rhs );
         void Update( const MedicalTreatmentCapacity& capacity );
 
         int id_;
         std::string name_;
         QSpinBox*   baseline_;
         QSpinBox*   patients_;
+    private:
+        Capacity( const Capacity& rhs );
     };
     typedef boost::ptr_vector< Capacity >::const_iterator CIT_Capacities;
     //@}

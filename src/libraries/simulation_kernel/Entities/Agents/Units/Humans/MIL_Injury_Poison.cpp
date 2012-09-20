@@ -184,7 +184,7 @@ namespace
 {
     struct PHY_PoisonProtectionFunctor : private boost::noncopyable
     {
-        PHY_PoisonProtectionFunctor( int agentConcentration, const std::string NBCAgent, unsigned int injuryID )
+        PHY_PoisonProtectionFunctor( int agentConcentration, const std::string& NBCAgent, unsigned int injuryID )
             : agentConcentration_( agentConcentration )
             , injuryID_          ( injuryID )
             , NBCAgent_          ( NBCAgent )

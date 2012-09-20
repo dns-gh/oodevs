@@ -34,9 +34,6 @@ public:
     virtual bool Parse( QString content, geometry::Point2f& result, QStringList& hint ) const = 0;
     virtual int GetNumberOfParameters() const = 0;
     //@}
-
-private:
-   int numParameters_;
 };
 
 }

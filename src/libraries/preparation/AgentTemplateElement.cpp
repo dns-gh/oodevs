@@ -70,7 +70,8 @@ namespace
 // -----------------------------------------------------------------------------
 AgentTemplateElement::AgentTemplateElement( AgentsModel& agents, const tools::Resolver_ABC< kernel::AgentType, std::string >& types, xml::xistream& input )
     : agents_( agents )
-    , type_  ( ReadType( types, input ) )
+    , type_( ReadType( types, input ) )
+    , cp_ ( false )
 {
     ReadName( input, name_ );
     if( name_.isEmpty() )

@@ -95,7 +95,6 @@ private:
     boost::asio::ip::tcp::resolver resolver_;
     boost::asio::ip::tcp::socket socket_;
     boost::function< void( const sword::SimToClient& ) > simToClientHandler_;
-    unsigned int bytes_;
     //@}
 };
 

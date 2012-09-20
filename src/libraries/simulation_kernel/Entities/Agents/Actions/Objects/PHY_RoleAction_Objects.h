@@ -138,8 +138,6 @@ private:
     //! @name Member data
     //@{
     MIL_AgentPion& owner_;
-    double         rWeightCapacity_;
-    double         rVolumeCapacity_;
     //@}
 };
 

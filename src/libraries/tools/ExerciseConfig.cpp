@@ -100,12 +100,12 @@ void ExerciseConfig::LoadExercise( const std::string& file )
     }
     catch( xml::exception& exception )
     {
-        throw exception;
+        throw;
     }
     catch( std::exception& e )
     {
         MT_LOG_ERROR_MSG( e.what() );
-        throw e;
+        throw;
     }
 }
 

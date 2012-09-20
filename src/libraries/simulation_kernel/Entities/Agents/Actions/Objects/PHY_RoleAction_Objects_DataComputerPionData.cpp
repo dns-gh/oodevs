@@ -29,8 +29,9 @@
 // Created: NLD 2004-10-01
 // -----------------------------------------------------------------------------
 PHY_RoleAction_Objects_DataComputerPionData::PHY_RoleAction_Objects_DataComputerPionData()
-    : pObject_             ( 0 )
-    , pPion_               ( 0 )
+    : operation_( eConstruct )
+    , pObject_( 0 )
+    , pPion_( 0 )
     , bConsumptionReserved_( false )
 {
     // NOTHING

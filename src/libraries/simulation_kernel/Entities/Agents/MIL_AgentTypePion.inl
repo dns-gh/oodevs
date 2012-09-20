@@ -109,9 +109,12 @@ bool MIL_AgentTypePion::operator==( const MIL_AgentTypePion& rhs ) const
 template< typename T >
 MIL_AgentTypePion::MIL_AgentTypePion( const std::string& strName, xml::xistream& xis, T* )
     : MIL_AgentType_ABC( strName, xis )
+    , pModel_( 0 )
+    , pUnitType_( new T( xis ) )
+    , rDistanceAvantLimas_( 0. )
+    , rFeedbackTime_( 0. )
     , pHumanRepartition_( new MIL_HumanRepartition( xis ) )
 {
-    pUnitType_ = new T( xis );
     InitializeRapFor              ( xis );
     InitializeDistancesAvantPoints( xis );
     InitializeModel               ( xis );

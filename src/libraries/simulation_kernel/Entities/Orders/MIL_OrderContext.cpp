@@ -54,10 +54,10 @@ MIL_OrderContext::MIL_OrderContext( const sword::MissionParameters& asn, const M
 MIL_OrderContext::MIL_OrderContext( const MIL_OrderContext& rhs )
     : hasContext_   ( rhs.hasContext_ )
     , limas_        ( rhs.limas_  )
-    , fuseau_       ()
+    , fuseau_       ( rhs.fuseau_ )
     , dirDanger_    ( rhs.dirDanger_ )
 {
-    fuseau_ = rhs.fuseau_; // $$$$ SBO 2008-03-04: ...
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------

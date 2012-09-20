@@ -257,8 +257,10 @@ std::map< const void*, unsigned int > PHY_PerceptionSurfaceAgent::GetTargetsPerc
 PHY_PerceptionSurfaceAgent& PHY_PerceptionSurfaceAgent::operator=( const PHY_PerceptionSurfaceAgent& rhs )
 {
     pSensorType_ = rhs.pSensorType_;
-    vOrigin_     = rhs.vOrigin_;
-    rHeight_     = rhs.rHeight_;
-    sectors_     = rhs.sectors_;
+    vOrigin_ = rhs.vOrigin_;
+    rHeight_ = rhs.rHeight_;
+    sectors_ = rhs.sectors_;
+    perceptionsUnderway_ = rhs.perceptionsUnderway_;
+    perceptionsBuffer_ = rhs.perceptionsBuffer_;
     return *this;
 }

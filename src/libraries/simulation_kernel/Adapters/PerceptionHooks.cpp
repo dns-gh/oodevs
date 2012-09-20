@@ -119,7 +119,7 @@ namespace
 
         if( !list.empty() )
         {
-            for( std::vector< const MIL_UrbanObject_ABC* >::const_iterator it = list.begin(); it != list.end() && rVisionNRJ > 0; it++ )
+            for( std::vector< const MIL_UrbanObject_ABC* >::const_iterator it = list.begin(); it != list.end() && rVisionNRJ > 0; ++it )
             {
                 const MIL_UrbanObject_ABC& object = **it;
                 const UrbanPhysicalCapacity* pPhysical = object.Retrieve< UrbanPhysicalCapacity >();

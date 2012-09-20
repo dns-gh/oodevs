@@ -446,7 +446,7 @@ ADN_Drawings_Data::DrawingInfo* const ADN_Drawings_Data::GetDrawing( const std::
 // Name: ADN_Drawings_Data::GetGeometryDrawings
 // Created: ABR 2011-04-21
 // -----------------------------------------------------------------------------
-ADN_Drawings_Data::T_DrawingInfoVector& ADN_Drawings_Data::GetGeometryDrawings( const std::string geometries, const std::string& category )
+ADN_Drawings_Data::T_DrawingInfoVector& ADN_Drawings_Data::GetGeometryDrawings( const std::string& geometries, const std::string& category )
 {
     T_DrawingInfoVector& currentVector = geometryMap_[ geometries ];
     if( currentVector.empty() )

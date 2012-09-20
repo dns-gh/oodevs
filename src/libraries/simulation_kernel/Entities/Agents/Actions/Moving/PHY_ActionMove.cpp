@@ -33,12 +33,13 @@
 // -----------------------------------------------------------------------------
 PHY_ActionMove::PHY_ActionMove( MIL_AgentPion& pion, boost::shared_ptr< DEC_Path_ABC > pPath )
     : PHY_DecisionCallbackAction_ABC( pion )
-    , pion_                         ( pion )
-    , role_                         ( pion.GetRole< moving::PHY_RoleAction_InterfaceMoving >() )
-    , pMainPath_                    ( boost::dynamic_pointer_cast< DEC_Agent_Path >( pPath ) )
-    , executionSuspended_           ( false )
-    , isBlockedByObject_            ( false )
-    , blockedTickCounter_           ( 0 )
+    , pion_( pion )
+    , role_( pion.GetRole< moving::PHY_RoleAction_InterfaceMoving >() )
+    , pMainPath_( boost::dynamic_pointer_cast< DEC_Agent_Path >( pPath ) )
+    , executionSuspended_( false )
+    , isBlockedByObject_( false )
+    , blockedTickCounter_( 0 )
+    , obstacleId_( 0 )
 {
     if( pMainPath_.get() )
         pMainPath_->AddRef();

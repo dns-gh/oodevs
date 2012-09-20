@@ -95,7 +95,7 @@ void WeatherListView::DeleteItem()
 // -----------------------------------------------------------------------------
 unsigned long WeatherListView::PopTrashedWeather()
 {
-    if( trashedWeather_.size() == 0 )
+    if( trashedWeather_.empty() )
         return 0;
     unsigned long result = trashedWeather_.front();
     trashedWeather_.pop();

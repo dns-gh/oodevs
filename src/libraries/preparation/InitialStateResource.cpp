@@ -31,8 +31,9 @@ InitialStateResource::InitialStateResource( const QString& name, const QString& 
 // Created: ABR 2011-03-02
 // -----------------------------------------------------------------------------
 InitialStateResource::InitialStateResource( xml::xistream& xis )
-    : category_   ( "" )
-    , maximum_    ( 0 )
+    : category_( "" )
+    , maximum_( 0 )
+    , number_( 0 )
     , consumption_( 0 )
 {
     std::string name;

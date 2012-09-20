@@ -273,7 +273,7 @@ void NodeElement::DistributeResource( float functionalState, const ResourceNetwo
     }
     for( IT_ResourceLinks it = links_.begin(); it != links_.end(); ++it )
         ( *it )->ResetFlow();
-    if( links_.size() > 0 )
+    if( !links_.empty() )
     {
         T_ResourceLinks links = links_;
         DoDistributeResource( links, model );

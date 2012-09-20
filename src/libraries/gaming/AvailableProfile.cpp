@@ -16,6 +16,8 @@
 // Created: SBO 2009-12-18
 // -----------------------------------------------------------------------------
 AvailableProfile::AvailableProfile()
+    : password_( false )
+    , supervisor_( false )
 {
     // NOTHING
 }

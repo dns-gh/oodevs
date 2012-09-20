@@ -38,7 +38,7 @@ class FilterInputArgument : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit FilterInputArgument( const tools::ExerciseConfig& config, const std::string& argumentValue, const kernel::XmlDescription& description, const std::string exerciseDir = "" );
+    explicit FilterInputArgument( const tools::ExerciseConfig& config, const std::string& argumentValue, const kernel::XmlDescription& description, const std::string& exerciseDir = "" );
     virtual ~FilterInputArgument();
     //@}
 

@@ -22,6 +22,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PolygonParameter )
 // Created: LGY 2011-06-06
 // -----------------------------------------------------------------------------
 MIL_PolygonParameter::MIL_PolygonParameter()
+    : valid_( false )
 {
     // NOTHING
 }

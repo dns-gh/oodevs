@@ -32,10 +32,10 @@ tools::IdManager ADN_Equipement_Data::idManager_;
 // Created: APE 2005-02-15
 // -----------------------------------------------------------------------------
 ADN_Equipement_Data::CategoryInfo::CategoryInfo()
-    : ADN_Ref_ABC         ( "ADN_Equipement_Data::CategoryInfo" )
+    : nId_( 0 )
+    , ADN_Ref_ABC( "ADN_Equipement_Data::CategoryInfo" )
     , ADN_DataTreeNode_ABC()
-    , nId_( ADN_Equipement_Data::idManager_.GetNextId() )
-    , parentResource_   ( *gpDummyDotationInfos )
+    , parentResource_( *gpDummyDotationInfos )
     , ptrResourceNature_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), 0 )
     , ptrLogisticSupplyClass_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetLogisticSupplyClasses(), 0 )
 {

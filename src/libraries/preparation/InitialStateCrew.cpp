@@ -78,6 +78,9 @@ InitialStateCrew::InitialStateCrew( E_HumanRank rank, E_HumanState state, E_Inju
 // Created: ABR 2011-03-02
 // -----------------------------------------------------------------------------
 InitialStateCrew::InitialStateCrew( xml::xistream& xis )
+    : psyop_       ( false )
+    , contaminated_( 0 )
+    , number_      ( 0 )
 {
     std::string rank;
     std::string state;

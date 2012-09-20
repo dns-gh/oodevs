@@ -63,6 +63,11 @@ protected:
     {
         DotationWidget( QWidget* parent )
             : Q3VGroupBox( parent )
+            , dotationLabel_( 0 )
+            , dotationType_( 0 )
+            , stock_( 0 )
+            , maxStockLabel_( 0 )
+            , maxStock_( 0 )
         {}
         RichLabel* dotationLabel_;
         ValuedComboBox< const kernel::DotationType* >* dotationType_;

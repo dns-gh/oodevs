@@ -26,6 +26,16 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Gen_Object )
 // Created: LGY 2011-06-06
 // -----------------------------------------------------------------------------
 DEC_Gen_Object::DEC_Gen_Object()
+    : identifier_( 0 )
+    , pObstacleType_( sword::ObstacleType_DemolitionTargetType_preliminary )
+    , rDensity_( 0 )
+    , nMinesActivityTime_( 0 )
+    , nActivationTime_( 0 )
+    , pTC2_( 0 )
+    , altitudeModifier_( 0 )
+    , timeLimit_( 0 )
+    , lodging_( 0 )
+    , mining_( false )
 {
     // NOTHING
 }
@@ -58,8 +68,8 @@ DEC_Gen_Object::DEC_Gen_Object( const sword::PlannedWork& msg, const MIL_EntityM
     , pTC2_              ( 0 )
     , altitudeModifier_  ( msg.has_altitude_modifier() ? msg.altitude_modifier() : 0 )
     , timeLimit_         ( msg.has_time_limit() ? msg.time_limit() : 0 )
-    , mining_            ( msg.has_mining() ? msg.mining() : false )
     , lodging_           ( msg.has_lodging() ? msg.lodging() : 0 )
+    , mining_            ( msg.has_mining() ? msg.mining() : false )
 {
     if( type_.empty() )
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
@@ -90,8 +100,8 @@ DEC_Gen_Object::DEC_Gen_Object( const sword::PlannedWork& msg, const MIL_EntityM
     , pTC2_              ( 0 )
     , altitudeModifier_  ( msg.has_altitude_modifier() ? msg.altitude_modifier() : 0 )
     , timeLimit_         ( msg.has_time_limit() ? msg.time_limit() : 0 )
-    , mining_            ( msg.has_mining() ? msg.mining() : false )
     , lodging_           ( msg.has_lodging() ? msg.lodging() : 0 )
+    , mining_            ( msg.has_mining() ? msg.mining() : false )
 {
     if( type_.empty() )
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
@@ -144,8 +154,8 @@ DEC_Gen_Object::DEC_Gen_Object( const DEC_Gen_Object& rhs )
     , pTC2_              ( rhs.pTC2_ )
     , altitudeModifier_  ( rhs.altitudeModifier_ )
     , timeLimit_         ( rhs.timeLimit_ )
-    , mining_            ( rhs.mining_ )
     , lodging_           ( 0 )
+    , mining_            ( rhs.mining_ )
 {
     // NOTHING
 }
@@ -176,8 +186,8 @@ DEC_Gen_Object& DEC_Gen_Object::operator=( const DEC_Gen_Object& rhs )
     pTC2_               = rhs.pTC2_;
     altitudeModifier_   = rhs.altitudeModifier_;
     timeLimit_          = rhs.timeLimit_;
-    mining_             = rhs.mining_;
     lodging_            = rhs.lodging_;
+    mining_             = rhs.mining_;
     return *this;
 }
 

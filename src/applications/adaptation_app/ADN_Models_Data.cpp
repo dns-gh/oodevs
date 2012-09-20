@@ -40,10 +40,9 @@ ADN_Models_Data::OrderInfos::OrderInfos()
 ADN_Models_Data::OrderInfos::OrderInfos( ADN_Missions_Data::FragOrder* fragorder, const std::string& name )
 : ADN_Ref_ABC()
 , ADN_DataTreeNode_ABC()
-, fragOrder_( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrders(), 0 )
+, fragOrder_( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrders(), fragorder )
+, strName_( name )
 {
-    fragOrder_ = fragorder;
-    strName_ = name;
     this->BindExistenceTo( &fragOrder_ );
 }
 
@@ -215,8 +214,9 @@ namespace
 ADN_Models_Data::ModelInfos::ModelInfos()
     : ADN_Ref_ABC()
     , missions_ ( dummy )
+    , isMasalife_( false )
 {
-    isMasalife_ = false;
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -226,11 +226,10 @@ ADN_Models_Data::ModelInfos::ModelInfos()
 ADN_Models_Data::ModelInfos::ModelInfos( ADN_Missions_Data::T_Mission_Vector& missions )
     : ADN_Ref_ABC()
     , missions_( missions )
+    , strDiaType_( "T_Pion" )
+    , strFile_( "DEC\\For Tests\\Empty\\Files.hal" )
+    , isMasalife_( false )
 {
-    strDiaType_ = "T_Pion";
-    strFile_ = "DEC\\For Tests\\Empty\\Files.hal";
-    isMasalife_ = false;
-
     strName_.SetDataName( "le nom" );
     strName_.SetParentNode( *this );
     strDiaType_.SetDataName( "le type DirectIA" );

@@ -24,7 +24,7 @@ class PHY_Breakdown : private boost::noncopyable
 public:
     //! @name Contructors/Destructor
     //@{
-    explicit PHY_Breakdown( const PHY_BreakdownType& type );
+    explicit PHY_Breakdown( const PHY_BreakdownType* type );
              PHY_Breakdown();
     virtual ~PHY_Breakdown();
     //@}

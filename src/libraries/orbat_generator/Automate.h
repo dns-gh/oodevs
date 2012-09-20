@@ -43,7 +43,7 @@ public:
 public:
     //! @name Operations
     //@{
-    void Automate::InsertIntoOrbat( xml::xostream& orbat, const IdNameGenerator& idNameGen, unsigned int knowledgeGroupId );
+    void InsertIntoOrbat( xml::xostream& orbat, const IdNameGenerator& idNameGen, unsigned int knowledgeGroupId );
     //@}
 
 private:

@@ -18,6 +18,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_ResourceNetwork )
 // Created: LGY 2011-06-06
 // -----------------------------------------------------------------------------
 DEC_ResourceNetwork::DEC_ResourceNetwork()
+    : objectId_( 0 )
 {
     // NOTHING
 }

@@ -19,6 +19,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_EnumerationParameter )
 // Created: LGY 2011-06-06
 // -----------------------------------------------------------------------------
 MIL_EnumerationParameter::MIL_EnumerationParameter()
+    : value_( 0 )
 {
     // NOTHING
 }

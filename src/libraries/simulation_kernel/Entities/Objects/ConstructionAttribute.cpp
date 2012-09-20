@@ -128,6 +128,7 @@ ConstructionAttribute& ConstructionAttribute::operator=( const ConstructionAttri
     constructionPercentage_ = rhs.constructionPercentage_;
     dotation_ = rhs.dotation_;
     density_ = rhs.density_;
+    bBuildByGen_  = rhs.bBuildByGen_;
     return *this;
 }
 

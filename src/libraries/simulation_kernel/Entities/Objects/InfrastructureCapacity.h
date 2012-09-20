@@ -31,7 +31,7 @@ class InfrastructureCapacity : public ObjectCapacity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             InfrastructureCapacity::InfrastructureCapacity();
+             InfrastructureCapacity();
     explicit InfrastructureCapacity( const PHY_InfrastructureType& type );
     explicit InfrastructureCapacity( xml::xistream& xis );
     virtual ~InfrastructureCapacity();

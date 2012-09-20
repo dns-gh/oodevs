@@ -45,6 +45,12 @@
 ADN_Population_GUI::ADN_Population_GUI( ADN_Population_Data& data )
     : ADN_GUI_ABC( "ADN_Population_GUI" )
     , data_( data )
+    , pValidatorDestruUnarmed_( 0 )
+    , pValidatorEvacUnarmed_( 0 )
+    , pValidatorWithoutUnarmed_( 0 )
+    , pValidatorDestruArmed_( 0 )
+    , pValidatorEvacArmed_( 0 )
+    , pValidatorWithoutArmed_( 0 )
 {
     // NOTHING
 }

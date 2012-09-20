@@ -1096,17 +1096,17 @@ const PHY_ConsumptionType& PHY_ComposanteTypePion::GetConsumptionMode( const MIL
 // Name: PHY_ComposanteTypePion::GetBreakdownType
 // Created: JVT 2005-04-26
 // -----------------------------------------------------------------------------
-const PHY_BreakdownType& PHY_ComposanteTypePion::GetBreakdownType( const T_BreakdownTypeProbabilityVector& probasVector ) const
+const PHY_BreakdownType* PHY_ComposanteTypePion::GetBreakdownType( const T_BreakdownTypeProbabilityVector& probasVector ) const
 {
     const double rRandomValue = 1. - MIL_Random::rand_ii( 0., 1., MIL_Random::eBreakdowns );
 
-    for( CIT_BreakdownTypeProbabilityVector it = probasVector.begin(); it != probasVector.end(); ++it )
+    for ( CIT_BreakdownTypeProbabilityVector it = probasVector.begin(); it != probasVector.end(); ++it )
     {
         if( rRandomValue <= it->rProbabilityBound_ )
-            return *it->pBreakdownType_;
+            return it->pBreakdownType_;
     }
     assert( false );
-    return *(PHY_BreakdownType*)0;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

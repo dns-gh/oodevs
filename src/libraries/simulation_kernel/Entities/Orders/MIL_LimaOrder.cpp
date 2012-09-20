@@ -27,6 +27,11 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_LimaOrder )
 // Created: LGY 2011-06-07
 // -----------------------------------------------------------------------------
 MIL_LimaOrder::MIL_LimaOrder()
+    : nID_( 0 )
+    , functions_()
+    , bFlag_( false )
+    , bScheduleFlag_( false )
+    , nSchedule_( 0 )
 {
     // NOTHING
 }

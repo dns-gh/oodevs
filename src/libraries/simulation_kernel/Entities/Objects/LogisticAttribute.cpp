@@ -58,6 +58,7 @@ LogisticAttribute::LogisticAttribute( const sword::MissionParameter_Value& attri
 // -----------------------------------------------------------------------------
 LogisticAttribute::LogisticAttribute()
     : pLogisticHierarchy_( new logistic::ObjectLogisticHierarchy() )
+    , idFromXML_( 0 )
 {
     // NOTHING
 }

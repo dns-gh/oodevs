@@ -34,24 +34,23 @@
 GQ_PlotData::GQ_PlotData( uint nUserID, GQ_Plot& plot )
 : QObject         ( &plot )
 , plot_           ( plot  )
-, bOwnData_       ( true  )
 , nUserID_        ( nUserID )
-, name_           ()
-, bVisible_       ( true )
 , pointPen_       ( Qt::red   )
 , linePen_        ( Qt::blue  )
 , barPen_         ( Qt::black )
 , barBrush_       ( Qt::green )
 , nPointShapeType_( eDot )
-, pointShape_     ()
-, bPolylineShape_ ( true )
-, bDrawBars_      ( false )
 , rBarWidth_      ( -1 )
 , nBarAlignment_  ( eAlign_Left  )
 , pData_          ( new T_Data() )
 , nFirstPoint_    ( 0 )
 , nNbrPoints_     ( -1 )
 , bbox_           ()
+, bOwnData_       ( true  )
+, bVisible_       ( true )
+, bPolylineShape_ ( true )
+, bDrawBars_      ( false )
+, bSelected_      ( false )
 {
     // NOTHING
 }
@@ -66,23 +65,21 @@ GQ_PlotData::GQ_PlotData( uint nUserID, GQ_Plot& plot )
 GQ_PlotData::GQ_PlotData( uint nUserID, GQ_Plot& plot, T_Data& data, uint nFirstPoint, int nNbrPoints )
 : QObject         ( &plot )
 , plot_           ( plot  )
-, bOwnData_       ( false )
 , nUserID_        ( nUserID )
-, name_           ()
-, bVisible_       ( true )
 , pointPen_       ( Qt::red   )
 , linePen_        ( Qt::blue  )
 , barPen_         ( Qt::black )
 , barBrush_       ( Qt::green )
 , nPointShapeType_( eDot )
-, pointShape_     ()
-, bPolylineShape_ ( true )
-, bDrawBars_      ( false )
 , rBarWidth_      ( -1 )
 , pData_          ( &data )
 , nFirstPoint_    ( nFirstPoint )
 , nNbrPoints_     ( nNbrPoints  )
-, bbox_           ()
+, bOwnData_       ( false )
+, bVisible_       ( true )
+, bPolylineShape_ ( true )
+, bDrawBars_      ( false )
+, bSelected_      ( false )
 {
     TouchData();
 }
@@ -576,7 +573,7 @@ typedef std::vector<QPoint> T_QPointVector;
 
 struct QPointVector_Comp
 {
-    bool operator ()( const QPoint& lhs, const QPoint rhs ) { return  lhs.x() < rhs.x(); }
+    bool operator ()( const QPoint& lhs, const QPoint& rhs ) { return  lhs.x() < rhs.x(); }
 };
 
 // -----------------------------------------------------------------------------

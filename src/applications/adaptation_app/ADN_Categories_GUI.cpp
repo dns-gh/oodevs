@@ -30,11 +30,15 @@
 //-----------------------------------------------------------------------------
 ADN_Categories_GUI::ADN_Categories_GUI( ADN_Categories_Data& data )
     : ADN_GUI_ABC( "ADN_Categories_GUI" )
-    , data_      ( data )
+    , data_( data )
     , pListArmor_( 0 )
-    , pListSize_ ( 0 )
+    , pListSize_( 0 )
     , pListDotationNature_( 0 )
+    , pListLogisticSupplyClasses_( 0 )
     , pAttritionEffects_( 0 )
+    , pComboType_( 0 )
+    , pArmorBreakdownGroup_( 0 )
+    , pAttritionEffectGroup_( 0 )
 {
     // NOTHING
 }

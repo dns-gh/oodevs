@@ -19,6 +19,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_TirIndirectParameter )
 // Created: LGY 2011-06-15
 // -----------------------------------------------------------------------------
 MIL_TirIndirectParameter::MIL_TirIndirectParameter()
+    : data_( 0 )
 {
     // NOTHING
 }

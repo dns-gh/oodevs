@@ -83,8 +83,8 @@ private:
     ADN_Categories_AttritionEffect_Table*   pAttritionEffects_;
 
     ADN_ComboBox* pComboType_;
-    Q3GroupBox*    pArmorBreakdownGroup_;
-    Q3GroupBox*    pAttritionEffectGroup_;
+    Q3GroupBox* pArmorBreakdownGroup_;
+    Q3GroupBox* pAttritionEffectGroup_;
 };
 
 #endif // __ADN_Categories_GUI_h_

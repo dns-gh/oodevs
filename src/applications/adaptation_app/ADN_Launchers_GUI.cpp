@@ -26,7 +26,8 @@
 //-----------------------------------------------------------------------------
 ADN_Launchers_GUI::ADN_Launchers_GUI( ADN_Launchers_Data& data )
     : ADN_GUI_ABC( "ADN_Launchers_GUI" )
-    , data_      ( data )
+    , data_( data )
+    , pModifPhs_( 0 )
 {
     // NOTHING
 }

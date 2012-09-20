@@ -46,7 +46,7 @@ public:
     //@{
     void Update                 ();
     static void LoadCheckPoint  ( const MIL_Config& config, const ObjectTypeResolver_ABC& resolver );
-    void SaveCheckPointDirectory( const std::string& directoryName, const std::string userName = "" );
+    void SaveCheckPointDirectory( const std::string& directoryName, const std::string& userName = "" );
     //@}
 
     //! @name Accessors
@@ -72,9 +72,9 @@ private:
     //! @name Tools
     //@{
     void RotateCheckPoints       ( const std::string& newName );
-    bool SaveCheckPoint          ( const std::string& name, const std::string userName = "" );
+    bool SaveCheckPoint          ( const std::string& name, const std::string& userName = "" );
     bool SaveOrbatCheckPoint     ( const std::string& name );
-    bool SaveFullCheckPoint      ( const std::string& name, const std::string userName = "" );
+    bool SaveFullCheckPoint      ( const std::string& name, const std::string& userName = "" );
 
     void UpdateNextCheckPointTick();
     //@}

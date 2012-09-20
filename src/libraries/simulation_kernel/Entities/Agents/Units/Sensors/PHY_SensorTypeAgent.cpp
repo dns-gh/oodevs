@@ -130,10 +130,17 @@ namespace
 // Created: NLD 2004-08-06
 // -----------------------------------------------------------------------------
 PHY_SensorTypeAgent::PHY_SensorTypeAgent( const PHY_SensorType& type, xml::xistream& xis )
-    : type_                ( type )
-    , volumeFactors_       ( PHY_Volume       ::GetVolumes       ().size(), 0. )
+    : type_( type )
+    , rAngle_( 0. )
+    , bScanningAllowed_( false )
+    , rRecognitionFirerDist_( 0. )
+    , rSquareProximityDist_( 0. )
+    , rIdentificationDist_( 0. )
+    , rRecognitionDist_( 0. )
+    , rDetectionDist_( 0. )
+    , volumeFactors_( PHY_Volume       ::GetVolumes       ().size(), 0. )
     , precipitationFactors_( weather::PHY_Precipitation::GetPrecipitations().size(), 0. )
-    , lightingFactors_     ( weather::PHY_Lighting     ::GetLightings     ().size(), 0. )
+    , lightingFactors_( weather::PHY_Lighting     ::GetLightings     ().size(), 0. )
     , postureSourceFactors_( PHY_Posture      ::GetPostures      ().size(), 0. )
     , postureTargetFactors_( PHY_Posture      ::GetPostures      ().size(), 0. )
     , urbanBlockFactors_   ( PHY_MaterialCompositionType::Count(), 1. )
@@ -485,7 +492,7 @@ bool PHY_SensorTypeAgent::ComputeUrbanExtinction( const MT_Vector2D& vSource, co
 
     if( !list.empty() )
     {
-        for( std::vector< const MIL_UrbanObject_ABC* >::const_iterator it = list.begin(); it != list.end() && rVisionNRJ > 0; it++ )
+        for( std::vector< const MIL_UrbanObject_ABC* >::const_iterator it = list.begin(); it != list.end() && rVisionNRJ > 0; ++it )
         {
             const MIL_UrbanObject_ABC& object = **it;
             const UrbanPhysicalCapacity* pPhysical = object.Retrieve< UrbanPhysicalCapacity >();

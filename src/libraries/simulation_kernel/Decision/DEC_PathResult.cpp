@@ -206,7 +206,7 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const T_KnowledgeObjectVector
                 continue;
             T_PointVector::const_iterator itPathHullPoint = borderPoints.begin();
             const MT_Vector2D* pPrevPathHullPos = &(*itPathHullPoint);
-            itPathHullPoint++;
+            ++itPathHullPoint;
             bool hullIntersected = false;
             for( ; !hullIntersected && itPathHullPoint != borderPoints.end(); ++itPathHullPoint )
             {

@@ -20,6 +20,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_DirectionParameter )
 // Created: LGY 2011-06-06
 // -----------------------------------------------------------------------------
 MIL_DirectionParameter::MIL_DirectionParameter()
+    : heading_( 0 )
 {
     // NOTHING
 }

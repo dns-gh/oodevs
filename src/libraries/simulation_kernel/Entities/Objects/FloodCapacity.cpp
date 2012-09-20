@@ -49,8 +49,9 @@ FloodCapacity::FloodCapacity( xml::xistream& xis )
 // Created: JSR 2010-12-16
 // -----------------------------------------------------------------------------
 FloodCapacity::FloodCapacity( const FloodCapacity& from )
+    : injuries_( from.injuries_ )
 {
-    injuries_ = from.injuries_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

@@ -55,7 +55,8 @@ PHY_DotationCategory_IndirectObjectCreationFire::PHY_DotationCategory_IndirectOb
 PHY_DotationCategory_IndirectObjectCreationFire::PHY_DotationCategory_IndirectObjectCreationFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, const std::string& objectType,
                                                                                                   unsigned int nInterventionType, double rDispersionX, double rDispersionY )
     : PHY_DotationCategory_IndirectFire_ABC( type, dotationCategory, nInterventionType, rDispersionX, rDispersionY )
-    , objectType_   ( objectType )
+    , objectType_( objectType )
+    , nLifeDuration_( 0 )
 {
     // NOTHING
 }

@@ -465,7 +465,7 @@ PHY_ComposanteTypePion::sBreakdownTypeProbability::sBreakdownTypeProbability( co
 // Created: JVT 2005-04-26
 // -----------------------------------------------------------------------------
 inline
-const PHY_BreakdownType& PHY_ComposanteTypePion::GetRandomBreakdownType() const
+const PHY_BreakdownType* PHY_ComposanteTypePion::GetRandomBreakdownType() const
 {
     return GetBreakdownType( randomBreakdownTypeProbabilities_ );
 }
@@ -475,7 +475,7 @@ const PHY_BreakdownType& PHY_ComposanteTypePion::GetRandomBreakdownType() const
 // Created: JVT 2005-04-26
 // -----------------------------------------------------------------------------
 inline
-const PHY_BreakdownType& PHY_ComposanteTypePion::GetAttritionBreakdownType() const
+const PHY_BreakdownType* PHY_ComposanteTypePion::GetAttritionBreakdownType() const
 {
     return GetBreakdownType( attritionBreakdownTypeProbabilities_ );
 }

@@ -113,7 +113,7 @@ public:
     virtual void Load( const tools::Loader_ABC& fileLoader );
     virtual void Reset();
     DrawingInfo* const GetDrawing( const std::string& code ) const;
-    T_DrawingInfoVector& GetGeometryDrawings( const std::string geometries, const std::string& category );
+    T_DrawingInfoVector& GetGeometryDrawings( const std::string& geometries, const std::string& category );
     T_DrawingInfoVector& GetCategoryDrawings( const std::string& category );
     //@}
 

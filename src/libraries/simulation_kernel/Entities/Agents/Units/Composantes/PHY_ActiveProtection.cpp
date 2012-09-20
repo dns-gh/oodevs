@@ -22,9 +22,10 @@ PHY_ActiveProtection::T_ProtectionList PHY_ActiveProtection::protections_;
 // Created: LDC 2010-01-07
 // -----------------------------------------------------------------------------
 PHY_ActiveProtection::PHY_ActiveProtection( xml::xistream& xis )
-    : pDotation_( 0 )
+    : coefficient_( 0 )
     , usage_    ( 0. )
     , hardKill_ ( false )
+    , pDotation_( 0 )
 {
     std::string strDotationName;
     xis >> xml::attribute( "name", name_ )

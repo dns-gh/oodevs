@@ -160,7 +160,7 @@ double DefaultPostureComputer::GetPostureTime() const
     assert( params_->rTimingFactor_ > 0. );
 
     double postureTime = params_->unitType_.GetPostureTime( params_->posture_ );
-    for( std::vector< double >::const_iterator it = coefficientsModifier_.begin(); it != coefficientsModifier_.end(); it++ )
+    for( std::vector< double >::const_iterator it = coefficientsModifier_.begin(); it != coefficientsModifier_.end(); ++it )
     {
         postureTime *= *it;
     }

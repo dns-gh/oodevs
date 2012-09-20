@@ -19,6 +19,7 @@ BOOST_STATIC_ASSERT( sizeof( DetectionMap::Environment ) == 1 );
 
 namespace
 {
+    // $$$$ LDC RC This thing is actually a disguised PHY_RawVisionData::sCell ...
     struct ArchiveCell {
         short h;
         unsigned char dh;

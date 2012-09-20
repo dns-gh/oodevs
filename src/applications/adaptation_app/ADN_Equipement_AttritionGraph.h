@@ -30,6 +30,7 @@ public:
     {
     public:
         GraphData( const int number )
+            : value_( 0 )
         {
             for( int i = 0; i < number; ++i )
                 values_.push_back( i == number - 1 ? 100. : 0 );

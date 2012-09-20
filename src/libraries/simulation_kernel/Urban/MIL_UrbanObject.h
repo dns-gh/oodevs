@@ -149,7 +149,7 @@ private:
     T_LivingAreas livingAreas_;
     mutable float complexity_;
     mutable float livingSpace_;
-    mutable std::vector< boost::shared_ptr< MT_Vector2D > > strechedArea_;
+    mutable std::vector< boost::shared_ptr< MT_Vector2D > > stretchedArea_;
     static const float stretchOffset_;
     //@}
 };

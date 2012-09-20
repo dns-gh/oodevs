@@ -155,7 +155,7 @@ void Utf8Converter::CP1252ToUtf8( const std::string &cp1252String, std::string& 
     }
     result[n] = 0;
     utf8String = reinterpret_cast< char* >( result );
-    delete result;
+    delete [] result;
 }
 
 // -----------------------------------------------------------------------------
@@ -209,7 +209,7 @@ void Utf8Converter::Utf8ToCP1252( const std::string& utf8String, std::string &cp
     }
     result[n] = 0;
     cp1252String = reinterpret_cast< char* >( result );
-    delete result;
+    delete [] result;
 }
 
 // -----------------------------------------------------------------------------

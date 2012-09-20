@@ -33,6 +33,7 @@ PerceptionCapacity::PerceptionCapacity( xml::xistream& xis )
 // Created: MGD 2010-03-12
 // -----------------------------------------------------------------------------
 PerceptionCapacity::PerceptionCapacity()
+: modifier_( false )
 {
     // NOTHING
 }

@@ -19,6 +19,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_BoolParameter )
 // Created: LGY 2011-06-06
 // -----------------------------------------------------------------------------
 MIL_BoolParameter::MIL_BoolParameter()
+    : value_( false )
 {
     // NOTHING
 }

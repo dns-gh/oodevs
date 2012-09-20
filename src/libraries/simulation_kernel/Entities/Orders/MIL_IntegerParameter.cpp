@@ -19,6 +19,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_IntegerParameter )
 // Created: LGY 2011-06-15
 // -----------------------------------------------------------------------------
 MIL_IntegerParameter::MIL_IntegerParameter()
+    : value_( 0 )
 {
     // NOTHING
 }

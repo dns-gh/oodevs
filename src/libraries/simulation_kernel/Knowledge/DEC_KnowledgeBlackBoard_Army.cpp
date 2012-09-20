@@ -769,7 +769,7 @@ namespace
 // Name: DEC_KnowledgeBlackBoard_Army::GetResourceNetworksInZone
 // Created: JSR 2012-01-17
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeBlackBoard_Army::GetResourceNetworksInZone( T_ResourceNetworkVector& container, const TER_Localisation& zone, const std::string type /*= ""*/ )
+void DEC_KnowledgeBlackBoard_Army::GetResourceNetworksInZone( T_ResourceNetworkVector& container, const TER_Localisation& zone, const std::string& type /*= ""*/ )
 {
     const std::vector< const MIL_UrbanObject_ABC* >& blocks = MIL_AgentServer::GetWorkspace().GetUrbanCache().GetUrbanBlocks();
     for( std::size_t i = 0; i < blocks.size(); ++i )

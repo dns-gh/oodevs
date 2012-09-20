@@ -100,7 +100,9 @@ class ADN_Tabbed_GUI_ABC : public ADN_GUI_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_Tabbed_GUI_ABC( const char* szClassName ) : ADN_GUI_ABC( szClassName) {}
+             ADN_Tabbed_GUI_ABC( const char* szClassName )
+                 : ADN_GUI_ABC( szClassName)
+                 , pTabWidget_( 0 ) {}
     virtual ~ADN_Tabbed_GUI_ABC() {};
     //@}
 

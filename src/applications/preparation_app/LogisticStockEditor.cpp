@@ -522,10 +522,10 @@ void LogisticStockEditor::SupplyStocks( std::set< const kernel::Agent_ABC* >& en
                 continue;
             std::set< const kernel::Agent_ABC* > copyEntDotationStocks = entDotationStocks;
             double surplus = DoDotationDistribution( entDotationStocks, dotationType, static_cast< double >( quantity ) );
-            if( surplus >= 1 && copyEntDotationStocks.size() > 0 )
+            int size = static_cast< int >( copyEntDotationStocks.size() );
+            if( surplus >= 1 && size > 0 )
             {
                 int remaining = static_cast< int >( surplus );
-                int size = static_cast< int >( copyEntDotationStocks.size() );
                 int mean =  remaining / size;
                 int rest = remaining - size * mean;
                 for( std::set< const kernel::Agent_ABC* >::iterator itEnt = copyEntDotationStocks.begin(); itEnt != copyEntDotationStocks.end(); ++itEnt )

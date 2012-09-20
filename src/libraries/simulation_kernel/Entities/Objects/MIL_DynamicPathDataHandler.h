@@ -23,8 +23,8 @@ class MIL_DynamicPathDataHandler
 public:
     //! @name Constructor/destructor
     //@{
-     MIL_DynamicPathDataHandler();
-    virtual ~MIL_DynamicPathDataHandler();
+    MIL_DynamicPathDataHandler();
+    ~MIL_DynamicPathDataHandler();
     //@}
 
     //! @name Operations

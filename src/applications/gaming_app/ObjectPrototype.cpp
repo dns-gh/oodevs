@@ -219,6 +219,7 @@ namespace
 ObjectPrototype::ObjectPrototype( QWidget* parent, kernel::Controllers& controllers, const StaticModel& model, const kernel::Team_ABC& noSideTeam, gui::ParametersLayer& layer )
     : ObjectPrototype_ABC( parent, controllers, model.coordinateConverter_, model.objectTypes_, noSideTeam, layer,
                            CreateFactory( controllers, model.objectTypes_, attributesList_ ) )
+    , attributesList_( 0 )
     , static_               ( model )
     , currentActionsModel_  ( 0 )
     , currentSimulationTime_( 0 )
