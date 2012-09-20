@@ -307,7 +307,7 @@
     </target>
 
     <target name="library.dis_plugin" depends="library.dispatcher,library.rpr" description="build dis_plugin static library">
-        <build-lib name="dis_plugin" pattern="lib${ant.project.name}_dis_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4"></build-lib>
+        <build-lib name="dis_plugin" pattern="lib${ant.project.name}_dis_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4" failonwarning="${failonwarning}"/>
     </target>
 
     <target name="library.dis_plugin_dll" depends="library.dis_plugin,library.dispatcher,library.tic" description="build dis_plugin dynamic library">
