@@ -268,7 +268,8 @@
         <build-plugin name="web_control" depends="boost,protobuf,xerces"
             libs="mongoose@{suffix},
                   lib${ant.project.name}_web_control_plugin-${platform}-mt@{suffix},
-                  lib${ant.project.name}_protocol-${platform}-mt@{suffix}">
+                  lib${ant.project.name}_protocol-${platform}-mt@{suffix}"
+            failonwarning="${failonwarning}">
             <syslibset libs="wsock32"/>
             <defineset define="WEB_CONTROL_PLUGIN_DLL_EXPORTS"/>
         </build-plugin>
