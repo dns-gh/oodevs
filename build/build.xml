@@ -338,7 +338,7 @@
     </target>
 
     <target name="library.aar_plugin" depends="library.dispatcher" description="build aar_plugin static library">
-        <build-lib name="aar_plugin" pattern="lib${ant.project.name}_aar_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4">
+        <build-lib name="aar_plugin" pattern="lib${ant.project.name}_aar_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
