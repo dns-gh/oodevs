@@ -60,6 +60,18 @@ local function fillWorkMap()
                     builders[ #builders + 1 ] = platoon
                 end
             end
+            -- Trier builders
+            for i=1, #builders-1 do
+                local builderI = CreateKnowledge(integration.ontology.types.body, builders[i] )
+                for j=i+1, #builders do
+                    local builderJ = CreateKnowledge(integration.ontology.types.body, builders[j] )
+                    if integration.distance(obstacle, builderI ) > integration.distance(obstacle, builderJ ) then
+                        local temp = builders[j]
+                        builders[j] = builders[i]
+                        builders[i] = temp
+                    end
+                end
+            end
         end
     end
 end
@@ -71,10 +83,12 @@ local function optimizeWorkMap( nbrFront, nbrTotalObstacle )
     local nombreAffectation = {}
     local nbrObstacleParBuilder = ( nbrTotalObstacle / nbrFront )
     for _, taskWorkMap in pairs( myself.leadData.workMap ) do
+        local nbObstacleDistribue = 0
         for obstacle, builders in pairs( taskWorkMap ) do
+            nbObstacleDistribue = nbObstacleDistribue +1
             local chosenBuilder = builders[1]
             nombreAffectation[chosenBuilder] = nombreAffectation[chosenBuilder] or 0
-            nombreAffectation[chosenBuilder] = nombreAffectation[chosenBuilder] + 1			
+            nombreAffectation[chosenBuilder] = nombreAffectation[chosenBuilder] + 1
             local nextObstacle = obstacle
             nextObstacle = next(taskWorkMap, nextObstacle ) -- car on ne veut pas toucher au builders[obstacle]
             while ( nextObstacle ) do
@@ -82,7 +96,7 @@ local function optimizeWorkMap( nbrFront, nbrTotalObstacle )
                  local nextSize = #nextBuilders
                  if nextSize > 1 then
                      for i,currentBuilder in pairs( nextBuilders ) do
-                         if currentBuilder == chosenBuilder and nombreAffectation[chosenBuilder] >= nbrObstacleParBuilder then
+                          if currentBuilder == chosenBuilder and ( nextSize > (nbrTotalObstacle - nbObstacleDistribue) or nombreAffectation[chosenBuilder] >= nbrObstacleParBuilder) then
                              local index = i
                              while index < nextSize do
                                  nextBuilders[index] = nextBuilders[index+1]
@@ -173,12 +187,14 @@ findBestsGEN = function( entities, tasks, companyTask , params, nbrFront, marche
     else
       maxNbrFront = nbrFront
     end
-    -- methode qui rempli la liste si les aucun pion n'a de dotation pour construire un obstacle donné
-    fillWorkMap()
-    if myself.leadData.workMap then
-        params.maxNbrFront = math.min( maxNbrFront, nbrFront )
-        if params.maxNbrFront~= 0 then
-            optimizeWorkMap( params.maxNbrFront, myself.leadData.nbrTotalObstacle )
+    if isMain then
+        -- methode qui rempli la liste si les aucun pion n'a de dotation pour construire un obstacle donné
+        fillWorkMap()
+        if myself.leadData.workMap then
+            params.maxNbrFront = math.min( maxNbrFront, nbrFront )
+            if params.maxNbrFront~= 0 then
+                optimizeWorkMap( params.maxNbrFront, myself.leadData.nbrTotalObstacle )
+            end
         end
     end
     return fillParameters( bestList, companyTask, params, nbrFront, marcheRetrograde, isMain, objectif )
