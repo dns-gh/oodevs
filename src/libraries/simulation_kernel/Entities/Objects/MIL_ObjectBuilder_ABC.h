@@ -10,6 +10,8 @@
 #ifndef __MIL_ObjectBuilder_ABC_h_
 #define __MIL_ObjectBuilder_ABC_h_
 
+#include <boost/noncopyable.hpp>
+
 class MIL_ObjectType_ABC;
 class MIL_Object_ABC;
 
@@ -19,7 +21,7 @@ class MIL_Object_ABC;
 */
 // Created: JCR 2008-06-02
 // =============================================================================
-class MIL_ObjectBuilder_ABC
+class MIL_ObjectBuilder_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -32,13 +34,6 @@ public:
     //@{
     virtual const MIL_ObjectType_ABC& GetType() const = 0;
     virtual void Build( MIL_Object_ABC& object ) const = 0;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    MIL_ObjectBuilder_ABC( const MIL_ObjectBuilder_ABC& );            //!< Copy constructor
-    MIL_ObjectBuilder_ABC& operator=( const MIL_ObjectBuilder_ABC& ); //!< Assignment operator
     //@}
 };
 

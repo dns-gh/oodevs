@@ -19,7 +19,6 @@
 #include "Entities/Objects/MedicalTreatmentAttribute.h"
 #include "Entities/Objects/ResourceNetworkCapacity.h"
 #include "Entities/Objects/StructuralCapacity.h"
-#include "Entities/Objects/MIL_ObjectBuilder_ABC.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "simulation_terrain/TER_World.h"
@@ -34,23 +33,17 @@ const float MIL_UrbanObject::stretchOffset_ = 10.f; // $$$$ _RC_ LGY 2010-10-11:
 // Name: MIL_UrbanObject constructor
 // Created: JSR 2012-08-01
 // -----------------------------------------------------------------------------
-MIL_UrbanObject::MIL_UrbanObject( xml::xistream& xis, const MIL_ObjectBuilder_ABC& builder, MIL_UrbanObject_ABC* parent /*= 0*/ )
-    : MIL_UrbanObject_ABC( builder.GetType() )
-    , nUrbanId_( xis.attribute< unsigned long >( "id" ) )
-    , name_( xis.attribute< std::string >( "name" ) )
+MIL_UrbanObject::MIL_UrbanObject( unsigned long id, const std::string& name, const MIL_ObjectType_ABC& type,
+                                  MIL_UrbanObject_ABC* parent /*= 0*/ )
+    : MIL_UrbanObject_ABC( type )
+    , nUrbanId_( id )
+    , name_( name )
     , parent_( parent )
     , complexity_( 0 )
     , livingSpace_( 0 )
 {
     if( name_.empty() )
         name_ = boost::lexical_cast< std::string >( nUrbanId_ );
-    builder.Build( *this );
-    ReadLocalisation( xis );
-    ReadColor( xis );
-    ReadInfrastructure( xis );
-    ReadPhysical( xis );
-    ReadResourceNetworks( xis );
-    ReadStructuralState( xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,6 +66,20 @@ MIL_UrbanObject::MIL_UrbanObject()
 MIL_UrbanObject::~MIL_UrbanObject()
 {
     DeleteAll();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_UrbanObject::ReadData
+// Created: LGY 2012-09-20
+// -----------------------------------------------------------------------------
+void MIL_UrbanObject::ReadData( xml::xistream& xis )
+{
+    ReadLocalisation( xis );
+    ReadColor( xis );
+    ReadInfrastructure( xis );
+    ReadPhysical( xis );
+    ReadResourceNetworks( xis );
+    ReadStructuralState( xis );
 }
 
 // -----------------------------------------------------------------------------

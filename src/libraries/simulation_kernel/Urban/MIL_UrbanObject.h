@@ -12,12 +12,14 @@
 
 #include "MIL_UrbanObject_ABC.h"
 
-
-class MIL_ObjectBuilder_ABC;
-
 namespace sword
 {
     class UrbanAttributes;
+}
+
+namespace xml
+{
+    class xistream;
 }
 
 class MIL_LivingArea;
@@ -34,7 +36,8 @@ class MIL_UrbanObject : public MIL_UrbanObject_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_UrbanObject( xml::xistream& xis, const MIL_ObjectBuilder_ABC& builder, MIL_UrbanObject_ABC* parent = 0 );
+             MIL_UrbanObject( unsigned long id, const std::string& name, const MIL_ObjectType_ABC& type,
+                              MIL_UrbanObject_ABC* parent = 0 );
              MIL_UrbanObject();
     virtual ~MIL_UrbanObject();
     //@}
@@ -48,6 +51,7 @@ public:
     virtual void GetUrbanBlocks( std::vector< const MIL_UrbanObject_ABC* >& blocks ) const;
     virtual float GetLivingSpace() const;
     virtual float ComputeComplexity() const;
+    void ReadData( xml::xistream& xis );
     //@}
 
     //! @name CheckPoints

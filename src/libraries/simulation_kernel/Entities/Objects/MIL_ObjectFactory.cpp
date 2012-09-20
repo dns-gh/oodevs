@@ -63,7 +63,7 @@ const MIL_ObjectType_ABC& MIL_ObjectFactory::FindType( const std::string& type )
 void MIL_ObjectFactory::Initialize( xml::xistream& xis )
 {
     xis >> xml::start( "objects" )
-        >> xml::list( "object", *this, &MIL_ObjectFactory::ReadObjectPrototype )
+            >> xml::list( "object", *this, &MIL_ObjectFactory::ReadObjectPrototype )
         >> xml::end;
 }
 
@@ -99,12 +99,14 @@ void MIL_ObjectFactory::ReadCapacity( const std::string& capacity, xml::xistream
 // Created: JCR 2008-06-03
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectFactory::CreateObject( const std::string& name, const std::string& type, MIL_Army_ABC* army, const TER_Localisation& location,
-    bool reserved, unsigned int externalIdentifier, unsigned int forcedId, double density ) const
+                                                 bool reserved, unsigned int externalIdentifier, unsigned int forcedId, double density ) const
 {
     CIT_Prototypes it = prototypes_.find( type );
     if( it == prototypes_.end() )
         throw std::runtime_error( __FUNCTION__ " - Unknown object type: " + type );
-    Object* object = new Object( *it->second, army, &location, externalIdentifier, name, reserved, forcedId );
+    const MIL_ObjectBuilder_ABC& builder = *it->second;
+    Object* object = new Object( builder.GetType(), army, &location, externalIdentifier, name, reserved, forcedId );
+    builder.Build( *object );
     attributes_->Initialize( *object );
     if( density )
     {
@@ -132,8 +134,10 @@ MIL_Object_ABC* MIL_ObjectFactory::CreateObject( xml::xistream& xis, MIL_Army_AB
         throw std::runtime_error( __FUNCTION__ " - Unknown object prototype: " + type );
     TER_Localisation location;
     location.Read( xis );
+    const MIL_ObjectBuilder_ABC& builder = *it->second;
     // $$$$ SBO 2009-06-08: Check geometry constraint
-    Object* object = new Object( xis, *it->second, army, &location );
+    Object* object = new Object( xis, builder.GetType(), army, &location );
+    builder.Build( *object );
     xis >> xml::optional >> xml::start( "attributes" )
         >> xml::list( *this, &MIL_ObjectFactory::ReadAttributes, *object )
         >> xml::end;
@@ -157,8 +161,9 @@ MIL_Object_ABC* MIL_ObjectFactory::CreateObject( const sword::MissionParameters&
     double rPointSize = it->second->GetPointSize();
     if( ! NET_ASN_Tools::ReadLocation( message.elem( 1 ).value( 0 ).location(), location, rPointSize ) )
         return 0;
-    Object* pObject = new Object( *it->second, army, &location, 0u, message.elem( 2 ).value( 0 ).acharstr() );
-
+    const MIL_ObjectBuilder_ABC& builder = *it->second;
+    Object* pObject = new Object( builder.GetType(), army, &location, 0u, message.elem( 2 ).value( 0 ).acharstr() );
+    builder.Build( *pObject );
     try
     {
         if( message.elem_size() < 5 )
@@ -187,7 +192,9 @@ MIL_Object_ABC* MIL_ObjectFactory::CreateObject( const MIL_ObjectBuilder_ABC& bu
     CIT_Prototypes it = prototypes_.find( builder.GetType().GetName() );
     if( it == prototypes_.end() )
         return 0;
-    Object* pObject = new Object( *it->second, army, 0, 0u );
+    const MIL_ObjectBuilder_ABC& objectBuilder = *it->second;
+    Object* pObject = new Object( objectBuilder.GetType(), army, 0, 0u );
+    objectBuilder.Build( *pObject );
     builder.Build( *pObject );
     pObject->Finalize();
     return pObject;
@@ -202,7 +209,11 @@ MIL_UrbanObject_ABC* MIL_ObjectFactory::CreateUrbanObject( xml::xistream& xis, M
     CIT_Prototypes it = prototypes_.find( "urban block" );
     if( it == prototypes_.end() )
         return 0;
-    MIL_UrbanObject_ABC* pObject = new MIL_UrbanObject( xis, *it->second, parent );
+    const MIL_ObjectBuilder_ABC& builder = *it->second;
+    MIL_UrbanObject* pObject = new MIL_UrbanObject( xis.attribute< unsigned long >( "id" ), xis.attribute< std::string >( "name" ),
+                                                    builder.GetType(), parent );
+    builder.Build( *pObject );
+    pObject->ReadData( xis );
     pObject->Finalize();
     return pObject;
 }

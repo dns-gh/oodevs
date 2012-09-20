@@ -12,7 +12,6 @@
 #include "BurnSurfaceAttribute.h"
 #include "ConstructionAttribute.h"
 #include "ObstacleAttribute.h"
-#include "MIL_ObjectBuilder_ABC.h"
 #include "MIL_ObjectType_ABC.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
@@ -28,24 +27,23 @@ BOOST_CLASS_EXPORT_IMPLEMENT( Object )
 // Name: Object constructor
 // Created: JCR 2008-06-06
 // -----------------------------------------------------------------------------
-Object::Object( xml::xistream& xis, const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC* army, const TER_Localisation* pLocation, bool /*reserved*/ )
-    : MIL_Object( army, builder.GetType(), xis.attribute< unsigned long >( "id" ) )
+Object::Object( xml::xistream& xis, const MIL_ObjectType_ABC& type, MIL_Army_ABC* army, const TER_Localisation* pLocation, bool /*reserved*/ )
+    : MIL_Object( army, type, xis.attribute< unsigned long >( "id" ) )
     , name_( xis.attribute< std::string >( "name", "" ) )
 {
     MIL_Object_ABC::Register();
     if( pLocation )
         Initialize( *pLocation );
-    builder.Build( *this );
 }
 
 namespace
 {
-    std::string FormatName( const std::string& name, const MIL_ObjectBuilder_ABC& builder, int id )
+    std::string FormatName( const std::string& name, const std::string& realName, int id )
     {
         if( !name.empty() )
             return name;
         std::stringstream stream;
-        stream << builder.GetType().GetRealName() << "[" << id << "]";
+        stream << realName << "[" << id << "]";
         return stream.str();
     }
 }
@@ -54,16 +52,15 @@ namespace
 // Name: Object constructor
 // Created: SBO 2009-12-14
 // -----------------------------------------------------------------------------
-Object::Object( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC* army, const TER_Localisation* pLocation,
+Object::Object( const MIL_ObjectType_ABC& type, MIL_Army_ABC* army, const TER_Localisation* pLocation,
                 unsigned int externalIdentifier, const std::string& name /*= std::string()*/, bool reserved /*= true*/, unsigned int forcedId /*= 0u*/ )
-    : MIL_Object( army, builder.GetType(), forcedId )
-    , name_( FormatName( name, builder, GetID() ) )
+    : MIL_Object( army, type, forcedId )
+    , name_( FormatName( name, type.GetRealName(), GetID() ) )
     , externalIdentifier_( externalIdentifier )
 {
     MIL_Object_ABC::Register();
     if( pLocation )
         Initialize( *pLocation );
-    builder.Build( *this );
     if( ObstacleAttribute* pObstacle = RetrieveAttribute< ObstacleAttribute >() )
         pObstacle->SetType( reserved );
 }
