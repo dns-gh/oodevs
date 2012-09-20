@@ -153,7 +153,7 @@
     </target>
 
     <target name="library.3a" depends="library.dispatcher" description="build 3a static library">
-        <build-lib name="3a" pattern="lib${ant.project.name}_3a-${platform}-mt@{suffix}" suffix="-gd"/>
+        <build-lib name="3a" pattern="lib${ant.project.name}_3a-${platform}-mt@{suffix}" suffix="-gd" failonwarning="${failonwarning}"/>
     </target>
 
     <target name="library.license_gui" description="build license_gui static library">
