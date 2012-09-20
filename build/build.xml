@@ -614,7 +614,8 @@
                   lib${ant.project.name}_frontend-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
                   lib${ant.project.name}_shield-${platform}-mt@{suffix},
-                  lib${ant.project.name}_tools-${platform}-mt@{suffix}">
+                  lib${ant.project.name}_tools-${platform}-mt@{suffix}"
+            failonwarning="${failonwarning}">
             <syslibset libs="shell32,user32"/>
             <defineset define="QT3_SUPPORT"/>
             <defineset define="LAUNCHER_DLL_EXPORTS"/>
