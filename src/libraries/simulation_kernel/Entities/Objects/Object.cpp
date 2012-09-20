@@ -11,7 +11,6 @@
 #include "Object.h"
 #include "BurnSurfaceAttribute.h"
 #include "ConstructionAttribute.h"
-#include "ObstacleAttribute.h"
 #include "MIL_ObjectType_ABC.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
@@ -53,7 +52,7 @@ namespace
 // Created: SBO 2009-12-14
 // -----------------------------------------------------------------------------
 Object::Object( const MIL_ObjectType_ABC& type, MIL_Army_ABC* army, const TER_Localisation* pLocation,
-                unsigned int externalIdentifier, const std::string& name /*= std::string()*/, bool reserved /*= true*/, unsigned int forcedId /*= 0u*/ )
+                unsigned int externalIdentifier, const std::string& name /*= std::string()*/, unsigned int forcedId /*= 0u*/ )
     : MIL_Object( army, type, forcedId )
     , name_( FormatName( name, type.GetRealName(), GetID() ) )
     , externalIdentifier_( externalIdentifier )
@@ -61,8 +60,6 @@ Object::Object( const MIL_ObjectType_ABC& type, MIL_Army_ABC* army, const TER_Lo
     MIL_Object_ABC::Register();
     if( pLocation )
         Initialize( *pLocation );
-    if( ObstacleAttribute* pObstacle = RetrieveAttribute< ObstacleAttribute >() )
-        pObstacle->SetType( reserved );
 }
 
 // -----------------------------------------------------------------------------

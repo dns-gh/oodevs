@@ -15,6 +15,7 @@
 #include "MIL_ObjectManipulator_ABC.h"
 #include "Object.h"
 #include "ObjectPrototype.h"
+#include "ObstacleAttribute.h"
 #include "Urban/MIL_UrbanObject.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
@@ -105,9 +106,11 @@ MIL_Object_ABC* MIL_ObjectFactory::CreateObject( const std::string& name, const 
     if( it == prototypes_.end() )
         throw std::runtime_error( __FUNCTION__ " - Unknown object type: " + type );
     const MIL_ObjectBuilder_ABC& builder = *it->second;
-    Object* object = new Object( builder.GetType(), army, &location, externalIdentifier, name, reserved, forcedId );
+    Object* object = new Object( builder.GetType(), army, &location, externalIdentifier, name, forcedId );
     builder.Build( *object );
     attributes_->Initialize( *object );
+    if( ObstacleAttribute* pObstacle = object->RetrieveAttribute< ObstacleAttribute >() )
+        pObstacle->SetType( reserved );
     if( density )
     {
         BuildableCapacity* capacity = object->Retrieve< BuildableCapacity >();
