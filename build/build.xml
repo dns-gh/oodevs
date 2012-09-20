@@ -163,7 +163,7 @@
     </target>
 
     <target name="library.bml_plugin" depends="library.dispatcher" description="build BML dispatcher plugin static library">
-        <build-lib name="bml_plugin" pattern="lib${ant.project.name}_bml_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4">
+        <build-lib name="bml_plugin" pattern="lib${ant.project.name}_bml_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
