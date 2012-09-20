@@ -225,7 +225,7 @@ public:
             archive << plateformDetail;
         if( featureLevel == 5 )
         {
-            uint32 size = subObjectList.size();
+            uint32 size = static_cast< uint32 >( subObjectList.size() );
             archive << size
                     << subObjectList;
         }
@@ -378,7 +378,7 @@ public:
     template< typename Archive >
     void Serialize( Archive& archive ) const
     {
-        const uint32 size = objectToManage.size();
+        const uint32 size = static_cast< uint32 >( objectToManage.size() );
         archive << size
                 << objectToManage;
         const unsigned int padding = archive.GetSize() % 8;
@@ -436,7 +436,7 @@ public:
     void Serialize( Archive& archive ) const
     {
         // TODO AHC padding
-        const uint32 size = objectToManage.size();
+        const uint32 size = static_cast< uint32 >( objectToManage.size() );
         archive << size
                 << objectToManage;
 
@@ -595,7 +595,7 @@ public:
     template< typename Archive >
     void Serialize( Archive& archive ) const
     {
-        const uint32 size = objectToManage.size();
+        const uint32 size = static_cast< uint32 >( objectToManage.size() );
         archive << size
                 << objectToManage;
         const unsigned int padding = archive.GetSize() % 8;
@@ -646,7 +646,7 @@ public:
     void Serialize( Archive& archive ) const
     {
         // TODO AHC padding
-        const uint32 size = objectToManage.size();
+        const uint32 size = static_cast< uint32 >( objectToManage.size() );
         archive << size
                 << objectToManage;
 

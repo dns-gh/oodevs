@@ -145,7 +145,7 @@ struct RecordSet
         template< typename Archive >
         void Serialize( Archive& archive ) const
         {
-            int32 size = data.size();
+            int32 size = static_cast< int32 >( data.size() );
             archive << numberOfBits
                     << size
                     << data;
@@ -165,7 +165,7 @@ struct RecordSet
     template< typename Archive >
     void Serialize( Archive& archive ) const
     {
-        int32 size = values.size();
+        int32 size = static_cast< int32 >( values.size() );
         archive << recordSetIdentifier
                 << recordSetSerialNumber
                 << size
@@ -947,7 +947,7 @@ struct VariableDatum
     template< typename Archive >
     void Serialize( Archive& archive ) const
     {
-        uint32 lengthInBits = 8 * value.size();
+        uint32 lengthInBits = static_cast< uint32 >( 8 * value.size() );
         /*
         uint32 datumSize = value.size();
         uint32 padding = 0;
@@ -987,7 +987,7 @@ struct VariableDatumSet
     template< typename Archive >
     void Serialize( Archive& archive ) const
     {
-        uint32 nbDatums = variableDatums.size();
+        uint32 nbDatums = static_cast< uint32 >( variableDatums.size() );
         uint32 padding = 0;
         archive << nbDatums
                 << padding;

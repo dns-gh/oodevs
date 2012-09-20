@@ -18,7 +18,7 @@
 
 #define BOOST_TODO BOOST_WARN_MESSAGE( 0, "TODO !" )
 
-#pragma warning( disable: 4505 )
+#pragma warning( disable: 4505 4244 )
 #include <turtle/mock.hpp>
 
 namespace mock

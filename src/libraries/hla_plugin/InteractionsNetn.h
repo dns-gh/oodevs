@@ -29,7 +29,7 @@ struct ListOfUnits
     template< typename Archive >
     void Serialize( Archive& archive ) const
     {
-        int32 size = list.size();
+        int32 size = static_cast< int32 >( list.size() );
         archive << size
                 << list;
     }
