@@ -821,7 +821,8 @@
                    libs="lib${ant.project.name}_MT_Tools-${platform}-mt,
                          lib${ant.project.name}_protocol-${platform}-mt,
                          lib${ant.project.name}_shield-${platform}-mt,
-                         lib${ant.project.name}_tools-${platform}-mt">
+                         lib${ant.project.name}_tools-${platform}-mt"
+                   failonwarning="${failonwarning}">
         </build-app>
     </target>
 
