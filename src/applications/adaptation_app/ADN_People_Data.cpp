@@ -112,7 +112,7 @@ ADN_People_Data::PeopleInfosConsumption::PeopleInfosConsumption()
 // -----------------------------------------------------------------------------
 std::string ADN_People_Data::PeopleInfosConsumption::GetItemName()
 {
-    return ptrResource_.GetData()->strName_.GetData().c_str();
+    return ptrResource_.GetData()->strName_.GetData();
 }
 
 // -----------------------------------------------------------------------------

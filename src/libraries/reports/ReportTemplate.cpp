@@ -18,7 +18,7 @@
 ReportTemplate::ReportTemplate( xml::xistream& xis, const ReportFactory& factory )
     : factory_( factory )
 {
-    std::string message, category;
+    std::string message;
     xis >> xml::attribute( "id", (int&)id_ )
         >> xml::attribute( "message", message )
         >> xml::list( "parameter", *this, &ReportTemplate::ReadParameter );

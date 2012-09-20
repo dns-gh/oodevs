@@ -65,7 +65,7 @@ void IconsRenderPass::Render( MapWidget_ABC& )
         firstPass_ = false;
         return;
     }
-    if( tasks_.size() > 0 )
+    if( !tasks_.empty() )
     {
         glEnable( GL_LINE_SMOOTH );
         for( CIT_IconTasks it = tasks_.begin(); it != tasks_.end(); ++it )

@@ -96,10 +96,10 @@ private:
     T_ConsignVector             consigns_;
     E_State                     nState_;
     int                         nTimer_;
-    bool                        bEmergencyAmbulance_;
-    double                    rNbrHumanHandled_;
+    double                      rNbrHumanHandled_;
     PHY_RoleInterface_Medical*  pSortingArea_;
     double                      rInfoTimer_;
+    bool                        bEmergencyAmbulance_;
     //@}
 };
 

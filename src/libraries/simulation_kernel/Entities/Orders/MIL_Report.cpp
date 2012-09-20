@@ -194,8 +194,8 @@ namespace
 // -----------------------------------------------------------------------------
 MIL_Report::MIL_Report( unsigned int id, xml::xistream& xis )
     : nID_( id )
+    , strMessage_( xis.attribute< std::string >( "message" ) ) 
 {
-    strMessage_ = xis.attribute< std::string >( "message" );
     category_ = ConvertCategory( xis.attribute< std::string >( "category" ) );
     xis >> xml::list( "parameter", *this, &MIL_Report::ReadParameter );
     ids_.Lock( id );

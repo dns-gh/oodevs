@@ -21,7 +21,7 @@ namespace bfs = boost::filesystem;
 
 namespace
 {
-    std::string ResolveInputFile( const std::string target, const tools::ExerciseConfig& config )
+    std::string ResolveInputFile( const std::string& target, const tools::ExerciseConfig& config )
     {
         if( target == "orbat" )
             return config.GetOrbatFile();

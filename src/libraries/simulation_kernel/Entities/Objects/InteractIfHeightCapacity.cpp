@@ -22,7 +22,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( InteractIfHeightCapacity )
 // Created: LDC 2009-03-03
 // -----------------------------------------------------------------------------
 InteractIfHeightCapacity::InteractIfHeightCapacity( xml::xistream& xis )
-    : height_( xis.attribute< double >( "height", 0.f ) )
+    : height_( xis.attribute< double >( "height", 0. ) )
 {
     // NOTHING
 }
@@ -32,6 +32,7 @@ InteractIfHeightCapacity::InteractIfHeightCapacity( xml::xistream& xis )
 // Created: LDC 2009-03-03
 // -----------------------------------------------------------------------------
 InteractIfHeightCapacity::InteractIfHeightCapacity()
+    : height_( 0. )
 {
     // NOTHING
 }

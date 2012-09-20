@@ -52,7 +52,8 @@ PHY_DotationCategory_IndirectObjectCreationFire::PHY_DotationCategory_IndirectOb
 // -----------------------------------------------------------------------------
 PHY_DotationCategory_IndirectObjectCreationFire::PHY_DotationCategory_IndirectObjectCreationFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis, const std::string& objectType )
     : PHY_DotationCategory_IndirectFire_ABC( type, dotationCategory, xis )
-    , objectType_   ( objectType )
+    , objectType_( objectType )
+    , nLifeDuration_( 0 )
 {
     // NOTHING
 }

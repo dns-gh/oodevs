@@ -345,7 +345,7 @@ float UrbanObjectWrapper::GetLivingSpace() const
 // -----------------------------------------------------------------------------
 const std::vector< boost::shared_ptr< MT_Vector2D > >& UrbanObjectWrapper::ComputeLocalisationsInsideBlock()
 {
-    if( strechedArea_.size() == 0 )
+    if( strechedArea_.empty() )
     {
         const UrbanObjectWrapper& constThis = *this;
         const T_PointVector& points = constThis.GetLocalisation().GetPoints();

@@ -42,7 +42,8 @@ DEC_Objective::~DEC_Objective()
 void DEC_Objective::operator=( const DEC_Objective& rhs )
 {
     localisation_ = rhs.localisation_;
-    nSchedule_    = rhs.nSchedule_;
+    nSchedule_ = rhs.nSchedule_;
+    bFlag_ = rhs.bFlag_;
 }
 
 // -----------------------------------------------------------------------------

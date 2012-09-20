@@ -222,7 +222,7 @@ void MedicalTreatmentAttribute::CreateDictionary()
 // -----------------------------------------------------------------------------
 bool MedicalTreatmentAttribute::IsOverriden() const
 {
-    return doctors_ != 0 || capacities_.size() != 0;
+    return doctors_ != 0 || !capacities_.empty();
 }
 
 // -----------------------------------------------------------------------------

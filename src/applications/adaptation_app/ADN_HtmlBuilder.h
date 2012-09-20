@@ -62,7 +62,6 @@ private:
     //@{
     std::stringstream strOutput_;
 
-
     // Table stuff
     int nTableCols_;
     int nTableRows_;

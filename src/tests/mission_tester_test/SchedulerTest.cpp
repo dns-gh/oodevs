@@ -73,9 +73,10 @@ namespace
     struct FilterFixture
     {
         FilterFixture()
-            : factory_             ( FilterFactoryStub() )
-            , agentScheduler_      ( factory_->Create( "agent" ), 500u, false )
-            , agentSchedulable_    ( new Schedulable( "agent" ) )
+            : filter_( 0 )
+            , factory_( FilterFactoryStub() )
+            , agentScheduler_( factory_->Create( "agent" ), 500u, false )
+            , agentSchedulable_( new Schedulable( "agent" ) )
             , automatonSchedulable_( new Schedulable( "automat" ) )
         {}
         MockFilter* filter_;

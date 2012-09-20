@@ -30,6 +30,9 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_LocalMeteo )
 // Created: JSR 2011-11-22
 // -----------------------------------------------------------------------------
 PHY_LocalMeteo::PHY_LocalMeteo()
+    : bIsPatched_( false )
+    , startTime_ ( 0 )
+    , endTime_   ( 0 )
 {
         // NOTHING
 }

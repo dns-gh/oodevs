@@ -74,8 +74,7 @@ void SetConsolePos( const int nPosX, const int nPosY )
     rcPos.Right = rcPos.Left + coord.X-1;
     rcPos.Bottom = rcPos.Top + coord.Y-1;
 
-    int nRet;
-    nRet = SetConsoleScreenBufferSize( GetStdHandle( STD_OUTPUT_HANDLE ), coord );
+    SetConsoleScreenBufferSize( GetStdHandle( STD_OUTPUT_HANDLE ), coord );
     SetWindowPos( FindWindow( NULL, szADN_Version.c_str() ), NULL, rcPos.Left, rcPos.Top, 0, 0, SWP_NOZORDER | SWP_NOACTIVATE | SWP_NOSIZE | SWP_FRAMECHANGED  );
 }
 

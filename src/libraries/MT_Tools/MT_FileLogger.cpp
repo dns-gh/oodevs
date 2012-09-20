@@ -73,7 +73,7 @@ namespace
 // Name: MT_FileLogger OpenNewOfstream
 // Created:  MMC 2012-01-31
 //-----------------------------------------------------------------------------
-unsigned int MT_FileLogger::OpenNewOfstream( const std::string fileName, bool clearPrevious /* = true */ )
+unsigned int MT_FileLogger::OpenNewOfstream( const std::string& fileName, bool clearPrevious /* = true */ )
 {
     unsigned int size = 0;
     if ( file_.get() )

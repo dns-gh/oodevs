@@ -326,7 +326,7 @@ void PHY_DotationGroupContainer::ChangeDotation( const PHY_DotationCategory& cat
 // -----------------------------------------------------------------------------
 const PHY_DotationCategory* PHY_DotationGroupContainer::GetIlluminationDotations( float range, bool permanent ) const
 {
-    for( T_DotationGroupMap::const_iterator it = dotationGroups_.begin(); it != dotationGroups_.end(); it++ )
+    for( T_DotationGroupMap::const_iterator it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
     {
         const PHY_DotationCategory* dotation = it->second->GetIlluminationDotations( range, permanent );
         if( dotation )
@@ -359,7 +359,7 @@ double PHY_DotationGroupContainer::GetFuelDotationNumber() const
 float PHY_DotationGroupContainer::GetIlluminatingRange() const
 {
     float rangeMax = 0;
-    for( T_DotationGroupMap::const_iterator it = dotationGroups_.begin(); it != dotationGroups_.end(); it++ )
+    for( T_DotationGroupMap::const_iterator it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
     {
         float range = it->second->GetIlluminatingRange( );
         if( range > rangeMax )

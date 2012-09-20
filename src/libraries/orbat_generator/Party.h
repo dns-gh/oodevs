@@ -50,11 +50,11 @@ public:
 public:
     //! @name Operations
     //@{
-    void Party::GenerateDiplomacy( xml::xostream& orbat, const unsigned int id, const std::string& side );
-    void Party::GenerateDiplomacy( xml::xostream& orbat, const unsigned int id, std::vector< boost::shared_ptr< Party > > parties );
-    void Party::InsertIntoOrbat( xml::xostream& orbat, const IdNameGenerator& idGen );
-    void Party::AddFormation( boost::shared_ptr< Formation > formation );
-    void Party::AddAutomate( boost::shared_ptr< Automate > automate );
+    void GenerateDiplomacy( xml::xostream& orbat, const unsigned int id, const std::string& side );
+    void GenerateDiplomacy( xml::xostream& orbat, const unsigned int id, std::vector< boost::shared_ptr< Party > > parties );
+    void InsertIntoOrbat( xml::xostream& orbat, const IdNameGenerator& idGen );
+    void AddFormation( boost::shared_ptr< Formation > formation );
+    void AddAutomate( boost::shared_ptr< Automate > automate );
     //@}
 
 private:

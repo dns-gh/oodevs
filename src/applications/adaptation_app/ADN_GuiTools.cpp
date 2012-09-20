@@ -79,7 +79,7 @@ bool ADN_GuiTools::MissingConvoyWarning()
 // -----------------------------------------------------------------------------
 bool ADN_GuiTools::MissingBreakdownWarning( const std::string& name )
 {
-    int nResult = QMessageBox::warning( 0,
+    QMessageBox::warning( 0,
         qApp->translate( "ADNDatabaseWarnings", "Database Work in progress" ),
         tools::translate( "Composante_Data", "Equipment - Shall contain at least one breakdown for " )
         + QString::fromLatin1( name.c_str() )

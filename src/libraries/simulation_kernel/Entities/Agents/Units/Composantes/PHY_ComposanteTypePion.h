@@ -160,8 +160,8 @@ public:
     double GetHaulerLoadingTime   () const;
     double GetHaulerUnloadingTime () const;
 
-    const PHY_BreakdownType& GetRandomBreakdownType   () const;
-    const PHY_BreakdownType& GetAttritionBreakdownType() const;
+    const PHY_BreakdownType* GetRandomBreakdownType   () const;
+    const PHY_BreakdownType* GetAttritionBreakdownType() const;
     bool CanHaveBreakdown() const;
     bool CanHaveBreakdown( const PHY_BreakdownType* ) const;
     //@}
@@ -295,7 +295,7 @@ private:
 
     //! @name Tools
     //@{
-    const PHY_BreakdownType& GetBreakdownType( const T_BreakdownTypeProbabilityVector& probasVector ) const;
+    const PHY_BreakdownType* GetBreakdownType( const T_BreakdownTypeProbabilityVector& probasVector ) const;
     //@}
     //! @name Helpers
     //@{

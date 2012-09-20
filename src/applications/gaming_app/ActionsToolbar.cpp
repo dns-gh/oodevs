@@ -149,7 +149,7 @@ void ActionsToolbar::Load()
 // Name: ActionsToolbar::DoLoad
 // Created: ABR 2011-10-10
 // -----------------------------------------------------------------------------
-void ActionsToolbar::DoLoad( const std::string filename )
+void ActionsToolbar::DoLoad( const std::string& filename )
 {
     if( filename.empty() )
         return;

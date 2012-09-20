@@ -122,7 +122,7 @@ void MIL_CheckPointManager::LoadCheckPoint( const MIL_Config& config )
 // Name: MIL_CheckPointManager::SaveCheckPointDirectory
 // Created: JSR 2010-03-10
 // -----------------------------------------------------------------------------
-void MIL_CheckPointManager::SaveCheckPointDirectory( const std::string& name, const std::string userName )
+void MIL_CheckPointManager::SaveCheckPointDirectory( const std::string& name, const std::string& userName )
 {
     client::ControlCheckPointSaveNowAck asnReplyMsg;
     asnReplyMsg.Send( NET_Publisher_ABC::Publisher() );
@@ -340,7 +340,7 @@ bool MIL_CheckPointManager::SaveOrbatCheckPoint( const std::string& name )
 // Name: MIL_CheckPointManager::SaveFullCheckPoint
 // Created: NLD 2007-01-11
 // -----------------------------------------------------------------------------
-bool MIL_CheckPointManager::SaveFullCheckPoint( const std::string& name, const std::string userName /*= ""*/ )
+bool MIL_CheckPointManager::SaveFullCheckPoint( const std::string& name, const std::string& userName /*= ""*/ )
 {
     const MIL_Config& config = MIL_AgentServer::GetWorkspace().GetConfig();
     try
@@ -372,7 +372,7 @@ bool MIL_CheckPointManager::SaveFullCheckPoint( const std::string& name, const s
 // Name: MIL_CheckPointManager::SaveCheckPoint
 // Created: JVT 2005-04-13
 // -----------------------------------------------------------------------------
-bool MIL_CheckPointManager::SaveCheckPoint( bool automatic, const std::string& name, const std::string userName /*= ""*/ )
+bool MIL_CheckPointManager::SaveCheckPoint( bool automatic, const std::string& name, const std::string& userName /*= ""*/ )
 {
     std::string checkpointName = userName.empty()? name : userName;
     MT_LOG_INFO_MSG( "Begin save checkpoint " << checkpointName );

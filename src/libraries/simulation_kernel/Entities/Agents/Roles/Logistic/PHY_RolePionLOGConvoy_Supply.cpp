@@ -14,6 +14,7 @@
 #include "Entities/Agents/Roles/Logistic/SupplyConvoyReal_ABC.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "LocationActionNotificationHandler_ABC.h"
 #include "SpeedComputer_ABC.h"
@@ -85,6 +86,18 @@ void PHY_RolePionLOGConvoy_Supply::Update( bool bIsDead )
 void PHY_RolePionLOGConvoy_Supply::Clean()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOGConvoy_Supply::GetPion
+// Created: LDC 2012-09-19
+// -----------------------------------------------------------------------------
+const MIL_AgentPionLOG_ABC& PHY_RolePionLOGConvoy_Supply::GetPion() const
+{
+    MIL_AgentPionLOG_ABC* pion = dynamic_cast< MIL_AgentPionLOG_ABC* >( &pion_ );
+    if( !pion )
+        throw std::runtime_error( "Convoy supply is not linked to a logistic unit." );
+    return *pion;
 }
 
 // -----------------------------------------------------------------------------

@@ -110,6 +110,8 @@ template< typename T >
 MIL_AgentTypePion::MIL_AgentTypePion( const std::string& strName, xml::xistream& xis, T* )
     : MIL_AgentType_ABC( strName, xis )
     , pHumanRepartition_( new MIL_HumanRepartition( xis ) )
+    , rDistanceAvantLimas_( 0. )
+    , rRapForIncreasePerTimeStepValue_( 0. )
 {
     pUnitType_ = new T( xis );
     InitializeRapFor              ( xis );

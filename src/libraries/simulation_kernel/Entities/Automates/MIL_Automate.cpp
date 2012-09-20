@@ -93,28 +93,28 @@ void load_construct_data( Archive& archive, MIL_Automate* automat, const unsigne
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
 MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, xml::xistream& xis, unsigned int gcPause, unsigned int gcMult )
-    : MIL_Entity_ABC                 ( xis )
-    , pType_                         ( &type )
-    , nID_                           ( nID )
-    , pParentFormation_              ( dynamic_cast< MIL_Formation* >( &parent ) )
-    , pParentAutomate_               ( dynamic_cast< MIL_Automate* >( &parent ) )
-    , pOrderManager_                 ( new MIL_AutomateOrderManager( *this ) )
-    , pPionPC_                       ( 0 )
-    , pions_                         ()
-    , recycledPions_                 ()
-    , automates_                     ()
-    , bEngaged_                      ( true )
-    , bAutomateModeChanged_          ( true )
+    : MIL_Entity_ABC( xis )
+    , pType_( &type )
+    , nID_( nID )
+    , pParentFormation_( dynamic_cast< MIL_Formation* >( &parent ) )
+    , pParentAutomate_( dynamic_cast< MIL_Automate* >( &parent ) )
+    , pOrderManager_( new MIL_AutomateOrderManager( *this ) )
+    , pPionPC_( 0 )
+    , pions_()
+    , recycledPions_()
+    , automates_()
+    , bEngaged_( true )
+    , bAutomateModeChanged_( true )
     , nTickRcDotationSupplyQuerySent_( 0 )
-    , pKnowledgeBlackBoard_          ( new DEC_KnowledgeBlackBoard_Automate( *this ) ) // $$$$ MCO : never deleted ?
-    , pArmySurrenderedTo_            ( 0 )
-    , pLogisticHierarchy_            ( new logistic::LogisticHierarchy( *this, false /* no quotas*/ ) )
-    , pBrainLogistic_                ( 0 )
-    , pDotationSupplyManager_        ( new MIL_DotationSupplyManager( *this ) )
-    , pStockSupplyManager_           ( new MIL_StockSupplyManager( *this ) )
-    , pColor_                        ( new MIL_Color( xis ) )
+    , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_Automate( *this ) ) // $$$$ MCO : never deleted ?
+    , pArmySurrenderedTo_( 0 )
+    , pLogisticHierarchy_( new logistic::LogisticHierarchy( *this, false /* no quotas*/ ) )
+    , pBrainLogistic_( 0 )
+    , pDotationSupplyManager_( new MIL_DotationSupplyManager( *this ) )
+    , pStockSupplyManager_( new MIL_StockSupplyManager( *this ) )
+    , pColor_( new MIL_Color( xis ) )
+    , symbol_( xis.attribute< std::string >( "nature", "" ) )
 {
-    symbol_ = xis.attribute< std::string >( "nature", "" );
     Initialize( xis, gcPause, gcMult );
     if( pParentFormation_ )
         pParentFormation_->RegisterAutomate( *this );

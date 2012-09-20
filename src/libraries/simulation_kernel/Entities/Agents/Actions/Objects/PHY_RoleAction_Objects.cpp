@@ -72,6 +72,8 @@ void load_construct_data( Archive& archive, PHY_RoleAction_Objects* role, const 
 // -----------------------------------------------------------------------------
 PHY_RoleAction_Objects::PHY_RoleAction_Objects( MIL_AgentPion& pion )
     : pion_( pion )
+    , rWeightCapacity_( 0. )
+    , rVolumeCapacity_( 0. )
 {
     //NOTHING
 }

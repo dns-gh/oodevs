@@ -49,6 +49,7 @@ public:
 
     //! @name Convoy
     //@{
+    virtual const MIL_AgentPionLOG_ABC& GetPion() const;
     virtual void AssignConvoy( boost::shared_ptr< logistic::SupplyConvoyReal_ABC > );
     virtual void UnassignConvoy();
 

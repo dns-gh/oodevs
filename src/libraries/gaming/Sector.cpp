@@ -67,15 +67,17 @@ Sector::Sector( const Point2f& vOrigin, unsigned heading, float rAngle )
 // Created: JVT 2005-04-12
 // -----------------------------------------------------------------------------
 Sector::Sector()
-    : vOrigin_   ()
+    : vOrigin_()
     , vDirection_()
     , rSemiAngle_( 0. )
-    , rA1_       ( 0. )
-    , rB1_       ( 0. )
-    , rC1_       ( 0. )
-    , rA2_       ( 0. )
-    , rB2_       ( 0. )
-    , rC2_       ( 0. )
+    , rA1_( 0. )
+    , rB1_( 0. )
+    , rC1_( 0. )
+    , rA2_( 0. )
+    , rB2_( 0. )
+    , rC2_( 0. )
+    , minAngle_( 0. )
+    , maxAngle_( 0. )
 {
     // NOTHING
 }

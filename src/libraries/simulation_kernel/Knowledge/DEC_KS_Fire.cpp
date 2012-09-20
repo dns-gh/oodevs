@@ -128,7 +128,7 @@ void DEC_KS_Fire::Talk( int /*currentTimeStep*/ )
 // -----------------------------------------------------------------------------
 bool DEC_KS_Fire::IsAttacked() const
 {
-    return pionsAttacking_.size() > 0 || populationsAttacking_.size() > 0;
+    return !pionsAttacking_.empty() || !populationsAttacking_.empty();
 }
 
 // -----------------------------------------------------------------------------

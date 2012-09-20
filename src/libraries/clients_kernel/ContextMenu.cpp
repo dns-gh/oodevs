@@ -48,7 +48,7 @@ ContextMenu::~ContextMenu()
 // -----------------------------------------------------------------------------
 void ContextMenu::InitializeBaseCategories()
 {
-    if( baseCategories_.size() == 0 )
+    if( baseCategories_.empty() )
     {
         baseCategories_.push_back( "Interface" );
         baseCategories_.push_back( "Order" );

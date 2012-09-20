@@ -19,7 +19,11 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 Availability::Availability()
     : type_( 0 )
+    , total_( 0 )
     , available_( 0 )
+    , atWork_( 0 )
+    , atRest_( 0 )
+        
 {
     // NOTHING
 }

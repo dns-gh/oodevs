@@ -18,11 +18,12 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_Breakdown )
 // Name: PHY_Breakdown constructor
 // Created: JVT 2005-02-03
 // -----------------------------------------------------------------------------
-PHY_Breakdown::PHY_Breakdown( const PHY_BreakdownType& type )
-    : pType_      ( &type )
-    , nRepairTime_( type.ChooseARepairTime() )
+PHY_Breakdown::PHY_Breakdown( const PHY_BreakdownType* type )
+    : pType_      ( type )
+    , nRepairTime_( type ? type->ChooseARepairTime() : 0 )
 {
-    // NOTHING
+    if( !pType_ )
+        throw std::runtime_error( "No breakdown type" );
 }
 
 // -----------------------------------------------------------------------------

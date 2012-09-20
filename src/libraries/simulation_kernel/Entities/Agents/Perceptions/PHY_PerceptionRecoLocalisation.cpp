@@ -27,10 +27,11 @@
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
 PHY_PerceptionRecoLocalisationReco::PHY_PerceptionRecoLocalisationReco( const TER_Localisation& localisation, float rGrowthSpeed, DEC_Decision_ABC& callerAgent )
-    : localisation_    ( localisation )
+    : rCurrentRadius_( 0. )
+    , rGrowthSpeed_( rGrowthSpeed )
+    , callerAgent_( callerAgent )
+    , localisation_( localisation )
     , bShouldUseRadius_( rGrowthSpeed > 0. ? true : false )
-    , rGrowthSpeed_    ( rGrowthSpeed )
-    , callerAgent_     ( callerAgent )
 {
     const MT_Rect& boundingBox = localisation_.GetBoundingBox();
     rRadius_ = static_cast< float >( boundingBox.GetCenter().Distance( boundingBox.GetPointUpLeft() ) );
@@ -41,11 +42,12 @@ PHY_PerceptionRecoLocalisationReco::PHY_PerceptionRecoLocalisationReco( const TE
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
 PHY_PerceptionRecoLocalisationReco::PHY_PerceptionRecoLocalisationReco( const TER_Localisation& localisation, bool bUseDefaultRadius, DEC_Decision_ABC& callerAgent )
-    : localisation_    ( localisation )
-    , rGrowthSpeed_    ( -1. )
-    , rRadius_         ( -1. )
+    : rRadius_( -1. )
+    , rCurrentRadius_( 0. )
+    , rGrowthSpeed_( -1. )
+    , callerAgent_( callerAgent )
+    , localisation_( localisation )
     , bShouldUseRadius_( bUseDefaultRadius )
-    , callerAgent_     ( callerAgent )
 {
     // NOTHING
 }

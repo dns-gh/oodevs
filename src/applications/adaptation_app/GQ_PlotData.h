@@ -194,42 +194,27 @@ protected:
     //! @name Member data
     //@{
     GQ_Plot& plot_;
-    bool bOwnData_;
-
-    uint    nUserID_;
+    unsigned int nUserID_;
     QString name_;
-    //@}
-
-    //! @name Settings parameters
-    //@{
-    bool bVisible_;
-
-    QPen   pointPen_;
-    QPen   linePen_;
-    QPen   barPen_;
+    QPen pointPen_;
+    QPen linePen_;
+    QPen barPen_;
     QBrush barBrush_;
-
     E_PointShapeType nPointShapeType_;
-    Q3PointArray      pointShape_;
-    bool             bPolylineShape_;
-
-    bool        bDrawBars_;
-    double      rBarWidth_;
+    Q3PointArray pointShape_;
+    double rBarWidth_;
     E_Alignment nBarAlignment_;
-    //@}
-
-    //! @name Runtime data
-    //@{
     T_Data* pData_;
-    uint nFirstPoint_;
+    unsigned int nFirstPoint_;
     int  nNbrPoints_;
-
-    bool bSelected_;
-    T_IndexVector selectedIndexes_;
-
-    T_RangeVector barLimits_;
-
     GQ_PlotDataBBox bbox_;
+    T_IndexVector selectedIndexes_;
+    T_RangeVector barLimits_;
+    bool bVisible_;
+    bool bOwnData_;
+    bool bPolylineShape_;
+    bool bDrawBars_;
+    bool bSelected_;
     //@}
 };
 

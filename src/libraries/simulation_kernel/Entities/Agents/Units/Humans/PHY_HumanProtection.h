@@ -72,11 +72,11 @@ public:
     //! @name Accessors
     //@{
     const std::string GetName() const;
-    float ComputeProtectionValue( int injuryID, int threshold, const std::string type ) const;
+    float ComputeProtectionValue( int injuryID, int threshold, const std::string& type ) const;
     //@}
 
 private:
-    bool IsProtectionAgainstThisType( const std::string type, T_InjuryTypes injuryTypesList ) const;
+    bool IsProtectionAgainstThisType( const std::string& type, T_InjuryTypes injuryTypesList ) const;
 
 public:
     //! @name Constructor/Destructor

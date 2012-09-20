@@ -64,7 +64,7 @@ private:
     virtual void NotifyUpdated( const Simulation::sCheckPoint& checkPoint );
 
     QToolButton* CreateToolButton( const QString label, const QPixmap& pixmap, const char* slot );
-    void DoLoad( const std::string filename );
+    void DoLoad( const std::string& filename );
     //@}
 
 private slots:

@@ -47,7 +47,7 @@ bool CreateBlockProcess::CanCreateBlock( const UrbanModel& model, const geometry
     std::vector< const kernel::UrbanObject_ABC* >::const_iterator it;
     model.GetListWithinCircle( footprint.BoundingBoxCenter(), radius , urbanBlocks );
 
-    if( urbanBlocks.size() != 0 )
+    if( !urbanBlocks.empty() )
     {
         gaiaGeomCollPtr getBlocks = 0;
         gaiaGeomCollPtr newBlock = geometryFactory_->CreatePolygonGeometry( footprint, projector );

@@ -128,7 +128,7 @@ public:
 
     MIL_Population* FindPopulation( UrbanObjectWrapper* urbanObject ) const;
 
-    const tools::Resolver< MIL_Army_ABC >& MIL_EntityManager::GetArmies() const;
+    const tools::Resolver< MIL_Army_ABC >& GetArmies() const;
     const bool HasInfiniteDotations() const;
     UrbanObjectWrapper& GetUrbanObjectWrapper( const urban::TerrainObject_ABC& object );
     unsigned int ConvertUrbanIdToSimId( unsigned int urbanId );

@@ -194,7 +194,7 @@ public:
     static boost::shared_ptr< MT_Vector2D > GetDirectionDanger( const boost::shared_ptr< MIL_Mission_ABC > pMission );
 
     static boost::shared_ptr< MIL_Mission_ABC > GetMission( DEC_Decision_ABC* pAgent );
-    static bool DEC_AgentFunctions::HasMission( DEC_Decision_ABC* pAgent );
+    static bool HasMission( DEC_Decision_ABC* pAgent );
     static void SetMission( DEC_Decision_ABC* pAgent, boost::shared_ptr< MIL_Mission_ABC > pMission );
 
     // Test / debug

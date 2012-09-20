@@ -27,7 +27,8 @@
 // -----------------------------------------------------------------------------
 ADN_Supply_GUI::ADN_Supply_GUI( ADN_Supply_Data& data )
     : ADN_GUI_ABC( "ADN_Supply_GUI" )
-    , data_      ( data )
+    , data_( data )
+    , missionConnector_( 0 )
 {
     // NOTHING
 }

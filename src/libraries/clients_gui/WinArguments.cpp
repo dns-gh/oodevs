@@ -16,8 +16,8 @@
 // Created: RDS 2008-07-22
 // -----------------------------------------------------------------------------
 WinArguments::WinArguments( const std::string& arguments )
+    : argv_( boost::program_options::split_winmain( arguments ) )
 {
-    argv_ = boost::program_options::split_winmain( arguments );
     argv_.insert( argv_.begin(), "simulation_app.exe" );
     std::transform( argv_.begin(), argv_.end(), std::back_inserter( cArgv_ ), std::mem_fun_ref( &std::string::c_str ) );
 }

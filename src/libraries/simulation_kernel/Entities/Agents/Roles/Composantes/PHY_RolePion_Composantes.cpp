@@ -1895,7 +1895,7 @@ void PHY_RolePion_Composantes::GiveComposante( unsigned int id, int quantity, PH
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::CreateBreakdowns( const PHY_ComposanteTypePion& composanteType, unsigned int quantity, unsigned int breakdownId )
 {
-    const PHY_BreakdownType* breakdownType = ( breakdownId == 0 ) ? &composanteType.GetRandomBreakdownType() : PHY_BreakdownType::Find( breakdownId );
+    const PHY_BreakdownType* breakdownType = ( breakdownId == 0 ) ? composanteType.GetRandomBreakdownType() : PHY_BreakdownType::Find( breakdownId );
     assert( breakdownType != 0 );
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end() && quantity > 0; ++it )
     {
@@ -1974,7 +1974,7 @@ void PHY_RolePion_Composantes::ChangeEquipmentState( const PHY_ComposanteTypePio
                 if( !message.list( 7 ).list( stateIt->second - 1 ).has_identifier() )
                     throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
                 unsigned int breakdownId = message.list( 7 ).list( stateIt->second - 1 ).identifier();
-                const PHY_BreakdownType* breakdownType = ( breakdownId == 0 ) ? &composanteType.GetRandomBreakdownType() : PHY_BreakdownType::Find( static_cast< unsigned int >( breakdownId ) );
+                const PHY_BreakdownType* breakdownType = ( breakdownId == 0 ) ? composanteType.GetRandomBreakdownType() : PHY_BreakdownType::Find( static_cast< unsigned int >( breakdownId ) );
                 if( !breakdownType )
                     throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
                 composante.ReinitializeState( *stateIt->first, breakdownType );

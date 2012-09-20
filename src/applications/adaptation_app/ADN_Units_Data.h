@@ -258,7 +258,7 @@ public:
     void Reset();
 
     T_UnitInfos_Vector& GetUnitsInfos();
-    UnitInfos*          FindUnit( const std::string strName );
+    UnitInfos*          FindUnit( const std::string& strName );
 
     QStringList GetUnitsThatUse( ADN_Composantes_Data::ComposanteInfos& composante );
     QStringList GetUnitsThatUse( ADN_Models_Data::ModelInfos& model );
@@ -290,7 +290,7 @@ ADN_Units_Data::T_UnitInfos_Vector& ADN_Units_Data::GetUnitsInfos()
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
 inline
-ADN_Units_Data::UnitInfos* ADN_Units_Data::FindUnit( const std::string strName )
+ADN_Units_Data::UnitInfos* ADN_Units_Data::FindUnit( const std::string& strName )
 {
     IT_UnitInfos_Vector it = std::find_if( vUnits_.begin(), vUnits_.end(), ADN_Tools::NameCmp<UnitInfos>( strName ) );
     if( it == vUnits_.end() )

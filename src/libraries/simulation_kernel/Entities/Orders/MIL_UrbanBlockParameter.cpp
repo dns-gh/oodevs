@@ -21,6 +21,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_UrbanBlockParameter )
 // Created: LGY 2011-06-06
 // -----------------------------------------------------------------------------
 MIL_UrbanBlockParameter::MIL_UrbanBlockParameter()
+    : pUrbanBlock_( 0 )
 {
     // NOTHING
 }

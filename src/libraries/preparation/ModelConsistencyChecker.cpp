@@ -301,7 +301,7 @@ void ModelConsistencyChecker::CheckStockInitialization()
             AddError( eStockInitialization, &agent );
         else if( stocks && !stocks->GetInvalidDotations().empty() )
             for( std::vector< std::string >::const_iterator itDotation = stocks->GetInvalidDotations().begin(); itDotation != stocks->GetInvalidDotations().end(); ++itDotation )
-                AddError( eStockInvalidDotation, &agent, itDotation->c_str() );
+                AddError( eStockInvalidDotation, &agent, *itDotation );
     }
 }
 

@@ -35,6 +35,7 @@ public:
 
 public:
              MIL_Fuseau();
+             MIL_Fuseau( const MIL_Fuseau& rhs );
              MIL_Fuseau( const MT_Vector2D& vOrientationRefPos, const T_PointVector& leftLimit, const T_PointVector& rightLimit, const MIL_LimaOrder* pBeginMissionLima = 0, const MIL_LimaOrder* pEndMissionLima = 0 );
              MIL_Fuseau( const T_PointVector& leftLimit, const T_PointVector& rightLimit );
     virtual ~MIL_Fuseau();
@@ -114,7 +115,6 @@ private:
     //@}
 
 private:
-     MIL_Fuseau( const MIL_Fuseau& rhs ); // ????
 
     //! @name Init
     //@{

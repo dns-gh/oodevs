@@ -59,7 +59,7 @@ private:
 
     //! @name Helpers
     //@{
-    void ProceedRequest( boost::asio::streambuf& response, std::string& contentﬂ );
+    void ProceedRequest( boost::asio::streambuf& response, std::string& content );
     void ReadHeader( boost::asio::streambuf& response );
     void ReadContent( boost::asio::streambuf& response, std::string& content );
     //@}

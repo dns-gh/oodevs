@@ -31,7 +31,7 @@ public:
 
     //! @name Operators
     //@{
-    const Humans& operator=( const Humans& rhs );
+    Humans& operator=( const Humans& rhs );
     Humans& operator-=( const Humans& rhs );
     Humans operator-( const Humans& rhs ) const;
     Humans operator-() const;

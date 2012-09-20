@@ -88,7 +88,7 @@ void PHY_RolePion_Illumination::NotifyStopIlluminate()
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Illumination::IsIlluminated() const
 {
-    if( !bIlluminatedDefinitely_ && illuminators_.size() == 0 )
+    if( !bIlluminatedDefinitely_ && illuminators_.empty() )
         return false;
     return true;
 }
@@ -118,7 +118,7 @@ void PHY_RolePion_Illumination::NotifyStartIlluminatedBy( const MIL_Entity_ABC& 
 void PHY_RolePion_Illumination::NotifyStopIlluminatedBy( const MIL_Entity_ABC& entity )
 {
     illuminators_.erase( &entity );
-    if( illuminators_.size() == 0 )
+    if( illuminators_.empty() )
         bHit_ = false;
 }
 

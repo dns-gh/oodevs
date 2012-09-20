@@ -80,6 +80,7 @@ namespace
 Application::Application( int& argc, char** argv, const QString& expiration )
     : Application_ABC( argc, argv )
     , mainWindow_ ( 0 )
+    , networkTimer_( 0 )
     , expiration_ ( expiration )
 {
     const QString locale = ReadLang();

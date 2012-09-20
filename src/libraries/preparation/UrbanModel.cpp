@@ -596,7 +596,7 @@ namespace
 // Name: UrbanModel::ExportShapeFile
 // Created: ABR 2012-06-13
 // -----------------------------------------------------------------------------
-void UrbanModel::ExportShapeFile( const std::string exportDirectory, const tools::ExerciseConfig& config, QProgressDialog& progressDialog ) const
+void UrbanModel::ExportShapeFile( const std::string& exportDirectory, const tools::ExerciseConfig& config, QProgressDialog& progressDialog ) const
 {
     boost::shared_ptr< Translator > trans( new Translator( *new PlanarCartesianProjector( config.GetTerrainLatitude(), config.GetTerrainLongitude() ), geometry::Vector2d( config.GetTerrainWidth() / 2.f, config.GetTerrainHeight() / 2.f ) ) );
 

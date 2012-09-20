@@ -45,6 +45,15 @@
 ADN_Composantes_GUI::ADN_Composantes_GUI( ADN_Composantes_Data& data )
     : ADN_GUI_ABC( "ADN_Composantes_GUI" )
     , data_( data )
+    , pCombo_( 0 )
+    , pBreakdownsGroup_( 0 )
+    , pSpeeds_( 0 )
+    , pSensors_( 0 )
+    , pRadars_( 0 )
+    , pDotations_( 0 )
+    , pConsumptions_( 0 )
+    , pWeapons_( 0 )
+    , pActiveProtections_( 0 )
 {
     // NOTHING
 }

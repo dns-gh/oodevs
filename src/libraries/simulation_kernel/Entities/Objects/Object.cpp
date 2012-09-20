@@ -76,6 +76,7 @@ Object::Object( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const 
 // -----------------------------------------------------------------------------
 Object::Object()
     : MIL_Object()
+    , externalIdentifier_( 0 )
 {
     // NOTHING
 }

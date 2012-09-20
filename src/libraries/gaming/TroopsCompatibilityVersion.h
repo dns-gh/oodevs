@@ -48,7 +48,7 @@ public:
 
     //! @name Operators
     //@{
-    int TroopsCompatibilityVersion::GetTotalHumans() const;
+    int GetTotalHumans() const;
     //@}
 
 private:

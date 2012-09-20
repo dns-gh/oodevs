@@ -80,7 +80,7 @@ HlaObject_ABC& HlaClass::Create( const ::hla::ObjectIdentifier& objectID, const 
 void HlaClass::Destroy( HlaObject_ABC& object )
 {
     BOOST_FOREACH( const T_Entities::value_type& entity, remoteEntities_ )
-        if( &*entity.second == &object )
+        if( entity.second.get() == &object )
         {
             pListeners_->Destroyed( entity.first );
             remoteEntities_.erase( entity.first );

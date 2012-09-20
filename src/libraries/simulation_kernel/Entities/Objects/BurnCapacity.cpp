@@ -16,7 +16,6 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
-#include "Entities/Agents/Units/Humans/MIL_Injury_Fire.h"
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_ObjectManager.h"
 

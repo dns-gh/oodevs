@@ -34,10 +34,9 @@ public:
         WoundInfo();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output, int n );
 
     public:
-        E_DoctorSkills  nType_;
         ADN_Type_Time   lifeExpectancy_;
         ADN_Type_Time   treatTime_;
         ADN_Type_Time   restingTime_;

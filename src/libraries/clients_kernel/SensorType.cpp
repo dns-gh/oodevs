@@ -191,8 +191,7 @@ float SensorType::ComputeExtinction( float rDistanceModificator, float rCurrentN
 
 //    rDistanceModificator *= lightingFactors_[ env.GetMeteo().GetLighting() ];
 //    rDistanceModificator *= weatherFactors_ [ env.GetMeteo().GetWeather() ];
-    bool bIsAroundBU = false;
-    bIsAroundBU = ComputeUrbanExtinction( rCurrentNRJ, distance, material );
+    ComputeUrbanExtinction( rCurrentNRJ, distance, material );
     if( rCurrentNRJ > 0 && !material )
     {
         rDistanceModificator *= ComputeEnvironementFactor( inForest, inTown, inGround );

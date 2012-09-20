@@ -206,13 +206,13 @@ void DEC_Knowledge_Urban::SendChangedState()
         nLastProgressSent_ = progress;
         bMustSend = true;
     }
-    if( perceivedByAutomate_.size() == 0 && bLastPerceived_ )
+    if( perceivedByAutomate_.empty() && bLastPerceived_ )
     {
         message().set_perceived( false );
         bLastPerceived_ = false;
         bMustSend = true;
     }
-    else if( perceivedByAutomate_.size() > 0 && !bLastPerceived_ )
+    else if( !perceivedByAutomate_.empty() && !bLastPerceived_ )
     {
         message().set_perceived( true ) ;
         bLastPerceived_ = true;

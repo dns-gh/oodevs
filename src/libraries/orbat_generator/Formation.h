@@ -40,8 +40,8 @@ public:
 public:
     //! @name Operations
     //@{
-    void Formation::InsertIntoOrbat( xml::xostream& orbat, const IdNameGenerator& idNameGen );
-    void Formation::AddAutomate( boost::shared_ptr< Automate > automate );
+    void InsertIntoOrbat( xml::xostream& orbat, const IdNameGenerator& idNameGen );
+    void AddAutomate( boost::shared_ptr< Automate > automate );
     //@}
 
 private:

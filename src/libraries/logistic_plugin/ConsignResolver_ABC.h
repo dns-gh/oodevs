@@ -83,7 +83,7 @@ protected:
     //@{
     virtual bool IsManageable( const sword::SimToClient& ) { return false; }
     virtual void ManageMessage( const sword::SimToClient& ) {}
-    ConsignData_ABC& ConsignResolver_ABC::GetConsign( int requestId );
+    ConsignData_ABC& GetConsign( int requestId );
     virtual ConsignData_ABC* CreateConsignData( int requestId ) = 0;
     virtual void DestroyConsignData( int requestId );
 

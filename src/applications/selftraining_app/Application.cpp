@@ -143,7 +143,7 @@ void Application::DeleteTranslators()
 // Name: Application::AddTranslator
 // Created: SBO 2008-04-09
 // -----------------------------------------------------------------------------
-void Application::AddTranslator( const std::string file, const QString& locale )
+void Application::AddTranslator( const std::string& file, const QString& locale )
 {
     QTranslator* trans = new QTranslator( this );
     const QString filename = QString( "%1_%2" ).arg( file.c_str() ).arg( locale );

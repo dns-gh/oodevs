@@ -516,7 +516,7 @@ bool PHY_SensorTypeAgent::ComputeUrbanExtinction( const MT_Vector2D& vSource, co
 
     if( !list.empty() )
     {
-        for( std::vector< const urban::TerrainObject_ABC* >::const_iterator it = list.begin(); it != list.end() && rVisionNRJ > 0; it++ )
+        for( std::vector< const urban::TerrainObject_ABC* >::const_iterator it = list.begin(); it != list.end() && rVisionNRJ > 0; ++it )
         {
             const urban::TerrainObject_ABC& object = **it;
 

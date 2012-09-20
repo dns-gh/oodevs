@@ -69,7 +69,7 @@ private:
 
     //! @name Helpers
     //@{
-    void AddTranslator( const std::string file, const QString& locale );
+    void AddTranslator( const std::string& file, const QString& locale );
     virtual bool notify( QObject* emitter, QEvent* event );
     //@}
 

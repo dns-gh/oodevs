@@ -34,6 +34,12 @@ ADN_Urban_GUI::ADN_Urban_GUI( ADN_Urban_Data& data )
     , pListMaterial_ ( 0 )
     , pListFacade_   ( 0 )
     , pListRoofShape_( 0 )
+    , pListAccommodation_( 0 )
+    , pListInfrastructure_( 0 )
+    , pAttritionTable_( 0 )
+    , pListTemplate_( 0 )
+    , pUsages_( 0 )
+        
 {
     // NOTHING
 }

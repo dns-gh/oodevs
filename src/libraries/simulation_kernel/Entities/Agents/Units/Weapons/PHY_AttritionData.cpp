@@ -19,10 +19,10 @@
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
 PHY_AttritionData::PHY_AttritionData()
-    : rDestroyed_                 ( 0. )
-    , rReparableWithEvacuation_   ( 0. )
+    : rDestroyed_( 0. )
+    , rReparableWithEvacuation_( 0. )
     , rReparableWithoutEvacuation_( 0. )
-    , rScore_                          ( 0. )
+    , rScore_( 0. )
 {
     // NOTHING
 }
@@ -32,6 +32,10 @@ PHY_AttritionData::PHY_AttritionData()
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
 PHY_AttritionData::PHY_AttritionData( xml::xistream& xis )
+    : rDestroyed_( 0. )
+    , rReparableWithEvacuation_( 0. )
+    , rReparableWithoutEvacuation_( 0. )
+    , rScore_( 0. )
 {
     xis >> xml::attribute( "destruction", rDestroyed_ )
         >> xml::attribute( "repairable-with-evacuation", rReparableWithEvacuation_ )

@@ -153,9 +153,11 @@ void StatusBar::OnMouseMove( const geometry::Point3f& position )
 void StatusBar::ParameterSelected( int index )
 {
     QLabel* field = menuFields_[index - 1];
-    pMenu_->setItemChecked( index, field->isHidden() );
     if( field )
+    {
+        pMenu_->setItemChecked( index, field->isHidden() );
         field->setShown( field->isHidden() );
+    }
 }
 
 // -----------------------------------------------------------------------------

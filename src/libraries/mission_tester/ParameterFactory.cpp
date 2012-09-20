@@ -73,7 +73,6 @@ namespace
 
     std::string ComputeCoord( Coordinates upperLeft, Coordinates lowerRight, const kernel::CoordinateConverter& converter )
     {
-        std::string prefix = upperLeft.prefix;
        // std::string result = "30TYT1741869888";
 		geometry::Point2f p1,p2,pf;
 		p1 = converter.ConvertToXY( upperLeft.prefix+upperLeft.alphaX+upperLeft.alphaY+boost::lexical_cast< std::string >(upperLeft.x)+boost::lexical_cast< std::string >(upperLeft.y));

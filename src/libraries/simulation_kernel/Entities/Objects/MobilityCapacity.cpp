@@ -30,6 +30,9 @@ MobilityCapacity::MobilityCapacity( xml::xistream& xis )
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 MobilityCapacity::MobilityCapacity()
+    : nSpeedPolicy_( eSpeedPolicy_Slowest )
+    , rDefaultSpeed_( 0. )
+    , rSpeedPolicyMaxSpeedAgentFactor_( 0.f )
 {
     // NOTHING
 }

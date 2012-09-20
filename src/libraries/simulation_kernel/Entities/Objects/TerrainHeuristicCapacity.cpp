@@ -39,8 +39,9 @@ TerrainHeuristicCapacity::TerrainHeuristicCapacity( xml::xistream& xis )
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 TerrainHeuristicCapacity::TerrainHeuristicCapacity( const TerrainHeuristicCapacity& from )
+    : environmentScores_( from.environmentScores_ )
 {
-    environmentScores_ = from.environmentScores_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

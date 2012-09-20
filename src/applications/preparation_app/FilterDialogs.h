@@ -79,7 +79,6 @@ private:
     Model&                                 model_;
     const kernel::CoordinateConverter_ABC& converter_;
     QWidget*                               parent_;
-    int                                    menuSeparatorId_;
     //@}
 };
 

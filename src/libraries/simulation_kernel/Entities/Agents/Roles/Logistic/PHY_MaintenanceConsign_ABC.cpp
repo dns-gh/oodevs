@@ -24,11 +24,12 @@
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
 PHY_MaintenanceConsign_ABC::PHY_MaintenanceConsign_ABC(  MIL_Agent_ABC& maintenanceAgent, PHY_MaintenanceComposanteState& composanteState )
-    : pMaintenance_           ( &maintenanceAgent )
-    , pComposanteState_       ( &composanteState )
-    , nTimer_                 ( 0 )
+    : nState_( eGoingFrom )
+    , pMaintenance_( &maintenanceAgent )
+    , pComposanteState_( &composanteState )
+    , nTimer_( 0 )
     , currentStateEndTimeStep_( std::numeric_limits< unsigned >::max() )
-    , bHasChanged_            ( true )
+    , bHasChanged_( true )
 {
     pComposanteState_->SetConsign( this );
 }
@@ -38,11 +39,12 @@ PHY_MaintenanceConsign_ABC::PHY_MaintenanceConsign_ABC(  MIL_Agent_ABC& maintena
 // Created: JVT 2005-04-11
 // -----------------------------------------------------------------------------
 PHY_MaintenanceConsign_ABC::PHY_MaintenanceConsign_ABC()
-    : pMaintenance_            ( 0 )
-    , pComposanteState_        ( 0 )
-    , nTimer_                  ( 0 )
+    : nState_( eGoingFrom )
+    , pMaintenance_( 0 )
+    , pComposanteState_( 0 )
+    , nTimer_( 0 )
     , currentStateEndTimeStep_ ( std::numeric_limits< unsigned >::max() )
-    , bHasChanged_             ( true )
+    , bHasChanged_( true )
 {
     // NOTHING
 }

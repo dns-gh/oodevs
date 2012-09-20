@@ -214,6 +214,8 @@ MIL_AgentTypePion::MIL_AgentTypePion( const DEC_Model_ABC* pModel )
     : pModel_   ( pModel )
     , pUnitType_( 0 )
     , pHumanRepartition_( new MIL_HumanRepartition() )
+    , rDistanceAvantLimas_( 0. )
+    , rRapForIncreasePerTimeStepValue_( 0. )
 {
     // NOTHING
 }

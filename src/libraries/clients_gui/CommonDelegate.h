@@ -113,9 +113,16 @@ private:
     template< typename T >
     struct SpinBoxDescription
     {
-        SpinBoxDescription() : min_( 0 ), max_( 0 ), gap_( 0 ), precision_( 0 ), minLinkedColumn_( 0 ), maxLinkedColumn_( 0 ) {}
         SpinBoxDescription( T min, T max, T gap, int precision, int minLinkedRow, int maxLinkedRow, int minLinkedCol, int maxLinkedCol )
-            : min_( min ), max_( max ), gap_( gap ), precision_( precision ), minLinkedRow_( minLinkedRow ), maxLinkedRow_( maxLinkedRow ), minLinkedCol_( minLinkedCol ), maxLinkedCol_( maxLinkedCol ) {}
+            : min_( min )
+            , max_( max )
+            , gap_( gap )
+            , precision_( precision )
+            , minLinkedRow_( minLinkedRow )
+            , maxLinkedRow_( maxLinkedRow )
+            , minLinkedCol_( minLinkedCol )
+            , maxLinkedCol_( maxLinkedCol ) 
+            {}
 
         T   min_;
         T   max_;

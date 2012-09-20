@@ -11,8 +11,8 @@
 #include "adaptation_app_pch.h"
 #include "ADN_TableItem_ComboBox.h"
 
-QComboBox *ADN_TableItem_ComboBox::fakeCombo = 0;
-QWidget *fakeComboWidget = 0;
+QComboBox* ADN_TableItem_ComboBox::fakeCombo = 0;
+QWidget* fakeComboWidget = 0;
 
 //-----------------------------------------------------------------------------
 // Name: ADN_TableItem_ComboBox constructor
@@ -20,10 +20,9 @@ QWidget *fakeComboWidget = 0;
 //-----------------------------------------------------------------------------
 ADN_TableItem_ComboBox::ADN_TableItem_ComboBox( ADN_Table *table ,void* data )
 : ADN_TableItem_ABC( table, data )
-, entries( )
+, cb( 0 )
 , current( 0 )
 , edit( false )
-, vItems_()
 {
     setReplaceable( false );
 

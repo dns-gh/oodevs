@@ -42,14 +42,14 @@ namespace
 // -----------------------------------------------------------------------------
 MIL_Formation::MIL_Formation( xml::xistream& xis, MIL_Army_ABC& army, MIL_Formation* pParent, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory )
     : MIL_Entity_ABC( xis )
-    , nID_        ( xis.attribute< unsigned int >( "id" ) )
-    , pArmy_      ( &army )
-    , pParent_    ( pParent )
-    , pLevel_     ( 0 )
+    , nID_( xis.attribute< unsigned int >( "id" ) )
+    , pArmy_( &army )
+    , pParent_( pParent )
+    , pLevel_( 0 )
     , pExtensions_( new MIL_DictionaryExtensions( xis ) )
-    , pColor_     ( new MIL_Color( xis ) )
+    , pColor_( new MIL_Color( xis ) )
+    , symbol_( xis.attribute< std::string >( "nature", "" ) )
 {
-    symbol_ = xis.attribute< std::string >( "nature", "" );
     pLevel_ = PHY_NatureLevel::Find( xis.attribute< std::string >( "level" ) );
     if( !pLevel_ )
         xis.error( "Unknown level" );

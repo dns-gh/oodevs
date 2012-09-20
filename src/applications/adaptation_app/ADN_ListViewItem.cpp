@@ -107,22 +107,23 @@ private:
 // Name: ADN_ListViewItem constructor
 // Created: JDY 03-07-02
 //-----------------------------------------------------------------------------
-ADN_ListViewItem::ADN_ListViewItem(ADN_ListView *parent,void* item,int ncol)
-:   Q3ListViewItem(parent, parent?parent->lastItem ():0 )
-,   pData_(item)
-,   vConnectors_(ncol,(ADN_Connector_ABC*)0 )
+ADN_ListViewItem::ADN_ListViewItem( ADN_ListView *parent, void* item, int ncol )
+    : Q3ListViewItem( parent, parent ? parent->lastItem () : 0 )
+    , pData_( item )
+    , vConnectors_( ncol, ( ADN_Connector_ABC* )0 )
 {
-    int size=parent->columns();
-    if (parent && size<ncol )
-        for (int i=0;i<ncol-size;++i)
-        {
-            parent->addColumn("");
-            parent->setSorting(size+i,true);
-        }
-
-    if (parent)
-    for (int j=0;j<parent->columns();++j)
-        parent->setColumnWidthMode(j,Q3ListView::Maximum);
+    if( parent )
+    {
+        int size = parent->columns();
+        if ( size < ncol )
+            for( int i=0; i < ncol - size; ++i )
+            {
+                parent->addColumn("");
+                parent->setSorting(size+i,true);
+            }
+        for( int j=0; j < parent->columns(); ++j )
+            parent->setColumnWidthMode( j, Q3ListView::Maximum );
+    }
 }
 
 

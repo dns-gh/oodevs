@@ -30,7 +30,12 @@ public:
     {
         Parameters( const PHY_UnitType& unitType, const PHY_Posture& posture )
             : unitType_( unitType )
-            , posture_ ( posture )
+            , posture_( posture )
+            , bIsDead_( false )
+            , bDiscreteModeEnabled_( false )
+            , rCompletionPercentage_( 0. )
+            , rStealthFactor_( 0. )
+            , rTimingFactor_( 0. )
         {
             // NOTHING
         }
@@ -38,8 +43,8 @@ public:
         const PHY_UnitType& unitType_;
         const PHY_Posture& posture_;
         bool bIsDead_;
-        double rCompletionPercentage_;
         bool bDiscreteModeEnabled_;
+        double rCompletionPercentage_;
         double rStealthFactor_;
         double rTimingFactor_;
     };

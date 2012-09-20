@@ -147,7 +147,14 @@ MIL_PopulationType::MIL_PopulationType( const std::string& strName, xml::xistrea
 // Created: LDC 2009-04-24
 // -----------------------------------------------------------------------------
 MIL_PopulationType::MIL_PopulationType( const DEC_Model_ABC& model )
-    : pModel_( &model )
+    : rConcentrationDensity_( 0. )
+    , rDefaultFlowDensity_  ( 0. )
+    , rMaxSpeed_            ( 0. )
+    , rArmedIndividuals_    ( 0. )
+    , rMale_                ( 1. )
+    , rFemale_              ( 0. )
+    , rChildren_            ( 0. )
+    , pModel_               ( &model )
 {
     // NOTHING
 }

@@ -23,6 +23,7 @@ namespace
 MT_GaussianRandom::MT_GaussianRandom()
     : rMean_           ( 0. )
     , rVariance_       ( 1. )
+    , rAlreadyComputed_( 0. )
     , bAlreadyComputed_( false )
 {
     // NOTHING
@@ -35,6 +36,7 @@ MT_GaussianRandom::MT_GaussianRandom()
 MT_GaussianRandom::MT_GaussianRandom( double rMean, double rVariance )
     : rMean_           ( rMean )
     , rVariance_       ( rVariance )
+    , rAlreadyComputed_( 0. )
     , bAlreadyComputed_( false )
 {
     // NOTHING
@@ -47,6 +49,7 @@ MT_GaussianRandom::MT_GaussianRandom( double rMean, double rVariance )
 MT_GaussianRandom::MT_GaussianRandom( const MT_GaussianRandom& rand )
     : rMean_           ( rand.rMean_ )
     , rVariance_       ( rand.rVariance_ )
+    , rAlreadyComputed_( 0. )
     , bAlreadyComputed_( false )
 {
     // NOTHING

@@ -36,6 +36,9 @@ ADN_Categories_GUI::ADN_Categories_GUI( ADN_Categories_Data& data )
 , pListSize_ ( 0 )
 , pListDotationNature_( 0 )
 , pAttritionEffects_( 0 )
+, pComboType_( 0 )
+, pArmorBreakdownGroup_( 0 )
+, pAttritionEffectGroup_( 0 )
 {
 }
 

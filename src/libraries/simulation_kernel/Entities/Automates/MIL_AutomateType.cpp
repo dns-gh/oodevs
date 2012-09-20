@@ -149,10 +149,10 @@ void MIL_AutomateType::Terminate()
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
 MIL_AutomateType::MIL_AutomateType( const std::string& strName, xml::xistream& xis )
-    : nID_                            ( 0 )
-    , strName_                        ( strName )
-    , pTypePC_                        ( 0 )
-    , pModel_                         ( 0 )
+    : nID_( 0 )
+    , strName_( strName )
+    , pTypePC_( 0 )
+    , pModel_( 0 )
     , rRapForIncreasePerTimeStepValue_( DEC_Knowledge_RapFor_ABC::GetRapForIncreasePerTimeStepDefaultValue() )
 {
     xis >> xml::attribute( "id", nID_ )
@@ -170,7 +170,10 @@ MIL_AutomateType::MIL_AutomateType( const std::string& strName, xml::xistream& x
 // Created: LDC 2009-04-24
 // -----------------------------------------------------------------------------
 MIL_AutomateType::MIL_AutomateType( const DEC_Model_ABC& model )
-    : pModel_( &model )
+    : nID_( 0 )
+    , pTypePC_( 0 )
+    , pModel_( &model )
+    , rRapForIncreasePerTimeStepValue_( 0. )
 {
     // NOTHING
 }

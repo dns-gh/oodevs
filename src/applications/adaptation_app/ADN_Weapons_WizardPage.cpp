@@ -17,6 +17,9 @@
 // -----------------------------------------------------------------------------
 ADN_Weapons_WizardPage::ADN_Weapons_WizardPage( const T_ItemVector& existingItems, const QString& pageTitle, QWidget* pParent /*= 0*/ )
     : ADN_WizardPage( existingItems, pageTitle, pParent )
+    , pComboLauncher_( 0 )
+    , pComboAmmo_( 0 )
+        
 {
     // NOTHING
 }

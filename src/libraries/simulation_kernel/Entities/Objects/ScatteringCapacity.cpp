@@ -33,6 +33,7 @@ ScatteringCapacity::ScatteringCapacity( xml::xistream& xis )
 // Created: MGD 2010-03-12
 // -----------------------------------------------------------------------------
 ScatteringCapacity::ScatteringCapacity()
+    : humanByTimeStep_( 0 )
 {
     // NOTHING
 }

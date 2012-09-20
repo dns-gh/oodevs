@@ -68,7 +68,7 @@ public:
 
     //! @name Accessors
     //@{
-    virtual const MIL_AgentPionLOG_ABC& GetPion() const { return *pPion_; };
+    virtual const MIL_AgentPionLOG_ABC& GetPion() const = 0;
     //@}
 
     //! @name Operations
@@ -135,8 +135,6 @@ public:
     //@}
 
 private:
-    MIL_AgentPionLOG_ABC* pPion_; //$$$Hack
-
     //! @name Serialization
     //@{
     friend class boost::serialization::access;

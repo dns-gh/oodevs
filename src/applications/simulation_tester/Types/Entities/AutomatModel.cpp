@@ -34,8 +34,6 @@ AutomatModel::AutomatModel( const std::string& strName, XmlInputArchive& archive
 {
     try
     {
-        std::string strValue;
-
         archive.BeginList( "Missions" );
         while( archive.NextListElement() )
         {

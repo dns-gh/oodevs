@@ -26,6 +26,7 @@ MIL_Schedule::MIL_Schedule( MIL_LivingArea_ABC& livingArea )
     , isMoving_                ( false )
     , initialized_             ( false )
     , currentMotivationChanged_( true )
+    , transferTime_( 0 )
 {
     // NOTHING
 }

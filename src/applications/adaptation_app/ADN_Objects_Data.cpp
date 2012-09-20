@@ -1234,7 +1234,7 @@ ADN_Objects_Data::ADN_CapacityInfos_InteractWithSide::ADN_CapacityInfos_Interact
 void ADN_Objects_Data::ADN_CapacityInfos_InteractWithSide::ReadArchive( xml::xistream& input )
 {
     bPresent_ = true;
-    std::string friends, enemy, neutral, unknown;
+    std::string friends, enemy, neutral;
     input >> xml::optional
           >> xml::attribute( "friend", friends )
           >> xml::optional

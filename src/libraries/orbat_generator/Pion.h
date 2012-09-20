@@ -40,7 +40,7 @@ public:
 public:
     //! @name Operations
     //@{
-    void Pion::InsertIntoOrbat( xml::xostream& orbat, const IdNameGenerator& idNameGen );
+    void InsertIntoOrbat( xml::xostream& orbat, const IdNameGenerator& idNameGen );
     //@}
 
 private:

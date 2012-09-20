@@ -38,6 +38,7 @@ AttitudeModifierCapacity::AttitudeModifierCapacity( xml::xistream& xis )
 // Created: MGD 2010-03-12
 // -----------------------------------------------------------------------------
 AttitudeModifierCapacity::AttitudeModifierCapacity()
+    : attitude_( 0 )
 {
     // NOTHING
 }

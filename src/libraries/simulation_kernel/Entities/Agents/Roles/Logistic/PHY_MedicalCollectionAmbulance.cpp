@@ -27,14 +27,14 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MedicalCollectionAmbulance )
 // Created: NLD 2005-01-11
 // -----------------------------------------------------------------------------
 PHY_MedicalCollectionAmbulance::PHY_MedicalCollectionAmbulance( PHY_RoleInterface_Medical& medical, PHY_ComposantePion& compAmbulance )
-    : pMedical_           ( &medical )
-    , pCompAmbulance_     ( &compAmbulance )
-    , consigns_           ()
-    , nState_             ( eWaiting )
-    , nTimer_             ( 0 )
-    , rNbrHumanHandled_   ( 0. )
+    : pMedical_( &medical )
+    , pCompAmbulance_( &compAmbulance )
+    , nState_( eWaiting )
+    , nTimer_( 0 )
+    , rNbrHumanHandled_( 0. )
+    , pSortingArea_( 0 )
+    , rInfoTimer_( 0 )
     , bEmergencyAmbulance_( false )
-    , pSortingArea_       ( 0 )
 {
     pMedical_->StartUsingForLogistic( *pCompAmbulance_ );
 }
@@ -44,14 +44,14 @@ PHY_MedicalCollectionAmbulance::PHY_MedicalCollectionAmbulance( PHY_RoleInterfac
 // Created: JVT 2005-04-11
 // -----------------------------------------------------------------------------
 PHY_MedicalCollectionAmbulance::PHY_MedicalCollectionAmbulance()
-    : pMedical_           ( 0 )
-    , pCompAmbulance_     ( 0 )
-    , consigns_           ()
-    , nState_             ( eWaiting )
-    , nTimer_             ( 0 )
-    , rNbrHumanHandled_   ( 0. )
+    : pMedical_( 0 )
+    , pCompAmbulance_( 0 )
+    , nState_( eWaiting )
+    , nTimer_( 0 )
+    , rNbrHumanHandled_( 0. )
+    , pSortingArea_( 0 )
+    , rInfoTimer_( 0 )
     , bEmergencyAmbulance_( false )
-    , pSortingArea_       ( 0 )
 {
 }
 

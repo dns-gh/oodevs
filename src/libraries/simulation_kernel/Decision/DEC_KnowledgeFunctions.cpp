@@ -295,7 +295,7 @@ UrbanObjectWrapper* DEC_KnowledgeFunctions::GetUrbanBlockForPosition( const MIL_
         throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     T_UrbanObjectVector blocks;
     pion.GetArmy().GetKnowledge().GetUrbanObjects( blocks );
-    for( T_UrbanObjectVector::iterator it = blocks.begin(); it != blocks.end(); it++ )
+    for( T_UrbanObjectVector::iterator it = blocks.begin(); it != blocks.end(); ++it )
         if( ( *it ) && ( *it )->GetLocalisation().IsInside( *point ) )
             return ( *it );
     return 0;
@@ -312,7 +312,7 @@ T_UrbanObjectVector DEC_KnowledgeFunctions::GetUrbanBlockInZone( const MIL_Agent
     {
         T_UrbanObjectVector blocks;
         pion.GetArmy().GetKnowledge().GetUrbanObjects( blocks );
-        for( T_UrbanObjectVector::iterator it = blocks.begin(); it != blocks.end(); it++ )
+        for( T_UrbanObjectVector::iterator it = blocks.begin(); it != blocks.end(); ++it )
             if( ( *it ) && pLocalisation->Contains( ( *it )->GetLocalisation() ) )
                 result.push_back( *it );
     }

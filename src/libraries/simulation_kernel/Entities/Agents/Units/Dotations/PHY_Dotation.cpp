@@ -26,15 +26,16 @@ const double PHY_Dotation::maxCapacity_ = 10000000;
 // Created: NLD 2004-08-04
 // -----------------------------------------------------------------------------
 PHY_Dotation::PHY_Dotation( const PHY_DotationCategory& category, PHY_DotationGroup& group, bool bInfiniteDotations )
-    : pCategory_              ( &category )
-    , pGroup_                 ( &group )
-    , rValue_                 ( 0. )
-    , rCapacity_              ( 0. )
+    : pCategory_( &category )
+    , pGroup_( &group )
+    , rValue_( 0. )
+    , rLastValueSent_( 0. )
+    , rCapacity_( 0. )
     , rConsumptionReservation_( 0. )
-    , rFireReservation_       ( 0. )
-    , rSupplyThreshold_       ( 0. )
-    , bDotationBlocked_       ( false )
-    , bInfiniteDotations_     ( bInfiniteDotations )
+    , rFireReservation_( 0. )
+    , rSupplyThreshold_( 0. )
+    , bDotationBlocked_( false )
+    , bInfiniteDotations_( bInfiniteDotations )
 {
     // NOTHING
 }
@@ -44,15 +45,16 @@ PHY_Dotation::PHY_Dotation( const PHY_DotationCategory& category, PHY_DotationGr
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
 PHY_Dotation::PHY_Dotation()
-    : pCategory_              ( 0 )
-    , pGroup_                 ( 0 )
-    , rValue_                 ( 0. )
-    , rCapacity_              ( 0. )
+    : pCategory_( 0 )
+    , pGroup_( 0 )
+    , rValue_( 0. )
+    , rLastValueSent_( 0. )
+    , rCapacity_( 0. )
     , rConsumptionReservation_( 0. )
-    , rFireReservation_       ( 0. )
-    , rSupplyThreshold_       ( 0. )
-    , bDotationBlocked_       ( false )
-    , bInfiniteDotations_     ( false )
+    , rFireReservation_( 0. )
+    , rSupplyThreshold_( 0. )
+    , bDotationBlocked_( false )
+    , bInfiniteDotations_( false )
 {
     // NOTHING
 }

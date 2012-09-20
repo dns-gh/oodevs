@@ -52,6 +52,8 @@ private:
     //@{
     typedef geometry::Point2< int > BurningCellOrigin;
 
+    // $$$$ RC LDC This should be replaced with different classes, one per phase
+    // in order not to clutter memory with several uninitialised and unused integers.
     struct BurningCell
     {
         BurningCell()

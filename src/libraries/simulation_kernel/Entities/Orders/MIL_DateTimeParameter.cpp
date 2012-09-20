@@ -20,6 +20,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_DateTimeParameter )
 // Created: LGY 2011-06-06
 // -----------------------------------------------------------------------------
 MIL_DateTimeParameter::MIL_DateTimeParameter()
+    : dateTime_( 0 )
 {
     // NOTHING
 }

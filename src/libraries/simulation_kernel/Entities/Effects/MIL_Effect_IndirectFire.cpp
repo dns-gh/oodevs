@@ -33,19 +33,19 @@
 // Created: NLD 2004-10-11
 // -----------------------------------------------------------------------------
 MIL_Effect_IndirectFire::MIL_Effect_IndirectFire( const MIL_Agent_ABC& firer, unsigned int nTargetKnowledgeID, const PHY_DotationCategory_IndirectFire_ABC& indirectDotationCategory, double rInterventionTypeToFire )
-    : nNbrRefs_                ( 0 )
-    , firer_                   ( firer )
-    , rInterventionTypeToFire_ ( rInterventionTypeToFire )
+    : nNbrRefs_( 0 )
+    , firer_( firer )
+    , rInterventionTypeToFire_( rInterventionTypeToFire )
     , indirectDotationCategory_( indirectDotationCategory )
-    , vSourcePosition_         ( firer.GetRole< PHY_RoleInterface_Location >().GetPosition() )
-    , vTargetPosition_         ( -1., -1. )
-    , nTargetKnowledgeID_      ( nTargetKnowledgeID )
-    , nNbrAmmoFired_           ( 0 )
-    , bIsFlying_               ( false )
-    , bFired_                  ( false )
-    , bArrived_                ( false )
-    , rImpactTimeStep_         ( 0. )
-    , pFireResult_             ( 0 )
+    , vSourcePosition_( firer.GetRole< PHY_RoleInterface_Location >().GetPosition() )
+    , vTargetPosition_( -1., -1. )
+    , nTargetKnowledgeID_( nTargetKnowledgeID )
+    , nNbrAmmoFired_( 0 )
+    , bIsFlying_( false )
+    , bFired_( false )
+    , bArrived_( false )
+    , rImpactTimeStep_( 0. )
+    , pFireResult_( 0 )
 {
     UpdateTargetPositionFromKnowledge(); /// Update vTargetPosition_
     IncRef();
@@ -56,18 +56,19 @@ MIL_Effect_IndirectFire::MIL_Effect_IndirectFire( const MIL_Agent_ABC& firer, un
 // Created: NLD 2004-10-11
 // -----------------------------------------------------------------------------
 MIL_Effect_IndirectFire::MIL_Effect_IndirectFire( const MIL_Agent_ABC& firer, const MT_Vector2D& vTargetPosition, const PHY_DotationCategory_IndirectFire_ABC& indirectDotationCategory, double rInterventionTypeToFire )
-    : nNbrRefs_                ( 0 )
-    , firer_                   ( firer )
-    , rInterventionTypeToFire_ ( rInterventionTypeToFire )
+    : nNbrRefs_( 0 )
+    , firer_( firer )
+    , rInterventionTypeToFire_( rInterventionTypeToFire )
     , indirectDotationCategory_( indirectDotationCategory )
-    , vSourcePosition_         ( firer.GetRole< PHY_RoleInterface_Location >().GetPosition() )
-    , vTargetPosition_         ( vTargetPosition )
-    , nTargetKnowledgeID_      ( 0 )
-    , nNbrAmmoFired_           ( 0 )
-    , bIsFlying_               ( false )
-    , bFired_                  ( false )
-    , rImpactTimeStep_         ( 0. )
-    , pFireResult_             ( 0 )
+    , vSourcePosition_( firer.GetRole< PHY_RoleInterface_Location >().GetPosition() )
+    , vTargetPosition_( vTargetPosition )
+    , nTargetKnowledgeID_( 0 )
+    , nNbrAmmoFired_( 0 )
+    , bIsFlying_( false )
+    , bFired_( false )
+    , bArrived_( false )
+    , rImpactTimeStep_( 0. )
+    , pFireResult_( 0 )
 {
     IncRef();
 }

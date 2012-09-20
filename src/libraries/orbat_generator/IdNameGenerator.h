@@ -21,7 +21,7 @@ namespace orbat_generator
 {
 	typedef struct Coordinates
     {
-        Coordinates( const std::string coord )
+        Coordinates( const std::string& coord )
             : x       ( ( int( coord [ 5 ] ) - 48 ) * 10000 + ( int ( coord [ 6 ] ) - 48 ) * 1000 + ( int ( coord [ 7 ] ) - 48 ) * 100 + ( int ( coord [ 8 ] ) - 48 ) * 10 + ( int ( coord [ 9 ] ) - 48 ) )
             , y       ( ( int( coord [ 10 ] ) - 48 ) * 10000 + ( int ( coord [ 11 ] ) - 48 ) * 1000 + ( int ( coord [ 12 ] ) - 48 ) * 100 + ( int ( coord [ 13 ] ) - 48 ) * 10 + ( int ( coord [ 14 ] ) - 48 ) )
             , alphaX  ( coord[ 3 ] )
@@ -85,9 +85,9 @@ private:
     //! @name Member data
     //@{
     mutable Coordinates upperLeft_;
-	mutable Coordinates lowerRight_;
-	mutable unsigned int knowledgeId_;
-	mutable std::string  crowdName_;
+    mutable Coordinates lowerRight_;
+    mutable unsigned int knowledgeId_;
+    mutable std::string  crowdName_;
     mutable std::string  pionName_;
     mutable std::string  formationName_;
     mutable std::string  partyName_;

@@ -167,11 +167,6 @@ private:
     DEC_KS_KnowledgeSynthetizer* pKsKnowledgeSynthetizer_;
     DEC_KS_Sharing* pKsSharing_;
     //@}
-
-    //! @name Queries caches
-    //@{
-    unsigned int nLastCacheUpdateTick_;
-    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_KnowledgeBlackBoard_KnowledgeGroup )

@@ -68,7 +68,7 @@ void MIL_OrderManager_ABC::Update()
                 pNextMission_.reset();
                 pMission_.reset();
                 bNewMissionStarted_ = false;
-                throw e;
+                throw;
             }
         }
     }

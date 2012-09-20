@@ -34,6 +34,15 @@
 ADN_Objects_GUI::ADN_Objects_GUI( ADN_Objects_Data& data )
     : ADN_GUI_ABC( "ADN_Objects_GUI" )
     , data_( data )
+    , pSpeedImpactCombo_( 0 )
+    , pMaxAgentSpeed_( 0 )
+    , pPointDistance_( 0 )
+    , floodHurtHuman1_( 0 )
+    , floodHurtHuman2_( 0 )
+    , floodHurtHuman3_( 0 )
+    , floodHurtHumanE_( 0 )
+    , floodDeadHuman_( 0 )
+    , pContent_( 0 )
 {
     // NOTHING
 }

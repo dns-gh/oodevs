@@ -87,7 +87,7 @@ struct Setter
         *data = value;
         object_.UpdateTemplate( objectTypes_ );
     }
-    Setter& operator=( const Setter& rhs ) { object_ = rhs.object_; objectTypes_ = rhs.objectTypes_; }
+    Setter& operator=( const Setter& rhs ) { object_ = rhs.object_; objectTypes_ = rhs.objectTypes_; return *this; }
 
     UrbanObject_ABC& object_;
     const ObjectTypes& objectTypes_;

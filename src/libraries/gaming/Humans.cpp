@@ -60,7 +60,7 @@ Humans::~Humans()
 // Name: Humans::operator=
 // Created: ABR 2011-08-30
 // -----------------------------------------------------------------------------
-const Humans& Humans::operator=( const Humans& rhs )
+Humans& Humans::operator=( const Humans& rhs )
 {
     state_       = rhs.state_;
     officers_    = rhs.officers_;

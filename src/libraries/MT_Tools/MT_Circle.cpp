@@ -58,10 +58,11 @@ MT_Circle::MT_Circle(double x,double y,double r)
 // Name: MT_Circle constructor
 // Created: JDY 03-03-06
 //-----------------------------------------------------------------------------
-MT_Circle::MT_Circle(const MT_Circle& c)
+MT_Circle::MT_Circle( const MT_Circle& c )
+        : c_( c.c_ )
+        , r_( c.r_ )
 {
-    c_=c.c_;
-    r_=c.r_;
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -132,15 +133,15 @@ T_PointVector MT_Circle::Intersection( const MT_Line& line) const
 // Name: MT_Circle::Intersection
 // Created: JDY 03-03-06
 //-----------------------------------------------------------------------------
-T_PointVector MT_Circle::Intersection( const MT_Vector2D& p1,const MT_Vector2D& p2) const
+T_PointVector MT_Circle::Intersection( const MT_Vector2D& p1, const MT_Vector2D& p2 ) const
 {
-    T_PointVector vect=Intersection(MT_Line(p1,p2));
+    T_PointVector vect = Intersection( MT_Line( p1, p2 ) );
     T_PointVector res;
-    double      d=p2.SquareDistance(p1);
-    for (CIT_PointVector cit=vect.begin();cit!=vect.end();cit++)
+    double d = p2.SquareDistance( p1 );
+    for( CIT_PointVector cit = vect.begin(); cit != vect.end(); ++cit )
     {
-        double rDist1 = p1.SquareDistance(*cit);
-        double rDist2 = p2.SquareDistance(*cit);
+        double rDist1 = p1.SquareDistance( *cit );
+        double rDist2 = p2.SquareDistance( *cit );
 
         if( rDist1 <= d && rDist2 <= d)
             res.push_back( *cit );

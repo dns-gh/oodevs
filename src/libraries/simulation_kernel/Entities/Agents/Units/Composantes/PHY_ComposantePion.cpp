@@ -50,21 +50,21 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_ComposantePion )
 // Created: NLD 2004-08-12
 // -----------------------------------------------------------------------------
 PHY_ComposantePion::PHY_ComposantePion( const MIL_Time_ABC& time, const PHY_ComposanteTypePion& type, PHY_RolePion_Composantes& role, unsigned int nNbrHumanInCrew, bool bMajor, bool bLoadable, bool bCanBePartOfConvoy )
-    : PHY_Composante_ABC           ()
-    , time_                        ( time )
-    , pState_                      ( &PHY_ComposanteState::undamaged_ )
-    , pRole_                       ( &role )
-    , pType_                       ( &type )
-    , bMajor_                      ( bMajor )
-    , bLoadable_                   ( bLoadable )
-    , bCanBePartOfConvoy_          ( bCanBePartOfConvoy )
-    , bUsedForLogistic_            ( false )
-    , nAutoRepairTimeStep_         ( 0 )
-    , pBreakdown_                  ( 0 )
-    , pMaintenanceState_           ( 0 )
+    : PHY_Composante_ABC()
+    , time_( time )
+    , pRole_( &role )
+    , pState_( &PHY_ComposanteState::undamaged_ )
+    , pType_( &type )
+    , bMajor_( bMajor )
+    , bLoadable_( bLoadable )
+    , bCanBePartOfConvoy_( bCanBePartOfConvoy )
+    , bUsedForLogistic_( false )
+    , pHumans_( new PHY_HumansComposante( time, *this, nNbrHumanInCrew ) )
+    , nAutoRepairTimeStep_( 0 )
+    , pBreakdown_( 0 )
+    , pMaintenanceState_( 0 )
     , nRandomBreakdownNextTimeStep_( 0 )
-    , pRandomBreakdownState_       ( 0 )
-    , pHumans_                     ( new PHY_HumansComposante( time, *this, nNbrHumanInCrew ) )
+    , pRandomBreakdownState_( 0 )
 {
     pType_->InstanciateWeapons( std::back_inserter( weapons_ ) );
     pType_->InstanciateSensors( std::back_inserter( sensors_ ) );
@@ -78,16 +78,20 @@ PHY_ComposantePion::PHY_ComposantePion( const MIL_Time_ABC& time, const PHY_Comp
 // Created: JVT 2005-04-01
 // -----------------------------------------------------------------------------
 PHY_ComposantePion::PHY_ComposantePion()
-    : PHY_Composante_ABC    ()
-    , time_                 ( MIL_Singletons::GetTime() )
-    , pRole_                ( 0 )
-    , pState_               ( 0 )
-    , pType_                ( 0 )
-    , bMajor_               ( false )
-    , bLoadable_            ( false )
-    , bUsedForLogistic_     ( false )
-    , bCanBePartOfConvoy_   ( false )
-    , pMaintenanceState_    ( 0 )
+    : PHY_Composante_ABC()
+    , time_( MIL_Singletons::GetTime() )
+    , pRole_( 0 )
+    , pState_( 0 )
+    , pType_( 0 )
+    , bMajor_( false )
+    , bLoadable_( false )
+    , bCanBePartOfConvoy_( false )
+    , bUsedForLogistic_( false )
+    , pHumans_( 0 )
+    , nAutoRepairTimeStep_( 0 )
+    , pBreakdown_( 0 )
+    , pMaintenanceState_( 0 )
+    , nRandomBreakdownNextTimeStep_( 0 )
     , pRandomBreakdownState_( 0 )
 {
     // NOTHING
@@ -222,7 +226,7 @@ void PHY_ComposantePion::ReinitializeState( const PHY_ComposanteState& state, co
             throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
         if( pBreakdown_ )
             delete pBreakdown_;
-        pBreakdown_ = new PHY_Breakdown( *breakdownType );
+        pBreakdown_ = new PHY_Breakdown( breakdownType );
     }
     else if( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ && !pBreakdown_ )
         pBreakdown_ = new PHY_Breakdown( pType_->GetRandomBreakdownType() );

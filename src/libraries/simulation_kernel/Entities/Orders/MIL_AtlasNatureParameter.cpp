@@ -19,6 +19,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AtlasNatureParameter )
 // Created: LGY 2011-06-06
 // -----------------------------------------------------------------------------
 MIL_AtlasNatureParameter::MIL_AtlasNatureParameter()
+    : nature_( 0 )
 {
     // NOTHING
 }

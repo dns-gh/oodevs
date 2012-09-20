@@ -91,7 +91,7 @@ public:
 
     static void AddEnemyRepresentation( const boost::shared_ptr< DEC_Knowledge_Agent >& agent );
     static void RemoveEnemyRepresentation( const boost::shared_ptr< DEC_Knowledge_Agent >& agent );
-    static std::vector<  boost::shared_ptr< DEC_Knowledge_Agent > > DEC_MiscFunctions::GetEnemyRepresentation( DEC_Decision_ABC* caller );
+    static std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > GetEnemyRepresentation( DEC_Decision_ABC* caller );
 
     //
     static void FillMissionParameters                         ( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& initTaskFunction, const directia::tools::binders::ScriptRef& refMission, boost::shared_ptr< MIL_Mission_ABC > mission, bool isMasalife );

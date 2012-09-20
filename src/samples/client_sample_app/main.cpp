@@ -151,7 +151,7 @@ namespace
             catch( std::exception& e )
             {
                 closesocket( socket_ );
-                throw e;
+                throw;
             }
             delete[] buffer;
         }

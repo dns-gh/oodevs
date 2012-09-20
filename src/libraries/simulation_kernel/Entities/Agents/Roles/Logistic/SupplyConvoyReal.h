@@ -74,7 +74,7 @@ public:
 private:
     //! @name Operations
     //@{
-    unsigned SupplyConvoyReal::ReturnTimeRemainingForAction( E_Action action );
+    unsigned int ReturnTimeRemainingForAction( E_Action action );
     //@}
 
 private:

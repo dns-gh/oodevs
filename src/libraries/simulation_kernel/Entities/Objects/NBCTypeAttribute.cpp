@@ -87,11 +87,12 @@ NBCTypeAttribute::~NBCTypeAttribute()
 // Created: RFT 2008-07-21
 // -----------------------------------------------------------------------------
 NBCTypeAttribute::NBCTypeAttribute( const NBCTypeAttribute& attr )
-    : pAgent_          ( attr.pAgent_ )
-    , concentration_   ( attr.GetConcentration() )
-    , width_           ( attr.GetWidth() )
-    , length_          ( attr.GetLength() )
+    : pAgent_( attr.pAgent_ )
+    , concentration_( attr.GetConcentration() )
+    , width_( attr.GetWidth() )
+    , length_( attr.GetLength() )
     , propagationAngle_( attr.GetPropagationAngle() )
+    , sourceLifeDuration_( 0 )
 {
     // NOTHING
 }

@@ -25,6 +25,13 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Gen_Object )
 // Created: LGY 2011-06-06
 // -----------------------------------------------------------------------------
 DEC_Gen_Object::DEC_Gen_Object()
+    : identifier_( 0 )
+    , pObstacleType_( sword::ObstacleType_DemolitionTargetType_preliminary )
+    , rDensity_( 0 )
+    , nMinesActivityTime_( 0 )
+    , nActivationTime_( 0 )
+    , pTC2_( 0 )
+        
 {
     // NOTHING
 }

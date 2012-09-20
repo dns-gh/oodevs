@@ -63,12 +63,13 @@ InfrastructureCapacity::InfrastructureCapacity( const PHY_InfrastructureType& ty
 // Created: SLG 2010-01-13
 // -----------------------------------------------------------------------------
 InfrastructureCapacity::InfrastructureCapacity( const InfrastructureCapacity& from )
+    : functionalState_( from.functionalState_ )
+    , role_( from.role_ )
+    , threshold_( from.threshold_ )
+    , enabled_( from.enabled_ )
+    , needUpdate_( from.needUpdate_ )
 {
-    functionalState_ = from.functionalState_;
-    role_ = from.role_;
-    enabled_ = from.enabled_;
-    threshold_ = from.threshold_;
-    needUpdate_ = from.needUpdate_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

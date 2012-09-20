@@ -229,7 +229,7 @@ double PHY_DotationGroup::Consume( const PHY_DotationCategory& category, double 
 // -----------------------------------------------------------------------------
 const PHY_DotationCategory* PHY_DotationGroup::GetIlluminationDotations( float range, bool permanent ) const
 {
-    for( T_DotationMap::const_iterator it = dotations_.begin(); it != dotations_.end(); it++ )
+    for( T_DotationMap::const_iterator it = dotations_.begin(); it != dotations_.end(); ++it )
     {
         if( it->first->IsIlluminating( range, permanent ) )
         {
@@ -246,7 +246,7 @@ const PHY_DotationCategory* PHY_DotationGroup::GetIlluminationDotations( float r
 float PHY_DotationGroup::GetIlluminatingRange() const
 {
     float rangeMax = 0.0;
-    for( T_DotationMap::const_iterator it = dotations_.begin(); it != dotations_.end(); it++ )
+    for( T_DotationMap::const_iterator it = dotations_.begin(); it != dotations_.end(); ++it )
     {
         if( it->first->GetIlluminatingRange( ) > rangeMax )
         {

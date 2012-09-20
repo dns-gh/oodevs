@@ -54,6 +54,7 @@ FormationTemplateElement::FormationTemplateElement( FormationModel& formations, 
 // -----------------------------------------------------------------------------
 FormationTemplateElement::FormationTemplateElement( FormationModel& formations, xml::xistream& input )
     : formations_( formations )
+    , levelId_( 0 )
 {
     std::string name;
     std::string strColor;

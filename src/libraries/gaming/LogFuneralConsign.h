@@ -70,7 +70,7 @@ private:
 
     //! @name Tools
     //@{
-    kernel::Entity_ABC* LogFuneralConsign::FindLogEntity(const sword::ParentEntity& msg);
+    kernel::Entity_ABC* FindLogEntity(const sword::ParentEntity& msg);
     //@}
 
 private:

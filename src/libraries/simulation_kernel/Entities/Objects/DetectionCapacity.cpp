@@ -110,6 +110,9 @@ void DetectionCapacity::ReadAcquisitionTime( xml::xistream& xis )
 // Created: MGD 2009-03-05
 // -----------------------------------------------------------------------------
 DetectionCapacity::DetectionCapacity()
+    : rDetectionTime_( 0 )
+    , rRecognitionTime_( 0 )
+    , rIdentificationTime_( 0 )
 {
     // NOTHING
 }

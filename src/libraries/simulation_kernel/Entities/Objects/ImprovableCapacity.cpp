@@ -28,6 +28,7 @@ ImprovableCapacity::ImprovableCapacity( const PHY_ConsumptionType& consumption, 
     , unitType_( type )
     , dotation_( 0 )
     , nFullNbrDotation_( 0 )
+    , finalised_( false )
 {
     xis >> xml::optional
         >> xml::start( "resources" )
@@ -61,6 +62,7 @@ ImprovableCapacity::ImprovableCapacity()
     , unitType_( ConstructionCapacity::eRaw )
     , dotation_( 0 )
     , nFullNbrDotation_( 0 )
+    , finalised_( false )
 {
     // NOTHING
 }

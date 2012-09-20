@@ -44,7 +44,7 @@ public:
     //@{
     struct Category
     {
-        Category( const std::string name, bool separatorText = false ) : name_( name ), separatorText_( separatorText ) {}
+        Category( const std::string& name, bool separatorText = false ) : name_( name ), separatorText_( separatorText ) {}
         bool operator<( const Category& category ) const { return name_ < category.name_; }
 
         std::string name_;

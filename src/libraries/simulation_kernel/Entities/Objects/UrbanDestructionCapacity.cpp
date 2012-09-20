@@ -85,6 +85,7 @@ UrbanDestructionCapacity::~UrbanDestructionCapacity()
 UrbanDestructionCapacity& UrbanDestructionCapacity::operator=( const UrbanDestructionCapacity& from )
 {
     data_.reset( new PHY_UrbanAttritionData( *from.data_ ) );
+    appliedOnce_ = from.appliedOnce_;
     return *this;
 }
 

@@ -31,7 +31,9 @@ MIL_IntoxicationEffect::MIL_IntoxicationEffect( MIL_PopulationHumans& humans, un
 // Created: JSR 2012-03-07
 // -----------------------------------------------------------------------------
 MIL_IntoxicationEffect::MIL_IntoxicationEffect()
-    : humans_( 0 )
+    : delay_( 0 )
+    , humans_( 0 )
+    , time_( 0 )
 {
     // NOTHING
 }
