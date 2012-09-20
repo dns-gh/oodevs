@@ -364,7 +364,7 @@
     </target>
 
     <target name="library.replay_plugin" depends="library.dispatcher" description="build replay_plugin static library">
-        <build-lib name="replay_plugin" pattern="lib${ant.project.name}_replay_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4">
+        <build-lib name="replay_plugin" pattern="lib${ant.project.name}_replay_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
