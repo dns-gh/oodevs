@@ -20,6 +20,22 @@ BOOST_AUTO_TEST_CASE( an_empty_model_matches_an_empty_constraint )
     BOOST_CHECK( model.Check( expected ) );
 }
 
+BOOST_AUTO_TEST_CASE( an_empty_model_fails_to_match_a_value_constraint )
+{
+    Model model;
+    model = 42;
+    core::Model expected;
+    BOOST_CHECK( ! model.Check( expected ) );
+}
+
+BOOST_AUTO_TEST_CASE( a_value_model_fails_to_match_an_empty_constraint )
+{
+    Model model;
+    core::Model expected;
+    expected = 42;
+    BOOST_CHECK( ! model.Check( expected ) );
+}
+
 BOOST_AUTO_TEST_CASE( a_model_constraint_accepts_number_values )
 {
     Model model;
@@ -86,7 +102,7 @@ BOOST_AUTO_TEST_CASE( a_model_constraint_accepts_inner_constraints_on_values )
     BOOST_CHECK( model.Check( expected ) );
 }
 
-BOOST_AUTO_TEST_CASE( a_model_constraint_accepts_child_nodes )
+BOOST_AUTO_TEST_CASE( a_model_constraint_accepts_string_child_nodes )
 {
     Model model;
     model[ "key" ];
@@ -113,6 +129,37 @@ BOOST_AUTO_TEST_CASE( a_model_constraint_accepts_child_nodes )
         core::Model expected;
         expected[ "key" ];
         expected[ "key 2" ];
+        BOOST_CHECK( ! model.Check( expected ) );
+    }
+}
+
+BOOST_AUTO_TEST_CASE( a_model_constraint_accepts_integer_child_nodes )
+{
+    Model model;
+    model[ 3 ];
+    {
+        core::Model expected;
+        BOOST_CHECK( ! model.Check( expected ) );
+    }
+    {
+        core::Model expected;
+        expected[ 3 ] = 42;
+        BOOST_CHECK( ! model.Check( expected ) );
+    }
+    {
+        core::Model expected;
+        expected[ 3 ][ 7 ];
+        BOOST_CHECK( ! model.Check( expected ) );
+    }
+    {
+        core::Model expected;
+        expected[ 3 ];
+        BOOST_CHECK( model.Check( expected ) );
+    }
+    {
+        core::Model expected;
+        expected[ 3 ];
+        expected[ 4 ];
         BOOST_CHECK( ! model.Check( expected ) );
     }
 }
@@ -230,20 +277,11 @@ BOOST_AUTO_TEST_CASE( a_model_accepts_user_data )
     }
 }
 
-BOOST_AUTO_TEST_CASE( a_model_accepts_empty_user_data )
+BOOST_AUTO_TEST_CASE( a_model_does_not_accept_empty_user_data )
 {
     Model model;
     boost::shared_ptr< core::UserData_ABC > data;
-    model.SetData( data );
-    {
-        core::Model expected;
-        BOOST_CHECK( model.Check( expected ) );
-    }
-    {
-        core::Model expected;
-        expected.SetData( data );
-        BOOST_CHECK( model.Check( expected ) );
-    }
+    BOOST_CHECK_THROW( model.SetData( data ), std::exception );
 }
 
 BOOST_AUTO_TEST_CASE( a_model_can_be_marked_for_remove )
@@ -264,8 +302,20 @@ BOOST_AUTO_TEST_CASE( a_model_can_be_marked_for_remove )
 BOOST_AUTO_TEST_CASE( a_model_is_printable )
 {
     Model model;
-    model = 42;
-    model[ "child" ];
-    model[ 0u ];
-    BOOST_CHECK( ! boost::lexical_cast< std::string >( model ).empty() );
+    Model& element = model.AddElement();
+    element[ "test" ] = 42;
+    element[ "too" ] = 123;
+    Model& element2 = model.AddElement();
+    element2[ "test" ] = 43;
+    element2[ "too" ] = mock::any;
+    BOOST_CHECK_EQUAL( "[\n"
+                        "  {\n"
+                        "    test: 42,\n"
+                        "    too: 123\n"
+                        "  },\n"
+                        "  {\n"
+                        "    test: 43,\n"
+                        "    too: any\n"
+                        "  }\n"
+                        "]", boost::lexical_cast< std::string >( model ) );
 }

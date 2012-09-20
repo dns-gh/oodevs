@@ -30,5 +30,11 @@
     <ClInclude Include="..\..\src\libraries\module_tester\NullModelVisitor.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\module_tester\ModelConstraint_ABC.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\module_tester\IsEmptyModelVisitor.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

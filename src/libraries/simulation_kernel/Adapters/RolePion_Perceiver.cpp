@@ -111,14 +111,13 @@ namespace
         {
             node.Accept( *this );
         }
-        virtual void Visit( const std::string& key, const core::Visitable_ABC& /*child*/ )
+        virtual void Visit( const std::string& key, const core::Model& child )
         {
             boost::shared_ptr< ListenerHelper >& helper = identifiers_[ key ];
             if( ! helper )
             {
-                const core::Model& node = operator[]( key ); // $$$$ SLI: not that great...
-                const unsigned int id = enable_( node );
-                helper.reset( new ListenerHelper( node, ListenerHelper::T_Callback(), boost::bind( &IdentifiedToggleListener::Disable, this, key, id ) ) );
+                const unsigned int id = enable_( child );
+                helper.reset( new ListenerHelper( child, ListenerHelper::T_Callback(), boost::bind( &IdentifiedToggleListener::Disable, this, key, id ) ) );
             }
         }
         void Disable( const std::string& key, unsigned int identifier )
@@ -130,7 +129,7 @@ namespace
         virtual void Visit( uint64_t ) {}
         virtual void Visit( double ) {}
         virtual void Visit( const std::string& ) {}
-        virtual void Visit( const core::Visitable_ABC& ) {}
+        virtual void Visit( const core::Model& ) {}
         virtual void Visit( boost::shared_ptr< core::UserData_ABC > ) {}
         virtual void MarkForRemove() {}
     private:

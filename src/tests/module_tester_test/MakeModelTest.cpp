@@ -37,9 +37,9 @@ BOOST_FIXTURE_TEST_CASE( make_model_can_build_data_model_constraint, Fixture )
 
 namespace
 {
-    bool CustomContraint( const Model::T_Value& v )
+    bool CustomContraint( const core::Model& m )
     {
-        return boost::get< double >( v ) == 42;
+        return m == 42;
     }
 }
 

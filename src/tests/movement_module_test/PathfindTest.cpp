@@ -19,14 +19,14 @@ using namespace sword::movement;
 BOOST_FIXTURE_TEST_CASE( destination_not_trafficable_cancels_path_computation_and_sends_difficult_terrain_report_event, PathfindFixture ) // $$$$ _RC_ SLI 2012-03-09: event is sent outside command
 {
     ExpectEvent( "movement report", sword::test::MakeModel( "entity", identifier )
-                                                          ( "code", MIL_Report::eReport_DifficultTerrain ) );
+                                                          ( "code", static_cast< int >( MIL_Report::eReport_DifficultTerrain ) ) );
     ComputeUntrafficablePathfind( CreateSimplePath() );
 }
 
 BOOST_FIXTURE_TEST_CASE( impossible_path_sends_difficult_terrain_report_event, PathfindFixture ) // $$$$ _RC_ SLI 2012-03-09: event is sent outside command
 {
     ExpectEvent( "movement report", sword::test::MakeModel( "entity", identifier )
-                                                          ( "code", MIL_Report::eReport_DifficultTerrain ) );
+                                                          ( "code", static_cast< int >( MIL_Report::eReport_DifficultTerrain ) ) );
     ComputeImpossiblePathfind( CreateSimplePath() );
 }
 

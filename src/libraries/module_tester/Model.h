@@ -11,59 +11,41 @@
 #define MODULE_TESTER_MODEL_H
 
 #include "NullModelVisitor.h"
-#include <core/Convert.h>
-#include <core/ModelPrinter.h>
+#include "ModelConstraint_ABC.h"
+#include "IsEmptyModelVisitor.h"
+#include <core/Model.h>
 #include <turtle/detail/check.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/bind.hpp>
-#ifdef _MSC_VER
-#   pragma warning( push, 0 )
-#   pragma warning( disable: 4512 4702 4181 )
-#elif defined __GNUC__
-#   pragma GCC system_header
-#endif
-#include <boost/variant.hpp>
-#ifdef _MSC_VER
-#   pragma warning( pop )
-#endif
+#include <iomanip>
 #include <vector>
 #include <map>
-
-namespace mock
-{
-    template< typename T >
-    bool operator==( const boost::variant< double, std::string >& expected, const T& actual )
-    {
-        return expected == boost::variant< double, std::string >( actual );
-    }
-}
 
 namespace sword
 {
 namespace test
 {
-class Model : public core::Visitable_ABC
+// =============================================================================
+/** @class  Model
+    @brief  Mock model
+*/
+// Created: MCO 2012-09-20
+// =============================================================================
+class Model
 {
-public:
-    //! @name Types
-    //@{
-    typedef boost::variant< double, std::string > T_Value;
-    //@}
-
 public:
     //! @name Constructors/Destructor
     //@{
     Model()
-        : isAny_   ( false )
-        , toRemove_( false )
+        : constraint_( new EmptyConstraint() )
+        , removed_   ( false )
     {}
     Model( const Model& rhs )
-        : value_   ( rhs.value_ )
-        , data_    ( rhs.data_ )
-        , children_( rhs.children_ )
-        , elements_( rhs.elements_ )
-        , isAny_   ( rhs.isAny_ )
-        , toRemove_( rhs.isAny_ )
+        : constraint_( rhs.constraint_ )
+        , data_      ( rhs.data_ )
+        , children_  ( rhs.children_ )
+        , elements_  ( rhs.elements_ )
+        , removed_   ( rhs.removed_ )
     {}
     //@}
 
@@ -71,38 +53,32 @@ public:
     //@{
     Model& operator=( const Model& rhs )
     {
-        value_ = rhs.value_;
+        constraint_ = rhs.constraint_;
         data_ = rhs.data_;
         children_ = rhs.children_;
         elements_ = rhs.elements_;
-        isAny_ = rhs.isAny_;
-        toRemove_ = rhs.toRemove_;
+        removed_ = rhs.removed_;
         return *this;
     }
 
     template< typename T >
     Model& operator=( const T& t )
     {
-        value_.reset( new mock::detail::check< T_Value, T >( t ) );
+        constraint_.reset( new ConstraintWrapper< T >( t ) );
         return *this;
     }
-    Model& operator=( const mock::constraint< mock::detail::any >& /*any*/ )
+    Model& operator=( const char* c )
     {
-        isAny_ = true;
-        return *this;
-    }
-    Model& operator=( const char* const c )
-    {
-        value_.reset( new mock::detail::check< T_Value, std::string >( c ) );
+        constraint_.reset( new ConstraintWrapper< const char* >( c ) );
         return *this;
     }
 
-    Model& operator[]( const std::string& key )
+    Model& Model::operator[]( const std::string& key )
     {
         if( key.empty() )
             return *this;
-        Model& child = children_[ Root( key ) ];
-        return child[ Leaf( key ) ];
+        constraint_.reset( new ChildrenConstraint() );
+        return children_[ Root( key ) ][ Leaf( key ) ];
     }
     Model& operator[]( const char* key )
     {
@@ -110,22 +86,19 @@ public:
     }
     Model& operator[]( unsigned int key )
     {
-        return children_[ boost::lexical_cast< std::string >( key ) ];
+        return operator[]( boost::lexical_cast< std::string >( key ) );
     }
 
-    bool Check( const core::Visitable_ABC& actual ) const
+    bool Check( const core::Model& actual ) const
     {
-        bool valid = true;
-        NodeValidator( *this, actual, valid );
-        return valid;
-    }
-    bool IsAny() const
-    {
-        return isAny_;
-    }
-    bool IsMarkedForRemove() const
-    {
-        return toRemove_;
+        try
+        {
+            return CheckRemove( actual ) && constraint_->Check( *this, actual );
+        }
+        catch( ... )
+        {
+        }
+        return false;
     }
     //@}
 
@@ -133,187 +106,30 @@ public:
     //@{
     Model& AddElement()
     {
+        constraint_.reset( new ElementsConstraint() );
         elements_.push_back( Model() );
         return elements_.back();
     }
     void SetData( boost::shared_ptr< core::UserData_ABC > data )
     {
+        if( ! data )
+            throw std::invalid_argument( "empty user data are not allowed in a model" );
+        constraint_.reset( new UserDataConstraint() );
         data_ = data;
     }
     Model& MarkForRemove()
     {
-        toRemove_ = true;
+        removed_ = true;
         return *this;
     }
-    virtual void Accept( core::ModelVisitor_ABC& visitor ) const
+
+    void Serialize( std::ostream& os, std::size_t indent = 0 ) const
     {
-        if( value_ )
-            visitor.Visit( boost::lexical_cast< std::string >( *value_ ) );
-        if( data_ )
-            visitor.Visit( data_ );
-        for( T_Children::const_iterator it = children_.begin(); it != children_.end(); ++it )
-            visitor.Visit( it->first, it->second );
-        for( std::size_t i = 0; i < elements_.size(); ++i )
-            visitor.Visit( elements_[ i ] );
-        if( toRemove_ )
-            visitor.MarkForRemove();
+        constraint_->Serialize( *this, os, indent );
     }
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::map< std::string, Model > T_Children;
-
-    struct ValueValidator : NullModelVisitor
-    {
-        ValueValidator( const Model& model, const core::Visitable_ABC& actual, bool& valid )
-            : model_  ( model )
-            , valid_  ( valid )
-            , visited_( false )
-        {
-            actual.Accept( *this );
-            if( ! visited_ && model_.value_ )
-                valid_ = false;
-        }
-#define VISIT( type ) \
-        virtual void Visit( type value ) \
-        { \
-            visited_ = true; \
-            if( ! model_.value_ || ! (*model_.value_)( value ) ) \
-                valid_ = false; \
-        }
-        VISIT( int64_t )
-        VISIT( uint64_t )
-        VISIT( double )
-        VISIT( const std::string& )
-#undef VISIT
-
-        const Model& model_;
-        bool& valid_;
-        bool visited_;
-    };
-
-    struct ChildrenValidator : NullModelVisitor
-    {
-        ChildrenValidator( const Model& model, const core::Visitable_ABC& actual, bool& valid )
-            : model_  ( model )
-            , valid_  ( valid )
-            , visited_( 0 )
-        {
-            actual.Accept( *this );
-            if( visited_ != model.children_.size() )
-                valid = false;
-        }
-
-        virtual void Visit( const std::string& key, const core::Visitable_ABC& child )
-        {
-            ++visited_;
-            T_Children::const_iterator it = model_.children_.find( key );
-            if( it == model_.children_.end() )
-                valid_ = false;
-            else
-                NodeValidator( it->second, child, valid_ );
-        }
-        virtual void Visit( unsigned int key, const core::Visitable_ABC& child )
-        {
-            Visit( boost::lexical_cast< std::string >( key ), child );
-        }
-
-        const Model& model_;
-        bool& valid_;
-        std::size_t visited_;
-    };
-    
-    struct ElementValidator : NullModelVisitor
-    {
-        ElementValidator( const Model& model, const core::Visitable_ABC& actual, bool& valid )
-            : model_( model )
-            , valid_( valid )
-            , count_( 0 )
-        {
-            actual.Accept( *this );
-            if( count_ != model_.elements_.size() )
-                valid = false;
-        }
-
-        virtual void Visit( const core::Visitable_ABC& element )
-        {
-            if( count_ >= model_.elements_.size() )
-                valid_ = false;
-            else
-                NodeValidator( model_.elements_[ count_++ ], element, valid_ );
-        }
-
-        const Model& model_;
-        bool& valid_;
-        std::size_t count_;
-    };
-    
-    struct UserDataValidator : NullModelVisitor
-    {
-        UserDataValidator( const Model& model, const core::Visitable_ABC& actual, bool& valid )
-            : model_  ( model )
-            , valid_  ( valid )
-            , visited_( false )
-        {
-            actual.Accept( *this );
-            if( ! visited_ && model_.data_ )
-                valid_ = false;
-        }
-        virtual void Visit( boost::shared_ptr< core::UserData_ABC > data )
-        {
-            visited_ = true;
-            if( ! model_.data_ || data->Get() != model_.data_->Get() )
-                valid_ = false;
-        }
-
-        const Model& model_;
-        bool& valid_;
-        bool visited_;
-    };
-
-    struct RemoveValidator : NullModelVisitor
-    {
-        RemoveValidator( const Model& model, const core::Visitable_ABC& actual, bool& valid )
-            : model_  ( model )
-            , valid_  ( valid )
-            , visited_( false )
-        {
-            actual.Accept( *this );
-            if( ! visited_ && model_.IsMarkedForRemove() )
-                valid_ = false;
-        }
-        virtual void MarkForRemove()
-        {
-            visited_ = true;
-            if( !model_.IsMarkedForRemove() )
-                valid_ = false;
-        }
-        const Model& model_;
-        bool& valid_;
-        bool visited_;
-    };
-    struct NodeValidator : NullModelVisitor
-    {
-        NodeValidator( const Model& model, const core::Visitable_ABC& actual, bool& valid )
-            : model_( model )
-            , valid_( valid )
-        {
-            if( model_.IsAny() )
-                return;
-            ValueValidator( model, actual, valid );
-            ChildrenValidator( model, actual, valid );
-            ElementValidator( model, actual, valid );
-            UserDataValidator( model, actual, valid );
-            RemoveValidator( model, actual, valid );
-        }
-
-        const Model& model_;
-        bool& valid_;
-    };
-    //@}
-
     //! @name Helpers
     //@{
     std::string Root( const std::string& key ) const
@@ -330,22 +146,173 @@ private:
             return "";
         return key.substr( pos + 1 );
     }
+
+    bool CheckRemove( const core::Model& actual ) const
+    {
+        struct RemoveCheck : NullModelVisitor
+        {
+            RemoveCheck( const core::Model& model )
+                : removed_( false )
+            {
+                model.Accept( *this );
+            }
+            virtual void MarkForRemove()
+            {
+                removed_ = true;
+            }
+            bool removed_;
+        };
+        RemoveCheck check( actual );
+        return removed_ == check.removed_;
+    }
     //@}
 
+private:
+    //! @name Types
+    //@{
+    typedef std::map< std::string, Model > T_Children;
+    typedef T_Children::const_iterator   CIT_Children;
+    typedef std::vector< Model >         T_Elements;
+    typedef T_Elements::const_iterator CIT_Elements;
+
+    template< typename T >
+    class ConstraintWrapper : public ModelConstraint_ABC
+    {
+    public:
+        ConstraintWrapper( T t )
+            : check_( t )
+        {}
+        virtual bool Check( const Model& /*expected*/, const core::Model& actual )
+        {
+            return check_( actual );
+        }
+        virtual void Serialize( const Model& /*expected*/, std::ostream& os, std::size_t /*indent*/ ) const
+        {
+            os << check_;
+        }
+    private:
+        mock::detail::check< const core::Model&, T > check_;
+    };
+
+    class EmptyConstraint : public ModelConstraint_ABC
+    {
+    public:
+        virtual bool Check( const Model& /*expected*/, const core::Model& actual )
+        {
+            return IsEmptyModelVisitor( actual );
+        }
+        virtual void Serialize( const Model& /*expected*/, std::ostream& os, std::size_t /*indent*/ ) const
+        {
+            os << "<empty>";
+        }
+    };
+
+    class UserDataConstraint : public ModelConstraint_ABC
+    {
+    public:
+        virtual bool Check( const Model& expected, const core::Model& actual )
+        {
+            return actual.GetData()->Get() == expected.data_->Get();
+        }
+        virtual void Serialize( const Model& expected, std::ostream& os, std::size_t /*indent*/ ) const
+        {
+            os << expected.data_->Get();
+        }
+    };
+
+    class ChildrenConstraint : public ModelConstraint_ABC, private NullModelVisitor
+    {
+    public:
+        virtual bool Check( const Model& expected, const core::Model& actual )
+        {
+            expected_ = &expected;
+            count_ = 0;
+            valid_ = true;
+            actual.Accept( *this );
+            return count_ == expected.children_.size() && valid_;
+        }
+        virtual void Serialize( const Model& expected, std::ostream& os, std::size_t indent ) const
+        {
+            os << shift( indent ) << "{" << std::endl;
+            for( CIT_Children it = expected.children_.begin(); it != expected.children_.end(); )
+            {
+                os << shift( indent + 2 ) << it->first << ": ";
+                it->second.Serialize( os, indent + 2 );
+                if( ++it != expected.children_.end() )
+                    os << "," << std::endl;
+            }
+            os << std::endl << shift( indent ) << "}";
+        }
+    private:
+        virtual void Visit( const std::string& key, const core::Model& child )
+        {
+            if( ! valid_ )
+                return;
+            CIT_Children it = expected_->children_.find( key );
+            valid_ = it != expected_->children_.end() && it->second.Check( child );
+            ++count_;
+        }
+        virtual void Visit( unsigned int key, const core::Model& child )
+        {
+            Visit( boost::lexical_cast< std::string >( key ), child );
+        }
+    private:
+        const Model* expected_;
+        std::size_t count_;
+        bool valid_;
+    };
+
+    class ElementsConstraint : public ModelConstraint_ABC
+    {
+    public:
+        virtual bool Check( const Model& expected, const core::Model& actual )
+        {
+            if( actual.GetSize() != expected.elements_.size() )
+                return false;
+            for( std::size_t i = 0; i < expected.elements_.size(); ++i )
+                if( ! expected.elements_[ i ].Check( actual.GetElement( i ) ) )
+                    return false;
+            return true;
+        }
+        virtual void Serialize( const Model& expected, std::ostream& os, std::size_t indent ) const
+        {
+            os << shift( indent ) << '[' << std::endl;
+            for( CIT_Elements it = expected.elements_.begin(); it != expected.elements_.end(); )
+            {
+                it->Serialize( os, indent + 2 );
+                if( ++it != expected.elements_.end() )
+                    os << "," << std::endl;
+            }
+            os << std::endl << shift( indent ) << ']';
+        }
+    };
+
+    struct shift
+    {
+        shift( std::size_t indent )
+            : indent_( indent )
+        {}
+        friend std::ostream& operator<<( std::ostream& os, const shift& s )
+        {
+            return os << std::setw( s.indent_ ) << "";
+        }
+        std::size_t indent_;
+    };
+
+private:
     //! @name Member data
     //@{
-    boost::shared_ptr< mock::detail::check_base< T_Value > > value_;
+    boost::shared_ptr< ModelConstraint_ABC > constraint_;
     boost::shared_ptr< core::UserData_ABC > data_;
-    std::vector< Model > elements_;
     T_Children children_;
-    bool isAny_;
-    bool toRemove_;
+    T_Elements elements_;
+    bool removed_;
     //@}
 };
 
 inline std::ostream& operator<<( std::ostream& os, const Model& model )
 {
-    core::ModelPrinter( model, os, false, 2 );
+    model.Serialize( os );
     return os;
 }
 

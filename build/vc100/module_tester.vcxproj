@@ -20,12 +20,14 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{442A29D1-0997-7810-39AC-AB572F226AF6}</ProjectGuid>
-  </PropertyGroup>  
+  </PropertyGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\module_tester\ApiFixture.h" />
+    <ClInclude Include="..\..\src\libraries\module_tester\IsEmptyModelVisitor.h" />
     <ClInclude Include="..\..\src\libraries\module_tester\MakeModel.h" />
     <ClInclude Include="..\..\src\libraries\module_tester\MockModuleApi.h" />
     <ClInclude Include="..\..\src\libraries\module_tester\Model.h" />
+    <ClInclude Include="..\..\src\libraries\module_tester\ModelConstraint_ABC.h" />
     <ClInclude Include="..\..\src\libraries\module_tester\NullModelVisitor.h" />
     <ClInclude Include="..\..\src\libraries\module_tester\Tools.h" />
   </ItemGroup>

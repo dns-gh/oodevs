@@ -7,9 +7,10 @@
 //
 // *****************************************************************************
 
-#ifndef MODULE_TESTER_NULL_MODEL_VISITOR_H
-#define MODULE_TESTER_NULL_MODEL_VISITOR_H
+#ifndef MODULE_TESTER_IS_EMPTY_MODEL_VISITOR_H
+#define MODULE_TESTER_IS_EMPTY_MODEL_VISITOR_H
 
+#include <core/Model.h>
 #include <core/ModelVisitor_ABC.h>
 #include <stdexcept>
 
@@ -18,48 +19,83 @@ namespace sword
 namespace test
 {
 // =============================================================================
-/** @class  NullModelVisitor
-    @brief  Null model visitor
+/** @class  IsEmptyModelVisitor
+    @brief  Model visitor to check whether it's empty or not
 */
 // Created: MCO 2012-09-20
 // =============================================================================
-class NullModelVisitor : public core::ModelVisitor_ABC
+class IsEmptyModelVisitor : private core::ModelVisitor_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             NullModelVisitor() {}
-    virtual ~NullModelVisitor() {}
+    explicit IsEmptyModelVisitor( const core::Model& model )
+        : empty_( true )
+    {
+        model.Accept( *this );
+    }
+    virtual ~IsEmptyModelVisitor() {}
     //@}
 
+    //! @name Accessors
+    //@{
+    operator bool() const
+    {
+        return empty_;
+    }
+    //@}
+
+private:
     //! @name Operations
     //@{
     virtual void Visit( int64_t /*value*/ )
-    {}
+    {
+        empty_ = false;
+    }
     virtual void Visit( uint64_t /*value*/ )
-    {}
+    {
+        empty_ = false;
+    }
     virtual void Visit( double /*value*/ )
-    {}
+    {
+        empty_ = false;
+    }
     virtual void Visit( const std::string& /*value*/ )
-    {}
+    {
+        empty_ = false;
+    }
 
     virtual void Visit( const std::string& /*key*/, const core::Model& /*child*/ )
-    {}
+    {
+        empty_ = false;
+    }
     virtual void Visit( unsigned int /*key*/, const core::Model& /*child*/ )
-    {}
+    {
+        empty_ = false;
+    }
 
     virtual void Visit( const core::Model& /*element*/ )
-    {}
+    {
+        empty_ = false;
+    }
 
     virtual void Visit( boost::shared_ptr< core::UserData_ABC > /*data*/ )
-    {}
+    {
+        empty_ = false;
+    }
 
     virtual void MarkForRemove()
     {}
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    bool empty_;
     //@}
 };
 
 }
 }
 
-#endif // MODULE_TESTER_NULL_MODEL_VISITOR_H
+#endif // MODULE_TESTER_IS_EMPTY_MODEL_VISITOR_H
