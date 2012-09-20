@@ -11,6 +11,7 @@
 #define SWORD_PATH_ADAPTER_H
 
 #include "Decision/DEC_Path_ABC.h"
+#include "Decision/DEC_Agent_PathClass_ABC.h"
 #include "Entities/Orders/MIL_Fuseau.h"
 #include "Knowledge/DEC_Knowledge_Def.h"
 #include "MT_Tools/MT_Scipio_enum.h"
@@ -45,7 +46,7 @@ namespace movement
 */
 // Created: MCO 2012-01-26
 // =============================================================================
-class PathAdapter : public DEC_Path_ABC
+class PathAdapter : public DEC_Path_ABC, private DEC_Agent_PathClass_ABC
 {
 public:
     //! @name Static Initializer
@@ -96,6 +97,13 @@ private:
     //! @name Helpers
     //@{
     void InitializePathKnowledges( const core::Model& entity, const MIL_AgentPion& pion );
+    //@}
+
+    //! @name Accessors
+    //@{
+    virtual double GetPopulationSecurityRange() const;
+    virtual double GetCostOutsideOfPopulation() const;
+    virtual double GetPopulationAttitudeCost( unsigned int attitudeID ) const;
     //@}
 
 private:

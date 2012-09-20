@@ -5360,5 +5360,8 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\CapacityFactory.h">
       <Filter>Source Files\Adapters</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Agent_PathClass_ABC.h">
+      <Filter>Source Files\Decision\Path\Agent\Type</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

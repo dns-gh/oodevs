@@ -118,6 +118,14 @@ namespace
     {
         return path->GetClass().HandlePopulations();
     }
+    DEFINE_HOOK( GetPopulationSecurityRange, double, ( boost::shared_ptr< sword::movement::Path_ABC > path ) )
+    {
+        return path->GetClass().GetPopulationSecurityRange();
+    }
+    DEFINE_HOOK( GetCostOutsideOfPopulation, double, ( boost::shared_ptr< sword::movement::Path_ABC > path ) )
+    {
+        return path->GetClass().GetCostOutsideOfPopulation();
+    }
     DEFINE_HOOK( GetPopulationAttitudeCost, double, ( boost::shared_ptr< sword::movement::Path_ABC > path, unsigned int type ) )
     {
         return path->GetClass().GetPopulationAttitudeCost( type );

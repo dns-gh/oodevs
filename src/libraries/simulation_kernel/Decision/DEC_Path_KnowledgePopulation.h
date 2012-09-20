@@ -12,9 +12,9 @@
 
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
 #include "simulation_terrain/TER_Localisation.h"
-#include <boost/function.hpp>
 
 class DEC_Knowledge_Population;
+class DEC_Agent_PathClass_ABC;
 class MIL_PopulationAttitude;
 class TerrainData;
 
@@ -29,7 +29,7 @@ class DEC_Path_KnowledgePopulation
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Path_KnowledgePopulation( const DEC_Knowledge_Population& knowledge, boost::function< double( unsigned int ) > populationAttitudeCost, bool avoidPolicy );
+             DEC_Path_KnowledgePopulation( const DEC_Knowledge_Population& knowledge, const DEC_Agent_PathClass_ABC& pathClass, bool avoidPolicy );
     virtual ~DEC_Path_KnowledgePopulation();
     //@}
 
@@ -67,9 +67,7 @@ private:
 private:
     T_PopulationElements elements_;
     bool bAvoidPolicy_;
-    boost::function< double( unsigned int ) > populationAttitudeCost_;
-    double populationSecurityRange_;
-    double costOutsideOfPopulation_;
+    const DEC_Agent_PathClass_ABC* pPathClass_;
 };
 
 #endif // __DEC_Path_KnowledgePopulation_h_

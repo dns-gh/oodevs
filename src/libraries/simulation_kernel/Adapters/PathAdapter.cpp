@@ -57,6 +57,8 @@ DECLARE_HOOK( GetObjectCost, double, ( boost::shared_ptr< sword::movement::Path_
 DECLARE_HOOK( GetThreshold, double, ( boost::shared_ptr< sword::movement::Path_ABC > path ) )
 
 DECLARE_HOOK( HandlePopulations, bool, ( boost::shared_ptr< sword::movement::Path_ABC > path ) )
+DECLARE_HOOK( GetPopulationSecurityRange, double, ( boost::shared_ptr< sword::movement::Path_ABC > path ) )
+DECLARE_HOOK( GetCostOutsideOfPopulation, double, ( boost::shared_ptr< sword::movement::Path_ABC > path ) )
 DECLARE_HOOK( GetPopulationAttitudeCost, double, ( boost::shared_ptr< sword::movement::Path_ABC > path, unsigned int type ) )
 
 DEFINE_HOOK( GetFuseauxCost, double, ( const SWORD_Model* entity, boost::shared_ptr< sword::movement::Path_ABC > path,
@@ -270,10 +272,6 @@ namespace
     {
         static_cast< std::vector< MT_Vector2D >* >( userData )->push_back( point );
     }
-    double GetPopulationAttitudeCost( boost::shared_ptr< movement::Path_ABC > path, unsigned int type )
-    {
-        return GET_HOOK( GetPopulationAttitudeCost )( path, type );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -343,8 +341,35 @@ void PathAdapter::InitializePathKnowledges( const core::Model& entity, const MIL
         pion.GetKnowledgeGroup()->GetKnowledge().GetPopulations( knowledgesPopulation );
         pathKnowledgePopulations_.reserve( knowledgesPopulation.size() );
         for( CIT_KnowledgePopulationVector it = knowledgesPopulation.begin(); it != knowledgesPopulation.end(); ++it )
-            pathKnowledgePopulations_.push_back( DEC_Path_KnowledgePopulation( **it, boost::bind( &GetPopulationAttitudeCost, path_, _1 ), !pion.GetType().IsTerrorist() ) );
+            pathKnowledgePopulations_.push_back( DEC_Path_KnowledgePopulation( **it, *this, !pion.GetType().IsTerrorist() ) );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PathAdapter::GetPopulationSecurityRange
+// Created: MCO 2012-09-20
+// -----------------------------------------------------------------------------
+double PathAdapter::GetPopulationSecurityRange() const
+{
+    return GET_HOOK( GetPopulationSecurityRange )( path_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PathAdapter::GetCostOutsideOfPopulation
+// Created: MCO 2012-09-20
+// -----------------------------------------------------------------------------
+double PathAdapter::GetCostOutsideOfPopulation() const
+{
+    return GET_HOOK( GetCostOutsideOfPopulation )( path_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PathAdapter::GetPopulationAttitudeCost
+// Created: MCO 2012-09-20
+// -----------------------------------------------------------------------------
+double PathAdapter::GetPopulationAttitudeCost( unsigned int attitudeID ) const
+{
+    return GET_HOOK( GetPopulationAttitudeCost )( path_, attitudeID );
 }
 
 // -----------------------------------------------------------------------------

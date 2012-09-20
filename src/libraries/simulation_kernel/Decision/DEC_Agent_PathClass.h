@@ -12,6 +12,7 @@
 
 #include <spatialcontainer/TerrainData.h>
 #include "DEC_PathClass.h"
+#include "DEC_Agent_PathClass_ABC.h"
 
 namespace xml
 {
@@ -29,7 +30,7 @@ class MIL_PopulationAttitude;
 */
 // Created: AGE 2005-08-04
 // =============================================================================
-class DEC_Agent_PathClass : public DEC_PathClass
+class DEC_Agent_PathClass : public DEC_PathClass, public DEC_Agent_PathClass_ABC
 {
 public:
     //! @name Manager
@@ -75,11 +76,12 @@ public:
           double       GetEnemyCostAtSecurityRange         () const;
           double       GetEnemyMaximumCost                 () const;
           double       GetObjectCost                       ( const MIL_ObjectType_ABC& objectType ) const;
-          double       GetPopulationAttitudeCost           ( unsigned int attitudeID ) const;
-          double       GetPopulationSecurityRange          () const;
           double       GetPopulationMaximumCost            () const;
-          double       GetCostOutsideOfPopulation          () const;
           double       GetThreshold                        () const;
+
+          virtual double GetPopulationAttitudeCost ( unsigned int attitudeID ) const;
+          virtual double GetPopulationSecurityRange() const;
+          virtual double GetCostOutsideOfPopulation() const;
 
           bool         IsShort                             () const;
           bool         IsFlying                            () const;

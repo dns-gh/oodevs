@@ -285,7 +285,7 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
         queryMaker_.GetKnowledgeGroup()->GetKnowledge().GetPopulations( knowledgesPopulation );
         pathKnowledgePopulations_.reserve( knowledgesPopulation.size() );
         for( CIT_KnowledgePopulationVector it = knowledgesPopulation.begin(); it != knowledgesPopulation.end(); ++it )
-            pathKnowledgePopulations_.push_back( DEC_Path_KnowledgePopulation( **it, boost::bind( &DEC_Agent_PathClass::GetPopulationAttitudeCost, &pathClass_, _1 ), !queryMaker_.GetType().IsTerrorist() ) );
+            pathKnowledgePopulations_.push_back( DEC_Path_KnowledgePopulation( **it, pathClass_, !queryMaker_.GetType().IsTerrorist() ) );
     }
 }
 

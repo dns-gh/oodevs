@@ -69,6 +69,8 @@ namespace movement
     APPLY( GetObjectCost, 2, double, ( boost::shared_ptr< sword::movement::Path_ABC > path, unsigned int type ) ) \
     APPLY( GetThreshold, 1, double, ( boost::shared_ptr< sword::movement::Path_ABC > path ) ) \
     APPLY( HandlePopulations, 1, bool, ( boost::shared_ptr< sword::movement::Path_ABC > path ) ) \
+    APPLY( GetPopulationSecurityRange, 1, double, ( boost::shared_ptr< sword::movement::Path_ABC > path ) ) \
+    APPLY( GetCostOutsideOfPopulation, 1, double, ( boost::shared_ptr< sword::movement::Path_ABC > path ) ) \
     APPLY( GetPopulationAttitudeCost, 2, double, ( boost::shared_ptr< sword::movement::Path_ABC > path, unsigned int type ) ) \
     APPLY( GetPathPoints, 3, void, ( unsigned int entity, void(*callback)( boost::shared_ptr< sword::movement::PathPoint > point, void* userData ), void* userData ) ) \
     APPLY( GetPathPos, 1, const MT_Vector2D&, ( boost::shared_ptr< sword::movement::PathPoint > point ) ) \
