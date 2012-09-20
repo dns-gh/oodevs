@@ -326,7 +326,7 @@
     </target>
 
     <target name="library.tic" depends="library.dispatcher" description="build tic static library">
-        <build-lib name="tic" pattern="lib${ant.project.name}_tic-${platform}-mt@{suffix}" suffix="-gd" depends="qt4">
+        <build-lib name="tic" pattern="lib${ant.project.name}_tic-${platform}-mt@{suffix}" suffix="-gd" depends="qt4" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
