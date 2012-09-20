@@ -27,7 +27,7 @@
 BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Instance )
 {
     WorldInitialize( "worldwide/Paris" );
-    MIL_ObjectFactory factory;
+    MIL_ObjectFactory factory( false );
     {
         xml::xistringstream xis(
             "<objects>"

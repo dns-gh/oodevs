@@ -46,7 +46,7 @@ BOOST_AUTO_TEST_CASE( Knowledge_UrbanTest_Update )
 {
     WorldInitialize( "worldwide/Paris" );
     {
-        MIL_ObjectFactory factory;
+        MIL_ObjectFactory factory( false );
         {
             xml::xistringstream xis( "<objects>"
                 "    <object type='urban block'/>"

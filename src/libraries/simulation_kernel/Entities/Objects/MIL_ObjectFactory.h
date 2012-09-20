@@ -34,6 +34,7 @@ class MIL_Army_ABC;
 class MIL_ObjectBuilder_ABC;
 class MIL_ObjectFilter;
 class MIL_UrbanObject_ABC;
+class CapacityFactory_ABC;
 
 // =============================================================================
 /** @class  MIL_ObjectFactory
@@ -46,7 +47,7 @@ class MIL_ObjectFactory : public ObjectTypeResolver_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_ObjectFactory();
+    explicit MIL_ObjectFactory( bool isLegacy );
     virtual ~MIL_ObjectFactory();
     //@}
 
@@ -90,7 +91,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< CapacityFactory > factory_;
+    std::auto_ptr< CapacityFactory_ABC > factory_;
     std::auto_ptr< AttributeFactory > attributes_;
     T_Prototypes prototypes_;
     //@}

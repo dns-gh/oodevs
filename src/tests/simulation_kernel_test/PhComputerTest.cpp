@@ -60,6 +60,7 @@ namespace
             , xis          ( "<objects>"
                              "    <object type='urban block'/>"
                              "</objects>" )
+            , factory      ( false )
         {
             factory.Initialize( xis );
             xml::xistringstream xisCity( "<urban-object name='city' id='2'/>" );

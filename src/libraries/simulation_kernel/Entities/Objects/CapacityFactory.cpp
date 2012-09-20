@@ -133,6 +133,8 @@ namespace
     };
 }
 
+using namespace legacy;
+
 // -----------------------------------------------------------------------------
 // Name: CapacityFactory constructor
 // Created: JCR 2008-05-22
@@ -244,7 +246,7 @@ void CapacityFactory::DoRegister( const std::string& capacity, const Prototype_C
 // Name: CapacityFactory::Create
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
-void CapacityFactory::Create( ObjectPrototype& prototype, const std::string& capacity, xml::xistream& xis )
+void CapacityFactory::Create( ObjectPrototype& prototype, const std::string& capacity, xml::xistream& xis ) const
 {
     const CIPrototype_Callbacks it = prototypeCallbacks_.find( capacity );
     if( it != prototypeCallbacks_.end() )
@@ -255,9 +257,9 @@ void CapacityFactory::Create( ObjectPrototype& prototype, const std::string& cap
 // Name: CapacityFactory::FinalizeCreate
 // Created: BCI 2011-01-05
 // -----------------------------------------------------------------------------
-void CapacityFactory::FinalizeCreate( ObjectPrototype& prototype )
+void CapacityFactory::FinalizeCreate( ObjectPrototype& prototype ) const
 {
-    for( FinalizePrototype_CallBacks::iterator it = finalizePrototypeCallbacks_.begin(); it != finalizePrototypeCallbacks_.end(); ++it )
+    for( FinalizePrototype_CallBacks::const_iterator it = finalizePrototypeCallbacks_.begin(); it != finalizePrototypeCallbacks_.end(); ++it )
         ( *it )( prototype );
 }
 

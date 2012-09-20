@@ -16,6 +16,8 @@
 class ObjectPrototype;
 class MIL_Object_ABC;
 
+namespace legacy
+{
 // =============================================================================
 /** @class  CapacityFactory
     @brief  CapacityFactory
@@ -33,11 +35,11 @@ public:
     virtual ~CapacityFactory();
     //@}
 
-    //! @name Creation/Update
+    //! @name Operations
     //@{
-    void Create( ObjectPrototype& object, const std::string& capacity, xml::xistream& xis );
-    void Update( MIL_Object_ABC& object, const std::string& capacity, xml::xistream& xis ) const;
-    void FinalizeCreate( ObjectPrototype& object );
+    virtual void Create( ObjectPrototype& object, const std::string& capacity, xml::xistream& xis ) const;
+    virtual void Update( MIL_Object_ABC& object, const std::string& capacity, xml::xistream& xis ) const;
+    virtual void FinalizeCreate( ObjectPrototype& object ) const;
     //@}
 
 private:
@@ -52,6 +54,13 @@ private:
     typedef std::map< std::string, Object_CallBack >                     Object_CallBacks;
     typedef Object_CallBacks::const_iterator                           CIObject_Callbacks;
     //@}
+
+protected:
+    //! @name Helpers
+    //@{
+    virtual void DoRegister( const std::string& capacity, const Prototype_CallBack& prototypeCallback );
+    //@}
+
 private:
     //! @name Registration
     //@{
@@ -62,7 +71,6 @@ private:
     //! @name Helpers
     //@{
     void RegisterFinalizeCreate( FinalizePrototype_CallBack finalizePrototypeCallback );
-    void DoRegister( const std::string& capacity, const Prototype_CallBack& prototypeCallback );
     void DoRegister( const std::string& capacity, const Prototype_CallBack& prototypeCallback, const Object_CallBack& objectCallback );
     //@}
 
@@ -75,4 +83,5 @@ private:
     //@}
 };
 
+}
 #endif // __Object_CapacityFactory_h_

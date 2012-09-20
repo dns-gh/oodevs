@@ -74,6 +74,7 @@ namespace
     struct ObjectCapacityFixture
     {
         ObjectCapacityFixture()
+            : factory( false )
         {
             WorldInitialize( "worldwide/Paris" );
         }

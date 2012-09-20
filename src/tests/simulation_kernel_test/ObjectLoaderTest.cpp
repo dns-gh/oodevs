@@ -21,6 +21,7 @@
 #include "simulation_kernel/Entities/Objects/MIL_ObjectFactory.h"
 #include "simulation_kernel/Entities/Objects/MIL_ObjectType_ABC.h"
 #include "simulation_kernel/Entities/Objects/SpawnCapacity.h"
+#include "simulation_kernel/Entities/Objects/PropagationCapacity.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
@@ -29,7 +30,7 @@
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( VerifyEmptyObjectDefinition )
 {
-    MIL_ObjectFactory factory;
+    MIL_ObjectFactory factory( false );
     xml::xistringstream xis( "<objects/>" );
     factory.Initialize( xis );
     BOOST_CHECK_THROW( factory.FindType( "fake" ), std::runtime_error );
@@ -81,7 +82,7 @@ BOOST_AUTO_TEST_CASE( VerifyDangerousObjects )
         "</resources>" );
     PHY_DotationType::Initialize( xdotation );
 
-    MIL_ObjectFactory factory;
+    MIL_ObjectFactory factory( false );
     xml::xistringstream xobject(
         "<objects>"
         "  <object name='Mine Cluster' point-size='50' type='mines'>"
@@ -119,11 +120,32 @@ BOOST_AUTO_TEST_CASE( VerifyDangerousObjects )
 
 // -----------------------------------------------------------------------------
 // Name: BOOST_AUTO_TEST_CASE
+// Created: LGY 2012-09-20
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( disaster_capacity_registration )
+{
+    xml::xistringstream xobject( "<objects>"
+                                 "  <object name='disaster'>"
+                                 "   <disaster/>"
+                                 "  </object>"
+                                 "</objects>" );
+    MIL_ObjectFactory legacyFactory( false );
+    BOOST_CHECK_NO_THROW( legacyFactory.Initialize( xobject ) );
+    const MIL_ObjectType_ABC& legacyType = legacyFactory.FindType( "disaster" );
+    BOOST_CHECK( legacyType.GetCapacity< sword::capacity::PropagationCapacity >() == 0 );
+    MIL_ObjectFactory factory( true );
+    BOOST_CHECK_NO_THROW( factory.Initialize( xobject ) );
+    const MIL_ObjectType_ABC& type = factory.FindType( "disaster" );
+    BOOST_CHECK( type.GetCapacity< sword::capacity::PropagationCapacity >() != 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BOOST_AUTO_TEST_CASE
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Constructor )
 {
-    MIL_ObjectFactory factory;
+    MIL_ObjectFactory factory( false );
     xml::xistringstream xis( "<objects>"
                              "    <object type='object'>"
                              "        <constructor unit-type='raw' default-consumption-mode='EnTravaux'/>"
@@ -142,7 +164,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Constructor )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_ConstructorBuildable )
 {
-    MIL_ObjectFactory factory;
+    MIL_ObjectFactory factory( false );
     xml::xistringstream xis( "<objects>"
                              "    <object type='object'>"
                              "        <constructor unit-type='raw' default-consumption-mode='EnTravaux'>"
@@ -163,7 +185,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_ConstructorBuildable )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_ConstructorImprovable )
 {
-    MIL_ObjectFactory factory;
+    MIL_ObjectFactory factory( false );
     xml::xistringstream xis( "<objects>"
                              "    <object type='object'>"
                              "        <constructor unit-type='raw' default-consumption-mode='EnTravaux'>"
@@ -185,7 +207,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_ConstructorImprovable )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Spawn )
 {
-    MIL_ObjectFactory factory;
+    MIL_ObjectFactory factory( false );
     xml::xistringstream xis( "<objects>"
                              "    <object type='object'>"
                              "        <spawn object='toto' action-range='10' nbc='false'/>"
