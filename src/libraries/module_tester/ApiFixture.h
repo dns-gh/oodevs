@@ -254,7 +254,7 @@ namespace core
             TRY
                 BOOST_REQUIRE( node );
                 BOOST_REQUIRE( value );
-                (*value) = core::Convert( node )->GetData();
+                (*value) = core::Convert( node )->GetData()->Get();
                 return true;
             CATCH
             return false;
