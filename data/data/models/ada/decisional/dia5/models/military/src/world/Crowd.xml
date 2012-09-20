@@ -230,6 +230,14 @@ This implementation always returns 'true'.</description>
 &#xD;
 This implementation returns 'true' if the crowd has a flow (it means the thc crowd is moving).</description>
         </method>
+        <method name="getName" abstract="false">
+            <description>Returns the name of the motile element.</description>
+            <return>
+                <type>
+                    <simple name="string"/>
+                </type>
+            </return>
+        </method>
     </methods>
     <predicates>
         <predicate name="isDangerous" abstract="false">

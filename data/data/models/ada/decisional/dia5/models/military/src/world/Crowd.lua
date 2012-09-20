@@ -137,6 +137,9 @@ return
     canBeFollowed = function( self )
         return true
     end,
+    getName = function( self )
+        return integration.getName( self )
+    end,
     -- -------------------------------------------------------------------------------- 
     -- Attributes
     -- --------------------------------------------------------------------------------

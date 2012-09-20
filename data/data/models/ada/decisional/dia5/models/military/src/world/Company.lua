@@ -147,10 +147,10 @@ predicate "isOperational"
         local listOperational = 0
         for _, entity in pairs( listCommanding or emptyTable ) do
             if entity:DEC_Agent_EtatOpsMajeur() ~= 0 then
-                listOperational = listOperational +1
+                listOperational = listOperational + 1
             end
         end
-        return (listOperational > operationalThreshold)
+        return ( listOperational > operationalThreshold )
     end
 }
 
@@ -218,7 +218,7 @@ return
         return self:isOperational()
     end, 
     -- -------------------------------------------------------------------------------- 
-    -- Intagration and specific methods
+    -- Integration and specific methods
     -- --------------------------------------------------------------------------------
     getPosition = function( self )
         return DEC_Automate_Position( self.source )
@@ -343,4 +343,7 @@ return
         end
         meKnowledge:sendDataToNewUnitInAutomat( unit, saintRegimeTravail, santePrioritesTact, maintPrioritesTact, maintPriorites, santePriorites, etatROEPopulation, etatROE )
     end,
+    getName = function( self )
+        return integration.getName( self )
+    end
 }

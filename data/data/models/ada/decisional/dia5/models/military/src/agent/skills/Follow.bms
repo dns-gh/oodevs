@@ -16,6 +16,8 @@ rootnode
         for _, entity in pairs( self.params.entities ) do
             if entity:canBeFollowed() then
                 self.entities[ #self.entities + 1 ] = entity
+            else
+                meKnowledge:RC( eRC_FollowingUnitIsDead, entity:getName() )
             end
         end
         -- None of the entities can be followed...

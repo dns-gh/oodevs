@@ -972,5 +972,8 @@ return
         start = function( self, message )
             integration.displayTrace( message )
         end
-    } )
+    } ),
+    getName = function( self )
+        return integration.getName( self )
+    end
 }
