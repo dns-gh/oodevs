@@ -344,7 +344,7 @@
     </target>
 
     <target name="library.rights_plugin" depends="library.dispatcher" description="build rights_plugin static library">
-        <build-lib name="rights_plugin" pattern="lib${ant.project.name}_rights_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4">
+        <build-lib name="rights_plugin" pattern="lib${ant.project.name}_rights_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
