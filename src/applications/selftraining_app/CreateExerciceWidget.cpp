@@ -258,15 +258,15 @@ void CreateExerciceWidget::OnSelectionChanged( Q3ListBoxItem* item )
     int indexModel = 0;
     for( QStringList::const_iterator it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
     {
+        const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).toAscii().constData() );
         if( std::strcmp( (*it).toAscii().constData(), dataSet.c_str() ) == 0 )
         {
-            const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).toAscii().constData() );
             int index = physicalModels.findIndex( QString( physical.c_str() ) );
             if( index != -1 )
                 editModelList_->setCurrentItem( indexModel + index + 1 );
-            else
-                indexModel += physicalModels.size();
         }
+        else
+            indexModel += physicalModels.size();
     }
     Update();
     page_.UpdateEditButton();
