@@ -217,6 +217,8 @@ create = function( self )
           self.progressionInAOR[ entity ] = proj
       end
 
+      local fuseau = meKnowledge:getFuseau()
+
       largeurFuseau = fuseau:getWidth()
 
       Activate( skill.links.coordinationManager , 1, { enititesFromEchelon = myself.leadData.pionsLima1, progressionInAOR = self.progressionInAOR, distance = largeurFuseau/2 } )
