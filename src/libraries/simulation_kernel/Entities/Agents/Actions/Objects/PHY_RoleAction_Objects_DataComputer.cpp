@@ -160,5 +160,5 @@ double PHY_RoleAction_Objects_DataComputer::ComputeWorkTime()
         RollbackConsumptionsReservations();
         return std::numeric_limits< double >::max();
     }
-    return rTotalOperationTime != 0. ? 1.0 / rTotalOperationTime : 0. ;
+    return rTotalOperationTime != 0. ? 1.0 / rTotalOperationTime : std::numeric_limits< double >::max();
 }
