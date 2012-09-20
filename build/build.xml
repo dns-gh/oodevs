@@ -663,7 +663,8 @@
             libs="dispatcher-${platform}-mt@{suffix},
                   lib${ant.project.name}_tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_license_gui-${platform}-mt@{suffix},
-                  lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix}">
+                  lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix}"
+            failonwarning="${failonwarning}">
             <syslibset libs="dbghelp,psapi,iphlpapi,user32,advapi32,shell32,gdi32"/>
             <defineset define="QT3_SUPPORT"/>
             <defineset>
