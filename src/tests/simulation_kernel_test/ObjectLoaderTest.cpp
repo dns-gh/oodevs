@@ -129,10 +129,10 @@ BOOST_AUTO_TEST_CASE( disaster_capacity_registration )
                                  "   <disaster/>"
                                  "  </object>"
                                  "</objects>" );
-    MIL_ObjectFactory legacyFactory( false );
+    MIL_ObjectFactory legacyFactory( true );
     BOOST_CHECK_NO_THROW( legacyFactory.Initialize( xobject ) );
     BOOST_CHECK_THROW( legacyFactory.FindType( "disaster" ), std::runtime_error );
-    MIL_ObjectFactory factory( true );
+    MIL_ObjectFactory factory( false );
     BOOST_CHECK_NO_THROW( factory.Initialize( xobject ) );
     const MIL_ObjectType_ABC& type = factory.FindType( "disaster" );
     BOOST_CHECK( type.GetCapacity< sword::capacity::PropagationCapacity >() != 0 );
