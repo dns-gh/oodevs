@@ -9,49 +9,14 @@
 
 #include "Head.h"
 
-#include "Helpers.h"
-#include "runtime/FileSystem_ABC.h"
-#include "runtime/Runtime_ABC.h"
-#include "runtime/Utf8.h"
-#include "host/Package.h"
+#include "Context.h"
 
-#include <boost/make_shared.hpp>
-#include <boost/property_tree/ptree.hpp>
+#include <QMetaType>
 #include <QSettings>
 #include <QtConcurrentRun>
 
 using namespace gui;
 using namespace runtime;
-using host::Package;
-
-namespace
-{
-    const std::string install_dir = "_";
-    const std::string tmp_dir     = "tmp";
-
-// -----------------------------------------------------------------------------
-// Name: RegisterProtocolHandler
-// Created: BAX 2012-09-06
-// -----------------------------------------------------------------------------
-void RegisterProtocolHandler( const QString& protocol, const QString& cmd )
-{
-    QSettings opt( "HKEY_CLASSES_ROOT\\" + protocol, QSettings::NativeFormat );
-    opt.setValue( ".", "URL:" + protocol + " Protocol" );
-    opt.setValue( "URL Protocol", "" );
-    QSettings open( "HKEY_CLASSES_ROOT\\" + protocol + "\\shell\\open\\command", QSettings::NativeFormat );
-    open.setValue( ".", cmd );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnregisterProtocolHandler
-// Created: BAX 2012-09-06
-// -----------------------------------------------------------------------------
-void UnregisterProtocolHandler( const QString& protocol )
-{
-    QSettings opt( "HKEY_CLASSES_ROOT\\" + protocol, QSettings::NativeFormat );
-    opt.remove( "" );
-}
-}
 
 // -----------------------------------------------------------------------------
 // Name: Head::Head
@@ -59,34 +24,31 @@ void UnregisterProtocolHandler( const QString& protocol )
 // -----------------------------------------------------------------------------
 Head::Head( const Runtime_ABC& runtime, const FileSystem_ABC& fs, Pool_ABC& pool )
     : QMainWindow( 0 )
-    , runtime_   ( runtime )
-    , fs_        ( fs )
-    , pool_      ( pool )
-    , root_      ( runtime.GetModuleFilename().remove_filename() )
-    , cmd_       ( CMD_DISPLAY )
-    , items_     ()
-    , async_     ()
-    , io_async_  ( pool )
 {
+    qRegisterMetaType< HttpCommand >( "HttpCommand" );
+
     ui_.setupUi( this );
     ui_.status->addPermanentWidget( &progress_ );
+    progress_.setVisible( false );
+    progress_.setTextVisible( false );
     ui_.status->addPermanentWidget( &count_ );
     items_.Setup( ui_.items );
-    QObject::connect( this, SIGNAL( ProgressVisible( bool ) ), this, SLOT( OnProgressVisible( bool ) ) );
-    QObject::connect( &items_, SIGNAL( modelReset() ), this, SLOT( OnModifiedItems() ) );
-    QObject::connect( &items_, SIGNAL( rowsInserted( const QModelIndex&, int, int ) ), this, SLOT( OnModifiedItems() ) );
-    QObject::connect( &items_, SIGNAL( rowsRemoved( const QModelIndex&, int, int ) ), this, SLOT( OnModifiedItems() ) );
-    QObject::connect( ui_.filter, SIGNAL( textChanged( const QString& ) ), items_.GetModel(), SLOT( setFilterFixedString( const QString& ) ) );
-    QObject::connect( ui_.clear_filter, SIGNAL( clicked ( bool ) ), ui_.filter, SLOT( clear() ) );
-    QObject::connect( ui_.toggle_items, SIGNAL( clicked( bool ) ), &items_, SLOT( Toggle() ) );
-    QObject::connect( ui_.remove_items, SIGNAL( clicked( bool ) ), this, SLOT( OnRemove() ) );
+    connect( &items_, SIGNAL( modelReset() ), this, SLOT( OnModifiedItems() ) );
+    connect( &items_, SIGNAL( rowsInserted( const QModelIndex&, int, int ) ), this, SLOT( OnModifiedItems() ) );
+    connect( &items_, SIGNAL( rowsRemoved( const QModelIndex&, int, int ) ), this, SLOT( OnModifiedItems() ) );
+    connect( ui_.filter, SIGNAL( textChanged( const QString& ) ), items_.GetModel(), SLOT( setFilterFixedString( const QString& ) ) );
+    connect( ui_.clear_filter, SIGNAL( clicked ( bool ) ), ui_.filter, SLOT( clear() ) );
+    connect( ui_.toggle_items, SIGNAL( clicked( bool ) ), &items_, SLOT( Toggle() ) );
     OnModifiedItems();
 
     LoadSettings();
-    ParseArguments();
-
-    fs_.MakePaths( root_ / install_dir );
-    fs_.MakePaths( root_ / tmp_dir );
+    ctx_.reset( new Context( runtime, fs, pool, async_, items_ ) );
+    connect( ctx_.get(), SIGNAL( StatusMessage( const QString& ) ), ui_.status, SLOT( showMessage( const QString& ) ) );
+    connect( ctx_.get(), SIGNAL( Progress( bool, int, int ) ), this, SLOT( OnProgress( bool, int, int ) ) );
+    connect( ui_.remove_items, SIGNAL( clicked( bool ) ), ctx_.get(), SLOT( OnRemove() ) );
+    connect( ctx_.get(), SIGNAL( NetworkRequest( HttpCommand, const QNetworkRequest& ) ), this, SLOT( OnNetworkRequest( HttpCommand, const QNetworkRequest& ) ) );
+    connect( ctx_.get(), SIGNAL( Exit() ), this, SLOT( close() ) );
+    async_.Register( QtConcurrent::run( ctx_.get(), &Context::Start ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -97,8 +59,7 @@ Head::~Head()
 {
     SaveSettings();
     async_.Join();
-    io_async_.Join();
-    fs_.Remove( root_ / tmp_dir );
+    ctx_.reset();
 }
 
 // -----------------------------------------------------------------------------
@@ -126,109 +87,6 @@ void Head::SaveSettings()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Head::ParseArguments
-// Created: BAX 2012-09-06
-// -----------------------------------------------------------------------------
-void Head::ParseArguments()
-{
-    const QStringList list = QCoreApplication::arguments();
-    for( QStringList::const_iterator it = list.begin() + 1; it != list.end(); ++it )
-        if( *it == "--root" && ++it != list.end() )
-        {
-            root_ = Utf8Convert( Utf8( *it ) );
-        }
-        else if( *it == "--register" )
-        {
-            cmd_ = CMD_REGISTER;
-        }
-        else if( *it == "--unregister" )
-        {
-            cmd_ = CMD_UNREGISTER;
-        }
-        else if( *it == "--run" && ++it != list.end() )
-        {
-            cmd_ = CMD_RUN;
-            url_ = *it;
-        }
-        else
-        {
-            throw std::runtime_error( "unknown parameter " + it->toStdString() );
-        }
-}
-
-// -----------------------------------------------------------------------------
-// Name: Head::ProcessCommand
-// Created: BAX 2012-09-06
-// -----------------------------------------------------------------------------
-bool Head::ProcessCommand()
-{
-    switch( cmd_ )
-    {
-        case CMD_REGISTER:
-            Register();
-            return true;
-
-        case CMD_UNREGISTER:
-            Unregister();
-            return true;
-
-        case CMD_RUN:
-            throw std::runtime_error( "run not implemented" );
-    }
-    ui_.status->showMessage( "Loading package(s)..." );
-    progress_.setRange( 0, 0 );
-    progress_.setTextVisible( false );
-    progress_.setVisible( true );
-    async_.Register( QtConcurrent::run( this, &Head::ParseRoot ) );
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Head::Register
-// Created: BAX 2012-09-06
-// -----------------------------------------------------------------------------
-void Head::Register()
-{
-    QString app = Utf8( Utf8Convert( runtime_.GetModuleFilename() ) );
-    QString cmd = QString( "\"%1\" \"%2\"" ).arg( app ).arg( "%1" );
-    RegisterProtocolHandler( "sword", cmd );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Head::Unregister
-// Created: BAX 2012-09-06
-// -----------------------------------------------------------------------------
-void Head::Unregister()
-{
-    UnregisterProtocolHandler( "sword" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Head::ParseRoot
-// Created: BAX 2012-09-06
-// -----------------------------------------------------------------------------
-void Head::ParseRoot()
-{
-    {
-        QMutexLocker lock( &access_ );
-        install_ = boost::make_shared< Package >( pool_, fs_, root_ / install_dir, true );
-        install_->Parse();
-    }
-    items_.Fill( install_->GetProperties() );
-    emit ProgressVisible( false );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Head::OnProgressVisible
-// Created: BAX 2012-09-06
-// -----------------------------------------------------------------------------
-void Head::OnProgressVisible( bool visible )
-{
-    progress_.setVisible( visible );
-    ui_.status->clearMessage();
-}
-
-// -----------------------------------------------------------------------------
 // Name: Head::OnModifiedItems
 // Created: BAX 2012-09-06
 // -----------------------------------------------------------------------------
@@ -239,12 +97,21 @@ void Head::OnModifiedItems()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Head::OnRemove
-// Created: BAX 2012-09-06
+// Name: Head::OnProgress
+// Created: BAX 2012-09-20
 // -----------------------------------------------------------------------------
-void Head::OnRemove()
+void Head::OnProgress( bool visible, int min, int max )
 {
-    const std::vector< size_t > removed = items_.Remove();
-    QMutexLocker lock( &access_ );
-    install_->Uninstall( io_async_, root_ / tmp_dir, removed );
+    if( visible )
+        progress_.setRange( min, max );
+    progress_.setVisible( visible );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Head::OnNetworkRequest
+// Created: BAX 2012-09-20
+// -----------------------------------------------------------------------------
+void Head::OnNetworkRequest( HttpCommand cmd, const QNetworkRequest& req )
+{
+    ctx_->SetNetworkReply( cmd, net_.get( req ) );
 }

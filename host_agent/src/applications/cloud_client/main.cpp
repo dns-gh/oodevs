@@ -54,9 +54,6 @@ int main( int argc, char* argv[] )
         FileSystem fs( log );
         Pool pool( 8 );
         Head head( factory.GetRuntime(), fs, pool );
-        const bool done = head.ProcessCommand();
-        if( done )
-            return 0;
         head.show();
         return app.exec();
     }
