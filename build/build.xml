@@ -507,7 +507,7 @@
     </target>
 
     <target name="modules.module_tester_test">
-        <build-test name="module_tester" depends="boost" libs="core@{suffix}"/>
+        <build-test name="module_tester" depends="boost" libs="core@{suffix}" failonwarning="${failonwarning}"/>
     </target>
 
     <target name="modules.movement_module" description="build movement module">
