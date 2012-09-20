@@ -376,7 +376,7 @@
     </target>
 
     <target name="library.resource_network" description="build resource network static library">
-        <build-lib name="resource_network" pattern="lib${ant.project.name}_resource_network-${platform}-mt@{suffix}" suffix="-gd"/>
+        <build-lib name="resource_network" pattern="lib${ant.project.name}_resource_network-${platform}-mt@{suffix}" suffix="-gd" failonwarning="${failonwarning}"/>
     </target>
 
     <target name="library.meteo" depends="library.protocol,library.clients_kernel" description="build meteo static library">
