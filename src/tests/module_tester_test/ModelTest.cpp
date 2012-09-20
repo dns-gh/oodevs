@@ -16,24 +16,24 @@ using namespace sword::test;
 BOOST_AUTO_TEST_CASE( an_empty_model_matches_an_empty_constraint )
 {
     Model model;
-    core::Model expected;
-    BOOST_CHECK( model.Check( expected ) );
+    core::Model actual;
+    BOOST_CHECK( model.Check( actual ) );
 }
 
 BOOST_AUTO_TEST_CASE( an_empty_model_fails_to_match_a_value_constraint )
 {
     Model model;
     model = 42;
-    core::Model expected;
-    BOOST_CHECK( ! model.Check( expected ) );
+    core::Model actual;
+    BOOST_CHECK( ! model.Check( actual ) );
 }
 
 BOOST_AUTO_TEST_CASE( a_value_model_fails_to_match_an_empty_constraint )
 {
     Model model;
-    core::Model expected;
-    expected = 42;
-    BOOST_CHECK( ! model.Check( expected ) );
+    core::Model actual;
+    actual = 42;
+    BOOST_CHECK( ! model.Check( actual ) );
 }
 
 BOOST_AUTO_TEST_CASE( a_model_constraint_accepts_number_values )
@@ -41,14 +41,14 @@ BOOST_AUTO_TEST_CASE( a_model_constraint_accepts_number_values )
     Model model;
     model = 42;
     {
-        core::Model expected;
-        expected = 42;
-        BOOST_CHECK( model.Check( expected ) );
+        core::Model actual;
+        actual = 42;
+        BOOST_CHECK( model.Check( actual ) );
     }
     {
-        core::Model expected;
-        expected = 43;
-        BOOST_CHECK( ! model.Check( expected ) );
+        core::Model actual;
+        actual = 43;
+        BOOST_CHECK( ! model.Check( actual ) );
     }
 }
 
@@ -66,14 +66,14 @@ BOOST_AUTO_TEST_CASE( a_model_constraint_accepts_boolean_values )
     Model model;
     model = false;
     {
-        core::Model expected;
-        expected = false;
-        BOOST_CHECK( model.Check( expected ) );
+        core::Model actual;
+        actual = false;
+        BOOST_CHECK( model.Check( actual ) );
     }
     {
-        core::Model expected;
-        expected = true;
-        BOOST_CHECK( ! model.Check( expected ) );
+        core::Model actual;
+        actual = true;
+        BOOST_CHECK( ! model.Check( actual ) );
     }
 }
 
@@ -82,14 +82,14 @@ BOOST_AUTO_TEST_CASE( a_model_constraint_accepts_string_values )
     Model model;
     model = "some string";
     {
-        core::Model expected;
-        expected = "some string";
-        BOOST_CHECK( model.Check( expected ) );
+        core::Model actual;
+        actual = "some string";
+        BOOST_CHECK( model.Check( actual ) );
     }
     {
-        core::Model expected;
-        expected = "some other string";
-        BOOST_CHECK( ! model.Check( expected ) );
+        core::Model actual;
+        actual = "some other string";
+        BOOST_CHECK( ! model.Check( actual ) );
     }
 }
 
@@ -97,9 +97,9 @@ BOOST_AUTO_TEST_CASE( a_model_constraint_accepts_inner_constraints_on_values )
 {
     Model model;
     model = mock::any;
-    core::Model expected;
-    expected = 42;
-    BOOST_CHECK( model.Check( expected ) );
+    core::Model actual;
+    actual = 42;
+    BOOST_CHECK( model.Check( actual ) );
 }
 
 BOOST_AUTO_TEST_CASE( a_model_constraint_accepts_string_child_nodes )
@@ -107,29 +107,29 @@ BOOST_AUTO_TEST_CASE( a_model_constraint_accepts_string_child_nodes )
     Model model;
     model[ "key" ];
     {
-        core::Model expected;
-        BOOST_CHECK( ! model.Check( expected ) );
+        core::Model actual;
+        BOOST_CHECK( ! model.Check( actual ) );
     }
     {
-        core::Model expected;
-        expected[ "key" ] = 42;
-        BOOST_CHECK( ! model.Check( expected ) );
+        core::Model actual;
+        actual[ "key" ] = 42;
+        BOOST_CHECK( ! model.Check( actual ) );
     }
     {
-        core::Model expected;
-        expected[ "key" ][ "sub-key" ];
-        BOOST_CHECK( ! model.Check( expected ) );
+        core::Model actual;
+        actual[ "key" ][ "sub-key" ];
+        BOOST_CHECK( ! model.Check( actual ) );
     }
     {
-        core::Model expected;
-        expected[ "key" ];
-        BOOST_CHECK( model.Check( expected ) );
+        core::Model actual;
+        actual[ "key" ];
+        BOOST_CHECK( model.Check( actual ) );
     }
     {
-        core::Model expected;
-        expected[ "key" ];
-        expected[ "key 2" ];
-        BOOST_CHECK( ! model.Check( expected ) );
+        core::Model actual;
+        actual[ "key" ];
+        actual[ "key 2" ];
+        BOOST_CHECK( ! model.Check( actual ) );
     }
 }
 
@@ -138,29 +138,29 @@ BOOST_AUTO_TEST_CASE( a_model_constraint_accepts_integer_child_nodes )
     Model model;
     model[ 3 ];
     {
-        core::Model expected;
-        BOOST_CHECK( ! model.Check( expected ) );
+        core::Model actual;
+        BOOST_CHECK( ! model.Check( actual ) );
     }
     {
-        core::Model expected;
-        expected[ 3 ] = 42;
-        BOOST_CHECK( ! model.Check( expected ) );
+        core::Model actual;
+        actual[ 3 ] = 42;
+        BOOST_CHECK( ! model.Check( actual ) );
     }
     {
-        core::Model expected;
-        expected[ 3 ][ 7 ];
-        BOOST_CHECK( ! model.Check( expected ) );
+        core::Model actual;
+        actual[ 3 ][ 7 ];
+        BOOST_CHECK( ! model.Check( actual ) );
     }
     {
-        core::Model expected;
-        expected[ 3 ];
-        BOOST_CHECK( model.Check( expected ) );
+        core::Model actual;
+        actual[ 3 ];
+        BOOST_CHECK( model.Check( actual ) );
     }
     {
-        core::Model expected;
-        expected[ 3 ];
-        expected[ 4 ];
-        BOOST_CHECK( ! model.Check( expected ) );
+        core::Model actual;
+        actual[ 3 ];
+        actual[ 4 ];
+        BOOST_CHECK( ! model.Check( actual ) );
     }
 }
 
@@ -169,24 +169,24 @@ BOOST_AUTO_TEST_CASE( a_model_with_any_constraint_accepts_every_valid_model )
     Model model;
     model = mock::any;
     {
-        core::Model expected;
-        expected[ "key" ];
-        BOOST_CHECK( model.Check( expected ) );
+        core::Model actual;
+        actual[ "key" ];
+        BOOST_CHECK( model.Check( actual ) );
     }
     {
-        core::Model expected;
-        expected.AddElement();
-        BOOST_CHECK( model.Check( expected ) );
+        core::Model actual;
+        actual.AddElement();
+        BOOST_CHECK( model.Check( actual ) );
     }
     {
-        core::Model expected;
-        expected = 42;
-        BOOST_CHECK( model.Check( expected ) );
+        core::Model actual;
+        actual = 42;
+        BOOST_CHECK( model.Check( actual ) );
     }
     {
-        core::Model expected;
-        expected.SetData( boost::make_shared< core::UserData< int > >( 42 ) );
-        BOOST_CHECK( model.Check( expected ) );
+        core::Model actual;
+        actual.SetData( boost::make_shared< core::UserData< int > >( 42 ) );
+        BOOST_CHECK( model.Check( actual ) );
     }
 }
 
@@ -195,23 +195,23 @@ BOOST_AUTO_TEST_CASE( a_model_constraint_splits_child_node_path )
     Model model;
     model[ "key/sub-key" ];
     {
-        core::Model expected;
-        BOOST_CHECK( ! model.Check( expected ) );
+        core::Model actual;
+        BOOST_CHECK( ! model.Check( actual ) );
     }
     {
-        core::Model expected;
-        expected[ "key" ];
-        BOOST_CHECK( ! model.Check( expected ) );
+        core::Model actual;
+        actual[ "key" ];
+        BOOST_CHECK( ! model.Check( actual ) );
     }
     {
-        core::Model expected;
-        expected[ "key/sub-key" ];
-        BOOST_CHECK( model.Check( expected ) );
+        core::Model actual;
+        actual[ "key/sub-key" ];
+        BOOST_CHECK( model.Check( actual ) );
     }
     {
-        core::Model expected;
-        expected[ "key/sub-key" ] = 42;
-        BOOST_CHECK( ! model.Check( expected ) );
+        core::Model actual;
+        actual[ "key/sub-key" ] = 42;
+        BOOST_CHECK( ! model.Check( actual ) );
     }
 }
 
@@ -220,13 +220,13 @@ BOOST_AUTO_TEST_CASE( a_model_accepts_values_on_child_nodes )
     Model model;
     model[ "key" ] = mock::any;
     {
-        core::Model expected;
-        BOOST_CHECK( ! model.Check( expected ) );
+        core::Model actual;
+        BOOST_CHECK( ! model.Check( actual ) );
     }
     {
-        core::Model expected;
-        expected[ "key" ] = "something else";
-        BOOST_CHECK( model.Check( expected ) );
+        core::Model actual;
+        actual[ "key" ] = "something else";
+        BOOST_CHECK( model.Check( actual ) );
     }
 }
 
@@ -235,29 +235,29 @@ BOOST_AUTO_TEST_CASE( a_model_accepts_element_nodes )
     Model model;
     model.AddElement();
     {
-        core::Model expected;
-        BOOST_CHECK( ! model.Check( expected ) );
+        core::Model actual;
+        BOOST_CHECK( ! model.Check( actual ) );
     }
     {
-        core::Model expected;
-        expected.AddElement() = 42;
-        BOOST_CHECK( ! model.Check( expected ) );
+        core::Model actual;
+        actual.AddElement() = 42;
+        BOOST_CHECK( ! model.Check( actual ) );
     }
     {
-        core::Model expected;
-        expected.AddElement().AddElement();
-        BOOST_CHECK( ! model.Check( expected ) );
+        core::Model actual;
+        actual.AddElement().AddElement();
+        BOOST_CHECK( ! model.Check( actual ) );
     }
     {
-        core::Model expected;
-        expected.AddElement();
-        BOOST_CHECK( model.Check( expected ) );
+        core::Model actual;
+        actual.AddElement();
+        BOOST_CHECK( model.Check( actual ) );
     }
     {
-        core::Model expected;
-        expected.AddElement();
-        expected.AddElement();
-        BOOST_CHECK( ! model.Check( expected ) );
+        core::Model actual;
+        actual.AddElement();
+        actual.AddElement();
+        BOOST_CHECK( ! model.Check( actual ) );
     }
 }
 
@@ -267,13 +267,13 @@ BOOST_AUTO_TEST_CASE( a_model_accepts_user_data )
     boost::shared_ptr< core::UserData_ABC > data = boost::make_shared< core::UserData< int > >( 42 );
     model.SetData( data );
     {
-        core::Model expected;
-        BOOST_CHECK( ! model.Check( expected ) );
+        core::Model actual;
+        BOOST_CHECK( ! model.Check( actual ) );
     }
     {
-        core::Model expected;
-        expected.SetData( data );
-        BOOST_CHECK( model.Check( expected ) );
+        core::Model actual;
+        actual.SetData( data );
+        BOOST_CHECK( model.Check( actual ) );
     }
 }
 
@@ -289,13 +289,13 @@ BOOST_AUTO_TEST_CASE( a_model_can_be_marked_for_remove )
     Model model;
     model.MarkForRemove();
     {
-        core::Model expected;
-        expected.MarkForRemove();
-        BOOST_CHECK( model.Check( expected ) );
+        core::Model actual;
+        actual.MarkForRemove();
+        BOOST_CHECK( model.Check( actual ) );
     }
     {
-        core::Model expected;
-        BOOST_CHECK( ! model.Check( expected ) );
+        core::Model actual;
+        BOOST_CHECK( ! model.Check( actual ) );
     }
 }
 
