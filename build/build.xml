@@ -143,7 +143,7 @@
     </target>
 
     <target name="library.frontend" depends="library.clients_gui" description="build frontend static library">
-        <build-lib name="frontend" depends="qt4" pattern="lib${ant.project.name}_frontend-${platform}-mt@{suffix}" suffix="-gd">
+        <build-lib name="frontend" depends="qt4" pattern="lib${ant.project.name}_frontend-${platform}-mt@{suffix}" suffix="-gd" failonwarning="${failonwarning}">
             <defineset define="_WIN32_WINNT=0x0501"/>
             <defineset define="QT3_SUPPORT"/>
             <defineset>

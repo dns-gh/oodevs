@@ -78,6 +78,7 @@
     <Lib />
     <ClCompile>
       <PreprocessorDefinitions>PLATFORM=$(CurrentPlatform);QT3_SUPPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
@@ -85,6 +86,7 @@
     <Lib />
     <ClCompile>
       <PreprocessorDefinitions>PLATFORM=$(CurrentPlatform);QT3_SUPPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
@@ -92,6 +94,7 @@
     <Lib />
     <ClCompile>
       <PreprocessorDefinitions>PLATFORM=$(CurrentPlatform);QT3_SUPPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
@@ -99,6 +102,7 @@
     <Lib />
     <ClCompile>
       <PreprocessorDefinitions>PLATFORM=$(CurrentPlatform);QT3_SUPPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>

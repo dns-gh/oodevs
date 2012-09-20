@@ -11,12 +11,14 @@
 #include "FileList.h"
 #include "moc_FileList.cpp"
 
+#pragma warning( push, 0 )
 #include <QtGui/QPushButton>
 #include <QtGui/QListWidget>
 #include <QtGui/QVBoxLayout>
 #include <QtGui/QHBoxLayout>
 #include <QtCore/QStringList>
 #include <QtGui/QFileDialog>
+#pragma warning( pop )
 
 #include <boost/algorithm/string.hpp>
 
@@ -108,7 +110,7 @@ void FileList::SetFiles(const FileVec_T& files)
     listWidget_->clear();
     QStringList itemsToAdd;
 
-    itemsToAdd.reserve(files.size());
+    itemsToAdd.reserve( static_cast<int>( files.size() ));
     for (unsigned i = 0; i < files.size(); ++i)
     {
         itemsToAdd.append(tr(files[i].c_str()));
