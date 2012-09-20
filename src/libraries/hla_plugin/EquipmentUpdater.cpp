@@ -110,7 +110,8 @@ void EquipmentUpdater::Notify( const sword::UnitAttributes& message, int /*conte
             if( staticComponent.second.first == dotation.type().id() )
                 equipmentName = staticComponent.first;
         const T_Components::const_iterator remoteComponent = remoteComponents.find( equipmentName );
-        mustSend = mustSend || ( remoteComponent != remoteComponents.end() && remoteComponent->second.second != dotation.available() );
+        mustSend = mustSend || ( remoteComponent != remoteComponents.end() && 
+            static_cast< int >( remoteComponent->second.second ) != dotation.available() );
     }
     if( mustSend )
         SendUpdate( identifier );

@@ -83,7 +83,7 @@ public:
     template< typename Archive >
     void Serialize( Archive& archive ) const
     {
-        uint32 sz = values_.size();
+        uint32 sz = static_cast< uint32 >( values_.size() );
         archive << sz;
         for( std::vector< Omt13String >::const_iterator it = values_.begin(); it != values_.end(); ++it )
             archive << *it;

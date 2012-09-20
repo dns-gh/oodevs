@@ -15,7 +15,9 @@
 #include "TacticalObject_ABC.h"
 #include "FOM_Serializer_ABC.h"
 
+#pragma warning( push, 0 )
 #include "protocol/proto/common.pb.h"
+#pragma warning( pop )
 
 #include <hla/Deserializer_ABC.h>
 #include <hla/Serializer_ABC.h>
@@ -85,7 +87,7 @@ Minefield::Minefield( TacticalObject_ABC& object, unsigned int identifier, const
 // Name: Minefield constructor
 // Created: AHC 2012-08-07
 // -----------------------------------------------------------------------------
-Minefield::Minefield( const std::string& identifier, EntityIdentifierResolver_ABC& /*entityIdentifierResolver*/, FOM_Serializer_ABC& fomSerializer )
+Minefield::Minefield( const std::string& identifier, EntityIdentifierResolver_ABC& /*entityIdentifierResolver*/, FOM_Serializer_ABC& /*fomSerializer*/ )
     : object_( 0 )
     , listeners_ ( new ObjectListenerComposite() )
     , identifier_( identifier )
@@ -227,7 +229,7 @@ void Minefield::ResetAttributes()
 // Name: Minefield::Attach
 // Created: AHC 2012-08-30
 // -----------------------------------------------------------------------------
-void Minefield::Attach( Agent_ABC* agent, unsigned long simId )
+void Minefield::Attach( Agent_ABC* /*agent*/, unsigned long /*simId*/ )
 {
     // NOTHING
 }
