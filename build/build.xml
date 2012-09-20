@@ -332,7 +332,7 @@
     </target>
 
     <target name="library.messenger_plugin" depends="library.dispatcher" description="build messenger_plugin static library">
-        <build-lib name="messenger_plugin" pattern="lib${ant.project.name}_messenger_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4">
+        <build-lib name="messenger_plugin" pattern="lib${ant.project.name}_messenger_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
