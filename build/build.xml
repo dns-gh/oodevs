@@ -807,7 +807,8 @@
                          lib${ant.project.name}_MT_Tools-${platform}-mt,
                          lib${ant.project.name}_protocol-${platform}-mt,
                          lib${ant.project.name}_tools-${platform}-mt,
-                         lib${ant.project.name}_license_gui-${platform}-mt@{suffix}">
+                         lib${ant.project.name}_license_gui-${platform}-mt@{suffix}"
+                   failonwarning="${failonwarning}">
             <syslibset libs="gdi32,shell32,htmlhelp,advapi32"/>
             <defineset define="QT3_SUPPORT"/>
         </build-app>

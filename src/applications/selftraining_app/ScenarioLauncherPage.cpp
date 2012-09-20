@@ -214,7 +214,7 @@ void ScenarioLauncherPage::OnLanguageChanged()
     tabs_->setTabText( 1, tools::translate( "ScenarioLauncherPage", "Settings" ) );
     SetTitle( tools::translate( "ScenarioLauncherPage", "Scenario" ) ); // $$$$ ABR 2011-11-10: FIXME
     progressPage_->SetTitle( tools::translate( "ScenarioLauncherPage", "Starting %1" ).arg( GetTitle() ) );
-    for( int i = 0; i < configTabs_->count() && i < plugins_.size(); ++i )
+    for( int i = 0; i < configTabs_->count() && i < static_cast< int >( plugins_.size()); ++i )
         configTabs_->setTabText( i, plugins_[ i ]->GetName() );
     LauncherClientPage::OnLanguageChanged();
 }
