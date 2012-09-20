@@ -723,6 +723,17 @@ bool DEC_Knowledge_Object::IsReservedObstacleActivated() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::GetActivationTime
+// Created: GGE 2012-09-19
+// -----------------------------------------------------------------------------
+int DEC_Knowledge_Object::GetActivationTime() const
+{
+    if( const ObstacleAttribute* activable = RetrieveAttribute< ObstacleAttribute >() )
+        return activable->GetActivationTime();
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Object::CanCollideWith
 // Created: JCR 2008-06-05
 // -----------------------------------------------------------------------------

@@ -281,7 +281,7 @@ return
          return integration.isActifManeuverObstacle( self )
     end,
     delayedActivationTime = function( self )
-        return 0
+        return integration.delaiAvantActivationForObject( self )
     end,
     canActivateIt = function( self )
         return integration.canActivateIt( self )

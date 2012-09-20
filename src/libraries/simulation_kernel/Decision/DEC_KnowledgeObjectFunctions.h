@@ -37,6 +37,7 @@ public:
     static int IsMined( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static int IsBreached( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static bool IsReservedObstacleActivated( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    static int GetActivationTime( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static bool IsReservedObstacle( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static bool IsKnowledgeValid( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
 

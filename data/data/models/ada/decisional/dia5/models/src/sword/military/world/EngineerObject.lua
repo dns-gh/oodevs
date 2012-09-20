@@ -157,6 +157,6 @@ return
         return false
     end,
     delayedActivationTime = function( self )
-        return integration.delaiAvantActivation( self )
+        return integration.delaiAvantActivationForGenObject( self )
     end
 }
