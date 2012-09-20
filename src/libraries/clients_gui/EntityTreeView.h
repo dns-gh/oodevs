@@ -57,6 +57,7 @@ public:
 private:
     //! @name Helpers
     //@{
+    virtual QStringList MimeTypes() const { return QStringList(); } // temp
     //@}
 
 private:

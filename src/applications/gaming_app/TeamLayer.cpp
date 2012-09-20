@@ -13,12 +13,10 @@
 #include "actions/ActionsModel.h"
 #include "actions/ActionTiming.h"
 #include "actions/ActionTasker.h"
-#include "clients_gui/ValuedDragObject.h"
+#include "clients_gui/DragAndDropHelpers.h"
 #include "clients_kernel/PopulationPrototype.h"
 #include "clients_kernel/Team_ABC.h"
 #include "gaming/AgentServerMsgMgr.h"
-#include "gaming/StaticModel.h"
-#include "protocol/simulationsenders.h"
 
 // -----------------------------------------------------------------------------
 // Name: TeamLayer constructor
@@ -27,12 +25,12 @@
 TeamLayer::TeamLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view,
                      const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel, const StaticModel& staticModel,
                      const kernel::Time_ABC& simulation, AgentServerMsgMgr& messageManager )
-: gui::EntityLayer< kernel::Team_ABC >( controllers, tools, strategy, view, profile )
-, actionsModel_( actionsModel )
-, static_( staticModel )
-, simulation_( simulation )
-, messageManager_( messageManager )
-, selected_( controllers, 0 )
+    : gui::EntityLayer< kernel::Team_ABC >( controllers, tools, strategy, view, profile )
+    , actionsModel_( actionsModel )
+    , static_( staticModel )
+    , simulation_( simulation )
+    , messageManager_( messageManager )
+    , selected_( controllers )
 {
     // NOTHING
 }
@@ -52,7 +50,7 @@ TeamLayer::~TeamLayer()
 // -----------------------------------------------------------------------------
 bool TeamLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& ) const
 {
-    return selected_ && gui::ValuedDragObject::Provides< const kernel::PopulationPrototype >( event );
+    return selected_ && dnd::HasData< kernel::PopulationPrototype >( event );
 }
 
 // -----------------------------------------------------------------------------
@@ -63,9 +61,9 @@ bool TeamLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& poi
 {
     if( selected_ )
     {
-        if( const kernel::PopulationPrototype* type = gui::ValuedDragObject::GetValue< const kernel::PopulationPrototype >( event ) )
+        if( const kernel::PopulationPrototype* type = dnd::FindData< kernel::PopulationPrototype >( event ) )
         {
-            actions::Action_ABC* action = actionsModel_.CreateCrowdCreationAction( *(type->type_), type->number_, point, *selected_ );
+            actions::Action_ABC* action = actionsModel_.CreateCrowdCreationAction( *type->type_, type->number_, point, *selected_ );
             action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
             action->Attach( *new actions::ActionTasker( selected_, false ) );
             action->Polish();

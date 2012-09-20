@@ -48,7 +48,7 @@ public:
     //@{
     void Purge();
     void EnableDragAndDrop( bool enable );
-    virtual QStringList AdditionalMimeTypes() const { return QStringList(); }
+//    virtual QStringList AdditionalMimeTypes() const { return QStringList(); }
     virtual void Drop( const QString& /*mimeType*/, void* /*data*/, QStandardItem& /*target*/ ) {}
     virtual QMimeData* MimeData( const QModelIndexList& /*indexes*/, bool& /*overriden*/ ) const { return 0; }
     //@}

@@ -13,7 +13,7 @@
 #include "PopulationsPanel.h"
 #include "moc_PopulationsPanel.cpp"
 #include "PopulationTypesListView.h"
-#include "ValuedDragObject.h"
+#include "clients_gui/DragAndDropHelpers.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/PopulationPrototype.h"
@@ -77,8 +77,7 @@ void PopulationsPanel::OnStartDrag( const PopulationType* type )
         return;
     prototype_.type_ = type;
     prototype_.number_ = number_->value();
-    Q3DragObject* drag = new gui::ValuedDragObject( &prototype_, this );
-    drag->drag();
+    dnd::CreateDragObject( &prototype_, this );
 }
 
 // -----------------------------------------------------------------------------

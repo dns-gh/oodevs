@@ -37,6 +37,8 @@
 #include "ENT/ENT_Enums_Gen.h"
 #include <boost/bind.hpp>
 
+const QString UrbanTreeView::mimeType_( typeid( kernel::UrbanObject_ABC ).name() );
+
 // -----------------------------------------------------------------------------
 // Name: UrbanTreeView constructor
 // Created: JSR 2012-09-14
@@ -324,6 +326,16 @@ bool UrbanTreeView::LessThan( const QModelIndex& left, const QModelIndex& right,
 }
 
 // -----------------------------------------------------------------------------
+// Name: UrbanTreeView::MimeTypes
+// Created: JSR 2012-09-18
+// -----------------------------------------------------------------------------
+QStringList UrbanTreeView::MimeTypes() const
+{
+    static QStringList list( mimeType_ );
+    return list;
+}
+
+// -----------------------------------------------------------------------------
 // Name: UrbanTreeView::MimeData
 // Created: JSR 2012-09-17
 // -----------------------------------------------------------------------------
@@ -354,7 +366,7 @@ QMimeData* UrbanTreeView::MimeData( const QModelIndexList& indexes, bool& overri
             }
         }
     }
-    mimeData->setData( gui::StandardModel::mimeTypeStr_, encodedData );
+    mimeData->setData( mimeType_, encodedData );
     return mimeData;
 }
 
@@ -382,7 +394,7 @@ void UrbanTreeView::dragMoveEvent( QDragMoveEvent *pEvent )
     QStringList formats = mimeData->formats();
     foreach( QString format, formats )
     {
-        if( format != gui::StandardModel::mimeTypeStr_ )
+        if( format != mimeType_ )
             continue;
         QByteArray encodedData = mimeData->data( format );
         QDataStream stream( &encodedData, QIODevice::ReadOnly );
@@ -420,7 +432,7 @@ void UrbanTreeView::Drop( const QString& mimeType, void* data, QStandardItem& ta
     kernel::Entity_ABC* entityTarget = dataModel_.GetDataFromItem< kernel::Entity_ABC >( target );
     if( !entityTarget )
         return;
-    if( mimeType == gui::StandardModel::mimeTypeStr_ )
+    if( mimeType == mimeType_ )
     {
         kernel::SafePointer< kernel::Entity_ABC >* safePtr = reinterpret_cast< kernel::SafePointer< kernel::Entity_ABC >* >( data );
         if( !safePtr )

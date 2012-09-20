@@ -22,8 +22,7 @@ namespace gui
 */
 // Created: AGE 2006-03-23
 // =============================================================================
-class AgentsLayer : public QObject
-                  , public EntityLayer< kernel::Agent_ABC >
+class AgentsLayer : public EntityLayer< kernel::Agent_ABC >
 {
 public:
     //! @name Constructors/Destructor

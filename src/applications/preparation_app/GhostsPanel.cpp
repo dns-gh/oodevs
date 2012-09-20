@@ -11,6 +11,8 @@
 #include "GhostsPanel.h"
 #include "moc_GhostsPanel.cpp"
 #include "EntitySymbolEditor.h"
+#include "clients_gui/UnitPreviewIcon.h"
+#include "clients_gui/DragAndDropHelpers.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -19,8 +21,6 @@
 #include "clients_kernel/SymbolRule.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Tools.h"
-#include "clients_gui/UnitPreviewIcon.h"
-#include "clients_gui/ValuedDragObject.h"
 
 using namespace kernel;
 
@@ -111,10 +111,7 @@ void GhostsPanel::IconDragged()
     protoType_.nature_ = symbolEditor_->GetNature();
     protoType_.level_ = symbolEditor_->GetLevel();
     if( warningLabel_->text().isEmpty() )
-    {
-        Q3DragObject* drag = new gui::ValuedDragObject( &protoType_, this );
-        drag->drag();
-    }
+        dnd::CreateDragObject( &protoType_, this );
 }
 
 // -----------------------------------------------------------------------------

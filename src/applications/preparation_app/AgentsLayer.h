@@ -36,7 +36,7 @@ class AgentsLayer : public gui::AgentsLayer
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, Model& model, ModelBuilder& modelBuilder, const kernel::Profile_ABC& profile, QWidget* parent );
+             AgentsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, Model& model, ModelBuilder& modelBuilder, const kernel::Profile_ABC& profile );
     virtual ~AgentsLayer();
     //@}
 
@@ -60,7 +60,7 @@ private:
     virtual void MultipleSelect( const std::vector< const kernel::Team_ABC* >& elements );
     virtual void AfterSelection();
 
-    bool IsValidTemplate( QDragMoveEvent* event ) const;
+    bool IsValidTemplate( QDropEvent* event ) const;
     bool IsEligibleForDrag( const geometry::Point2f& point ) const;
 
     virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
@@ -78,6 +78,7 @@ private:
     geometry::Point2f                            draggingPoint_;
     geometry::Point2f                            draggingOffset_;
     geometry::Point2f                            oldPosition_;
+    std::auto_ptr< QWidget > dummy_;
     //@}
 };
 

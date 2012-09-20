@@ -11,8 +11,8 @@
 #include "TemplateListView.h"
 #include "moc_TemplateListView.cpp"
 #include "preparation/HierarchyTemplate.h"
+#include "clients_gui/DragAndDropHelpers.h"
 #include "clients_gui/ValuedListItem.h"
-#include "clients_gui/ValuedDragObject.h"
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <tools/XmlCrc32Signature.h>
@@ -70,8 +70,9 @@ Q3DragObject* TemplateListView::dragObject()
     if( !pItem )
         return 0;
 
-    const HierarchyTemplate* pTemplate = pItem->GetValue< HierarchyTemplate >();
-    return new ValuedDragObject( pTemplate, this );
+    HierarchyTemplate* pTemplate = pItem->GetValue< HierarchyTemplate >();
+    dnd::CreateDragObject( pTemplate, this );
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

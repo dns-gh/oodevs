@@ -29,12 +29,12 @@
 #include "clients_kernel/Usages_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
+#include "clients_gui/DragAndDropHelpers.h"
 #include "clients_gui/ListItemToolTip.h"
 #include "clients_gui/SearchListView.h"
 #include "clients_gui/SymbolIcon.h"
 #include "clients_gui/ValuedListItem.h"
 #include "clients_gui/SymbolIcons.h"
-#include "clients_gui/ValuedDragObject.h"
 #include "preparation/StaticModel.h"
 #include "preparation/UrbanHierarchies.h"
 #include "preparation/UrbanMenuManager.h"
@@ -258,7 +258,8 @@ Q3DragObject* UrbanListView::dragObject()
     }
     if( dragged_.empty() )
         return 0;
-    return new gui::ValuedDragObject( static_cast< sUrbanDrag* >( 0 ), this );
+    dnd::CreateDragObject( static_cast< sUrbanDrag* >( 0 ), this );
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -267,7 +268,7 @@ Q3DragObject* UrbanListView::dragObject()
 // -----------------------------------------------------------------------------
 kernel::Entity_ABC* UrbanListView::Drop( QDropEvent* pEvent ) const
 {
-    if( !dragged_.empty() && gui::ValuedDragObject::Provides< const sUrbanDrag >( pEvent ) )
+    if( !dragged_.empty() && dnd::HasData< sUrbanDrag >( pEvent ) )
     {
         QPoint position = viewport()->mapFromParent( pEvent->pos() );
         gui::ValuedListItem* item = static_cast< gui::ValuedListItem* >( itemAt( position ) );
@@ -297,7 +298,7 @@ kernel::Entity_ABC* UrbanListView::Drop( QDropEvent* pEvent ) const
 void UrbanListView::viewportDragEnterEvent( QDragEnterEvent* pEvent )
 {
     EntityListView::viewportDragEnterEvent( pEvent );
-    pEvent->accept( gui::ValuedDragObject::Provides< const sUrbanDrag >( pEvent ) );
+    pEvent->accept( dnd::HasData< sUrbanDrag >( pEvent ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -12,7 +12,6 @@
 #include "moc_InhabitantListView.cpp"
 #include "PreparationProfile.h"
 #include "ModelBuilder.h"
-#include "clients_gui/ValuedDragObject.h"
 #include "preparation/InhabitantPositions.h"
 
 // -----------------------------------------------------------------------------
@@ -75,25 +74,6 @@ void InhabitantListView::NotifyCreated( const kernel::Team_ABC& team )
     gui::ValuedListItem* item = gui::FindSibling( (const kernel::Entity_ABC*)&team, firstChild() );
     if( item )
         item->setRenameEnabled( 0, true );
-}
-
-// -----------------------------------------------------------------------------
-// Name: InhabitantListView::dragObject
-// Created: SLG 2010-11-23
-// -----------------------------------------------------------------------------
-Q3DragObject* InhabitantListView::dragObject()
-{
-    if( IsDragAndDropLocked() )
-        return 0;
-    gui::ValuedListItem* pItem = static_cast< gui::ValuedListItem* >( selectedItem() );
-    if( !pItem )
-        return 0;
-    if( dynamic_cast< const kernel::Inhabitant_ABC* >( &*selected_ ) )
-    {
-        const InhabitantPositions* pos = static_cast< const InhabitantPositions* >( selected_->Retrieve< kernel::Positions >() );
-        return new gui::ValuedDragObject( pos, dynamic_cast< QWidget* >( parent() ) );
-    }
-    return 0;
 }
 
 // -----------------------------------------------------------------------------

@@ -978,9 +978,6 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\Types.h">
       <Filter>Source Files\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\ValuedDragObject.h">
-      <Filter>Source Files\Tools</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\ValuedListItem.h">
       <Filter>Source Files\Tools</Filter>
     </ClInclude>
@@ -1466,6 +1463,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\ItemDecorationGetter_ABC.h">
       <Filter>Source Files\MVC\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\DragAndDropHelpers.h">
+      <Filter>Source Files\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

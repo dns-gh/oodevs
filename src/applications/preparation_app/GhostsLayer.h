@@ -28,8 +28,7 @@ class Model;
 */
 // Created: ABR 2011-10-19
 // =============================================================================
-class GhostsLayer : public QObject
-                  , public gui::EntityLayer< kernel::Ghost_ABC >
+class GhostsLayer : public gui::EntityLayer< kernel::Ghost_ABC >
                   , public kernel::MultipleSelectionObserver_Base< kernel::Automat_ABC >
                   , public kernel::MultipleSelectionObserver_Base< kernel::Formation_ABC >
 {
@@ -71,9 +70,9 @@ private:
     kernel::SafePointer< kernel::Automat_ABC >   selectedAutomat_;
     kernel::SafePointer< kernel::Formation_ABC > selectedFormation_;
     kernel::SafePointer< kernel::Ghost_ABC >     highLightedGhost_;
-    QWidget* dummy_;
     geometry::Point2f draggingPoint_;
     geometry::Point2f draggingOffset_;
+    std::auto_ptr< QWidget > dummy_;
     //@}
 };
 

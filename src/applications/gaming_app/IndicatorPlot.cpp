@@ -13,10 +13,10 @@
 #include "IndicatorExportDialog.h"
 #include "gaming/IndicatorRequest.h"
 #include "gaming/Simulation.h"
+#include "clients_gui/DragAndDropHelpers.h"
 #include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_gui/ValuedDragObject.h"
 #include "protocol/ReplaySenders.h"
 #include <boost/foreach.hpp>
 
@@ -242,7 +242,7 @@ void IndicatorPlot::NotifyUpdated( const Simulation& simulation )
 // -----------------------------------------------------------------------------
 void IndicatorPlot::dragEnterEvent( QDragEnterEvent* e )
 {
-    e->accept( gui::ValuedDragObject::Provides< const IndicatorRequest >( e ) );
+    e->accept( dnd::HasData< IndicatorRequest >( e ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -251,7 +251,7 @@ void IndicatorPlot::dragEnterEvent( QDragEnterEvent* e )
 // -----------------------------------------------------------------------------
 void IndicatorPlot::dropEvent( QDropEvent* e )
 {
-    if( const IndicatorRequest* request = gui::ValuedDragObject::GetValue< const IndicatorRequest >( e ) )
+    if( const IndicatorRequest* request = dnd::FindData< IndicatorRequest >( e ) )
         Add( *request );
 }
 

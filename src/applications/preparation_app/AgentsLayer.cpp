@@ -16,6 +16,7 @@
 #include "preparation/AutomatPositions.h"
 #include "preparation/GhostModel.h"
 #include "preparation/HierarchyTemplate.h"
+#include "clients_gui/DragAndDropHelpers.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Ghost_ABC.h"
@@ -25,15 +26,12 @@
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/Tools.h"
 #include "clients_gui/StandardModel.h"
-#include "clients_gui/ValuedDragObject.h"
-
-using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: AgentsLayer constructor
 // Created: SBO 2006-08-31
 // -----------------------------------------------------------------------------
-AgentsLayer::AgentsLayer( Controllers& controllers, const GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, Model& model, ModelBuilder& modelBuilder, const Profile_ABC& profile, QWidget* parent )
+AgentsLayer::AgentsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, Model& model, ModelBuilder& modelBuilder, const kernel::Profile_ABC& profile )
     : gui::AgentsLayer( controllers, tools, strategy, view, profile )
     , model_            ( model )
     , modelBuilder_     ( modelBuilder )
@@ -41,8 +39,9 @@ AgentsLayer::AgentsLayer( Controllers& controllers, const GlTools_ABC& tools, gu
     , selectedAutomat_  ( controllers )
     , selectedFormation_( controllers )
     , selectedTeam_     ( controllers )
+    , dummy_            ( new QWidget() )
 {
-    setParent( parent );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -117,32 +116,24 @@ void AgentsLayer::AfterSelection()
 // -----------------------------------------------------------------------------
 bool AgentsLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& ) const
 {
-    // QT4 version (temp)
-    const QMimeData* mimeData = event->mimeData();
-    QStringList formats = mimeData->formats();
-    foreach( QString format, formats )
-    {
-        if( format == gui::StandardModel::mimeTypeStr_ && ( selectedAutomat_ || selectedAgent_ || selectedFormation_ ) )
-            return true;
-    }
-
-    // QT3 version
-    return ( gui::ValuedDragObject::Provides< const AgentPositions >   ( event ) && selectedAgent_ )
-        || ( gui::ValuedDragObject::Provides< const AgentType >        ( event ) && selectedAutomat_ )
-        || ( gui::ValuedDragObject::Provides< const AutomatType >      ( event ) && ( selectedFormation_ || selectedAutomat_ ) )
-        || ( gui::ValuedDragObject::Provides< const HierarchyTemplate >( event ) && IsValidTemplate( event ) )
-        || ( gui::ValuedDragObject::Provides< const Entity_ABC >       ( event ) && ( selectedAutomat_ || selectedAgent_ || selectedFormation_ ) );
+    return ( dnd::HasData< kernel::Agent_ABC>( event ) && selectedAgent_ ) ||
+           ( dnd::HasData< kernel::Automat_ABC >( event ) && selectedAutomat_ ) ||
+           ( dnd::HasData< kernel::Formation_ABC >( event ) && selectedFormation_ ) ||
+           ( dnd::HasData< AgentPositions >( event ) && selectedAgent_ ) ||
+           ( dnd::HasData< kernel::AgentType >( event ) && selectedAutomat_ ) ||
+           ( dnd::HasData<  kernel::AutomatType >( event ) && ( selectedFormation_ || selectedAutomat_ ) ) ||
+           IsValidTemplate( event );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentsLayer::IsValidTemplate
 // Created: AGE 2007-05-30
 // -----------------------------------------------------------------------------
-bool AgentsLayer::IsValidTemplate( QDragMoveEvent* event ) const
+bool AgentsLayer::IsValidTemplate( QDropEvent* event ) const
 {
     if( !selectedFormation_ && !selectedTeam_ && !selectedAutomat_ )
         return false;
-    const HierarchyTemplate* droppedItem = gui::ValuedDragObject::GetValue< const HierarchyTemplate >( event );
+    const HierarchyTemplate* droppedItem = dnd::FindData< HierarchyTemplate >( event );
     if( ! droppedItem )
         return false;
     if( selectedTeam_ )
@@ -171,8 +162,8 @@ namespace
 bool AgentsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& point )
 {
     oldPosition_ = geometry::Point2f();
-    kernel::Entity_ABC* entity = gui::ValuedDragObject::GetValue< kernel::Entity_ABC >( event );
-    if( dynamic_cast< kernel::Agent_ABC* >( entity) || dynamic_cast< kernel::Automat_ABC* >( entity) || dynamic_cast< kernel::Formation_ABC* >( entity) )
+    const kernel::Entity_ABC* entity = dnd::FindSafeEntityData< kernel::Agent_ABC, kernel::Automat_ABC, kernel::Formation_ABC >( event );
+    if( entity )
         oldPosition_ = entity->Retrieve< kernel::Positions >()->GetPosition();
     return gui::AgentsLayer::HandleEnterDragEvent( event, point );
 }
@@ -183,65 +174,25 @@ bool AgentsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::
 // -----------------------------------------------------------------------------
 bool AgentsLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point )
 {
-    // QT4 temp : to be done with DragAndDropObserver_ABC
-    const QMimeData* mimeData = event->mimeData();
-    QStringList formats = mimeData->formats();
-    foreach( QString format, formats )
+    AgentPositions* positions = dnd::FindData< AgentPositions >( event );
+    if( positions )
     {
-        if( format == gui::StandardModel::mimeTypeStr_ )
+        if( selectedAgent_ && world_.IsInside( point ) && draggingPoint_.Distance( point ) >= 5.f * tools_.Pixels( point ) )
         {
-            QByteArray encodedData = mimeData->data( format );
-            QDataStream stream( &encodedData, QIODevice::ReadOnly );
-            while( !stream.atEnd() )
-            {
-                unsigned int ptr = 0;
-                stream >> ptr;
-                if( ptr )
-                {
-                    kernel::SafePointer< kernel::Entity_ABC >* safePtr = reinterpret_cast< kernel::SafePointer< kernel::Entity_ABC >* >( ptr );
-                    if( safePtr && *safePtr )
-                    {
-                        kernel::Entity_ABC* entity = safePtr->ConstCast();
-                        if( ( dynamic_cast< kernel::Agent_ABC* >( entity) || dynamic_cast< kernel::Automat_ABC* >( entity) || dynamic_cast< kernel::Formation_ABC* >( entity) ) && world_.IsInside( point ) )
-                        {
-                            kernel::Moveable_ABC* position = dynamic_cast< kernel::Moveable_ABC* >( entity->Retrieve< kernel::Positions >() );
-                            if( position )
-                            {
-                                position->Move( point );
-                                draggingPoint_ = point;
-                            }
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    // QT3
-    if( AgentPositions* position = gui::ValuedDragObject::GetValue< AgentPositions >( event ) )
-    {
-        if( !selectedAgent_ )
-            return false;
-        if( world_.IsInside( point ) && draggingPoint_.Distance( point ) >= 5.f * tools_.Pixels( point ) )
-        {
-            position->Move( point + draggingOffset_.ToVector() );
+            positions->Move( point + draggingOffset_.ToVector() );
             draggingPoint_ = point;
         }
         return true;
     }
-    else if( kernel::Entity_ABC* entity = gui::ValuedDragObject::GetValue< kernel::Entity_ABC >( event ) )
+    kernel::Entity_ABC* entity = dnd::FindSafeEntityData< kernel::Agent_ABC, kernel::Automat_ABC, kernel::Formation_ABC >( event );
+    if( entity )
     {
-        if( ( dynamic_cast< kernel::Agent_ABC* >( entity) || dynamic_cast< kernel::Automat_ABC* >( entity) || dynamic_cast< kernel::Formation_ABC* >( entity) ) && world_.IsInside( point ) )
+        if( kernel::Moveable_ABC* position = dynamic_cast< kernel::Moveable_ABC* >( entity->Retrieve< kernel::Positions >() ) )
         {
-            kernel::Moveable_ABC* position = dynamic_cast< kernel::Moveable_ABC* >( entity->Retrieve< kernel::Positions >() );
-            if( position )
-            {
-                position->Move( point );
-                draggingPoint_ = point;
-            }
-            return true;
+            position->Move( point );
+            draggingPoint_ = point;
         }
+        return true;
     }
     return gui::AgentsLayer::HandleMoveDragEvent( event, point );
 }
@@ -252,52 +203,46 @@ bool AgentsLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Po
 // -----------------------------------------------------------------------------
 bool AgentsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& point )
 {
-    if( AgentPositions* position = gui::ValuedDragObject::GetValue< AgentPositions >( event ) )
+    AgentPositions* positions = dnd::FindData< AgentPositions >( event );
+    if( positions && selectedAgent_)
     {
-        if( !selectedAgent_ )
-            return false;
         draggingPoint_.Set( 0, 0 );
         draggingOffset_.Set( 0, 0 );
         return true;
     }
-    if( const AgentType* droppedItem = gui::ValuedDragObject::GetValue< const AgentType >( event ) )
+    const kernel::AgentType* agentType = dnd::FindData< kernel::AgentType >( event );
+    if( agentType && selectedAutomat_ )
     {
-        if( !selectedAutomat_ )
-            return false;
-        if( !IsValid( *selectedAutomat_, *droppedItem ) )
+        if( !IsValid( *selectedAutomat_, *agentType ) )
         {
             QMessageBox::warning( 0, tools::translate( "Application", "SWORD" ), tools::translate( "AgentsLayer", "Logistic units can not be placed under a non logistic automat" ) );
             return false;
         }
-
-        model_.agents_.CreateAgent( *selectedAutomat_.ConstCast(), *droppedItem, point );
+        model_.agents_.CreateAgent( *selectedAutomat_.ConstCast(), *agentType, point );
         return true;
     }
-    if( const AutomatType* droppedItem = gui::ValuedDragObject::GetValue< const AutomatType >( event ) )
+    const kernel::AutomatType* automatType = dnd::FindData< kernel::AutomatType >( event );
+    if( automatType && ( selectedFormation_ || selectedAutomat_ ) )
     {
-        if( !selectedFormation_ && !selectedAutomat_ )
-            return false;
-        Entity_ABC* selectedEntity = selectedFormation_.ConstCast();
+        kernel::Entity_ABC* selectedEntity = selectedFormation_.ConstCast();
         if( !selectedEntity )
             selectedEntity = selectedAutomat_.ConstCast();
-        model_.agents_.CreateAutomat( *selectedEntity, *droppedItem, point );
+        model_.agents_.CreateAutomat( *selectedEntity, *automatType, point );
         return true;
     }
-    if( const HierarchyTemplate* droppedItem = gui::ValuedDragObject::GetValue< const HierarchyTemplate >( event ) )
+    const HierarchyTemplate* model = dnd::FindData< HierarchyTemplate >( event );
+    if( model && ( selectedFormation_ || selectedTeam_ || selectedAutomat_ ) )
     {
-        if( !selectedFormation_ && !selectedTeam_ && !selectedAutomat_ )
-            return false;
         if( selectedTeam_ )
-            droppedItem->Instanciate( *selectedTeam_.ConstCast(), point );
+            model->Instanciate( *selectedTeam_.ConstCast(), point );
         else if( selectedFormation_ )
-            droppedItem->Instanciate( *selectedFormation_.ConstCast(), point );
+            model->Instanciate( *selectedFormation_.ConstCast(), point );
         else
-            droppedItem->Instanciate( *selectedAutomat_.ConstCast(), point );
+            model->Instanciate( *selectedAutomat_.ConstCast(), point );
         return true;
     }
-    else if( kernel::Entity_ABC* entity = gui::ValuedDragObject::GetValue< kernel::Entity_ABC >( event ) )
-        if( ( dynamic_cast< kernel::Agent_ABC* >( entity) || dynamic_cast< kernel::Automat_ABC* >( entity) || dynamic_cast< kernel::Formation_ABC* >( entity) ) && world_.IsInside( point ) )
-            oldPosition_ = geometry::Point2f();
+    if( dnd::FindSafeEntityData< kernel::Agent_ABC, kernel::Automat_ABC, kernel::Formation_ABC >( event ) )
+        oldPosition_ = geometry::Point2f();
     return false;
 }
 
@@ -361,12 +306,11 @@ bool AgentsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f&
     bool result = gui::AgentsLayer::HandleMousePress( event, point );
     if( ( event->button() & Qt::LeftButton ) != 0 && event->state() == Qt::NoButton && IsEligibleForDrag( point ) )
     {
-        if( const AgentPositions* pos = static_cast< const AgentPositions* >( selectedAgent_->Retrieve< Positions >() ) )
+        if( const AgentPositions* pos = static_cast< const AgentPositions* >( selectedAgent_->Retrieve< kernel::Positions >() ) )
         {
             draggingPoint_ = point;
             draggingOffset_ = pos->GetPosition( true ) - point.ToVector();
-            Q3DragObject* drag = new gui::ValuedDragObject( pos, dynamic_cast< QWidget* >( parent() ) );
-            drag->dragMove();
+            dnd::CreateDragObject( pos, dummy_.get() );
         }
     }
     return result;

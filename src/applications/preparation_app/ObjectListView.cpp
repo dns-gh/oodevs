@@ -11,40 +11,40 @@
 #include "ObjectListView.h"
 #include "ModelBuilder.h"
 #include "PreparationProfile.h"
-#include "clients_gui/ValuedDragObject.h"
+#include "clients_gui/DragAndDropHelpers.h"
 #include "clients_gui/ValuedListItem.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/tools.h"
 #include "preparation/AltitudeModifierAttribute.h"
 #include "preparation/FloodAttribute.h"
 
-namespace
-{
-    class ListValuedDragObject : public gui::ValuedDragObject
-    {
-    public:
-        ListValuedDragObject( const kernel::Entity_ABC* entity, QWidget* dragSource = 0 )
-            : ValuedDragObject( entity, dragSource )
-            , entity_( entity )
-        {
-            if( entity_ )
-                if( const AltitudeModifierAttribute* attribute = entity_->Retrieve< AltitudeModifierAttribute >() )
-                    attribute->BeginDrag();
-        }
-        virtual ~ListValuedDragObject()
-        {
-            if( entity_)
-            {
-                if( const AltitudeModifierAttribute* attribute = entity_->Retrieve< AltitudeModifierAttribute >() )
-                    attribute->EndDrag();
-                if( const FloodAttribute* flood = entity_->Retrieve< FloodAttribute >() )
-                    flood->EndDrag();
-            }
-        }
-    private:
-        const kernel::Entity_ABC* entity_;
-    };
-}
+// namespace
+// {
+//     class ListValuedDragObject : public gui::ValuedDragObject
+//     {
+//     public:
+//         ListValuedDragObject( const kernel::Entity_ABC* entity, QWidget* dragSource = 0 )
+//             : ValuedDragObject( entity, dragSource )
+//             , entity_( entity )
+//         {
+//             if( entity_ )
+//                 if( const AltitudeModifierAttribute* attribute = entity_->Retrieve< AltitudeModifierAttribute >() )
+//                     attribute->BeginDrag();
+//         }
+//         virtual ~ListValuedDragObject()
+//         {
+//             if( entity_)
+//             {
+//                 if( const AltitudeModifierAttribute* attribute = entity_->Retrieve< AltitudeModifierAttribute >() )
+//                     attribute->EndDrag();
+//                 if( const FloodAttribute* flood = entity_->Retrieve< FloodAttribute >() )
+//                     flood->EndDrag();
+//             }
+//         }
+//     private:
+//         const kernel::Entity_ABC* entity_;
+//     };
+// }
 
 // -----------------------------------------------------------------------------
 // Name: ObjectListView constructor
@@ -75,11 +75,12 @@ Q3DragObject* ObjectListView::dragObject()
 {
     if( IsDragAndDropLocked() )
         return 0;
-    gui::ObjectListView::dragObject();
     gui::ValuedListItem* pItem = static_cast< gui::ValuedListItem* >( selectedItem() );
     if( !pItem )
         return 0;
-    return new ListValuedDragObject( pItem->GetValue< const kernel::Entity_ABC >(), this );
+    if( kernel::Object_ABC* obj = static_cast< kernel::Object_ABC* >( pItem->GetValue< kernel::Entity_ABC >() ) )
+        dnd::CreateSafeDragObject( obj, this, controllers_ );
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

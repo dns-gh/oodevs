@@ -21,7 +21,6 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Options.h"
-#include "clients_gui/ValuedDragObject.h" // LTO
 #include "clients_gui/ValuedListItem.h" // LTO
 #include "preparation/AutomatCommunications.h"
 #include "preparation/KnowledgeGroupCommunications.h" // LTO

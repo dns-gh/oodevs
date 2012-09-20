@@ -51,9 +51,9 @@ private:
     //@{
     kernel::SafePointer< kernel::Object_ABC > selected_;
     const kernel::GlTools_ABC& tools_;
-    std::auto_ptr< QWidget > dummy_;
     geometry::Point2f draggingPoint_;
     geometry::Point2f oldPosition_;
+    std::auto_ptr< QWidget > dummy_;
     //@}
 };
 

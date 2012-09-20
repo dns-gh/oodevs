@@ -11,9 +11,9 @@
 #include "AfterActionRequestList.h"
 #include "moc_AfterActionRequestList.cpp"
 #include "clients_kernel/Controllers.h"
+#include "clients_gui/DragAndDropHelpers.h"
 #include "clients_gui/ItemFactory_ABC.h"
 #include "clients_gui/ListItemToolTip.h"
-#include "clients_gui/ValuedDragObject.h"
 #include "gaming/IndicatorRequest.h"
 #include "gaming/Simulation.h"
 #include "IndicatorPlotFactory.h"
@@ -38,8 +38,9 @@ namespace
             ValuedListItem* item = static_cast< ValuedListItem* >( selectedItem() );
             if( !item )
                 return 0;
-            const IndicatorRequest* request = item->GetValue< const IndicatorRequest >();
-            return new ValuedDragObject( request, this );
+            IndicatorRequest* request = item->GetValue< IndicatorRequest >();
+            dnd::CreateDragObject( request, this );
+            return 0;
         }
     };
 }

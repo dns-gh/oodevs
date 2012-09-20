@@ -89,6 +89,15 @@ void ObjectTreeView::NotifyDeleted( const kernel::Entity_ABC& entity )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ObjectTreeView::MimeTypes
+// Created: JSR 2012-09-18
+// -----------------------------------------------------------------------------
+QStringList ObjectTreeView::MimeTypes() const
+{
+    return QStringList();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ObjectTreeView::IsTypeRejected
 // Created: JSR 2012-09-13
 // -----------------------------------------------------------------------------

@@ -46,8 +46,7 @@ void EntityTreeView< Entity >::NotifyCreated( const Entity& entity )
         teamItem = dataModel_.AddRootSafeItem( dataModel_.rowCount(), 0, team.GetName(), team.GetTooltip(), team, ItemSpecificFlags( team ) );
 
     dataModel_.AddChildSafeItem( teamItem, teamItem->rowCount(), 0, entity.GetName(), entity.GetTooltip(), entity, ItemSpecificFlags( entity ) );
-    //popItem->SetNamed( static_cast< const Entity_ABC& >( inhabitant ) );
-    //popItem->setDragEnabled( true );
+
 }
 
 // -----------------------------------------------------------------------------

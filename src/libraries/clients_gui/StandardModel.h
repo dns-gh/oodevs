@@ -49,7 +49,6 @@ public:
     //@{
     static const QString showValue_;
     static const QString hideValue_;
-    static const QString mimeTypeStr_;
     //@}
 
 signals:

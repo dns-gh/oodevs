@@ -9,17 +9,13 @@
 
 #include "gaming_app_pch.h"
 #include "FormationLayer.h"
-#include "actions/AutomatCreationListener.h"
 #include "actions/Action_ABC.h"
 #include "actions/ActionsModel.h"
 #include "actions/ActionTiming.h"
 #include "actions/ActionTasker.h"
-#include "clients_gui/ValuedDragObject.h"
+#include "clients_gui/DragAndDropHelpers.h"
 #include "clients_kernel/PopulationPrototype.h"
 #include "gaming/AgentServerMsgMgr.h"
-#include "gaming/StaticModel.h"
-#include "protocol/SimulationSenders.h"
-#include <ctime>
 
 // -----------------------------------------------------------------------------
 // Name: FormationLayer constructor
@@ -55,8 +51,7 @@ FormationLayer::~FormationLayer()
 // -----------------------------------------------------------------------------
 bool FormationLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& /*point*/ ) const
 {
-    return selected_ && ( gui::ValuedDragObject::Provides< const kernel::AutomatType >( event )
-                         || gui::ValuedDragObject::Provides< const kernel::PopulationPrototype >( event ) );
+    return selected_ && ( dnd::HasData< const kernel::AutomatType >( event ) || dnd::HasData< const kernel::PopulationPrototype >( event ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,12 +62,12 @@ bool FormationLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f
 {
     if( selected_ )
     {
-        if( const kernel::AutomatType* droppedItem = gui::ValuedDragObject::GetValue< const kernel::AutomatType >( event ) )
+        if( const kernel::AutomatType* droppedItem = dnd::FindData< kernel::AutomatType >( event ) )
         {
             RequestCreation( point, *droppedItem );
             return true;
         }
-        if( const kernel::PopulationPrototype* droppedItem = gui::ValuedDragObject::GetValue< const kernel::PopulationPrototype >( event ) )
+        if( const kernel::PopulationPrototype* droppedItem = dnd::FindData< kernel::PopulationPrototype >( event ) )
         {
             RequestCreation( point, *droppedItem );
             return true;
@@ -101,11 +96,7 @@ void FormationLayer::RequestCreation( const geometry::Point2f& point, const kern
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new actions::ActionTasker( selected_, false ) );
     action->Polish();
-    int context = (int)clock();
-//    boost::shared_ptr< sword::Listener > listener( new AutomatCreationListener( point, type, context,
-//        agentsModel_, controllers_.controller_, actionsModel_, simulation_ ) );
-//    messageManager_.RegisterListener( listener );
-    actionsModel_.Publish( *action, context );
+    actionsModel_.Publish( *action, clock() );
 }
 
 // -----------------------------------------------------------------------------

@@ -18,7 +18,6 @@
 #include "clients_kernel/AutomatComposition.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/ComponentType.h"
-#include "ValuedDragObject.h"
 #include "resources.h"
 #include "Tools.h"
 
@@ -299,6 +298,7 @@ void UnitListView::Display( const AutomatType& type, ValuedListItem* item )
         pcItem->setPixmap( 0, MAKE_PIXMAP( commandpost ) );
 }
 
+#include "DragAndDropHelpers.h"
 // -----------------------------------------------------------------------------
 // Name: UnitListView::dragObject
 // Created: SBO 2006-04-18
@@ -308,10 +308,9 @@ Q3DragObject* UnitListView::dragObject()
     ValuedListItem* pItem = dynamic_cast< ValuedListItem* >( selectedItem() );
     if( !pItem )
         return 0;
-
     if( pItem->IsA< const AgentType >() )
-        return new ValuedDragObject( pItem->GetValueNoCheck< const AgentType >(), this );
+        dnd::CreateDragObject( pItem->GetValueNoCheck< AgentType >(), this );
     else if( pItem->IsA< const AutomatType >() )
-        return new ValuedDragObject( pItem->GetValueNoCheck< const AutomatType >(), this );
+        dnd::CreateDragObject( pItem->GetValueNoCheck< AutomatType >(), this );
     return 0;
 }

@@ -18,7 +18,6 @@ namespace kernel
     class AgentType;
     class AutomatType;
     class Automat_ABC;
-    class CoordinateConverter_ABC;
     class Time_ABC;
 }
 

@@ -15,6 +15,7 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Ghost_ABC.h"
+#include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/AutomatType.h"
@@ -101,28 +102,43 @@ void HierarchyTreeView_ABC::InternalNotifyCreated( const kernel::Hierarchies& hi
         UpdateItem( *entityItem, entity );
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: HierarchyTreeView_ABC::AddItemIfPossible
+// Created: JSR 2012-09-18
+// -----------------------------------------------------------------------------
+template< typename Entity >
+bool HierarchyTreeView_ABC::AddItemIfPossible( const kernel::Entity_ABC& entity, QStandardItem* parent, QStandardItem*& ret )
+{
+    if( entity.GetTypeName() == Entity::typeName_ )
+    {
+        if( !parent )
+            parent = dataModel_.invisibleRootItem();
+        int row = parent->rowCount();
+        ret = dataModel_.AddChildSafeItem( parent, row, 0, entity.GetName(), entity.GetTooltip(), static_cast< const Entity& >( entity ), Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled );
+        for( int col = 1; col < dataModel_.columnCount(); ++col )
+            dataModel_.AddChildItem( parent, row, col );
+        return true;
+    }
+    return false;
+}
+
 // -----------------------------------------------------------------------------
 // Name: HierarchyTreeView_ABC::AddItem
 // Created: JSR 2012-09-12
 // -----------------------------------------------------------------------------
 QStandardItem* HierarchyTreeView_ABC::AddItem( QStandardItem* parent, const kernel::Entity_ABC& entity )
 {
-    QStandardItem* ret;
-    if( parent )
-    {
-        int row = parent->rowCount();
-        ret = dataModel_.AddChildSafeItem( parent, row, 0, entity.GetName(), entity.GetTooltip(), entity, ItemSpecificFlags( entity ) );
-        for( int col = 1; col < dataModel_.columnCount(); ++col )
-            dataModel_.AddChildItem( parent, row, col );
-    }
-    else
-    {
-        int row = dataModel_.rowCount();
-        ret = dataModel_.AddRootSafeItem( row, 0, entity.GetName(), entity.GetTooltip(), entity, ItemSpecificFlags( entity ) );
-        for( int col = 1; col < dataModel_.columnCount(); ++col )
-            dataModel_.AddRootItem( row, col );
-    }
-    return ret;
+    QStandardItem* ret = 0;
+    if( AddItemIfPossible< kernel::Agent_ABC >( entity, parent, ret ) ||
+        AddItemIfPossible< kernel::Automat_ABC >( entity, parent, ret ) ||
+        AddItemIfPossible< kernel::Formation_ABC >( entity, parent, ret ) ||
+        AddItemIfPossible< kernel::Team_ABC >( entity, parent, ret ) ||
+        AddItemIfPossible< kernel::Ghost_ABC >( entity, parent, ret ) ||
+        AddItemIfPossible< kernel::KnowledgeGroup_ABC >( entity, parent, ret ) )
+        return ret;
+    assert( false );
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -207,15 +223,6 @@ const QPixmap* HierarchyTreeView_ABC::GetDecoration( const QModelIndex &index )
 }
 
 // -----------------------------------------------------------------------------
-// Name: HierarchyTreeView_ABC::ItemSpecificFlags
-// Created: JSR 2012-08-31
-// -----------------------------------------------------------------------------
-Qt::ItemFlags HierarchyTreeView_ABC::ItemSpecificFlags( const kernel::Entity_ABC& /*entity*/ ) const
-{
-    return Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled;
-}
-
-// -----------------------------------------------------------------------------
 // Name: HierarchyTreeView_ABC::CanChangeSuperior
 // Created: JSR 2012-09-07
 // -----------------------------------------------------------------------------
@@ -225,13 +232,16 @@ bool HierarchyTreeView_ABC::CanChangeSuperior( const kernel::Entity_ABC& /*entit
 }
 
 // -----------------------------------------------------------------------------
-// Name: HierarchyTreeView_ABC::AdditionalMimeTypes
+// Name: HierarchyTreeView_ABC::MimeTypes
 // Created: JSR 2012-09-07
 // -----------------------------------------------------------------------------
-QStringList HierarchyTreeView_ABC::AdditionalMimeTypes() const
+QStringList HierarchyTreeView_ABC::MimeTypes() const
 {
     QStringList l;
-    l << typeid( kernel::AgentType ).name() << typeid( kernel::AutomatType ).name();
+    l << typeid( kernel::Agent_ABC ).name() << typeid( kernel::Automat_ABC ).name()
+      << typeid( kernel::Formation_ABC ).name() << typeid( kernel::Ghost_ABC ).name()
+      << typeid( kernel::KnowledgeGroup_ABC ).name() << typeid( kernel::AgentType ).name()
+      << typeid( kernel::AutomatType ).name();
     return l;
 }
 
@@ -247,35 +257,33 @@ void HierarchyTreeView_ABC::Drop( const QString& mimeType, void* data, QStandard
     if( !entityTarget )
         return;
 
-    if( mimeType == StandardModel::mimeTypeStr_ )
+    if( mimeType == typeid( kernel::AgentType ).name() )
     {
-        kernel::SafePointer< const kernel::Entity_ABC >* safePtr = reinterpret_cast< kernel::SafePointer< const kernel::Entity_ABC >* >( data );
-        if( !safePtr || !*safePtr )
-            return;
-        const kernel::Entity_ABC* entity = *safePtr;
-        if( const kernel::Agent_ABC* agent = dynamic_cast< const kernel::Agent_ABC* >( entity ) )
-            Drop( *agent, *entityTarget );
-        else if( const kernel::Automat_ABC* automat = dynamic_cast< const kernel::Automat_ABC* >( entity ) )
-            Drop( *automat, *entityTarget );
-        else if( const kernel::Formation_ABC* formation = dynamic_cast< const kernel::Formation_ABC* >( entity ) )
-            Drop( *formation, *entityTarget );
-        else if( const kernel::Ghost_ABC* ghost = dynamic_cast< const kernel::Ghost_ABC* >( entity ) )
-            Drop( *ghost, *entityTarget );
-        else if( const kernel::KnowledgeGroup_ABC* knowledgeGroup = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( entity ) )
-            Drop( *knowledgeGroup, *entityTarget );
-    }
-    else if( mimeType == typeid( kernel::AgentType ).name() )
-    {
-
-        const kernel::AgentType* type = *reinterpret_cast< const kernel::AgentType** >( data );
+        const kernel::AgentType* type = reinterpret_cast< kernel::AgentType* >( data );
         if( type )
             Drop( *type, *entityTarget );
     }
     else if( mimeType == typeid( kernel::AutomatType ).name() )
     {
-        const kernel::AutomatType* type = *reinterpret_cast< const kernel::AutomatType** >( data );
+        const kernel::AutomatType* type = reinterpret_cast< kernel::AutomatType* >( data );
         if( type )
             Drop( *type, *entityTarget );
+    }
+    else
+    {
+        kernel::SafePointer< const kernel::Entity_ABC >* safePtr = reinterpret_cast< kernel::SafePointer< const kernel::Entity_ABC >* >( data );
+        if( !safePtr || !*safePtr )
+            return;
+        if( mimeType == typeid( kernel::Agent_ABC ).name() )
+            Drop( static_cast< const kernel::Agent_ABC& >( **safePtr ), *entityTarget );
+        else if( mimeType == typeid( kernel::Automat_ABC ).name() )
+            Drop( static_cast< const kernel::Automat_ABC& >( **safePtr ), *entityTarget );
+        else if( mimeType == typeid( kernel::Formation_ABC ).name() )
+            Drop( static_cast< const kernel::Formation_ABC& >( **safePtr ), *entityTarget );
+        else if( mimeType == typeid( kernel::Ghost_ABC ).name() )
+            Drop( static_cast< const kernel::Ghost_ABC& >( **safePtr ), *entityTarget );
+        else if( mimeType == typeid( kernel::KnowledgeGroup_ABC ).name() )
+            Drop( static_cast< const kernel::KnowledgeGroup_ABC& >( **safePtr ), *entityTarget );
     }
 }
 
@@ -311,20 +319,7 @@ void HierarchyTreeView_ABC::dragMoveEvent( QDragMoveEvent *pEvent )
         {
             int ptr = 0;
             stream >> ptr;
-            if( format == StandardModel::mimeTypeStr_ )
-            {
-                kernel::SafePointer< const kernel::Entity_ABC >* safePtr = reinterpret_cast< kernel::SafePointer< const kernel::Entity_ABC >* >( ptr );
-                if( safePtr && *safePtr )
-                {
-                    const kernel::Entity_ABC* entity = *safePtr;
-                    if( entity->GetId() != target->GetId() && CanChangeSuperior( *entity, *target ) )
-                    {
-                        pEvent->accept();
-                        return;
-                    }
-                }
-            }
-            else if( format == typeid( kernel::AgentType ).name() )
+            if( format == typeid( kernel::AgentType ).name() )
             {
                 kernel::AgentType* type = reinterpret_cast< kernel::AgentType* >( ptr );
                 if( type )
@@ -348,6 +343,19 @@ void HierarchyTreeView_ABC::dragMoveEvent( QDragMoveEvent *pEvent )
                             pEvent->accept();
                             return;
                         }
+                }
+            }
+            else
+            {
+                kernel::SafePointer< const kernel::Entity_ABC >* safePtr = reinterpret_cast< kernel::SafePointer< const kernel::Entity_ABC >* >( ptr );
+                if( safePtr && *safePtr )
+                {
+                    const kernel::Entity_ABC* entity = *safePtr;
+                    if( entity->GetId() != target->GetId() && CanChangeSuperior( *entity, *target ) )
+                    {
+                        pEvent->accept();
+                        return;
+                    }
                 }
             }
         }

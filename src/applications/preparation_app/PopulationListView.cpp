@@ -12,7 +12,7 @@
 #include "moc_PopulationListView.cpp"
 #include "PreparationProfile.h"
 #include "ModelBuilder.h"
-#include "clients_gui/ValuedDragObject.h"
+#include "clients_gui/DragAndDropHelpers.h"
 #include "preparation/PopulationHierarchies.h"
 
 // -----------------------------------------------------------------------------
@@ -96,7 +96,8 @@ Q3DragObject* PopulationListView::dragObject()
         gui::ValuedListItem* pItem = static_cast< gui::ValuedListItem* >( selectedItem() );
         if( !pItem )
             return 0;
-        return new gui::ValuedDragObject( pItem->GetValue< const kernel::Entity_ABC >(), this );
+        if( kernel::Population_ABC* pop = dynamic_cast< kernel::Population_ABC* >( pItem->GetValue< kernel::Entity_ABC >() ) )
+            dnd::CreateSafeDragObject( pop, this, controllers_ );
     }
     return 0;
 }
@@ -123,7 +124,7 @@ void PopulationListView::OnContextMenuRequested( Q3ListViewItem* item, const QPo
 void PopulationListView::viewportDragEnterEvent( QDragEnterEvent* pEvent )
 {
     EntityListView::viewportDragEnterEvent( pEvent );
-    pEvent->accept( gui::ValuedDragObject::Provides< const kernel::Entity_ABC >( pEvent ) );
+    pEvent->accept( dnd::HasData< kernel::Population_ABC >( pEvent ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -133,7 +134,7 @@ void PopulationListView::viewportDragEnterEvent( QDragEnterEvent* pEvent )
 void PopulationListView::viewportDragMoveEvent( QDragMoveEvent *pEvent )
 {
     EntityListView::viewportDragMoveEvent( pEvent );
-    pEvent->accept( gui::ValuedDragObject::Provides< const kernel::Entity_ABC >( pEvent ) );
+    pEvent->accept( dnd::HasData< kernel::Population_ABC >( pEvent ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -143,7 +144,7 @@ void PopulationListView::viewportDragMoveEvent( QDragMoveEvent *pEvent )
 void PopulationListView::viewportDropEvent( QDropEvent* pEvent )
 {
     EntityListView::viewportDropEvent( pEvent );
-    const kernel::Population_ABC* entity = dynamic_cast< const kernel::Population_ABC* >( gui::ValuedDragObject::GetValue< const kernel::Entity_ABC >( pEvent ) );
+    const kernel::Population_ABC* entity = dnd::FindSafeData< kernel::Population_ABC >( pEvent );
     if( entity )
     {
         QPoint position = viewport()->mapFromParent( pEvent->pos() );

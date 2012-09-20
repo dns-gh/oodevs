@@ -9,15 +9,13 @@
 
 #include "preparation_app_pch.h"
 #include "PopulationsLayer.h"
+#include "clients_gui/DragAndDropHelpers.h"
 #include "clients_kernel/PopulationPrototype.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
 #include "preparation/Model.h"
 #include "preparation/AgentsModel.h"
 #include "preparation/PopulationPositions.h"
-#include "clients_gui/ValuedDragObject.h"
-
-using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: PopulationsLayer constructor
@@ -49,9 +47,9 @@ PopulationsLayer::~PopulationsLayer()
 // -----------------------------------------------------------------------------
 bool PopulationsLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& ) const
 {
-    return ( gui::ValuedDragObject::Provides< const PopulationPrototype >( event ) && selectedEntity_ )
-        || ( gui::ValuedDragObject::Provides< const PopulationPositions >( event ) && selectedPopulation_ )
-        || ( gui::ValuedDragObject::Provides< const Entity_ABC >( event ) && selectedPopulation_ );
+    return ( dnd::HasData< kernel::PopulationPrototype >( event ) && selectedEntity_ ) ||
+           ( dnd::HasData< PopulationPositions >( event ) && selectedPopulation_ ) ||
+           ( dnd::HasData< kernel::Population_ABC >( event ) && selectedPopulation_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,11 +59,9 @@ bool PopulationsLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& 
 bool PopulationsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& point )
 {
     oldPosition_ = geometry::Point2f();
-    if( kernel::Population_ABC* entity = dynamic_cast< kernel::Population_ABC* >( gui::ValuedDragObject::GetValue< kernel::Entity_ABC >( event ) ) )
-    {
-        PopulationPositions* position = static_cast< PopulationPositions* >( entity->Retrieve< kernel::Positions >() );
-        oldPosition_ = position->GetPosition( true );
-    }
+    if( dnd::HasData< kernel::Population_ABC >( event ) && selectedPopulation_ )
+        if( const kernel::Positions* position = selectedPopulation_->Retrieve< kernel::Positions >() )
+            oldPosition_ = position->GetPosition( true );
     return gui::PopulationsLayer::HandleEnterDragEvent( event, point );
 }
 
@@ -75,27 +71,18 @@ bool PopulationsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geome
 // -----------------------------------------------------------------------------
 bool PopulationsLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point )
 {
-    if( selectedPopulation_ )
+    if( selectedPopulation_ && ( dnd::HasData< kernel::Population_ABC >( event ) || dnd::HasData< PopulationPositions >( event ) ) )
     {
-        PopulationPositions* positions = gui::ValuedDragObject::GetValue< PopulationPositions >( event );
-        if( !positions )
+        if( kernel::Moveable_ABC* positions = static_cast< kernel::Moveable_ABC* >( selectedPopulation_.ConstCast()->Retrieve< kernel::Positions >() ) )
         {
-            if( Entity_ABC* entity = gui::ValuedDragObject::GetValue< Entity_ABC >( event ) )
-                positions = static_cast< PopulationPositions* >( selectedPopulation_.ConstCast()->Retrieve< Positions >() );
-        }
-        if( positions )
-        {
-            if( draggingPoint_.Distance( point ) >= 5.f * tools_.Pixels( point ) )
+            const geometry::Point2f newPosition = point + draggingOffset_.ToVector();
+            if( draggingPoint_.Distance( point ) >= 5.f * tools_.Pixels( point ) && world_.IsInside( newPosition ) )
             {
-                const geometry::Point2f newPosition = point + draggingOffset_.ToVector();
-                if( world_.IsInside( newPosition ) )
-                {
-                    positions->Move( newPosition );
-                    draggingPoint_ = point;
-                }
+                positions->Move( newPosition );
+                draggingPoint_ = point;
             }
-            return true;
         }
+        return true;
     }
     return gui::PopulationsLayer::HandleMoveDragEvent( event, point );
 }
@@ -108,7 +95,7 @@ bool PopulationsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point
 {
     if( selectedEntity_ )
     {
-        if( const PopulationPrototype* droppedItem = gui::ValuedDragObject::GetValue< const kernel::PopulationPrototype >( event ) )
+        if( const kernel::PopulationPrototype* droppedItem = dnd::FindData< kernel::PopulationPrototype >( event ) )
         {
             model_.agents_.CreatePopulation( *selectedEntity_.ConstCast(), *(droppedItem->type_), droppedItem->number_, point );
             return true;
@@ -116,16 +103,10 @@ bool PopulationsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point
     }
     else if( selectedPopulation_ )
     {
-        PopulationPositions* positions = gui::ValuedDragObject::GetValue< PopulationPositions >( event );
-        if( !positions )
-        {
-            if( kernel::Population_ABC* entity = dynamic_cast< kernel::Population_ABC* >( gui::ValuedDragObject::GetValue< kernel::Entity_ABC >( event ) ) )
-            {
-                positions = static_cast< PopulationPositions* >( selectedPopulation_.ConstCast()->Retrieve< Positions >() );
-                oldPosition_ = geometry::Point2f();
-            }
-        }
-        if( positions )
+        bool hasPopulation = dnd::HasData< kernel::Population_ABC >( event );
+        if( hasPopulation )
+            oldPosition_ = geometry::Point2f();
+        if( hasPopulation || dnd::HasData< PopulationPositions >( event ) )
         {
             draggingPoint_.Set( 0, 0 );
             draggingOffset_.Set( 0, 0 );
@@ -143,7 +124,7 @@ bool PopulationsLayer::HandleLeaveDragEvent( QDragLeaveEvent* /*event*/ )
 {
     if( selectedPopulation_ && !oldPosition_.IsZero() )
     {
-        static_cast< PopulationPositions* >( selectedPopulation_.ConstCast()->Retrieve< kernel::Positions >() )->Move( oldPosition_ );
+        static_cast< kernel::Moveable_ABC* >( selectedPopulation_.ConstCast()->Retrieve< kernel::Positions >() )->Move( oldPosition_ );
         oldPosition_ = geometry::Point2f();
         return true;
     }
@@ -158,7 +139,7 @@ bool PopulationsLayer::HandleKeyPress( QKeyEvent* key )
 {
     if( key->key() == Qt::Key_Delete && selectedPopulation_ )
     {
-        delete (const Population_ABC*)selectedPopulation_;
+        delete static_cast< const kernel::Population_ABC* >( selectedPopulation_ );
         return true;
     }
     return false;
@@ -212,12 +193,11 @@ bool PopulationsLayer::HandleMousePress( QMouseEvent* event, const geometry::Poi
     bool result = gui::PopulationsLayer::HandleMousePress( event, point );
     if( ( event->button() & Qt::LeftButton ) != 0 && event->state() == Qt::NoButton && IsEligibleForDrag( point ) )
     {
-        if( const PopulationPositions* pos = static_cast< const PopulationPositions* >( selectedPopulation_->Retrieve< Positions >() ) )
+        if( const PopulationPositions* pos = static_cast< const PopulationPositions* >( selectedPopulation_->Retrieve< kernel::Positions >() ) )
         {
             draggingPoint_ = point;
             draggingOffset_ = pos->GetPosition( true ) - point.ToVector();
-            Q3DragObject* drag = new gui::ValuedDragObject( pos, dummy_.get() );
-            drag->dragMove();
+            dnd::CreateDragObject( pos, dummy_.get() );
         }
     }
     return result;

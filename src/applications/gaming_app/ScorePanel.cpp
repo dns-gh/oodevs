@@ -14,9 +14,9 @@
 #include "IndicatorPlot.h"
 #include "IndicatorPlotFactory.h"
 #include "IndicatorReportDialog.h"
+#include "clients_gui/DragAndDropHelpers.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Tools.h"
-#include "clients_gui/ValuedDragObject.h"
 #include "gaming/IndicatorRequest.h"
 #include "gaming/Score.h"
 #include "gaming/ScoreModel.h"
@@ -35,8 +35,9 @@ namespace
             if( gui::ValuedListItem* item = static_cast< gui::ValuedListItem* >( selectedItem() ) )
                 if( Score* score = item->GetValue< Score >() )
                 {
-                    const IndicatorRequest& request = model_.CreateRequest( *score );
-                    return new gui::ValuedDragObject( &request, this );
+                    IndicatorRequest& request = model_.CreateRequest( *score );
+                    dnd::CreateDragObject( &request, this );
+                    return 0;
                 }
             return 0;
         }

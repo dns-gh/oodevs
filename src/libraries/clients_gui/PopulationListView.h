@@ -48,7 +48,7 @@ protected:
     virtual bool IsTypeRejected( const kernel::Entity_ABC& entity ) const;
     //@}
 
-private:
+protected:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;

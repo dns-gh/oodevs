@@ -9,7 +9,7 @@
 
 #include "preparation_app_pch.h"
 #include "ObjectsLayer.h"
-#include "clients_gui/ValuedDragObject.h"
+#include "clients_gui/DragAndDropHelpers.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Object_ABC.h"
 #include "preparation/AltitudeModifierAttribute.h"
@@ -18,18 +18,24 @@
 
 namespace
 {
-    class LayerValuedDragObject : public gui::ValuedDragObject
+    class LayerDrag : public QDrag
     {
     public:
-        LayerValuedDragObject( const ObjectPositions* pos, const kernel::Entity_ABC* entity, QWidget* dragSource = 0 )
-            : ValuedDragObject( pos, dragSource )
-            , entity_    ( entity )
+        LayerDrag( const ObjectPositions* pos, const kernel::Entity_ABC* entity, QWidget* dragSource )
+            : QDrag( dragSource )
+            , entity_( entity )
         {
+            QMimeData* mimeData = new QMimeData;
+            QByteArray encodedData;
+            QDataStream stream( &encodedData, QIODevice::WriteOnly );
+            stream << reinterpret_cast< unsigned int >( pos );
+            mimeData->setData( QString( typeid( ObjectPositions ).name() ), encodedData );
+            setMimeData( mimeData );
             if( entity_ )
                 if( const AltitudeModifierAttribute* attribute = entity_->Retrieve< AltitudeModifierAttribute >() )
                     attribute->BeginDrag();
         }
-        virtual ~LayerValuedDragObject()
+        virtual ~LayerDrag()
         {
             if( entity_)
             {
@@ -52,7 +58,7 @@ ObjectsLayer::ObjectsLayer( kernel::Controllers& controllers, const kernel::GlTo
     : gui::ObjectsLayer( controllers, tools, strategy, view, profile, picker )
     , selected_( controllers )
     , tools_   ( tools )
-    , dummy_   ( new QWidget )
+    , dummy_( new QWidget() )
 {
     // NOTHING
 }
@@ -74,7 +80,7 @@ bool ObjectsLayer::HandleKeyPress( QKeyEvent* key )
 {
     if( selected_ && key->key() == Qt::Key_Delete )
     {
-        delete (const kernel::Object_ABC*)selected_;
+        delete static_cast< const kernel::Object_ABC* >( selected_ );
         return true;
     }
     return false;
@@ -88,11 +94,7 @@ bool ObjectsLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& ) co
 {
     if( !selected_ )
         return false;
-    if( gui::ValuedDragObject::Provides< const ObjectPositions >( event ) )
-        return true;
-    if( kernel::Entity_ABC* entity = gui::ValuedDragObject::GetValue< kernel::Entity_ABC >( event ) )
-        return entity->GetTypeName() == kernel::Object_ABC::typeName_;
-    return false;
+    return dnd::HasData< ObjectPositions >( event ) || dnd::HasData< kernel::Object_ABC >( event );
 }
 
 // -----------------------------------------------------------------------------
@@ -102,10 +104,10 @@ bool ObjectsLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& ) co
 bool ObjectsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& point )
 {
     oldPosition_ = geometry::Point2f();
-    if( kernel::Object_ABC* entity = dynamic_cast< kernel::Object_ABC* >( gui::ValuedDragObject::GetValue< kernel::Entity_ABC >( event ) ) )
+    if( const kernel::Object_ABC* entity = dnd::FindSafeData< kernel::Object_ABC >( event ) )
     {
-        ObjectPositions* position = static_cast< ObjectPositions* >( entity->Retrieve< kernel::Positions >() );
-        oldPosition_ = position->GetBoundingBox().Center();
+        if( const kernel::Positions* position = entity->Retrieve< kernel::Positions >() )
+            oldPosition_ = position->GetBoundingBox().Center();
     }
     return gui::ObjectsLayer::HandleEnterDragEvent( event, point );
 }
@@ -116,23 +118,24 @@ bool ObjectsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry:
 // -----------------------------------------------------------------------------
 bool ObjectsLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point )
 {
-    if( ObjectPositions* position = gui::ValuedDragObject::GetValue< ObjectPositions >( event ) )
+    if( dnd::HasData< ObjectPositions >( event ) && selected_ )
     {
-        if( !selected_ )
-            return false;
-        if( draggingPoint_.Distance( point ) >= 5.f * tools_.Pixels( point ) )
+        if( ObjectPositions* position = static_cast< ObjectPositions* >( selected_.ConstCast()->Retrieve< kernel::Positions >() ) )
         {
-            const geometry::Vector2f translation( draggingPoint_, point );
-            const geometry::Rectangle2f boundingBox = position->GetBoundingBox() + translation;
-            if( boundingBox.Intersect( world_ ) == boundingBox )
+            if( draggingPoint_.Distance( point ) >= 5.f * tools_.Pixels( point ) )
             {
-                position->Translate( draggingPoint_, translation, 5.f * tools_.Pixels( point ) );
-                draggingPoint_ = point;
+                const geometry::Vector2f translation( draggingPoint_, point );
+                const geometry::Rectangle2f boundingBox = position->GetBoundingBox() + translation;
+                if( boundingBox.Intersect( world_ ) == boundingBox )
+                {
+                    position->Translate( draggingPoint_, translation, 5.f * tools_.Pixels( point ) );
+                    draggingPoint_ = point;
+                }
             }
         }
         return true;
     }
-    else if( kernel::Object_ABC* entity = dynamic_cast< kernel::Object_ABC* >( gui::ValuedDragObject::GetValue< kernel::Entity_ABC >( event ) ) )
+    if( kernel::Object_ABC* entity = dnd::FindSafeData< kernel::Object_ABC >( event ) )
     {
         ObjectPositions* position = static_cast< ObjectPositions* >( entity->Retrieve< kernel::Positions >() );
         const geometry::Point2f translation = point - position->GetBoundingBox().Center().ToVector();
@@ -153,12 +156,12 @@ bool ObjectsLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::P
 // -----------------------------------------------------------------------------
 bool ObjectsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& )
 {
-    if( selected_ && gui::ValuedDragObject::GetValue< ObjectPositions >( event ) )
+    if( dnd::HasData< ObjectPositions >( event ) && selected_ )
     {
         draggingPoint_.Set( 0, 0 );
         return true;
     }
-    else if( dynamic_cast< kernel::Object_ABC* >( gui::ValuedDragObject::GetValue< kernel::Entity_ABC >( event ) ) )
+    if( dnd::HasData< kernel::Object_ABC >( event ) )
         oldPosition_ = geometry::Point2f();
     return false;
 }
@@ -200,8 +203,8 @@ bool ObjectsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f
         if( const ObjectPositions* pos = static_cast< const ObjectPositions* >( selected_->Retrieve< kernel::Positions >() ) )
         {
             draggingPoint_ = point;
-            Q3DragObject* drag = new LayerValuedDragObject( pos, selected_, dummy_.get() );
-            drag->dragMove();
+            QDrag* drag = new LayerDrag( pos, selected_, dummy_.get() );
+            drag->exec();
         }
     }
     return result;

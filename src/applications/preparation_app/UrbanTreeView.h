@@ -63,6 +63,7 @@ private:
     virtual bool IsTypeRejected( const kernel::Entity_ABC& entity ) const;
     virtual bool LessThan( const QModelIndex& left, const QModelIndex& right, bool& valid ) const;
     const QPixmap* GetEntityPixmap( const kernel::Entity_ABC& entity );
+    virtual QStringList MimeTypes() const;
     virtual QMimeData* MimeData( const QModelIndexList& indexes, bool& overriden ) const;
     virtual void dragMoveEvent( QDragMoveEvent *pEvent );
     virtual void Drop( const QString& mimeType, void* data, QStandardItem& target );
@@ -73,6 +74,7 @@ private:
     //@{
     gui::SymbolIcons& symbols_;
     const StaticModel& staticModel_;
+    static const QString mimeType_;
     //@}
 };
 

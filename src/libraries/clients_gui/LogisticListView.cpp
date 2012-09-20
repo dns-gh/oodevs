@@ -17,7 +17,6 @@
 #include "ListView.h"
 #include "ListItemToolTip.h"
 #include "LongNameHelper.h"
-#include "ValuedDragObject.h"
 
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"

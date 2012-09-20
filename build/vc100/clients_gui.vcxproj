@@ -602,6 +602,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\libraries\clients_gui\DragAndDropHelpers.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\DragAndDropObserver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\EntityTreeView.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\EntityTreeView_ABC.h">
@@ -1119,7 +1120,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\UnitStateTable_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\clients_gui\ValuedDragObject.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\ValuedListItem.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\BaseDisplayer.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\CheckBoxDisplayer.h" />

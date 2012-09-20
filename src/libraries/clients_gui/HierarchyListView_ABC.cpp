@@ -12,10 +12,10 @@
 #include "clients_gui_pch.h"
 #include "HierarchyListView_ABC.h"
 #include "moc_HierarchyListView_ABC.cpp"
+#include "DragAndDropHelpers.h"
 #include "EntitySymbols.h"
 #include "Layer_ABC.h"
 #include "ListItemToolTip.h"
-#include "ValuedDragObject.h"
 #include "ValuedListItem.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/AutomatType.h"
@@ -313,6 +313,13 @@ void HierarchyListView_ABC::UpdateItem( ValuedListItem* root )
     }
 }
 
+// tmp
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "clients_kernel/Ghost_ABC.h"
+
 // -----------------------------------------------------------------------------
 // Name: HierarchyListView_ABC::dragObject
 // Created: SBO 2006-04-18
@@ -325,7 +332,19 @@ Q3DragObject* HierarchyListView_ABC::dragObject()
     ValuedListItem* pItem = static_cast< ValuedListItem* >( selectedItem() );
     if( !pItem )
         return 0;
-    return new ValuedDragObject( pItem->GetValue< const Entity_ABC >(), this );
+    // tmp
+    Entity_ABC* entity = pItem->GetValue< Entity_ABC >();
+    if( kernel::Agent_ABC* agent = dynamic_cast< kernel::Agent_ABC* >( entity ) )
+        dnd::CreateSafeDragObject( agent, this, controllers_ );
+    else if( kernel::Automat_ABC* automat = dynamic_cast< kernel::Automat_ABC* >( entity ) )
+        dnd::CreateSafeDragObject( automat, this, controllers_ );
+    else if( kernel::Formation_ABC* formation = dynamic_cast< kernel::Formation_ABC* >( entity ) )
+        dnd::CreateSafeDragObject( formation, this, controllers_ );
+    else if( kernel::KnowledgeGroup_ABC* kg = dynamic_cast< kernel::KnowledgeGroup_ABC* >( entity ) )
+        dnd::CreateSafeDragObject( kg, this, controllers_ );
+    else if( kernel::Ghost_ABC* g = dynamic_cast< kernel::Ghost_ABC* >( entity ) )
+        dnd::CreateSafeDragObject( g, this, controllers_ );
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -340,9 +359,13 @@ void HierarchyListView_ABC::viewportDragEnterEvent( QDragEnterEvent* pEvent )
         return;
     }
     ListView< HierarchyListView_ABC >::viewportDragEnterEvent( pEvent );
-    pEvent->accept( ValuedDragObject::Provides< const Entity_ABC >( pEvent ) ||
-                    ValuedDragObject::Provides< const AgentType >( pEvent ) ||
-                    ValuedDragObject::Provides< const AutomatType >( pEvent ) );
+    pEvent->accept( dnd::HasData< const Agent_ABC >( pEvent ) ||
+        dnd::HasData< Automat_ABC >( pEvent ) ||
+        dnd::HasData< Formation_ABC >( pEvent ) ||
+        dnd::HasData< KnowledgeGroup_ABC >( pEvent ) ||
+        dnd::HasData< Ghost_ABC >( pEvent ) ||
+        dnd::HasData< AgentType >( pEvent ) ||
+        dnd::HasData< AutomatType >( pEvent ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -357,22 +380,22 @@ void HierarchyListView_ABC::viewportDragMoveEvent( QDragMoveEvent* pEvent )
         return;
     }
     ListView< HierarchyListView_ABC >::viewportDragMoveEvent( pEvent );
-    if( const Entity_ABC* entity = gui::ValuedDragObject::GetValue< Entity_ABC >( pEvent ) )
+    if( const Entity_ABC* entity = dnd::FindSafeEntityData< Agent_ABC, Automat_ABC, Formation_ABC, Ghost_ABC, KnowledgeGroup_ABC >( pEvent ) )
     {
         QPoint position = viewport()->mapFromParent( pEvent->pos() );
-        pEvent->accept( CanDrop( entity, position ) && ValuedDragObject::Provides< const Entity_ABC >( pEvent ) );
+        pEvent->accept( CanDrop( entity, position ) );
         return;
     }
-    else if( const AgentType* type = gui::ValuedDragObject::GetValue< AgentType >( pEvent ) )
+    else if( const AgentType* type = dnd::FindData< AgentType >( pEvent ) )
     {
         QPoint position = viewport()->mapFromParent( pEvent->pos() );
-        pEvent->accept( CanDropOnGhost( type, position, eGhostType_Agent ) && ValuedDragObject::Provides< const AgentType >( pEvent ) );
+        pEvent->accept( CanDropOnGhost( type, position, eGhostType_Agent ) );
         return;
     }
-    else if( const AutomatType* type = gui::ValuedDragObject::GetValue< AutomatType >( pEvent ) )
+    else if( const AutomatType* type = dnd::FindData< AutomatType >( pEvent ) )
     {
         QPoint position = viewport()->mapFromParent( pEvent->pos() );
-        pEvent->accept( CanDropOnGhost( type, position, eGhostType_Automat ) && ValuedDragObject::Provides< const AutomatType >( pEvent ) );
+        pEvent->accept( CanDropOnGhost( type, position, eGhostType_Automat ) );
         return;
     }
     pEvent->ignore();
@@ -390,7 +413,7 @@ void HierarchyListView_ABC::viewportDropEvent( QDropEvent* pEvent )
         return;
     }
     ListView< HierarchyListView_ABC >::viewportDropEvent( pEvent );
-    if( const Entity_ABC* entity = ValuedDragObject::GetValue< const Entity_ABC >( pEvent ) )
+    if( const Entity_ABC* entity = dnd::FindSafeEntityData< Agent_ABC, Automat_ABC, Formation_ABC, Ghost_ABC, KnowledgeGroup_ABC >( pEvent ) )
     {
         QPoint position = viewport()->mapFromParent( pEvent->pos() );
         ValuedListItem* targetItem = static_cast< ValuedListItem* >( itemAt( position ) );
@@ -403,7 +426,7 @@ void HierarchyListView_ABC::viewportDropEvent( QDropEvent* pEvent )
             entity->Select( controllers_.actions_ );
         }
     }
-    else if( const AgentType* type = ValuedDragObject::GetValue< const AgentType >( pEvent ) )
+    else if( const AgentType* type = dnd::FindData< AgentType >( pEvent ) )
     {
         QPoint position = viewport()->mapFromParent( pEvent->pos() );
         ValuedListItem* targetItem = static_cast< ValuedListItem* >( itemAt( position ) );
@@ -412,7 +435,7 @@ void HierarchyListView_ABC::viewportDropEvent( QDropEvent* pEvent )
         else
             pEvent->accept();
     }
-    else if( const AutomatType* type = ValuedDragObject::GetValue< const AutomatType >( pEvent ) )
+    else if( const AutomatType* type = dnd::FindData< AutomatType >( pEvent ) )
     {
         QPoint position = viewport()->mapFromParent( pEvent->pos() );
         ValuedListItem* targetItem = static_cast< ValuedListItem* >( itemAt( position ) );

@@ -18,7 +18,6 @@ using namespace gui;
 
 const QString StandardModel::showValue_ = "show";
 const QString StandardModel::hideValue_ = "hide";
-const QString StandardModel::mimeTypeStr_ = "sword/varianttype";
 
 // -----------------------------------------------------------------------------
 // Name: StandardModel constructor
@@ -174,10 +173,9 @@ void StandardModel::LockDragAndDrop( bool lock )
 QStringList StandardModel::mimeTypes() const
 {
      // $$$$ JSR 2012-09-07: TODO gérer différents mimeTypes? (entity, agenttype, automattype)
-    QStringList mimeTypes;
     if( dragAndDropObserver_ && !dndLocked_ )
-        mimeTypes << mimeTypeStr_ << dragAndDropObserver_->AdditionalMimeTypes();
-    return mimeTypes;
+        return dragAndDropObserver_->MimeTypes();
+    return QStringList();
 }
 
 // -----------------------------------------------------------------------------
@@ -195,16 +193,24 @@ QMimeData* StandardModel::mimeData( const QModelIndexList& indexes ) const
     mimeData = new QMimeData();
     QByteArray encodedData;
     QDataStream stream( &encodedData, QIODevice::WriteOnly );
+    QString mimeType;
     foreach( QModelIndex index, indexes )
     {
         if( index.isValid() )
         {
             QStandardItem* item = itemFromIndex( index.model() == this ? index : proxy_.mapToSource( index ) );
-            if( item)
-                stream << reinterpret_cast< unsigned int >( item->data( DataRole ).value< kernel::VariantPointer >().ptr_ );
+            if( item && item->data( MimeTypeRole ).isValid() )
+            {
+                const QString itemMimeType = item->data( MimeTypeRole ).value< QString >();
+                if( mimeType.isNull() || mimeType == itemMimeType )
+                {
+                    mimeType = itemMimeType;
+                    stream << reinterpret_cast< unsigned int >( item->data( DataRole ).value< kernel::VariantPointer >().ptr_ );
+                }
+            }
         }
     }
-    mimeData->setData( mimeTypeStr_, encodedData );
+    mimeData->setData( mimeType, encodedData );
     return mimeData;
 }
 
@@ -234,28 +240,20 @@ bool StandardModel::dropMimeData( const QMimeData* data, Qt::DropAction action, 
     if( !item )
         return false;
     // TODO encapsuler tout ça dans une classe intermédiaire, ou bien faire des helpers
-    QStringList additionalMimeTypes = dragAndDropObserver_->AdditionalMimeTypes();
+    QStringList additionalMimeTypes = dragAndDropObserver_->MimeTypes();
     QStringList formats = data->formats();
     foreach( QString format, formats )
     {
-        if( format == mimeTypeStr_ )
+        QByteArray encodedData = data->data( format );
+        QDataStream stream( &encodedData, QIODevice::ReadOnly );
+        while( !stream.atEnd() )
         {
-            QByteArray encodedData = data->data( format );
-            QDataStream stream( &encodedData, QIODevice::ReadOnly );
-            while( !stream.atEnd() )
-            {
-                unsigned int ptr = 0;
-                stream >> ptr;
-                if( ptr )
-                    dragAndDropObserver_->Drop( format, reinterpret_cast< void* >( ptr ), *item );
-            }
+            unsigned int ptr = 0;
+            stream >> ptr;
+            if( ptr )
+                dragAndDropObserver_->Drop( format, reinterpret_cast< void* >( ptr ), *item );
         }
-        else if( additionalMimeTypes.contains( format ) )
-        {
-            // old dnd version, to be removed when porting to QT4 is finished
-            QByteArray encodedData = data->data( format );
-            dragAndDropObserver_->Drop( format, reinterpret_cast< void* >( encodedData.data() ), *item );
-        }
+
     }
     return true;
 }

@@ -9,37 +9,22 @@
 
 #include "gaming_app_pch.h"
 #include "AutomatsLayer.h"
-#include "actions/AutomatCreationListener.h"
-#include "actions/ActionFactory.h"
 #include "actions/ActionsModel.h"
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
-#include "actions/Identifier.h"
-#include "actions/Point.h"
 #include "actions/UnitMagicAction.h"
+#include "clients_gui/DragAndDropHelpers.h"
+#include "clients_kernel/Viewport_ABC.h"
+#include "gaming/AgentServerMsgMgr.h"
 #include "gaming/ConvexHulls.h"
 #include "gaming/MissionParameters.h"
-#include "clients_kernel/AgentType.h"
-#include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/AutomatType.h"
-#include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/MagicActionType.h"
-#include "clients_kernel/Point.h"
-#include "clients_kernel/Viewport_ABC.h"
-#include "clients_gui/ValuedDragObject.h"
-#include "gaming/AgentServerMsgMgr.h"
-#include "protocol/SimulationSenders.h"
-#include <ctime>
-
-using namespace kernel;
-using namespace actions;
 
 // -----------------------------------------------------------------------------
 // Name: AutomatsLayer constructor
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
-AutomatsLayer::AutomatsLayer( Controllers& controllers, const GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view,
-                             const Profile_ABC& profile, actions::ActionsModel& actionsModel,
+AutomatsLayer::AutomatsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view,
+                             const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel,
                              const kernel::Time_ABC& simulation, AgentServerMsgMgr& messageManager,
                              tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel )
     : gui::AutomatsLayer( controllers, tools, strategy, view, profile )
@@ -68,13 +53,13 @@ AutomatsLayer::~AutomatsLayer()
 // Name: AutomatsLayer::Draw
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-void AutomatsLayer::Draw( const Entity_ABC& entity, Viewport_ABC& viewport )
+void AutomatsLayer::Draw( const kernel::Entity_ABC& entity, kernel::Viewport_ABC& viewport )
 {
     gui::AutomatsLayer::Draw( entity, viewport );
     if( !ShouldDisplay( entity ) && selected_ == &entity )
     {
         SelectColor( entity );
-        const Positions& positions = entity.Get< Positions >();
+        const kernel::Positions& positions = entity.Get< kernel::Positions >();
         const geometry::Point2f position = positions.GetPosition();
         viewport.SetHotpoint( position );
         selected_->Get< MissionParameters >().Draw( position, viewport, tools_ );
@@ -111,8 +96,7 @@ bool AutomatsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2
 // -----------------------------------------------------------------------------
 bool AutomatsLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& ) const
 {
-    return selected_ && ( gui::ValuedDragObject::Provides< const AgentType >( event )
-        || gui::ValuedDragObject::Provides< const AutomatType >( event ) );
+    return selected_ && ( dnd::HasData< const kernel::AgentType >( event ) || dnd::HasData< const kernel::AutomatType >( event ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -123,12 +107,12 @@ bool AutomatsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f&
 {
     if( !selected_ )
         return false;
-    if( const AgentType* droppedItem = gui::ValuedDragObject::GetValue< const AgentType >( event ) )
+    if( const kernel::AgentType* droppedItem = dnd::FindData< kernel::AgentType >( event ) )
     {
         RequestCreation( point, *droppedItem );
         return true;
     }
-    if( const AutomatType* droppedItem = gui::ValuedDragObject::GetValue< const AutomatType >( event ) )
+    if( const kernel::AutomatType* droppedItem = dnd::FindData< kernel::AutomatType >( event ) )
     {
         RequestCreation( point, *droppedItem );
         return true;
@@ -143,8 +127,8 @@ bool AutomatsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f&
 void AutomatsLayer::RequestCreation( const geometry::Point2f& point, const kernel::AgentType& type )
 {
     actions::Action_ABC* action = actionsModel_.CreateAgentCreationAction( type, point, *selected_ );
-    action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
-    action->Attach( *new ActionTasker( selected_, false ) );
+    action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
+    action->Attach( *new actions::ActionTasker( selected_, false ) );
     action->Polish();
     actionsModel_.Publish( *action );
 }
@@ -155,10 +139,9 @@ void AutomatsLayer::RequestCreation( const geometry::Point2f& point, const kerne
 // -----------------------------------------------------------------------------
 void AutomatsLayer::RequestCreation( const geometry::Point2f& point, const kernel::AutomatType& type )
 {
-    Action_ABC* action = actionsModel_.CreateAutomatCreationAction( point, type, *selected_, agentsModel_, messageManager_, simulation_ );
-    action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
-    action->Attach( *new ActionTasker( selected_, false ) );
+    actions::Action_ABC* action = actionsModel_.CreateAutomatCreationAction( point, type, *selected_, agentsModel_, messageManager_, simulation_ );
+    action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
+    action->Attach( *new actions::ActionTasker( selected_, false ) );
     action->Polish();
-    int context = (int)clock();
-    actionsModel_.Publish( *action, context );
+    actionsModel_.Publish( *action, clock() );
 }

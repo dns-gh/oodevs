@@ -70,7 +70,6 @@ protected:
     //! @name Operations
     //@{
     virtual const QPixmap* GetDecoration( const QModelIndex &index );
-    virtual Qt::ItemFlags ItemSpecificFlags( const kernel::Entity_ABC& entity ) const;
     virtual void focusInEvent( QFocusEvent* event );
     //@}
 
@@ -78,7 +77,7 @@ private:
     //! @name Drag n drop
     //@{
     virtual bool CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const;
-    virtual QStringList AdditionalMimeTypes() const;
+    virtual QStringList MimeTypes() const;
     virtual void Drop( const QString& mimeType, void* data, QStandardItem& target );
     virtual void dragMoveEvent( QDragMoveEvent *pEvent );
     virtual void Drop( const kernel::Agent_ABC& /*item*/, const kernel::Entity_ABC& /*target*/ ) {}
@@ -88,6 +87,10 @@ private:
     virtual void Drop( const kernel::KnowledgeGroup_ABC& /*item*/, const kernel::Entity_ABC& /*target*/ ) {}
     virtual void Drop( const kernel::AgentType& /*item*/, kernel::Entity_ABC& /*target*/ ) {}
     virtual void Drop( const kernel::AutomatType& /*item*/, kernel::Entity_ABC& /*target*/ ) {}
+
+    template< typename Entity >
+    bool AddItemIfPossible( const kernel::Entity_ABC& entity, QStandardItem* parent, QStandardItem*& ret );
+
     //@}
 
 signals:
