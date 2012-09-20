@@ -125,7 +125,7 @@ BOOST_AUTO_TEST_CASE( VerifyDangerousObjects )
 BOOST_AUTO_TEST_CASE( disaster_capacity_registration )
 {
     xml::xistringstream xobject( "<objects>"
-                                 "  <object name='disaster'>"
+                                 "  <object type='disaster'>"
                                  "   <disaster/>"
                                  "  </object>"
                                  "</objects>" );
