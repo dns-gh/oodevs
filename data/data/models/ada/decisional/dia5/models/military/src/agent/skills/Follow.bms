@@ -14,17 +14,21 @@ rootnode
         -- Verify that entities can be followed
         self.entities = {}
         for _, entity in pairs( self.params.entities ) do
-            if entity:canBeFollowed() then
-                self.entities[ #self.entities + 1 ] = entity
-            else
-                meKnowledge:RC( eRC_FollowingUnitIsDead, entity:getName() )
+            if entity:isValid() then -- the knowldedge of the entity is lost
+                if entity:canBeFollowed() then
+                    self.entities[ #self.entities + 1 ] = entity
+                else
+                    meKnowledge:RC( eRC_FollowingUnitIsDead, entity:getName() )
+                end
             end
         end
         -- None of the entities can be followed...
-        if not next( self.entities ) then 
+        if not next( self.entities ) then
+            meKnowledge:RC( eRC_NoUnitsInParameter )
             Feedback( self.feedbacks.failed )
             return
         end -- else, decide to follow filtered intities
+
         Activate( skill.links.stayClose, 1, { entities = self.entities } )
     end
 }
