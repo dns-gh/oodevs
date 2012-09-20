@@ -144,7 +144,12 @@ namespace frontend
         xis >> xml::start( "exercise" );
         xos << xml::start( "exercise" );
         tools::SchemaWriter().WriteExerciseSchema( xos, "exercise" );
-        CopyXmlFields( xis, xos, "meta;population;propagations;profiles;orbat;urbanstate;weather;urban;scores;success" );
+        xis     >> xml::start( "meta" );
+        xos     << xml::start( "meta" );
+        CopyXmlFields( xis, xos, "briefing" );
+        xis     >> xml::end;
+        xos     << xml::end;
+        CopyXmlFields( xis, xos, "population;propagations;profiles;orbat;urbanstate;weather;urban;scores;success" );
         xos << xml::start( "terrain" ) << xml::attribute( "name", params.terrain_ ) << xml::end
             << xml::start( "model" ) << xml::attribute( "dataset", params.model_ ) << xml::attribute( "physical", params.physical_ ) << xml::end;
         xis >> xml::end;
