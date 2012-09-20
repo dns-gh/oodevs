@@ -1370,7 +1370,7 @@
     </target>
 
     <target name="application.integration_decisionnal_test" description="build Sword Integration DIA5 test executable">
-        <build-test name="integration_decisionnal" depends="boost" libs="directia-${platform}-mt-4_6" dir="resources">
+        <build-test name="integration_decisionnal" depends="boost" libs="directia-${platform}-mt-4_6" dir="resources" failonwarning="${failonwarning}">
             <includepath path="${libraries.dir}/simulation_kernel"/>
             <defineset>
                 <define name="PLATFORM" value="${platform}"/>

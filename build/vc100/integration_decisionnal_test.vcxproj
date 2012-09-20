@@ -78,6 +78,7 @@
     <PostBuildEvent />
     <ClCompile>
       <PreprocessorDefinitions>PLATFORM=$(CurrentPlatform);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <PostBuildEvent>
       <Command>cd $(RunDir)
@@ -92,6 +93,7 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
     <PostBuildEvent />
     <ClCompile>
       <PreprocessorDefinitions>PLATFORM=$(CurrentPlatform);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <PostBuildEvent>
       <Command>cd $(RunDir)
@@ -104,6 +106,7 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
     <PostBuildEvent />
     <ClCompile>
       <PreprocessorDefinitions>PLATFORM=$(CurrentPlatform);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <PostBuildEvent />
     <PostBuildEvent>
@@ -117,6 +120,7 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
     <PostBuildEvent />
     <ClCompile>
       <PreprocessorDefinitions>PLATFORM=$(CurrentPlatform);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <PostBuildEvent>
       <Command>cd $(RunDir)
