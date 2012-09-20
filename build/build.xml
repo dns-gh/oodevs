@@ -234,7 +234,7 @@
     </target>
 
     <target name="library.rpr" description="build rpr static library">
-        <build-lib name="rpr" pattern="lib${ant.project.name}_rpr-${platform}-mt@{suffix}" suffix="-gd"/>
+        <build-lib name="rpr" pattern="lib${ant.project.name}_rpr-${platform}-mt@{suffix}" suffix="-gd" failonwarning="${failonwarning}"/>
     </target>
 
     <target name="library.hla_plugin" depends="library.dispatcher,library.rpr" description="build hla_plugin static library">
