@@ -240,6 +240,10 @@ integration.getDangerosityLevel = function( crowd )
     return DEC_ConnaissancePopulation_Dangerosite( crowd.source )*100
 end
 
+integration.crowdHasFlow = function( crowd )
+    return DEC_ConnaissancePopulation_HasFlow( crowd.source )
+end
+
 integration.affinityLevel = function( crowd )
     return (DEC_GetAdhesionPopulation( crowd.source ) + 1 ) *50
 end
