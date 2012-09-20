@@ -12,11 +12,6 @@
 
 #include "Entities/Objects/CapacityFactory.h"
 
-namespace legacy
-{
-    class CapacityFactory;
-}
-
 namespace sword
 {
 // =============================================================================
