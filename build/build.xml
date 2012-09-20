@@ -82,7 +82,7 @@
     </target>
 
     <target name="library.simulation_terrain" depends="library.MT_Tools" description="build simulation_terrain static library">
-        <build-lib name="simulation_terrain" pattern="lib${ant.project.name}_simulation_terrain-${platform}-mt@{suffix}" suffix="-gd"/>
+        <build-lib name="simulation_terrain" pattern="lib${ant.project.name}_simulation_terrain-${platform}-mt@{suffix}" suffix="-gd" failonwarning="${failonwarning}"/>
     </target>
 
     <target name="library.simulation_kernel" depends="library.tools,library.protocol,library.simulation_terrain,library.meteo,library.resource_network,library.flood" description="build simulation_kernel static library">
