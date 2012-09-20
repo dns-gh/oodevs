@@ -135,6 +135,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>$(ProjectName)_pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <AdditionalDependencies>psapi.lib;masalloc.lib;core.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -147,6 +148,7 @@
     <ClCompile>
       <PreprocessorDefinitions>PLATFORM=$(CurrentPlatform);_WIN32_WINNT=0x0501;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\src\libraries\simulation_kernel;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <AdditionalDependencies>psapi.lib;masalloc.lib;core.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -162,6 +164,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>$(ProjectName)_pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <AdditionalDependencies>psapi.lib;masalloc_d.lib;core_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -174,6 +177,7 @@
     <ClCompile>
       <PreprocessorDefinitions>PLATFORM=$(CurrentPlatform);_WIN32_WINNT=0x0501;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\src\libraries\simulation_kernel;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <AdditionalDependencies>psapi.lib;masalloc_d.lib;core_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
