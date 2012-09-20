@@ -131,8 +131,7 @@ BOOST_AUTO_TEST_CASE( disaster_capacity_registration )
                                  "</objects>" );
     MIL_ObjectFactory legacyFactory( false );
     BOOST_CHECK_NO_THROW( legacyFactory.Initialize( xobject ) );
-    const MIL_ObjectType_ABC& legacyType = legacyFactory.FindType( "disaster" );
-    BOOST_CHECK( legacyType.GetCapacity< sword::capacity::PropagationCapacity >() == 0 );
+    BOOST_CHECK_THROW( legacyFactory.FindType( "disaster" ) );
     MIL_ObjectFactory factory( true );
     BOOST_CHECK_NO_THROW( factory.Initialize( xobject ) );
     const MIL_ObjectType_ABC& type = factory.FindType( "disaster" );
