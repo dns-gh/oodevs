@@ -107,3 +107,7 @@ integration.isThreateningOrHostilePredicate = {
             return self:isHostile() or self:isThreatening()
         end
     }
+
+integration.getName = function( agent )
+    return DEC_GetSzName( agent.source )
+end
