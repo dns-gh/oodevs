@@ -721,7 +721,8 @@
                   lib${ant.project.name}_shield-${platform}-mt@{suffix},
                   lib${ant.project.name}_indicators-${platform}-mt,
                   lib${ant.project.name}_web_control_plugin-${platform}-mt@{suffix},
-                  lib${ant.project.name}_license_gui-${platform}-mt@{suffix}">
+                  lib${ant.project.name}_license_gui-${platform}-mt@{suffix}"
+            failonwarning="${failonwarning}">
             <syslibset libs="dbghelp,psapi,iphlpapi,user32,shell32,advapi32,gdi32"/>
             <defineset define="QT3_SUPPORT"/>
         </build-app>
