@@ -18,6 +18,7 @@
 #include "gaming/AgentServerMsgMgr.h"
 #include "gaming/ConvexHulls.h"
 #include "gaming/MissionParameters.h"
+#include <ctime>
 
 // -----------------------------------------------------------------------------
 // Name: AutomatsLayer constructor

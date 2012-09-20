@@ -16,6 +16,7 @@
 #include "clients_gui/DragAndDropHelpers.h"
 #include "clients_kernel/PopulationPrototype.h"
 #include "gaming/AgentServerMsgMgr.h"
+#include <ctime>
 
 // -----------------------------------------------------------------------------
 // Name: FormationLayer constructor
