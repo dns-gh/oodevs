@@ -1488,6 +1488,14 @@ This implementation returns 'true' if the units to transport has the &quot;getTr
                 </type>
             </return>
         </method>
+        <method name="canBeFollowed" abstract="false">
+            <description>Returns &quot;true&quot; if this element can be followed by the agent, 'false' otherwise.&#xD;
+&#xD;
+This implementation returns 'true' if this element is operational. It means that an destroyed agent cannot be followed.</description>
+        </method>
+        <method name="isMoving" abstract="false">
+            <description>Returns 'true' if this element is moving, 'false' otherwise.</description>
+        </method>
     </methods>
     <predicates>
         <predicate name="isCommandingFor">
@@ -1539,7 +1547,6 @@ This implementation returns 'true' if the units to transport has the &quot;getTr
         <predicate name="isLoaded" abstract="false">
             <description>Renvoie vrai si l'élément est chargé.</description>
         </predicate>
-        <predicate name="isMoving" abstract="false"/>
         <predicate name="fireForbiddenOnCrowd" abstract="false">
             <description>Renvoie vrai si le ROE de l'unité est &quot;tir interdit face foule&quot;</description>
         </predicate>

@@ -1,0 +1,28 @@
+-- ****************************************************************************
+-- Follow a set of entities
+-- self.params.entities: the reachable elements
+-- self.params.positions: the reaching elements
+-- ****************************************************************************
+rootnode
+{
+    connections = { skill.links.stayClose },
+
+    -- --------------------------------------------------------------------------------
+    -- For each objective of the skill, stay close to it.
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        -- Verify that entities can be followed
+        self.entities = {}
+        for _, entity in pairs( self.params.entities ) do
+            if entity:canBeFollowed() then
+                self.entities[ #self.entities + 1 ] = entity
+            end
+        end
+        -- None of the entities can be followed...
+        if not next( self.entities ) then 
+            Feedback( self.feedbacks.failed )
+            return
+        end -- else, decide to follow filtered intities
+        Activate( skill.links.stayClose, 1, { entities = self.entities } )
+    end
+}

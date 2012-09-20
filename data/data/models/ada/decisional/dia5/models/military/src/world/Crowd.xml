@@ -5,6 +5,7 @@
     <realizes>properties.Askable</realizes>
     <realizes>properties.Controlable</realizes>
     <realizes>properties.Attackable</realizes>
+    <realizes>properties.Motile</realizes>
     <methods>
         <method name="computeRelation">
             <description>__INTEGRATION</description>
@@ -218,6 +219,16 @@
         </method>
         <method name="unloadIt" abstract="false">
             <description>Action de déchargement d'une concentration appartentant à la foule.</description>
+        </method>
+        <method name="canBeFollowed" abstract="false">
+            <description>Returns &quot;true&quot; if this element can be followed by the agent, 'false' otherwise.&#xD;
+&#xD;
+This implementation always returns 'true'.</description>
+        </method>
+        <method name="isMoving" abstract="false">
+            <description>Returns 'true' if this element is moving, 'false' otherwise.&#xD;
+&#xD;
+This implementation returns 'true' if the crowd has a flow (it means the thc crowd is moving).</description>
         </method>
     </methods>
     <predicates>

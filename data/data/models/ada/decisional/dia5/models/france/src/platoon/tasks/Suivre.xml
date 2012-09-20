@@ -14,31 +14,10 @@
     <stages>
         <stage label="suivre" permanent="true">
             <skills>
-                <skill name="agent.skills.primitives.StayClose">
+                <skill name="agent.skills.Follow">
                     <parameter name="entities">
                         <value>
                             <parameter>objectives</parameter>
-                        </value>
-                    </parameter>
-                    <parameter name="positions">
-                        <value>
-                            <call method="queries.getPositionsToFollow">
-                                <parameter name="elementsToFollow">
-                                    <value>
-                                        <parameter>objectives</parameter>
-                                    </value>
-                                </parameter>
-                                <parameter name="dynamic">
-                                    <value>
-                                        <boolean>true</boolean>
-                                    </value>
-                                </parameter>
-                                <parameter name="distanceMin">
-                                    <value>
-                                        <number>100.0</number>
-                                    </value>
-                                </parameter>
-                            </call>
                         </value>
                     </parameter>
                 </skill>

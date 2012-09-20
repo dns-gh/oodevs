@@ -5,6 +5,7 @@
     <realizes>properties.Reinforcable</realizes>
     <realizes>properties.Body</realizes>
     <realizes>properties.Supportable</realizes>
+    <realizes>properties.Motile</realizes>
     <methods>
         <method name="RC">
             <description>Action de rendre compte.</description>
@@ -367,6 +368,16 @@
                     <class name="world.PlatoonAlly"/>
                 </type>
             </argument>
+        </method>
+        <method name="canBeFollowed" abstract="false">
+            <description>Returns &quot;true&quot; if this element can be followed by the agent, 'false' otherwise.&#xD;
+&#xD;
+This implementation returns 'true' if at least one of the subordinate agents is operational.</description>
+        </method>
+        <method name="isMoving" abstract="false">
+            <description>Returns 'true' if this element is moving, 'false' otherwise.&#xD;
+&#xD;
+This implementation returns 'true' if one of the subordinate units of the company is moving.</description>
         </method>
     </methods>
     <predicates>

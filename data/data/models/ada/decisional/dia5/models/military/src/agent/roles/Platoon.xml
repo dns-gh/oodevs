@@ -97,6 +97,7 @@
         <skill name="agent.skills.Transport"/>
         <skill name="agent.skills.Bridge"/>
         <skill name="agent.skills.Reconnoiter"/>
+        <skill name="agent.skills.Follow"/>
     </skills>
     <resources>
         <resource name="agent.resources.EngageCapacity"/>

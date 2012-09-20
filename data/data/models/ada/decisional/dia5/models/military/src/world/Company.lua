@@ -211,7 +211,12 @@ return
     changeAutomate = function( self )
         integration.changeAutomate( self, true )
     end,
-
+    isMoving = function( self )
+        return integration.isCommanderMoving( self )
+    end,
+    canBeFollowed = function( self )
+        return self:isOperational()
+    end, 
     -- -------------------------------------------------------------------------------- 
     -- Intagration and specific methods
     -- --------------------------------------------------------------------------------
