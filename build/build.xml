@@ -406,7 +406,7 @@
     </target>
 
     <target name="library.script_plugin" depends="library.dispatcher" description="build script_plugin static library">
-        <build-lib name="script_plugin" pattern="lib${ant.project.name}_script_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4">
+        <build-lib name="script_plugin" pattern="lib${ant.project.name}_script_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
         <copy todir="${run.dir}/resources/scripts">

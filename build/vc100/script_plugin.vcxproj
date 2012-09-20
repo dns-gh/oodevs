@@ -87,6 +87,9 @@
 copy /Y $(TargetDir)\scripts $(RunDir)resources\scripts
 </Command>
     </PostBuildEvent>
+    <ClCompile>
+      <TreatWarningAsError>true</TreatWarningAsError>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
     <PreBuildEvent>
@@ -101,6 +104,9 @@ copy /Y $(TargetDir)\scripts $(RunDir)resources\scripts
 copy /Y $(TargetDir)\scripts $(RunDir)resources\scripts
 </Command>
     </PostBuildEvent>
+    <ClCompile>
+      <TreatWarningAsError>true</TreatWarningAsError>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
     <PreBuildEvent>
@@ -115,6 +121,9 @@ copy /Y $(TargetDir)\scripts $(RunDir)resources\scripts
 copy /Y $(TargetDir)\scripts $(RunDir)resources\scripts
 </Command>
     </PostBuildEvent>
+    <ClCompile>
+      <TreatWarningAsError>true</TreatWarningAsError>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
     <PreBuildEvent>
@@ -129,6 +138,9 @@ copy /Y $(TargetDir)\scripts $(RunDir)resources\scripts
 copy /Y $(TargetDir)\scripts $(RunDir)resources\scripts
 </Command>
     </PostBuildEvent>
+    <ClCompile>
+      <TreatWarningAsError>true</TreatWarningAsError>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\script_plugin\ActionScheduler.cpp" />
