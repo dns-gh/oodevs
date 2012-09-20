@@ -1,0 +1,36 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2012 MASA Group
+//
+// *****************************************************************************
+
+#ifndef MockSink_h
+#define MockSink_h
+
+#include "simulation_kernel/Adapters/Sink_ABC.h"
+#include "flood/FloodModel_ABC.h"
+
+// =============================================================================
+/** @class  MockSink
+    @brief  Mock sink
+*/
+// Created: LGY 2012-09-20
+// =============================================================================
+MOCK_BASE_CLASS( MockSink, sword::Sink_ABC )
+{
+    MOCK_METHOD( ExecutePerceptions, 0 );
+    MOCK_METHOD( ExecuteCommands, 0 );
+    MOCK_METHOD( ApplyEffects, 0 );
+    MOCK_METHOD( UpdateModel, 2 );
+
+    MOCK_METHOD_EXT( Create, 3, MIL_AgentPion*( const MIL_AgentTypePion&, MIL_Automate&, xml::xistream& ), CreateFromXml );
+    MOCK_METHOD_EXT( Create, 3, MIL_AgentPion*( const MIL_AgentTypePion&, MIL_Automate&, const MT_Vector2D& ), CreateFromPoint );
+    MOCK_METHOD_EXT( Create, 4, MIL_AgentPion*( const MIL_AgentTypePion&, MIL_Automate&, const MT_Vector2D&, const std::string& ), CreateFromPointAndName );
+
+    MOCK_METHOD( CreateFloodModel, 0 );
+};
+
+#endif // MockSink_h

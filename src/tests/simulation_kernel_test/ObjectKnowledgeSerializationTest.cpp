@@ -11,6 +11,7 @@
 #include "SingletonTerminator.h"
 #include "MockArmy.h"
 #include "MockBuilder.h"
+#include "MockSink.h"
 #include "MockMIL_Time_ABC.h"
 #include "MockNET_Publisher_ABC.h"
 #include "StubTER_World.h"
@@ -72,7 +73,7 @@ BOOST_CLASS_EXPORT( ArmySerializationProxy )
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( VerifyObjectKnowledge_Serialization, ObjectKnowledgeSerializationFixture )
 {
-    MIL_ObjectFactory factory( false );
+    MIL_ObjectFactory factory( true );
     {
         xml::xistringstream xis( "<objects>"
                                  "    <object type='object'>"
@@ -89,10 +90,11 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectKnowledge_Serialization, ObjectKnowledgeSer
     std::auto_ptr< MIL_Object_ABC > pObject;
     {
         MockBuilder builder;
+        MockSink sink;
         MOCK_EXPECT( builder.GetType ).once().returns( boost::cref( type ) );
         MOCK_EXPECT( builder.Build ).once();
         MOCK_EXPECT( army.RegisterObject ).once();
-        pObject.reset( factory.CreateObject( builder, &army ) );
+        pObject.reset( factory.CreateObject( sink, builder, &army ) );
         mock::verify( builder );
         mock::verify( army );
     }

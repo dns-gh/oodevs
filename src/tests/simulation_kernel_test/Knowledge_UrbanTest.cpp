@@ -19,6 +19,7 @@
 #include "StubTER_World.h"
 #include "Fixture.h"
 #include "MockMIL_Time_ABC.h"
+#include "MockSink.h"
 #include "MockNET_Publisher_ABC.h"
 #include <memory>
 
@@ -46,7 +47,7 @@ BOOST_AUTO_TEST_CASE( Knowledge_UrbanTest_Update )
 {
     WorldInitialize( "worldwide/Paris" );
     {
-        MIL_ObjectFactory factory( false );
+        MIL_ObjectFactory factory( true );
         {
             xml::xistringstream xis( "<objects>"
                 "    <object type='urban block'/>"
@@ -58,7 +59,8 @@ BOOST_AUTO_TEST_CASE( Knowledge_UrbanTest_Update )
         MockNET_Publisher_ABC publisher;
         FixturePion pion( effectManager );
         flux >> xml::start( "urban-object" );
-        std::auto_ptr< MIL_UrbanObject_ABC > pObject( factory.CreateUrbanObject( flux, 0 ) );
+        MockSink sink;
+        std::auto_ptr< MIL_UrbanObject_ABC > pObject( factory.CreateUrbanObject( sink, flux, 0 ) );
         flux >> xml::end;
         PHY_RolePion_UrbanLocation* urbanRole = new PHY_RolePion_UrbanLocation( *pion.pPion_ );
         urbanRole->NotifyMovingInsideObject( *pObject);

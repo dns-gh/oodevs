@@ -223,6 +223,9 @@
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\SingletonTerminator.h">
       <Filter>Source Files\stub</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockSink.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\simulation_kernel_test_pch.cpp">

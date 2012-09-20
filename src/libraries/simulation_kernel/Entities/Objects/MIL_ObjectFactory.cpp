@@ -109,7 +109,7 @@ void MIL_ObjectFactory::ReadCapacity( const std::string& capacity, xml::xistream
 // Name: MIL_ObjectFactory::CreateObject
 // Created: JCR 2008-06-03
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectFactory::CreateObject( const std::string& name, const std::string& type, MIL_Army_ABC* army, const TER_Localisation& location,
+MIL_Object_ABC* MIL_ObjectFactory::CreateObject( sword::Sink_ABC& sink, const std::string& name, const std::string& type, MIL_Army_ABC* army, const TER_Localisation& location,
                                                  bool reserved, unsigned int externalIdentifier, unsigned int forcedId, double density ) const
 {
     CIT_Prototypes it = prototypes_.find( type );
@@ -117,7 +117,7 @@ MIL_Object_ABC* MIL_ObjectFactory::CreateObject( const std::string& name, const 
         throw std::runtime_error( __FUNCTION__ " - Unknown object type: " + type );
     const MIL_ObjectBuilder_ABC& builder = *it->second;
     Object* object = new Object( builder.GetType(), army, &location, externalIdentifier, name, forcedId );
-    builder.Build( *object );
+    builder.Build( *object, sink );
     attributes_->Initialize( *object );
     if( ObstacleAttribute* pObstacle = object->RetrieveAttribute< ObstacleAttribute >() )
         pObstacle->SetType( reserved );
@@ -138,7 +138,7 @@ MIL_Object_ABC* MIL_ObjectFactory::CreateObject( const std::string& name, const 
 // Name: MIL_ObjectFactory::ReadObject
 // Created: JCR 2008-05-23
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectFactory::CreateObject( xml::xistream& xis, MIL_Army_ABC* army ) const
+MIL_Object_ABC* MIL_ObjectFactory::CreateObject( sword::Sink_ABC& sink, xml::xistream& xis, MIL_Army_ABC* army ) const
 {
     const std::string type( xis.attribute< std::string >( "type" ) );
 
@@ -150,7 +150,7 @@ MIL_Object_ABC* MIL_ObjectFactory::CreateObject( xml::xistream& xis, MIL_Army_AB
     const MIL_ObjectBuilder_ABC& builder = *it->second;
     // $$$$ SBO 2009-06-08: Check geometry constraint
     Object* object = new Object( xis, builder.GetType(), army, &location );
-    builder.Build( *object );
+    builder.Build( *object, sink );
     xis >> xml::optional >> xml::start( "attributes" )
         >> xml::list( *this, &MIL_ObjectFactory::ReadAttributes, *object )
         >> xml::end;
@@ -162,7 +162,8 @@ MIL_Object_ABC* MIL_ObjectFactory::CreateObject( xml::xistream& xis, MIL_Army_AB
 // Name: MIL_ObjectFactory::CreateObject
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectFactory::CreateObject( const sword::MissionParameters& message, MIL_Army_ABC* army, sword::ObjectMagicActionAck_ErrorCode& value ) const
+MIL_Object_ABC* MIL_ObjectFactory::CreateObject( sword::Sink_ABC& sink, const sword::MissionParameters& message, MIL_Army_ABC* army,
+                                                 sword::ObjectMagicActionAck_ErrorCode& value ) const
 {
     CIT_Prototypes it = prototypes_.find( message.elem( 0 ).value( 0 ).acharstr() );
     if( it == prototypes_.end() )
@@ -176,7 +177,7 @@ MIL_Object_ABC* MIL_ObjectFactory::CreateObject( const sword::MissionParameters&
         return 0;
     const MIL_ObjectBuilder_ABC& builder = *it->second;
     Object* pObject = new Object( builder.GetType(), army, &location, 0u, message.elem( 2 ).value( 0 ).acharstr() );
-    builder.Build( *pObject );
+    builder.Build( *pObject, sink );
     try
     {
         if( message.elem_size() < 5 )
@@ -200,15 +201,15 @@ MIL_Object_ABC* MIL_ObjectFactory::CreateObject( const sword::MissionParameters&
 // Name: MIL_ObjectFactory::CreateObject
 // Created: JCR 2008-06-03
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectFactory::CreateObject( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC* army ) const
+MIL_Object_ABC* MIL_ObjectFactory::CreateObject( sword::Sink_ABC& sink, const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC* army ) const
 {
     CIT_Prototypes it = prototypes_.find( builder.GetType().GetName() );
     if( it == prototypes_.end() )
         return 0;
     const MIL_ObjectBuilder_ABC& objectBuilder = *it->second;
     Object* pObject = new Object( objectBuilder.GetType(), army, 0, 0u );
-    objectBuilder.Build( *pObject );
-    builder.Build( *pObject );
+    objectBuilder.Build( *pObject, sink );
+    builder.Build( *pObject, sink );
     pObject->Finalize();
     return pObject;
 }
@@ -217,7 +218,7 @@ MIL_Object_ABC* MIL_ObjectFactory::CreateObject( const MIL_ObjectBuilder_ABC& bu
 // Name: MIL_ObjectFactory::CreateUrbanObject
 // Created: JSR 2012-08-03
 // -----------------------------------------------------------------------------
-MIL_UrbanObject_ABC* MIL_ObjectFactory::CreateUrbanObject( xml::xistream& xis, MIL_UrbanObject_ABC* parent ) const
+MIL_UrbanObject_ABC* MIL_ObjectFactory::CreateUrbanObject( sword::Sink_ABC& sink, xml::xistream& xis, MIL_UrbanObject_ABC* parent ) const
 {
     CIT_Prototypes it = prototypes_.find( "urban block" );
     if( it == prototypes_.end() )
@@ -225,7 +226,7 @@ MIL_UrbanObject_ABC* MIL_ObjectFactory::CreateUrbanObject( xml::xistream& xis, M
     const MIL_ObjectBuilder_ABC& builder = *it->second;
     MIL_UrbanObject* pObject = new MIL_UrbanObject( xis.attribute< unsigned long >( "id" ), xis.attribute< std::string >( "name" ),
                                                     builder.GetType(), parent );
-    builder.Build( *pObject );
+    builder.Build( *pObject, sink );
     pObject->ReadData( xis );
     pObject->Finalize();
     return pObject;

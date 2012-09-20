@@ -14,6 +14,7 @@
 #include "simulation_kernel/Urban/MIL_UrbanObject.h"
 #include "Fixture.h"
 #include "MockMIL_Time_ABC.h"
+#include "MockSink.h"
 #include "StubTER_World.h"
 #include <memory>
 
@@ -41,7 +42,7 @@ BOOST_AUTO_TEST_CASE( Knowledge_UrbanPerceptionTest_Update )
 {
     WorldInitialize( "worldwide/Paris" );
     {
-        MIL_ObjectFactory factory( false );
+        MIL_ObjectFactory factory( true );
         {
             xml::xistringstream xis( "<objects>"
                 "    <object type='urban block'/>"
@@ -50,8 +51,9 @@ BOOST_AUTO_TEST_CASE( Knowledge_UrbanPerceptionTest_Update )
         }
         MIL_EffectManager effectManager;
         FixturePion pion( effectManager );
+        MockSink sink;
         flux >> xml::start( "urban-object" );
-        std::auto_ptr< MIL_UrbanObject_ABC > pObject( factory.CreateUrbanObject( flux, 0 ) );
+        std::auto_ptr< MIL_UrbanObject_ABC > pObject( factory.CreateUrbanObject( sink, flux, 0 ) );
         flux >> xml::end;
 
         {

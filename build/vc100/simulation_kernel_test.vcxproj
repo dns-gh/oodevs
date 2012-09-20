@@ -133,7 +133,7 @@
     </ClCompile>
     <PostBuildEvent>
       <Command>cd $(RunDir)
-$(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_directory=../../data/tests/$(ProjectName)</Command>
+$(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_directory=../../data/tests/$(ProjectName) --run_test=VerifyObjectCapacity_InteractionAttitudeModifier</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
@@ -159,10 +159,15 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
+    <PostBuildEvent>
+      <Command>cd $(RunDir)
+$(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_directory=../../data/tests/$(ProjectName) --run_test=disaster_capacity_registration</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\Fixture.h" />
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockObjectTypeResolver.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockSink.h" />
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\simulation_kernel_test_pch.h" />
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockAgent.h" />
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockAgentFactory.h" />

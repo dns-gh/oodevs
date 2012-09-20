@@ -40,6 +40,7 @@
 #include "MockBuilder.h"
 #include "MockArmy.h"
 #include "MockAgent.h"
+#include "MockSink.h"
 #include "MockToxicAttribute.h"
 #include "MockMIL_Time_ABC.h"
 #include "MockRoleLocation.h"
@@ -57,9 +58,10 @@ namespace
     {
         MIL_Object_ABC* pObject = 0;
         MockBuilder builder;
+        MockSink sink;
         MOCK_EXPECT( builder.GetType ).once().returns( boost::cref( type ) );
         MOCK_EXPECT( builder.Build ).once();
-        BOOST_CHECK_NO_THROW( pObject = factory.CreateObject( builder, &army ); );
+        BOOST_CHECK_NO_THROW( pObject = factory.CreateObject( sink, builder, &army ); );
         mock::verify( builder );
         BOOST_REQUIRE( pObject != 0 );
         return pObject;

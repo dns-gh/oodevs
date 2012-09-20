@@ -18,6 +18,7 @@
 #include "LogisticAttribute.h"
 #include "MIL_ObjectFactory.h"
 #include "MIL_Object_ABC.h"
+#include "Adapters/Sink_ABC.h"
 #include "MIL_ObjectManipulator_ABC.h"
 #include "MIL_AgentServer.h"
 #include "Entities/MIL_Army_ABC.h"
@@ -41,24 +42,28 @@
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_ObjectManager )
 
 template< typename Archive >
-void save_construct_data( Archive& /*archive*/, const MIL_ObjectManager* /*manager*/, const unsigned int /*version*/ )
+void save_construct_data( Archive& archive, const MIL_ObjectManager* manager, const unsigned int /*version*/ )
 {
-    // NOTHING
+    const sword::Sink_ABC* sink = &manager->sink_;
+    archive << sink;
 }
 
 template< typename Archive >
-void load_construct_data( Archive& /*archive*/, MIL_ObjectManager* manager, const unsigned int /*version*/ )
+void load_construct_data( Archive& archive, MIL_ObjectManager* manager, const unsigned int /*version*/ )
 {
-    ::new( manager )MIL_ObjectManager( MIL_AgentServer::GetWorkspace().GetObjectFactory() );
+    sword::Sink_ABC* sink;
+    archive >> sink;
+    ::new( manager )MIL_ObjectManager( MIL_AgentServer::GetWorkspace().GetObjectFactory(), *sink );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectManager constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-MIL_ObjectManager::MIL_ObjectManager( MIL_ObjectFactory& factory )
+MIL_ObjectManager::MIL_ObjectManager( MIL_ObjectFactory& factory, sword::Sink_ABC& sink )
     : factory_  ( factory )
     , nbObjects_( 0 )
+    , sink_     ( sink )
 {
     // NOTHING
 }
@@ -192,7 +197,7 @@ unsigned long MIL_ObjectManager::Count() const
 // -----------------------------------------------------------------------------
 MIL_Object_ABC& MIL_ObjectManager::CreateObject( xml::xistream& xis, MIL_Army_ABC* army )
 {
-    MIL_Object_ABC* pObject = factory_.CreateObject( xis, army );
+    MIL_Object_ABC* pObject = factory_.CreateObject( sink_, xis, army );
     if( !pObject )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown object" ); //@TODO MGD propagate reference
     RegisterObject( pObject );
@@ -221,7 +226,7 @@ sword::ObjectMagicActionAck_ErrorCode MIL_ObjectManager::CreateObject( const swo
             return sword::ObjectMagicActionAck::error_invalid_party;
     }
     sword::ObjectMagicActionAck_ErrorCode errorCode = sword::ObjectMagicActionAck::no_error;
-    MIL_Object_ABC* pObject = factory_.CreateObject( message, pArmy, errorCode );
+    MIL_Object_ABC* pObject = factory_.CreateObject( sink_, message, pArmy, errorCode );
     if( pObject && pObject->RetrieveAttribute< AltitudeModifierAttribute >() )
     {
         const TER_Localisation& localisation = pObject->GetLocalisation();
@@ -240,7 +245,7 @@ sword::ObjectMagicActionAck_ErrorCode MIL_ObjectManager::CreateObject( const swo
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectManager::CreateObject( const std::string& type, MIL_Army_ABC* army, const TER_Localisation& localisation )
 {
-    MIL_Object_ABC* pObject = factory_.CreateObject( "", type, army, localisation, sword::ObstacleType_DemolitionTargetType_preliminary, 0u, 0u );
+    MIL_Object_ABC* pObject = factory_.CreateObject( sink_, "", type, army, localisation, sword::ObstacleType_DemolitionTargetType_preliminary, 0u, 0u );
     RegisterObject( pObject );
     return pObject;
 }
@@ -251,7 +256,7 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( const std::string& type, MIL_Ar
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectManager::CreateObject( const std::string& type, MIL_Army_ABC* army, const TER_Localisation& localisation, unsigned int forcedId )
 {
-    MIL_Object_ABC* pObject = factory_.CreateObject( "", type, army, localisation, sword::ObstacleType_DemolitionTargetType_preliminary, 0u, forcedId );
+    MIL_Object_ABC* pObject = factory_.CreateObject( sink_, "", type, army, localisation, sword::ObstacleType_DemolitionTargetType_preliminary, 0u, forcedId );
     RegisterObject( pObject );
     return pObject;
 }
@@ -265,7 +270,7 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC* army, const std::
 {
     if( pLocalisation )
     {
-        MIL_Object_ABC* pObject = factory_.CreateObject( name, type, army, *pLocalisation, obstacleType == sword::ObstacleType_DemolitionTargetType_reserved, externalIdentifier, 0, density );
+        MIL_Object_ABC* pObject = factory_.CreateObject( sink_, name, type, army, *pLocalisation, obstacleType == sword::ObstacleType_DemolitionTargetType_reserved, externalIdentifier, 0, density );
         RegisterObject( pObject );
         return pObject;
     }
@@ -278,7 +283,7 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC* army, const std::
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC* army, const MIL_ObjectBuilder_ABC& builder )
 {
-    MIL_Object_ABC* pObject = factory_.CreateObject( builder, army );
+    MIL_Object_ABC* pObject = factory_.CreateObject( sink_, builder, army );
     RegisterObject( pObject );
     return pObject;
 }
@@ -289,7 +294,7 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC* army, const MIL_O
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectManager::CreateUrbanObject( xml::xistream& xis, MIL_UrbanObject_ABC* parent )
 {
-    MIL_UrbanObject_ABC* pObject = factory_.CreateUrbanObject( xis, parent );
+    MIL_UrbanObject_ABC* pObject = factory_.CreateUrbanObject( sink_, xis, parent );
     if( pObject->IsBlock() )
     {
         const UrbanPhysicalCapacity* pPhysical = pObject->Retrieve< UrbanPhysicalCapacity >();

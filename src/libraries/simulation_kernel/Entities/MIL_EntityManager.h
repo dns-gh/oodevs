@@ -301,8 +301,8 @@ private:
     std::auto_ptr< PopulationFactory_ABC >        populationFactory_;      // have to be declared before armyFactory
     std::auto_ptr< InhabitantFactory_ABC >        inhabitantFactory_;      // have to be declared before armyFactory
     std::auto_ptr< AgentFactory_ABC >             agentFactory_;           // have to be declared before armyFactory
-    std::auto_ptr< MIL_ObjectManager >            pObjectManager_;
     std::auto_ptr< sword::Sink_ABC >              sink_;
+    std::auto_ptr< MIL_ObjectManager >            pObjectManager_;
     std::auto_ptr< flood::FloodModel_ABC >        pFloodModel_;
     std::auto_ptr< AutomateFactory_ABC >          automateFactory_;        // have to be declared before armyFactory & formation factory
     std::auto_ptr< FormationFactory_ABC >         formationFactory_;       // have to be declared before armyFactory

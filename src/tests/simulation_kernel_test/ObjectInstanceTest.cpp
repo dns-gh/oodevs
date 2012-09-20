@@ -10,6 +10,7 @@
 #include "simulation_kernel_test_pch.h"
 #include "MockArmy.h"
 #include "MockBuilder.h"
+#include "MockSink.h"
 #include "simulation_kernel/Entities/Objects/MIL_ObjectFactory.h"
 #include "simulation_kernel/Entities/Objects/Object.h"
 #include "simulation_kernel/Entities/MIL_Army_ABC.h"
@@ -27,7 +28,7 @@
 BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Instance )
 {
     WorldInitialize( "worldwide/Paris" );
-    MIL_ObjectFactory factory( false );
+    MIL_ObjectFactory factory( true );
     {
         xml::xistringstream xis(
             "<objects>"
@@ -45,10 +46,11 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Instance )
     MOCK_EXPECT( army.RegisterObject ).once();
     std::auto_ptr< MIL_Object_ABC > pObject;
     {
+        MockSink sink;
         MockBuilder builder;
         MOCK_EXPECT( builder.GetType ).once().returns( boost::cref( type ) );
         MOCK_EXPECT( builder.Build ).once();
-        BOOST_CHECK_NO_THROW( pObject.reset( factory.CreateObject( builder, &army ) ) );
+        BOOST_CHECK_NO_THROW( pObject.reset( factory.CreateObject( sink, builder, &army ) ) );
         mock::verify( builder );
     }
 

@@ -22,6 +22,7 @@ namespace sword
     class MagicAction;
     class ObjectMagicAction;
     enum ObjectMagicActionAck_ErrorCode;
+    class Sink_ABC;
 }
 
 namespace flood
@@ -48,7 +49,7 @@ class MIL_UrbanObject_ABC;
 class MIL_ObjectManager : private boost::noncopyable
 {
 public:
-    explicit MIL_ObjectManager( MIL_ObjectFactory& factory );
+             MIL_ObjectManager( MIL_ObjectFactory& factory, sword::Sink_ABC& sink );
     virtual ~MIL_ObjectManager();
 
     //! @name CheckPoints
@@ -122,6 +123,7 @@ private:
     T_ObjectSet universalObjects_;
     unsigned int nbObjects_;
     MIL_ObjectFactory& factory_;
+    sword::Sink_ABC& sink_;
     //@}
 };
 
