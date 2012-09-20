@@ -353,7 +353,6 @@ Tree Session::GetProperties( bool save ) const
     else
         BOOST_FOREACH( const Tree::value_type& it, links_ )
         {
-            tree.put( it.first + ".id",       Get< size_t >( it.second, "id" ) );
             tree.put( it.first + ".name",     Get< std::string >( it.second, "name" ) );
             tree.put( it.first + ".checksum", Get< std::string >( it.second, "checksum" ) );
         }

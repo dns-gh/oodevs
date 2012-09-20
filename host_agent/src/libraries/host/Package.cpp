@@ -402,7 +402,6 @@ struct Item : Package_ABC::Item_ABC
     void Link( Tree& tree, const Package_ABC& ref, bool recurse )
     {
         const std::string prefix = GetType();
-        tree.put( prefix + ".id" , id_ );
         tree.put( prefix + ".name", Utf8Convert( name_ ) );
         tree.put( prefix + ".root", Utf8Convert( root_ ) );
         tree.put( prefix + ".checksum", checksum_ );
