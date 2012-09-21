@@ -147,11 +147,12 @@ namespace
     class sObjectKnowledgesInCircleFilteredInserter : boost::noncopyable
     {
     public:
-        sObjectKnowledgesInCircleFilteredInserter( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const MT_Vector2D& center, double rRadius )
+        sObjectKnowledgesInCircleFilteredInserter( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const MT_Vector2D& center, double rRadius, bool nonActivatedObstacles )
             : pContainer_( &container )
             , filter_    ( filter )
             , pCenter_   ( &center )
             , rRadius_   ( rRadius )
+            , nonActivatedObstacles_( nonActivatedObstacles )
         {
             // NOTHING
         }
@@ -159,7 +160,7 @@ namespace
         void operator() ( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
         {
             if( knowledge->IsValid()
-            && ( !knowledge->IsReservedObstacle() || knowledge->IsReservedObstacleActivated() )
+            && ( nonActivatedObstacles_ || ( !knowledge->IsReservedObstacle() || knowledge->IsReservedObstacleActivated() ) )
             && filter_.Test( knowledge->GetType() ) 
             && knowledge->GetLocalisation().ComputeBarycenter().Distance( *pCenter_ ) <= rRadius_ )
                 pContainer_->push_back( knowledge );
@@ -170,12 +171,13 @@ namespace
         const MIL_ObjectFilter& filter_;
         const MT_Vector2D* pCenter_;
         double rRadius_;
+        bool nonActivatedObstacles_;
     };
 }
 
-void DEC_KnowledgeBlackBoard_Army::GetObjectsInCircle( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const MT_Vector2D& center, double rRadius )
+void DEC_KnowledgeBlackBoard_Army::GetObjectsInCircle( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const MT_Vector2D& center, double rRadius, bool nonActivatedObstacles )
 {
-    sObjectKnowledgesInCircleFilteredInserter functor( container, filter, center, rRadius );
+    sObjectKnowledgesInCircleFilteredInserter functor( container, filter, center, rRadius, nonActivatedObstacles );
 
     assert( pKnowledgeObjectContainer_ );
     pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );

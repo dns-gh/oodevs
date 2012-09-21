@@ -37,8 +37,14 @@ integration.getTypeUrbanBlock = function( urbanBlock )
 end
 
 integration.startBuildIt = function( object )
+    local checkpoint = integration.obtenirObjetProcheDe( object:getLocalisation(), 
+                        object:getType(), 10 )
     object[myself] = object[myself] or {}
-    object[myself].actionBuild = DEC_StartCreateObject( object.source )
+    if checkpoint == nil then
+        object[myself].actionBuild = DEC_StartCreateObject( object.source )
+    else
+        object[myself].actionBuild = DEC_StartCreateObject( checkpoint.source ) -- Cas d'une reprise sur sauvegarde
+    end
     actionCallbacks[ object[myself].actionBuild ] = function( arg ) object[myself].actionBuildState = arg end
     actionKnowledgeCallbacks[ object[myself].actionBuild ] = function( arg )
         if arg and DEC_ConnaissanceObjet_NiveauConstruction( arg ) > 0 then
@@ -126,7 +132,7 @@ end
 
 integration.obtenirObjetProcheDe = function( locRef, eTypeObject, rDistMax )
     local ptRef = integration.getBarycentreZoneFromLocalisation( locRef )
-    local lstObjets = DEC_Knowledges_ObjectsInCircle( ptRef, rDistMax, {eTypeObject} )
+    local lstObjets = DEC_Knowledges_AllObjectsInCircle( ptRef, rDistMax, {eTypeObject} )
     local _returnValue = integration.obtenirObjetProcheDePosition( ptRef, lstObjets, rDistMax )
     return _returnValue
 end
