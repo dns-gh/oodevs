@@ -231,6 +231,8 @@ bool ADN_Supply_Data::SupplyDataInfos::IsValidDatabase()
 {
     if( ptrUnit_.GetData() == 0 )
         return ADN_GuiTools::MissingConvoyWarning();
+    if( ptrSupplyMission_.GetData() == 0 )
+        return ADN_GuiTools::MissingConvoyMissionWarning();
     return true;
 }
 

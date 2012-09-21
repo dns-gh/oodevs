@@ -19,6 +19,14 @@
         <source>Automat %1 requires at least one PC, database cannot be saved.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>No decisional model defined for unit %1, database cannot be saved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convoy mission not defined in Log/Supply, database cannot be saved.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_ActiveProtections_GUI</name>
