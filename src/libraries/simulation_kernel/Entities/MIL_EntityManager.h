@@ -82,6 +82,10 @@ class TER_Localisation;
 class MIL_UrbanObject_ABC;
 class KnowledgesVisitor_ABC;
 
+void TerminatePhysicalSingletons();
+void TerminateMilitarySingletons();
+void TerminateLogisticsSingletons();
+
 // =============================================================================
 // @class  MIL_EntityManager
 // Created: JVT 2004-08-03

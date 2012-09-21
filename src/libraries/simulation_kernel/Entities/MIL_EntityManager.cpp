@@ -122,6 +122,64 @@ namespace bfs = boost::filesystem;
 
 using namespace sword;
 
+void TerminatePhysicalSingletons()
+{
+    PHY_SensorType                ::Terminate();
+    PHY_ComposanteTypePion        ::Terminate();
+    PHY_WeaponType                ::Terminate();
+    PHY_LauncherType              ::Terminate();
+    PHY_DotationType              ::Terminate();
+    PHY_DotationNature            ::Terminate();
+    PHY_Protection                ::Terminate();
+    PHY_Volume                    ::Terminate();
+    PHY_HumanRank                 ::Terminate();
+    PHY_HumanWound                ::Terminate();
+    PHY_ComposanteState           ::Terminate();
+    PHY_IndirectFireDotationClass ::Terminate();
+    PHY_AmmoDotationClass         ::Terminate();
+    PHY_Experience                ::Terminate();
+    PHY_Stress                    ::Terminate();
+    PHY_Tiredness                 ::Terminate();
+    PHY_Morale                    ::Terminate();
+    PHY_MaintenanceLevel          ::Terminate();
+    PHY_PerceptionLevel           ::Terminate();
+    PHY_RadarClass                ::Terminate();
+    PHY_NatureLevel               ::Terminate();
+    PHY_NatureAtlas               ::Terminate();
+    PHY_RoePopulation             ::Terminate();
+    PHY_MaintenanceWorkRate       ::Terminate();
+    PHY_RadarType                 ::Terminate();
+    PHY_DotationLogisticType      ::Terminate();
+    PHY_SupplyResourcesAlarms     ::Terminate();
+    PHY_MaintenanceResourcesAlarms::Terminate();
+    PHY_MedicalResourcesAlarms    ::Terminate();
+    PHY_MaterialCompositionType   ::Terminate();
+    PHY_AccomodationType          ::Terminate();
+    PHY_InfrastructureType        ::Terminate();
+    PHY_RoofShapeType             ::Terminate();
+    PHY_ResourceNetworkType       ::Terminate();
+}
+
+void TerminateMilitarySingletons()
+{
+    MIL_PopulationAttitude        ::Terminate();
+    MIL_AutomateType              ::Terminate();
+    MIL_AgentTypePion             ::Terminate();
+    MIL_NbcAgentType              ::Terminate();
+    MIL_FireClass                 ::Terminate();
+    MIL_MedicalTreatmentType      ::Terminate();
+    MIL_KnowledgeGroupType        ::Terminate();
+    MIL_PopulationType            ::Terminate();
+    MIL_InhabitantType            ::Terminate();
+    MIL_LimaFunction              ::Terminate();
+}
+
+void TerminateLogisticsSingletons()
+{
+    logistic::FuneralConfig       ::Terminate();
+    logistic::SupplyConvoyConfig  ::Terminate();
+}
+
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_EntityManager )
 
 // =============================================================================
@@ -287,52 +345,9 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
 MIL_EntityManager::~MIL_EntityManager()
 {
     // Types
-    logistic::FuneralConfig       ::Terminate();
-    MIL_PopulationAttitude        ::Terminate();
-    MIL_AutomateType              ::Terminate();
-    MIL_AgentTypePion             ::Terminate();
-    PHY_SensorType                ::Terminate();
-    PHY_ComposanteTypePion        ::Terminate();
-    PHY_WeaponType                ::Terminate();
-    PHY_LauncherType              ::Terminate();
-    PHY_DotationType              ::Terminate();
-    PHY_DotationNature            ::Terminate();
-    MIL_NbcAgentType              ::Terminate();
-    MIL_FireClass                 ::Terminate();
-    MIL_MedicalTreatmentType      ::Terminate();
-    PHY_Protection                ::Terminate();
-    PHY_Volume                    ::Terminate();
-    PHY_HumanRank                 ::Terminate();
-    PHY_HumanWound                ::Terminate();
-    PHY_ComposanteState           ::Terminate();
-    PHY_IndirectFireDotationClass ::Terminate();
-    PHY_AmmoDotationClass         ::Terminate();
-    MIL_KnowledgeGroupType        ::Terminate();
-    PHY_Experience                ::Terminate();
-    PHY_Stress                    ::Terminate();
-    PHY_Tiredness                 ::Terminate();
-    PHY_Morale                    ::Terminate();
-    PHY_MaintenanceLevel          ::Terminate();
-    PHY_PerceptionLevel           ::Terminate();
-    PHY_RadarClass                ::Terminate();
-    PHY_NatureLevel               ::Terminate();
-    PHY_NatureAtlas               ::Terminate();
-    PHY_RoePopulation             ::Terminate();
-    PHY_MaintenanceWorkRate       ::Terminate();
-    logistic::SupplyConvoyConfig  ::Terminate();
-    PHY_RadarType                 ::Terminate();
-    MIL_PopulationType            ::Terminate();
-    MIL_InhabitantType            ::Terminate();
-    PHY_DotationLogisticType      ::Terminate();
-    PHY_SupplyResourcesAlarms     ::Terminate();
-    PHY_MaintenanceResourcesAlarms::Terminate();
-    PHY_MedicalResourcesAlarms    ::Terminate();
-    MIL_LimaFunction              ::Terminate();
-    PHY_MaterialCompositionType   ::Terminate();
-    PHY_AccomodationType          ::Terminate();
-    PHY_InfrastructureType        ::Terminate();
-    PHY_RoofShapeType             ::Terminate();
-    PHY_ResourceNetworkType       ::Terminate();
+    TerminateLogisticsSingletons();
+    TerminateMilitarySingletons();
+    TerminatePhysicalSingletons();
 }
 
 // -----------------------------------------------------------------------------
