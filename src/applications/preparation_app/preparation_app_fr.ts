@@ -448,6 +448,10 @@
         <source>Human factors automatic evolution</source>
         <translation>Evolution automatique des facteurs humains</translation>
     </message>
+    <message>
+        <source>Melmil</source>
+        <translation>Melmil</translation>
+    </message>
 </context>
 <context>
     <name>ExtensionsPanel</name>
@@ -1462,6 +1466,10 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Invalid logistic subordinate for &apos;%1&apos; in orbat.xml. The link will deleted at next save.</source>
         <translation>&quot;%1&quot; a un subordonné logistique invalide dans orbat.xml. Le lien sera supprimé à la prochaine sauvegarde.</translation>
+    </message>
+    <message>
+        <source>Melmil file is missing.</source>
+        <translation>Fichier melmil référencé absent</translation>
     </message>
 </context>
 <context>

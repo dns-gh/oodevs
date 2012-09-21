@@ -26,7 +26,8 @@ namespace
     {
         return type == eNoLogisticBase || type ==  eNoCommandPost || type ==  eSeveralCommandPost
             || type ==  eNoKnowledgeGroup || type ==  eScoreError || type ==  eSuccessFactorError
-            || type == eBadCPExtensions || type == eProfileNoRole || type == eNoOrbat || type == eDiffusionList;
+            || type == eBadCPExtensions || type == eProfileNoRole || type == eNoOrbat
+            || type == eDiffusionList || type == eMelmil;
     }
 
 #define CONVERT_TO_MASK( mask ) { if( type & mask ) return mask; }
@@ -74,53 +75,54 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
 
     // Fill errors text
     // Uniqueness
-    errorDescriptions_[ eLongNameUniqueness ]              = tools::translate( "ModelConsistencyDialog", "Duplicate long name for units %1." );
-    errorDescriptions_[ eTeamNameUniqueness ]              = tools::translate( "ModelConsistencyDialog", "Duplicate name for parties %1." );
-    errorDescriptions_[ eObjectNameUniqueness ]            = tools::translate( "ModelConsistencyDialog", "Duplicate name for objects %1." );
-    errorDescriptions_[ eLimaNameUniqueness ]              = tools::translate( "ModelConsistencyDialog", "Duplicate name for limas %1." );
-    errorDescriptions_[ eLimitNameUniqueness ]             = tools::translate( "ModelConsistencyDialog", "Duplicate name for limits %1." );
+    errorDescriptions_[ eLongNameUniqueness ] = tools::translate( "ModelConsistencyDialog", "Duplicate long name for units %1." );
+    errorDescriptions_[ eTeamNameUniqueness ] = tools::translate( "ModelConsistencyDialog", "Duplicate name for parties %1." );
+    errorDescriptions_[ eObjectNameUniqueness ] = tools::translate( "ModelConsistencyDialog", "Duplicate name for objects %1." );
+    errorDescriptions_[ eLimaNameUniqueness ] = tools::translate( "ModelConsistencyDialog", "Duplicate name for limas %1." );
+    errorDescriptions_[ eLimitNameUniqueness ] = tools::translate( "ModelConsistencyDialog", "Duplicate name for limits %1." );
 
     // Logistic
-    errorDescriptions_[ eStockInitialization ]             = tools::translate( "ModelConsistencyDialog", "No stocks initialized." );
-    errorDescriptions_[ eStockMaxExceeded ]                = tools::translate( "ModelConsistencyDialog", "Allocated stocks of nature %1 exceed max capacity." );
-    errorDescriptions_[ eStockMissing ]                    = tools::translate( "ModelConsistencyDialog", "Some resources used by logistic subordinate(s) are not initialized: %1." );
-    errorDescriptions_[ eLogisticInitialization ]          = tools::translate( "ModelConsistencyDialog", "No logistic link initialized." );
-    errorDescriptions_[ eNoLogisticBase ]                  = tools::translate( "ModelConsistencyDialog", "No valid logistic base defined." );
-    errorDescriptions_[ eNoLogisticFormation ]             = tools::translate( "ModelConsistencyDialog", "Logistic sector not included in a logistic base." );
-    errorDescriptions_[ eLogisticBaseNotSameTeam ]         = tools::translate( "ModelConsistencyDialog", "Logistic base's party differs from object's party." );
-    errorDescriptions_[ eStockInvalidDotation ]            = tools::translate( "ModelConsistencyDialog", "Invalid stock resource '%1' in orbat.xml. This resource will not be saved." );
-    errorDescriptions_[ eBadLogisticSubordinate ]          = tools::translate( "ModelConsistencyDialog", "Invalid logistic subordinate for '%1' in orbat.xml. The link will deleted at next save." );
+    errorDescriptions_[ eStockInitialization ] = tools::translate( "ModelConsistencyDialog", "No stocks initialized." );
+    errorDescriptions_[ eStockMaxExceeded ] = tools::translate( "ModelConsistencyDialog", "Allocated stocks of nature %1 exceed max capacity." );
+    errorDescriptions_[ eStockMissing ] = tools::translate( "ModelConsistencyDialog", "Some resources used by logistic subordinate(s) are not initialized: %1." );
+    errorDescriptions_[ eLogisticInitialization ] = tools::translate( "ModelConsistencyDialog", "No logistic link initialized." );
+    errorDescriptions_[ eNoLogisticBase ] = tools::translate( "ModelConsistencyDialog", "No valid logistic base defined." );
+    errorDescriptions_[ eNoLogisticFormation ] = tools::translate( "ModelConsistencyDialog", "Logistic sector not included in a logistic base." );
+    errorDescriptions_[ eLogisticBaseNotSameTeam ] = tools::translate( "ModelConsistencyDialog", "Logistic base's party differs from object's party." );
+    errorDescriptions_[ eStockInvalidDotation ] = tools::translate( "ModelConsistencyDialog", "Invalid stock resource '%1' in orbat.xml. This resource will not be saved." );
+    errorDescriptions_[ eBadLogisticSubordinate ] = tools::translate( "ModelConsistencyDialog", "Invalid logistic subordinate for '%1' in orbat.xml. The link will deleted at next save." );
 
     // Profile
-    errorDescriptions_[ eProfileUniqueness ]               = tools::translate( "ModelConsistencyDialog", "Association with multiple profiles: %1." );
-    errorDescriptions_[ eProfileUnreadable ]               = tools::translate( "ModelConsistencyDialog", "Not 'readable' to any user profile. You will not be able to see it on the game." );
-    errorDescriptions_[ eProfileUnwritable ]               = tools::translate( "ModelConsistencyDialog", "Not 'writable' to any user profile. You will not be able to give orders to it on the game." );
-    errorDescriptions_[ eProfileNumberTooHigh ]            = tools::translate( "ModelConsistencyDialog", "The profile \"%1\" contains more than 12 automats and/or crowds." );
-    errorDescriptions_[ eProfileNoRole ]                   = tools::translate( "ModelConsistencyDialog", "No user role defined for profile \"%1\"." );
+    errorDescriptions_[ eProfileUniqueness ] = tools::translate( "ModelConsistencyDialog", "Association with multiple profiles: %1." );
+    errorDescriptions_[ eProfileUnreadable ] = tools::translate( "ModelConsistencyDialog", "Not 'readable' to any user profile. You will not be able to see it on the game." );
+    errorDescriptions_[ eProfileUnwritable ] = tools::translate( "ModelConsistencyDialog", "Not 'writable' to any user profile. You will not be able to give orders to it on the game." );
+    errorDescriptions_[ eProfileNumberTooHigh ] = tools::translate( "ModelConsistencyDialog", "The profile \"%1\" contains more than 12 automats and/or crowds." );
+    errorDescriptions_[ eProfileNoRole ] = tools::translate( "ModelConsistencyDialog", "No user role defined for profile \"%1\"." );
 
     // Ghost
-    errorDescriptions_[ eGhostExistence ]                  = tools::translate( "ModelConsistencyDialog", "A phantom unit is present." );
-    errorDescriptions_[ eGhostConverted ]                  = tools::translate( "ModelConsistencyDialog", "Unknown type '%1', a phantom unit has been created instead." );
+    errorDescriptions_[ eGhostExistence ] = tools::translate( "ModelConsistencyDialog", "A phantom unit is present." );
+    errorDescriptions_[ eGhostConverted ] = tools::translate( "ModelConsistencyDialog", "Unknown type '%1', a phantom unit has been created instead." );
 
     // Command Post
-    errorDescriptions_[ eNoCommandPost ]                   = tools::translate( "ModelConsistencyDialog", "Automat has no command post." );
-    errorDescriptions_[ eSeveralCommandPost ]              = tools::translate( "ModelConsistencyDialog", "Automat has more than one command post." );
+    errorDescriptions_[ eNoCommandPost ] = tools::translate( "ModelConsistencyDialog", "Automat has no command post." );
+    errorDescriptions_[ eSeveralCommandPost ] = tools::translate( "ModelConsistencyDialog", "Automat has more than one command post." );
 
     // Others
-    errorDescriptions_[ eLongNameSize ]                    = tools::translate( "ModelConsistencyDialog", "Long name size limit exceeded : %1." );
-    errorDescriptions_[ eUnknownObjectTypes ]              = tools::translate( "ModelConsistencyDialog", "Unknown object type \"%1\", some objects could not be loaded." );
-    errorDescriptions_[ eUnknownCrowdTypes ]               = tools::translate( "ModelConsistencyDialog", "Unknown crowd type \"%1\", some crowds could not be loaded." );
-    errorDescriptions_[ eUnknownPopulationTypes ]          = tools::translate( "ModelConsistencyDialog", "Unknown population type \"%1\", some populations could not be loaded." );
-    errorDescriptions_[ eNoKnowledgeGroup ]                = tools::translate( "ModelConsistencyDialog", "Automat has no knowledge group." );
-    errorDescriptions_[ eScoreError ]                      = tools::translate( "ModelConsistencyDialog", "Score definitions contain errors: %1" );
-    errorDescriptions_[ eSuccessFactorError ]              = tools::translate( "ModelConsistencyDialog", "Success factor definitions contain errors: %1" );
-    errorDescriptions_[ eUnknownInfrastructure]            = tools::translate( "ModelConsistencyDialog", "Unknown infrastructure \"%1\". It will be deleted at next save." );
-    errorDescriptions_[ eUnknownResourceNetwork]           = tools::translate( "ModelConsistencyDialog", "Unknown resource network type \"%1\". Related networks will deleted at next save." );
-    errorDescriptions_[ eNoOrbat ]                         = tools::translate( "ModelConsistencyDialog", "No orbat.xml found. The orbat.xml file will be created after the first save." );
-    errorDescriptions_[ eBadCPExtensions ]                 = tools::translate( "ModelConsistencyDialog", "CP type or SIOC type extensions defined for a non CP unit." );
-    errorDescriptions_[ eDiffusionList ]                   = tools::translate( "ModelConsistencyDialog", "Cycle detected in diffusion list." );
-    errorDescriptions_[ eDeletedUrbanBlocks ]              = tools::translate( "ModelConsistencyDialog", "Some resource network nodes point on nonexistent urban blocks. They will be deleted at next save.");
-    errorDescriptions_[ eOthers ]                          = "%1";
+    errorDescriptions_[ eLongNameSize ] = tools::translate( "ModelConsistencyDialog", "Long name size limit exceeded : %1." );
+    errorDescriptions_[ eUnknownObjectTypes ] = tools::translate( "ModelConsistencyDialog", "Unknown object type \"%1\", some objects could not be loaded." );
+    errorDescriptions_[ eUnknownCrowdTypes ] = tools::translate( "ModelConsistencyDialog", "Unknown crowd type \"%1\", some crowds could not be loaded." );
+    errorDescriptions_[ eUnknownPopulationTypes ] = tools::translate( "ModelConsistencyDialog", "Unknown population type \"%1\", some populations could not be loaded." );
+    errorDescriptions_[ eNoKnowledgeGroup ] = tools::translate( "ModelConsistencyDialog", "Automat has no knowledge group." );
+    errorDescriptions_[ eScoreError ] = tools::translate( "ModelConsistencyDialog", "Score definitions contain errors: %1" );
+    errorDescriptions_[ eSuccessFactorError ] = tools::translate( "ModelConsistencyDialog", "Success factor definitions contain errors: %1" );
+    errorDescriptions_[ eUnknownInfrastructure] = tools::translate( "ModelConsistencyDialog", "Unknown infrastructure \"%1\". It will be deleted at next save." );
+    errorDescriptions_[ eUnknownResourceNetwork] = tools::translate( "ModelConsistencyDialog", "Unknown resource network type \"%1\". Related networks will deleted at next save." );
+    errorDescriptions_[ eNoOrbat ] = tools::translate( "ModelConsistencyDialog", "No orbat.xml found. The orbat.xml file will be created after the first save." );
+    errorDescriptions_[ eBadCPExtensions ] = tools::translate( "ModelConsistencyDialog", "CP type or SIOC type extensions defined for a non CP unit." );
+    errorDescriptions_[ eDiffusionList ] = tools::translate( "ModelConsistencyDialog", "Cycle detected in diffusion list." );
+    errorDescriptions_[ eDeletedUrbanBlocks ] = tools::translate( "ModelConsistencyDialog", "Some resource network nodes point on nonexistent urban blocks. They will be deleted at next save.");
+    errorDescriptions_[ eMelmil ] = tools::translate( "ModelConsistencyDialog", "Melmil file is missing.");
+    errorDescriptions_[ eOthers ] = "%1";
 }
 
 // -----------------------------------------------------------------------------

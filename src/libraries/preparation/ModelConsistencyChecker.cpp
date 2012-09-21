@@ -11,6 +11,7 @@
 #include "ModelConsistencyChecker.h"
 #include "AgentsModel.h"
 #include "Dotation.h"
+#include "Exercise.h"
 #include "FormationModel.h"
 #include "GhostModel.h"
 #include "LimitsModel.h"
@@ -64,6 +65,7 @@
 #pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )
+#include <boost/filesystem/operations.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/foreach.hpp>
 #include <boost/format.hpp>
@@ -861,6 +863,21 @@ void ModelConsistencyChecker::CheckFiles()
     for( int i = 0; i < filesErrors.size(); ++i )
         AddError( eOthers, 0, filesErrors[ i ] );
     fileLoaderObserver_.Purge();
+    std::string actionPlanning = model_.GetActionPlanning();
+    if( !actionPlanning.empty() )
+    {
+        bool exist = true;
+        try
+        {
+            exist = boost::filesystem::exists( actionPlanning );
+        }
+        catch( ... )
+        {
+            exist = false;
+        }
+        if( !exist )
+            AddError( eMelmil, 0 );
+    }
 }
 
 namespace

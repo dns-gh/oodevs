@@ -110,6 +110,7 @@ public:
     tools::IdManager& GetIdManager() const;
     kernel::SymbolFactory& GetSymbolsFactory() const;
     bool IsLoaded() const;
+    std::string GetActionPlanning() const;
     //@}
 
 private:
@@ -123,6 +124,7 @@ private:
     //! @name Member data
     //@{
     const StaticModel& staticModel_;
+    const tools::ExerciseConfig* config_;
     tools::IdManager& idManager_;
     kernel::Controllers& controllers_;
     TeamFactory_ABC& teamFactory_;

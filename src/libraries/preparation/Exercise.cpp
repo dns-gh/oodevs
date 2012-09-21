@@ -230,8 +230,16 @@ void Exercise::AddResource( const QString& name, const QString& file )
 // -----------------------------------------------------------------------------
 void Exercise::SetActionPlanning( const std::string& filename )
 {
-    if( actionPlanning_.empty() )
-        actionPlanning_ = filename;
+    actionPlanning_ = filename;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Exercise::GetActionPlanning
+// Created: LDC 2012-09-21
+// -----------------------------------------------------------------------------
+std::string Exercise::GetActionPlanning() const
+{
+    return actionPlanning_;
 }
 
 // -----------------------------------------------------------------------------

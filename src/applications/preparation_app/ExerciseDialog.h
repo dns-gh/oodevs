@@ -98,6 +98,7 @@ private:
     Q3ListView* resources_;
     QCheckBox* infiniteDotationsCheckBox_;
     QCheckBox* humanEvolutionCheckBox_;
+    QCheckBox* melmilCheckBox_;
     //@}
 };
 

@@ -70,6 +70,7 @@ public:
     void SetBriefing( const QString& lang, const QString& text );
     void AddResource( const QString& name, const QString& file );
     void SetActionPlanning( const std::string& filename );
+    std::string GetActionPlanning() const;
     void ClearResources();
     //@}
 

@@ -29,13 +29,14 @@ ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controller
 {
     setModal( false );
     setCaption( tr( "Exercise" ) );
-    Q3GridLayout* grid = new Q3GridLayout( this, 4, 2, 0, 5 );
+    Q3GridLayout* grid = new Q3GridLayout( this, 5, 2, 0, 5 );
     grid->setMargin( 5 );
     grid->setRowStretch( 0, 1 );
     grid->setRowStretch( 1, 10 );
     grid->setRowStretch( 2, 5 );
     grid->setRowStretch( 3, 1 );
     grid->setRowStretch( 4, 1 );
+    grid->setRowStretch( 5, 1 );
     {
         Q3GroupBox* box = new Q3HGroupBox( tr( "Information" ), this );
         new QLabel( tr( "Name:" ), box );
@@ -79,12 +80,14 @@ ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controller
         Q3GroupBox* box = new Q3VGroupBox( tr( "Parameters" ), this );
         humanEvolutionCheckBox_ = new QCheckBox( tr( "Human factors automatic evolution" ), box );
         grid->addMultiCellWidget( box, 3, 3, 0, 2 );
+        melmilCheckBox_ = new QCheckBox( tr( "Melmil" ), box );
+        grid->addMultiCellWidget( box, 4, 4, 0, 2 );
     }
     {
         Q3HBox* box = new Q3HBox( this );
         QPushButton* ok = new QPushButton( tr( "Ok" ), box );
         QPushButton* cancel = new QPushButton( tr( "Cancel" ), box );
-        grid->addWidget( box, 4, 2 );
+        grid->addWidget( box, 5, 2 );
         connect( ok, SIGNAL( clicked() ), SLOT( OnAccept() ) );
         connect( cancel, SIGNAL( clicked() ), SLOT( OnReject() ) );
     }
@@ -152,6 +155,7 @@ void ExerciseDialog::showEvent( QShowEvent* showEvent )
 {
     QDialog::showEvent( showEvent );
     humanEvolutionCheckBox_->setChecked( exercise_.GetSettings().GetValue< bool >( "human-evolution" ) );
+    melmilCheckBox_->setChecked( !exercise_.GetActionPlanning().empty() );
 }
 
 namespace
@@ -213,6 +217,7 @@ void ExerciseDialog::OnAccept()
     for( Q3ListViewItemIterator it( resources_ ); it.current(); ++it )
         exercise_.AddResource( it.current()->text( 0 ), it.current()->text( 1 ) );
     exercise_.GetSettings().SetValue< bool >( "human-evolution", humanEvolutionCheckBox_->isChecked() );
+    exercise_.SetActionPlanning( melmilCheckBox_->isChecked() ? "melmil.xml" : std::string() ); // $$$$ LDC somewhat redundant with FilterCommand::Execute()
     accept();
 }
 

@@ -67,38 +67,39 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 Model::Model( Controllers& controllers, const ::StaticModel& staticModel )
     : EntityResolverFacade( static_cast< Model_ABC& >( *this ) )
-    , controllers_          ( controllers )
-    , staticModel_          ( staticModel )
-    , idManager_            ( *new tools::IdManager() )
-    , teamFactory_          ( *new TeamFactory( controllers, *this, staticModel, idManager_ ) )
+    , staticModel_( staticModel )
+    , config_( 0 )
+    , idManager_( *new tools::IdManager() )
+    , controllers_( controllers )
+    , teamFactory_( *new TeamFactory( controllers, *this, staticModel, idManager_ ) )
     , knowledgeGroupFactory_( *new KnowledgeGroupFactory( controllers, staticModel, idManager_ ) )
-    , formationFactory_     ( *new FormationFactory( controllers, staticModel, idManager_, symbolsFactory_ ) )
-    , agentFactory_         ( *new AgentFactory( controllers, *this, staticModel, idManager_, knowledgeGroupFactory_, symbolsFactory_ ) )
-    , objectFactory_        ( *new ObjectFactory( controllers, *this, staticModel, idManager_ ) )
-    , profileFactory_       ( *new ProfileFactory( controllers.controller_, *this, staticModel.extensions_ ) )
-    , scoreFactory_         ( *new ScoreFactory( controllers_, staticModel.indicators_, staticModel.gaugeTypes_, *this ) )
-    , successFactorFactory_ ( *new SuccessFactorFactory( controllers_, *this, staticModel.successFactorActionTypes_ ) )
-    , drawingFactory_       ( *new gui::DrawerFactory( controllers, staticModel.drawings_, staticModel.coordinateConverter_ ) )
-    , ghostFactory_         ( *new GhostFactory( controllers, *this, staticModel, idManager_, knowledgeGroupFactory_, symbolsFactory_ ) )
-    , resourceObserver_     ( *new ResourceNetworkSelectionObserver( controllers ) )
-    , loaded_               ( false )
+    , formationFactory_( *new FormationFactory( controllers, staticModel, idManager_, symbolsFactory_ ) )
+    , agentFactory_( *new AgentFactory( controllers, *this, staticModel, idManager_, knowledgeGroupFactory_, symbolsFactory_ ) )
+    , objectFactory_( *new ObjectFactory( controllers, *this, staticModel, idManager_ ) )
+    , profileFactory_( *new ProfileFactory( controllers.controller_, *this, staticModel.extensions_ ) )
+    , scoreFactory_( *new ScoreFactory( controllers_, staticModel.indicators_, staticModel.gaugeTypes_, *this ) )
+    , successFactorFactory_( *new SuccessFactorFactory( controllers_, *this, staticModel.successFactorActionTypes_ ) )
+    , drawingFactory_( *new gui::DrawerFactory( controllers, staticModel.drawings_, staticModel.coordinateConverter_ ) )
+    , ghostFactory_( *new GhostFactory( controllers, *this, staticModel, idManager_, knowledgeGroupFactory_, symbolsFactory_ ) )
+    , resourceObserver_( *new ResourceNetworkSelectionObserver( controllers ) )
+    , loaded_( false )
     , consistencyErrorsOnLoad_( false )
-    , exercise_             ( *new Exercise( controllers.controller_ ) )
-    , teams_                ( *new TeamsModel( controllers, teamFactory_ ) )
-    , objects_              ( *new ObjectsModel( controllers, objectFactory_, staticModel.objectTypes_ ) )
-    , knowledgeGroups_      ( *new KnowledgeGroupsModel( controllers, knowledgeGroupFactory_ ) ) // LTO
-    , agents_               ( *new AgentsModel( controllers, agentFactory_, staticModel ) )
-    , formations_           ( *new FormationModel( controllers, formationFactory_, agents_, staticModel ) )
-    , limits_               ( *new LimitsModel( controllers, staticModel.coordinateConverter_, idManager_ ) )
-    , weather_              ( *new WeatherModel( controllers.controller_, staticModel.coordinateConverter_ ) )
-    , profiles_             ( *new ProfilesModel( controllers, profileFactory_ ) )
-    , scores_               ( *new ScoresModel( scoreFactory_, teams_, staticModel.objectTypes_, staticModel.objectTypes_ ) )
-    , successFactors_       ( *new SuccessFactorsModel( successFactorFactory_ ) )
-    , urban_                ( *new UrbanModel( controllers, staticModel, objects_, idManager_ ) )
-    , drawings_             ( *new gui::DrawerModel( controllers, drawingFactory_, *this ) )
-    , ghosts_               ( *new GhostModel( controllers, ghostFactory_ ) )
-    , symbolsFactory_       ( *new SymbolFactory() )
-    , performanceIndicator_ ( *new PerformanceIndicator( *this ) )
+    , exercise_( *new Exercise( controllers.controller_ ) )
+    , teams_( *new TeamsModel( controllers, teamFactory_ ) )
+    , objects_( *new ObjectsModel( controllers, objectFactory_, staticModel.objectTypes_ ) )
+    , knowledgeGroups_( *new KnowledgeGroupsModel( controllers, knowledgeGroupFactory_ ) ) // LTO
+    , agents_( *new AgentsModel( controllers, agentFactory_, staticModel ) )
+    , formations_( *new FormationModel( controllers, formationFactory_, agents_, staticModel ) )
+    , limits_( *new LimitsModel( controllers, staticModel.coordinateConverter_, idManager_ ) )
+    , weather_( *new WeatherModel( controllers.controller_, staticModel.coordinateConverter_ ) )
+    , profiles_( *new ProfilesModel( controllers, profileFactory_ ) )
+    , scores_( *new ScoresModel( scoreFactory_, teams_, staticModel.objectTypes_, staticModel.objectTypes_ ) )
+    , successFactors_( *new SuccessFactorsModel( successFactorFactory_ ) )
+    , urban_( *new UrbanModel( controllers, staticModel, objects_, idManager_ ) )
+    , drawings_( *new gui::DrawerModel( controllers, drawingFactory_, *this ) )
+    , ghosts_( *new GhostModel( controllers, ghostFactory_ ) )
+    , symbolsFactory_( *new SymbolFactory() )
+    , performanceIndicator_( *new PerformanceIndicator( *this ) )
 {
     // NOTHING
 }
@@ -313,6 +314,7 @@ namespace
 void Model::Load( const tools::ExerciseConfig& config )
 {
     config.GetLoader().LoadFile( config.GetExerciseFile(), boost::bind( &Exercise::Load, &exercise_, _1 ) );
+    config_ = &config;
     config.GetLoader().LoadFile( config.GetSettingsFile(), boost::bind( &tools::ExerciseSettings::Load, &exercise_.GetSettings(), _1 ) );
     config.GetLoader().LoadOptionalFile( config.GetUrbanFile(), boost::bind( &UrbanModel::LoadUrban, &urban_, _1 ) );
     config.GetLoader().LoadOptionalFile( config.GetUrbanStateFile(), boost::bind( &UrbanModel::LoadUrbanState, &urban_, _1 ) );
@@ -492,4 +494,13 @@ bool Model::IsLoaded() const
 void Model::SetLoaded( bool status )
 {
     loaded_ = status;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::GetActionPlanning
+// Created: LDC 2012-09-21
+// -----------------------------------------------------------------------------
+std::string Model::GetActionPlanning() const
+{
+    return config_ ? config_->BuildExerciseChildFile( exercise_.GetActionPlanning() ) : exercise_.GetActionPlanning(); 
 }
