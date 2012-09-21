@@ -783,7 +783,7 @@ void LogisticSupplyPushFlowDialog::EraseRecipientData( const QString& recipient 
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::EraseRecipientData( int index )
 {
-    if( index >= recipients_.size() )
+    if( index >= static_cast< int >( recipients_.size() ))
         return;
     T_Recipients::iterator it = recipients_.begin(); std::advance( it, index );
     T_RecipientSupplies::iterator itSupplies = recipientSupplies_.find( *it );
@@ -944,7 +944,7 @@ void LogisticSupplyPushFlowDialog::OnResourcesValueChanged( int row, int col )
 
     const Dotation& dotationSelected = supplies_[ selection ];
     T_SuppliesVector& supplies = it->second;
-    if( row == supplies.size() )
+    if( row == static_cast< int >( supplies.size() ))
     {
         ObjectQuantity newDotation( selection, 1 );
         supplies.push_back( newDotation );
@@ -1016,7 +1016,7 @@ void LogisticSupplyPushFlowDialog::OnCarriersValueChanged( int row, int col )
     int newValue = itemValue.text().toInt();
 
     unsigned int equipementSelectedAvailable = carriersTypes_[ selection ];
-    if( row == carriers_.size() )
+    if( row == static_cast< int >( carriers_.size() ))
     {
         ObjectQuantity newEquipment( selection, 1 );
         carriers_.push_back( newEquipment );

@@ -258,6 +258,6 @@ int AfterActionFunctionList::GetIndex( actions::gui::Param_ABC* param ) const
 {
     for( std::size_t i = 0; i < paramList_.size(); ++i )
         if( paramList_[ i ].get() == param )
-            return i;
+            return static_cast< int >( i );
     return -1;
 }

@@ -870,7 +870,7 @@ void LogisticSupplyPullFlowDialog::OnResourcesValueChanged( int row, int col )
     int newValue = itemValue.text().toInt();
 
     const Dotation& dotationSelected = supplies_[ selection ];
-    if( row == supplierSupplies_.size() )
+    if( row == static_cast< int >( supplierSupplies_.size() ))
     {
         ObjectQuantity newDotation( selection, 1 );
         supplierSupplies_.push_back( newDotation );
@@ -943,7 +943,7 @@ void LogisticSupplyPullFlowDialog::OnCarriersValueChanged( int row, int col )
     int newValue = itemValue.text().toInt();
 
     unsigned int equipementSelectedAvailable = carriersTypes_[ selection ];
-    if( row == carriers_.size() )
+    if( row == static_cast< int >( carriers_.size() ))
     {
         ObjectQuantity newEquipment( selection, 1 );
         carriers_.push_back( newEquipment );
