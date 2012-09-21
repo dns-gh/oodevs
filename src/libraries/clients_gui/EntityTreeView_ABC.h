@@ -93,7 +93,7 @@ protected:
 protected slots:
     //! @name Slots
     //@{
-    void OnActivate( const QModelIndex& index );
+    virtual void OnActivate( const QModelIndex& index );
     void OnSelect( const QItemSelection& selected, const QItemSelection& deselected );
     void OnDataChanged( const QModelIndex& index, const QVariant& value );
     //@}

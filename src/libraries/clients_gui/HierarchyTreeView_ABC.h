@@ -65,6 +65,8 @@ protected:
     void UpdateItem( QStandardItem& entityItem, const kernel::Entity_ABC& entity );
     void UpdateBackgroundColor( QStandardItem& entityItem, const kernel::Entity_ABC& entity );
     virtual void AdditionalUpdateItem( QStandardItem& /*entityItem*/, const kernel::Entity_ABC& /*entity*/ ) {}
+    template< typename Entity >
+    bool AddItemIfPossible( const kernel::Entity_ABC& entity, QStandardItem* parent, QStandardItem*& ret );
     //@}
 
     //! @name Operations
@@ -73,7 +75,7 @@ protected:
     virtual void focusInEvent( QFocusEvent* event );
     //@}
 
-private:
+protected:
     //! @name Drag n drop
     //@{
     virtual bool CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const;
@@ -87,10 +89,6 @@ private:
     virtual void Drop( const kernel::KnowledgeGroup_ABC& /*item*/, const kernel::Entity_ABC& /*target*/ ) {}
     virtual void Drop( const kernel::AgentType& /*item*/, kernel::Entity_ABC& /*target*/ ) {}
     virtual void Drop( const kernel::AutomatType& /*item*/, kernel::Entity_ABC& /*target*/ ) {}
-
-    template< typename Entity >
-    bool AddItemIfPossible( const kernel::Entity_ABC& entity, QStandardItem* parent, QStandardItem*& ret );
-
     //@}
 
 signals:

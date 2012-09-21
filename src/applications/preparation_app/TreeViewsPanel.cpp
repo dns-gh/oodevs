@@ -10,15 +10,13 @@
 #include "preparation_app_pch.h"
 #include "TreeViewsPanel.h"
 #include "moc_TreeViewsPanel.cpp"
-#include "ModelBuilder.h"
-#include "TacticalTreeView.h"
-#include "PreparationProfile.h"
 #include "CommunicationTreeView.h"
+#include "LogisticTreeView.h"
+#include "ModelBuilder.h"
+#include "PreparationProfile.h"
+#include "TacticalTreeView.h"
 #include "UrbanTreeView.h"
 #include "clients_gui/ObjectTreeView.h"
-// #include "PopulationTreeView.h"
-// #include "LogisticTreeView.h"
-// #include "InhabitantTreeView.h"
 #include "clients_gui/EntityTreeView.h"
 #include "clients_gui/SearchTreeView.h"
 #include "clients_gui/GlProxy.h"
@@ -123,15 +121,15 @@ void TreeViewsPanel::CreateUnitTabWidget( QTabWidget* parent, QTabWidget* tabWid
         Configure( searchTreeView, treeViews, aggregateToolbar, ePreparationMode_Terrain );
         parent->addTab( searchTreeView, tools::translate( "DockContainer","Communication" ) );
     }
-/*    // Logistic
+    // Logistic
     {
-        gui::SearchTreeView_ABC* searchTreeView = new gui::SearchTreeView< LogisticTreeView >( tabWidget, controllers, factory, PreparationProfile::GetProfile(), icons, modelBuilder );
+        gui::SearchTreeView_ABC* searchTreeView = new gui::SearchTreeView< LogisticTreeView >( tabWidget, controllers, PreparationProfile::GetProfile(), modelBuilder, icons );
         trees.push_back( static_cast< gui::HierarchyTreeView_ABC* >( searchTreeView->GetRichTreeView() ) );
         connect( trees.back(), SIGNAL( TreeViewFocusIn( gui::HierarchyTreeView_ABC* ) ), SLOT( FocusIn( gui::HierarchyTreeView_ABC* ) ) );
         Configure( searchTreeView, treeViews, aggregateToolbar, ePreparationMode_Terrain );
         parent->addTab( searchTreeView, tools::translate( "DockContainer", "Logistic" ) );
     }
-*/
+
 }
 
 // -----------------------------------------------------------------------------

@@ -164,6 +164,9 @@
     <Filter Include="Source Files\Panels\Preferences">
       <UniqueIdentifier>{c38c4f1c-939e-4cea-9a40-e7a7ce285b71}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\TreeView">
+      <UniqueIdentifier>{e5fb827d-01f4-45c8-9c6a-662c4192daca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\applications\gaming_app\Application.cpp">
@@ -796,6 +799,9 @@
     <ClCompile Include="..\..\src\applications\gaming_app\ObjectStateDialog.cpp">
       <Filter>Source Files\Dialogs\Magic actions</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\LogisticTreeView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\gaming_app\Config.h">
@@ -1149,6 +1155,7 @@
     <ClInclude Include="..\..\src\applications\gaming_app\BypassPrototype.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\LogisticTreeView.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\gaming_app\ObjectKnowledgePanel.inl">

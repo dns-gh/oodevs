@@ -1146,6 +1146,17 @@ Voulez-vous le supprimer?</translation>
     </message>
 </context>
 <context>
+    <name>gui::LogisticTreeView</name>
+    <message>
+        <source>Unsupported units</source>
+        <translation>Unités non soutenues</translation>
+    </message>
+    <message>
+        <source>Supported units</source>
+        <translation>Unités soutenues</translation>
+    </message>
+</context>
+<context>
     <name>gui::MedicalTreatmentPrototype_ABC</name>
     <message>
         <source>MedicalTreatment parameters</source>

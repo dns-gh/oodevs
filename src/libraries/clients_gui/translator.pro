@@ -55,6 +55,7 @@ LodgingPrototype_ABC.cpp \
 Logger.cpp \
 LodgingPrototype_ABC.cpp \
 LogisticListView.cpp \
+LogisticTreeView.cpp \
 LogisticPrototype_ABC.cpp \
 MedicalTreatmentPrototype_ABC.cpp \
 MetricsLayer.cpp \

@@ -90,7 +90,7 @@ void RichTreeView::Purge()
 // -----------------------------------------------------------------------------
 void RichTreeView::EnableDragAndDrop( bool enable )
 {
-    dataModel_.SetDragAndDropObserver( enable? this : 0 );
+    dataModel_.SetDragAndDropObserver( enable ? this : 0 );
     setDragEnabled( enable );
     setAcceptDrops( enable );
     setDropIndicatorShown( enable );

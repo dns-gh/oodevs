@@ -194,6 +194,7 @@
     <ClCompile Include="..\..\src\applications\preparation_app\LogisticLinksEditor.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\LogisticListView.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\LogisticStockEditor.cpp" />
+    <ClCompile Include="..\..\src\applications\preparation_app\LogisticTreeView.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\LongNameEditor.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\main.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\MainWindow.cpp" />
@@ -548,6 +549,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\LogisticTreeView.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\ModelConsistencyDialog.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>

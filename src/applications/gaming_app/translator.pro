@@ -65,6 +65,7 @@ KnowledgeGroupMagicOrdersInterface.cpp \
 LendingsListView.cpp \
 LoginDialog.cpp \
 LogisticListView.cpp \
+LogisticTreeView.cpp \
 LogisticStatusWidgets.cpp \
 LogisticSupplyChangeQuotasDialog.cpp \
 LogisticSupplyPullFlowDialog.cpp \

@@ -21,6 +21,7 @@
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Hierarchies.h"
 #include "clients_kernel/Options.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 
 using namespace gui;
@@ -185,6 +186,10 @@ void HierarchyTreeView_ABC::UpdateItem( QStandardItem& entityItem, const kernel:
     AdditionalUpdateItem( entityItem, entity );
 }
 
+// -----------------------------------------------------------------------------
+// Name: HierarchyTreeView_ABC::GetDecoration
+// Created: ABR 2012-09-14
+// -----------------------------------------------------------------------------
 void HierarchyTreeView_ABC::UpdateBackgroundColor( QStandardItem& entityItem, const kernel::Entity_ABC& entity )
 {
     // TODO Move following to preparation or gui reimplementation, no ghost on gaming ... or not, all color could also be handle here (log missing, tacticaly destroyed, etc.), options are permissive for that, and it anticipate a gaming/prepa merge
@@ -294,13 +299,12 @@ void HierarchyTreeView_ABC::Drop( const QString& mimeType, void* data, QStandard
 void HierarchyTreeView_ABC::dragMoveEvent( QDragMoveEvent *pEvent )
 {
     // TODO factoriser la méthode
-    if( IsReadOnly() )
+    if( IsReadOnly()  )
     {
         pEvent->ignore();
         return;
     }
-    EntityTreeView_ABC::dragMoveEvent( pEvent );
-    QPoint position = viewport()->mapFromParent( pEvent->pos() );
+    //EntityTreeView_ABC::dragMoveEvent( pEvent );
     kernel::Entity_ABC* target = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( indexAt( pEvent->pos() ) );
     const QMimeData* mimeData = pEvent->mimeData();
 
@@ -351,7 +355,7 @@ void HierarchyTreeView_ABC::dragMoveEvent( QDragMoveEvent *pEvent )
                 if( safePtr && *safePtr )
                 {
                     const kernel::Entity_ABC* entity = *safePtr;
-                    if( entity->GetId() != target->GetId() && CanChangeSuperior( *entity, *target ) )
+                    if( entity->GetId() != target->GetId() && CanChangeSuperior( *entity, *target ) && profile_.CanDoMagic( *entity ) && profile_.CanDoMagic( *target ))
                     {
                         pEvent->accept();
                         return;
@@ -364,7 +368,7 @@ void HierarchyTreeView_ABC::dragMoveEvent( QDragMoveEvent *pEvent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: HierarchyListView_ABC::focusInEvent
+// Name: HierarchyTreeView_ABC::focusInEvent
 // Created: LGY 2012-06-29
 // -----------------------------------------------------------------------------
 void HierarchyTreeView_ABC::focusInEvent( QFocusEvent* event )
