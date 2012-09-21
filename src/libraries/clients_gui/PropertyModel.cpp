@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "PropertyModel.h"
+#include "moc_PropertyModel.cpp"
 #include "PropertyItem.h"
 #include "PropertyDisplayer.h"
 

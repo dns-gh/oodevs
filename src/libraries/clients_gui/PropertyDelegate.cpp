@@ -10,6 +10,8 @@
 #include "clients_gui_pch.h"
 #include "PropertyDelegate.h"
 #include "PropertyModel.h"
+#include "clients_kernel/ActionController.h"
+#include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Property_ABC.h"
 #include "clients_kernel/VariantPointer.h"
 
@@ -19,8 +21,9 @@ using namespace gui;
 // Name: PropertyDelegate constructor
 // Created: LGY 2012-08-13
 // -----------------------------------------------------------------------------
-PropertyDelegate::PropertyDelegate( kernel::EditorFactory_ABC& factory )
-    : factory_( factory )
+PropertyDelegate::PropertyDelegate( kernel::ActionController& actionController, kernel::EditorFactory_ABC& factory )
+    : actionController_( actionController )
+    , factory_( factory )
 {
     // NOTHING
 }
@@ -52,7 +55,14 @@ QWidget* PropertyDelegate::createEditor( QWidget* parent, const QStyleOptionView
 void PropertyDelegate::setModelData( QWidget* editor, QAbstractItemModel * model, const QModelIndex & index ) const
 {
     if( PropertyModel* standardModel = static_cast< PropertyModel* >( model ) )
+    {
+        actionController_.BlockSelection( true );
+
         standardModel->Update( editor, index );
+
+        actionController_.BlockSelection( false );
+        QMetaObject::invokeMethod( standardModel, "InternalItemChanged" );
+    }
 }
 
 // -----------------------------------------------------------------------------

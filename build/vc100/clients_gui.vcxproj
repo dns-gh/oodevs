@@ -130,6 +130,7 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\LinkInterpreter_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ListView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\LogisticListView.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\LogisticTreeView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\LongNameHelper.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ModalDialog.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\NatureEditionCategory.cpp" />
@@ -683,6 +684,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\LogisticTreeView.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\LongNameHelper.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\ModalDialog.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\NumericLimitsEditor.h">
@@ -702,24 +704,40 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\ModelObserver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\ObjectTreeView.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\OverFlyingColorModifier.h" />
-    <ClInclude Include="..\..\src\libraries\clients_gui\PropertyDelegate.h" />
+    <CustomBuild Include="..\..\src\libraries\clients_gui\PropertyDelegate.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing %(Filename).h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(Filename).h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\PropertyDialog.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\PropertyDisplayer.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\PropertyItem.h" />
-    <ClInclude Include="..\..\src\libraries\clients_gui\PropertyModel.h">
+    <CustomBuild Include="..\..\src\libraries\clients_gui\PropertyModel.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc%27ing %(Filename).h</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing %(Filename).h</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(Filename).h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing "%(FullPath)"</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing "%(FullPath)"</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-    </ClInclude>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\PropertyTreeView.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\resources.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\StatusBar.h">
@@ -1156,7 +1174,20 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\PropertiesPanel.h" />
+    <CustomBuild Include="..\..\src\libraries\clients_gui\PropertiesPanel.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing %(Filename).h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(Filename).h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\GQ_Plot.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>

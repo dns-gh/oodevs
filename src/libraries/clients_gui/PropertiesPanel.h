@@ -45,6 +45,8 @@ class PropertiesPanel : public QScrollArea
                       , public tools::ElementObserver_ABC< kernel::DictionaryUpdated >
                       , private boost::noncopyable
 {
+    Q_OBJECT
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -61,6 +63,12 @@ private:
     virtual void NotifyUpdated( const kernel::DictionaryUpdated& message );
     virtual void NotifyDeleted( const kernel::DictionaryUpdated& message );
     virtual void NotifyCreated( const kernel::DictionaryUpdated& message );
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnItemChanged();
     //@}
 
 private:

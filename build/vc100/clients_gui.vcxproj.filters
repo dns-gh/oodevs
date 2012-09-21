@@ -913,6 +913,9 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\ItemPixmapDelegate.cpp">
       <Filter>Source Files\MVC\View</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\LogisticTreeView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -1007,9 +1010,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\SubItemDisplayer.h">
       <Filter>Source Files\Tools\Displayers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\PropertiesPanel.h">
-      <Filter>Source Files\Tools\Editors</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\GQ_PlotDataBBox.h">
       <Filter>Source Files\Tools\Graphs</Filter>
@@ -1416,9 +1416,6 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\Application_ABC.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\PropertyDelegate.h">
-      <Filter>Source Files\MVC\View</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\PropertyItem.h">
       <Filter>Source Files\MVC\View</Filter>
     </ClInclude>
@@ -1433,9 +1430,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\PropertyDisplayer.h">
       <Filter>Source Files\Tools\Editors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\PropertyModel.h">
-      <Filter>Source Files\MVC\Model</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\HierarchyTreeView.h">
       <Filter>Source Files\MVC\View</Filter>
@@ -1466,6 +1460,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\DragAndDropHelpers.h">
       <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\LogisticTreeView.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1875,6 +1872,15 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\SearchTreeView.h">
       <Filter>Source Files\MVC\View</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\PropertiesPanel.h">
+      <Filter>Source Files\Tools\Editors</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\PropertyDelegate.h">
+      <Filter>Source Files\MVC\View</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\PropertyModel.h">
+      <Filter>Source Files\MVC\Model</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

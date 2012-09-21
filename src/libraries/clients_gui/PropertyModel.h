@@ -28,6 +28,8 @@ class PropertyModel : public QStandardItemModel
                     , public kernel::Displayer_ABC
                     , public tools::Caller< kernel::Property_ABC* >
 {
+    Q_OBJECT
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -66,6 +68,12 @@ private:
     void Update( QStandardItem* parent, QStandardItem* property );
     QStandardItem* FindParent( QStandardItem* item ) const;
     QStandardItem* FindItem( QStandardItem* item, const QString& text ) const;
+    //@}
+
+signals:
+    //! @name Signals
+    //@{
+    void InternalItemChanged();
     //@}
 
 private:

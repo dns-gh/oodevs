@@ -11,9 +11,11 @@
 
 #include "clients_gui_pch.h"
 #include "PropertiesPanel.h"
+#include "moc_PropertiesPanel.cpp"
 #include "PropertyTreeView.h"
 #include "PropertyModel.h"
 #include "PropertyDelegate.h"
+#include "clients_kernel/ActionController.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/DictionaryUpdated.h"
@@ -32,13 +34,14 @@ PropertiesPanel::PropertiesPanel( QWidget* parent, kernel::Controllers& controll
     , glProxy_    ( glProxy )
     , selected_   ( 0 )
     , view_       ( new PropertyTreeView() )
-    , delegate_   ( new PropertyDelegate( factory ) )
+    , delegate_   ( new PropertyDelegate( controllers.actions_, factory ) )
     , model_      ( new PropertyModel( displayer ) )
 {
     view_->setModel( model_ );
     view_->setItemDelegate( delegate_ );
     setWidget( view_ );
     setWidgetResizable( true );
+    connect( model_, SIGNAL( InternalItemChanged() ), this, SLOT( OnItemChanged() ) );
     controllers_.Register( *this );
 }
 
@@ -131,5 +134,21 @@ void PropertiesPanel::NotifyCreated( const kernel::DictionaryUpdated& message )
             dictionary->Display( message.GetEntry(), *model_ );
             view_->Display();
         }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropertiesPanel::OnItemChanged
+// Created: ABR 2012-09-20
+// -----------------------------------------------------------------------------
+void PropertiesPanel::OnItemChanged()
+{
+    if( selected_ )
+    {
+        selected_->Select( controllers_.actions_ );
+
+        kernel::ActionController::T_Selectables list;
+        list.push_back( selected_ );
+        selected_->MultipleSelect( controllers_.actions_, list );
     }
 }
