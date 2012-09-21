@@ -59,7 +59,6 @@ QStandardItem* StandardModel::AddChildTextItem( QStandardItem* root, int row, in
     return item;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: StandardModel::AddRootDataItem
 // Created: ABR 2012-09-19
@@ -77,7 +76,7 @@ QStandardItem* StandardModel::AddRootDataItem( int row, int col, const QString& 
 // -----------------------------------------------------------------------------
 template< typename T >
 inline
-QStandardItem* StandardModel::AddChildDataItem( QStandardItem* parent, int row, int col, const QString& text, const QString& tooltip, const T& value, Qt::ItemFlags flags /*= 0*/ )
+QStandardItem* StandardModel::AddChildDataItem( QStandardItem* root, int row, int col, const QString& text, const QString& tooltip, const T& value, Qt::ItemFlags flags /*= 0*/ )
 {
     QStandardItem* item = AddChildTextItem( root, row, col, text, tooltip, flags );
 
@@ -85,6 +84,7 @@ QStandardItem* StandardModel::AddChildDataItem( QStandardItem* parent, int row, 
     variant->setValue( kernel::VariantPointer( &value ) );
     item->setData( *variant, DataRole );
     item->setData( *new QVariant( false ), SafeRole );
+    item->setData( QString( typeid( T ).name() ), MimeTypeRole );
 
     return item;
 }
@@ -154,16 +154,14 @@ namespace
         for( int row = 0; row < root->rowCount(); ++row )
         {
             QStandardItem* childItem = root->child( row, 0 );
-            if( childItem )
+            assert( childItem );
+            if( childItem->text() == text )
+                return childItem;
+            else
             {
-                if( childItem->text() == text )
-                    return childItem;
-                else
-                {
-                    QStandardItem* result = RecFindTextItem( childItem, text );
-                    if( result )
-                        return result;
-                }
+                QStandardItem* result = RecFindTextItem( childItem, text );
+                if( result )
+                    return result;
             }
         }
         return 0;
@@ -182,17 +180,15 @@ namespace
         for( int row = 0; row < root->rowCount(); ++row )
         {
             QStandardItem* childItem = root->child( row, 0 );
-            if( childItem )
+            assert( childItem );
+            const T* concretChildEntity = model.GetDataFromItem< T >( *childItem );
+            if( concretChildEntity == &value )
+                return childItem;
+            else
             {
-                const T* concretChildEntity = model.GetDataFromItem< T >( *childItem );
-                if( concretChildEntity == &value )
-                    return childItem;
-                else
-                {
-                    QStandardItem* result = RecFindDataItem( model, childItem, value );
-                    if( result )
-                        return result;
-                }
+                QStandardItem* result = RecFindDataItem( model, childItem, value );
+                if( result )
+                    return result;
             }
         }
         return 0;
@@ -210,26 +206,24 @@ namespace
         for( int row = 0; row < root->rowCount(); )
         {
             QStandardItem* childItem = root->child( row, 0 );
-            if( childItem )
-            {
-                RecPurgeObsoleteSafeItem< T >( childItem );
+            assert( childItem );
+            RecPurgeObsoleteSafeItem< T >( childItem );
 
-                if( childItem->data( StandardModel::SafeRole ).isValid() && childItem->data( StandardModel::SafeRole ).toBool() &&
-                    childItem->data( StandardModel::DataRole ).isValid() )
+            if( childItem->data( StandardModel::SafeRole ).isValid() && childItem->data( StandardModel::SafeRole ).toBool() &&
+                childItem->data( StandardModel::DataRole ).isValid() )
+            {
+                const kernel::SafePointer< T >* childEntity = static_cast< const kernel::SafePointer< T >* >( childItem->data( StandardModel::DataRole ).value< kernel::VariantPointer >().ptr_ );
+                if( childEntity && *childEntity == 0 )
                 {
-                    const kernel::SafePointer< T >* childEntity = static_cast< const kernel::SafePointer< T >* >( childItem->data( StandardModel::DataRole ).value< kernel::VariantPointer >().ptr_ );
-                    if( childEntity && *childEntity == 0 )
-                    {
-                        QList< QStandardItem* > rowItems = root->takeRow( row );
-                        for( QList< QStandardItem *>::iterator it = rowItems.begin(); it != rowItems.end(); ++it )
-                            delete *it;
-                    }
-                    else
-                        ++row;
+                    QList< QStandardItem* > rowItems = root->takeRow( row );
+                    for( QList< QStandardItem *>::iterator it = rowItems.begin(); it != rowItems.end(); ++it )
+                        delete *it;
                 }
                 else
                     ++row;
             }
+            else
+                ++row;
         }
     }
 }
@@ -240,9 +234,9 @@ namespace
 // -----------------------------------------------------------------------------
 template< typename T >
 inline
-T* StandardModel::FindData( const T& value ) const
+T* StandardModel::FindData( const T& value, QStandardItem* root /*= 0*/ ) const
 {
-    QStandardItem* item = FindDataItem( value );
+    QStandardItem* item = FindDataItem( value, root );
     if( item )
         return GetDataFromItem( *item );
     return 0;
@@ -264,9 +258,9 @@ QStandardItem* StandardModel::FindTextItem( const QString& text, QStandardItem* 
 // -----------------------------------------------------------------------------
 template< typename T >
 inline
-QStandardItem* StandardModel::FindDataItem( const T& value ) const
+QStandardItem* StandardModel::FindDataItem( const T& value, QStandardItem* root /*= 0*/ ) const
 {
-    return RecFindDataItem( *this, invisibleRootItem(), value );
+    return RecFindDataItem( *this, root ? root : invisibleRootItem(), value );
 }
 
 // -----------------------------------------------------------------------------
@@ -278,6 +272,74 @@ inline
 void StandardModel::PurgeObsoleteSafeItem()
 {
     RecPurgeObsoleteSafeItem< T >( invisibleRootItem() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: StandardModel::DeleteTree
+// Created: ABR 2012-09-20
+// -----------------------------------------------------------------------------
+inline
+void StandardModel::DeleteTree( QStandardItem* item )
+{
+    if( !item )
+        return;
+    PurgeChildren( *item );
+    DeleteItemRow( item );
+}
+
+// -----------------------------------------------------------------------------
+// Name: StandardModel::DeleteItemRow
+// Created: ABR 2012-09-20
+// -----------------------------------------------------------------------------
+inline
+void StandardModel::DeleteItemRow( QStandardItem* item )
+{
+    QStandardItem* parentItem = item->parent();
+    if( parentItem )
+    {
+        // $$$$ ABR 2012-09-20: Delete safe pointer if needed
+        if( item->data( StandardModel::SafeRole ).isValid() && item->data( StandardModel::SafeRole ).toBool() &&
+            item->data( StandardModel::DataRole ).isValid() )
+        {
+            controllers_.Unregister( *const_cast< tools::Observer_ABC* >( static_cast< const tools::Observer_ABC* >( item->data( StandardModel::DataRole ).value< kernel::VariantPointer >().ptr_ ) ) );
+            delete item->data( StandardModel::DataRole ).value< kernel::VariantPointer >().ptr_;
+        }
+        // $$$$ ABR 2012-09-20: Delete row
+        QList< QStandardItem* > rowItems = parentItem->takeRow( item->row() );
+        for( QList< QStandardItem* >::iterator it = rowItems.begin(); it != rowItems.end(); ++it )
+        {
+            QStandardItem* rowItem = *it;
+            delete rowItem;
+            rowItem = 0;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: StandardModel::PurgeChildren
+// Created: ABR 2012-09-20
+// -----------------------------------------------------------------------------
+inline
+void StandardModel::PurgeChildren( QStandardItem& item )
+{
+    while( item.rowCount() )
+    {
+        QStandardItem* childItem = item.child( 0, 0 );
+        assert( childItem );
+        DeleteTree( childItem );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: StandardModel::MoveItem
+// Created: ABR 2012-09-20
+// -----------------------------------------------------------------------------
+inline
+void StandardModel::MoveItem( QStandardItem& item, QStandardItem& newParent )
+{
+    QStandardItem* parentItem = item.parent();
+    if( parentItem )
+        newParent.appendRow( parentItem->takeRow( item.row() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -297,9 +359,23 @@ T* StandardModel::GetDataFromItem( const QStandardItem& item ) const
                 return safePtr->ConstCast();
         }
         else
+        {
             return const_cast< T* >( static_cast< const T* >( item.data( DataRole ).value< kernel::VariantPointer >().ptr_ ) );
+        }
     }
     return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: StandardModel::GetItemFromIndex
+// Created: ABR 2012-09-21
+// -----------------------------------------------------------------------------
+inline
+QStandardItem* StandardModel::GetItemFromIndex( const QModelIndex& index ) const
+{
+    if( !index.isValid() )
+        return 0;
+    return itemFromIndex( index.model() == this ? index : proxy_.mapToSource( index ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -310,9 +386,7 @@ template< typename T >
 inline
 T* StandardModel::GetDataFromIndex( const QModelIndex& index ) const
 {
-    if( !index.isValid() )
-        return 0;
-    QStandardItem* item = itemFromIndex( index.model() == this ? index : proxy_.mapToSource( index ) );
+    QStandardItem* item = GetItemFromIndex( index );
     if( !item )
         return 0;
     return GetDataFromItem< T >( *item );

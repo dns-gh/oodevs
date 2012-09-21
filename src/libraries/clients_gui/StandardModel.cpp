@@ -110,9 +110,10 @@ void StandardModel::Accept( StandardModelVisitor_ABC& visitor, QStandardItem* ro
 // -----------------------------------------------------------------------------
 void StandardModel::Purge()
 {
-    // $$$$ ABR 2012-08-14: TODO
-}
 
+    //if( invisibleRootItem() )
+    //    PurgeChildren( *invisibleRootItem() );
+}
 
 // -----------------------------------------------------------------------------
 // Name: StandardModel::HasAnyChildVisible
@@ -124,12 +125,10 @@ bool StandardModel::HasAnyChildVisible( QStandardItem& root, T_FilterFunction fu
     for( int row = 0; row < root.rowCount(); ++row )
     {
         QStandardItem* childItem = root.child( row, 0 );
-        if( childItem )
-        {
-            bool childVisible = HasAnyChildVisible( *childItem, func );
-            childItem->setData( childVisible ? StandardModel::showValue_ : StandardModel::hideValue_, StandardModel::FilterRole );
-            isVisible = isVisible || childVisible;
-        }
+        assert( childItem );
+        bool childVisible = HasAnyChildVisible( *childItem, func );
+        childItem->setData( childVisible ? StandardModel::showValue_ : StandardModel::hideValue_, StandardModel::FilterRole );
+        isVisible = isVisible || childVisible;
     }
     return isVisible;
 }
@@ -143,8 +142,8 @@ void StandardModel::ApplyFilter( T_FilterFunction func )
     for( int row = 0; row < rowCount(); ++row )
     {
         QStandardItem* childItem = item( row, 0 );
-        if( childItem )
-            childItem->setData( ( HasAnyChildVisible( *childItem, func ) ) ? StandardModel::showValue_ : StandardModel::hideValue_, StandardModel::FilterRole );
+        assert( childItem );
+        childItem->setData( ( HasAnyChildVisible( *childItem, func ) ) ? StandardModel::showValue_ : StandardModel::hideValue_, StandardModel::FilterRole );
     }
 }
 

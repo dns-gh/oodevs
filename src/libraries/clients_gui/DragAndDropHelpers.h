@@ -10,6 +10,7 @@
 #ifndef __DragAndDropHelpers_h_
 #define __DragAndDropHelpers_h_
 
+#include "StandardModel.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include <QtGui/qevent.h>
@@ -21,6 +22,18 @@ namespace kernel
 
 namespace dnd
 {
+    template< typename T >
+    bool IsA( QStandardItem& item )
+    {
+        if( item.data( gui::StandardModel::MimeTypeRole ).isValid() )
+        {
+            std::string tmp1 = typeid( T ).name();
+            std::string tmp2 = item.data( gui::StandardModel::MimeTypeRole ).toString();
+            return typeid( T ).name() == item.data( gui::StandardModel::MimeTypeRole ).toString();
+        }
+        return typeid( T ).name() == typeid( QString ).name();
+    }
+
     template< typename T >
     bool HasData( const QDropEvent* event )
     {
@@ -102,6 +115,18 @@ namespace dnd
             return static_cast< kernel::Entity_ABC* >( data );
         if( T3* data = FindSafeData< T3 >( event ) )
             return static_cast< kernel::Entity_ABC* >( data );
+        return 0;
+    }
+
+    template< typename T1, typename T2, typename T3  >
+    kernel::Entity_ABC* FindSafeEntityData( const gui::StandardModel& model, QStandardItem& item )
+    {
+        if( IsA< T1 >( item ) )
+            return static_cast< kernel::Entity_ABC* >( model.GetDataFromItem< T1 >( item ) );
+        if( IsA< T2 >( item ) )
+            return static_cast< kernel::Entity_ABC* >( model.GetDataFromItem< T2 >( item ) );
+        if( IsA< T3 >( item ) )
+            return static_cast< kernel::Entity_ABC* >( model.GetDataFromItem< T3 >( item ) );
         return 0;
     }
 

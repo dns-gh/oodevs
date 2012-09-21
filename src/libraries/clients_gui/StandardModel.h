@@ -77,25 +77,29 @@ public:
     void Purge();
     template< typename T >
     void PurgeObsoleteSafeItem();
+    void DeleteTree( QStandardItem* item );
+    void DeleteItemRow( QStandardItem* item );
+    void PurgeChildren( QStandardItem& item );
+    void MoveItem( QStandardItem& item, QStandardItem& newParent );
 
     QStandardItem* AddRootItem( int row, int col, Qt::ItemFlags flags = 0 );
-    QStandardItem* AddChildItem( QStandardItem* parent, int row, int col, Qt::ItemFlags flags = 0 );
+    QStandardItem* AddChildItem( QStandardItem* root, int row, int col, Qt::ItemFlags flags = 0 );
 
     QStandardItem* AddRootTextItem( int row, int col, const QString& text, const QString& tooltip, Qt::ItemFlags flags = 0 );
-    QStandardItem* AddChildTextItem( QStandardItem* parent, int row, int col, const QString& text, const QString& tooltip, Qt::ItemFlags flags = 0 );
+    QStandardItem* AddChildTextItem( QStandardItem* root, int row, int col, const QString& text, const QString& tooltip, Qt::ItemFlags flags = 0 );
 
     template< typename T >
     QStandardItem* AddRootSafeItem( int row, int col, const QString& text, const QString& tooltip, const T& value, Qt::ItemFlags flags = 0 );
     template< typename T >
-    QStandardItem* AddChildSafeItem( QStandardItem* parent, int row, int col, const QString& text, const QString& tooltip, const T& value, Qt::ItemFlags flags = 0 );
+    QStandardItem* AddChildSafeItem( QStandardItem* root, int row, int col, const QString& text, const QString& tooltip, const T& value, Qt::ItemFlags flags = 0 );
 
     template< typename T >
     QStandardItem* AddRootDataItem( int row, int col, const QString& text, const QString& tooltip, const T& value, Qt::ItemFlags flags = 0 );
     template< typename T >
-    QStandardItem* AddChildDataItem( QStandardItem* parent, int row, int col, const QString& text, const QString& tooltip, const T& value, Qt::ItemFlags flags = 0 );
+    QStandardItem* AddChildDataItem( QStandardItem* root, int row, int col, const QString& text, const QString& tooltip, const T& value, Qt::ItemFlags flags = 0 );
 
     QStandardItem* AddRootIconItem( int row, int col, const QPixmap& pixmap, Qt::ItemFlags flags = 0 );
-    QStandardItem* AddChildIconItem( QStandardItem* parent, int row, int col, const QPixmap& pixmap, Qt::ItemFlags flags = 0 );
+    QStandardItem* AddChildIconItem( QStandardItem* root, int row, int col, const QPixmap& pixmap, Qt::ItemFlags flags = 0 );
 
     QModelIndex GetMainModelIndex( const QModelIndex& index ) const;
     //@}
@@ -106,16 +110,17 @@ public:
     T* GetDataFromItem( const QStandardItem& item ) const;
     template< typename T >
     T* GetDataFromIndex( const QModelIndex& index ) const;
+    QStandardItem* GetItemFromIndex( const QModelIndex& index ) const;
     //@}
 
     //! @name Find
     //@{
     template< typename T >
-    T* FindData( const T& value ) const;
+    T* FindData( const T& value, QStandardItem* root = 0 ) const;
 
     QStandardItem* FindTextItem( const QString& text, QStandardItem* root = 0 ) const;
     template< typename T >
-    QStandardItem* FindDataItem( const T& value ) const;
+    QStandardItem* FindDataItem( const T& value, QStandardItem* root = 0 ) const;
     //@}
 
     //! @name Filters
