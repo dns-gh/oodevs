@@ -1014,7 +1014,7 @@ que pourrait subir l'agent dans son efficacité à résoudre la tâche de groupe
             <argument name="typeObject">
                 <description>Type de l'objet ( par exemple eTypeObjectJammingArea ).</description>
                 <type>
-                    <simple name="numeric"/>
+                    <simple name="string"/>
                 </type>
             </argument>
         </method>
