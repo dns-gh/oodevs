@@ -419,8 +419,7 @@ void TransferArchive( cpplog::BaseLogger& log, Archive* dst, Archive* src, const
         err = archive_write_header( dst, entry );
         if( err != ARCHIVE_OK )
             CheckArchiveCode( log, dst, err );
-        else if( archive_entry_size( entry ) > 0 )
-            CopyBlocks( log, src, dst );
+        CopyBlocks( log, src, dst );
         err = archive_write_finish_entry( dst );
         if( err != ARCHIVE_OK )
             CheckArchiveCode( log, dst, err );
