@@ -261,7 +261,7 @@
     </target>
 
     <target name="library.web_control_plugin" depends="library.protocol" description="build web_control_plugin static library">
-        <build-lib name="web_control_plugin" pattern="lib${ant.project.name}_web_control_plugin-${platform}-mt@{suffix}" suffix="-gd"/>
+        <build-lib name="web_control_plugin" pattern="lib${ant.project.name}_web_control_plugin-${platform}-mt@{suffix}" suffix="-gd" failonwarning="${failonwarning}"/>
     </target>
 
     <target name="library.web_control_plugin_dll" depends="library.web_control_plugin" description="build web_control_plugin dynamic library">
