@@ -27,3 +27,8 @@ integration.pcEstBrouille = function( self )
     local pc = DEC_Pion_PionPCDeAutomate( self.source )
     return DEC_Agent_EstBrouille( pc ) or DEC_Agent_EstEnSilenceRadioEmission( pc ) or DEC_Agent_EstEnSilenceRadioReception( pc )
 end
+
+
+integration.getName = function( agent )
+    return DEC_GetSzName( agent.source )
+end
