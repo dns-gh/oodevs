@@ -14,7 +14,7 @@
 #include "ModelConstraint_ABC.h"
 #include "IsEmptyModelVisitor.h"
 #include <core/Model.h>
-#include <turtle/detail/check.hpp>
+#include <turtle/matcher.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/bind.hpp>
 #include <iomanip>
@@ -180,18 +180,18 @@ private:
     {
     public:
         ConstraintWrapper( T t )
-            : check_( t )
+            : matcher_( t )
         {}
         virtual bool Check( const Model& /*expected*/, const core::Model& actual )
         {
-            return check_( actual );
+            return matcher_( actual );
         }
         virtual void Serialize( const Model& /*expected*/, std::ostream& os, std::size_t /*indent*/ ) const
         {
-            os << check_;
+            os << matcher_;
         }
     private:
-        mock::detail::check< const core::Model&, T > check_;
+        mock::matcher< const core::Model&, T > matcher_;
     };
 
     class EmptyConstraint : public ModelConstraint_ABC
