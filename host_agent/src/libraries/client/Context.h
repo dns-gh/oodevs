@@ -13,11 +13,13 @@
 #include "runtime/Async.h"
 
 #include <boost/filesystem/path.hpp>
+#include <boost/property_tree/ptree_fwd.hpp>
 #include <boost/scoped_ptr.hpp>
 
-#include <QMutex>
+#include <QReadWriteLock>
 #include <QNetworkRequest>
 #include <QNetworkReply>
+#include <QPointer>
 #include <QUrl>
 
 namespace host
@@ -34,9 +36,11 @@ namespace runtime
 
 namespace gui
 {
-    struct QAsync;
+    typedef boost::property_tree::ptree Tree;
     typedef boost::filesystem::path Path;
-    class ItemModel;
+    struct  Download;
+    class   ItemModel;
+    struct  QAsync;
 }
 
 namespace gui
@@ -53,6 +57,7 @@ enum Command
 enum HttpCommand
 {
     HTTP_CMD_GET_SESSION,
+    HTTP_CMD_DOWNLOAD_INSTALL,
     HTTP_CMD_COUNT,
 };
 
@@ -75,13 +80,22 @@ public:
 signals:
     void Exit();
     void StatusMessage( const QString& );
-    void Progress( bool visible, int min, int max );
+    void ClearMessage();
+    void ShowProgress( int min, int max );
+    void ClearProgress();
     void NetworkRequest( HttpCommand cmd, const QNetworkRequest& req );
+    void CheckAbort( QPointer< QNetworkReply > ptr );
 
 public slots:
     void OnRemove();
     void OnGetSession();
     void ParseSession( QNetworkReply* rpy );
+    void OnDownloadInstall();
+    void OnDownloadRead();
+
+private:
+    typedef boost::shared_ptr< Download > T_Download;
+    typedef QHash< int, T_Download >      T_Downloads;
 
 private:
     void ParseArguments();
@@ -90,6 +104,8 @@ private:
     void Unregister();
     void ParseRoot();
     void GetSession();
+    void AddItem( const Tree& src, const std::string& type );
+    void Unpack( T_Download down );
 
 private:
     const runtime::Runtime_ABC& runtime_;
@@ -101,8 +117,9 @@ private:
     Command cmd_;
     Path root_;
     QUrl url_;
-    QMutex access_;
+    QReadWriteLock access_;
     boost::scoped_ptr< host::Package_ABC > install_;
+    T_Downloads downloads_;
 };
 }
 

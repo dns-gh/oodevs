@@ -26,6 +26,7 @@ Head::Head( const Runtime_ABC& runtime, const FileSystem_ABC& fs, Pool_ABC& pool
     : QMainWindow( 0 )
 {
     qRegisterMetaType< HttpCommand >( "HttpCommand" );
+    qRegisterMetaType< QPointer< QNetworkReply > >( "QPointer< QNetworkReply >" );
 
     ui_.setupUi( this );
     ui_.status->addPermanentWidget( &progress_ );
@@ -44,10 +45,13 @@ Head::Head( const Runtime_ABC& runtime, const FileSystem_ABC& fs, Pool_ABC& pool
     LoadSettings();
     ctx_.reset( new Context( runtime, fs, pool, async_, items_ ) );
     connect( ctx_.get(), SIGNAL( StatusMessage( const QString& ) ), ui_.status, SLOT( showMessage( const QString& ) ) );
-    connect( ctx_.get(), SIGNAL( Progress( bool, int, int ) ), this, SLOT( OnProgress( bool, int, int ) ) );
+    connect( ctx_.get(), SIGNAL( ClearMessage() ), ui_.status, SLOT( clearMessage() ) );
+    connect( ctx_.get(), SIGNAL( ShowProgress( int, int ) ), this, SLOT( OnShowProgress( int, int ) ) );
+    connect( ctx_.get(), SIGNAL( ClearProgress() ), &progress_, SLOT( hide() ) );
     connect( ui_.remove_items, SIGNAL( clicked( bool ) ), ctx_.get(), SLOT( OnRemove() ) );
     connect( ctx_.get(), SIGNAL( NetworkRequest( HttpCommand, const QNetworkRequest& ) ), this, SLOT( OnNetworkRequest( HttpCommand, const QNetworkRequest& ) ) );
     connect( ctx_.get(), SIGNAL( Exit() ), this, SLOT( close() ) );
+    connect( ctx_.get(), SIGNAL( CheckAbort( QPointer< QNetworkReply > ) ), this, SLOT( CheckAbort( QPointer< QNetworkReply > ) ) );
     async_.Register( QtConcurrent::run( ctx_.get(), &Context::Start ) );
 }
 
@@ -100,11 +104,10 @@ void Head::OnModifiedItems()
 // Name: Head::OnProgress
 // Created: BAX 2012-09-20
 // -----------------------------------------------------------------------------
-void Head::OnProgress( bool visible, int min, int max )
+void Head::OnShowProgress( int min, int max )
 {
-    if( visible )
-        progress_.setRange( min, max );
-    progress_.setVisible( visible );
+    progress_.setRange( min, max );
+    progress_.show();
 }
 
 // -----------------------------------------------------------------------------
@@ -114,4 +117,18 @@ void Head::OnProgress( bool visible, int min, int max )
 void Head::OnNetworkRequest( HttpCommand cmd, const QNetworkRequest& req )
 {
     ctx_->SetNetworkReply( cmd, net_.get( req ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Head::CheckAbort
+// Created: BAX 2012-09-21
+// -----------------------------------------------------------------------------
+void Head::CheckAbort( QPointer< QNetworkReply > ptr )
+{
+    // it is critical to call this function in the ui thread
+    if( ptr.isNull() )
+        return;
+    const qint64 len = ptr->bytesAvailable();
+    if( len > 0 )
+        ptr->abort();
 }

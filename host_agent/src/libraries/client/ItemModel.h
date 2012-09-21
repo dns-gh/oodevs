@@ -10,6 +10,7 @@
 #define ITEMMODEL_H_
 
 #include "FlatModel.h"
+#include <boost/noncopyable.hpp>
 #include <boost/property_tree/ptree_fwd.hpp>
 #include <QDateTime>
 #include <QSortFilterProxyModel>
@@ -22,9 +23,10 @@ namespace gui
 
 namespace gui
 {
-struct Item
+struct Item : public boost::noncopyable
 {
      Item( const Tree& tree, int status );
+     Item( size_t id, const QString& type, const QString& name, const QString& checksum );
     ~Item();
 
     QVariant Data( int col, int role );
@@ -45,8 +47,6 @@ private:
     int             status_; // <0 missing, [0,100[ downloading, >100 complete
     size_t          size_;
     Qt::CheckState  check_state_;
-
-    Item& operator=( const Item& );
 };
 
 class ItemModel : public FlatModel< gui::Item >

@@ -102,6 +102,25 @@ Item::Item( const Tree& tree, int status )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Item::Item
+// Created: BAX 2012-09-18
+// -----------------------------------------------------------------------------
+Item::Item( size_t id, const QString& type, const QString& name, const QString& checksum )
+    : id_         ( id )
+    , type_       ( type )
+    , name_       ( name )
+    , package_    ()
+    , version_    ()
+    , status_     ()
+    , date_       ()
+    , checksum_   ( checksum )
+    , size_       ( 0 )
+    , check_state_( Qt::Unchecked )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: Item::~Item
 // Created: BAX 2012-09-06
 // -----------------------------------------------------------------------------
