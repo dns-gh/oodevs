@@ -505,7 +505,7 @@
                      modules.perception_module_test,modules.fire_module_test,modules.propagation_module_test"/>
 
     <target name="library.wrapper" description="build wrapper library">
-        <build-lib name="wrapper" />
+        <build-lib name="wrapper" failonwarning="${failonwarning}"/>
     </target>
 
     <target name="modules.module_tester_test">
