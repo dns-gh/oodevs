@@ -36,6 +36,7 @@ using namespace kernel;
 ActionController::ActionController()
     : currentMode_      ( 0 )
     , selecting_        ( false )
+    , blocked_          ( false )
     , overFlying_       ( false )
     , selectInRectangle_( false )
     , menu_()
@@ -132,6 +133,8 @@ const Selectionner_ABC* ActionController::GetSelectionner( const Selectable_ABC*
 // -----------------------------------------------------------------------------
 void ActionController::SetSelected( const Selectable_ABC& selectable, bool append )
 {
+    if( blocked_ )
+        return;
     const Selectionner_ABC* selectionner = GetSelectionner( &selectable );
     assert( selectionner );
     if( !selectionner )
@@ -185,6 +188,8 @@ void ActionController::SetSelected( const Selectable_ABC& selectable, bool appen
 // -----------------------------------------------------------------------------
 void ActionController::AddToSelection( const T_Selectables& selectables )
 {
+    if( blocked_ )
+        return;
     for( CIT_Selectables it = selectables.begin(); it != selectables.end(); ++it )
     {
         const Selectionner_ABC* selectionner = GetSelectionner( *it );
@@ -230,6 +235,8 @@ void ActionController::NotifyRectangleSelection( const geometry::Point2f& topLef
 // -----------------------------------------------------------------------------
 void ActionController::SetMultipleSelection( const T_Selectables& selectables )
 {
+    if( blocked_ )
+        return;
     ClearSingleSelection();
     ClearMultipleSelection();
     for( CIT_Selectables it = selectables.begin(); it != selectables.end(); ++it )
@@ -329,4 +336,13 @@ void ActionController::DeselectAll()
 {
     ClearSingleSelection();
     ClearMultipleSelection();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionController::BlockSelection
+// Created: ABR 2012-09-20
+// -----------------------------------------------------------------------------
+void ActionController::BlockSelection( bool blocked )
+{
+    blocked_ = blocked;
 }

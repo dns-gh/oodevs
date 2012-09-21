@@ -84,6 +84,8 @@ public:
     bool HasMultipleSelection() const;
     const Selectionner_ABC* GetSelectionner( const Selectable_ABC* selectable ) const; // private ?
 
+    void BlockSelection( bool blocked );
+
     // -----------------------------------------------------------------------------
     // Select
     // -----------------------------------------------------------------------------
@@ -96,34 +98,34 @@ public:
     void Select( const T& element )
     {
         // avoid re entrance
-        if( ! selecting_ )
+        if( !selecting_ && !blocked_ )
         {
             selecting_ = true;
             Apply( & tools::SelectionObserver_ABC::BeforeSelection );
             Apply( & tools::SelectionObserver_Base< T >::Select, element );
             Apply( & tools::SelectionObserver_ABC::AfterSelection );
+            selecting_ = false;
         }
-        selecting_ = false;
     }
     template< typename T1, typename T2 >
     void Select( const T1& firstElement, const T2& secondElement )
     {
         // avoid re entrance
-        if( ! selecting_ )
+        if( !selecting_ && !blocked_ )
         {
             selecting_ = true;
             Apply( & tools::SelectionObserver_ABC::BeforeSelection );
             Apply( & tools::SelectionObserver_Base< T1 >::Select, firstElement );
             Apply( & tools::SelectionObserver_Base< T2 >::Select, secondElement );
             Apply( & tools::SelectionObserver_ABC::AfterSelection );
+            selecting_ = false;
         }
-        selecting_ = false;
     }
     template< typename T1, typename T2, typename T3 >
     void Select( const T1& firstElement, const T2& secondElement, const T3& thirdElement )
     {
         // avoid re entrance
-        if( ! selecting_ )
+        if( !selecting_ && !blocked_  )
         {
             selecting_ = true;
             Apply( & tools::SelectionObserver_ABC::BeforeSelection );
@@ -131,15 +133,15 @@ public:
             Apply( & tools::SelectionObserver_Base< T2 >::Select, secondElement );
             Apply( & tools::SelectionObserver_Base< T3 >::Select, thirdElement );
             Apply( & tools::SelectionObserver_ABC::AfterSelection );
+            selecting_ = false;
         }
-        selecting_ = false;
     }
 
     template< typename T >
     void MultipleSelect( const std::vector< const T* >& elements )
     {
         // avoid re entrance
-        if( ! selecting_ )
+        if( !selecting_ && !blocked_ )
         {
             selecting_ = true;
             if( !selectInRectangle_ )
@@ -147,14 +149,14 @@ public:
             Apply( & kernel::MultipleSelectionObserver_Base< T >::MultipleSelect, elements );
             if( !selectInRectangle_ )
                 Apply( & kernel::MultipleSelectionObserver_ABC::AfterSelection );
+            selecting_ = false;
         }
-        selecting_ = false;
     }
     template< typename T1, typename T2 >
     void MultipleSelect( const std::vector< const T1* >& firstElements, const std::vector< const T2* >& secondElements )
     {
         // avoid re entrance
-        if( ! selecting_ )
+        if( !selecting_ && !blocked_ )
         {
             selecting_ = true;
             if( !selectInRectangle_ )
@@ -163,14 +165,14 @@ public:
             Apply( & kernel::MultipleSelectionObserver_Base< T2 >::MultipleSelect, secondElements );
             if( !selectInRectangle_ )
                 Apply( & kernel::MultipleSelectionObserver_ABC::AfterSelection );
+            selecting_ = false;
         }
-        selecting_ = false;
     }
     template< typename T1, typename T2, typename T3 >
     void MultipleSelect( const std::vector< const T1* >& firstElements, const std::vector< const T2* >& secondElements, const std::vector< const T3* >& thirdElements )
     {
         // avoid re entrance
-        if( ! selecting_ )
+        if( !selecting_ && !blocked_ )
         {
             selecting_ = true;
             if( !selectInRectangle_ )
@@ -180,8 +182,8 @@ public:
             Apply( & kernel::MultipleSelectionObserver_Base< T3 >::MultipleSelect, thirdElements );
             if( !selectInRectangle_ )
                 Apply( & kernel::MultipleSelectionObserver_ABC::AfterSelection );
+            selecting_ = false;
         }
-        selecting_ = false;
     }
 
     // -----------------------------------------------------------------------------
@@ -275,6 +277,7 @@ private:
     //@{
     int currentMode_;
     bool selecting_;
+    bool blocked_;
     bool overFlying_;
     bool selectInRectangle_;
     kernel::ContextMenu menu_;
