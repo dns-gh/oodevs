@@ -96,15 +96,15 @@ void Synchroniser::Commit( ClientPublisher_ABC& publisher, Model& model )
         (*it)->Apply( &EntityPublisher_ABC::SendFullUpdate, publisher );
 
     Publisher p( publisher, model );
-    int size = toDestroy_.size();
-    for( int i = size - 1; i >= 0; --i )
+    size_t size = toDestroy_.size();
+    for( size_t i = size; i > 0; --i )
     {
         // $$$$ AGE 2008-06-20:
 //        (*it)->Apply( &EntityPublisher_ABC::SendDestruction, p );
         // $$$$ AGE 2008-06-20: causes reentrances in the destructor...
         // $$$$ AGE 2008-06-20: Change the whole thing (see SimulationDispatcher::EndSynchronisation)
 
-        const EntityPublisher_ABC* publisher = (toDestroy_[i])->Retrieve< EntityPublisher_ABC >();
+        const EntityPublisher_ABC* publisher = (toDestroy_[i - 1])->Retrieve< EntityPublisher_ABC >();
         if( publisher )
             publisher->SendDestruction( p );
     }

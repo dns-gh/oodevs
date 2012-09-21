@@ -75,7 +75,7 @@
     </target>
 
     <target name="library.dispatcher" depends="library.MT_Tools,library.tools,library.protocol,library.meteo" description="build dispatcher static library">
-        <build-lib name="dispatcher" pattern="lib${ant.project.name}_dispatcher-${platform}-mt@{suffix}" suffix="-gd" depends="qt4">
+        <build-lib name="dispatcher" pattern="lib${ant.project.name}_dispatcher-${platform}-mt@{suffix}" suffix="-gd" depends="qt4" failonwarning="${failonwarning}">
             <defineset define="MT_AUTO_LINK"/>
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
