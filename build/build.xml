@@ -36,11 +36,11 @@
       libraries
     ============================================================================
     -->
-    <target name="libraries" depends="library.tools,library.MT_Tools,library.ENT,library.protocol,library.simulation_terrain,library.simulation_kernel,
-                                      library.clients_kernel,library.clients_gui,library.actions,library.actions,library.actions_gui,library.reports,
-                                      library.gaming,library.preparation,library.plugins,library.3a,library.mission_tester,library.license_gui,library.geostore" description="build all libraries"/>
+    <target name="libraries" depends="tools,MT_Tools,ENT,protocol,simulation_terrain,simulation_kernel,
+                                      clients_kernel,clients_gui,actions,actions,actions_gui,reports,
+                                      gaming,preparation,library.plugins,3a,mission_tester,license_gui,geostore" description="build all libraries"/>
 
-    <target name="library.tools" depends="library.MT_Tools" description="build tools static library">
+    <target name="tools" depends="MT_Tools" description="build tools static library">
         <build-lib name="tools" pattern="lib${ant.project.name}_tools-${platform}-mt@{suffix}" suffix="-gd" depends="qt4">
             <defineset define="QT3_SUPPORT"/>
             <defineset>
@@ -51,13 +51,13 @@
         </build-lib>
     </target>
 
-    <target name="library.MT_Tools" description="build MT_Tools static library">
+    <target name="MT_Tools" description="build MT_Tools static library">
         <build-lib name="MT_Tools" pattern="lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix}" suffix="-gd">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
 
-    <target name="library.protocol" description="build protocol static library">
+    <target name="protocol" description="build protocol static library">
         <exec taskname="protolint" executable="python" failonerror="true" timeout="60000">
             <arg value="${libraries.dir}/protocol/protolint.py"/>
             <arg value="${libraries.dir}/protocol/proto"/>
@@ -68,24 +68,24 @@
         </build-lib>
     </target>
 
-    <target name="library.ENT" description="build ENT static library">
+    <target name="ENT" description="build ENT static library">
         <build-lib name="ENT" depends="qt4" pattern="lib${ant.project.name}_ENT-${platform}-mt@{suffix}" suffix="-gd">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
 
-    <target name="library.dispatcher" depends="library.MT_Tools,library.tools,library.protocol,library.meteo" description="build dispatcher static library">
+    <target name="dispatcher" depends="MT_Tools,tools,protocol,meteo" description="build dispatcher static library">
         <build-lib name="dispatcher" pattern="lib${ant.project.name}_dispatcher-${platform}-mt@{suffix}" suffix="-gd" depends="qt4" failonwarning="${failonwarning}">
             <defineset define="MT_AUTO_LINK"/>
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
 
-    <target name="library.simulation_terrain" depends="library.MT_Tools" description="build simulation_terrain static library">
+    <target name="simulation_terrain" depends="MT_Tools" description="build simulation_terrain static library">
         <build-lib name="simulation_terrain" pattern="lib${ant.project.name}_simulation_terrain-${platform}-mt@{suffix}" suffix="-gd" failonwarning="${failonwarning}"/>
     </target>
 
-    <target name="library.simulation_kernel" depends="library.tools,library.protocol,library.simulation_terrain,library.meteo,library.resource_network,library.flood" description="build simulation_kernel static library">
+    <target name="simulation_kernel" depends="tools,protocol,simulation_terrain,meteo,resource_network,flood" description="build simulation_kernel static library">
         <build-lib name="simulation_kernel" pattern="lib${ant.project.name}_simulation_kernel-${platform}-mt@{suffix}" suffix="-gd" excludes="**/DEC_Knowledge_ObjectAttributeProxy_ABC.h">
             <includepath path="${libraries.dir}/simulation_kernel"/> <!-- pour MIL.h -->
             <defineset>
@@ -94,55 +94,55 @@
         </build-lib>
     </target>
 
-    <target name="library.clients_kernel" depends="library.protocol,library.tools,library.ENT" description="build clients_kernel static library">
+    <target name="clients_kernel" depends="protocol,tools,ENT" description="build clients_kernel static library">
         <build-lib name="clients_kernel" depends="qt4" pattern="lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix}" suffix="-gd">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
 
-    <target name="library.clients_gui" depends="library.clients_kernel" description="build clients_gui static library">
+    <target name="clients_gui" depends="clients_kernel" description="build clients_gui static library">
         <build-lib name="clients_gui" excludes="**/font/*" depends="qt4" pattern="lib${ant.project.name}_clients_gui-${platform}-mt@{suffix}" suffix="-gd" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
 
-    <target name="library.actions" depends="library.protocol,library.clients_kernel" description="build actions static library">
+    <target name="actions" depends="protocol,clients_kernel" description="build actions static library">
         <build-lib name="actions" depends="qt4" pattern="lib${ant.project.name}_actions-${platform}-mt@{suffix}" suffix="-gd">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
 
-    <target name="library.actions_gui" depends="library.clients_gui,library.actions" description="build actions_gui library">
+    <target name="actions_gui" depends="clients_gui,actions" description="build actions_gui library">
         <build-lib name="actions_gui" depends="boost,qt4,xerces" pattern="lib${ant.project.name}_actions_gui-${platform}-mt@{suffix}" suffix="-gd" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
 
-    <target name="library.indicators" depends="library.clients_kernel" description="build indicators static library">
+    <target name="indicators" depends="clients_kernel" description="build indicators static library">
         <build-lib name="indicators" depends="boost,qt4,xerces" pattern="lib${ant.project.name}_indicators-${platform}-mt@{suffix}" suffix="-gd">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
 
-    <target name="library.reports" depends="library.protocol,library.clients_kernel" description="build reports static library">
+    <target name="reports" depends="protocol,clients_kernel" description="build reports static library">
         <build-lib name="reports" depends="qt4" pattern="lib${ant.project.name}_reports-${platform}-mt@{suffix}" suffix="-gd">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
 
-    <target name="library.gaming" depends="library.protocol,library.clients_gui,library.actions,library.actions_gui,library.indicators,library.reports,library.meteo,library.flood" description="build gaming static library">
+    <target name="gaming" depends="protocol,clients_gui,actions,actions_gui,indicators,reports,meteo,flood" description="build gaming static library">
         <build-lib name="gaming" depends="qt4" pattern="lib${ant.project.name}_gaming-${platform}-mt@{suffix}" suffix="-gd">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
 
-    <target name="library.preparation" depends="library.clients_gui,library.actions_gui,library.indicators,library.flood,library.geostore" description="build preparation static library">
+    <target name="preparation" depends="clients_gui,actions_gui,indicators,flood,geostore" description="build preparation static library">
         <build-lib name="preparation" depends="qt4" pattern="lib${ant.project.name}_preparation-${platform}-mt@{suffix}" suffix="-gd" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
 
-    <target name="library.frontend" depends="library.clients_gui" description="build frontend static library">
+    <target name="frontend" depends="clients_gui" description="build frontend static library">
         <build-lib name="frontend" depends="qt4" pattern="lib${ant.project.name}_frontend-${platform}-mt@{suffix}" suffix="-gd" failonwarning="${failonwarning}">
             <defineset define="_WIN32_WINNT=0x0501"/>
             <defineset define="QT3_SUPPORT"/>
@@ -152,17 +152,17 @@
         </build-lib>
     </target>
 
-    <target name="library.3a" depends="library.dispatcher" description="build 3a static library">
+    <target name="3a" depends="dispatcher" description="build 3a static library">
         <build-lib name="3a" pattern="lib${ant.project.name}_3a-${platform}-mt@{suffix}" suffix="-gd" failonwarning="${failonwarning}"/>
     </target>
 
-    <target name="library.license_gui" description="build license_gui static library">
+    <target name="license_gui" description="build license_gui static library">
         <build-lib name="license_gui" depends="qt4,flexlm" pattern="lib${ant.project.name}_license_gui-${platform}-mt@{suffix}" suffix="-gd">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
 
-    <target name="library.bml_plugin" depends="library.dispatcher" description="build BML dispatcher plugin static library">
+    <target name="bml_plugin" depends="dispatcher" description="build BML dispatcher plugin static library">
         <build-lib name="bml_plugin" pattern="lib${ant.project.name}_bml_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
@@ -185,7 +185,7 @@
         </sequential>
     </macrodef>
 
-    <target name="library.bml_plugin_dll" depends="library.bml_plugin" description="build bml_plugin dynamic library">
+    <target name="bml_plugin_dll" depends="bml_plugin" description="build bml_plugin dynamic library">
         <build-plugin name="bml" depends="boost,qt4,terrain,xalan,xerces,protobuf"
             libs="lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
                   lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
@@ -199,7 +199,7 @@
         </build-plugin>
     </target>
 
-    <target name="library.edxlhave_plugin_dll" depends="library.dispatcher" description="build edxlhave_plugin_dll dynamic library">
+    <target name="edxlhave_plugin_dll" depends="dispatcher" description="build edxlhave_plugin_dll dynamic library">
         <build-plugin name="edxlhave" depends="boost,qt4,terrain,xalan,xerces,protobuf"
             libs="lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
                   lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
@@ -212,13 +212,13 @@
         </build-plugin>
     </target>
 
-    <target name="library.crossbow_plugin" depends="library.MT_Tools,library.tools,library.protocol" description="build crossbow dispatcher plugin static library">
+    <target name="crossbow_plugin" depends="MT_Tools,tools,protocol" description="build crossbow dispatcher plugin static library">
         <build-lib name="crossbow_plugin" pattern="lib${ant.project.name}_crossbow_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
 
-    <target name="library.crossbow_plugin_dll" depends="library.crossbow_plugin" description="build crossbow_plugin dynamic library">
+    <target name="crossbow_plugin_dll" depends="crossbow_plugin" description="build crossbow_plugin dynamic library">
         <build-plugin name="crossbow" depends="boost,qt4,terrain,xalan,xerces,protobuf"
             libs="gdal_i,
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
@@ -234,17 +234,17 @@
         </build-plugin>
     </target>
 
-    <target name="library.rpr" description="build rpr static library">
+    <target name="rpr" description="build rpr static library">
         <build-lib name="rpr" pattern="lib${ant.project.name}_rpr-${platform}-mt@{suffix}" suffix="-gd" failonwarning="${failonwarning}"/>
     </target>
 
-    <target name="library.hla_plugin" depends="library.dispatcher,library.rpr" description="build hla_plugin static library">
+    <target name="hla_plugin" depends="dispatcher,rpr" description="build hla_plugin static library">
         <build-lib name="hla_plugin" pattern="lib${ant.project.name}_hla_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
 
-    <target name="library.hla_plugin_dll" depends="library.hla_plugin" description="build hla_plugin dynamic library">
+    <target name="hla_plugin_dll" depends="hla_plugin" description="build hla_plugin dynamic library">
         <build-plugin name="hla" depends="boost,qt4,terrain,xalan,xerces,protobuf"
             libs="HLA,
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
@@ -261,11 +261,11 @@
         </build-plugin>
     </target>
 
-    <target name="library.web_control_plugin" depends="library.protocol" description="build web_control_plugin static library">
+    <target name="web_control_plugin" depends="protocol" description="build web_control_plugin static library">
         <build-lib name="web_control_plugin" pattern="lib${ant.project.name}_web_control_plugin-${platform}-mt@{suffix}" suffix="-gd" failonwarning="${failonwarning}"/>
     </target>
 
-    <target name="library.web_control_plugin_dll" depends="library.web_control_plugin" description="build web_control_plugin dynamic library">
+    <target name="web_control_plugin_dll" depends="web_control_plugin" description="build web_control_plugin dynamic library">
         <build-plugin name="web_control" depends="boost,protobuf,xerces"
             libs="mongoose@{suffix},
                   lib${ant.project.name}_web_control_plugin-${platform}-mt@{suffix},
@@ -276,7 +276,7 @@
         </build-plugin>
     </target>
 
-    <target name="library.vrforces_plugin" depends="library.protocol,library.rpr" description="build vrforces_plugin static library">
+    <target name="vrforces_plugin" depends="protocol,rpr" description="build vrforces_plugin static library">
         <build-lib name="vrforces_plugin" pattern="lib${ant.project.name}_vrforces_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4">
             <includepath path="${include.dir}/vrforces"/>
             <includepath path="${include.dir}/vrlink"/>
@@ -291,7 +291,7 @@
         </build-lib>
     </target>
 
-    <target name="library.vrforces_plugin_dll" depends="library.dispatcher,library.vrforces_plugin" description="build vrforces_plugin dynamic library" if="is-vc80">
+    <target name="vrforces_plugin_dll" depends="dispatcher,vrforces_plugin" description="build vrforces_plugin dynamic library" if="is-vc80">
         <build-plugin name="vrforces" depends="boost,qt4,terrain,xalan,xerces,protobuf"
             libs="libFedtime1516,
                   matrixRT,mtlRT,vlHLA1516RT,vlRT,vlutilRT,vrfcontrolHLA1516,
@@ -307,11 +307,11 @@
         </build-plugin>
     </target>
 
-    <target name="library.dis_plugin" depends="library.dispatcher,library.rpr" description="build dis_plugin static library">
+    <target name="dis_plugin" depends="dispatcher,rpr" description="build dis_plugin static library">
         <build-lib name="dis_plugin" pattern="lib${ant.project.name}_dis_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4" failonwarning="${failonwarning}"/>
     </target>
 
-    <target name="library.dis_plugin_dll" depends="library.dis_plugin,library.dispatcher,library.tic" description="build dis_plugin dynamic library">
+    <target name="dis_plugin_dll" depends="dis_plugin,dispatcher,tic" description="build dis_plugin dynamic library">
         <build-plugin name="dis" depends="boost,qt4,terrain,xalan,xerces,protobuf"
             libs="lib${ant.project.name}_ENT-${platform}-mt@{suffix},
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
@@ -326,87 +326,87 @@
         </build-plugin>
     </target>
 
-    <target name="library.tic" depends="library.dispatcher" description="build tic static library">
+    <target name="tic" depends="dispatcher" description="build tic static library">
         <build-lib name="tic" pattern="lib${ant.project.name}_tic-${platform}-mt@{suffix}" suffix="-gd" depends="qt4" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
 
-    <target name="library.messenger_plugin" depends="library.dispatcher" description="build messenger_plugin static library">
+    <target name="messenger_plugin" depends="dispatcher" description="build messenger_plugin static library">
         <build-lib name="messenger_plugin" pattern="lib${ant.project.name}_messenger_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
 
-    <target name="library.aar_plugin" depends="library.dispatcher" description="build aar_plugin static library">
+    <target name="aar_plugin" depends="dispatcher" description="build aar_plugin static library">
         <build-lib name="aar_plugin" pattern="lib${ant.project.name}_aar_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
 
-    <target name="library.rights_plugin" depends="library.dispatcher" description="build rights_plugin static library">
+    <target name="rights_plugin" depends="dispatcher" description="build rights_plugin static library">
         <build-lib name="rights_plugin" pattern="lib${ant.project.name}_rights_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
 
-    <target name="library.order_plugin" depends="library.dispatcher" description="build order_plugin static library">
+    <target name="order_plugin" depends="dispatcher" description="build order_plugin static library">
         <build-lib name="order_plugin" pattern="lib${ant.project.name}_order_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4"
                    failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
 
-    <target name="library.saver_plugin" depends="library.dispatcher" description="build saver_plugin static library">
+    <target name="saver_plugin" depends="dispatcher" description="build saver_plugin static library">
         <build-lib name="saver_plugin" pattern="lib${ant.project.name}_saver_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4"
                    failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
 
-    <target name="library.replay_plugin" depends="library.dispatcher" description="build replay_plugin static library">
+    <target name="replay_plugin" depends="dispatcher" description="build replay_plugin static library">
         <build-lib name="replay_plugin" pattern="lib${ant.project.name}_replay_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
 
-    <target name="library.positions_plugin" depends="library.dispatcher" description="build positions saver dispatcher plugin static library">
+    <target name="positions_plugin" depends="dispatcher" description="build positions saver dispatcher plugin static library">
         <build-lib name="positions_plugin" pattern="lib${ant.project.name}_positions_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4"
                    failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
 
-    <target name="library.resource_network" description="build resource network static library">
+    <target name="resource_network" description="build resource network static library">
         <build-lib name="resource_network" pattern="lib${ant.project.name}_resource_network-${platform}-mt@{suffix}" suffix="-gd" failonwarning="${failonwarning}"/>
     </target>
 
-    <target name="library.meteo" depends="library.protocol,library.clients_kernel" description="build meteo static library">
+    <target name="meteo" depends="protocol,clients_kernel" description="build meteo static library">
         <build-lib name="meteo" pattern="lib${ant.project.name}_meteo-${platform}-mt@{suffix}" suffix="-gd" depends="qt4">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
 
-    <target name="library.flood" description="build flood static library">
+    <target name="flood" description="build flood static library">
         <build-lib name="flood" pattern="lib${ant.project.name}_flood-${platform}-mt@{suffix}" suffix="-gd" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
 
-    <target name="library.geostore" description="build geostore static library">
+    <target name="geostore" description="build geostore static library">
         <build-lib name="geostore" depends="qt4" pattern="lib${ant.project.name}_geostore-${platform}-mt@{suffix}" suffix="-gd"
                    failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
 
-    <target name="library.shield" depends="library.protocol" description="build shield static library">
+    <target name="shield" depends="protocol" description="build shield static library">
         <build-lib name="shield" excludes="**/*.h" pattern="lib${ant.project.name}_shield-${platform}-mt@{suffix}" suffix="-gd" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
 
-    <target name="library.script_plugin" depends="library.dispatcher" description="build script_plugin static library">
+    <target name="script_plugin" depends="dispatcher" description="build script_plugin static library">
         <build-lib name="script_plugin" pattern="lib${ant.project.name}_script_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
@@ -415,13 +415,13 @@
         </copy>
     </target>
 
-    <target name="library.timeline_plugin" depends="library.dispatcher" description="build timeline_plugin static library">
+    <target name="timeline_plugin" depends="dispatcher" description="build timeline_plugin static library">
         <build-lib name="timeline_plugin" pattern="lib${ant.project.name}_timeline_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
 
-    <target name="library.timeline_plugin_dll" depends="library.timeline_plugin" description="build timeline_plugin dynamic library">
+    <target name="timeline_plugin_dll" depends="timeline_plugin" description="build timeline_plugin dynamic library">
         <build-plugin name="timeline" depends="boost,qt4,terrain,xalan,xerces,protobuf,openssl"
             libs="lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
                   lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
@@ -436,27 +436,27 @@
         </build-plugin>
     </target>
 
-    <target name="library.score_plugin" depends="library.dispatcher,library.3a,library.indicators" description="build score_plugin static library">
+    <target name="score_plugin" depends="dispatcher,3a,indicators" description="build score_plugin static library">
         <build-lib name="score_plugin" depends="boost,qt4" pattern="lib${ant.project.name}_score_plugin-${platform}-mt@{suffix}" suffix="-gd" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
 
-    <target name="library.logger_plugin" depends="library.dispatcher,library.reports" description="build logger_plugin static library">
+    <target name="logger_plugin" depends="dispatcher,reports" description="build logger_plugin static library">
         <build-lib name="logger_plugin" depends="qt4" pattern="lib${ant.project.name}_logger_plugin-${platform}-mt@{suffix}" suffix="-gd"
                    failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
 
-    <target name="library.logistic_plugin" depends="library.dispatcher,library.reports" description="build logistic_plugin static library">
+    <target name="logistic_plugin" depends="dispatcher,reports" description="build logistic_plugin static library">
         <build-lib name="logistic_plugin" depends="qt4" pattern="lib${ant.project.name}_logistic_plugin-${platform}-mt@{suffix}" suffix="-gd"
             failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
 
-    <target name="library.logistic_plugin_dll" depends="library.logistic_plugin" description="build logistic_plugin dynamic library">
+    <target name="logistic_plugin_dll" depends="logistic_plugin" description="build logistic_plugin dynamic library">
         <build-plugin name="logistic" depends="boost,qt4,terrain,xalan,xerces,protobuf,openssl"
             libs="Qt3Support4,
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
@@ -472,24 +472,24 @@
         </build-plugin>
     </target>
 
-    <target name="library.client_proxy" depends="library.protocol,library.tools" description="build clients_kernel static library">
+    <target name="client_proxy" depends="protocol,tools" description="build clients_kernel static library">
         <build-lib name="client_proxy" pattern="lib${ant.project.name}_client_proxy-${platform}-mt@{suffix}" suffix="-gd">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
 
-    <target name="library.plugins" depends="library.messenger_plugin,library.dis_plugin_dll,library.hla_plugin_dll,
-                                            library.aar_plugin,library.rights_plugin,library.order_plugin,library.saver_plugin,library.replay_plugin,
-                                            library.3a,
-                                            library.bml_plugin,library.bml_plugin_dll,
-                                            library.edxlhave_plugin_dll,
-                                            library.script_plugin,library.score_plugin,
-                                            library.crossbow_plugin_dll,library.timeline_plugin_dll,
-                                            library.web_control_plugin_dll,
-                                            library.logger_plugin,library.positions_plugin,
-                                            library.logistic_plugin,library.logistic_plugin_dll" description="build all dispatcher plugins"/>
+    <target name="library.plugins" depends="messenger_plugin,dis_plugin_dll,hla_plugin_dll,
+                                            aar_plugin,rights_plugin,order_plugin,saver_plugin,replay_plugin,
+                                            3a,
+                                            bml_plugin,bml_plugin_dll,
+                                            edxlhave_plugin_dll,
+                                            script_plugin,score_plugin,
+                                            crossbow_plugin_dll,timeline_plugin_dll,
+                                            web_control_plugin_dll,
+                                            logger_plugin,positions_plugin,
+                                            logistic_plugin,logistic_plugin_dll" description="build all dispatcher plugins"/>
 
-    <target name="library.mission_tester" depends="library.clients_kernel,library.actions,library.client_proxy" description="build mission tester lib">
+    <target name="mission_tester" depends="clients_kernel,actions,client_proxy" description="build mission tester lib">
         <build-lib name="mission_tester" pattern="lib${ant.project.name}_mission_tester-${platform}-mt@{suffix}" suffix="-gd" depends="qt4">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
@@ -501,83 +501,83 @@
     ============================================================================
     -->
     <target name="modules" description="build Sword modules"
-            depends="library.simulation_kernel,library.wrapper,modules.module_tester_test,modules.movement_module_test,
-                     modules.perception_module_test,modules.fire_module_test,modules.propagation_module_test"/>
+            depends="simulation_kernel,wrapper,module_tester_test,movement_module_test,
+                     perception_module_test,fire_module_test,propagation_module_test"/>
 
-    <target name="library.wrapper" description="build wrapper library">
+    <target name="wrapper" description="build wrapper library">
         <build-lib name="wrapper" failonwarning="${failonwarning}"/>
     </target>
 
-    <target name="modules.module_tester_test">
+    <target name="module_tester_test">
         <build-test name="module_tester" depends="boost" libs="core@{suffix}" failonwarning="${failonwarning}"/>
     </target>
 
-    <target name="modules.movement_module" description="build movement module">
+    <target name="movement_module" description="build movement module">
         <build-lib name="movement_module">
             <includepath path="${libraries.dir}/simulation_kernel"/>
         </build-lib>
     </target>
 
-    <target name="modules.movement_module_dll" depends="library.MT_Tools,library.wrapper,modules.movement_module" description="build movement module dll">
+    <target name="movement_module_dll" depends="MT_Tools,wrapper,movement_module" description="build movement module dll">
         <build-lib name="movement_module_dll" outtype="shared" pattern="movement_module" depends="terrain,boost,xerces"
                    libs="movement_module@{suffix},wrapper@{suffix},lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix}"/>
     </target>
 
-    <target name="modules.movement_module_test" depends="modules.movement_module_dll">
+    <target name="movement_module_test" depends="movement_module_dll">
         <build-test name="movement_module" depends="boost,xerces,terrain" libs="movement_module@{suffix},core@{suffix}">
             <includepath path="${libraries.dir}/simulation_kernel"/>
             <compilerarg value="-Zm500"/>
         </build-test>
     </target>
 
-    <target name="modules.perception_module" description="build perception module">
+    <target name="perception_module" description="build perception module">
         <build-lib name="perception_module">
             <includepath path="${libraries.dir}/simulation_kernel"/>
         </build-lib>
     </target>
 
-    <target name="modules.perception_module_dll" depends="library.wrapper,modules.perception_module" description="build perception module dll">
+    <target name="perception_module_dll" depends="wrapper,perception_module" description="build perception module dll">
         <build-lib name="perception_module_dll" outtype="shared" pattern="perception_module" depends="boost,xerces"
                    libs="perception_module@{suffix},wrapper@{suffix}"/>
     </target>
 
-    <target name="modules.perception_module_test" depends="modules.perception_module_dll">
+    <target name="perception_module_test" depends="perception_module_dll">
         <build-test name="perception_module" depends="boost" libs="perception_module@{suffix},core@{suffix}">
             <includepath path="${libraries.dir}/simulation_kernel"/>
             <compilerarg value="-Zm500"/>
         </build-test>
     </target>
 
-    <target name="modules.fire_module" description="build fire module">
+    <target name="fire_module" description="build fire module">
         <build-lib name="fire_module">
             <includepath path="${libraries.dir}/simulation_kernel"/>
         </build-lib>
     </target>
 
-    <target name="modules.fire_module_dll"  depends="library.wrapper,modules.fire_module" description="build fire module dll">
+    <target name="fire_module_dll"  depends="wrapper,fire_module" description="build fire module dll">
         <build-lib name="fire_module_dll" outtype="shared" pattern="fire_module" depends="boost,xerces"
                    libs="fire_module@{suffix},wrapper@{suffix}"/>
     </target>
 
-    <target name="modules.fire_module_test" depends="modules.fire_module_dll">
+    <target name="fire_module_test" depends="fire_module_dll">
         <build-test name="fire_module" depends="boost" libs="fire_module@{suffix},core@{suffix}">
             <includepath path="${libraries.dir}/simulation_kernel"/>
             <compilerarg value="-Zm500"/>
         </build-test>
     </target>
 
-    <target name="modules.propagation_module" description="build propagation module">
+    <target name="propagation_module" description="build propagation module">
         <build-lib name="propagation_module">
             <includepath path="${libraries.dir}/simulation_kernel"/>
         </build-lib>
     </target>
 
-    <target name="modules.propagation_module_dll" depends="library.wrapper,modules.propagation_module" description="build propagation module dll">
+    <target name="propagation_module_dll" depends="wrapper,propagation_module" description="build propagation module dll">
         <build-lib name="propagation_module_dll" outtype="shared" pattern="propagation_module" depends="boost"
                    libs="propagation_module@{suffix},wrapper@{suffix}"/>
     </target>
 
-    <target name="modules.propagation_module_test" depends="modules.propagation_module_dll">
+    <target name="propagation_module_test" depends="propagation_module_dll">
         <build-test name="propagation_module" depends="boost" libs="propagation_module@{suffix},core@{suffix}">
             <includepath path="${libraries.dir}/simulation_kernel"/>
             <compilerarg value="-Zm500"/>
@@ -593,19 +593,19 @@
             depends="applications.simulation,applications.clients,applications.frontends"/>
 
     <target name="applications.simulation" description="build Sword Simulation executables"
-            depends="application.dispatcher_app,application.simulation_app,application.replayer_app"/>
+            depends="dispatcher_app,simulation_app,replayer_app"/>
 
     <target name="applications.clients" description="build Sword Client executables"
-            depends="application.gaming_app,application.preparation_app,application.adaptation_app,
-                     application.loadtester_app,application.wise_driver_dll,library.vrforces_plugin_dll,
-                     application.mission_tester_app,application.edxlhave_app,
-                     application.launcher_test_app,application.xml_signature_app,
-                     application.shield_app"/>
+            depends="gaming_app,preparation_app,adaptation_app,
+                     loadtester_app,wise_driver_dll,vrforces_plugin_dll,
+                     mission_tester_app,edxlhave_app,
+                     launcher_test_app,xml_signature_app,
+                     shield_app"/>
 
     <target name="applications.frontends" description="build Sword Frontend executables"
-            depends="application.selftraining_app,application.launcher_app,application.package_app"/>
+            depends="selftraining_app,launcher_app,package_app"/>
 
-    <target name="application.launcher_dll" depends="library.client_proxy,library.clients_gui,library.frontend,library.protocol,library.shield" description="build Sword launcher dll">
+    <target name="launcher_dll" depends="client_proxy,clients_gui,frontend,protocol,shield" description="build Sword launcher dll">
         <build-lib name="launcher_dll" outtype="shared" depends="boost,qt4,xerces,xalan,protobuf" pattern="launcher-${platform}-mt"
             libs="zipstream,zlib1,tools,
                   lib${ant.project.name}_clients_gui-${platform}-mt@{suffix},
@@ -625,7 +625,7 @@
         </build-lib>
     </target>
 
-    <target name="application.dispatcher_dll" depends="library.dispatcher,library.actions,library.clients_kernel,library.ENT,library.plugins,library.shield" description="build Sword Dispatcher dll">
+    <target name="dispatcher_dll" depends="dispatcher,actions,clients_kernel,ENT,library.plugins,shield" description="build Sword Dispatcher dll">
         <build-lib name="dispatcher_dll" outtype="shared" depends="boost,terrain,qt4,xerces,xalan,protobuf" pattern="dispatcher-${platform}-mt@{suffix}" suffix="-gd"
             libs="directia-${platform}-mt@{suffix}-4_6,
                   lib${ant.project.name}_actions-${platform}-mt@{suffix},
@@ -659,7 +659,7 @@
         </build-lib>
     </target>
 
-    <target name="application.dispatcher_app" depends="application.dispatcher_dll" description="build Sword Dispatcher executable">
+    <target name="dispatcher_app" depends="dispatcher_dll" description="build Sword Dispatcher executable">
         <build-app name="dispatcher_app" depends="boost,terrain,flexlm,qt4,xerces,xalan"
             libs="dispatcher-${platform}-mt@{suffix},
                   lib${ant.project.name}_tools-${platform}-mt@{suffix},
@@ -674,7 +674,7 @@
         </build-app>
     </target>
 
-    <target name="application.simulation_app" depends="library.license_gui,library.simulation_kernel,application.dispatcher_dll" description="build Sword Simulation executable">
+    <target name="simulation_app" depends="license_gui,simulation_kernel,dispatcher_dll" description="build Sword Simulation executable">
         <build-app name="simulation_app" depends="terrain,boost,xerces,xalan,flexlm,protobuf" pattern="simulation_app"
             libs="masalloc,directia-${platform}-mt-4_6,library-${platform}-mt,
                   gdal_i,gdal_ogr,log4cxx,geodata,analysis,
@@ -700,7 +700,7 @@
         </build-app>
     </target>
 
-    <target name="application.replayer_app" depends="application.dispatcher_dll,library.dispatcher,library.3a,library.score_plugin,library.web_control_plugin" description="build Sword replayer executable">
+    <target name="replayer_app" depends="dispatcher_dll,dispatcher,3a,score_plugin,web_control_plugin" description="build Sword replayer executable">
         <build-app name="replayer_app" depends="terrain,boost,flexlm,qt4,xerces,xalan,protobuf" pattern="replayer_app"
             libs="tools,directia-${platform}-mt-4_6,
                   mongoose@{suffix},
@@ -729,7 +729,7 @@
         </build-app>
     </target>
 
-    <target name="application.adaptation_app" depends="library.ENT,library.clients_gui" description="build Sword Adaptation executable">
+    <target name="adaptation_app" depends="ENT,clients_gui" description="build Sword Adaptation executable">
         <build-app name="adaptation_app" depends="qt4,xerces,xalan,boost,flexlm" excludes="**/XmlResources.cpp"
                    libs="svgl,zipstream,bugtrap,excel@{suffix},
                          lib${ant.project.name}_ENT-${platform}-mt,
@@ -744,7 +744,7 @@
         </build-app>
     </target>
 
-    <target name="application.gaming_app" depends="library.gaming" description="build Sword Gaming executable">
+    <target name="gaming_app" depends="gaming" description="build Sword Gaming executable">
         <build-app name="gaming_app" depends="terrain,xerces,xalan,qt4,boost,flexlm,protobuf"
                    libs="gdal_i,gdal_ogr,log4cxx,svgl,zipstream,zlib1,bugtrap,
                          lib${ant.project.name}_actions-${platform}-mt,
@@ -767,7 +767,7 @@
         </build-app>
     </target>
 
-    <target name="application.loadtester_app" depends="library.protocol,library.tools" description="build Sword load testing executable">
+    <target name="loadtester_app" depends="protocol,tools" description="build Sword load testing executable">
         <build-app name="loadtester_app" subsystem="console"
                    depends="boost,protobuf" failonwarning="${failonwarning}"
                    libs="lib${ant.project.name}_protocol-${platform}-mt,
@@ -778,7 +778,7 @@
         </build-app>
     </target>
 
-    <target name="application.preparation_app" depends="library.preparation,library.frontend" description="build Sword Gaming executable">
+    <target name="preparation_app" depends="preparation,frontend" description="build Sword Gaming executable">
         <build-app name="preparation_app" excludes="**/**_Gen.*" depends="terrain,xerces,xalan,qt4,boost,flexlm,protobuf"
                    libs="gdal_i,gdal_ogr,log4cxx,svgl,zipstream,zlib1,bugtrap,
                          geodata,geos_i,spatialite,proj_i,libiconv,
@@ -803,7 +803,7 @@
         </build-app>
     </target>
 
-    <target name="application.selftraining_app" depends="library.frontend,application.launcher_dll" description="build Sword Self-training executable">
+    <target name="selftraining_app" depends="frontend,launcher_dll" description="build Sword Self-training executable">
         <build-app name="selftraining_app" depends="qt4,boost,xerces,xalan,flexlm,protobuf"
                    libs="bugtrap,zipstream,zlib1,tools
                          launcher-${platform}-mt@{suffix},
@@ -821,7 +821,7 @@
         </build-app>
     </target>
 
-    <target name="application.shield_app" depends="library.MT_Tools,library.protocol,library.shield,library.tools" description="Build shield test application">
+    <target name="shield_app" depends="MT_Tools,protocol,shield,tools" description="Build shield test application">
         <build-app name="shield_app" depends="qt4,boost,protobuf"
                    libs="lib${ant.project.name}_MT_Tools-${platform}-mt,
                          lib${ant.project.name}_protocol-${platform}-mt,
@@ -831,7 +831,7 @@
         </build-app>
     </target>
 
-    <target name="application.launcher_app" depends="library.MT_Tools,application.launcher_dll" description="build Sword launcher service">
+    <target name="launcher_app" depends="MT_Tools,launcher_dll" description="build Sword launcher service">
         <build-app name="launcher_app" depends="boost,xerces,xalan" subsystem="console"
                    libs="launcher-${platform}-mt@{suffix},tools
                       lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix}"
@@ -841,14 +841,14 @@
         </build-app>
     </target>
 
-    <target name="application.package_app" description="build Sword Package deployment executable">
+    <target name="package_app" description="build Sword Package deployment executable">
         <build-app name="package_app" depends="boost" subsystem="console">
             <syslibset libs="user32"/>
             <defineset define="QT3_SUPPORT"/>
         </build-app>
     </target>
 
-    <target name="application.wise_driver_dll" depends="library.client_proxy" description="build Sword WISE driver dll" if="is-vc80">
+    <target name="wise_driver_dll" depends="client_proxy" description="build Sword WISE driver dll" if="is-vc80">
         <build-lib name="wise_driver_dll" outtype="shared" depends="boost,protobuf" suffix="-gd" pattern="MASAGroup.Sword@{suffix}"
             libs="Common,DriverBase,
                   lib${ant.project.name}_client_proxy-${platform}-mt@{suffix},
@@ -862,7 +862,7 @@
         </build-lib>
     </target>
 
-    <target name="application.mission_tester_app" depends="library.mission_tester" description="build Sword mission tester executable">
+    <target name="mission_tester_app" depends="mission_tester" description="build Sword mission tester executable">
         <build-app name="mission_tester_app" depends="boost,protobuf,qt4,terrain,xalan,xerces"
             libs="lib${ant.project.name}_mission_tester-${platform}-mt@{suffix},
                   lib${ant.project.name}_actions-${platform}-mt@{suffix},
@@ -877,13 +877,13 @@
         </build-app>
     </target>
 
-    <target name="application.edxlhave_app" depends="library.protocol" description="build edxl_app (Emergency Data Exchange)">
+    <target name="edxlhave_app" depends="protocol" description="build edxl_app (Emergency Data Exchange)">
         <build-app name="edxlhave_app" depends="xerces,boost,protobuf,openssl" libs="lib${ant.project.name}_protocol-${platform}-mt@{suffix}" subsystem="console" failonwarning="${failonwarning}">
             <includepath path="${out.dir}/release/libraries/protocol"/>
         </build-app>
     </target>
 
-    <target name="application.launcher_test_app" depends="library.protocol,library.frontend,library.shield" description="build application">
+    <target name="launcher_test_app" depends="protocol,frontend,shield" description="build application">
         <build-app name="launcher_test_app" subsystem="console" depends="qt4,boost,xerces,protobuf"
             libs="lib${ant.project.name}_protocol-${platform}-mt@{suffix},
                   lib${ant.project.name}_frontend-${platform}-mt,
@@ -897,7 +897,7 @@
         </build-app>
     </target>
 
-    <target name="application.xml_signature_app" description="build application">
+    <target name="xml_signature_app" description="build application">
         <build-app name="xml_signature_app" subsystem="console" depends="boost" libs="tools" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-app>
@@ -908,7 +908,7 @@
     samples
     ============================================================================
     -->
-    <target name="sample.client_sample_app" depends="library.protocol" description="build Sample client application">
+    <target name="client_sample_app" depends="protocol" description="build Sample client application">
         <build-app name="client_sample_app" depends="protobuf" root="${samples.dir}"
                    libs="lib${ant.project.name}_protocol-${platform}-mt@{suffix}" subsystem="console">
             <syslibset libs="wsock32"/>
@@ -969,7 +969,7 @@
         </zip>
     </target>
 
-    <target name="generate-signatures" depends="application.xml_signature_app" description="generate signatures">
+    <target name="generate-signatures" depends="xml_signature_app" description="generate signatures">
         <exec executable="${out.dir}/release/applications/xml_signature_app/xml_signature_app.exe" dir="${run.dir}" failonerror="true" timeout="30000">
             <arg value="${data.dir}/data/models/ada/physical"/>
             <arg value="${data.dir}/data/terrains"/>
@@ -1025,15 +1025,15 @@
     ============================================================================
     -->
     <target name="test" depends="generate-license,scripts_test,adaptation_test,tools_test,3a_test,plugins_test,hla_plugin_test,web_control_plugin_test,
-                                 shield_test,clients_test,exercises_test,data_migrations_test,dispatcher_test,application.simulation_kernel_test,
-                                 application.integration_decisionnal_test,checkpoint_test,protocol_test,positions_plugin_test,
+                                 shield_test,clients_test,exercises_test,data_migrations_test,dispatcher_test,simulation_kernel_test,
+                                 integration_decisionnal_test,checkpoint_test,protocol_test,positions_plugin_test,
                                  actions_test,launcher_test,reports_test,flood_test,client_proxy_test" description="run all tests"/>
 
-    <target name="3a_test" depends="library.3a">
+    <target name="3a_test" depends="3a">
         <build-test name="3a" depends="xerces,terrain,boost,protobuf" libs="lib${ant.project.name}_3a-${platform}-mt@{suffix},lib${ant.project.name}_protocol-${platform}-mt" failonwarning="${failonwarning}"/>
     </target>
 
-    <target name="tools_test" depends="library.tools">
+    <target name="tools_test" depends="tools">
         <build-test name="tools" depends="boost,xerces,xalan,qt4"
             libs="lib${ant.project.name}_tools-${platform}-mt@{suffix},
                   tools,
@@ -1041,7 +1041,7 @@
             failonwarning="${failonwarning}"/>
     </target>
 
-    <target name="plugins_test" depends="library.hla_plugin,library.tic,library.script_plugin,library.bml_plugin,library.crossbow_plugin,library.timeline_plugin,web_control_plugin_test,library.logistic_plugin">
+    <target name="plugins_test" depends="hla_plugin,tic,script_plugin,bml_plugin,crossbow_plugin,timeline_plugin,web_control_plugin_test,logistic_plugin">
         <build-test name="plugins" depends="xerces,terrain,boost,openssl,protobuf,qt4"
             libs="directia-${platform}-mt-4_6,gdal_i,
                   lib${ant.project.name}_tools-${platform}-mt,
@@ -1061,7 +1061,7 @@
         </build-test>
     </target>
 
-    <target name="hla_plugin_test" depends="library.hla_plugin" if="is-vc80">
+    <target name="hla_plugin_test" depends="hla_plugin" if="is-vc80">
         <build-test name="hla_plugin" depends="boost,qt4,terrain,xerces,xalan,protobuf"
             libs="HLA,
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
@@ -1078,7 +1078,7 @@
         </build-test>
     </target>
 
-    <target name="web_control_plugin_test" depends="library.web_control_plugin">
+    <target name="web_control_plugin_test" depends="web_control_plugin">
         <build-test name="web_control_plugin" depends="boost,protobuf,xerces"
             libs="mongoose@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
@@ -1089,7 +1089,7 @@
         </build-test>
     </target>
 
-    <target name="shield_test" depends="library.shield">
+    <target name="shield_test" depends="shield">
         <build-test name="shield" depends="boost,protobuf" excludes="**/*.h"
             libs="lib${ant.project.name}_tools-${platform}-mt,
                  lib${ant.project.name}_MT_Tools-${platform}-mt,
@@ -1098,7 +1098,7 @@
             failonwarning="${failonwarning}"/>
     </target>
 
-    <target name="clients_test" depends="library.indicators,library.preparation">
+    <target name="clients_test" depends="indicators,preparation">
         <build-test name="clients" depends="terrain,boost,qt4,xerces,xalan,protobuf"
             libs="gdal_i,gdal_ogr,svgl,zipstream,zlib1,geodata,geos_i,spatialite,proj_i,libiconv,
                   lib${ant.project.name}_tools-${platform}-mt,
@@ -1118,7 +1118,7 @@
         </build-test>
     </target>
 
-    <target name="actions_test" depends="library.actions">
+    <target name="actions_test" depends="actions">
         <build-test name="actions" depends="terrain,boost,qt4,xerces,xalan,protobuf"
             libs="lib${ant.project.name}_tools-${platform}-mt,
                   lib${ant.project.name}_ENT-${platform}-mt,
@@ -1131,7 +1131,7 @@
         </build-test>
     </target>
 
-    <target name="client_proxy_test" depends="library.client_proxy,library.protocol,library.tools,library.MT_Tools">
+    <target name="client_proxy_test" depends="client_proxy,protocol,tools,MT_Tools">
         <build-test name="client_proxy" depends="boost,protobuf"
             libs="lib${ant.project.name}_tools-${platform}-mt,
                   lib${ant.project.name}_client_proxy-${platform}-mt,
@@ -1141,7 +1141,7 @@
         </build-test>
     </target>
 
-    <target name="dispatcher_test" depends="library.dispatcher,library.messenger_plugin">
+    <target name="dispatcher_test" depends="dispatcher,messenger_plugin">
         <build-test name="dispatcher" depends="boost,qt4,xerces,xalan,terrain,protobuf"
             libs="lib${ant.project.name}_clients_kernel-${platform}-mt,
                   lib${ant.project.name}_MT_Tools-${platform}-mt,
@@ -1155,7 +1155,7 @@
         </build-test>
     </target>
 
-    <target name="launcher_test" depends="application.launcher_dll,library.frontend">
+    <target name="launcher_test" depends="launcher_dll,frontend">
         <build-test name="launcher" depends="boost,qt4,xerces,protobuf"
             libs="launcher-${platform}-mt@{suffix},tools,
                   lib${ant.project.name}_frontend-${platform}-mt,
@@ -1170,11 +1170,11 @@
         </build-test>
     </target>
 
-    <target name="flood_test" depends="library.flood">
+    <target name="flood_test" depends="flood">
         <build-test name="flood" depends="boost" libs="lib${ant.project.name}_flood-${platform}-mt" failonwarning="${failonwarning}"/>
     </target>
 
-    <target name="positions_plugin_test" depends="library.protocol,library.positions_plugin">
+    <target name="positions_plugin_test" depends="protocol,positions_plugin">
         <build-test name="positions_plugin" depends="boost,protobuf"
             libs="lib${ant.project.name}_positions_plugin-${platform}-mt,lib${ant.project.name}_protocol-${platform}-mt"
             failonwarning="${failonwarning}"/>
@@ -1218,7 +1218,7 @@
         </sequential>
     </macrodef>
 
-    <target name="checkpoint_test" depends="application.simulation_app,modules" description="save and load a checkpoint">
+    <target name="checkpoint_test" depends="simulation_app,modules" description="save and load a checkpoint">
         <run-one-simulation exercise="scipio/CheckpointTests">
             <arg value="--savecheckpoint=tempcheckpoint"/>
             <arg value="--legacy"/>
@@ -1351,7 +1351,7 @@
         <test-adaptation input="${data.dir}/data/models/ada/physical/worldwide"/>
     </target>
 
-    <target name="application.simulation_kernel_test" depends="library.simulation_kernel" description="build Sword Simulation kernel test executable">
+    <target name="simulation_kernel_test" depends="simulation_kernel" description="build Sword Simulation kernel test executable">
         <build-test name="simulation_kernel"
                     libs="core,masalloc,tools,directia-${platform}-mt-4_6,library-${platform}-mt,
                          gdal_i,gdal_ogr,log4cxx,geodata,analysis,
@@ -1374,7 +1374,7 @@
         </build-test>
     </target>
 
-    <target name="application.integration_decisionnal_test" description="build Sword Integration DIA5 test executable">
+    <target name="integration_decisionnal_test" description="build Sword Integration DIA5 test executable">
         <build-test name="integration_decisionnal" depends="boost" libs="directia-${platform}-mt-4_6" dir="resources" failonwarning="${failonwarning}">
             <includepath path="${libraries.dir}/simulation_kernel"/>
             <defineset>
@@ -1446,7 +1446,7 @@
         <test-data-migration old-version="5.0.0" exercise="Egypt"/>
     </target>
 
-    <target name="protocol_test" description="build protocol test application" depends="library.protocol,library.tools">
+    <target name="protocol_test" description="build protocol test application" depends="protocol,tools">
         <build-test name="protocol" depends="boost,protobuf"
             libs="lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_tools-${platform}-mt@{suffix},
@@ -1697,7 +1697,7 @@
         </zip>
     </target>
 
-    <target name="package.wise-driver" depends="application.wise_driver_dll" description="package the wise driver installer" if="is-vc80">
+    <target name="package.wise-driver" depends="wise_driver_dll" description="package the wise driver installer" if="is-vc80">
         <nsis name="sword-wise_driver" script="sword-wise_driver.nsi">
             <arg value="/DAPP_VERSION_MAJOR=${version.project.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.version}"/>
