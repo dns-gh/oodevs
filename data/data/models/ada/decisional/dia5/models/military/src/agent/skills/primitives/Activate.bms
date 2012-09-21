@@ -75,7 +75,7 @@ node "activateElement"
     -- --------------------------------------------------------------------------------
     activate = function( self )
         -- when the entity is activated send a feedback
-        if not self.params.entity:isManeuverObstacle() or self.params.entity:isActifManeuverObstacle() then
+        if not self.params.entity:isManeuverObstacle() or self.params.entity:isActifManeuverObstacle() or self.params.entity:delayedActivationTime() > 0 then
                meKnowledge:RC( eRC_ObstacleNonActivable, self.params.entity.source )
                Feedback( self.feedbacks.done, { entity = self.params.entity, reason = "activated"  } )
                return

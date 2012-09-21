@@ -158,4 +158,7 @@ return
     canBeImproved = function( self )
         return false
     end,
+    delayedActivationTime = function( self )
+        return integration.delaiAvantActivationForGenObject( self )
+    end
 }

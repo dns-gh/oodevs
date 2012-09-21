@@ -38,3 +38,11 @@ end
 integration.isActifManeuverObstacle = function ( object )
     return DEC_ConnaissanceObjet_EstObstacleDeManoeuvreActif( object.source )
 end
+
+integration.delaiAvantActivationForGenObject = function ( genObject )
+    return DEC_GenObject_DateActivationMines( genObject.source )
+end
+
+integration.delaiAvantActivationForObject = function ( object )
+    return DEC_ConnaissanceObjet_DateActivationObstacle( object.source )
+end

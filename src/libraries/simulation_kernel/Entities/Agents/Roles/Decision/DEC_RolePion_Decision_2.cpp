@@ -93,6 +93,7 @@ void DEC_RolePion_Decision::RegisterUserArchetypeFunctions ( directia::brain::Br
     // Object knowledges accessors
     brain[ "DEC_IsValidKnowledgeObject" ] = &DEC_KnowledgeObjectFunctions::IsKnowledgeValid;
     brain[ "DEC_ConnaissanceObjet_EstObstacleDeManoeuvreActif" ] = &DEC_KnowledgeObjectFunctions::IsReservedObstacleActivated;
+    brain[ "DEC_ConnaissanceObjet_DateActivationObstacle" ] = &DEC_KnowledgeObjectFunctions::GetActivationTime;
     brain[ "DEC_ConnaissanceObjet_EstObstacleDeManoeuvre" ] = &DEC_KnowledgeObjectFunctions::IsReservedObstacle;
     brain[ "DEC_ConnaissanceObjet_EstContourne" ] = &DEC_KnowledgeObjectFunctions::IsBypassed;
     brain[ "DEC_ConnaissanceObjet_EstValorise" ] = &DEC_KnowledgeObjectFunctions::IsMined;

@@ -273,6 +273,15 @@ bool DEC_KnowledgeObjectFunctions::IsReservedObstacle( boost::shared_ptr< DEC_Kn
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::GetActivationTime
+// Created: GGE 2012-09-19
+// -----------------------------------------------------------------------------
+int DEC_KnowledgeObjectFunctions::GetActivationTime( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+{
+    return pKnowledge && pKnowledge->IsValid() && pKnowledge->GetActivationTime();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeObjectFunctions::IsBypassed
 // Created: NLD 2004-04-09
 // Modified: JVT 2004-12-17

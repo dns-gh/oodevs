@@ -73,7 +73,6 @@ node "BuildElement"
 
     create = function( self )
         self.arrived = false
-        self.alreadyBuiltNeedActivate = false
         if self.params.positions or self.params.positions == NIL then
             self.positions = queries.getPositionsToBuild[ "execute" ](
                                              { elementsToBuild = { self.params.entity } } )
@@ -94,8 +93,8 @@ node "BuildElement"
             return
         end
         -- when the entity is built send a feedback
-        if toBuild:isBuilt() or self.alreadyBuiltNeedActivate then
-            if toBuild:isManeuverObstacle() and not toBuild:isActifManeuverObstacle() then  --if maneuver obstacle, it need to be activated to consider building action is over
+        if toBuild:isBuilt() then
+            if toBuild:isManeuverObstacle() and not toBuild:isActifManeuverObstacle() and toBuild:delayedActivationTime() == 0 then  --if maneuver obstacle, it need to be activated to consider building action is over
                meKnowledge:sendObstacleToActivate( integration.GetSuperiorKnowledge( meKnowledge), toBuild )
                Feedback( self.feedbacks.notActivated, { element = toBuild } )
                return   

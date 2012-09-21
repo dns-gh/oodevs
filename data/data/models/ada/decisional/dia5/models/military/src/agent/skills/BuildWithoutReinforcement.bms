@@ -89,7 +89,7 @@ rootnode
 
         if self.alltry then
             for _, objective in pairs( self.objectsToActivate ) do -- Obstacles should be activated to consider action over 
-                if not objective:isActifManeuverObstacle() then
+                if objective:isManeuverObstacle() and not objective:isActifManeuverObstacle() and objective:delayedActivationTime() == 0 then
                     return
                 end
             end

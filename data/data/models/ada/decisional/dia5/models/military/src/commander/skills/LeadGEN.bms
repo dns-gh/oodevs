@@ -246,7 +246,6 @@ done = function( self ) end,
 
 create = function( self )
         myself.newTask = false
-        myself.hasSentFinMission = false
         myself.leadData = {}
         myself.leadData.workMap = {}
         self.parameters = myself.taskParams
@@ -336,7 +335,6 @@ activate = function( self )
            Feedback( self.feedbacks.done )
         else
            meKnowledge:RC( eRC_FinMission )
-           myself.hasSentFinMission = true
         end
         myself.feedback = false
     end

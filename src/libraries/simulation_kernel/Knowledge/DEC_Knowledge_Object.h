@@ -112,6 +112,7 @@ public:
     bool IsConstructed() const;
     bool IsReservedObstacle() const;
     bool IsReservedObstacleActivated() const;
+    int GetActivationTime() const;
     virtual unsigned int GetID() const;
     unsigned int GetObjectId() const;
     const std::string& GetName() const;
