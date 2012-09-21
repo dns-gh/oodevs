@@ -367,8 +367,6 @@ void ADN_NBC_Datas::NbcAgentInfos::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_NBC_Datas::NbcAgentInfos::WriteArchive( xml::xostream& output )
 {
-    if( !bLiquidPresent_.GetData() && !bGazPresent_.GetData() )
-        return;
     output << xml::start( "agent" )
            << xml::attribute( "name", strName_ )
            << xml::attribute( "category", category_ )
