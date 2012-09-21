@@ -94,7 +94,7 @@ end
 
 integration.isInForbiddenFireArea = function( target )
     local friendly = 1 -- tristate: 0 = enemy, 1 = friendly, 2 = unknown
-    return DEC_KnowledgeAgent_IsInObject( eTypeObjectZoneInterditeTir, target.source, friendly )
+    return DEC_KnowledgeAgent_IsInObject( eTypeObjectFiringForbiddenArea, target.source, friendly )
 end
 
 -- Renvoie l'attrition potentielle [0;100] de l'agent à partir d'une position donnée, pour un PH donné.
