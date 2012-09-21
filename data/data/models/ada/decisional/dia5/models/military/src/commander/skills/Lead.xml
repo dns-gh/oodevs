@@ -41,7 +41,7 @@ This mission is issued to rear echelon units ready to support the forward echelo
             </default>
         </parameter>
         <parameter name="peiTasks" nullable="true">
-            <description>The task to be performed by the scouting units.</description>
+            <description>The task to be performed by the scouting units, only in case they cannot perform the main task.</description>
             <type>
                 <simple name="string"/>
             </type>
