@@ -6,7 +6,7 @@
             <description>Les unités à suivre.</description>
             <type>
                 <list>
-                    <class name="properties.Reachable"/>
+                    <class name="properties.Motile"/>
                 </list>
             </type>
         </parameter>

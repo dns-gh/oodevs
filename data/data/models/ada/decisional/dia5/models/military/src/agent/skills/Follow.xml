@@ -5,9 +5,10 @@
 If no entities can be followed (none of them are operational), this skill sends the feedback 'failed'.</description>
     <parameters>
         <parameter name="entities">
+            <description>The set of entities to follow.</description>
             <type>
                 <list>
-                    <class name="properties.Reachable"/>
+                    <class name="properties.Motile"/>
                 </list>
             </type>
         </parameter>

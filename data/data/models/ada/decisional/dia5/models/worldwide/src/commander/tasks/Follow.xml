@@ -6,7 +6,7 @@
             <description>The entities to follow.</description>
             <type>
                 <list>
-                    <class name="properties.Reachable"/>
+                    <class name="properties.Motile"/>
                 </list>
             </type>
         </parameter>
