@@ -29,7 +29,6 @@ public:
     //@{
              PropagationCapacity();
     explicit PropagationCapacity( xml::xistream& xis );
-    explicit PropagationCapacity( sword::Sink_ABC& sink );
     virtual ~PropagationCapacity();
     //@}
 
@@ -44,6 +43,12 @@ public:
     virtual void Register( MIL_Object_ABC& object );
     virtual void Instanciate( MIL_Object_ABC& object ) const;
     virtual void Instanciate( MIL_Object_ABC& object, sword::Sink_ABC& sink ) const;
+    //@}
+
+private:
+    //! @name Constructors/Destructor
+    //@{
+    explicit PropagationCapacity( sword::Sink_ABC& sink );
     //@}
 
 private:
