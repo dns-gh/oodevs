@@ -388,7 +388,7 @@
     </target>
 
     <target name="library.flood" description="build flood static library">
-        <build-lib name="flood" pattern="lib${ant.project.name}_flood-${platform}-mt@{suffix}" suffix="-gd">
+        <build-lib name="flood" pattern="lib${ant.project.name}_flood-${platform}-mt@{suffix}" suffix="-gd" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
