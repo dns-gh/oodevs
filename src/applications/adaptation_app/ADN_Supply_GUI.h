@@ -33,14 +33,12 @@ public:
     //! @name Operations
     //@{
     void Build();
-    void ConnectMission( bool connect );
     //@}
 
 private:
     //! @name Member data
     //@{
     ADN_Supply_Data& data_;
-    ADN_Connector_ABC* missionConnector_;
     //@}
 };
 

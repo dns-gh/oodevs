@@ -28,7 +28,6 @@
 ADN_Supply_GUI::ADN_Supply_GUI( ADN_Supply_Data& data )
     : ADN_GUI_ABC( "ADN_Supply_GUI" )
     , data_( data )
-    , missionConnector_( 0 )
 {
     // NOTHING
 }
@@ -57,8 +56,7 @@ void ADN_Supply_GUI::Build()
     // Supply
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
     builder.AddField< ADN_SupplyUnitSelector >( pInfoHolder, tr( "Unit type" ), data_.infos_.ptrUnit_ );
-    builder.AddField< ADN_ComboBox_Vector< ADN_Missions_Data::Mission > >( pInfoHolder, tr( "Mission" ), missionConnector_ );
-    ConnectMission( true );
+    builder.AddField< ADN_ComboBox_Vector< ADN_Missions_Data::Mission > >( pInfoHolder, tr( "Mission" ),  data_.infos_.ptrSupplyMission_ );
 
     Q3GroupBox* pTypeGroup = new Q3GroupBox( 2, Qt::Vertical, tr( "Convoy type" ) );
     {
@@ -130,13 +128,4 @@ void ADN_Supply_GUI::Build()
     // Main widget
     pMainWidget_ = CreateScrollArea( *pContent );
     pMainWidget_->setObjectName( strClassName_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Supply_GUI::ConnectMission
-// Created: JSR 2010-05-07
-// -----------------------------------------------------------------------------
-void ADN_Supply_GUI::ConnectMission( bool connect)
-{
-    missionConnector_->Connect( &data_.infos_.ptrSupplyMission_, connect );
 }
