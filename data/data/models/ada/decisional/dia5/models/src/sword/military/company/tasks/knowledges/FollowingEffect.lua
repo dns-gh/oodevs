@@ -1,7 +1,7 @@
 return
 {
 
-    getEntitiesToSupport = function( self, params )
+    getEntitiesToFollow = function( self, params )
         return { params.objective }
     end
 }

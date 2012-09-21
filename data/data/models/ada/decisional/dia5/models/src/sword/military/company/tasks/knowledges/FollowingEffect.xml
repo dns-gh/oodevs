@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.company.tasks.knowledges.FollowingEffect" source-version="1.0.0" extends="sword.military.company.tasks.knowledges.CompanyTask">
-  <description>Interface des connaissances de mission de niveau compagnie</description>
-  <methods>
-    <method name="getEntitiesToSupport">
-      <return>
-        <type>
-          <list>
-            <class name="directia.core.Object"/>
-          </list>
-        </type>
-      </return>
-    </method>
-  </methods>
+    <description>Interface des connaissances de mission de niveau compagnie</description>
+    <methods>
+        <method name="getEntitiesToFollow">
+            <return>
+                <type>
+                    <list>
+                        <class name="directia.core.Object"/>
+                    </list>
+                </type>
+            </return>
+        </method>
+    </methods>
 </class>
