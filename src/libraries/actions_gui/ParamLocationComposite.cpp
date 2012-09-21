@@ -230,9 +230,9 @@ void ParamLocationComposite::OnChecked( bool checked )
 // -----------------------------------------------------------------------------
 int ParamLocationComposite::GetIndex( Param_ABC* param ) const
 {
-    for( int i = 0; i < params_.size(); ++i )
+    for( size_t i = 0; i < params_.size(); ++i )
         if( params_[ i ] == param )
-            return i;
+            return static_cast< int >( i );
     return -1;
 }
 

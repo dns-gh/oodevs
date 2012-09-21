@@ -113,7 +113,7 @@
     </target>
 
     <target name="library.actions_gui" depends="library.clients_gui,library.actions" description="build actions_gui library">
-        <build-lib name="actions_gui" depends="boost,qt4,xerces" pattern="lib${ant.project.name}_actions_gui-${platform}-mt@{suffix}" suffix="-gd">
+        <build-lib name="actions_gui" depends="boost,qt4,xerces" pattern="lib${ant.project.name}_actions_gui-${platform}-mt@{suffix}" suffix="-gd" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>

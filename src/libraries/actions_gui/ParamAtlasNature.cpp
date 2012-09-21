@@ -17,7 +17,9 @@
 #include "clients_kernel/OrderParameter.h"
 #include "clients_kernel/StaticModel.h"
 #include "clients_gui/Tools.h"
+#pragma warning( push, 0 )
 #include <Qt3Support/q3buttongroup.h>
+#pragma warning( pop )
 
 using namespace actions::gui;
 
