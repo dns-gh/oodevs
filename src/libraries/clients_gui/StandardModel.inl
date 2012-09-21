@@ -67,7 +67,7 @@ template< typename T >
 inline
 QStandardItem* StandardModel::AddRootDataItem( int row, int col, const QString& text, const QString& tooltip, const T& value, Qt::ItemFlags flags /*= 0*/ )
 {
-    return AddRootDataItem( invisibleRootItem(), row, col, text, tooltip, value, flags );
+    return AddChildDataItem( invisibleRootItem(), row, col, text, tooltip, value, flags );
 }
 
 // -----------------------------------------------------------------------------

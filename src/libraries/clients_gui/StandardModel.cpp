@@ -171,7 +171,6 @@ void StandardModel::LockDragAndDrop( bool lock )
 // -----------------------------------------------------------------------------
 QStringList StandardModel::mimeTypes() const
 {
-     // $$$$ JSR 2012-09-07: TODO gérer différents mimeTypes? (entity, agenttype, automattype)
     if( dragAndDropObserver_ && !dndLocked_ )
         return dragAndDropObserver_->MimeTypes();
     return QStringList();
@@ -252,7 +251,6 @@ bool StandardModel::dropMimeData( const QMimeData* data, Qt::DropAction action, 
             if( ptr )
                 dragAndDropObserver_->Drop( format, reinterpret_cast< void* >( ptr ), *item );
         }
-
     }
     return true;
 }
