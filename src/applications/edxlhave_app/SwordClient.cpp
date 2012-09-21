@@ -155,7 +155,7 @@ void SwordClient::ReadMessage( const std::vector< google::protobuf::uint8 >& buf
 {
     // decode message
     Message message;
-    if( ! message.ParseFromArray( &buffer.front(), buffer.size() ) )
+    if( ! message.ParseFromArray( &buffer.front(), static_cast< int >( buffer.size() )) )
         throw std::runtime_error( "Deserialization failed" );
     Handle( message );
 }

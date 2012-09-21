@@ -877,7 +877,7 @@
     </target>
 
     <target name="application.edxlhave_app" depends="library.protocol" description="build edxl_app (Emergency Data Exchange)">
-        <build-app name="edxlhave_app" depends="xerces,boost,protobuf,openssl" libs="lib${ant.project.name}_protocol-${platform}-mt@{suffix}" subsystem="console" >
+        <build-app name="edxlhave_app" depends="xerces,boost,protobuf,openssl" libs="lib${ant.project.name}_protocol-${platform}-mt@{suffix}" subsystem="console" failonwarning="${failonwarning}">
             <includepath path="${out.dir}/release/libraries/protocol"/>
         </build-app>
     </target>
