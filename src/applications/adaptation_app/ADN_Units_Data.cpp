@@ -21,6 +21,7 @@
 #include "ADN_OpenFile_Exception.h"
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_UnitSymbols_Data.h"
+#include "ADN_GuiTools.h"
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
 
@@ -953,6 +954,17 @@ void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Units_Data::IsValidDatabase
+// Created: LGY 2012-09-21
+// -----------------------------------------------------------------------------
+bool ADN_Units_Data::UnitInfos::IsValidDatabase()
+{
+    if( ptrModel_.GetData() == 0 )
+        return ADN_GuiTools::MissingDecisionalModel( strName_.GetData() );
+    return true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: UnitInfos::CleanupNature
 // Created: RPD 2011-04-11
 // -----------------------------------------------------------------------------
@@ -1098,4 +1110,16 @@ QStringList ADN_Units_Data::GetUnitsThatUse( helpers::LogisticSupplyClass& suppl
             if( ( *itStock )->ptrLogisticSupplyClass_.GetData()->strName_.GetData() == supply.strName_.GetData() )
                 result << ( *it )->strName_.GetData().c_str();
     return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_Data::IsValidDatabase
+// Created: LGY 2012-09-21
+// -----------------------------------------------------------------------------
+bool ADN_Units_Data::IsValidDatabase()
+{
+    for( IT_UnitInfos_Vector it = vUnits_.begin(); it != vUnits_.end(); ++it )
+        if( !(*it)->IsValidDatabase() )
+            return false;
+    return true;
 }

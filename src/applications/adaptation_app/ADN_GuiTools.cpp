@@ -74,6 +74,20 @@ bool ADN_GuiTools::MissingConvoyWarning()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_GuiTools::MissingConvoyMissionWarning
+// Created: LGY 2012-09-21
+// -----------------------------------------------------------------------------
+bool ADN_GuiTools::MissingConvoyMissionWarning()
+{
+    QApplication::restoreOverrideCursor();
+    QMessageBox::warning( 0,
+        qApp->translate( "ADNDatabaseWarnings", "Database Work in progress" ),
+        qApp->translate( "ADNDatabaseWarnings", "Convoy mission not defined in Log/Supply, database cannot be saved." ),
+        QMessageBox::Ok | QMessageBox::Default );
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_GuiTools::MissingBreakdownWarning
 // Created: PHC 2011-01-20
 // -----------------------------------------------------------------------------
@@ -128,6 +142,20 @@ bool ADN_GuiTools::BadAutomatComposition( const std::string& name )
     QMessageBox::warning( 0,
         qApp->translate( "ADNDatabaseWarnings", "Database Work in progress" ),
         qApp->translate( "ADNDatabaseWarnings", "Automat %1 requires at least one PC, database cannot be saved." ).arg( name.c_str() ),
+        QMessageBox::Ok | QMessageBox::Default );
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_GuiTools::MissingDecisionalModel
+// Created: LGY 2012-09-21
+// -----------------------------------------------------------------------------
+bool ADN_GuiTools::MissingDecisionalModel( const std::string& unit )
+{
+    QApplication::restoreOverrideCursor();
+    QMessageBox::warning( 0,
+        qApp->translate( "ADNDatabaseWarnings", "Database Work in progress" ),
+        qApp->translate( "ADNDatabaseWarnings", "No decisional model defined for unit %1, database cannot be saved." ).arg( unit.c_str() ),
         QMessageBox::Ok | QMessageBox::Default );
     return false;
 }

@@ -192,6 +192,8 @@ public:
         void WriteArchive( xml::xostream& output ) const;
         void CleanupNature();
 
+        bool IsValidDatabase();
+
     public:
         ADN_Type_Int                                                nId_;
         ADN_Type_Enum<E_AgentTypePion,eNbrAgentTypePion>            eTypeId_;
@@ -260,6 +262,9 @@ public:
     QStringList GetUnitsThatUse( ADN_Composantes_Data::ComposanteInfos& composante );
     QStringList GetUnitsThatUse( ADN_Models_Data::ModelInfos& model );
     QStringList GetUnitsThatUse( helpers::LogisticSupplyClass& supply );
+
+    virtual bool IsValidDatabase();
+
 
 private:
     void ReadArchive( xml::xistream& input );

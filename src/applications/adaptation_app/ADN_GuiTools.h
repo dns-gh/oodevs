@@ -34,7 +34,9 @@ public:
     static bool MultiRefWarning( ADN_Ref_ABC* data = 0 );
     static bool DeletionWarning();
     static bool MissingConvoyWarning();
+    static bool MissingConvoyMissionWarning();
     static bool MissingBreakdownWarning( const std::string& name );
+    static bool MissingDecisionalModel( const std::string& unit );
     static bool MissingGeometry( const std::string& name );
     static bool MissingPCOnAutomat( const std::string& name );
     static bool BadAutomatComposition( const std::string& name );
