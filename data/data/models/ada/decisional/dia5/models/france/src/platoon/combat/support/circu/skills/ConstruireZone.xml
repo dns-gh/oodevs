@@ -8,7 +8,7 @@
 		</parameter>
 		<parameter name="typeObjet">
 			<type>
-				<simple name="numeric"/>
+				<simple name="string"/>
 			</type>
 		</parameter>
 	</parameters>

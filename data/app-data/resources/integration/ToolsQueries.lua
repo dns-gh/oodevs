@@ -421,7 +421,7 @@ end
 integration.query.getSiteFranchissementDansZone = function ( zone )
     local allRes={}
     local obstacles = {}
-    obstacles = DEC_ObjectKnowledgesInZone( zone.source, {"crossing site" } )
+    obstacles = DEC_ObjectKnowledgesInZone( zone.source, { eTypeObjectCrossingSite } )
     for _, objective in pairs( obstacles ) do
         allRes[ #allRes + 1 ] = CreateKnowledge( world.Object, objective )
     end

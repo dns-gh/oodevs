@@ -108,17 +108,17 @@ integration.getImplantationObjects = function( area, nbAreas )
         end
         
         local name = DEC_GetSzName(meKnowledge.source)
-        local eTypeObject = eTypeObjectZoneImplantationCanon
+        local eTypeObject = eTypeObjectGunArtilleryDeploymentArea
         if string.find(name, "COBRA") ~= nil then
-            eTypeObject = eTypeObjectZoneImplantationCOBRA
+            eTypeObject = eTypeObjectCOBRADeploymentArea
         elseif string.find(name, "LRM") ~= nil then
-            eTypeObject = eTypeObjectZoneImplantationLRM
+            eTypeObject = eTypeObjectMrlsDeploymentArea
         elseif string.find(name, "SAM") ~= nil or string.find(name, "Mortier") ~= nil then
-            eTypeObject = eTypeObjectZoneImplantationMortier
+            eTypeObject = eTypeObjectMortarDeploymentArea
         end
         
         existingObject = integration.obtenirObjetProcheDe( localisation,  eTypeObject, 10 )
-        local object = DEC_CreateDynamicGenObject( S_TypeObject_ToString( eTypeObject ), localisation, 0  )
+        local object = DEC_CreateDynamicGenObject( eTypeObject, localisation, 0  )
         local toto = CreateKnowledge( world.EngineerObject, object )
         toto.knowledge = existingObject
         objectKn[#objectKn+1] = toto

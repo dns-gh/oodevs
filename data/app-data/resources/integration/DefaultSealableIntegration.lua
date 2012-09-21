@@ -5,9 +5,9 @@ local startSealOffLocation = function( location, knowledge )
         local border = DEC_Geometrie_CreerLocalisationPolyligne( DEC_Geometrie_ListePointsLocalisation( location ) )
         knowledge.sealPerceptionID = DEC_Perception_ActivateLocationProgressiveRecce( DEC_Geometrie_AgrandirLocalisation( location, 10 ), 2 )
         local sealoffarea = nil
-        local sealoffarea = integration.obtenirObjetProcheDe( location, "seal off area", 10 )
+        local sealoffarea = integration.obtenirObjetProcheDe( location, eTypeObjectSealOffArea, 10 )
         if sealoffarea == nil then -- need to create seal off area
-            DEC_CreerObjetSansDelais( "seal off area", border )
+            DEC_CreerObjetSansDelais( eTypeObjectSealOffArea, border )
             meKnowledge:RC( eRC_DebutBouclageZone )			
         end
     end
@@ -20,7 +20,7 @@ end
 
 integration.startedSealOffArea = function( area )
     local SealOffArea = nil
-    SealOffArea = integration.obtenirObjetProcheDe( area.source, "seal off area", 10 )
+    SealOffArea = integration.obtenirObjetProcheDe( area.source, eTypeObjectSealOffArea, 10 )
     if SealOffArea then
         if not area.constructedObject then
             area.constructedObject = SealOffArea
@@ -45,7 +45,7 @@ integration.stopSealOffArea  = function( area )
         end
     end
     local ptRef = integration.getBarycentreZoneFromLocalisation( area.source )
-    local lstObjets = DEC_Knowledges_ObjectsInCircle( ptRef, 10, { "seal off area" } ) --cas ou plusieurs pions ont construit un objet car ils sont arrivés au même tick
+    local lstObjets = DEC_Knowledges_ObjectsInCircle( ptRef, 10, { eTypeObjectSealOffArea } ) --cas ou plusieurs pions ont construit un objet car ils sont arrivés au même tick
     if #lstObjets > 0 then
         for i = 1, #lstObjets do
             if DEC_ConnaissanceObjet_NiveauAnimation( lstObjets[i] ) == 0 then
@@ -64,7 +64,7 @@ end
 integration.startedSealOffUrbanBlock = function( urbanBlock )
     local SealOffArea = nil
     local buArea = DEC_PolygoneBlocUrbain( urbanBlock.source )
-    SealOffArea = integration.obtenirObjetProcheDe( buArea, "seal off area", 10 )
+    SealOffArea = integration.obtenirObjetProcheDe( buArea, eTypeObjectSealOffArea, 10 )
     if SealOffArea then
         if not urbanBlock.constructedObject then
             urbanBlock.constructedObject = SealOffArea
@@ -89,7 +89,7 @@ integration.stopSealOffUrbanBlock = function( urbanBlock )
         end
         local buArea = DEC_PolygoneBlocUrbain( urbanBlock.source )
         local ptRef = integration.getBarycentreZoneFromLocalisation( buArea )
-        local lstObjets = DEC_Knowledges_ObjectsInCircle( ptRef, 10, { "seal off area" } ) --cas ou plusieurs pions ont construit un objet car ils sont arrivés au même tick
+        local lstObjets = DEC_Knowledges_ObjectsInCircle( ptRef, 10, { eTypeObjectSealOffArea } ) --cas ou plusieurs pions ont construit un objet car ils sont arrivés au même tick
         if #lstObjets > 0 then
             for i = 1, #lstObjets do
                 if DEC_ConnaissanceObjet_NiveauAnimation( lstObjets[i] ) == 0 then

@@ -259,10 +259,10 @@ integration.buildInstantlyCheckPointOn = function( position )  -- A appeler une 
     if not position.constructedObject then
     local localisation = DEC_Geometrie_ConvertirPointEnLocalisation( position.source )
     local checkpoint = integration.obtenirObjetProcheDe( localisation, 
-                        S_TypeObject_ToString( eTypeObjectPosteControle ), 10 )
+                        eTypeObjectCheckpoint, 10 )
     if checkpoint == nil then -- need to create a checkpoint object
         DEC_CreerObjetSansDelais( 
-                S_TypeObject_ToString( eTypeObjectPosteControle ), localisation )
+                eTypeObjectCheckpoint, localisation )
         end
         meKnowledge:RC( eRC_MiseEnPlaceFiltrage )
     end
@@ -272,7 +272,7 @@ end
 
 integration.doFiltration = function( bodySearchStrength, blockingStrength, position )
     meKnowledge.localisationForFilterCrowd = meKnowledge.localisationForFilterCrowd or DEC_Geometrie_ConvertirPointEnLocalisation( position.source )
-    meKnowledge.checkPointForFilterCrowd = meKnowledge.checkPointForFilterCrowd or integration.obtenirObjetProcheDe( meKnowledge.localisationForFilterCrowd, S_TypeObject_ToString( eTypeObjectPosteControle ), 10 )
+    meKnowledge.checkPointForFilterCrowd = meKnowledge.checkPointForFilterCrowd or integration.obtenirObjetProcheDe( meKnowledge.localisationForFilterCrowd, eTypeObjectCheckpoint, 10 )
     integration.setBodySearchIntensity( bodySearchStrength , position, meKnowledge.checkPointForFilterCrowd )
     integration.changeCrowdDensity( blockingStrength, meKnowledge.checkPointForFilterCrowd )
 end
@@ -327,11 +327,11 @@ integration.buildInstantlyObjectOn = function( typeObject, position )  -- A appe
         localisation = DEC_Geometrie_ConvertirPointEnLocalisation( position.source )
     end
     local object = object
-	object = integration.obtenirObjetProcheDe( localisation, S_TypeObject_ToString( typeObject ), 10 )
+	object = integration.obtenirObjetProcheDe( localisation, typeObject, 10 )
     if object ~= nil then -- rebuild the already existing object
         DEC_DetruireObjetSansDelais( object )
 	end
-		position.id = DEC_CreerObjetSansDelais( S_TypeObject_ToString( typeObject ), localisation )
+		position.id = DEC_CreerObjetSansDelais( typeObject, localisation )
 end
 -- -------------------------------------------------------------------------------- 
 -- Destroy object on position
@@ -349,10 +349,10 @@ integration.buildInstantlyDecontaminatePlotOn = function( position )  -- A appel
     if not position.constructedObject then
     local localisation = DEC_Geometrie_ConvertirPointEnLocalisation( position.source )
     local DecontaminatePlot = integration.obtenirObjetProcheDe( localisation, 
-                        S_TypeObject_ToString( eTypeObjectSiteDecontamination ), 10 )
+                        eTypeObjectSiteDecontamination, 10 )
     if DecontaminatePlot == nil then -- need to create a decontamination site object
         DEC_CreerObjetSansDelais( 
-                S_TypeObject_ToString( eTypeObjectSiteDecontamination ), localisation )
+                eTypeObjectSiteDecontamination, localisation )
         end
     end
 end
@@ -361,7 +361,7 @@ integration.animateDecontaminatePlot = function( position ) -- Appeler à chaque 
     local DecontaminatePlot = nil
     local localisation = DEC_Geometrie_ConvertirPointEnLocalisation( position.source )
     DecontaminatePlot = integration.obtenirObjetProcheDe( localisation, 
-                    S_TypeObject_ToString( eTypeObjectSiteDecontamination ), 10 )
+                    eTypeObjectSiteDecontamination, 10 )
     if DecontaminatePlot then
         if not position.constructedObject then
             position.constructedObject = DecontaminatePlot
@@ -392,7 +392,7 @@ end
 integration.startAffectMobility = function( target, affectionType )
     meKnowledge:RC( eRC_DebutTravaux )
     target[myself] = target[myself] or {}
-    local genObject = DEC_CreateDynamicGenObject( S_TypeObject_ToString( affectionType ), target:getLocalisation(), true )
+    local genObject = DEC_CreateDynamicGenObject( affectionType, target:getLocalisation(), true )
     target[myself].actionBuild = DEC_StartCreateObject( genObject )
     actionCallbacks[ target[myself].actionBuild ] = function( arg ) target[myself].actionBuildState = arg end
     actionKnowledgeCallbacks[ target[myself].actionBuild ] = function( arg ) target[myself].mobility = arg end
@@ -427,7 +427,7 @@ end
 integration.startEquipBridge = function( site, typePont )
     meKnowledge:RC( eRC_DebutTravaux )
     site[myself] = site[myself] or {}
-    local genObject = DEC_CreateDynamicGenObject( S_TypeObject_ToString( typePont ), site:getLocalisation(), true )
+    local genObject = DEC_CreateDynamicGenObject( typePont, site:getLocalisation(), true )
     site[myself].actionBuild = DEC_StartCreateObject( genObject )
     actionCallbacks[ site[myself].actionBuild ] = function( arg ) site[myself].actionBuildState = arg end
     actionKnowledgeCallbacks[ site[myself].actionBuild ] = function( arg ) site[myself].bridge = arg end

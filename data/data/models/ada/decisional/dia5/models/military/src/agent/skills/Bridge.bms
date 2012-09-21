@@ -26,9 +26,9 @@ rootnode
         self.arrived = false
         self.bridgeBuilt = false
         if self.params.typePontage == 0 then
-            self.typePont = eTypeObjectPontFlottantContinu
+            self.typePont = eTypeObjectContinuousPontoonBridge
         else
-            self.typePont = eTypeObjectPontFlottantDiscontinu
+            self.typePont = eTypeObjectDiscontinuousPontoonBridge
         end
     end,
 
