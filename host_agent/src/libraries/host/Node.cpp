@@ -509,7 +509,7 @@ void Node::DownloadInstall( web::Chunker_ABC& dst, size_t id )
         if( !item )
             throw web::HttpException( web::NOT_FOUND );
         boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );
-        unlink.Assign( boost::bind( &Node::UnlinkExercise, this, install_->LinkItem( *item ) ) );
+        unlink = boost::bind( &Node::UnlinkExercise, this, install_->LinkItem( *item ) );
     }
     install_->Download( dst, *item );
 }
@@ -529,7 +529,7 @@ void Node::DownloadInstall( web::Chunker_ABC& dst, const std::string& type,
         if( !item )
             throw web::HttpException( web::NOT_FOUND );
         boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );
-        unlink.Assign( boost::bind( &Node::UnlinkExercise, this, install_->LinkItem( *item ) ) );
+        unlink = boost::bind( &Node::UnlinkExercise, this, install_->LinkItem( *item ) );
     }
     install_->Download( dst, *item );
 }

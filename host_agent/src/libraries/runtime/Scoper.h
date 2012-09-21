@@ -32,10 +32,11 @@ struct Scoper : public boost::noncopyable
     {
         // NOTHING
     }
-    void Assign( const Task& task )
+    Scoper& operator=( const Task& task )
     {
         assert( !task_ );
         task_ = task;
+        return *this;
     }
     ~Scoper()
     {
