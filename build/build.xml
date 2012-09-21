@@ -101,7 +101,7 @@
     </target>
 
     <target name="library.clients_gui" depends="library.clients_kernel" description="build clients_gui static library">
-        <build-lib name="clients_gui" excludes="**/font/*" depends="qt4" pattern="lib${ant.project.name}_clients_gui-${platform}-mt@{suffix}" suffix="-gd">
+        <build-lib name="clients_gui" excludes="**/font/*" depends="qt4" pattern="lib${ant.project.name}_clients_gui-${platform}-mt@{suffix}" suffix="-gd" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>

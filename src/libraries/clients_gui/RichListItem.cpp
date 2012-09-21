@@ -437,7 +437,7 @@ void RichListItem::ValidUserRenaming( int column )
 // -----------------------------------------------------------------------------
 void RichListItem::SetRenamingText( int column, const QString& text )
 {
-    if( column < 0 || column >= columns_.size() )
+    if( column < 0 || column >= static_cast< int >( columns_.size() ))
         return;
     columns_[ column ].renamingText = text;
 }
