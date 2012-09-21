@@ -18,7 +18,7 @@
                     </parameter>
                     <parameter name="typeObjet">
                         <value>
-                            <number>25.0</number>
+                            <string>mobility enhanced area</string>
                         </value>
                     </parameter>
                 </skill>

@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.circu.skills.ConstruireZone" source-version="1.0.0">
-	<parameters>
-		<parameter name="zone">
-			<type>
-				<class name="sword.military.world.Area"/>
-			</type>
-		</parameter>
-		<parameter name="typeObjet">
-			<type>
-				<simple name="numeric"/>
-			</type>
-		</parameter>
-	</parameters>
-	<links>
-		<link name="moveToward" skill="sword.military.platoon.skills.MoveToward"/>
-	</links>
+    <parameters>
+        <parameter name="zone">
+            <type>
+                <class name="sword.military.world.Area"/>
+            </type>
+        </parameter>
+        <parameter name="typeObjet">
+            <type>
+                <simple name="string"/>
+            </type>
+        </parameter>
+    </parameters>
+    <links>
+        <link name="moveToward" skill="sword.military.platoon.skills.MoveToward"/>
+    </links>
 </skill>

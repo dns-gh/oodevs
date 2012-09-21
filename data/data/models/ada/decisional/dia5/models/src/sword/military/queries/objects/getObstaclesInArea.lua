@@ -4,9 +4,9 @@ queryImplementation "getObstaclesInArea"
         local allRes={}
         local obstacles = {}
         obstacles = DEC_ObjectKnowledgesInZone( params.area.source, 
-            {"abattis", "anti tank obstacle", "barricade", "bridge destruction", 
-             "landslide", "mines", "mined area (linear)", "mined area (scattered)", 
-             "road destruction" } )
+            { eTypeObjectAbatis, eTypeObjectAntiTankObstacle, eTypeObjectBarricade, eTypeObjectBridgeDestruction, 
+             eTypeObjectLandslide, eTypeObjectMines, eTypeObjectScatteredMinedArea, eTypeObjectLinearMinedArea, 
+             eTypeObjectRoadDestruction } )
         for _, objective in pairs( obstacles ) do
             allRes[ #allRes + 1 ] = CreateKnowledge( sword.military.world.Object, objective )
         end

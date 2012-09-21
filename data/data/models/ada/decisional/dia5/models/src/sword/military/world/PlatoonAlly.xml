@@ -1012,7 +1012,7 @@ que pourrait subir l'agent dans son efficacité à résoudre la tâche de groupe
                 </type>
             </argument>
             <argument name="typeObject">
-                <description>Type de l'objet ( par exemple eTypeObjectZoneBrouillage ).</description>
+                <description>Type de l'objet ( par exemple eTypeObjectJammingArea ).</description>
                 <type>
                     <simple name="numeric"/>
                 </type>

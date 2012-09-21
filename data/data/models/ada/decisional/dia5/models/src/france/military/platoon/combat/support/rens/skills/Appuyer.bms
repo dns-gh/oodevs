@@ -33,6 +33,6 @@ node "JammingActivation"
     end,
     
     select = function( self )
-          meKnowledge:buildObjectOnPosition( eTypeObjectZoneBrouillage, self.params.position )
+          meKnowledge:buildObjectOnPosition( eTypeObjectJammingArea, self.params.position )
     end,
 }

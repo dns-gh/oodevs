@@ -4,9 +4,9 @@ queryImplementation "getObstaclesAroundMe"
         local allRes={}
         local obstacles = {}
         obstacles = DEC_Knowledges_ObjectsInCircle( meKnowledge:getPosition(), params.distance,
-            {"abattis", "anti tank obstacle", "barricade", "bridge destruction", 
-             "landslide", "mines", "mined area (linear)", "mined area (scattered)", 
-             "road destruction" } )
+            { eTypeObjectAbatis, eTypeObjectAntiTankObstacle, eTypeObjectBarricade, eTypeObjectBridgeDestruction, 
+             eTypeObjectLandslide, eTypeObjectMines, eTypeObjectLinearMinedArea, eTypeObjectScatteredMinedArea, 
+             eTypeObjectRoadDestruction } )
         for _, objective in pairs( obstacles ) do
             allRes[ #allRes + 1 ] = CreateKnowledge( sword.military.world.Object, objective )
         end
