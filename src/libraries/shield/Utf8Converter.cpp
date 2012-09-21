@@ -123,7 +123,7 @@ void Utf8Converter::CP1252ToUtf8( const std::string &cp1252String, std::string& 
     const char* cp1252Content = cp1252String.c_str();
     unsigned char* result = new unsigned char[1 + cp1252String.size() * 4];
     unsigned int n ( 0 );
-    unsigned int  i ( cp1252String.size() );
+    size_t  i ( cp1252String.size() );
     const unsigned char* incoming = reinterpret_cast< const unsigned char* >( cp1252Content );
     while ( i > 0 )
     {
@@ -167,7 +167,7 @@ void Utf8Converter::Utf8ToCP1252( const std::string& utf8String, std::string &cp
     const char* utf8content = utf8String.c_str();
     unsigned char* result = new unsigned char[1 + utf8String.size()];
     unsigned int n ( 0 );
-    unsigned int i ( utf8String.size() );
+    size_t i ( utf8String.size() );
     const unsigned char* incoming = reinterpret_cast< const unsigned char* >( utf8content );
     while ( i > 0 )
     {

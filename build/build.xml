@@ -400,7 +400,7 @@
     </target>
 
     <target name="library.shield" depends="library.protocol" description="build shield static library">
-        <build-lib name="shield" excludes="**/*.h" pattern="lib${ant.project.name}_shield-${platform}-mt@{suffix}" suffix="-gd">
+        <build-lib name="shield" excludes="**/*.h" pattern="lib${ant.project.name}_shield-${platform}-mt@{suffix}" suffix="-gd" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
