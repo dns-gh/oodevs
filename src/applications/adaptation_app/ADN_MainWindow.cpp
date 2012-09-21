@@ -400,6 +400,7 @@ void ADN_MainWindow::NewProject()
     mainTabWidget_->show();
     QString strCaption = tr( "Sword Adaptation Tool - " ) + qfilename;
     setCaption( strCaption );
+    pProjectLoadAction_->setVisible( false );
 }
 
 //-----------------------------------------------------------------------------
