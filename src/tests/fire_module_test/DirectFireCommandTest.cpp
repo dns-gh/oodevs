@@ -68,13 +68,6 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_temporary_blocked_when_bloc
     ExecuteCommands();
 }
 
-BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_no_capacity_if_target_has_no_component_when_not_blockable, FireFixture )
-{
-    MOCK_EXPECT( IsTemporarilyBlocked ).once().returns( false );
-    ExpectCallback( 2 );
-    ExecuteCommands();
-}
-
 BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_no_capacity_if_target_has_no_component, FireFixture )
 {
     MOCK_EXPECT( IsTemporarilyBlocked ).once().returns( false );
