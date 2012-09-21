@@ -217,3 +217,21 @@ std::auto_ptr< flood::FloodModel_ABC > Sink::CreateFloodModel() const
 {
     return std::auto_ptr< flood::FloodModel_ABC >( new flood::FloodModel( *pElevation_ ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Sink::StartCommand
+// Created: LGY 2012-09-21
+// -----------------------------------------------------------------------------
+std::size_t Sink::StartCommand( const std::string& /*type*/, const core::Model& /*parameters*/ )
+{
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Sink::StopCommand
+// Created: LGY 2012-09-21
+// -----------------------------------------------------------------------------
+void Sink::StopCommand( std::size_t /*command*/ )
+{
+    // NOTHING
+}

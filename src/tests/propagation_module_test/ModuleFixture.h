@@ -28,7 +28,8 @@ namespace propagation
     struct ModuleFixture : core::HookFixture
     {
         ModuleFixture()
-            : HookFixture( "propagation_module", boost::assign::list_of( "flood command" ) )
+            : HookFixture( "propagation_module", boost::assign::list_of( "flood command" )
+                                                                       ( "propagation command" ) )
         {}
     };
 }

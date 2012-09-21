@@ -9,6 +9,7 @@
 
 #include "ModuleFacade.h"
 #include "FloodCommand.h"
+#include "PropagationCommand.h"
 #include "wrapper/Command.h"
 
 using namespace sword;
@@ -21,4 +22,5 @@ using namespace sword::propagation;
 ModuleFacade::ModuleFacade()
 {
     sword::wrapper::RegisterCommand< FloodCommand >( "flood command" );
+    sword::wrapper::RegisterCommand< PropagationCommand >( "propagation command" );
 }

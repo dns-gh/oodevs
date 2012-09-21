@@ -114,11 +114,13 @@
     <ClCompile Include="..\..\src\libraries\propagation_module\FloodCommand.cpp" />
     <ClCompile Include="..\..\src\libraries\propagation_module\FloodModel.cpp" />
     <ClCompile Include="..\..\src\libraries\propagation_module\ModuleFacade.cpp" />
+    <ClCompile Include="..\..\src\libraries\propagation_module\PropagationCommand.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\propagation_module\FloodCommand.h" />
     <ClInclude Include="..\..\src\libraries\propagation_module\FloodModel.h" />
     <ClInclude Include="..\..\src\libraries\propagation_module\ModuleFacade.h" />
+    <ClInclude Include="..\..\src\libraries\propagation_module\PropagationCommand.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="wrapper.vcxproj">

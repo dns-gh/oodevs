@@ -14,6 +14,11 @@
 #include "FloodModelFactory_ABC.h"
 #include <boost/serialization/export.hpp>
 
+namespace core
+{
+    class Model;
+}
+
 namespace sword
 {
 // =============================================================================
@@ -38,6 +43,12 @@ public:
     virtual void ExecuteCommands() = 0;
     virtual void ApplyEffects() = 0;
     virtual void UpdateModel( unsigned int tick, int duration ) = 0;
+    //@}
+
+    //! @name Commands
+    //@{
+    virtual std::size_t StartCommand( const std::string& type, const core::Model& parameters ) = 0;
+    virtual void StopCommand( std::size_t command ) = 0;
     //@}
 
     //! @name CheckPoints

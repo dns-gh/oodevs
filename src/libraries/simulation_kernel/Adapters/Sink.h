@@ -50,10 +50,10 @@ public:
     virtual void UpdateModel( unsigned int tick, int duration );
 
     void PostCommand( const std::string& type, const core::Model& parameters );
-    std::size_t StartCommand( const std::string& type, const core::Model& parameters );
+    virtual std::size_t StartCommand( const std::string& type, const core::Model& parameters );
     void PauseCommand( std::size_t command );
     void ResumeCommand( std::size_t command );
-    void StopCommand( std::size_t command );
+    virtual void StopCommand( std::size_t command );
     //@}
 
     //! @name Factory

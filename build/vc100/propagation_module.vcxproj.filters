@@ -19,12 +19,18 @@
     <ClInclude Include="..\..\src\libraries\propagation_module\FloodModel.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\propagation_module\PropagationCommand.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\propagation_module\FloodCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\propagation_module\FloodModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\propagation_module\PropagationCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

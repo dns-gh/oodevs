@@ -27,19 +27,37 @@ class PropagationCapacity : public ObjectCapacity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
+             PropagationCapacity();
     explicit PropagationCapacity( xml::xistream& xis );
+    explicit PropagationCapacity( sword::Sink_ABC& sink );
     virtual ~PropagationCapacity();
+    //@}
+
+    //! @name Serialization
+    //@{
+    template< typename Archive >
+    void serialize( Archive&, const unsigned int );
     //@}
 
     //! @name Operations
     //@{
     virtual void Register( MIL_Object_ABC& object );
     virtual void Instanciate( MIL_Object_ABC& object ) const;
+    virtual void Instanciate( MIL_Object_ABC& object, sword::Sink_ABC& sink ) const;
+    //@}
+
+private:
+    //! @name Member Data
+    //@{
+    sword::Sink_ABC* pSink_;
+    std::size_t command_;
     //@}
 };
 
 }
 
 }
+
+BOOST_CLASS_EXPORT_KEY( sword::capacity::PropagationCapacity )
 
 #endif // SWORD_PROPAGATION_CAPACITY_h

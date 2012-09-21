@@ -45,6 +45,12 @@ public:
     virtual void UpdateModel( unsigned int tick, int duration );
     //@}
 
+    //! @name Commands
+    //@{
+    virtual std::size_t StartCommand( const std::string& type, const core::Model& parameters );
+    virtual void StopCommand( std::size_t command );
+    //@}
+
     //! @name Factory
     //@{
     virtual MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, xml::xistream& xis );
