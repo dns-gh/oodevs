@@ -117,6 +117,7 @@ void ADN_Objects_Data_ObjectInfos::InitializeCapacities()
     capacities_[ ADN_Objects_Data::ADN_CapacityInfos_UndergroundNetwork::TAG ].reset(       new ADN_Objects_Data::ADN_CapacityInfos_UndergroundNetwork() );
     capacities_[ ADN_Objects_Data::ADN_CapacityInfos_FireForbidden::TAG ].reset(            new ADN_Objects_Data::ADN_CapacityInfos_FireForbidden() );
     capacities_[ ADN_Objects_Data::ADN_CapacityInfos_Border::TAG ].reset(                   new ADN_Objects_Data::ADN_CapacityInfos_Border() );
+    capacities_[ ADN_Objects_Data::ADN_CapacityInfos_Disaster::TAG ].reset(                 new ADN_Objects_Data::ADN_CapacityInfos_Disaster() );
 }
 
 // -----------------------------------------------------------------------------

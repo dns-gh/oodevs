@@ -1323,6 +1323,7 @@ INIT_DATA( ADN_CapacityInfos_UndergroundNetwork,      "UndergroundNetwork",     
 INIT_DATA( ADN_CapacityInfos_UrbanDestruction,        "UrbanDestruction",        "urban-destruction" );
 INIT_DATA( ADN_CapacityInfos_FireForbidden,           "FireForbidden",           "fire-forbidden" );
 INIT_DATA( ADN_CapacityInfos_Border,                  "Border",                  "border" );
+INIT_DATA( ADN_CapacityInfos_Disaster,                "Disaster",                "disaster" );
 
 #pragma warning( pop )
 

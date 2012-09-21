@@ -74,6 +74,7 @@
 			<xs:enumeration value="flood"/>
 			<xs:enumeration value="dyke"/>
 			<xs:enumeration value="resource production node"/>
+			<xs:enumeration value="disaster"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="T_ConsumptionMode">
@@ -153,6 +154,7 @@
 				</xs:complexType>
 			</xs:element>
 			<xs:element name="activable" minOccurs="0"/>
+			<xs:element name="disaster" minOccurs="0"/>
 			<xs:element name="attrition" minOccurs="0">
 				<xs:complexType>
 					<xs:attribute name="attrition-surface" type="T_NonNegativeDouble"/>

@@ -44,6 +44,7 @@ public:
         ePointSize,
         eDescription,
         eActivableCapacityPresent,
+        eDisasterCapacityPresent,
         eAttitudeModifierCapacityPresent,
         eAttitudeModifierCapacity_Attitude,
         eAltitudeModifierCapacityPresent,

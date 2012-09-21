@@ -3364,6 +3364,10 @@ La capacité d&apos;engendrer un autre objet vas être désactivée.</translatio
         <source>Neutral</source>
         <translation>Neutre</translation>
     </message>
+    <message>
+        <source>Disaster</source>
+        <translation>Désastre</translation>
+    </message>
 </context>
 <context>
     <name>ADN_OpenFile_Exception</name>

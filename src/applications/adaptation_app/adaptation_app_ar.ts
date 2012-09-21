@@ -3344,6 +3344,10 @@ The spawn capacity will be disabled.</source>
         <source>Geometry</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Disaster</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_OpenFile_Exception</name>

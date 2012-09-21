@@ -113,6 +113,7 @@ public:
     typedef helpers::ADN_CapacityInfos_Default< helpers::eUndergroundNetworkCapacity >      ADN_CapacityInfos_UndergroundNetwork;
     typedef helpers::ADN_CapacityInfos_Default< helpers::eFireForbiddenCapacity >           ADN_CapacityInfos_FireForbidden;
     typedef helpers::ADN_CapacityInfos_Default< helpers::eBorderCapacity >                  ADN_CapacityInfos_Border;
+    typedef helpers::ADN_CapacityInfos_Default< helpers::eDisasterCapacity >                ADN_CapacityInfos_Disaster;
 
     class ADN_CapacityInfos_Attrition
         : public helpers::ADN_CapacityInfos_Default< helpers::eAttritionCapacity >

@@ -60,10 +60,11 @@ ADN_Objects_GUI::~ADN_Objects_GUI()
 
 namespace
 {
-    void CreateCapacityCheckBox( const QString& name, ADN_Connector_ABC*& connector, Q3GroupBox* groupBox )
+    void CreateCapacityCheckBox( const QString& name, ADN_Connector_ABC*& connector, Q3GroupBox* groupBox, bool isVisible = true )
     {
         ADN_CheckBox* checkBox = new ADN_CheckBox( name, groupBox );
         checkBox->setObjectName( "ADN_Objects_GUI_Capacity" + name );
+        checkBox->setVisible( isVisible );
         connector = &checkBox->GetConnector();
     }
 
@@ -149,6 +150,7 @@ void ADN_Objects_GUI::Build()
         CreateCapacityCheckBox( tr( "Underground network exit" ), vInfosConnectors[ eUndergroundNetworkCapacityPresent ], capacitiesGroup );
         CreateCapacityCheckBox( tr( "Fire forbidden" ), vInfosConnectors[ eFireForbiddenCapacityPresent ], capacitiesGroup );
         CreateCapacityCheckBox( tr( "Border" ), vInfosConnectors[ eBorderCapacityPresent ], capacitiesGroup );
+        CreateCapacityCheckBox( tr( "Disaster" ), vInfosConnectors[ eDisasterCapacityPresent ], capacitiesGroup, false );
     }
 
     QGridLayout* grid = new QGridLayout();

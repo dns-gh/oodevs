@@ -3361,6 +3361,10 @@ The spawn capacity will be disabled.</source>
         <source>Neutral</source>
         <translation>Neutral</translation>
     </message>
+    <message>
+        <source>Disaster</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_OpenFile_Exception</name>
