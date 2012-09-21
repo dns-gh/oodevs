@@ -149,21 +149,7 @@ private:
 
     bool CheckRemove( const core::Model& actual ) const
     {
-        struct RemoveCheck : NullModelVisitor
-        {
-            RemoveCheck( const core::Model& model )
-                : removed_( false )
-            {
-                model.Accept( *this );
-            }
-            virtual void MarkForRemove()
-            {
-                removed_ = true;
-            }
-            bool removed_;
-        };
-        RemoveCheck check( actual );
-        return removed_ == check.removed_;
+        return removed_ == RemoveCheck( actual ).removed_;
     }
     //@}
 
@@ -174,6 +160,20 @@ private:
     typedef T_Children::const_iterator   CIT_Children;
     typedef std::vector< Model >         T_Elements;
     typedef T_Elements::const_iterator CIT_Elements;
+
+    struct RemoveCheck : NullModelVisitor
+    {
+        RemoveCheck( const core::Model& model )
+            : removed_( false )
+        {
+            model.Accept( *this );
+        }
+        virtual void MarkForRemove()
+        {
+            removed_ = true;
+        }
+        bool removed_;
+    };
 
     template< typename T >
     class ConstraintWrapper : public ModelConstraint_ABC
