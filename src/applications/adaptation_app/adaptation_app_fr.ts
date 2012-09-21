@@ -25,7 +25,7 @@
     </message>
     <message>
         <source>No decisional model defined for unit %1, database cannot be saved.</source>
-        <translation>Le modèle décisionnel de l'unité %1 n&apos;est pas défini, la base ne peut pas être sauvée.</translation>
+        <translation>Le modèle décisionnel de l&apos;unité %1 n&apos;est pas défini, la base ne peut pas être sauvée.</translation>
     </message>
     <message>
         <source>Convoy mission not defined in Log/Supply, database cannot be saved.</source>
