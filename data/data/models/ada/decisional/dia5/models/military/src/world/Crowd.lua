@@ -138,7 +138,7 @@ return
         return true
     end,
     getName = function( self )
-        return "crowd agent"
+        return integration.getName( self )
     end,
     -- -------------------------------------------------------------------------------- 
     -- Attributes
@@ -155,7 +155,7 @@ return
             end
         end,
         remover = function( self, task )
-            error( "unused method", 2 )
+                      error( "unused method", 2 )
         end
     }
 }

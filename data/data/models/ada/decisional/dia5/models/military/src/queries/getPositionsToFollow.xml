@@ -5,7 +5,7 @@
         <parameter name="elementsToFollow">
             <type>
                 <list>
-                    <class name="properties.Motile"/>
+                    <class name="properties.Reachable"/>
                 </list>
             </type>
         </parameter>

@@ -5,7 +5,7 @@ local result =
     end,
 
     fillParameters = function( self, companyTask, params )
-        local objectives = companyTask:getEntitiesToFollow( params )
+        local objectives = companyTask:getEntitiesToSupport( params )
         if next( objectives ) then
              return { objectives = objectives }
         end
@@ -13,6 +13,6 @@ local result =
 }
 
 local t = initTaskKnowledge( result )
-taskKnowledge[ "agent.tasks.Follow" ] = t
+taskKnowledge["agent.tasks.Follow"] = t
 
 return result
