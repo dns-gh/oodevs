@@ -38,7 +38,9 @@ struct Chunker_ABC : public boost::noncopyable
 {
              Chunker_ABC() {}
     virtual ~Chunker_ABC() {}
-    virtual io::Writer_ABC& SetName( const std::string& name ) = 0;
+    virtual void            SetHeader( const std::string& key, const std::string& value ) = 0;
+    virtual void            SetName( const std::string& name ) = 0;
+    virtual io::Writer_ABC& OpenWriter() = 0;
 };
 
 boost::shared_ptr< Chunker_ABC > MakeChunker( Reply_ABC& rpy );

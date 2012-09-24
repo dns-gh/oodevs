@@ -859,7 +859,8 @@ bool Session::Restore()
 bool Session::Download( web::Chunker_ABC& dst ) const
 {
     boost::shared_lock< boost::shared_mutex > lock( access_ );
-    io::Writer_ABC& sink = dst.SetName( cfg_.name );
+    dst.SetName( cfg_.name );
+    io::Writer_ABC& sink = dst.OpenWriter();
     FileSystem_ABC::T_Packer packer = deps_.system.Pack( sink );
     packer->Pack( paths_.root, runtime::Packer_ABC::T_Predicate() );
     const Path output = GetOutput();

@@ -83,12 +83,29 @@ struct Chunker : public Chunker_ABC, public io::Writer_ABC
     }
 
     // -----------------------------------------------------------------------------
+    // Name: Chunker::SetHeader
+    // Created: BAX 2012-09-14
+    // -----------------------------------------------------------------------------
+    virtual void SetHeader( const std::string& key, const std::string& value )
+    {
+        rpy_.SetHeader( key, value );
+    }
+
+    // -----------------------------------------------------------------------------
     // Name: Chunker::SetName
     // Created: BAX 2012-09-14
     // -----------------------------------------------------------------------------
-    io::Writer_ABC& SetName( const std::string& name )
+    virtual void SetName( const std::string& name )
     {
-        rpy_.SetHeader( "Content-Disposition", "attachment; filename=\"" + name + ".zip\"" );
+        SetHeader( "Content-Disposition", "attachment; filename=\"" + name + ".zip\"" );
+    }
+
+    // -----------------------------------------------------------------------------
+    // Name: Chunker::OpenWriter
+    // Created: BAX 2012-09-14
+    // -----------------------------------------------------------------------------
+    virtual io::Writer_ABC& OpenWriter()
+    {
         rpy_.WriteHeaders();
         return *this;
     }

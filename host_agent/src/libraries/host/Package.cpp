@@ -419,7 +419,8 @@ struct Item : Package_ABC::Item_ABC
 
     void Download( const FileSystem_ABC& fs, web::Chunker_ABC& dst ) const
     {
-        io::Writer_ABC& io = dst.SetName( Utf8Convert( name_ ) );
+        dst.SetName( Utf8Convert( name_ ) );
+        io::Writer_ABC& io = dst.OpenWriter();
         FileSystem_ABC::T_Packer packer = fs.Pack( io );
         packer->Pack( root_, IsItemFile( GetSuffix() ) );
     }
