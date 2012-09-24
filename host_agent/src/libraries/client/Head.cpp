@@ -12,6 +12,7 @@
 #include "Context.h"
 
 #include <QMetaType>
+#include <QPointer>
 #include <QSettings>
 #include <QtConcurrentRun>
 
@@ -49,9 +50,7 @@ Head::Head( const Runtime_ABC& runtime, const FileSystem_ABC& fs, Pool_ABC& pool
     connect( ctx_.get(), SIGNAL( ShowProgress( int, int ) ), this, SLOT( OnShowProgress( int, int ) ) );
     connect( ctx_.get(), SIGNAL( ClearProgress() ), &progress_, SLOT( hide() ) );
     connect( ui_.remove_items, SIGNAL( clicked( bool ) ), ctx_.get(), SLOT( OnRemove() ) );
-    connect( ctx_.get(), SIGNAL( NetworkRequest( HttpCommand, const QNetworkRequest& ) ), this, SLOT( OnNetworkRequest( HttpCommand, const QNetworkRequest& ) ) );
     connect( ctx_.get(), SIGNAL( Exit() ), this, SLOT( close() ) );
-    connect( ctx_.get(), SIGNAL( CheckAbort( QPointer< QNetworkReply > ) ), this, SLOT( CheckAbort( QPointer< QNetworkReply > ) ) );
     async_.Register( QtConcurrent::run( ctx_.get(), &Context::Start ) );
 }
 
@@ -108,27 +107,4 @@ void Head::OnShowProgress( int min, int max )
 {
     progress_.setRange( min, max );
     progress_.show();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Head::OnNetworkRequest
-// Created: BAX 2012-09-20
-// -----------------------------------------------------------------------------
-void Head::OnNetworkRequest( HttpCommand cmd, const QNetworkRequest& req )
-{
-    ctx_->SetNetworkReply( cmd, net_.get( req ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Head::CheckAbort
-// Created: BAX 2012-09-21
-// -----------------------------------------------------------------------------
-void Head::CheckAbort( QPointer< QNetworkReply > ptr )
-{
-    // it is critical to call this function in the ui thread
-    if( ptr.isNull() )
-        return;
-    const qint64 len = ptr->bytesAvailable();
-    if( len > 0 )
-        ptr->abort();
 }

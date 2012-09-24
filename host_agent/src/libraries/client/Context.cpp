@@ -9,12 +9,12 @@
 
 #include "Context.h"
 
+#include "Download.h"
 #include "Helpers.h"
 #include "ItemModel.h"
 #include "QAsync.h"
 
 #include "runtime/FileSystem_ABC.h"
-#include "runtime/Io.h"
 #include "runtime/PropertyTree.h"
 #include "runtime/Runtime_ABC.h"
 #include "runtime/Scoper.h"
@@ -23,8 +23,6 @@
 #include "host/Package.h"
 
 #include <boost/make_shared.hpp>
-#include <boost/thread/condition_variable.hpp>
-#include <boost/thread/mutex.hpp>
 
 #include <QCoreApplication>
 #include <QSettings>
@@ -40,138 +38,8 @@ namespace
 {
     const std::string install_dir = "_";
     const std::string tmp_dir     = "tmp";
-    const size_t      buffer_size = 1<<20;
+    const QNetworkRequest::Attribute id_attribute = QNetworkRequest::Attribute( QNetworkRequest::User + 0 );
 }
-
-struct gui::Download : public io::Reader_ABC
-{
-    // -----------------------------------------------------------------------------
-    // Name: Download::Download
-    // Created: BAX 2012-09-21
-    // -----------------------------------------------------------------------------
-    Download( const FileSystem_ABC& fs, const Path& root, const QString& name )
-        : buffer_( buffer_size )
-        , root_  ( fs.MakeAnyPath( root / tmp_dir ) )
-        , name_  ( name )
-        , eof_   ( false )
-        , write_ ( 0 )
-        , read_  ( 0 )
-        , reply_ ( 0 )
-    {
-        // NOTHING
-    }
-
-    // -----------------------------------------------------------------------------
-    // Name: Download::~Download
-    // Created: BAX 2012-09-21
-    // -----------------------------------------------------------------------------
-    ~Download()
-    {
-        // NOTHING
-    }
-
-    // -----------------------------------------------------------------------------
-    // Name: Download::Write
-    // Created: BAX 2012-09-21
-    // -----------------------------------------------------------------------------
-    void Write( QNetworkReply* rpy )
-    {
-        boost::lock_guard< boost::mutex > lock( access_ );
-        if( eof_ )
-            return;
-        const qint64 avail = rpy->bytesAvailable();
-        reply_ = rpy;
-        const qint64 left = buffer_size - write_;
-        const size_t next = std::min( left, avail );
-        const qint64 len  = next ? rpy->read( &buffer_[write_], next ) : 0;
-        write_           += len;
-        gate_.notify_one();
-    }
-
-    // -----------------------------------------------------------------------------
-    // Name: Download::Read
-    // Created: BAX 2012-09-21
-    // -----------------------------------------------------------------------------
-    int Read( void* data, size_t size )
-    {
-        boost::unique_lock< boost::mutex > lock( access_ );
-        while( !eof_ && read_ == write_ )
-            gate_.wait( lock );
-        if( eof_ && read_ == write_ )
-            return 0;
-        const size_t next = std::min( write_ - read_, size );
-        memcpy( data, &buffer_[read_], next );
-        read_ += next;
-        if( read_ == write_ )
-        {
-            read_  = 0;
-            write_ = 0;
-            QMetaObject::invokeMethod( reply_, "readyRead" );
-        }
-        return static_cast< int >( next );
-    }
-
-    // -----------------------------------------------------------------------------
-    // Name: Download::GetRoot
-    // Created: BAX 2012-09-21
-    // -----------------------------------------------------------------------------
-    const Path& GetRoot() const
-    {
-        return root_;
-    }
-
-    // -----------------------------------------------------------------------------
-    // Name: Download::GetName
-    // Created: BAX 2012-09-21
-    // -----------------------------------------------------------------------------
-    const QString& GetName() const
-    {
-        return name_;
-    }
-
-    // -----------------------------------------------------------------------------
-    // Name: Download::GetReply
-    // Created: BAX 2012-09-21
-    // -----------------------------------------------------------------------------
-    const QPointer< QNetworkReply > GetReply() const
-    {
-        return reply_;
-    }
-
-    // -----------------------------------------------------------------------------
-    // Name: Download::Close
-    // Created: BAX 2012-09-21
-    // -----------------------------------------------------------------------------
-    void Close()
-    {
-        boost::lock_guard< boost::mutex > lock( access_ );
-        eof_ = true;
-        gate_.notify_one();
-    }
-
-    // -----------------------------------------------------------------------------
-    // Name: Download::Finish
-    // Created: BAX 2012-09-24
-    // -----------------------------------------------------------------------------
-    bool Finish( QNetworkReply* rpy )
-    {
-        if( rpy->bytesAvailable() <= 0 )
-            return true;
-        boost::lock_guard< boost::mutex > lock( access_ );
-        return eof_;
-    }
-
-private:
-    const Path root_;
-    const QString name_;
-    boost::mutex access_;
-    std::vector< char > buffer_;
-    size_t write_;
-    size_t read_;
-    bool eof_;
-    boost::condition_variable gate_;
-    QPointer< QNetworkReply > reply_;
-};
 
 // -----------------------------------------------------------------------------
 // Name: Context::Context
@@ -191,7 +59,7 @@ Context::Context( const Runtime_ABC& runtime, const FileSystem_ABC& fs, Pool_ABC
     , install_  ()
     , downloads_()
 {
-    // NOTHING
+    connect( this, SIGNAL( NetworkRequest( HttpCommand, const QNetworkRequest& ) ), this, SLOT( OnNetworkRequest( HttpCommand, const QNetworkRequest& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -383,11 +251,12 @@ void Context::GetSession()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Context::SetNetworkReply
+// Name: Head::OnNetworkRequest
 // Created: BAX 2012-09-20
 // -----------------------------------------------------------------------------
-void Context::SetNetworkReply( HttpCommand cmd, QNetworkReply* rpy )
+void Context::OnNetworkRequest( HttpCommand cmd, const QNetworkRequest& req )
 {
+    QNetworkReply* rpy = net_.get( req );
     switch( cmd )
     {
         case HTTP_CMD_GET_SESSION:
@@ -395,10 +264,7 @@ void Context::SetNetworkReply( HttpCommand cmd, QNetworkReply* rpy )
             break;
 
         case HTTP_CMD_DOWNLOAD_INSTALL:
-            rpy->setReadBufferSize( buffer_size );
-            connect( rpy, SIGNAL( readyRead() ), this, SLOT( OnDownloadRead() ) );
-            connect( rpy, SIGNAL( error( QNetworkReply::NetworkError ) ), this, SLOT( OnDownloadEnd() ) );
-            connect( rpy, SIGNAL( finished() ), this, SLOT( OnDownloadEnd() ) );
+            OpenDownload( rpy );
             break;
     }
 }
@@ -430,11 +296,12 @@ void Context::ParseSession( QNetworkReply* rpy )
     const Tree session = FromJson( QUtf8( rpy->readAll() ) );
     QWriteLocker lock( &access_ );
     //qDebug() << QUtf8( ToJson( session, true ) );
+    size_t idx = size_t( ~0 );
     //AddItem( session, "binary" );
-    AddItem( session, "model" );
-    AddItem( session, "terrain" );
-    AddItem( session, "exercise" );
-    if( !downloads_.empty() )
+    AddItem( session, "model", idx );
+    AddItem( session, "terrain", idx );
+    AddItem( session, "exercise", idx );
+    if( idx != -1 )
         return;
 
     emit ClearMessage();
@@ -445,7 +312,7 @@ void Context::ParseSession( QNetworkReply* rpy )
 // Name: Head::AddItem
 // Created: BAX 2012-09-20
 // -----------------------------------------------------------------------------
-void Context::AddItem( const Tree& src, const std::string& type )
+void Context::AddItem( const Tree& src, const std::string& type, size_t& idx )
 {
     const std::string name = Get< std::string >( src, type + ".name" );
     const std::string checksum = Get< std::string >( src, type + ".checksum" );
@@ -454,15 +321,13 @@ void Context::AddItem( const Tree& src, const std::string& type )
     if( pkg )
         return;
 
-    const int id = downloads_.size() + (1<<30);
+    const int id = ++idx + (1<<30);
     const QString qtype = QUtf8( type );
     const QString qname = QUtf8( name );
     const QString qchecksum = QUtf8( checksum );
 
     boost::shared_ptr< Item > item = boost::make_shared< Item >( static_cast< size_t >( id ), qtype, qname, qchecksum );
     items_.Append( item );
-    T_Download down = boost::make_shared< Download >( fs_, root_, qname );
-    downloads_.insert( id, down );
 
     QUrl next = url_;
     next.setPath( "/api/download_install" );
@@ -475,95 +340,49 @@ void Context::AddItem( const Tree& src, const std::string& type )
     next.setQueryItems( list );
 
     QNetworkRequest req( next );
-    req.setAttribute( QNetworkRequest::User, id );
+    req.setAttribute( id_attribute, id );
     emit NetworkRequest( HTTP_CMD_DOWNLOAD_INSTALL, req );
-
-    async_.Register( QtConcurrent::run( this, &Context::Unpack, down ) );
 }
 
-// -----------------------------------------------------------------------------
-// Name: Context::OnDownloadRead
-// Created: BAX 2012-09-21
-// -----------------------------------------------------------------------------
-void Context::OnDownloadRead()
+namespace
 {
-    QNetworkReply* rpy = qobject_cast< QNetworkReply* >( sender() );
-    const int id = rpy->request().attribute( QNetworkRequest::User ).toInt();
-
-    T_Download down;
-    {
-        QReadLocker read( &access_ );
-        T_Downloads::iterator it = downloads_.find( id );
-        if( it == downloads_.end() )
-            return;
-        down = *it;
-    }
-
-    down->Write( rpy );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Context::Unpack
-// Created: BAX 2012-09-21
-// -----------------------------------------------------------------------------
-void Context::Unpack( T_Download down )
+int GetId( const QNetworkReply* rpy )
 {
-    try
-    {
-        FileSystem_ABC::T_Unpacker unpacker = fs_.Unpack( down->GetRoot(), *down );
-        unpacker->Unpack();
-        down->Close();
-    }
-    catch( std::exception& err )
-    {
-        emit StatusMessage( QString( "Unable to download package %1 (%2)" ).arg( down->GetName() ).arg( err.what() ) );
-    }
-    emit CheckAbort( down->GetReply() );
+    return rpy->request().attribute( QNetworkRequest::User ).toInt();
+}
 }
 
 // -----------------------------------------------------------------------------
-// Name: Context::OnDownloadInstall
-// Created: BAX 2012-09-21
-// -----------------------------------------------------------------------------
-void Context::OnDownloadEnd()
-{
-    QNetworkReply* rpy = qobject_cast< QNetworkReply* >( sender() );
-    const int id = rpy->request().attribute( QNetworkRequest::User ).toInt();
-    rpy->deleteLater();
-
-    T_Download down;
-    {
-        QReadLocker read( &access_ );
-        T_Downloads::iterator it = downloads_.find( id );
-        if( it == downloads_.end() )
-            return;
-        down = *it;
-    }
-
-    runtime::Scoper finish = boost::bind( &Context::FinishDownload, this, id );
-    QNetworkReply::NetworkError err = rpy->error();
-    if( err != QNetworkReply::NoError )
-    {
-        QString error = err == QNetworkReply::OperationCanceledError ? "Extraction aborted" : rpy->errorString();
-        // find another way to report errors...
-        emit StatusMessage( QString( "Unable to download package %1 (%2)" ).arg( down->GetName() ).arg( error ) );
-        return;
-    }
-
-    while( !down->Finish( rpy ) )
-    {
-        down->Write( rpy );
-        QCoreApplication::processEvents();
-        QThread::yieldCurrentThread();
-    }
-    down->Close();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Context::FinishDownload
+// Name: Context::OpenDownload
 // Created: BAX 2012-09-24
 // -----------------------------------------------------------------------------
-void Context::FinishDownload( int id )
+void Context::OpenDownload( QNetworkReply* rpy )
+{
+    const int id = GetId( rpy );
+    T_Download down = MakeDownload( rpy, fs_, root_ / tmp_dir );
+    connect( down.get(), SIGNAL( End( QNetworkReply* ) ), this, SLOT( OnCloseDownload( QNetworkReply* ) ) );
+    QWriteLocker lock( &access_ );
+    downloads_.insert( id, down );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Context::OnCloseDownload
+// Created: BAX 2012-09-24
+// -----------------------------------------------------------------------------
+void Context::OnCloseDownload( QNetworkReply* rpy )
+{
+    rpy->deleteLater();
+    const int id = GetId( rpy );
+    // call CloseDownload in a worker thread because it will join the download
+    // unpacking thread
+    async_.Register( QtConcurrent::run( this, &Context::CloseDownload, id ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Context::CloseDownload
+// Created: BAX 2012-09-24
+// -----------------------------------------------------------------------------
+void Context::CloseDownload( int id )
 {
     QWriteLocker write( &access_ );
     T_Downloads::iterator it = downloads_.find( id );

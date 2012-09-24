@@ -17,9 +17,9 @@
 #include <boost/scoped_ptr.hpp>
 
 #include <QReadWriteLock>
+#include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QNetworkReply>
-#include <QPointer>
 #include <QUrl>
 
 namespace host
@@ -38,7 +38,7 @@ namespace gui
 {
     typedef boost::property_tree::ptree Tree;
     typedef boost::filesystem::path Path;
-    struct  Download;
+    struct  Download_ABC;
     class   ItemModel;
     struct  QAsync;
 }
@@ -75,7 +75,6 @@ public:
 
 public:
     void Start();
-    void SetNetworkReply( HttpCommand cmd, QNetworkReply* rpy );
 
 signals:
     void Exit();
@@ -84,18 +83,16 @@ signals:
     void ShowProgress( int min, int max );
     void ClearProgress();
     void NetworkRequest( HttpCommand cmd, const QNetworkRequest& req );
-    void CheckAbort( QPointer< QNetworkReply > ptr );
 
 public slots:
     void OnRemove();
+    void OnNetworkRequest( HttpCommand cmd, const QNetworkRequest& req );
     void OnGetSession();
-    void ParseSession( QNetworkReply* rpy );
-    void OnDownloadRead();
-    void OnDownloadEnd();
+    void OnCloseDownload( QNetworkReply* rpy );
 
 private:
-    typedef boost::shared_ptr< Download > T_Download;
-    typedef QHash< int, T_Download >      T_Downloads;
+    typedef boost::shared_ptr< Download_ABC > T_Download;
+    typedef QHash< int, T_Download >          T_Downloads;
 
 private:
     void ParseArguments();
@@ -104,9 +101,10 @@ private:
     void Unregister();
     void ParseRoot();
     void GetSession();
-    void AddItem( const Tree& src, const std::string& type );
-    void Unpack( T_Download down );
-    void FinishDownload( int id );
+    void ParseSession( QNetworkReply* rpy );
+    void AddItem( const Tree& src, const std::string& type, size_t& idx );
+    void OpenDownload( QNetworkReply* rpy );
+    void CloseDownload( int id );
 
 private:
     const runtime::Runtime_ABC& runtime_;
@@ -114,6 +112,7 @@ private:
     runtime::Pool_ABC& pool_;
     QAsync& async_;
     runtime::Async io_;
+    QNetworkAccessManager net_;
     ItemModel& items_;
     Command cmd_;
     Path root_;

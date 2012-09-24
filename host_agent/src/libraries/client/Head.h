@@ -15,10 +15,6 @@
 
 #include <QLabel>
 #include <QMainWindow>
-#include <QNetworkAccessManager>
-#include <QNetworkRequest>
-#include <QNetworkReply>
-#include <QPointer>
 #include <QProgressBar>
 
 #include "ui_head.h"
@@ -55,8 +51,6 @@ private:
 private slots:
     void OnModifiedItems();
     void OnShowProgress( int min, int max );
-    void OnNetworkRequest( HttpCommand cmd, const QNetworkRequest& req );
-    void CheckAbort( QPointer< QNetworkReply > ptr );
 
 private:
     Ui::Head ui_;
@@ -65,7 +59,6 @@ private:
     ItemModel items_;
     boost::scoped_ptr< Context > ctx_;
     QAsync async_;
-    QNetworkAccessManager net_;
 };
 }
 
