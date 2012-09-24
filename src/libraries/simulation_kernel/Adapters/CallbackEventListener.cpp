@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-#include "MovementCallbackEventListener.h"
+#include "CallbackEventListener.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include <core/Facade.h>
@@ -16,36 +16,32 @@
 
 using namespace sword;
 
-namespace
-{
-    const std::string event = "movement callback";
-}
-
 // -----------------------------------------------------------------------------
-// Name: MovementCallbackEventListener constructor
+// Name: CallbackEventListener constructor
 // Created: MCO 2012-06-15
 // -----------------------------------------------------------------------------
-MovementCallbackEventListener::MovementCallbackEventListener( const core::Model& model, core::Facade& facade )
+CallbackEventListener::CallbackEventListener( const core::Model& model, core::Facade& facade, const std::string& event )
     : model_ ( model )
     , facade_( facade )
+    , event_ ( event )
 {
-    facade.Register( event, *this );
+    facade.Register( event_, *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MovementCallbackEventListener destructor
+// Name: CallbackEventListener destructor
 // Created: MCO 2012-06-15
 // -----------------------------------------------------------------------------
-MovementCallbackEventListener::~MovementCallbackEventListener()
+CallbackEventListener::~CallbackEventListener()
 {
-    facade_.Unregister( event, *this );
+    facade_.Unregister( event_, *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MovementCallbackEventListener::Notify
+// Name: CallbackEventListener::Notify
 // Created: MCO 2012-06-15
 // -----------------------------------------------------------------------------
-void MovementCallbackEventListener::Notify( const core::Model& callback )
+void CallbackEventListener::Notify( const core::Model& callback )
 {
     const unsigned int entity = callback[ "entity" ];
     DEC_Decision_ABC& role = model_[ "entities" ][ entity ][ "pion" ].GetUserData< MIL_AgentPion >().GetRole< DEC_Decision_ABC >();

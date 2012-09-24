@@ -2547,9 +2547,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\ExternalPerceptionEventListener.cpp">
       <Filter>Source Files\Adapters\EventListeners</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\MovementCallbackEventListener.cpp">
-      <Filter>Source Files\Adapters\EventListeners</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\MovementEventListener.cpp">
       <Filter>Source Files\Adapters\EventListeners</Filter>
     </ClCompile>
@@ -2627,6 +2624,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\CapacityFactory.cpp">
       <Filter>Source Files\Adapters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\CallbackEventListener.cpp">
+      <Filter>Source Files\Adapters\EventListeners</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -5267,9 +5267,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\MovementEventListener.h">
       <Filter>Source Files\Adapters\EventListeners</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\MovementCallbackEventListener.h">
-      <Filter>Source Files\Adapters\EventListeners</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\MovementReportNameEventListener.h">
       <Filter>Source Files\Adapters\EventListeners</Filter>
     </ClInclude>
@@ -5362,6 +5359,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Agent_PathClass_ABC.h">
       <Filter>Source Files\Decision\Path\Agent\Type</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\CallbackEventListener.h">
+      <Filter>Source Files\Adapters\EventListeners</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

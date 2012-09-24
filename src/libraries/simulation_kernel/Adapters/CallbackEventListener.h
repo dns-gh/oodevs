@@ -7,10 +7,11 @@
 //
 // *****************************************************************************
 
-#ifndef SWORD_MOVEMENT_CALLBACK_EVENT_LISTENER_H
-#define SWORD_MOVEMENT_CALLBACK_EVENT_LISTENER_H
+#ifndef SWORD_CALLBACK_EVENT_LISTENER_H
+#define SWORD_CALLBACK_EVENT_LISTENER_H
 
 #include <core/EventListener_ABC.h>
+#include <string>
 
 namespace core
 {
@@ -21,18 +22,18 @@ namespace core
 namespace sword
 {
 // =============================================================================
-/** @class  MovementCallbackEventListener
-    @brief  Movement callback event listener
+/** @class  CallbackEventListener
+    @brief  Callback event listener
 */
-// Created: MCO 2012-06-15
+// Created: MCO 2012-09-24
 // =============================================================================
-class MovementCallbackEventListener : public core::EventListener_ABC
+class CallbackEventListener : public core::EventListener_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             MovementCallbackEventListener( const core::Model& model, core::Facade& facade );
-    virtual ~MovementCallbackEventListener();
+             CallbackEventListener( const core::Model& model, core::Facade& facade, const std::string& event );
+    virtual ~CallbackEventListener();
     //@}
 
     //! @name Operations
@@ -45,9 +46,10 @@ private:
     //@{
     const core::Model& model_;
     core::Facade& facade_;
+    const std::string event_;
     //@}
 };
 
 }
 
-#endif // SWORD_MOVEMENT_CALLBACK_EVENT_LISTENER_H
+#endif // SWORD_CALLBACK_EVENT_LISTENER_H

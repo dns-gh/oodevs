@@ -29,7 +29,7 @@
 #include "DirectFirePionAttackEventListener.h"
 #include "ExternalPerceptionEventListener.h"
 #include "MovementReportEventListener.h"
-#include "MovementCallbackEventListener.h"
+#include "CallbackEventListener.h"
 #include "PerceptionCallbackEventListener.h"
 #include "MovementEventListener.h"
 #include "AlatMonitoringEventListener.h"
@@ -213,12 +213,13 @@ void Sink::Initialize()
 {
     listeners_.push_back( new ReportEventListener( *model_, *facade_ ) );
     listeners_.push_back( new MovementReportNameEventListener( *model_, *facade_ ) );
-    listeners_.push_back( new MovementCallbackEventListener( *model_, *facade_ ) );
+    listeners_.push_back( new CallbackEventListener( *model_, *facade_, "movement callback" ) );
     listeners_.push_back( new PerceptionCallbackEventListener( *model_, *facade_ ) );
     listeners_.push_back( new MovementEventListener( *model_, *facade_ ) );
     listeners_.push_back( new MovementReportEventListener( *model_, *facade_ ) );
     listeners_.push_back( new DirectFirePionEventListener( *model_, *facade_, factory_ ) );
     listeners_.push_back( new DirectFirePionAttackEventListener( *model_, *facade_, factory_ ) );
+    listeners_.push_back( new CallbackEventListener( *model_, *facade_, "direct fire pion callback" ) );
     listeners_.push_back( new ExternalPerceptionEventListener( *model_, *facade_, factory_ ) );
     listeners_.push_back( new AlatMonitoringEventListener( *model_, *facade_, factory_ ) );
     MovementHooks::Initialize( *facade_ );
