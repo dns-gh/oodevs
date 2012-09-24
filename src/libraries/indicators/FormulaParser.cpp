@@ -196,7 +196,8 @@ void FormulaParser::Impl::Evaluate( const bs::tree_match< const char* >::const_t
         {
             if( it->children.size() > 1 )
                 Evaluate( it->children.begin() + 1 );
-            const unsigned int paramCount = it->children.size() > 1 ? it->children[1].children.size() : 0;
+            const unsigned int paramCount = it->children.size() > 1
+                ? static_cast< unsigned int >( it->children[1].children.size() ) : 0;
             handler_.HandleFunctionCall( EvaluateString( it->children[0].value ), paramCount );
             break;
         }

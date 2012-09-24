@@ -119,7 +119,7 @@
     </target>
 
     <target name="indicators" depends="clients_kernel" description="build indicators static library">
-        <build-lib name="indicators" depends="boost,qt4,xerces" pattern="lib${ant.project.name}_indicators-${platform}-mt@{suffix}" suffix="-gd">
+        <build-lib name="indicators" depends="boost,qt4,xerces" pattern="lib${ant.project.name}_indicators-${platform}-mt@{suffix}" suffix="-gd" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
