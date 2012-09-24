@@ -34,6 +34,7 @@ protected:
     virtual QWidget* CreateNameField();
     virtual std::string GetName();
     virtual bool validatePage();
+    virtual void ApplyOptions();
     //@}
 
 private:
