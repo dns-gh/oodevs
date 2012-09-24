@@ -9,9 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_ActionInterrogate.h"
-
 #include "MIL_AgentServer.h"
-#include "PopulationFactory_ABC.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
