@@ -17,6 +17,7 @@
 #include "runtime/Io.h"
 #include "runtime/PropertyTree.h"
 #include "runtime/Runtime_ABC.h"
+#include "runtime/Scoper.h"
 #include "runtime/Utf8.h"
 
 #include "host/Package.h"
@@ -76,10 +77,10 @@ struct gui::Download : public io::Reader_ABC
     void Write( QNetworkReply* rpy )
     {
         boost::lock_guard< boost::mutex > lock( access_ );
-        const qint64 avail = rpy->bytesAvailable();
-        reply_ = rpy;
         if( eof_ )
             return;
+        const qint64 avail = rpy->bytesAvailable();
+        reply_ = rpy;
         const qint64 left = buffer_size - write_;
         const size_t next = std::min( left, avail );
         const qint64 len  = next ? rpy->read( &buffer_[write_], next ) : 0;
@@ -102,7 +103,11 @@ struct gui::Download : public io::Reader_ABC
         memcpy( data, &buffer_[read_], next );
         read_ += next;
         if( read_ == write_ )
-            read_ = write_ = 0;
+        {
+            read_  = 0;
+            write_ = 0;
+            QMetaObject::invokeMethod( reply_, "readyRead" );
+        }
         return static_cast< int >( next );
     }
 
@@ -142,6 +147,18 @@ struct gui::Download : public io::Reader_ABC
         boost::lock_guard< boost::mutex > lock( access_ );
         eof_ = true;
         gate_.notify_one();
+    }
+
+    // -----------------------------------------------------------------------------
+    // Name: Download::Finish
+    // Created: BAX 2012-09-24
+    // -----------------------------------------------------------------------------
+    bool Finish( QNetworkReply* rpy )
+    {
+        if( rpy->bytesAvailable() <= 0 )
+            return true;
+        boost::lock_guard< boost::mutex > lock( access_ );
+        return eof_;
     }
 
 private:
@@ -378,9 +395,10 @@ void Context::SetNetworkReply( HttpCommand cmd, QNetworkReply* rpy )
             break;
 
         case HTTP_CMD_DOWNLOAD_INSTALL:
-            connect( rpy, SIGNAL( error( QNetworkReply::NetworkError ) ), this, SLOT( OnDownloadInstall() ) );
-            connect( rpy, SIGNAL( finished() ), this, SLOT( OnDownloadInstall() ) );
+            rpy->setReadBufferSize( buffer_size );
             connect( rpy, SIGNAL( readyRead() ), this, SLOT( OnDownloadRead() ) );
+            connect( rpy, SIGNAL( error( QNetworkReply::NetworkError ) ), this, SLOT( OnDownloadEnd() ) );
+            connect( rpy, SIGNAL( finished() ), this, SLOT( OnDownloadEnd() ) );
             break;
     }
 }
@@ -494,6 +512,7 @@ void Context::Unpack( T_Download down )
     {
         FileSystem_ABC::T_Unpacker unpacker = fs_.Unpack( down->GetRoot(), *down );
         unpacker->Unpack();
+        down->Close();
     }
     catch( std::exception& err )
     {
@@ -506,39 +525,53 @@ void Context::Unpack( T_Download down )
 // Name: Context::OnDownloadInstall
 // Created: BAX 2012-09-21
 // -----------------------------------------------------------------------------
-void Context::OnDownloadInstall()
+void Context::OnDownloadEnd()
 {
     QNetworkReply* rpy = qobject_cast< QNetworkReply* >( sender() );
     const int id = rpy->request().attribute( QNetworkRequest::User ).toInt();
     rpy->deleteLater();
 
     T_Download down;
-    bool last = false;
     {
-        QWriteLocker read( &access_ );
+        QReadLocker read( &access_ );
         T_Downloads::iterator it = downloads_.find( id );
         if( it == downloads_.end() )
             return;
         down = *it;
-        downloads_.erase( it );
-        last = downloads_.empty();
     }
 
+    runtime::Scoper finish = boost::bind( &Context::FinishDownload, this, id );
     QNetworkReply::NetworkError err = rpy->error();
     if( err != QNetworkReply::NoError )
     {
         QString error = err == QNetworkReply::OperationCanceledError ? "Extraction aborted" : rpy->errorString();
+        // find another way to report errors...
         emit StatusMessage( QString( "Unable to download package %1 (%2)" ).arg( down->GetName() ).arg( error ) );
-        if( last )
-            emit ClearProgress();
         return;
     }
 
-    down->Write( rpy );
-    down->Close();
-    if( last )
+    while( !down->Finish( rpy ) )
     {
-        emit ClearProgress();
-        emit ClearMessage();
+        down->Write( rpy );
+        QCoreApplication::processEvents();
+        QThread::yieldCurrentThread();
     }
+    down->Close();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Context::FinishDownload
+// Created: BAX 2012-09-24
+// -----------------------------------------------------------------------------
+void Context::FinishDownload( int id )
+{
+    QWriteLocker write( &access_ );
+    T_Downloads::iterator it = downloads_.find( id );
+    if( it == downloads_.end() )
+        return;
+    downloads_.erase( it );
+    if( !downloads_.empty() )
+        return;
+    emit ClearProgress();
+    emit ClearMessage();
 }

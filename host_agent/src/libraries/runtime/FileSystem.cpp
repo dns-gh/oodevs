@@ -381,7 +381,7 @@ void CopyBlocks( cpplog::BaseLogger& log, Archive* src, Archive* dst )
             return;
         if( err != ARCHIVE_OK )
             AbortArchive( log, src );
-        __LA_SSIZE_T len = archive_write_data( dst, buffer, size );
+        __LA_SSIZE_T len = size ? archive_write_data( dst, buffer, size ) : 0;
         if( len != static_cast< __LA_SSIZE_T >( size ) )
             AbortArchive( log, dst );
     }

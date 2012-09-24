@@ -90,8 +90,8 @@ public slots:
     void OnRemove();
     void OnGetSession();
     void ParseSession( QNetworkReply* rpy );
-    void OnDownloadInstall();
     void OnDownloadRead();
+    void OnDownloadEnd();
 
 private:
     typedef boost::shared_ptr< Download > T_Download;
@@ -106,6 +106,7 @@ private:
     void GetSession();
     void AddItem( const Tree& src, const std::string& type );
     void Unpack( T_Download down );
+    void FinishDownload( int id );
 
 private:
     const runtime::Runtime_ABC& runtime_;
