@@ -694,6 +694,20 @@
                 </type>
             </return>
         </method>
+        <method name="isMoving" abstract="false">
+            <description>Returns 'true' if this element is moving, 'false' otherwise.</description>
+        </method>
+        <method name="canBeFollowed" abstract="false">
+            <description>Retourne "vrai" si cet élément peut être suivi par l'agent, "faux" sinon. Cette implémentation retourne "vrai" si cet élément est opérationnel, ie: un élément</description>
+        </method>
+        <method name="getName" abstract="false">
+            <description>Retourne le nom de l'élément motile.</description>
+            <return>
+                <type>
+                    <simple name="string"/>
+                </type>
+            </return>
+        </method>
     </methods>
     <predicates>
         <predicate name="isDestroyed">
@@ -719,7 +733,6 @@
         <predicate name="isThreateningOrHostile" abstract="false">
             <description>Renvoie vrai si la connaissance est considérée comme menaçante ou hostile.</description>
         </predicate>
-        <predicate name="isMoving" abstract="false"/>
         <predicate name="isLoaded" abstract="false">
             <description>Renvoie vrai si l'élément est chargé.</description>
         </predicate>

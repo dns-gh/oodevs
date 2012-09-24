@@ -1,47 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.tasks.Follow" source-version="1.0.0" knowledge-class="sword.military.platoon.tasks.knowledges.Follow">
-	<parameters>
-		<parameter name="objectives">
-			<description>L'élément à suivre.</description>
-			<type>
-				<list>
-					<class name="sword.military.knowledge.decisional.Reachable"/>
-				</list>
-			</type>
-		</parameter>
-	</parameters>
-	<stages>
-		<stage label="Suivre." permanent="true">
-			<skills>
-				<skill name="sword.military.platoon.skills.primitives.StayClose">
-					<parameter name="entities">
-						<value>
-							<parameter>objectives</parameter>
-						</value>
-					</parameter>
-					<parameter name="positions">
-						<value>
-							<call method="sword.military.queries.tactical.getPositionsToFollow">
-								<parameter name="elementsToFollow">
-									<value>
-										<parameter>objectives</parameter>
-									</value>
-								</parameter>
-								<parameter name="dynamic">
-									<value>
-										<boolean>true</boolean>
-									</value>
-								</parameter>
-								<parameter name="distanceMin">
-									<value>
-										<number>2000.0</number>
-									</value>
-								</parameter>
-							</call>
-						</value>
-					</parameter>
-				</skill>
-			</skills>
-		</stage>
-	</stages>
+    <parameters>
+        <parameter name="objectives">
+            <description>L'élément à suivre.</description>
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.Motile"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="Suivre." permanent="true">
+            <skills>
+                <skill name="sword.military.platoon.skills.Follow">
+                    <parameter name="entities">
+                        <value>
+                            <parameter>objectives</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
 </task>

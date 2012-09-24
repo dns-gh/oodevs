@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.world.Company" source-version="1.0.0">
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.world.Company" source-version="1.0.0" extends="sword.military.world.LocalizedElement">
     <description>Représente une compagnie AMIE ou ma propre compagnie.</description>
     <realizes>directia.core.model.RoleBody</realizes>
     <realizes>sword.military.knowledge.decisional.Reinforcable</realizes>
     <realizes>common.Body</realizes>
     <realizes>sword.military.knowledge.decisional.Supportable</realizes>
+    <realizes>sword.military.knowledge.Motile</realizes>
     <methods>
         <method name="RC">
             <description>Action de rendre compte.</description>
@@ -367,6 +368,23 @@
                     <class name="sword.military.world.PlatoonAlly"/>
                 </type>
             </argument>
+        </method>
+        <method name="isMoving" abstract="false">
+            <description>Returns 'true' if this element is moving, 'false' otherwise.</description>
+        </method>
+        <method name="canBeFollowed" abstract="false">
+            <description>Retourne &quot;vrai&quot; si cet élément peut être suivi par l'agent, &quot;faux&quot; sinon. Cette implémentation retourne &quot;vrai&quot; si cet élément est opérationnel, ie: un élément</description>
+        </method>
+        <method name="getName" abstract="false">
+            <description>Retourne le nom de l'élément motile.</description>
+            <return>
+                <type>
+                    <simple name="string"/>
+                </type>
+            </return>
+        </method>
+        <method name="getPositions">
+            <description>Fonction d'intégration</description>
         </method>
     </methods>
     <predicates>

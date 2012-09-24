@@ -216,12 +216,6 @@ predicate "isOperational"
         return self:operationalLevel() ~= 0
     end 
 }
-predicate "isMoving"
-{
-    method = function( self )
-        return integration.bodyIsMoving( self )
-    end
-}
 
 predicate "isInCrowd"
 {
@@ -346,6 +340,12 @@ return
     end,
     loadLevel = function( self )
         return self:getLoadlevel()
+    end,
+    isMoving = function( self )
+        return integration.bodyIsMoving( self )
+    end,
+    canBeFollowed = function( self )
+        return self:isOperational()
     end,
 
     -- -------------------------------------------------------------------------------- 
@@ -961,5 +961,8 @@ return
     end,
     allowCarriers = function( self )
         integration.allowCarriers()
+    end,
+    getName = function( self )
+        return integration.getName( self )
     end
 }

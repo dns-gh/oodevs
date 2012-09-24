@@ -131,6 +131,15 @@ return
         started = integration.startedUnloadCrowd, 
         stop = integration.stopUnloadCrowd
     } ),
+    isMoving = function( self )
+        return integration.crowdHasFlow( self )
+    end,
+    canBeFollowed = function( self )
+        return true
+    end,
+    getName = function( self )
+        return integration.getName( self )
+    end,
     -- -------------------------------------------------------------------------------- 
     -- Attributes
     -- --------------------------------------------------------------------------------

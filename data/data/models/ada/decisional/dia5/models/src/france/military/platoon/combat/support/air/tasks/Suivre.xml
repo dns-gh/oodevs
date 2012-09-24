@@ -1,65 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.air.tasks.Suivre" source-version="1.0.0" knowledge-class="sword.military.platoon.tasks.knowledges.Follow">
-	<parameters>
-		<parameter name="objective">
-			<description>Les éléments à suivre.</description>
-			<type>
-				<class name="sword.military.knowledge.decisional.Reachable"/>
-			</type>
-		</parameter>
-	</parameters>
-	<stages>
-		<stage label="Decoller" permanent="false">
-			<skills>
-				<skill name="france.military.platoon.combat.support.air.skills.Decoller" main="true">
-					<parameter name="HauteurDeVol">
-						<value>
-							<number>6500.0</number>
-						</value>
-					</parameter>
-				</skill>
-			</skills>
-		</stage>
-		<stage label="Suivre.">
-			<skills>
-				<skill name="sword.military.platoon.skills.primitives.StayClose" main="true">
-					<parameter name="entities">
-						<value>
-							<list>
-								<parameter>objective</parameter>
-							</list>
-						</value>
-					</parameter>
-					<parameter name="positions">
-						<value>
-							<call method="sword.military.queries.tactical.getPositionsToFollow">
-								<parameter name="elementsToFollow">
-									<value>
-										<list>
-											<parameter>objective</parameter>
-										</list>
-									</value>
-								</parameter>
-								<parameter name="dynamic">
-									<value>
-										<boolean>true</boolean>
-									</value>
-								</parameter>
-								<parameter name="distanceMin">
-									<value>
-										<number>50.0</number>
-									</value>
-								</parameter>
-							</call>
-						</value>
-					</parameter>
-				</skill>
-			</skills>
-		</stage>
-		<stage label="Aterrissage" disable-when-done="true">
-			<skills>
-				<skill name="france.military.platoon.combat.support.air.skills.Atterrir" main="true"/>
-			</skills>
-		</stage>
-	</stages>
+    <parameters>
+        <parameter name="objective">
+            <description>Les éléments à suivre.</description>
+            <type>
+                <class name="sword.military.knowledge.Motile"/>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="Decoller" permanent="false">
+            <skills>
+                <skill name="france.military.platoon.combat.support.air.skills.Decoller" main="true">
+                    <parameter name="HauteurDeVol">
+                        <value>
+                            <number>6500.0</number>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+        <stage label="Suivre.">
+            <skills>
+                <skill name="sword.military.platoon.skills.Follow" main="true">
+                    <parameter name="entities">
+                        <value>
+                            <list>
+                                <parameter>objective</parameter>
+                            </list>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+        <stage label="Aterrissage" disable-when-done="true">
+            <skills>
+                <skill name="france.military.platoon.combat.support.air.skills.Atterrir" main="true"/>
+            </skills>
+        </stage>
+    </stages>
 </task>

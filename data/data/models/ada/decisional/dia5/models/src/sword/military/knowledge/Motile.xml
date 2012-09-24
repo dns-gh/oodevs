@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.knowledge.Motile" source-version="1.0.0">
   <description>Represente tout élément capable de se déplacer par ses propres moyens (les unités).</description>
-  <predicates>
-    <predicate name="isMoving"/>
-  </predicates>
+    <methods>
+        <method name="canBeFollowed">
+            <description>Returns &quot;true&quot; if this element can be followed by the agent, 'false' otherwise.</description>
+        </method>
+        <method name="isMoving">
+            <description>Returns 'true' if this element is moving, 'false' otherwise.</description>
+        </method>
+    </methods>
 </interface>

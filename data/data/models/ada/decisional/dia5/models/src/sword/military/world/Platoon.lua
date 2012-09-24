@@ -30,12 +30,6 @@ predicate "isOperational"
         return self:operationalLevel() ~= 0
     end
 }
-predicate "isMoving"
-{
-    method = function( self )
-        return integration.isMoving( self )
-    end
-}
 predicate "isDangerous"
 {
     method = function( self )
@@ -136,6 +130,12 @@ return
     end,
     loadLevel = function( self )
         return self:getLoadlevel()
+    end,
+    isMoving = function( self )
+        return integration.isMoving( self )
+    end,
+    canBeFollowed = function( self )
+        return self:isOperational()
     end,
 
     -- -------------------------------------------------------------------------------- 
@@ -382,4 +382,7 @@ return
     dischargeItIn = function( self, camp )
         return integration.dischargeAgentKnowledge( self, camp )
     end,
+    getName = function( self )
+        return integration.getName( self )
+    end
 }

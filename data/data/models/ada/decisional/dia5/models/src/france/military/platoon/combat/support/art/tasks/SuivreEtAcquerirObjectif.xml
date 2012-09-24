@@ -30,35 +30,12 @@
                         </value>
                     </parameter>
                 </skill>
-                <skill name="sword.military.platoon.skills.primitives.StayClose" main="true">
+                <skill name="sword.military.platoon.skills.Follow" main="true">
                     <parameter name="entities">
                         <value>
                             <list>
                                 <parameter>entity</parameter>
                             </list>
-                        </value>
-                    </parameter>
-                    <parameter name="positions">
-                        <value>
-                            <call method="sword.military.queries.tactical.getPositionsToFollow">
-                                <parameter name="elementsToFollow">
-                                    <value>
-                                        <list>
-                                            <parameter>entity</parameter>
-                                        </list>
-                                    </value>
-                                </parameter>
-                                <parameter name="dynamic">
-                                    <value>
-                                        <boolean>true</boolean>
-                                    </value>
-                                </parameter>
-                                <parameter name="distanceMin">
-                                    <value>
-                                        <number>50.0</number>
-                                    </value>
-                                </parameter>
-                            </call>
                         </value>
                     </parameter>
                 </skill>

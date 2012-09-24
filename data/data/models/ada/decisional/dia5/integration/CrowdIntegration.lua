@@ -244,6 +244,11 @@ integration.isAttacking = function( crowd )
     return DEC_Connaissances_EstPrisAPartieParPopulation( crowd.source )
 end
 
+integration.crowdHasFlow = function( crowd )
+    return DEC_ConnaissancePopulation_HasFlow( crowd.source )
+end
+
+
 -- -------------------------------------------------------------------------------- 
 -- Crowd Demonstrates
 -- @author EVH

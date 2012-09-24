@@ -211,12 +211,21 @@ return
     changeAutomate = function( self )
         integration.changeAutomate( self, true )
     end,
+    isMoving = function( self )
+        return integration.isCompanyMoving( self )
+    end,
+    canBeFollowed = function( self )
+        return self:isOperational()
+    end,
 
     -- -------------------------------------------------------------------------------- 
     -- Intagration and specific methods
     -- --------------------------------------------------------------------------------
     getPosition = function( self )
         return DEC_Automate_Position( self.source )
+    end,
+    getPositions = function( self )
+      return { self:getPosition() }
     end,
     getMyPosition = function( self )
         return CreateKnowledge( sword.military.world.Point, self:getPosition() )
@@ -338,4 +347,7 @@ return
         end
         meKnowledge:sendDataToNewUnitInAutomat( unit, saintRegimeTravail, santePrioritesTact, maintPrioritesTact, maintPriorites, santePriorites, etatROEPopulation, etatROE )
     end,
+    getName = function( self )
+        return integration.getName( self )
+    end
 }

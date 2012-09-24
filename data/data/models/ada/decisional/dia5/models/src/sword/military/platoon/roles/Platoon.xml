@@ -94,6 +94,7 @@
         <skill name="france.military.platoon.combat.support.rens.skills.primitives.ActivateRadarTirIndirect"/>
         <skill name="sword.military.platoon.skills.Settle"/>
         <skill name="sword.military.platoon.coercition.skills.EngageFriendsEnemies"/>
+        <skill name="sword.military.platoon.skills.Follow"/>
     </skills>
     <resources>
         <resource name="sword.military.platoon.resources.EngageCapacity"/>

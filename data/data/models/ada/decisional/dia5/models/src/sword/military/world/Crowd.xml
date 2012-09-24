@@ -5,6 +5,7 @@
     <realizes>sword.military.knowledge.Askable</realizes>
     <realizes>sword.military.knowledge.Controlable</realizes>
     <realizes>sword.military.knowledge.Attackable</realizes>
+    <realizes>sword.military.knowledge.Motile</realizes>
     <methods>
         <method name="computeRelation">
             <description>__INTEGRATION</description>
@@ -218,6 +219,20 @@
         </method>
         <method name="unloadIt" abstract="false">
             <description>Action de déchargement d'une concentration appartentant à la foule.</description>
+        </method>
+        <method name="isMoving" abstract="false">
+            <description>Returns 'true' if this element is moving, 'false' otherwise.</description>
+        </method>
+        <method name="canBeFollowed" abstract="false">
+            <description>Retourne "vrai" si cet élément peut être suivi par l'agent, "faux" sinon. Cette implémentation retourne "vrai" si cet élément est opérationnel, ie: un élément</description>
+        </method>
+        <method name="getName" abstract="false">
+            <description>Returns the name of the motile element.</description>
+            <return>
+                <type>
+                    <simple name="string"/>
+                </type>
+            </return>
         </method>
     </methods>
     <predicates>

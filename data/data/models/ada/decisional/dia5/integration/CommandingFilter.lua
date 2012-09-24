@@ -137,3 +137,13 @@ integration.nbPlatoonsHaveTask = function( listPlatoonAlly, targetTask )
     end
     return nb
 end
+
+integration.isCompanyMoving = function( company )
+    local subordinates = company.source:DEC_Automate_PionsAvecPC()
+    for _, subordinate in pairs( subordinates or emptyTable ) do
+        if subordinate:DEC_Agent_IsMoving() then
+            return true
+        end
+    end
+    return false
+end

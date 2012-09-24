@@ -21,8 +21,15 @@
                 <nil/>
             </default>
         </parameter>
+        <parameter name="distanceMin">
+            <type>
+                <simple name="numeric"/>
+            </type>
+            <default>
+                <number>100.0</number>
+            </default>
+        </parameter>
     </parameters>
-    <modifiers/>
     <links>
         <link name="observe" skill="sword.military.platoon.skills.actions.Observe">
             <description>Lien vers le skill Observe</description>
