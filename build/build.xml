@@ -871,7 +871,8 @@
                   lib${ant.project.name}_MT_Tools-${platform}-mt,
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
-                  lib${ant.project.name}_tools-${platform}-mt@{suffix}">
+                  lib${ant.project.name}_tools-${platform}-mt@{suffix}"
+            failonwarning="${failonwarning}">
             <syslibset libs="geocoord"/>
             <defineset define="QT3_SUPPORT"/>
         </build-app>

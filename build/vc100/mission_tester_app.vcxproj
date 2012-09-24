@@ -102,23 +102,35 @@
     <Link>
       <AdditionalDependencies>spatialcontainer_d.lib;terrain_d.lib;glu32.lib;psapi.lib;dbghelp.lib;svgl_d.lib;htmlhelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <ClCompile>
+      <TreatWarningAsError>true</TreatWarningAsError>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
     <Link>
       <AdditionalDependencies>spatialcontainer_d.lib;terrain_d.lib;glu32.lib;psapi.lib;dbghelp.lib;svgl_d.lib;htmlhelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <ClCompile>
+      <TreatWarningAsError>true</TreatWarningAsError>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
     <Link>
       <AdditionalDependencies>spatialcontainer.lib;terrain.lib;glu32.lib;psapi.lib;dbghelp.lib;svgl.lib;htmlhelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
+    <ClCompile>
+      <TreatWarningAsError>true</TreatWarningAsError>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
     <Link>
       <AdditionalDependencies>spatialcontainer.lib;terrain.lib;glu32.lib;psapi.lib;dbghelp.lib;svgl.lib;htmlhelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
+    <ClCompile>
+      <TreatWarningAsError>true</TreatWarningAsError>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\applications\mission_tester_app\main.cpp" />
