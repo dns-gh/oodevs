@@ -82,7 +82,8 @@ namespace
         tools::ReadTimeAttribute( xis, "time", time );
         time = MIL_Tools::ConvertSecondsToSim( time ); // second.hectare-1 => dT.hectare-1
         time /= 10000.;                                // dT.hectare-1     => dT.m-2
-        time = 1. / ( 1. / time );                     // dT.m-2           => dT.px-2
+        if( time != 0. )
+            time = 1. / ( 1. / time );                     // dT.m-2           => dT.px-2
     }
 }
 
