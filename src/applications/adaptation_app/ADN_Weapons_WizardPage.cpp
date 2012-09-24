@@ -96,3 +96,23 @@ bool ADN_Weapons_WizardPage::validatePage()
     }
     return ADN_WizardPage::validatePage();
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Weapons_WizardPage::ApplyOptions
+// Created: LDC 2012-09-24
+// -----------------------------------------------------------------------------
+void ADN_Weapons_WizardPage::ApplyOptions()
+{
+    if( element_ )
+    {
+        std::string strLauncher = pComboLauncher_->currentText().toAscii().constData();
+        ADN_Launchers_Data::LauncherInfos* pLauncher = ADN_Workspace::GetWorkspace().GetLaunchers().GetData().FindLauncher( strLauncher );
+        element_->ptrLauncher_ = pLauncher;
+        
+        std::string strAmmo = pComboAmmo_->currentText().toAscii().constData();
+        ADN_Equipement_Data::ResourceInfos& ammoDotation = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Munition );
+        ADN_Equipement_Data::CategoryInfo* pAmmo = ammoDotation.FindCategory( strAmmo );
+        ADN_Equipement_Data::AmmoCategoryInfo* ammo = dynamic_cast< ADN_Equipement_Data::AmmoCategoryInfo* >( pAmmo );        
+        element_->ptrAmmunition_ = ammo;
+    }
+}
