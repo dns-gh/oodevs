@@ -125,7 +125,7 @@
     </target>
 
     <target name="reports" depends="protocol,clients_kernel" description="build reports static library">
-        <build-lib name="reports" depends="qt4" pattern="lib${ant.project.name}_reports-${platform}-mt@{suffix}" suffix="-gd">
+        <build-lib name="reports" depends="qt4" pattern="lib${ant.project.name}_reports-${platform}-mt@{suffix}" suffix="-gd" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
