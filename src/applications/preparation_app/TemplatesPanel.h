@@ -13,7 +13,6 @@
 #include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
-#include "clients_kernel/ModelLoaded.h"
 #include "clients_gui/InfoPanel_ABC.h"
 
 namespace kernel
@@ -21,6 +20,8 @@ namespace kernel
     class Controllers;
     class Entity_ABC;
     class AgentTypes;
+    class ModelLoaded;
+    class ModelUnLoaded;
 }
 
 class AgentsModel;
@@ -40,7 +41,7 @@ class TemplatesPanel : public gui::InfoPanel_ABC
                      , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
                      , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -56,12 +57,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    TemplatesPanel( const TemplatesPanel& );            //!< Copy constructor
-    TemplatesPanel& operator=( const TemplatesPanel& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const kernel::ModelLoaded& );

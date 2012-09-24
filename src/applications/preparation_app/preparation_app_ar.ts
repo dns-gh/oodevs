@@ -2500,10 +2500,6 @@ This data can&apos;t be projected.</source>
 <context>
     <name>TemplateListView</name>
     <message>
-        <source>Template</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Rename</source>
         <translation type="unfinished"></translation>
     </message>

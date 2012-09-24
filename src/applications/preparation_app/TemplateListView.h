@@ -10,8 +10,14 @@
 #ifndef __TemplateListView_h_
 #define __TemplateListView_h_
 
-namespace kernel { class Entity_ABC; class AgentTypes; }
-namespace xml    { class xistream; }
+#include "clients_gui/RichTreeView.h"
+
+namespace kernel
+{
+    class Controllers;
+    class Entity_ABC;
+    class AgentTypes;
+}
 
 class AgentsModel;
 class ColorController;
@@ -24,14 +30,14 @@ class HierarchyTemplate;
 */
 // Created: AGE 2007-05-30
 // =============================================================================
-class TemplateListView : public Q3ListView
+class TemplateListView : public gui::RichTreeView
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             TemplateListView( QWidget* parent, AgentsModel& agents, FormationModel& formations, const kernel::AgentTypes& types, ColorController& colorController );
+             TemplateListView( QWidget* parent, kernel::Controllers& controllers, AgentsModel& agents, FormationModel& formations, const kernel::AgentTypes& types, ColorController& colorController );
     virtual ~TemplateListView();
     //@}
 
@@ -45,18 +51,11 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void OnRename( Q3ListViewItem*, int, const QString& );
+    void OnRename( const QModelIndex& index, const QVariant& variant );
     void OnRename();
-    void OnContextMenuRequested( Q3ListViewItem*, const QPoint&, int );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    TemplateListView( const TemplateListView& );            //!< Copy constructor
-    TemplateListView& operator=( const TemplateListView& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
     typedef std::vector< HierarchyTemplate* > T_Templates;
@@ -66,7 +65,8 @@ private:
 
     //! @name Helpers
     //@{
-    virtual Q3DragObject* dragObject();
+    void contextMenuEvent( QContextMenuEvent* event );
+    virtual QStringList MimeTypes() const;
     void Clear();
     void ReadTemplate( xml::xistream& input );
     void CreateItem( HierarchyTemplate& t );

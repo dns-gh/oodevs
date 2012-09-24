@@ -2501,10 +2501,6 @@ Ces données ne peuvent pas être projetées.</translation>
 <context>
     <name>TemplateListView</name>
     <message>
-        <source>Template</source>
-        <translation>Modèle</translation>
-    </message>
-    <message>
         <source>Rename</source>
         <translation>Renommer</translation>
     </message>

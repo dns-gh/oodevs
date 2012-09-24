@@ -307,11 +307,7 @@ void StandardModel::DeleteItemRow( QStandardItem* item )
     // $$$$ ABR 2012-09-20: Delete row
     QList< QStandardItem* > rowItems = parentItem->takeRow( item->row() );
     for( QList< QStandardItem* >::iterator it = rowItems.begin(); it != rowItems.end(); ++it )
-    {
-        QStandardItem* rowItem = *it;
-        delete rowItem;
-        rowItem = 0;
-    }
+        delete *it;
 }
 
 // -----------------------------------------------------------------------------

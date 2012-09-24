@@ -12,33 +12,27 @@
 #include "moc_TemplateListView.cpp"
 #include "preparation/HierarchyTemplate.h"
 #include "clients_gui/DragAndDropHelpers.h"
-#include "clients_gui/ValuedListItem.h"
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <tools/XmlCrc32Signature.h>
-#include <xeumeuleu/xml.hpp>
 
 namespace bfs = boost::filesystem;
-using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: TemplateListView constructor
 // Created: AGE 2007-05-30
 // -----------------------------------------------------------------------------
-TemplateListView::TemplateListView( QWidget* parent, AgentsModel& agents, FormationModel& formations, const kernel::AgentTypes& types, ColorController& colorController )
-    : Q3ListView( parent )
+TemplateListView::TemplateListView( QWidget* parent, kernel::Controllers& controllers, AgentsModel& agents, FormationModel& formations, const kernel::AgentTypes& types, ColorController& colorController )
+    : gui::RichTreeView( controllers, parent )
     , agents_         ( agents )
     , formations_     ( formations )
     , types_          ( types )
     , colorController_( colorController )
 {
-    addColumn( tr( "Template" ) );
-    setResizeMode( Q3ListView::AllColumns );
-    header()->hide();
-    setSorting( -1 );
-    setDefaultRenameAction( Q3ListView::Accept );
-    connect( this, SIGNAL( itemRenamed( Q3ListViewItem*, int, const QString& ) ), SLOT( OnRename( Q3ListViewItem*, int, const QString& ) ) );
-    connect( this, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ) );
+    EnableDragAndDrop( true );
+    setHeaderHidden( true );
+    setEditTriggers( SelectedClicked | EditKeyPressed );
+    connect( &dataModel_, SIGNAL( DataChanged( const QModelIndex&, const QVariant& ) ), SLOT( OnRename( const QModelIndex&, const QVariant& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,31 +55,25 @@ void TemplateListView::CreateTemplate( const kernel::Entity_ABC& entity )
 }
 
 // -----------------------------------------------------------------------------
-// Name: TemplateListView::dragObject
-// Created: AGE 2007-05-30
+// Name: TemplateListView::MimeTypes
+// Created: JSR 2012-09-24
 // -----------------------------------------------------------------------------
-Q3DragObject* TemplateListView::dragObject()
+QStringList TemplateListView::MimeTypes() const
 {
-    ValuedListItem* pItem = static_cast< ValuedListItem* >( selectedItem() );
-    if( !pItem )
-        return 0;
-
-    HierarchyTemplate* pTemplate = pItem->GetValue< HierarchyTemplate >();
-    dnd::CreateDragObject( pTemplate, this );
-    return 0;
+    return QStringList( typeid( HierarchyTemplate ).name() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TemplateListView::OnContextMenuRequested
-// Created: LGY 2012-03-06
+// Name: TemplateListView::contextMenuEvent
+// Created: JSR 2012-09-24
 // -----------------------------------------------------------------------------
-void TemplateListView::OnContextMenuRequested( Q3ListViewItem* item, const QPoint& where, int )
+void TemplateListView::contextMenuEvent( QContextMenuEvent* event )
 {
-    if( item )
+    if( event && indexAt( event->pos() ) == selectionModel()->currentIndex() )
     {
         QMenu* menu = new QMenu( this  );
         menu->addAction( tr( "Rename" ), this, SLOT( OnRename() ) );
-        menu->popup( where );
+        menu->popup( event->globalPos() );
     }
 }
 
@@ -95,22 +83,20 @@ void TemplateListView::OnContextMenuRequested( Q3ListViewItem* item, const QPoin
 // -----------------------------------------------------------------------------
 void TemplateListView::OnRename()
 {
-    if( selectedItem() )
-        selectedItem()->startRename( 0 );
+    const QModelIndex index = selectionModel()->currentIndex();
+    if( index.isValid() )
+        edit( index );
 }
 
 // -----------------------------------------------------------------------------
 // Name: TemplateListView::OnRename
-// Created: AGE 2007-05-30
+// Created: JSR 2012-09-24
 // -----------------------------------------------------------------------------
-void TemplateListView::OnRename( Q3ListViewItem* item, int, const QString& newName )
+void TemplateListView::OnRename( const QModelIndex& index, const QVariant& variant )
 {
-    if( ValuedListItem* pItem = static_cast< ValuedListItem* >( item ) )
-    {
-        HierarchyTemplate* pTemplate = pItem->GetValue< HierarchyTemplate >();
-        pTemplate->Rename( newName );
-        item->setText( 0, newName );
-    }
+    if( index.isValid() && variant.type() == QVariant::String )
+        if( HierarchyTemplate* pTemplate = dataModel_.GetDataFromIndex< HierarchyTemplate >( index ) )
+            pTemplate->Rename( variant.toString() );
 }
 
 // -----------------------------------------------------------------------------
@@ -122,7 +108,7 @@ void TemplateListView::LoadTemplates( const std::string& filename )
     try
     {
         Clear();
-        if( ! filename.empty() && bfs::exists( bfs::path( filename ) ) )
+        if( !filename.empty() && bfs::exists( bfs::path( filename ) ) )
         {
             xml::xifstream input( filename );
             input >> xml::start( "templates" )
@@ -167,10 +153,7 @@ void TemplateListView::ReadTemplate( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void TemplateListView::CreateItem( HierarchyTemplate& t )
 {
-    ValuedListItem* item = new ValuedListItem( this );
-    item->Set( &t, t.GetName() );
-    item->setDragEnabled( true );
-    item->setRenameEnabled( 0, true );
+    dataModel_.AddRootDataItem( dataModel_.rowCount(), 0, t.GetName(), "", t, Qt::ItemIsDragEnabled | Qt::ItemIsEditable );
 }
 
 // -----------------------------------------------------------------------------
@@ -179,7 +162,7 @@ void TemplateListView::CreateItem( HierarchyTemplate& t )
 // -----------------------------------------------------------------------------
 void TemplateListView::Clear()
 {
-    clear();
+    dataModel_.Purge();
     for( CIT_Templates it = templates_.begin(); it != templates_.end(); ++it )
         delete *it;
     templates_.clear();
@@ -191,19 +174,24 @@ void TemplateListView::Clear()
 // -----------------------------------------------------------------------------
 void TemplateListView::keyPressEvent( QKeyEvent* evt )
 {
-    if( evt && evt->key() == Qt::Key_Delete && selectedItem() )
+    const QModelIndex index = selectionModel()->currentIndex();
+    if( evt && evt->key() == Qt::Key_Delete && index.isValid() )
     {
-        ValuedListItem* item = static_cast< ValuedListItem* >( selectedItem() );
-        HierarchyTemplate* t = item->GetValue< HierarchyTemplate >();
-        IT_Templates it = std::find( templates_.begin(), templates_.end(), t );
-        if( it != templates_.end() )
+        if( HierarchyTemplate* pTemplate = dataModel_.GetDataFromIndex< HierarchyTemplate >( index ) )
         {
-            delete *it;
-            std::swap( *it, templates_.back() );
-            templates_.pop_back();
-            delete item;
+            IT_Templates it = std::find( templates_.begin(), templates_.end(), pTemplate );
+            if( it != templates_.end() )
+            {
+                delete *it;
+                std::swap( *it, templates_.back() );
+                templates_.pop_back();
+                QStandardItem* item = dataModel_.GetItemFromIndex( index );
+                QList< QStandardItem* > rowItems = dataModel_.invisibleRootItem()->takeRow( item->row() );
+                for( QList< QStandardItem* >::iterator it = rowItems.begin(); it != rowItems.end(); ++it )
+                    delete *it;
+            }
         }
     }
     else
-        Q3ListView::keyPressEvent( evt );
+        RichTreeView::keyPressEvent( evt );
 }

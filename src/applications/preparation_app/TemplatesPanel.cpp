@@ -16,6 +16,7 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/ModelLoaded.h"
 #include "tools/ExerciseConfig.h"
 
 // -----------------------------------------------------------------------------
@@ -27,7 +28,7 @@ TemplatesPanel::TemplatesPanel( QWidget* parent, gui::PanelStack_ABC& panel, ker
     , controllers_ ( controllers )
     , menuEntity_  ( controllers )
 {
-    list_ = new TemplateListView( this, agents, formations, types, colorController );
+    list_ = new TemplateListView( this, controllers, agents, formations, types, colorController );
     setWidget( list_ );
     controllers_.Register( *this );
 }
