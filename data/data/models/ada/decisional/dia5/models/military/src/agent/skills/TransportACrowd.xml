@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="platoon.skills.TransporterFoule" source-version="1.0.0">
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.skills.TransportACrowd" source-version="1.0.0">
     <parameters>
         <parameter name="crowd">
             <description>Foule a transporter.</description>
@@ -19,12 +19,21 @@
                 <class name="properties.Loading"/>
             </type>
         </parameter>
+        <parameter name="minDistance">
+            <description>The  minimum distance (in METERS) between the loading position and the crowd's concentration which is used to verifiy that the concentration to transport is not moving. If distance between the crowd concentration to transport and the loading position is greater than the 'minDistance' value, the agent waits the crowd to get closer.</description>
+            <type>
+                <simple name="numeric"/>
+            </type>
+            <default>
+                <number>100.0</number>
+            </default>
+        </parameter>
     </parameters>
     <body-type>
         <class name="world.PlatoonAlly"/>
     </body-type>
     <links>
-        <link name="moveToward" skill="platoon.skills.MoveAlong"/>
+        <link name="moveToward" skill="agent.skills.MoveToward"/>
     </links>
     <resources>
         <resource name="agent.resources.TransportationCapacity" variable="loadcapacity"/>

@@ -19,7 +19,6 @@
         <skill name="agent.skills.RecoverHumanTransporters"/>
         <skill name="platoon.skills.ReparerReseau"/>
         <skill name="platoon.skills.SortirDuReseauSouterrain"/>
-        <skill name="platoon.skills.TransporterFoule"/>
         <skill name="platoon.terrorism.skills.Renseigner"/>
         <skill name="platoon.combat.support.log.skills.AmeliorerMobilite"/>
         <skill name="platoon.combat.support.log.skills.Convoyer"/>

@@ -41,10 +41,10 @@ rootnode
         meKnowledge.isStoppingTransport = false
         -- init crowd's concentration information
         meKnowledge.crowdTransporting = self.params.crowd
-        self.concentration = integration.getNearbyConcentration(  meKnowledge.crowdTransporting, self.params.loadingPoint )
+        self.concentration = integration.getNearbyConcentration(  meKnowledge.crowdTransporting, self.params.loadingPoint, self.params.minDistance )
         self.position = integration.getPositionConcentration(  meKnowledge.crowdTransporting, self.concentration )
         self.positionInit = self.position
-        
+
         self.arrivedLoadPoint = false
         self.arrivedDestination = false
         self.loadFinished = false
@@ -55,6 +55,7 @@ rootnode
         local Activate = Activate
 
         if self.concentration == 0 then
+            meKnowledge:sendMessage( "The crowd's concentration position is too far from the loading position" )
             Feedback( self.feedbacks.done )
             return
         end
@@ -78,13 +79,12 @@ rootnode
         end
 
         if self.unloadFinished then
-            local concentration = integration.getNearbyConcentration( meKnowledge.crowdTransporting, self.params.loadingPoint )
+            local concentration = integration.getNearbyConcentration( meKnowledge.crowdTransporting, self.params.loadingPoint, self.params.minDistance )
             if concentration == 0 or concentration ~= self.concentration then
                 Feedback( self.feedbacks.done )
             end
-           
         end
-        
+
         self.loadFinished = false
         self.unloadFinished = false
         self.arrivedLoadPoint = false

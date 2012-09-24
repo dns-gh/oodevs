@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="platoon.tasks.TransporterFoule" source-version="1.0.0" knowledge-class="platoon.tasks.knowledges.TransporterFoule">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.tasks.TransportACrowd" source-version="1.0.0" knowledge-class="commander.tasks.knowledges.TransportACrowd">
     <parameters>
         <parameter name="crowd">
             <description>Foule à transporter</description>
             <type>
-                <class name="properties.Transportable"/>
+                <class name="properties.Loadable"/>
             </type>
         </parameter>
         <parameter name="loadingPoint">
@@ -27,37 +27,37 @@
         </parameter>
     </parameters>
     <stages>
-        <stage label="Transport de foule">
-            <description>Transporte la concentration de la foule qui est proches du point d'embarquemenet  successivement suivant les capacité du pion.</description>
+        <stage label="Crowd transportation begins">
             <skills>
-                <skill name="agent.skills.TransportACrowd" main="true">
-                    <parameter name="crowd">
+                <skill name="commander.skills.Lead" main="true">
+                    <parameter name="companyTask">
                         <value>
-                            <parameter>crowd</parameter>
+                            <string>commander.tasks.TransportACrowd</string>
                         </value>
                     </parameter>
-                    <parameter name="loadingPoint">
+                    <parameter name="mainTasks">
                         <value>
-                            <parameter>loadingPoint</parameter>
+                            <string>agent.tasks.TransportACrowd</string>
                         </value>
                     </parameter>
-                    <parameter name="destination">
+                    <parameter name="supportTasks">
                         <value>
-                            <parameter>destination</parameter>
+                            <string>agent.tasks.MoveAlong</string>
                         </value>
                     </parameter>
-                </skill>
-            </skills>
-        </stage>
-        <stage label="Déplacement vers le point de regroupement" disable-when-done="true">
-            <description>se deplace vers le point de rendez vous donne en parametre</description>
-            <skills>
-                <skill name="agent.skills.MoveAlong" main="true">
-                    <parameter name="entities">
+                    <parameter name="defaultTask">
                         <value>
-                            <list>
-                                <parameter>meetingPoint</parameter>
-                            </list>
+                            <string>agent.tasks.MoveAlong</string>
+                        </value>
+                    </parameter>
+                    <parameter name="taskForSupporting">
+                        <value>
+                            <string>agent.tasks.MoveAlong</string>
+                        </value>
+                    </parameter>
+                    <parameter name="noCoordination">
+                        <value>
+                            <boolean>true</boolean>
                         </value>
                     </parameter>
                 </skill>
