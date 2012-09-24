@@ -61,6 +61,26 @@
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
   </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
+    <ClCompile>
+      <TreatWarningAsError>true</TreatWarningAsError>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
+    <ClCompile>
+      <TreatWarningAsError>true</TreatWarningAsError>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
+    <ClCompile>
+      <TreatWarningAsError>true</TreatWarningAsError>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
+    <ClCompile>
+      <TreatWarningAsError>true</TreatWarningAsError>
+    </ClCompile>
+  </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\applications\package_app\package_app.cpp" />
   </ItemGroup>

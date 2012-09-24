@@ -842,7 +842,7 @@
     </target>
 
     <target name="package_app" description="build Sword Package deployment executable">
-        <build-app name="package_app" depends="boost" subsystem="console">
+        <build-app name="package_app" depends="boost" subsystem="console" failonwarning="${failonwarning}">
             <syslibset libs="user32"/>
             <defineset define="QT3_SUPPORT"/>
         </build-app>
