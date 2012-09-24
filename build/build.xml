@@ -69,7 +69,7 @@
     </target>
 
     <target name="ENT" description="build ENT static library">
-        <build-lib name="ENT" depends="qt4" pattern="lib${ant.project.name}_ENT-${platform}-mt@{suffix}" suffix="-gd">
+        <build-lib name="ENT" depends="qt4" pattern="lib${ant.project.name}_ENT-${platform}-mt@{suffix}" suffix="-gd" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
