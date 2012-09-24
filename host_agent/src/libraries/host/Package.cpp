@@ -420,6 +420,7 @@ struct Item : Package_ABC::Item_ABC
     void Download( const FileSystem_ABC& fs, web::Chunker_ABC& dst ) const
     {
         dst.SetName( Utf8( name_ ) );
+        dst.SetHeader( "Original-Content-Length", boost::lexical_cast< std::string >( size_ ) );
         io::Writer_ABC& io = dst.OpenWriter();
         FileSystem_ABC::T_Packer packer = fs.Pack( io );
         packer->Pack( root_, IsItemFile( GetSuffix() ) );
