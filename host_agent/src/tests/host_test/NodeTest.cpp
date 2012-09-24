@@ -216,7 +216,7 @@ BOOST_FIXTURE_TEST_CASE( node_cache, Fixture )
 
     NilReader src;
     boost::shared_ptr< MockUnpack > unpack = boost::make_shared< MockUnpack >();
-    MOCK_EXPECT( system.Unpack ).once().with( mock::any, mock::same( src ) ).returns( unpack );
+    MOCK_EXPECT( system.Unpack ).once().with( mock::any, mock::same( src ), mock::any ).returns( unpack );
     MOCK_EXPECT( unpack->Unpack ).once();
 
     MOCK_EXPECT( packages.Make ).once().with( mock::any, false ).returns( cache );

@@ -9,6 +9,7 @@
 
 #include "Download.h"
 
+#include "Helpers.h"
 #include "QAsync.h"
 
 #include "runtime/FileSystem_ABC.h"
@@ -31,22 +32,25 @@ namespace
 
 namespace
 {
-struct Download : public gui::Download_ABC
+struct Download : public gui::Download_ABC, public io::Writer_ABC
 {
     // -----------------------------------------------------------------------------
     // Name: Download::Download
     // Created: BAX 2012-09-21
     // -----------------------------------------------------------------------------
     Download( QNetworkReply* rpy, const FileSystem_ABC& fs, const Path& root )
-        : fs_    ( fs )
-        , buffer_( buffer_size )
-        , root_  ( fs.MakeAnyPath( root ) )
-        , eof_   ( false )
-        , write_ ( 0 )
-        , read_  ( 0 )
-        , total_ ( 0 )
-        , rpy_   ( rpy )
-        , async_ ()
+        : fs_      ( fs )
+        , buffer_  ( buffer_size )
+        , root_    ( fs.MakeAnyPath( root ) )
+        , rpy_     ( rpy )
+        , write_   ( 0 )
+        , read_    ( 0 )
+        , current_ ( 0 )
+        , total_   ( 0 )
+        , progress_( 0 )
+        , eof_     ( false )
+        , headers_ ( false )
+        , async_   ()
     {
         rpy->setReadBufferSize( buffer_size );
         connect( this, SIGNAL( ReadyWrite() ), rpy, SIGNAL( readyRead() ) );
@@ -72,9 +76,9 @@ struct Download : public gui::Download_ABC
     // -----------------------------------------------------------------------------
     void ReadHeaders( QNetworkReply* rpy )
     {
-        if( has_headers_ )
+        if( headers_ )
             return;
-        has_headers_ = true;
+        headers_ = true;
         bool valid = false;
         const int total = rpy->rawHeader( QString( "Original-Content-Length" ).toAscii() ).toInt( &valid );
         if( valid )
@@ -128,6 +132,25 @@ struct Download : public gui::Download_ABC
     }
 
     // -----------------------------------------------------------------------------
+    // Name: Download::Write
+    // Created: BAX 2012-09-24
+    // -----------------------------------------------------------------------------
+    int Write( const void* /*data*/, size_t size )
+    {
+        const int rpy = static_cast< int >( size );
+        boost::lock_guard< boost::mutex > lock( access_ );
+        current_ += size;
+        if( !total_ )
+            return rpy;
+        const size_t next = ( current_ * 100 ) / total_;
+        if( next <= progress_ )
+            return rpy;
+        progress_ = next;
+        emit Progress( rpy_, next );
+        return rpy;
+    }
+
+    // -----------------------------------------------------------------------------
     // Name: Download::Close
     // Created: BAX 2012-09-21
     // -----------------------------------------------------------------------------
@@ -146,12 +169,12 @@ struct Download : public gui::Download_ABC
     {
         try
         {
-            FileSystem_ABC::T_Unpacker unpacker = fs_.Unpack( root_, *this );
+            FileSystem_ABC::T_Unpacker unpacker = fs_.Unpack( root_, *this, this );
             unpacker->Unpack();
         }
-        catch( ... )
+        catch( const std::exception& err )
         {
-            // log me
+            emit Error( rpy_, QUtf8( std::string( err.what() ) ) );
         }
         Close();
         emit Abort();
@@ -205,9 +228,7 @@ struct Download : public gui::Download_ABC
     {
         QNetworkReply::NetworkError err = rpy_->error();
         if( err != QNetworkReply::NoError && err != QNetworkReply::OperationCanceledError )
-        {
-            // find a way to report errors
-        }
+            emit Error( rpy_, rpy_->errorString() );
         Finish();
         emit End( rpy_ );
     }
@@ -221,9 +242,11 @@ private:
     QPointer< QNetworkReply > rpy_;
     size_t write_;
     size_t read_;
+    size_t current_;
     size_t total_;
-    bool has_headers_;
+    size_t progress_;
     bool eof_;
+    bool headers_;
     QAsync async_;
 };
 }

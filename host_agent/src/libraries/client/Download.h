@@ -47,7 +47,9 @@ public slots:
 signals:
     void ReadyWrite();
     void Abort();
-    void End( QNetworkReply* );
+    void End( QPointer< QNetworkReply > );
+    void Error( QPointer< QNetworkReply >, const QString& );
+    void Progress( QPointer< QNetworkReply >, int );
 };
 
 boost::shared_ptr< Download_ABC > MakeDownload( QNetworkReply* rpy, const runtime::FileSystem_ABC& fs, const Path& root );

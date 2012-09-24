@@ -371,7 +371,7 @@ const wchar_t* StripPathPrefix( const wchar_t* input, size_t diff )
     return *input == L'/' ? ++input : input;
 }
 
-void CopyBlocks( cpplog::BaseLogger& log, Archive* src, Archive* dst )
+void CopyBlocks( cpplog::BaseLogger& log, Archive* src, Archive* dst, io::Writer_ABC* writer )
 {
     for( ;; )
     {
@@ -381,13 +381,18 @@ void CopyBlocks( cpplog::BaseLogger& log, Archive* src, Archive* dst )
             return;
         if( err != ARCHIVE_OK )
             AbortArchive( log, src );
-        __LA_SSIZE_T len = size ? archive_write_data( dst, buffer, size ) : 0;
+        if( !size )
+            continue;
+        if( writer )
+            writer->Write( buffer, size );
+        __LA_SSIZE_T len = archive_write_data( dst, buffer, size );
         if( len != static_cast< __LA_SSIZE_T >( size ) )
             AbortArchive( log, dst );
     }
 }
 
-void TransferArchive( cpplog::BaseLogger& log, Archive* dst, Archive* src, const Path& root, const Packer_ABC::T_Predicate& predicate, bool pack )
+void TransferArchive( cpplog::BaseLogger& log, Archive* dst, Archive* src, const Path& root,
+                      const Packer_ABC::T_Predicate& predicate, bool pack, io::Writer_ABC* writer )
 {
     const size_t diff = root.generic_wstring().size();
     boost::shared_ptr< ArchiveEntry > ptr( archive_entry_new(), archive_entry_free );
@@ -419,7 +424,7 @@ void TransferArchive( cpplog::BaseLogger& log, Archive* dst, Archive* src, const
         err = archive_write_header( dst, entry );
         if( err != ARCHIVE_OK )
             CheckArchiveCode( log, dst, err );
-        CopyBlocks( log, src, dst );
+        CopyBlocks( log, src, dst, writer );
         err = archive_write_finish_entry( dst );
         if( err != ARCHIVE_OK )
             CheckArchiveCode( log, dst, err );
@@ -429,10 +434,11 @@ void TransferArchive( cpplog::BaseLogger& log, Archive* dst, Archive* src, const
 
 struct Unpacker : public Unpacker_ABC
 {
-    Unpacker( cpplog::BaseLogger& log, const Path& output, io::Reader_ABC& src )
+    Unpacker( cpplog::BaseLogger& log, const Path& output, io::Reader_ABC& src, io::Writer_ABC* dst )
         : log_   ( log )
         , output_( output )
         , src_   ( src )
+        , dst_   ( dst )
         , buffer_( UINT16_MAX )
     {
         // NOTHING
@@ -468,13 +474,14 @@ struct Unpacker : public Unpacker_ABC
               | ARCHIVE_EXTRACT_FFLAGS;
         archive_write_disk_set_options( dst.get(), flags );
         archive_write_disk_set_standard_lookup( dst.get() );
-        TransferArchive( log_, dst.get(), src.get(), output_, Packer_ABC::T_Predicate(), false );
+        TransferArchive( log_, dst.get(), src.get(), output_, Packer_ABC::T_Predicate(), false, dst_ );
         archive_write_close( dst.get() );
     }
 
     cpplog::BaseLogger& log_;
     const Path output_;
     io::Reader_ABC& src_;
+    io::Writer_ABC* dst_;
     std::vector< char > buffer_;
 };
 }
@@ -483,9 +490,9 @@ struct Unpacker : public Unpacker_ABC
 // Name: FileSystem::Unpack
 // Created: BAX 2012-05-11
 // -----------------------------------------------------------------------------
-FileSystem_ABC::T_Unpacker FileSystem::Unpack( const Path& output, io::Reader_ABC& src ) const
+FileSystem_ABC::T_Unpacker FileSystem::Unpack( const Path& output, io::Reader_ABC& src, io::Writer_ABC* dst ) const
 {
-    return boost::make_shared< Unpacker >( boost::ref( log_ ), output, boost::ref( src ) );
+    return boost::make_shared< Unpacker >( boost::ref( log_ ), output, boost::ref( src ), dst );
 }
 
 namespace
@@ -527,7 +534,7 @@ struct Packer : public Packer_ABC
         int err = archive_read_disk_open_w( src.get(), input.generic_wstring().c_str() );
         if( err != ARCHIVE_OK )
             throw std::runtime_error( archive_error_string( src.get() ) );
-        TransferArchive( log_, dst_.get(), src.get(), input, predicate, true );
+        TransferArchive( log_, dst_.get(), src.get(), input, predicate, true, 0 );
     }
 
     cpplog::BaseLogger& log_;

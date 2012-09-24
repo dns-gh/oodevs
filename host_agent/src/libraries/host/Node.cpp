@@ -386,7 +386,7 @@ void Node::UploadCache( io::Reader_ABC& src )
     boost::shared_ptr< Package_ABC > next;
     try
     {
-        FileSystem_ABC::T_Unpacker unpacker = deps_.system.Unpack( output, src );
+        FileSystem_ABC::T_Unpacker unpacker = deps_.system.Unpack( output, src, 0 );
         unpacker->Unpack();
         next = deps_.packages.Make( output, false );
         if( !next->Parse() )

@@ -360,7 +360,7 @@ void Context::OpenDownload( QNetworkReply* rpy )
 {
     const int id = GetId( rpy );
     T_Download down = MakeDownload( rpy, fs_, root_ / tmp_dir );
-    connect( down.get(), SIGNAL( End( QNetworkReply* ) ), this, SLOT( OnCloseDownload( QNetworkReply* ) ) );
+    connect( down.get(), SIGNAL( End( QPointer< QNetworkReply > ) ), this, SLOT( OnCloseDownload( QPointer< QNetworkReply > ) ) );
     QWriteLocker lock( &access_ );
     downloads_.insert( id, down );
 }
@@ -369,7 +369,7 @@ void Context::OpenDownload( QNetworkReply* rpy )
 // Name: Context::OnCloseDownload
 // Created: BAX 2012-09-24
 // -----------------------------------------------------------------------------
-void Context::OnCloseDownload( QNetworkReply* rpy )
+void Context::OnCloseDownload( QPointer< QNetworkReply > rpy )
 {
     rpy->deleteLater();
     const int id = GetId( rpy );

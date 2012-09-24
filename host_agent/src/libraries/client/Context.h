@@ -20,6 +20,7 @@
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QNetworkReply>
+#include <QPointer>
 #include <QUrl>
 
 namespace host
@@ -88,7 +89,7 @@ public slots:
     void OnRemove();
     void OnNetworkRequest( HttpCommand cmd, const QNetworkRequest& req );
     void OnGetSession();
-    void OnCloseDownload( QNetworkReply* rpy );
+    void OnCloseDownload( QPointer< QNetworkReply > rpy );
 
 private:
     typedef boost::shared_ptr< Download_ABC > T_Download;

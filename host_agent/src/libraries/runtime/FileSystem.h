@@ -49,7 +49,7 @@ public:
     virtual std::string ReadFile( const Path& path ) const;
     virtual void        Glob( const Path& path, const Path& name, const T_Predicate& predicate ) const;
     virtual void        Walk( const Path& path, bool recurse, const T_Predicate& predicate ) const;
-    virtual T_Unpacker  Unpack( const Path& output, io::Reader_ABC& src ) const;
+    virtual T_Unpacker  Unpack( const Path& output, io::Reader_ABC& src, io::Writer_ABC* dst ) const;
     virtual T_Packer    Pack( io::Writer_ABC& dst ) const;
     virtual std::string Checksum( const Path& root, const T_Predicate& predicate, size_t& read ) const;
     virtual Path        MakeAnyPath( const Path& root ) const;
