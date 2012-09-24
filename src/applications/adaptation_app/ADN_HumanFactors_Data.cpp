@@ -24,7 +24,12 @@
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
 ADN_HumanFactors_Data::ModifiersInfo::ModifiersInfo( const std::string& strName )
-    : strName_ ( strName )
+    : strName_( strName )
+    , rSpeedModifier_( 0.001 )
+    , rPHModifier_( 0.001 )
+    , rSensorsModifier_( 0.001 )
+    , rReloadModifier_( 0.001 )
+    , rStanceModifier_( 0.001 )
 {
     // NOTHING
 }
@@ -67,6 +72,8 @@ void ADN_HumanFactors_Data::ModifiersInfo::WriteArchive( xml::xostream& output )
 // Created: ABR 2011-12-08
 // -----------------------------------------------------------------------------
 ADN_HumanFactors_Data::ThresholdsInfo::ThresholdsInfo()
+    : firstThreshold_( 1 )
+    , secondThreshold_( 1 )
 {
     // NOTHING
 }
@@ -111,13 +118,13 @@ ADN_HumanFactors_Data::ADN_HumanFactors_Data()
     , worriedModifiers_      ( "Worried" )
     , stressedModifiers_     ( "Stressed" )
     , tirednessThresholds_   ()
-    , tirednessMoving_       ()
-    , tirednessWorking_      ()
-    , tirednessEngineStopped_()
-    , tirednessEngineRunning_()
+    , tirednessMoving_       ( 0 )
+    , tirednessWorking_      ( 0 )
+    , tirednessEngineStopped_( 0 )
+    , tirednessEngineRunning_( 0 )
     , stressThresholds_      ()
-    , stressIncPerShot_      ()
-    , stressDecPerHour_      ()
+    , stressIncPerShot_      ( 0 )
+    , stressDecPerHour_      ( 0 )
 {
     // NOTHING
 }
