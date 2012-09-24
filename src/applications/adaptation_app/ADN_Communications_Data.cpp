@@ -31,6 +31,8 @@
 // -----------------------------------------------------------------------------
 ADN_Communications_Data::ADN_Communications_Data()
 : ADN_Data_ABC()
+, rSpeedModifier_( 0 )
+, rReloadModifier_( 0 )
 {
 }
 
