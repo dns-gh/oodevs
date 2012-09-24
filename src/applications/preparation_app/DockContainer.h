@@ -23,7 +23,6 @@ namespace gui
     class FormationLayer;
     class EntitySymbols;
     class ItemFactory_ABC;
-    class SearchListView_ABC;
     class SearchTreeView_ABC;
     class SymbolIcons;
     class ColorStrategy_ABC;
@@ -43,7 +42,6 @@ class ColorController;
 class ModelBuilder;
 class Model;
 class StaticModel;
-class LogisticListView;
 class ObjectCreationPanel;
 class InhabitantCreationPanel;
 class CreationPanels;
@@ -63,8 +61,7 @@ public:
     //@{
              DockContainer( QMainWindow* parent, kernel::Controllers& controllers, gui::AutomatsLayer& automats,
                             gui::FormationLayer& formation, gui::EntitySymbols& icons, ModelBuilder& modelBuilder,
-                            gui::ItemFactory_ABC& factory, Model& model, StaticModel& staticModel,
-                            const tools::ExerciseConfig& config, gui::SymbolIcons& symbols,
+                            Model& model, StaticModel& staticModel, const tools::ExerciseConfig& config, gui::SymbolIcons& symbols,
                             gui::ColorStrategy_ABC& colorStrategy, gui::ParametersLayer& paramLayer, gui::WeatherLayer& weatherLayer,
                             gui::GlProxy& glProxy, ColorController& colorController, gui::TerrainProfilerLayer& terrainProfilerLayer );
     virtual ~DockContainer();
@@ -88,7 +85,6 @@ public:
 private:
     //! @name Member data
     //@{
-    std::vector< gui::SearchListView_ABC* > listViews_;
     std::vector< gui::SearchTreeView_ABC* > treeViews_;
     CreationPanels*                         pCreationPanel_;
     LivingAreaPanel*                        pLivingAreaPanel_;

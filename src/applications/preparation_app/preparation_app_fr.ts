@@ -94,10 +94,6 @@
         <source>Create sub knowledge group</source>
         <translation>Créer un sous-groupe de connaissance</translation>
     </message>
-    <message>
-        <source>Change knowledge group</source>
-        <translation>Changer de groupe de connaissance</translation>
-    </message>
 </context>
 <context>
     <name>CommunicationTreeView</name>
@@ -234,38 +230,6 @@
     <message>
         <source>Creation</source>
         <translation>Création</translation>
-    </message>
-    <message>
-        <source>Units</source>
-        <translation>Unités</translation>
-    </message>
-    <message>
-        <source>Tactical</source>
-        <translation>Tactique</translation>
-    </message>
-    <message>
-        <source>Communication</source>
-        <translation>Groupes de connaissance</translation>
-    </message>
-    <message>
-        <source>Logistic</source>
-        <translation>Logistique</translation>
-    </message>
-    <message>
-        <source>Objects</source>
-        <translation>Objets</translation>
-    </message>
-    <message>
-        <source>Urban</source>
-        <translation>Zone urbaine</translation>
-    </message>
-    <message>
-        <source>Crowds</source>
-        <translation>Foules</translation>
-    </message>
-    <message>
-        <source>Populations</source>
-        <translation>Populations</translation>
     </message>
 </context>
 <context>
@@ -759,13 +723,6 @@
     <message>
         <source>---</source>
         <translation>---</translation>
-    </message>
-</context>
-<context>
-    <name>InhabitantListView</name>
-    <message>
-        <source>Create side</source>
-        <translation>Créer un camp</translation>
     </message>
 </context>
 <context>
@@ -1436,13 +1393,6 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
 </context>
 <context>
-    <name>ObjectListView</name>
-    <message>
-        <source>Create side</source>
-        <translation>Créer un camp</translation>
-    </message>
-</context>
-<context>
     <name>OrbatPanel</name>
     <message>
         <source>Phantom:</source>
@@ -1610,13 +1560,6 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Multi station load level: </source>
         <translation>Niveau de charge de l&apos;exercice en multi poste: </translation>
-    </message>
-</context>
-<context>
-    <name>PopulationListView</name>
-    <message>
-        <source>Create side</source>
-        <translation>Créer un camp</translation>
     </message>
 </context>
 <context>
@@ -2421,45 +2364,6 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
 </context>
 <context>
-    <name>TacticalListView</name>
-    <message>
-        <source>Create formation</source>
-        <translation>Créer une formation</translation>
-    </message>
-    <message>
-        <source>Engage</source>
-        <translation>Embrayer</translation>
-    </message>
-    <message>
-        <source>Disengage</source>
-        <translation>Débrayer</translation>
-    </message>
-    <message>
-        <source>Create side</source>
-        <translation>Créer un camp</translation>
-    </message>
-    <message>
-        <source>Rename</source>
-        <translation>Renommer</translation>
-    </message>
-    <message>
-        <source>Change superior</source>
-        <translation>Changer de supérieur</translation>
-    </message>
-    <message>
-        <source>Change automat type</source>
-        <translation>Changer le type d&apos;automate</translation>
-    </message>
-    <message>
-        <source>Replace by a new automat</source>
-        <translation type="unfinished">Remplacer par un nouvel automate</translation>
-    </message>
-    <message>
-        <source>Change hierarchy level</source>
-        <translation>Changer le niveau hiérarchique</translation>
-    </message>
-</context>
-<context>
     <name>TacticalTreeView</name>
     <message>
         <source>Create side</source>
@@ -2661,49 +2565,6 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Resource %1 consumption: </source>
         <translation>Consommation de la ressource %1: </translation>
-    </message>
-</context>
-<context>
-    <name>UrbanListView</name>
-    <message>
-        <source>Urban</source>
-        <translation>Zone urbaine</translation>
-    </message>
-    <message>
-        <source>Create city</source>
-        <translation>Créer une ville</translation>
-    </message>
-    <message>
-        <source>Material</source>
-        <translation>Matériau</translation>
-    </message>
-    <message>
-        <source>Infrastructure</source>
-        <translation>Infrastructure</translation>
-    </message>
-    <message>
-        <source>RoofShape</source>
-        <translation>Toit</translation>
-    </message>
-    <message>
-        <source>Area</source>
-        <translation>Surface</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>Aucun</translation>
-    </message>
-    <message>
-        <source>Usages</source>
-        <translation>Usages</translation>
-    </message>
-    <message>
-        <source>Resource network</source>
-        <translation>Réseaux de ressource</translation>
-    </message>
-    <message>
-        <source>Rename</source>
-        <translation type="unfinished">Renommer</translation>
     </message>
 </context>
 <context>

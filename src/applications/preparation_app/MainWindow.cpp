@@ -186,7 +186,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     toolbarContainer_.reset( new ToolbarContainer( this, controllers, staticModel, *glProxy_, *locationsLayer, *eventStrategy_, *paramLayer, model_.urban_, dialogContainer_->GetRemoveBlocksDialog() ) );
 
     // Dock widgets
-    dockContainer_.reset( new DockContainer( this, controllers_, automats, formation, *icons, *modelBuilder_, *factory, model_, staticModel_, config_, *symbols, *strategy_, *paramLayer, *weatherLayer, *glProxy_, *colorController_, *profilerLayer ) );
+    dockContainer_.reset( new DockContainer( this, controllers_, automats, formation, *icons, *modelBuilder_, model_, staticModel_, config_, *symbols, *strategy_, *paramLayer, *weatherLayer, *glProxy_, *colorController_, *profilerLayer ) );
     connect( toolbarContainer_->GetGisToolbar().GetTerrainProfilerButton(), SIGNAL( toggled( bool ) ), &dockContainer_->GetTerrainProfiler(), SLOT( setVisible( bool ) ) );
     connect( &dockContainer_->GetTerrainProfiler(), SIGNAL( visibilityChanged( bool ) ), toolbarContainer_->GetGisToolbar().GetTerrainProfilerButton(), SLOT( setOn( bool ) ) );
 

@@ -23,9 +23,6 @@
     <Filter Include="Source Files\Panels\Infos">
       <UniqueIdentifier>{3ee7fa14-8d7a-48c2-a92c-5ce1aea80ec7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Lists">
-      <UniqueIdentifier>{55126f22-48f7-4e1c-bb08-08e0c7c55c96}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Layers">
       <UniqueIdentifier>{b32048aa-18de-4671-bc03-738d871c5969}</UniqueIdentifier>
     </Filter>
@@ -217,21 +214,6 @@
     <ClCompile Include="..\..\src\applications\preparation_app\PropertiesPanel.cpp">
       <Filter>Source Files\Panels\Infos</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\preparation_app\CommunicationListView.cpp">
-      <Filter>Source Files\Lists</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\preparation_app\InhabitantListView.cpp">
-      <Filter>Source Files\Lists</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\preparation_app\ObjectListView.cpp">
-      <Filter>Source Files\Lists</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\preparation_app\PopulationListView.cpp">
-      <Filter>Source Files\Lists</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\preparation_app\TacticalListView.cpp">
-      <Filter>Source Files\Lists</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\AgentsLayer.cpp">
       <Filter>Source Files\Layers</Filter>
     </ClCompile>
@@ -421,9 +403,6 @@
     <ClCompile Include="..\..\src\applications\preparation_app\UserProfileUnitRights.cpp">
       <Filter>Source Files\Dialogs\Profiles\Rights</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\preparation_app\LogisticListView.cpp">
-      <Filter>Source Files\Lists</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\LongNameEditor.cpp">
       <Filter>Source Files\Dialogs\Editors</Filter>
     </ClCompile>
@@ -469,9 +448,6 @@
     <ClCompile Include="..\..\src\applications\preparation_app\OrbatPanel.cpp">
       <Filter>Source Files\Panels\Preferences</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\preparation_app\UrbanListView.cpp">
-      <Filter>Source Files\Lists</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\LocationEditorToolbar.cpp">
       <Filter>Source Files\Menus</Filter>
     </ClCompile>
@@ -504,9 +480,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\TerrainExportDialog.cpp">
       <Filter>Source Files\Dialogs\Urban</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\preparation_app\ListViewsPanel.cpp">
-      <Filter>Source Files\Panels</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\OrbatDockWidget.cpp">
       <Filter>Source Files\Panels</Filter>
@@ -687,9 +660,6 @@
     <ClInclude Include="..\..\src\applications\preparation_app\UserProfileRights_ABC.h">
       <Filter>Source Files\Dialogs\Profiles\Rights</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\preparation_app\LogisticListView.h">
-      <Filter>Source Files\Lists</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\CsvExport.h">
       <Filter>Source Files\Dialogs\Filter</Filter>
     </ClInclude>
@@ -747,9 +717,6 @@
     <ClInclude Include="..\..\src\applications\preparation_app\PropertyDisplayer.h">
       <Filter>Source Files\Dialogs\Editors</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\preparation_app\EntityTreeView.h">
-      <Filter>Source Files\TreeView</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\BypassPrototype.h">
       <Filter>Source Files\Panels\Creation</Filter>
     </ClInclude>
@@ -779,9 +746,6 @@
     <None Include="..\..\src\applications\preparation_app\preparation_app_ar.ts">
       <Filter>Translations</Filter>
     </None>
-    <None Include="..\..\src\applications\preparation_app\EntityTreeView.inl">
-      <Filter>Source Files\TreeView</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\..\src\applications\preparation_app\MainWindow.h">
@@ -804,18 +768,6 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\WeatherPanel.h">
       <Filter>Source Files\Panels\Weather</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\preparation_app\InhabitantListView.h">
-      <Filter>Source Files\Lists</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\preparation_app\ObjectListView.h">
-      <Filter>Source Files\Lists</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\preparation_app\PopulationListView.h">
-      <Filter>Source Files\Lists</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\preparation_app\TacticalListView.h">
-      <Filter>Source Files\Lists</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\LimitsLayer.h">
       <Filter>Source Files\Layers</Filter>
@@ -964,9 +916,6 @@
     <CustomBuild Include="..\..\src\applications\preparation_app\GhostsPanel.h">
       <Filter>Source Files\Panels\Creation</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\preparation_app\CommunicationListView.h">
-      <Filter>Source Files\Lists</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\NewProfileDialog.h">
       <Filter>Source Files\Dialogs\Profiles</Filter>
     </CustomBuild>
@@ -994,9 +943,6 @@
     <CustomBuild Include="..\..\src\applications\preparation_app\FilterPartiesListView.h">
       <Filter>Source Files\Dialogs\Filter</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\preparation_app\UrbanListView.h">
-      <Filter>Source Files\Lists</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\RemoveBlocksDialog.h">
       <Filter>Source Files\Dialogs\Urban</Filter>
     </CustomBuild>
@@ -1004,9 +950,6 @@
       <Filter>Source Files\Dialogs\Urban</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\OrbatDockWidget.h">
-      <Filter>Source Files\Panels</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\preparation_app\ListViewsPanel.h">
       <Filter>Source Files\Panels</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\ChangeAutomatTypeDialog.h">

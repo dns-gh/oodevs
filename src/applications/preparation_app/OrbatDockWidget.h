@@ -23,7 +23,6 @@ namespace gui
     class FormationLayer;
     class EntitySymbols;
     class ItemFactory_ABC;
-    class SearchListView_ABC;
     class SearchTreeView_ABC;
     class SymbolIcons;
 }
@@ -31,7 +30,6 @@ namespace gui
 class Model;
 class StaticModel;
 class ModelBuilder;
-class ListViewsPanel;
 class TreeViewsPanel;
 
 // =============================================================================
@@ -47,10 +45,6 @@ class OrbatDockWidget : public gui::RichDockWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             OrbatDockWidget( kernel::Controllers& controllers, QWidget* parent, const QString& objectName,
-                              const QString& windowTitle, gui::AutomatsLayer& automats, gui::FormationLayer& formation,
-                              gui::EntitySymbols& icons, ModelBuilder& modelBuilder, gui::ItemFactory_ABC& factory,
-                              Model& model, StaticModel& staticModel, std::vector< gui::SearchListView_ABC* >& listViews, gui::SymbolIcons& symbols );
              OrbatDockWidget( kernel::Controllers& controllers, QWidget* parent, const QString& objectName,
                               const QString& windowTitle, gui::AutomatsLayer& automats, gui::FormationLayer& formation,
                               gui::EntitySymbols& icons, ModelBuilder& modelBuilder, Model& model, StaticModel& staticModel,
@@ -77,7 +71,6 @@ private:
     //! @name Member data
     //@{
     QToolButton* expandButton_;
-    ListViewsPanel* pListViewPanel_;
     TreeViewsPanel* pTreeViewPanel_;
     QIcon expandIcon_;
     QIcon collapseIcon_;

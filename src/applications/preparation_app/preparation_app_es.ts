@@ -94,10 +94,6 @@
         <source>Create sub knowledge group</source>
         <translation>Crear subgrupo de información</translation>
     </message>
-    <message>
-        <source>Change knowledge group</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>CommunicationTreeView</name>
@@ -234,38 +230,6 @@
     <message>
         <source>Creation</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Units</source>
-        <translation type="unfinished">Unidades</translation>
-    </message>
-    <message>
-        <source>Tactical</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Communication</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logistic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Objects</source>
-        <translation type="unfinished">Objetos</translation>
-    </message>
-    <message>
-        <source>Urban</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Crowds</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Populations</source>
-        <translation type="unfinished">Poblaciones</translation>
     </message>
 </context>
 <context>
@@ -758,13 +722,6 @@
     </message>
     <message>
         <source>---</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>InhabitantListView</name>
-    <message>
-        <source>Create side</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1435,13 +1392,6 @@ This data can&apos;t be projected.</source>
     </message>
 </context>
 <context>
-    <name>ObjectListView</name>
-    <message>
-        <source>Create side</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>OrbatPanel</name>
     <message>
         <source>Phantom:</source>
@@ -1608,13 +1558,6 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Multi station load level: </source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>PopulationListView</name>
-    <message>
-        <source>Create side</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2420,45 +2363,6 @@ This data can&apos;t be projected.</source>
     </message>
 </context>
 <context>
-    <name>TacticalListView</name>
-    <message>
-        <source>Create formation</source>
-        <translation>Crear una formación</translation>
-    </message>
-    <message>
-        <source>Engage</source>
-        <translation>Comprometer</translation>
-    </message>
-    <message>
-        <source>Disengage</source>
-        <translation>Liberar</translation>
-    </message>
-    <message>
-        <source>Create side</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rename</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Change superior</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Change automat type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Replace by a new automat</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Change hierarchy level</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>TacticalTreeView</name>
     <message>
         <source>Create side</source>
@@ -2659,49 +2563,6 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Resource %1 consumption: </source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>UrbanListView</name>
-    <message>
-        <source>Urban</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Create city</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Material</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Infrastructure</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>RoofShape</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Area</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Usages</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resource network</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rename</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
