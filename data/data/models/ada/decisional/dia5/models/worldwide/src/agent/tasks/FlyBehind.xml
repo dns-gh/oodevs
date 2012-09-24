@@ -5,7 +5,7 @@
         <parameter name="aircraft">
             <description>The aircraft to follow.</description>
             <type>
-                <class name="properties.Reachable"/>
+                <class name="properties.Motile"/>
             </type>
         </parameter>
         <parameter name="height">
@@ -41,35 +41,12 @@
         </stage>
         <stage label="flying behind the unit">
             <skills>
-                <skill name="agent.skills.primitives.StayClose" main="true">
+                <skill name="agent.skills.Follow" main="true">
                     <parameter name="entities">
                         <value>
                             <list>
                                 <parameter>aircraft</parameter>
                             </list>
-                        </value>
-                    </parameter>
-                    <parameter name="positions">
-                        <value>
-                            <call method="queries.getPositionsToFollow">
-                                <parameter name="elementsToFollow">
-                                    <value>
-                                        <list>
-                                            <parameter>aircraft</parameter>
-                                        </list>
-                                    </value>
-                                </parameter>
-                                <parameter name="dynamic">
-                                    <value>
-                                        <boolean>true</boolean>
-                                    </value>
-                                </parameter>
-                                <parameter name="distanceMin">
-                                    <value>
-                                        <parameter>distance</parameter>
-                                    </value>
-                                </parameter>
-                            </call>
                         </value>
                     </parameter>
                 </skill>

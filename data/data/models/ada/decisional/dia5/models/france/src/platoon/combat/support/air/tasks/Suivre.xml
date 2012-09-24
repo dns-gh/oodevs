@@ -4,7 +4,7 @@
         <parameter name="objective">
             <description>Les éléments à suivre.</description>
             <type>
-                <class name="properties.Reachable"/>
+                <class name="properties.Motile"/>
             </type>
         </parameter>
     </parameters>
@@ -22,35 +22,12 @@
         </stage>
         <stage label="Suivre.">
             <skills>
-                <skill name="agent.skills.primitives.StayClose" main="true">
+                <skill name="agent.skills.Follow" main="true">
                     <parameter name="entities">
                         <value>
                             <list>
                                 <parameter>objective</parameter>
                             </list>
-                        </value>
-                    </parameter>
-                    <parameter name="positions">
-                        <value>
-                            <call method="queries.getPositionsToFollow">
-                                <parameter name="elementsToFollow">
-                                    <value>
-                                        <list>
-                                            <parameter>objective</parameter>
-                                        </list>
-                                    </value>
-                                </parameter>
-                                <parameter name="dynamic">
-                                    <value>
-                                        <boolean>true</boolean>
-                                    </value>
-                                </parameter>
-                                <parameter name="distanceMin">
-                                    <value>
-                                        <number>50.0</number>
-                                    </value>
-                                </parameter>
-                            </call>
                         </value>
                     </parameter>
                 </skill>
