@@ -459,4 +459,5 @@ eRC_PrisSousTirEclairant = 444
 eRC_PrisSousTirFumigene = 445
 eRC_DetectedObject = 446
 eRC_OfficersKilled = 447
-eNbr = 448
+eRC_UnitNotCaptured = 448
+eNbr = 449

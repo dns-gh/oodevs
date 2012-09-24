@@ -658,5 +658,6 @@
     <parameter type="ObjectKnowledge"/>
   </report>
   <report category="operational" id="447" message="The unit officers suffered an attack"/>
+  <report category="operational" id="448" message="The unit is not captured by my side"/>
 </reports>
-<!-- signature="4173704490" -->
+<!-- signature="2126295419" -->

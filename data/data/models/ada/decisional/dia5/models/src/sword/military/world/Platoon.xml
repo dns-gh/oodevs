@@ -509,6 +509,14 @@
                 </type>
             </return>
         </method>
+        <method name="isUnitCaptured" abstract="false">
+            <description>Renvoie vrai si l'unité est prisonnière.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
         <method name="canUnloadIt" abstract="false">
             <description>Renvoie vrai si les conditions de déchargement sont réunies (distance par défaut mais la priorité peut dépendre de la mission etc.).</description>
             <return>

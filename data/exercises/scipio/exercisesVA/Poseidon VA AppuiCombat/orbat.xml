@@ -197,7 +197,7 @@
                 <resource name="CART 5.56 BAL ORD F1" quantity="40000000"/>
                 <resource name="CART 9 BAL ORD F3" quantity="40000000"/>
                 <resource name="CART 30/550  OSPEI" quantity="40000"/>
-                <resource name="F-35 1" quantity="500000000"/>
+                <resource name="F-35 1" quantity="50000"/>
               </stocks>
             </unit>
           </automat>

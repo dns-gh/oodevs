@@ -614,6 +614,7 @@ public:
         eRC_PrisSousTirFumigene,
         eRC_DetectedObject,
         eRC_OfficersKilled,
+        eRC_UnitNotCaptured,
         eLast
     };
     //@}
