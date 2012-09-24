@@ -95,7 +95,7 @@
     </target>
 
     <target name="clients_kernel" depends="protocol,tools,ENT" description="build clients_kernel static library">
-        <build-lib name="clients_kernel" depends="qt4" pattern="lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix}" suffix="-gd">
+        <build-lib name="clients_kernel" depends="qt4" pattern="lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix}" suffix="-gd" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
