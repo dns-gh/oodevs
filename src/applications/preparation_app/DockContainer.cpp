@@ -45,7 +45,7 @@
 
 #include "PreparationProfile.h"
 
-#define USE_TREEVIEWS // temp, before QT4 port is complete
+//#define USE_TREEVIEWS // temp, before QT4 port is complete
 
 // -----------------------------------------------------------------------------
 // Name: DockContainer constructor
@@ -63,6 +63,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     // Agent list panel
     {
 #ifdef USE_TREEVIEWS
+        ( void ) factory;
         gui::RichDockWidget* pListDockWnd = new OrbatDockWidget( controllers, parent, "orbat", tools::translate( "DockContainer", "ORBAT" ),
                                                                  automats, formation, icons, modelBuilder, model, staticModel, treeViews_, symbols );
 #else
@@ -85,7 +86,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     {
         gui::RichDockWidget* pCreationDockWnd = new gui::RichDockWidget( controllers, parent, "creation", tools::translate( "DockContainer", "Creation" ) );
         pCreationDockWnd->SetModes( ePreparationMode_Default | ePreparationMode_LivingArea | ePreparationMode_Terrain );
-        pCreationPanel_ = new CreationPanels( pCreationDockWnd, controllers, staticModel, model, config, factory, symbols, colorStrategy, paramLayer, weatherLayer, glProxy, colorController );
+        pCreationPanel_ = new CreationPanels( pCreationDockWnd, controllers, staticModel, model, config, symbols, colorStrategy, paramLayer, weatherLayer, glProxy, colorController );
         pCreationDockWnd->setWidget( pCreationPanel_ );
         parent->addDockWidget( Qt::RightDockWidgetArea, pCreationDockWnd );
     }

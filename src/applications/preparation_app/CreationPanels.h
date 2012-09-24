@@ -25,7 +25,6 @@ namespace kernel
 namespace gui
 {
     class ColorStrategy_ABC;
-    class ItemFactory_ABC;
     class GlProxy;
     class ParametersLayer;
     class SymbolIcons;
@@ -52,7 +51,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              CreationPanels( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel, const Model& model,
-                             const tools::ExerciseConfig& config, gui::ItemFactory_ABC& factory, gui::SymbolIcons& icons, gui::ColorStrategy_ABC& colorStrategy,
+                             const tools::ExerciseConfig& config, gui::SymbolIcons& icons, gui::ColorStrategy_ABC& colorStrategy,
                              gui::ParametersLayer& paramLayer, gui::WeatherLayer& weatherLayer, gui::GlProxy& glProxy, ColorController& colorController );
     virtual ~CreationPanels();
     //@}

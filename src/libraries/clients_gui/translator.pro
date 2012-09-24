@@ -70,7 +70,6 @@ ObstaclePrototype_ABC.cpp \
 OptionsPanel.cpp \
 PopulationListView.cpp \
 PopulationPanel.cpp \
-PopulationTypesListView.cpp \
 PopulationsPanel.cpp \
 PreferencesDialog.cpp \
 PreferencesList.cpp \

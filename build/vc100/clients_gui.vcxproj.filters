@@ -1464,6 +1464,12 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\UnitTreeView.h">
       <Filter>Source Files\Creation\Units</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\PopulationsPanel.h">
+      <Filter>Source Files\Creation\Crowds</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\PopulationTypesListView.h">
+      <Filter>Source Files\Creation\Crowds</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\clients_gui\HierarchyListView.inl">
@@ -1662,12 +1668,6 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\DrawingCategoryItem.h">
       <Filter>Source Files\Creation\Drawings\Widgets</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\PopulationsPanel.h">
-      <Filter>Source Files\Creation\Crowds</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\PopulationTypesListView.h">
-      <Filter>Source Files\Creation\Crowds</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\WeatherListView.h">
       <Filter>Source Files\Creation\Weather</Filter>

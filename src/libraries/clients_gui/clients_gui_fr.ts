@@ -1394,13 +1394,6 @@ Voulez-vous le supprimer?</translation>
     </message>
 </context>
 <context>
-    <name>gui::PopulationTypesListView</name>
-    <message>
-        <source>Crowd type</source>
-        <translation>Type de foule</translation>
-    </message>
-</context>
-<context>
     <name>gui::PopulationsPanel</name>
     <message>
         <source>Crowds</source>

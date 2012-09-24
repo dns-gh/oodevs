@@ -31,12 +31,12 @@ using namespace kernel;
 // Created: SBO 2006-08-28
 // -----------------------------------------------------------------------------
 CreationPanels::CreationPanels( QWidget* parent, kernel::Controllers& controllers, const ::StaticModel& staticModel, const Model& model,
-                                const tools::ExerciseConfig& config, gui::ItemFactory_ABC& factory, gui::SymbolIcons& icons, gui::ColorStrategy_ABC& colorStrategy,
+                                const tools::ExerciseConfig& config, gui::SymbolIcons& icons, gui::ColorStrategy_ABC& colorStrategy,
                                 gui::ParametersLayer& paramLayer, gui::WeatherLayer& weatherLayer, gui::GlProxy& glProxy, ColorController& colorController )
     : Panels( parent )
 {
     AddPanel( new gui::UnitsPanel ( this, *this, controllers, staticModel.types_, icons, colorStrategy ) );
-    AddPanel( new gui::PopulationsPanel( this, *this, controllers, ( tools::Resolver< PopulationType >&)( staticModel.types_ ), factory ) );
+    AddPanel( new gui::PopulationsPanel( this, *this, controllers, ( tools::Resolver< PopulationType >&)( staticModel.types_ ) ) );
     inhabitantCreationPanel_ = new InhabitantCreationPanel( this, *this, controllers, staticModel.types_, model.agents_, paramLayer, glProxy );
     AddPanel( inhabitantCreationPanel_ );
     objectCreationPanel_ = new ObjectCreationPanel( this, *this, controllers, staticModel, model.objects_, model.urban_, model.teams_.GetNoSideTeam(), paramLayer, glProxy, config );

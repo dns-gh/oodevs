@@ -7,37 +7,28 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::PopulationTypesListView */
-
 #include "clients_gui_pch.h"
 #include "PopulationTypesListView.h"
-#include "moc_PopulationTypesListView.cpp"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/PopulationPrototype.h"
 #include "clients_kernel/PopulationType.h"
-#include "Tools.h"
-
-#pragma warning( disable : 4355 ) // $$$$ SBO 2008-05-14: 'this' : used in base member initializer list
 
 using namespace gui;
-using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: PopulationTypesListView constructor
 // Created: SBO 2006-11-09
 // -----------------------------------------------------------------------------
-PopulationTypesListView::PopulationTypesListView( QWidget* parent, kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::PopulationType >& types, gui::ItemFactory_ABC& factory )
-    : gui::ListView< PopulationTypesListView >( parent, *this, factory )
+PopulationTypesListView::PopulationTypesListView( QWidget* parent, kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::PopulationType >& types, const QSpinBox& number )
+    : RichTreeView( controllers, parent )
     , controllers_( controllers )
     , types_( types )
+    , number_( number )
+    , prototype_( new kernel::PopulationPrototype )
 {
-    setResizeMode( Q3ListView::AllColumns );
-    setMinimumSize( 1, 1 );
-    addColumn( tools::translate( "gui::PopulationTypesListView", "Crowd type" ) );
-    setRootIsDecorated( true );
-    header()->hide();
-    setSorting( -1 );
-
-    controllers_.Register( *this );
+    EnableDragAndDrop( true );
+    setHeaderHidden( true );
+    controllers_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -50,23 +41,17 @@ PopulationTypesListView::~PopulationTypesListView()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationTypesListView::Display
-// Created: SBO 2006-11-09
-// -----------------------------------------------------------------------------
-void PopulationTypesListView::Display( const kernel::PopulationType& type, gui::ValuedListItem* item )
-{
-    item->setDragEnabled( true );
-    item->SetNamed( type );
-}
-
-// -----------------------------------------------------------------------------
 // Name: PopulationTypesListView::NotifyUpdated
 // Created: SBO 2006-11-09
 // -----------------------------------------------------------------------------
 void PopulationTypesListView::NotifyUpdated( const kernel::ModelLoaded& )
 {
-    tools::Iterator< const PopulationType& > it( types_.CreateIterator() );
-    DeleteTail( gui::ListView< PopulationTypesListView >::Display( it, this ) );
+    tools::Iterator< const kernel::PopulationType& > it( types_.CreateIterator() );
+    while( it.HasMoreElements() )
+    {
+        const kernel::PopulationType & type = it.NextElement();
+        dataModel_.AddRootDataItem( dataModel_.rowCount(), 0, type.GetName().c_str(), "", type, Qt::ItemIsDragEnabled );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -75,18 +60,35 @@ void PopulationTypesListView::NotifyUpdated( const kernel::ModelLoaded& )
 // -----------------------------------------------------------------------------
 void PopulationTypesListView::NotifyUpdated( const kernel::ModelUnLoaded& )
 {
-    clear();
+    dataModel_.Purge();
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationTypesListView::startDrag
-// Created: SBO 2006-11-09
+// Name: PopulationTypesListView::MimeTypes
+// Created: JSR 2012-09-24
 // -----------------------------------------------------------------------------
-void PopulationTypesListView::startDrag()
+QStringList PopulationTypesListView::MimeTypes() const
 {
-    gui::ValuedListItem* pItem = static_cast< gui::ValuedListItem* >( selectedItem() );
-    if( !pItem )
-        return;
-    const PopulationType* pType = pItem->GetValue< const PopulationType >();
-    emit StartDrag( pType );
+    return QStringList( typeid( kernel::PopulationType ).name() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationTypesListView::MimeData
+// Created: JSR 2012-09-24
+// -----------------------------------------------------------------------------
+QMimeData* PopulationTypesListView::MimeData( const QModelIndexList& indexes, bool& overriden ) const
+{
+    overriden = true;
+    if( indexes.size() )
+    {
+        prototype_->type_ = dataModel_.GetDataFromIndex< kernel::PopulationType >( indexes.at( 0 ) );
+        prototype_->number_ = number_.value();
+        QMimeData* mimeData = new QMimeData();
+        QByteArray encodedData;
+        QDataStream stream( &encodedData, QIODevice::WriteOnly );
+        stream << reinterpret_cast< unsigned int >( prototype_.get() );
+        mimeData->setData( QString( typeid( kernel::PopulationPrototype ).name() ), encodedData );
+        return mimeData;
+    }
+    return 0;
 }

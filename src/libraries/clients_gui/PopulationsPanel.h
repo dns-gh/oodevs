@@ -14,12 +14,10 @@
 #include "tools/Resolver_ABC.h"
 #include "tools/SelectionObserver_ABC.h"
 #include "clients_gui/InfoPanel_ABC.h"
-#include "clients_kernel/PopulationPrototype.h"
 
 namespace kernel
 {
     class Controllers;
-    class Entity_ABC;
     class Formation_ABC;
     class ModelLoaded;
     class PopulationType;
@@ -29,7 +27,6 @@ namespace kernel
 namespace gui
 {
     class PanelStack_ABC;
-    class ItemFactory_ABC;
     class PopulationTypesListView;
 
 // =============================================================================
@@ -45,21 +42,15 @@ class PopulationsPanel : public gui::InfoPanel_ABC
                        , public tools::SelectionObserver_Base< kernel::Formation_ABC >
                        , public tools::SelectionObserver_Base< kernel::Team_ABC >
 {
-    Q_OBJECT;
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationsPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::PopulationType >& types, gui::ItemFactory_ABC& factory );
+             PopulationsPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::PopulationType >& types );
     virtual ~PopulationsPanel();
     //@}
 
-private:
-    //! @name Copy/Assignment
-    //@{
-    PopulationsPanel( const PopulationsPanel& );            //!< Copy constructor
-    PopulationsPanel& operator=( const PopulationsPanel& ); //!< Assignment operator
-    //@}
 
+private:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const kernel::ModelLoaded& );
@@ -69,20 +60,12 @@ private:
     virtual void Select( const kernel::Team_ABC& element );
     //@}
 
-private slots:
-    //!@name Slots
-    //@{
-    void OnStartDrag( const kernel::PopulationType* type );
-    //@}
-
 private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
     PopulationTypesListView* list_;
     QSpinBox* number_;
-    const kernel::Entity_ABC* selected_;
-    kernel::PopulationPrototype prototype_;
     //@}
 };
 }

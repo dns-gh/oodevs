@@ -90,9 +90,11 @@ InhabitantCreationPanel::~InhabitantCreationPanel()
 // -----------------------------------------------------------------------------
 void InhabitantCreationPanel::Draw( kernel::Viewport_ABC& /*viewport*/ )
 {
-    SimpleLocationDrawer visitor( tools_ );
     if( location_ )
+    {
+        SimpleLocationDrawer visitor( tools_ );
         location_->Accept( visitor );
+    }
 }
 
 // -----------------------------------------------------------------------------

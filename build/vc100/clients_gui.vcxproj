@@ -1886,42 +1886,9 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\DrawingPositions.h" />
-    <CustomBuild Include="..\..\src\libraries\clients_gui\PopulationsPanel.h">
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing "%(FullPath)"</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing "%(FullPath)"</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\PopulationTypesListView.h">
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing "%(FullPath)"</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing "%(FullPath)"</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-    </CustomBuild>
+    <ClInclude Include="..\..\src\libraries\clients_gui\PopulationsPanel.h"/>
+    <ClInclude Include="..\..\src\libraries\clients_gui\PopulationTypesListView.h"/>
+
     <CustomBuild Include="..\..\src\libraries\clients_gui\WeatherListView.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>

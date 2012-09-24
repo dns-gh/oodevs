@@ -179,7 +179,14 @@ void EntityTreeView_ABC::OnDataChanged( const QModelIndex& index, const QVariant
     {
         kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( index );
         if( entity )
+        {
             modelObserver_.OnRename( *entity, value.toString() );
+            if( QStandardItem* item = dataModel_.GetItemFromIndex( index ) )
+            {
+                item->setData( *new QVariant( entity->GetName() ), Qt::DisplayRole );
+                item->setData( *new QVariant( entity->GetTooltip()  ), Qt::ToolTipRole );
+            }
+        }
     }
 }
 

@@ -10,21 +10,21 @@
 #ifndef __PopulationTypesListView_h_
 #define __PopulationTypesListView_h_
 
-#include "clients_gui/ListView.h"
+#include "clients_gui/RichTreeView.h"
 #include "tools/ElementObserver_ABC.h"
 #include "tools/Resolver_ABC.h"
 
 namespace kernel
 {
-    class PopulationType;
+    class Controllers;
     class ModelLoaded;
     class ModelUnLoaded;
-    class Controllers;
+    class PopulationType;
+    struct PopulationPrototype;
 }
 
 namespace gui
 {
-    class ItemFactory_ABC;
 
 // =============================================================================
 /** @class  PopulationTypesListView
@@ -32,42 +32,25 @@ namespace gui
 */
 // Created: SBO 2006-11-09
 // =============================================================================
-class PopulationTypesListView : public gui::ListView< PopulationTypesListView >
+class PopulationTypesListView : public gui::RichTreeView
                               , public tools::Observer_ABC
                               , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                               , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
 {
-    Q_OBJECT;
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationTypesListView( QWidget* parent, kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::PopulationType >& types, gui::ItemFactory_ABC& factory );
+             PopulationTypesListView( QWidget* parent, kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::PopulationType >& types, const QSpinBox& number );
     virtual ~PopulationTypesListView();
     //@}
 
-    //! @name Operations
-    //@{
-    void Display( const kernel::PopulationType& type, gui::ValuedListItem* );
-    //@}
-
-signals:
-    //! @name Signals
-    //@{
-    void StartDrag( const kernel::PopulationType* );
-    //@}
-
 private:
-    //! @name Copy/Assignment
-    //@{
-    PopulationTypesListView( const PopulationTypesListView& );            //!< Copy constructor
-    PopulationTypesListView& operator=( const PopulationTypesListView& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
+    virtual QStringList MimeTypes() const;
+    virtual QMimeData* MimeData( const QModelIndexList& indexes, bool& overriden ) const;
     virtual void NotifyUpdated( const kernel::ModelLoaded& );
     virtual void NotifyUpdated( const kernel::ModelUnLoaded& );
-    virtual void startDrag();
     //@}
 
 private:
@@ -75,6 +58,8 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const tools::Resolver_ABC< kernel::PopulationType >& types_;
+    const QSpinBox& number_;
+    std::auto_ptr< kernel::PopulationPrototype > prototype_;
     //@}
 };
 
