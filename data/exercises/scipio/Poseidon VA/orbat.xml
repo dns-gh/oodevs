@@ -57,64 +57,17 @@
       <tactical>
         <formation id="10" level="ii" name="INF [10]" symbol="symbols/sfgpucim">
           <automat engaged="false" id="11" knowledge-group="95" name="SGTIA INF [11]" symbol="symbols/sfgpucim" type="SGTIA INF dominante roues">
-            <unit command-post="true" id="12" name="Section . CDT CIE INF VAB" position="29TNF3245158128" type="INF . Section CDT CIE VAB">
-              <extensions>
-                <entry key="NomLong" value="SECTION.CDTCIEINFVAB.SGTIAINF11.INF10"/>
-              </extensions>
-            </unit>
-            <unit command-post="false" id="13" name="Section . CBT INF VAB CDS SOFF" position="29TNF3323557555" type="INF . Section CBT VAB CDS SOFF">
-              <extensions>
-                <entry key="NomLong" value="SECTION.CBTINFVABCDSSOFF.SGTIAINF11.INF10"/>
-              </extensions>
-            </unit>
-            <unit command-post="false" id="14" name="Section . CBT INF VAB CDS SOFF" position="29TNF3200157688" type="INF . Section CBT VAB CDS SOFF">
-              <extensions>
-                <entry key="NomLong" value="SECTION.CBTINFVABCDSSOFF.SGTIAINF11.INF10"/>
-              </extensions>
-            </unit>
-            <unit command-post="false" id="15" name="Section . CBT INF VAB CDS OFF" position="29TNF3166157811" type="INF . Section CBT VAB CDS OFF">
-              <extensions>
-                <entry key="NomLong" value="SECTION.CBTINFVABCDSOFF.SGTIAINF11.INF10"/>
-              </extensions>
-            </unit>
-            <unit command-post="false" id="16" name="Groupe . MO81 VAB" position="29TNF3250457725" type="INF . Groupe INF MO81 VAB">
-              <extensions>
-                <entry key="NomLong" value="GROUPE.MO81VAB.SGTIAINF11.INF10"/>
-              </extensions>
-            </unit>
-            <unit command-post="false" id="17" name="Peloton . LECLERC CDP SOFF" position="29TNF3203057892" type="ABC . Peloton LECLERC CDP SOFF">
-              <extensions>
-                <entry key="NomLong" value="PELOTON.LECLERCCDPSOFF.SGTIAINF11.INF10"/>
-              </extensions>
-            </unit>
-            <unit command-post="false" id="18" name="Groupe GEN . EBG" position="29TNF3277957761" type="GEN . Groupe EBG">
-              <extensions>
-                <entry key="NomLong" value="GROUPEGEN.EBG.SGTIAINF11.INF10"/>
-              </extensions>
-            </unit>
-            <unit command-post="false" id="19" name="PIA Dominante ABC" position="29TNF3309757657" type="PIA Dominante ABC">
-              <extensions>
-                <entry key="NomLong" value="PIADOMINANTEABC.SGTIAINF11.INF10"/>
-              </extensions>
-            </unit>
-            <unit command-post="false" id="20" name="PIA Dominante INF" position="29TNF3271057443" type="PIA Dominante INF">
-              <extensions>
-                <entry key="NomLong" value="PIADOMINANTEINF.SGTIAINF11.INF10"/>
-              </extensions>
-            </unit>
-            <unit command-post="false" id="21" name="PIA Dominante Reco" position="29TNF3330158136" type="PIA Dominante Reco">
-              <extensions>
-                <entry key="NomLong" value="PIADOMINANTERECO.SGTIAINF11.INF10"/>
-              </extensions>
-            </unit>
-            <unit command-post="false" id="109" name="Patrouille . EI 12,7" position="29TNF3193058129" type="ABC . Patrouille EI 12,7">
-              <extensions>
-                <entry key="NomLong" value="PATROUILLE.EI127.SGTIAINF11.INF10"/>
-              </extensions>
-            </unit>
-            <extensions>
-              <entry key="NomLong" value="SGTIAINF11.INF10"/>
-            </extensions>
+            <unit command-post="true" id="12" name="Section . CDT CIE INF VAB" position="29TNF3245158128" type="INF . Section CDT CIE VAB"/>
+            <unit command-post="false" id="13" name="Section . CBT INF VAB CDS SOFF" position="29TNF3323557555" type="INF . Section CBT VAB CDS SOFF"/>
+            <unit command-post="false" id="14" name="Section . CBT INF VAB CDS SOFF" position="29TNF3200157688" type="INF . Section CBT VAB CDS SOFF"/>
+            <unit command-post="false" id="15" name="Section . CBT INF VAB CDS OFF" position="29TNF3166157811" type="INF . Section CBT VAB CDS OFF"/>
+            <unit command-post="false" id="16" name="Groupe . MO81 VAB" position="29TNF3250457725" type="INF . Groupe INF MO81 VAB"/>
+            <unit command-post="false" id="17" name="Peloton . LECLERC CDP SOFF" position="29TNF3203057892" type="ABC . Peloton LECLERC CDP SOFF"/>
+            <unit command-post="false" id="18" name="Groupe GEN . EBG" position="29TNF3277957761" type="GEN . Groupe EBG"/>
+            <unit command-post="false" id="19" name="PIA Dominante ABC" position="29TNF3309757657" type="PIA Dominante ABC"/>
+            <unit command-post="false" id="20" name="PIA Dominante INF" position="29TNF3271057443" type="PIA Dominante INF"/>
+            <unit command-post="false" id="21" name="PIA Dominante Reco" position="29TNF3330158136" type="PIA Dominante Reco"/>
+            <unit command-post="false" id="109" name="Patrouille . EI 12,7" position="29TNF3193058129" type="ABC . Patrouille EI 12,7"/>
           </automat>
           <limit name="Limite 90">
             <point>29TNF2690165242</point>
@@ -128,246 +81,65 @@
             <point>29TNF3865955394</point>
             <point>29TNF3670250590</point>
           </limit>
-          <extensions>
-            <entry key="NomLong" value="INF10"/>
-          </extensions>
         </formation>
         <formation id="92" level="ii" name="ABC [92]" symbol="symbols/sfgpucath">
           <automat engaged="true" id="22" knowledge-group="94" name="SGTIA ABC [22]" symbol="symbols/sfgpucath" type="SGTIA ABC XL">
-            <unit command-post="true" id="23" name="Peloton . LECLERC CDT ESC" position="29TNF3462859298" type="ABC . Peloton LECLERC CDT ESC">
-              <extensions>
-                <entry key="NomLong" value="PELOTON.LECLERCCDTESC.SGTIAABC22.ABC92"/>
-              </extensions>
-            </unit>
-            <unit command-post="false" id="24" name="Peloton . LECLERC CDP SOFF" position="29TNF3480558372" type="ABC . Peloton LECLERC CDP SOFF">
-              <extensions>
-                <entry key="NomLong" value="PELOTON.LECLERCCDPSOFF.SGTIAABC22.ABC92"/>
-              </extensions>
-            </unit>
-            <unit command-post="false" id="25" name="Peloton . LECLERC CDP SOFF" position="29TNF3489958215" type="ABC . Peloton LECLERC CDP SOFF">
-              <extensions>
-                <entry key="NomLong" value="PELOTON.LECLERCCDPSOFF.SGTIAABC22.ABC92"/>
-              </extensions>
-            </unit>
-            <unit command-post="false" id="26" name="ABC . Peloton LECLERC CDP OFF" position="29TNF3414758331" type="ABC . Peloton LECLERC CDP OFF">
-              <extensions>
-                <entry key="NomLong" value="ABC.PELOTONLECLERCCDPOFF.SGTIAABC22.ABC92"/>
-              </extensions>
-            </unit>
-            <unit command-post="false" id="27" name="Section . CBT INF VAB CDS SOFF" position="29TNF3503958595" type="INF . Section CBT VAB CDS SOFF">
-              <extensions>
-                <entry key="NomLong" value="SECTION.CBTINFVABCDSSOFF.SGTIAABC22.ABC92"/>
-              </extensions>
-            </unit>
-            <unit command-post="false" id="28" name="Peloton . d appui direct" position="29TNF3418358939" type="ABC . Peloton d appui direct">
-              <extensions>
-                <entry key="NomLong" value="PELOTON.DAPPUIDIRECT.SGTIAABC22.ABC92"/>
-              </extensions>
-            </unit>
-            <unit command-post="false" id="29" name="Groupe GEN . EBG" position="29TNF3450458846" type="GEN . Groupe EBG">
-              <extensions>
-                <entry key="NomLong" value="GROUPEGEN.EBG.SGTIAABC22.ABC92"/>
-              </extensions>
-            </unit>
-            <unit command-post="false" id="30" name="PIA Dominante ABC" position="29TNF3460258815" type="PIA Dominante ABC">
-              <extensions>
-                <entry key="NomLong" value="PIADOMINANTEABC.SGTIAABC22.ABC92"/>
-              </extensions>
-            </unit>
-            <unit command-post="false" id="31" name="PIA Dominante INF" position="29TNF3416858526" type="PIA Dominante INF">
-              <extensions>
-                <entry key="NomLong" value="PIADOMINANTEINF.SGTIAABC22.ABC92"/>
-              </extensions>
-            </unit>
-            <unit command-post="false" id="32" name="PIA Dominante Reco" position="29TNF3513058899" type="PIA Dominante Reco">
-              <extensions>
-                <entry key="NomLong" value="PIADOMINANTERECO.SGTIAABC22.ABC92"/>
-              </extensions>
-            </unit>
-            <unit command-post="false" id="108" name="Patrouille . EI 12,7" position="29TNF3532359783" type="ABC . Patrouille EI 12,7">
-              <extensions>
-                <entry key="NomLong" value="PATROUILLE.EI127.SGTIAABC22.ABC92"/>
-              </extensions>
-            </unit>
-            <extensions>
-              <entry key="NomLong" value="SGTIAABC22.ABC92"/>
-            </extensions>
+            <unit command-post="true" id="23" name="Peloton . LECLERC CDT ESC" position="29TNF3462859298" type="ABC . Peloton LECLERC CDT ESC"/>
+            <unit command-post="false" id="24" name="Peloton . LECLERC CDP SOFF" position="29TNF3480558372" type="ABC . Peloton LECLERC CDP SOFF"/>
+            <unit command-post="false" id="25" name="Peloton . LECLERC CDP SOFF" position="29TNF3489958215" type="ABC . Peloton LECLERC CDP SOFF"/>
+            <unit command-post="false" id="26" name="ABC . Peloton LECLERC CDP OFF" position="29TNF3414758331" type="ABC . Peloton LECLERC CDP OFF"/>
+            <unit command-post="false" id="27" name="Section . CBT INF VAB CDS SOFF" position="29TNF3503958595" type="INF . Section CBT VAB CDS SOFF"/>
+            <unit command-post="false" id="28" name="Peloton . d appui direct" position="29TNF3418358939" type="ABC . Peloton d appui direct"/>
+            <unit command-post="false" id="29" name="Groupe GEN . EBG" position="29TNF3450458846" type="GEN . Groupe EBG"/>
+            <unit command-post="false" id="30" name="PIA Dominante ABC" position="29TNF3460258815" type="PIA Dominante ABC"/>
+            <unit command-post="false" id="31" name="PIA Dominante INF" position="29TNF3416858526" type="PIA Dominante INF"/>
+            <unit command-post="false" id="32" name="PIA Dominante Reco" position="29TNF3513058899" type="PIA Dominante Reco"/>
+            <unit command-post="false" id="108" name="Patrouille . EI 12,7" position="29TNF3532359783" type="ABC . Patrouille EI 12,7"/>
           </automat>
-          <extensions>
-            <entry key="NomLong" value="ABC92"/>
-          </extensions>
         </formation>
         <formation id="110" level="xxxx" name="Artillerie [110]" symbol="symbols/sfgpucfhe">
           <automat engaged="true" id="111" knowledge-group="7" name="ASS . Batterie de Tir AUF1 [111]" symbol="symbols/sfgpucfhe" type="ASS . Batterie de Tir AUF1">
-            <unit command-post="true" id="112" name="PC . Batterie ASS" position="29TNF3028963569" type="ASS . PC Batterie ASS">
-              <extensions>
-                <entry key="NomLong" value="PC.BATTERIEASS.ASS.BATTERIEDETIRAUF1111.ARTILLERIE110"/>
-              </extensions>
-            </unit>
-            <unit command-post="false" id="113" name="Section de Tir . AUF1 CDS OFF" position="29TNF3079263072" type="ASS . Section de Tir AUF1 CDS OFF">
-              <extensions>
-                <entry key="NomLong" value="SECTIONDETIR.AUF1CDSOFF.ASS.BATTERIEDETIRAUF1111.ARTILLERIE110"/>
-              </extensions>
-            </unit>
-            <unit command-post="false" id="114" name="Section de Tir . AUF1 CDS OFF" position="29TNF3029362571" type="ASS . Section de Tir AUF1 CDS OFF">
-              <extensions>
-                <entry key="NomLong" value="SECTIONDETIR.AUF1CDSOFF.ASS.BATTERIEDETIRAUF1111.ARTILLERIE110"/>
-              </extensions>
-            </unit>
-            <unit command-post="false" id="115" name="Section . CDT CIE INF VAB" position="29TNF3148663497" type="INF . Section CDT CIE VAB">
-              <extensions>
-                <entry key="NomLong" value="SECTION.CDTCIEINFVAB.ASS.BATTERIEDETIRAUF1111.ARTILLERIE110"/>
-              </extensions>
-            </unit>
-            <extensions>
-              <entry key="CacherPourExportDQP" value="false"/>
-              <entry key="IndRadio" value=""/>
-              <entry key="NomLong" value="ASS.BATTERIEDETIRAUF1111.ARTILLERIE110"/>
-            </extensions>
+            <unit command-post="true" id="112" name="PC . Batterie ASS" position="29TNF3028963569" type="ASS . PC Batterie ASS"/>
+            <unit command-post="false" id="113" name="Section de Tir . AUF1 CDS OFF" position="29TNF3079263072" type="ASS . Section de Tir AUF1 CDS OFF"/>
+            <unit command-post="false" id="114" name="Section de Tir . AUF1 CDS OFF" position="29TNF3029362571" type="ASS . Section de Tir AUF1 CDS OFF"/>
+            <unit command-post="false" id="115" name="Section . CDT CIE INF VAB" position="29TNF3148663497" type="INF . Section CDT CIE VAB"/>
           </automat>
-          <extensions>
-            <entry key="NomLong" value="ARTILLERIE110"/>
-          </extensions>
         </formation>
-        <formation id="158" level="xxxx" logistic-level="logistic-base" name="BL [158]" symbol="">
-          <extensions>
-            <entry key="NomLong" value="BL158"/>
-          </extensions>
-        </formation>
-        <formation id="210" level="xxxx" name="GTIA [210]" symbol="">
-          <extensions>
-            <entry key="NomLong" value="GTIA210"/>
-          </extensions>
-        </formation>
+        <formation id="158" level="xxxx" logistic-level="logistic-base" name="BL [158]" symbol=""/>
+        <formation id="210" level="xxxx" name="GTIA [210]" symbol=""/>
         <formation id="310" level="xxxx" name="Circulation [310]" symbol="symbols/sfgpuulm">
           <automat engaged="true" id="311" knowledge-group="95" name="CIRCU . Peloton Circulation sur VAB [311]" symbol="symbols/sfgpuulm" type="CIRCU . Peloton Circulation sur VAB">
-            <unit command-post="true" id="312" name="CIRCU PC sur VAB [312]" position="29TNF3579263072" type="CIRCU . PC sur VAB">
-              <extensions>
-                <entry key="NomLong" value="CIRCUPCSURVAB312.CIRCU.PELOTONCIRCULATIONSURVAB311.CIRCULATION310"/>
-              </extensions>
-            </unit>
-            <unit command-post="false" id="313" name="CIRCU . Patrouille VAB [313]" position="29TNF3579263072" type="CIRCU . Patrouille VAB">
-              <extensions>
-                <entry key="NomLong" value="CIRCU.PATROUILLEVAB313.CIRCU.PELOTONCIRCULATIONSURVAB311.CIRCULATION310"/>
-              </extensions>
-            </unit>
-            <unit command-post="false" id="314" name="CIRCU . Patrouille VAB [314]" position="29TNF3589363072" type="CIRCU . Patrouille VAB">
-              <extensions>
-                <entry key="NomLong" value="CIRCU.PATROUILLEVAB314.CIRCU.PELOTONCIRCULATIONSURVAB311.CIRCULATION310"/>
-              </extensions>
-            </unit>
-            <unit command-post="false" id="315" name="CIRCU . Patrouille VAB [315]" position="29TNF3599463072" type="CIRCU . Patrouille VAB">
-              <extensions>
-                <entry key="NomLong" value="CIRCU.PATROUILLEVAB315.CIRCU.PELOTONCIRCULATIONSURVAB311.CIRCULATION310"/>
-              </extensions>
-            </unit>
-            <unit command-post="false" id="316" name="CIRCU . Patrouille VAB [316]" position="29TNF3609563072" type="CIRCU . Patrouille VAB">
-              <extensions>
-                <entry key="NomLong" value="CIRCU.PATROUILLEVAB316.CIRCU.PELOTONCIRCULATIONSURVAB311.CIRCULATION310"/>
-              </extensions>
-            </unit>
-            <extensions>
-              <entry key="NomLong" value="CIRCU.PELOTONCIRCULATIONSURVAB311.CIRCULATION310"/>
-            </extensions>
+            <unit command-post="true" id="312" name="CIRCU PC sur VAB [312]" position="29TNF3579263072" type="CIRCU . PC sur VAB"/>
+            <unit command-post="false" id="313" name="CIRCU . Patrouille VAB [313]" position="29TNF3579263072" type="CIRCU . Patrouille VAB"/>
+            <unit command-post="false" id="314" name="CIRCU . Patrouille VAB [314]" position="29TNF3589363072" type="CIRCU . Patrouille VAB"/>
+            <unit command-post="false" id="315" name="CIRCU . Patrouille VAB [315]" position="29TNF3599463072" type="CIRCU . Patrouille VAB"/>
+            <unit command-post="false" id="316" name="CIRCU . Patrouille VAB [316]" position="29TNF3609563072" type="CIRCU . Patrouille VAB"/>
           </automat>
-          <extensions>
-            <entry key="NomLong" value="CIRCULATION310"/>
-          </extensions>
         </formation>
         <formation id="410" level="xxxx" name="NRBC [410]" symbol="symbols/sfgpuuad">
           <automat engaged="true" id="411" knowledge-group="95" name="NRBC . Section Decontamination [411]" symbol="symbols/sfgpuuad" type="NRBC . Section Decontamination">
-            <unit command-post="true" id="412" name="NRBC . PC deconta [412]" position="29TNF3779263072" type="NRBC . PC deconta">
-              <extensions>
-                <entry key="NomLong" value="NRBC.PCDECONTA412.NRBC.SECTIONDECONTAMINATION411.NRBC410"/>
-              </extensions>
-            </unit>
-            <unit command-post="false" id="413" name="NRBC . Equipe decontamination [413]" position="29TNF3779363072" type="NRBC . Equipe decontamination">
-              <extensions>
-                <entry key="NomLong" value="NRBC.EQUIPEDECONTAMINATION413.NRBC.SECTIONDECONTAMINATION411.NRBC410"/>
-              </extensions>
-            </unit>
-            <unit command-post="false" id="414" name="NRBC . Equipe decontamination [414]" position="29TNF3789463072" type="NRBC . Equipe decontamination">
-              <extensions>
-                <entry key="NomLong" value="NRBC.EQUIPEDECONTAMINATION414.NRBC.SECTIONDECONTAMINATION411.NRBC410"/>
-              </extensions>
-            </unit>
-            <unit command-post="false" id="415" name="NRBC . Equipe decontamination [415]" position="29TNF3799563072" type="NRBC . Equipe decontamination">
-              <extensions>
-                <entry key="NomLong" value="NRBC.EQUIPEDECONTAMINATION415.NRBC.SECTIONDECONTAMINATION411.NRBC410"/>
-              </extensions>
-            </unit>
-            <extensions>
-              <entry key="NomLong" value="NRBC.SECTIONDECONTAMINATION411.NRBC410"/>
-            </extensions>
+            <unit command-post="true" id="412" name="NRBC . PC deconta [412]" position="29TNF3779263072" type="NRBC . PC deconta"/>
+            <unit command-post="false" id="413" name="NRBC . Equipe decontamination [413]" position="29TNF3779363072" type="NRBC . Equipe decontamination"/>
+            <unit command-post="false" id="414" name="NRBC . Equipe decontamination [414]" position="29TNF3789463072" type="NRBC . Equipe decontamination"/>
+            <unit command-post="false" id="415" name="NRBC . Equipe decontamination [415]" position="29TNF3799563072" type="NRBC . Equipe decontamination"/>
           </automat>
           <automat engaged="true" id="416" knowledge-group="95" name="NRBC . PC Section Reco [416]" symbol="symbols/sfgpuuac" type="NRBC . Section Reco">
-            <unit command-post="true" id="417" name="NRBC . PC deconta [417]" position="29TNF2950863072" type="NRBC . PC Section Reco">
-              <extensions>
-                <entry key="NomLong" value="NRBC.PCDECONTA417.NRBC.PCSECTIONRECO416.NRBC410"/>
-              </extensions>
-            </unit>
-            <unit command-post="false" id="418" name="NRBC . Patrouille Reco [418]" position="29TNF2960863072" type="NRBC . Patrouille Reco">
-              <extensions>
-                <entry key="NomLong" value="NRBC.PATROUILLERECO418.NRBC.PCSECTIONRECO416.NRBC410"/>
-              </extensions>
-            </unit>
-            <extensions>
-              <entry key="NomLong" value="NRBC.PCSECTIONRECO416.NRBC410"/>
-            </extensions>
+            <unit command-post="true" id="417" name="NRBC . PC deconta [417]" position="29TNF2950863072" type="NRBC . PC Section Reco"/>
+            <unit command-post="false" id="418" name="NRBC . Patrouille Reco [418]" position="29TNF2960863072" type="NRBC . Patrouille Reco"/>
           </automat>
-          <extensions>
-            <entry key="NomLong" value="NRBC410"/>
-          </extensions>
         </formation>
         <formation id="432" level="i" name="Formation [432]" symbol="symbols/sfgpumi">
           <automat engaged="true" id="433" knowledge-group="7" name="CIV . Civil" symbol="symbols/sfgpumi" type="CIV . Civil">
-            <unit command-post="true" id="434" name="Civil" position="29TNF3085964118" type="Civil">
-              <extensions>
-                <entry key="NomLong" value="CIVIL.CIV.CIVIL.FORMATION432.CAMPBLEU"/>
-              </extensions>
-            </unit>
-            <unit command-post="false" id="437" name="Civil" position="29TNF3128964022" type="Civil">
-              <extensions>
-                <entry key="NomLong" value="CIVIL.CIV.CIVIL.FORMATION432.CAMPBLEU"/>
-              </extensions>
-            </unit>
-            <unit command-post="false" id="438" name="Civil" position="29TNF3105164035" type="Civil">
-              <extensions>
-                <entry key="NomLong" value="CIVIL.CIV.CIVIL.FORMATION432.CAMPBLEU"/>
-              </extensions>
-            </unit>
-            <extensions>
-              <entry key="NomLong" value="CIV.CIVIL.FORMATION432.CAMPBLEU"/>
-            </extensions>
+            <unit command-post="true" id="434" name="Civil" position="29TNF3085964118" type="Civil"/>
+            <unit command-post="false" id="437" name="Civil" position="29TNF3128964022" type="Civil"/>
+            <unit command-post="false" id="438" name="Civil" position="29TNF3105164035" type="Civil"/>
           </automat>
           <automat engaged="true" id="435" knowledge-group="7" name="CIV . Civil" symbol="symbols/sfgpumi" type="CIV . Civil">
-            <unit command-post="true" id="436" name="Civil" position="29TNF3125764165" type="Civil">
-              <extensions>
-                <entry key="NomLong" value="CIVIL.CIV.CIVIL.FORMATION432.CAMPBLEU"/>
-              </extensions>
-            </unit>
-            <unit command-post="false" id="439" name="Civil" position="29TNF3072064020" type="Civil">
-              <extensions>
-                <entry key="NomLong" value="CIVIL.CIV.CIVIL.FORMATION432.CAMPBLEU"/>
-              </extensions>
-            </unit>
-            <unit command-post="false" id="440" name="Civil" position="29TNF3082463976" type="Civil">
-              <extensions>
-                <entry key="NomLong" value="CIVIL.CIV.CIVIL.FORMATION432.CAMPBLEU"/>
-              </extensions>
-            </unit>
-            <unit command-post="false" id="441" name="Civil" position="29TNF3081563846" type="Civil">
-              <extensions>
-                <entry key="NomLong" value="CIVIL.CIV.CIVIL.FORMATION432.CAMPBLEU"/>
-              </extensions>
-            </unit>
-            <extensions>
-              <entry key="NomLong" value="CIV.CIVIL.FORMATION432.CAMPBLEU"/>
-            </extensions>
+            <unit command-post="true" id="436" name="Civil" position="29TNF3125764165" type="Civil"/>
+            <unit command-post="false" id="439" name="Civil" position="29TNF3072064020" type="Civil"/>
+            <unit command-post="false" id="440" name="Civil" position="29TNF3082463976" type="Civil"/>
+            <unit command-post="false" id="441" name="Civil" position="29TNF3081563846" type="Civil"/>
           </automat>
-          <extensions>
-            <entry key="NomLong" value="FORMATION432.CAMPBLEU"/>
-          </extensions>
         </formation>
       </tactical>
       <communication>
@@ -1334,10 +1106,7 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary">
-              <activation-time value="0"/>
-              <activity-time value="0"/>
-            </obstacle>
+            <obstacle activated="true" type="preliminary"/>
             <activity-time value="0"/>
           </attributes>
         </object>
@@ -1353,10 +1122,7 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary">
-              <activation-time value="0"/>
-              <activity-time value="0"/>
-            </obstacle>
+            <obstacle activated="true" type="preliminary"/>
             <activity-time value="0"/>
           </attributes>
         </object>
@@ -1367,10 +1133,7 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary">
-              <activation-time value="0"/>
-              <activity-time value="0"/>
-            </obstacle>
+            <obstacle activated="true" type="preliminary"/>
           </attributes>
         </object>
         <object id="126" name="destruction pont 2" type="bridge destruction">
@@ -1380,10 +1143,7 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary">
-              <activation-time value="0"/>
-              <activity-time value="0"/>
-            </obstacle>
+            <obstacle activated="true" type="preliminary"/>
           </attributes>
         </object>
         <object id="127" name="destruction pont 3" type="bridge destruction">
@@ -1393,10 +1153,7 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary">
-              <activation-time value="0"/>
-              <activity-time value="0"/>
-            </obstacle>
+            <obstacle activated="true" type="preliminary"/>
           </attributes>
         </object>
         <object id="151" name="bouchon mines [151]" type="mines">
@@ -1406,7 +1163,10 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="false" type="reserved"/>
+            <obstacle activated="false" type="reserved">
+              <activation-time value="600"/>
+              <activity-time value="0"/>
+            </obstacle>
             <activity-time value="0"/>
           </attributes>
         </object>
@@ -2267,29 +2027,6 @@
       <inhabitants/>
       <logistics/>
     </party>
-    <no-party>
-      <objects>
-        <object id="454" name="noeud de reseau de ressource [454]" type="ressource network element">
-          <shape type="point">
-            <points>
-              <point>29TNF3089260032</point>
-            </points>
-          </shape>
-          <attributes>
-            <construction completion="1"/>
-            <resources>
-              <node resource-type="eau courante">
-                <link capacity="-1" target="25"/>
-              </node>
-              <node resource-type="electricite"/>
-              <node resource-type="nourriture">
-                <link capacity="-1" target="24"/>
-              </node>
-            </resources>
-          </attributes>
-        </object>
-      </objects>
-    </no-party>
   </parties>
   <diplomacy>
     <party id="1">
@@ -2306,4 +2043,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="3867227615" -->
+<!-- signature="0765807485" -->
