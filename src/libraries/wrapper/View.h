@@ -64,7 +64,6 @@ public:
     void VisitChildren( T_ChildrenVisitor visitor ) const;
     //@}
 
-public:
     //! @name Operators
     //@{
     bool operator==( const View& rhs ) const;
