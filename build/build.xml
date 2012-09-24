@@ -913,7 +913,7 @@
         <build-app name="client_sample_app" depends="protobuf" root="${samples.dir}"
                    libs="lib${ant.project.name}_protocol-${platform}-mt@{suffix}" subsystem="console"
                    failonwarning="${failonwarning}">
-            <syslibset libs="wsock32"/>
+            <syslibset libs="wsock32,ws2_32"/>
             <includepath path="${out.dir}/release/libraries/protocol"/>
         </build-app>
     </target>
