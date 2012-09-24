@@ -67,6 +67,7 @@ private:
     virtual QMimeData* MimeData( const QModelIndexList& indexes, bool& overriden ) const;
     virtual void dragMoveEvent( QDragMoveEvent *pEvent );
     virtual void Drop( const QString& mimeType, void* data, QStandardItem& target );
+    virtual void keyPressEvent( QKeyEvent* event );
     //@}
 
 private:

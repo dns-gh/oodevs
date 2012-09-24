@@ -331,6 +331,22 @@ void TacticalTreeView::DoChangeSuperior( kernel::Entity_ABC& entity, kernel::Ent
 }
 
 // -----------------------------------------------------------------------------
+// Name: TacticalTreeView::keyPressEvent
+// Created: JSR 2012-09-24
+// -----------------------------------------------------------------------------
+void TacticalTreeView::keyPressEvent( QKeyEvent* event )
+{
+    const QModelIndex index = selectionModel()->currentIndex();
+    if( event && event->key() == Qt::Key_Delete && index.isValid() )
+    {
+        if( kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( index ) )
+            modelObserver_.DeleteEntity( *entity );
+    }
+    else
+        gui::TacticalTreeView::keyPressEvent( event );
+}
+
+// -----------------------------------------------------------------------------
 // Name: TacticalTreeView::AddFormationMenu
 // Created: JSR 2012-09-11
 // -----------------------------------------------------------------------------

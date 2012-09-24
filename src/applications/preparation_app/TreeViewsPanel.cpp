@@ -14,6 +14,7 @@
 #include "LogisticTreeView.h"
 #include "ModelBuilder.h"
 #include "ObjectTreeView.h"
+#include "InhabitantTreeView.h"
 #include "PopulationTreeView.h"
 #include "PreparationProfile.h"
 #include "TacticalTreeView.h"
@@ -79,7 +80,7 @@ TreeViewsPanel::TreeViewsPanel( kernel::Controllers& controllers, gui::EntitySym
     }
     // Populations
     {
-        gui::SearchTreeView_ABC* searchTreeView = new gui::SearchTreeView< gui::InhabitantTreeView >( this, controllers, PreparationProfile::GetProfile(), modelBuilder );
+        gui::SearchTreeView_ABC* searchTreeView = new gui::SearchTreeView< InhabitantTreeView >( this, controllers, PreparationProfile::GetProfile(), modelBuilder );
         Configure( searchTreeView, treeViews, aggregateToolbar, ePreparationMode_Terrain );
         addTab( searchTreeView, tools::translate( "DockContainer","Populations" ) );
     }

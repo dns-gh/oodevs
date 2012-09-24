@@ -10,6 +10,7 @@
 #include "preparation_app_pch.h"
 #include "PopulationTreeView.h"
 #include "clients_gui/DragAndDropHelpers.h"
+#include "clients_gui/ModelObserver_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/Team_ABC.h"
@@ -105,4 +106,20 @@ void PopulationTreeView::Drop( const QString& mimeType, void* data, QStandardIte
         const kernel::Entity_ABC& superior = targetHierarchies ? targetHierarchies->GetTop() : *entityTarget;
         static_cast< PopulationHierarchies* >( hierarchies )->ChangeSuperior( const_cast< kernel::Entity_ABC& >( superior ) );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationTreeView::keyPressEvent
+// Created: JSR 2012-09-24
+// -----------------------------------------------------------------------------
+void PopulationTreeView::keyPressEvent( QKeyEvent* event )
+{
+    const QModelIndex index = selectionModel()->currentIndex();
+    if( event && event->key() == Qt::Key_Delete && index.isValid() )
+    {
+        if( kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( index ) )
+            modelObserver_.DeleteEntity( *entity );
+    }
+    else
+        gui::PopulationTreeView::keyPressEvent( event );
 }

@@ -211,7 +211,6 @@ void UrbanListView::keyPressEvent( QKeyEvent* key )
         }
         if( !blocks.empty() )
         {
-            urbanModel_.GetUrbanMenuManager().ClearSelection();
             modelBuilder_.DeleteBlocks( blocks );
             key->accept();
             return;

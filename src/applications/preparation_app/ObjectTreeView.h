@@ -34,6 +34,12 @@ public:
     virtual Qt::ItemFlags ItemSpecificFlags( const kernel::Entity_ABC& entity ) const;
     virtual QMimeData* MimeData( const QModelIndexList& indexes, bool& overriden ) const;
     //@}
+
+private:
+    //! @name Operations
+    //@{
+    virtual void keyPressEvent( QKeyEvent* event );
+    //@}
 };
 
 #endif // __ObjectTreeView_h_

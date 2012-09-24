@@ -46,6 +46,7 @@ private:
     //@{
     virtual void NotifyUpdated( const LogisticBaseStates& hierarchy );
     virtual void NotifyUpdated( const LogisticLevelAttritube& hierarchy );
+    virtual void keyPressEvent( QKeyEvent* event );
     //@}
 
 private:

@@ -78,7 +78,6 @@ bool UrbanLayer::HandleKeyPress( QKeyEvent* key )
 {
     if( key->key() != Qt::Key_Delete || ( controllers_.modes_ && controllers_.modes_->GetCurrentMode() != ePreparationMode_Terrain ) || actualSelection_.empty() )
         return false;
-    model_.GetUrbanMenuManager().ClearSelection();
     model_.DeleteBlocks( actualSelection_ );
     return true;
 }

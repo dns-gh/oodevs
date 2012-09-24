@@ -15,6 +15,7 @@ namespace kernel
     class Automat_ABC;
     class AutomatType;
     class Entity_ABC;
+    class UrbanObject_ABC;
 }
 
 namespace gui
@@ -44,7 +45,9 @@ public:
     virtual void ClearSelection() = 0;
     virtual void CreateFormation( int level ) = 0;
     virtual kernel::Automat_ABC* ReplaceAutomat( kernel::Entity_ABC& original, const kernel::AutomatType& type ) = 0;
+    virtual void DeleteEntity( const kernel::Entity_ABC& entity ) = 0;
     virtual void CreateCityOrDistrict( kernel::Entity_ABC* parent ) = 0;
+    virtual void DeleteBlocks( const std::vector< const kernel::UrbanObject_ABC* >& urbanObjects ) = 0;
     //@}
 };
 

@@ -363,12 +363,3 @@ void UrbanMenuManager::DoApplyToChildren( kernel::Entity_ABC& object ) const
     while( it.HasMoreElements() )
         DoApplyToChildren( const_cast< kernel::Entity_ABC& >( it.NextElement() ) );
 }
-
-// -----------------------------------------------------------------------------
-// Name: UrbanMenuManager::ClearSelection
-// Created: ABR 2012-08-17
-// -----------------------------------------------------------------------------
-void UrbanMenuManager::ClearSelection()
-{
-    selected_.clear();
-}

@@ -317,3 +317,19 @@ void CommunicationTreeView::Drop( const kernel::KnowledgeGroup_ABC& item, const 
             static_cast< KnowledgeGroupCommunications& >( com ).ChangeSuperior( const_cast< kernel::Entity_ABC& >( target ) );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: CommunicationTreeView::keyPressEvent
+// Created: JSR 2012-09-24
+// -----------------------------------------------------------------------------
+void CommunicationTreeView::keyPressEvent( QKeyEvent* event )
+{
+    const QModelIndex index = selectionModel()->currentIndex();
+    if( event && event->key() == Qt::Key_Delete && index.isValid() )
+    {
+        if( kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( index ) )
+            modelObserver_.DeleteEntity( *entity );
+    }
+    else
+        gui::HierarchyTreeView< kernel::CommunicationHierarchies >::keyPressEvent( event );
+}

@@ -9,6 +9,7 @@
 
 #include "preparation_app_pch.h"
 #include "ObjectTreeView.h"
+#include "clients_gui/ModelObserver_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 #include "preparation/AltitudeModifierAttribute.h"
 #include "preparation/FloodAttribute.h"
@@ -101,4 +102,20 @@ QMimeData* ObjectTreeView::MimeData( const QModelIndexList& indexes, bool& overr
     stream << reinterpret_cast< unsigned int >( item->data( gui::StandardModel::DataRole ).value< kernel::VariantPointer >().ptr_ );
     mimeData->setData( typeid( kernel::Object_ABC ).name(), encodedData );
     return mimeData;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectTreeView::keyPressEvent
+// Created: JSR 2012-09-24
+// -----------------------------------------------------------------------------
+void ObjectTreeView::keyPressEvent( QKeyEvent* event )
+{
+    const QModelIndex index = selectionModel()->currentIndex();
+    if( event && event->key() == Qt::Key_Delete && index.isValid() )
+    {
+        if( kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( index ) )
+            modelObserver_.DeleteEntity( *entity );
+    }
+    else
+        gui::ObjectTreeView::keyPressEvent( event );
 }

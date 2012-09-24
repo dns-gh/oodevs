@@ -69,6 +69,8 @@ private:
 
     virtual bool CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const;
     virtual void DoChangeSuperior( kernel::Entity_ABC& entity, kernel::Entity_ABC& superior );
+
+    virtual void keyPressEvent( QKeyEvent* event );
     //@}
 
 private slots:

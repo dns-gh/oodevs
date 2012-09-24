@@ -78,21 +78,21 @@ void UrbanTreeView::NotifyCreated( const kernel::UrbanObject_ABC& object )
     const kernel::Hierarchies* hierarchies = object.Retrieve< kernel::Hierarchies >();
     if( !hierarchies ) // $$$$ ABR 2012-05-22: Only urban block have hierarchies
         return;
-    const kernel::Entity_ABC* superior = hierarchies->GetSuperior();
+    const kernel::Entity_ABC* superior = static_cast< const kernel::UrbanObject_ABC* >( hierarchies->GetSuperior() );
     QStandardItem* item = 0;
     if( superior )
     {
         if( QStandardItem* supItem = dataModel_.FindDataItem( *superior ) )
         {
             const int row = supItem->rowCount();
-            item = dataModel_.AddChildSafeItem( supItem, row, 0, object.GetName(), object.GetTooltip(), static_cast< const kernel::Entity_ABC& >( object ), Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled );
+            item = dataModel_.AddChildSafeItem( supItem, row, 0, object.GetName(), object.GetTooltip(), object, Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled );
             dataModel_.AddChildItem( supItem, row, 1 );
         }
     }
     else
     {
         const int row = dataModel_.rowCount();
-        item = dataModel_.AddRootSafeItem( row, 0, object.GetName(), object.GetTooltip(), static_cast< const kernel::Entity_ABC& >( object ), Qt::ItemIsDropEnabled );
+        item = dataModel_.AddRootSafeItem( row, 0, object.GetName(), object.GetTooltip(), object, Qt::ItemIsDropEnabled );
         dataModel_.AddRootItem( row, 1 );
     }
     if( item )
@@ -317,8 +317,8 @@ bool UrbanTreeView::IsTypeRejected( const kernel::Entity_ABC& entity ) const
 // -----------------------------------------------------------------------------
 bool UrbanTreeView::LessThan( const QModelIndex& left, const QModelIndex& right, bool& valid ) const
 {
-    const kernel::Entity_ABC* entity1 = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( left );
-    const kernel::Entity_ABC* entity2 = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( right );
+    const kernel::UrbanObject_ABC* entity1 = dataModel_.GetDataFromIndex< kernel::UrbanObject_ABC >( left );
+    const kernel::Entity_ABC* entity2 = dataModel_.GetDataFromIndex< kernel::UrbanObject_ABC >( right );
     if( !entity1 || !entity2 )
         return false;
     valid = true;
@@ -350,8 +350,8 @@ QMimeData* UrbanTreeView::MimeData( const QModelIndexList& indexes, bool& overri
     {
         if( index.isValid() )
         {
-            const kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( index );
-            if( entity && !IsTypeRejected( *entity ) )
+            const kernel::UrbanObject_ABC* entity = dataModel_.GetDataFromIndex< kernel::UrbanObject_ABC >( index );
+            if( entity )
             {
                 const UrbanHierarchies& hierarchies = static_cast< const UrbanHierarchies& >( entity->Get< kernel::Hierarchies >() );
                 if( level != static_cast< EUrbanLevel >( -1 ) && level != hierarchies.GetLevel() )
@@ -381,10 +381,9 @@ void UrbanTreeView::dragMoveEvent( QDragMoveEvent *pEvent )
         pEvent->ignore();
         return;
     }
-    EntityTreeView_ABC::dragMoveEvent( pEvent );
     QPoint position = viewport()->mapFromParent( pEvent->pos() );
-    kernel::Entity_ABC* target = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( indexAt( pEvent->pos() ) );
-    if( !target || IsTypeRejected( *target ))
+    kernel::UrbanObject_ABC* target = dataModel_.GetDataFromIndex< kernel::UrbanObject_ABC >( indexAt( pEvent->pos() ) );
+    if( !target )
     {
         pEvent->ignore();
         return;
@@ -402,11 +401,11 @@ void UrbanTreeView::dragMoveEvent( QDragMoveEvent *pEvent )
         {
             int ptr = 0;
             stream >> ptr;
-            kernel::SafePointer< const kernel::Entity_ABC >* safePtr = reinterpret_cast< kernel::SafePointer< const kernel::Entity_ABC >* >( ptr );
+            kernel::SafePointer< const kernel::UrbanObject_ABC >* safePtr = reinterpret_cast< kernel::SafePointer< const kernel::UrbanObject_ABC >* >( ptr );
             if( safePtr )
             {
-                const kernel::Entity_ABC* entity = *safePtr;
-                if( entity && !IsTypeRejected( *entity ) )
+                const kernel::UrbanObject_ABC* entity = *safePtr;
+                if( entity )
                 {
                     EUrbanLevel level = static_cast< const UrbanHierarchies& >( entity->Get< kernel::Hierarchies >() ).GetLevel();
                     if( ( level == eUrbanLevelBlock && levelTarget == eUrbanLevelDistrict ) || ( level == eUrbanLevelDistrict && levelTarget == eUrbanLevelCity ) )
@@ -429,16 +428,16 @@ void UrbanTreeView::Drop( const QString& mimeType, void* data, QStandardItem& ta
 {
     if( IsReadOnly() )
         return;
-    kernel::Entity_ABC* entityTarget = dataModel_.GetDataFromItem< kernel::Entity_ABC >( target );
+    kernel::UrbanObject_ABC* entityTarget = dataModel_.GetDataFromItem< kernel::UrbanObject_ABC >( target );
     if( !entityTarget )
         return;
     if( mimeType == mimeType_ )
     {
-        kernel::SafePointer< kernel::Entity_ABC >* safePtr = reinterpret_cast< kernel::SafePointer< kernel::Entity_ABC >* >( data );
+        kernel::SafePointer< kernel::UrbanObject_ABC >* safePtr = reinterpret_cast< kernel::SafePointer< kernel::UrbanObject_ABC >* >( data );
         if( !safePtr )
             return;
-        kernel::Entity_ABC* object = safePtr->ConstCast();
-        if( !object || IsTypeRejected( *object ) )
+        kernel::UrbanObject_ABC* object = safePtr->ConstCast();
+        if( !object )
             return;
         UrbanHierarchies& hierarchies = static_cast< UrbanHierarchies& >( object->Get< kernel::Hierarchies >() );
         kernel::Entity_ABC* superior = const_cast< kernel::Entity_ABC* >( hierarchies.GetSuperior() );
@@ -453,7 +452,7 @@ void UrbanTreeView::Drop( const QString& mimeType, void* data, QStandardItem& ta
         for( QList< QStandardItem *>::iterator it = rowItems.begin(); it != rowItems.end(); ++it )
             delete *it;
         static_cast< UrbanHierarchies& >( object->Get< kernel::Hierarchies >() ).ChangeSuperior( *entityTarget );
-        NotifyCreated( static_cast< kernel::UrbanObject_ABC& >( *object ) );
+        NotifyCreated( *object );
         tools::Iterator< const kernel::Entity_ABC& > subIt = hierarchies.CreateSubordinateIterator();
         while( subIt.HasMoreElements() )
         {
@@ -463,4 +462,26 @@ void UrbanTreeView::Drop( const QString& mimeType, void* data, QStandardItem& ta
         entityTarget->Get< kernel::UrbanPositions_ABC >().ResetConvexHull();
         controllers_.actions_.SetSelected( *entityTarget, false );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanTreeView::keyPressEvent
+// Created: JSR 2012-09-24
+// -----------------------------------------------------------------------------
+void UrbanTreeView::keyPressEvent( QKeyEvent* event )
+{
+    if( GetCurrentMode() == ePreparationMode_Terrain && event->key() == Qt::Key_Delete )
+    {
+        QModelIndexList list = selectionModel()->selectedIndexes();
+        std::vector< const kernel::UrbanObject_ABC* > blocks;
+        for( QModelIndexList::const_iterator it = list.begin(); it != list.end(); ++it )
+            if( const kernel::UrbanObject_ABC* entity = dataModel_.GetDataFromIndex< kernel::UrbanObject_ABC >( *it ) )
+                blocks.push_back( entity );
+        if( !blocks.empty() )
+        {
+            modelObserver_.DeleteBlocks( blocks );
+            return;
+        }
+    }
+    gui::EntityTreeView_ABC::keyPressEvent( event );
 }

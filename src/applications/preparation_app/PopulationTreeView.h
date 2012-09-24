@@ -35,6 +35,12 @@ public:
     virtual QStringList MimeTypes() const;
     virtual void Drop( const QString& mimeType, void* data, QStandardItem& target );
     //@}
+
+private:
+    //! @name Operations
+    //@{
+    virtual void keyPressEvent( QKeyEvent* event );
+    //@}
 };
 
 #endif // __PopulationTreeView_h_

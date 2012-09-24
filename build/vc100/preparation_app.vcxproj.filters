@@ -550,6 +550,9 @@
     <ClCompile Include="..\..\src\applications\preparation_app\PopulationTreeView.cpp">
       <Filter>Source Files\TreeView</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\InhabitantTreeView.cpp">
+      <Filter>Source Files\TreeView</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\preparation_app\Application.h">
@@ -757,6 +760,9 @@
       <Filter>Source Files\TreeView</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\PopulationTreeView.h">
+      <Filter>Source Files\TreeView</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\InhabitantTreeView.h">
       <Filter>Source Files\TreeView</Filter>
     </ClInclude>
   </ItemGroup>

@@ -188,6 +188,7 @@
     <ClCompile Include="..\..\src\applications\preparation_app\GhostsLayer.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\GhostsPanel.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\InhabitantLayer.cpp" />
+    <ClCompile Include="..\..\src\applications\preparation_app\InhabitantTreeView.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\ListViewsPanel.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\LivingAreaPanel.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\LocationEditorToolbar.cpp" />
@@ -535,6 +536,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\applications\preparation_app\InhabitantTreeView.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\LivingAreaEditor_ABC.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\LocationEditorToolbar.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\LogisticListView.h">

@@ -9,9 +9,10 @@
 
 #include "preparation_app_pch.h"
 #include "LogisticTreeView.h"
+#include "clients_gui/ModelObserver_ABC.h"
+#include "clients_kernel/StrongType.h"
 #include "preparation/LogisticBaseStates.h"
 #include "preparation/LogisticLevelAttritube.h"
-#include "clients_kernel/StrongType.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogisticTreeView constructor
@@ -69,4 +70,20 @@ void LogisticTreeView::NotifyUpdated( const LogisticBaseStates& hierarchy )
 void LogisticTreeView::NotifyUpdated( const LogisticLevelAttritube& hierarchy )
 {
     CreateOrReplace( hierarchy.GetEntity() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticTreeView::keyPressEvent
+// Created: JSR 2012-09-24
+// -----------------------------------------------------------------------------
+void LogisticTreeView::keyPressEvent( QKeyEvent* event )
+{
+    const QModelIndex index = selectionModel()->currentIndex();
+    if( event && event->key() == Qt::Key_Delete && index.isValid() )
+    {
+        if( kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( index ) )
+            modelObserver_.DeleteEntity( *entity );
+    }
+    else
+        gui::LogisticTreeView::keyPressEvent( event );
 }

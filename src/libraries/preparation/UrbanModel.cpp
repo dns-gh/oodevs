@@ -584,12 +584,3 @@ bool UrbanModel::TakeLinkErrors()
     cleanedLinks_ = false;
     return result;
 }
-
-// -----------------------------------------------------------------------------
-// Name: UrbanModel::GetUrbanMenuManager
-// Created: ABR 2012-08-17
-// -----------------------------------------------------------------------------
-UrbanMenuManager& UrbanModel::GetUrbanMenuManager() const
-{
-    return *menuManager_.get();
-}
