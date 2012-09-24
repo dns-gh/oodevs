@@ -280,7 +280,7 @@ Automat_ABC* AgentFactory::Create( xml::xistream& xis, Entity_ABC& parent )
     Automat* result = new Automat( xis, controllers_.controller_, idManager_, *type );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( *new AutomatPositions( *result ) );
-    result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( xis ) );
+    result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( xis, std::string() ) );
     result->Attach( *new AutomatDecisions( xis, controllers_.controller_, *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, &parent ) );
     result->Attach< CommunicationHierarchies >( *new AutomatCommunications( xis, controllers_.controller_, *result, model_.knowledgeGroups_ ) );

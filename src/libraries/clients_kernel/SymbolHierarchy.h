@@ -47,7 +47,7 @@ private:
     //! @name Member data
     //@{
     std::string symbol_;
-    std::string originalSymbol_;
+    std::string computedSymbol_;
     bool overriden_;
     //@}
 };

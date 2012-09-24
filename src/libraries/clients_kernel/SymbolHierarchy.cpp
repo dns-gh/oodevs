@@ -38,7 +38,7 @@ SymbolHierarchy::~SymbolHierarchy()
 // -----------------------------------------------------------------------------
 const std::string& SymbolHierarchy::GetValue() const
 {
-    return symbol_;
+    return overriden_ ? symbol_: computedSymbol_;
 }
 
 // -----------------------------------------------------------------------------
@@ -47,9 +47,7 @@ const std::string& SymbolHierarchy::GetValue() const
 // -----------------------------------------------------------------------------
 void SymbolHierarchy::MergeSymbol( const std::string& symbol )
 {
-    App6Symbol::Merge( symbol, originalSymbol_ );
-    if( !overriden_ )
-        symbol_ = originalSymbol_;
+    App6Symbol::Merge( symbol, computedSymbol_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,9 +56,8 @@ void SymbolHierarchy::MergeSymbol( const std::string& symbol )
 // -----------------------------------------------------------------------------
 void SymbolHierarchy::ResetSymbol( const std::string& symbol )
 {
-    originalSymbol_ = symbol;
-    if( !overriden_ )
-        symbol_ = originalSymbol_;
+    if( !symbol.empty() )
+        computedSymbol_ = symbol;
 }
 
 // -----------------------------------------------------------------------------
@@ -69,7 +66,6 @@ void SymbolHierarchy::ResetSymbol( const std::string& symbol )
 // -----------------------------------------------------------------------------
 void SymbolHierarchy::PrepareForMerge()
 {
-    originalSymbol_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -78,7 +74,7 @@ void SymbolHierarchy::PrepareForMerge()
 // -----------------------------------------------------------------------------
 void SymbolHierarchy::OverrideValue( const std::string& value )
 {
-    overriden_ = ( value != originalSymbol_ );
+    overriden_ = true;
     symbol_ = value;
 }
 
@@ -89,7 +85,6 @@ void SymbolHierarchy::OverrideValue( const std::string& value )
 void SymbolHierarchy::Reset()
 {
     overriden_ = false;
-    symbol_ = originalSymbol_;
 }
 
 // -----------------------------------------------------------------------------

@@ -37,10 +37,11 @@
 #include "Symbol.h"
 #include "UrbanKnowledges.h"
 #include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/Color_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/ObjectTypes.h"
-#include "clients_kernel/Color_ABC.h"
+#include "clients_kernel/SymbolFactory.h"
 #include "clients_kernel/SymbolHierarchy_ABC.h"
 
 // -----------------------------------------------------------------------------
@@ -102,7 +103,10 @@ kernel::Formation_ABC* TeamFactory::CreateFormation( const sword::FormationCreat
     Formation* result = new Formation( message, controllers_.controller_ );
     result->Attach< Lives_ABC >( *new FormationLives( *result ) );
     kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
-    result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( message.has_app6symbol() ? "symbols/" + message.app6symbol() : std::string() ) );
+    std::string symbol = message.has_app6symbol() ? message.app6symbol() : std::string();
+    const kernel::Karma& karma = superior->Get< kernel::TacticalHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
+    symbol = symbol.empty() ? model_.symbolsFactory_.GetSymbolBase( karma ) : "symbols/" + symbol;
+    result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( symbol ) );
     result->Attach< kernel::TacticalHierarchies >( *new FormationHierarchy( controllers_.controller_, *result, superior, model_.symbolsFactory_ ) );
     if( result->GetLogisticLevel() != kernel::LogisticLevel::none_ )
         result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, model_.teams_, static_.objectTypes_, result->GetLogisticLevel(), dico, *result ) );

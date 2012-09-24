@@ -103,7 +103,8 @@ kernel::Formation_ABC* FormationFactory::Create( xml::xistream& xis, kernel::Ent
 {
     Formation* formation = new Formation( xis, controllers_.controller_, idManager_ );
     PropertiesDictionary& dico = formation->Get< PropertiesDictionary >();
-    formation->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( xis ) );
+    const kernel::Karma& karma = parent.Get< kernel::TacticalHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
+    formation->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( xis, symbolsFactory_.GetSymbolBase( karma ) ) );
     formation->Attach< kernel::TacticalHierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent, symbolsFactory_ ) );
     formation->Attach< kernel::Positions >( *new FormationPositions( *formation ) );
     formation->Attach( *new LogisticLevelAttritube( controllers_, xis, *formation, true, dico ) );

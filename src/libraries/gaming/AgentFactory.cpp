@@ -77,16 +77,17 @@
 #include "Color.h"
 #include "CommandPostAttributes.h"
 #include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/Color_ABC.h"
+#include "clients_kernel/CommandPostAttributes_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/SymbolFactory.h"
+#include "clients_kernel/SymbolHierarchy.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/Color_ABC.h"
-#include "clients_kernel/SymbolHierarchy.h"
-#include "clients_kernel/CommandPostAttributes_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentFactory constructor
@@ -120,14 +121,17 @@ kernel::Automat_ABC* AgentFactory::Create( const sword::AutomatCreation& message
 {
     Automat* result = new Automat( message, controllers_.controller_, static_.types_ );
     kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
-    result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( message.has_app6symbol() ? "symbols/" + message.app6symbol() : std::string() ) );
-    result->Attach< kernel::CommunicationHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, model_.knowledgeGroups_, dico ) );
     kernel::Entity_ABC* superior = 0;
 
     if( message.parent().has_formation() )
         superior = &model_.GetFormationResolver().Get( message.parent().formation().id() );
     else
         superior = &model_.GetAutomatResolver().Get( message.parent().automat().id() );
+    std::string symbol = message.has_app6symbol() ? message.app6symbol() : std::string();
+    const kernel::Karma& karma = superior->Get< kernel::TacticalHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
+    symbol = symbol.empty() ? model_.symbolsFactory_.GetSymbolBase( karma ) : "symbols/" + symbol;
+    result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( symbol ) );
+    result->Attach< kernel::CommunicationHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, model_.knowledgeGroups_, dico ) );
     result->Attach< kernel::TacticalHierarchies >( *new AutomatTacticalHierarchies( controllers_.controller_, *result, *superior, model_.agents_, model_.teams_ ) );
     result->Attach< Lives_ABC >( *new AutomatLives( *result ) );
     result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, model_.teams_, static_.objectTypes_, result->GetLogisticLevel(), dico, *result ) );
