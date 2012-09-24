@@ -255,7 +255,7 @@ namespace core
 
         //! @name Operations
         //@{
-        virtual void* Get() const
+        virtual void* Get( const std::type_info* /*type = 0*/ ) const
         {
             return static_cast< void* >( const_cast< boost::shared_ptr< movement::Path_ABC >* >( &userData_ ) );
         }
