@@ -567,7 +567,7 @@
     </target>
 
     <target name="propagation_module" description="build propagation module">
-        <build-lib name="propagation_module">
+        <build-lib name="propagation_module" failonwarning="${failonwarning}">
             <includepath path="${libraries.dir}/simulation_kernel"/>
         </build-lib>
     </target>
