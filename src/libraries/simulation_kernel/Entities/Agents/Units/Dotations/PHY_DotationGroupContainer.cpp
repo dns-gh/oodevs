@@ -498,7 +498,7 @@ void PHY_DotationGroupContainer::SendFullState( client::UnitAttributes& asn ) co
             const PHY_Dotation& dotation = *itDotation->second;
             sword::ResourceDotations_ResourceDotation& asnRessource = *asn().mutable_resource_dotations()->add_elem();
             asnRessource.mutable_type()->set_id( dotation.GetCategory().GetMosID() );
-            asnRessource.set_quantity( static_cast< unsigned int >( dotation.GetValue() ) );
+            asnRessource.set_quantity( static_cast< unsigned int >( dotation.GetValue() + .5 ) );
             asnRessource.set_threshold( static_cast< float >( dotation.GetSupplyThresholdPercentage() ) );
         }
     }
