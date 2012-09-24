@@ -149,9 +149,9 @@ MIL_PopulationType::MIL_PopulationType( const std::string& strName, xml::xistrea
 // Name: MIL_PopulationType constructor
 // Created: LDC 2009-04-24
 // -----------------------------------------------------------------------------
-MIL_PopulationType::MIL_PopulationType( const DEC_Model_ABC& model )
+MIL_PopulationType::MIL_PopulationType( const DEC_Model_ABC& model, double rConcentrationDensity )
     : nID_( 0 )
-    , rConcentrationDensity_( 0. )
+    , rConcentrationDensity_( rConcentrationDensity )
     , rDefaultFlowDensity_( 0. )
     , rMaxSpeed_( 0. )
     , rArmedIndividuals_( 0. )

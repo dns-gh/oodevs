@@ -77,7 +77,7 @@ public:
     //@}
 
 protected:
-    MIL_PopulationType( const DEC_Model_ABC& model );
+             MIL_PopulationType( const DEC_Model_ABC& model, double rConcentrationDensity = 0. );
     virtual ~MIL_PopulationType();
 
 private:
