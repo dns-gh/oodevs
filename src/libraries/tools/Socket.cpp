@@ -54,7 +54,7 @@ void Socket::Close()
 namespace
 {
     const int bigSize = 1000;
-    const int reclaimSize = 100;
+    const size_t reclaimSize = 100;
 }
 
 // -----------------------------------------------------------------------------
@@ -73,8 +73,8 @@ int Socket::Send( unsigned long tag, Message& message )
             boost::asio::async_write( *socket_, message.MakeOutputBuffer( tag ),
                                   boost::bind( &Socket::Sent, shared_from_this(),
                                                message, boost::asio::placeholders::error ) );
-        size = queue_.size();
-        if( 0 == size % bigSize )
+        size = static_cast< int >( queue_.size() );
+        if( 0 == ( size % bigSize ))
         {
             MT_LOG_INFO_MSG( "Queuing " << size << " messages queued for " << endpoint_ );
         }
@@ -105,8 +105,8 @@ void Socket::Sent( const Message&, const boost::system::error_code& error )
                                   boost::bind( &Socket::Sent, shared_from_this(),
                                                message, boost::asio::placeholders::error ) );
         }
-        int size = queue_.size();
-        if( size && ( 0 == size % bigSize ) )
+        size_t size = queue_.size();
+        if( size && ( 0 == ( size % bigSize )))
         {
             MT_LOG_INFO_MSG( "There are " << size << " messages queued for " << endpoint_ );
             needCleanup_ = true;

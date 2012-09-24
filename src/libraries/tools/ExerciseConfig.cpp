@@ -98,7 +98,7 @@ void ExerciseConfig::LoadExercise( const std::string& file )
             SetExerciseName( file );
         pWorldParameters_.reset( new WorldParameters( *fileLoader_, dataset_, physical_, GetTerrainFile(), GetPopulationFile() ) );
     }
-    catch( xml::exception& exception )
+    catch( xml::exception& )
     {
         throw;
     }

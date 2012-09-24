@@ -41,7 +41,7 @@
                                       gaming,preparation,library.plugins,3a,mission_tester,license_gui,geostore" description="build all libraries"/>
 
     <target name="tools" depends="MT_Tools" description="build tools static library">
-        <build-lib name="tools" pattern="lib${ant.project.name}_tools-${platform}-mt@{suffix}" suffix="-gd" depends="qt4">
+        <build-lib name="tools" pattern="lib${ant.project.name}_tools-${platform}-mt@{suffix}" suffix="-gd" depends="qt4" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
             <defineset>
                 <define name="APP_VERSION" value="${version.minor}"/>
