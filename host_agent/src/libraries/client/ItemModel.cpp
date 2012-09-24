@@ -55,7 +55,7 @@ namespace
 {
 QString QGet( const Tree& tree, const std::string& key )
 {
-    return Utf8( Get< std::string >( tree, key ) );
+    return QUtf8( Get< std::string >( tree, key ) );
 }
 
 QString Capitalize( QString text )

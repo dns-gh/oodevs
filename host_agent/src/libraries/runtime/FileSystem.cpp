@@ -41,7 +41,7 @@
 #endif
 
 using namespace runtime;
-using runtime::Utf8Convert;
+using runtime::Utf8;
 
 // -----------------------------------------------------------------------------
 // Name: FileSystem::FileSystem
@@ -93,7 +93,7 @@ namespace
 {
 Path MovePath( const Path& dst, const std::string& prefix, const Path& src )
 {
-    return dst / Utf8Convert( src ).substr( prefix.size() );
+    return dst / Utf8( src ).substr( prefix.size() );
 }
 }
 
@@ -103,7 +103,7 @@ Path MovePath( const Path& dst, const std::string& prefix, const Path& src )
 // -----------------------------------------------------------------------------
 void FileSystem::CopyDirectory( const Path& src, const Path& dst ) const
 {
-    const std::string prefix = Utf8Convert( src );
+    const std::string prefix = Utf8( src );
     for( boost::filesystem::recursive_directory_iterator it( src ); it != boost::filesystem::recursive_directory_iterator(); ++it )
         if( boost::filesystem::is_directory( it->status() ) )
             boost::filesystem::create_directory( MovePath( dst, prefix, *it ) );
@@ -215,7 +215,7 @@ int OpenDescriptor( const Path& path )
     _wsopen_s( &fd, path.wstring().c_str(), O_WRONLY | O_CREAT | O_EXCL | O_BINARY, _SH_DENYRW, _S_IREAD | _S_IWRITE );
     return fd;
 #else
-    return open( Utf8Convert( path ).c_str(), O_WRONLY | O_CREAT | O_EXCL | O_BINARY );
+    return open( Utf8( path ).c_str(), O_WRONLY | O_CREAT | O_EXCL | O_BINARY );
 #endif
 }
 
@@ -565,7 +565,7 @@ std::string FileSystem::Checksum( const Path& root, const FileSystem_ABC::T_Pred
         // msvc does not support utf-8 strings
         std::ifstream in( path.wstring(), std::ifstream::binary );
 #else
-        std::ifstream in( Utf8Convert( path ).c_str(), std::ifstream::binary );
+        std::ifstream in( Utf8( path ).c_str(), std::ifstream::binary );
 #endif
         if( in.bad() )
         {

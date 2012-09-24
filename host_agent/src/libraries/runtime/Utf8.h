@@ -21,22 +21,22 @@ namespace filesystem
 namespace runtime
 {
 // -----------------------------------------------------------------------------
-// Name: Utf8Convert
+// Name: Utf8
 // Created: BAX 2012-03-07
 // -----------------------------------------------------------------------------
-std::wstring Utf8Convert( const std::string& text );
+std::wstring Utf8( const std::string& text );
 
 // -----------------------------------------------------------------------------
-// Name: Utf8Convert
+// Name: Utf8
 // Created: BAX 2012-03-07
 // -----------------------------------------------------------------------------
-std::string  Utf8Convert( const std::wstring& text );
+std::string  Utf8( const std::wstring& text );
 
 // -----------------------------------------------------------------------------
-// Name: Utf8Convert
+// Name: Utf8
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-std::string  Utf8Convert( const boost::filesystem::path& path );
+std::string  Utf8( const boost::filesystem::path& path );
 }
 
 #endif

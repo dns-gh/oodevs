@@ -72,7 +72,7 @@ BOOST_AUTO_TEST_CASE( process_returns_correct_members )
     MockApi api;
     int pid = 42;
     std::auto_ptr< Process > process = MakeProcess( api, pid, wname );
-    BOOST_CHECK_EQUAL( Utf8Convert( wname ), process->GetName() );
+    BOOST_CHECK_EQUAL( Utf8( wname ), process->GetName() );
     BOOST_CHECK_EQUAL( pid, process->GetPid() );
 }
 

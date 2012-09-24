@@ -32,7 +32,7 @@
 using namespace host;
 using namespace property_tree;
 using namespace web::node;
-using runtime::Utf8Convert;
+using runtime::Utf8;
 using runtime::Async;
 using runtime::FileSystem_ABC;
 using runtime::Pool_ABC;
@@ -139,7 +139,7 @@ Node::Node( const NodeDependencies& deps,
     , sessions_size_   ( 0 )
 {
     const boost::optional< std::string > cache = tree.get_optional< std::string >( "cache" );
-    ParsePackages( cache == boost::none ? Path() : Utf8Convert( *cache ) );
+    ParsePackages( cache == boost::none ? Path() : Utf8( *cache ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -227,7 +227,7 @@ Tree Node::Save() const
     Tree tree = GetCommonProperties();
     tree.put( "sessions.num_play", num_play_ );
     if( cache_ )
-        tree.put( "cache", Utf8Convert( cache_->GetPath().filename() ) );
+        tree.put( "cache", Utf8( cache_->GetPath().filename() ) );
     tree.put( "stopped", stopped_ );
     if( !process_ )
         return tree;
@@ -274,7 +274,7 @@ bool Node::Start( const Path& app, const Path& web, const std::string& type,
 #ifdef _DEBUG
         ( "--debug" )
 #endif
-        ( MakeOption( "www",  Utf8Convert( web ) ) )
+        ( MakeOption( "www",  Utf8( web ) ) )
         ( MakeOption( "uuid", id_ ) )
         ( MakeOption( "type", type ) )
         ( MakeOption( "name", cfg_.name ) )
@@ -282,8 +282,8 @@ bool Node::Start( const Path& app, const Path& web, const std::string& type,
         ( MakeOption( "port", port_->Get() ) );
     if( cfg_.sessions.reset )
         args.push_back( "--reset" );
-    T_Process ptr = deps_.runtime.Start( Utf8Convert( app ), args, std::string(),
-                                         Utf8Convert( root_ / ( type + ".log" ) ) );
+    T_Process ptr = deps_.runtime.Start( Utf8( app ), args, std::string(),
+                                         Utf8( root_ / ( type + ".log" ) ) );
     if( !ptr )
         return previous;
 

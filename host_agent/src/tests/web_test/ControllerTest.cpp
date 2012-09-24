@@ -144,7 +144,7 @@ namespace
         std::string json;
         BOOST_FOREACH( const Path& it, list )
         {
-            std::string item = runtime::Utf8Convert( it );
+            std::string item = runtime::Utf8( it );
             std::replace( item.begin(), item.end(), '\\', '/' );
             json += "\"" + item + "\",";
         }

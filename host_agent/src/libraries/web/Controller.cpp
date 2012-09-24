@@ -177,7 +177,7 @@ void WriteHttpReply( Reply_ABC& rpy, const std::vector< Path >& list )
     std::ostringstream stream;
     BOOST_FOREACH( const Path& it, list )
     {
-        std::string item = runtime::Utf8Convert( it );
+        std::string item = runtime::Utf8( it );
         std::replace( item.begin(), item.end(), '\\', '/' );
         stream << "\"" << item << "\",";
     }

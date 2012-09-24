@@ -105,7 +105,7 @@ namespace
         {
             std::string json;
             BOOST_FOREACH( const Path& it, operand() )
-                json += "\"" + runtime::Utf8Convert( it ) + "\",";
+                json += "\"" + runtime::Utf8( it ) + "\",";
             BOOST_CHECK_EQUAL( "[" + json.substr( 0, json.size() - 1 ) + "]", expected );
         }
         else

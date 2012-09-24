@@ -37,15 +37,15 @@ namespace
 
 BOOST_AUTO_TEST_CASE( empty_string_converts )
 {
-    BOOST_CHECK( std::string()  == Utf8Convert( std::wstring() ) );
-    BOOST_CHECK( std::wstring() == Utf8Convert( std::string()  ) );
+    BOOST_CHECK( std::string()  == Utf8( std::wstring() ) );
+    BOOST_CHECK( std::wstring() == Utf8( std::string()  ) );
 }
 
 BOOST_AUTO_TEST_CASE( utf8_to_unicode_converts )
 {
     const std::string input( reinterpret_cast< const char* >( tamil_utf8 ), COUNT_OF( tamil_utf8 ) );
     const std::wstring expected( tamil_utf16, COUNT_OF( tamil_utf16 ) );
-    const std::wstring actual = Utf8Convert( input );
+    const std::wstring actual = Utf8( input );
     BOOST_CHECK( expected == actual );
 }
 
@@ -53,7 +53,7 @@ BOOST_AUTO_TEST_CASE( unicode_to_utf8_converts )
 {
     const std::wstring input( tamil_utf16, COUNT_OF( tamil_utf16 ) );
     const std::string expected( reinterpret_cast< const char* >( tamil_utf8 ), COUNT_OF( tamil_utf8 ) );
-    const std::string actual = Utf8Convert( input );
+    const std::string actual = Utf8( input );
     BOOST_CHECK( expected == actual );
 }
 
@@ -61,6 +61,6 @@ BOOST_AUTO_TEST_CASE( unicode_path_to_utf8_converts )
 {
     const boost::filesystem::path input( std::wstring( tamil_utf16, COUNT_OF( tamil_utf16 ) ) );
     const std::string expected( reinterpret_cast< const char* >( tamil_utf8 ), COUNT_OF( tamil_utf8 ) );
-    const std::string actual = Utf8Convert( input );
+    const std::string actual = Utf8( input );
     BOOST_CHECK( expected == actual );
 }

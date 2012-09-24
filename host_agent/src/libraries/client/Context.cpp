@@ -214,7 +214,7 @@ void Context::ParseArguments()
     for( QStringList::const_iterator it = list.begin() + 1; it != list.end(); ++it )
         if( *it == "--root" && ++it != list.end() )
         {
-            root_ = Utf8Convert( Utf8( *it ) );
+            root_ = Utf8( QUtf8( *it ) );
         }
         else if( *it == "--register" )
         {
@@ -292,7 +292,7 @@ void RegisterProtocolHandler( const QString& protocol, const QString& cmd )
 // -----------------------------------------------------------------------------
 void Context::Register()
 {
-    QString app = Utf8( Utf8Convert( runtime_.GetModuleFilename() ) );
+    QString app = QUtf8( Utf8( runtime_.GetModuleFilename() ) );
     QString cmd = QString( "\"%1\" --run \"%2\"" ).arg( app ).arg( "%1" );
     RegisterProtocolHandler( "sword", cmd );
 }
@@ -409,9 +409,9 @@ void Context::OnGetSession()
 // -----------------------------------------------------------------------------
 void Context::ParseSession( QNetworkReply* rpy )
 {
-    const Tree session = FromJson( Utf8( rpy->readAll() ) );
+    const Tree session = FromJson( QUtf8( rpy->readAll() ) );
     QWriteLocker lock( &access_ );
-    //qDebug() << Utf8( ToJson( session, true ) );
+    //qDebug() << QUtf8( ToJson( session, true ) );
     //AddItem( session, "binary" );
     AddItem( session, "model" );
     AddItem( session, "terrain" );
@@ -437,9 +437,9 @@ void Context::AddItem( const Tree& src, const std::string& type )
         return;
 
     const int id = downloads_.size() + (1<<30);
-    const QString qtype = Utf8( type );
-    const QString qname = Utf8( name );
-    const QString qchecksum = Utf8( checksum );
+    const QString qtype = QUtf8( type );
+    const QString qname = QUtf8( name );
+    const QString qchecksum = QUtf8( checksum );
 
     boost::shared_ptr< Item > item = boost::make_shared< Item >( static_cast< size_t >( id ), qtype, qname, qchecksum );
     items_.Append( item );
@@ -450,7 +450,7 @@ void Context::AddItem( const Tree& src, const std::string& type )
     next.setPath( "/api/download_install" );
     QList< QPair< QString, QString > > list;
     list.append( qMakePair( QString( "sid" ), url_.queryItemValue( "sid" ) ) );
-    list.append( qMakePair( QString( "id" ),  Utf8( node ) ) );
+    list.append( qMakePair( QString( "id" ),  QUtf8( node ) ) );
     list.append( qMakePair( QString( "type" ), qtype ) );
     list.append( qMakePair( QString( "name" ),  qname ) );
     list.append( qMakePair( QString( "checksum" ),  qchecksum ) );

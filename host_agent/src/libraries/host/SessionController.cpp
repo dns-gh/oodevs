@@ -20,7 +20,7 @@
 
 using namespace host;
 using namespace property_tree;
-using runtime::Utf8Convert;
+using runtime::Utf8;
 using runtime::Async;
 using runtime::FileSystem_ABC;
 using runtime::Pool_ABC;
@@ -49,10 +49,10 @@ SessionController::SessionController( cpplog::BaseLogger& log,
 {
     system_.MakePaths( trash_ );
     if( !system_.IsDirectory( apps_ ) )
-        throw std::runtime_error( "'" + runtime::Utf8Convert( apps_ ) + "' is not a directory" );
+        throw std::runtime_error( "'" + runtime::Utf8( apps_ ) + "' is not a directory" );
     const Path app = apps_ / "simulation_app.exe";
     if( !system_.IsFile( app ) )
-        throw std::runtime_error( "'" + Utf8Convert( app ) + "' is not a file" );
+        throw std::runtime_error( "'" + Utf8( app ) + "' is not a file" );
     timer_ = MakeTimer( pool, boost::posix_time::seconds( 5 ), boost::bind( &SessionController::Refresh, this ) );
     sizes_ = MakeTimer( pool, boost::posix_time::minutes( 1 ), boost::bind( &SessionController::RefreshSize, this ) );
 }
@@ -144,7 +144,7 @@ void SessionController::ReloadSession( const Path& path, T_Predicate predicate )
     catch( const std::exception& err )
     {
         LOG_WARN( log_ ) << "[session] " << err.what();
-        LOG_WARN( log_ ) << "[session] Unable to reload " << Utf8Convert( path );
+        LOG_WARN( log_ ) << "[session] Unable to reload " << Utf8( path );
     }
 }
 
@@ -225,7 +225,7 @@ void SessionController::Create( Session_ABC& session )
     LOG_INFO( log_ ) << "[session] "
                      << session.GetId() << " "
                      << session.GetName() << " "
-                     << Utf8Convert( session.GetExercise() ) << " :" << session.GetPort();
+                     << Utf8( session.GetExercise() ) << " :" << session.GetPort();
     Save( session );
 }
 

@@ -33,13 +33,13 @@
 using namespace host;
 using namespace mocks;
 using namespace property_tree;
-using runtime::Utf8Convert;
+using runtime::Utf8;
 
 namespace
 {
     std::string GetApp( const Path& apps, bool replace = true )
     {
-        std::string reply = Utf8Convert( apps / "simulation_app.exe" );
+        std::string reply = Utf8( apps / "simulation_app.exe" );
         if( replace )
             std::replace( reply.begin(), reply.end(), '\\', '/' );
         return reply;

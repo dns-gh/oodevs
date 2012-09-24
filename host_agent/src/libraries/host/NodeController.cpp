@@ -25,7 +25,7 @@
 
 using namespace host;
 using namespace property_tree;
-using runtime::Utf8Convert;
+using runtime::Utf8;
 using runtime::Async;
 using runtime::FileSystem_ABC;
 using runtime::Pool_ABC;
@@ -61,9 +61,9 @@ NodeController::NodeController( cpplog::BaseLogger& log,
 {
     system.MakePaths( root_ );
     if( !system_.IsFile( app_ ) )
-        throw std::runtime_error( "'" + runtime::Utf8Convert( app_ ) + "' is not a binary" );
+        throw std::runtime_error( "'" + runtime::Utf8( app_ ) + "' is not a binary" );
     if( !system_.IsDirectory( web_ ) )
-        throw std::runtime_error( "'" + runtime::Utf8Convert( web_ ) + "' is not a directory" );
+        throw std::runtime_error( "'" + runtime::Utf8( web_ ) + "' is not a directory" );
     timer_ = runtime::MakeTimer( pool, boost::posix_time::seconds( 5 ), boost::bind( &NodeController::Refresh, this ) );
 }
 
@@ -107,7 +107,7 @@ void NodeController::ReloadNode( const Path& path )
     catch( const std::exception& err )
     {
         LOG_WARN( log_ ) << "[" << type_ << "] " << err.what();
-        LOG_WARN( log_ ) << "[" << type_ << "] Unable to reload " << Utf8Convert( path );
+        LOG_WARN( log_ ) << "[" << type_ << "] Unable to reload " << Utf8( path );
     }
 }
 

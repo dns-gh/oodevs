@@ -25,7 +25,7 @@
 using namespace host;
 using namespace host::proxy;
 using namespace property_tree;
-using runtime::Utf8Convert;
+using runtime::Utf8;
 using runtime::Async;
 using runtime::FileSystem_ABC;
 using runtime::Pool_ABC;
@@ -72,9 +72,9 @@ Proxy::Proxy( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime,
     , async_  ( pool )
 {
     if( !system_.Exists( config_.app ) )
-        throw std::runtime_error( runtime::Utf8Convert( config_.app ) + " is missing" );
+        throw std::runtime_error( runtime::Utf8( config_.app ) + " is missing" );
     if( !system_.IsFile( config_.app ) )
-        throw std::runtime_error( runtime::Utf8Convert( config_.app ) + " is not a file" );
+        throw std::runtime_error( runtime::Utf8( config_.app ) + " is not a file" );
     const Path tag = config_.root / "proxy.id";
     LOG_INFO( log_ ) << "[proxy] Listening to localhost:" << config_.port;
     bool hasProcess = system_.IsFile( tag );
@@ -225,12 +225,12 @@ Proxy::T_Process Proxy::MakeProcess() const
     if( config_.ssl.enabled )
     {
         args.push_back( "--ssl" );
-        args.push_back( "--ssl_certificate \"" + Utf8Convert( config_.ssl.certificate ) + "\"" );
-        args.push_back( "--ssl_key \"" + Utf8Convert( config_.ssl.key ) + "\"" );
+        args.push_back( "--ssl_certificate \"" + Utf8( config_.ssl.certificate ) + "\"" );
+        args.push_back( "--ssl_key \"" + Utf8( config_.ssl.key ) + "\"" );
     }
-    return runtime_.Start( Utf8Convert( config_.app ), args,
-            Utf8Convert( Path( config_.app ).remove_filename() ),
-            Utf8Convert( config_.root / "proxy.log" ) );
+    return runtime_.Start( Utf8( config_.app ), args,
+            Utf8( Path( config_.app ).remove_filename() ),
+            Utf8( config_.root / "proxy.log" ) );
 }
 
 // -----------------------------------------------------------------------------

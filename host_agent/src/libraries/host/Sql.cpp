@@ -17,7 +17,7 @@
 #include <sqlite/sqlite3.h>
 
 using namespace host;
-using runtime::Utf8Convert;
+using runtime::Utf8;
 
 namespace
 {
@@ -79,7 +79,7 @@ Sql::Sql( const Path& file )
     : file_  ( file )
 {
     sqlite3* pdb = 0;
-    int err = sqlite3_open( Utf8Convert( file_ ).c_str(), &pdb );
+    int err = sqlite3_open( Utf8( file_ ).c_str(), &pdb );
     if( err != SQLITE_OK )
         ThrowSqlException( "Unable to open " + file.string(), err );
     db_.reset( pdb, &SqliteClose );

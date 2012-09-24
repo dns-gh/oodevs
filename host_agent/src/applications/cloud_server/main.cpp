@@ -57,7 +57,7 @@ int wmain( int argc, wchar_t* argv[], wchar_t* /*env*/ )
 {
     std::vector< std::string > args;
     for( int i = 0; i < argc; ++i )
-        args.push_back( Utf8Convert( std::wstring( argv[i] ) ) );
+        args.push_back( Utf8( std::wstring( argv[i] ) ) );
     std::vector< const char* > ptrs;
     for( int i = 0; i < argc; ++i )
         ptrs.push_back( args.at( i ).c_str() );
@@ -99,7 +99,7 @@ bool ReadParameter( Path& dst, const std::string& name, int& idx, int argc, cons
         return false;
     if( ++idx >= argc )
         throw std::runtime_error( "missing " + name + " parameter" );
-    dst = Utf8Convert( std::string( argv[idx] ) );
+    dst = Utf8( std::string( argv[idx] ) );
     return true;
 }
 
@@ -283,7 +283,7 @@ struct SessionFactory : public SessionFactory_ABC
         const Tree tree = FromJson( deps.system.ReadFile( tag ) );
         const boost::optional< std::string > id = tree.get_optional< std::string >( "node" );
         if( id == boost::none )
-            throw std::runtime_error( "missing node id in " + Utf8Convert( tag ) );
+            throw std::runtime_error( "missing node id in " + Utf8( tag ) );
         NodeController_ABC::T_Node node = nodes.Get( boost::uuids::string_generator()( *id ) );
         if( !node )
             throw std::runtime_error( "unknown node " + *id );
@@ -397,20 +397,20 @@ Configuration ParseConfiguration( const runtime::Runtime_ABC& runtime, const Fil
 
     const Path bin = Path( module ).remove_filename();
     Configuration cfg;
-    cfg.root                  = Utf8Convert( GetTree( tree, "root", Utf8Convert( root ) ) );
+    cfg.root                  = Utf8( GetTree( tree, "root", Utf8( root ) ) );
     cfg.ports.period          = GetTree( tree, "ports.period", 40 );
     cfg.ports.min             = GetTree( tree, "ports.min", 50000 );
     cfg.ports.max             = GetTree( tree, "ports.max", 60000 );
     cfg.ports.proxy           = GetTree( tree, "ports.proxy", 8080 );
     cfg.cluster.enabled       = GetTree( tree, "cluster.enabled", true );
     cfg.ssl.enabled           = GetTree( tree, "ssl.enabled", false );
-    cfg.ssl.certificate       = Utf8Convert( GetTree( tree, "ssl.certificate", Utf8Convert( bin / "certificate.pem" ) ) );
-    cfg.ssl.key               = Utf8Convert( GetTree( tree, "ssl.key", Utf8Convert( bin / "key.pem" ) ) );
-    cfg.proxy.app             = Utf8Convert( GetTree( tree, "proxy.app",    Utf8Convert( bin / "proxy.exe" ) ) );
-    cfg.node.app              = Utf8Convert( GetTree( tree, "node.app",     Utf8Convert( bin / "node.exe" ) ) );
-    cfg.node.root             = Utf8Convert( GetTree( tree, "node.root",    Utf8Convert( bin / ".." / "www" ) ) );
+    cfg.ssl.certificate       = Utf8( GetTree( tree, "ssl.certificate", Utf8( bin / "certificate.pem" ) ) );
+    cfg.ssl.key               = Utf8( GetTree( tree, "ssl.key", Utf8( bin / "key.pem" ) ) );
+    cfg.proxy.app             = Utf8( GetTree( tree, "proxy.app",    Utf8( bin / "proxy.exe" ) ) );
+    cfg.node.app              = Utf8( GetTree( tree, "node.app",     Utf8( bin / "node.exe" ) ) );
+    cfg.node.root             = Utf8( GetTree( tree, "node.root",    Utf8( bin / ".." / "www" ) ) );
     cfg.node.min_play_seconds = GetTree( tree, "node.min_play_s", 5*60 );
-    cfg.session.apps          = Utf8Convert( GetTree( tree, "session.apps", Utf8Convert( bin ) ) );
+    cfg.session.apps          = Utf8( GetTree( tree, "session.apps", Utf8( bin ) ) );
     system.WriteFile( config, ToJson( tree, true ) );
 
     bool valid = cfg.Parse( log, argc, argv );

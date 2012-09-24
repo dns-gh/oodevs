@@ -28,7 +28,7 @@ using namespace property_tree;
 using runtime::Async;
 using runtime::FileSystem_ABC;
 using runtime::Pool_ABC;
-using runtime::Utf8Convert;
+using runtime::Utf8;
 
 typedef boost::function< void( const Path& ) > PathOperand;
 
@@ -86,7 +86,7 @@ struct Metadata
         Tree rpy;
         SaveTo( rpy );
         if( !tomb_.empty() )
-            rpy.put( "tomb", Utf8Convert( tomb_ ) );
+            rpy.put( "tomb", Utf8( tomb_ ) );
         return rpy;
     }
 
@@ -155,7 +155,7 @@ private:
     Metadata( const Tree& tree )
         : package_( Get< std::string >( tree, "package", "" ) )
         , version_( GetVersion( tree, "version" ) )
-        , tomb_   ( Utf8Convert( Get< std::string >( tree, "tomb", "" ) ) )
+        , tomb_   ( Utf8( Get< std::string >( tree, "tomb", "" ) ) )
         , links_  ( 0 )
     {
         // NOTHING
@@ -263,7 +263,7 @@ struct Item : Package_ABC::Item_ABC
         Tree tree;
         tree.put( "id", id_ );
         tree.put( "type", GetType() );
-        tree.put( "name", Utf8Convert( name_ ) );
+        tree.put( "name", Utf8( name_ ) );
         tree.put( "date", date_ );
         tree.put( "checksum", checksum_ );
         tree.put( "size", size_ );
@@ -324,7 +324,7 @@ struct Item : Package_ABC::Item_ABC
             if( !ref.Find( *dep, true ) && !root.Find( *dep, true ) )
             {
                 action_ = "error";
-                error_ = "Missing " + dep->GetType() + " " + Utf8Convert( dep->GetName() );
+                error_ = "Missing " + dep->GetType() + " " + Utf8( dep->GetName() );
                 return;
             }
         Package_ABC::T_Item next = ref.Find( *this, true );
@@ -402,8 +402,8 @@ struct Item : Package_ABC::Item_ABC
     void Link( Tree& tree, const Package_ABC& ref, bool recurse )
     {
         const std::string prefix = GetType();
-        tree.put( prefix + ".name", Utf8Convert( name_ ) );
-        tree.put( prefix + ".root", Utf8Convert( root_ ) );
+        tree.put( prefix + ".name", Utf8( name_ ) );
+        tree.put( prefix + ".root", Utf8( root_ ) );
         tree.put( prefix + ".checksum", checksum_ );
         if( recurse )
             BOOST_FOREACH( const T_Dependencies::value_type& it, GetDependencies() )
@@ -419,7 +419,7 @@ struct Item : Package_ABC::Item_ABC
 
     void Download( const FileSystem_ABC& fs, web::Chunker_ABC& dst ) const
     {
-        dst.SetName( Utf8Convert( name_ ) );
+        dst.SetName( Utf8( name_ ) );
         io::Writer_ABC& io = dst.OpenWriter();
         FileSystem_ABC::T_Packer packer = fs.Pack( io );
         packer->Pack( root_, IsItemFile( GetSuffix() ) );
@@ -457,7 +457,7 @@ std::string GetFilename( Path path, const std::string& root )
     path.remove_filename();
     while( path.filename() != root )
         reply = PopFilename( path ) / reply;
-    return Utf8Convert( reply );
+    return Utf8( reply );
 }
 
 template< typename T >
@@ -484,7 +484,7 @@ bool AttachExtended( Async& async, const Path& path, const FileSystem_ABC& syste
 struct Model : public Item
 {
     Model( const FileSystem_ABC& system, const Path& root, const Path& file, size_t id, const Metadata* meta )
-        : Item( system, root, id, Utf8Convert( Path( file ).remove_filename().remove_filename().filename() ), Format( system.GetLastWrite( file ) ), meta )
+        : Item( system, root, id, Utf8( Path( file ).remove_filename().remove_filename().filename() ), Format( system.GetLastWrite( file ) ), meta )
     {
         // NOTHING
     }
@@ -918,7 +918,7 @@ namespace
 {
 void Link( Tree& dst, const Tree& src, const std::string& key, const Package& pkg )
 {
-    const Path root = Utf8Convert( Get< std::string >( src, key + ".root"  ) );
+    const Path root = Utf8( Get< std::string >( src, key + ".root"  ) );
     const std::string checksum = Get< std::string >( src, key + ".checksum" );
     Package_ABC::T_Item item = pkg.Find( root, checksum, false );
     if( item )

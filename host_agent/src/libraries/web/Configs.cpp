@@ -20,7 +20,7 @@
 
 using namespace web;
 using namespace property_tree;
-using runtime::Utf8Convert;
+using runtime::Utf8;
 using session::RngDistribution;
 
 // -----------------------------------------------------------------------------
@@ -195,7 +195,7 @@ bool ReadPlugins( session::Config::T_Plugins& dst, const Plugins& plugins, const
     bool modified = false;
     BOOST_FOREACH( const Path& path, plugins.GetNames( 0, INT_MAX ) )
     {
-        const std::string name = Utf8Convert( path );
+        const std::string name = Utf8( path );
         session::Config::T_Plugins::iterator it = dst.find( name );
         if( it == dst.end() )
             it = dst.insert( std::make_pair( name, session::PluginConfig( plugins, path ) ) ).first;

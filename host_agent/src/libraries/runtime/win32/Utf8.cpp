@@ -42,20 +42,20 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: Utf8Convert
+// Name: Utf8
 // Created: BAX 2012-03-07
 // -----------------------------------------------------------------------------
-std::wstring runtime::Utf8Convert( const std::string& text )
+std::wstring runtime::Utf8( const std::string& text )
 {
     return Convert< std::string, std::wstring, wchar_t >( text,
         boost::bind( MultiByteToWideChar, CP_UTF8, 0, _1, _2, _3, _4 ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Utf8Convert
+// Name: Utf8
 // Created: BAX 2012-03-07
 // -----------------------------------------------------------------------------
-std::string runtime::Utf8Convert( const std::wstring& text )
+std::string runtime::Utf8( const std::wstring& text )
 {
     return Convert< std::wstring, std::string, char >( text,
         boost::bind( WideCharToMultiByte, CP_UTF8, 0, _1, _2, _3, _4,
@@ -63,10 +63,10 @@ std::string runtime::Utf8Convert( const std::wstring& text )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Utf8Convert
+// Name: Utf8
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-std::string runtime::Utf8Convert( const boost::filesystem::path& path )
+std::string runtime::Utf8( const boost::filesystem::path& path )
 {
-    return Utf8Convert( path.wstring() );
+    return Utf8( path.wstring() );
 }

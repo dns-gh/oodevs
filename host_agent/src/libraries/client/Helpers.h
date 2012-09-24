@@ -14,12 +14,12 @@
 
 namespace gui
 {
-    inline QString Utf8( const std::string& text )
+    inline QString QUtf8( const std::string& text )
     {
         return QString::fromUtf8( text.c_str(), static_cast< int >( text.size() ) );
     }
 
-    inline std::string Utf8( const QString& text )
+    inline std::string QUtf8( const QString& text )
     {
         const QByteArray data = text.toUtf8();
         return std::string( data.constData(), data.size() );

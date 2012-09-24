@@ -51,7 +51,7 @@ namespace
     {
         wchar_t name[MAX_PATH];
         int size = api.GetProcessName( handle.get(), name, sizeof name - 1 );
-        return size ? Utf8Convert( std::wstring( name ) ) : "";
+        return size ? Utf8( std::wstring( name ) ) : "";
     }
 }
 

@@ -64,7 +64,7 @@ std::string Api::GetLastError() const
                    reinterpret_cast< LPWSTR >( &buffer ), 0, NULL );
     const std::wstring error( buffer );
     LocalFree( buffer );
-    return Utf8Convert( error );
+    return Utf8( error );
 }
 
 // -----------------------------------------------------------------------------

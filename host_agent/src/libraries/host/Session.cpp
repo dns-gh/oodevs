@@ -45,7 +45,7 @@ using namespace web::session;
 using runtime::Async;
 using runtime::FileSystem_ABC;
 using runtime::Runtime_ABC;
-using runtime::Utf8Convert;
+using runtime::Utf8;
 using web::Client_ABC;
 
 namespace
@@ -139,7 +139,7 @@ Session::T_Process AcquireProcess( const Tree& tree, const runtime::Runtime_ABC&
 
 Path GetPath( const Tree& src, const std::string& key )
 {
-    return Utf8Convert( Get< std::string >( src, key ) );
+    return Utf8( Get< std::string >( src, key ) );
 }
 
 template< typename T >
@@ -404,7 +404,7 @@ void WritePlugin( Tree& tree, const std::string& prefix, const web::session::Plu
 {
     if( !cfg.enabled )
         return;
-    tree.put( prefix + "<xmlattr>.library", Utf8Convert( cfg.library ) );
+    tree.put( prefix + "<xmlattr>.library", Utf8( cfg.library ) );
     BOOST_FOREACH( const web::session::PluginConfig::T_Parameters::value_type& value, cfg.parameters )
         tree.put( prefix + XpathToXml( value.first ), value.second );
 }
@@ -635,11 +635,11 @@ bool Session::Start( const Path& apps, const std::string& checkpoint )
         ClearOutput( output );
     deps_.system.MakePaths( output );
     std::vector< std::string > options = boost::assign::list_of
-        ( MakeOption( "debug-dir", Utf8Convert( GetRoot() / "debug" ) ) )
-        ( MakeOption( "exercises-dir", Utf8Convert( GetPath( "exercise" ) ) ) )
-        ( MakeOption( "terrains-dir", Utf8Convert( GetPath( "terrain" ) ) ) )
-        ( MakeOption( "models-dir", Utf8Convert( GetPath( "model" ) ) ) )
-        ( MakeOption( "exercise", Utf8Convert( GetExercise() ) ) )
+        ( MakeOption( "debug-dir", Utf8( GetRoot() / "debug" ) ) )
+        ( MakeOption( "exercises-dir", Utf8( GetPath( "exercise" ) ) ) )
+        ( MakeOption( "terrains-dir", Utf8( GetPath( "terrain" ) ) ) )
+        ( MakeOption( "models-dir", Utf8( GetPath( "model" ) ) ) )
+        ( MakeOption( "exercise", Utf8( GetExercise() ) ) )
         ( MakeOption( "session",  output.filename() ) )
         ( "--silent" );
     std::string file = "session.xml";
@@ -654,8 +654,8 @@ bool Session::Start( const Path& apps, const std::string& checkpoint )
     deps_.system.WriteFile( output / file, GetConfiguration( cfg_, port_->Get() ) );
     if( !checkpoint.empty() )
         options.push_back( MakeOption( "checkpoint", checkpoint ) );
-    T_Process ptr = deps_.runtime.Start( Utf8Convert( apps / app ),
-        options, Utf8Convert( apps ), Utf8Convert( GetRoot() / "session.log" ) );
+    T_Process ptr = deps_.runtime.Start( Utf8( apps / app ),
+        options, Utf8( apps ), Utf8( GetRoot() / "session.log" ) );
     if( !ptr )
         return false;
 
@@ -889,7 +889,7 @@ template< typename T >
 bool Attach( const FileSystem_ABC& system, const Path& path, T& items )
 {
     if( system.IsFile( path / "data" ) )
-        items.push_back( runtime::Utf8Convert( path.filename() ) );
+        items.push_back( runtime::Utf8( path.filename() ) );
     return true;
 }
 }
@@ -909,7 +909,7 @@ Session::T_Ptr Session::Replay()
     cfg.name += " replay " + boost::lexical_cast< std::string >( replays_.size() + 1 );
     SessionPaths paths = paths_;
     paths.root = deps_.system.MakeAnyPath( paths.root.remove_filename() );
-    T_Ptr next = boost::make_shared< Session >( deps_, node_, paths, cfg, Utf8Convert( GetExercise() ), id_ );
+    T_Ptr next = boost::make_shared< Session >( deps_, node_, paths, cfg, Utf8( GetExercise() ), id_ );
     replays_.insert( next->GetId() );
     return next;
 }
