@@ -157,7 +157,7 @@
     </target>
 
     <target name="license_gui" description="build license_gui static library">
-        <build-lib name="license_gui" depends="qt4,flexlm" pattern="lib${ant.project.name}_license_gui-${platform}-mt@{suffix}" suffix="-gd">
+        <build-lib name="license_gui" depends="qt4,flexlm" pattern="lib${ant.project.name}_license_gui-${platform}-mt@{suffix}" suffix="-gd" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
