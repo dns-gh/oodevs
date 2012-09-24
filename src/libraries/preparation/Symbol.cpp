@@ -24,18 +24,26 @@ Symbol::Symbol( const std::string& symbol )
 // Name: Symbol constructor
 // Created: LGY 2011-07-28
 // -----------------------------------------------------------------------------
-Symbol::Symbol( xml::xistream& xis )
+Symbol::Symbol( xml::xistream& xis, const std::string& defaultSymbol )
 {
     if( xis.has_attribute( "symbol" ) )
     {
-        OverrideValue( xis.attribute< std::string >( "symbol" ) );
+        std::string nature = xis.attribute< std::string >( "symbol" );
+        if( nature.empty() )
+            nature = defaultSymbol;
+        else if( nature.find( "symbols/" ) == std::string::npos )
+            nature = "symbols/" + nature;
+        OverrideValue( nature );
         if( xis.has_attribute( "overridden-symbol" ) )
         {
             bool overridden = xis.attribute< bool >( "overridden-symbol" );
             SetOverriden( overridden );
         }
         else
+        {
+            ResetSymbol( nature );
             SetOverriden( false );
+    }
     }
 }
 

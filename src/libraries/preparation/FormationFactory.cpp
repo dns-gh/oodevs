@@ -81,7 +81,8 @@ kernel::Formation_ABC* FormationFactory::Create( xml::xistream& xis, kernel::Ent
 {
     Formation* formation = new Formation( xis, controllers_.controller_, idManager_ );
     kernel::PropertiesDictionary& dico = formation->Get< kernel::PropertiesDictionary >();
-    formation->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( xis ) );
+    const kernel::Karma& karma = parent.Get< kernel::TacticalHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
+    formation->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( xis, symbolsFactory_.GetSymbolBase( karma ) ) );
     formation->Attach< kernel::TacticalHierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent, symbolsFactory_ ) );
     formation->Attach< kernel::Positions >( *new FormationPositions( *formation ) );
     formation->Attach< LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_.controller_, *formation, staticModel_.objectTypes_, dico ) );

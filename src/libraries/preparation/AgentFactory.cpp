@@ -261,7 +261,7 @@ kernel::Automat_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Entity_AB
     kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
     result->Attach( *new kernel::EntityType< kernel::AutomatType >( *result, *type, dictionary ) );
     result->Attach< kernel::Positions >( *new AutomatPositions( *result ) );
-    result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( xis ) );
+    result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( xis, std::string() ) );
     result->Attach< kernel::AutomatDecisions_ABC >( *new AutomatDecisions( xis, controllers_.controller_, *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, &parent ) );
     result->Attach< kernel::CommunicationHierarchies >( *new AutomatCommunications( xis, controllers_.controller_, *result, model_.knowledgeGroups_ ) );

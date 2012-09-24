@@ -32,7 +32,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit Symbol( const std::string& symbol );
-    explicit Symbol( xml::xistream& xis );
+    explicit Symbol( xml::xistream& xis, const std::string& defaultSymbol );
     virtual ~Symbol();
     //@}
 
