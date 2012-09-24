@@ -382,7 +382,7 @@
     </target>
 
     <target name="meteo" depends="protocol,clients_kernel" description="build meteo static library">
-        <build-lib name="meteo" pattern="lib${ant.project.name}_meteo-${platform}-mt@{suffix}" suffix="-gd" depends="qt4">
+        <build-lib name="meteo" pattern="lib${ant.project.name}_meteo-${platform}-mt@{suffix}" suffix="-gd" depends="qt4" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
