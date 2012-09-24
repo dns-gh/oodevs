@@ -21,7 +21,7 @@
   <orbat file="orbat.xml"/>
   <urbanstate file="urbanstate.xml"/>
   <weather file="weather.xml"/>
-  <terrain name="Angers_x9_en"/>
+  <terrain name="TerrainTest"/>
   <model dataset="ada" physical="worldwide-ML"/>
 </exercise>
 <!-- signature="0782551468" -->
