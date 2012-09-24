@@ -31,7 +31,7 @@ using namespace actions;
 // Name: CreationPanels constructor
 // Created: SBO 2007-06-19
 // -----------------------------------------------------------------------------
-CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const ::StaticModel& staticModel, ItemFactory_ABC& factory, const Model& model,
+CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const ::StaticModel& staticModel, const Model& model,
                                 const Time_ABC& simulation, ParametersLayer& paramLayer, ::WeatherLayer& weatherLayer, GlTools_ABC& tools, SymbolIcons& icons,
                                 ColorStrategy_ABC& colorStrategy, const tools::ExerciseConfig& config )
     : Panels      ( parent )
@@ -39,7 +39,7 @@ CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const
 {
     setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
     AddPanel( units_ = new UnitsPanel( this, *this, controllers, staticModel.types_, icons, colorStrategy ) );
-    AddPanel( crowds_ = new PopulationsPanel( this, *this, controllers, staticModel.types_, factory ) );
+    AddPanel( crowds_ = new PopulationsPanel( this, *this, controllers, staticModel.types_ ) );
     AddPanel( objects_ = new ObjectCreationPanel( this, *this, controllers, model.actions_, staticModel, simulation, model.teams_.GetNoSideTeam(), paramLayer, tools ) );
     AddPanel( drawings_ = new DrawerPanel( this, *this, paramLayer, controllers, model.drawings_, config ) );
     AddPanel( fires_ = new FireCreationPanel( this, *this, controllers, model.actions_, simulation, staticModel, paramLayer, tools ) );

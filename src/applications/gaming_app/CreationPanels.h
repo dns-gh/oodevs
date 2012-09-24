@@ -32,7 +32,6 @@ namespace gui
 {
     class ColorStrategy_ABC;
     class DrawerPanel;
-    class ItemFactory_ABC;
     class ParametersLayer;
     class PopulationsPanel;
     class SymbolIcons;
@@ -60,7 +59,7 @@ class CreationPanels : public gui::Panels
 public:
     //! @name Constructors/Destructor
     //@{
-    CreationPanels( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel, gui::ItemFactory_ABC& factory, const Model& model,
+    CreationPanels( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel, const Model& model,
                     const kernel::Time_ABC& simulation, gui::ParametersLayer& paramLayer, ::WeatherLayer& weatherLayer, kernel::GlTools_ABC& tools, gui::SymbolIcons& icons,
                     gui::ColorStrategy_ABC& colorStrategy, const tools::ExerciseConfig& config );
     virtual ~CreationPanels();
