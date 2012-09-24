@@ -27,10 +27,12 @@ ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controller
     , controllers_( controllers )
     , exercise_( exercise )
     , config_( config )
+    , resources_( new QStandardItemModel( this) )
+    , orderFiles_( new QStandardItemModel( this) )
 {
     setModal( false );
     setCaption( tr( "Exercise" ) );
-    Q3GridLayout* grid = new Q3GridLayout( this, 5, 2, 0, 5 );
+    QGridLayout* grid = new QGridLayout( this );
     grid->setMargin( 5 );
     grid->setRowStretch( 0, 1 );
     grid->setRowStretch( 1, 10 );
@@ -38,71 +40,99 @@ ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controller
     grid->setRowStretch( 3, 1 );
     grid->setRowStretch( 4, 1 );
     {
-        Q3GroupBox* box = new Q3HGroupBox( tr( "Information" ), this );
-        new QLabel( tr( "Name:" ), box );
+        QGroupBox* box = new QGroupBox( tr( "Information" ), this );
+        QHBoxLayout* layout = new QHBoxLayout();
+        box->setLayout( layout );
+        layout->addWidget( new QLabel( tr( "Name:" ) ) );
         name_ = new QLineEdit( box );
-        grid->addMultiCellWidget( box, 0, 0, 0, 2 );
+        layout->addWidget( name_ );
+        grid->addWidget( box, 0, 0, 1, 2 );
     }
     {
-        Q3GroupBox* box = new Q3VGroupBox( tr( "Briefing" ), this );
-        Q3HBox* hbox = new Q3HBox( box );
-        new QLabel( tr( "Language" ), hbox );
-        lang_ = new gui::ValuedComboBox< QString >( hbox );
+        QGroupBox* box = new QGroupBox( tr( "Briefing" ), this );
+        QVBoxLayout* vLayout = new QVBoxLayout();
+        box->setLayout( vLayout );
+        QHBoxLayout* hLayout = new QHBoxLayout();
+        vLayout->addLayout( hLayout );
+        hLayout->addWidget( new QLabel( tr( "Language" ) ) );
+        lang_ = new gui::ValuedComboBox< QString >();
+        hLayout->addWidget( lang_ );
         lang_->AddItem( tr( "English" ), "en" );
         lang_->AddItem( tr( "French" ), "fr" );
         lang_->AddItem( tr( "Spanish" ), "es" );
         connect( lang_, SIGNAL( activated( int ) ), this, SLOT( OnChangeLang() ) );
-        QPushButton* textFormat = new QPushButton( tr( "source" ), hbox );
+        QPushButton* textFormat = new QPushButton( tr( "source" ) );
+        hLayout->addWidget( textFormat );
         textFormat->setToggleButton( true );
         connect( textFormat, SIGNAL( toggled( bool ) ), this, SLOT( OnToggleDisplayMode( bool ) ) );
-        briefing_ = new Q3TextEdit( box );
+        briefing_ = new QTextEdit();
+        vLayout->addWidget( briefing_ );
         briefing_->setTextFormat( Qt::RichText );
-        grid->addMultiCellWidget( box, 1, 1, 0, 2 );
+        grid->addWidget( box, 1, 0, 1, 2 );
     }
     {
-        Q3GroupBox* box = new Q3HGroupBox( tr( "Files" ), this );
-        resources_ = new Q3ListView( box );
-        resources_->addColumn( tr( "Name" ) );
-        resources_->addColumn( tr( "File" ) );
-        resources_->header()->setMovingEnabled( false );
-        resources_->setAllColumnsShowFocus( true );
-        resources_->setResizeMode( Q3ListView::LastColumn );
-        Q3VBox* tools = new Q3VBox( box );
-        QPushButton* add = new QPushButton( tr( "+" ), tools );
+        QGroupBox* box = new QGroupBox( tr( "Files" ) );
+        QHBoxLayout* layout = new QHBoxLayout();
+        box->setLayout( layout );
+        resourcesView_ = new QTreeView();
+        layout->addWidget( resourcesView_ );
+        resourcesView_->setModel( resources_ );
+        resources_->setColumnCount( 2 );
+        QStringList headers;
+        headers << tr( "Name" ) << tr( "File" );
+        resources_->setHorizontalHeaderLabels( headers );
+        resourcesView_->header()->setMovable( false );
+        QVBoxLayout* vLayout = new QVBoxLayout();
+        layout->addLayout( vLayout );
+        QPushButton* add = new QPushButton( tr( "+" ) );
+        vLayout->addWidget( add );
         add->setMaximumWidth( 40 );
         connect( add, SIGNAL( clicked() ), this, SLOT( OnAddResource() ) );
-        QPushButton* del = new QPushButton( tr( "-" ), tools );
+        QPushButton* del = new QPushButton( tr( "-" ) );
+        vLayout->addWidget( del );
         del->setMaximumWidth( 40 );
         connect( del, SIGNAL( clicked() ), this, SLOT( OnDeleteResource() ) );
-        grid->addMultiCellWidget( box, 2, 2, 0, 2 );
+        grid->addWidget( box, 2, 0, 1, 2 );
     }
     {
-        Q3GroupBox* box = new Q3HGroupBox( tr( "Order files" ), this );
-        orderFiles_ = new Q3ListView( box );
-        orderFiles_->addColumn( tr( "File" ) );
-        orderFiles_->header()->setMovingEnabled( false );
-        orderFiles_->setAllColumnsShowFocus( true );
-        orderFiles_->setResizeMode( Q3ListView::LastColumn );
-        Q3VBox* tools = new Q3VBox( box );
-        QPushButton* add = new QPushButton( tr( "+" ), tools );
+        QGroupBox* box = new QGroupBox( tr( "Order files" ) );
+        QHBoxLayout* layout = new QHBoxLayout();
+        box->setLayout( layout );
+        orderFilesView_ = new QTreeView();
+        layout->addWidget( orderFilesView_ );
+        orderFilesView_->setModel( orderFiles_ );
+        QStringList headers( tr( "File" ) );
+        orderFiles_->setHorizontalHeaderLabels( headers );
+        orderFilesView_->header()->setMovable( false );
+        QVBoxLayout* vLayout = new QVBoxLayout();
+        layout->addLayout( vLayout );
+        QPushButton* add = new QPushButton( tr( "+" ) );
+        vLayout->addWidget( add );
         add->setMaximumWidth( 40 );
         connect( add, SIGNAL( clicked() ), this, SLOT( OnAddOrderFile() ) );
-        QPushButton* del = new QPushButton( tr( "-" ), tools );
+        QPushButton* del = new QPushButton( tr( "-" ) );
+        vLayout->addWidget( del );
         del->setMaximumWidth( 40 );
         connect( del, SIGNAL( clicked() ), this, SLOT( OnDeleteOrderFile() ) );
-        grid->addMultiCellWidget( box, 3, 3, 0, 2 );
+        grid->addWidget( box, 3, 0, 1, 2 );
     }
     {
-        Q3GroupBox* box = new Q3VGroupBox( tr( "Parameters" ), this );
-        infiniteDotationsCheckBox_ = new QCheckBox( tr( "Infinite resources" ), box );
-        humanEvolutionCheckBox_ = new QCheckBox( tr( "Human factors automatic evolution" ), box );
-        grid->addMultiCellWidget( box, 4, 4, 0, 2 );
+        QGroupBox* box = new QGroupBox( tr( "Parameters" ) );
+        QVBoxLayout* vLayout = new QVBoxLayout();
+        box->setLayout( vLayout );
+        infiniteDotationsCheckBox_ = new QCheckBox( tr( "Infinite resources" ) );
+        vLayout->addWidget( infiniteDotationsCheckBox_ );
+        humanEvolutionCheckBox_ = new QCheckBox( tr( "Human factors automatic evolution" ) );
+        vLayout->addWidget( humanEvolutionCheckBox_ );
+        grid->addWidget( box, 4, 0, 1, 2 );
     }
     {
-        Q3HBox* box = new Q3HBox( this );
-        QPushButton* ok = new QPushButton( tr( "Ok" ), box );
-        QPushButton* cancel = new QPushButton( tr( "Cancel" ), box );
-        grid->addWidget( box, 5, 2 );
+        QHBoxLayout* box = new QHBoxLayout();
+        QPushButton* ok = new QPushButton( tr( "Ok" ) );
+        QPushButton* cancel = new QPushButton( tr( "Cancel" ) );
+        box->addWidget( ok );
+        box->addWidget( cancel );
+        grid->addLayout( box, 5, 1 );
         connect( ok, SIGNAL( clicked() ), SLOT( OnAccept() ) );
         connect( cancel, SIGNAL( clicked() ), SLOT( OnReject() ) );
     }
@@ -135,8 +165,8 @@ void ExerciseDialog::Update( const Exercise& exercise )
 {
     name_->setText( exercise.GetName() );
     briefings_.clear();
-    resources_->clear();
-    orderFiles_->clear();
+    resources_->removeRows( 0, resources_->rowCount() );
+    orderFiles_->removeRows( 0, orderFiles_->rowCount() );;
     exercise.Accept( *this );
     OnChangeLang();
 }
@@ -207,10 +237,13 @@ namespace
 // -----------------------------------------------------------------------------
 void ExerciseDialog::AddResource( const QString& name, const QString& file )
 {
-    Q3ListViewItem* item = new Q3ListViewItem( resources_ );
-    item->setRenameEnabled( 0, true );
-    item->setText( 0, name );
-    item->setText( 1, MakeRelativePath( file, config_ ) );
+    QStandardItem* item1 = new QStandardItem( name );
+    QStandardItem* item2 = new QStandardItem( MakeRelativePath( file, config_ ) );
+    item1->setEditable( false );
+    item2->setEditable( false );
+    QList< QStandardItem* > items;
+    items << item1 << item2;
+    resources_->appendRow( items );
 }
 
 // -----------------------------------------------------------------------------
@@ -220,11 +253,9 @@ void ExerciseDialog::AddResource( const QString& name, const QString& file )
 void ExerciseDialog::AddOrderFile( const QString& file )
 {
     const QString filename = MakeRelativePath( file, config_ );
-    for( Q3ListViewItemIterator it( orderFiles_ ); it.current(); ++it )
-        if( filename == it.current()->text( 0 ) )
-            return;
-    Q3ListViewItem* item = new Q3ListViewItem( orderFiles_ );
-    item->setText( 0, filename );
+    if( orderFiles_->findItems( filename ).size() > 0 )
+        return;
+    orderFiles_->appendRow( new QStandardItem( filename ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -271,12 +302,12 @@ void ExerciseDialog::OnAccept()
     for( T_Briefings::const_iterator it = briefings_.begin(); it != briefings_.end(); ++it )
         exercise_.SetBriefing( it->first, it->second );
     exercise_.ClearResources();
-    for( Q3ListViewItemIterator it( resources_ ); it.current(); ++it )
-        exercise_.AddResource( it.current()->text( 0 ), it.current()->text( 1 ) );
+    for( int row = 0; row < resources_->rowCount(); ++row )
+        exercise_.AddResource( resources_->item( row )->text(), resources_->item( row, 1 )->text() );
     exercise_.ClearOrderFiles();
     QStringList copiedFiles;
-    for( Q3ListViewItemIterator it( orderFiles_ ); it.current(); ++it )
-        exercise_.AddOrderFile( CopyIfAbsolute( it.current()->text( 0 ), config_, copiedFiles ) );
+    for( int row = 0; row < orderFiles_->rowCount(); ++row )
+        exercise_.AddOrderFile( CopyIfAbsolute( orderFiles_->item( row )->text(), config_, copiedFiles ) );
     if( !copiedFiles.isEmpty() )
     {
         QString message = tr( "The following files will be copied to the exercise scripts/resources subfolder:\n" );
@@ -337,8 +368,9 @@ void ExerciseDialog::OnAddResource()
 // -----------------------------------------------------------------------------
 void ExerciseDialog::OnDeleteResource()
 {
-    if( Q3ListViewItem* item = resources_->currentItem() )
-        delete item;
+    const QModelIndex index = resourcesView_->currentIndex();
+    if( index.isValid() )
+        resources_->removeRow( index.row(), index.parent() );
 }
 
 // -----------------------------------------------------------------------------
@@ -358,6 +390,7 @@ void ExerciseDialog::OnAddOrderFile()
 // -----------------------------------------------------------------------------
 void ExerciseDialog::OnDeleteOrderFile()
 {
-    if( Q3ListViewItem* item = orderFiles_->currentItem() )
-        delete item;
+    const QModelIndex index = orderFilesView_->currentIndex();
+    if( index.isValid() )
+        orderFiles_->removeRow( index.row(), index.parent() );
 }

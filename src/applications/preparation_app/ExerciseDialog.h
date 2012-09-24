@@ -97,10 +97,12 @@ private:
     QLineEdit* name_;
     gui::ValuedComboBox< QString >* lang_;
     QString selectedLang_;
-    Q3TextEdit* briefing_;
+    QTextEdit* briefing_;
     T_Briefings briefings_;
-    Q3ListView* resources_;
-    Q3ListView* orderFiles_;
+    QStandardItemModel* resources_;
+    QStandardItemModel* orderFiles_;
+    QTreeView* resourcesView_;
+    QTreeView* orderFilesView_;
     QCheckBox* infiniteDotationsCheckBox_;
     QCheckBox* humanEvolutionCheckBox_;
     //@}

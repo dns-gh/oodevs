@@ -1,3 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<templates/>
-<!-- signature="2867133099" -->
+<templates>
+  <template>
+    <element agentType="INF . Section CDT CIE VAB" commandPost="true" name="Section . CDT CIE INF VAB" type="agent" x="0" y="0">
+      <extensions>
+        <entry key="NomLong" value="SECTION.CDTCIEINFVAB.SGTIAINF11.INF10"/>
+      </extensions>
+    </element>
+  </template>
+</templates>
+<!-- signature="3688066943" -->
