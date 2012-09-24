@@ -321,7 +321,7 @@ void Context::AddItem( const Tree& src, const std::string& type, size_t& idx )
     if( pkg )
         return;
 
-    const int id = ++idx + (1<<30);
+    const int id = static_cast< int >( ++idx + (1<<30) );
     const QString qtype = QUtf8( type );
     const QString qname = QUtf8( name );
     const QString qchecksum = QUtf8( checksum );

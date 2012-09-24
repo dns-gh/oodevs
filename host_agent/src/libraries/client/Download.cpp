@@ -146,7 +146,7 @@ struct Download : public gui::Download_ABC, public io::Writer_ABC
         if( next <= progress_ )
             return rpy;
         progress_ = next;
-        emit Progress( rpy_, next );
+        emit Progress( rpy_, static_cast< int >( next ) );
         return rpy;
     }
 
