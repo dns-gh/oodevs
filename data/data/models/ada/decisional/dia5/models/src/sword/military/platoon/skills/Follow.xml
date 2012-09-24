@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.skills.Follow" source-version="1.0.0">
+    <parameters>
+        <parameter name="entities">
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.Motile"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <links>
+        <link name="stayClose" skill="sword.military.platoon.skills.primitives.StayClose"/>
+    </links>
+</skill>
