@@ -148,7 +148,7 @@ namespace
                 if( send( socket_, reinterpret_cast< char* >( buffer ), static_cast< int >( message.GetCachedSize() ), 0 ) == SOCKET_ERROR )
                     Fail( "Failed to send message with error: ", WSAGetLastError() );
             }
-            catch( std::exception& e )
+            catch( std::exception& )
             {
                 closesocket( socket_ );
                 throw;

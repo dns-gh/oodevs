@@ -71,6 +71,7 @@
     </Link>
     <ClCompile>
       <AdditionalIncludeDirectories>$(IntDir)\..\..\libraries\protocol;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <PostBuildEvent>
       <Command>
@@ -83,6 +84,7 @@
     </Link>
     <ClCompile>
       <AdditionalIncludeDirectories>$(IntDir)\..\..\libraries\protocol;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <PostBuildEvent>
       <Command>
@@ -95,6 +97,7 @@
     </Link>
     <ClCompile>
       <AdditionalIncludeDirectories>$(IntDir)\..\..\libraries\protocol;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <PostBuildEvent>
       <Command>
@@ -107,6 +110,7 @@
     </Link>
     <ClCompile>
       <AdditionalIncludeDirectories>$(IntDir)\..\..\libraries\protocol;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <PostBuildEvent>
       <Command>
