@@ -75,6 +75,7 @@
     <Link />
     <ClCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <AdditionalDependencies>spatialcontainer_d.lib;masalloc_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -89,6 +90,7 @@
     <Link />
     <ClCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <AdditionalDependencies>spatialcontainer_d.lib;masalloc_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -103,6 +105,7 @@
     <Link />
     <ClCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <AdditionalDependencies>spatialcontainer.lib;masalloc.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -117,6 +120,7 @@
     <Link />
     <ClCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <AdditionalDependencies>spatialcontainer.lib;masalloc.lib;%(AdditionalDependencies)</AdditionalDependencies>

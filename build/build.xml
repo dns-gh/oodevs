@@ -574,7 +574,7 @@
 
     <target name="propagation_module_dll" depends="wrapper,propagation_module" description="build propagation module dll">
         <build-lib name="propagation_module_dll" outtype="shared" pattern="propagation_module" depends="boost"
-                   libs="propagation_module@{suffix},wrapper@{suffix}"/>
+                   libs="propagation_module@{suffix},wrapper@{suffix}" failonwarning="${failonwarning}"/>
     </target>
 
     <target name="propagation_module_test" depends="propagation_module_dll">
