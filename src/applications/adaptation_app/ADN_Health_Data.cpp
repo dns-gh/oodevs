@@ -24,6 +24,7 @@ ADN_Health_Data::WoundInfo::WoundInfo()
     : lifeExpectancy_( "0s" )
     , treatTime_( "0s" )
     , restingTime_( "0s" )
+    , rPercentage_( 0. )
 
 {
     // NOTHING
