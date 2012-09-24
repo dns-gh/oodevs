@@ -110,9 +110,8 @@ void StandardModel::Accept( StandardModelVisitor_ABC& visitor, QStandardItem* ro
 // -----------------------------------------------------------------------------
 void StandardModel::Purge()
 {
-
-    //if( invisibleRootItem() )
-    //    PurgeChildren( *invisibleRootItem() );
+    if( invisibleRootItem() )
+        PurgeChildren( *invisibleRootItem() );
 }
 
 // -----------------------------------------------------------------------------

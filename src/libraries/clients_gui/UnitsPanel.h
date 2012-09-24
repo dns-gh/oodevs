@@ -24,8 +24,7 @@ namespace kernel
 namespace gui
 {
     class PanelStack_ABC;
-    class ItemFactory_ABC;
-    class UnitListView;
+    class UnitTreeView;
     class UnitPreviewIcon;
     class SymbolIcons;
     class ColorStrategy_ABC;
@@ -45,7 +44,7 @@ class UnitsPanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitsPanel( QWidget* parent, PanelStack_ABC& panel, kernel::Controllers& controllers, const kernel::AgentTypes& agentTypes, ItemFactory_ABC& factory, SymbolIcons& icons, ColorStrategy_ABC& colorStrategy );
+             UnitsPanel( QWidget* parent, PanelStack_ABC& panel, kernel::Controllers& controllers, const kernel::AgentTypes& agentTypes, SymbolIcons& icons, ColorStrategy_ABC& colorStrategy );
     virtual ~UnitsPanel();
     //@}
 
@@ -55,17 +54,11 @@ private slots:
     void Sort();
     void OpenList();
     void CloseList();
-    void SelectionChanged( Q3ListViewItem* item );
+    void SelectionChanged();
     void IconDragged();
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    UnitsPanel( const UnitsPanel& );            //!< Copy constructor
-    UnitsPanel& operator=( const UnitsPanel& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const kernel::ModelLoaded& );
@@ -76,7 +69,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     ValuedComboBox< std::string >* combo_;
-    UnitListView* list_;
+    UnitTreeView* list_;
     UnitPreviewIcon* icon_;
     //@}
 };

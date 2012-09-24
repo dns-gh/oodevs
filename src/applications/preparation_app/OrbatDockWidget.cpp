@@ -64,8 +64,7 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers, QWidget* par
 // -----------------------------------------------------------------------------
 OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers, QWidget* parent, const QString& objectName,
     const QString& windowTitle, gui::AutomatsLayer& automats, gui::FormationLayer& formation,
-    gui::EntitySymbols& icons, ModelBuilder& modelBuilder, gui::ItemFactory_ABC& factory,
-    Model& model, StaticModel& staticModel, std::vector< gui::SearchTreeView_ABC* >& treeViews, gui::SymbolIcons& symbols )
+    gui::EntitySymbols& icons, ModelBuilder& modelBuilder, Model& model, StaticModel& staticModel, std::vector< gui::SearchTreeView_ABC* >& treeViews, gui::SymbolIcons& symbols )
     : gui::RichDockWidget( controllers, parent, objectName, windowTitle )
     , pListViewPanel_( 0 )
     , pTreeViewPanel_( 0 )
@@ -85,7 +84,7 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers, QWidget* par
     expandButton_->setIcon( expandIcon_ );
     toolbarBox->addWidget( expandButton_, 0, 1, 1, 1, Qt::AlignRight );
 
-    pTreeViewPanel_ = new TreeViewsPanel( controllers, factory, icons, modelBuilder, model, treeViews, symbols, staticModel, *aggregateToolbar );
+    pTreeViewPanel_ = new TreeViewsPanel( controllers, icons, modelBuilder, model, treeViews, symbols, staticModel, *aggregateToolbar );
 
     QWidget* widget = new QWidget();
     QVBoxLayout* box = new QVBoxLayout( widget );

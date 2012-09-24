@@ -449,7 +449,7 @@ void TacticalListView::ChangeAutomatType()
         typeName = static_cast< const kernel::Ghost_ABC& >( *contextMenuEntity_ ).GetType();
     else
         return;
-    ChangeAutomatTypeDialog( this, controllers_, agentTypes_, modelBuilder_, itemFactory_, *contextMenuEntity_.ConstCast(), typeName );
+    ChangeAutomatTypeDialog( this, controllers_, agentTypes_, modelBuilder_, *contextMenuEntity_.ConstCast(), typeName );
 }
 
 namespace

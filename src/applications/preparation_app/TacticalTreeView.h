@@ -18,7 +18,6 @@
 namespace gui
 {
     class ChangeSuperiorDialog;
-    class ItemFactory_ABC;
 }
 
 namespace kernel
@@ -46,7 +45,7 @@ class TacticalTreeView : public gui::TacticalTreeView
 public:
     //! @name Constructors/Destructor
     //@{
-    TacticalTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, const gui::EntitySymbols& symbols, Model& model, const kernel::AgentTypes& agentTypes, gui::ItemFactory_ABC& factory, QWidget* parent = 0 );
+    TacticalTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, const gui::EntitySymbols& symbols, Model& model, const kernel::AgentTypes& agentTypes, QWidget* parent = 0 );
     virtual ~TacticalTreeView();
     //@}
 
@@ -96,7 +95,6 @@ private:
     //@{
     Model& model_;
     const kernel::AgentTypes& agentTypes_;
-    gui::ItemFactory_ABC& factory_; // TODO à virer quand UnitListView sera en QT4
     kernel::SafePointer< kernel::Entity_ABC > contextMenuEntity_;
     gui::ChangeSuperiorDialog* changeSuperiorDialog_;
     //@}

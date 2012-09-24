@@ -544,6 +544,12 @@
     <ClCompile Include="..\..\src\applications\preparation_app\LogisticTreeView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\ObjectTreeView.cpp">
+      <Filter>Source Files\TreeView</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\PopulationTreeView.cpp">
+      <Filter>Source Files\TreeView</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\preparation_app\Application.h">
@@ -746,6 +752,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\LogisticTreeView.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\ObjectTreeView.h">
+      <Filter>Source Files\TreeView</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\PopulationTreeView.h">
+      <Filter>Source Files\TreeView</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

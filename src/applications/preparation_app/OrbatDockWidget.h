@@ -53,8 +53,8 @@ public:
                               Model& model, StaticModel& staticModel, std::vector< gui::SearchListView_ABC* >& listViews, gui::SymbolIcons& symbols );
              OrbatDockWidget( kernel::Controllers& controllers, QWidget* parent, const QString& objectName,
                               const QString& windowTitle, gui::AutomatsLayer& automats, gui::FormationLayer& formation,
-                              gui::EntitySymbols& icons, ModelBuilder& modelBuilder, gui::ItemFactory_ABC& factory,
-                              Model& model, StaticModel& staticModel, std::vector< gui::SearchTreeView_ABC* >& treeViews, gui::SymbolIcons& symbols );
+                              gui::EntitySymbols& icons, ModelBuilder& modelBuilder, Model& model, StaticModel& staticModel,
+                              std::vector< gui::SearchTreeView_ABC* >& treeViews, gui::SymbolIcons& symbols );
     virtual ~OrbatDockWidget();
     //@}
 

@@ -550,9 +550,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\UndergroundPrototype_ABC.cpp">
       <Filter>Source Files\Creation\Objects\Attributes</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\UnitListView.cpp">
-      <Filter>Source Files\Creation\Units</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\UnitPreviewIcon.cpp">
       <Filter>Source Files\Creation\Units</Filter>
     </ClCompile>
@@ -916,6 +913,9 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\LogisticTreeView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\UnitTreeView.cpp">
+      <Filter>Source Files\Creation\Units</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -1251,9 +1251,6 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\UndergroundPrototype_ABC.h">
       <Filter>Source Files\Creation\Objects\Attributes</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\UnitListView.h">
-      <Filter>Source Files\Creation\Units</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\DrawerShape.h">
       <Filter>Source Files\Creation\Drawings</Filter>
     </ClInclude>
@@ -1463,6 +1460,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\LogisticTreeView.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\UnitTreeView.h">
+      <Filter>Source Files\Creation\Units</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

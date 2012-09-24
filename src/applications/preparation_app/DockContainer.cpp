@@ -45,7 +45,7 @@
 
 #include "PreparationProfile.h"
 
-//#define USE_TREEVIEWS // temp, before QT4 port is complete
+#define USE_TREEVIEWS // temp, before QT4 port is complete
 
 // -----------------------------------------------------------------------------
 // Name: DockContainer constructor
@@ -64,7 +64,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     {
 #ifdef USE_TREEVIEWS
         gui::RichDockWidget* pListDockWnd = new OrbatDockWidget( controllers, parent, "orbat", tools::translate( "DockContainer", "ORBAT" ),
-                                                                 automats, formation, icons, modelBuilder, factory, model, staticModel, treeViews_, symbols );
+                                                                 automats, formation, icons, modelBuilder, model, staticModel, treeViews_, symbols );
 #else
         gui::RichDockWidget* pListDockWnd = new OrbatDockWidget( controllers, parent, "orbat", tools::translate( "DockContainer", "ORBAT" ),
                                                                  automats, formation, icons, modelBuilder, factory, model, staticModel, listViews_, symbols );

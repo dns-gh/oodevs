@@ -12,9 +12,10 @@
 #include "clients_gui_pch.h"
 #include "UnitsPanel.h"
 #include "moc_UnitsPanel.cpp"
+#include "clients_gui/DragAndDropHelpers.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/AgentTypes.h"
-#include "UnitListView.h"
+#include "UnitTreeView.h"
 #include "UnitPreviewIcon.h"
 #include "Tools.h"
 
@@ -38,7 +39,7 @@ namespace
 // Name: UnitsPanel constructor
 // Created: SBO 2006-08-28
 // -----------------------------------------------------------------------------
-UnitsPanel::UnitsPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, const AgentTypes& types, ItemFactory_ABC& factory, SymbolIcons& icons, ColorStrategy_ABC& colorStrategy )
+UnitsPanel::UnitsPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, const AgentTypes& types, SymbolIcons& icons, ColorStrategy_ABC& colorStrategy )
     : InfoPanel_ABC( parent, panel, tr( "Units" ), "UnitsPanel" )
     , controllers_( controllers )
 {
@@ -48,18 +49,18 @@ UnitsPanel::UnitsPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& con
     {
         Q3HBox* box = new Q3HBox( vbox );
         QPushButton* openAll  = new QPushButton( "+", box );
-        openAll->setMaximumSize( 20, 20 );;
+        openAll->setMaximumSize( 20, 20 );
         QPushButton* closeAll = new QPushButton( "-", box );
-        closeAll->setMaximumSize( 20, 20 );;
+        closeAll->setMaximumSize( 20, 20 );
         connect( openAll , SIGNAL( clicked() ), SLOT( OpenList() ) );
         connect( closeAll, SIGNAL( clicked() ), SLOT( CloseList() ) );
 
         QLabel* label = new QLabel( tr( "Display type: " ), box );
         label->setAlignment( Qt::AlignRight | Qt::AlignVCenter );
         combo_ = BuildNatureFieldsCombo( box );
-        list_ = new UnitListView( vbox, controllers_, types, factory );
+        list_ = new UnitTreeView( controllers_, types, vbox );
         connect( combo_, SIGNAL( activated( int ) ), SLOT( Sort() ) );
-        connect( list_ , SIGNAL( selectionChanged( Q3ListViewItem* ) ), SLOT( SelectionChanged( Q3ListViewItem* ) ) );
+        connect( list_->selectionModel() , SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ), SLOT( SelectionChanged() ) );
     }
     {
         icon_ = new UnitPreviewIcon( vbox, controllers_, icons, colorStrategy, tr( "Drag and drop symbol to map to create a new unit." ) );
@@ -93,7 +94,7 @@ void UnitsPanel::Sort()
 // -----------------------------------------------------------------------------
 void UnitsPanel::OpenList()
 {
-    list_->SetOpen( true );
+    list_->expandAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -102,7 +103,7 @@ void UnitsPanel::OpenList()
 // -----------------------------------------------------------------------------
 void UnitsPanel::CloseList()
 {
-    list_->SetOpen( false );
+    list_->collapseAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -118,15 +119,12 @@ void UnitsPanel::NotifyUpdated( const ModelLoaded& )
 // Name: UnitsPanel::SelectionChanged
 // Created: SBO 2007-10-16
 // -----------------------------------------------------------------------------
-void UnitsPanel::SelectionChanged( Q3ListViewItem* item )
+void UnitsPanel::SelectionChanged()
 {
-    if( ValuedListItem* value = dynamic_cast< ValuedListItem* >( item ) )
-    {
-        if( value->IsA< const AgentType >() )
-            icon_->NotifySelected( *value->GetValueNoCheck< const AgentType >() );
-        else if( value->IsA< const AutomatType >() )
-            icon_->NotifySelected( *value->GetValueNoCheck< const AutomatType >() );
-    }
+    if( kernel::AgentType* type = list_->GetSelected< kernel::AgentType >() )
+        icon_->NotifySelected( *type );
+    else if( kernel::AutomatType* type = list_->GetSelected< kernel::AutomatType >() )
+        icon_->NotifySelected( *type );
 }
 
 // -----------------------------------------------------------------------------
@@ -135,6 +133,8 @@ void UnitsPanel::SelectionChanged( Q3ListViewItem* item )
 // -----------------------------------------------------------------------------
 void UnitsPanel::IconDragged()
 {
-    if( Q3DragObject* drag = list_->dragObject() )
-        drag->drag();
+    if( kernel::AgentType* type = list_->GetSelected< kernel::AgentType >() )
+        dnd::CreateDragObject( type, this );
+    else if( kernel::AutomatType* type = list_->GetSelected< kernel::AutomatType >() )
+        dnd::CreateDragObject( type, this );
 }

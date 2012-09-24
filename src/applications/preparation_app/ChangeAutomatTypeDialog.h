@@ -14,6 +14,7 @@ namespace gui
 {
     class ItemFactory_ABC;
     class ModelObserver_ABC;
+    class UnitTreeView;
 }
 
 namespace kernel
@@ -36,7 +37,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ChangeAutomatTypeDialog( QWidget* parent, kernel::Controllers& controllers, const kernel::AgentTypes& list,
-                                      gui::ModelObserver_ABC& builder, gui::ItemFactory_ABC& factory, kernel::Entity_ABC& entity, const std::string& typeName );
+                                      gui::ModelObserver_ABC& builder, kernel::Entity_ABC& entity, const std::string& typeName );
     virtual ~ChangeAutomatTypeDialog();
     //@}
 
@@ -53,7 +54,7 @@ private:
     kernel::Controllers& controllers_;
     gui::ModelObserver_ABC& builder_;
     kernel::Entity_ABC& entity_;
-    Q3ListView* list_;
+    gui::UnitTreeView* list_;
     QPushButton* okBtn_;
     //@}
 };

@@ -35,11 +35,10 @@
 // Name: TacticalTreeView constructor
 // Created: JSR 2012-09-07
 // -----------------------------------------------------------------------------
-TacticalTreeView::TacticalTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, const gui::EntitySymbols& symbols, Model& model, const kernel::AgentTypes& agentTypes, gui::ItemFactory_ABC& factory, QWidget* parent /* = 0 */ )
+TacticalTreeView::TacticalTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, const gui::EntitySymbols& symbols, Model& model, const kernel::AgentTypes& agentTypes, QWidget* parent /* = 0 */ )
     : gui::TacticalTreeView( controllers, profile, modelObserver, symbols, parent )
     , model_( model )
     , agentTypes_( agentTypes )
-    , factory_( factory )
     , contextMenuEntity_( controllers )
     , changeSuperiorDialog_( 0 )
 {
@@ -435,5 +434,5 @@ void TacticalTreeView::ChangeAutomatType()
         typeName = static_cast< const kernel::Ghost_ABC& >( *contextMenuEntity_ ).GetType();
     else
         return;
-    ChangeAutomatTypeDialog( this, controllers_, agentTypes_, modelObserver_, factory_, *contextMenuEntity_.ConstCast(), typeName );
+    ChangeAutomatTypeDialog( this, controllers_, agentTypes_, modelObserver_, *contextMenuEntity_.ConstCast(), typeName );
 }

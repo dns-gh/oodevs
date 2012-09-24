@@ -70,7 +70,6 @@ private:
 
 typedef EntityTreeView< kernel::Inhabitant_ABC > InhabitantTreeView;
 typedef EntityTreeView< kernel::Population_ABC > PopulationTreeView;
-typedef EntityTreeView< kernel::UrbanObject_ABC> UrbanTreeView;
 
 } //! namespace gui
 

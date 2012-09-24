@@ -1743,17 +1743,6 @@ Do you want to remove it?</source>
     </message>
 </context>
 <context>
-    <name>gui::UnitListView</name>
-    <message>
-        <source>Unit type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Count</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>gui::UnitStateDialog</name>
     <message>
         <source>Unit state</source>

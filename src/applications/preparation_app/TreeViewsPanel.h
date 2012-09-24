@@ -18,7 +18,6 @@ namespace kernel
 namespace gui
 {
     class HierarchyTreeView_ABC;
-    class ItemFactory_ABC;
     class EntitySymbols;
     class SymbolIcons;
     class SearchTreeView_ABC;
@@ -42,9 +41,9 @@ class TreeViewsPanel : public QTabWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             TreeViewsPanel( kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons,
-                             ModelBuilder& modelBuilder, Model& model, std::vector< gui::SearchTreeView_ABC* >& treeViews,
-                             gui::SymbolIcons& symbols, StaticModel& staticModel, const gui::AggregateToolbar& aggregateToolbar );
+             TreeViewsPanel( kernel::Controllers& controllers, gui::EntitySymbols& icons, ModelBuilder& modelBuilder,
+                             Model& model, std::vector< gui::SearchTreeView_ABC* >& treeViews, gui::SymbolIcons& symbols,
+                             StaticModel& staticModel, const gui::AggregateToolbar& aggregateToolbar );
     virtual ~TreeViewsPanel();
     //@}
 
@@ -60,7 +59,7 @@ public slots:
 private:
     //! @name Helpers
     //@{
-    void CreateUnitTabWidget( QTabWidget* parent, QTabWidget* tabWidget, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory,
+    void CreateUnitTabWidget( QTabWidget* parent, QTabWidget* tabWidget, kernel::Controllers& controllers,
                               gui::EntitySymbols& icons, ModelBuilder& modelBuilder, Model& model, StaticModel& staticModel,
                               std::vector< gui::SearchTreeView_ABC* >& treeViews, const gui::AggregateToolbar& aggregateToolbar, bool first );
     void Configure( gui::SearchTreeView_ABC* searchTreeView, std::vector< gui::SearchTreeView_ABC* >& treeViews,

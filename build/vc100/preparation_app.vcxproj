@@ -201,9 +201,11 @@
     <ClCompile Include="..\..\src\applications\preparation_app\ModelBuilder.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\ModelConsistencyDialog.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\NewProfileDialog.cpp" />
+    <ClCompile Include="..\..\src\applications\preparation_app\ObjectTreeView.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\OrbatDockWidget.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\OrbatPanel.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\PerformanceDialog.cpp" />
+    <ClCompile Include="..\..\src\applications\preparation_app\PopulationTreeView.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\preparation_app_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
@@ -621,6 +623,8 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\applications\preparation_app\ObjectTreeView.h" />
+    <ClInclude Include="..\..\src\applications\preparation_app\PopulationTreeView.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\preparation_app_pch.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\PreparationProfile.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\CreationPanels.h" />

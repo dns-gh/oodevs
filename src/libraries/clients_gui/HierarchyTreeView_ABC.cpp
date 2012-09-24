@@ -116,7 +116,7 @@ bool HierarchyTreeView_ABC::AddItemIfPossible( const kernel::Entity_ABC& entity,
         if( !parent )
             parent = dataModel_.invisibleRootItem();
         int row = parent->rowCount();
-        ret = dataModel_.AddChildSafeItem( parent, row, 0, entity.GetName(), entity.GetTooltip(), static_cast< const Entity& >( entity ), Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled );
+        ret = dataModel_.AddChildSafeItem( parent, row, 0, entity.GetName(), entity.GetTooltip(), static_cast< const Entity& >( entity ), Qt::ItemIsEditable | ItemSpecificFlags( entity ) );
         for( int col = 1; col < dataModel_.columnCount(); ++col )
             dataModel_.AddChildItem( parent, row, col );
         return true;
@@ -234,6 +234,15 @@ const QPixmap* HierarchyTreeView_ABC::GetDecoration( const QModelIndex &index )
 bool HierarchyTreeView_ABC::CanChangeSuperior( const kernel::Entity_ABC& /*entity*/, const kernel::Entity_ABC& /*superior*/ ) const
 {
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: HierarchyTreeView_ABC::ItemSpecificFlags
+// Created: JSR 2012-09-21
+// -----------------------------------------------------------------------------
+Qt::ItemFlags HierarchyTreeView_ABC::ItemSpecificFlags( const kernel::Entity_ABC& entity ) const
+{
+    return entity.GetTypeName() == kernel::Team_ABC::typeName_ ? Qt::ItemIsDropEnabled : Qt::ItemIsDropEnabled | Qt::ItemIsDragEnabled;
 }
 
 // -----------------------------------------------------------------------------

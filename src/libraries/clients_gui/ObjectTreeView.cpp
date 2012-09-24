@@ -52,7 +52,7 @@ void ObjectTreeView::NotifyCreated( const kernel::Object_ABC& object )
     QStandardItem* typeItem = dataModel_.FindTextItem( type.GetName().c_str() );
     if( !typeItem )
         typeItem = dataModel_.AddChildTextItem( teamItem, teamItem->rowCount(), 0, type.GetName().c_str(), type.GetName().c_str() );
-    dataModel_.AddChildSafeItem( typeItem, typeItem->rowCount(), 0, object.GetName(), object.GetTooltip(), object, Qt::ItemIsEditable );
+    dataModel_.AddChildSafeItem( typeItem, typeItem->rowCount(), 0, object.GetName(), object.GetTooltip(), object, Qt::ItemIsEditable | ItemSpecificFlags( object ) );
 }
 
 // -----------------------------------------------------------------------------

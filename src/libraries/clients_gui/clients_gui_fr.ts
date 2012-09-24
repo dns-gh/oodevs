@@ -1755,17 +1755,6 @@ Voulez-vous le supprimer?</translation>
     </message>
 </context>
 <context>
-    <name>gui::UnitListView</name>
-    <message>
-        <source>Unit type</source>
-        <translation>Type d&apos;unité</translation>
-    </message>
-    <message>
-        <source>Count</source>
-        <translation>Nombre</translation>
-    </message>
-</context>
-<context>
     <name>gui::UnitStateDialog</name>
     <message>
         <source>Unit state</source>

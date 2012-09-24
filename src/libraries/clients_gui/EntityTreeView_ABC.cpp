@@ -82,7 +82,7 @@ void EntityTreeView_ABC::NotifyCreated( const kernel::Team_ABC& team )
     const kernel::Entity_ABC& entityTeam = static_cast< const kernel::Entity_ABC& >( team );
     QStandardItem* teamItem = dataModel_.FindDataItem( entityTeam );
     if( !teamItem )
-        teamItem = dataModel_.AddRootSafeItem( dataModel_.rowCount(), 0, team.GetName(), team.GetTooltip(), entityTeam );
+        teamItem = dataModel_.AddRootSafeItem( dataModel_.rowCount(), 0, team.GetName(), team.GetTooltip(), entityTeam, ItemSpecificFlags( team ) );
 }
 
 // -----------------------------------------------------------------------------

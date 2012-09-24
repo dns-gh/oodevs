@@ -295,23 +295,22 @@ inline
 void StandardModel::DeleteItemRow( QStandardItem* item )
 {
     QStandardItem* parentItem = item->parent();
-    if( parentItem )
+    if( !parentItem )
+        parentItem = invisibleRootItem();
+    // $$$$ ABR 2012-09-20: Delete safe pointer if needed
+    if( item->data( StandardModel::SafeRole ).isValid() && item->data( StandardModel::SafeRole ).toBool() &&
+        item->data( StandardModel::DataRole ).isValid() )
     {
-        // $$$$ ABR 2012-09-20: Delete safe pointer if needed
-        if( item->data( StandardModel::SafeRole ).isValid() && item->data( StandardModel::SafeRole ).toBool() &&
-            item->data( StandardModel::DataRole ).isValid() )
-        {
-            controllers_.Unregister( *const_cast< tools::Observer_ABC* >( static_cast< const tools::Observer_ABC* >( item->data( StandardModel::DataRole ).value< kernel::VariantPointer >().ptr_ ) ) );
-            delete item->data( StandardModel::DataRole ).value< kernel::VariantPointer >().ptr_;
-        }
-        // $$$$ ABR 2012-09-20: Delete row
-        QList< QStandardItem* > rowItems = parentItem->takeRow( item->row() );
-        for( QList< QStandardItem* >::iterator it = rowItems.begin(); it != rowItems.end(); ++it )
-        {
-            QStandardItem* rowItem = *it;
-            delete rowItem;
-            rowItem = 0;
-        }
+        controllers_.Unregister( *const_cast< tools::Observer_ABC* >( static_cast< const tools::Observer_ABC* >( item->data( StandardModel::DataRole ).value< kernel::VariantPointer >().ptr_ ) ) );
+        delete item->data( StandardModel::DataRole ).value< kernel::VariantPointer >().ptr_;
+    }
+    // $$$$ ABR 2012-09-20: Delete row
+    QList< QStandardItem* > rowItems = parentItem->takeRow( item->row() );
+    for( QList< QStandardItem* >::iterator it = rowItems.begin(); it != rowItems.end(); ++it )
+    {
+        QStandardItem* rowItem = *it;
+        delete rowItem;
+        rowItem = 0;
     }
 }
 

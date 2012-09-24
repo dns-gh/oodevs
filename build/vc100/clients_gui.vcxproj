@@ -189,6 +189,7 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\UnitStateTableEquipment.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\UnitStateTableResource.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\UnitStateTable_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\UnitTreeView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ValuedListItem.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\BaseDisplayer.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\CheckBoxDisplayer.cpp" />
@@ -299,7 +300,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\StockPrototype_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SupplyRoutePrototype_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\UndergroundPrototype_ABC.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\UnitListView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\UnitPreviewIcon.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\UnitsPanel.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\DrawerShape.cpp" />
@@ -1150,6 +1150,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\UnitStateTable_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\UnitTreeView.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\ValuedListItem.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\BaseDisplayer.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\CheckBoxDisplayer.h" />
@@ -1803,7 +1804,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\UndergroundPrototype_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\clients_gui\UnitListView.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\UnitPreviewIcon.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>
