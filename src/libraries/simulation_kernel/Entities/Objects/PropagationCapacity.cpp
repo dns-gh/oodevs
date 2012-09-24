@@ -95,5 +95,6 @@ void PropagationCapacity::Instanciate( MIL_Object_ABC& object, sword::Sink_ABC& 
 template< typename Archive >
 void PropagationCapacity::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
+    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
+         & pSink_;
 }

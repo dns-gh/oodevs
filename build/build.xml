@@ -1235,6 +1235,13 @@
             <arg value="--checkpoint=tempcheckpoint"/>
             <arg value="--deletecheckpoint"/>
         </run-one-simulation>
+        <run-one-simulation exercise="test/CheckpointTests">
+            <arg value="--savecheckpoint=tempcheckpoint"/>
+        </run-one-simulation>
+        <run-one-simulation exercise="test/CheckpointTests">
+            <arg value="--checkpoint=tempcheckpoint"/>
+            <arg value="--deletecheckpoint"/>
+        </run-one-simulation>
     </target>
 
     <macrodef name="test-scripts">

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.1.0/exercise/orbat.xsd">
+  <parties>
+    <no-party>
+      <objects>
+        <object id="1" name="disaster" type="disaster">
+          <shape type="point">
+            <points>
+              <point>30TYT1252886433</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+      </objects>
+    </no-party>
+  </parties>
+  <diplomacy/>
+</orbat>
+<!-- signature="2567572118" -->
