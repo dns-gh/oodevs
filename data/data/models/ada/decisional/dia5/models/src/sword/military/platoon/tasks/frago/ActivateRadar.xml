@@ -12,7 +12,7 @@
                 <description>Opérer un silence radar</description>
             </goal>
             <skills>
-                <skill name="sword.military.platoon.skills.actions.ActivateRadar"/>
+                <skill name="sword.military.platoon.skills.actions.ActivateRadar" priority="100000.0"/>
             </skills>
         </stage>
     </stages>

@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.tasks.frago.GoTo" source-version="1.0.0" knowledge-class="sword.military.platoon.tasks.knowledges.GoTo">
-  <description>Fragmentary order that force an agent to go toward a specific reachable objective.</description>
-  <parameters>
-    <parameter name="objectives">
-      <description>The objective to reach.</description>
-      <type>
-        <list>
-          <class name="sword.military.knowledge.decisional.Reachable"/>
-        </list>
-      </type>
-    </parameter>
-  </parameters>
-  <stages>
-    <stage label="Ordre de mouvement vers les objectifs" permanent="false" disable-when-done="true">
-      <description>Déplacement direct vers l'un des objectifs passés en paramètre.</description>
-      <skills>
-        <skill name="sword.military.platoon.skills.MoveToward" main="true" priority="1000.0">
-          <parameter name="entities">
-            <value>
-              <parameter>objectives</parameter>
-            </value>
-          </parameter>
-        </skill>
-      </skills>
-    </stage>
-  </stages>
+    <description>Fragmentary order that force an agent to go toward a specific reachable objective.</description>
+    <parameters>
+        <parameter name="objectives">
+            <description>The objective to reach.</description>
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Reachable"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="Ordre de mouvement vers les objectifs" permanent="false" disable-when-done="true">
+            <description>Déplacement direct vers l'un des objectifs passés en paramètre.</description>
+            <skills>
+                <skill name="sword.military.platoon.skills.MoveToward" main="true" priority="100000.0">
+                    <parameter name="entities">
+                        <value>
+                            <parameter>objectives</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
 </task>

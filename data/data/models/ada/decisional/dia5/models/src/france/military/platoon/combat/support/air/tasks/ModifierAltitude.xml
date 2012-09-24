@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.air.tasks.ModifierAltitude" source-version="1.0.0">
-	<parameters>
-		<parameter name="altitude">
-			<type>
-				<simple name="numeric"/>
-			</type>
-		</parameter>
-	</parameters>
-	<stages>
-		<stage label="Modification de l'altitude" disable-when-done="true">
-			<skills>
-				<skill name="france.military.platoon.combat.support.air.skills.ModifierAltitude" main="true">
-					<parameter name="HauteurDeVol">
-						<value>
-							<parameter>altitude</parameter>
-						</value>
-					</parameter>
-				</skill>
-			</skills>
-		</stage>
-	</stages>
+    <parameters>
+        <parameter name="altitude">
+            <type>
+                <simple name="numeric"/>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="Modification de l'altitude" disable-when-done="true">
+            <skills>
+                <skill name="france.military.platoon.combat.support.air.skills.ModifierAltitude" main="true" priority="100000.0">
+                    <parameter name="HauteurDeVol">
+                        <value>
+                            <parameter>altitude</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
 </task>

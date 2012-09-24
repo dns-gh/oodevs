@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.tasks.frago.ObservePartialRadioSilence" source-version="1.0.0" knowledge-class="sword.military.platoon.tasks.knowledges.MoveToward">
-  <description>Ordre de conduite demandant d'opérer un silence radio partiel</description>
-  <parameters/>
-  <goal>
-    <description>Opérer un silence radio partiel</description>
-  </goal>
-  <stages>
-    <stage label="Silence radio partiel" permanent="true">
-      <description>Opére un silence radio partiel sauf contre ordre</description>
-      <goal>
+    <description>Ordre de conduite demandant d'opérer un silence radio partiel</description>
+    <parameters/>
+    <goal>
         <description>Opérer un silence radio partiel</description>
-      </goal>
-      <skills>
-        <skill name="sword.military.platoon.skills.actions.ObservePartialRadioSilence"/>
-      </skills>
-    </stage>
-  </stages>
+    </goal>
+    <stages>
+        <stage label="Silence radio partiel" permanent="true">
+            <description>Opére un silence radio partiel sauf contre ordre</description>
+            <goal>
+                <description>Opérer un silence radio partiel</description>
+            </goal>
+            <skills>
+                <skill name="sword.military.platoon.skills.actions.ObservePartialRadioSilence" priority="100000.0"/>
+            </skills>
+        </stage>
+    </stages>
 </task>

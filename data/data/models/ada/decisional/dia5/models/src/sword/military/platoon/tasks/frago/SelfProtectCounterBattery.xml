@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.tasks.frago.SelfProtectCounterBattery" source-version="1.0.0">
-	<description>Ordre de conduite de sauvegarde face à des tirs de contre batterie.</description>
-	<parameters>
-		<parameter name="meetingPoint">
-			<description>Les positions de sauvegarde.</description>
-			<type>
-				<class name="sword.military.knowledge.decisional.Reaching"/>
-			</type>
-		</parameter>
-	</parameters>
-	<goal>
-		<description>Se sauvegarder sur la position.</description>
-	</goal>
-	<stages>
-		<stage label="Sauvegarde" permanent="true">
-			<skills>
-				<skill name="france.military.platoon.skills.EnsureIndirectFire" priority="1000.0">
-					<parameter name="firePositions">
-						<value>
-							<list>
-								<parameter>meetingPoint</parameter>
-							</list>
-						</value>
-					</parameter>
-				</skill>
-			</skills>
-		</stage>
-	</stages>
+    <description>Ordre de conduite de sauvegarde face à des tirs de contre batterie.</description>
+    <parameters>
+        <parameter name="meetingPoint">
+            <description>Les positions de sauvegarde.</description>
+            <type>
+                <class name="sword.military.knowledge.decisional.Reaching"/>
+            </type>
+        </parameter>
+    </parameters>
+    <goal>
+        <description>Se sauvegarder sur la position.</description>
+    </goal>
+    <stages>
+        <stage label="Sauvegarde" permanent="true">
+            <skills>
+                <skill name="france.military.platoon.skills.EnsureIndirectFire" priority="100000.0">
+                    <parameter name="firePositions">
+                        <value>
+                            <list>
+                                <parameter>meetingPoint</parameter>
+                            </list>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
 </task>

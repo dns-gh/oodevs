@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.tasks.frago.Mount" source-version="1.0.0">
-  <description>Ordre simple d'embarquer.</description>
-  <stages>
-    <stage label="Embarquement" permanent="true">
-      <skills>
-        <skill name="sword.military.platoon.skills.actions.Mount" priority="1000.0"/>
-      </skills>
-    </stage>
-  </stages>
+    <description>Ordre simple d'embarquer.</description>
+    <stages>
+        <stage label="Embarquement" permanent="true">
+            <skills>
+                <skill name="sword.military.platoon.skills.actions.Mount" priority="100000.0"/>
+            </skills>
+        </stage>
+    </stages>
 </task>

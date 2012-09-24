@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.tasks.frago.ActivateRadio" source-version="1.0.0" knowledge-class="sword.military.platoon.tasks.knowledges.MoveToward">
-  <parameters/>
-  <goal>
-    <description>Arreter tout type de silence radio</description>
-  </goal>
-  <stages>
-    <stage label="Arret du silence radio" permanent="true">
-      <description>desactive le silence radio</description>
-      <goal>
-        <description>Remet les radio en route</description>
-      </goal>
-      <skills>
-        <skill name="sword.military.platoon.skills.actions.ActivateRadio"/>
-      </skills>
-    </stage>
-  </stages>
+    <parameters/>
+    <goal>
+        <description>Arreter tout type de silence radio</description>
+    </goal>
+    <stages>
+        <stage label="Arret du silence radio" permanent="true">
+            <description>desactive le silence radio</description>
+            <goal>
+                <description>Remet les radio en route</description>
+            </goal>
+            <skills>
+                <skill name="sword.military.platoon.skills.actions.ActivateRadio" priority="100000.0"/>
+            </skills>
+        </stage>
+    </stages>
 </task>

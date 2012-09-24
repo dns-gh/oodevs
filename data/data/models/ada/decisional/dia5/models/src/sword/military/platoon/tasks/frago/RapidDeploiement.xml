@@ -1,77 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.tasks.frago.RapidDeploiement" source-version="1.0.0">
-	<description>Ordre de conduite de sauvegarde face à des tirs de contre batterie.</description>
-	<parameters>
-		<parameter name="entity">
-			<type>
-				<class name="sword.military.knowledge.IndirectFireable"/>
-			</type>
-		</parameter>
-		<parameter name="munition">
-			<type>
-				<simple name="numeric"/>
-			</type>
-		</parameter>
-		<parameter name="interventionType">
-			<type>
-				<simple name="numeric"/>
-			</type>
-		</parameter>
-		<parameter name="firePositions">
-			<type>
-				<list>
-					<class name="sword.military.knowledge.decisional.Reaching"/>
-				</list>
-			</type>
-		</parameter>
-	</parameters>
-	<goal>
-		<description>Se sauvegarder sur la position.</description>
-	</goal>
-	<stages>
-		<stage label="Deploiement">
-			<skills>
-				<skill name="france.military.platoon.skills.EnsureIndirectFire" main="true" priority="1000.0">
-					<parameter name="callByFragOrder">
-						<value>
-							<boolean>true</boolean>
-						</value>
-					</parameter>
-					<parameter name="firePositions">
-						<value>
-							<parameter>firePositions</parameter>
-						</value>
-					</parameter>
-				</skill>
-			</skills>
-		</stage>
-		<stage label="Appliquer feux" disable-when-done="true">
-			<skills>
-				<skill name="sword.military.platoon.skills.ApplyIndirectFire" main="true" priority="1000.0">
-					<parameter name="entities">
-						<value>
-							<list>
-								<parameter>entity</parameter>
-							</list>
-						</value>
-					</parameter>
-					<parameter name="interventionType">
-						<value>
-							<parameter>interventionType</parameter>
-						</value>
-					</parameter>
-					<parameter name="munition">
-						<value>
-							<parameter>munition</parameter>
-						</value>
-					</parameter>
-					<parameter name="canReceiveUnexpectedOrder">
-						<value>
-							<boolean>false</boolean>
-						</value>
-					</parameter>
-				</skill>
-			</skills>
-		</stage>
-	</stages>
+    <description>Ordre de conduite de sauvegarde face à des tirs de contre batterie.</description>
+    <parameters>
+        <parameter name="entity">
+            <type>
+                <class name="sword.military.knowledge.IndirectFireable"/>
+            </type>
+        </parameter>
+        <parameter name="munition">
+            <type>
+                <simple name="numeric"/>
+            </type>
+        </parameter>
+        <parameter name="interventionType">
+            <type>
+                <simple name="numeric"/>
+            </type>
+        </parameter>
+        <parameter name="firePositions">
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Reaching"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <goal>
+        <description>Se sauvegarder sur la position.</description>
+    </goal>
+    <stages>
+        <stage label="Deploiement">
+            <skills>
+                <skill name="france.military.platoon.skills.EnsureIndirectFire" main="true" priority="100000.0">
+                    <parameter name="callByFragOrder">
+                        <value>
+                            <boolean>true</boolean>
+                        </value>
+                    </parameter>
+                    <parameter name="firePositions">
+                        <value>
+                            <parameter>firePositions</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+        <stage label="Appliquer feux" disable-when-done="true">
+            <skills>
+                <skill name="sword.military.platoon.skills.ApplyIndirectFire" main="true" priority="100000.0">
+                    <parameter name="entities">
+                        <value>
+                            <list>
+                                <parameter>entity</parameter>
+                            </list>
+                        </value>
+                    </parameter>
+                    <parameter name="interventionType">
+                        <value>
+                            <parameter>interventionType</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="munition">
+                        <value>
+                            <parameter>munition</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="canReceiveUnexpectedOrder">
+                        <value>
+                            <boolean>false</boolean>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
 </task>

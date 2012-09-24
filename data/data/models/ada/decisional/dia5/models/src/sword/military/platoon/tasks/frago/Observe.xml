@@ -18,7 +18,7 @@
                 <description>Orientation des capteurs vers l'élement passé en paramètre. Cette ordre oblige l'agent à regarder vers une PCO ou DGO.</description>
             </goal>
             <skills>
-                <skill name="sword.military.platoon.skills.actions.Observe" main="true" priority="1000.0">
+                <skill name="sword.military.platoon.skills.actions.Observe" main="true" priority="100000.0">
                     <parameter name="entity">
                         <value>
                             <parameter>objective</parameter>
