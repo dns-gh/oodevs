@@ -473,7 +473,7 @@
     </target>
 
     <target name="client_proxy" depends="protocol,tools" description="build clients_kernel static library">
-        <build-lib name="client_proxy" pattern="lib${ant.project.name}_client_proxy-${platform}-mt@{suffix}" suffix="-gd">
+        <build-lib name="client_proxy" pattern="lib${ant.project.name}_client_proxy-${platform}-mt@{suffix}" suffix="-gd" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
