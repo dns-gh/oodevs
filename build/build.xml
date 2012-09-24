@@ -578,7 +578,7 @@
     </target>
 
     <target name="propagation_module_test" depends="propagation_module_dll">
-        <build-test name="propagation_module" depends="boost" libs="propagation_module@{suffix},core@{suffix}">
+        <build-test name="propagation_module" depends="boost" libs="propagation_module@{suffix},core@{suffix}" failonwarning="${failonwarning}">
             <includepath path="${libraries.dir}/simulation_kernel"/>
             <compilerarg value="-Zm500"/>
         </build-test>
