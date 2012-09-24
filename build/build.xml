@@ -131,7 +131,7 @@
     </target>
 
     <target name="gaming" depends="protocol,clients_gui,actions,actions_gui,indicators,reports,meteo,flood" description="build gaming static library">
-        <build-lib name="gaming" depends="qt4" pattern="lib${ant.project.name}_gaming-${platform}-mt@{suffix}" suffix="-gd">
+        <build-lib name="gaming" depends="qt4" pattern="lib${ant.project.name}_gaming-${platform}-mt@{suffix}" suffix="-gd" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
