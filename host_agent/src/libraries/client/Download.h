@@ -16,7 +16,6 @@
 #include <boost/shared_ptr.hpp>
 
 #include <QNetworkReply>
-#include <QPointer>
 
 namespace runtime
 {
@@ -47,12 +46,14 @@ public slots:
 signals:
     void ReadyWrite();
     void Abort();
-    void End( QPointer< QNetworkReply > );
-    void Error( QPointer< QNetworkReply >, const QString& );
-    void Progress( QPointer< QNetworkReply >, int );
+    void End( size_t );
+    void Error( size_t, const QString& );
+    void Progress( size_t, int );
 };
 
-boost::shared_ptr< Download_ABC > MakeDownload( QNetworkReply* rpy, const runtime::FileSystem_ABC& fs, const Path& root );
+size_t GetDownloadId( const QNetworkReply* rpy );
+
+boost::shared_ptr< Download_ABC > MakeDownload( size_t id, QNetworkReply* rpy, const runtime::FileSystem_ABC& fs, const Path& root );
 }
 
 #endif // DOWNLOAD_H_

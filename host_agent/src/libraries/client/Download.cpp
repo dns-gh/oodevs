@@ -38,9 +38,10 @@ struct Download : public gui::Download_ABC, public io::Writer_ABC
     // Name: Download::Download
     // Created: BAX 2012-09-21
     // -----------------------------------------------------------------------------
-    Download( QNetworkReply* rpy, const FileSystem_ABC& fs, const Path& root )
+    Download( size_t id, QNetworkReply* rpy, const FileSystem_ABC& fs, const Path& root )
         : fs_      ( fs )
         , buffer_  ( buffer_size )
+        , id_      ( id )
         , root_    ( fs.MakeAnyPath( root ) )
         , rpy_     ( rpy )
         , write_   ( 0 )
@@ -50,6 +51,7 @@ struct Download : public gui::Download_ABC, public io::Writer_ABC
         , progress_( 0 )
         , eof_     ( false )
         , headers_ ( false )
+        , finished_( false )
         , async_   ()
     {
         rpy->setReadBufferSize( buffer_size );
@@ -67,7 +69,7 @@ struct Download : public gui::Download_ABC, public io::Writer_ABC
     // -----------------------------------------------------------------------------
     ~Download()
     {
-        async_.Join();
+        // NOTHING
     }
 
     // -----------------------------------------------------------------------------
@@ -146,7 +148,7 @@ struct Download : public gui::Download_ABC, public io::Writer_ABC
         if( next <= progress_ )
             return rpy;
         progress_ = next;
-        emit Progress( rpy_, static_cast< int >( next ) );
+        emit Progress( id_, static_cast< int >( next ) );
         return rpy;
     }
 
@@ -174,7 +176,7 @@ struct Download : public gui::Download_ABC, public io::Writer_ABC
         }
         catch( const std::exception& err )
         {
-            emit Error( rpy_, QUtf8( std::string( err.what() ) ) );
+            emit Error( id_, QUtf8( std::string( err.what() ) ) );
         }
         Close();
         emit Abort();
@@ -226,15 +228,21 @@ struct Download : public gui::Download_ABC, public io::Writer_ABC
     // -----------------------------------------------------------------------------
     void OnFinished()
     {
+        if( finished_ )
+            return;
+        finished_ = true;
         QNetworkReply::NetworkError err = rpy_->error();
         if( err != QNetworkReply::NoError && err != QNetworkReply::OperationCanceledError )
-            emit Error( rpy_, rpy_->errorString() );
+            emit Error( id_, rpy_->errorString() );
         Finish();
-        emit End( rpy_ );
+        async_.Join();
+        rpy_->deleteLater();
+        emit End( id_ );
     }
 
 private:
     const FileSystem_ABC& fs_;
+    const size_t id_;
     const Path root_;
     mutable boost::mutex access_;
     boost::condition_variable gate_;
@@ -247,6 +255,7 @@ private:
     size_t progress_;
     bool eof_;
     bool headers_;
+    bool finished_;
     QAsync async_;
 };
 }
@@ -255,7 +264,7 @@ private:
 // Name: gui::MakeDownload
 // Created: BAX 2012-09-24
 // -----------------------------------------------------------------------------
-boost::shared_ptr< gui::Download_ABC > gui::MakeDownload( QNetworkReply* rpy, const runtime::FileSystem_ABC& fs, const Path& root )
+boost::shared_ptr< gui::Download_ABC > gui::MakeDownload( size_t id, QNetworkReply* rpy, const runtime::FileSystem_ABC& fs, const Path& root )
 {
-    return boost::make_shared< Download >( rpy, fs, root );
+    return boost::make_shared< Download >( id, rpy, fs, root );
 }

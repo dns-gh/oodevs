@@ -344,23 +344,19 @@ void Context::AddItem( const Tree& src, const std::string& type, size_t& idx )
     emit NetworkRequest( HTTP_CMD_DOWNLOAD_INSTALL, req );
 }
 
-namespace
-{
-int GetId( const QNetworkReply* rpy )
-{
-    return rpy->request().attribute( QNetworkRequest::User ).toInt();
-}
-}
-
 // -----------------------------------------------------------------------------
 // Name: Context::OpenDownload
 // Created: BAX 2012-09-24
 // -----------------------------------------------------------------------------
 void Context::OpenDownload( QNetworkReply* rpy )
 {
-    const int id = GetId( rpy );
-    T_Download down = MakeDownload( rpy, fs_, root_ / tmp_dir );
-    connect( down.get(), SIGNAL( End( QPointer< QNetworkReply > ) ), this, SLOT( OnCloseDownload( QPointer< QNetworkReply > ) ) );
+    const size_t id = static_cast< size_t >( rpy->request().attribute( id_attribute ).toULongLong() );
+    T_Download down = MakeDownload( id, rpy, fs_, root_ / tmp_dir );
+    connect( down.get(), SIGNAL( End( size_t ) ), this, SLOT( OnCloseDownload( size_t ) ) );
+#if 0
+    connect( down.get(), SIGNAL( Error( size_t, const QString& ) ), this, SLOT( OnDownloadError( size_t, const QString& ) ) );
+    connect( down.get(), SIGNAL( Progress( size_t, int ) ), this, SLOT( OnDownloadProgress( size_t, int ) ) );
+#endif
     QWriteLocker lock( &access_ );
     downloads_.insert( id, down );
 }
@@ -369,20 +365,7 @@ void Context::OpenDownload( QNetworkReply* rpy )
 // Name: Context::OnCloseDownload
 // Created: BAX 2012-09-24
 // -----------------------------------------------------------------------------
-void Context::OnCloseDownload( QPointer< QNetworkReply > rpy )
-{
-    rpy->deleteLater();
-    const int id = GetId( rpy );
-    // call CloseDownload in a worker thread because it will join the download
-    // unpacking thread
-    async_.Register( QtConcurrent::run( this, &Context::CloseDownload, id ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Context::CloseDownload
-// Created: BAX 2012-09-24
-// -----------------------------------------------------------------------------
-void Context::CloseDownload( int id )
+void Context::OnCloseDownload( size_t id )
 {
     QWriteLocker write( &access_ );
     T_Downloads::iterator it = downloads_.find( id );

@@ -12,7 +12,6 @@
 #include "Context.h"
 
 #include <QMetaType>
-#include <QPointer>
 #include <QSettings>
 #include <QtConcurrentRun>
 
@@ -27,7 +26,6 @@ Head::Head( const Runtime_ABC& runtime, const FileSystem_ABC& fs, Pool_ABC& pool
     : QMainWindow( 0 )
 {
     qRegisterMetaType< HttpCommand >( "HttpCommand" );
-    qRegisterMetaType< QPointer< QNetworkReply > >( "QPointer< QNetworkReply >" );
 
     ui_.setupUi( this );
     ui_.status->addPermanentWidget( &progress_ );

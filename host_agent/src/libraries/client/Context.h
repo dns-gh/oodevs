@@ -20,7 +20,6 @@
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QNetworkReply>
-#include <QPointer>
 #include <QUrl>
 
 namespace host
@@ -89,11 +88,11 @@ public slots:
     void OnRemove();
     void OnNetworkRequest( HttpCommand cmd, const QNetworkRequest& req );
     void OnGetSession();
-    void OnCloseDownload( QPointer< QNetworkReply > rpy );
+    void OnCloseDownload( size_t id );
 
 private:
     typedef boost::shared_ptr< Download_ABC > T_Download;
-    typedef QHash< int, T_Download >          T_Downloads;
+    typedef QHash< size_t, T_Download >       T_Downloads;
 
 private:
     void ParseArguments();
@@ -105,7 +104,6 @@ private:
     void ParseSession( QNetworkReply* rpy );
     void AddItem( const Tree& src, const std::string& type, size_t& idx );
     void OpenDownload( QNetworkReply* rpy );
-    void CloseDownload( int id );
 
 private:
     const runtime::Runtime_ABC& runtime_;
