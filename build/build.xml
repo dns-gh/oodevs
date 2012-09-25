@@ -38,7 +38,7 @@
     -->
     <target name="libraries" depends="tools,MT_Tools,ENT,protocol,simulation_terrain,simulation_kernel,
                                       clients_kernel,clients_gui,actions,actions,actions_gui,reports,
-                                      gaming,preparation,library.plugins,3a,mission_tester,license_gui,geostore" description="build all libraries"/>
+                                      gaming,preparation,library.plugins,3a,license_gui,geostore" description="build all libraries"/>
 
     <target name="tools" depends="MT_Tools" description="build tools static library">
         <build-lib name="tools" pattern="lib${ant.project.name}_tools-${platform}-mt@{suffix}" suffix="-gd" depends="qt4" failonwarning="${failonwarning}">
@@ -489,12 +489,6 @@
                                             logger_plugin,positions_plugin,
                                             logistic_plugin,logistic_plugin_dll" description="build all dispatcher plugins"/>
 
-    <target name="mission_tester" depends="clients_kernel,actions,client_proxy" description="build mission tester lib">
-        <build-lib name="mission_tester" pattern="lib${ant.project.name}_mission_tester-${platform}-mt@{suffix}" suffix="-gd" depends="qt4" failonwarning="${failonwarning}">
-            <defineset define="QT3_SUPPORT"/>
-        </build-lib>
-    </target>
-
     <!--
     ============================================================================
      modules
@@ -598,7 +592,7 @@
     <target name="applications.clients" description="build Sword Client executables"
             depends="gaming_app,preparation_app,adaptation_app,
                      loadtester_app,wise_driver_dll,vrforces_plugin_dll,
-                     mission_tester_app,edxlhave_app,
+                     edxlhave_app,
                      launcher_test_app,xml_signature_app,
                      shield_app"/>
 
@@ -860,22 +854,6 @@
             <defineset define="DLLDRIVER_EXPORTS"/>
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
-    </target>
-
-    <target name="mission_tester_app" depends="mission_tester" description="build Sword mission tester executable">
-        <build-app name="mission_tester_app" depends="boost,protobuf,qt4,terrain,xalan,xerces"
-            libs="lib${ant.project.name}_mission_tester-${platform}-mt@{suffix},
-                  lib${ant.project.name}_actions-${platform}-mt@{suffix},
-                  lib${ant.project.name}_client_proxy-${platform}-mt@{suffix},
-                  lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
-                  lib${ant.project.name}_MT_Tools-${platform}-mt,
-                  lib${ant.project.name}_ENT-${platform}-mt@{suffix},
-                  lib${ant.project.name}_protocol-${platform}-mt@{suffix},
-                  lib${ant.project.name}_tools-${platform}-mt@{suffix}"
-            failonwarning="${failonwarning}">
-            <syslibset libs="geocoord"/>
-            <defineset define="QT3_SUPPORT"/>
-        </build-app>
     </target>
 
     <target name="edxlhave_app" depends="protocol" description="build edxl_app (Emergency Data Exchange)">
