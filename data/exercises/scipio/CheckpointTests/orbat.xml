@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/exercise/orbat.xsd">
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.1.0/exercise/orbat.xsd">
   <parties>
     <party id="1051" name="BadGuys" type="friend">
       <objects>
@@ -21,23 +21,6 @@
           </shape>
           <attributes>
             <construction completion="1"/>
-          </attributes>
-        </object>
-        <object id="1073" name="itineraire logistique" type="logistic route">
-          <shape type="ligne">
-            <points>
-              <point>31TCM1649364968</point>
-              <point>31TCM2443172863</point>
-            </points>
-          </shape>
-          <attributes>
-            <supply-route>
-              <flow>2</flow>
-              <width>3</width>
-              <length>4</length>
-              <max-weight>3</max-weight>
-              <equipped>true</equipped>
-            </supply-route>
           </attributes>
         </object>
         <object id="1074" name="nuage nbc" type="nbc cloud">
@@ -146,23 +129,21 @@
         </object>
       </objects>
       <tactical>
-        <formation id="1187" level="ii" name="Formation [1187]">
-          <automat engaged="true" id="1188" knowledge-group="1189" name="MILICE [1188]" type="MILICE">
+        <formation id="1187" level="ii" name="Formation [1187]" symbol="symbols/sfgpuci">
+          <automat engaged="true" id="1188" knowledge-group="1189" name="MILICE [1188]" symbol="symbols/sfgpuci" type="MILICE">
             <unit command-post="true" id="1190" name="MILICE . CDT" position="31TCM2043387103" type="MILICE . PICK UP CDT"/>
             <unit command-post="false" id="1191" name="MILICE . Miliciens" position="31TCM2091886588" type="MILICE . PICK UP 10 Miliciens"/>
             <unit command-post="false" id="1192" name="MILICE . Miliciens" position="31TCM2040186105" type="MILICE . PICK UP 10 Miliciens"/>
           </automat>
-          <automat engaged="false" id="1197" knowledge-group="1189" name="SGTIA PIA [1197]" type="SGTIA PIA">
+          <automat engaged="false" id="1197" knowledge-group="1189" name="SGTIA PIA [1197]" symbol="symbols/sfgpucim" type="SGTIA PIA">
             <unit command-post="true" id="1198" name="PC SGTIA" position="31TCM1949190732" type="PC SGTIA"/>
             <unit command-post="false" id="1199" name="PIA Dominante ABC" position="31TCM1997690218" type="PIA Dominante ABC"/>
             <unit command-post="false" id="1200" name="PIA Dominante INF" position="31TCM1946089734" type="PIA Dominante INF"/>
             <unit command-post="false" id="1201" name="PIA Dominante Reco" position="31TCM1897590249" type="PIA Dominante Reco"/>
             <unit command-post="false" id="1202" name="Groupe GEN . EBG" position="31TCM2003989826" type="GEN . Groupe EBG"/>
           </automat>
-          <automat engaged="true" id="1223" knowledge-group="1189" name="Batterie de Tir AUF1 [1207] [1223]" type="ASS . Batterie de Tir AUF1">
+          <automat engaged="true" id="1223" knowledge-group="1189" name="Batterie de Tir AUF1 [1207] [1223]" symbol="symbols/sfgpucfhe" type="ASS . Batterie de Tir AUF1">
             <unit command-post="true" id="1224" name="ASS . PC Batterie ASS" position="31TCM1330297569" type="ASS . PC Batterie ASS"/>
-            <unit command-post="false" id="1225" name="ASS . Section de Tir AUF1 CDS OFF" position="31TCM1378797054" type="ASS . Section de Tir AUF1 CDS OFF"/>
-            <unit command-post="false" id="1226" name="ASS . Section de Tir AUF1 CDS SOFF" position="31TCM1327196571" type="ASS . Section de Tir AUF1 CDS SOFF"/>
           </automat>
         </formation>
       </tactical>
@@ -185,7 +166,10 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary"/>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+              <activity-time value="0"/>
+            </obstacle>
             <construction completion="0.55"/>
           </attributes>
         </object>
@@ -228,7 +212,10 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary"/>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+              <activity-time value="0"/>
+            </obstacle>
             <construction completion="0.6"/>
             <activity-time value="3000"/>
           </attributes>
@@ -240,7 +227,10 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary"/>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+              <activity-time value="0"/>
+            </obstacle>
             <construction completion="1"/>
           </attributes>
         </object>
@@ -251,7 +241,10 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary"/>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+              <activity-time value="0"/>
+            </obstacle>
             <construction completion="1"/>
           </attributes>
         </object>
@@ -262,7 +255,10 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary"/>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+              <activity-time value="0"/>
+            </obstacle>
             <construction completion="1"/>
           </attributes>
         </object>
@@ -332,7 +328,10 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary"/>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+              <activity-time value="0"/>
+            </obstacle>
             <construction completion="1"/>
             <activity-time value="3600"/>
           </attributes>
@@ -347,7 +346,10 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary"/>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+              <activity-time value="0"/>
+            </obstacle>
             <construction completion="1"/>
             <activity-time value="0"/>
           </attributes>
@@ -362,11 +364,11 @@
         </object>
       </objects>
       <tactical>
-        <formation id="1107" level="ii" logistic-level="logistic-base" name="Formation [1107]">
-          <automat engaged="true" id="1108" knowledge-group="1109" logistic-level="logistic-base" name="TC2 10RC [1108]" type="LOG . TC2 10RC">
+        <formation id="1107" level="ii" logistic-level="logistic-base" name="Formation [1107]" symbol="symbols/sfgpuss">
+          <automat engaged="true" id="1108" knowledge-group="1109" logistic-level="logistic-base" name="TC2 10RC [1108]" symbol="symbols/sfgpuss" type="LOG . TC2 10RC">
             <unit command-post="true" id="1110" name="TC2 10RC" position="31TBM9576199425" type="LOG . TC2 10RC"/>
           </automat>
-          <automat engaged="true" id="1111" knowledge-group="1109" name="Ssgpt Manoeuvre ALAT [1111]" type="ALAT - Ssgpt Manoeuvre">
+          <automat engaged="true" id="1111" knowledge-group="1109" name="Ssgpt Manoeuvre ALAT [1111]" symbol="symbols/sfgpucvruh" type="ALAT - Ssgpt Manoeuvre">
             <unit command-post="true" id="1112" name="PC ALAT Manoeuvre" position="31TBN9679702718" type="ALAT - PC Escadrille"/>
             <unit command-post="false" id="1113" name="Patrouille 3HM" position="31TBN9728202203" type="ALAT - Patrouille 3HM"/>
             <unit command-post="false" id="1114" name="Patrouille 3HM" position="31TBN9704202139" type="ALAT - Patrouille 3HM"/>
@@ -375,33 +377,21 @@
             <unit command-post="false" id="1117" name="Patrouille 2HAC" position="31TBN9748902197" type="ALAT - Patrouille 2HAC"/>
             <unit command-post="false" id="1118" name="Patrouille 2HAM" position="31TBN9726601704" type="ALAT - Patrouille 2HAM"/>
           </automat>
-          <automat engaged="true" id="1119" knowledge-group="1109" name="Ssgpt Infanterie Char [1119]" type="INF . Ssgpt Infanterie Char">
+          <automat engaged="true" id="1119" knowledge-group="1109" name="Ssgpt Infanterie Char [1119]" symbol="symbols/sfgpucim" type="INF . Ssgpt Infanterie Char">
             <unit command-post="true" id="1120" name="Section CDT CIE INF VAB" position="31TBN8995703409" type="INF . Section CDT CIE VAB"/>
             <unit command-post="false" id="1121" name="Section CBT INF VAB CDS OFF" position="31TBN9054303258" type="INF . Section CBT VAB CDS OFF"/>
             <unit command-post="false" id="1122" name="Section CBT INF VAB CDS OFF" position="31TBN8992502410" type="INF . Section CBT VAB CDS OFF"/>
             <unit command-post="false" id="1123" name="Section CBT INF VAB CDS OFF" position="31TBN8944002925" type="INF . Section CBT VAB CDS OFF"/>
             <unit command-post="false" id="1124" name="Peloton LECLERC CDP OFF" position="31TBN9045703393" type="ABC . Peloton LECLERC CDP OFF"/>
           </automat>
-          <automat engaged="true" id="1125" knowledge-group="1109" name="GLAISE ASA Batterie SA 13 [1125]" type="GLAISE - ASA - Batterie SA 13">
-            <unit command-post="true" id="1126" name="GLAISE ASA PC" position="31TBM8924699773" type="GLAISE - ASA - PC"/>
-            <unit command-post="false" id="1127" name="GLAISE ASA Section SA 13" position="31TBM8973199258" type="GLAISE - ASA - Section SA 13"/>
-            <unit command-post="false" id="1128" name="GLAISE ASA Section SA 13" position="31TBM8921598775" type="GLAISE - ASA - Section SA 13"/>
-          </automat>
-          <automat engaged="true" id="1129" knowledge-group="1109" name="Peloton Circulation sur VAB [1129]" type="CIRCU . Peloton Circulation sur VAB">
+          <automat engaged="true" id="1129" knowledge-group="1109" name="Peloton Circulation sur VAB [1129]" symbol="symbols/sfgpusz" type="CIRCU . Peloton Circulation sur VAB">
             <unit command-post="true" id="1130" name="Patrouille CDT PON CIRCU VAB" position="31TBN9332705274" type="CIRCU . PC sur VAB"/>
             <unit command-post="false" id="1131" name="Patrouille CIRCU VAB" position="31TBN9381204759" type="CIRCU . Patrouille VAB"/>
             <unit command-post="false" id="1132" name="Patrouille CIRCU VAB" position="31TBN9329604276" type="CIRCU . Patrouille VAB"/>
             <unit command-post="false" id="1133" name="Patrouille CIRCU VAB" position="31TBN9281104791" type="CIRCU . Patrouille VAB"/>
             <unit command-post="false" id="1134" name="Patrouille CIRCU VAB" position="31TBN9382805258" type="CIRCU . Patrouille VAB"/>
           </automat>
-          <automat engaged="true" id="1135" knowledge-group="1109" name="Zone Fonctionnelle Maintenance BLD [1135]" type="LOG . Secteur reparation maint mob">
-            <unit command-post="true" id="1136" name="PC LOG BLD Maintenance" position="31TBM9275996290" type="LOG . PC LOG BLD Secteur Maintenance"/>
-            <unit command-post="false" id="1137" name="Section CDT CMM (EVAC)" position="31TBM9324495775" type="LOG . Section CDT CMM (EVAC)"/>
-            <unit command-post="false" id="1138" name="Section Reparation Mob BLD  MOB" position="31TBM9272795292" type="LOG . Section Reparation Mob BLD  MOB"/>
-            <unit command-post="false" id="1139" name="Section Reparation EA BLD SREAT" position="31TBM9224295806" type="LOG . Section Reparation EA BLD SREAT"/>
-            <unit command-post="false" id="1140" name="Section Reparation Mob Feu BLD  SRMF" position="31TBM9325996274" type="LOG . Section Reparation Mob Feu BLD  SRMF"/>
-          </automat>
-          <automat engaged="true" id="1145" knowledge-group="1109" name="Zone Fonctionnelle Sante BLD [1145]" type="LOG . Secteur traitement">
+          <automat engaged="true" id="1145" knowledge-group="1109" name="Zone Fonctionnelle Sante BLD [1145]" symbol="symbols/sfgpusm" type="LOG . Secteur traitement">
             <unit command-post="true" id="1146" name="PC LOG BLD Sante" position="31TBN9856900616" type="LOG . PC LOG BLD Secteur Sante"/>
             <unit command-post="false" id="1147" name="Groupe VS J5" position="31TBN9905400101" type="LOG . Groupe VS J5"/>
             <unit command-post="false" id="1148" name="Groupe VS VAB" position="31TBM9853899618" type="LOG . Groupe VS VAB"/>
@@ -410,11 +400,10 @@
             <unit command-post="false" id="1151" name="Section Medico Psychologique" position="31TBN9926200095" type="LOG . Section Medico Psychologique"/>
             <unit command-post="false" id="1152" name="Antenne Chirurgicale" position="31TBM9903899602" type="LOG . Antenne Chirurgicale"/>
             <unit command-post="false" id="1153" name="Section Chirurgicale Modulaire" position="31TBM9853199411" type="LOG . Section Chirurgicale Modulaire"/>
-            <unit command-post="false" id="1154" name="Section Chirurgicale HMC" position="31TBM9803799634" type="LOG . Section Chirurgicale HMC"/>
             <unit command-post="false" id="1155" name="Section de Triage modulaire" position="31TBN9784600139" type="LOG . Section Triage modulaire"/>
             <unit command-post="false" id="1158" name="Equipe HM EVASAN glaise" position="31TBN9928400800" type="LOG . Equipe HM EVASAN BLIAT"/>
           </automat>
-          <automat engaged="true" id="1165" knowledge-group="1109" name="Zone Fonctionnelle Ravitaillement Transport BLIAT [1165]" type="LOG . Secteur distribution stockage (SEA)">
+          <automat engaged="true" id="1165" knowledge-group="1109" name="Zone Fonctionnelle Ravitaillement Transport BLIAT [1165]" symbol="symbols/sfgpust" type="LOG . Secteur distribution stockage (SEA)">
             <unit command-post="true" id="1166" name="PC LOG BLD Ravitaillerment" position="31TBN9757806328" type="LOG . PC LOG BLD Secteur Ravitaillement"/>
             <unit command-post="false" id="1167" name="Groupe Munitions BLIAT" position="31TBN9806305813" type="LOG . Groupe Munitions BLIAT"/>
             <unit command-post="false" id="1168" name="Escouade Trspt CARB BLIAT" position="31TBN9754605329" type="LOG . Escouade Trspt CARB BLIAT"/>
@@ -422,19 +411,19 @@
             <unit command-post="false" id="1170" name="Section Magasin CAP BLIAT" position="31TBN9807806312" type="LOG . Section Magasin CAP BLIAT"/>
             <unit command-post="false" id="1171" name="Groupe Appro Vivre Eau BLIAT" position="31TBN9827005806" type="LOG . Groupe Appro Vivre Eau BLIAT"/>
           </automat>
-          <automat engaged="false" id="1172" knowledge-group="1109" name="Milices LAND ROVER [1172]" type="MILICE">
+          <automat engaged="false" id="1172" knowledge-group="1109" name="Milices LAND ROVER [1172]" symbol="symbols/sfgpuci" type="MILICE">
             <unit command-post="true" id="1173" name="Milice armee AK47 LAND ROVER" position="31TBM9984195734" type="MILICE . PICK UP CDT"/>
             <unit command-post="false" id="1174" name="Milice armee LRAC LAND ROVER" position="31TCM0032695219" type="MILICE . PICK UP 14,5"/>
             <unit command-post="false" id="1175" name="Milice armee LRAC LAND ROVER" position="31TBM9981094736" type="MILICE . PICK UP 23/2"/>
           </automat>
-          <automat engaged="true" id="1176" knowledge-group="1109" name="Section Reco NBC [1176]" type="NRBC . Reco">
+          <automat engaged="true" id="1176" knowledge-group="1109" name="Section Reco NBC [1176]" symbol="symbols/sfgpuuacr" type="NRBC . Reco">
             <unit command-post="true" id="1177" name="Patrouille Reco NBC CDT" position="31TBM8757595859" type="NRBC . PC Reco"/>
             <unit command-post="false" id="1178" name="Patrouille Reco NBC" position="31TBM8806095344" type="NRBC . Patrouille Reco"/>
           </automat>
-          <automat engaged="true" id="1179" knowledge-group="1109" name="Refugies x10 [1179]" type="CIV . DPRE hommes femmes et enfants">
+          <automat engaged="true" id="1179" knowledge-group="1109" name="Refugies x10 [1179]" symbol="symbols/sfgpumr" type="CIV . DPRE hommes femmes et enfants">
             <unit command-post="true" id="1180" name="Refugies 10 Pers" position="31TBM9644394487" type="Réfugiés hommes femmes et enfants"/>
           </automat>
-          <automat engaged="true" id="1181" knowledge-group="1109" name="GLAISE RENS URH [1181]" type="GLAISE - RENS . URH">
+          <automat engaged="true" id="1181" knowledge-group="1109" name="GLAISE RENS URH [1181]" symbol="symbols/sfgpujpb" type="GLAISE - RENS . URH">
             <unit command-post="true" id="1182" name="GLAISE RENS Patrouille URH" position="31TBN9102806415" type="GLAISE - RENS . Patrouille URH"/>
           </automat>
           <lima name="Lima 1185">
@@ -505,22 +494,6 @@
           </shape>
           <attributes/>
         </object>
-        <object id="1086" name="zone nbc" type="nbc zone">
-          <shape type="polygone">
-            <points>
-              <point>31TBM8682567467</point>
-              <point>31TBM8838666140</point>
-              <point>31TBM9349367099</point>
-              <point>31TBM9175169497</point>
-            </points>
-          </shape>
-          <attributes>
-            <nbc-agents danger="0" state="liquid">
-              <nbc-agent type="Chimique"/>
-            </nbc-agents>
-            <input-toxic-cloud data-field="nom_var_shp_mesure_C" export="false" source="Indianapolis_Plume_1300"/>
-          </attributes>
-        </object>
         <object id="1088" name="zone bouclee" type="seal off area">
           <shape type="ligne">
             <points>
@@ -588,8 +561,8 @@
         </object>
       </objects>
       <tactical>
-        <formation id="1211" level="i" name="Formation [1211]">
-          <automat engaged="false" id="1218" knowledge-group="1213" name="Terroriste [1218]" type="ASY . Terroristes">
+        <formation id="1211" level="i" name="Formation [1211]" symbol="symbols/sfgpuc">
+          <automat engaged="false" id="1218" knowledge-group="1213" name="Terroriste [1218]" symbol="symbols/sfgpuc" type="ASY . Terroristes">
             <unit command-post="false" id="1219" name="Terroriste IED" position="31TCM1872195235" type="Terroriste IED"/>
             <unit command-post="false" id="1220" name="Terroriste RPG" position="31TCM1920694720" type="Terroriste RPG"/>
             <unit command-post="false" id="1221" name="Terroriste Sniper" position="31TCM1868994236" type="Terroriste Sniper"/>
@@ -702,4 +675,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="2446965194" -->
+<!-- signature="0728653485" -->
