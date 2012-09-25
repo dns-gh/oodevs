@@ -48,5 +48,5 @@ void DefaultWeaponReloadingComputer::AddModifier( double modifier )
 // -----------------------------------------------------------------------------
 double DefaultWeaponReloadingComputer::GetDuration() const
 {
-    return std::accumulate( modifiers_.begin(), modifiers_.end(), 1., std::multiplies< double >() );
+    return std::accumulate( modifiers_.begin(), modifiers_.end(), initialDuration_, std::multiplies< double >() );
 }
