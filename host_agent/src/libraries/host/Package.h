@@ -52,6 +52,7 @@ public:
     virtual size_t CountExercises() const;
     virtual bool Parse();
     virtual void Identify( const Package_ABC& reference );
+    virtual void Install( runtime::Async& async, const Path& root, const T_Items& items );
     virtual void Install( runtime::Async& async, const Path& root, const Package_ABC& src, const std::vector< size_t >& ids );
     virtual void Uninstall( runtime::Async& async, const Path& root, const std::vector< size_t >& ids );
     virtual Tree LinkExercise( const std::string& name );

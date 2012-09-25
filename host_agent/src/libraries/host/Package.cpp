@@ -799,14 +799,10 @@ void AddItemPath( boost::mutex& access, std::vector< Path >& list, const Path& p
 
 // -----------------------------------------------------------------------------
 // Name: Package::Install
-// Created: BAX 2012-05-24
+// Created: BAX 2012-09-24
 // -----------------------------------------------------------------------------
-void Package::Install( Async& io, const Path& tomb, const Package_ABC& src, const std::vector< size_t >& ids )
+void Package::Install( Async& io, const Path& tomb, const T_Items& install )
 {
-    T_Items install;
-    BOOST_FOREACH( size_t id, ids )
-        for( T_Item item = src.Find( id, true ); item; item.reset() )
-            install.push_back( item );
     if( install.empty() )
         return;
 
@@ -826,6 +822,19 @@ void Package::Install( Async& io, const Path& tomb, const Package_ABC& src, cons
 
     std::sort( items_.begin(), items_.end(), &ItemOrder );
     Identify( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Package::Install
+// Created: BAX 2012-05-24
+// -----------------------------------------------------------------------------
+void Package::Install( Async& io, const Path& tomb, const Package_ABC& src, const std::vector< size_t >& ids )
+{
+    T_Items install;
+    BOOST_FOREACH( size_t id, ids )
+        for( T_Item item = src.Find( id, true ); item; item.reset() )
+            install.push_back( item );
+    Install( io, tomb, install );
 }
 
 namespace

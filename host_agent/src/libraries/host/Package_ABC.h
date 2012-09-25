@@ -55,7 +55,8 @@ struct Package_ABC : public boost::noncopyable
     //@{
     struct Item_ABC;
     typedef boost::shared_ptr< Item_ABC > T_Item;
-    typedef std::vector< Path > T_Exercises;
+    typedef std::vector< Path >           T_Exercises;
+    typedef std::vector< T_Item >         T_Items;
     //@}
 
     //! @name Methods
@@ -70,6 +71,7 @@ struct Package_ABC : public boost::noncopyable
     virtual size_t CountExercises() const = 0;
     virtual bool Parse() = 0;
     virtual void Identify( const Package_ABC& ref ) = 0;
+    virtual void Install( runtime::Async& async, const Path& root, const T_Items& items ) = 0;
     virtual void Install( runtime::Async& async, const Path& root, const Package_ABC& src, const std::vector< size_t >& ids ) = 0;
     virtual void Uninstall( runtime::Async& async, const Path& root, const std::vector< size_t >& ids ) = 0;
     virtual Tree LinkExercise( const std::string& name ) = 0;
