@@ -102,7 +102,7 @@ ParameterFactory::ParameterFactory( const kernel::CoordinateConverter_ABC& conve
     , lowerRight_    ( xis.attribute< std::string >( "lower-right-point", "ppp" ) )
     , model_         ( model )
 {
-    srand( time( 0 ) );
+    srand( static_cast< unsigned int >( time( 0 )));
 }
 
 // -----------------------------------------------------------------------------
@@ -132,7 +132,8 @@ std::auto_ptr< actions::Parameter_ABC > ParameterFactory::CreateParameter( const
     if( parameter.GetType() == "point" )
         return CreatePointParameter( parameter );
     if( parameter.GetType() == "integer" || parameter.GetType() == "numeric"  )
-        return std::auto_ptr< actions::Parameter_ABC >( new actions::parameters::Numeric( parameter, rand() % 2 ) );
+        return std::auto_ptr< actions::Parameter_ABC >(
+        new actions::parameters::Numeric( parameter, static_cast< float >( rand() % 2 )));
 	if( parameter.GetType() == "medicalpriorities" )
 		return CreateMedicalPrioritiesParameter( parameter );
 	if( parameter.GetType() == "maintenancepriorities" )

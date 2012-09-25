@@ -490,7 +490,7 @@
                                             logistic_plugin,logistic_plugin_dll" description="build all dispatcher plugins"/>
 
     <target name="mission_tester" depends="clients_kernel,actions,client_proxy" description="build mission tester lib">
-        <build-lib name="mission_tester" pattern="lib${ant.project.name}_mission_tester-${platform}-mt@{suffix}" suffix="-gd" depends="qt4">
+        <build-lib name="mission_tester" pattern="lib${ant.project.name}_mission_tester-${platform}-mt@{suffix}" suffix="-gd" depends="qt4" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
