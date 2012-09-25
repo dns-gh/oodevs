@@ -1436,13 +1436,6 @@ Do you want to remove it?</source>
     </message>
 </context>
 <context>
-    <name>gui::PreferencesList</name>
-    <message>
-        <source>Category</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>gui::PresetDialog</name>
     <message>
         <source>Rename preset</source>

@@ -1885,5 +1885,8 @@
     <CustomBuild Include="..\..\src\libraries\clients_gui\PropertyModel.h">
       <Filter>Source Files\MVC\Model</Filter>
     </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\PreferencesList.h">
+      <Filter>Source Files\Preferences</Filter>
+    </CustomBuild>
   </ItemGroup>
 </Project>

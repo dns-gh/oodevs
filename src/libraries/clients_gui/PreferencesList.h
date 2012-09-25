@@ -10,17 +10,21 @@
 #ifndef __PreferencesList_h_
 #define __PreferencesList_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace gui
 {
-
 // =============================================================================
 /** @class  PreferencesList
     @brief  PreferencesList
 */
 // Created: SBO 2007-01-03
 // =============================================================================
-class PreferencesList : public Q3ListView
+class PreferencesList : public QTreeView
+                      , private boost::noncopyable
 {
+    Q_OBJECT
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -31,25 +35,26 @@ public:
     //! @name Operations
     //@{
     void AddPage( const QString& name, QWidget* widget );
-    virtual void setCurrentItem( Q3ListViewItem* item );
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnSelect( const QItemSelection& selected, const QItemSelection& deselected );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    PreferencesList( const PreferencesList& );            //!< Copy constructor
-    PreferencesList& operator=( const PreferencesList& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
     typedef std::map< QString, QWidget* > T_Widgets;
+    typedef T_Widgets::const_iterator   CIT_Widgets;
     //@}
 
 private:
     //! @name Member data
     //@{
     QStackedWidget& pages_;
+    QStandardItemModel* model_;
     T_Widgets widgets_;
     //@}
 };

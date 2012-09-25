@@ -40,9 +40,9 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
     , pGraphicPrefPanel_( 0 )
 {
     setCaption( tr( "Preferences" ) );
-    QGridLayout* grid = new QGridLayout( this, 3, 2 );
-    grid->setColStretch( 0, 0 );
-    grid->setColStretch( 1, 3 );
+    QGridLayout* grid = new QGridLayout( this );
+    grid->setColumnStretch( 0, 1 );
+    grid->setColumnStretch( 1, 3 );
     grid->setRowStretch( 0, 1 );
     grid->setRowStretch( 1, 6 );
     grid->setRowStretch( 2, 1 );
@@ -122,7 +122,7 @@ void PreferencesDialog::AddPage( const QString& name, PreferencePanel_ABC& page 
 // -----------------------------------------------------------------------------
 QSize PreferencesDialog::sizeHint() const
 {
-    return QSize( 500, 540 );
+    return QSize( 750, 550 );
 }
 
 // -----------------------------------------------------------------------------
