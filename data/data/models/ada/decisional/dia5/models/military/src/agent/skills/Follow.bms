@@ -1,7 +1,6 @@
 -- ****************************************************************************
--- Follow a set of entities
--- self.params.entities: the reachable elements
--- self.params.positions: the reaching elements
+-- Follow a set of motile entities
+-- self.params.entities: the motile elements to follow
 -- ****************************************************************************
 rootnode
 {
@@ -11,17 +10,19 @@ rootnode
     -- For each objective of the skill, stay close to it.
     -- --------------------------------------------------------------------------------
     activate = function( self )
-        -- Verify that entities can be followed
-        self.entities = {}
+
+        -- Filtering entities to be followed 
+        self.entities = {} -- init
         for _, entity in pairs( self.params.entities ) do
-            if entity:isValid() then -- the knowldedge of the entity is lost
-                if entity:canBeFollowed() then
+            if entity:isValid() then
+                if entity:canBeFollowed() then -- see method implementations in classes that realizes the "Motile" type.
                     self.entities[ #self.entities + 1 ] = entity
                 else
                     meKnowledge:RC( eRC_FollowingUnitIsDead, entity:getName() )
                 end
-            end
+            end -- else...the knowldedge of the entity is lost. Can't follow it
         end
+
         -- None of the entities can be followed...
         if not next( self.entities ) then
             meKnowledge:RC( eRC_NoUnitsInParameter )
@@ -29,6 +30,7 @@ rootnode
             return
         end -- else, decide to follow filtered intities
 
+        -- Activate "StayClose" skill to follow operational entities
         Activate( skill.links.stayClose, 1, { entities = self.entities } )
     end
 }

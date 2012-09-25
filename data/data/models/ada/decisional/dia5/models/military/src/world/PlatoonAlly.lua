@@ -345,11 +345,11 @@ return
         return integration.bodyIsMoving( self )
     end,
     canBeFollowed = function( self )
-        return self:isOperational()
+        return self:isOperational() -- this element can be followed if it is operationnal
     end,
 
     -- -------------------------------------------------------------------------------- 
-    -- Integrations and sp�cifics methods
+    -- Integrations and specific methos
     -- --------------------------------------------------------------------------------
     isPosted = function( self )
         return integration.isPosted( self )
@@ -862,7 +862,7 @@ return
         return integration.isTransportingCrowd( self )
     end,
     isSurrendered = function( self )
-        return integration.isSurrendered( self )
+        return integration.isFriendSurrendered( self )
     end,
     changeAutomate = function( self )
         integration.changeAutomate( self )

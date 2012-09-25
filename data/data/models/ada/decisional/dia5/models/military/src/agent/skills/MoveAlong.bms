@@ -12,7 +12,7 @@ rootnode
     done = function( self, params, additionalParams ) -- the element has been reached
         self.nextTargetIndex = self.nextTargetIndex + 1
         if self.nextTargetIndex > #self.params.entities then
-            Feedback( self.feedbacks.done )
+            Feedback( self.feedbacks.done, additionalParams )
         end
     end,
 

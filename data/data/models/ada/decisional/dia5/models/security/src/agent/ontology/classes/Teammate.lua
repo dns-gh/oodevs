@@ -23,7 +23,7 @@ method "extractVictimsFromIt" (
     end )
 
 -- --------------------------------------------------------------------------------
--- MedicalUnit implementation
+-- MedicalUnit methods implementations
 -- --------------------------------------------------------------------------------
 method "evacuateVictims" (
     function( self, victimsUnit )  -- This element (self) is a medical unit
@@ -36,7 +36,7 @@ method "canEvacuateVictims" (
     end )
 
 -- --------------------------------------------------------------------------------
--- Transportable implementation
+-- Transportable methods implementations
 -- --------------------------------------------------------------------------------
 method "canBeLoaded" ( 
     function( self )
