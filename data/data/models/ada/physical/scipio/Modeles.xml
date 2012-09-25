@@ -3913,21 +3913,13 @@
         <mission name="PION AIR Faire Mouvement"/>
       </missions>
       <fragorders>
-        <fragorder name="Passer En NBC4"/>
-        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Desactiver Radar"/>
         <fragorder name="Activer Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
-        <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Passer En Silence Radio"/>
       </fragorders>
     </unit>
     <unit dia-type="france.military.platoon.combat.support.air.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.RENS.Drone SDTI">
@@ -3939,24 +3931,15 @@
         <mission name="PION COMMUNES Stationner"/>
       </missions>
       <fragorders>
-        <fragorder name="Passer En NBC4"/>
-        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Desactiver Radar"/>
         <fragorder name="Activer Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
-        <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.RENS.Section ROHUM">
@@ -7509,4 +7492,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1837746405" -->
+<!-- signature="3240250571" -->
