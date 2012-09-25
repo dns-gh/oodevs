@@ -221,9 +221,12 @@ void Context::ParseRoot()
         items_.Fill( install_->GetProperties() );
     }
     if( cmd_ != CMD_RUN )
+    {
         emit ClearProgress();
-    else
-        GetSession();
+        emit ClearMessage();
+        return;
+    }
+    GetSession();
 }
 
 // -----------------------------------------------------------------------------
