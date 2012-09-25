@@ -9,7 +9,7 @@
         <parameter name="entities">
             <type>
                 <list>
-                    <class name="sword.military.knowledge.decisional.Loadable"/>
+                    <class name="sword.military.world.Platoon"/>
                 </list>
             </type>
         </parameter>
@@ -20,8 +20,8 @@
     <stages>
         <stage label="Déplacement vers les réfugiés.">
             <skills>
-                <skill name="sword.military.platoon.skills.primitives.Load" main="true">
-                    <parameter name="entities">
+                <skill name="sword.military.platoon.skills.primitives.TransportPrisoners" main="true">
+                    <parameter name="platoons">
                         <value>
                             <parameter>entities</parameter>
                         </value>

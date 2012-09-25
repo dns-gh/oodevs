@@ -248,3 +248,7 @@ end
 integration.allowCarriers = function( )
     DEC_LaisserTransporteursSansDelai( )
 end
+
+integration.isFriendOrFoeSurrendered = function( platoon )
+    return DEC_ConnaissanceAgent_EstRenduAMonCamp( meKnowledge.source, platoon.source )
+end

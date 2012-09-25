@@ -1,53 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.EscorterPrisonniersVersCamp" source-version="1.0.0" knowledge-class="sword.military.platoon.tasks.knowledges.LoadAndDischarge">
-	<parameters>
-		<parameter name="camp">
-			<type>
-				<class name="sword.military.knowledge.Camp"/>
-			</type>
-		</parameter>
-		<parameter name="entities">
-			<type>
-				<list>
-					<class name="sword.military.knowledge.decisional.Loadable"/>
-				</list>
-			</type>
-		</parameter>
-	</parameters>
-	<stages>
-		<stage label="Embarquement des unités">
-			<skills>
-				<skill name="sword.military.platoon.skills.primitives.Load" main="true">
-					<parameter name="entities">
-						<value>
-							<parameter>entities</parameter>
-						</value>
-					</parameter>
-				</skill>
-			</skills>
-		</stage>
-		<stage label="Débarquement des unités dans le camp" disable-when-done="true">
-			<skills>
-				<skill name="sword.military.platoon.skills.DischargeIn" main="true">
-					<parameter name="camp">
-						<value>
-							<parameter>camp</parameter>
-						</value>
-					</parameter>
-					<parameter name="elements">
-						<value>
-							<parameter>entities</parameter>
-						</value>
-					</parameter>
-				</skill>
-				<skill name="france.military.platoon.skills.LibererEmbarques">
-					<parameter name="entities">
-						<value>
-							<parameter>entities</parameter>
-						</value>
-					</parameter>
-				</skill>
-			</skills>
-		</stage>
-	</stages>
+    <parameters>
+        <parameter name="camp">
+            <type>
+                <class name="sword.military.knowledge.Camp"/>
+            </type>
+        </parameter>
+        <parameter name="entities">
+            <type>
+                <list>
+                    <class name="sword.military.world.Platoon"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="Embarquement des unités">
+            <skills>
+                <skill name="sword.military.platoon.skills.primitives.TransportPrisoners" main="true">
+                    <parameter name="platoons">
+                        <value>
+                            <parameter>entities</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+        <stage label="Débarquement des unités dans le camp" disable-when-done="true">
+            <skills>
+                <skill name="sword.military.platoon.skills.DischargeIn" main="true">
+                    <parameter name="camp">
+                        <value>
+                            <parameter>camp</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="elements">
+                        <value>
+                            <parameter>entities</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+                <skill name="france.military.platoon.skills.LibererEmbarques">
+                    <parameter name="entities">
+                        <value>
+                            <parameter>entities</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
 </task>
