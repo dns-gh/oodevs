@@ -914,11 +914,11 @@
         </sequential>
     </macrodef>
 
-    <target name = "generate-database-common" depends="generate-decisional-files">
+    <target name = "generate-database-common" depends="configure-update,generate-decisional-files">
         <bmc src="${models.dir}/common/src" core="${models.dir}/directia.core/directia.core.bml" luac="false"/>
     </target>
 
-    <target name="generate-database-crowd" depends="generate-database-common" description= "compile behavior model database for crowd">
+    <target name="generate-database-crowd" depends="configure-update,generate-database-common" description= "compile behavior model database for crowd">
         <bmc src="${models.dir}/crowd/src" core="${models.dir}/directia.core/directia.core.bml" depends="${models.dir}/common/src" luac="false"/>
     </target>
 
@@ -1881,7 +1881,7 @@
     main
     ============================================================================
     -->
-    <target name="configure" description="initialize local project structure with libraries">
+    <target name="configure-update" description="update package dependencies">
         <update name="geometry"/>
         <update name="geocoord"/>
         <update name="terrain" modules="terrain,graphics,spatialcontainer,pathfind,analysis,vmap,geodata,gdal_ogr"/>
@@ -1922,9 +1922,10 @@
         <update name="iconv"/>
         <update name="proj4"/>
         <update name="asciidoc" version="8.6.8"/>
-        <antcall target="generate-database"/>
-        <antcall target="generate-symbols"/>
     </target>
+
+    <target name="configure" description="update packages and decisional"
+        depends="configure-update,generate-database,generate-symbols"/>
 
     <target name="clean" description="clean intermediate build artifacts">
         <delete dir="${out.dir}"/>
