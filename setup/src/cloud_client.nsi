@@ -59,6 +59,7 @@ Section $(^Name)
     File "${ROOT}\cloud\cloud_client.exe"
     File "${ROOT}\sword\QtCore4.dll"
     File "${ROOT}\sword\QtGui4.dll"
+    File "${ROOT}\sword\QtNetwork4.dll"
 
     ; shortcuts
     CreateDirectory "$SMPROGRAMS\$(^Name)"
