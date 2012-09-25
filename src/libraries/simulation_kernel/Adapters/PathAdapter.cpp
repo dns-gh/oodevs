@@ -119,6 +119,8 @@ void PathAdapter::Initialize( core::Facade& facade )
     USE_HOOK( GetThreshold, facade );
     USE_HOOK( HandlePopulations, facade );
     USE_HOOK( GetPopulationAttitudeCost, facade );
+    USE_HOOK( GetPopulationSecurityRange, facade );
+    USE_HOOK( GetCostOutsideOfPopulation, facade );
 }
 
 namespace
