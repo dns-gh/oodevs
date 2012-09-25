@@ -143,9 +143,16 @@ QVariant Item::Data( int col, int role ) const
         case Qt::UserRole:
             switch( col )
             {
-                case ITEM_COL_STATUS:
-                    return status_;
+                case ITEM_COL_TYPE:     return type_;
+                case ITEM_COL_NAME:     return name_;
+                case ITEM_COL_PACKAGE:  return package_;
+                case ITEM_COL_VERSION:  return version_;
+                case ITEM_COL_STATUS:   return status_;
+                case ITEM_COL_DATE:     return date_;
+                case ITEM_COL_CHECKSUM: return checksum_;
+                case ITEM_COL_SIZE:     return size_;
             }
+            break;
 
         case Qt::DisplayRole:
             switch( col )
