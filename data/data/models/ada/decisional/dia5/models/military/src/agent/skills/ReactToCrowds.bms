@@ -29,7 +29,9 @@ rootnode
                 if meKnowledge:fireForbiddenOnCrowd() then -- any kind of intervention is not allowed
                     -- Leave crowd
                     self.position = self.position or integration.getSafetyPositionFromCrowd( crowd, 1000 )
-                    Activate( skill.links.moveToward, 1, { entities  = { self.position } } ) 
+                    if self.position then
+                        Activate( skill.links.moveToward, 1, { entities  = { self.position } } ) 
+                    end 
                 else -- choose appropriate reponse regarding to orders
                     Activate( skill.links.respondToCrowd, 1,{ crowd = crowd } ) -- intervene in the crowd
                 end
