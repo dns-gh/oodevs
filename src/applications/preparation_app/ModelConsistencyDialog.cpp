@@ -27,10 +27,10 @@ namespace
         return type == eNoLogisticBase || type ==  eNoCommandPost || type ==  eSeveralCommandPost
             || type ==  eNoKnowledgeGroup || type ==  eScoreError || type ==  eSuccessFactorError
             || type == eBadCPExtensions || type == eProfileNoRole || type == eNoOrbat
-            || type == eDiffusionList || type == eMelmil;
+            || type == eDiffusionList || type == eMelmil || type == eDeletedUrbanBlocks || type == eDeletedPopulationUrbanBlocks;
     }
 
-#define CONVERT_TO_MASK( mask ) { if( type & mask ) return mask; }
+#define CONVERT_TO_MASK( mask ) { if( type < mask ) return mask; }
     E_ConsistencyCheck Convert( E_ConsistencyCheck type )
     {
         CONVERT_TO_MASK( eUniquenessMask )
@@ -122,6 +122,7 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ eDiffusionList ] = tools::translate( "ModelConsistencyDialog", "Cycle detected in diffusion list." );
     errorDescriptions_[ eDeletedUrbanBlocks ] = tools::translate( "ModelConsistencyDialog", "Some resource network nodes point on nonexistent urban blocks. They will be deleted at next save.");
     errorDescriptions_[ eMelmil ] = tools::translate( "ModelConsistencyDialog", "Melmil file is missing.");
+    errorDescriptions_[ eDeletedPopulationUrbanBlocks ] = "%1";
     errorDescriptions_[ eOthers ] = "%1";
 }
 
