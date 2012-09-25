@@ -10,18 +10,13 @@
 #ifndef __FilterPartiesListView_h_
 #define __FilterPartiesListView_h_
 
-namespace xml
-{
-    class xistream;
-}
-
 // =============================================================================
 /** @class  FilterPartiesListView
     @brief  FilterPartiesListView
 */
 // Created: ABR 2012-05-29
 // =============================================================================
-class FilterPartiesListView : public Q3ListView
+class FilterPartiesListView : public QTreeView
 {
     Q_OBJECT
 
@@ -48,13 +43,7 @@ signals:
 private slots:
     //! @name Slots
     //@{
-    void OnItemClicked( Q3ListViewItem* item, const QPoint& point, int column );
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    enum E_Column { eCheckbox = 0, eHiddenCheckbox = 1, eHiddenPartyID = 2, ePartyName  = 3 };
+    void OnItemClicked( const QModelIndex& index );
     //@}
 
     //! @name Helpers
@@ -68,6 +57,7 @@ private:
     bool    checkedByDefault_;
     QPixmap checkedPixmap_;
     QPixmap uncheckedPixmap_;
+    QStandardItemModel model_;
     //@}
 };
 

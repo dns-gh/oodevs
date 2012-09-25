@@ -13,31 +13,23 @@
 #include "clients_gui/resources.h"
 #include "clients_kernel/Tools.h"
 
+#define PartyIdRole ( Qt::UserRole + 1 )
+#define CheckedRole ( Qt::UserRole + 2 )
+
 // -----------------------------------------------------------------------------
 // Name: FilterPartiesListView constructor
 // Created: ABR 2012-05-29
 // -----------------------------------------------------------------------------
 FilterPartiesListView::FilterPartiesListView( QWidget* parent, bool checkedByDefault /* = true */ )
-    : Q3ListView( parent )
+    : QTreeView( parent )
     , checkedPixmap_   ( MAKE_PIXMAP( check ) )
     , uncheckedPixmap_ ( MAKE_PIXMAP( cross ) )
     , checkedByDefault_( checkedByDefault )
 {
     setMaximumHeight( 100 );
-
-    addColumn( "Checkbox" );
-    addColumn( "Hidden checkbox", 0 );
-    addColumn( "Hidden party id", 0 );
-    addColumn( "Party" );
-    header()->setResizeEnabled( false );
-    header()->setMovingEnabled( false );
-    hideColumn( eHiddenPartyID );
-    hideColumn( eHiddenCheckbox );
+    setModel( &model_ );
     header()->hide();
-
-    setResizeMode( Q3ListView::LastColumn );
-
-    connect( this, SIGNAL( clicked( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnItemClicked( Q3ListViewItem*, const QPoint&, int ) ) );
+    connect( this, SIGNAL( clicked( const QModelIndex& ) ), SLOT( OnItemClicked( const QModelIndex& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,9 +47,9 @@ FilterPartiesListView::~FilterPartiesListView()
 // -----------------------------------------------------------------------------
 bool FilterPartiesListView::IsPartyChecked( unsigned long partyID )
 {
-    for( Q3ListViewItemIterator it( this ); it.current(); ++it )
-        if( ( *it )->text( eHiddenPartyID ).toUInt() == partyID )
-            return ( *it )->text( eHiddenCheckbox ).toInt() > 0;
+    for( int i = 0; i < model_.rowCount(); ++i )
+        if( model_.item( i )->data( PartyIdRole ).toUInt() == partyID )
+            return model_.item( i )->data( CheckedRole ).toBool();
     assert( false );
     return false;
 }
@@ -66,15 +58,17 @@ bool FilterPartiesListView::IsPartyChecked( unsigned long partyID )
 // Name: FilterPartiesListView::OnItemClicked
 // Created: ABR 2012-05-29
 // -----------------------------------------------------------------------------
-void FilterPartiesListView::OnItemClicked( Q3ListViewItem* item, const QPoint& /* point */, int column )
+void FilterPartiesListView::OnItemClicked( const QModelIndex& index )
 {
-    if( column != eCheckbox || !item )
+    if( !index.isValid() )
         return;
-
-    bool checked = item->text( eHiddenCheckbox ).toInt() > 0;
+    QStandardItem* item = model_.itemFromIndex( index );
+    if( !item )
+        return;
+    bool checked = item->data( CheckedRole ).toBool();
     checked = !checked;
-    item->setText( eHiddenCheckbox, QString::number( ( checked ) ? 1 : 0 ) );
-    item->setPixmap( eCheckbox, ( checked ) ? checkedPixmap_ : uncheckedPixmap_  );
+    item->setData( checked, CheckedRole );
+    item->setIcon( ( checked ) ? checkedPixmap_ : uncheckedPixmap_  );
     emit( ValueChanged() );
 }
 
@@ -84,7 +78,7 @@ void FilterPartiesListView::OnItemClicked( Q3ListViewItem* item, const QPoint& /
 // -----------------------------------------------------------------------------
 bool FilterPartiesListView::ParseOrbatFile( const std::string& fileName )
 {
-    clear();
+    model_.clear();
     bool status = true;
     try
     {
@@ -108,13 +102,12 @@ bool FilterPartiesListView::ParseOrbatFile( const std::string& fileName )
 void FilterPartiesListView::ReadTeam( xml::xistream& xis )
 {
     const std::string name = xis.attribute< std::string >( "name", "" );
-    unsigned long id = xis.attribute< unsigned long >( "id", 0 );
+    unsigned int id = xis.attribute< unsigned int >( "id", 0 );
     assert( !name.empty() && id != 0 );
-    Q3ListViewItem* item = new Q3ListViewItem( this );
-    item->setText( ePartyName, name.c_str() );
-    item->setText( eHiddenPartyID, QString::number( id ) );
-    item->setText( eHiddenCheckbox, QString::number( ( checkedByDefault_ ) ? 1 : 0 ) );
-    item->setPixmap( eCheckbox, ( checkedByDefault_ ) ? checkedPixmap_ : uncheckedPixmap_ );
+    QStandardItem* item = new QStandardItem( ( checkedByDefault_ ) ? checkedPixmap_ : uncheckedPixmap_, name.c_str() );
+    item->setData( id, PartyIdRole );
+    item->setData( checkedByDefault_, CheckedRole );
+    model_.appendRow( item );
 }
 
 // -----------------------------------------------------------------------------
@@ -124,8 +117,14 @@ void FilterPartiesListView::ReadTeam( xml::xistream& xis )
 QString FilterPartiesListView::GetTeamList()
 {
     QString result = "";
-    for( Q3ListViewItemIterator it( this ); it.current(); ++it )
-        if( ( *it )->text( eHiddenCheckbox ).toInt() > 0 )
-            result += ( result.isEmpty() ) ? ( *it )->text( eHiddenPartyID ) : QString( ";%1" ).arg( ( *it )->text( eHiddenPartyID ) );
+    for( int i = 0; i < model_.rowCount(); ++i )
+    {
+        QStandardItem* item = model_.item( i );
+        if( item->data( CheckedRole ).toBool() )
+        {
+            const QString idStr = QString::number( item->data( PartyIdRole ).toUInt() );
+            result += ( result.isEmpty() ) ? idStr : QString( ";%1" ).arg( idStr );
+        }
+    }
     return result;
 }

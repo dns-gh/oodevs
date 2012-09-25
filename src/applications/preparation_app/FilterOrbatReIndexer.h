@@ -14,7 +14,6 @@
 
 class QCheckBox;
 class QLineEdit;
-class Q3ListView;
 
 namespace xml
 {
