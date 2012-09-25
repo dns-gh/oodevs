@@ -55,8 +55,10 @@ rootnode
                 Activate( skill.nodes.Reports, 1, { report = eRC_DecrochageFaceAPopulation } )
                 self.positionSurete = integration.getSafetyPositionFromCrowd( 
                         self.params.crowd, skill.modifiers.distanceEsquivePopulation )
-                StartActivate( skill.links.moveToward, 1, { entities  = { self.positionSurete } } )
-                self.isSelfProtecting = true
+                if self.positionSurete then 
+                    StartActivate( skill.links.moveToward, 1, { entities  = { self.positionSurete } } )
+                    self.isSelfProtecting = true
+                end
             end
             Feedback( self.feedbacks.failed )
         else  -- move to crowd and try to control it

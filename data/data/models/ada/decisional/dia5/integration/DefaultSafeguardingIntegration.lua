@@ -37,7 +37,7 @@ integration.getSafetyPositionFromCrowd = function( crowd, distance )
     if position then
         return CreateKnowledge( sword.military.world.Point, position)
     else
-        return meKnowledge:getMyPosition()
+        return nil
     end
 end
 
