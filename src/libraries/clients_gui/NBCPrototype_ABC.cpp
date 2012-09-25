@@ -12,9 +12,9 @@
 #include "clients_gui_pch.h"
 #include "NBCPrototype_ABC.h"
 #include "clients_kernel/NBCAgent.h"
+#include "clients_kernel/VariantPointer.h"
 #include "tools/Iterator.h"
 #include "RichLabel.h"
-#include "ValuedListItem.h"
 #include "Tools.h"
 #include "LoadableSpinBox.h"
 
@@ -27,8 +27,10 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 NBCPrototype_ABC::NBCPrototype_ABC( QWidget* parent, const tools::Resolver_ABC< NBCAgent >& resolver, int maxToxic )
     : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::NBCPrototype_ABC", "NBC parameters" ) )
-    , resolver_( resolver )
-    , maxToxic_( maxToxic )
+    , resolver_ ( resolver )
+    , maxToxic_ ( maxToxic )
+    , model_    ( new QStandardItemModel( this ) )
+    , nbcAgents_( new QTreeView() )
 {
     QGridLayout* layout = new QGridLayout( this, 0, 2 );
     layout->addWidget( new QLabel( tools::translate( "gui::NBCPrototype_ABC", "Danger level:" ) ) );
@@ -36,10 +38,10 @@ NBCPrototype_ABC::NBCPrototype_ABC( QWidget* parent, const tools::Resolver_ABC< 
     layout->addWidget( danger_ );
     nbcAgentsLabel_ = new RichLabel( tools::translate( "gui::NBCPrototype_ABC", "NBC agent(s):" ) );
     layout->addWidget( nbcAgentsLabel_ );
-    nbcAgents_ = new Q3ListView();
-    nbcAgents_->setResizeMode( Q3ListView::AllColumns );
-    nbcAgents_->setMinimumHeight( 100 );
-    nbcAgents_->addColumn( tools::translate( "gui::NBCPrototype_ABC", "Type" ) );
+
+    nbcAgents_->setModel( model_ );
+    nbcAgents_->header()->hide();
+
     layout->addWidget( nbcAgents_ );
 
     layout->addWidget( new QLabel( tools::translate( "gui::NBCPrototype_ABC", "NBC agent state:" ) ) );
@@ -67,10 +69,21 @@ NBCPrototype_ABC::~NBCPrototype_ABC()
 // -----------------------------------------------------------------------------
 void NBCPrototype_ABC::UpdateSelection()
 {
-    if( maxToxic_ == 1 )
-        nbcAgents_->setSelectionMode( Q3ListView::Single );
-    else
-        nbcAgents_->setSelectionMode( Q3ListView::Multi );
+    nbcAgents_->setSelectionMode( maxToxic_ == 1 ? QAbstractItemView::SingleSelection :
+                                                   QAbstractItemView::MultiSelection );
+}
+
+namespace
+{
+    QStandardItem* CreateItem( const kernel::NBCAgent& agent )
+    {
+        QStandardItem* item = new QStandardItem( agent.GetName().c_str() );
+        item->setEditable( false );
+        QVariant* variant = new QVariant();
+        variant->setValue( kernel::VariantPointer( &agent ) );
+        item->setData( *variant, Qt::UserRole );
+        return item;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -79,14 +92,10 @@ void NBCPrototype_ABC::UpdateSelection()
 // -----------------------------------------------------------------------------
 void NBCPrototype_ABC::FillTypes()
 {
-    nbcAgents_->clear();
+    model_->clear();
     tools::Iterator< const NBCAgent& > it( resolver_.CreateIterator() );
     while( it.HasMoreElements() )
-    {
-        const NBCAgent& element = it.NextElement();
-        ValuedListItem* item = new ValuedListItem( nbcAgents_ );
-        item->SetNamed( element );
-    }
+        model_->appendRow( CreateItem( it.NextElement() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -120,11 +129,7 @@ bool NBCPrototype_ABC::CheckValidity( const kernel::Team_ABC& ) const
 // -----------------------------------------------------------------------------
 unsigned NBCPrototype_ABC::GetAgentCount() const
 {
-    unsigned selected = 0;
-    for( Q3ListViewItem* item = nbcAgents_->firstChild(); item != 0; item = item->nextSibling() )
-        if( item->isSelected() )
-            ++selected;
-    return selected;
+    return nbcAgents_->selectionModel()->selectedIndexes().size();
 }
 
 // -----------------------------------------------------------------------------

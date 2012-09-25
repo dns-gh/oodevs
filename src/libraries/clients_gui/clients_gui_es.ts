@@ -1210,10 +1210,6 @@ Voulez-vous le supprimer?</translation>
         <translation>Agent(s) NBC:</translation>
     </message>
     <message>
-        <source>Type</source>
-        <translation>Type</translation>
-    </message>
-    <message>
         <source>NBC agent state:</source>
         <translation>Etat agent NBC:</translation>
     </message>

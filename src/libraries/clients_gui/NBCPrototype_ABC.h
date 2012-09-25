@@ -67,7 +67,8 @@ protected:
     int maxToxic_;
     RichLabel* nbcAgentsLabel_;
     LoadableSpinBox* danger_;
-    Q3ListView* nbcAgents_;
+    QTreeView* nbcAgents_;
+    QStandardItemModel* model_;
     ValuedComboBox< std::string >* nbcStates_;
     //@}
 };

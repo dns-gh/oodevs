@@ -13,6 +13,7 @@
 #include "tools/Iterator.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/VariantPointer.h"
 #include "preparation/NBCAttribute.h"
 #include "clients_gui/RichLabel.h"
 #include "clients_gui/ValuedListItem.h"
@@ -53,9 +54,9 @@ void NBCPrototype::Commit( const kernel::Team_ABC& )
         NBCAttribute* attribute = new NBCAttribute( dictionary );
         {
             attribute->SetState( nbcStates_->GetValue() );
-            for( Q3ListViewItem* item = nbcAgents_->firstChild(); item != 0; item = item->nextSibling() )
-                if( item->isSelected() )
-                    attribute->AddAgent( *static_cast< ValuedListItem* >( item )->GetValue< const NBCAgent >() );
+            QModelIndexList indexes = nbcAgents_->selectionModel()->selectedIndexes();
+            for( QModelIndexList::const_iterator it = indexes.begin(); it != indexes.end(); ++it )
+                attribute->AddAgent( *static_cast< const kernel::NBCAgent* >( (*it).data( Qt::UserRole ).value< kernel::VariantPointer >().ptr_ ) );
             attribute->SetDanger( danger_->value() );
         }
         creation_->Attach( *attribute );

@@ -1212,10 +1212,6 @@ Do you want to remove it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>NBC agent state:</source>
         <translation type="unfinished"></translation>
     </message>

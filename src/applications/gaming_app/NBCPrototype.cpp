@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "NBCPrototype.h"
 #include "clients_kernel/NBCAgent.h"
+#include "clients_kernel/VariantPointer.h"
 #include "tools/Iterator.h"
 #include "clients_gui/ValuedListItem.h"
 #include "protocol/ClientSenders.h"
@@ -49,8 +50,8 @@ void NBCPrototype::Commit( const kernel::Team_ABC& )
     list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_nbc );
     list.AddQuantity( "DangerLevel", danger_->value() );
     actions::parameters::ParameterList& agents = list.AddList( "NBCAgents" );
-    for( Q3ListViewItem* item = nbcAgents_->firstChild(); item != 0; item = item->nextSibling() )
-        if( item->isSelected() )
-            agents.AddIdentifier( "Id", static_cast< ValuedListItem* >( item )->GetValue< const NBCAgent >()->GetId() );
+    QModelIndexList indexes = nbcAgents_->selectionModel()->selectedIndexes();
+    for( QModelIndexList::const_iterator it = indexes.begin(); it != indexes.end(); ++it )
+        agents.AddIdentifier( "Id", static_cast< const kernel::NBCAgent* >( (*it).data( Qt::UserRole ).value< kernel::VariantPointer >().ptr_ )->GetId() );
     list.AddQuantity( "State", nbcStates_->GetValue() == "liquid" ? eLiquid : eGas );
 }
