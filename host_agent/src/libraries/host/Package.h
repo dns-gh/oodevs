@@ -42,6 +42,7 @@ public:
     //! @name Package_ABC methods
     //@{
     virtual Tree GetProperties() const;
+    virtual Tree GetPropertiesFrom( const Item_ABC& item ) const;
     virtual size_t GetSize() const;
     virtual Path GetPath() const;
     virtual T_Item Find( size_t id, bool alive ) const;

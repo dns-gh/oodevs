@@ -17,6 +17,7 @@ namespace mocks
     MOCK_BASE_CLASS( MockPackage, host::Package_ABC )
     {
         MOCK_METHOD( GetProperties, 0 );
+        MOCK_METHOD( GetPropertiesFrom, 1 );
         MOCK_METHOD( GetSize, 0 );
         MOCK_METHOD( GetPath, 0 );
         MOCK_METHOD( Parse, 0 );

@@ -62,6 +62,7 @@ struct Package_ABC : public boost::noncopyable
     //! @name Methods
     //@{
     virtual Tree GetProperties() const = 0;
+    virtual Tree GetPropertiesFrom( const Item_ABC& item ) const = 0;
     virtual size_t GetSize() const = 0;
     virtual Path GetPath() const = 0;
     virtual T_Item Find( size_t id, bool alive ) const = 0;
