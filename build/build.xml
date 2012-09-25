@@ -1215,10 +1215,10 @@
             <arg value="--checkpoint=tempcheckpoint"/>
             <arg value="--deletecheckpoint"/>
         </run-one-simulation>
-        <run-one-simulation exercise="test/CheckpointTests">
+        <run-one-simulation exercise="tests/CheckpointTests">
             <arg value="--savecheckpoint=tempcheckpoint"/>
         </run-one-simulation>
-        <run-one-simulation exercise="test/CheckpointTests">
+        <run-one-simulation exercise="tests/CheckpointTests">
             <arg value="--checkpoint=tempcheckpoint"/>
             <arg value="--deletecheckpoint"/>
         </run-one-simulation>

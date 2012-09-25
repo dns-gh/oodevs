@@ -14,7 +14,7 @@
       <checkpoint frequency="100000h" keep="1" usecrc="true"/>
       <debug decisional="false" diadebugger="false" diadebuggerport="15000" networklogger="true" networkloggerport="20000" pathfind="false"/>
       <decisional useonlybinaries="false"/>
-      <dispatcher embedded="true"/>
+      <dispatcher embedded="false"/>
       <network port="10000"/>
       <orbat checkcomposition="false"/>
       <pathfinder threads="1"/>
