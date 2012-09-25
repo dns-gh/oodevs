@@ -91,10 +91,12 @@ public slots:
     void OnGetSession();
     void OnCloseDownload( size_t id );
     void OnDownloadProgress( size_t id, size_t current, int progress );
+    void ParsePackages();
 
 private:
-    typedef boost::shared_ptr< Download_ABC > T_Download;
-    typedef QHash< size_t, T_Download >       T_Downloads;
+    typedef boost::shared_ptr< Download_ABC >      T_Download;
+    typedef QHash< size_t, T_Download >            T_Downloads;
+    typedef boost::shared_ptr< host::Package_ABC > T_Package;
 
 private:
     void ParseArguments();
@@ -114,12 +116,12 @@ private:
     QAsync& async_;
     runtime::Async io_;
     QNetworkAccessManager net_;
-    ItemModel& items_;
     Command cmd_;
     Path root_;
     QUrl url_;
     QReadWriteLock access_;
-    boost::scoped_ptr< host::Package_ABC > install_;
+    T_Package install_;
+    ItemModel& items_;
     T_Downloads downloads_;
 };
 }

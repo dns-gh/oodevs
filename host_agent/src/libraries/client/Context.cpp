@@ -31,7 +31,10 @@
 
 using namespace gui;
 using namespace property_tree;
-using namespace runtime;
+using runtime::FileSystem_ABC;
+using runtime::Pool_ABC;
+using runtime::Runtime_ABC;
+using runtime::Utf8;
 using host::Package;
 
 namespace
@@ -213,7 +216,7 @@ void Context::ParseRoot()
 {
     {
         QWriteLocker lock( &access_ );
-        install_.reset( new Package( pool_, fs_, root_ / install_dir, true ) );
+        install_ = boost::make_shared< Package >( pool_, fs_, root_ / install_dir, true );
         install_->Parse();
         items_.Fill( install_->GetProperties() );
     }
@@ -359,6 +362,27 @@ void Context::OpenDownload( QNetworkReply* rpy )
     downloads_.insert( id, down );
 }
 
+namespace
+{
+// -----------------------------------------------------------------------------
+// Name: GetValue
+// Created: BAX 2012-09-25
+// -----------------------------------------------------------------------------
+QVariant GetValue( const QModelIndex& idx, int col )
+{
+    return idx.sibling( idx.row(), col ).data( Qt::UserRole );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SetValue
+// Created: BAX 2012-09-25
+// -----------------------------------------------------------------------------
+void SetValue( ItemModel& model, const QModelIndex& idx, int col, const QVariant& value )
+{
+    model.setData( idx.sibling( idx.row(), col ), value, Qt::UserRole );
+}
+}
+
 // -----------------------------------------------------------------------------
 // Name: Context::OnDownloadProgress
 // Created: BAX 2012-09-25
@@ -369,8 +393,8 @@ void Context::OnDownloadProgress( size_t id, size_t current, int progress )
     QModelIndex idx = items_.Find( id );
     if( !idx.isValid() )
         return;
-    items_.setData( idx.sibling( idx.row(), ITEM_COL_SIZE ), current, Qt::UserRole );
-    items_.setData( idx.sibling( idx.row(), ITEM_COL_STATUS ), progress, Qt::UserRole );
+    SetValue( items_, idx, ITEM_COL_SIZE, current );
+    SetValue( items_, idx, ITEM_COL_STATUS, progress );
 }
 
 // -----------------------------------------------------------------------------
@@ -386,6 +410,43 @@ void Context::OnCloseDownload( size_t id )
     downloads_.erase( it );
     if( !downloads_.empty() )
         return;
+    async_.Register( QtConcurrent::run( this, &Context::ParsePackages ) );
+    emit StatusMessage( "Parsing package(s)..." );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Context::ParsePackages
+// Created: BAX 2012-09-25
+// -----------------------------------------------------------------------------
+void Context::ParsePackages()
+{
+    T_Package next = boost::make_shared< Package >( pool_, fs_, root_ / tmp_dir, true );
+    const bool valid = next->Parse();
+    if( !valid )
+    {
+        emit ClearProgress();
+        emit StatusMessage( "Unable to parse downloaded package(s)" );
+        return;
+    }
+
+    Package::T_Items targets;
+    for( int row = 0; row < items_.rowCount(); ++row )
+    {
+        QModelIndex idx = items_.index( row, 0 );
+        const QString type = GetValue( idx, ITEM_COL_TYPE ).toString();
+        const QString name = GetValue( idx, ITEM_COL_NAME ).toString();
+        const QString sum  = GetValue( idx, ITEM_COL_CHECKSUM ).toString();
+        const Package::T_Item it = next->Find( QUtf8( type ), QUtf8( name ), QUtf8( sum ) );
+        if( !it )
+        {
+            emit ClearProgress();
+            emit StatusMessage( QString( "Missing download %1 %2 0x%3" ).arg( type ).arg( name ).arg( sum ) );
+            return;
+        }
+        targets.push_back( it );
+    }
+
+    install_->Install( io_, root_, targets );
     emit ClearProgress();
     emit ClearMessage();
 }
