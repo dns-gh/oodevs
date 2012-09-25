@@ -9,7 +9,7 @@
         <parameter name="entities">
             <type>
                 <list>
-                    <class name="properties.Loadable"/>
+                    <class name="world.Platoon"/>
                 </list>
             </type>
         </parameter>
@@ -20,8 +20,8 @@
     <stages>
         <stage label="Déplacement vers les réfugiés.">
             <skills>
-                <skill name="agent.skills.primitives.Load" main="true">
-                    <parameter name="entities">
+                <skill name="agent.skills.TransportPrisoners" main="true">
+                    <parameter name="platoons">
                         <value>
                             <parameter>entities</parameter>
                         </value>

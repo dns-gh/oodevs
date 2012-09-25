@@ -99,6 +99,7 @@
         <skill name="agent.skills.Reconnoiter"/>
         <skill name="agent.skills.Follow"/>
         <skill name="agent.skills.TransportACrowd"/>
+        <skill name="agent.skills.TransportPrisoners"/>
     </skills>
     <resources>
         <resource name="agent.resources.EngageCapacity"/>

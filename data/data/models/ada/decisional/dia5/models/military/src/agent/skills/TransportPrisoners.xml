@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.skills.TransportPrisoners" source-version="1.0.0">
+    <parameters>
+        <parameter name="platoons">
+            <type>
+                <list>
+                    <class name="world.Platoon"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <links>
+        <link name="load" skill="agent.skills.primitives.Load"/>
+    </links>
+</skill>

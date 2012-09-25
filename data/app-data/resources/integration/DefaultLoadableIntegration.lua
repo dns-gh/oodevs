@@ -256,10 +256,14 @@ integration.isTransported = function( enemy )
     return DEC_ConnaissanceAgent_EstTransporte( enemy.source )
 end
 
-integration.isSurrendered = function( )
-    return DEC_Agent_EstRendu( myself )
-end
-
 integration.allowCarriers = function( )
     DEC_LaisserTransporteursSansDelai( )
+end
+
+integration.isFriendSurrendered = function( friend )
+    return DEC_Agent_EstRendu( friend.source )
+end
+
+integration.isFriendOrFoeSurrendered = function( platoon )
+    return DEC_ConnaissanceAgent_EstRenduAMonCamp( meKnowledge.source, platoon.source )
 end

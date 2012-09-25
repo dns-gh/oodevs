@@ -509,8 +509,8 @@
                 </type>
             </return>
         </method>
-        <method name="isUnitCaptured" abstract="false">
-            <description>Renvoie vrai si l'unité est prisonnière.</description>
+        <method name="isSurrendered" abstract="false">
+            <description>Returns 'true' if the platoon is surrendered to the agent's camp, 'false' otherwise.</description>
             <return>
                 <type>
                     <simple name="boolean"/>

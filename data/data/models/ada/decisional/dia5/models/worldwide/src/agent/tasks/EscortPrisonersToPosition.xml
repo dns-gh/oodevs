@@ -16,7 +16,7 @@ Once all units has been loaded, they are tranported to the given location, then 
             <description>The surrendered units to be unloaded onto the given location.</description>
             <type>
                 <list>
-                    <class name="properties.Loadable"/>
+                    <class name="world.Platoon"/>
                 </list>
             </type>
         </parameter>
@@ -27,8 +27,8 @@ Once all units has been loaded, they are tranported to the given location, then 
     <stages>
         <stage label="moving toward surrendered units">
             <skills>
-                <skill name="agent.skills.primitives.Load" main="true">
-                    <parameter name="entities">
+                <skill name="agent.skills.TransportPrisoners" main="true">
+                    <parameter name="platoons">
                         <value>
                             <parameter>entities</parameter>
                         </value>
