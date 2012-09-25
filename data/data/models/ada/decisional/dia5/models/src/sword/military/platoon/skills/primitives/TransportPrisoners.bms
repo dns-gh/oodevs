@@ -1,0 +1,44 @@
+-- ****************************************************************************
+-- Capture prisoners
+-- self.params.entities: the loadable elements
+-- self.params.entities: the loading elements
+-- ****************************************************************************
+rootnode
+{
+    connections = { skill.links.load },
+
+    -- -------------------------------------------------------------------------------- 
+    -- Feedbacks
+    -- --------------------------------------------------------------------------------
+    done = function( self ) 
+       Feedback( self.feedbacks.done )
+    end,
+
+    -- --------------------------------------------------------------------------------
+    -- For each objective of the skill, stay close to it.
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+
+        -- Filtering platoons to be transported 
+        self.platoons = {} -- init
+        for _, platoon in pairs( self.params.platoons ) do
+            if platoon:isValid() then
+                if platoon:isSurrendered() then
+                    self.platoons[ #self.platoons + 1 ] = platoon
+                else
+                    meKnowledge:RC( eRC_UnitNotCaptured )
+                end
+            end -- else...the knowldedge of the entity is lost. Can't transport it
+        end
+
+        -- None of the platoons can be transported
+        if not next( self.platoons ) then
+            meKnowledge:RC( eRC_NoUnitsInParameter )
+            Feedback( self.feedbacks.failed )
+            return
+        end -- else, decide to load filtered platoons
+
+        -- Activate "Load" skill to transport surrendered platoons
+        Activate( skill.links.load, 1, { entities = self.platoons } )
+    end
+}

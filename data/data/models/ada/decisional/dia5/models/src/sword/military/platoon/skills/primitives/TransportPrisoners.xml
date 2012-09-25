@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.skills.primitives.TransportPrisoners" source-version="1.0.0">
+    <description>Charger les unités prisonnières passées en paramètre.</description>
+    <parameters>
+        <parameter name="platoons">
+            <description>Les unités prisonnières à charger.</description>
+            <type>
+                <list>
+                    <class name="sword.military.world.Platoon"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <links>
+        <link name="load" skill="sword.military.platoon.skills.primitives.Load"/>
+    </links>
+</skill>
