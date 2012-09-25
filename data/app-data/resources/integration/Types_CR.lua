@@ -495,4 +495,5 @@ eRC_CaptureEnd = 480
 eRC_PrisSousTirEclairant = 481
 eRC_PrisSousTirFumigene = 482
 eRC_OfficersKilled = 483
-eNbr = 484
+eRC_UnitNotCaptured = 484
+eNbr = 485

@@ -48,7 +48,8 @@ node "LoadElement"
     {
         skill.links.moveAndTakePosition,
         skill.links.observe,
-        skill.nodes.Load
+        skill.nodes.Load,
+        skill.nodes.RC
     },
 
     feedbacks = { "loaded" },
@@ -75,6 +76,11 @@ node "LoadElement"
     -- --------------------------------------------------------------------------------
     activate = function( self )
         if self.params.entity:isLoaded() then
+            return
+        end
+
+        if not self.params.entity:isUnitCaptured( meKnowledge ) then
+            Activate( skill.nodes.RC, 1, { RC = eRC_UnitNotCaptured } )
             return
         end
 
@@ -108,4 +114,11 @@ node "Load"
             Feedback( self.feedbacks.loaded, { element = self.params.entity } )
         end
     end
+}
+
+node "RC"
+{
+    create = function( self )
+        meKnowledge:RC( self.params.RC )
+    end,
 }

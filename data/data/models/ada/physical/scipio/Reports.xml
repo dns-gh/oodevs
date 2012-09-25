@@ -658,5 +658,6 @@
     <parameter type="ObjectKnowledge"/>
   </report>
   <report category="operational" id="447" message="Les officiers de l'unité ont subi un attentat"/>
+  <report category="operational" id="448" message="L'unité n'est pas rendue à mon camp"/>
 </reports>
-<!-- signature="4103406392" -->
+<!-- signature="0952534728" -->

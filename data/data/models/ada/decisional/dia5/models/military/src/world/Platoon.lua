@@ -119,6 +119,9 @@ return
     canLoadIt = function( self )
         return true -- in skill load, load element if arrived on position
     end,
+    isUnitCaptured = function( self, unit )
+        return DEC_ConnaissanceAgent_EstRenduAMonCamp( unit.source, self.source )
+    end,
     canUnloadIt = function( self )
         return true -- in skill unload, load element if arrived on position
     end,

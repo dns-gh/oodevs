@@ -692,5 +692,6 @@
   <report category="operational" id="481" message="Under lighting fire"/>
   <report category="operational" id="482" message="Under smoke fire"/>
   <report category="operational" id="483" message="The unit officers suffered an attack"/>
+  <report category="operational" id="484" message="The unit is not captured by my side"/>
 </reports>
-<!-- signature="2148295837" -->
+<!-- signature="2859669781" -->

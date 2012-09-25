@@ -645,6 +645,7 @@ public:
         eRC_PrisSousTirEclairant,
         eRC_PrisSousTirFumigene,
         eRC_OfficersKilled,
+        eRC_UnitNotCaptured,
         eLast
     };
     //@}
