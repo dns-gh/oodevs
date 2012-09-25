@@ -54,7 +54,6 @@ int main( int argc, char* argv[] )
         FileSystem fs( log );
         Pool pool( 8 );
         Head head( factory.GetRuntime(), fs, pool );
-        head.show();
         return app.exec();
     }
     catch( const std::exception& err )

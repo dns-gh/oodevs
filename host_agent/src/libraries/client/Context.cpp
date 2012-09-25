@@ -150,6 +150,7 @@ void Context::ProcessCommand()
             emit Exit();
             return;
     }
+    emit Show();
     emit StatusMessage( "Loading cache..." );
     emit ShowProgress( 0, 0 );
     ParseRoot();

@@ -50,6 +50,7 @@ Head::Head( const Runtime_ABC& runtime, const FileSystem_ABC& fs, Pool_ABC& pool
     connect( ctx_.get(), SIGNAL( ClearProgress() ), &progress_, SLOT( hide() ) );
     connect( ui_.remove_items, SIGNAL( clicked( bool ) ), ctx_.get(), SLOT( OnRemove() ) );
     connect( ctx_.get(), SIGNAL( Exit() ), this, SLOT( close() ) );
+    connect( ctx_.get(), SIGNAL( Show() ), this, SLOT( show() ) );
     async_.Register( QtConcurrent::run( ctx_.get(), &Context::Start ) );
 }
 

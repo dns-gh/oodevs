@@ -78,6 +78,7 @@ public:
 
 signals:
     void Exit();
+    void Show();
     void StatusMessage( const QString& );
     void ClearMessage();
     void ShowProgress( int min, int max );
