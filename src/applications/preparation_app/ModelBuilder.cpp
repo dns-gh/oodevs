@@ -488,30 +488,6 @@ namespace
 
 // -----------------------------------------------------------------------------
 // Name: ModelBuilder::OnRename
-// Created: SBO 2006-09-28
-// -----------------------------------------------------------------------------
-void ModelBuilder::OnRename( Q3ListViewItem*, int, const QString& text )
-{
-    if( selectedTeam_ )
-        Rename< Team >( selectedTeam_.ConstCast(), text, controllers_, property_ );
-    else if( selectedAgent_ )
-        Rename< Agent >( selectedAgent_.ConstCast(), text, controllers_, property_ );
-    else if( selectedAutomat_ )
-        Rename< Automat >( selectedAutomat_.ConstCast(), text, controllers_, property_ );
-    else if( selectedFormation_ )
-        Rename< Formation >( selectedFormation_.ConstCast(), text, controllers_, property_ );
-    else if( selectedGroup_ )
-        Rename< KnowledgeGroup >( selectedGroup_.ConstCast(), text, controllers_, property_ );
-    else if( selectedGhost_ )
-        Rename< Ghost >( selectedGhost_.ConstCast(), text, controllers_, property_ );
-    else if( selectedObject_ )
-        Rename< Object >( selectedObject_.ConstCast(), text, controllers_, property_ );
-    else if( selectedUrbanObject_ )
-        Rename< kernel::UrbanObject >( selectedUrbanObject_.ConstCast(), text, controllers_, property_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModelBuilder::OnRename
 // Created: JSR 2012-08-31
 // -----------------------------------------------------------------------------
 void ModelBuilder::OnRename( kernel::Entity_ABC& entity, const QString& newName )
