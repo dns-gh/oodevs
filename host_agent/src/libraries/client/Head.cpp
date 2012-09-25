@@ -25,6 +25,7 @@ using namespace runtime;
 Head::Head( const Runtime_ABC& runtime, const FileSystem_ABC& fs, Pool_ABC& pool )
     : QMainWindow( 0 )
 {
+    qRegisterMetaType< size_t >( "size_t" );
     qRegisterMetaType< HttpCommand >( "HttpCommand" );
 
     ui_.setupUi( this );

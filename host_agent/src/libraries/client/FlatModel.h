@@ -207,7 +207,10 @@ struct FlatModel : public QAbstractItemModel
     // -----------------------------------------------------------------------------
     virtual bool setData( const QModelIndex& index, const QVariant& value, int role )
     {
-        return FlatModel< T >::Item( index ).SetData( index.column(), value, role );
+        const bool modified = FlatModel< T >::Item( index ).SetData( index.column(), value, role );
+        if( modified )
+            emit dataChanged( index, index );
+        return modified;
     }
 
 protected:

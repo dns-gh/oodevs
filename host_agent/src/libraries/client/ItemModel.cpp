@@ -24,19 +24,6 @@
 using namespace gui;
 using namespace property_tree;
 
-enum ItemColumn
-{
-    ITEM_COL_TYPE,
-    ITEM_COL_NAME,
-    ITEM_COL_PACKAGE,
-    ITEM_COL_VERSION,
-    ITEM_COL_STATUS,
-    ITEM_COL_DATE,
-    ITEM_COL_CHECKSUM,
-    ITEM_COL_SIZE,
-    ITEM_COL_COUNT,
-};
-
 static const QString item_headers[] =
 {
     "Type",
@@ -131,10 +118,10 @@ Item::~Item()
 
 namespace
 {
-QVariant ConvertStatus( int status )
+QVariant GetStatus( const QString& error, int status )
 {
-    if( status < 0 )
-        return "Missing";
+    if( !error.isEmpty() )
+        return error;
     if( status < 100 )
         return status;
     return "Complete";
@@ -167,7 +154,7 @@ QVariant Item::Data( int col, int role )
                 case ITEM_COL_NAME:     return name_;
                 case ITEM_COL_PACKAGE:  return package_;
                 case ITEM_COL_VERSION:  return version_;
-                case ITEM_COL_STATUS:   return ConvertStatus( status_ );
+                case ITEM_COL_STATUS:   return GetStatus( error_, status_ );
                 case ITEM_COL_DATE:     return date_.toString( "yyyy-MM-dd hh:mm:ss" );
                 case ITEM_COL_CHECKSUM: return "0x" + checksum_;
                 case ITEM_COL_SIZE:     return PrettySize( size_ );
@@ -181,16 +168,46 @@ QVariant Item::Data( int col, int role )
     return QVariant();
 }
 
+namespace
+{
+// -----------------------------------------------------------------------------
+// Name: SetProgress
+// Created: BAX 2012-09-25
+// -----------------------------------------------------------------------------
+bool SetProgress( int& current, int next )
+{
+    if( next <= current )
+        return false;
+    current = next;
+    return true;
+}
+}
+
 // -----------------------------------------------------------------------------
 // Name: Item::SetData
 // Created: BAX 2012-09-06
 // -----------------------------------------------------------------------------
-bool Item::SetData( int /*col*/, const QVariant& value, int role )
+bool Item::SetData( int col, const QVariant& value, int role )
 {
-    if( role != Qt::CheckStateRole )
-        return false;
-    check_state_ = static_cast< Qt::CheckState >( value.toInt() );
-    return true;
+    switch( role )
+    {
+        case Qt::CheckStateRole:
+            check_state_ = static_cast< Qt::CheckState >( value.toInt() );
+            return true;
+
+        case Qt::UserRole:
+            switch( col )
+            {
+                case ITEM_COL_STATUS:
+                    return SetProgress( status_, value.toInt() );
+
+                case ITEM_COL_SIZE:
+                    size_ = static_cast< size_t >( value.toULongLong() );
+                    return true;
+            }
+            break;
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

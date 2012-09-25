@@ -23,6 +23,19 @@ namespace gui
 
 namespace gui
 {
+enum ItemColumn
+{
+    ITEM_COL_TYPE,
+    ITEM_COL_NAME,
+    ITEM_COL_PACKAGE,
+    ITEM_COL_VERSION,
+    ITEM_COL_STATUS,
+    ITEM_COL_DATE,
+    ITEM_COL_CHECKSUM,
+    ITEM_COL_SIZE,
+    ITEM_COL_COUNT,
+};
+
 struct Item : public boost::noncopyable
 {
      Item( const Tree& tree, int status );
@@ -44,7 +57,8 @@ private:
     const QDateTime date_;
     const QString   checksum_;
 
-    int             status_; // <0 missing, [0,100[ downloading, >100 complete
+    QString         error_;
+    int             status_; // [0,100[ downloading, >=100 complete
     size_t          size_;
     Qt::CheckState  check_state_;
 };

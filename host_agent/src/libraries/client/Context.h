@@ -89,6 +89,7 @@ public slots:
     void OnNetworkRequest( HttpCommand cmd, const QNetworkRequest& req );
     void OnGetSession();
     void OnCloseDownload( size_t id );
+    void OnDownloadProgress( size_t id, size_t current, int progress );
 
 private:
     typedef boost::shared_ptr< Download_ABC > T_Download;

@@ -148,7 +148,7 @@ struct Download : public gui::Download_ABC, public io::Writer_ABC
         if( next <= progress_ )
             return rpy;
         progress_ = next;
-        emit Progress( id_, static_cast< int >( next ) );
+        emit Progress( id_, current_, static_cast< int >( next ) );
         return rpy;
     }
 
@@ -237,6 +237,7 @@ struct Download : public gui::Download_ABC, public io::Writer_ABC
         Finish();
         async_.Join();
         rpy_->deleteLater();
+        emit Progress( id_, current_, 100 );
         emit End( id_ );
     }
 
