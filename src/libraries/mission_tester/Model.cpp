@@ -9,7 +9,6 @@
 
 #include "mission_tester_pch.h"
 #include "Agent.h"
-#include "AgentKnowledge.h"
 #include "Automat.h"
 #include "Listener_ABC.h"
 #include "Model.h"
