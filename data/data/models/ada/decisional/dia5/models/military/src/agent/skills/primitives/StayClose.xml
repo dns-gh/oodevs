@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.skills.primitives.StayClose" source-version="1.0.0">
-    <description>Déplacement simple vers une position permettant de rester proche des éléments passés en paramètre.</description>
+    <description>For the agent, to stay close to a set of given entities. &#xD;
+By issuing a set of entities and positions, the agent will choose the best position to go to. The agent activates a &quot;move to&quot; action with a priority depending on the efficiency of each position to get close to each entity.</description>
     <parameters>
         <parameter name="entities">
-            <description>Elements au près desquels il faut aller.</description>
+            <description>The set of elements to stay close to.</description>
             <type>
                 <list>
                     <class name="properties.Reachable"/>
@@ -11,7 +12,8 @@
             </type>
         </parameter>
         <parameter name="positions" nullable="true">
-            <description>Positions vers lesquelles l'entité peut se déplacer pour rester proche des élements passés en paramètre.</description>
+            <description>The positions to use to stay close to the elements.&#xD;
+If no positions issued, the skill calls the query &quot;getPositionsToStayClose()&quot; with the given &quot;entities&quot; as parameters. </description>
             <type>
                 <list>
                     <class name="properties.Reaching"/>
@@ -32,10 +34,10 @@
     </parameters>
     <links>
         <link name="observe" skill="agent.skills.actions.Observe">
-            <description>Lien vers le skill Observe</description>
+            <description>To enact the decision to orientate sensors toward the entities.</description>
         </link>
         <link name="moveAndTakePosition" skill="agent.skills.actions.MoveAndTakePosition">
-            <description>Lien vers le skill moveAndTakePosition</description>
+            <description>To enact the decision to move to the chosen position.</description>
         </link>
     </links>
 </skill>

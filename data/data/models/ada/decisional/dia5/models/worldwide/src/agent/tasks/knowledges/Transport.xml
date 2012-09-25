@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.tasks.knowledges.Transport" source-version="1.0.0" extends="agent.tasks.knowledges.PlatoonTask">
-    <description>The knowledge of the 'Transport' mission. This knowledge is used by the company commander to perform its own tasks. </description>
+    <description>The knowledge of the 'TransportACrowd' mission. This knowledge is used by the company commander to perform its own task. </description>
     <methods>
         <method name="fillParameters" abstract="false">
             <argument name="companyTask">

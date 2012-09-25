@@ -55,7 +55,7 @@ rootnode
         local Activate = Activate
 
         if self.concentration == 0 then
-            meKnowledge:sendMessage( "The crowd's concentration position is too far from the loading position" )
+            meKnowledge:sendMessage( "the agent cannot load the crowd (no crowd's concentration on loading position )" )
             Feedback( self.feedbacks.done )
             return
         end

@@ -94,7 +94,7 @@ node "LoadCrowdConcentration"
     create = function( self )
         if not self.params.crowd:hasConcentration( self.params.position ) then
             Feedback( self.feedbacks.failed ) -- agent has not the capability to transport the crowd
-            meKnowledge:sendMessage( "no crowd's concentration on loading position)" ) -- $$$ MIA TEMP
+            meKnowledge:sendMessage( "no crowd's concentration on loading position" ) -- $$$ MIA TEMP
             return -- no need to evaluate the end of the skill
         end
     end,

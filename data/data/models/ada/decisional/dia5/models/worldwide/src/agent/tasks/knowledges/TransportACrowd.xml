@@ -3,13 +3,13 @@
     <methods>
         <method name="fillParameters" abstract="false">
             <argument name="companyTask">
-                <description>La t??che automate</description>
+                <description>The string name of the company tasks.</description>
                 <type>
                     <class name="properties.Commandable"/>
                 </type>
             </argument>
             <argument name="objectives">
-                <description>Les objectifs de la t??che automate</description>
+                <description>The objectives of the task.</description>
                 <type>
                     <list>
                         <class name="directia.core.Object"/>

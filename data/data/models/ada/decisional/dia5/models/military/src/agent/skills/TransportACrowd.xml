@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.skills.TransportACrowd" source-version="1.0.0">
+    <description>To transport a 'Crowd' agent toward a given destination. &#xD;
+Depending on its crowd transport capacity, agent will make as many round trips as necessary between 'loadingPoint' and the 'destination'. &#xD;
+Because tha agent can only transports crowds' concentrations, this skill needs a loading position to indicate which concentration to transport. Indeed, a crowd can be compouded with several separated concentrations. Only one concentration can be transported at a time. The agent will transport the nearest concentration from the &quot;loadingPoint&quot; parameter.</description>
     <parameters>
         <parameter name="crowd">
-            <description>Foule a transporter.</description>
+            <description>The crowd agent to transport.</description>
             <type>
                 <class name="properties.Transportable"/>
             </type>
         </parameter>
         <parameter name="loadingPoint">
-            <description>Position d'embarquement.</description>
+            <description>The crowd's concentration position onto which the agent loads the elements of the crowd.</description>
             <type>
                 <class name="properties.Loading"/>
             </type>
         </parameter>
         <parameter name="destination">
-            <description>Position ou transporter les unites</description>
+            <description>The destination onto which the agent must bring the crowd.</description>
             <type>
                 <class name="properties.Loading"/>
             </type>
@@ -33,7 +36,9 @@
         <class name="world.PlatoonAlly"/>
     </body-type>
     <links>
-        <link name="moveToward" skill="agent.skills.MoveToward"/>
+        <link name="moveToward" skill="agent.skills.MoveToward">
+            <description>Used to make round trips between the loading position and the destination.</description>
+        </link>
     </links>
     <resources>
         <resource name="agent.resources.TransportationCapacity" variable="loadcapacity"/>

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.behaviors.tasks.TransportACrowd" source-version="1.0.0">
     <description>To transport a entire 'Crowd' toward a given destination. &#xD;
-Depending on its crowd transport capacity, agent will make as many round trips as necessary between 'loadingPosition' and the 'targetDestination'.</description>
+Depending on its crowd transport capacity, agent will make as many round trips as necessary between 'loadingPosition' and the 'targetDestination'.&#xD;
+Because the agent can only transports crowds' concentrations, this mission needs a loading position to indicate which concentration to transport. Indeed, a crowd can be compouded with several separated concentrations. Only one concentration can be transported at a time. The agent will transport the nearest concentration from the &quot;loadingPosition&quot; parameter.</description>
     <parameters>
         <parameter name="crowd">
             <description>The crowd to transport.</description>
