@@ -447,8 +447,11 @@ void Context::ParsePackages()
             return;
         }
         targets.push_back( it );
+        const Tree src = next->GetPropertiesFrom( *it );
+        items_.Replace( idx.row(), boost::make_shared< Item >( src, 100 ) );
     }
 
+    QWriteLocker write( &access_ );
     install_->Install( io_, root_, targets );
     emit ClearProgress();
     emit ClearMessage();
