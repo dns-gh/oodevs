@@ -42,11 +42,11 @@ struct Item : public boost::noncopyable
      Item( size_t id, const QString& type, const QString& name, const QString& checksum );
     ~Item();
 
-    QVariant Data( int col, int role );
-    bool SetData( int col, const QVariant& value, int role );
-    Qt::CheckState GetCheckState() const;
-    size_t GetId() const;
-    bool Equal( size_t id ) const;
+    QVariant        Data( int col, int role ) const;
+    Qt::CheckState  GetCheckState() const;
+    size_t          GetId() const;
+    bool            Equal( size_t id ) const;
+    bool            SetData( int col, const QVariant& value, int role );
 
 private:
     const size_t    id_;

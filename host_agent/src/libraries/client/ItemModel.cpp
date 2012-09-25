@@ -132,7 +132,7 @@ QVariant GetStatus( const QString& error, int status )
 // Name: Item::Data
 // Created: BAX 2012-09-06
 // -----------------------------------------------------------------------------
-QVariant Item::Data( int col, int role )
+QVariant Item::Data( int col, int role ) const
 {
     switch( role )
     {
