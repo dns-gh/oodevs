@@ -4,7 +4,7 @@
 &#xD;
 The agent decides to move toward each given units, from the nearest to the furthest. Once a unit has been reached, the agent loads it (magic tranportation).&#xD;
 &#xD;
-Once all units has been loaded, they are tranported to the given location, then they are unload onto the location.</description>
+Once all units has been loaded, they are tranported to the given location, then they are unload onto the 'position'.</description>
     <parameters>
         <parameter name="position">
             <description>The location into which the agent has to escort the surrendered units.</description>
