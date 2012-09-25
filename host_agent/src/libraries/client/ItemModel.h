@@ -38,17 +38,25 @@ enum ItemColumn
 
 struct Item : public boost::noncopyable
 {
+    //! @name Constructors/Destructor
+    //@{
      Item( const Tree& tree, int status );
      Item( size_t id, const QString& type, const QString& name, const QString& checksum );
     ~Item();
+    //@}
 
+    //! @name Public Methods
+    //@{
     QVariant        Data( int col, int role ) const;
     Qt::CheckState  GetCheckState() const;
     size_t          GetId() const;
     bool            Equal( size_t id ) const;
     bool            SetData( int col, const QVariant& value, int role );
+    //@}
 
 private:
+    //! @name private members
+    //@{
     const size_t    id_;
     const QString   type_;
     const QString   name_;
@@ -58,9 +66,10 @@ private:
     const QString   checksum_;
 
     QString         error_;
-    int             status_; // [0,100[ downloading, >=100 complete
+    int             status_;
     size_t          size_;
     Qt::CheckState  check_state_;
+    //@}
 };
 
 class ItemModel : public FlatModel< gui::Item >
@@ -68,20 +77,37 @@ class ItemModel : public FlatModel< gui::Item >
     Q_OBJECT
 
 public:
+    //! @name Constructors/Destructor
+    //@{
      ItemModel();
     ~ItemModel();
+    //@}
+
+    //! @name QAbstractItemModel methods
+    //@{
     virtual Qt::ItemFlags flags( const QModelIndex& idx ) const;
-    void Fill( const Tree& tree );
-    void Setup( QAbstractItemView* view );
+    //@}
+
+    //! @name Public methods
+    //@{
+    void                Fill( const Tree& src );
+    void                Setup( QAbstractItemView* view );
     QAbstractItemModel* GetModel();
+    //@}
 
 public slots:
-    void Toggle();
-    std::vector< size_t > Remove();
+    //! @name Slots
+    //@{
+    void                    Toggle();
+    std::vector< size_t >   Remove();
+    //@}
 
 private:
+    //! @name private members
+    //@{
     Qt::CheckState toggle_;
     QSortFilterProxyModel proxy_;
+    //@}
 };
 }
 
