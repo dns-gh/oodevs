@@ -43,10 +43,17 @@ void EntityTreeView< Entity >::NotifyCreated( const Entity& entity )
 
     QStandardItem* teamItem = dataModel_.FindDataItem( team );
     if( !teamItem )
-        teamItem = dataModel_.AddRootSafeItem( dataModel_.rowCount(), 0, team.GetName(), team.GetTooltip(), team, ItemSpecificFlags( team ) );
+    {
+        const int row = dataModel_.rowCount();
+        teamItem = dataModel_.AddRootSafeItem( row, 0, team.GetName(), team.GetTooltip(), team, ItemSpecificFlags( team ) );
+        for( int col = 1; col < dataModel_.columnCount(); ++col )
+            dataModel_.AddRootItem( row, col );
+    }
 
-    dataModel_.AddChildSafeItem( teamItem, teamItem->rowCount(), 0, entity.GetName(), entity.GetTooltip(), entity, ItemSpecificFlags( entity ) );
-
+    const int row = teamItem->rowCount();
+    dataModel_.AddChildSafeItem( teamItem, row, 0, entity.GetName(), entity.GetTooltip(), entity, ItemSpecificFlags( entity ) );
+    for( int col = 1; col < dataModel_.columnCount(); ++col )
+        dataModel_.AddChildItem( teamItem, row, col );
 }
 
 // -----------------------------------------------------------------------------

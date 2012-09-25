@@ -37,11 +37,26 @@ namespace
             bool ret = parent_.LessThan( left, right, valid );
             if( valid )
                 return ret;
-            return QSortFilterProxyModel::lessThan( left, right );
+            QString txt1 = sourceModel()->data( left ).toString();
+            QString txt2 = sourceModel()->data( right ).toString();
+            return txt1.localeAwareCompare( txt2 ) > 0;
         }
 
     public:
         const RichTreeView& parent_;
+    };
+
+    class HeightDelegate : public QItemDelegate
+    {
+    public:
+        explicit HeightDelegate( QObject* parent ) : QItemDelegate( parent ) {}
+        virtual QSize sizeHint ( const QStyleOptionViewItem & option, const QModelIndex & index ) const
+        {
+            QSize s = QItemDelegate::sizeHint( option, index );
+            if( s.height() < 20 )
+                s.setHeight( 20 );
+            return s;
+        }
     };
 }
 
@@ -55,6 +70,8 @@ RichTreeView::RichTreeView( kernel::Controllers& controllers, QWidget* parent /*
     , dataModel_( controllers, *proxyModel_, this )
 {
     setSortingEnabled( true );
+
+    setItemDelegate( new HeightDelegate( this ) );
 
     setModel( proxyModel_ );
     proxyModel_->setFilterRole( StandardModel::FilterRole );

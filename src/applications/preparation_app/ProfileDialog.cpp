@@ -20,7 +20,7 @@
 // Name: ProfileDialog constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const gui::EntitySymbols& icons,
+ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers, const gui::EntitySymbols& icons,
                               Model& model, const kernel::ExtensionTypes& extensions )
     : ModalDialog( parent, "ProfileDialog" )
     , pChecher_( new ProfilesChecker() )
@@ -50,7 +50,7 @@ ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers,
 
     box = new Q3VBox( this );
     box->setMargin( 5 );
-    pages_ = new UserProfileWidget( box, controllers, factory, icons, extensions, *pChecher_, model );
+    pages_ = new UserProfileWidget( box, controllers, icons, extensions, *pChecher_, model );
     pages_->setMargin( 5 );
     grid->addWidget( box, 1, 1 );
 

@@ -39,7 +39,8 @@ public:
         DataRole        = Qt::UserRole,
         FilterRole      = Qt::UserRole + 1,
         MimeTypeRole    = Qt::UserRole + 2,
-        SafeRole        = Qt::UserRole + 3
+        SafeRole        = Qt::UserRole + 3,
+        OtherRole       = Qt::UserRole + 4
     };
 
     typedef boost::function< bool ( QStandardItem&, StandardModel& ) > T_FilterFunction;

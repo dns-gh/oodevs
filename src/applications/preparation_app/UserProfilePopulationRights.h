@@ -11,7 +11,8 @@
 #define __UserProfilePopulationRights_h_
 
 #include "UserProfileRights_ABC.h"
-#include "clients_gui/PopulationListView.h"
+#include "clients_gui/EntityTreeView.h"
+#include "clients_gui/DummyModelObserver.h"
 
 // =============================================================================
 /** @class  UserProfilePopulationRights
@@ -19,36 +20,34 @@
 */
 // Created: SBO 2007-01-18
 // =============================================================================
-class UserProfilePopulationRights : public gui::PopulationListView
+class UserProfilePopulationRights : public gui::PopulationTreeView
                                   , public UserProfileRights_ABC
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             UserProfilePopulationRights( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+             UserProfilePopulationRights( QWidget* pParent, kernel::Controllers& controllers, const QString& name );
     virtual ~UserProfilePopulationRights();
     //@}
 
 private slots:
     //! @name Slots
     //@{
-    void OnItemClicked( Q3ListViewItem*, const QPoint&, int );
+    void OnItemClicked( const QModelIndex& index );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    UserProfilePopulationRights( const UserProfilePopulationRights& );            //!< Copy constructor
-    UserProfilePopulationRights& operator=( const UserProfilePopulationRights& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
-    virtual void viewportResizeEvent( QResizeEvent* e );
-    virtual void setColumnWidth( int column, int w );
-    virtual void OnContextMenuRequested( Q3ListViewItem*, const QPoint&, int );
+    virtual void contextMenuEvent( QContextMenuEvent* event );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    gui::DummyModelObserver observer_;
     //@}
 };
 

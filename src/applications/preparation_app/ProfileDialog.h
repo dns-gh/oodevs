@@ -42,8 +42,8 @@ class ProfileDialog : public ModalDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ProfileDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory,
-                            const gui::EntitySymbols& icons, Model& model, const kernel::ExtensionTypes& extensions );
+             ProfileDialog( QWidget* parent, kernel::Controllers& controllers, const gui::EntitySymbols& icons,
+                            Model& model, const kernel::ExtensionTypes& extensions );
     virtual ~ProfileDialog();
     //@}
 

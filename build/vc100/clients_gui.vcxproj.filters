@@ -1470,6 +1470,9 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\PopulationTypesListView.h">
       <Filter>Source Files\Creation\Crowds</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\DummyModelObserver.h">
+      <Filter>Source Files\MVC\Model</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\clients_gui\HierarchyListView.inl">

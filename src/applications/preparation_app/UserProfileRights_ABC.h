@@ -10,14 +10,13 @@
 #ifndef __UserProfileRights_ABC_h_
 #define __UserProfileRights_ABC_h_
 
+#include "clients_gui/StandardModelVisitor_ABC.h"
+#include <boost/noncopyable.hpp>
+
 namespace gui
 {
-    class ValuedListItem;
-}
-
-namespace kernel
-{
-    class Entity_ABC;
+    class RichTreeView;
+    class StandardModel;
 }
 
 class UserProfile;
@@ -29,33 +28,29 @@ class UserProfile;
 */
 // Created: SBO 2007-01-18
 // =============================================================================
-class UserProfileRights_ABC
+class UserProfileRights_ABC : public gui::StandardModelVisitor_ABC
+                            , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit UserProfileRights_ABC( Q3ListView* listView );
+             UserProfileRights_ABC( gui::RichTreeView& listView, gui::StandardModel& model, const QString& name );
     virtual ~UserProfileRights_ABC();
     //@}
 
     //! @name Operations
     //@{
     virtual void Display( UserProfile& profile );
+    virtual void Visit( QStandardItem& item );
     //@}
 
 protected:
     //! @name Slots
     //@{
-    void OnItemClicked( Q3ListViewItem* item, const QPoint& point, int column );
+    void OnItemClicked( const QModelIndex& index );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    UserProfileRights_ABC( const UserProfileRights_ABC& );            //!< Copy constructor
-    UserProfileRights_ABC& operator=( const UserProfileRights_ABC& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
     enum Status
@@ -72,19 +67,21 @@ private:
     //@{
     void Commit();
     void Clear();
-    void SetStatus( Q3ListViewItem* item, Status status );
-    void SetStatus( gui::ValuedListItem* item, bool inheritsReadable, bool inheritsWriteable );
-    void SetStatus( gui::ValuedListItem* item, bool isReadable, bool isWriteable, bool inheritsReadable, bool inheritsWriteable );
+    void SetStatus( QStandardItem* item, Status status );
+    void SetStatus( QStandardItem* item, bool inheritsReadable, bool inheritsWriteable );
+    void SetStatus( QStandardItem* item, bool isReadable, bool isWriteable, bool inheritsReadable, bool inheritsWriteable );
     Status MakeStatus( bool read, bool write, bool inheritedRead, bool inheritedWrite );
-    void EnsureVisible( gui::ValuedListItem* item );
+    void EnsureVisible( QStandardItem* item );
     //@}
 
 private:
     //! @name Member data
     //@{
-    Q3ListView* listView_;
+    gui::RichTreeView& listView_;
+    gui::StandardModel& model_;
     UserProfile* profile_;
-    QPixmap check_, check_grey_;
+    QPixmap check_;
+    QPixmap check_grey_;
     //@}
 };
 
