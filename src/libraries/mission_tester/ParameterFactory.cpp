@@ -371,7 +371,7 @@ std::auto_ptr< actions::Parameter_ABC > ParameterFactory::CreateMedicalPrioritie
 {
     std::string priorities;
     int num = 4;
-    unsigned int PrioritiesList[ 4 ] = { 2, 3, 4, 5 };
+    char PrioritiesList[ 4 ] = { '2', '3', '4', '5' };
     unsigned int prioritiesQuantity = rand() % 5;
     for( unsigned int it = 1; it <= prioritiesQuantity; ++it )
     {
@@ -393,15 +393,15 @@ std::auto_ptr< actions::Parameter_ABC > ParameterFactory::CreateMedicalPrioritie
 std::auto_ptr< actions::Parameter_ABC > ParameterFactory::CreateMaintenancePrioritiesParameter( const kernel::OrderParameter& parameter ) const
 {
 	std::string priorities;
-	int num = 4;
 	unsigned int PrioritiesList[ 369 ];
-	for (unsigned int it = 0; it < 369; ++it )
+    unsigned int num = sizeof( PrioritiesList )/sizeof( *PrioritiesList );
+	for (unsigned int it = 0; it < num; ++it )
 		PrioritiesList[ it ] = it + 1;
-	unsigned int prioritiesQuantity = rand() % 369;
+	unsigned int prioritiesQuantity = rand() % num;
 	for( unsigned int it = 1; it <= prioritiesQuantity; ++it )
 	{
 		unsigned int res = rand() % num;
-		priorities += PrioritiesList[ res ];
+		priorities += boost::lexical_cast< std::string >( PrioritiesList[ res ] );
 		PrioritiesList[res] = PrioritiesList[ num - 1 ];
 		--num;
 		if( it != prioritiesQuantity )
