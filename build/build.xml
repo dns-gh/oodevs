@@ -982,6 +982,15 @@
         </copy>
     </target>
 
+    <target name="deploy-qt-translations" description="deploy qt translations"
+        depends="deploy-application-data">
+        <copy todir="${run.dir}/resources/locales">
+            <fileset dir="${run.dir}">
+                <include name="qt_*.qm"/>
+            </fileset>
+        </copy>
+    </target>
+
     <!--
     ============================================================================
     license
@@ -1925,7 +1934,8 @@
     </target>
 
     <target name="configure" description="update packages and decisional"
-        depends="configure-update,generate-database,generate-symbols"/>
+        depends="configure-update,deploy-qt-translations,generate-database,
+            generate-symbols"/>
 
     <target name="clean" description="clean intermediate build artifacts">
         <delete dir="${out.dir}"/>
