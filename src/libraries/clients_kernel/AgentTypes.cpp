@@ -428,6 +428,7 @@ void AgentTypes::CreateMagicActionTypes()
     RegisterActionType( *new MagicActionType( "create_wounds", sword::create_wounds ) );
     RegisterActionType( *new MagicActionType( "create_breakdowns", sword::create_breakdowns ) );
     RegisterActionType( *new MagicActionType( "log_finish_handlings", sword::log_finish_handlings ) );
+    RegisterActionType( *new MagicActionType( "change_equipment_human_size", sword::change_equipment_human_size ) );
 
     // Knowledge Magic Actions
     RegisterActionType( *new MagicActionType( "knowledge_group_enable", sword::enable ) );

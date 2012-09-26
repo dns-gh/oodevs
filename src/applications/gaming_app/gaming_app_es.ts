@@ -3243,6 +3243,14 @@ This data can&apos;t be projected.</source>
         <source>Finish logistic handlings</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Change human number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>change_equipment_human_size</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UnitStateDialog</name>

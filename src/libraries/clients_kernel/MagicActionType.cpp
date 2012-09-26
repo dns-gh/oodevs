@@ -310,4 +310,6 @@ void MagicActionType::Initialize()
         CreateOrderParameter( "Wounds", "list" );
     else if( name == "create_breakdowns")
         CreateOrderParameter( "Breakdowns", "list" );
+    else if( name == "change_equipment_human_size" )
+        CreateOrderParameter( "NewSize", "numeric" );
 }

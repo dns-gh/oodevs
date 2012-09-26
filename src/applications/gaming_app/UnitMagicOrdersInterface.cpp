@@ -14,6 +14,7 @@
 #include "actions/ActionTiming.h"
 #include "actions/Army.h"
 #include "actions/Point.h"
+#include "actions/Quantity.h"
 #include "actions/UnitMagicAction.h"
 #include "clients_gui/GlSelector.h"
 #include "clients_gui/LocationCreator.h"
@@ -94,8 +95,16 @@ void UnitMagicOrdersInterface::NotifyContextMenu( const kernel::Agent_ABC& agent
         AddSurrenderMenu( magicMenu, agent );
         if( orders->CanRetrieveTransporters() )
             AddMagic( tr( "Recover - Transporters" ), SLOT( RecoverHumanTransporters() ), magicMenu );
-        AddMagic( tr( "Destroy - Component" ),  SLOT( DestroyComponent() ),  magicMenu );;
+        AddMagic( tr( "Destroy - Component" ),  SLOT( DestroyComponent() ),  magicMenu );
         AddMagic( tr( "Reload brain" ), SLOT( ReloadBrain() ), magicMenu );
+        
+        kernel::ContextMenu* valueMenu = new kernel::ContextMenu( magicMenu );
+        QLineEdit* valueEditor = new QLineEdit( QString::number( 100 ), valueMenu );
+        valueEditor->setValidator( new QIntValidator( 1, 1000, valueEditor ) );
+        valueMenu->insertItem( valueEditor->text() );
+        magicMenu->insertItem( tr( "Change human number" ), valueMenu );
+        connect( valueEditor, SIGNAL( returnPressed() ), this, SLOT( ChangeHumanNumber() ) );
+        connect( valueEditor, SIGNAL( returnPressed() ), menu, SLOT( hide() ) );
 
         const LogMaintenanceConsigns* maintenanceConsigns = agent.Retrieve< LogMaintenanceConsigns >();
         const LogMedicalConsigns* medicalConsigns = agent.Retrieve< LogMedicalConsigns >();
@@ -346,6 +355,26 @@ void UnitMagicOrdersInterface::ReloadBrain()
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new ActionTasker( selectedEntity_, false ) );
         action->RegisterAndPublish( actionsModel_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitMagicOrdersInterface::ChangeHumanNumber
+// Created: LDC 2012-09-26
+// -----------------------------------------------------------------------------
+void UnitMagicOrdersInterface::ChangeHumanNumber()
+{
+    const QLineEdit* editor = dynamic_cast< const QLineEdit* >( sender() );
+    if( selectedEntity_ && editor )
+    {
+        MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_equipment_human_size" );
+        UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "change_equipment_human_size" ), true );
+        tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+        action->AddParameter( *new parameters::Quantity( it.NextElement(), editor->text().toInt() ) );
+        action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
+        action->Attach( *new ActionTasker( selectedEntity_, false ) );
+        action->RegisterAndPublish( actionsModel_ );
+
     }
 }
 

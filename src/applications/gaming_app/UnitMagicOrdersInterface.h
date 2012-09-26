@@ -87,6 +87,7 @@ private slots:
     void SurrenderTo( int );
     void ReloadBrain();
     void FinishLogisticHandlings();
+    void ChangeHumanNumber();
     //@}
 
 private:

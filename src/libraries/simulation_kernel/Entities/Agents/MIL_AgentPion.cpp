@@ -1764,11 +1764,17 @@ void MIL_AgentPion::OnReceiveCreateDirectFireOrder( const sword::MissionParamete
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveChangeEquipmentHumanSize( const sword::MissionParameters& msg )
 {
+    PHY_RolePion_Composantes& roleComposantes = GetRole< PHY_RolePion_Composantes >();
+    if( msg.elem_size() == 1 && msg.elem( 0 ).value_size() == 1 && msg.elem( 0 ).value( 0 ).has_quantity() )
+    {
+        roleComposantes.ChangeHumanSize( 0, msg.elem( 0 ).value( 0 ).quantity() );
+        return;
+    }
+
     if( msg.elem_size() != 2 || msg.elem( 0 ).value_size() != 1 || !msg.elem( 0 ).value( 0 ).has_equipmenttype() || 
         msg.elem( 1 ).value_size() != 1 || !msg.elem( 1 ).value( 0 ).has_quantity() )
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
 
-    PHY_RolePion_Composantes& roleComposantes = GetRole< PHY_RolePion_Composantes >();
     roleComposantes.ChangeHumanSize( msg.elem( 0 ).value( 0 ).equipmenttype().id(), msg.elem( 1 ).value( 0 ).quantity() );
 }
 

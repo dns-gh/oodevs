@@ -3246,6 +3246,14 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Finish logistic handlings</source>
         <translation>Terminer les consignes logistiques</translation>
     </message>
+    <message>
+        <source>Change human number</source>
+        <translation">Changer le nombre d humains</translation>
+    </message>
+    <message>
+        <source>change_equipment_human_size</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UnitStateDialog</name>
