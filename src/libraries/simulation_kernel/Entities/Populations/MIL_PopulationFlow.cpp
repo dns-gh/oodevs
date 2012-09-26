@@ -939,3 +939,12 @@ double MIL_PopulationFlow::GetDefaultDensity( const MIL_PopulationType& type ) c
 {
     return type.GetDefaultFlowDensity();
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::Intersect2DWithCircle
+// Created: SLI 2012-09-26
+// -----------------------------------------------------------------------------
+bool MIL_PopulationFlow::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, double rRadius, std::vector< MT_Vector2D >& shape ) const
+{
+    return TER_PopulationFlow_ABC::Intersect2DWithCircle( vCircleCenter, rRadius, shape );
+}

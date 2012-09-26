@@ -35,8 +35,7 @@ DECLARE_HOOK( ComputePerceptionDistanceFactor, double, ( const SWORD_Model* enti
 DECLARE_HOOK( GetCollidingPopulationDensity, double, ( const SWORD_Model* entity ) )
 DECLARE_HOOK( GetSignificantVolume, const PHY_Volume*, ( const SWORD_Model* entity, const double* volumeFactors ) )
 DECLARE_HOOK( GetVolumeIdentifierFromInstance, size_t, ( const PHY_Volume* volume ) ) // $$$$ _RC_ SLI 2012-09-17: remove dependency on PHY_Volume
-DECLARE_HOOK( PopulationFlowIntersectWithCircle, bool, ( const SWORD_Model* flow, MT_Vector2D circleCenter, double radius, void(*AddShapePoint)( MT_Vector2D point, void* userData ), void* userData ) )
-DECLARE_HOOK( PopulationConcentrationIntersectWithCircle, bool, ( const SWORD_Model* concentration, MT_Vector2D circleCenter, double radius ) )
+DECLARE_HOOK( PopulationElementIntersectWithCircle, bool, ( const SWORD_Model* element, MT_Vector2D circleCenter, double radius, void(*AddShapePoint)( MT_Vector2D point, void* userData ), void* userData ) )
 DECLARE_HOOK( GetUrbanBlockFactor, double, ( const SWORD_Model* block, const double* urbanBlockFactors ) )
 DECLARE_HOOK( IsMaterialType, bool, ( const char* material ) )
 DECLARE_HOOK( GetPostureSize, size_t, () )
@@ -529,7 +528,7 @@ const PerceptionLevel& SensorTypeAgent::ComputeConcentrationPerception( const wr
     if( rDistanceMaxModificator == 0. )
         return PerceptionLevel::notSeen_;
 
-    if( !GET_HOOK( PopulationConcentrationIntersectWithCircle )( target, vSourcePos, rDetectionDist_ * rDistanceMaxModificator ) )
+    if( !GET_HOOK( PopulationElementIntersectWithCircle )( target, vSourcePos, rDetectionDist_ * rDistanceMaxModificator, 0, 0 ) )
         return PerceptionLevel::notSeen_;
     return PerceptionLevel::identified_;
 }
@@ -565,7 +564,7 @@ const PerceptionLevel& SensorTypeAgent::ComputeFlowPerception( const wrapper::Vi
         }
         std::vector< MT_Vector2D >& shape_;
     } intersector( shape );
-    if( !GET_HOOK( PopulationFlowIntersectWithCircle )( target, vSourcePos, rDetectionDist_ * rDistanceMaxModificator, &ShapeIntersection::AddPoint, &intersector ) )
+    if( !GET_HOOK( PopulationElementIntersectWithCircle )( target, vSourcePos, rDetectionDist_ * rDistanceMaxModificator, &ShapeIntersection::AddPoint, &intersector ) )
         return PerceptionLevel::notSeen_;
     return PerceptionLevel::identified_;
 }

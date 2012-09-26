@@ -84,8 +84,7 @@ class PHY_Volume;
     APPLY( GetSignificantVolume, 2, const PHY_Volume*, ( const SWORD_Model* entity, const double* volumeFactors ) ) \
     APPLY( GetVolumeIdentifierFromInstance, 1, size_t, ( const PHY_Volume* volume ) ) \
     APPLY( GetVolumeSize, 0, size_t, () ) \
-    APPLY( PopulationFlowIntersectWithCircle, 5, bool, ( const SWORD_Model* flow, MT_Vector2D circleCenter, double radius, void(*AddShapePoint)( MT_Vector2D point, void* userData ), void* userData ) ) \
-    APPLY( PopulationConcentrationIntersectWithCircle, 3, bool, ( const SWORD_Model* concentration, MT_Vector2D circleCenter, double radius ) ) \
+    APPLY( PopulationElementIntersectWithCircle, 5, bool, ( const SWORD_Model* element, MT_Vector2D circleCenter, double radius, void(*AddShapePoint)( MT_Vector2D point, void* userData ), void* userData ) ) \
     APPLY( GetUrbanBlockFactor, 2, double, ( const SWORD_Model* block, const double* urbanBlockFactors ) ) \
     APPLY( IsMaterialType, 1, bool, ( const char* material ) ) \
     APPLY( GetPrecipitationSize, 0, size_t, () ) \

@@ -463,3 +463,12 @@ double MIL_PopulationConcentration::GetDefaultDensity( const MIL_PopulationType&
 {
     return type.GetConcentrationDensity();
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::Intersect2DWithCircle
+// Created: SLI 2012-09-26
+// -----------------------------------------------------------------------------
+bool MIL_PopulationConcentration::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, double rRadius, std::vector< MT_Vector2D >& /*shape*/ ) const
+{
+    return TER_PopulationConcentration_ABC::Intersect2DWithCircle( vCircleCenter, rRadius );
+}

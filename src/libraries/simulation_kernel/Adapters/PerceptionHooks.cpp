@@ -212,17 +212,14 @@ namespace
     {
         return PHY_Volume::GetVolumes().size();
     }
-    DEFINE_HOOK( PopulationFlowIntersectWithCircle, bool, ( const SWORD_Model* flow, MT_Vector2D circleCenter, double radius, void(*AddShapePoint)( MT_Vector2D point, void* userData ), void* userData ) )
+    DEFINE_HOOK( PopulationElementIntersectWithCircle, bool, ( const SWORD_Model* element, MT_Vector2D circleCenter, double radius, void(*AddShapePoint)( MT_Vector2D point, void* userData ), void* userData ) )
     {
         T_PointVector points;
-        bool result = GET_DATA( flow, MIL_PopulationFlow ).Intersect2DWithCircle( circleCenter, radius, points );
-        BOOST_FOREACH( const MT_Vector2D& point, points )
-            AddShapePoint( point, userData );
+        bool result = GET_DATA( element, MIL_PopulationElement_ABC ).Intersect2DWithCircle( circleCenter, radius, points );
+        if( AddShapePoint )
+            BOOST_FOREACH( const MT_Vector2D& point, points )
+                AddShapePoint( point, userData );
         return result;
-    }
-    DEFINE_HOOK( PopulationConcentrationIntersectWithCircle, bool, ( const SWORD_Model* concentration, MT_Vector2D circleCenter, double radius ) )
-    {
-        return GET_DATA( concentration, MIL_PopulationConcentration ).Intersect2DWithCircle( circleCenter, radius );
     }
     DEFINE_HOOK( GetUrbanBlockFactor, double, ( const SWORD_Model* block, const double* urbanBlockFactors ) )
     {
@@ -610,8 +607,7 @@ void PerceptionHooks::Initialize( core::Facade& facade )
     REGISTER_HOOK( GetSignificantVolume, facade );
     REGISTER_HOOK( GetVolumeIdentifierFromInstance, facade );
     REGISTER_HOOK( GetVolumeSize, facade );
-    REGISTER_HOOK( PopulationFlowIntersectWithCircle, facade );
-    REGISTER_HOOK( PopulationConcentrationIntersectWithCircle, facade );
+    REGISTER_HOOK( PopulationElementIntersectWithCircle, facade );
     REGISTER_HOOK( GetUrbanBlockFactor, facade );
     REGISTER_HOOK( IsMaterialType, facade );
     REGISTER_HOOK( GetPrecipitationSize, facade );
