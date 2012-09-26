@@ -34,7 +34,6 @@
         <skill name="agent.skills.SetPace"/>
         <skill name="agent.skills.actions.EquipNBCOutfit"/>
         <skill name="agent.skills.actions.UnequipNBCOutfit"/>
-        <skill name="agent.skills.primitives.Animate"/>
         <skill name="agent.skills.primitives.Illuminate"/>
         <skill name="agent.skills.ApplyIndirectFire"/>
         <skill name="agent.skills.actions.ObserveRadarSilence"/>
@@ -100,6 +99,7 @@
         <skill name="agent.skills.Follow"/>
         <skill name="agent.skills.TransportACrowd"/>
         <skill name="agent.skills.TransportPrisoners"/>
+        <skill name="agent.skills.Operate"/>
     </skills>
     <resources>
         <resource name="agent.resources.EngageCapacity"/>

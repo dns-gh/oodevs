@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.skills.Operate" source-version="1.0.0">
+    <description>For the agent, to reach an object and operate it.</description>
+    <parameters>
+        <parameter name="entity">
+            <description>The element to operate.</description>
+            <type>
+                <class name="properties.Animatable"/>
+            </type>
+        </parameter>
+    </parameters>
+    <links>
+        <link name="moveToward" skill="agent.skills.primitives.MoveToward">
+            <description>To enact the decision to move toward the object to operate.</description>
+        </link>
+    </links>
+</skill>

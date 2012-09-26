@@ -1,47 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface xmlns="http://www.masagroup.net/directia/schemas/bm" name="properties.Animatable" source-version="1.0.0" extends="properties.Reachable">
-  <description>Représente tout élément de connaissance Animatable.</description>
-  <methods>
-    <method name="animationPriority">
-      <description>Renvoie la priorité de l'élément de connaissance pour son animation.</description>
-      <return>
-        <type>
-          <simple name="numeric"/>
-        </type>
-      </return>
-    </method>
-    <method name="canAnimateIt">
-      <description>Renvoie vraie si les conditions d'animation sont réunies.</description>
-      <return>
-        <type>
-          <simple name="boolean"/>
-        </type>
-      </return>
-    </method>
-    <method name="animateIt">
-      <description>Action d'animation de l'élément.</description>
-    </method>
-    <method name="animationLevel">
-      <description>Le niveau d'animation de l'objet.</description>
-      <return>
-        <type>
-          <simple name="numeric"/>
-        </type>
-      </return>
-    </method>
-  </methods>
-  <predicates>
-    <predicate name="isFullyAnimated">
-      <description> Utilisée dans les requêtes ou dans les méthodes utilisées dans les comportements.
+    <description>Représente tout élément de connaissance Animatable.</description>
+    <methods>
+        <method name="canAnimateIt">
+            <description>Renvoie vraie si les conditions d'animation sont réunies.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="animateIt">
+            <description>Action d'animation de l'élément.</description>
+        </method>
+        <method name="animationLevel">
+            <description>Le niveau d'animation de l'objet.</description>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+    </methods>
+    <predicates>
+        <predicate name="isFullyAnimated">
+            <description> Utilisée dans les requêtes ou dans les méthodes utilisées dans les comportements.
 
             Renvoie vrai si la connaissance est considérée comme animée à son potentiel maximum.
             </description>
-    </predicate>
-    <predicate name="isPartiallyAnimated">
-      <description> Utilisée dans les requêtes ou dans les méthodes utilisées dans les comportements.
+        </predicate>
+        <predicate name="isPartiallyAnimated">
+            <description> Utilisée dans les requêtes ou dans les méthodes utilisées dans les comportements.
 
             Renvoie vrai si la connaissance est considérée comme animée par au moins un élément.
             </description>
-    </predicate>
-  </predicates>
+        </predicate>
+    </predicates>
 </interface>

@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="platoon.tasks.Animer" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.Animate">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="platoon.tasks.Animer" source-version="1.0.0" knowledge-class="platoon.tasks.knowledges.Animer">
     <description>Animer un object tactique</description>
     <parameters>
-        <parameter name="entities">
+        <parameter name="entity">
             <description>Les objets à animer</description>
             <type>
-                <list>
-                    <class name="properties.Animatable"/>
-                    <class name="properties.Animating"/>
-                </list>
+                <class name="properties.Animatable"/>
             </type>
         </parameter>
     </parameters>
@@ -16,21 +13,16 @@
         <description>Animer les objets.</description>
     </goal>
     <stages>
-        <stage label="Animation" disable-when-done="true">
+        <stage label="Animation" permanent="true">
             <description>Animer les object</description>
             <goal>
                 <description>Animer les objets</description>
             </goal>
             <skills>
-                <skill name="agent.skills.primitives.Animate" main="true" priority="1.0">
-                    <parameter name="entities">
+                <skill name="agent.skills.Operate">
+                    <parameter name="entity">
                         <value>
-                            <parameter>entities</parameter>
-                        </value>
-                    </parameter>
-                    <parameter name="positions">
-                        <value>
-                            <parameter>entities</parameter>
+                            <parameter>entity</parameter>
                         </value>
                     </parameter>
                 </skill>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.tasks.Operate" source-version="1.0.0" knowledge-class="commander.tasks.knowledges.Operate">
+    <description>For the commander agent, to order subordinates units to operate a sword object.</description>
+    <parameters>
+        <parameter name="object">
+            <description>The object to operate.</description>
+            <type>
+                <class name="properties.Animatable"/>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="moving to site" disable-when-done="true">
+            <skills>
+                <skill name="commander.skills.Lead" main="true">
+                    <parameter name="companyTask">
+                        <value>
+                            <string>commander.tasks.Operate</string>
+                        </value>
+                    </parameter>
+                    <parameter name="mainTasks">
+                        <value>
+                            <string>agent.tasks.Operate</string>
+                        </value>
+                    </parameter>
+                    <parameter name="supportTasks">
+                        <value>
+                            <string>agent.tasks.Follow</string>
+                        </value>
+                    </parameter>
+                    <parameter name="defaultTask">
+                        <value>
+                            <string>agent.tasks.Follow</string>
+                        </value>
+                    </parameter>
+                    <parameter name="taskForSupporting">
+                        <value>
+                            <string>agent.tasks.CombatSupport</string>
+                        </value>
+                    </parameter>
+                    <parameter name="noCoordination">
+                        <value>
+                            <boolean>true</boolean>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
+</task>

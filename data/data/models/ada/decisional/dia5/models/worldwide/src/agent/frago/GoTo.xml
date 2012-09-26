@@ -13,7 +13,7 @@
         <description>To reach a given objective at all cost.</description>
     </goal>
     <stages>
-        <stage>
+        <stage disable-when-done="true">
             <skills>
                 <skill name="agent.skills.MoveToward" main="true" priority="100000.0">
                     <parameter name="entities">

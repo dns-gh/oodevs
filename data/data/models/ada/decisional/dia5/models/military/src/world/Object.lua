@@ -28,17 +28,11 @@ return
     canApproachIt = function( self )
        return meKnowledge:isSupported()
     end,
-    animationPriority = function( self )
-        return math.max( self:proximityLevel(), 1 ) / 100
-    end,
     canAnimateIt = function( self )
-        return self:isReached() and integration.canAnimateIt( self )
+        return integration.canAnimateIt( self )
     end,
     animationLevel = function( self )
         return integration.animationLevel( self )
-    end,
-    animationEfficiency = function( self, objective )
-        return self == objective and 1 or 0
     end,
     improvePriority = function( self )
         return math.max( self:proximityLevel(), 1 ) / 100
@@ -155,12 +149,6 @@ return
     {
         method = function( self )
             return self:animationLevel() > 0
-        end,
-    },
-    predicate "isAnimatingFor"
-    {
-        method = function( self, objective )
-            return self == objective
         end,
     },
     predicate "isActivated"

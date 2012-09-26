@@ -10,6 +10,6 @@ local result =
 }
 
 local t = initTaskKnowledge( result )
-taskKnowledge["agent.tasks.knowledges.Ambush"] = t
+taskKnowledge["platoon.tasks.knowledges.Animer"] = t
 
 return result

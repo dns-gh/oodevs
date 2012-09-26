@@ -1,184 +1,170 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class xmlns="http://www.masagroup.net/directia/schemas/bm" name="world.EngineerObject" source-version="1.0.0" extends="world.Object">
-	<description>Unité</description>
-	<methods>
-		<method name="getProximity">
-			<argument name="objective">
-				<description>L'élément objectif</description>
-				<type>
-					<class name="world.Element"/>
-				</type>
-			</argument>
-		</method>
-		<method name="getPosition">
-			<description>Fonction d'intégration retournant un MT_Vector2D</description>
-		</method>
-		<method name="getMyPosition">
-			<description>Fonction d'intégration retournant un Point qui a pour coordonnées ma position.</description>
-			<return>
-				<type>
-					<class name="properties.Reachable"/>
-				</type>
-			</return>
-		</method>
-		<method name="getPositions">
-			<description>Fonction d'intégration retournant une liste de MT_Vector2D (ici la même que getPosition)</description>
-		</method>
-		<method name="buildPriority">
-			<description>Indicate the capacity to build this object</description>
-			<return>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</return>
-		</method>
-		<method name="canBuildIt">
-			<description>Indicate the capacity to build this object</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="canBuildItNow">
-			<description>Indicate the capacity to build this object</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="buildIt">
-			<description>Build</description>
-		</method>
-		<method name="takeUpPosition">
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="constructionLevel">
-			<description>Indicate the construction level of this object</description>
-			<return>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</return>
-		</method>
-		<method name="buildingCapacity">
-			<description>Indicate the capacity to build this object with reinforcement</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="buildingCapacityWithOutReinforcement">
-			<description>Indicate the capacity to build this object without reinforcement</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="buildingDotation">
-			<description>Indicate if the unit has enought dotation to build this object</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="buildEfficiency" abstract="false">
-			<argument name="objective">
-				<type>
-					<class name="properties.Buildable"/>
-				</type>
-			</argument>
-			<return>
-				<description>Valeur comprise entre 0 et 1 qui détermine l'efficacité d'une position pour construire un element.</description>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</return>
-		</method>
-		<method name="isValid">
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="canAnimateIt">
-			<description>Renvoie vraie si les conditions d'animation sont réunies.</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="animateIt">
-			<description>Action d'animation de l'élément.</description>
-		</method>
-		<method name="animationLevel">
-			<description>Le niveau d'animation de l'objet.</description>
-			<return>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</return>
-		</method>
-		<method name="animationEfficiency">
-			<description>Renvoie l'efficacité (la pertinence) de la position pour l'animation d'un objectif.</description>
-			<argument name="objectives">
-				<description>L'objectif à animer.</description>
-				<type>
-					<class name="properties.Animatable"/>
-				</type>
-			</argument>
-			<return>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</return>
-		</method>
-		<method name="getType">
-			<description>Retourne le type de l'objet.</description>
-		</method>
-		<method name="getLocalisation">
-			<description>Retourne la localisation de l'objet.</description>
-		</method>
-		<method name="plannedworkToWork" abstract="false">
-			<return>
-				<type>
-					<class name="properties.Buildable"/>
-				</type>
-			</return>
-		</method>
-		<method name="canBeImproved" abstract="false">
-			<description>Indicate if the object can be improved.</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="isManeuverObstacle" abstract="false">
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="isActifManeuverObstacle" abstract="false">
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="delayedActivationTime" abstract="false">
+    <description>Unité</description>
+    <methods>
+        <method name="getProximity">
+            <argument name="objective">
+                <description>L'élément objectif</description>
+                <type>
+                    <class name="world.Element"/>
+                </type>
+            </argument>
+        </method>
+        <method name="getPosition">
+            <description>Fonction d'intégration retournant un MT_Vector2D</description>
+        </method>
+        <method name="getMyPosition">
+            <description>Fonction d'intégration retournant un Point qui a pour coordonnées ma position.</description>
+            <return>
+                <type>
+                    <class name="properties.Reachable"/>
+                </type>
+            </return>
+        </method>
+        <method name="getPositions">
+            <description>Fonction d'intégration retournant une liste de MT_Vector2D (ici la même que getPosition)</description>
+        </method>
+        <method name="buildPriority">
+            <description>Indicate the capacity to build this object</description>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="canBuildIt">
+            <description>Indicate the capacity to build this object</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="canBuildItNow">
+            <description>Indicate the capacity to build this object</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="buildIt">
+            <description>Build</description>
+        </method>
+        <method name="takeUpPosition">
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="constructionLevel">
+            <description>Indicate the construction level of this object</description>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="buildingCapacity">
+            <description>Indicate the capacity to build this object with reinforcement</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="buildingCapacityWithOutReinforcement">
+            <description>Indicate the capacity to build this object without reinforcement</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="buildingDotation">
+            <description>Indicate if the unit has enought dotation to build this object</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="buildEfficiency" abstract="false">
+            <argument name="objective">
+                <type>
+                    <class name="properties.Buildable"/>
+                </type>
+            </argument>
+            <return>
+                <description>Valeur comprise entre 0 et 1 qui détermine l'efficacité d'une position pour construire un element.</description>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="isValid">
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="canAnimateIt">
+            <description>Renvoie vraie si les conditions d'animation sont réunies.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="animateIt">
+            <description>Action d'animation de l'élément.</description>
+        </method>
+        <method name="animationLevel">
+            <description>Le niveau d'animation de l'objet.</description>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="getType">
+            <description>Retourne le type de l'objet.</description>
+        </method>
+        <method name="getLocalisation">
+            <description>Retourne la localisation de l'objet.</description>
+        </method>
+        <method name="plannedworkToWork" abstract="false">
+            <return>
+                <type>
+                    <class name="properties.Buildable"/>
+                </type>
+            </return>
+        </method>
+        <method name="canBeImproved" abstract="false">
+            <description>Indicate if the object can be improved.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="isManeuverObstacle" abstract="false">
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="isActifManeuverObstacle" abstract="false">
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="delayedActivationTime" abstract="false">
             <description>Indicate the time before activation</description>
             <return>
                 <type>
@@ -186,18 +172,18 @@
                 </type>
             </return>
         </method>
-	</methods>
-	<predicates>
-		<predicate name="isBuilt">
-			<description>Renvoie vrai si la connaissance est considérée comme construite.</description>
-		</predicate>
-		<predicate name="isBuildingFor">
-			<description>Renvoie vrai si l'élément est une position permettant de construire l'objectif.</description>
-			<argument>
-				<type>
-					<class name="properties.Buildable"/>
-				</type>
-			</argument>
-		</predicate>
-	</predicates>
+    </methods>
+    <predicates>
+        <predicate name="isBuilt">
+            <description>Renvoie vrai si la connaissance est considérée comme construite.</description>
+        </predicate>
+        <predicate name="isBuildingFor">
+            <description>Renvoie vrai si l'élément est une position permettant de construire l'objectif.</description>
+            <argument>
+                <type>
+                    <class name="properties.Buildable"/>
+                </type>
+            </argument>
+        </predicate>
+    </predicates>
 </class>

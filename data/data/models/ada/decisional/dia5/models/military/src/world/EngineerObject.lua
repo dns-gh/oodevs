@@ -111,13 +111,6 @@ return
             return 0
         end
     end,
-    animationEfficiency = function( self, objective )
-        if self.knowledge then
-            return self.knowledge:animationEfficiency()
-        else
-            return 0
-        end
-    end,
     animateIt = function( self )
         if self.knowledge then
             return self.knowledge:animateIt()
