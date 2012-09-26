@@ -475,3 +475,12 @@ const std::set< MIL_Object_ABC* >& MIL_ObjectManager::GetUniversalObjects() cons
 {
     return universalObjects_;
 }
+
+// -----------------------------------------------------------------------------
+// Name:MIL_ObjectManager::GetObjects
+// Created: SLI 2012-09-19
+// -----------------------------------------------------------------------------
+const std::map< unsigned int, MIL_Object_ABC* >& MIL_ObjectManager::GetObjects() const
+{
+    return objects_;
+}

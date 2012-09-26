@@ -80,6 +80,7 @@ public:
     void ReadUrbanState( xml::xistream& xis );
     MIL_Object_ABC* Find( unsigned int nID ) const;
     const std::set< MIL_Object_ABC* >& GetUniversalObjects() const;
+    const std::map< unsigned int, MIL_Object_ABC* >& GetObjects() const;
     //@}
 
     //! @name Network

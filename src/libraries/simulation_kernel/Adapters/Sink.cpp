@@ -46,6 +46,8 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
+#include "Entities/Objects/MIL_ObjectManager.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_AgentComposante.h"
@@ -72,11 +74,11 @@ namespace sword
 template< typename Archive >
 void save_construct_data( Archive& archive, const Sink* sink, const unsigned int /*version*/ )
 {
-    const AgentFactory_ABC* agentFactory = &sink->agentFactory_;
-    const PopulationFactory_ABC* populationFactory = &sink->populationFactory_;
+    const AgentFactory_ABC* agents = &sink->agents_;
+    const PopulationFactory_ABC* populations = &sink->populations_;
     const core::Model* model = sink->model_.get();
-    archive << agentFactory
-            << populationFactory
+    archive << agents
+            << populations
             << model
             << sink->gcPause_
             << sink->gcMult_
@@ -87,19 +89,19 @@ void save_construct_data( Archive& archive, const Sink* sink, const unsigned int
 template< typename Archive >
 void load_construct_data( Archive& archive, Sink* sink, const unsigned int /*version*/ )
 {
-    AgentFactory_ABC* agentFactory;
-    PopulationFactory_ABC* populationFactory;
+    AgentFactory_ABC* agents;
+    PopulationFactory_ABC* populations;
     core::Model* model;
     unsigned int gcPause;
     unsigned int gcMult;
     std::vector< unsigned int > dangerousObjects;
-    archive >> agentFactory
-            >> populationFactory
+    archive >> agents
+            >> populations
             >> model
             >> gcPause
             >> gcMult
             >> dangerousObjects;
-    ::new( sink )Sink( *agentFactory, *populationFactory, std::auto_ptr< core::Model >( model ), gcPause, gcMult, dangerousObjects );
+    ::new( sink )Sink( *agents, *populations, std::auto_ptr< core::Model >( model ), gcPause, gcMult, dangerousObjects );
     archive >> sink->elements_;
 }
 }
@@ -171,10 +173,10 @@ namespace
 // Name: Sink constructor
 // Created: SBO 2011-06-06
 // -----------------------------------------------------------------------------
-Sink::Sink( AgentFactory_ABC& agentFactory, const PopulationFactory_ABC& populationFactory, unsigned int gcPause, unsigned int gcMult,
-            const std::vector< unsigned int >& dangerousObjects )
-    : agentFactory_     ( agentFactory )
-    , populationFactory_( populationFactory )
+Sink::Sink( AgentFactory_ABC& agents, const PopulationFactory_ABC& populations,
+            unsigned int gcPause, unsigned int gcMult, const std::vector< unsigned int >& dangerousObjects )
+    : agents_           ( agents )
+    , populations_      ( populations )
     , gcPause_          ( gcPause )
     , gcMult_           ( gcMult )
     , dangerousObjects_ ( dangerousObjects )
@@ -190,10 +192,10 @@ Sink::Sink( AgentFactory_ABC& agentFactory, const PopulationFactory_ABC& populat
 // Name: Sink constructor
 // Created: MCO 2012-09-12
 // -----------------------------------------------------------------------------
-Sink::Sink( AgentFactory_ABC& agentFactory, const PopulationFactory_ABC& populationFactory, std::auto_ptr< core::Model > model, unsigned int gcPause, unsigned int gcMult,
-            const std::vector< unsigned int >& dangerousObjects )
-    : agentFactory_     ( agentFactory )
-    , populationFactory_( populationFactory )
+Sink::Sink( AgentFactory_ABC& agents, const PopulationFactory_ABC& populations,
+            std::auto_ptr< core::Model > model, unsigned int gcPause, unsigned int gcMult, const std::vector< unsigned int >& dangerousObjects )
+    : agents_           ( agents )
+    , populations_      ( populations )
     , gcPause_          ( gcPause )
     , gcMult_           ( gcMult )
     , dangerousObjects_ ( dangerousObjects )
@@ -281,6 +283,7 @@ void Sink::ApplyEffects()
 SWORD_USER_DATA_EXPORT( boost::shared_ptr< DEC_Knowledge_Agent > )
 SWORD_USER_DATA_EXPORT( const MIL_Population* )
 SWORD_USER_DATA_EXPORT( const MIL_PopulationElement_ABC* )
+SWORD_USER_DATA_EXPORT( MIL_Object_ABC* )
 
 namespace
 {
@@ -371,6 +374,13 @@ namespace
             population.Apply( visitor );
         }
     }
+    template< typename T >
+    void UpdateObjects( core::Model& objects, const T& factory )
+    {
+        objects.Clear();
+        BOOST_FOREACH( const T::value_type& object, factory )
+            objects[ object.first ][ "data" ].SetUserData( object.second );
+    }
     void UpdateAgent( MIL_AgentPion& pion, core::Model& entity )
     {
         entity[ "is-deployed" ] = ! pion.GetRole< PHY_RoleInterface_Deployment >().IsUndeployed();
@@ -399,14 +409,15 @@ namespace
 // Name: Sink::UpdateModel
 // Created: SLI 2012-01-13
 // -----------------------------------------------------------------------------
-void Sink::UpdateModel( unsigned int tick, int duration )
+void Sink::UpdateModel( unsigned int tick, int duration, const MIL_ObjectManager& objects )
 {
     (*model_)[ "tick" ] = tick;
     (*model_)[ "step" ] = duration;
     core::Model& entities = (*model_)[ "entities" ];
     UpdateKnowledges( entities, (*model_)[ "knowledges" ], (*model_)[ "enemies" ], (*model_)[ "friends" ] );
-    UpdatePopulations( (*model_)[ "populations" ], populationFactory_ );
-    for( tools::Iterator< const MIL_AgentPion& > it = agentFactory_.CreateIterator(); it.HasMoreElements(); )
+    UpdatePopulations( (*model_)[ "populations" ], populations_ );
+    UpdateObjects( (*model_ )[ "objects" ], objects.GetObjects() );
+    for( tools::Iterator< const MIL_AgentPion& > it = agents_.CreateIterator(); it.HasMoreElements(); )
     {
         MIL_AgentPion& pion = const_cast< MIL_AgentPion& >( it.NextElement() );
         UpdateAgent( pion, entities[ pion.GetID() ] );
@@ -501,7 +512,7 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
     xis >> xml::attribute( "position", strPosition );
     MT_Vector2D vPosTmp;
     MIL_Tools::ConvertCoordMosToSim( strPosition, vPosTmp );
-    MIL_AgentPion& pion = Configure( *agentFactory_.Create( type, automate, xis ), vPosTmp );
+    MIL_AgentPion& pion = Configure( *agents_.Create( type, automate, xis ), vPosTmp );
     pion.GetRole< PHY_RolePion_Composantes >().ReadOverloading( xis ); // Equipments + Humans
     return &pion;
 }
@@ -512,7 +523,7 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
 // -----------------------------------------------------------------------------
 MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition )
 {
-    return &Configure( *agentFactory_.Create( type, automate, vPosition ), vPosition );
+    return &Configure( *agents_.Create( type, automate, vPosition ), vPosition );
 }
 
 // -----------------------------------------------------------------------------
@@ -521,7 +532,7 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
 // -----------------------------------------------------------------------------
 MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name )
 {
-    return &Configure( *agentFactory_.Create( type, automate, vPosition, name ), vPosition );
+    return &Configure( *agents_.Create( type, automate, vPosition, name ), vPosition );
 }
 
 // -----------------------------------------------------------------------------

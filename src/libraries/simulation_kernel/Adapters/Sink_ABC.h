@@ -14,6 +14,8 @@
 #include "FloodModelFactory_ABC.h"
 #include <boost/serialization/export.hpp>
 
+class MIL_ObjectManager;
+
 namespace core
 {
     class Model;
@@ -42,7 +44,7 @@ public:
     virtual void ExecutePerceptions() = 0;
     virtual void ExecuteCommands() = 0;
     virtual void ApplyEffects() = 0;
-    virtual void UpdateModel( unsigned int tick, int duration ) = 0;
+    virtual void UpdateModel( unsigned int tick, int duration, const MIL_ObjectManager& objects ) = 0;
     //@}
 
     //! @name Commands

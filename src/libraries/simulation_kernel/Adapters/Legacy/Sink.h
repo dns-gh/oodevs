@@ -42,7 +42,7 @@ public:
     virtual void ExecutePerceptions();
     virtual void ExecuteCommands();
     virtual void ApplyEffects();
-    virtual void UpdateModel( unsigned int tick, int duration );
+    virtual void UpdateModel( unsigned int tick, int duration, const MIL_ObjectManager& objects );
     //@}
 
     //! @name Commands

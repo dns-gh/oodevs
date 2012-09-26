@@ -39,8 +39,8 @@ class Sink : public Sink_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Sink( AgentFactory_ABC& agentFactory, const PopulationFactory_ABC& populationFactory, unsigned int gcPause, unsigned int gcMult,
-                   const std::vector< unsigned int >& dangerousObjects );
+             Sink( AgentFactory_ABC& agents, const PopulationFactory_ABC& populations,
+                   unsigned int gcPause, unsigned int gcMult, const std::vector< unsigned int >& dangerousObjects );
     virtual ~Sink();
     //@}
 
@@ -49,7 +49,7 @@ public:
     virtual void ExecuteCommands();
     virtual void ApplyEffects();
     virtual void ExecutePerceptions();
-    virtual void UpdateModel( unsigned int tick, int duration );
+    virtual void UpdateModel( unsigned int tick, int duration, const MIL_ObjectManager& objects );
 
     void PostCommand( const std::string& type, const core::Model& parameters );
     virtual std::size_t StartCommand( const std::string& type, const core::Model& parameters );
@@ -81,8 +81,8 @@ public:
 private:
     //! @name Constructors/Destructor
     //@{
-    Sink( AgentFactory_ABC& agentFactory, const PopulationFactory_ABC& populationFactory, std::auto_ptr< core::Model > model, unsigned int gcPause, unsigned int gcMult,
-          const std::vector< unsigned int >& dangerousObjects );
+    Sink( AgentFactory_ABC& agents, const PopulationFactory_ABC& populations,
+          std::auto_ptr< core::Model > model, unsigned int gcPause, unsigned int gcMult, const std::vector< unsigned int >& dangerousObjects );
     //@}
 
     //! @name Helpers
@@ -95,8 +95,8 @@ private:
 private:
     //! @name Member data
     //@{
-    AgentFactory_ABC& agentFactory_;
-    const PopulationFactory_ABC& populationFactory_;
+    AgentFactory_ABC& agents_;
+    const PopulationFactory_ABC& populations_;
     const unsigned int gcPause_;
     const unsigned int gcMult_;
     const std::vector< unsigned int > dangerousObjects_;

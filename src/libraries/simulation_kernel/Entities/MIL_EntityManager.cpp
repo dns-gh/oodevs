@@ -596,7 +596,7 @@ void MIL_EntityManager::Finalize()
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::Synchronize()
 {
-    sink_->UpdateModel( time_.GetCurrentTick(), time_.GetTickDuration() );
+    sink_->UpdateModel( time_.GetCurrentTick(), time_.GetTickDuration(), *pObjectManager_ );
     sink_->ApplyEffects();
 }
 
@@ -906,7 +906,7 @@ void MIL_EntityManager::Update()
 {
     PreprocessRandomBreakdowns();
     UpdateKnowledges();
-    sink_->UpdateModel( time_.GetCurrentTick(), time_.GetTickDuration() );
+    sink_->UpdateModel( time_.GetCurrentTick(), time_.GetTickDuration(), *pObjectManager_ );
     UpdateDecisions();
     UpdateActions();
     UpdateEffects();
