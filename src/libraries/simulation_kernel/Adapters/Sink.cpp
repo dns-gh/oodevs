@@ -416,7 +416,6 @@ void Sink::UpdateModel( unsigned int tick, int duration, const MIL_ObjectManager
     (*model_)[ "tick" ] = tick;
     (*model_)[ "step" ] = duration;
     core::Model& entities = (*model_)[ "entities" ];
-    UpdateKnowledges( entities, (*model_)[ "knowledges" ], (*model_)[ "enemies" ], (*model_)[ "friends" ] );
     UpdatePopulations( (*model_)[ "populations" ], populations_ );
     UpdateObjects( (*model_ )[ "objects" ], objects.GetObjects() );
     for( tools::Iterator< const MIL_AgentPion& > it = agents_.CreateIterator(); it.HasMoreElements(); )
@@ -424,6 +423,15 @@ void Sink::UpdateModel( unsigned int tick, int duration, const MIL_ObjectManager
         MIL_AgentPion& pion = const_cast< MIL_AgentPion& >( it.NextElement() );
         UpdateAgent( pion, entities[ pion.GetID() ] );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Sink::UpdateKnowledges
+// Created: SLI 2012-09-25
+// -----------------------------------------------------------------------------
+void Sink::UpdateKnowledges()
+{
+    ::UpdateKnowledges( (*model_)[ "entities" ], (*model_)[ "knowledges" ], (*model_)[ "enemies" ], (*model_)[ "friends" ] );
 }
 
 // -----------------------------------------------------------------------------
