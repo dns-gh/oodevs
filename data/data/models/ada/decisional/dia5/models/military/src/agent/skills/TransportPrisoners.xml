@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.skills.TransportPrisoners" source-version="1.0.0">
+    <description>For the agent, to transport (non-realistic transportation )a set of surrendered units (knowledge agent). This skill uses the &quot;load&quot; skill to load the issued units. This skill verifies that the unit to transport is surrendered to the agent's side. If one of the units is not surrendered, it won't be transported.&#xD;
+&#xD;
+If no entities can be transported (none of them are surrendered), this skill sends the feedback 'failed'.</description>
     <parameters>
         <parameter name="platoons">
+            <description>The set of surrendered platoons to transport.</description>
             <type>
                 <list>
                     <class name="world.Platoon"/>
@@ -10,6 +14,8 @@
         </parameter>
     </parameters>
     <links>
-        <link name="load" skill="agent.skills.primitives.Load"/>
+        <link name="load" skill="agent.skills.primitives.Load">
+            <description>To enact the decision of loading the platoons.</description>
+        </link>
     </links>
 </skill>
