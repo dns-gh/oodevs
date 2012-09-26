@@ -66,8 +66,8 @@ bool PerceptionRecoObjectsReco::IsInside( const wrapper::View& knowledge ) const
 // -----------------------------------------------------------------------------
 void PerceptionRecoObjectsReco::GetObjectsInside( const wrapper::View& model, const wrapper::View& /*perceiver*/, Perception_ABC::T_ObjectVector& result ) const
 {
-    ListInCircleVisitor< wrapper::View > objectVisitor( result );
-    GET_HOOK( GetObjectListWithinCircle )( model, vCenter_, rCurrentSize_, &ListInCircleVisitor< const SWORD_Model* >::Add, &objectVisitor );
+    ListInCircleVisitor objectVisitor( result );
+    GET_HOOK( GetObjectListWithinCircle )( model, vCenter_, rCurrentSize_, &ListInCircleVisitor::Add, &objectVisitor );
     for( Perception_ABC::T_ObjectVector::iterator it = result.begin(); it != result.end(); )
         if( GET_HOOK( IsObjectIntersectingLocalization )( localisation_, *it ) )
             ++it;

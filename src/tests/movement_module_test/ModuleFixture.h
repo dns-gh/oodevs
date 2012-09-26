@@ -22,7 +22,6 @@ class KnowledgeCache;
 class DEC_Knowledge_Object;
 class MT_Line;
 class MIL_LimaOrder;
-class MIL_Object_ABC;
 class TerrainPathfinder;
 
 typedef bool (*PathfindShouldEndComputation)( float rCostToCurrentNode, float rCostToGoalNode, void* userData );
@@ -107,21 +106,21 @@ namespace movement
     APPLY( GetWorldWeldValue, 0, double, () ) \
     APPLY( ComputePathfind, 13, bool, ( TerrainPathfinder& pathfind, bool needRefine, bool strictClosest, const geometry::Point2f& from, const geometry::Point2f& to, PathfindEvaluateCost evaluate, void* evaluateData, PathfindGetCost get, void* getData, PathfindHandlePathPoint handler, void* handlerData, PathfindShouldEndComputation termination, void* terminationData ) ) \
     APPLY( CanMove, 1, bool, ( const SWORD_Model* entity ) ) \
-    APPLY( CanObjectInteractWith, 2, bool, ( const SWORD_Model* entity, const MIL_Object_ABC& object ) ) \
-    APPLY( GetObjectListWithinCircle, 4, void, ( const MT_Vector2D& vCenter, double rRadius, void (*callback)( MIL_Object_ABC* object, void* userData ), void* userData ) ) \
-    APPLY( GetObjectId, 1, int, ( const MIL_Object_ABC& object ) ) \
-    APPLY( GetObjectRealName, 1, const char*, ( const MIL_Object_ABC& object ) ) \
+    APPLY( CanObjectInteractWith, 2, bool, ( const SWORD_Model* entity, const SWORD_Model* object ) ) \
+    APPLY( GetObjectListWithinCircle, 5, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* object, void* userData ), void* userData ) ) \
+    APPLY( GetObjectId, 1, int, ( const SWORD_Model* object ) ) \
+    APPLY( GetObjectRealName, 1, const char*, ( const SWORD_Model* object ) ) \
     APPLY( GetSpeedWithReinforcement, 2, double, ( const SWORD_Model* entity, const TerrainData& environment ) ) \
     APPLY( GetMaxSpeedWithReinforcement, 1, double, ( const SWORD_Model* entity ) ) \
-    APPLY( GetSpeedWithReinforcementObject, 3, double, ( const SWORD_Model* entity, const TerrainData& environment, const MIL_Object_ABC& object ) ) \
+    APPLY( GetSpeedWithReinforcementObject, 3, double, ( const SWORD_Model* entity, const TerrainData& environment, const SWORD_Model* object ) ) \
     APPLY( HasResources, 1, bool, ( const SWORD_Model* entity ) ) \
-    APPLY( NotifyMovingInsideObject, 2, void, ( const SWORD_Model* entity, MIL_Object_ABC& object ) ) \
+    APPLY( NotifyMovingInsideObject, 2, void, ( const SWORD_Model* entity, const SWORD_Model* object ) ) \
     APPLY( NotifyMovingOnPathPoint, 2, void, ( const SWORD_Model* entity, const MT_Vector2D& point ) ) \
-    APPLY( NotifyMovingOutsideObject, 2, void, ( const SWORD_Model* entity, MIL_Object_ABC& object ) ) \
-    APPLY( ObjectIntersect2D, 4, bool, ( const MIL_Object_ABC& object, const MT_Line& line, void (*callback)( const MT_Vector2D& point, void* userData ), void* userData ) ) \
-    APPLY( ObjectIsInside, 2, bool, ( const MIL_Object_ABC& object, const MT_Vector2D& point ) ) \
-    APPLY( ObjectIsOnBorder, 2, bool, ( const MIL_Object_ABC& object, const MT_Vector2D& point ) ) \
-    APPLY( EntityManagerFindObject, 1, MIL_Object_ABC*, ( unsigned int nID ) ) \
+    APPLY( NotifyMovingOutsideObject, 2, void, ( const SWORD_Model* entity, const SWORD_Model* object ) ) \
+    APPLY( ObjectIntersect2D, 4, bool, ( const SWORD_Model* object, const MT_Line& line, void (*callback)( const MT_Vector2D& point, void* userData ), void* userData ) ) \
+    APPLY( ObjectIsInside, 2, bool, ( const SWORD_Model* object, const MT_Vector2D& point ) ) \
+    APPLY( ObjectIsOnBorder, 2, bool, ( const SWORD_Model* object, const MT_Vector2D& point ) ) \
+    APPLY( EntityManagerFindObject, 1, bool, ( unsigned int nID ) ) \
     APPLY( GetKnowledgeObjectRealName, 1, const char*, ( boost::shared_ptr< DEC_Knowledge_Object > object ) ) \
     APPLY( GetObjectKnownId, 1, int, ( boost::shared_ptr< DEC_Knowledge_Object > obstacle ) ) \
     APPLY( StartComputePathfind, 2, void, ( const SWORD_Model* entity, boost::shared_ptr< sword::movement::Path_ABC > path ) ) \

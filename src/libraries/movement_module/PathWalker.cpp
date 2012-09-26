@@ -24,20 +24,20 @@ namespace movement
 {
 
 DECLARE_HOOK( CanMove, bool, ( const SWORD_Model* entity ) )
-DECLARE_HOOK( CanObjectInteractWith, bool, ( const SWORD_Model* entity, const MIL_Object_ABC& object ) )
-DECLARE_HOOK( GetObjectListWithinCircle, void, ( const MT_Vector2D& vCenter, double rRadius, void (*callback)( MIL_Object_ABC* object, void* userData ), void* userData ) )
-DECLARE_HOOK( GetObjectId, int, ( const MIL_Object_ABC& object ) )
-DECLARE_HOOK( GetObjectRealName, const char*, ( const MIL_Object_ABC& object ) )
+DECLARE_HOOK( CanObjectInteractWith, bool, ( const SWORD_Model* entity, const SWORD_Model* object ) )
+DECLARE_HOOK( GetObjectListWithinCircle, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* object, void* userData ), void* userData ) )
+DECLARE_HOOK( GetObjectId, int, ( const SWORD_Model* object ) )
+DECLARE_HOOK( GetObjectRealName, const char*, ( const SWORD_Model* object ) )
 DECLARE_HOOK( GetSpeedWithReinforcement, double, ( const SWORD_Model* entity, const TerrainData& environment ) )
-DECLARE_HOOK( GetSpeedWithReinforcementObject, double, ( const SWORD_Model* entity, const TerrainData& environment, const MIL_Object_ABC& object ) )
+DECLARE_HOOK( GetSpeedWithReinforcementObject, double, ( const SWORD_Model* entity, const TerrainData& environment, const SWORD_Model* object ) )
 DECLARE_HOOK( GetWorldWeldValue, double, () ) // $$$$ MCO : "static data" which amazingly is hard-coded to 10 in simulation_terrain
 DECLARE_HOOK( HasResources, bool, ( const SWORD_Model* entity ) )
-DECLARE_HOOK( NotifyMovingInsideObject, void, ( const SWORD_Model* entity, MIL_Object_ABC& object ) )
+DECLARE_HOOK( NotifyMovingInsideObject, void, ( const SWORD_Model* entity, const SWORD_Model* object ) )
 DECLARE_HOOK( NotifyMovingOnPathPoint, void, ( const SWORD_Model* entity, const MT_Vector2D& point ) )
-DECLARE_HOOK( NotifyMovingOutsideObject, void, ( const SWORD_Model* entity, MIL_Object_ABC& object ) )
-DECLARE_HOOK( ObjectIntersect2D, bool, ( const MIL_Object_ABC& object, const MT_Line& line, void (*callback)( const MT_Vector2D& point, void* userData ), void* userData ) )
-DECLARE_HOOK( ObjectIsInside, bool, ( const MIL_Object_ABC& object, const MT_Vector2D& point ) )
-DECLARE_HOOK( ObjectIsOnBorder, bool, ( const MIL_Object_ABC& object, const MT_Vector2D& point ) )
+DECLARE_HOOK( NotifyMovingOutsideObject, void, ( const SWORD_Model* entity, const SWORD_Model* object ) )
+DECLARE_HOOK( ObjectIntersect2D, bool, ( const SWORD_Model* object, const MT_Line& line, void (*callback)( const MT_Vector2D& point, void* userData ), void* userData ) )
+DECLARE_HOOK( ObjectIsInside, bool, ( const SWORD_Model* object, const MT_Vector2D& point ) )
+DECLARE_HOOK( ObjectIsOnBorder, bool, ( const SWORD_Model* object, const MT_Vector2D& point ) )
 
 void PostReport( unsigned int entity, MIL_Report::E_EngineReport code )
 {
@@ -169,9 +169,9 @@ void PathWalker::SetEnvironmentType( const TerrainData& environment, const wrapp
 
 namespace
 {
-    void AddObject( MIL_Object_ABC* object, void* userData )
+    void AddObject( const SWORD_Model* object, void* userData )
     {
-        static_cast< std::vector< const MIL_Object_ABC* >* >( userData )->push_back( object );
+        static_cast< std::vector< wrapper::View >* >( userData )->push_back( object );
     }
 }
 
@@ -179,7 +179,7 @@ namespace
 // Name: PathWalker::SetCurrentPath
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
-PathWalker::E_ReturnCode PathWalker::SetCurrentPath( boost::shared_ptr< PathResult > pPath, const wrapper::View& entity ) const
+PathWalker::E_ReturnCode PathWalker::SetCurrentPath( boost::shared_ptr< PathResult > pPath, const wrapper::View& model, const wrapper::View& entity ) const
 {
     if( pCurrentPath_.get() && pPath == pCurrentPath_ && !bForcePathCheck_  /*&& !GetRole< PHY_RoleInterface_Location >().HasDoneMagicMove()*/ )
         return eRunning;
@@ -201,14 +201,14 @@ PathWalker::E_ReturnCode PathWalker::SetCurrentPath( boost::shared_ptr< PathResu
     {
         bool isInsideObject = false;
         const MT_Vector2D& lastWaypoint = pPath->GetLastWaypoint();
-        typedef std::vector< const MIL_Object_ABC* > T_Objects;
+        typedef std::vector< wrapper::View > T_Objects;
         T_Objects objects;
-        GET_HOOK( GetObjectListWithinCircle )( lastWaypoint, 100, &AddObject, &objects );
+        GET_HOOK( GetObjectListWithinCircle )( model, lastWaypoint, 100, &AddObject, &objects );
         for( T_Objects::const_iterator it = objects.begin(); it != objects.end(); ++it )
         {
-            if( GET_HOOK( ObjectIsInside )( **it, lastWaypoint ) )
+            if( GET_HOOK( ObjectIsInside )( *it, lastWaypoint ) )
             {
-                PostReport( entity_, MIL_Report::eReport_DifficultMovementProgression, GET_HOOK( GetObjectRealName )( **it ) );
+                PostReport( entity_, MIL_Report::eReport_DifficultMovementProgression, GET_HOOK( GetObjectRealName )( *it ) );
                 isInsideObject = true;
                 break;
             }
@@ -272,14 +272,14 @@ namespace
 // Name: PathWalker::ComputeObjectCollision
 // Created: MCO 2012-02-06
 //-----------------------------------------------------------------------------
-void PathWalker::ComputeObjectCollision( MIL_Object_ABC* object, void* userData )
+void PathWalker::ComputeObjectCollision( const SWORD_Model* object, void* userData )
 {
     const CollisionData* data = static_cast< const CollisionData* >( userData );
-    if( GET_HOOK( ObjectIntersect2D )( *object, *data->lineTmp, &InsertPoint, data->collisions ) )
+    if( GET_HOOK( ObjectIntersect2D )( object, *data->lineTmp, &InsertPoint, data->collisions ) )
     {
         for( IT_PointSet itPoint = data->collisions->begin(); itPoint != data->collisions->end(); ++itPoint )
         {
-            if( ! GET_HOOK( ObjectIsInside )( *object, *itPoint ) )
+            if( ! GET_HOOK( ObjectIsInside )( object, *itPoint ) )
                 continue;
             IT_MoveStepSet itMoveStep = data->moveStepSet->insert( T_MoveStep( *itPoint ) ).first;
             const_cast< T_ObjectSet& >( itMoveStep->ponctualObjectsOnSet_ ).insert( object );
@@ -300,7 +300,7 @@ void PathWalker::ComputeObjectCollision( MIL_Object_ABC* object, void* userData 
     {
         // Picking au milieu de la ligne reliant les 2 points
         MT_Vector2D vTmp = ( itMoveStep->vPos_ + itPrevMoveStep->vPos_ ) / 2;
-        if( GET_HOOK( ObjectIsInside )( *object, vTmp ) )
+        if( GET_HOOK( ObjectIsInside )( object, vTmp ) )
         {
             const_cast< T_ObjectSet& >( itPrevMoveStep->objectsToNextPointSet_ ).insert( object );
             bInsideObjectOnPrevPoint = true;
@@ -323,7 +323,7 @@ void PathWalker::ComputeObjectCollision( MIL_Object_ABC* object, void* userData 
 // Name: PathWalker::ComputeObjectsCollision
 // Created: NLD 2002-12-17
 //-----------------------------------------------------------------------------
-void PathWalker::ComputeObjectsCollision( const MT_Vector2D& vStart, const MT_Vector2D& vEnd, T_MoveStepSet& moveStepSet ) const
+void PathWalker::ComputeObjectsCollision( const wrapper::View& model, const MT_Vector2D& vStart, const MT_Vector2D& vEnd, T_MoveStepSet& moveStepSet ) const
 {
     // Récupération de la liste des objets dynamiques contenus dans le rayon vEnd - vStart
     MT_Line lineTmp( vStart, vEnd );
@@ -335,7 +335,7 @@ void PathWalker::ComputeObjectsCollision( const MT_Vector2D& vStart, const MT_Ve
     data.lineTmp = &lineTmp;
     data.collisions = &collisions;
     data.moveStepSet = &moveStepSet;
-    GET_HOOK( GetObjectListWithinCircle )( vStart, ( vEnd - vStart ).Magnitude(), &ComputeObjectCollision, &data );
+    GET_HOOK( GetObjectListWithinCircle )( model, vStart, ( vEnd - vStart ).Magnitude(), &ComputeObjectCollision, &data );
 }
 
 // -----------------------------------------------------------------------------
@@ -350,7 +350,7 @@ bool PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_MoveSte
     // Prise en compte des objets ponctuels se trouvant sur le 'move step'
     for( it = itCurMoveStep->ponctualObjectsOnSet_.begin(); it != itCurMoveStep->ponctualObjectsOnSet_.end(); ++it )
     {
-        MIL_Object_ABC& object = const_cast< MIL_Object_ABC& >( **it );
+        const wrapper::View& object = *it;
         double rSpeedWithinObject = GET_HOOK( GetSpeedWithReinforcementObject )( entity, environment_, object );
         if( GET_HOOK( CanObjectInteractWith )( entity, object ) )
         {
@@ -378,7 +378,7 @@ bool PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_MoveSte
     double rMaxSpeedForStep = std::numeric_limits< double >::max();
     for( it = itCurMoveStep->objectsToNextPointSet_.begin(); it != itCurMoveStep->objectsToNextPointSet_.end(); ++it )
     {
-        MIL_Object_ABC& object = const_cast< MIL_Object_ABC& >( **it );
+        const wrapper::View& object = *it;
         if( GET_HOOK( CanObjectInteractWith )( entity, object ) )
         {
             GET_HOOK( NotifyMovingInsideObject )( entity, object );
@@ -402,7 +402,7 @@ bool PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_MoveSte
     // itCurMoveStep a pu être dépassé => notification des objets dont on sort
     for( it = itNextMoveStep->objectsOutSet_.begin(); it != itNextMoveStep->objectsOutSet_.end(); ++it )
     {
-        MIL_Object_ABC& object = const_cast< MIL_Object_ABC& >( **it );
+        const wrapper::View& object = *it;
         if( GET_HOOK( CanObjectInteractWith )( entity, object ) )
             GET_HOOK( NotifyMovingOutsideObject )( entity, object );
     }
@@ -430,7 +430,7 @@ bool PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_MoveSte
 // Name: PathWalker::TryToMoveTo
 // Created: NLD 2002-12-17
 //-----------------------------------------------------------------------------
-bool PathWalker::TryToMoveTo( const PathResult& path, const MT_Vector2D& vNewPosTmp, double& rTimeRemaining, const wrapper::View& entity ) const
+bool PathWalker::TryToMoveTo( const PathResult& path, const MT_Vector2D& vNewPosTmp, double& rTimeRemaining, const wrapper::View& model, const wrapper::View& entity ) const
 {
     // Deplacement de vNewPos_ vers vNewPosTmp
     if( vNewPosTmp == vNewPos_ )
@@ -450,7 +450,7 @@ bool PathWalker::TryToMoveTo( const PathResult& path, const MT_Vector2D& vNewPos
 
     sMoveStepCmp cmp( vNewPos );
     T_MoveStepSet moveStepSet( cmp );
-    ComputeObjectsCollision( vNewPos, vNewPosTmp, moveStepSet );
+    ComputeObjectsCollision( model, vNewPos, vNewPosTmp, moveStepSet );
     if( moveStepSet.size() < 2 )
     {
         ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Move step set has not at least 2 elements" ); // $$$$ LDC RC Can never happen.
@@ -476,7 +476,7 @@ bool PathWalker::TryToMoveTo( const PathResult& path, const MT_Vector2D& vNewPos
 // Created: NLD 2004-09-22
 // Modified: MGD 2010-03-12
 // -----------------------------------------------------------------------------
-int PathWalker::Move( boost::shared_ptr< PathResult > pPath, const wrapper::View& entity ) const
+int PathWalker::Move( boost::shared_ptr< PathResult > pPath, const wrapper::View& model, const wrapper::View& entity ) const
 {
     if( bHasMoved_ )
         return eAlreadyMoving;
@@ -491,7 +491,7 @@ int PathWalker::Move( boost::shared_ptr< PathResult > pPath, const wrapper::View
         return eRunning;
     }
 
-    pathSet_ = SetCurrentPath( pPath, entity );
+    pathSet_ = SetCurrentPath( pPath, model, entity );
     if( pathSet_ == eItineraireMustBeJoined )
         return eItineraireMustBeJoined;
 
@@ -535,7 +535,7 @@ int PathWalker::Move( boost::shared_ptr< PathResult > pPath, const wrapper::View
     while( rTimeRemaining > 0. )
     {
         const MT_Vector2D vPosBeforeMove( vNewPos_ );
-        const bool moveTryResult = TryToMoveTo( *pPath, ( *itNextPathPoint_ )->GetPos(), rTimeRemaining, entity );  // $$$$ VPR 2012-01-06: Modifies vNewPos_
+        const bool moveTryResult = TryToMoveTo( *pPath, ( *itNextPathPoint_ )->GetPos(), rTimeRemaining, model, entity );  // $$$$ VPR 2012-01-06: Modifies vNewPos_
         rWalkedDistance_ += vPosBeforeMove.Distance( vNewPos_ );
 
         if( !moveTryResult )

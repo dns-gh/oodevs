@@ -73,8 +73,8 @@ bool PerceptionRecoSurveillanceReco::IsInside( const MT_Vector2D& vPoint ) const
 void PerceptionRecoSurveillanceReco::GetAgentsInside( const wrapper::View& model, Perception_ABC::T_AgentPtrVector& result ) const
 {
     Perception_ABC::T_AgentPtrVector agents;
-    ListInCircleVisitor< wrapper::View > agentVisitor( agents );
-    GET_HOOK( GetAgentListWithinLocalisation )( model, localisation_, &ListInCircleVisitor< const SWORD_Model* >::Add, &agentVisitor );
+    ListInCircleVisitor agentVisitor( agents );
+    GET_HOOK( GetAgentListWithinLocalisation )( model, localisation_, &ListInCircleVisitor::Add, &agentVisitor );
     BOOST_FOREACH( wrapper::View agent, agents )
         if( IsInside( MT_Vector2D( agent[ "movement/position/x" ], agent[ "movement/position/y" ] ) ) )
             result.push_back( agent );

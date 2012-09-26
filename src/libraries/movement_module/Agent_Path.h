@@ -16,7 +16,6 @@
 #include "wrapper/View.h"
 
 class MIL_LimaOrder;
-class MIL_Object_ABC;
 
 namespace sword
 {

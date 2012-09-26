@@ -81,11 +81,11 @@ bool PerceptionRecoLocalisationReco::IsInside( const wrapper::View& perceiver, c
 void PerceptionRecoLocalisationReco::GetAgentsInside( const wrapper::View& model, const wrapper::View& perceiver, Perception_ABC::T_AgentPtrVector& result ) const
 {
     result.clear();
-    ListInCircleVisitor< wrapper::View > agentVisitor( result );
+    ListInCircleVisitor agentVisitor( result );
     if( bShouldUseRadius_ )
     {
         const double rRadius = rRadius_ < 0. ? perceiver[ "perceptions/max-agent-perception-distance" ] : rRadius_;
-        GET_HOOK( GetAgentListWithinCircle )( model, MT_Vector2D( perceiver[ "movement/position/x" ], perceiver[ "movement/position/y" ] ), rRadius, &ListInCircleVisitor< const SWORD_Model* >::Add, &agentVisitor );
+        GET_HOOK( GetAgentListWithinCircle )( model, MT_Vector2D( perceiver[ "movement/position/x" ], perceiver[ "movement/position/y" ] ), rRadius, &ListInCircleVisitor::Add, &agentVisitor );
         for( Perception_ABC::T_AgentPtrVector::iterator it = result.begin(); it != result.end(); )
         {
             const MT_Vector2D position( (*it)[ "movement/position/x" ], (*it)[ "movement/position/y" ] );
@@ -96,7 +96,7 @@ void PerceptionRecoLocalisationReco::GetAgentsInside( const wrapper::View& model
         }
     }
     else
-        GET_HOOK( GetAgentListWithinLocalisation )( model, localisation_, &ListInCircleVisitor< const SWORD_Model* >::Add, &agentVisitor );
+        GET_HOOK( GetAgentListWithinLocalisation )( model, localisation_, &ListInCircleVisitor::Add, &agentVisitor );
 }
 
 // -----------------------------------------------------------------------------

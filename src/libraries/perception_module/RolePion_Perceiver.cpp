@@ -494,24 +494,24 @@ void RolePion_Perceiver::ExecutePerceptions( const wrapper::View& model, const w
                                           &knowledgesVisitor );
 
         const T_SurfacesAgents surfacesAgent( surfacesAgent );
-        ListInCircleVisitor< wrapper::View > agentVisitor( perceivableAgents );
-        GET_HOOK( GetAgentListWithinCircle )( model, position, maxPerceptionDistance, &ListInCircleVisitor< const SWORD_Model* >::Add, &agentVisitor );
+        ListInCircleVisitor agentVisitor( perceivableAgents );
+        GET_HOOK( GetAgentListWithinCircle )( model, position, maxPerceptionDistance, &ListInCircleVisitor::Add, &agentVisitor );
         BOOST_FOREACH( T_Perception activePerception, activePerceptions )
             activePerception->ExecuteAgents( model, entity, surfacesAgent, perceivableAgents );
 
         const T_SurfacesObjects surfacesObject( surfacesObject );
-        ListInCircleVisitor< wrapper::View > objectVisitor( perceivableObjects );
-        GET_HOOK( GetObjectListWithinCircle )( model, position, maxPerceptionDistance, &ListInCircleVisitor< const SWORD_Model* >::Add, &objectVisitor );
+        ListInCircleVisitor objectVisitor( perceivableObjects );
+        GET_HOOK( GetObjectListWithinCircle )( model, position, maxPerceptionDistance, &ListInCircleVisitor::Add, &objectVisitor );
         BOOST_FOREACH( T_Perception activePerception, activePerceptions )
             activePerception->ExecuteObjects( model, entity, surfacesObject, perceivableObjects );
 
-        ListInCircleVisitor< wrapper::View > concentrationVisitor( perceivableConcentrations );
-        GET_HOOK( GetConcentrationListWithinCircle )( model, position, maxPerceptionDistance, &ListInCircleVisitor< const SWORD_Model* >::Add, &concentrationVisitor );
+        ListInCircleVisitor concentrationVisitor( perceivableConcentrations );
+        GET_HOOK( GetConcentrationListWithinCircle )( model, position, maxPerceptionDistance, &ListInCircleVisitor::Add, &concentrationVisitor );
         BOOST_FOREACH( T_Perception activePerception, activePerceptions )
             activePerception->ExecuteConcentrations( entity, surfacesAgent, perceivableConcentrations );
 
-        ListInCircleVisitor< wrapper::View > flowVisitor( perceivableFlows );
-        GET_HOOK( GetFlowListWithinCircle )( model, position, maxPerceptionDistance, &ListInCircleVisitor< const SWORD_Model* >::Add, &flowVisitor );
+        ListInCircleVisitor flowVisitor( perceivableFlows );
+        GET_HOOK( GetFlowListWithinCircle )( model, position, maxPerceptionDistance, &ListInCircleVisitor::Add, &flowVisitor );
         BOOST_FOREACH( T_Perception activePerception, activePerceptions )
             activePerception->ExecuteFlows( entity, surfacesAgent, perceivableFlows );
 

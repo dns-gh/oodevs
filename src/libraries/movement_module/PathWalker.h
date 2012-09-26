@@ -15,9 +15,9 @@
 #include <spatialcontainer/TerrainData.h>
 #include <boost/noncopyable.hpp>
 
-class MIL_Object_ABC;
 class KnowledgeCache;
 class MT_Line;
+struct SWORD_Model;
 
 namespace sword
 {
@@ -63,7 +63,7 @@ public:
 
     //! @name Operations
     //@{
-    int Move( boost::shared_ptr< PathResult > pPath, const wrapper::View& entity ) const;
+    int Move( boost::shared_ptr< PathResult > pPath, const wrapper::View& model, const wrapper::View& entity ) const;
     void MoveSuspended( boost::shared_ptr< PathResult > pPath ) const;
     void MoveCanceled( boost::shared_ptr< PathResult > pPath ) const;
     void Clean();
@@ -79,8 +79,8 @@ public:
 private:
      //! @name Types
     //@{
-    typedef std::set< const MIL_Object_ABC* > T_ObjectSet;
-    typedef T_ObjectSet::const_iterator     CIT_ObjectSet;
+    typedef std::set< const SWORD_Model* >   T_ObjectSet;
+    typedef T_ObjectSet::const_iterator    CIT_ObjectSet;
 
     // Struct used to store the steps when moving from a point to another : manage the collision with the dynamic objects
     struct T_MoveStep
@@ -120,12 +120,12 @@ private:
     //! @name Tools
     //@{
     bool TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_MoveStepSet itNextMoveStep, double& rTimeRemaining, bool bFirstMove, const wrapper::View& entity ) const;
-    bool TryToMoveTo( const PathResult& path, const MT_Vector2D& vNewPosTmp, double& rTimeRemaining, const wrapper::View& entity ) const;
-    void ComputeObjectsCollision( const MT_Vector2D& vStart, const MT_Vector2D& vEnd, T_MoveStepSet& moveStepSet ) const;
+    bool TryToMoveTo( const PathResult& path, const MT_Vector2D& vNewPosTmp, double& rTimeRemaining, const wrapper::View& model, const wrapper::View& entity ) const;
+    void ComputeObjectsCollision( const wrapper::View& model, const MT_Vector2D& vStart, const MT_Vector2D& vEnd, T_MoveStepSet& moveStepSet ) const;
     void ComputeCurrentSpeed( const wrapper::View& entity ) const;
     void InitializeEnvironment( const PathResult& path, const wrapper::View& entity ) const;
     bool GoToNextNavPoint( PathResult& path, const wrapper::View& entity ) const;
-    E_ReturnCode SetCurrentPath( boost::shared_ptr< PathResult > pPath, const wrapper::View& entity ) const;
+    E_ReturnCode SetCurrentPath( boost::shared_ptr< PathResult > pPath, const wrapper::View& model, const wrapper::View& entity ) const;
     void SetCurrentPathPoint( PathResult& path ) const;
     void SetEnvironmentType( const TerrainData& environment, const wrapper::View& entity ) const;
     void PostMovement( const wrapper::View& entity ) const;
@@ -138,7 +138,7 @@ private:
         T_PointSet* collisions;
         T_MoveStepSet* moveStepSet;
     };
-    static void ComputeObjectCollision( MIL_Object_ABC* object, void* userData );
+    static void ComputeObjectCollision( const SWORD_Model* object, void* userData );
     //@}
 
 private:

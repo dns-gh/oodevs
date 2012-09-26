@@ -150,7 +150,7 @@ namespace
         for( std::size_t i = 0; i < effect.GetSize(); ++i )
         {
             const core::Model& notification = effect.GetElement( i );
-            Target& target = *reinterpret_cast< Target* >( static_cast< size_t >( notification[ "target" ] ) );
+            Target& target = notification[ "target/data" ].GetUserData< Target >();
             const PHY_PerceptionLevel& level = PHY_PerceptionLevel::FindPerceptionLevel( notification[ "level" ] );
             const bool recorded = notification[ "recorded" ];
             T_Notification notifier = boost::bind( static_cast< Result (DEC_KS_Perception::*)( Target&, const PHY_PerceptionLevel&, bool ) >(&DEC_KS_Perception::NotifyPerception), _1, boost::ref( target ), boost::ref( level ), recorded );
@@ -162,7 +162,7 @@ namespace
         for( std::size_t i = 0; i < effect.GetSize(); ++i )
         {
             const core::Model& notification = effect.GetElement( i );
-            MIL_Agent_ABC& target = *notification[ "target" ].GetUserData< MIL_Agent_ABC* >();
+            MIL_AgentPion& target = notification[ "target" ].GetUserData< MIL_AgentPion >();
             const PHY_PerceptionLevel& level = PHY_PerceptionLevel::FindPerceptionLevel( notification[ "level" ] );
             const bool recorded = notification[ "recorded" ];
             T_Notification notifier = boost::bind( static_cast< bool(DEC_KS_Perception::*)( MIL_Agent_ABC&, const PHY_PerceptionLevel&, bool ) >(&DEC_KS_Perception::NotifyPerception), _1, boost::ref( target ), boost::ref( level ), recorded );
@@ -174,7 +174,7 @@ namespace
         for( std::size_t i = 0; i < effect.GetSize(); ++i )
         {
             const core::Model& notification = effect.GetElement( i );
-            MIL_PopulationFlow& flow = *reinterpret_cast< MIL_PopulationFlow* >( static_cast< size_t >( notification[ "target" ] ) );
+            MIL_PopulationFlow& flow = notification[ "target/data" ].GetUserData< MIL_PopulationFlow >();
             const PHY_PerceptionLevel& level = PHY_PerceptionLevel::FindPerceptionLevel( notification[ "level" ] );
             const bool recorded = notification[ "recorded" ];
             const core::Model& points = notification[ "shape" ];
@@ -190,7 +190,7 @@ namespace
         for( std::size_t i = 0; i < effect.GetSize(); ++i )
         {
             const core::Model& notification = effect.GetElement( i );
-            const MIL_UrbanObject_ABC& object = *reinterpret_cast< const MIL_UrbanObject_ABC* >( static_cast< size_t >( notification[ "target" ] ) );
+            const MIL_UrbanObject_ABC& object = notification[ "target/data" ].GetUserData< MIL_UrbanObject_ABC >();
             const PHY_PerceptionLevel& level = PHY_PerceptionLevel::FindPerceptionLevel( notification[ "level" ] );
             T_Notification notifier = boost::bind( static_cast< void(DEC_KS_Perception::*)( const MIL_UrbanObject_ABC&, const PHY_PerceptionLevel& ) >(&DEC_KS_Perception::NotifyPerception), _1, boost::ref( object ), boost::ref( level ) );
             notifications.push_back( notifier );
@@ -200,7 +200,7 @@ namespace
 
 DECLARE_HOOK( IsUsingActiveRadar, bool, ( const SWORD_Model* entity ) )
 DECLARE_HOOK( IsUsingSpecializedActiveRadar, bool, ( const SWORD_Model* entity, const char* radarType ) )
-DECLARE_HOOK( ComputeKnowledgeObjectPerception, size_t, ( const SWORD_Model* model, const SWORD_Model* entity, const DEC_Knowledge_Object* object ) )
+DECLARE_HOOK( ComputeKnowledgeObjectPerception, size_t, ( const SWORD_Model* model, const SWORD_Model* entity, const SWORD_Model* knowledgeObject ) )
 DECLARE_HOOK( GetPerceptionId, int, () )
 
 // -----------------------------------------------------------------------------
@@ -684,7 +684,9 @@ void RolePion_Perceiver::ExecutePerceptions()
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& RolePion_Perceiver::ComputePerception( const DEC_Knowledge_Object& knowledge ) const
 {
-    return PHY_PerceptionLevel::FindPerceptionLevel( GET_HOOK( ComputeKnowledgeObjectPerception )( core::Convert( &model_ ), core::Convert( &entity_ ), &knowledge ) );
+    core::Model model;
+    model[ "data" ].SetUserData( &knowledge );
+    return PHY_PerceptionLevel::FindPerceptionLevel( GET_HOOK( ComputeKnowledgeObjectPerception )( core::Convert( &model_ ), core::Convert( &entity_ ), core::Convert( &model ) ) );
 }
 
 // -----------------------------------------------------------------------------

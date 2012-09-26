@@ -18,10 +18,10 @@
 using namespace sword;
 using namespace sword::movement;
 
-DECLARE_HOOK( EntityManagerFindObject, MIL_Object_ABC*, ( unsigned int nID ) )
+DECLARE_HOOK( EntityManagerFindObject, bool, ( unsigned int nID ) )
 DECLARE_HOOK( GetKnowledgeObjectRealName, const char*, ( boost::shared_ptr< DEC_Knowledge_Object > object ) )
 DECLARE_HOOK( GetObjectKnownId, int, ( boost::shared_ptr< DEC_Knowledge_Object > obstacle ) )
-DECLARE_HOOK( UpdateObjectsToAvoid, bool, ( boost::shared_ptr< KnowledgeCache >& cache, const  SWORD_Model* entity ) )
+DECLARE_HOOK( UpdateObjectsToAvoid, bool, ( boost::shared_ptr< KnowledgeCache >& cache, const SWORD_Model* entity ) )
 
 namespace
 {
@@ -154,7 +154,7 @@ void MoveCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::V
     }
     executionSuspended_ = false;
     isBlockedByObject_ = false;
-    int nReturn = pathWalker_->Move( pMainPath_, entity );
+    int nReturn = pathWalker_->Move( pMainPath_, model, entity );
 
     if( nReturn == PathWalker::eRunning )
     { // NOTHING. Pathfind is computing. Just don't try to do anything in this state.
@@ -165,7 +165,7 @@ void MoveCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::V
     else if( nReturn == PathWalker::eItineraireMustBeJoined )
     {
         CreateNewPath( entity );
-        nReturn = pathWalker_->Move( pMainPath_, entity );
+        nReturn = pathWalker_->Move( pMainPath_, model, entity );
     }
     else if( nReturn == PathWalker::ePartialPath )
     { // NOTHING. Unit will move to the nearest point of the target.

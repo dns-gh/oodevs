@@ -54,8 +54,8 @@ bool PerceptionRecoUrbanBlockReco::IsInside( const MT_Vector2D& vPoint ) const
 void PerceptionRecoUrbanBlockReco::GetAgentsInside( const wrapper::View& root, Perception_ABC::T_AgentPtrVector& result ) const
 {
     result.clear();
-    ListInCircleVisitor< wrapper::View > agentVisitor( result );
-    GET_HOOK( GetAgentListWithinLocalisation )( root, localisation_, &ListInCircleVisitor< const SWORD_Model* >::Add, &agentVisitor );
+    ListInCircleVisitor agentVisitor( result );
+    GET_HOOK( GetAgentListWithinLocalisation )( root, localisation_, &ListInCircleVisitor::Add, &agentVisitor );
 }
 
 // -----------------------------------------------------------------------------

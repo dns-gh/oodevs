@@ -252,12 +252,13 @@ namespace
         }
         void AddObjectOnPath()
         {
-            MIL_Object_ABC* object = reinterpret_cast< MIL_Object_ABC* >( 42 );
-            MOCK_EXPECT( GetObjectListWithinCircle ).once().calls( boost::bind( boost::apply< void >(), _3, object, _4 ) );
+            object = 42;
+            MOCK_EXPECT( GetObjectListWithinCircle ).once().calls( boost::bind( boost::apply< void >(), _4, core::Convert( &object ), _5 ) );
             MOCK_EXPECT( ObjectIntersect2D ).once().calls( boost::bind( &ObjectFixture::AddCollision< void(*)( const MT_Vector2D&, void* ) >, this, _3, _4 ) );
             MOCK_EXPECT( ObjectIsInside ).once().returns( true );
         }
         const double weldValue;
+        core::Model object;
     };
 }
 

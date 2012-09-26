@@ -22,7 +22,7 @@ using namespace sword;
 using namespace sword::perception;
 
 DECLARE_HOOK( ComputeAgentRatioInsidePerceptionPolygon, double, ( const SWORD_Model* perceiver, const SWORD_Model* target, double distance, double roll ) )
-DECLARE_HOOK( GetCurrentUrbanBlock, const SWORD_Model*, ( const SWORD_Model* entity ) )
+DECLARE_HOOK( GetCurrentUrbanBlock, const SWORD_Model*, ( const SWORD_Model* root, const SWORD_Model* entity ) )
 DECLARE_HOOK( GetUrbanBlocksListWithinSegment, void, ( const SWORD_Model* root, MT_Vector2D first, MT_Vector2D second, void (*callback)( const SWORD_Model* urbanObjectWrapper, void* userData ), void* userData ) )
 DECLARE_HOOK( IsPostureStationed, bool, ( const SWORD_Model* entity ) )
 DECLARE_HOOK( GetUrbanObjectStructuralHeight, double, ( const SWORD_Model* urbanObject ) )
@@ -136,7 +136,7 @@ bool ZURBPerceptionComputer::ComputeParametersPerception( const wrapper::View& m
     std::vector< wrapper::View > list;
     FillUrbanBlocks filler( list );
     GET_HOOK( GetUrbanBlocksListWithinSegment )( model, perceiverPosition, targetPosition, &FillUrbanBlocks::Notify, &filler );
-    const wrapper::View perceiverUrbanBlock( GET_HOOK( GetCurrentUrbanBlock )( perceiver ) );
+    const SWORD_Model* perceiverUrbanBlock = GET_HOOK( GetCurrentUrbanBlock )( model, perceiver );
 
     T_Sensors sensors;
     FillSensorTypeAgents( perceiver, sensors );

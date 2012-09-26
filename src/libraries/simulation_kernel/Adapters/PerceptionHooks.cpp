@@ -38,6 +38,7 @@
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
+#include "Entities/Populations/MIL_Population.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "DetectionComputer_ABC.h"
 #include "DetectionComputerFactory_ABC.h"
@@ -85,6 +86,7 @@ using namespace transport;
 
 #define GET_ROLE( node, role ) (*core::Convert( node ))[ "pion" ].GetUserData< MIL_AgentPion >().GetRole< role >()
 #define GET_PION( node ) (*core::Convert( node ))[ "pion" ].GetUserData< MIL_AgentPion >()
+#define GET_DATA( node, data ) (*core::Convert( node ))[ "data" ].GetUserData< data >()
 
 namespace
 {
@@ -210,21 +212,21 @@ namespace
     {
         return PHY_Volume::GetVolumes().size();
     }
-    DEFINE_HOOK( PopulationFlowIntersectWithCircle, bool, ( const MIL_PopulationFlow& flow, MT_Vector2D circleCenter, double radius, void(*AddShapePoint)( MT_Vector2D point, void* userData ), void* userData ) )
+    DEFINE_HOOK( PopulationFlowIntersectWithCircle, bool, ( const SWORD_Model* flow, MT_Vector2D circleCenter, double radius, void(*AddShapePoint)( MT_Vector2D point, void* userData ), void* userData ) )
     {
         T_PointVector points;
-        bool result = flow.Intersect2DWithCircle( circleCenter, radius, points );
+        bool result = GET_DATA( flow, MIL_PopulationFlow ).Intersect2DWithCircle( circleCenter, radius, points );
         BOOST_FOREACH( const MT_Vector2D& point, points )
             AddShapePoint( point, userData );
         return result;
     }
-    DEFINE_HOOK( PopulationConcentrationIntersectWithCircle, bool, ( const MIL_PopulationConcentration& concentration, MT_Vector2D circleCenter, double radius ) )
+    DEFINE_HOOK( PopulationConcentrationIntersectWithCircle, bool, ( const SWORD_Model* concentration, MT_Vector2D circleCenter, double radius ) )
     {
-        return concentration.Intersect2DWithCircle( circleCenter, radius );
+        return GET_DATA( concentration, MIL_PopulationConcentration ).Intersect2DWithCircle( circleCenter, radius );
     }
-    DEFINE_HOOK( GetUrbanBlockFactor, double, ( const MIL_UrbanObject_ABC& block, const double* urbanBlockFactors ) )
+    DEFINE_HOOK( GetUrbanBlockFactor, double, ( const SWORD_Model* block, const double* urbanBlockFactors ) )
     {
-        if( const UrbanPhysicalCapacity* pPhysical = block.Retrieve< UrbanPhysicalCapacity >() )
+        if( const UrbanPhysicalCapacity* pPhysical = GET_DATA( block, MIL_UrbanObject_ABC ).Retrieve< UrbanPhysicalCapacity >() )
             if( const PHY_MaterialCompositionType* materialCompositionType = PHY_MaterialCompositionType::Find( pPhysical->GetMaterial() ) )
                 return urbanBlockFactors[ materialCompositionType->GetId() ];
         return 1.f;
@@ -269,13 +271,13 @@ namespace
         *identifier = it->second->GetID();
         return true;
     }
-    DEFINE_HOOK( GetObjectType, size_t, ( const MIL_Object_ABC& object ) )
+    DEFINE_HOOK( GetObjectType, size_t, ( const SWORD_Model* object ) )
     {
-        return object.GetType().GetID();
+        return GET_DATA( object, MIL_Object_ABC ).GetType().GetID();
     }
-    DEFINE_HOOK( GetKnowledgeObjectType, size_t, ( const DEC_Knowledge_Object& object ) )
+    DEFINE_HOOK( GetKnowledgeObjectType, size_t, ( const SWORD_Model* object ) )
     {
-        return object.GetType().GetID();
+        return GET_DATA( object, DEC_Knowledge_Object ).GetType().GetID();
     }
     DEFINE_HOOK( GetPostureSize, size_t, () )
     {
@@ -318,13 +320,13 @@ namespace
     {
         return GET_ROLE( entity, PHY_RoleInterface_Population ).GetCollidingPopulationDensity();
     }
-    DEFINE_HOOK( ObjectIntersectWithCircle, bool, ( const MIL_Object_ABC& object, const MT_Vector2D& center, double radius ) )
+    DEFINE_HOOK( ObjectIntersectWithCircle, bool, ( const SWORD_Model* object, const MT_Vector2D& center, double radius ) )
     {
-        return object.Intersect2DWithCircle( center, radius );
+        return GET_DATA( object, MIL_Object_ABC ).Intersect2DWithCircle( center, radius );
     }
-    DEFINE_HOOK( KnowledgeObjectIntersectWithCircle, bool, ( const DEC_Knowledge_Object& object, const MT_Vector2D& center, double radius ) )
+    DEFINE_HOOK( KnowledgeObjectIntersectWithCircle, bool, ( const SWORD_Model* knowledgeObject, const MT_Vector2D& center, double radius ) )
     {
-        return object.GetLocalisation().Intersect2DWithCircle( center, radius );
+        return GET_DATA( knowledgeObject, DEC_Knowledge_Object ).GetLocalisation().Intersect2DWithCircle( center, radius );
     }
     DEFINE_HOOK( GetEnvironmentAssociation, size_t, ( const char* environment ) )
     {
@@ -366,31 +368,35 @@ namespace
         }
         return GET_ROLE( target, PHY_RoleInterface_UrbanLocation ).ComputeRatioPionInside( polygon, roll );
     }
-    DEFINE_HOOK( GetCurrentUrbanBlock, const MIL_UrbanObject_ABC*, ( const SWORD_Model* entity ) )
+    DEFINE_HOOK( GetCurrentUrbanBlock, const SWORD_Model*, ( const SWORD_Model* root, const SWORD_Model* entity ) )
     {
-        return GET_ROLE( entity, PHY_RoleInterface_UrbanLocation ).GetCurrentUrbanBlock();
+        const MIL_UrbanObject_ABC* block = GET_ROLE( entity, PHY_RoleInterface_UrbanLocation ).GetCurrentUrbanBlock();
+        if( !block )
+            return 0;
+        return core::Convert( &(*core::Convert( root ))[ "urban-objects" ][ block->GetID() ] );
     }
-    DEFINE_HOOK( GetUrbanObjectStructuralHeight, double, ( const MIL_UrbanObject_ABC* urbanObject ) )
+    DEFINE_HOOK( GetUrbanObjectStructuralHeight, double, ( const SWORD_Model* urbanObject ) )
     {
-        if( const UrbanPhysicalCapacity* physical = urbanObject->Retrieve< UrbanPhysicalCapacity >() )
-            if( const StructuralCapacity* structuralCapacity = urbanObject->Retrieve< StructuralCapacity >() )
+        const MIL_UrbanObject_ABC& object = GET_DATA( urbanObject, MIL_UrbanObject_ABC );
+        if( const UrbanPhysicalCapacity* physical = object.Retrieve< UrbanPhysicalCapacity >() )
+            if( const StructuralCapacity* structuralCapacity = object.Retrieve< StructuralCapacity >() )
                 return structuralCapacity->GetStructuralState() * physical->GetHeight();
         return 0;
     }
-    DEFINE_HOOK( GetUrbanObjectOccupation, double, ( const MIL_UrbanObject_ABC* urbanObject ) )
+    DEFINE_HOOK( GetUrbanObjectOccupation, double, ( const SWORD_Model* urbanObject ) )
     {
-        if( const UrbanPhysicalCapacity* physical = urbanObject->Retrieve< UrbanPhysicalCapacity >() )
+        if( const UrbanPhysicalCapacity* physical = GET_DATA( urbanObject, MIL_UrbanObject_ABC ).Retrieve< UrbanPhysicalCapacity >() )
             return physical->GetOccupation();
         return 0;
     }
-    DEFINE_HOOK( GetUrbanObjectStructuralState, double, ( const MIL_UrbanObject_ABC* urbanObject ) )
+    DEFINE_HOOK( GetUrbanObjectStructuralState, double, ( const SWORD_Model* urbanObject ) )
     {
-        const StructuralCapacity* structuralCapacity = urbanObject->Retrieve< StructuralCapacity >();
+        const StructuralCapacity* structuralCapacity = GET_DATA( urbanObject, MIL_UrbanObject_ABC ).Retrieve< StructuralCapacity >();
         return structuralCapacity ? structuralCapacity->GetStructuralState() : 0;
     }
-    DEFINE_HOOK( HasUrbanObjectArchitecture, bool, ( const MIL_UrbanObject_ABC* urbanObject ) )
+    DEFINE_HOOK( HasUrbanObjectArchitecture, bool, ( const SWORD_Model* urbanObject ) )
     {
-        return urbanObject->Retrieve< UrbanPhysicalCapacity >() != 0;
+        return GET_DATA( urbanObject, MIL_UrbanObject_ABC ).Retrieve< UrbanPhysicalCapacity >() != 0;
     }
     DEFINE_HOOK( CanUrbanBlockBeSeen, bool, ( const SWORD_Model* perceiver, const SWORD_Model* urbanBlock ) )
     {
@@ -406,9 +412,9 @@ namespace
     }
     DEFINE_HOOK( AppendAddedKnowledge, void, ( const SWORD_Model* root, const SWORD_Model* entity,
                                                void (*agentCallback)( const SWORD_Model* agent, void* userData ),
-                                               void (*objectCallback)( MIL_Object_ABC* object, void* userData ),
-                                               void (*concentrationCallback)( const MIL_PopulationConcentration* concentration, void* userData ),
-                                               void (*flowCallback)( const MIL_PopulationFlow* flow, void* userData ),
+                                               void (*objectCallback)( const SWORD_Model* object, void* userData ),
+                                               void (*concentrationCallback)( const SWORD_Model* concentration, void* userData ),
+                                               void (*flowCallback)( const SWORD_Model* flow, void* userData ),
                                                void* userData ) )
     {
         const core::Model& rootNode = *core::Convert( root );
@@ -420,11 +426,17 @@ namespace
         BOOST_FOREACH( TER_Agent_ABC* agent, perceivableAgents )
             agentCallback( core::Convert( &rootNode[ "entities" ][ static_cast< const PHY_RoleInterface_Location* >( agent )->GetAgent().GetID() ] ), userData );
         BOOST_FOREACH( TER_Object_ABC* object, perceivableObjects )
-            objectCallback( static_cast< MIL_Object_ABC* >( object ), userData );
-        BOOST_FOREACH( const TER_PopulationConcentration_ABC* concentration, perceivableConcentrations )
-            concentrationCallback( static_cast< const MIL_PopulationConcentration* >( concentration ), userData );
-        BOOST_FOREACH( const TER_PopulationFlow_ABC* flow, perceivableFlows )
-            flowCallback( static_cast< const MIL_PopulationFlow* >( flow ), userData );
+            objectCallback( core::Convert( &rootNode[ "objects" ][ static_cast< MIL_Object_ABC* >( object )->GetID() ] ), userData );
+        BOOST_FOREACH( const TER_PopulationConcentration_ABC* terConcentration, perceivableConcentrations )
+        {
+            const MIL_PopulationConcentration* concentration = static_cast< const MIL_PopulationConcentration* >( terConcentration );
+            concentrationCallback( core::Convert( &rootNode[ "populations" ][ concentration->GetPopulation().GetID() ][ "concentrations" ][ concentration->GetID() ] ), userData );
+        }
+        BOOST_FOREACH( const TER_PopulationFlow_ABC* terFlow, perceivableFlows )
+        {
+            const MIL_PopulationFlow* flow = static_cast< const MIL_PopulationFlow* >( terFlow );
+            flowCallback( core::Convert( &rootNode[ "populations" ][ flow->GetPopulation().GetID() ][ "flows" ][ flow->GetID() ] ), userData );
+        }
     }
     DEFINE_HOOK( IsInCity, bool, ( const SWORD_Model* entity ) )
     {
@@ -438,33 +450,33 @@ namespace
     {
         return GET_PION( perceiver ).GetKnowledgeGroup()->IsPerceptionDistanceHacked( GET_PION( target ) );
     }
-    DEFINE_HOOK( IsObjectPerceptionDistanceHacked, bool, ( const SWORD_Model* perceiver, const MIL_Object_ABC* object ) )
+    DEFINE_HOOK( IsObjectPerceptionDistanceHacked, bool, ( const SWORD_Model* perceiver, const SWORD_Model* object ) )
     {
-        return GET_PION( perceiver ).GetKnowledgeGroup()->IsPerceptionDistanceHacked( *object );
+        return GET_PION( perceiver ).GetKnowledgeGroup()->IsPerceptionDistanceHacked( GET_DATA( object, MIL_Object_ABC ) );
     }
-    DEFINE_HOOK( IsPopulationFlowPerceptionDistanceHacked, bool, ( const SWORD_Model* perceiver, const MIL_PopulationFlow* flow ) )
+    DEFINE_HOOK( IsPopulationFlowPerceptionDistanceHacked, bool, ( const SWORD_Model* perceiver, const SWORD_Model* flow ) )
     {
-        return GET_PION( perceiver ).GetKnowledgeGroup()->IsPerceptionDistanceHacked( flow->GetPopulation() );
+        return GET_PION( perceiver ).GetKnowledgeGroup()->IsPerceptionDistanceHacked( GET_DATA( flow, MIL_PopulationFlow* )->GetPopulation() );
     }
-    DEFINE_HOOK( IsPopulationConcentrationPerceptionDistanceHacked, bool, ( const SWORD_Model* perceiver, const MIL_PopulationConcentration* concentration ) )
+    DEFINE_HOOK( IsPopulationConcentrationPerceptionDistanceHacked, bool, ( const SWORD_Model* perceiver, const SWORD_Model* concentration ) )
     {
-        return GET_PION( perceiver ).GetKnowledgeGroup()->IsPerceptionDistanceHacked( concentration->GetPopulation() );
+        return GET_PION( perceiver ).GetKnowledgeGroup()->IsPerceptionDistanceHacked( GET_DATA( concentration, MIL_PopulationConcentration* )->GetPopulation() );
     }
     DEFINE_HOOK( GetHackedPerceptionLevel, int, ( const SWORD_Model* perceiver, const SWORD_Model* target ) )
     {
         return GET_PION( perceiver ).GetKnowledgeGroup()->GetPerceptionLevel( GET_PION( target ) ).GetID();
     }
-    DEFINE_HOOK( GetObjectPerceptionLevel, int, ( const SWORD_Model* perceiver, const MIL_Object_ABC* object ) )
+    DEFINE_HOOK( GetObjectPerceptionLevel, int, ( const SWORD_Model* perceiver, const SWORD_Model* object ) )
     {
-        return GET_PION( perceiver ).GetKnowledgeGroup()->GetPerceptionLevel( *object ).GetID();
+        return GET_PION( perceiver ).GetKnowledgeGroup()->GetPerceptionLevel( GET_DATA( object, MIL_Object_ABC ) ).GetID();
     }
-    DEFINE_HOOK( GetPopulationFlowPerceptionLevel, int, ( const SWORD_Model* perceiver, const MIL_PopulationFlow* flow ) )
+    DEFINE_HOOK( GetPopulationFlowPerceptionLevel, int, ( const SWORD_Model* perceiver, const SWORD_Model* flow ) )
     {
-        return GET_PION( perceiver ).GetKnowledgeGroup()->GetPerceptionLevel( flow->GetPopulation() ).GetID();
+        return GET_PION( perceiver ).GetKnowledgeGroup()->GetPerceptionLevel( GET_DATA( flow, MIL_PopulationFlow* )->GetPopulation() ).GetID();
     }
-    DEFINE_HOOK( GetPopulationConcentrationPerceptionLevel, int, ( const SWORD_Model* perceiver, const MIL_PopulationConcentration* concentration ) )
+    DEFINE_HOOK( GetPopulationConcentrationPerceptionLevel, int, ( const SWORD_Model* perceiver, const SWORD_Model* concentration ) )
     {
-        return GET_PION( perceiver ).GetKnowledgeGroup()->GetPerceptionLevel( concentration->GetPopulation() ).GetID();
+        return GET_PION( perceiver ).GetKnowledgeGroup()->GetPerceptionLevel( GET_DATA( concentration, MIL_PopulationConcentration* )->GetPopulation() ).GetID();
     }
     DEFINE_HOOK( CanBeSeen, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) )
     {
@@ -473,17 +485,17 @@ namespace
         GET_PION( target ).Execute( *detectionComputer );
         return detectionComputer->CanBeSeen();
     }
-    DEFINE_HOOK( CanObjectBePerceived, bool, ( const MIL_Object_ABC* object ) )
+    DEFINE_HOOK( CanObjectBePerceived, bool, ( const SWORD_Model* object ) )
     {
-        return (*object)().CanBePerceived();
+        return GET_DATA( object, MIL_Object_ABC )().CanBePerceived();
     }
-    DEFINE_HOOK( CanPopulationFlowBePerceived, bool, ( const MIL_PopulationFlow* flow ) )
+    DEFINE_HOOK( CanPopulationFlowBePerceived, bool, ( const SWORD_Model* flow ) )
     {
-        return flow->CanBePerceived();
+        return GET_DATA( flow, MIL_PopulationFlow* )->CanBePerceived();
     }
-    DEFINE_HOOK( CanPopulationConcentrationBePerceived, bool, ( const MIL_PopulationConcentration* concentration ) )
+    DEFINE_HOOK( CanPopulationConcentrationBePerceived, bool, ( const SWORD_Model* concentration ) )
     {
-        return concentration->CanBePerceived();
+        return GET_DATA( concentration, MIL_PopulationConcentration* )->CanBePerceived();
     }
     DEFINE_HOOK( IsCivilian, bool, ( const SWORD_Model* agent ) )
     {
@@ -495,17 +507,17 @@ namespace
             return false;
         return GET_PION( perceiver ).GetKnowledge().GetKnowledgeAgentPerceptionContainer().GetKnowledgeAgentPerception( GET_PION( target ) ) == 0;
     }
-    DEFINE_HOOK( IsPopulationFlowNewlyPerceived, bool, ( const SWORD_Model* perceiver, const MIL_PopulationFlow* flow, int level ) )
+    DEFINE_HOOK( IsPopulationFlowNewlyPerceived, bool, ( const SWORD_Model* perceiver, const SWORD_Model* flow, int level ) )
     {
         if( PHY_PerceptionLevel::FindPerceptionLevel( level ) == PHY_PerceptionLevel::notSeen_ )
             return false;
-        return GET_PION( perceiver ).GetKnowledge().GetKnowledgePopulationPerceptionContainer().GetKnowledgePopulationPerception( flow->GetPopulation() ) == 0;
+        return GET_PION( perceiver ).GetKnowledge().GetKnowledgePopulationPerceptionContainer().GetKnowledgePopulationPerception( GET_DATA( flow, MIL_PopulationFlow* )->GetPopulation() ) == 0;
     }
-    DEFINE_HOOK( IsPopulationConcentrationNewlyPerceived, bool, ( const SWORD_Model* perceiver, const MIL_PopulationConcentration* concentration, int level ) )
+    DEFINE_HOOK( IsPopulationConcentrationNewlyPerceived, bool, ( const SWORD_Model* perceiver, const SWORD_Model* concentration, int level ) )
     {
         if( PHY_PerceptionLevel::FindPerceptionLevel( level ) == PHY_PerceptionLevel::notSeen_ )
             return false;
-        return GET_PION( perceiver ).GetKnowledge().GetKnowledgePopulationPerceptionContainer().GetKnowledgePopulationPerception( concentration->GetPopulation() ) == 0;
+        return GET_PION( perceiver ).GetKnowledge().GetKnowledgePopulationPerceptionContainer().GetKnowledgePopulationPerception( GET_DATA( concentration, MIL_PopulationConcentration* )->GetPopulation() ) == 0;
     }
     DEFINE_HOOK( ConvertSecondsToSim, double, ( double seconds ) )
     {
@@ -533,9 +545,9 @@ namespace
     {
         return GET_ROLE( entity, PHY_RoleInterface_Communications ).CanEmit();
     }
-    DEFINE_HOOK( IsObjectUniversal, bool, ( const MIL_Object_ABC* object ) )
+    DEFINE_HOOK( IsObjectUniversal, bool, ( const SWORD_Model* object ) )
     {
-        return object->IsUniversal();
+        return GET_DATA( object, MIL_Object_ABC* )->IsUniversal();
     }
     DEFINE_HOOK( CanComponentPerceive, bool, ( const SWORD_Model* entity, const SWORD_Model* component ) )
     {
@@ -564,25 +576,25 @@ namespace
     DEFINE_HOOK( IsLocalizationInsideCircle, bool, ( const SWORD_Model* localization, const MT_Vector2D* center, double radius ) )
     {
         const TER_Localisation circle( *center, radius );
-        const T_PointVector& pointLocalisationFinale = core::Convert( localization )->GetUserData< const TER_Localisation* >()->GetPoints();
+        const T_PointVector& pointLocalisationFinale = core::Convert( localization )->GetUserData< boost::shared_ptr< TER_Localisation > >()->GetPoints();
         bool result = true;
         for( CIT_PointVector it = pointLocalisationFinale.begin(); result && it != pointLocalisationFinale.end(); ++it )
             result = circle.IsInside( *it );
         return result;
     }
-    DEFINE_HOOK( IsKnowledgeObjectInsidePerception, bool, ( const SWORD_Model* localization, const MT_Vector2D* center, double radius, const DEC_Knowledge_Object* object ) )
+    DEFINE_HOOK( IsKnowledgeObjectInsidePerception, bool, ( const SWORD_Model* localization, const MT_Vector2D* center, double radius, const SWORD_Model* knowledgeObject ) )
     {
-        const TER_Localisation& knowledgeLocalization = object->GetLocalisation();
+        const TER_Localisation& knowledgeLocalization = GET_DATA( knowledgeObject, DEC_Knowledge_Object ).GetLocalisation();
         const TER_Localisation circle( *center, radius );
-        return core::Convert( localization )->GetUserData< const TER_Localisation* >()->IsIntersecting( knowledgeLocalization ) && circle.IsIntersecting( knowledgeLocalization );
+        return core::Convert( localization )->GetUserData< boost::shared_ptr< TER_Localisation > >()->IsIntersecting( knowledgeLocalization ) && circle.IsIntersecting( knowledgeLocalization );
     }
-    DEFINE_HOOK( IsObjectIntersectingLocalization, bool, ( const SWORD_Model* localization, const MIL_Object_ABC* object ) )
+    DEFINE_HOOK( IsObjectIntersectingLocalization, bool, ( const SWORD_Model* localization, const SWORD_Model* object ) )
     {
-        return core::Convert( localization )->GetUserData< const TER_Localisation* >()->IsIntersecting( object->GetLocalisation() );
+        return core::Convert( localization )->GetUserData< boost::shared_ptr< TER_Localisation > >()->IsIntersecting( GET_DATA( object, MIL_Object_ABC ).GetLocalisation() );
     }
-    DEFINE_HOOK( IsKnowledgeObjectIntersectingWithCircle, bool, ( const MT_Vector2D* center, double radius, const DEC_Knowledge_Object* object ) )
+    DEFINE_HOOK( IsKnowledgeObjectIntersectingWithCircle, bool, ( const MT_Vector2D* center, double radius, const SWORD_Model* knowledgeObject ) )
     {
-        return object->GetLocalisation().Intersect2DWithCircle( *center, radius );
+        return GET_DATA( knowledgeObject, DEC_Knowledge_Object ).GetLocalisation().Intersect2DWithCircle( *center, radius );
     }
     DEFINE_HOOK( GetLocalizationRadius, double, ( const SWORD_Model* localization ) )
     {

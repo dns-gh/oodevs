@@ -14,7 +14,6 @@
 #include "MT_Tools/Mt_Vector2DTypes.h"
 #include <boost/shared_ptr.hpp>
 
-class MIL_Object_ABC;
 class DEC_Knowledge_Object;
 class KnowledgeCache;
 

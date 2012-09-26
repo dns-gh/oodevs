@@ -65,9 +65,9 @@ void PerceptionAlat::ExecuteAgents( const wrapper::View& model, const wrapper::V
 
     // Recherche des pions dans la localisation
     Perception_ABC::T_AgentPtrVector agentsDetected;
-    ListInCircleVisitor< wrapper::View > agentVisitor( agentsDetected );
+    ListInCircleVisitor agentVisitor( agentsDetected );
     BOOST_FOREACH( const wrapper::View& localisation, localisations_ )
-        GET_HOOK( GetAgentListWithinLocalisation )( model, localisation, &ListInCircleVisitor< const SWORD_Model* >::Add, &agentVisitor );
+        GET_HOOK( GetAgentListWithinLocalisation )( model, localisation, &ListInCircleVisitor::Add, &agentVisitor );
 
     // Enregistrement des pions vus
     BOOST_FOREACH( const wrapper::View& target, agentsDetected )

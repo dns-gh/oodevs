@@ -137,16 +137,16 @@ void PerceptionRadarData::Acquire( const wrapper::View& model, const wrapper::Vi
     for( T_ZoneSet::const_iterator itZone = zones.begin(); itZone != zones.end(); ++itZone )
     {
         targets.clear();
-        ListInCircleVisitor< wrapper::View > agentVisitor( targets );
-        GET_HOOK( GetAgentListWithinLocalisation )( model, *itZone, &ListInCircleVisitor< const SWORD_Model* >::Add, &agentVisitor );
+        ListInCircleVisitor agentVisitor( targets );
+        GET_HOOK( GetAgentListWithinLocalisation )( model, *itZone, &ListInCircleVisitor::Add, &agentVisitor );
         AcquireTargets( model, perceiver, targets, effect );
     }
 
     if( bAcquireOnPerceiverPosition )
     {
         targets.clear();
-        ListInCircleVisitor< wrapper::View > agentVisitor( targets );
-        GET_HOOK( GetAgentListWithinCircle )( model, MT_Vector2D( perceiver[ "movement/position/x" ], perceiver[ "movement/position/y" ] ), pRadarType_->GetRadius(), &ListInCircleVisitor< const SWORD_Model* >::Add, &agentVisitor );
+        ListInCircleVisitor agentVisitor( targets );
+        GET_HOOK( GetAgentListWithinCircle )( model, MT_Vector2D( perceiver[ "movement/position/x" ], perceiver[ "movement/position/y" ] ), pRadarType_->GetRadius(), &ListInCircleVisitor::Add, &agentVisitor );
         AcquireTargets( model, perceiver, targets, effect );
     }
 

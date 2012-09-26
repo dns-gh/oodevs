@@ -10,6 +10,7 @@
 #ifndef SWORD_PERCEPTION_LIST_IN_CIRCLE_VISITOR_H
 #define SWORD_PERCEPTION_LIST_IN_CIRCLE_VISITOR_H
 
+#include "wrapper/View.h"
 #include <vector>
 #include <boost/noncopyable.hpp>
 
@@ -23,27 +24,26 @@ namespace perception
 */
 // Created: SLI 2012-07-10
 // =============================================================================
-template< typename T >
 struct ListInCircleVisitor : private boost::noncopyable
 {
     //! @name Constructors/Destructor
     //@{
-    explicit ListInCircleVisitor( std::vector< T >& list )
+    explicit ListInCircleVisitor( std::vector< wrapper::View >& list )
         : list_( list )
     {}
     //@}
 
     //! @name Operations
     //@{
-    static void Add( T data, void* userData )
+    static void Add( const SWORD_Model* data, void* userData )
     {
-        static_cast< ListInCircleVisitor< T >* >( userData )->list_.push_back( data );
+        static_cast< ListInCircleVisitor* >( userData )->list_.push_back( data );
     }
     //@}
 
     //! @name Member data
     //@{
-    std::vector< T >& list_;
+    std::vector< wrapper::View >& list_;
     //@}
 };
 

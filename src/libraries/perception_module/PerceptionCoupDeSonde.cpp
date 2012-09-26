@@ -89,9 +89,9 @@ const PerceptionLevel& PerceptionCoupDeSonde::ComputeAgent( const wrapper::View&
 void PerceptionCoupDeSonde::ExecuteAgents( const wrapper::View& model, const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const T_AgentPtrVector& /*perceivableAgents*/ )
 {
     Perception_ABC::T_AgentPtrVector vAgentDetectedList;
-    ListInCircleVisitor< wrapper::View > agentVisitor( vAgentDetectedList );
+    ListInCircleVisitor agentVisitor( vAgentDetectedList );
     const MT_Vector2D vSourcePos( perceiver[ "movement/position/x" ], perceiver[ "movement/position/y" ] );
-    GET_HOOK( GetAgentListWithinCircle )( model, vSourcePos, rLength_, &ListInCircleVisitor< const SWORD_Model* >::Add, &agentVisitor );
+    GET_HOOK( GetAgentListWithinCircle )( model, vSourcePos, rLength_, &ListInCircleVisitor::Add, &agentVisitor );
 
     for ( Perception_ABC::T_AgentPtrVector::const_iterator itAgent = vAgentDetectedList.begin(); itAgent != vAgentDetectedList.end(); ++itAgent )
     {

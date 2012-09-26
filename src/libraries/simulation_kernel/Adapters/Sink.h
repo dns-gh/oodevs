@@ -50,6 +50,7 @@ public:
     virtual void ApplyEffects();
     virtual void ExecutePerceptions();
     virtual void UpdateModel( unsigned int tick, int duration, const MIL_ObjectManager& objects );
+    virtual void UpdateUrbanModel( const MIL_UrbanCache& cache );
 
     void PostCommand( const std::string& type, const core::Model& parameters );
     virtual std::size_t StartCommand( const std::string& type, const core::Model& parameters );

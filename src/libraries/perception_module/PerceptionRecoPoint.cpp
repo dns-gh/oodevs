@@ -115,8 +115,8 @@ void PerceptionRecoPoint::ExecuteAgents( const wrapper::View& model, const wrapp
     for( T_RecoVector::const_iterator itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
     {
         perceivableAgents.clear();
-        ListInCircleVisitor< wrapper::View > agentVisitor( perceivableAgents );
-        GET_HOOK( GetAgentListWithinCircle )( model, (*itReco)->vCenter_, (*itReco)->rCurrentSize_, &ListInCircleVisitor< const SWORD_Model* >::Add, &agentVisitor );
+        ListInCircleVisitor agentVisitor( perceivableAgents );
+        GET_HOOK( GetAgentListWithinCircle )( model, (*itReco)->vCenter_, (*itReco)->rCurrentSize_, &ListInCircleVisitor::Add, &agentVisitor );
         for( T_AgentPtrVector::const_iterator it = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
         {
             const wrapper::View& agent = *it;
@@ -157,8 +157,8 @@ void PerceptionRecoPoint::ExecuteObjects( const wrapper::View& model, const wrap
     for( T_RecoVector::const_iterator itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
     {
         perceivableObjects.clear();
-        ListInCircleVisitor< wrapper::View > objectVisitor( perceivableObjects );
-        GET_HOOK( GetObjectListWithinCircle )( model, (*itReco)->vCenter_, (*itReco)->rCurrentSize_, &ListInCircleVisitor< const SWORD_Model* >::Add, &objectVisitor );
+        ListInCircleVisitor objectVisitor( perceivableObjects );
+        GET_HOOK( GetObjectListWithinCircle )( model, (*itReco)->vCenter_, (*itReco)->rCurrentSize_, &ListInCircleVisitor::Add, &objectVisitor );
         for( T_ObjectVector::const_iterator it = perceivableObjects.begin(); it != perceivableObjects.end(); ++it )
         {
             const wrapper::View& object = *it;

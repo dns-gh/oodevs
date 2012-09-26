@@ -596,6 +596,7 @@ void MIL_EntityManager::Finalize()
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::Synchronize()
 {
+    sink_->UpdateUrbanModel( MIL_AgentServer::GetWorkspace().GetUrbanCache() );
     sink_->UpdateModel( time_.GetCurrentTick(), time_.GetTickDuration(), *pObjectManager_ );
     sink_->ApplyEffects();
 }

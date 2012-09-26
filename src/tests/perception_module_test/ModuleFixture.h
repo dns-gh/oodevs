@@ -99,7 +99,7 @@ class PHY_Volume;
     APPLY( GetPerceptionRandom, 0, double, () ) \
     APPLY( IsKnown, 2, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) ) \
     APPLY( ComputeAgentRatioInsidePerceptionPolygon, 4, double, ( const SWORD_Model* perceiver, const SWORD_Model* target, double distance, double roll ) ) \
-    APPLY( GetCurrentUrbanBlock, 1, const SWORD_Model*, ( const SWORD_Model* entity ) ) \
+    APPLY( GetCurrentUrbanBlock, 2, const SWORD_Model*, ( const SWORD_Model* root, const SWORD_Model* entity ) ) \
     APPLY( GetUrbanObjectStructuralHeight, 1, double, ( const SWORD_Model* urbanObject ) ) \
     APPLY( GetUrbanObjectOccupation, 1, double, ( const SWORD_Model* urbanObject ) ) \
     APPLY( GetUrbanObjectStructuralState, 1, double, ( const SWORD_Model* urbanObject ) ) \

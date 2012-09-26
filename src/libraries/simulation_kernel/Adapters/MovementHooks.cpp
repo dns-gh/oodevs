@@ -29,6 +29,7 @@
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"
+#include "Entities/Populations/MIL_Population.h"
 #include "Entities/Objects/MIL_ObjectFactory.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
@@ -41,6 +42,7 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 #include "Decision/DEC_PathFind_Manager.h"
 #include "Tools/MIL_Tools.h"
 #include "Urban/MIL_UrbanCache.h"
@@ -73,6 +75,7 @@ namespace movement
 
 #define GET_ROLE( node, role ) (*core::Convert( node ))[ "pion" ].GetUserData< MIL_AgentPion >().GetRole< role >()
 #define GET_PION( node ) (*core::Convert( node ))[ "pion" ].GetUserData< MIL_AgentPion >()
+#define GET_DATA( node, data ) (*core::Convert( node ))[ "data" ].GetUserData< data >()
 
 namespace
 {
@@ -96,44 +99,55 @@ namespace
         BOOST_FOREACH( TER_Agent_ABC* agent, agentsDetected )
             callback( core::Convert( &rootNode[ "entities" ][ static_cast< const PHY_RoleInterface_Location* >( agent )->GetAgent().GetID() ] ), userData );
     }
-    DEFINE_HOOK( GetObjectListWithinCircle, void, ( const MT_Vector2D& vCenter, double rRadius, void (*callback)( MIL_Object_ABC* object, void* userData ), void* userData ) )
+    DEFINE_HOOK( GetObjectListWithinCircle, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* object, void* userData ), void* userData ) )
     {
+        const core::Model& rootNode = *core::Convert( root );
         TER_Object_ABC::T_ObjectVector objects; // Récupération de la liste des objets dynamiques contenus dans le rayon vEnd - vStart
         TER_World::GetWorld().GetObjectManager().GetListWithinCircle( vCenter, rRadius, objects );
         BOOST_FOREACH( TER_Object_ABC* object, objects )
-            callback( static_cast< MIL_Object_ABC* >( object ), userData );
+            callback( core::Convert( &rootNode[ "objects" ][ static_cast< MIL_Object_ABC* >( object )->GetID() ] ), userData );
     }
-    DEFINE_HOOK( GetConcentrationListWithinCircle, void, ( const MT_Vector2D& vCenter, double rRadius, void (*callback)( const MIL_PopulationConcentration* concentration, void* userData ), void* userData ) )
+    DEFINE_HOOK( GetConcentrationListWithinCircle, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* concentration, void* userData ), void* userData ) )
     {
+        const core::Model& rootNode = *core::Convert( root );
         TER_PopulationConcentration_ABC::T_ConstPopulationConcentrationVector perceivableConcentrations;
         TER_World::GetWorld().GetPopulationManager().GetConcentrationManager().GetListWithinCircle( vCenter, rRadius, perceivableConcentrations );
-        BOOST_FOREACH( const TER_PopulationConcentration_ABC* concentration, perceivableConcentrations )
-            callback( static_cast< const MIL_PopulationConcentration* >( concentration ), userData );
+        BOOST_FOREACH( const TER_PopulationConcentration_ABC* terConcentration, perceivableConcentrations )
+        {
+            const MIL_PopulationConcentration* concentration = static_cast< const MIL_PopulationConcentration* >( terConcentration );
+            callback( core::Convert( &rootNode[ "populations" ][ concentration->GetPopulation().GetID() ][ "concentrations" ][ concentration->GetID() ] ), userData );
+        }
     }
-    DEFINE_HOOK( GetFlowListWithinCircle, void, ( const MT_Vector2D& vCenter, double rRadius, void (*callback)( const MIL_PopulationFlow* flow, void* userData ), void* userData ) )
+    DEFINE_HOOK( GetFlowListWithinCircle, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* flow, void* userData ), void* userData ) )
     {
+        const core::Model& rootNode = *core::Convert( root );
         TER_PopulationFlow_ABC::T_ConstPopulationFlowVector perceivableFlows;
         TER_World::GetWorld().GetPopulationManager().GetFlowManager().GetListWithinCircle( vCenter, rRadius, perceivableFlows );
-        BOOST_FOREACH( const TER_PopulationFlow_ABC* flow, perceivableFlows )
-            callback( static_cast< const MIL_PopulationFlow* >( flow ), userData );
+        BOOST_FOREACH( const TER_PopulationFlow_ABC* terFlow, perceivableFlows )
+        {
+            const MIL_PopulationFlow* flow = static_cast< const MIL_PopulationFlow* >( terFlow );
+            callback( core::Convert( &rootNode[ "populations" ][ flow->GetPopulation().GetID() ][ "flows" ][ flow->GetID() ] ), userData );
+        }
     }
-    DEFINE_HOOK( GetUrbanObjectListWithinCircle, void, ( const MT_Vector2D& center, float radius, void (*callback)( const MIL_UrbanObject_ABC* urbanObjectWrapper, void* userData ), void* userData ) )
+    DEFINE_HOOK( GetUrbanObjectListWithinCircle, void, ( const SWORD_Model* root, const MT_Vector2D& center, float radius, void (*callback)( const SWORD_Model* urbanObjectWrapper, void* userData ), void* userData ) )
     {
+        const core::Model& rootNode = *core::Convert( root );
         std::vector< const MIL_UrbanObject_ABC* > perceivableUrbanBlock;
         MIL_AgentServer::GetWorkspace().GetUrbanCache().GetListWithinCircle( center, radius, perceivableUrbanBlock );
         BOOST_FOREACH( const MIL_UrbanObject_ABC* urbanBlock, perceivableUrbanBlock )
-            callback( urbanBlock, userData );
+            callback( core::Convert( &rootNode[ "urban-objects" ][ urbanBlock->GetID() ] ), userData );
     }
-    DEFINE_HOOK( GetUrbanBlocksListWithinSegment, void, ( MT_Vector2D first, MT_Vector2D second, void (*callback)( const MIL_UrbanObject_ABC* urbanObjectWrapper, void* userData ), void* userData ) )
+    DEFINE_HOOK( GetUrbanBlocksListWithinSegment, void, ( const SWORD_Model* root, MT_Vector2D first, MT_Vector2D second, void (*callback)( const SWORD_Model* urbanObjectWrapper, void* userData ), void* userData ) )
     {
+        const core::Model& rootNode = *core::Convert( root );
         std::vector< const MIL_UrbanObject_ABC* > list;
         MIL_AgentServer::GetWorkspace().GetUrbanCache().GetUrbanBlocksWithinSegment( first, second, list );
         BOOST_FOREACH( const MIL_UrbanObject_ABC* urbanBlock, list )
-            callback( urbanBlock, userData );
+            callback( core::Convert( &rootNode[ "urban-objects" ][ urbanBlock->GetID() ] ), userData );
     }
-    DEFINE_HOOK( EntityManagerFindObject, MIL_Object_ABC*, ( unsigned int nID ) )
+    DEFINE_HOOK( EntityManagerFindObject, bool, ( unsigned int nID ) )
     {
-        return MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( nID );
+        return MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( nID ) != 0;
     }
     DEFINE_HOOK( GetWorldWeldValue, double, () )
     {
@@ -383,42 +397,42 @@ namespace
     {
         return GET_ROLE( entity, PHY_RoleInterface_TerrainAnalysis ).CanMoveOn( point );
     }
-    DEFINE_HOOK( ObjectIntersect2D, bool, ( const MIL_Object_ABC& object, const MT_Line& line, void (*callback)( const MT_Vector2D& point, void* userData ), void* userData ) )
+    DEFINE_HOOK( ObjectIntersect2D, bool, ( const SWORD_Model* object, const MT_Line& line, void (*callback)( const MT_Vector2D& point, void* userData ), void* userData ) )
     {
         MT_Vector2D pt;
         TER_DistanceLess cmp( pt );
         T_PointSet collisions( cmp );
-        bool result = object.Intersect2D( line, collisions );
+        bool result = GET_DATA( object, MIL_Object_ABC ).Intersect2D( line, collisions );
         std::for_each( collisions.begin(), collisions.end(), boost::bind( callback, _1, userData ) );
         return result;
     }
-    DEFINE_HOOK( ObjectIsInside, bool, ( const MIL_Object_ABC& object, const MT_Vector2D& point ) )
+    DEFINE_HOOK( ObjectIsInside, bool, ( const SWORD_Model* object, const MT_Vector2D& point ) )
     {
-        return object.IsInside( point );
+        return GET_DATA( object, MIL_Object_ABC ).IsInside( point );
     }
-    DEFINE_HOOK( ObjectIsOnBorder, bool, ( const MIL_Object_ABC& object, const MT_Vector2D& point ) )
+    DEFINE_HOOK( ObjectIsOnBorder, bool, ( const SWORD_Model* object, const MT_Vector2D& point ) )
     {
-        return object.IsOnBorder( point );
+        return GET_DATA( object, MIL_Object_ABC ).IsOnBorder( point );
     }
-    DEFINE_HOOK( GetSpeedWithReinforcementObject, double, ( const SWORD_Model* entity, const TerrainData& environment, const MIL_Object_ABC& object ) )
+    DEFINE_HOOK( GetSpeedWithReinforcementObject, double, ( const SWORD_Model* entity, const TerrainData& environment, const SWORD_Model* object ) )
     {
-        return GET_ROLE( entity, RoleAction_Moving ).GetSpeedWithReinforcement( environment, object );
+        return GET_ROLE( entity, RoleAction_Moving ).GetSpeedWithReinforcement( environment, GET_DATA( object, MIL_Object_ABC ) );
     }
-    DEFINE_HOOK( CanObjectInteractWith, bool, ( const SWORD_Model* entity, const MIL_Object_ABC& object ) )
+    DEFINE_HOOK( CanObjectInteractWith, bool, ( const SWORD_Model* entity, const SWORD_Model* object ) )
     {
-        return GET_ROLE( entity, RoleAction_Moving ).CanObjectInteractWith( object );
+        return GET_ROLE( entity, RoleAction_Moving ).CanObjectInteractWith( GET_DATA( object, MIL_Object_ABC ) );
     }
-    DEFINE_HOOK( NotifyMovingInsideObject, void, ( const SWORD_Model* entity, MIL_Object_ABC& object ) )
+    DEFINE_HOOK( NotifyMovingInsideObject, void, ( const SWORD_Model* entity, const SWORD_Model* object ) )
     {
-        return GET_ROLE( entity, RoleAction_Moving ).NotifyMovingInsideObject( object );
+        return GET_ROLE( entity, RoleAction_Moving ).NotifyMovingInsideObject( GET_DATA( object, MIL_Object_ABC ) );
     }
-    DEFINE_HOOK( NotifyMovingOutsideObject, void, ( const SWORD_Model* entity, MIL_Object_ABC& object ) )
+    DEFINE_HOOK( NotifyMovingOutsideObject, void, ( const SWORD_Model* entity, const SWORD_Model* object ) )
     {
-        return GET_ROLE( entity, RoleAction_Moving ).NotifyMovingOutsideObject( object );
+        return GET_ROLE( entity, RoleAction_Moving ).NotifyMovingOutsideObject( GET_DATA( object, MIL_Object_ABC ) );
     }
-    DEFINE_HOOK( GetObjectId, int, ( const MIL_Object_ABC& object ) )
+    DEFINE_HOOK( GetObjectId, int, ( const SWORD_Model* object ) )
     {
-        return object.GetID();
+        return GET_DATA( object, MIL_Object_ABC ).GetID();
     }
     DEFINE_HOOK( CanMove, bool, ( const SWORD_Model* entity ) )
     {
@@ -484,9 +498,9 @@ namespace
     {
         return MIL_Tools::GetLandTypeName( terrain ).c_str();
     }
-    DEFINE_HOOK( GetObjectRealName, const char*, ( const MIL_Object_ABC& object ) )
+    DEFINE_HOOK( GetObjectRealName, const char*, ( const SWORD_Model* object ) )
     {
-        return object.GetType().GetRealName().c_str();
+        return GET_DATA( object, MIL_Object_ABC ).GetType().GetRealName().c_str();
     }
     DEFINE_HOOK( GetKnowledgeObjectRealName, const char*, ( boost::shared_ptr< DEC_Knowledge_Object > object ) )
     {

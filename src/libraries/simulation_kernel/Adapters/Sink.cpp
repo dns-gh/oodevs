@@ -48,6 +48,8 @@
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
 #include "Entities/Objects/MIL_ObjectManager.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
+#include "Urban/MIL_UrbanCache.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_AgentComposante.h"
@@ -422,6 +424,18 @@ void Sink::UpdateModel( unsigned int tick, int duration, const MIL_ObjectManager
         MIL_AgentPion& pion = const_cast< MIL_AgentPion& >( it.NextElement() );
         UpdateAgent( pion, entities[ pion.GetID() ] );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Sink::UpdateUrbanModel
+// Created: SLI 2012-09-24
+// -----------------------------------------------------------------------------
+void Sink::UpdateUrbanModel( const MIL_UrbanCache& cache )
+{
+    BOOST_FOREACH( const MIL_UrbanObject_ABC* object, cache.GetCities() )
+        (*model_ )[ "urban-objects" ][ object->GetID() ][ "data" ].SetUserData( object );
+    BOOST_FOREACH( const MIL_UrbanObject_ABC* object, cache.GetUrbanBlocks() )
+        (*model_ )[ "urban-objects" ][ object->GetID() ][ "data" ].SetUserData( object );
 }
 
 // -----------------------------------------------------------------------------
