@@ -13,6 +13,7 @@
 #include "runtime/Io.h"
 
 #include <boost/make_shared.hpp>
+#include <boost/ref.hpp>
 #include <boost/shared_ptr.hpp>
 
 #include <vector>
@@ -167,5 +168,5 @@ struct Chunker : public Chunker_ABC, public io::Writer_ABC
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Chunker_ABC > web::MakeChunker( Reply_ABC& rpy )
 {
-    return boost::make_shared< Chunker >( rpy );
+    return boost::make_shared< Chunker >( boost::ref( rpy ) );
 }
