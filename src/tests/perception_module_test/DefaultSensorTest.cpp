@@ -91,10 +91,10 @@ BOOST_FIXTURE_TEST_CASE( population_flows_in_list_are_identified_with_default_se
     const SWORD_Model* perceiver = core::Convert( &entity );
     MOCK_RESET( GetFlowListWithinCircle );
     MOCK_EXPECT( GetFlowListWithinCircle ).once().calls( boost::bind( boost::apply< void >(), _4, flow, _5 ) );
-    MOCK_EXPECT( IsPopulationFlowPerceptionDistanceHacked ).once().with( perceiver, flow ).returns( false );
+    MOCK_EXPECT( IsPopulationElementPerceptionDistanceHacked ).once().with( perceiver, flow ).returns( false );
     MOCK_EXPECT( PopulationElementIntersectWithCircle ).once().calls( boost::bind( &AddPoints, boost::cref( shape ), _4, _5 ) );
     MOCK_EXPECT( CanPopulationElementBePerceived ).once().with( flow ).returns( true );
-    MOCK_EXPECT( IsPopulationFlowNewlyPerceived ).once().with( perceiver, flow, mock::any ).returns( true );
+    MOCK_EXPECT( IsPopulationElementNewlyPerceived ).once().with( perceiver, flow, mock::any ).returns( true );
     ExpectNotifications( "population-flows",
         sword::test::MakeModel()[ sword::test::MakeModel( "target/data", 42 )
                                                         ( "level", 3 ) // identified
@@ -115,10 +115,10 @@ BOOST_FIXTURE_TEST_CASE( population_concentrations_in_list_are_identified_with_d
     const SWORD_Model* perceiver = core::Convert( &entity );
     MOCK_RESET( GetConcentrationListWithinCircle );
     MOCK_EXPECT( GetConcentrationListWithinCircle ).once().calls( boost::bind( boost::apply< void >(), _4, concentration, _5 ) );
-    MOCK_EXPECT( IsPopulationConcentrationPerceptionDistanceHacked ).once().with( perceiver, concentration ).returns( false );
+    MOCK_EXPECT( IsPopulationElementPerceptionDistanceHacked ).once().with( perceiver, concentration ).returns( false );
     MOCK_EXPECT( CanPopulationElementBePerceived ).once().with( concentration ).returns( true );
     MOCK_EXPECT( PopulationElementIntersectWithCircle ).once().returns( true );
-    MOCK_EXPECT( IsPopulationConcentrationNewlyPerceived ).once().with( perceiver, concentration, mock::any ).returns( true );
+    MOCK_EXPECT( IsPopulationElementNewlyPerceived ).once().with( perceiver, concentration, mock::any ).returns( true );
     ExpectNotifications( "population-concentrations", sword::test::MakeModel()[ sword::test::MakeModel( "target/data", 42 )
                                                                                                       ( "level", 3 ) // identified
                                                                                                       ( "recorded", false ) ] );

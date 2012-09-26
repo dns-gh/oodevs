@@ -451,13 +451,9 @@ namespace
     {
         return GET_PION( perceiver ).GetKnowledgeGroup()->IsPerceptionDistanceHacked( GET_DATA( object, MIL_Object_ABC ) );
     }
-    DEFINE_HOOK( IsPopulationFlowPerceptionDistanceHacked, bool, ( const SWORD_Model* perceiver, const SWORD_Model* flow ) )
+    DEFINE_HOOK( IsPopulationElementPerceptionDistanceHacked, bool, ( const SWORD_Model* perceiver, const SWORD_Model* element ) )
     {
-        return GET_PION( perceiver ).GetKnowledgeGroup()->IsPerceptionDistanceHacked( GET_DATA( flow, MIL_PopulationElement_ABC ).GetPopulation() );
-    }
-    DEFINE_HOOK( IsPopulationConcentrationPerceptionDistanceHacked, bool, ( const SWORD_Model* perceiver, const SWORD_Model* concentration ) )
-    {
-        return GET_PION( perceiver ).GetKnowledgeGroup()->IsPerceptionDistanceHacked( GET_DATA( concentration, MIL_PopulationElement_ABC ).GetPopulation() );
+        return GET_PION( perceiver ).GetKnowledgeGroup()->IsPerceptionDistanceHacked( GET_DATA( element, MIL_PopulationElement_ABC ).GetPopulation() );
     }
     DEFINE_HOOK( GetHackedPerceptionLevel, int, ( const SWORD_Model* perceiver, const SWORD_Model* target ) )
     {
@@ -467,13 +463,9 @@ namespace
     {
         return GET_PION( perceiver ).GetKnowledgeGroup()->GetPerceptionLevel( GET_DATA( object, MIL_Object_ABC ) ).GetID();
     }
-    DEFINE_HOOK( GetPopulationFlowPerceptionLevel, int, ( const SWORD_Model* perceiver, const SWORD_Model* flow ) )
+    DEFINE_HOOK( GetPopulationElementPerceptionLevel, int, ( const SWORD_Model* perceiver, const SWORD_Model* element ) )
     {
-        return GET_PION( perceiver ).GetKnowledgeGroup()->GetPerceptionLevel( GET_DATA( flow, MIL_PopulationElement_ABC ).GetPopulation() ).GetID();
-    }
-    DEFINE_HOOK( GetPopulationConcentrationPerceptionLevel, int, ( const SWORD_Model* perceiver, const SWORD_Model* concentration ) )
-    {
-        return GET_PION( perceiver ).GetKnowledgeGroup()->GetPerceptionLevel( GET_DATA( concentration, MIL_PopulationElement_ABC ).GetPopulation() ).GetID();
+        return GET_PION( perceiver ).GetKnowledgeGroup()->GetPerceptionLevel( GET_DATA( element, MIL_PopulationElement_ABC ).GetPopulation() ).GetID();
     }
     DEFINE_HOOK( CanBeSeen, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) )
     {
@@ -500,17 +492,11 @@ namespace
             return false;
         return GET_PION( perceiver ).GetKnowledge().GetKnowledgeAgentPerceptionContainer().GetKnowledgeAgentPerception( GET_PION( target ) ) == 0;
     }
-    DEFINE_HOOK( IsPopulationFlowNewlyPerceived, bool, ( const SWORD_Model* perceiver, const SWORD_Model* flow, int level ) )
+    DEFINE_HOOK( IsPopulationElementNewlyPerceived, bool, ( const SWORD_Model* perceiver, const SWORD_Model* element, int level ) )
     {
         if( PHY_PerceptionLevel::FindPerceptionLevel( level ) == PHY_PerceptionLevel::notSeen_ )
             return false;
-        return GET_PION( perceiver ).GetKnowledge().GetKnowledgePopulationPerceptionContainer().GetKnowledgePopulationPerception( GET_DATA( flow, MIL_PopulationElement_ABC ).GetPopulation() ) == 0;
-    }
-    DEFINE_HOOK( IsPopulationConcentrationNewlyPerceived, bool, ( const SWORD_Model* perceiver, const SWORD_Model* concentration, int level ) )
-    {
-        if( PHY_PerceptionLevel::FindPerceptionLevel( level ) == PHY_PerceptionLevel::notSeen_ )
-            return false;
-        return GET_PION( perceiver ).GetKnowledge().GetKnowledgePopulationPerceptionContainer().GetKnowledgePopulationPerception( GET_DATA( concentration, MIL_PopulationElement_ABC ).GetPopulation() ) == 0;
+        return GET_PION( perceiver ).GetKnowledge().GetKnowledgePopulationPerceptionContainer().GetKnowledgePopulationPerception( GET_DATA( element, MIL_PopulationElement_ABC ).GetPopulation() ) == 0;
     }
     DEFINE_HOOK( ConvertSecondsToSim, double, ( double seconds ) )
     {
@@ -644,19 +630,16 @@ void PerceptionHooks::Initialize( core::Facade& facade )
     REGISTER_HOOK( BelongsToKnowledgeGroup, facade );
     REGISTER_HOOK( IsAgentPerceptionDistanceHacked, facade );
     REGISTER_HOOK( IsObjectPerceptionDistanceHacked, facade );
-    REGISTER_HOOK( IsPopulationFlowPerceptionDistanceHacked, facade );
-    REGISTER_HOOK( IsPopulationConcentrationPerceptionDistanceHacked, facade );
+    REGISTER_HOOK( IsPopulationElementPerceptionDistanceHacked, facade );
     REGISTER_HOOK( GetHackedPerceptionLevel, facade );
     REGISTER_HOOK( GetObjectPerceptionLevel, facade );
-    REGISTER_HOOK( GetPopulationFlowPerceptionLevel, facade );
-    REGISTER_HOOK( GetPopulationConcentrationPerceptionLevel, facade );
+    REGISTER_HOOK( GetPopulationElementPerceptionLevel, facade );
     REGISTER_HOOK( CanBeSeen, facade );
     REGISTER_HOOK( CanObjectBePerceived, facade );
     REGISTER_HOOK( CanPopulationElementBePerceived, facade );
     REGISTER_HOOK( IsCivilian, facade );
     REGISTER_HOOK( IsAgentNewlyPerceived, facade );
-    REGISTER_HOOK( IsPopulationFlowNewlyPerceived, facade );
-    REGISTER_HOOK( IsPopulationConcentrationNewlyPerceived, facade );
+    REGISTER_HOOK( IsPopulationElementNewlyPerceived, facade );
     REGISTER_HOOK( ConvertSecondsToSim, facade );
     REGISTER_HOOK( GetConsumptionTypeSize, facade );
     REGISTER_HOOK( FindConsumptionType, facade );

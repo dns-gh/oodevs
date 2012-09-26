@@ -30,19 +30,16 @@ DECLARE_HOOK( IsInCity, bool, ( const SWORD_Model* entity ) )
 DECLARE_HOOK( BelongsToKnowledgeGroup, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) )
 DECLARE_HOOK( IsAgentPerceptionDistanceHacked, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) )
 DECLARE_HOOK( IsObjectPerceptionDistanceHacked, bool, ( const SWORD_Model* perceiver, const SWORD_Model* object ) )
-DECLARE_HOOK( IsPopulationFlowPerceptionDistanceHacked, bool, ( const SWORD_Model* perceiver, const SWORD_Model* flow ) )
-DECLARE_HOOK( IsPopulationConcentrationPerceptionDistanceHacked, bool, ( const SWORD_Model* perceiver, const SWORD_Model* concentration ) )
+DECLARE_HOOK( IsPopulationElementPerceptionDistanceHacked, bool, ( const SWORD_Model* perceiver, const SWORD_Model* element ) )
 DECLARE_HOOK( GetHackedPerceptionLevel, int, ( const SWORD_Model* perceiver, const SWORD_Model* target ) )
 DECLARE_HOOK( GetObjectPerceptionLevel, int, ( const SWORD_Model* perceiver, const SWORD_Model* object ) )
-DECLARE_HOOK( GetPopulationFlowPerceptionLevel, int, ( const SWORD_Model* perceiver, const SWORD_Model* flow ) )
-DECLARE_HOOK( GetPopulationConcentrationPerceptionLevel, int, ( const SWORD_Model* perceiver, const SWORD_Model* concentration ) )
+DECLARE_HOOK( GetPopulationElementPerceptionLevel, int, ( const SWORD_Model* perceiver, const SWORD_Model* element ) )
 DECLARE_HOOK( CanBeSeen, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) )
 DECLARE_HOOK( CanObjectBePerceived, bool, ( const SWORD_Model* object ) )
 DECLARE_HOOK( CanPopulationElementBePerceived, bool, ( const SWORD_Model* element ) )
 DECLARE_HOOK( IsCivilian, bool, ( const SWORD_Model* agent ) )
 DECLARE_HOOK( IsAgentNewlyPerceived, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target, int level ) )
-DECLARE_HOOK( IsPopulationFlowNewlyPerceived, bool, ( const SWORD_Model* perceiver, const SWORD_Model* flow, int level ) )
-DECLARE_HOOK( IsPopulationConcentrationNewlyPerceived, bool, ( const SWORD_Model* perceiver, const SWORD_Model* concentration, int level ) )
+DECLARE_HOOK( IsPopulationElementNewlyPerceived, bool, ( const SWORD_Model* perceiver, const SWORD_Model* element, int level ) )
 DECLARE_HOOK( IsObjectUniversal, bool, ( const SWORD_Model* object ) )
 DECLARE_HOOK( GetPerceptionRandom, double, () )
 
@@ -265,12 +262,12 @@ void PerceptionView::ExecuteFlows( const wrapper::View& perceiver, const Surface
             const wrapper::View& flow = *it;
             T_PointVector shape;
             const PerceptionLevel* level = &PerceptionLevel::notSeen_;
-            if ( GET_HOOK( IsPopulationFlowPerceptionDistanceHacked )( perceiver, flow ) )
-                level = &PerceptionLevel::FindPerceptionLevel( GET_HOOK( GetPopulationFlowPerceptionLevel )( perceiver, flow ) );
+            if ( GET_HOOK( IsPopulationElementPerceptionDistanceHacked )( perceiver, flow ) )
+                level = &PerceptionLevel::FindPerceptionLevel( GET_HOOK( GetPopulationElementPerceptionLevel )( perceiver, flow ) );
             else
                 level = &ComputeFlow( perceiver, surfaces, flow, shape );
             observer_.NotifyFlowPerception( flow, *level, shape );
-            civiliansEncountered |= GET_HOOK( IsPopulationFlowNewlyPerceived )( perceiver, flow, level->GetID() );
+            civiliansEncountered |= GET_HOOK( IsPopulationElementNewlyPerceived )( perceiver, flow, level->GetID() );
         }
         if( civiliansEncountered )
             PostReport( identifier_, MIL_Report::eReport_CiviliansEncountered );
@@ -304,12 +301,12 @@ void PerceptionView::ExecuteConcentrations( const wrapper::View& perceiver, cons
         {
             const wrapper::View& concentration = *it;
             const PerceptionLevel* level = &PerceptionLevel::notSeen_;
-            if ( GET_HOOK( IsPopulationConcentrationPerceptionDistanceHacked )( perceiver, concentration ) )
-                level = &PerceptionLevel::FindPerceptionLevel( GET_HOOK( GetPopulationConcentrationPerceptionLevel )( perceiver, concentration ) );
+            if ( GET_HOOK( IsPopulationElementPerceptionDistanceHacked )( perceiver, concentration ) )
+                level = &PerceptionLevel::FindPerceptionLevel( GET_HOOK( GetPopulationElementPerceptionLevel )( perceiver, concentration ) );
             else
                 level = &ComputeConcentration( perceiver, surfaces, concentration );
             observer_.NotifyConcentrationPerception( concentration, *level );
-            civiliansEncountered |= GET_HOOK( IsPopulationConcentrationNewlyPerceived )( perceiver, concentration, level->GetID() );
+            civiliansEncountered |= GET_HOOK( IsPopulationElementNewlyPerceived )( perceiver, concentration, level->GetID() );
         }
         if( civiliansEncountered )
             PostReport( identifier_, MIL_Report::eReport_CiviliansEncountered );
