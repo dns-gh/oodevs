@@ -26,7 +26,7 @@ class PerceptionRecoObjectsReco : public PerceptionLocalisation
 public:
     explicit PerceptionRecoObjectsReco( const wrapper::View& perception, const wrapper::View& entity );
 
-    bool IsInside        ( const DEC_Knowledge_Object& knowledge )         const;
+    bool IsInside        ( const wrapper::View& knowledge ) const;
     void GetObjectsInside( const wrapper::View&, Perception_ABC::T_ObjectVector& ) const;
 
 private:
@@ -53,8 +53,8 @@ public:
 
     //! @name Execution
     //@{
-    virtual void                   Execute( const wrapper::View& perceiver, const SurfacesObject_ABC& surfaces, const T_ObjectVector& perceivableObjects );
-    virtual const PerceptionLevel& Compute( const wrapper::View& perceiver, const SurfacesObject_ABC& surfaces, const DEC_Knowledge_Object& knowledge ) const;
+    virtual void                   ExecuteObjects( const wrapper::View& perceiver, const SurfacesObject_ABC& surfaces, const T_ObjectVector& perceivableObjects );
+    virtual const PerceptionLevel& ComputeObject( const wrapper::View& perceiver, const SurfacesObject_ABC& surfaces, const wrapper::View& knowledge ) const;
     //@}
 
 private:

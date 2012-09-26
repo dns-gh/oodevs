@@ -17,53 +17,47 @@
 // module dependencies
 #include "MT_Tools/MT_Vector2D.h"
 
-class MIL_UrbanObject_ABC;
-class MIL_Object_ABC;
-class MIL_PopulationConcentration;
-class MIL_PopulationFlow;
-class PHY_ComposantePion;
 class PHY_Volume;
-class DEC_Knowledge_Object;
 
 #define REGISTERED_HOOKS( APPLY ) \
     APPLY( InitializePerceptionTypes, 1, void, ( const char* xml ) ) \
     APPLY( IsPointVisible, 3, bool, ( const SWORD_Model* model, const SWORD_Model* entity, const MT_Vector2D* point ) ) \
     APPLY( AgentHasRadar, 2, bool, ( const SWORD_Model* entity, size_t radarType ) ) \
     APPLY( GetPerception, 3, double, ( const SWORD_Model* entity, const MT_Vector2D* point, const MT_Vector2D* target ) ) \
-    APPLY( ComputeKnowledgeObjectPerception, 3, size_t, ( const SWORD_Model* model, const SWORD_Model* entity, const DEC_Knowledge_Object* object ) )
+    APPLY( ComputeKnowledgeObjectPerception, 3, size_t, ( const SWORD_Model* model, const SWORD_Model* entity, const SWORD_Model* knowledgeObject ) )
 
 #define USED_HOOKS( APPLY ) \
     APPLY( GetAgentListWithinCircle, 5, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* agent, void* userData ), void* userData ) ) \
     APPLY( GetAgentListWithinLocalisation, 4, void, ( const SWORD_Model* root, const SWORD_Model* localization, void (*callback)( const SWORD_Model* agent, void* userData ), void* userData ) ) \
-    APPLY( GetObjectListWithinCircle, 4, void, ( const MT_Vector2D& vCenter, double rRadius, void (*callback)( MIL_Object_ABC* object, void* userData ), void* userData ) ) \
-    APPLY( GetConcentrationListWithinCircle, 4, void, ( const MT_Vector2D& vCenter, double rRadius, void (*callback)( const MIL_PopulationConcentration* concentration, void* userData ), void* userData ) ) \
-    APPLY( GetFlowListWithinCircle, 4, void, ( const MT_Vector2D& vCenter, double rRadius, void (*callback)( const MIL_PopulationFlow* flow, void* userData ), void* userData ) ) \
-    APPLY( GetUrbanObjectListWithinCircle, 4, void, ( const MT_Vector2D& center, float radius, void (*callback)( const MIL_UrbanObject_ABC* urbanObjectWrapper, void* userData ), void* userData ) ) \
-    APPLY( GetUrbanBlocksListWithinSegment, 4, void, ( MT_Vector2D first, MT_Vector2D second, void (*callback)( const MIL_UrbanObject_ABC* urbanObjectWrapper, void* userData ), void* userData ) ) \
+    APPLY( GetObjectListWithinCircle, 4, void, ( const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* object, void* userData ), void* userData ) ) \
+    APPLY( GetConcentrationListWithinCircle, 4, void, ( const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* concentration, void* userData ), void* userData ) ) \
+    APPLY( GetFlowListWithinCircle, 4, void, ( const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* flow, void* userData ), void* userData ) ) \
+    APPLY( GetUrbanObjectListWithinCircle, 4, void, ( const MT_Vector2D& center, float radius, void (*callback)( const SWORD_Model* urbanObjectWrapper, void* userData ), void* userData ) ) \
+    APPLY( GetUrbanBlocksListWithinSegment, 4, void, ( MT_Vector2D first, MT_Vector2D second, void (*callback)( const SWORD_Model* urbanObjectWrapper, void* userData ), void* userData ) ) \
     APPLY( AppendAddedKnowledge, 7, void, ( const SWORD_Model* root, const SWORD_Model* entity, \
                                             void (*agentCallback)( const SWORD_Model* agent, void* userData ), \
-                                            void (*objectCallback)( MIL_Object_ABC* object, void* userData ), \
-                                            void (*concentrationCallback)( const MIL_PopulationConcentration* concentration, void* userData ), \
-                                            void (*flowCallback)( const MIL_PopulationFlow* flow, void* userData ), \
+                                            void (*objectCallback)( const SWORD_Model* object, void* userData ), \
+                                            void (*concentrationCallback)( const SWORD_Model* concentration, void* userData ), \
+                                            void (*flowCallback)( const SWORD_Model* flow, void* userData ), \
                                             void* userData ) ) \
     APPLY( IsInCity, 1 , bool, ( const SWORD_Model* entity ) ) \
     APPLY( BelongsToKnowledgeGroup, 2, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) ) \
     APPLY( IsAgentPerceptionDistanceHacked, 2, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) ) \
-    APPLY( IsObjectPerceptionDistanceHacked, 2, bool, ( const SWORD_Model* perceiver, const MIL_Object_ABC* object ) ) \
-    APPLY( IsPopulationFlowPerceptionDistanceHacked, 2, bool, ( const SWORD_Model* perceiver, const MIL_PopulationFlow* flow ) ) \
-    APPLY( IsPopulationConcentrationPerceptionDistanceHacked, 2, bool, ( const SWORD_Model* perceiver, const MIL_PopulationConcentration* concentration ) ) \
+    APPLY( IsObjectPerceptionDistanceHacked, 2, bool, ( const SWORD_Model* perceiver, const SWORD_Model* object ) ) \
+    APPLY( IsPopulationFlowPerceptionDistanceHacked, 2, bool, ( const SWORD_Model* perceiver, const SWORD_Model* flow ) ) \
+    APPLY( IsPopulationConcentrationPerceptionDistanceHacked, 2, bool, ( const SWORD_Model* perceiver, const SWORD_Model* concentration ) ) \
     APPLY( GetHackedPerceptionLevel, 2, int, ( const SWORD_Model* perceiver, const SWORD_Model* target ) ) \
-    APPLY( GetObjectPerceptionLevel, 2, int, ( const SWORD_Model* perceiver, const MIL_Object_ABC* object ) ) \
-    APPLY( GetPopulationFlowPerceptionLevel, 2, int, ( const SWORD_Model* perceiver, const MIL_PopulationFlow* flow ) ) \
-    APPLY( GetPopulationConcentrationPerceptionLevel, 2, int, ( const SWORD_Model* perceiver, const MIL_PopulationConcentration* concentration ) ) \
+    APPLY( GetObjectPerceptionLevel, 2, int, ( const SWORD_Model* perceiver, const SWORD_Model* object ) ) \
+    APPLY( GetPopulationFlowPerceptionLevel, 2, int, ( const SWORD_Model* perceiver, const SWORD_Model* flow ) ) \
+    APPLY( GetPopulationConcentrationPerceptionLevel, 2, int, ( const SWORD_Model* perceiver, const SWORD_Model* concentration ) ) \
     APPLY( CanBeSeen, 2, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) ) \
-    APPLY( CanObjectBePerceived, 1, bool, ( const MIL_Object_ABC* object ) ) \
-    APPLY( CanPopulationFlowBePerceived, 1, bool, ( const MIL_PopulationFlow* flow ) ) \
-    APPLY( CanPopulationConcentrationBePerceived, 1, bool, ( const MIL_PopulationConcentration* concentration ) ) \
+    APPLY( CanObjectBePerceived, 1, bool, ( const SWORD_Model* object ) ) \
+    APPLY( CanPopulationFlowBePerceived, 1, bool, ( const SWORD_Model* flow ) ) \
+    APPLY( CanPopulationConcentrationBePerceived, 1, bool, ( const SWORD_Model* concentration ) ) \
     APPLY( IsCivilian, 1, bool, ( const SWORD_Model* agent ) ) \
     APPLY( IsAgentNewlyPerceived, 3, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target, int level ) ) \
-    APPLY( IsPopulationFlowNewlyPerceived, 3, bool, ( const SWORD_Model* perceiver, const MIL_PopulationFlow* flow, int level ) ) \
-    APPLY( IsPopulationConcentrationNewlyPerceived, 3, bool, ( const SWORD_Model* perceiver, const MIL_PopulationConcentration* concentration, int level ) ) \
+    APPLY( IsPopulationFlowNewlyPerceived, 3, bool, ( const SWORD_Model* perceiver, const SWORD_Model* flow, int level ) ) \
+    APPLY( IsPopulationConcentrationNewlyPerceived, 3, bool, ( const SWORD_Model* perceiver, const SWORD_Model* concentration, int level ) ) \
     APPLY( ConvertSecondsToSim, 1, double, ( double seconds ) ) \
     APPLY( GetConsumptionTypeSize, 0, size_t, () ) \
     APPLY( FindConsumptionType, 3, void, ( const char* consumptionType, void(*callback)( unsigned int identifier, void* userData ), void* userData ) ) \
@@ -81,19 +75,19 @@ class DEC_Knowledge_Object;
     APPLY( GetPostureCompletionPercentage, 1, double, ( const SWORD_Model* entity ) ) \
     APPLY( ComputePerceptionDistanceFactor, 1, double, ( const SWORD_Model* entity ) ) \
     APPLY( GetCollidingPopulationDensity, 1, double, ( const SWORD_Model* entity ) ) \
-    APPLY( ObjectIntersectWithCircle, 3, bool, ( const MIL_Object_ABC& object, const MT_Vector2D& center, double radius ) ) \
-    APPLY( KnowledgeObjectIntersectWithCircle, 3, bool, ( const DEC_Knowledge_Object& object, const MT_Vector2D& center, double radius ) ) \
+    APPLY( ObjectIntersectWithCircle, 3, bool, ( const SWORD_Model* object, const MT_Vector2D& center, double radius ) ) \
+    APPLY( KnowledgeObjectIntersectWithCircle, 3, bool, ( const SWORD_Model* knowledgeObject, const MT_Vector2D& center, double radius ) ) \
     APPLY( FindObjectType, 1, unsigned int, ( const char* type ) ) \
-    APPLY( GetObjectType, 1, size_t, ( const MIL_Object_ABC& object ) ) \
-    APPLY( GetKnowledgeObjectType, 1, size_t, ( const DEC_Knowledge_Object& object ) ) \
+    APPLY( GetObjectType, 1, size_t, ( const SWORD_Model* object ) ) \
+    APPLY( GetKnowledgeObjectType, 1, size_t, ( const SWORD_Model* object ) ) \
     APPLY( GetEnvironmentAssociation, 1, size_t, ( const char* environment ) ) \
     APPLY( GetAltitude, 2, double, ( double x, double y ) ) \
     APPLY( GetSignificantVolume, 2, const PHY_Volume*, ( const SWORD_Model* entity, const double* volumeFactors ) ) \
     APPLY( GetVolumeIdentifierFromInstance, 1, size_t, ( const PHY_Volume* volume ) ) \
     APPLY( GetVolumeSize, 0, size_t, () ) \
-    APPLY( PopulationFlowIntersectWithCircle, 5, bool, ( const MIL_PopulationFlow& flow, MT_Vector2D circleCenter, double radius, void(*AddShapePoint)( MT_Vector2D point, void* userData ), void* userData ) ) \
-    APPLY( PopulationConcentrationIntersectWithCircle, 3, bool, ( const MIL_PopulationConcentration& concentration, MT_Vector2D circleCenter, double radius ) ) \
-    APPLY( GetUrbanBlockFactor, 2, double, ( const MIL_UrbanObject_ABC& block, const double* urbanBlockFactors ) ) \
+    APPLY( PopulationFlowIntersectWithCircle, 5, bool, ( const SWORD_Model* flow, MT_Vector2D circleCenter, double radius, void(*AddShapePoint)( MT_Vector2D point, void* userData ), void* userData ) ) \
+    APPLY( PopulationConcentrationIntersectWithCircle, 3, bool, ( const SWORD_Model* concentration, MT_Vector2D circleCenter, double radius ) ) \
+    APPLY( GetUrbanBlockFactor, 2, double, ( const SWORD_Model* block, const double* urbanBlockFactors ) ) \
     APPLY( IsMaterialType, 1, bool, ( const char* material ) ) \
     APPLY( GetPrecipitationSize, 0, size_t, () ) \
     APPLY( GetLightingSize, 0, size_t, () ) \
@@ -101,15 +95,15 @@ class DEC_Knowledge_Object;
     APPLY( GetVolumeIdentifier, 2, bool, ( const char* type, size_t* identifier ) ) \
     APPLY( GetPrecipitationIdentifier, 2, bool, ( const char* type, size_t* identifier ) ) \
     APPLY( GetLightingIdentifier, 2, bool, ( const char* type, size_t* identifier ) ) \
-    APPLY( IsObjectUniversal, 1, bool, ( const MIL_Object_ABC* object ) ) \
+    APPLY( IsObjectUniversal, 1, bool, ( const SWORD_Model* object ) ) \
     APPLY( GetPerceptionRandom, 0, double, () ) \
     APPLY( IsKnown, 2, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) ) \
     APPLY( ComputeAgentRatioInsidePerceptionPolygon, 4, double, ( const SWORD_Model* perceiver, const SWORD_Model* target, double distance, double roll ) ) \
-    APPLY( GetCurrentUrbanBlock, 1, const MIL_UrbanObject_ABC*, ( const SWORD_Model* entity ) ) \
-    APPLY( GetUrbanObjectStructuralHeight, 1, double, ( const MIL_UrbanObject_ABC* urbanObject ) ) \
-    APPLY( GetUrbanObjectOccupation, 1, double, ( const MIL_UrbanObject_ABC* urbanObject ) ) \
-    APPLY( GetUrbanObjectStructuralState, 1, double, ( const MIL_UrbanObject_ABC* urbanObject ) ) \
-    APPLY( HasUrbanObjectArchitecture, 1, bool, ( const MIL_UrbanObject_ABC* urbanObject ) ) \
+    APPLY( GetCurrentUrbanBlock, 1, const SWORD_Model*, ( const SWORD_Model* entity ) ) \
+    APPLY( GetUrbanObjectStructuralHeight, 1, double, ( const SWORD_Model* urbanObject ) ) \
+    APPLY( GetUrbanObjectOccupation, 1, double, ( const SWORD_Model* urbanObject ) ) \
+    APPLY( GetUrbanObjectStructuralState, 1, double, ( const SWORD_Model* urbanObject ) ) \
+    APPLY( HasUrbanObjectArchitecture, 1, bool, ( const SWORD_Model* urbanObject ) ) \
     APPLY( CanUrbanBlockBeSeen, 2, bool, ( const SWORD_Model* perceiver, const SWORD_Model* urbanBlock ) ) \
     APPLY( IsPostureStationed, 1, bool, ( const SWORD_Model* entity ) ) \
     APPLY( CanComponentPerceive, 2, bool, ( const SWORD_Model* entity, const SWORD_Model* component ) ) \
@@ -118,9 +112,9 @@ class DEC_Knowledge_Object;
     APPLY( GetVisionObject, 1, unsigned char, ( const MT_Vector2D* point ) ) \
     APPLY( IsPointInsideLocalisation, 2, bool, ( const SWORD_Model* localisation, const MT_Vector2D* point ) ) \
     APPLY( IsLocalizationInsideCircle, 3, bool, ( const SWORD_Model* localization, const MT_Vector2D* center, double radius ) ) \
-    APPLY( IsKnowledgeObjectInsidePerception, 4, bool, ( const SWORD_Model* localization, const MT_Vector2D* center, double radius, const DEC_Knowledge_Object* object ) ) \
-    APPLY( IsObjectIntersectingLocalization, 2, bool, ( const SWORD_Model* localization, const MIL_Object_ABC* object ) ) \
-    APPLY( IsKnowledgeObjectIntersectingWithCircle, 3, bool, ( const MT_Vector2D* center, double radius, const DEC_Knowledge_Object* object ) ) \
+    APPLY( IsKnowledgeObjectInsidePerception, 4, bool, ( const SWORD_Model* localization, const MT_Vector2D* center, double radius, const SWORD_Model* knowledgeObject ) ) \
+    APPLY( IsObjectIntersectingLocalization, 2, bool, ( const SWORD_Model* localization, const SWORD_Model* object ) ) \
+    APPLY( IsKnowledgeObjectIntersectingWithCircle, 3, bool, ( const MT_Vector2D* center, double radius, const SWORD_Model* knowledgeObject ) ) \
     APPLY( GetLocalizationRadius, 1, double, ( const SWORD_Model* localization ) )
 
 #define REGISTERED_AND_USED_HOOKS( APPLY ) \

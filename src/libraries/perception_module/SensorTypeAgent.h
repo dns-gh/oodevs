@@ -20,9 +20,6 @@ namespace xml
     class xistream;
 }
 
-class MIL_PopulationConcentration;
-class MIL_PopulationFlow;
-class MIL_UrbanObject_ABC;
 class MT_Vector2D;
 
 namespace sword
@@ -56,7 +53,7 @@ public:
           double       GetMaxDistance            () const;
           double       GetAngle                  () const;
           double       GetFactor                 ( size_t identifier ) const;
-          double       GetUrbanBlockFactor( const MIL_UrbanObject_ABC& target ) const;
+          double       GetUrbanBlockFactor       ( const wrapper::View& target ) const;
           bool         CanScan                   () const;
           bool         CanDetectFirer            ( double distance ) const;
     const SensorType&  GetType                   () const;
@@ -65,11 +62,11 @@ public:
 
     //! @name Operations
     //@{
-    const PerceptionLevel& ComputePerception( const wrapper::View& perceiver, const MT_Vector2D& target, double rSensorHeight ) const;
-    const PerceptionLevel& ComputePerception( const wrapper::View& perceiver, const wrapper::View& target, double rSensorHeight ) const;
-    const PerceptionLevel& ComputePerception( const wrapper::View& perceiver, const MIL_PopulationConcentration& target, double rSensorHeight ) const;
-    const PerceptionLevel& ComputePerception( const wrapper::View& perceiver, const MIL_PopulationFlow& target, double rSensorHeight, std::vector< MT_Vector2D >& shape ) const;
-    double ComputePerceptionAccuracy( const wrapper::View& perceiver, const MIL_PopulationFlow& target, double rSensorHeight ) const;
+    const PerceptionLevel& ComputePointPerception( const wrapper::View& perceiver, const MT_Vector2D& target, double rSensorHeight ) const;
+    const PerceptionLevel& ComputeAgentPerception( const wrapper::View& perceiver, const wrapper::View& target, double rSensorHeight ) const;
+    const PerceptionLevel& ComputeConcentrationPerception( const wrapper::View& perceiver, const wrapper::View& target, double rSensorHeight ) const;
+    const PerceptionLevel& ComputeFlowPerception( const wrapper::View& perceiver, const wrapper::View& target, double rSensorHeight, std::vector< MT_Vector2D >& shape ) const;
+    double ComputePerceptionAccuracy( const wrapper::View& perceiver, const wrapper::View& target, double rSensorHeight ) const;
     const double IdentificationDistance   () const;
     const double ReconnoissanceDistance   () const;
     void ComputeDistances( const wrapper::View& perceiver, const wrapper::View& target, double& identification, double& recognition, double& detection ) const;
@@ -121,7 +118,7 @@ private:
     const SensorType& type_;
 
     double rAngle_;
-    bool     bScanningAllowed_;
+    bool   bScanningAllowed_;
     double rRecognitionFirerDist_;
 
     // Distances

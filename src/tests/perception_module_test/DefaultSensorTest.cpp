@@ -54,7 +54,8 @@ BOOST_FIXTURE_TEST_CASE( agents_in_list_are_identified_with_default_sensor, Perc
 
 BOOST_FIXTURE_TEST_CASE( objects_in_list_are_identified_with_default_sensor, PerceptionCommandFixture )
 {
-    MIL_Object_ABC* object = reinterpret_cast< MIL_Object_ABC* >( 42 );
+    const SWORD_Model* object = core::Convert( &model[ "objects/some-object" ] );
+    model[ "objects/some-object" ] = core::MakeModel( "data", 42 );
     const SWORD_Model* perceiver = core::Convert( &entity );
     MOCK_RESET( GetObjectListWithinCircle );
     MOCK_EXPECT( GetObjectListWithinCircle ).once().calls( boost::bind( boost::apply< void >(), _3, object, _4 ) );
@@ -63,7 +64,7 @@ BOOST_FIXTURE_TEST_CASE( objects_in_list_are_identified_with_default_sensor, Per
     MOCK_EXPECT( IsObjectUniversal ).once().with( object ).returns( false );
     MOCK_EXPECT( GetObjectType ).once().returns( 0u );
     MOCK_EXPECT( ObjectIntersectWithCircle ).once().returns( true );
-    ExpectNotifications( "objects", sword::test::MakeModel()[ sword::test::MakeModel( "target", 42 )
+    ExpectNotifications( "objects", sword::test::MakeModel()[ sword::test::MakeModel( "target/data", 42 )
                                                                                     ( "level", 3 ) // identified
                                                                                     ( "recorded", false ) ] );
     PostCommand( "perception", core::MakeModel( "identifier", identifier ) );
@@ -85,7 +86,8 @@ BOOST_FIXTURE_TEST_CASE( population_flows_in_list_are_identified_with_default_se
     const std::vector< MT_Vector2D > shape = boost::assign::list_of( MT_Vector2D( 0., 0. ) )
                                                                    ( MT_Vector2D( 1., 1. ) )
                                                                    ( MT_Vector2D( 2., 0. ) );
-    MIL_PopulationFlow* flow = reinterpret_cast< MIL_PopulationFlow* >( 42 );
+    const SWORD_Model* flow = core::Convert( &model[ "populations/some-population/flows/the-flow" ] );
+    model[ "populations/some-population/flows/the-flow" ] = core::MakeModel( "data", 42 );
     const SWORD_Model* perceiver = core::Convert( &entity );
     MOCK_RESET( GetFlowListWithinCircle );
     MOCK_EXPECT( GetFlowListWithinCircle ).once().calls( boost::bind( boost::apply< void >(), _3, flow, _4 ) );
@@ -94,7 +96,7 @@ BOOST_FIXTURE_TEST_CASE( population_flows_in_list_are_identified_with_default_se
     MOCK_EXPECT( CanPopulationFlowBePerceived ).once().with( flow ).returns( true );
     MOCK_EXPECT( IsPopulationFlowNewlyPerceived ).once().with( perceiver, flow, mock::any ).returns( true );
     ExpectNotifications( "population-flows",
-        sword::test::MakeModel()[ sword::test::MakeModel( "target", 42 )
+        sword::test::MakeModel()[ sword::test::MakeModel( "target/data", 42 )
                                                         ( "level", 3 ) // identified
                                                         ( "recorded", false )
                                                         ( "shape", sword::test::MakeModel()[ sword::test::MakeModel( "x", 0. )( "y", 0. ) ]
@@ -108,7 +110,8 @@ BOOST_FIXTURE_TEST_CASE( population_flows_in_list_are_identified_with_default_se
 
 BOOST_FIXTURE_TEST_CASE( population_concentrations_in_list_are_identified_with_default_sensor, PerceptionCommandFixture )
 {
-    MIL_PopulationConcentration* concentration = reinterpret_cast< MIL_PopulationConcentration* >( 42 );
+    const SWORD_Model* concentration = core::Convert( &model[ "populations/some-population/concentrations/the-concentration" ] );
+    model[ "populations/some-population/concentrations/the-concentration" ] = core::MakeModel( "data", 42 );
     const SWORD_Model* perceiver = core::Convert( &entity );
     MOCK_RESET( GetConcentrationListWithinCircle );
     MOCK_EXPECT( GetConcentrationListWithinCircle ).once().calls( boost::bind( boost::apply< void >(), _3, concentration, _4 ) );
@@ -116,7 +119,7 @@ BOOST_FIXTURE_TEST_CASE( population_concentrations_in_list_are_identified_with_d
     MOCK_EXPECT( CanPopulationConcentrationBePerceived ).once().with( concentration ).returns( true );
     MOCK_EXPECT( PopulationConcentrationIntersectWithCircle ).once().returns( true );
     MOCK_EXPECT( IsPopulationConcentrationNewlyPerceived ).once().with( perceiver, concentration, mock::any ).returns( true );
-    ExpectNotifications( "population-concentrations", sword::test::MakeModel()[ sword::test::MakeModel( "target", 42 )
+    ExpectNotifications( "population-concentrations", sword::test::MakeModel()[ sword::test::MakeModel( "target/data", 42 )
                                                                                                       ( "level", 3 ) // identified
                                                                                                       ( "recorded", false ) ] );
     ExpectEvent( "report", sword::test::MakeModel( "entity", identifier )

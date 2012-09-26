@@ -14,8 +14,6 @@
 #include "MT_Tools/Mt_Vector2DTypes.h"
 #include <map>
 
-class MIL_PopulationFlow;
-
 namespace sword
 {
 namespace perception
@@ -39,19 +37,18 @@ public:
 
     //! @name Execution
     //@{
-    virtual const PerceptionLevel& Compute( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const MT_Vector2D& vPoint ) const;
+    virtual const PerceptionLevel& ComputePoint( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const MT_Vector2D& vPoint ) const;
 
-    virtual void                   Execute( const wrapper::View& model, const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const T_AgentPtrVector& perceivableAgents );
-    virtual const PerceptionLevel& Compute( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const wrapper::View& target ) const;
+    virtual void                   ExecuteAgents( const wrapper::View& model, const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const T_AgentPtrVector& perceivableAgents );
+    virtual const PerceptionLevel& ComputeAgent( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const wrapper::View& target ) const;
 
-    virtual void                   Execute( const wrapper::View& perceiver, const SurfacesObject_ABC& surfaces, const T_ObjectVector& perceivableObjects );
-    virtual const PerceptionLevel& Compute( const wrapper::View& perceiver, const SurfacesObject_ABC& surfaces, const DEC_Knowledge_Object& knowledge ) const;
+    virtual void                   ExecuteObjects( const wrapper::View& perceiver, const SurfacesObject_ABC& surfaces, const T_ObjectVector& perceivableObjects );
+    virtual const PerceptionLevel& ComputeObject( const wrapper::View& perceiver, const SurfacesObject_ABC& surfaces, const wrapper::View& knowledgeObject ) const;
 
-    virtual void                   Execute( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const T_ConstPopulationFlowVector& perceivableFlows );
-    virtual const PerceptionLevel& Compute( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const MIL_PopulationFlow& flow, T_PointVector& shape ) const;
+    virtual void                   ExecuteFlows( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const T_ConstPopulationFlowVector& perceivableFlows );
 
-    virtual void                   Execute( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const T_ConstPopulationConcentrationVector& perceivableConcentrations );
-    virtual const PerceptionLevel& Compute( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const MIL_PopulationConcentration& concentration ) const;
+    virtual void                   ExecuteConcentrations( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const T_ConstPopulationConcentrationVector& perceivableConcentrations );
+    virtual const PerceptionLevel& ComputeConcentration( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const wrapper::View& concentration ) const;
 
     virtual void FinalizePerception( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces );
     //@}
@@ -62,7 +59,7 @@ private:
     void FinalizeSurfaceAgents();
     void TransferPerception( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces ) const;
     bool IsEnabled( const wrapper::View& perceiver ) const;
-    const PerceptionLevel& Compute( const wrapper::View& perceiver, const SurfacesObject_ABC& surfaces, const MIL_Object_ABC& object ) const;
+    virtual const PerceptionLevel& ComputeFlow( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const wrapper::View& flow, T_PointVector& shape ) const;
     //@}
 
     //! @name Types

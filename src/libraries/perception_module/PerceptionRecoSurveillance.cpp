@@ -109,11 +109,11 @@ void PerceptionRecoSurveillance::AddLocalisation( const wrapper::View& perceptio
 }
 
 // -----------------------------------------------------------------------------
-// Name: PerceptionRecoSurveillance::Compute
+// Name: PerceptionRecoSurveillance::ComputePoint
 // Created: JVT 2004-10-21
 // Modified: JVT 2004-10-28
 // -----------------------------------------------------------------------------
-const PerceptionLevel& PerceptionRecoSurveillance::Compute( const wrapper::View& /*perceiver*/, const SurfacesAgent_ABC& /*surfaces*/, const MT_Vector2D& vPoint ) const
+const PerceptionLevel& PerceptionRecoSurveillance::ComputePoint( const wrapper::View& /*perceiver*/, const SurfacesAgent_ABC& /*surfaces*/, const MT_Vector2D& vPoint ) const
 {
     for( T_RecoVector::const_iterator itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
         if( (*itReco)->IsInside( vPoint ) )
@@ -122,10 +122,10 @@ const PerceptionLevel& PerceptionRecoSurveillance::Compute( const wrapper::View&
 }
 
 // -----------------------------------------------------------------------------
-// Name: PerceptionRecoSurveillance::Execute
+// Name: PerceptionRecoSurveillance::ExecuteAgents
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-void PerceptionRecoSurveillance::Execute( const wrapper::View& model, const wrapper::View& perceiver, const SurfacesAgent_ABC& /*surfaces*/, const T_AgentPtrVector& /*perceivableAgents*/ )
+void PerceptionRecoSurveillance::ExecuteAgents( const wrapper::View& model, const wrapper::View& perceiver, const SurfacesAgent_ABC& /*surfaces*/, const T_AgentPtrVector& /*perceivableAgents*/ )
 {
     Perception_ABC::T_AgentPtrVector perceivableAgents;
     for( T_RecoVector::const_iterator itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
@@ -135,17 +135,17 @@ void PerceptionRecoSurveillance::Execute( const wrapper::View& model, const wrap
         {
             const wrapper::View& agent = *it;
             if( GET_HOOK( CanBeSeen )( perceiver, agent ) )
-                observer_.NotifyPerception( agent, PerceptionLevel::recognized_ );
+                observer_.NotifyAgentPerception( agent, PerceptionLevel::recognized_ );
         }
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: PerceptionRecoSurveillance::Compute
+// Name: PerceptionRecoSurveillance::ComputeAgent
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-const PerceptionLevel& PerceptionRecoSurveillance::Compute( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const wrapper::View& target ) const
+const PerceptionLevel& PerceptionRecoSurveillance::ComputeAgent( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const wrapper::View& target ) const
 {
     const MT_Vector2D location( target[ "movement/position/x" ], target[ "movement/position/y" ] );
-    return Compute( perceiver, surfaces, location );
+    return ComputePoint( perceiver, surfaces, location );
 }

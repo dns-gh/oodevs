@@ -111,7 +111,7 @@ namespace
 // Name: PerceptionRadar::Execute
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-void PerceptionRadar::Execute( const wrapper::View& model, const wrapper::View& perceiver, const SurfacesAgent_ABC& /*surfaces*/, const T_AgentPtrVector& /*perceivableAgents*/ )
+void PerceptionRadar::ExecuteAgents( const wrapper::View& model, const wrapper::View& perceiver, const SurfacesAgent_ABC& /*surfaces*/, const T_AgentPtrVector& /*perceivableAgents*/ )
 {
     if( !GET_HOOK( IsUsingActiveRadar )( perceiver ) )
         return;

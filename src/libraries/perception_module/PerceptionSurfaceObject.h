@@ -12,9 +12,6 @@
 
 #include "MT_Tools/MT_Vector2DTypes.h"
 
-class MIL_Object_ABC;
-class DEC_Knowledge_Object;
-
 namespace sword
 {
 namespace wrapper
@@ -44,8 +41,8 @@ public:
 
     //! @name Operations
     //@{
-    const PerceptionLevel& ComputePerception( const wrapper::View& perceiver, const MIL_Object_ABC& target ) const;
-    const PerceptionLevel& ComputePerception( const wrapper::View& perceiver, const DEC_Knowledge_Object& target ) const;
+    const PerceptionLevel& ComputeKnowledgeObjectPerception( const wrapper::View& perceiver, const wrapper::View& target ) const;
+    const PerceptionLevel& ComputeObjectPerception( const wrapper::View& perceiver, const wrapper::View& target ) const;
     //@}
 
     //! @name Accessors

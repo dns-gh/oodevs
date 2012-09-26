@@ -22,13 +22,13 @@ using namespace sword;
 using namespace sword::perception;
 
 DECLARE_HOOK( ComputeAgentRatioInsidePerceptionPolygon, double, ( const SWORD_Model* perceiver, const SWORD_Model* target, double distance, double roll ) )
-DECLARE_HOOK( GetCurrentUrbanBlock, const MIL_UrbanObject_ABC*, ( const SWORD_Model* entity ) )
-DECLARE_HOOK( GetUrbanBlocksListWithinSegment, void, ( MT_Vector2D first, MT_Vector2D second, void (*callback)( const MIL_UrbanObject_ABC* urbanObjectWrapper, void* userData ), void* userData ) )
+DECLARE_HOOK( GetCurrentUrbanBlock, const SWORD_Model*, ( const SWORD_Model* entity ) )
+DECLARE_HOOK( GetUrbanBlocksListWithinSegment, void, ( MT_Vector2D first, MT_Vector2D second, void (*callback)( const SWORD_Model* urbanObjectWrapper, void* userData ), void* userData ) )
 DECLARE_HOOK( IsPostureStationed, bool, ( const SWORD_Model* entity ) )
-DECLARE_HOOK( GetUrbanObjectStructuralHeight, double, ( const MIL_UrbanObject_ABC* urbanObject ) )
-DECLARE_HOOK( GetUrbanObjectOccupation, double, ( const MIL_UrbanObject_ABC* urbanObject ) )
-DECLARE_HOOK( GetUrbanObjectStructuralState, double, ( const MIL_UrbanObject_ABC* urbanObject ) )
-DECLARE_HOOK( HasUrbanObjectArchitecture, bool, ( const MIL_UrbanObject_ABC* urbanObject ) )
+DECLARE_HOOK( GetUrbanObjectStructuralHeight, double, ( const SWORD_Model* urbanObject ) )
+DECLARE_HOOK( GetUrbanObjectOccupation, double, ( const SWORD_Model* urbanObject ) )
+DECLARE_HOOK( GetUrbanObjectStructuralState, double, ( const SWORD_Model* urbanObject ) )
+DECLARE_HOOK( HasUrbanObjectArchitecture, bool, ( const SWORD_Model* urbanObject ) )
 
 // -----------------------------------------------------------------------------
 // Name: ZURBPerceptionComputer constructor
@@ -105,13 +105,13 @@ namespace
             }
         }
     }
-    typedef std::vector< const MIL_UrbanObject_ABC* > T_UrbanObjects;
+    typedef std::vector< wrapper::View > T_UrbanObjects;
     struct FillUrbanBlocks : private boost::noncopyable
     {
         explicit FillUrbanBlocks( T_UrbanObjects& list )
             : list_( list )
         {}
-        static void Notify( const MIL_UrbanObject_ABC* urbanObject, void* userData )
+        static void Notify( const SWORD_Model* urbanObject, void* userData )
         {
             static_cast< FillUrbanBlocks* >( userData )->list_.push_back( urbanObject );
         }
@@ -133,10 +133,10 @@ bool ZURBPerceptionComputer::ComputeParametersPerception( const wrapper::View& p
     MT_Vector2D targetPosition( target[ "movement/position/x" ], target[ "movement/position/y" ] );
     MT_Vector2D perceiverPosition( perceiver[ "movement/position/x" ], perceiver[ "movement/position/y" ] );
 
-    std::vector< const MIL_UrbanObject_ABC* > list;
+    std::vector< wrapper::View > list;
     FillUrbanBlocks filler( list );
     GET_HOOK( GetUrbanBlocksListWithinSegment )( perceiverPosition, targetPosition, &FillUrbanBlocks::Notify, &filler );
-    const MIL_UrbanObject_ABC* perceiverUrbanBlock = GET_HOOK( GetCurrentUrbanBlock )( perceiver );
+    const wrapper::View perceiverUrbanBlock( GET_HOOK( GetCurrentUrbanBlock )( perceiver ) );
 
     T_Sensors sensors;
     FillSensorTypeAgents( perceiver, sensors );
@@ -153,7 +153,7 @@ bool ZURBPerceptionComputer::ComputeParametersPerception( const wrapper::View& p
         for( T_UrbanObjects::const_iterator it = list.begin(); it != list.end() && worstFactor > 0.; ++it )
             if( perceiverUrbanBlock == 0 || !( perceiverUrbanBlock == *it && GET_HOOK( IsPostureStationed )( target ) ) )
             {
-                const MIL_UrbanObject_ABC* object = *it;
+                const wrapper::View& object = *it;
                 double objectHeight = sensorHeight;
                 double occupation = 1.;
                 double structuralState = 1.;
@@ -170,7 +170,7 @@ bool ZURBPerceptionComputer::ComputeParametersPerception( const wrapper::View& p
                         return false;
                 }
                 double heightFactor         = perceiverUrbanBlockHeight / objectHeight;
-                double materialVisibility   = std::min( 1., sensorType->GetUrbanBlockFactor( *object ) );
+                double materialVisibility   = std::min( 1., sensorType->GetUrbanBlockFactor( object ) );
                 double opacityFactor        = std::min( 1., occupation * ( 1. - materialVisibility ) * structuralState );
                 double visibilityFactor     = std::min( 1., ( 1. - opacityFactor ) * heightFactor );
                 worstFactor = std::min( worstFactor, visibilityFactor );

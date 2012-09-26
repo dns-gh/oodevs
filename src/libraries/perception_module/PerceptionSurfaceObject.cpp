@@ -47,21 +47,21 @@ PerceptionSurfaceObject::~PerceptionSurfaceObject()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PerceptionSurfaceObject::ComputePerception
+// Name: PerceptionSurfaceObject::ComputeObjectPerception
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------
-const PerceptionLevel& PerceptionSurfaceObject::ComputePerception( const wrapper::View& perceiver, const MIL_Object_ABC& target ) const
+const PerceptionLevel& PerceptionSurfaceObject::ComputeObjectPerception( const wrapper::View& perceiver, const wrapper::View& target ) const
 {
-    return pSensorType_->ComputePerception( perceiver, target, rHeight_ );
+    return pSensorType_->ComputeObjectPerception( perceiver, target, rHeight_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PerceptionSurfaceObject::ComputePerception
+// Name: PerceptionSurfaceObject::ComputeKnowledgeObjectPerception
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-const PerceptionLevel& PerceptionSurfaceObject::ComputePerception( const wrapper::View& perceiver, const DEC_Knowledge_Object& target ) const
+const PerceptionLevel& PerceptionSurfaceObject::ComputeKnowledgeObjectPerception( const wrapper::View& perceiver, const wrapper::View& target ) const
 {
-    return pSensorType_->ComputePerception( perceiver, target, rHeight_ );
+    return pSensorType_->ComputeKnowledgeObjectPerception( perceiver, target, rHeight_ );
 }
 
 // -----------------------------------------------------------------------------

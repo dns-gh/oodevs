@@ -11,6 +11,7 @@
 #include "SensorTypeObjectData.h"
 #include "PerceptionLevel.h"
 #include "wrapper/Hook.h"
+#include "wrapper/View.h"
 #include <module_api/Log.h>
 #include <xeumeuleu/xml.hpp>
 
@@ -18,8 +19,8 @@ using namespace sword;
 using namespace sword::perception;
 
 DECLARE_HOOK( FindObjectType, unsigned int, ( const char* type ) )
-DECLARE_HOOK( GetObjectType, size_t, ( const MIL_Object_ABC& object ) )
-DECLARE_HOOK( GetKnowledgeObjectType, size_t, ( const DEC_Knowledge_Object& object ) )
+DECLARE_HOOK( GetObjectType, size_t, ( const SWORD_Model* object ) )
+DECLARE_HOOK( GetKnowledgeObjectType, size_t, ( const SWORD_Model* object ) )
 
 // -----------------------------------------------------------------------------
 // Name: SensorTypeObject constructor
@@ -68,10 +69,10 @@ SensorTypeObject::~SensorTypeObject()
 }
 
 // -----------------------------------------------------------------------------
-// Name: SensorTypeObject::ComputePerception
+// Name: SensorTypeObject::ComputeObjectPerception
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-const PerceptionLevel& SensorTypeObject::ComputePerception( const wrapper::View& perceiver, const MIL_Object_ABC& target, double rSensorHeight ) const
+const PerceptionLevel& SensorTypeObject::ComputeObjectPerception( const wrapper::View& perceiver, const wrapper::View& target, double rSensorHeight ) const
 {
     const size_t type = GET_HOOK( GetObjectType )( target );
     if( objectData_.size() <= type )
@@ -79,14 +80,14 @@ const PerceptionLevel& SensorTypeObject::ComputePerception( const wrapper::View&
     const SensorTypeObjectData* pObjectData = objectData_[ type ];
     if( !pObjectData )
         return PerceptionLevel::notSeen_;
-    return pObjectData->ComputePerception( perceiver, target, rSensorHeight );
+    return pObjectData->ComputeObjectPerception( perceiver, target, rSensorHeight );
 }
 
 // -----------------------------------------------------------------------------
-// Name: SensorTypeObject::ComputePerception
+// Name: SensorTypeObject::ComputeKnowledgeObjectPerception
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-const PerceptionLevel& SensorTypeObject::ComputePerception( const wrapper::View& perceiver, const DEC_Knowledge_Object& target, double rSensorHeight ) const
+const PerceptionLevel& SensorTypeObject::ComputeKnowledgeObjectPerception( const wrapper::View& perceiver, const wrapper::View& target, double rSensorHeight ) const
 {
     const size_t type = GET_HOOK( GetKnowledgeObjectType )( target );
     if( objectData_.size() <= type )
@@ -94,7 +95,7 @@ const PerceptionLevel& SensorTypeObject::ComputePerception( const wrapper::View&
     const SensorTypeObjectData* pObjectData = objectData_[ type ];
     if( !pObjectData )
         return PerceptionLevel::notSeen_;
-    return pObjectData->ComputePerception( perceiver, target, rSensorHeight );
+    return pObjectData->ComputeKnowledgeObjectPerception( perceiver, target, rSensorHeight );
 }
 
 // -----------------------------------------------------------------------------

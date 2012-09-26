@@ -13,6 +13,7 @@
 #include "PerceptionSurfaceAgent.h"
 #include "SurfacesAgentVisitor_ABC.h"
 #include "SurfacesAgent_ABC.h"
+#include <boost/bind.hpp>
 
 using namespace sword;
 using namespace sword::perception;
@@ -41,7 +42,7 @@ ZOPerceptionComputer::~ZOPerceptionComputer()
 // -----------------------------------------------------------------------------
 const PerceptionLevel& ZOPerceptionComputer::ComputePerception( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const wrapper::View& target ) const
 {
-    PerceptionComputer< SurfacesAgentVisitor_ABC, PerceptionSurfaceAgent, wrapper::View > computer( perceiver, target );
+    PerceptionComputer< SurfacesAgentVisitor_ABC, PerceptionSurfaceAgent > computer( boost::bind( &PerceptionSurfaceAgent::ComputeAgentPerception, _1, boost::cref( perceiver ), boost::cref( target ) ) );
     surfaces.Apply( computer );
     return computer.GetLevel();
 }

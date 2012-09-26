@@ -42,15 +42,15 @@ BOOST_FIXTURE_TEST_CASE( is_point_visible_hook_computes_visibility_between_entit
 
 BOOST_FIXTURE_TEST_CASE( compute_knowledge_object_perception_hook_returns_perception_level, sword::perception::PerceptionViewFixture )
 {
-    DEC_Knowledge_Object* object = reinterpret_cast< DEC_Knowledge_Object* >( 43 );
+    core::Model knowledge;
     MOCK_EXPECT( GetKnowledgeObjectType ).returns( 0u );
     {
         MOCK_EXPECT( KnowledgeObjectIntersectWithCircle ).once().returns( true );
-        BOOST_CHECK_EQUAL( 3u, ComputeKnowledgeObjectPerception( core::Convert( &model ), core::Convert( &entity ), object ) );
+        BOOST_CHECK_EQUAL( 3u, ComputeKnowledgeObjectPerception( core::Convert( &model ), core::Convert( &entity ), core::Convert( &knowledge ) ) );
     }
     {
         MOCK_EXPECT( KnowledgeObjectIntersectWithCircle ).once().returns( false );
-        BOOST_CHECK_EQUAL( 0u, ComputeKnowledgeObjectPerception( core::Convert( &model ), core::Convert( &entity ), object ) );
+        BOOST_CHECK_EQUAL( 0u, ComputeKnowledgeObjectPerception( core::Convert( &model ), core::Convert( &entity ), core::Convert( &knowledge ) ) );
     }
 }
 

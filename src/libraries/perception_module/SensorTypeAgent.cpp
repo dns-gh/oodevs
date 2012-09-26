@@ -34,10 +34,10 @@ DECLARE_HOOK( GetPostureCompletionPercentage, double, ( const SWORD_Model* entit
 DECLARE_HOOK( ComputePerceptionDistanceFactor, double, ( const SWORD_Model* entity ) )
 DECLARE_HOOK( GetCollidingPopulationDensity, double, ( const SWORD_Model* entity ) )
 DECLARE_HOOK( GetSignificantVolume, const PHY_Volume*, ( const SWORD_Model* entity, const double* volumeFactors ) )
-DECLARE_HOOK( GetVolumeIdentifierFromInstance, size_t, ( const PHY_Volume* volume ) )
-DECLARE_HOOK( PopulationFlowIntersectWithCircle, bool, ( const MIL_PopulationFlow& flow, MT_Vector2D circleCenter, double radius, void(*AddShapePoint)( MT_Vector2D point, void* userData ), void* userData ) )
-DECLARE_HOOK( PopulationConcentrationIntersectWithCircle, bool, ( const MIL_PopulationConcentration& concentration, MT_Vector2D circleCenter, double radius ) )
-DECLARE_HOOK( GetUrbanBlockFactor, double, ( const MIL_UrbanObject_ABC& block, const double* urbanBlockFactors ) )
+DECLARE_HOOK( GetVolumeIdentifierFromInstance, size_t, ( const PHY_Volume* volume ) ) // $$$$ _RC_ SLI 2012-09-17: remove dependency on PHY_Volume
+DECLARE_HOOK( PopulationFlowIntersectWithCircle, bool, ( const SWORD_Model* flow, MT_Vector2D circleCenter, double radius, void(*AddShapePoint)( MT_Vector2D point, void* userData ), void* userData ) )
+DECLARE_HOOK( PopulationConcentrationIntersectWithCircle, bool, ( const SWORD_Model* concentration, MT_Vector2D circleCenter, double radius ) )
+DECLARE_HOOK( GetUrbanBlockFactor, double, ( const SWORD_Model* block, const double* urbanBlockFactors ) )
 DECLARE_HOOK( IsMaterialType, bool, ( const char* material ) )
 DECLARE_HOOK( GetPostureSize, size_t, () )
 DECLARE_HOOK( GetVolumeSize, size_t, () )
@@ -476,10 +476,10 @@ const PerceptionLevel& SensorTypeAgent::RayTrace( const MT_Vector2D& vSource, do
 }
 
 // -----------------------------------------------------------------------------
-// Name: SensorTypeAgent::ComputePerception
+// Name: SensorTypeAgent::ComputePointPerception
 // Created: NLD 2004-10-14
 // -----------------------------------------------------------------------------
-const PerceptionLevel& SensorTypeAgent::ComputePerception( const wrapper::View& source, const MT_Vector2D& vTargetPos, double rSensorHeight ) const
+const PerceptionLevel& SensorTypeAgent::ComputePointPerception( const wrapper::View& source, const MT_Vector2D& vTargetPos, double rSensorHeight ) const
 {
     const double rDistanceMaxModificator = GetSourceFactor( source );
 
@@ -491,16 +491,16 @@ const PerceptionLevel& SensorTypeAgent::ComputePerception( const wrapper::View& 
 }
 
 // -----------------------------------------------------------------------------
-// Name: SensorTypeAgent::ComputePerception
+// Name: SensorTypeAgent::ComputeAgentPerception
 // Created: NLD 2004-08-30
 // Modified: JVT 2004-09-28
 // -----------------------------------------------------------------------------
-const PerceptionLevel& SensorTypeAgent::ComputePerception( const wrapper::View& source, const wrapper::View& target, double rSensorHeight ) const
+const PerceptionLevel& SensorTypeAgent::ComputeAgentPerception( const wrapper::View& source, const wrapper::View& target, double rSensorHeight ) const
 {
     const MT_Vector2D vTargetPos( target[ "movement/position/x" ], target[ "movement/position/y" ] );
 
     if( target[ "is-dead" ] )
-        return ComputePerception( source, vTargetPos, rSensorHeight );
+        return ComputePointPerception( source, vTargetPos, rSensorHeight );
 
     const PHY_Volume* pSignificantVolume = GET_HOOK( GetSignificantVolume )( target, &volumeFactors_[0] );
     if( !pSignificantVolume )
@@ -518,10 +518,10 @@ const PerceptionLevel& SensorTypeAgent::ComputePerception( const wrapper::View& 
 }
 
 // -----------------------------------------------------------------------------
-// Name: SensorTypeAgent::ComputePerception
+// Name: SensorTypeAgent::ComputeConcentrationPerception
 // Created: NLD 2005-10-12
 // -----------------------------------------------------------------------------
-const PerceptionLevel& SensorTypeAgent::ComputePerception( const wrapper::View& source, const MIL_PopulationConcentration& target, double /*rSensorHeight*/ ) const
+const PerceptionLevel& SensorTypeAgent::ComputeConcentrationPerception( const wrapper::View& source, const wrapper::View& target, double /*rSensorHeight*/ ) const
 {
     const double     rDistanceMaxModificator = GetSourceFactor( source );
     const MT_Vector2D vSourcePos( source[ "movement/position/x" ], source[ "movement/position/y" ] );
@@ -538,17 +538,17 @@ const PerceptionLevel& SensorTypeAgent::ComputePerception( const wrapper::View& 
 // Name: SensorTypeAgent::ComputePerceptionAccuracy
 // Created: NLD 2005-10-12
 // -----------------------------------------------------------------------------
-double SensorTypeAgent::ComputePerceptionAccuracy( const wrapper::View& source, const MIL_PopulationFlow& /*target*/, double /*rSensorHeight*/ ) const
+double SensorTypeAgent::ComputePerceptionAccuracy( const wrapper::View& source, const wrapper::View& /*target*/, double /*rSensorHeight*/ ) const
 {
     const double rDistanceMaxModificator = GetSourceFactor( source );
     return rDetectionDist_ * rDistanceMaxModificator;
 }
 
 // -----------------------------------------------------------------------------
-// Name: SensorTypeAgent::ComputePerception
+// Name: SensorTypeAgent::ComputeFlowPerception
 // Created: NLD 2005-10-12
 // -----------------------------------------------------------------------------
-const PerceptionLevel& SensorTypeAgent::ComputePerception( const wrapper::View& source, const MIL_PopulationFlow& target, double /*rSensorHeight*/, std::vector< MT_Vector2D >& shape ) const
+const PerceptionLevel& SensorTypeAgent::ComputeFlowPerception( const wrapper::View& source, const wrapper::View& target, double /*rSensorHeight*/, std::vector< MT_Vector2D >& shape ) const
 {
     const double     rDistanceMaxModificator = GetSourceFactor( source );
     const MT_Vector2D vSourcePos( source[ "movement/position/x" ], source[ "movement/position/y" ] );
@@ -646,7 +646,7 @@ double SensorTypeAgent::GetFactor( size_t identifier ) const
 // Name: SensorTypeAgent::GetUrbanFactor
 // Created: SLG 2010-04-30
 // -----------------------------------------------------------------------------
-double SensorTypeAgent::GetUrbanBlockFactor( const MIL_UrbanObject_ABC& block ) const
+double SensorTypeAgent::GetUrbanBlockFactor( const wrapper::View& block ) const
 {
     return GET_HOOK( ::GetUrbanBlockFactor )( block, &urbanBlockFactors_[0] );
 }

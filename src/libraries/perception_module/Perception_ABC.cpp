@@ -17,70 +17,70 @@ using namespace sword::perception;
 // Name: Perception_ABC::Compute
 // Created: NLD 2005-10-11
 // -----------------------------------------------------------------------------
-const sword::perception::PerceptionLevel& Perception_ABC::Compute( const wrapper::View& /*perceiver*/, const SurfacesAgent_ABC& /*surfaces*/, const MT_Vector2D& /*vPoint*/ ) const
+const sword::perception::PerceptionLevel& Perception_ABC::ComputePoint( const wrapper::View& /*perceiver*/, const SurfacesAgent_ABC& /*surfaces*/, const MT_Vector2D& /*vPoint*/ ) const
 {
     return PerceptionLevel::notSeen_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Perception_ABC::Execute
+// Name: Perception_ABC::ExecuteAgents
 // Created: NLD 2005-10-11
 // -----------------------------------------------------------------------------
-void Perception_ABC::Execute( const wrapper::View& /*model*/, const wrapper::View& /*perceiver*/, const SurfacesAgent_ABC& /*surfaces*/, const T_AgentPtrVector& /*perceivableAgents*/ )
+void Perception_ABC::ExecuteAgents( const wrapper::View& /*model*/, const wrapper::View& /*perceiver*/, const SurfacesAgent_ABC& /*surfaces*/, const T_AgentPtrVector& /*perceivableAgents*/ )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Perception_ABC::Compute
+// Name: Perception_ABC::ComputeAgent
 // Created: NLD 2005-10-11
 // -----------------------------------------------------------------------------
-const sword::perception::PerceptionLevel& Perception_ABC::Compute( const wrapper::View& /*perceiver*/, const SurfacesAgent_ABC& /*surfaces*/, const wrapper::View& /*target*/ ) const
+const sword::perception::PerceptionLevel& Perception_ABC::ComputeAgent( const wrapper::View& /*perceiver*/, const SurfacesAgent_ABC& /*surfaces*/, const wrapper::View& /*target*/ ) const
 {
     return PerceptionLevel::notSeen_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Perception_ABC::Execute
+// Name: Perception_ABC::ExecuteObjects
 // Created: NLD 2005-10-11
 // -----------------------------------------------------------------------------
-void Perception_ABC::Execute( const wrapper::View& /*perceiver*/, const SurfacesObject_ABC& /*surfaces*/, const T_ObjectVector& /*perceivableObjects*/ )
+void Perception_ABC::ExecuteObjects( const wrapper::View& /*perceiver*/, const SurfacesObject_ABC& /*surfaces*/, const T_ObjectVector& /*perceivableObjects*/ )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Perception_ABC::Compute
+// Name: Perception_ABC::ComputeObject
 // Created: NLD 2005-10-11
 // -----------------------------------------------------------------------------
-const sword::perception::PerceptionLevel& Perception_ABC::Compute( const wrapper::View& /*perceiver*/, const SurfacesObject_ABC& /*surfaces*/, const DEC_Knowledge_Object& /*knowledge*/ ) const
+const sword::perception::PerceptionLevel& Perception_ABC::ComputeObject( const wrapper::View& /*perceiver*/, const SurfacesObject_ABC& /*surfaces*/, const wrapper::View& /*knowledgeObject*/ ) const
 {
     return PerceptionLevel::notSeen_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Perception_ABC::Execute
+// Name: Perception_ABC::ExecuteFlows
 // Created: NLD 2005-10-11
 // -----------------------------------------------------------------------------
-void Perception_ABC::Execute( const wrapper::View& /*perceiver*/, const SurfacesAgent_ABC& /*surfaces*/, const T_ConstPopulationFlowVector& /*perceivableFlows*/ )
+void Perception_ABC::ExecuteFlows( const wrapper::View& /*perceiver*/, const SurfacesAgent_ABC& /*surfaces*/, const T_ConstPopulationFlowVector& /*perceivableFlows*/ )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Perception_ABC::Compute
+// Name: Perception_ABC::ComputeConcentration
 // Created: NLD 2005-10-11
 // -----------------------------------------------------------------------------
-const sword::perception::PerceptionLevel& Perception_ABC::Compute( const wrapper::View& /*perceiver*/, const SurfacesAgent_ABC& /*surfaces*/, const MIL_PopulationConcentration& /*concentration*/ ) const
+const sword::perception::PerceptionLevel& Perception_ABC::ComputeConcentration( const wrapper::View& /*perceiver*/, const SurfacesAgent_ABC& /*surfaces*/, const wrapper::View& /*concentration*/ ) const
 {
     return PerceptionLevel::notSeen_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Perception_ABC::Execute
+// Name: Perception_ABC::ExecuteConcentrations
 // Created: NLD 2005-10-11
 // -----------------------------------------------------------------------------
-void Perception_ABC::Execute( const wrapper::View& /*perceiver*/, const SurfacesAgent_ABC& /*surfaces*/, const T_ConstPopulationConcentrationVector& /*perceivableConcentrations*/ )
+void Perception_ABC::ExecuteConcentrations( const wrapper::View& /*perceiver*/, const SurfacesAgent_ABC& /*surfaces*/, const T_ConstPopulationConcentrationVector& /*perceivableConcentrations*/ )
 {
     // NOTHING
 }

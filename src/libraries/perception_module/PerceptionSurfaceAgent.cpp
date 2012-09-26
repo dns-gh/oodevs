@@ -90,24 +90,24 @@ bool PerceptionSurfaceAgent::IsInside( const MT_Vector2D& vPoint ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PerceptionSurfaceAgent::ComputePerception
+// Name: PerceptionSurfaceAgent::ComputePointPerception
 // Created: NLD 2004-10-14
 // -----------------------------------------------------------------------------
-const PerceptionLevel& PerceptionSurfaceAgent::ComputePerception( const wrapper::View& perceiver, const MT_Vector2D& vTargetPos ) const
+const PerceptionLevel& PerceptionSurfaceAgent::ComputePointPerception( const wrapper::View& perceiver, const MT_Vector2D& vTargetPos ) const
 {
-    return pSensorType_->ComputePerception( perceiver, vTargetPos, rHeight_ );
+    return pSensorType_->ComputePointPerception( perceiver, vTargetPos, rHeight_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PerceptionSurfaceAgent::ComputePerception
+// Name: PerceptionSurfaceAgent::ComputeAgentPerception
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------
-const PerceptionLevel& PerceptionSurfaceAgent::ComputePerception( const wrapper::View& perceiver, const wrapper::View& target ) const
+const PerceptionLevel& PerceptionSurfaceAgent::ComputeAgentPerception( const wrapper::View& perceiver, const wrapper::View& target ) const
 {
     const MT_Vector2D vTargetPos( target[ "movement/position/x" ], target[ "movement/position/y" ] );
     if( !( GET_HOOK( IsKnown )( perceiver, target ) || ( perceiver[ "perceptions/peripherical-vision/activated" ] && pSensorType_->CanScan() ) || IsInside( vTargetPos ) ) )
         return PerceptionLevel::notSeen_;
-    const PerceptionLevel& level = pSensorType_->ComputePerception( perceiver, target, rHeight_ );
+    const PerceptionLevel& level = pSensorType_->ComputeAgentPerception( perceiver, target, rHeight_ );
     return GetLevelWithDelay( level, target[ "identifier" ] );
 }
 
@@ -142,12 +142,12 @@ void PerceptionSurfaceAgent::FinalizePerception()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PerceptionSurfaceAgent::ComputePerception
+// Name: PerceptionSurfaceAgent::ComputeConcentrationPerception
 // Created: NLD 2005-10-12
 // -----------------------------------------------------------------------------
-const PerceptionLevel& PerceptionSurfaceAgent::ComputePerception( const wrapper::View& perceiver, const MIL_PopulationConcentration& target ) const
+const PerceptionLevel& PerceptionSurfaceAgent::ComputeConcentrationPerception( const wrapper::View& perceiver, const wrapper::View& target ) const
 {
-    const PerceptionLevel& level = pSensorType_->ComputePerception( perceiver, target, rHeight_ );
+    const PerceptionLevel& level = pSensorType_->ComputeConcentrationPerception( perceiver, target, rHeight_ );
     return GetLevelWithDelay( level, reinterpret_cast< std::size_t >( &target ) ); // $$$$ _RC_ SLI 2012-06-04: Use identifier instead
 }
 
@@ -155,18 +155,18 @@ const PerceptionLevel& PerceptionSurfaceAgent::ComputePerception( const wrapper:
 // Name: PerceptionSurfaceAgent::ComputePerceptionAccuracy
 // Created: NLD 2005-10-12
 // -----------------------------------------------------------------------------
-double PerceptionSurfaceAgent::ComputePerceptionAccuracy( const wrapper::View& perceiver, const MIL_PopulationFlow& target ) const
+double PerceptionSurfaceAgent::ComputePerceptionAccuracy( const wrapper::View& perceiver, const wrapper::View& target ) const
 {
     return pSensorType_->ComputePerceptionAccuracy( perceiver, target, rHeight_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PerceptionSurfaceAgent::ComputePerception
+// Name: PerceptionSurfaceAgent::ComputeFlowPerception
 // Created: NLD 2005-10-12
 // -----------------------------------------------------------------------------
-const PerceptionLevel& PerceptionSurfaceAgent::ComputePerception( const wrapper::View& perceiver, const MIL_PopulationFlow& target, T_PointVector& shape ) const
+const PerceptionLevel& PerceptionSurfaceAgent::ComputeFlowPerception( const wrapper::View& perceiver, const wrapper::View& target, T_PointVector& shape ) const
 {
-    const PerceptionLevel& level = pSensorType_->ComputePerception( perceiver, target, rHeight_, shape );
+    const PerceptionLevel& level = pSensorType_->ComputeFlowPerception( perceiver, target, rHeight_, shape );
     return GetLevelWithDelay( level, reinterpret_cast< std::size_t >( &target ) ); // $$$$ _RC_ SLI 2012-06-04: Use identifier instead
 }
 

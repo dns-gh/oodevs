@@ -13,10 +13,6 @@
 #include <boost/noncopyable.hpp>
 #include <vector>
 
-class MIL_UrbanObject_ABC;
-class MIL_Object_ABC;
-class MIL_PopulationFlow;
-class MIL_PopulationConcentration;
 class MT_Vector2D;
 
 namespace sword
@@ -46,12 +42,12 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyPerceptionUrban( const MIL_UrbanObject_ABC* urbanBlock, const PerceptionLevel& level ) = 0;
-    virtual void NotifyPerception( const wrapper::View& agent, const PerceptionLevel& level ) = 0;
-    virtual void NotifyPerception( const wrapper::View& agent, const PerceptionLevel& level, bool perceptionRecorded ) = 0;
-    virtual void NotifyPerception( const MIL_Object_ABC* object, const PerceptionLevel& level ) = 0;
-    virtual void NotifyPerception( const MIL_PopulationFlow* flow, const PerceptionLevel& level, const std::vector< MT_Vector2D >& shape ) = 0;
-    virtual void NotifyPerception( const MIL_PopulationConcentration* concentration, const PerceptionLevel& level ) = 0;
+    virtual void NotifyUrbanPerception( const wrapper::View& urbanBlock, const PerceptionLevel& level ) = 0;
+    virtual void NotifyAgentPerception( const wrapper::View& agent, const PerceptionLevel& level ) = 0;
+    virtual void NotifyAgentPerception( const wrapper::View& agent, const PerceptionLevel& level, bool perceptionRecorded ) = 0;
+    virtual void NotifyObjectPerception( const wrapper::View& object, const PerceptionLevel& level ) = 0;
+    virtual void NotifyFlowPerception( const wrapper::View& flow, const PerceptionLevel& level, const std::vector< MT_Vector2D >& shape ) = 0;
+    virtual void NotifyConcentrationPerception( const wrapper::View& concentration, const PerceptionLevel& level ) = 0;
     //@}
 };
 

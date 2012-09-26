@@ -16,14 +16,6 @@
 
 namespace sword
 {
-    class VisionCone;
-}
-
-class MIL_PopulationConcentration;
-class MIL_PopulationFlow;
-
-namespace sword
-{
 namespace wrapper
 {
     class View;
@@ -54,11 +46,11 @@ public:
     //! @name Operations
     //@{
     void Apply( TargetPerceptionVisitor_ABC& visitor ) const;
-    const PerceptionLevel& ComputePerception( const wrapper::View& perceiver, const MT_Vector2D& target ) const;
-    const PerceptionLevel& ComputePerception( const wrapper::View& perceiver, const wrapper::View& target ) const;
-    const PerceptionLevel& ComputePerception( const wrapper::View& perceiver, const MIL_PopulationConcentration& target ) const;
-    const PerceptionLevel& ComputePerception( const wrapper::View& perceiver, const MIL_PopulationFlow& target, T_PointVector& shape ) const;
-    double ComputePerceptionAccuracy( const wrapper::View& perceiver, const MIL_PopulationFlow& target ) const;
+    const PerceptionLevel& ComputePointPerception( const wrapper::View& perceiver, const MT_Vector2D& target ) const;
+    const PerceptionLevel& ComputeAgentPerception( const wrapper::View& perceiver, const wrapper::View& target ) const;
+    const PerceptionLevel& ComputeConcentrationPerception( const wrapper::View& perceiver, const wrapper::View& target ) const;
+    const PerceptionLevel& ComputeFlowPerception( const wrapper::View& perceiver, const wrapper::View& target, T_PointVector& shape ) const;
+    double ComputePerceptionAccuracy( const wrapper::View& perceiver, const wrapper::View& target ) const;
     void AddDirection( const MT_Vector2D& vDir );
     void TransferPerception( const std::map< std::size_t, std::pair< unsigned int, double > >& urbanPerceptionMap ) const;
     void NotifyCone( wrapper::Effect& effect ) const;

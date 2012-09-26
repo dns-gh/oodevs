@@ -19,11 +19,11 @@
 using namespace sword;
 using namespace sword::perception;
 
-DECLARE_HOOK( CanObjectBePerceived, bool, ( const MIL_Object_ABC* object ) )
+DECLARE_HOOK( CanObjectBePerceived, bool, ( const SWORD_Model* object ) )
 DECLARE_HOOK( IsLocalizationInsideCircle, bool, ( const SWORD_Model* localization, const MT_Vector2D* center, double radius ) )
-DECLARE_HOOK( IsKnowledgeObjectInsidePerception, bool, ( const SWORD_Model* localization, const MT_Vector2D* center, double radius, const DEC_Knowledge_Object* object ) )
-DECLARE_HOOK( IsObjectIntersectingLocalization, bool, ( const SWORD_Model* localization, const MIL_Object_ABC* object ) )
-DECLARE_HOOK( GetObjectListWithinCircle, void, ( const MT_Vector2D& vCenter, double rRadius, void (*callback)( MIL_Object_ABC* object, void* userData ), void* userData ) )
+DECLARE_HOOK( IsKnowledgeObjectInsidePerception, bool, ( const SWORD_Model* localization, const MT_Vector2D* center, double radius, const SWORD_Model* knowledgeObject ) )
+DECLARE_HOOK( IsObjectIntersectingLocalization, bool, ( const SWORD_Model* localization, const SWORD_Model* object ) )
+DECLARE_HOOK( GetObjectListWithinCircle, void, ( const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* object, void* userData ), void* userData ) )
 
 // -----------------------------------------------------------------------------
 // Name: PerceptionRecoObjectsReco constructor
@@ -55,9 +55,9 @@ PerceptionRecoObjectsReco::PerceptionRecoObjectsReco( const wrapper::View& perce
 // Name: PerceptionRecoObjectsReco::IsInside
 // Created: JVT 2005-01-19
 // -----------------------------------------------------------------------------
-bool PerceptionRecoObjectsReco::IsInside( const DEC_Knowledge_Object& knowledge ) const
+bool PerceptionRecoObjectsReco::IsInside( const wrapper::View& knowledge ) const
 {
-    return GET_HOOK( IsKnowledgeObjectInsidePerception )( localisation_, &vCenter_, rCurrentSize_, &knowledge );
+    return GET_HOOK( IsKnowledgeObjectInsidePerception )( localisation_, &vCenter_, rCurrentSize_, knowledge );
 }
 
 // -----------------------------------------------------------------------------
@@ -66,8 +66,8 @@ bool PerceptionRecoObjectsReco::IsInside( const DEC_Knowledge_Object& knowledge 
 // -----------------------------------------------------------------------------
 void PerceptionRecoObjectsReco::GetObjectsInside( const wrapper::View&, Perception_ABC::T_ObjectVector& result ) const
 {
-    ListInCircleVisitor< MIL_Object_ABC* > objectVisitor( result );
-    GET_HOOK( GetObjectListWithinCircle )( vCenter_, rCurrentSize_, &ListInCircleVisitor< MIL_Object_ABC* >::Add, &objectVisitor );
+    ListInCircleVisitor< wrapper::View > objectVisitor( result );
+    GET_HOOK( GetObjectListWithinCircle )( vCenter_, rCurrentSize_, &ListInCircleVisitor< const SWORD_Model* >::Add, &objectVisitor );
     for( Perception_ABC::T_ObjectVector::iterator it = result.begin(); it != result.end(); )
         if( GET_HOOK( IsObjectIntersectingLocalization )( localisation_, *it ) )
             ++it;
@@ -104,10 +104,10 @@ void PerceptionRecoObjects::AddLocalisation( const wrapper::View& perception, co
 }
 
 // -----------------------------------------------------------------------------
-// Name: PerceptionRecoObjects::Compute
+// Name: PerceptionRecoObjects::ComputeObject
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-const PerceptionLevel& PerceptionRecoObjects::Compute( const wrapper::View& /*perceiver*/, const SurfacesObject_ABC& /*surfaces*/, const DEC_Knowledge_Object& knowledge ) const
+const PerceptionLevel& PerceptionRecoObjects::ComputeObject( const wrapper::View& /*perceiver*/, const SurfacesObject_ABC& /*surfaces*/, const wrapper::View& knowledge ) const
 {
     for( T_RecoVector::const_iterator it = recos_.begin(); it != recos_.end(); ++it )
         if( (*it)->IsInside( knowledge ) )
@@ -116,10 +116,10 @@ const PerceptionLevel& PerceptionRecoObjects::Compute( const wrapper::View& /*pe
 }
 
 // -----------------------------------------------------------------------------
-// Name: PerceptionRecoObjects::Execute
+// Name: PerceptionRecoObjects::ExecuteObjects
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-void PerceptionRecoObjects::Execute( const wrapper::View& perceiver, const SurfacesObject_ABC& /*surfaces*/, const T_ObjectVector& /*perceivableObjects*/ )
+void PerceptionRecoObjects::ExecuteObjects( const wrapper::View& perceiver, const SurfacesObject_ABC& /*surfaces*/, const T_ObjectVector& /*perceivableObjects*/ )
 {
     for( T_RecoVector::const_iterator itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
     {
@@ -127,9 +127,9 @@ void PerceptionRecoObjects::Execute( const wrapper::View& perceiver, const Surfa
         (*itReco)->GetObjectsInside( perceiver, perceivableObjects );
         for( T_ObjectVector::const_iterator it = perceivableObjects.begin(); it != perceivableObjects.end(); ++it )
         {
-            MIL_Object_ABC* object = *it;
+            const wrapper::View& object = *it;
             if( GET_HOOK( CanObjectBePerceived )( object ) )
-                observer_.NotifyPerception( object, PerceptionLevel::identified_ ); // Identifié ou not seen pour les objets
+                observer_.NotifyObjectPerception( object, PerceptionLevel::identified_ ); // Identifié ou not seen pour les objets
         }
     }
 }

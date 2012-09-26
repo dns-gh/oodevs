@@ -45,30 +45,30 @@ PerceptionObserver::~PerceptionObserver()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PerceptionObserver::NotifyPerceptionUrban
+// Name: PerceptionObserver::NotifyUrbanPerception
 // Created: SLI 2012-06-19
 // -----------------------------------------------------------------------------
-void PerceptionObserver::NotifyPerceptionUrban( const MIL_UrbanObject_ABC* urbanBlock, const PerceptionLevel& level )
+void PerceptionObserver::NotifyUrbanPerception( const wrapper::View& urbanBlock, const PerceptionLevel& level )
 {
     wrapper::Node notification = urbanBlockNotifications_.AddElement();
-    notification[ "target" ] = reinterpret_cast< size_t >( urbanBlock );
+    notification[ "target" ] = urbanBlock;
     notification[ "level" ] = level.GetID();
 }
 
 // -----------------------------------------------------------------------------
-// Name: PerceptionObserver::NotifyPerception
+// Name: PerceptionObserver::NotifyAgentPerception
 // Created: SLI 2012-06-19
 // -----------------------------------------------------------------------------
-void PerceptionObserver::NotifyPerception( const wrapper::View& agent, const PerceptionLevel& level )
+void PerceptionObserver::NotifyAgentPerception( const wrapper::View& agent, const PerceptionLevel& level )
 {
-    NotifyPerception( agent, level, recordModeEnabled_ );
+    NotifyAgentPerception( agent, level, recordModeEnabled_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PerceptionObserver::NotifyPerception
+// Name: PerceptionObserver::NotifyAgentPerception
 // Created: SLI 2012-06-19
 // -----------------------------------------------------------------------------
-void PerceptionObserver::NotifyPerception( const wrapper::View& agent, const PerceptionLevel& level, bool perceptionRecorded )
+void PerceptionObserver::NotifyAgentPerception( const wrapper::View& agent, const PerceptionLevel& level, bool perceptionRecorded )
 {
     wrapper::Node notification = agentNotifications_.AddElement();
     notification[ "target" ] = agent[ "pion" ];
@@ -77,25 +77,25 @@ void PerceptionObserver::NotifyPerception( const wrapper::View& agent, const Per
 }
 
 // -----------------------------------------------------------------------------
-// Name: PerceptionObserver::NotifyPerception
+// Name: PerceptionObserver::NotifyObjectPerception
 // Created: SLI 2012-06-19
 // -----------------------------------------------------------------------------
-void PerceptionObserver::NotifyPerception( const MIL_Object_ABC* object, const PerceptionLevel& level )
+void PerceptionObserver::NotifyObjectPerception( const wrapper::View& object, const PerceptionLevel& level )
 {
     wrapper::Node notification = objectNotifications_.AddElement();
-    notification[ "target" ] = reinterpret_cast< size_t >( object );
+    notification[ "target" ] = object;
     notification[ "level" ] = level.GetID();
     notification[ "recorded" ] = recordModeEnabled_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PerceptionObserver::NotifyPerception
+// Name: PerceptionObserver::NotifyFlowPerception
 // Created: SLI 2012-06-19
 // -----------------------------------------------------------------------------
-void PerceptionObserver::NotifyPerception( const MIL_PopulationFlow* flow, const PerceptionLevel& level, const std::vector< MT_Vector2D >& shape )
+void PerceptionObserver::NotifyFlowPerception( const wrapper::View& flow, const PerceptionLevel& level, const std::vector< MT_Vector2D >& shape )
 {
     wrapper::Node notification = flowNotifications_.AddElement();
-    notification[ "target" ] = reinterpret_cast< size_t >( flow );
+    notification[ "target" ] = flow;
     notification[ "level" ] = level.GetID();
     notification[ "recorded" ] = recordModeEnabled_;
     wrapper::Node points = notification[ "shape" ];
@@ -108,13 +108,13 @@ void PerceptionObserver::NotifyPerception( const MIL_PopulationFlow* flow, const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PerceptionObserver::NotifyPerception
+// Name: PerceptionObserver::NotifyConcentrationPerception
 // Created: SLI 2012-06-19
 // -----------------------------------------------------------------------------
-void PerceptionObserver::NotifyPerception( const MIL_PopulationConcentration* concentration, const PerceptionLevel& level )
+void PerceptionObserver::NotifyConcentrationPerception( const wrapper::View& concentration, const PerceptionLevel& level )
 {
     wrapper::Node notification = concentrationNotifications_.AddElement();
-    notification[ "target" ] = reinterpret_cast< size_t >( concentration );
+    notification[ "target" ] = concentration;
     notification[ "level" ] = level.GetID();
     notification[ "recorded" ] = recordModeEnabled_;
 }

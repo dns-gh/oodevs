@@ -13,10 +13,6 @@
 #include <vector>
 #include <boost/noncopyable.hpp>
 
-class DEC_Knowledge_Object;
-class MIL_Object_ABC;
-class MIL_PopulationFlow;
-class MIL_PopulationConcentration;
 class MT_Vector2D;
 
 namespace sword
@@ -41,9 +37,9 @@ public:
     //! @name Types
     //@{
     typedef std::vector< wrapper::View > T_AgentPtrVector;
-    typedef std::vector< MIL_Object_ABC* > T_ObjectVector;
-    typedef std::vector< const MIL_PopulationFlow* > T_ConstPopulationFlowVector;
-    typedef std::vector< const MIL_PopulationConcentration* > T_ConstPopulationConcentrationVector;
+    typedef std::vector< wrapper::View > T_ObjectVector;
+    typedef std::vector< wrapper::View > T_ConstPopulationFlowVector;
+    typedef std::vector< wrapper::View > T_ConstPopulationConcentrationVector;
     //@}
 
 public:
@@ -55,18 +51,18 @@ public:
 
     //! @name Execution
     //@{
-    virtual const PerceptionLevel& Compute( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const MT_Vector2D& vPoint ) const;
+    virtual const PerceptionLevel& ComputePoint( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const MT_Vector2D& vPoint ) const;
 
-    virtual void                   Execute( const wrapper::View& model, const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const T_AgentPtrVector& perceivableAgents );
-    virtual const PerceptionLevel& Compute( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const wrapper::View& target ) const;
+    virtual void                   ExecuteAgents( const wrapper::View& model, const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const T_AgentPtrVector& perceivableAgents );
+    virtual const PerceptionLevel& ComputeAgent( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const wrapper::View& target ) const;
 
-    virtual void                   Execute( const wrapper::View& perceiver, const SurfacesObject_ABC& surfaces, const T_ObjectVector& perceivableObjects );
-    virtual const PerceptionLevel& Compute( const wrapper::View& perceiver, const SurfacesObject_ABC& surfaces, const DEC_Knowledge_Object& knowledge ) const;
+    virtual void                   ExecuteObjects( const wrapper::View& perceiver, const SurfacesObject_ABC& surfaces, const T_ObjectVector& perceivableObjects );
+    virtual const PerceptionLevel& ComputeObject( const wrapper::View& perceiver, const SurfacesObject_ABC& surfaces, const wrapper::View& knowledgeObject ) const;
 
-    virtual void                   Execute( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const T_ConstPopulationFlowVector& perceivableFlows );
+    virtual void                   ExecuteFlows( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const T_ConstPopulationFlowVector& perceivableFlows );
 
-    virtual void                   Execute( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const T_ConstPopulationConcentrationVector& perceivableConcentrations );
-    virtual const PerceptionLevel& Compute( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const MIL_PopulationConcentration& concentration ) const;
+    virtual void                   ExecuteConcentrations( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const T_ConstPopulationConcentrationVector& perceivableConcentrations );
+    virtual const PerceptionLevel& ComputeConcentration( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const wrapper::View& concentration ) const;
 
     virtual void FinalizePerception( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces );
     //@}

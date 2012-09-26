@@ -16,7 +16,8 @@ BOOST_FIXTURE_TEST_CASE( perception_reco_object_sensor_identifies_all_objects_in
 {
     const double growthSpeed = 2;
     const std::size_t perceptionId = 42;
-    MIL_Object_ABC* object = reinterpret_cast< MIL_Object_ABC* >( 666 );
+    const SWORD_Model* object = core::Convert( &model[ "objects/some-object" ] );
+    model[ "objects/some-object" ] = core::MakeModel( "data", 666 );
     entity[ "perceptions/sensor/activated" ] = false;
     core::Model& perception = entity[ "perceptions/object-detection" ][ perceptionId ];
     perception = core::MakeModel( "localization", core::MakeModel() )
@@ -36,7 +37,7 @@ BOOST_FIXTURE_TEST_CASE( perception_reco_object_sensor_identifies_all_objects_in
     ExpectEvent( "perception callback", sword::test::MakeModel( "entity", identifier )
                                                               ( "perception", perceptionId ) );
     ExpectNotifications( "objects", sword::test::MakeModel()
-                                    [ sword::test::MakeModel( "target", 666 )
+                                    [ sword::test::MakeModel( "target/data", 666 )
                                                             ( "level", 3 ) // identified
                                                             ( "recorded", false ) ] );
     PostCommand( "perception", core::MakeModel( "identifier", identifier ) );

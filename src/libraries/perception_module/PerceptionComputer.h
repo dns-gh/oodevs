@@ -11,6 +11,7 @@
 #define SWORD_PERCEPTION_PERCEPTION_COMPUTER_H
 
 #include "PerceptionLevel.h"
+#include <boost/function.hpp>
 
 namespace sword
 {
@@ -26,15 +27,15 @@ namespace perception
 */
 // Created: SLI 2012-05-30
 // =============================================================================
-template< typename Visitor, typename Surface, typename Target >
+template< typename Visitor, typename Surface >
 class PerceptionComputer : public Visitor
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             PerceptionComputer( const wrapper::View& perceiver, const Target& target )
-                 : perceiver_( perceiver )
-                 , target_   ( target )
+    typedef boost::function< const PerceptionLevel&( const Surface& ) > T_Computer;
+    explicit PerceptionComputer( T_Computer computer )
+                 : computer_ ( computer )
                  , bestLevel_( &PerceptionLevel::notSeen_ )
              {}
     virtual ~PerceptionComputer() {}
@@ -44,7 +45,7 @@ public:
     //@{
     virtual bool Notify( const Surface& surface )
     {
-        const PerceptionLevel& currentLevel = surface.ComputePerception( perceiver_, target_ );
+        const PerceptionLevel& currentLevel = computer_( surface );
         if( currentLevel > *bestLevel_ )
         {
             bestLevel_ = &currentLevel;
@@ -61,8 +62,7 @@ public:
 private:
     //! @name Member data
     //@{
-    const wrapper::View& perceiver_;
-    const Target& target_;
+    T_Computer computer_;
     const PerceptionLevel* bestLevel_;
     //@}
 };

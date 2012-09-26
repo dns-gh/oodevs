@@ -18,9 +18,6 @@ namespace xml
     class xistream;
 }
 
-class MIL_Object_ABC;
-class DEC_Knowledge_Object;
-
 namespace sword
 {
 namespace wrapper
@@ -51,8 +48,8 @@ public:
 
     //! @name Operations
     //@{
-    const PerceptionLevel& ComputePerception( const wrapper::View& perceiver, const MIL_Object_ABC&   target, double rSensorHeight ) const;
-    const PerceptionLevel& ComputePerception( const wrapper::View& perceiver, const DEC_Knowledge_Object& target, double rSensorHeight ) const;
+    const PerceptionLevel& ComputeObjectPerception( const wrapper::View& perceiver, const wrapper::View& target, double rSensorHeight ) const;
+    const PerceptionLevel& ComputeKnowledgeObjectPerception( const wrapper::View& perceiver, const wrapper::View& target, double rSensorHeight ) const;
     //@}
 
     //! @name Helpers
@@ -68,9 +65,9 @@ private:
     //@}
 
 private:
-    const SensorType& type_;
-    T_ObjectDataVector    objectData_;
-    double              rMaxDistance_;
+    const SensorType&  type_;
+    T_ObjectDataVector objectData_;
+    double             rMaxDistance_;
 };
 
 }

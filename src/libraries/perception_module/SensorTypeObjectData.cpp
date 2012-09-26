@@ -25,8 +25,8 @@ DECLARE_HOOK( GetCurrentPostureIdentifier, size_t, ( const SWORD_Model* entity )
 DECLARE_HOOK( GetPostureCompletionPercentage, double, ( const SWORD_Model* entity ) )
 DECLARE_HOOK( ComputePerceptionDistanceFactor, double, ( const SWORD_Model* entity ) )
 DECLARE_HOOK( GetCollidingPopulationDensity, double, ( const SWORD_Model* entity ) )
-DECLARE_HOOK( ObjectIntersectWithCircle, bool, ( const MIL_Object_ABC& object, const MT_Vector2D& center, double radius ) )
-DECLARE_HOOK( KnowledgeObjectIntersectWithCircle, bool, ( const DEC_Knowledge_Object& object, const MT_Vector2D& center, double radius ) )
+DECLARE_HOOK( ObjectIntersectWithCircle, bool, ( const SWORD_Model* object, const MT_Vector2D& center, double radius ) )
+DECLARE_HOOK( KnowledgeObjectIntersectWithCircle, bool, ( const SWORD_Model* knowledgeObject, const MT_Vector2D& center, double radius ) )
 
 // -----------------------------------------------------------------------------
 // Name: SensorTypeObjectData::InitializeFactors
@@ -134,8 +134,7 @@ double SensorTypeObjectData::GetSourceFactor( const wrapper::View& source ) cons
 // Name: SensorTypeObjectData::ComputePerception
 // Created: SLI 2012-07-10
 // -----------------------------------------------------------------------------
-template< typename Object >
-const PerceptionLevel& SensorTypeObjectData::ComputePerception( const wrapper::View& perceiver, const Object& target, bool(*intersectWithCircle) ( const Object& object, const MT_Vector2D& center, double radius ) ) const
+const PerceptionLevel& SensorTypeObjectData::ComputePerception( const wrapper::View& perceiver, const wrapper::View& target, bool(*intersectWithCircle) ( const SWORD_Model* object, const MT_Vector2D& center, double radius ) ) const
 {
     const double rDistanceMaxModificator = GetSourceFactor( perceiver );
     const MT_Vector2D vSourcePos( perceiver[ "movement/position/x" ], perceiver[ "movement/position/y" ] );
@@ -145,21 +144,21 @@ const PerceptionLevel& SensorTypeObjectData::ComputePerception( const wrapper::V
 }
 
 // -----------------------------------------------------------------------------
-// Name: SensorTypeObject::ComputePerception
+// Name: SensorTypeObject::ComputeObjectPerception
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-const PerceptionLevel& SensorTypeObjectData::ComputePerception( const wrapper::View& perceiver, const MIL_Object_ABC& target, double /*rSensorHeight*/ ) const
+const PerceptionLevel& SensorTypeObjectData::ComputeObjectPerception( const wrapper::View& perceiver, const wrapper::View& target, double /*rSensorHeight*/ ) const
 {
-    return ComputePerception< MIL_Object_ABC >( perceiver, target, GET_HOOK( ObjectIntersectWithCircle ) );
+    return ComputePerception( perceiver, target, GET_HOOK( ObjectIntersectWithCircle ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: SensorTypeObject::ComputePerception
+// Name: SensorTypeObject::ComputeKnowledgeObjectPerception
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-const PerceptionLevel& SensorTypeObjectData::ComputePerception( const wrapper::View& perceiver, const DEC_Knowledge_Object& target, double /*rSensorHeight*/ ) const
+const PerceptionLevel& SensorTypeObjectData::ComputeKnowledgeObjectPerception( const wrapper::View& perceiver, const wrapper::View& target, double /*rSensorHeight*/ ) const
 {
-    return ComputePerception< DEC_Knowledge_Object >( perceiver, target, GET_HOOK( KnowledgeObjectIntersectWithCircle ) );
+    return ComputePerception( perceiver, target, GET_HOOK( KnowledgeObjectIntersectWithCircle ) );
 }
 
 // -----------------------------------------------------------------------------

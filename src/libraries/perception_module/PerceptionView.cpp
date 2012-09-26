@@ -24,26 +24,27 @@
 #include "wrapper/View.h"
 #include "wrapper/Event.h"
 #include "simulation_kernel/Entities/Orders/MIL_Report.h" // $$$$ MCO : for enums
+#include <boost/bind.hpp>
 
 DECLARE_HOOK( IsInCity, bool, ( const SWORD_Model* entity ) )
 DECLARE_HOOK( BelongsToKnowledgeGroup, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) )
 DECLARE_HOOK( IsAgentPerceptionDistanceHacked, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) )
-DECLARE_HOOK( IsObjectPerceptionDistanceHacked, bool, ( const SWORD_Model* perceiver, const MIL_Object_ABC* object ) )
-DECLARE_HOOK( IsPopulationFlowPerceptionDistanceHacked, bool, ( const SWORD_Model* perceiver, const MIL_PopulationFlow* flow ) )
-DECLARE_HOOK( IsPopulationConcentrationPerceptionDistanceHacked, bool, ( const SWORD_Model* perceiver, const MIL_PopulationConcentration* concentration ) )
+DECLARE_HOOK( IsObjectPerceptionDistanceHacked, bool, ( const SWORD_Model* perceiver, const SWORD_Model* object ) )
+DECLARE_HOOK( IsPopulationFlowPerceptionDistanceHacked, bool, ( const SWORD_Model* perceiver, const SWORD_Model* flow ) )
+DECLARE_HOOK( IsPopulationConcentrationPerceptionDistanceHacked, bool, ( const SWORD_Model* perceiver, const SWORD_Model* concentration ) )
 DECLARE_HOOK( GetHackedPerceptionLevel, int, ( const SWORD_Model* perceiver, const SWORD_Model* target ) )
-DECLARE_HOOK( GetObjectPerceptionLevel, int, ( const SWORD_Model* perceiver, const MIL_Object_ABC* object ) )
-DECLARE_HOOK( GetPopulationFlowPerceptionLevel, int, ( const SWORD_Model* perceiver, const MIL_PopulationFlow* flow ) )
-DECLARE_HOOK( GetPopulationConcentrationPerceptionLevel, int, ( const SWORD_Model* perceiver, const MIL_PopulationConcentration* concentration ) )
+DECLARE_HOOK( GetObjectPerceptionLevel, int, ( const SWORD_Model* perceiver, const SWORD_Model* object ) )
+DECLARE_HOOK( GetPopulationFlowPerceptionLevel, int, ( const SWORD_Model* perceiver, const SWORD_Model* flow ) )
+DECLARE_HOOK( GetPopulationConcentrationPerceptionLevel, int, ( const SWORD_Model* perceiver, const SWORD_Model* concentration ) )
 DECLARE_HOOK( CanBeSeen, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) )
-DECLARE_HOOK( CanObjectBePerceived, bool, ( const MIL_Object_ABC* object ) )
-DECLARE_HOOK( CanPopulationFlowBePerceived, bool, ( const MIL_PopulationFlow* flow ) )
-DECLARE_HOOK( CanPopulationConcentrationBePerceived, bool, ( const MIL_PopulationConcentration* concentration ) )
+DECLARE_HOOK( CanObjectBePerceived, bool, ( const SWORD_Model* object ) )
+DECLARE_HOOK( CanPopulationFlowBePerceived, bool, ( const SWORD_Model* flow ) )
+DECLARE_HOOK( CanPopulationConcentrationBePerceived, bool, ( const SWORD_Model* concentration ) )
 DECLARE_HOOK( IsCivilian, bool, ( const SWORD_Model* agent ) )
 DECLARE_HOOK( IsAgentNewlyPerceived, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target, int level ) )
-DECLARE_HOOK( IsPopulationFlowNewlyPerceived, bool, ( const SWORD_Model* perceiver, const MIL_PopulationFlow* flow, int level ) )
-DECLARE_HOOK( IsPopulationConcentrationNewlyPerceived, bool, ( const SWORD_Model* perceiver, const MIL_PopulationConcentration* concentration, int level ) )
-DECLARE_HOOK( IsObjectUniversal, bool, ( const MIL_Object_ABC* object ) )
+DECLARE_HOOK( IsPopulationFlowNewlyPerceived, bool, ( const SWORD_Model* perceiver, const SWORD_Model* flow, int level ) )
+DECLARE_HOOK( IsPopulationConcentrationNewlyPerceived, bool, ( const SWORD_Model* perceiver, const SWORD_Model* concentration, int level ) )
+DECLARE_HOOK( IsObjectUniversal, bool, ( const SWORD_Model* object ) )
 DECLARE_HOOK( GetPerceptionRandom, double, () )
 
 using namespace sword;
@@ -71,22 +72,22 @@ PerceptionView::~PerceptionView()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PerceptionView::Compute
+// Name: PerceptionView::ComputePoint
 // Created: NLD 2004-10-14
 // -----------------------------------------------------------------------------
-const PerceptionLevel& PerceptionView::Compute( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const MT_Vector2D& vPoint ) const
+const PerceptionLevel& PerceptionView::ComputePoint( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const MT_Vector2D& vPoint ) const
 {
-    PerceptionComputer< SurfacesAgentVisitor_ABC, PerceptionSurfaceAgent, MT_Vector2D > computer( perceiver, vPoint );
+    PerceptionComputer< SurfacesAgentVisitor_ABC, PerceptionSurfaceAgent > computer( boost::bind( &PerceptionSurfaceAgent::ComputePointPerception, _1, perceiver, vPoint ) );
     if( IsEnabled( perceiver ) )
         surfaces.Apply( computer );
     return computer.GetLevel();
 }
 
 // -----------------------------------------------------------------------------
-// Name: PerceptionView::Compute
+// Name: PerceptionView::ComputeAgent(
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
-const PerceptionLevel& PerceptionView::Compute( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const wrapper::View& target ) const
+const PerceptionLevel& PerceptionView::ComputeAgent( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const wrapper::View& target ) const
 {
     TransferPerception( perceiver, surfaces );
     if( GET_HOOK( BelongsToKnowledgeGroup )( perceiver, target ) )
@@ -130,10 +131,10 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: PerceptionView::Execute
+// Name: PerceptionView::ExecuteAgents
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
-void PerceptionView::Execute( const wrapper::View& /*model*/, const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const T_AgentPtrVector& perceivableAgents )
+void PerceptionView::ExecuteAgents( const wrapper::View& /*model*/, const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const T_AgentPtrVector& perceivableAgents )
 {
     if( IsEnabled( perceiver ) )
     {
@@ -147,12 +148,12 @@ void PerceptionView::Execute( const wrapper::View& /*model*/, const wrapper::Vie
             if( GET_HOOK( IsAgentPerceptionDistanceHacked )( perceiver, agent ) )
             {
                 const PerceptionLevel& level = PerceptionLevel::FindPerceptionLevel( GET_HOOK( GetHackedPerceptionLevel )( perceiver, agent ) );
-                observer_.NotifyPerception( agent, level );
+                observer_.NotifyAgentPerception( agent, level );
             }
             else if( GET_HOOK( CanBeSeen )( perceiver, agent ) )
             {
-                const PerceptionLevel& level = Compute( perceiver, surfaces, agent );
-                observer_.NotifyPerception( agent, level );
+                const PerceptionLevel& level = ComputeAgent( perceiver, surfaces, agent );
+                observer_.NotifyAgentPerception( agent, level );
                 if( GET_HOOK( IsAgentNewlyPerceived )( perceiver, agent, level.GetID() ) 
                     && !civiliansEncountered && GET_HOOK( IsCivilian )( agent ) )
                 {
@@ -165,52 +166,51 @@ void PerceptionView::Execute( const wrapper::View& /*model*/, const wrapper::Vie
 }
 
 // -----------------------------------------------------------------------------
-// Name: PerceptionView::Compute
+// Name: PerceptionView::ComputeObject
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-const PerceptionLevel& PerceptionView::Compute( const wrapper::View& perceiver, const SurfacesObject_ABC& surfaces, const DEC_Knowledge_Object& knowledge ) const
+const PerceptionLevel& PerceptionView::ComputeObject( const wrapper::View& perceiver, const SurfacesObject_ABC& surfaces, const wrapper::View& knowledgeObject ) const
 {
-    PerceptionComputer< SurfacesObjectVisitor_ABC, PerceptionSurfaceObject, DEC_Knowledge_Object > computer( perceiver, knowledge );
+    PerceptionComputer< SurfacesObjectVisitor_ABC, PerceptionSurfaceObject > computer( boost::bind( &PerceptionSurfaceObject::ComputeKnowledgeObjectPerception, _1, perceiver, knowledgeObject ) );
     if( IsEnabled( perceiver ) )
         surfaces.Apply( computer );
     return computer.GetLevel();
 }
 
-// -----------------------------------------------------------------------------
-// Name: PerceptionView::Compute
-// Created: NLD 2004-09-07
-// -----------------------------------------------------------------------------
-const PerceptionLevel& PerceptionView::Compute( const wrapper::View& perceiver, const SurfacesObject_ABC& surfaces, const MIL_Object_ABC& target ) const
+namespace
 {
-    if( !IsEnabled( perceiver ) || !GET_HOOK( CanObjectBePerceived )( &target ) )
-        return PerceptionLevel::notSeen_;
+    const PerceptionLevel& ComputeObject( const wrapper::View& perceiver, const SurfacesObject_ABC& surfaces, const wrapper::View& target, bool isEnabled )
+    {
+        if( !isEnabled || !GET_HOOK( CanObjectBePerceived )( target ) )
+            return PerceptionLevel::notSeen_;
 
-    if( GET_HOOK( IsObjectUniversal )( &target ) )
-        return PerceptionLevel::identified_;
+        if( GET_HOOK( IsObjectUniversal )( target ) )
+            return PerceptionLevel::identified_;
 
-    PerceptionComputer< SurfacesObjectVisitor_ABC, PerceptionSurfaceObject, MIL_Object_ABC > computer( perceiver, target );
-    surfaces.Apply( computer );
-    return computer.GetLevel();
+        PerceptionComputer< SurfacesObjectVisitor_ABC, PerceptionSurfaceObject > computer( boost::bind( &PerceptionSurfaceObject::ComputeObjectPerception, _1, perceiver, target ) );
+        surfaces.Apply( computer );
+        return computer.GetLevel();
+    }
 }
 
 // -----------------------------------------------------------------------------
-// Name: PerceptionView::Execute
+// Name: PerceptionView::ExecuteObjects
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void PerceptionView::Execute( const wrapper::View& perceiver, const SurfacesObject_ABC& surfaces, const T_ObjectVector& perceivableObjects )
+void PerceptionView::ExecuteObjects( const wrapper::View& perceiver, const SurfacesObject_ABC& surfaces, const T_ObjectVector& perceivableObjects )
 {
     if( IsEnabled( perceiver ) )
     {
         for( T_ObjectVector::const_iterator itObject = perceivableObjects.begin(); itObject != perceivableObjects.end(); ++itObject )
         {
-            MIL_Object_ABC* object = *itObject;
+            const wrapper::View& object = *itObject;
             if ( GET_HOOK( IsObjectPerceptionDistanceHacked )( perceiver, object ) )
             {
                 const PerceptionLevel& level = PerceptionLevel::FindPerceptionLevel( GET_HOOK( GetObjectPerceptionLevel )( perceiver, object ) );
-                observer_.NotifyPerception( object, level );
+                observer_.NotifyObjectPerception( object, level );
             }
             else
-                observer_.NotifyPerception( object, Compute( perceiver, surfaces, *object ) );
+                observer_.NotifyObjectPerception( object, ::ComputeObject( perceiver, surfaces, object, IsEnabled( perceiver ) ) );
         }
     }
 }
@@ -219,13 +219,13 @@ void PerceptionView::Execute( const wrapper::View& perceiver, const SurfacesObje
 // Name: PerceptionView::Compute
 // Created: NLD 2005-10-12
 // -----------------------------------------------------------------------------
-const PerceptionLevel& PerceptionView::Compute( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const MIL_PopulationFlow& flow, T_PointVector& shape ) const
+const PerceptionLevel& PerceptionView::ComputeFlow( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const wrapper::View& flow, T_PointVector& shape ) const
 {
-    if( !IsEnabled( perceiver ) || !GET_HOOK( CanPopulationFlowBePerceived )( &flow ) )
+    if( !IsEnabled( perceiver ) || !GET_HOOK( CanPopulationFlowBePerceived )( flow ) )
         return PerceptionLevel::notSeen_;
     struct PerceptionComputer : public SurfacesAgentVisitor_ABC
     {
-        PerceptionComputer( const wrapper::View& perceiver, const MIL_PopulationFlow& flow )
+        PerceptionComputer( const wrapper::View& perceiver, const wrapper::View& flow )
             : perceiver_   ( perceiver )
             , flow_        ( flow )
             , pBestSurface_( 0 )
@@ -242,35 +242,35 @@ const PerceptionLevel& PerceptionView::Compute( const wrapper::View& perceiver, 
             return false;
         }
         const wrapper::View& perceiver_;
-        const MIL_PopulationFlow& flow_;
+        const wrapper::View& flow_;
         const PerceptionSurfaceAgent* pBestSurface_;
         double rBestCost_;
     } computer( perceiver, flow );
     surfaces.Apply( computer );
     if( !computer.pBestSurface_ )
         return PerceptionLevel::notSeen_;
-    return computer.pBestSurface_->ComputePerception( perceiver, flow, shape );
+    return computer.pBestSurface_->ComputeFlowPerception( perceiver, flow, shape );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PerceptionView::Execute
+// Name: PerceptionView::ExecuteFLows
 // Created: NLD 2005-10-11
 // -----------------------------------------------------------------------------
-void PerceptionView::Execute( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const T_ConstPopulationFlowVector& perceivableFlows )
+void PerceptionView::ExecuteFlows( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const T_ConstPopulationFlowVector& perceivableFlows )
 {
     if( IsEnabled( perceiver ) )
     {
         bool civiliansEncountered = false;
         for( T_ConstPopulationFlowVector::const_iterator it = perceivableFlows.begin(); it != perceivableFlows.end(); ++it )
         {
-            MIL_PopulationFlow* flow = const_cast< MIL_PopulationFlow* >( *it ); // $$$ RC LDC Should propagate constness to called methods instead
+            const wrapper::View& flow = *it;
             T_PointVector shape;
             const PerceptionLevel* level = &PerceptionLevel::notSeen_;
             if ( GET_HOOK( IsPopulationFlowPerceptionDistanceHacked )( perceiver, flow ) )
                 level = &PerceptionLevel::FindPerceptionLevel( GET_HOOK( GetPopulationFlowPerceptionLevel )( perceiver, flow ) );
             else
-                level = &Compute( perceiver, surfaces, *flow, shape );
-            observer_.NotifyPerception( flow, *level, shape );
+                level = &ComputeFlow( perceiver, surfaces, flow, shape );
+            observer_.NotifyFlowPerception( flow, *level, shape );
             civiliansEncountered |= GET_HOOK( IsPopulationFlowNewlyPerceived )( perceiver, flow, level->GetID() );
         }
         if( civiliansEncountered )
@@ -279,37 +279,37 @@ void PerceptionView::Execute( const wrapper::View& perceiver, const SurfacesAgen
 }
 
 // -----------------------------------------------------------------------------
-// Name: PerceptionView::Compute
+// Name: PerceptionView::ComputeConcentration
 // Created: NLD 2005-10-11
 // -----------------------------------------------------------------------------
-const PerceptionLevel& PerceptionView::Compute( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const MIL_PopulationConcentration& target ) const
+const PerceptionLevel& PerceptionView::ComputeConcentration( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const wrapper::View& target ) const
 {
-    if( !IsEnabled( perceiver ) || !GET_HOOK( CanPopulationConcentrationBePerceived )( &target ) )
+    if( !IsEnabled( perceiver ) || !GET_HOOK( CanPopulationConcentrationBePerceived )( target ) )
         return PerceptionLevel::notSeen_;
 
-    PerceptionComputer< SurfacesAgentVisitor_ABC, PerceptionSurfaceAgent, MIL_PopulationConcentration > computer( perceiver, target );
+    PerceptionComputer< SurfacesAgentVisitor_ABC, PerceptionSurfaceAgent > computer( boost::bind( &PerceptionSurfaceAgent::ComputeConcentrationPerception, _1, perceiver, target ) );
     surfaces.Apply( computer );
     return computer.GetLevel();
 }
 
 // -----------------------------------------------------------------------------
-// Name: PerceptionView::Execute
+// Name: PerceptionView::ExecuteConcentrations
 // Created: NLD 2005-10-11
 // -----------------------------------------------------------------------------
-void PerceptionView::Execute( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const T_ConstPopulationConcentrationVector& perceivableConcentrations )
+void PerceptionView::ExecuteConcentrations( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const T_ConstPopulationConcentrationVector& perceivableConcentrations )
 {
     if( IsEnabled( perceiver ) )
     {
         bool civiliansEncountered = false;
         for( T_ConstPopulationConcentrationVector::const_iterator it = perceivableConcentrations.begin(); it != perceivableConcentrations.end(); ++it )
         {
-            MIL_PopulationConcentration* concentration = const_cast< MIL_PopulationConcentration* >( *it ); // $$$ RC LDC Should propagate constness to called methods instead
+            const wrapper::View& concentration = *it;
             const PerceptionLevel* level = &PerceptionLevel::notSeen_;
             if ( GET_HOOK( IsPopulationConcentrationPerceptionDistanceHacked )( perceiver, concentration ) )
                 level = &PerceptionLevel::FindPerceptionLevel( GET_HOOK( GetPopulationConcentrationPerceptionLevel )( perceiver, concentration ) );
             else
-                level = &Compute( perceiver, surfaces, *concentration );
-            observer_.NotifyPerception( concentration, *level );
+                level = &ComputeConcentration( perceiver, surfaces, concentration );
+            observer_.NotifyConcentrationPerception( concentration, *level );
             civiliansEncountered |= GET_HOOK( IsPopulationConcentrationNewlyPerceived )( perceiver, concentration, level->GetID() );
         }
         if( civiliansEncountered )

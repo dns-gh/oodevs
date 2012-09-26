@@ -17,10 +17,6 @@
 
 namespace sword
 {
-namespace wrapper
-{
-    class View;
-}
 namespace perception
 {
 // =============================================================================
@@ -40,12 +36,12 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyPerceptionUrban( const MIL_UrbanObject_ABC* urbanBlock, const PerceptionLevel& level );
-    virtual void NotifyPerception( const wrapper::View& agent, const PerceptionLevel& level );
-    virtual void NotifyPerception( const wrapper::View& agent, const PerceptionLevel& level, bool perceptionRecorded );
-    virtual void NotifyPerception( const MIL_Object_ABC* object, const PerceptionLevel& level );
-    virtual void NotifyPerception( const MIL_PopulationFlow* flow, const PerceptionLevel& level, const std::vector< MT_Vector2D >& shape );
-    virtual void NotifyPerception( const MIL_PopulationConcentration* concentration, const PerceptionLevel& level );
+    virtual void NotifyUrbanPerception( const wrapper::View& urbanBlock, const PerceptionLevel& level );
+    virtual void NotifyAgentPerception( const wrapper::View& agent, const PerceptionLevel& level );
+    virtual void NotifyAgentPerception( const wrapper::View& agent, const PerceptionLevel& level, bool perceptionRecorded );
+    virtual void NotifyObjectPerception( const wrapper::View& object, const PerceptionLevel& level );
+    virtual void NotifyFlowPerception( const wrapper::View& flow, const PerceptionLevel& level, const std::vector< MT_Vector2D >& shape );
+    virtual void NotifyConcentrationPerception( const wrapper::View& concentration, const PerceptionLevel& level );
     //@}
 
 private:

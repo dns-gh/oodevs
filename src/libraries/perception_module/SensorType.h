@@ -54,9 +54,9 @@ public:
     //@{
     const SensorTypeObject* GetTypeObject() const;
     const SensorTypeAgent*  GetTypeAgent () const;
-    const std::string&          GetName      () const;
-          unsigned int                  GetID        () const;
-    const unsigned int GetDelay() const;
+    const std::string&      GetName      () const;
+          unsigned int      GetID        () const;
+    const unsigned int      GetDelay     () const;
     //@}
 
 private:

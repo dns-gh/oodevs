@@ -45,10 +45,10 @@ PerceptionCoupDeSonde::~PerceptionCoupDeSonde()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PerceptionCoupDeSonde::Compute
+// Name: PerceptionCoupDeSonde::ComputePoint
 // Created: NLD 2004-10-14
 // -----------------------------------------------------------------------------
-const PerceptionLevel& PerceptionCoupDeSonde::Compute( const wrapper::View& perceiver, const SurfacesAgent_ABC& /*surfaces*/, const MT_Vector2D& vTargetPos ) const
+const PerceptionLevel& PerceptionCoupDeSonde::ComputePoint( const wrapper::View& perceiver, const SurfacesAgent_ABC& /*surfaces*/, const MT_Vector2D& vTargetPos ) const
 {
     const MT_Vector2D vSourcePos( perceiver[ "movement/position/x" ], perceiver[ "movement/position/y" ] );
     if( vSourcePos.Distance( vTargetPos ) > rLength_ )
@@ -62,10 +62,10 @@ const PerceptionLevel& PerceptionCoupDeSonde::Compute( const wrapper::View& perc
 }
 
 // -----------------------------------------------------------------------------
-// Name: PerceptionCoupDeSonde::Compute
+// Name: PerceptionCoupDeSonde::ComputeAgent
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
-const PerceptionLevel& PerceptionCoupDeSonde::Compute( const wrapper::View& perceiver, const SurfacesAgent_ABC& /*surfaces*/, const wrapper::View& target ) const
+const PerceptionLevel& PerceptionCoupDeSonde::ComputeAgent( const wrapper::View& perceiver, const SurfacesAgent_ABC& /*surfaces*/, const wrapper::View& target ) const
 {
     if( GET_HOOK( BelongsToKnowledgeGroup )( perceiver, target ) )
         return PerceptionLevel::recognized_;
@@ -83,10 +83,10 @@ const PerceptionLevel& PerceptionCoupDeSonde::Compute( const wrapper::View& perc
 }
 
 // -----------------------------------------------------------------------------
-// Name: PerceptionCoupDeSonde::Execute
+// Name: PerceptionCoupDeSonde::ExecuteAgents
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
-void PerceptionCoupDeSonde::Execute( const wrapper::View& model, const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const T_AgentPtrVector& /*perceivableAgents*/ )
+void PerceptionCoupDeSonde::ExecuteAgents( const wrapper::View& model, const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const T_AgentPtrVector& /*perceivableAgents*/ )
 {
     Perception_ABC::T_AgentPtrVector vAgentDetectedList;
     ListInCircleVisitor< wrapper::View > agentVisitor( vAgentDetectedList );
@@ -97,6 +97,6 @@ void PerceptionCoupDeSonde::Execute( const wrapper::View& model, const wrapper::
     {
         const wrapper::View& agent = *itAgent;
         if( GET_HOOK( CanBeSeen )( perceiver, agent ) )
-            observer_.NotifyPerception( agent, Compute( perceiver, surfaces, agent ) );
+            observer_.NotifyAgentPerception( agent, ComputeAgent( perceiver, surfaces, agent ) );
     }
 }

@@ -54,10 +54,10 @@ PerceptionAlat::~PerceptionAlat()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PerceptionAlat::Execute
+// Name: PerceptionAlat::ExecuteAgents
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
-void PerceptionAlat::Execute( const wrapper::View& model, const wrapper::View& perceiver, const SurfacesAgent_ABC& /*surfaces*/, const T_AgentPtrVector& /*perceivableAgents*/ )
+void PerceptionAlat::ExecuteAgents( const wrapper::View& model, const wrapper::View& perceiver, const SurfacesAgent_ABC& /*surfaces*/, const T_AgentPtrVector& /*perceivableAgents*/ )
 {
     const MT_Vector2D perceiverPosition( perceiver[ "movement/position/x" ], perceiver[ "movement/position/y" ] );
     const MT_Vector2D perceiverDirection( perceiver[ "movement/direction/x" ], perceiver[ "movement/direction/y" ] );
@@ -76,7 +76,7 @@ void PerceptionAlat::Execute( const wrapper::View& model, const wrapper::View& p
         if( GET_HOOK( CanBeSeen )( perceiver, target ) && fabs( ( targetPosition - perceiverPosition ) * perceiverDirection ) <= rDetectionSemiHeight )
         {
             const bool bPerceptionDelayed = GET_HOOK( GetVisionObject )( &targetPosition ) != eVisionEmpty;
-            observer_.NotifyPerception( target, PerceptionLevel::recognized_, bPerceptionDelayed );
+            observer_.NotifyAgentPerception( target, PerceptionLevel::recognized_, bPerceptionDelayed );
         }
     }
 }

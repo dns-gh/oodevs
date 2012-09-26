@@ -119,7 +119,7 @@ void PerceptionRadarData::Update( const wrapper::View& model, PerceptionObserver
             itAcquisitionData = acquisitionData_.erase( itAcquisitionData );
             continue;
         }
-        observer.NotifyPerception( target, pRadarType_->ComputeAcquisitionLevel( target, data.nFirstTimeStepPerceived_, model[ "tick" ] ) );
+        observer.NotifyAgentPerception( target, pRadarType_->ComputeAcquisitionLevel( target, data.nFirstTimeStepPerceived_, model[ "tick" ] ) );
         data.bUpdated_ = false;
         ++itAcquisitionData;
     }
