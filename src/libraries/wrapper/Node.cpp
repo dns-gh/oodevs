@@ -67,7 +67,7 @@ Node& Node::operator=( const std::string& value )
 Node& Node::operator=( const View& view )
 {
     if( ! ::SWORD_CopyModel( view, node_ ) )
-        throw std::runtime_error( "unable copy node model" );
+        throw std::runtime_error( "unable to copy node model" );
     return *this;
 }
 
