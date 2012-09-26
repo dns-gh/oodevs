@@ -110,8 +110,8 @@ BOOST_FIXTURE_TEST_CASE( population_flows_in_list_are_identified_with_default_se
 
 BOOST_FIXTURE_TEST_CASE( population_concentrations_in_list_are_identified_with_default_sensor, PerceptionCommandFixture )
 {
-    const SWORD_Model* concentration = core::Convert( &model[ "populations/some-population/concentrations/the-concentration" ] );
-    model[ "populations/some-population/concentrations/the-concentration" ] = core::MakeModel( "data", 42 );
+    const SWORD_Model* concentration = core::Convert( &model[ "populations/some-population/elements/the-concentration" ] );
+    model[ "populations/some-population/elements/the-concentration" ] = core::MakeModel( "data", 42 );
     const SWORD_Model* perceiver = core::Convert( &entity );
     MOCK_RESET( GetConcentrationListWithinCircle );
     MOCK_EXPECT( GetConcentrationListWithinCircle ).once().calls( boost::bind( boost::apply< void >(), _4, concentration, _5 ) );

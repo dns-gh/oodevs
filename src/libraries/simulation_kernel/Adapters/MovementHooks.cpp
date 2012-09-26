@@ -115,7 +115,7 @@ namespace
         BOOST_FOREACH( const TER_PopulationConcentration_ABC* terConcentration, perceivableConcentrations )
         {
             const MIL_PopulationConcentration* concentration = static_cast< const MIL_PopulationConcentration* >( terConcentration );
-            callback( core::Convert( &rootNode[ "populations" ][ concentration->GetPopulation().GetID() ][ "concentrations" ][ concentration->GetID() ] ), userData );
+            callback( core::Convert( &rootNode[ "populations" ][ concentration->GetPopulation().GetID() ][ "elements" ][ concentration->GetID() ] ), userData );
         }
     }
     DEFINE_HOOK( GetFlowListWithinCircle, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* flow, void* userData ), void* userData ) )
@@ -126,7 +126,7 @@ namespace
         BOOST_FOREACH( const TER_PopulationFlow_ABC* terFlow, perceivableFlows )
         {
             const MIL_PopulationFlow* flow = static_cast< const MIL_PopulationFlow* >( terFlow );
-            callback( core::Convert( &rootNode[ "populations" ][ flow->GetPopulation().GetID() ][ "flows" ][ flow->GetID() ] ), userData );
+            callback( core::Convert( &rootNode[ "populations" ][ flow->GetPopulation().GetID() ][ "elements" ][ flow->GetID() ] ), userData );
         }
     }
     DEFINE_HOOK( GetUrbanObjectListWithinCircle, void, ( const SWORD_Model* root, const MT_Vector2D& center, float radius, void (*callback)( const SWORD_Model* urbanObjectWrapper, void* userData ), void* userData ) )

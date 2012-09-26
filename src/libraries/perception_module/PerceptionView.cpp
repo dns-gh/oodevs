@@ -38,7 +38,7 @@ DECLARE_HOOK( GetPopulationFlowPerceptionLevel, int, ( const SWORD_Model* percei
 DECLARE_HOOK( GetPopulationConcentrationPerceptionLevel, int, ( const SWORD_Model* perceiver, const SWORD_Model* concentration ) )
 DECLARE_HOOK( CanBeSeen, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) )
 DECLARE_HOOK( CanObjectBePerceived, bool, ( const SWORD_Model* object ) )
-DECLARE_HOOK( CanPopulationElementBePerceived, bool, ( const SWORD_Model* element )
+DECLARE_HOOK( CanPopulationElementBePerceived, bool, ( const SWORD_Model* element ) )
 DECLARE_HOOK( IsCivilian, bool, ( const SWORD_Model* agent ) )
 DECLARE_HOOK( IsAgentNewlyPerceived, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target, int level ) )
 DECLARE_HOOK( IsPopulationFlowNewlyPerceived, bool, ( const SWORD_Model* perceiver, const SWORD_Model* flow, int level ) )
@@ -220,7 +220,7 @@ void PerceptionView::ExecuteObjects( const wrapper::View& /*model*/, const wrapp
 // -----------------------------------------------------------------------------
 const PerceptionLevel& PerceptionView::ComputeFlow( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const wrapper::View& flow, T_PointVector& shape ) const
 {
-    if( !IsEnabled( perceiver ) || !GET_HOOK( CanPopulationFlowBePerceived )( flow ) )
+    if( !IsEnabled( perceiver ) || !GET_HOOK( CanPopulationElementBePerceived )( flow ) )
         return PerceptionLevel::notSeen_;
     struct PerceptionComputer : public SurfacesAgentVisitor_ABC
     {

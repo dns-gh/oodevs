@@ -427,12 +427,12 @@ namespace
         BOOST_FOREACH( const TER_PopulationConcentration_ABC* terConcentration, perceivableConcentrations )
         {
             const MIL_PopulationConcentration* concentration = static_cast< const MIL_PopulationConcentration* >( terConcentration );
-            concentrationCallback( core::Convert( &rootNode[ "populations" ][ concentration->GetPopulation().GetID() ][ "concentrations" ][ concentration->GetID() ] ), userData );
+            concentrationCallback( core::Convert( &rootNode[ "populations" ][ concentration->GetPopulation().GetID() ][ "elements" ][ concentration->GetID() ] ), userData );
         }
         BOOST_FOREACH( const TER_PopulationFlow_ABC* terFlow, perceivableFlows )
         {
             const MIL_PopulationFlow* flow = static_cast< const MIL_PopulationFlow* >( terFlow );
-            flowCallback( core::Convert( &rootNode[ "populations" ][ flow->GetPopulation().GetID() ][ "flows" ][ flow->GetID() ] ), userData );
+            flowCallback( core::Convert( &rootNode[ "populations" ][ flow->GetPopulation().GetID() ][ "elements" ][ flow->GetID() ] ), userData );
         }
     }
     DEFINE_HOOK( IsInCity, bool, ( const SWORD_Model* entity ) )
@@ -453,11 +453,11 @@ namespace
     }
     DEFINE_HOOK( IsPopulationFlowPerceptionDistanceHacked, bool, ( const SWORD_Model* perceiver, const SWORD_Model* flow ) )
     {
-        return GET_PION( perceiver ).GetKnowledgeGroup()->IsPerceptionDistanceHacked( GET_DATA( flow, MIL_PopulationFlow* )->GetPopulation() );
+        return GET_PION( perceiver ).GetKnowledgeGroup()->IsPerceptionDistanceHacked( GET_DATA( flow, MIL_PopulationElement_ABC ).GetPopulation() );
     }
     DEFINE_HOOK( IsPopulationConcentrationPerceptionDistanceHacked, bool, ( const SWORD_Model* perceiver, const SWORD_Model* concentration ) )
     {
-        return GET_PION( perceiver ).GetKnowledgeGroup()->IsPerceptionDistanceHacked( GET_DATA( concentration, MIL_PopulationConcentration* )->GetPopulation() );
+        return GET_PION( perceiver ).GetKnowledgeGroup()->IsPerceptionDistanceHacked( GET_DATA( concentration, MIL_PopulationElement_ABC ).GetPopulation() );
     }
     DEFINE_HOOK( GetHackedPerceptionLevel, int, ( const SWORD_Model* perceiver, const SWORD_Model* target ) )
     {
@@ -469,11 +469,11 @@ namespace
     }
     DEFINE_HOOK( GetPopulationFlowPerceptionLevel, int, ( const SWORD_Model* perceiver, const SWORD_Model* flow ) )
     {
-        return GET_PION( perceiver ).GetKnowledgeGroup()->GetPerceptionLevel( GET_DATA( flow, MIL_PopulationFlow* )->GetPopulation() ).GetID();
+        return GET_PION( perceiver ).GetKnowledgeGroup()->GetPerceptionLevel( GET_DATA( flow, MIL_PopulationElement_ABC ).GetPopulation() ).GetID();
     }
     DEFINE_HOOK( GetPopulationConcentrationPerceptionLevel, int, ( const SWORD_Model* perceiver, const SWORD_Model* concentration ) )
     {
-        return GET_PION( perceiver ).GetKnowledgeGroup()->GetPerceptionLevel( GET_DATA( concentration, MIL_PopulationConcentration* )->GetPopulation() ).GetID();
+        return GET_PION( perceiver ).GetKnowledgeGroup()->GetPerceptionLevel( GET_DATA( concentration, MIL_PopulationElement_ABC ).GetPopulation() ).GetID();
     }
     DEFINE_HOOK( CanBeSeen, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) )
     {
@@ -504,13 +504,13 @@ namespace
     {
         if( PHY_PerceptionLevel::FindPerceptionLevel( level ) == PHY_PerceptionLevel::notSeen_ )
             return false;
-        return GET_PION( perceiver ).GetKnowledge().GetKnowledgePopulationPerceptionContainer().GetKnowledgePopulationPerception( GET_DATA( flow, MIL_PopulationFlow* )->GetPopulation() ) == 0;
+        return GET_PION( perceiver ).GetKnowledge().GetKnowledgePopulationPerceptionContainer().GetKnowledgePopulationPerception( GET_DATA( flow, MIL_PopulationElement_ABC ).GetPopulation() ) == 0;
     }
     DEFINE_HOOK( IsPopulationConcentrationNewlyPerceived, bool, ( const SWORD_Model* perceiver, const SWORD_Model* concentration, int level ) )
     {
         if( PHY_PerceptionLevel::FindPerceptionLevel( level ) == PHY_PerceptionLevel::notSeen_ )
             return false;
-        return GET_PION( perceiver ).GetKnowledge().GetKnowledgePopulationPerceptionContainer().GetKnowledgePopulationPerception( GET_DATA( concentration, MIL_PopulationConcentration* )->GetPopulation() ) == 0;
+        return GET_PION( perceiver ).GetKnowledge().GetKnowledgePopulationPerceptionContainer().GetKnowledgePopulationPerception( GET_DATA( concentration, MIL_PopulationElement_ABC ).GetPopulation() ) == 0;
     }
     DEFINE_HOOK( ConvertSecondsToSim, double, ( double seconds ) )
     {

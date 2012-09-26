@@ -230,11 +230,11 @@ void Sink::Initialize()
     listeners_.push_back( new PerceptionCallbackEventListener( *model_, *facade_ ) );
     listeners_.push_back( new MovementEventListener( *model_, *facade_ ) );
     listeners_.push_back( new MovementReportEventListener( *model_, *facade_ ) );
-    listeners_.push_back( new DirectFirePionEventListener( *model_, *facade_, agentFactory_ ) );
-    listeners_.push_back( new DirectFirePionAttackEventListener( *model_, *facade_, agentFactory_ ) );
+    listeners_.push_back( new DirectFirePionEventListener( *model_, *facade_, agents_ ) );
+    listeners_.push_back( new DirectFirePionAttackEventListener( *model_, *facade_, agents_ ) );
     listeners_.push_back( new CallbackEventListener( *model_, *facade_, "direct fire pion callback" ) );
-    listeners_.push_back( new ExternalPerceptionEventListener( *model_, *facade_, agentFactory_ ) );
-    listeners_.push_back( new AlatMonitoringEventListener( *model_, *facade_, agentFactory_ ) );
+    listeners_.push_back( new ExternalPerceptionEventListener( *model_, *facade_, agents_ ) );
+    listeners_.push_back( new AlatMonitoringEventListener( *model_, *facade_, agents_ ) );
     MovementHooks::Initialize( *facade_ );
     RolePion_Decision::Initialize( *facade_ );
     FireHooks::Initialize( *facade_ );
