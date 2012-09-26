@@ -85,6 +85,18 @@ void PHY_RoleAction_Objects_DataComputer::RollbackConsumptionsReservations()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Objects_DataComputer::GetDotationsNumber
+// Created: LDC 2012-09-26
+// -----------------------------------------------------------------------------
+unsigned int PHY_RoleAction_Objects_DataComputer::GetDotationsNumber( const PHY_DotationCategory& category ) const
+{
+    unsigned int nNbrAvailable = 0;
+    for( CRIT_PionDataVector it = pionsData_.rbegin(); it != pionsData_.rend(); ++it )
+        nNbrAvailable += it->GetDotationValue( category );
+    return nNbrAvailable;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Objects_DataComputer::HasDotations
 // Created: NLD 2004-10-01
 // -----------------------------------------------------------------------------
