@@ -63,9 +63,11 @@ namespace
 struct Metadata
 {
     Metadata( const std::string& package, const std::string& version )
-        : package_( package )
-        , version_( version )
-        , links_  ( 0 )
+        : package_ ( package )
+        , version_ ( version )
+        , checksum_()
+        , links_   ( 0 )
+        , size_    ( 0 )
     {
         // NOTHING
     }
@@ -81,6 +83,16 @@ struct Metadata
         return version_;
     }
 
+    std::string GetChecksum() const
+    {
+       return checksum_;
+    }
+
+    size_t GetSize() const
+    {
+       return size_;
+    }
+
     Tree GetProperties() const
     {
         Tree rpy;
@@ -94,6 +106,14 @@ struct Metadata
     {
         tree.put( "package", package_ );
         tree.put( "version", version_ );
+        tree.put( "checksum", checksum_ );
+        tree.put( "size", size_ );
+    }
+
+    void Finalize( const std::string& checksum, size_t size )
+    {
+       checksum_ = checksum;
+       size_ = size;
     }
 
     static std::string GetFilename()
@@ -153,10 +173,12 @@ struct Metadata
 
 private:
     Metadata( const Tree& tree )
-        : package_( Get< std::string >( tree, "package", "" ) )
-        , version_( GetVersion( tree, "version" ) )
-        , tomb_   ( Utf8( Get< std::string >( tree, "tomb", "" ) ) )
-        , links_  ( 0 )
+        : package_ ( Get< std::string >( tree, "package" ) )
+        , version_ ( GetVersion( tree, "version" ) )
+        , checksum_( Get< std::string >( tree, "checksum" ) )
+        , tomb_    ( Utf8( Get< std::string >( tree, "tomb" ) ) )
+        , links_   ( 0 )
+        , size_    ( 0 )
     {
         // NOTHING
     }
@@ -175,8 +197,10 @@ private:
 
     const std::string package_;
     const std::string version_;
+    std::string checksum_;
     Path tomb_;
     size_t links_;
+    size_t size_;
 };
 
 template< typename T, typename U >
@@ -240,7 +264,6 @@ struct Item : Package_ABC::Item_ABC
         , name_ ( name )
         , date_ ( date )
         , meta_ ( meta ? *meta : Metadata::Reload( system, root ) )
-        , size_ ( 0 )
     {
         // NOTHING
     }
@@ -248,7 +271,6 @@ struct Item : Package_ABC::Item_ABC
     Item( const std::string& name )
         : id_   ( 0 )
         , name_ ( name )
-        , size_ ( 0 )
     {
         // NOTHING
     }
@@ -265,8 +287,6 @@ struct Item : Package_ABC::Item_ABC
         tree.put( "type", GetType() );
         tree.put( "name", Utf8( name_ ) );
         tree.put( "date", date_ );
-        tree.put( "checksum", checksum_ );
-        tree.put( "size", size_ );
         meta_.SaveTo( tree );
         if( !action_.empty() )
             tree.put( "action", action_ );
@@ -277,7 +297,7 @@ struct Item : Package_ABC::Item_ABC
 
     virtual size_t GetSize() const
     {
-        return size_;
+        return meta_.GetSize();
     }
 
     virtual Path GetRoot() const
@@ -292,7 +312,7 @@ struct Item : Package_ABC::Item_ABC
 
     virtual std::string GetChecksum() const
     {
-        return checksum_;
+        return meta_.GetChecksum();
     }
 
     virtual bool Compare( size_t id ) const
@@ -307,7 +327,7 @@ struct Item : Package_ABC::Item_ABC
 
     virtual bool Compare( const std::pair< Path, std::string >& pair ) const
     {
-        return pair.first == root_ && pair.second == checksum_;
+        return pair.first == root_ && pair.second == GetChecksum();
     }
 
     typedef std::vector< Package_ABC::T_Item > T_Dependencies;
@@ -330,7 +350,7 @@ struct Item : Package_ABC::Item_ABC
         Package_ABC::T_Item next = ref.Find( *this, true );
         if( !next )
             action_ = "add";
-        else if( checksum_ != next->GetChecksum() )
+        else if( GetChecksum() != next->GetChecksum() )
             action_ = "update";
     }
 
@@ -343,10 +363,13 @@ struct Item : Package_ABC::Item_ABC
 
     void MakeChecksum( const FileSystem_ABC& system )
     {
+        if( !GetChecksum().empty() )
+           return;
         size_t read;
         const Path root = root_ / GetSuffix();
-        checksum_ = system.Checksum( root, IsItemFile( root ), read );
-        size_ = read;
+        const std::string checksum = system.Checksum( root, IsItemFile( root ), read );
+        meta_.Finalize( checksum, read );
+        meta_.Save( system, root );
     }
 
     void Install( Async& async, const FileSystem_ABC& system, const Path& tomb, const Path& root, const Package_ABC& dst, const Package::T_Items& targets, const PathOperand& operand ) const
@@ -356,7 +379,8 @@ struct Item : Package_ABC::Item_ABC
                 return;
 
         Package_ABC::T_Item old = dst.Find( *this, false );
-        if( old && old->GetChecksum() == checksum_ )
+        const std::string checksum = GetChecksum();
+        if( old && old->GetChecksum() == checksum )
             return old->Reinstall( system );
 
         const Path output = system.MakeAnyPath( root );
@@ -404,7 +428,7 @@ struct Item : Package_ABC::Item_ABC
         const std::string prefix = GetType();
         tree.put( prefix + ".name", Utf8( name_ ) );
         tree.put( prefix + ".root", Utf8( root_ ) );
-        tree.put( prefix + ".checksum", checksum_ );
+        tree.put( prefix + ".checksum", GetChecksum() );
         if( recurse )
             BOOST_FOREACH( const T_Dependencies::value_type& it, GetDependencies() )
                 for( Package_ABC::T_Item next = ref.Find( *it, true ); next; next.reset() )
@@ -420,7 +444,7 @@ struct Item : Package_ABC::Item_ABC
     void Download( const FileSystem_ABC& fs, web::Chunker_ABC& dst ) const
     {
         dst.SetName( Utf8( name_ ) );
-        dst.SetHeader( "Original-Content-Length", boost::lexical_cast< std::string >( size_ ) );
+        dst.SetHeader( "Original-Content-Length", boost::lexical_cast< std::string >( GetSize() ) );
         io::Writer_ABC& io = dst.OpenWriter();
         FileSystem_ABC::T_Packer packer = fs.Pack( io );
         packer->Pack( root_, IsItemFile( GetSuffix() ) );
@@ -432,10 +456,8 @@ protected:
     const Path name_;
     const std::string date_;
     Metadata meta_;
-    std::string checksum_;
     std::string action_;
     std::string error_;
-    size_t size_;
 };
 
 std::string Format( const std::time_t& time )
