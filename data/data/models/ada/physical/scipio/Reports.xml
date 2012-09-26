@@ -577,10 +577,47 @@
   <report category="operational" id="403" message="Aucune unité ne peut effectuer la mission principale ou un des pions de l'automate est brouillé"/>
   <report category="operational" id="404" message="Section repliée"/>
   <report category="operational" id="405" message="Début de repliement"/>
-  <report category="operational" id="406" message="Progression difficile en raison de %1">
+  <report category="operational" id="406" message="Le bloc urbain ne peut pas être habité"/>
+  <report category="operational" id="407" message="Objectif alerté"/>
+  <report category="operational" id="408" message="L'objectif n'est plus alerté"/>
+  <report category="operational" id="409" message="Objectif confiné"/>
+  <report category="operational" id="410" message="L'objectif n'est plus confiné"/>
+  <report category="operational" id="411" message="Objectif évacué"/>
+  <report category="operational" id="412" message="L'objectif n'est plus évacué"/>
+  <report category="operational" id="413" message="Début de production de ressource"/>
+  <report category="operational" id="414" message="Fin de production de ressource"/>
+  <report category="operational" id="415" message="Amélioration de la production du noeud de ressource"/>
+  <report category="operational" id="416" message="Détérioration de la production du noeud de ressource"/>
+  <report category="operational" id="417" message="Désactivation du noeud de ressource"/>
+  <report category="operational" id="418" message="Activation du noeud de ressource"/>
+  <report category="operational" id="419" message="Pas de noeud de ressource dans la zone"/>
+  <report category="operational" id="420" message="Pas de bloc urbain dans la zone"/>
+  <report category="operational" id="421" message="Pas de foule dans la zone"/>
+  <report category="operational" id="422" message="Victimes évacuées"/>
+  <report category="operational" id="423" message="Victimes extraites"/>
+  <report category="operational" id="424" message="Les victimes ne peuvent être évacuées"/>
+  <report category="operational" id="425" message="Les victimes ne peuvent être extraites"/>
+  <report category="operational" id="426" message="Début de réduction de la production de ressources"/>
+  <report category="operational" id="427" message="Fin de réduction de la production de ressources"/>
+  <report category="operational" id="428" message="Pas de victimes blessées"/>
+  <report category="operational" id="429" message="L'unité ne peut être transportée"/>
+  <report category="operational" id="430" message="L'unité ne peut être déposée"/>
+  <report category="operational" id="431" message="L'unité est transportée"/>
+  <report category="operational" id="432" message="L'unité est déposée"/>
+  <report category="operational" id="433" message="Progression difficile en raison de %1">
     <parameter type="String"/>
   </report>
-  <report category="operational" id="407" message="La lima de type %1 n'est pas renseignée">
+  <report category="operational" id="434" message="Le feu ne peut pas être éteint"/>
+  <report category="operational" id="435" message="Pas de feux dans la zone"/>
+  <report category="operational" id="436" message="Début de décontamination"/>
+  <report category="operational" id="437" message="Fin de décontamination"/>
+  <report category="operational" id="438" message="Début de soins sur la foule"/>
+  <report category="operational" id="439" message="Personnes blessées guéries"/>
+  <report category="operational" id="440" message="Début d'extraction des victimes"/>
+  <report category="operational" id="441" message="Impossible de soigner le blessé"/>
+  <report category="operational" id="442" message="Point de contrôle établi"/>
+  <report category="operational" id="443" message="Le système est utilisé"/>
+  <report category="operational" id="444" message="La lima de type %1 n'est pas renseignée">
     <parameter type="Enumeration">
       <value id="0" name="ligne_debouche"/>
       <value id="1" name="ligne_changement_attitude"/>
@@ -594,70 +631,67 @@
       <value id="9" name="ligne_identification_accueil"/>
     </parameter>
   </report>
-  <report category="operational" id="408" message="Vitesse limitée par population"/>
-  <report category="operational" id="409" message="Fin de vitesse limitée par population"/>
-  <report category="operational" id="410" message="Décrochage face à un incendie"/>
-  <report category="operational" id="411" message="Capturé"/>
-  <report category="operational" id="412" message="Prise en otage de %1">
+  <report category="operational" id="445" message="L'entité ne peut pas suivre (elle ne peut pas faire la mission)"/>
+  <report category="operational" id="446" message="Demande de suivre"/>
+  <report category="operational" id="447" message="Début de création de lien de ressource"/>
+  <report category="operational" id="448" message="Lien de ressource créé"/>
+  <report category="operational" id="449" message="L'unité ne peut pas être déposée"/>
+  <report category="operational" id="450" message="Décrochage face à un incendie"/>
+  <report category="operational" id="451" message="Capturé"/>
+  <report category="operational" id="452" message="Prise en otage de %1">
     <parameter type="AgentKnowledge"/>
   </report>
-  <report category="operational" id="413" message="En attente d'une escorte ou d'ordre poursuivre convoi"/>
-  <report category="operational" id="414" message="Début de dévalorisation pour l'objet : %1">
+  <report category="operational" id="453" message="En attente d'une escorte ou d'ordre poursuivre convoi"/>
+  <report category="operational" id="454" message="Début de dévalorisation pour l'objet : %1">
     <parameter type="ObjectKnowledge"/>
   </report>
-  <report category="operational" id="415" message="Fin de dévalorisation pour l'objet : %1">
+  <report category="operational" id="455" message="Fin de dévalorisation pour l'objet : %1">
     <parameter type="ObjectKnowledge"/>
   </report>
-  <report category="operational" id="416" message="Pas de position trafficable dans la zone"/>
-  <report category="operational" id="417" message="Pris sous tir d'IED"/>
-  <report category="operational" id="418" message="L'entrée et la sortie ne sont pas dans le même réseau souterrain"/>
-  <report category="operational" id="419" message="%1 déposé">
+  <report category="operational" id="456" message="Pas de position trafficable dans la zone"/>
+  <report category="operational" id="457" message="Pris sous tir d'IED"/>
+  <report category="operational" id="458" message="Vitesse limitée par population"/>
+  <report category="operational" id="459" message="Fin de vitesse limitée par population"/>
+  <report category="operational" id="460" message="L'entrée et la sortie ne sont pas dans le même réseau souterrain"/>
+  <report category="operational" id="461" message="Incendie en cours de traitement"/>
+  <report category="operational" id="462" message="%1 déposé">
     <parameter type="AgentKnowledge"/>
   </report>
-  <report category="operational" id="420" message="Subit un interrogatoire"/>
-  <report category="operational" id="421" message="Impossible d'obtenir le renseignement critique : rapport de force trop faible"/>
-  <report category="operational" id="422" message="La cible n'est plus valide"/>
-  <report category="operational" id="423" message="Ordre de conduite %1 reçu">
+  <report category="operational" id="463" message="L'objet ne peut être traité"/>
+  <report category="operational" id="464" message="Subit un interrogatoire"/>
+  <report category="operational" id="465" message="Impossible d'obtenir le renseignement critique : rapport de force trop faible"/>
+  <report category="operational" id="466" message="La cible n'est plus valide"/>
+  <report category="operational" id="467" message="Ordre de conduite %1 reçu">
     <parameter type="String"/>
   </report>
-  <report category="operational" id="424" message="En mode furtif"/>
-  <report category="operational" id="425" message="Fin du mode furtif"/>
-  <report category="operational" id="426" message="L'obstacle %1 ne peut pas être activé">
+  <report category="operational" id="468" message="En mode furtif"/>
+  <report category="operational" id="469" message="Fin du mode furtif"/>
+  <report category="operational" id="470" message="L'obstacle %1 ne peut pas être activé">
     <parameter type="ObjectKnowledge"/>
   </report>
-  <report category="operational" id="427" message="Tir d'artillerie sur l'unité %1, équipement %2 ( %3 réparable(s) avec évacuation, %4 réparable(s) sans évacuation, %5 détruit(s) )">
+  <report category="operational" id="471" message="Tir d'artillerie sur l'unité %1, équipement %2 ( %3 réparable(s) avec évacuation, %4 réparable(s) sans évacuation, %5 détruit(s) )">
     <parameter type="Integer"/>
     <parameter type="String"/>
     <parameter type="Integer"/>
     <parameter type="Integer"/>
     <parameter type="Integer"/>
   </report>
-  <report category="operational" id="428" message="Activation de l'IED impossible : hors de portée"/>
-  <report category="operational" id="429" message="Brouillé"/>
-  <report category="operational" id="430" message="Pion PC brouillé ou en silence radio"/>
-  <report category="operational" id="431" message="Mise à feu de l'IED impossible : il n'est pas encore en place"/>
-  <report category="operational" id="432" message="IED prêt pour mise à feu"/>
-  <report category="operational" id="433" message="L'unité %1 suivie est tactiquement détruite">
+  <report category="operational" id="472" message="Activation de l'IED impossible : hors de portée"/>
+  <report category="operational" id="473" message="Brouillé"/>
+  <report category="operational" id="474" message="Pion PC brouillé ou en silence radio"/>
+  <report category="operational" id="475" message="Mise à feu de l'IED impossible : il n'est pas encore en place"/>
+  <report category="operational" id="476" message="IED prêt pour mise à feu"/>
+  <report category="operational" id="477" message="L'unité %1 suivie est tactiquement détruite">
     <parameter type="String"/>
   </report>
-  <report category="operational" id="434" message="L'unité %1 appuyée est tactiquement détruite">
+  <report category="operational" id="478" message="L'unité %1 appuyée est tactiquement détruite">
     <parameter type="String"/>
   </report>
-  <report category="operational" id="435" message="Les unités passées en paramètre sont toutes détruites"/>
-  <report category="operational" id="436" message="Unité détectée"/>
-  <report category="operational" id="437" message="Unité amie reconnue"/>
-  <report category="operational" id="438" message="Unité amie identifiée"/>
-  <report category="operational" id="439" message="Unité ennemie reconnue"/>
-  <report category="operational" id="440" message="Unité ennemie identifiée"/>
-  <report category="operational" id="441" message="Unité neutre reconnue"/>
-  <report category="operational" id="442" message="Unité neutre identifiée"/>
-  <report category="operational" id="443" message="Libéré"/>
-  <report category="operational" id="444" message="Pris sous tir éclairant"/>
-  <report category="operational" id="445" message="Pris sous tir fumigène"/>
-  <report category="operational" id="446" message="Objet détecté : %1">
-    <parameter type="ObjectKnowledge"/>
-  </report>
-  <report category="operational" id="447" message="Les officiers de l'unité ont subi un attentat"/>
-  <report category="operational" id="448" message="L'unité n'est pas rendue à mon camp"/>
+  <report category="operational" id="479" message="Les unités passées en paramètre sont toutes détruites"/>
+  <report category="operational" id="480" message="Libéré"/>
+  <report category="operational" id="481" message="Pris sous tir éclairant"/>
+  <report category="operational" id="482" message="Pris sous tir fumigène"/>
+  <report category="operational" id="483" message="Les officiers de l'unité ont subi un attentat"/>
+  <report category="operational" id="484" message="L'unité n'est pas rendue à mon camp"/>
 </reports>
-<!-- signature="0952534728" -->
+<!-- signature="0073650719" -->

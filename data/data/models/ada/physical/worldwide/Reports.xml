@@ -126,11 +126,11 @@
   <report category="operational" id="88" message="crossing site closed"/>
   <report category="operational" id="89" message="unit %1 has successfully reinforced unit %2">
     <parameter type="Agent"/>
-    <parameter type="Agent"/>
+    <parameter type="Automat"/>
   </report>
   <report category="operational" id="90" message="cannot reinforce target unit">
     <parameter type="Agent"/>
-    <parameter type="Agent"/>
+    <parameter type="Automat"/>
   </report>
   <report category="operational" id="91" message="demolition reserved obstacle %1 ready for activation">
     <parameter type="ObjectKnowledge"/>
@@ -652,14 +652,14 @@
   <report category="operational" id="457" message="Under IED fire"/>
   <report category="operational" id="458" message="Speed limited due to population"/>
   <report category="operational" id="459" message="End of speed limitation"/>
-  <report category="operational" id="460" message="Enter and exit are not in the same underground network"/>
+  <report category="operational" id="460" message="Entry and exit are not in the same underground network"/>
   <report category="operational" id="461" message="Fire is being extinguished"/>
   <report category="operational" id="462" message="%1 dropped">
     <parameter type="AgentKnowledge"/>
   </report>
   <report category="operational" id="463" message="Object cannot be operated"/>
   <report category="operational" id="464" message="Being interrogated"/>
-  <report category="operational" id="465" message="Impossible to have the critical intelligence : weak force ratio"/>
+  <report category="operational" id="465" message="Impossible to obtain critical intelligence : force ratio too weak"/>
   <report category="operational" id="466" message="The target is no longer valid"/>
   <report category="operational" id="467" message="%1 fragmentary order received">
     <parameter type="String"/>
@@ -681,17 +681,17 @@
   <report category="operational" id="474" message="PC is jammed or in radio silence"/>
   <report category="operational" id="475" message="Firing of IED impossible: not yet in place"/>
   <report category="operational" id="476" message="IED ready for firing"/>
-  <report category="operational" id="477" message="The followed unit %1 is destroyed">
+  <report category="operational" id="477" message="Followed unit %1 is destroyed">
     <parameter type="String"/>
   </report>
-  <report category="operational" id="478" message="The supported unit %1 is destroyed">
+  <report category="operational" id="478" message="Supported unit %1 is destroyed">
     <parameter type="String"/>
   </report>
-  <report category="operational" id="479" message="All parameters units are destroyed"/>
+  <report category="operational" id="479" message="All units passed as parameters are destroyed"/>
   <report category="operational" id="480" message="Released"/>
   <report category="operational" id="481" message="Under lighting fire"/>
   <report category="operational" id="482" message="Under smoke fire"/>
   <report category="operational" id="483" message="The unit officers suffered an attack"/>
   <report category="operational" id="484" message="The unit is not captured by my side"/>
 </reports>
-<!-- signature="2859669781" -->
+<!-- signature="0446918926" -->
