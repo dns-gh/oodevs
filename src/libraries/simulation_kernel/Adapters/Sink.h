@@ -16,6 +16,8 @@
 #include <boost/ptr_container/ptr_vector.hpp>
 #include <vector>
 
+class PopulationFactory_ABC;
+
 namespace core
 {
     class EventListener_ABC;
@@ -37,7 +39,7 @@ class Sink : public Sink_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Sink( AgentFactory_ABC& factory, unsigned int gcPause, unsigned int gcMult,
+             Sink( AgentFactory_ABC& agentFactory, const PopulationFactory_ABC& populationFactory, unsigned int gcPause, unsigned int gcMult,
                    const std::vector< unsigned int >& dangerousObjects );
     virtual ~Sink();
     //@}
@@ -79,7 +81,7 @@ public:
 private:
     //! @name Constructors/Destructor
     //@{
-    Sink( AgentFactory_ABC& factory, std::auto_ptr< core::Model > model, unsigned int gcPause, unsigned int gcMult,
+    Sink( AgentFactory_ABC& agentFactory, const PopulationFactory_ABC& populationFactory, std::auto_ptr< core::Model > model, unsigned int gcPause, unsigned int gcMult,
           const std::vector< unsigned int >& dangerousObjects );
     //@}
 
@@ -93,7 +95,8 @@ private:
 private:
     //! @name Member data
     //@{
-    AgentFactory_ABC& factory_;
+    AgentFactory_ABC& agentFactory_;
+    const PopulationFactory_ABC& populationFactory_;
     const unsigned int gcPause_;
     const unsigned int gcMult_;
     const std::vector< unsigned int > dangerousObjects_;

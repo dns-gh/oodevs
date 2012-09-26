@@ -290,7 +290,7 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , populationFactory_            ( new PopulationFactory( *missionController_, gcPause, gcMult ) )
     , agentFactory_                 ( new AgentFactory( *idManager_, *missionController_ ) )
     , sink_                         ( isLegacy ? std::auto_ptr< sword::Sink_ABC >( new sword::legacy::Sink( *agentFactory_, gcPause, gcMult ) )
-                                               : std::auto_ptr< sword::Sink_ABC >( new sword::Sink( *agentFactory_, gcPause, gcMult, objectFactory.GetDangerousObjects() ) ) )
+                                               : std::auto_ptr< sword::Sink_ABC >( new sword::Sink( *agentFactory_, *populationFactory_, gcPause, gcMult, objectFactory.GetDangerousObjects() ) ) )
     , pObjectManager_               ( new MIL_ObjectManager( objectFactory, *sink_ ) )
     , pFloodModel_                  ( sink_->CreateFloodModel() )
     , automateFactory_              ( new AutomateFactory( *idManager_, gcPause, gcMult ) )

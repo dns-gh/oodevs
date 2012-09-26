@@ -33,6 +33,7 @@
 #include "PerceptionCallbackEventListener.h"
 #include "MovementEventListener.h"
 #include "AlatMonitoringEventListener.h"
+#include "PopulationFactory_ABC.h"
 #include "Entities/Agents/Roles/Deployment/PHY_RoleInterface_Deployment.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
@@ -40,9 +41,11 @@
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
+#include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Orders/MIL_Report.h"
+#include "Entities/Populations/MIL_PopulationElement_ABC.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_AgentComposante.h"
@@ -69,9 +72,11 @@ namespace sword
 template< typename Archive >
 void save_construct_data( Archive& archive, const Sink* sink, const unsigned int /*version*/ )
 {
-    const AgentFactory_ABC* factory = &sink->factory_;
+    const AgentFactory_ABC* agentFactory = &sink->agentFactory_;
+    const PopulationFactory_ABC* populationFactory = &sink->populationFactory_;
     const core::Model* model = sink->model_.get();
-    archive << factory
+    archive << agentFactory
+            << populationFactory
             << model
             << sink->gcPause_
             << sink->gcMult_
@@ -82,17 +87,19 @@ void save_construct_data( Archive& archive, const Sink* sink, const unsigned int
 template< typename Archive >
 void load_construct_data( Archive& archive, Sink* sink, const unsigned int /*version*/ )
 {
-    AgentFactory_ABC* factory;
+    AgentFactory_ABC* agentFactory;
+    PopulationFactory_ABC* populationFactory;
     core::Model* model;
     unsigned int gcPause;
     unsigned int gcMult;
     std::vector< unsigned int > dangerousObjects;
-    archive >> factory
+    archive >> agentFactory
+            >> populationFactory
             >> model
             >> gcPause
             >> gcMult
             >> dangerousObjects;
-    ::new( sink )Sink( *factory, std::auto_ptr< core::Model >( model ), gcPause, gcMult, dangerousObjects );
+    ::new( sink )Sink( *agentFactory, *populationFactory, std::auto_ptr< core::Model >( model ), gcPause, gcMult, dangerousObjects );
     archive >> sink->elements_;
 }
 }
@@ -164,16 +171,17 @@ namespace
 // Name: Sink constructor
 // Created: SBO 2011-06-06
 // -----------------------------------------------------------------------------
-Sink::Sink( AgentFactory_ABC& factory, unsigned int gcPause, unsigned int gcMult,
+Sink::Sink( AgentFactory_ABC& agentFactory, const PopulationFactory_ABC& populationFactory, unsigned int gcPause, unsigned int gcMult,
             const std::vector< unsigned int >& dangerousObjects )
-    : factory_         ( factory )
-    , gcPause_         ( gcPause )
-    , gcMult_          ( gcMult )
-    , dangerousObjects_( dangerousObjects )
-    , modules_         ( configuration )
-    , logger_          ( new CoreLogger() )
-    , model_           ( new core::Model() )
-    , facade_          ( new core::Facade( modules_, *logger_, *model_ ) )
+    : agentFactory_     ( agentFactory )
+    , populationFactory_( populationFactory )
+    , gcPause_          ( gcPause )
+    , gcMult_           ( gcMult )
+    , dangerousObjects_ ( dangerousObjects )
+    , modules_          ( configuration )
+    , logger_           ( new CoreLogger() )
+    , model_            ( new core::Model() )
+    , facade_           ( new core::Facade( modules_, *logger_, *model_ ) )
 {
     Initialize();
 }
@@ -182,16 +190,17 @@ Sink::Sink( AgentFactory_ABC& factory, unsigned int gcPause, unsigned int gcMult
 // Name: Sink constructor
 // Created: MCO 2012-09-12
 // -----------------------------------------------------------------------------
-Sink::Sink( AgentFactory_ABC& factory, std::auto_ptr< core::Model > model, unsigned int gcPause, unsigned int gcMult,
+Sink::Sink( AgentFactory_ABC& agentFactory, const PopulationFactory_ABC& populationFactory, std::auto_ptr< core::Model > model, unsigned int gcPause, unsigned int gcMult,
             const std::vector< unsigned int >& dangerousObjects )
-    : factory_         ( factory )
-    , gcPause_         ( gcPause )
-    , gcMult_          ( gcMult )
-    , dangerousObjects_( dangerousObjects )
-    , modules_         ( configuration )
-    , logger_          ( new CoreLogger() )
-    , model_           ( model )
-    , facade_          ( new core::Facade( modules_, *logger_, *model_ ) )
+    : agentFactory_     ( agentFactory )
+    , populationFactory_( populationFactory )
+    , gcPause_          ( gcPause )
+    , gcMult_           ( gcMult )
+    , dangerousObjects_ ( dangerousObjects )
+    , modules_          ( configuration )
+    , logger_           ( new CoreLogger() )
+    , model_            ( model )
+    , facade_           ( new core::Facade( modules_, *logger_, *model_ ) )
 {
     Initialize();
 }
@@ -217,11 +226,11 @@ void Sink::Initialize()
     listeners_.push_back( new PerceptionCallbackEventListener( *model_, *facade_ ) );
     listeners_.push_back( new MovementEventListener( *model_, *facade_ ) );
     listeners_.push_back( new MovementReportEventListener( *model_, *facade_ ) );
-    listeners_.push_back( new DirectFirePionEventListener( *model_, *facade_, factory_ ) );
-    listeners_.push_back( new DirectFirePionAttackEventListener( *model_, *facade_, factory_ ) );
+    listeners_.push_back( new DirectFirePionEventListener( *model_, *facade_, agentFactory_ ) );
+    listeners_.push_back( new DirectFirePionAttackEventListener( *model_, *facade_, agentFactory_ ) );
     listeners_.push_back( new CallbackEventListener( *model_, *facade_, "direct fire pion callback" ) );
-    listeners_.push_back( new ExternalPerceptionEventListener( *model_, *facade_, factory_ ) );
-    listeners_.push_back( new AlatMonitoringEventListener( *model_, *facade_, factory_ ) );
+    listeners_.push_back( new ExternalPerceptionEventListener( *model_, *facade_, agentFactory_ ) );
+    listeners_.push_back( new AlatMonitoringEventListener( *model_, *facade_, agentFactory_ ) );
     MovementHooks::Initialize( *facade_ );
     RolePion_Decision::Initialize( *facade_ );
     FireHooks::Initialize( *facade_ );
@@ -270,6 +279,8 @@ void Sink::ApplyEffects()
 }
 
 SWORD_USER_DATA_EXPORT( boost::shared_ptr< DEC_Knowledge_Agent > )
+SWORD_USER_DATA_EXPORT( const MIL_Population* )
+SWORD_USER_DATA_EXPORT( const MIL_PopulationElement_ABC* )
 
 namespace
 {
@@ -337,6 +348,29 @@ namespace
                 UpdateKnowledgeGroup( entities, knowledges, enemies, friends, it->second );
         }
     }
+    struct PopulationElementVisitor : public MIL_EntityVisitor_ABC< MIL_PopulationElement_ABC >
+    {
+        explicit PopulationElementVisitor( core::Model& elements )
+            : elements_( elements )
+        {}
+        virtual void Visit( const MIL_PopulationElement_ABC& element )
+        {
+            elements_[ element.GetID() ][ "data" ].SetUserData( &element );
+        }
+        core::Model& elements_;
+    };
+    void UpdatePopulations( core::Model& populations, const tools::Resolver< MIL_Population >& factory )
+    {
+        for( tools::Iterator< const MIL_Population& > it = factory.CreateIterator(); it.HasMoreElements(); )
+        {
+            const MIL_Population& population = it.NextElement();
+            core::Model& populationModel = populations[ population.GetID() ];
+            populationModel.Clear();
+            populationModel[ "data" ].SetUserData( &population );
+            PopulationElementVisitor visitor( populationModel[ "elements" ] );
+            population.Apply( visitor );
+        }
+    }
     void UpdateAgent( MIL_AgentPion& pion, core::Model& entity )
     {
         entity[ "is-deployed" ] = ! pion.GetRole< PHY_RoleInterface_Deployment >().IsUndeployed();
@@ -371,7 +405,8 @@ void Sink::UpdateModel( unsigned int tick, int duration )
     (*model_)[ "step" ] = duration;
     core::Model& entities = (*model_)[ "entities" ];
     UpdateKnowledges( entities, (*model_)[ "knowledges" ], (*model_)[ "enemies" ], (*model_)[ "friends" ] );
-    for( tools::Iterator< const MIL_AgentPion& > it = factory_.CreateIterator(); it.HasMoreElements(); )
+    UpdatePopulations( (*model_)[ "populations" ], populationFactory_ );
+    for( tools::Iterator< const MIL_AgentPion& > it = agentFactory_.CreateIterator(); it.HasMoreElements(); )
     {
         MIL_AgentPion& pion = const_cast< MIL_AgentPion& >( it.NextElement() );
         UpdateAgent( pion, entities[ pion.GetID() ] );
@@ -466,7 +501,7 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
     xis >> xml::attribute( "position", strPosition );
     MT_Vector2D vPosTmp;
     MIL_Tools::ConvertCoordMosToSim( strPosition, vPosTmp );
-    MIL_AgentPion& pion = Configure( *factory_.Create( type, automate, xis ), vPosTmp );
+    MIL_AgentPion& pion = Configure( *agentFactory_.Create( type, automate, xis ), vPosTmp );
     pion.GetRole< PHY_RolePion_Composantes >().ReadOverloading( xis ); // Equipments + Humans
     return &pion;
 }
@@ -477,7 +512,7 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
 // -----------------------------------------------------------------------------
 MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition )
 {
-    return &Configure( *factory_.Create( type, automate, vPosition ), vPosition );
+    return &Configure( *agentFactory_.Create( type, automate, vPosition ), vPosition );
 }
 
 // -----------------------------------------------------------------------------
@@ -486,7 +521,7 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
 // -----------------------------------------------------------------------------
 MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name )
 {
-    return &Configure( *factory_.Create( type, automate, vPosition, name ), vPosition );
+    return &Configure( *agentFactory_.Create( type, automate, vPosition, name ), vPosition );
 }
 
 // -----------------------------------------------------------------------------
