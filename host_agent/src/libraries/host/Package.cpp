@@ -776,10 +776,10 @@ Package_ABC::T_Item Package::Find( const Path& root, const std::string& checksum
 namespace
 {
 // -----------------------------------------------------------------------------
-// Name: Compare
+// Name: CompareChecksum
 // Created: BAX 2012-09-10
 // -----------------------------------------------------------------------------
-bool Compare( const Package_ABC::T_Item& item, const std::string& type, const std::string& name, const std::string& checksum )
+bool CompareChecksum( const Package_ABC::T_Item& item, const std::string& type, const std::string& name, const std::string& checksum )
 {
     return item->GetType()     == type
         && item->GetName()     == name
@@ -793,7 +793,7 @@ bool Compare( const Package_ABC::T_Item& item, const std::string& type, const st
 // -----------------------------------------------------------------------------
 Package_ABC::T_Item Package::Find( const std::string& type, const std::string& name, const std::string& checksum ) const
 {
-    T_Items::const_iterator it = std::find_if( items_.begin(), items_.end(), boost::bind( &Compare, _1, type, name, checksum ) );
+    T_Items::const_iterator it = std::find_if( items_.begin(), items_.end(), boost::bind( &CompareChecksum, _1, ( type ), ( name ), ( checksum ) ) );
     return it == items_.end() ? T_Item() : *it;
 }
 

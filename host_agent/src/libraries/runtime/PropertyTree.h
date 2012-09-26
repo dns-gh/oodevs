@@ -58,12 +58,12 @@ namespace property_tree
     template< typename T, typename U >
     void Walk( const T_Tree& src, const T& begin, const T& end, const U& operand )
     {
-        std::pair< Tree::const_assoc_iterator, Tree::const_assoc_iterator > range = src.equal_range( *begin );
+        std::pair< T_Tree::const_assoc_iterator, T_Tree::const_assoc_iterator > range = src.equal_range( *begin );
         if( std::distance( begin, end ) > 1 )
-            for( Tree::const_assoc_iterator it = range.first; it != range.second; ++it )
+            for( T_Tree::const_assoc_iterator it = range.first; it != range.second; ++it )
                 Walk( it->second, begin + 1, end, operand );
         else
-            for( Tree::const_assoc_iterator it = range.first; it != range.second; ++it )
+            for( T_Tree::const_assoc_iterator it = range.first; it != range.second; ++it )
                 operand( it->second );
     }
 }
