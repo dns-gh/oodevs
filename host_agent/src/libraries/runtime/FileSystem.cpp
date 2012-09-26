@@ -23,8 +23,13 @@
 
 #include <stdint.h>
 #include <fcntl.h>
-#include <io.h>
 #include <iostream>
+
+#ifdef WIN32
+#include <io.h>
+#else
+#define O_BINARY 0
+#endif
 
 #define  LIBARCHIVE_STATIC
 #include <libarchive/archive.h>
