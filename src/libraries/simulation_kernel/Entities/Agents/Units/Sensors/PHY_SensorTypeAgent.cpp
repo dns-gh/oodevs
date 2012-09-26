@@ -675,7 +675,7 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Age
     const double     rDistanceMaxModificator = GetSourceFactor( source );
     const MT_Vector2D& vSourcePos              = source.GetRole< PHY_RoleInterface_Location >().GetPosition();
 
-    if( rDistanceMaxModificator == 0. || !target.Intersect2DWithCircle( vSourcePos, rDetectionDist_ * rDistanceMaxModificator ) )
+    if( rDistanceMaxModificator == 0. || !target.TER_PopulationConcentration_ABC::Intersect2DWithCircle( vSourcePos, rDetectionDist_ * rDistanceMaxModificator ) )
         return PHY_PerceptionLevel::notSeen_;
     return PHY_PerceptionLevel::identified_;
 }
