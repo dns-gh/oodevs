@@ -45,7 +45,7 @@ public:
     bool Update(); // Return false if the concentration must be deleted
     virtual void Clean();
     bool IsValid() const; // false = will be deleted
-    bool CanBePerceived() const;
+    virtual bool CanBePerceived() const;
     //@}
 
     //! @name Actions

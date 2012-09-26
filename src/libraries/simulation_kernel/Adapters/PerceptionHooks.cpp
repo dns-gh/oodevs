@@ -489,13 +489,9 @@ namespace
     {
         return GET_DATA( object, MIL_Object_ABC )().CanBePerceived();
     }
-    DEFINE_HOOK( CanPopulationFlowBePerceived, bool, ( const SWORD_Model* flow ) )
+    DEFINE_HOOK( CanPopulationElementBePerceived, bool, ( const SWORD_Model* element ) )
     {
-        return GET_DATA( flow, MIL_PopulationFlow* )->CanBePerceived();
-    }
-    DEFINE_HOOK( CanPopulationConcentrationBePerceived, bool, ( const SWORD_Model* concentration ) )
-    {
-        return GET_DATA( concentration, MIL_PopulationConcentration* )->CanBePerceived();
+        return GET_DATA( element, MIL_PopulationElement_ABC ).CanBePerceived();
     }
     DEFINE_HOOK( IsCivilian, bool, ( const SWORD_Model* agent ) )
     {
@@ -660,8 +656,7 @@ void PerceptionHooks::Initialize( core::Facade& facade )
     REGISTER_HOOK( GetPopulationConcentrationPerceptionLevel, facade );
     REGISTER_HOOK( CanBeSeen, facade );
     REGISTER_HOOK( CanObjectBePerceived, facade );
-    REGISTER_HOOK( CanPopulationFlowBePerceived, facade );
-    REGISTER_HOOK( CanPopulationConcentrationBePerceived, facade );
+    REGISTER_HOOK( CanPopulationElementBePerceived, facade );
     REGISTER_HOOK( IsCivilian, facade );
     REGISTER_HOOK( IsAgentNewlyPerceived, facade );
     REGISTER_HOOK( IsPopulationFlowNewlyPerceived, facade );

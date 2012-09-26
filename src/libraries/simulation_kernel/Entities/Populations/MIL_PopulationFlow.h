@@ -39,7 +39,7 @@ public:
     bool Update();
     void Clean ();
     bool IsValid() const; // false = will be deleted
-    bool CanBePerceived() const;
+    virtual bool CanBePerceived() const;
     //@}
 
     //! @name Actions

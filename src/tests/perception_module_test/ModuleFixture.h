@@ -52,8 +52,7 @@ class PHY_Volume;
     APPLY( GetPopulationConcentrationPerceptionLevel, 2, int, ( const SWORD_Model* perceiver, const SWORD_Model* concentration ) ) \
     APPLY( CanBeSeen, 2, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) ) \
     APPLY( CanObjectBePerceived, 1, bool, ( const SWORD_Model* object ) ) \
-    APPLY( CanPopulationFlowBePerceived, 1, bool, ( const SWORD_Model* flow ) ) \
-    APPLY( CanPopulationConcentrationBePerceived, 1, bool, ( const SWORD_Model* concentration ) ) \
+    APPLY( CanPopulationElementBePerceived, 1, bool, ( const SWORD_Model* element ) ) \
     APPLY( IsCivilian, 1, bool, ( const SWORD_Model* agent ) ) \
     APPLY( IsAgentNewlyPerceived, 3, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target, int level ) ) \
     APPLY( IsPopulationFlowNewlyPerceived, 3, bool, ( const SWORD_Model* perceiver, const SWORD_Model* flow, int level ) ) \
