@@ -123,7 +123,7 @@ int PHY_RoleAction_Objects::Construct( MIL_Object_ABC& object )
     if( object().IsBuilt() )
         return eFinished;
     PHY_RoleAction_Objects_DataComputer dataComputer( pion_, eConstruct, object );
-    const double rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
+    double rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
     if( rDeltaPercentage == std::numeric_limits< double >::max() )
         return eNoCapacity;
 
@@ -137,8 +137,18 @@ int PHY_RoleAction_Objects::Construct( MIL_Object_ABC& object )
         if( nDotationNeeded )
         {
             pDotationCategory = object.Get< BuildableCapacity >().GetDotationCategory();
-            if( pDotationCategory && !dataComputer.HasDotations( *pDotationCategory, nDotationNeeded ) )
-                return eNoMoreDotation;
+            if( pDotationCategory )
+            {
+                if( !dataComputer.HasDotations( *pDotationCategory, nDotationNeeded ) )
+                {
+                    unsigned int availableDotations = dataComputer.GetDotationsNumber( *pDotationCategory );
+                    if( !availableDotations )
+                        return eNoMoreDotation;
+                    double delta = double( availableDotations )/ double( nDotationNeeded );
+                    rDeltaPercentage *= delta;
+                    nDotationNeeded = availableDotations;
+                }
+            }
         }
     }
 

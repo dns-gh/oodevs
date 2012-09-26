@@ -35,6 +35,7 @@ public:
 
     //! @name Operations
     //@{
+    unsigned int GetDotationsNumber( const PHY_DotationCategory& category ) const;
     bool HasDotations( const PHY_DotationCategory& category, unsigned int nNbr ) const;
     void ConsumeDotations( const PHY_DotationCategory& category, double& nbr );
     void RecoverDotations( const PHY_DotationCategory& category, unsigned int nNbr );
