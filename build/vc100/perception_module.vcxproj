@@ -26,7 +26,6 @@
     <ClInclude Include="..\..\src\libraries\perception_module\PerceptionAlat.h" />
     <ClInclude Include="..\..\src\libraries\perception_module\PerceptionCommand.h" />
     <ClInclude Include="..\..\src\libraries\perception_module\PerceptionComputer.h" />
-    <ClInclude Include="..\..\src\libraries\perception_module\PerceptionComputer_ABC.h" />
     <ClInclude Include="..\..\src\libraries\perception_module\PerceptionCoupDeSonde.h" />
     <ClInclude Include="..\..\src\libraries\perception_module\PerceptionLevel.h" />
     <ClInclude Include="..\..\src\libraries\perception_module\PerceptionLocalisation.h" />

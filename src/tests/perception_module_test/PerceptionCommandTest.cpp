@@ -47,7 +47,7 @@ BOOST_FIXTURE_TEST_CASE( perception_command_identifies_urban_objects_in_list, Pe
     const SWORD_Model* urbanObject = core::Convert( &model[ "objects/urban-object" ] );
     model[ "objects/urban-object" ] = core::MakeModel( "data", 42 );
     MOCK_RESET( GetUrbanObjectListWithinCircle );
-    MOCK_EXPECT( GetUrbanObjectListWithinCircle ).once().calls( boost::bind( boost::apply< void >(), _3, urbanObject, _4 ) );
+    MOCK_EXPECT( GetUrbanObjectListWithinCircle ).once().calls( boost::bind( boost::apply< void >(), _4, urbanObject, _5 ) );
     MOCK_EXPECT( GetUrbanObjectOccupation ).once().with( urbanObject ).returns( 1 );
     ExpectNotifications( "urban-blocks", sword::test::MakeModel()
                                              [ sword::test::MakeModel( "level", 3 )

@@ -84,10 +84,10 @@ const PerceptionLevel& PerceptionView::ComputePoint( const wrapper::View& percei
 }
 
 // -----------------------------------------------------------------------------
-// Name: PerceptionView::ComputeAgent(
+// Name: PerceptionView::ComputeAgent
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
-const PerceptionLevel& PerceptionView::ComputeAgent( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const wrapper::View& target ) const
+const PerceptionLevel& PerceptionView::ComputeAgent( const wrapper::View& model, const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const wrapper::View& target ) const
 {
     TransferPerception( perceiver, surfaces );
     if( GET_HOOK( BelongsToKnowledgeGroup )( perceiver, target ) )
@@ -114,7 +114,7 @@ const PerceptionLevel& PerceptionView::ComputeAgent( const wrapper::View& percei
             roll = static_cast< double >( GET_HOOK( GetPerceptionRandom )() );
         perceptionsBuffer_[ target[ "identifier" ] ] = std::pair< unsigned int, double >( tick + 1, roll );
         const ZURBPerceptionComputer computer( roll, tick );
-        const PerceptionLevel& urbanResult = computer.ComputePerception( perceiver, surfaces, target );
+        const PerceptionLevel& urbanResult = computer.ComputePerception( model, perceiver, target );
         return result < urbanResult ? result : urbanResult;
     }
 }
@@ -134,7 +134,7 @@ namespace
 // Name: PerceptionView::ExecuteAgents
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
-void PerceptionView::ExecuteAgents( const wrapper::View& /*model*/, const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const T_AgentPtrVector& perceivableAgents )
+void PerceptionView::ExecuteAgents( const wrapper::View& model, const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const T_AgentPtrVector& perceivableAgents )
 {
     if( IsEnabled( perceiver ) )
     {
@@ -152,7 +152,7 @@ void PerceptionView::ExecuteAgents( const wrapper::View& /*model*/, const wrappe
             }
             else if( GET_HOOK( CanBeSeen )( perceiver, agent ) )
             {
-                const PerceptionLevel& level = ComputeAgent( perceiver, surfaces, agent );
+                const PerceptionLevel& level = ComputeAgent( model, perceiver, surfaces, agent );
                 observer_.NotifyAgentPerception( agent, level );
                 if( GET_HOOK( IsAgentNewlyPerceived )( perceiver, agent, level.GetID() ) 
                     && !civiliansEncountered && GET_HOOK( IsCivilian )( agent ) )
@@ -197,7 +197,7 @@ namespace
 // Name: PerceptionView::ExecuteObjects
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void PerceptionView::ExecuteObjects( const wrapper::View& perceiver, const SurfacesObject_ABC& surfaces, const T_ObjectVector& perceivableObjects )
+void PerceptionView::ExecuteObjects( const wrapper::View& /*model*/, const wrapper::View& perceiver, const SurfacesObject_ABC& surfaces, const T_ObjectVector& perceivableObjects )
 {
     if( IsEnabled( perceiver ) )
     {

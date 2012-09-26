@@ -21,7 +21,7 @@ using namespace sword;
 using namespace sword::perception;
 
 DECLARE_HOOK( GetAgentListWithinCircle, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* agent, void* userData ), void* userData ) )
-DECLARE_HOOK( GetObjectListWithinCircle, void, ( const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* object, void* userData ), void* userData ) )
+DECLARE_HOOK( GetObjectListWithinCircle, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* object, void* userData ), void* userData ) )
 DECLARE_HOOK( CanBeSeen, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) )
 DECLARE_HOOK( CanObjectBePerceived, bool, ( const SWORD_Model* object ) )
 DECLARE_HOOK( IsKnowledgeObjectIntersectingWithCircle, bool, ( const MT_Vector2D* center, double radius, const SWORD_Model* knowledgeObject ) )
@@ -130,7 +130,7 @@ void PerceptionRecoPoint::ExecuteAgents( const wrapper::View& model, const wrapp
 // Name: PerceptionRecoPoint::ComputeAgent
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-const PerceptionLevel& PerceptionRecoPoint::ComputeAgent( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const wrapper::View& target ) const
+const PerceptionLevel& PerceptionRecoPoint::ComputeAgent( const wrapper::View& /*model*/, const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const wrapper::View& target ) const
 {
     return ComputePoint( perceiver, surfaces, MT_Vector2D( target[ "movement/position/x" ], target[ "movement/position/y" ] ) );
 }
@@ -151,14 +151,14 @@ const PerceptionLevel& PerceptionRecoPoint::ComputeObject( const wrapper::View& 
 // Name: PerceptionRecoPoint::ExecuteObjects
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-void PerceptionRecoPoint::ExecuteObjects( const wrapper::View& /*perceiver*/, const SurfacesObject_ABC& /*surfaces*/, const T_ObjectVector& /*perceivableObjects*/ )
+void PerceptionRecoPoint::ExecuteObjects( const wrapper::View& model, const wrapper::View& /*perceiver*/, const SurfacesObject_ABC& /*surfaces*/, const T_ObjectVector& /*perceivableObjects*/ )
 {
     T_ObjectVector perceivableObjects;
     for( T_RecoVector::const_iterator itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
     {
         perceivableObjects.clear();
         ListInCircleVisitor< wrapper::View > objectVisitor( perceivableObjects );
-        GET_HOOK( GetObjectListWithinCircle )( (*itReco)->vCenter_, (*itReco)->rCurrentSize_, &ListInCircleVisitor< const SWORD_Model* >::Add, &objectVisitor );
+        GET_HOOK( GetObjectListWithinCircle )( model, (*itReco)->vCenter_, (*itReco)->rCurrentSize_, &ListInCircleVisitor< const SWORD_Model* >::Add, &objectVisitor );
         for( T_ObjectVector::const_iterator it = perceivableObjects.begin(); it != perceivableObjects.end(); ++it )
         {
             const wrapper::View& object = *it;

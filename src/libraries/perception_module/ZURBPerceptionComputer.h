@@ -10,22 +10,22 @@
 #ifndef SWORD_PERCEPTION_ZURB_PERCEPTION_COMPUTER_H
 #define SWORD_PERCEPTION_ZURB_PERCEPTION_COMPUTER_H
 
-#include "PerceptionComputer_ABC.h"
-
-class MT_Vector2D;
-class TER_Polygon;
-
 namespace sword
 {
+namespace wrapper
+{
+    class View;
+}
 namespace perception
 {
+    class PerceptionLevel;
 // =============================================================================
 /** @class  ZURBComputer
     @brief  ZURB Computer
 */
 // Created: SLG 2010-04-29
 // =============================================================================
-class ZURBPerceptionComputer : public PerceptionComputer_ABC
+class ZURBPerceptionComputer
 {
 public:
     //! @name Constructors/Destructor
@@ -36,7 +36,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual const PerceptionLevel& ComputePerception( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const wrapper::View& target ) const;
+    const PerceptionLevel& ComputePerception( const wrapper::View& model, const wrapper::View& perceiver, const wrapper::View& target ) const;
     //@}
 
 private:
@@ -62,7 +62,7 @@ private:
 private:
     //! @name Helpers
     //@{
-    bool ComputeParametersPerception( const wrapper::View& perceiver, const wrapper::View& target, BestSensorsParameters& parameters ) const;
+    bool ComputeParametersPerception( const wrapper::View& model, const wrapper::View& perceiver, const wrapper::View& target, BestSensorsParameters& parameters ) const;
     const PerceptionLevel& GetLevelWithDelay( unsigned int delay, const PerceptionLevel& level ) const;
     //@}
 private:

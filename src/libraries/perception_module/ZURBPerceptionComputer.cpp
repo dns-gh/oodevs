@@ -23,7 +23,7 @@ using namespace sword::perception;
 
 DECLARE_HOOK( ComputeAgentRatioInsidePerceptionPolygon, double, ( const SWORD_Model* perceiver, const SWORD_Model* target, double distance, double roll ) )
 DECLARE_HOOK( GetCurrentUrbanBlock, const SWORD_Model*, ( const SWORD_Model* entity ) )
-DECLARE_HOOK( GetUrbanBlocksListWithinSegment, void, ( MT_Vector2D first, MT_Vector2D second, void (*callback)( const SWORD_Model* urbanObjectWrapper, void* userData ), void* userData ) )
+DECLARE_HOOK( GetUrbanBlocksListWithinSegment, void, ( const SWORD_Model* root, MT_Vector2D first, MT_Vector2D second, void (*callback)( const SWORD_Model* urbanObjectWrapper, void* userData ), void* userData ) )
 DECLARE_HOOK( IsPostureStationed, bool, ( const SWORD_Model* entity ) )
 DECLARE_HOOK( GetUrbanObjectStructuralHeight, double, ( const SWORD_Model* urbanObject ) )
 DECLARE_HOOK( GetUrbanObjectOccupation, double, ( const SWORD_Model* urbanObject ) )
@@ -54,10 +54,10 @@ ZURBPerceptionComputer::~ZURBPerceptionComputer()
 // Name: ZURBPerceptionComputer::ComputePerception
 // Created: SLG 2010-04-29
 // -----------------------------------------------------------------------------
-const PerceptionLevel& ZURBPerceptionComputer::ComputePerception( const wrapper::View& perceiver, const SurfacesAgent_ABC& /*surfaces*/, const wrapper::View& target ) const
+const PerceptionLevel& ZURBPerceptionComputer::ComputePerception( const wrapper::View& model, const wrapper::View& perceiver, const wrapper::View& target ) const
 {
     BestSensorsParameters bestSensorParameters;
-    if ( !ComputeParametersPerception( perceiver, target, bestSensorParameters ) )
+    if ( !ComputeParametersPerception( model, perceiver, target, bestSensorParameters ) )
         return PerceptionLevel::notSeen_;
     if( roll_ < GET_HOOK( ComputeAgentRatioInsidePerceptionPolygon )( perceiver, target, bestSensorParameters.detectionDist_, roll_ )/*role.ComputeRatioPionInside( polygon, roll_ )*/ )
     {
@@ -123,7 +123,7 @@ namespace
 // Name: ZURBPerceptionComputer::ComputeDistancePerception
 // Created: SLG 2010-04-29
 // -----------------------------------------------------------------------------
-bool ZURBPerceptionComputer::ComputeParametersPerception( const wrapper::View& perceiver, const wrapper::View& target, BestSensorsParameters& sensorsParameters ) const
+bool ZURBPerceptionComputer::ComputeParametersPerception( const wrapper::View& model, const wrapper::View& perceiver, const wrapper::View& target, BestSensorsParameters& sensorsParameters ) const
 {
     static const double epsilon = 1e-8;
     static const double sensorHeight = 2.;
@@ -135,7 +135,7 @@ bool ZURBPerceptionComputer::ComputeParametersPerception( const wrapper::View& p
 
     std::vector< wrapper::View > list;
     FillUrbanBlocks filler( list );
-    GET_HOOK( GetUrbanBlocksListWithinSegment )( perceiverPosition, targetPosition, &FillUrbanBlocks::Notify, &filler );
+    GET_HOOK( GetUrbanBlocksListWithinSegment )( model, perceiverPosition, targetPosition, &FillUrbanBlocks::Notify, &filler );
     const wrapper::View perceiverUrbanBlock( GET_HOOK( GetCurrentUrbanBlock )( perceiver ) );
 
     T_Sensors sensors;

@@ -65,7 +65,7 @@ const PerceptionLevel& PerceptionCoupDeSonde::ComputePoint( const wrapper::View&
 // Name: PerceptionCoupDeSonde::ComputeAgent
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
-const PerceptionLevel& PerceptionCoupDeSonde::ComputeAgent( const wrapper::View& perceiver, const SurfacesAgent_ABC& /*surfaces*/, const wrapper::View& target ) const
+const PerceptionLevel& PerceptionCoupDeSonde::ComputeAgent( const wrapper::View& /*model*/, const wrapper::View& perceiver, const SurfacesAgent_ABC& /*surfaces*/, const wrapper::View& target ) const
 {
     if( GET_HOOK( BelongsToKnowledgeGroup )( perceiver, target ) )
         return PerceptionLevel::recognized_;
@@ -97,6 +97,6 @@ void PerceptionCoupDeSonde::ExecuteAgents( const wrapper::View& model, const wra
     {
         const wrapper::View& agent = *itAgent;
         if( GET_HOOK( CanBeSeen )( perceiver, agent ) )
-            observer_.NotifyAgentPerception( agent, ComputeAgent( perceiver, surfaces, agent ) );
+            observer_.NotifyAgentPerception( agent, ComputeAgent( model, perceiver, surfaces, agent ) );
     }
 }

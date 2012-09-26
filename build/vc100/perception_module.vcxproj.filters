@@ -116,9 +116,6 @@
     <ClInclude Include="..\..\src\libraries\perception_module\ZURBPerceptionComputer.h">
       <Filter>Source Files\Perceptions\Computers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\perception_module\PerceptionComputer_ABC.h">
-      <Filter>Source Files\Perceptions\Computers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\perception_module\PerceptionComputer.h">
       <Filter>Source Files\Perceptions\Computers</Filter>
     </ClInclude>

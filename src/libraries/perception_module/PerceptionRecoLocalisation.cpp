@@ -163,7 +163,7 @@ void PerceptionRecoLocalisation::ExecuteAgents( const wrapper::View& model, cons
 // Name: PerceptionRecoLocalisation::ComputeAgent
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-const PerceptionLevel& PerceptionRecoLocalisation::ComputeAgent( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const wrapper::View& target ) const
+const PerceptionLevel& PerceptionRecoLocalisation::ComputeAgent( const wrapper::View& /*model*/, const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const wrapper::View& target ) const
 {//@TODO move to  private
     const MT_Vector2D location( target[ "movement/position/x" ], target[ "movement/position/y" ] );
     return ComputePoint( perceiver, surfaces, location );

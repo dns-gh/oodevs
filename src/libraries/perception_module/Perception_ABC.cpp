@@ -35,7 +35,7 @@ void Perception_ABC::ExecuteAgents( const wrapper::View& /*model*/, const wrappe
 // Name: Perception_ABC::ComputeAgent
 // Created: NLD 2005-10-11
 // -----------------------------------------------------------------------------
-const sword::perception::PerceptionLevel& Perception_ABC::ComputeAgent( const wrapper::View& /*perceiver*/, const SurfacesAgent_ABC& /*surfaces*/, const wrapper::View& /*target*/ ) const
+const sword::perception::PerceptionLevel& Perception_ABC::ComputeAgent( const wrapper::View& /*model*/, const wrapper::View& /*perceiver*/, const SurfacesAgent_ABC& /*surfaces*/, const wrapper::View& /*target*/ ) const
 {
     return PerceptionLevel::notSeen_;
 }
@@ -44,7 +44,7 @@ const sword::perception::PerceptionLevel& Perception_ABC::ComputeAgent( const wr
 // Name: Perception_ABC::ExecuteObjects
 // Created: NLD 2005-10-11
 // -----------------------------------------------------------------------------
-void Perception_ABC::ExecuteObjects( const wrapper::View& /*perceiver*/, const SurfacesObject_ABC& /*surfaces*/, const T_ObjectVector& /*perceivableObjects*/ )
+void Perception_ABC::ExecuteObjects( const wrapper::View& /*model*/, const wrapper::View& /*perceiver*/, const SurfacesObject_ABC& /*surfaces*/, const T_ObjectVector& /*perceivableObjects*/ )
 {
     // NOTHING
 }

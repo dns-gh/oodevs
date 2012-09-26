@@ -144,7 +144,7 @@ void PerceptionRecoSurveillance::ExecuteAgents( const wrapper::View& model, cons
 // Name: PerceptionRecoSurveillance::ComputeAgent
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-const PerceptionLevel& PerceptionRecoSurveillance::ComputeAgent( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const wrapper::View& target ) const
+const PerceptionLevel& PerceptionRecoSurveillance::ComputeAgent( const wrapper::View& /*model*/, const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const wrapper::View& target ) const
 {
     const MT_Vector2D location( target[ "movement/position/x" ], target[ "movement/position/y" ] );
     return ComputePoint( perceiver, surfaces, location );

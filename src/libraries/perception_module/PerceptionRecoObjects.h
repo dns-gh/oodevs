@@ -27,7 +27,7 @@ public:
     explicit PerceptionRecoObjectsReco( const wrapper::View& perception, const wrapper::View& entity );
 
     bool IsInside        ( const wrapper::View& knowledge ) const;
-    void GetObjectsInside( const wrapper::View&, Perception_ABC::T_ObjectVector& ) const;
+    void GetObjectsInside( const wrapper::View&, const wrapper::View&, Perception_ABC::T_ObjectVector& ) const;
 
 private:
     PerceptionRecoObjectsReco& operator = ( const PerceptionRecoObjectsReco& );
@@ -53,7 +53,7 @@ public:
 
     //! @name Execution
     //@{
-    virtual void                   ExecuteObjects( const wrapper::View& perceiver, const SurfacesObject_ABC& surfaces, const T_ObjectVector& perceivableObjects );
+    virtual void                   ExecuteObjects( const wrapper::View& model, const wrapper::View& perceiver, const SurfacesObject_ABC& surfaces, const T_ObjectVector& perceivableObjects );
     virtual const PerceptionLevel& ComputeObject( const wrapper::View& perceiver, const SurfacesObject_ABC& surfaces, const wrapper::View& knowledge ) const;
     //@}
 

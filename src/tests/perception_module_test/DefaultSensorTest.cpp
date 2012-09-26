@@ -58,7 +58,7 @@ BOOST_FIXTURE_TEST_CASE( objects_in_list_are_identified_with_default_sensor, Per
     model[ "objects/some-object" ] = core::MakeModel( "data", 42 );
     const SWORD_Model* perceiver = core::Convert( &entity );
     MOCK_RESET( GetObjectListWithinCircle );
-    MOCK_EXPECT( GetObjectListWithinCircle ).once().calls( boost::bind( boost::apply< void >(), _3, object, _4 ) );
+    MOCK_EXPECT( GetObjectListWithinCircle ).once().calls( boost::bind( boost::apply< void >(), _4, object, _5 ) );
     MOCK_EXPECT( IsObjectPerceptionDistanceHacked ).once().with( perceiver, object ).returns( false );
     MOCK_EXPECT( CanObjectBePerceived ).once().with( object ).returns( true );
     MOCK_EXPECT( IsObjectUniversal ).once().with( object ).returns( false );
@@ -90,7 +90,7 @@ BOOST_FIXTURE_TEST_CASE( population_flows_in_list_are_identified_with_default_se
     model[ "populations/some-population/flows/the-flow" ] = core::MakeModel( "data", 42 );
     const SWORD_Model* perceiver = core::Convert( &entity );
     MOCK_RESET( GetFlowListWithinCircle );
-    MOCK_EXPECT( GetFlowListWithinCircle ).once().calls( boost::bind( boost::apply< void >(), _3, flow, _4 ) );
+    MOCK_EXPECT( GetFlowListWithinCircle ).once().calls( boost::bind( boost::apply< void >(), _4, flow, _5 ) );
     MOCK_EXPECT( IsPopulationFlowPerceptionDistanceHacked ).once().with( perceiver, flow ).returns( false );
     MOCK_EXPECT( PopulationFlowIntersectWithCircle ).once().calls( boost::bind( &AddPoints, boost::cref( shape ), _4, _5 ) );
     MOCK_EXPECT( CanPopulationFlowBePerceived ).once().with( flow ).returns( true );
@@ -114,7 +114,7 @@ BOOST_FIXTURE_TEST_CASE( population_concentrations_in_list_are_identified_with_d
     model[ "populations/some-population/concentrations/the-concentration" ] = core::MakeModel( "data", 42 );
     const SWORD_Model* perceiver = core::Convert( &entity );
     MOCK_RESET( GetConcentrationListWithinCircle );
-    MOCK_EXPECT( GetConcentrationListWithinCircle ).once().calls( boost::bind( boost::apply< void >(), _3, concentration, _4 ) );
+    MOCK_EXPECT( GetConcentrationListWithinCircle ).once().calls( boost::bind( boost::apply< void >(), _4, concentration, _5 ) );
     MOCK_EXPECT( IsPopulationConcentrationPerceptionDistanceHacked ).once().with( perceiver, concentration ).returns( false );
     MOCK_EXPECT( CanPopulationConcentrationBePerceived ).once().with( concentration ).returns( true );
     MOCK_EXPECT( PopulationConcentrationIntersectWithCircle ).once().returns( true );

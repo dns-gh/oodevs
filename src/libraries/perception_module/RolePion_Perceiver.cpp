@@ -52,10 +52,10 @@ using namespace sword::perception;
 DECLARE_HOOK( CanComponentPerceive, bool, ( const SWORD_Model* entity, const SWORD_Model* component ) )
 DECLARE_HOOK( ComputePerceptionDistanceFactor, double, ( const SWORD_Model* entity ) );
 DECLARE_HOOK( GetAgentListWithinCircle, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* agent, void* userData ), void* userData ) )
-DECLARE_HOOK( GetObjectListWithinCircle, void, ( const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* object, void* userData ), void* userData ) )
-DECLARE_HOOK( GetConcentrationListWithinCircle, void, ( const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* concentration, void* userData ), void* userData ) )
-DECLARE_HOOK( GetFlowListWithinCircle, void, ( const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* flow, void* userData ), void* userData ) )
-DECLARE_HOOK( GetUrbanObjectListWithinCircle, void, ( const MT_Vector2D& center, float radius, void (*callback)( const SWORD_Model* urbanObjectWrapper, void* userData ), void* userData ) )
+DECLARE_HOOK( GetObjectListWithinCircle, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* object, void* userData ), void* userData ) )
+DECLARE_HOOK( GetConcentrationListWithinCircle, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* concentration, void* userData ), void* userData ) )
+DECLARE_HOOK( GetFlowListWithinCircle, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* flow, void* userData ), void* userData ) )
+DECLARE_HOOK( GetUrbanObjectListWithinCircle, void, ( const SWORD_Model* root, const MT_Vector2D& center, float radius, void (*callback)( const SWORD_Model* urbanObjectWrapper, void* userData ), void* userData ) )
 DECLARE_HOOK( AppendAddedKnowledge, void, ( const SWORD_Model* root, const SWORD_Model* entity,
                                             void (*agentCallback)( const SWORD_Model* agent, void* userData ),
                                             void (*objectCallback)( const SWORD_Model* object, void* userData ),
@@ -479,7 +479,7 @@ void RolePion_Perceiver::ExecutePerceptions( const wrapper::View& model, const w
         UrbanObjectVisitor urbanVisitor( observer, entity[ "perceptions/max-agent-perception-distance" ] );
 
         const MT_Vector2D position( entity[ "movement/position/x" ], entity[ "movement/position/y" ] );
-        GET_HOOK( GetUrbanObjectListWithinCircle )( position, maxBlockPerceptionDistance, &UrbanObjectVisitor::NotifyUrbanObject, &urbanVisitor );
+        GET_HOOK( GetUrbanObjectListWithinCircle )( model, position, maxBlockPerceptionDistance, &UrbanObjectVisitor::NotifyUrbanObject, &urbanVisitor );
         const double maxPerceptionDistance = urbanVisitor.ComputeMaxPerceptionDistance();
 
         Perception_ABC::T_AgentPtrVector perceivableAgents;
@@ -501,17 +501,17 @@ void RolePion_Perceiver::ExecutePerceptions( const wrapper::View& model, const w
 
         const T_SurfacesObjects surfacesObject( surfacesObject );
         ListInCircleVisitor< wrapper::View > objectVisitor( perceivableObjects );
-        GET_HOOK( GetObjectListWithinCircle )( position, maxPerceptionDistance, &ListInCircleVisitor< const SWORD_Model* >::Add, &objectVisitor );
+        GET_HOOK( GetObjectListWithinCircle )( model, position, maxPerceptionDistance, &ListInCircleVisitor< const SWORD_Model* >::Add, &objectVisitor );
         BOOST_FOREACH( T_Perception activePerception, activePerceptions )
-            activePerception->ExecuteObjects( entity, surfacesObject, perceivableObjects );
+            activePerception->ExecuteObjects( model, entity, surfacesObject, perceivableObjects );
 
         ListInCircleVisitor< wrapper::View > concentrationVisitor( perceivableConcentrations );
-        GET_HOOK( GetConcentrationListWithinCircle )( position, maxPerceptionDistance, &ListInCircleVisitor< const SWORD_Model* >::Add, &concentrationVisitor );
+        GET_HOOK( GetConcentrationListWithinCircle )( model, position, maxPerceptionDistance, &ListInCircleVisitor< const SWORD_Model* >::Add, &concentrationVisitor );
         BOOST_FOREACH( T_Perception activePerception, activePerceptions )
             activePerception->ExecuteConcentrations( entity, surfacesAgent, perceivableConcentrations );
 
         ListInCircleVisitor< wrapper::View > flowVisitor( perceivableFlows );
-        GET_HOOK( GetFlowListWithinCircle )( position, maxPerceptionDistance, &ListInCircleVisitor< const SWORD_Model* >::Add, &flowVisitor );
+        GET_HOOK( GetFlowListWithinCircle )( model, position, maxPerceptionDistance, &ListInCircleVisitor< const SWORD_Model* >::Add, &flowVisitor );
         BOOST_FOREACH( T_Perception activePerception, activePerceptions )
             activePerception->ExecuteFlows( entity, surfacesAgent, perceivableFlows );
 

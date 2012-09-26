@@ -131,7 +131,7 @@ void PerceptionRecoUrbanBlock::ExecuteAgents( const wrapper::View& model, const 
 // Name: PerceptionRecoUrbanBlock::ComputeAgent
 // Created: MGD 2010-02-11
 // -----------------------------------------------------------------------------
-const PerceptionLevel& PerceptionRecoUrbanBlock::ComputeAgent( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const wrapper::View& target ) const
+const PerceptionLevel& PerceptionRecoUrbanBlock::ComputeAgent( const wrapper::View& /*model*/, const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const wrapper::View& target ) const
 {
     return ComputePoint( perceiver, surfaces, MT_Vector2D( target[ "movement/position/x" ], target[ "movement/position/y" ] ) );
 }

@@ -30,7 +30,7 @@ BOOST_FIXTURE_TEST_CASE( perception_reco_object_sensor_identifies_all_objects_in
     MOCK_EXPECT( IsLocalizationInsideCircle ).once().returns( false );
     MOCK_RESET( GetObjectListWithinCircle );
     MOCK_EXPECT( GetObjectListWithinCircle ).once();
-    MOCK_EXPECT( GetObjectListWithinCircle ).once().with( mock::any, growthSpeed, mock::any, mock::any ).calls( boost::bind( boost::apply< void >(), _3, object, _4 ) );
+    MOCK_EXPECT( GetObjectListWithinCircle ).once().with( mock::any, mock::any, growthSpeed, mock::any, mock::any ).calls( boost::bind( boost::apply< void >(), _4, object, _5 ) );
     MOCK_EXPECT( IsObjectIntersectingLocalization ).once().with( mock::any, object ).returns( true );
     MOCK_EXPECT( CanObjectBePerceived ).once().with( object ).returns( true );
     ExpectEffect( perception[ "radius" ], sword::test::MakeModel( growthSpeed ) );

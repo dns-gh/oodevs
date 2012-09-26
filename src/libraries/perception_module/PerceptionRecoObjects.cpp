@@ -23,7 +23,7 @@ DECLARE_HOOK( CanObjectBePerceived, bool, ( const SWORD_Model* object ) )
 DECLARE_HOOK( IsLocalizationInsideCircle, bool, ( const SWORD_Model* localization, const MT_Vector2D* center, double radius ) )
 DECLARE_HOOK( IsKnowledgeObjectInsidePerception, bool, ( const SWORD_Model* localization, const MT_Vector2D* center, double radius, const SWORD_Model* knowledgeObject ) )
 DECLARE_HOOK( IsObjectIntersectingLocalization, bool, ( const SWORD_Model* localization, const SWORD_Model* object ) )
-DECLARE_HOOK( GetObjectListWithinCircle, void, ( const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* object, void* userData ), void* userData ) )
+DECLARE_HOOK( GetObjectListWithinCircle, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* object, void* userData ), void* userData ) )
 
 // -----------------------------------------------------------------------------
 // Name: PerceptionRecoObjectsReco constructor
@@ -64,10 +64,10 @@ bool PerceptionRecoObjectsReco::IsInside( const wrapper::View& knowledge ) const
 // Name: PerceptionRecoObjectsReco::GetObjectsInside
 // Created: JVT 2005-01-19
 // -----------------------------------------------------------------------------
-void PerceptionRecoObjectsReco::GetObjectsInside( const wrapper::View&, Perception_ABC::T_ObjectVector& result ) const
+void PerceptionRecoObjectsReco::GetObjectsInside( const wrapper::View& model, const wrapper::View& /*perceiver*/, Perception_ABC::T_ObjectVector& result ) const
 {
     ListInCircleVisitor< wrapper::View > objectVisitor( result );
-    GET_HOOK( GetObjectListWithinCircle )( vCenter_, rCurrentSize_, &ListInCircleVisitor< const SWORD_Model* >::Add, &objectVisitor );
+    GET_HOOK( GetObjectListWithinCircle )( model, vCenter_, rCurrentSize_, &ListInCircleVisitor< const SWORD_Model* >::Add, &objectVisitor );
     for( Perception_ABC::T_ObjectVector::iterator it = result.begin(); it != result.end(); )
         if( GET_HOOK( IsObjectIntersectingLocalization )( localisation_, *it ) )
             ++it;
@@ -119,12 +119,12 @@ const PerceptionLevel& PerceptionRecoObjects::ComputeObject( const wrapper::View
 // Name: PerceptionRecoObjects::ExecuteObjects
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-void PerceptionRecoObjects::ExecuteObjects( const wrapper::View& perceiver, const SurfacesObject_ABC& /*surfaces*/, const T_ObjectVector& /*perceivableObjects*/ )
+void PerceptionRecoObjects::ExecuteObjects( const wrapper::View& model, const wrapper::View& perceiver, const SurfacesObject_ABC& /*surfaces*/, const T_ObjectVector& /*perceivableObjects*/ )
 {
     for( T_RecoVector::const_iterator itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
     {
         T_ObjectVector perceivableObjects;
-        (*itReco)->GetObjectsInside( perceiver, perceivableObjects );
+        (*itReco)->GetObjectsInside( model, perceiver, perceivableObjects );
         for( T_ObjectVector::const_iterator it = perceivableObjects.begin(); it != perceivableObjects.end(); ++it )
         {
             const wrapper::View& object = *it;
