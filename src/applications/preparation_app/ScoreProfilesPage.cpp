@@ -13,6 +13,8 @@
 #include "preparation/ProfileSelection.h"
 #include "preparation/UserProfile.h"
 
+Q_DECLARE_METATYPE( const UserProfile* )
+
 // -----------------------------------------------------------------------------
 // Name: ScoreProfilesPage constructor
 // Created: SBO 2011-05-16
@@ -26,8 +28,12 @@ ScoreProfilesPage::ScoreProfilesPage( QWidget* parent, kernel::Controllers& cont
         Q3GroupBox* box = new Q3GroupBox( 1, Qt::Horizontal, tr( "Access rights" ), this );
         box->setMargin( 5 );
         new QLabel( tr( "Selected profiles will have access to the score during the exercise." ), box );
-        list_ = new Q3ListView( box );
-        list_->addColumn( tr( "Profile" ) );
+        QTreeView* view = new QTreeView( box );
+        view->setRootIsDecorated( false );
+        view->setEditTriggers( 0 );
+        model_ = new QStandardItemModel( this );
+        view->setModel( model_ );
+        model_->setHorizontalHeaderLabels( QStringList( tr( "Profile" ) ) );
     }
     controllers_.Register( *this );
 }
@@ -47,10 +53,11 @@ ScoreProfilesPage::~ScoreProfilesPage()
 // -----------------------------------------------------------------------------
 void ScoreProfilesPage::NotifyCreated( const UserProfile& profile )
 {
-    Q3CheckListItem* item = new Q3CheckListItem( list_, profile.GetLogin(), Q3CheckListItem::CheckBox );
-    item->setOn( true );
-    list_->insertItem( item );
-    profiles_[ &profile ] = item;
+    QStandardItem* item = new QStandardItem( profile.GetLogin() );
+    item->setData( true, Qt::CheckStateRole );
+    item->setData( QVariant::fromValue( &profile ) );
+    item->setCheckable( true );
+    model_->appendRow( item );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,10 +66,12 @@ void ScoreProfilesPage::NotifyCreated( const UserProfile& profile )
 // -----------------------------------------------------------------------------
 void ScoreProfilesPage::NotifyUpdated( const UserProfile& profile )
 {
-    T_Profiles::iterator it = profiles_.find( &profile );
-    if( it != profiles_.end() )
-        if( it->second->text( 0 ) != profile.GetLogin() )
-            it->second->setText( 0, profile.GetLogin() );
+    for( int i = 0; i < model_->rowCount(); ++i )
+    {
+        QStandardItem* item = model_->item( i );
+        if( item->data().value< const UserProfile* >() == &profile )
+            item->setText( profile.GetLogin() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -71,12 +80,14 @@ void ScoreProfilesPage::NotifyUpdated( const UserProfile& profile )
 // -----------------------------------------------------------------------------
 void ScoreProfilesPage::NotifyDeleted( const UserProfile& profile )
 {
-    T_Profiles::iterator it = profiles_.find( &profile );
-    if( it != profiles_.end() )
+    for( int i = 0; i < model_->rowCount(); ++i )
     {
-        if( Q3ListViewItem* item = list_->findItem( profile.GetLogin(), 0 ) )
-            list_->removeItem( item );
-        profiles_.erase( it );
+        QStandardItem* item = model_->item( i );
+        if( item->data().value< const UserProfile* >() == &profile )
+        {
+            model_->removeRow( i );
+            return;;
+        }
     }
 }
 
@@ -86,8 +97,11 @@ void ScoreProfilesPage::NotifyDeleted( const UserProfile& profile )
 // -----------------------------------------------------------------------------
 void ScoreProfilesPage::StartEdit( const ProfileSelection& profiles )
 {
-    for( T_Profiles::iterator it = profiles_.begin(); it != profiles_.end(); ++it )
-        it->second->setOn( profiles.Find( it->first->GetLogin() ) != 0 );
+    for( int i = 0; i < model_->rowCount(); ++i )
+    {
+        QStandardItem* item = model_->item( i );
+        item->setData( profiles.Find( item->text() ) != 0, Qt::CheckStateRole );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -97,8 +111,14 @@ void ScoreProfilesPage::StartEdit( const ProfileSelection& profiles )
 std::auto_ptr< ProfileSelection > ScoreProfilesPage::CreateResult() const
 {
     std::auto_ptr< ProfileSelection > selection( new ProfileSelection( controllers_ ) );
-    for( T_Profiles::const_iterator it = profiles_.begin(); it != profiles_.end(); ++it )
-        if( it->second->isOn() )
-            selection->Register( it->first->GetLogin(), *it->first );
+    for( int i = 0; i < model_->rowCount(); ++i )
+    {
+        QStandardItem* item = model_->item( i );
+        if( item->data( Qt::CheckStateRole ).toBool() )
+        {
+            const UserProfile* profile = item->data().value< const UserProfile* >();
+            selection->Register( profile->GetLogin(), *profile );
+        }
+    }
     return selection;
 }

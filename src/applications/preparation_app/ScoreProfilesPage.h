@@ -11,7 +11,6 @@
 #define __ScoreProfilesPage_h_
 
 #include "tools/ElementObserver_ABC.h"
-#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -20,7 +19,6 @@ namespace kernel
 
 class ProfileSelection;
 class UserProfile;
-class QCheckListItem;
 
 // =============================================================================
 /** @class  ScoreProfilesPage
@@ -29,7 +27,6 @@ class QCheckListItem;
 // Created: SBO 2011-05-16
 // =============================================================================
 class ScoreProfilesPage : public Q3VBox
-                        , private boost::noncopyable
                         , public tools::Observer_ABC
                         , public tools::ElementObserver_ABC< UserProfile >
 {
@@ -55,17 +52,11 @@ private:
     virtual void NotifyDeleted( const UserProfile& profile );
     //@}
 
-    //! @name Types
-    //@{
-    typedef std::map< const UserProfile*, Q3CheckListItem* > T_Profiles;
-    //@}
-
 private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    T_Profiles profiles_;
-    Q3ListView* list_;
+    QStandardItemModel* model_;
     //@}
 };
 

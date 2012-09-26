@@ -28,6 +28,8 @@ FilterPartiesListView::FilterPartiesListView( QWidget* parent, bool checkedByDef
 {
     setMaximumHeight( 100 );
     setModel( &model_ );
+    setEditTriggers( 0 );
+    setRootIsDecorated( false );
     header()->hide();
     connect( this, SIGNAL( clicked( const QModelIndex& ) ), SLOT( OnItemClicked( const QModelIndex& ) ) );
 }
