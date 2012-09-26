@@ -1142,11 +1142,13 @@ void MIL_AgentPion::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg,
         break;
     case sword::change_equipment_human_size:
         OnReceiveChangeEquipmentHumanSize( msg.parameters() );
+        break;
     case sword::load_unit:
         OnReceiveLoadUnit( msg.parameters() );
         break;
     case sword::log_finish_handlings:
-        OnReceiveFinishLogisticHandlings(); 
+        OnReceiveFinishLogisticHandlings();
+        break;
     case sword::unload_unit:
         OnReceiveUnloadUnit( msg.parameters() );
         break;
