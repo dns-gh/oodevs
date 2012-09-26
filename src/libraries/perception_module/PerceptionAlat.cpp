@@ -41,7 +41,7 @@ namespace
 PerceptionAlat::PerceptionAlat( const wrapper::View& /*model*/, const wrapper::View& entity, PerceptionObserver_ABC& observer )
     : observer_( observer )
 {
-    entity[ "perceptions/alat/reco" ].VisitIntegerChildren( boost::bind( &::AddLocalization, boost::ref( localisations_ ), _2 ) );
+    entity[ "perceptions/alat/reco" ].VisitIdentifiedChildren( boost::bind( &::AddLocalization, boost::ref( localisations_ ), _2 ) );
 }
 
 // -----------------------------------------------------------------------------

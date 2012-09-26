@@ -82,7 +82,7 @@ void PerceptionRecoObjectsReco::GetObjectsInside( const wrapper::View&, Percepti
 PerceptionRecoObjects::PerceptionRecoObjects( const wrapper::View& /*model*/, const wrapper::View& entity, PerceptionObserver_ABC& observer )
     : observer_( observer )
 {
-    entity[ "perceptions/object-detection" ].VisitIntegerChildren( boost::bind( &PerceptionRecoObjects::AddLocalisation, this, _2, boost::cref( entity ) ) );
+    entity[ "perceptions/object-detection" ].VisitIdentifiedChildren( boost::bind( &PerceptionRecoObjects::AddLocalisation, this, _2, boost::cref( entity ) ) );
 }
 
 // -----------------------------------------------------------------------------

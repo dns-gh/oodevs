@@ -23,8 +23,8 @@ BOOST_FIXTURE_TEST_CASE( localization_reco_sensor_recognized_all_agents_in_locat
                                 ( "has-growth-speed", true )
                                 ( "radius", 0 )
                                 ( "max-radius-reached", false );
-    const SWORD_Model* other = core::Convert( &model[ "entities/other" ] );
-    model[ "entities/other" ] = core::MakeModel( "pion", 43 )
+    const SWORD_Model* other = core::Convert( &model[ "entities" ][ target ] );
+    model[ "entities" ][ target ] = core::MakeModel( "pion", 43 )
                                                ( "movement/position/x", 5 )
                                                ( "movement/position/y", 5 );
     MOCK_EXPECT( GetLocalizationRadius ).once().returns( 100 );

@@ -23,8 +23,10 @@
 #include <core/Hooks.h>
 #include <core/Logger_ABC.h>
 #include <core/MakeModel.h>
-#include <core/ChildrenVisitor.h>
+#include <core/NamedChildrenVisitor.h>
+#include <core/IdentifiedChildrenVisitor.h>
 #include <core/MergeVisitor.h>
+#include <turtle/mock.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/bind.hpp>
 #include <boost/assign.hpp>
@@ -196,7 +198,7 @@ namespace core
             CATCH
             return 0;
         }
-        static const SWORD_Model* SWORD_GetChild( const SWORD_Model* node, const char* key )
+        static const SWORD_Model* SWORD_GetNamedChild( const SWORD_Model* node, const char* key )
         {
             TRY
                 BOOST_REQUIRE( node );
@@ -205,7 +207,7 @@ namespace core
             CATCH
             return 0;
         }
-        static SWORD_Model* SWORD_SetChild( SWORD_Model* node, const char* key )
+        static SWORD_Model* SWORD_SetNamedChild( SWORD_Model* node, const char* key )
         {
             TRY
                 BOOST_REQUIRE( node );
@@ -214,12 +216,22 @@ namespace core
             CATCH
             return 0;
         }
-        static int SWORD_VisitChildren( const SWORD_Model* parent, SWORD_ChildrenVisitor visitor, void* userData )
+        static int SWORD_VisitNamedChildren( const SWORD_Model* parent, SWORD_NamedChildrenVisitor visitor, void* userData )
         {
             TRY
                 BOOST_REQUIRE( parent );
                 BOOST_REQUIRE( visitor );
-                core::ChildrenVisitor( *core::Convert( parent ), visitor, userData );
+                core:: NamedChildrenVisitor( *core::Convert( parent ), visitor, userData );
+                return true;
+            CATCH
+            return false;
+        }
+        static int SWORD_VisitIdentifiedChildren( const SWORD_Model* parent, SWORD_IdentifiedChildrenVisitor visitor, void* userData )
+        {
+            TRY
+                BOOST_REQUIRE( parent );
+                BOOST_REQUIRE( visitor );
+                core::IdentifiedChildrenVisitor( *core::Convert( parent ), visitor, userData );
                 return true;
             CATCH
             return false;
@@ -233,7 +245,7 @@ namespace core
             CATCH
             return false;
         }
-        static const SWORD_Model* SWORD_GetChildInt( const SWORD_Model* parent, unsigned int key )
+        static const SWORD_Model* SWORD_GetIdentifiedChild( const SWORD_Model* parent, unsigned int key )
         {
             TRY
                 BOOST_REQUIRE( parent );
@@ -241,7 +253,7 @@ namespace core
             CATCH
             return 0;
         }
-        static SWORD_Model* SWORD_SetChildInt( SWORD_Model* parent, unsigned int key )
+        static SWORD_Model* SWORD_SetIdentifiedChild( SWORD_Model* parent, unsigned int key )
         {
             TRY
                 BOOST_REQUIRE( parent );

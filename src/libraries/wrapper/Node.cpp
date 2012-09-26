@@ -79,9 +79,9 @@ Node Node::operator[]( const std::string& key )
 {
     if( key.empty() )
         return Node( node_ );
-    SWORD_Model* child = ::SWORD_SetChild( node_, key.c_str() );
+    SWORD_Model* child = ::SWORD_SetNamedChild( node_, key.c_str() );
     if( !child )
-        throw std::runtime_error( "could not retrieve child parameter '" + key + "'" );
+        throw std::runtime_error( "could not create named child '" + key + "'" );
     return Node( child );
 }
 
@@ -93,9 +93,9 @@ Node Node::operator[]( const char* key )
 {
     if( ! key )
         return Node( node_ );
-    SWORD_Model* child = ::SWORD_SetChild( node_, key );
+    SWORD_Model* child = ::SWORD_SetNamedChild( node_, key );
     if( !child )
-        throw std::runtime_error( "could not retrieve child parameter '" + std::string( key ) + "'" );
+        throw std::runtime_error( "could not create named child '" + std::string( key ) + "'" );
     return Node( child );
 }
 
@@ -105,9 +105,9 @@ Node Node::operator[]( const char* key )
 // -----------------------------------------------------------------------------
 Node Node::operator[]( size_t key )
 {
-    SWORD_Model* child = ::SWORD_SetChildInt( node_, boost::numeric_cast< unsigned int >( key ) );
+    SWORD_Model* child = ::SWORD_SetIdentifiedChild( node_, boost::numeric_cast< unsigned int >( key ) );
     if( !child )
-        throw std::runtime_error( "could not retrieve child parameter '" + boost::lexical_cast< std::string >( key ) + "'" );
+        throw std::runtime_error( "could not create identified child '" + boost::lexical_cast< std::string >( key ) + "'" );
     return Node( child );
 }
 

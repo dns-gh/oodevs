@@ -35,9 +35,9 @@ PerceptionRadar::PerceptionRadar( const wrapper::View& entity, PerceptionObserve
     EnableRadar( entity[ "perceptions/radars/radar" ], RadarClass::radar_ );
     EnableRadar( entity[ "perceptions/radars/tapping" ], RadarClass::tapping_ );
     EnableRadar( entity[ "perceptions/radars/tapping-radar" ], RadarClass::tappingRadar_ );
-    entity[ "perceptions/localized-radars/radar" ].VisitIntegerChildren( boost::bind( &PerceptionRadar::EnableLocalizedRadar, this, _2, boost::cref( RadarClass::radar_ ) ) );
-    entity[ "perceptions/localized-radars/tapping" ].VisitIntegerChildren( boost::bind( &PerceptionRadar::EnableLocalizedRadar, this, _2, boost::cref( RadarClass::tapping_ ) ) );
-    entity[ "perceptions/localized-radars/tapping-radar" ].VisitIntegerChildren( boost::bind( &PerceptionRadar::EnableLocalizedRadar, this, _2, boost::cref( RadarClass::tappingRadar_ ) ) );
+    entity[ "perceptions/localized-radars/radar" ].VisitIdentifiedChildren( boost::bind( &PerceptionRadar::EnableLocalizedRadar, this, _2, boost::cref( RadarClass::radar_ ) ) );
+    entity[ "perceptions/localized-radars/tapping" ].VisitIdentifiedChildren( boost::bind( &PerceptionRadar::EnableLocalizedRadar, this, _2, boost::cref( RadarClass::tapping_ ) ) );
+    entity[ "perceptions/localized-radars/tapping-radar" ].VisitIdentifiedChildren( boost::bind( &PerceptionRadar::EnableLocalizedRadar, this, _2, boost::cref( RadarClass::tappingRadar_ ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -116,7 +116,7 @@ void PerceptionRadar::Execute( const wrapper::View& model, const wrapper::View& 
     if( !GET_HOOK( IsUsingActiveRadar )( perceiver ) )
         return;
     wrapper::Effect effect( perceiver[ "perceptions/radars/acquisitions" ] );
-    perceiver[ "perceptions/radars/acquisitions" ].VisitStringChildren( boost::bind( &::AddRadarType< T_RadarDataMap >, _1, boost::cref( perceiver ), boost::ref( effect ), boost::ref( radarData_ ) ) );
+    perceiver[ "perceptions/radars/acquisitions" ].VisitNamedChildren( boost::bind( &::AddRadarType< T_RadarDataMap >, _1, boost::cref( perceiver ), boost::ref( effect ), boost::ref( radarData_ ) ) );
     PrepareRadarData( perceiver, radarTypes_ );
     RadarClass::T_RadarClassMap radarClasses = RadarClass::GetRadarClasses();
     for( RadarClass::CIT_RadarClassMap itRadarClass = radarClasses.begin(); itRadarClass != radarClasses.end(); ++itRadarClass )

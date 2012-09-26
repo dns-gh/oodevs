@@ -25,10 +25,10 @@ BOOST_FIXTURE_TEST_CASE( perception_reco_point_sensor_recognizes_all_agents_in_g
                                 ( "max-radius", 10 )
                                 ( "radius", 0 )
                                 ( "max-radius-reached", false );
-    const SWORD_Model* other = core::Convert( &model[ "entities/other" ] );
+    const SWORD_Model* other = core::Convert( &model[ "entities" ][ target ] );
     const SWORD_Model* perceiver = core::Convert( &entity );
-    model[ "entities/other" ] = core::MakeModel( "pion", 43 )
-                                               ( "identifier", "other" );
+    model[ "entities" ][ target ] = core::MakeModel( "pion", 43 )
+                                                   ( "identifier", target );
     MOCK_RESET( GetAgentListWithinCircle );
     MOCK_EXPECT( GetAgentListWithinCircle ).once();
     MOCK_EXPECT( GetAgentListWithinCircle ).once().with( mock::any, mock::any, growthSpeed, mock::any, mock::any ).calls( boost::bind( boost::apply< void >(), _4, other, _5 ) );

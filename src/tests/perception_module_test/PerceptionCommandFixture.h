@@ -19,6 +19,7 @@ namespace perception
     struct PerceptionCommandFixture : public sword::perception::PerceptionViewFixture
     {
         PerceptionCommandFixture()
+            : target( 123 )
         {
             MOCK_EXPECT( GetUrbanObjectListWithinCircle );
             MOCK_EXPECT( AppendAddedKnowledge );
@@ -58,6 +59,7 @@ namespace perception
         {
             ExpectNotifications( T_Nofitications() );
         }
+        const unsigned int target;
     };
 }
 }

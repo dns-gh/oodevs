@@ -32,7 +32,7 @@ void TogglePerceptionCommand::Execute( const wrapper::View& parameters, const wr
     const size_t identifier = parameters[ "identifier" ];
     const std::string perceptionId = parameters[ "perception" ];
     const bool isActivated = parameters[ "activated" ];
-    const wrapper::View& perception = model[ "entities" ][ identifier ][ "perceptions"][ perceptionId ][ "activated" ];
+    const wrapper::View& perception = model[ "entities" ][ identifier ][ "perceptions" ][ perceptionId ][ "activated" ];
     if( perception == isActivated )
         return;
     wrapper::Effect effect( perception );

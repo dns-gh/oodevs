@@ -60,10 +60,10 @@ public:
 
     void* GetUserData() const;
 
-    typedef boost::function< void( const std::string& key, const View& child ) > T_StringChildrenVisitor;
-    void VisitStringChildren( T_StringChildrenVisitor visitor ) const;
-    typedef boost::function< void( unsigned int key, const View& child ) > T_IntegerChildrenVisitor;
-    void VisitIntegerChildren( T_IntegerChildrenVisitor visitor ) const;
+    typedef boost::function< void( const std::string& key, const View& child ) > T_NamedChildrenVisitor;
+    void VisitNamedChildren( T_NamedChildrenVisitor visitor ) const;
+    typedef boost::function< void( unsigned int key, const View& child ) > T_IdentifiedChildrenVisitor;
+    void VisitIdentifiedChildren( T_IdentifiedChildrenVisitor visitor ) const;
     //@}
 
     //! @name Operators

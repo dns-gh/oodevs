@@ -42,7 +42,7 @@ PerceptionRadarData::PerceptionRadarData( const wrapper::View& entity, wrapper::
     : pRadarType_( &radarType )
     , effect_    ( effect )
 {
-    GetRadar( entity, radarType ).VisitIntegerChildren( boost::bind( &PerceptionRadarData::AddData, this, _2 ) );
+    GetRadar( entity, radarType ).VisitIdentifiedChildren( boost::bind( &PerceptionRadarData::AddData, this, _2 ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -16,11 +16,11 @@ BOOST_FIXTURE_TEST_CASE( alat_reco_sensor_recognized_all_agents_in_location_depe
 {
     const unsigned char eVisionEmpty = 0;
     entity[ "perceptions/sensor/activated" ] = false;
-    entity[ "perceptions/alat/reco/0/localization" ];
-    const SWORD_Model* other = core::Convert( &model[ "entities/other" ] );
-    model[ "entities/other/pion" ] = 43;
-    model[ "entities/other/movement/position/x" ] = 5;
-    model[ "entities/other/movement/position/y" ] = 5;
+    entity[ "perceptions/alat/reco" ][ 0u ][ "localization" ];
+    const SWORD_Model* other = core::Convert( &model[ "entities" ][ target ] );
+    model[ "entities" ][ target ][ "pion" ] = 43;
+    model[ "entities" ][ target ][ "movement/position/x" ] = 5;
+    model[ "entities" ][ target ][ "movement/position/y" ] = 5;
     const SWORD_Model* perceiver = core::Convert( &entity );
     MOCK_EXPECT( GetAgentListWithinLocalisation ).once().calls( boost::bind( boost::apply< void >(), _3, other, _4 ) );
     MOCK_EXPECT( CanBeSeen ).once().with( perceiver, other ).returns( true );

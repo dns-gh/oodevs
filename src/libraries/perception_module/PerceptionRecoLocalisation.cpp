@@ -106,7 +106,7 @@ void PerceptionRecoLocalisationReco::GetAgentsInside( const wrapper::View& model
 PerceptionRecoLocalisation::PerceptionRecoLocalisation( const wrapper::View& /*model*/, const wrapper::View& entity, PerceptionObserver_ABC& observer )
     : observer_( observer )
 {
-    entity[ "perceptions/reco" ].VisitIntegerChildren( boost::bind( &PerceptionRecoLocalisation::AddLocalisation, this, _2, boost::cref( entity ) ) );
+    entity[ "perceptions/reco" ].VisitIdentifiedChildren( boost::bind( &PerceptionRecoLocalisation::AddLocalisation, this, _2, boost::cref( entity ) ) );
 }
 
 // -----------------------------------------------------------------------------
