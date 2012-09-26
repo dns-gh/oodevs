@@ -380,8 +380,6 @@ void CheckEgypt( bool& sentinel, const Tree& item, size_t size )
     BOOST_CHECK_EQUAL( Get< Path >( item, ".name" ), Path( "worldwide/Egypt" ) );
     BOOST_CHECK_EQUAL( Get< std::string >( item, ".checksum" ), "1A741642" );
     BOOST_CHECK_EQUAL( Get< size_t >( item, ".size" ), size );
-    BOOST_CHECK_EQUAL( Get< std::string >( item, ".package" ), "Egypt" );
-    BOOST_CHECK_EQUAL( Get< std::string >( item, ".version" ), "trunk" );
 }
 }
 
