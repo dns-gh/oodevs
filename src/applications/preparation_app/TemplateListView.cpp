@@ -182,9 +182,10 @@ void TemplateListView::keyPressEvent( QKeyEvent* evt )
             IT_Templates it = std::find( templates_.begin(), templates_.end(), pTemplate );
             if( it != templates_.end() )
             {
-                delete *it;
-                std::swap( *it, templates_.back() );
+                *it = templates_.back();
                 templates_.pop_back();
+                delete pTemplate;
+                
                 QStandardItem* item = dataModel_.GetItemFromIndex( index );
                 QList< QStandardItem* > rowItems = dataModel_.invisibleRootItem()->takeRow( item->row() );
                 for( QList< QStandardItem* >::iterator it = rowItems.begin(); it != rowItems.end(); ++it )
