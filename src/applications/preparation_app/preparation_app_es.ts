@@ -1365,7 +1365,7 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Invalid logistic subordinate for &apos;%1&apos; in orbat.xml. The link will deleted at next save.</source>
+        <source>Invalid logistic subordinate for &apos;%1&apos; in orbat.xml. The link will be deleted at next save.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

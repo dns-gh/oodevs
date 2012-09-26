@@ -1366,7 +1366,7 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Des liens de réseau de ressource pointent sur des bloc inexistant sur ce terrain et seront supprimés à la prochaine sauvegarde.</translation>
     </message>
     <message>
-        <source>Invalid logistic subordinate for &apos;%1&apos; in orbat.xml. The link will deleted at next save.</source>
+        <source>Invalid logistic subordinate for &apos;%1&apos; in orbat.xml. The link will be deleted at next save.</source>
         <translation>&quot;%1&quot; a un subordonné logistique invalide dans orbat.xml. Le lien sera supprimé à la prochaine sauvegarde.</translation>
     </message>
 </context>
