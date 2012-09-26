@@ -178,7 +178,7 @@ private:
         , checksum_( Get< std::string >( tree, "checksum" ) )
         , tomb_    ( Utf8( Get< std::string >( tree, "tomb" ) ) )
         , links_   ( 0 )
-        , size_    ( 0 )
+        , size_    ( Get< size_t >( tree, "size", 0 ) )
     {
         // NOTHING
     }
@@ -369,7 +369,7 @@ struct Item : Package_ABC::Item_ABC
         const Path root = root_ / GetSuffix();
         const std::string checksum = system.Checksum( root, IsItemFile( root ), read );
         meta_.Finalize( checksum, read );
-        meta_.Save( system, root );
+        meta_.Save( system, root_ );
     }
 
     void Install( Async& async, const FileSystem_ABC& system, const Path& tomb, const Path& root, const Package_ABC& dst, const Package::T_Items& targets, const PathOperand& operand ) const

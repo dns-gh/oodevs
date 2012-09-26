@@ -106,6 +106,7 @@ struct Fixture
         MOCK_EXPECT( system.GetLastWrite ).with( file ).returns( std::time_t() );
         MOCK_EXPECT( system.ReadFile ).with( file ).returns( contents );
         MOCK_EXPECT( system.ReadFile ).with( root / "metadata.tag" ).returns( "" );
+        MOCK_EXPECT( system.WriteFile ).with( root / "metadata.tag", mock::any ).returns( true );
         MOCK_EXPECT( system.Checksum ).with( data / name, mock::any, mock::any ).returns( checksum );
         dst.push_back( file );
     }
@@ -256,7 +257,6 @@ struct Fixture
         MOCK_EXPECT( system.MakeAnyPath ).once().with( root ).returns( sub );
         MOCK_EXPECT( system.MakePaths ).once().with( boost::bind( &BeginWith, sub, _1 ) );
         MOCK_EXPECT( system.CopyDirectory ).once();
-        MOCK_EXPECT( system.WriteFile ).once().with( boost::bind( &EndWith, "metadata.tag", _1 ), mock::any ).returns( true );
         T_Paths dst;
         size_t idx;
         if( type == "model" )
@@ -346,7 +346,6 @@ BOOST_FIXTURE_TEST_CASE( package_links, Fixture )
 
     const Path dst = GetFileIndex();
     Async async( pool );
-    MOCK_EXPECT( system.WriteFile ).once().with( boost::bind( &EndWith, "metadata.tag", _1 ), mock::any ).returns( true );
     install.Uninstall( async, dst, boost::assign::list_of( 0 ) );
     const Tree data = install.GetProperties();
     CheckCounts( data, 0, 1, 1 );
@@ -365,11 +364,9 @@ BOOST_FIXTURE_TEST_CASE( package_reinstall_silently, Fixture )
     install.LinkExercise( "shore" );
 
     Async async( pool );
-    MOCK_EXPECT( system.WriteFile ).once().with( boost::bind( &EndWith, "metadata.tag", _1 ), mock::any ).returns( true );
     install.Uninstall( async, GetFileIndex(), boost::assign::list_of( 2 ) );
     mock::verify();
 
-    MOCK_EXPECT( system.WriteFile ).once().with( boost::bind( &EndWith, "metadata.tag", _1 ), mock::any ).returns( true );
     install.Install( async, install.GetPath() / GetFileIndex(), cache, boost::assign::list_of( 2 ) );
 }
 
