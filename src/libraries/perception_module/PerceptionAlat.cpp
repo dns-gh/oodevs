@@ -28,7 +28,7 @@ DECLARE_HOOK( GetVisionObject, unsigned char, ( const MT_Vector2D* point ) )
 
 namespace
 {
-    void AddLocalization( std::vector< wrapper::View >& localizations, const std::string& /*key*/, const wrapper::View& perception )
+    void AddLocalization( std::vector< wrapper::View >& localizations, const wrapper::View& perception )
     {
         localizations.push_back( perception[ "localization" ] );
     }
@@ -41,7 +41,7 @@ namespace
 PerceptionAlat::PerceptionAlat( const wrapper::View& /*model*/, const wrapper::View& entity, PerceptionObserver_ABC& observer )
     : observer_( observer )
 {
-    entity[ "perceptions/alat/reco" ].VisitChildren( boost::bind( &::AddLocalization, boost::ref( localisations_ ), _1, _2 ) );
+    entity[ "perceptions/alat/reco" ].VisitIntegerChildren( boost::bind( &::AddLocalization, boost::ref( localisations_ ), _2 ) );
 }
 
 // -----------------------------------------------------------------------------

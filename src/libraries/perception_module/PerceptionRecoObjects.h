@@ -60,7 +60,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void AddLocalisation( const std::string& /*key*/, const wrapper::View& perception, const wrapper::View& entity );
+    void AddLocalisation( const wrapper::View& perception, const wrapper::View& entity );
     //@}
 
 private:

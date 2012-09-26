@@ -441,7 +441,7 @@ namespace
     void AddActiveListPerception( const std::string& sensor, T_PerceptionVector& activeperceptions, const wrapper::View& model, const wrapper::View& entity, PerceptionObserver_ABC& observer )
     {
         bool activated = false;
-        entity[ "perceptions" ][ sensor ].VisitChildren( boost::lambda::var( activated ) = true );
+        entity[ "perceptions" ][ sensor ].VisitIntegerChildren( boost::lambda::var( activated ) = true );
         if( activated )
             activeperceptions.push_back( boost::shared_ptr< Type >( new Type( model, entity, observer ) ) );
     }

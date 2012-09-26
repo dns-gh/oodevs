@@ -116,6 +116,8 @@ View View::operator[]( const std::string& key ) const
 // -----------------------------------------------------------------------------
 View View::operator[]( const char* key ) const
 {
+    if( ! key )
+        return model_;
     const SWORD_Model* child = ::SWORD_GetChild( model_, key );
     if( !child )
         throw std::runtime_error( "could not retrieve child parameter '" + std::string( key ) + "'" );
@@ -186,22 +188,43 @@ bool View::operator!=( const View& rhs ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: View::function< void
+// Name: View::VisitStringChildren
 // Created: SLI 2012-07-23
 // -----------------------------------------------------------------------------
-void View::VisitChildren( T_ChildrenVisitor visitor ) const
+void View::VisitStringChildren( T_StringChildrenVisitor visitor ) const
 {
     struct ChildrenVisitor
     {
-        explicit ChildrenVisitor( T_ChildrenVisitor visitor )
+        explicit ChildrenVisitor( T_StringChildrenVisitor visitor )
             : visitor_( visitor )
         {}
         static void Visit( const char* key, const SWORD_Model* child, void* userData )
         {
             static_cast< ChildrenVisitor* >( userData )->visitor_( key, child );
         }
-        T_ChildrenVisitor visitor_;
+        T_StringChildrenVisitor visitor_;
     } childrenVisitor( visitor );
-    if( !::SWORD_VisitChildren( model_, &ChildrenVisitor::Visit, &childrenVisitor ) )
-        throw std::runtime_error( "could not visit children" );
+    if( ! SWORD_VisitStringChildren( model_, &ChildrenVisitor::Visit, &childrenVisitor ) )
+        throw std::runtime_error( "could not visit string children" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: View::VisitIntegerChildren
+// Created: MCO 2012-09-26
+// -----------------------------------------------------------------------------
+void View::VisitIntegerChildren( T_IntegerChildrenVisitor visitor ) const
+{
+    struct ChildrenVisitor
+    {
+        explicit ChildrenVisitor( T_IntegerChildrenVisitor visitor )
+            : visitor_( visitor )
+        {}
+        static void Visit( unsigned int key, const SWORD_Model* child, void* userData )
+        {
+            static_cast< ChildrenVisitor* >( userData )->visitor_( key, child );
+        }
+        T_IntegerChildrenVisitor visitor_;
+    } childrenVisitor( visitor );
+    if( ! SWORD_VisitIntegerChildren( model_, &ChildrenVisitor::Visit, &childrenVisitor ) )
+        throw std::runtime_error( "could not visit integer children" );
 }

@@ -74,7 +74,7 @@ bool PerceptionRecoUrbanBlockReco::CanSeeIt( const wrapper::View& perceiver ) co
 PerceptionRecoUrbanBlock::PerceptionRecoUrbanBlock( const wrapper::View& /*model*/, const wrapper::View& entity, PerceptionObserver_ABC& observer )
     : observer_( observer )
 {
-    entity[ "perceptions/urban" ].VisitChildren( boost::bind( &PerceptionRecoUrbanBlock::AddLocalisation, this, _1, _2 ) );
+    entity[ "perceptions/urban" ].VisitIntegerChildren( boost::bind( &PerceptionRecoUrbanBlock::AddLocalisation, this, _2 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,7 +90,7 @@ PerceptionRecoUrbanBlock::~PerceptionRecoUrbanBlock()
 // Name: PerceptionRecoUrbanBlock::AddLocalisation
 // Created: SLI 2012-08-27
 // -----------------------------------------------------------------------------
-void PerceptionRecoUrbanBlock::AddLocalisation( const std::string& /*key*/, const wrapper::View& perception )
+void PerceptionRecoUrbanBlock::AddLocalisation( const wrapper::View& perception )
 {
     Add( std::auto_ptr< PerceptionRecoUrbanBlockReco >( new PerceptionRecoUrbanBlockReco( perception ) ) );
 }

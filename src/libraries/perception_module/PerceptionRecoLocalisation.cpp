@@ -106,7 +106,7 @@ void PerceptionRecoLocalisationReco::GetAgentsInside( const wrapper::View& model
 PerceptionRecoLocalisation::PerceptionRecoLocalisation( const wrapper::View& /*model*/, const wrapper::View& entity, PerceptionObserver_ABC& observer )
     : observer_( observer )
 {
-    entity[ "perceptions/reco" ].VisitChildren( boost::bind( &PerceptionRecoLocalisation::AddLocalisation, this, _1, _2, boost::cref( entity ) ) );
+    entity[ "perceptions/reco" ].VisitIntegerChildren( boost::bind( &PerceptionRecoLocalisation::AddLocalisation, this, _2, boost::cref( entity ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -122,7 +122,7 @@ PerceptionRecoLocalisation::~PerceptionRecoLocalisation()
 // Name: PerceptionRecoLocalisation::AddLocalisation
 // Created: SLI 2012-08-28
 // -----------------------------------------------------------------------------
-void PerceptionRecoLocalisation::AddLocalisation( const std::string& /*key*/, const wrapper::View& perception, const wrapper::View& entity )
+void PerceptionRecoLocalisation::AddLocalisation( const wrapper::View& perception, const wrapper::View& entity )
 {
     Add( std::auto_ptr< PerceptionRecoLocalisationReco >( new PerceptionRecoLocalisationReco( perception, entity ) ) );
 }

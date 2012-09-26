@@ -12,8 +12,8 @@
 
 #include <module_api/Config.h>
 #include <module_api/Model.h>
-#include <string>
 #include <boost/function.hpp>
+#include <string>
 
 namespace sword
 {
@@ -60,8 +60,10 @@ public:
 
     void* GetUserData() const;
 
-    typedef boost::function< void( const std::string& key, const View& child ) > T_ChildrenVisitor;
-    void VisitChildren( T_ChildrenVisitor visitor ) const;
+    typedef boost::function< void( const std::string& key, const View& child ) > T_StringChildrenVisitor;
+    void VisitStringChildren( T_StringChildrenVisitor visitor ) const;
+    typedef boost::function< void( unsigned int key, const View& child ) > T_IntegerChildrenVisitor;
+    void VisitIntegerChildren( T_IntegerChildrenVisitor visitor ) const;
     //@}
 
     //! @name Operators

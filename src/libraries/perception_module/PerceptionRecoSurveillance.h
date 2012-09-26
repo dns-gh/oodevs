@@ -64,7 +64,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void AddLocalisation( const std::string& /*key*/, const wrapper::View& perception, unsigned int currentTimeStep );
+    void AddLocalisation( const wrapper::View& perception, unsigned int currentTimeStep );
     //@}
 
 private:

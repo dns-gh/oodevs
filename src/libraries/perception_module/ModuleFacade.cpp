@@ -56,7 +56,7 @@ namespace
     bool IsActivated( const sword::wrapper::View& sensor )
     {
         bool activated = false;
-        sensor.VisitChildren( boost::lambda::var( activated ) = true );
+        sensor.VisitIntegerChildren( boost::lambda::var( activated ) = true );
         return activated;
     }
     DEFINE_HOOK( IsUsingActiveRadar, bool, ( const SWORD_Model* entity ) )

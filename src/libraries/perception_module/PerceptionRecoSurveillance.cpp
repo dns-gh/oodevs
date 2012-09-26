@@ -87,7 +87,7 @@ void PerceptionRecoSurveillanceReco::GetAgentsInside( const wrapper::View& model
 PerceptionRecoSurveillance::PerceptionRecoSurveillance( const wrapper::View& model, const wrapper::View& entity, PerceptionObserver_ABC& observer )
     : observer_( observer )
 {
-    entity[ "perceptions/alat/monitoring" ].VisitChildren( boost::bind( &PerceptionRecoSurveillance::AddLocalisation, this, _1, _2, model[ "tick" ] ) );
+    entity[ "perceptions/alat/monitoring" ].VisitIntegerChildren( boost::bind( &PerceptionRecoSurveillance::AddLocalisation, this, _2, model[ "tick" ] ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -103,7 +103,7 @@ PerceptionRecoSurveillance::~PerceptionRecoSurveillance()
 // Name: PerceptionRecoSurveillance::AddLocalisation
 // Created: JVT 2004-10-22
 // -----------------------------------------------------------------------------
-void PerceptionRecoSurveillance::AddLocalisation( const std::string& /*key*/, const wrapper::View& perception, unsigned int currentTimeStep )
+void PerceptionRecoSurveillance::AddLocalisation( const wrapper::View& perception, unsigned int currentTimeStep )
 {
     Add( std::auto_ptr< PerceptionRecoSurveillanceReco >( new PerceptionRecoSurveillanceReco( perception, currentTimeStep ) ) );
 }

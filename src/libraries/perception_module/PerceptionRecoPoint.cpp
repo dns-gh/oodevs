@@ -72,7 +72,7 @@ PerceptionRecoPointReco::PerceptionRecoPointReco( const wrapper::View& perceptio
 PerceptionRecoPoint::PerceptionRecoPoint( const wrapper::View& /*model*/, const wrapper::View& entity, PerceptionObserver_ABC& observer )
     : observer_( observer )
 {
-    entity[ "perceptions/recognition-point" ].VisitChildren( boost::bind( &PerceptionRecoPoint::AddLocalisation, this, _1, _2, boost::cref( entity ) ) );
+    entity[ "perceptions/recognition-point" ].VisitIntegerChildren( boost::bind( &PerceptionRecoPoint::AddLocalisation, this, _2, boost::cref( entity ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -88,7 +88,7 @@ PerceptionRecoPoint::~PerceptionRecoPoint()
 // Name: PerceptionRecoPoint::AddLocalisation
 // Created: SLI 2012-08-23
 // -----------------------------------------------------------------------------
-void PerceptionRecoPoint::AddLocalisation( const std::string& , const wrapper::View& perception, const wrapper::View& entity )
+void PerceptionRecoPoint::AddLocalisation( const wrapper::View& perception, const wrapper::View& entity )
 {
     Add( std::auto_ptr< PerceptionRecoPointReco >( new PerceptionRecoPointReco( perception, entity ) ) );
 }

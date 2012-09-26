@@ -82,7 +82,7 @@ void PerceptionRecoObjectsReco::GetObjectsInside( const wrapper::View&, Percepti
 PerceptionRecoObjects::PerceptionRecoObjects( const wrapper::View& /*model*/, const wrapper::View& entity, PerceptionObserver_ABC& observer )
     : observer_( observer )
 {
-    entity[ "perceptions/object-detection" ].VisitChildren( boost::bind( &PerceptionRecoObjects::AddLocalisation, this, _1, _2, boost::cref( entity ) ) );
+    entity[ "perceptions/object-detection" ].VisitIntegerChildren( boost::bind( &PerceptionRecoObjects::AddLocalisation, this, _2, boost::cref( entity ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -98,7 +98,7 @@ PerceptionRecoObjects::~PerceptionRecoObjects()
 // Name: PerceptionRecoObjects::AddLocalisation
 // Created: JVT 2005-01-19
 // -----------------------------------------------------------------------------
-void PerceptionRecoObjects::AddLocalisation( const std::string& /*key*/, const wrapper::View& perception, const wrapper::View& entity )
+void PerceptionRecoObjects::AddLocalisation( const wrapper::View& perception, const wrapper::View& entity )
 {
     Add( std::auto_ptr< PerceptionRecoObjectsReco >( new PerceptionRecoObjectsReco( perception, entity ) ) );
 }

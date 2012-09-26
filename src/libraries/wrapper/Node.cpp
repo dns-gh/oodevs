@@ -91,7 +91,12 @@ Node Node::operator[]( const std::string& key )
 // -----------------------------------------------------------------------------
 Node Node::operator[]( const char* key )
 {
-    return (*this)[ std::string( key ) ];
+    if( ! key )
+        return Node( node_ );
+    SWORD_Model* child = ::SWORD_SetChild( node_, key );
+    if( !child )
+        throw std::runtime_error( "could not retrieve child parameter '" + std::string( key ) + "'" );
+    return Node( child );
 }
 
 // -----------------------------------------------------------------------------

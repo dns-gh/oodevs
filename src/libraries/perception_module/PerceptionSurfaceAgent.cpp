@@ -183,7 +183,7 @@ bool PerceptionSurfaceAgent::IsInitialized()
 // Name: PerceptionSurfaceAgent::TransferPerception
 // Created: SLG 2010-05-07
 // -----------------------------------------------------------------------------
-void PerceptionSurfaceAgent::TransferPerception( std::map< std::size_t, std::pair< unsigned int, double > > urbanPerceptionMap ) const
+void PerceptionSurfaceAgent::TransferPerception( const std::map< std::size_t, std::pair< unsigned int, double > >& urbanPerceptionMap ) const
 {
     perceptionsBuffer_.clear();
     for( std::map< std::size_t, std::pair< unsigned int, double > >::const_iterator it = urbanPerceptionMap.begin(); it != urbanPerceptionMap.end(); ++it )

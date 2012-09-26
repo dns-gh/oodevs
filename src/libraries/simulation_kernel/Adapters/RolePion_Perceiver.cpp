@@ -111,7 +111,7 @@ namespace
         {
             node.Accept( *this );
         }
-        virtual void Visit( const std::string& key, const core::Model& child )
+        virtual void Visit( unsigned int key, const core::Model& child )
         {
             boost::shared_ptr< ListenerHelper >& helper = identifiers_[ key ];
             if( ! helper )
@@ -120,7 +120,7 @@ namespace
                 helper.reset( new ListenerHelper( child, ListenerHelper::T_Callback(), boost::bind( &IdentifiedToggleListener::Disable, this, key, id ) ) );
             }
         }
-        void Disable( const std::string& key, unsigned int identifier )
+        void Disable( unsigned int key, unsigned int identifier )
         {
             identifiers_.erase( key );
             disable_( identifier );
@@ -129,13 +129,14 @@ namespace
         virtual void Visit( uint64_t ) {}
         virtual void Visit( double ) {}
         virtual void Visit( const std::string& ) {}
+        virtual void Visit( const std::string&, const core::Model& ) {}
         virtual void Visit( const core::Model& ) {}
         virtual void Visit( boost::shared_ptr< core::UserData_ABC > ) {}
         virtual void MarkForRemove() {}
     private:
         boost::function< int( const core::Model& ) > enable_;
         boost::function< void( int ) > disable_;
-        std::map< std::string, boost::shared_ptr< ListenerHelper > > identifiers_;
+        std::map< unsigned int, boost::shared_ptr< ListenerHelper > > identifiers_;
     };
     int EnableFlyingShell( PHY_RoleInterface_Perceiver& perceiver, const core::Model& node )
     {
