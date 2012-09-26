@@ -61,7 +61,7 @@ WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, Control
     localWidget_ = new gui::WeatherWidget( localLayout_, tr( "Weather parameters" ) );
     CreateLocalParameters();
     localWeathers_ = new WeatherListView( localLayout_, converter );
-    connect( localWeathers_, SIGNAL( selectionChanged() ), this, SLOT( LocalSelectionChanged() ) );
+    connect( localWeathers_->selectionModel(), SIGNAL( currentChanged( const QModelIndex&, const QModelIndex& ) ), this, SLOT( LocalSelectionChanged() ) );
     connect( sunrise_, SIGNAL( timeChanged( const QTime& ) ), SLOT( OnSunRiseChanged( const QTime& ) ) );
     connect( sunset_, SIGNAL( timeChanged( const QTime& ) ), SLOT( OnSunSetChanged( const QTime& ) ) );
 

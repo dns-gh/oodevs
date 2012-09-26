@@ -36,6 +36,16 @@ WeatherListView::~WeatherListView()
     // NOTHING
 }
 
+namespace
+{
+    void Create( const std::string& name, QStandardItemModel& model )
+    {
+        QStandardItem* item = new QStandardItem( name.c_str() );
+        item->setEditable( false );
+        model.appendRow( item );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: WeatherListView::Update
 // Created: SBO 2006-12-20
@@ -50,8 +60,7 @@ void WeatherListView::Update( const MeteoModel& model )
         boost::shared_ptr< weather::MeteoLocal > weather = boost::shared_ptr< weather::MeteoLocal >( new weather::MeteoLocal( *static_cast< weather::MeteoLocal* >( ( *it ).get() ) ) );
         weathers_.push_back( weather );
         maxId = ( maxId > weather->GetId() ) ? maxId : weather->GetId();
-        Q3ListViewItem* item = new Q3ListViewItem( this );
-        item->setText( 0, weather->GetName().c_str() );
+        Create( weather->GetName(), *model_ );
     }
     weather::MeteoLocal::localCounter_ = maxId + 1;
 }
@@ -65,8 +74,8 @@ void WeatherListView::CreateItem()
     boost::shared_ptr< weather::MeteoLocal > weather = boost::shared_ptr< weather::MeteoLocal >( new weather::MeteoLocal( converter_, tr( "Local weather " ).toAscii().constData() ) );
     weather->SetCreated( true );
     weather->SetPeriod( tools::QTimeToBoostTime( simulation_.GetDateTime() ), tools::QTimeToBoostTime( simulation_.GetDateTime() ) );
-    Q3ListViewItem* item = new Q3ListViewItem( this );
-    item->setText( 0, weather->GetName().c_str() );
+
+    Create( weather->GetName(), *model_ );
     weathers_.push_back( weather );
 }
 
@@ -76,16 +85,17 @@ void WeatherListView::CreateItem()
 // -----------------------------------------------------------------------------
 void WeatherListView::DeleteItem()
 {
-    if( selectedItem() )
+    QModelIndex index = selectionModel()->currentIndex();
+    if( QStandardItem* item = model_->itemFromIndex( index ) )
     {
-        const QString text = selectedItem()->text( 0 );
+        const QString text = item->text();
         for( IT_Weathers it = weathers_.begin(); it != weathers_.end(); ++it )
             if( (*it)->GetName() == text.toAscii().constData() )
             {
                 trashedWeather_.push( ( *it )->GetId() );
                 break;
             }
-            removeItem( selectedItem() );
+        model_->removeRow( index.row() );
     }
 }
 

@@ -50,7 +50,17 @@ void WeatherListView::CommitTo( WeatherModel& model )
             QMessageBox::warning( this, weather->GetName().c_str(), tr( "Time parameters or location are incorrect" ) );
     }
     QMessageBox::warning( this, tr( "Weather" ), tr( "Weather modifications applied" ) );
-    setSelected( selectedItem(), false );
+    selectionModel()->clear();
+}
+
+namespace
+{
+    void Create( const std::string& name, QStandardItemModel& model )
+    {
+        QStandardItem* item = new QStandardItem( name.c_str() );
+        item->setEditable( false );
+        model.appendRow( item );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -67,8 +77,7 @@ void WeatherListView::Update( const WeatherModel& model )
         boost::shared_ptr< weather::MeteoLocal > weather = boost::shared_ptr< weather::MeteoLocal >( new weather::MeteoLocal( it.NextElement() ) );
         weather->SetCreated( true );
         weathers_.push_back( weather );
-        Q3ListViewItem* item = new Q3ListViewItem( this );
-        item->setText( 0, weather->GetName().c_str() );
+        Create( weather->GetName(), *model_ );
     }
 }
 
@@ -81,7 +90,6 @@ void WeatherListView::CreateItem()
     boost::shared_ptr< weather::MeteoLocal > weather = boost::shared_ptr< weather::MeteoLocal >( new weather::MeteoLocal( converter_, tr( "Local weather " ).toAscii().constData() ) );
     weather->SetCreated( true );
     weather->SetPeriod( tools::QTimeToBoostTime( exerciceTime_ ), tools::QTimeToBoostTime( exerciceTime_.addDays( 1 ) ) );
-    Q3ListViewItem* item = new Q3ListViewItem( this );
-    item->setText( 0, weather->GetName().c_str() );
+    Create( weather->GetName(), *model_ );
     weathers_.push_back( weather );
 }

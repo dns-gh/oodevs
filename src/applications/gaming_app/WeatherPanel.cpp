@@ -49,7 +49,7 @@ WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel:
     localWidget_ = new WeatherWidget( localLayout_, tr( "Weather parameters" ) );
     CreateLocalParameters();
     localWeathers_ = new WeatherListView( localLayout_, model.coordinateConverter_, simulation_ );
-    connect( localWeathers_, SIGNAL( selectionChanged() ), this, SLOT( LocalSelectionChanged() ) );
+    connect( localWeathers_->selectionModel(), SIGNAL( currentChanged( const QModelIndex&, const QModelIndex& ) ), this, SLOT( LocalSelectionChanged() ) );
 
     controllers_.Register( *this );
 }

@@ -23,12 +23,11 @@ using namespace gui;
 // Created: ABR 2011-05-30
 // -----------------------------------------------------------------------------
 WeatherListView::WeatherListView( QWidget* parent, const kernel::CoordinateConverter_ABC& converter )
-    : Q3ListView( parent, "WeatherListView" )
+    : QTreeView( parent )
     , converter_( converter )
+    , model_    ( new QStandardItemModel() )
 {
-    addColumn( tr( "Local weathers" ) );
-    setResizeMode( Q3ListView::AllColumns );
-    connect( this, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( ContextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ) );
+    setModel( model_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -47,20 +46,24 @@ WeatherListView::~WeatherListView()
 void WeatherListView::Clear()
 {
     weathers_.clear();
-    clear();
+    model_->clear();
+    model_->setHorizontalHeaderLabels( QStringList( tr( "Local weathers" ) ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: WeatherListView::ContextMenuRequested
-// Created: ABR 2011-06-06
+// Name: WeatherListView::contextMenuEvent
+// Created: LGY 2012-09-26
 // -----------------------------------------------------------------------------
-void WeatherListView::ContextMenuRequested( Q3ListViewItem* item, const QPoint& point, int /*column*/ )
+void WeatherListView::contextMenuEvent( QContextMenuEvent* event )
 {
-    kernel::ContextMenu* menu = new kernel::ContextMenu( this );
-    menu->insertItem( tr( "Add" ), this, SLOT( CreateItem() ) );
-    if( item )
-        menu->insertItem(tr( "Delete" ), this, SLOT( DeleteItem() ) );
-    menu->exec( point );
+    if( event )
+    {
+        QMenu* menu = new QMenu( this );
+        menu->addAction( tr( "Add" ), this, SLOT( CreateItem() ) );
+        if( indexAt( event->pos() ) == selectionModel()->currentIndex() )
+            menu->addAction( tr( "Delete" ), this, SLOT( DeleteItem() ) );
+        menu->popup( event->globalPos() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -69,9 +72,9 @@ void WeatherListView::ContextMenuRequested( Q3ListViewItem* item, const QPoint& 
 // -----------------------------------------------------------------------------
 weather::Meteo* WeatherListView::SelectedItem()
 {
-    if( selectedItem() )
+    if( QStandardItem* item = model_->itemFromIndex( selectionModel()->currentIndex() ) )
     {
-        const QString text = selectedItem()->text( 0 );
+        const QString text = item->text();
         for( IT_Weathers it = weathers_.begin(); it != weathers_.end(); ++it )
             if( (*it)->GetName() == text.toAscii().constData() )
                 return it->get();
@@ -85,10 +88,11 @@ weather::Meteo* WeatherListView::SelectedItem()
 // -----------------------------------------------------------------------------
 void WeatherListView::DeleteItem()
 {
-    if( selectedItem() )
+    QModelIndex index = selectionModel()->currentIndex();
+    if( QStandardItem* item = model_->itemFromIndex( index ) )
     {
-        const QString text = selectedItem()->text( 0 );
-        removeItem( selectedItem() );
+        const QString text = item->text();
+        model_->removeRow( index.row() );
 
         for( IT_Weathers it = weathers_.begin(); it != weathers_.end(); ++it )
             if( (*it)->GetName() == text.toAscii().constData() )

@@ -29,14 +29,13 @@ namespace weather
 
 namespace gui
 {
-
 // =============================================================================
 /** @class  WeatherListView
-    @brief  WeatherListView
+    @brief  Weather list view
 */
 // Created: ABR 2011-05-30
 // =============================================================================
-class WeatherListView : public Q3ListView
+class WeatherListView : public QTreeView
                       , private boost::noncopyable
 {
     Q_OBJECT;
@@ -51,7 +50,7 @@ public:
 
     //! @name Constructors/Destructor
     //@{
-    WeatherListView( QWidget* parent, const kernel::CoordinateConverter_ABC& converter );
+             WeatherListView( QWidget* parent, const kernel::CoordinateConverter_ABC& converter );
     virtual ~WeatherListView();
     //@}
 
@@ -64,9 +63,14 @@ public:
 private slots:
     //! @name Slots
     //@{
-    virtual void ContextMenuRequested( Q3ListViewItem* item, const QPoint& point, int column );
     virtual void CreateItem() = 0;
     virtual void DeleteItem();
+    //@}
+
+private:
+    //! @name Operations
+    //@{
+    virtual void contextMenuEvent( QContextMenuEvent* event );
     //@}
 
 protected:
@@ -78,6 +82,7 @@ protected:
 protected:
     //! @name Member data
     //@{
+    QStandardItemModel*                    model_;
     const kernel::CoordinateConverter_ABC& converter_;
     T_Weathers                             weathers_;
     //@}
