@@ -82,8 +82,7 @@ void InterferenceCapacity::Register( MIL_Object_ABC& object )
 void InterferenceCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
     InterferenceCapacity* capacity = new InterferenceCapacity( *this );
-    object.AddCapacity( capacity );
-    object.Register( static_cast< MIL_InteractiveContainer_ABC *>( capacity ) );
+    capacity->Register( object );
 }
 
 // -----------------------------------------------------------------------------

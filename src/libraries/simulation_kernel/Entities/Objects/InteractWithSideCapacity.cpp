@@ -65,7 +65,7 @@ bool InteractWithSideCapacity::IsPossible( const MIL_Army_ABC& army1, const MIL_
 // -----------------------------------------------------------------------------
 template< typename Archive > void InteractWithSideCapacity::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
+    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this ) & friendSide_ & enemySide_& neutralSide_;
 }
 
 // -----------------------------------------------------------------------------
