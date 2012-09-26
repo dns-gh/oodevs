@@ -539,7 +539,7 @@ void MainWindow::LoadExercise( bool checkConsistency /*= true*/ )
         }
         loading_ = false;
         controllers_.ChangeMode( ePreparationMode_Exercise );
-        SetWindowTitle( !model_.GetLoadingErrors().empty() || model_.ghosts_.NeedSaving() || model_.OldUrbanMode() );
+        SetWindowTitle( !model_.GetLoadingErrors().empty() || model_.ghosts_.NeedSaving() || model_.HasConsistencyErrorsOnLoad() ||  model_.OldUrbanMode() );
         if( checkConsistency )
             emit CheckConsistency();
     }

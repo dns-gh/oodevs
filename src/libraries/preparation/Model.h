@@ -101,6 +101,8 @@ public:
     void SaveExercise( const tools::ExerciseConfig& config );
     void AppendLoadingError( E_ConsistencyCheck type, const std::string& error );
     const T_LoadingErrors& GetLoadingErrors() const;
+    bool HasConsistencyErrorsOnLoad() const;
+    void SetConsistencyErrorsOnLoad();
     void ClearLoadingErrors();
     bool OldUrbanMode() const;
     void SetExerciseValidity( bool valid );
@@ -138,6 +140,7 @@ private:
     kernel::ResourceNetworkSelectionObserver& resourceObserver_;
     QString name_;
     bool loaded_;
+    bool consistencyErrorsOnLoad_;
     bool oldUrbanMode_;
     T_LoadingErrors loadingErrors_;
     //@}

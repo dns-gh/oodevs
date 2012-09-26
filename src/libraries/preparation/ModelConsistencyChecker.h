@@ -77,7 +77,9 @@ private:
     void CheckScores();
     void CheckSuccessFactors();
     void CheckLogisticBase();
+    void CheckOrbat();
     void CheckLogisticFormation();
+    void CheckLogisticSubordinates();
     void CheckUrban();
     void CheckFiles();
     //@}

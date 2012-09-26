@@ -429,7 +429,7 @@ void AgentsModel::CreateInhabitant( xml::xistream& xis, Team_ABC& parent, Model&
     }
     catch( std::exception& e )
     {
-        model.AppendLoadingError( eOthers, std::string( e.what() ) );
+        model.AppendLoadingError( eDeletedPopulationUrbanBlocks, std::string( e.what() ) );
     }
 }
 

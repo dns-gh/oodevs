@@ -43,6 +43,7 @@
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/DotationCapacityType.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/EntityType.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Ghost_ABC.h"
@@ -151,6 +152,7 @@ bool ModelConsistencyChecker::CheckConsistency()
     CheckLogisticInitialization();
     CheckLogisticBase();
     CheckLogisticFormation();
+    CheckLogisticSubordinates();
 
     CheckProfileUniqueness();
     CheckProfileInitialization();
@@ -163,6 +165,7 @@ bool ModelConsistencyChecker::CheckConsistency()
     CheckLoadingErrors();
     CheckScores();
     CheckSuccessFactors();
+    CheckOrbat();
     CheckUrban();
     CheckFiles();
 
@@ -676,6 +679,17 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
+// Name: ModelConsistencyChecker::CheckOrbat
+// Created: ABR 2012-02-27
+// -----------------------------------------------------------------------------
+void ModelConsistencyChecker::CheckOrbat()
+{
+    Iterator< const Team_ABC& > it = model_.GetTeamResolver().CreateIterator();
+    if( !it.HasMoreElements() )
+        AddError( eNoOrbat, 0 );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ModelConsistencyChecker::CheckLogisticFormation
 // Created: MMC 2012-04-18
 // -----------------------------------------------------------------------------
@@ -698,6 +712,30 @@ void ModelConsistencyChecker::CheckLogisticFormation()
                 continue;
         }
         AddError( eNoLogisticFormation, &automat );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelConsistencyChecker::CheckLogisticSubordinates
+// Created: LDC 2012-09-13
+// -----------------------------------------------------------------------------
+void ModelConsistencyChecker::CheckLogisticSubordinates()
+{
+    Iterator< const Automat_ABC& > it = model_.GetAutomatResolver().CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const Automat_ABC& automat = it.NextElement();
+        const kernel::AutomatType& type = automat.Get< kernel::EntityType< kernel::AutomatType > >().GetType();
+        if( !type.HasLogistics() )
+            continue;
+        if( automat.GetLogisticLevel() != kernel::LogisticLevel::logistic_base_ )
+            continue;
+        LogisticBaseStates* hierarchy = const_cast< LogisticBaseStates* >( static_cast< const LogisticBaseStates* >( automat.Retrieve< LogisticHierarchiesBase >() ) );
+        if( hierarchy->CleanBadSubordinates() )
+        {
+            AddError( eBadLogisticSubordinate, &automat );
+            const_cast< Model& >( model_ ).SetConsistencyErrorsOnLoad();
+        }
     }
 }
 
@@ -732,7 +770,10 @@ void ModelConsistencyChecker::CheckUrban()
     for( std::set< std::string >::const_iterator itNetwork = unknownNetworks.begin(); itNetwork != unknownNetworks.end(); ++ itNetwork )
         AddError( eUnknownResourceNetwork, 0, *itNetwork );
     if( model_.urban_.TakeLinkErrors() )
+    {
         AddError( eDeletedUrbanBlocks, 0, "" );
+        const_cast< Model& >( model_ ).SetConsistencyErrorsOnLoad();
+    }
 }
 
 // -----------------------------------------------------------------------------

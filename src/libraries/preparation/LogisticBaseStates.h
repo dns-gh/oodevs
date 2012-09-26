@@ -56,6 +56,8 @@ public:
     virtual void ClearDotations();
     virtual void SetDotation( const kernel::DotationType& type, unsigned int quantity );
     void SerializeQuotas( xml::xostream& xos ) const;
+
+    bool CleanBadSubordinates();
     //@}
 
 private:

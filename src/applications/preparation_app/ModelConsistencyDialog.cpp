@@ -25,10 +25,11 @@ namespace
     bool IsError( E_ConsistencyCheck type )
     {
         return type == eNoLogisticBase || type ==  eNoCommandPost || type ==  eSeveralCommandPost
-            || type ==  eNoKnowledgeGroup || type ==  eScoreError || type ==  eSuccessFactorError;
+            || type ==  eNoKnowledgeGroup || type ==  eScoreError || type ==  eSuccessFactorError
+            || type == eDeletedUrbanBlocks || type == eDeletedPopulationUrbanBlocks;
     }
 
-#define CONVERT_TO_MASK( mask ) { if( type & mask ) return mask; }
+#define CONVERT_TO_MASK( mask ) { if( type < mask ) return mask; }
     E_ConsistencyCheck Convert( E_ConsistencyCheck type )
     {
         CONVERT_TO_MASK( eUniquenessMask )
@@ -89,6 +90,7 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ eNoLogisticFormation ]             = tools::translate( "ModelConsistencyDialog", "Logistic sector not included in a logistic base." );
     errorDescriptions_[ eLogisticBaseNotSameTeam ]         = tools::translate( "ModelConsistencyDialog", "Logistic base's party differs from object's party." );
     errorDescriptions_[ eStockInvalidDotation ]            = tools::translate( "ModelConsistencyDialog", "Invalid stock resource '%1' in orbat.xml. This resource will not be saved." );
+    errorDescriptions_[ eBadLogisticSubordinate ]          = tools::translate( "ModelConsistencyDialog", "Invalid logistic subordinate for '%1' in orbat.xml. The link will deleted at next save." );
 
     // Profile
     errorDescriptions_[ eProfileUniqueness ]               = tools::translate( "ModelConsistencyDialog", "Association with multiple profiles: %1." );
@@ -114,6 +116,8 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ eUnknownInfrastructure]            = tools::translate( "ModelConsistencyDialog", "Unknown infrastructure \"%1\". It will be deleted at next save." );
     errorDescriptions_[ eUnknownResourceNetwork]           = tools::translate( "ModelConsistencyDialog", "Unknown resource network type \"%1\". Related networks will deleted at next save." );
     errorDescriptions_[ eDeletedUrbanBlocks ]              = tools::translate( "ModelConsistencyDialog", "Some resource network nodes point on nonexistent urban blocks. They will be deleted at next save.");
+    errorDescriptions_[ eDeletedPopulationUrbanBlocks ] = "%1";
+    errorDescriptions_[ eNoOrbat ]                         = tools::translate( "ModelConsistencyDialog", "No orbat.xml found" );
     errorDescriptions_[ eOthers ]                          = "%1";
 }
 

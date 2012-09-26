@@ -14,6 +14,7 @@
 
 namespace kernel
 {
+    class AutomatType;
     class LogisticLevel;
 
 // =============================================================================

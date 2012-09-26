@@ -1349,6 +1349,10 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>No orbat.xml found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Unknown resource network type &quot;%1&quot;. Related networks will deleted at next save.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1358,6 +1362,10 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Some resource network nodes point on nonexistent urban blocks. They will be deleted at next save.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid logistic subordinate for &apos;%1&apos; in orbat.xml. The link will deleted at next save.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -81,6 +81,7 @@ Model::Model( Controllers& controllers, const ::StaticModel& staticModel )
     , ghostFactory_         ( *new GhostFactory( controllers, *this, staticModel, idManager_, knowledgeGroupFactory_, symbolsFactory_ ) )
     , resourceObserver_     ( *new ResourceNetworkSelectionObserver( controllers ) )
     , loaded_               ( false )
+    , consistencyErrorsOnLoad_( false )
     , oldUrbanMode_         ( false )
     , exercise_             ( *new Exercise( controllers.controller_ ) )
     , teams_                ( *new TeamsModel( controllers, teamFactory_ ) )
@@ -383,6 +384,24 @@ void Model::SetExerciseValidity( bool valid )
 const Model::T_LoadingErrors& Model::GetLoadingErrors() const
 {
     return loadingErrors_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::HasConsistencyErrorsOnLoad
+// Created: LDC 2012-09-13
+// -----------------------------------------------------------------------------
+bool Model::HasConsistencyErrorsOnLoad() const
+{
+    return consistencyErrorsOnLoad_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::SetConsistencyErrorsOnLoad
+// Created: LDC 2012-09-13
+// -----------------------------------------------------------------------------
+void Model::SetConsistencyErrorsOnLoad()
+{
+    consistencyErrorsOnLoad_ = true;
 }
 
 // -----------------------------------------------------------------------------
