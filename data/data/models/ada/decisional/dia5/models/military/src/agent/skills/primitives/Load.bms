@@ -75,6 +75,7 @@ node "LoadElement"
     -- --------------------------------------------------------------------------------
     activate = function( self )
         if self.params.entity:isLoaded() then
+            Feedback( self.feedbacks.loaded, { element = self.params.entity } )
             return
         end
 
