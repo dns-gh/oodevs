@@ -17,14 +17,29 @@
 !define PRG $PROGRAMFILES
 !endif
 
+!include "FileFunc.nsh"
+!insertmacro GetParameters
+!insertmacro GetOptions
+
 Name "Sword Cloud"
 OutFile "${DISTDIR}\sword_cloud_${PLATFORM}_setup.exe"
 InstallDir "${PRG}\$(^Name)"
 InstallDirRegKey HKLM "Software\MASA Group\$(^Name)" "Install_Dir"
 RequestExecutionLevel admin
 
+VAR SKIP_SERVICE_CONTROL
+
 ;--------------------------------
 Function .onInit
+    ${GetParameters} $R0
+    ClearErrors
+
+    StrCpy $SKIP_SERVICE_CONTROL "true"
+    ${GetOptions} $R0 /SKIP_SERVICE_CONTROL $0
+    IfErrors 0 +2
+    StrCpy $SKIP_SERVICE_CONTROL "false"
+    ClearErrors
+
     System::Call 'kernel32::CreateMutexA(i 0, i 0, t "$(^Name)") i .r1 ?e'
     Pop $R0
     StrCmp $R0 0 +3
@@ -51,10 +66,10 @@ Section $(^Name)
     SectionIn RO
     SetShellVarContext all
 
-    !ifndef SKIP_SERVICE_CONTROL
+    ${If} $SKIP_SERVICE_CONTROL == "false"
         ; stop current service
         nsExec::Exec 'net stop "Sword Cloud"'
-    !endif
+    ${Endif}
 
     ; set permissions
     CreateDirectory "$INSTDIR"
@@ -135,9 +150,9 @@ Section $(^Name)
 
     ; service
     nsExec::Exec '"$INSTDIR\bin\cloud_server.exe" --register'
-    !ifndef SKIP_SERVICE_CONTROL
+    ${If} $SKIP_SERVICE_CONTROL == "false"
         nsExec::Exec 'net start "Sword Cloud"'
-    !endif
+    ${Endif}
 SectionEnd
 
 ;--------------------------------
