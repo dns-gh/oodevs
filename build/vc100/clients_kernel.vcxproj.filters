@@ -1197,6 +1197,9 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\AutomatDecisions_ABC.h">
       <Filter>Source Files\Model\Extensions</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\KnowledgeGroupFactory_ABC.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\clients_kernel\ApproximativeMap.inl">
