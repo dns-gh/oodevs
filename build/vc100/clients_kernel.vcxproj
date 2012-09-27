@@ -388,7 +388,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\ExtensionType.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\ExtensionTypes.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\XmlDescription.h" />
-    <ClInclude Include="..\..\src\libraries\preparation\ScoreFactory_ABC.h" />
     <CustomBuildStep Include="..\..\src\libraries\clients_kernel\ActionController.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Controller.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Controllers.h" />

@@ -1014,9 +1014,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\PopulationPrototype.h">
       <Filter>Source Files\Model\Entities\Population</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\preparation\ScoreFactory_ABC.h">
-      <Filter>Source Files\Model\Extensions</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\SymbolHierarchy_ABC.h">
       <Filter>Source Files\Model\Extensions</Filter>
     </ClInclude>
