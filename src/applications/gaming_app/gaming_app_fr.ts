@@ -1665,10 +1665,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Journal</translation>
     </message>
     <message>
-        <source>Tactical</source>
-        <translation>Tactique</translation>
-    </message>
-    <message>
         <source>Properties</source>
         <translation>Propriétés</translation>
     </message>
@@ -1683,10 +1679,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Creation</source>
         <translation>Création</translation>
-    </message>
-    <message>
-        <source>Communication</source>
-        <translation>Groupes de connaissance</translation>
     </message>
     <message>
         <source>Orbat</source>
@@ -1731,10 +1723,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source> - Not connected</source>
         <translation> - Non connecté</translation>
-    </message>
-    <message>
-        <source>Logistic</source>
-        <translation>Logistique</translation>
     </message>
     <message>
         <source>Error loading image file</source>
@@ -2462,6 +2450,33 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Bypass:</source>
         <translation>Contournement:</translation>
+    </message>
+</context>
+<context>
+    <name>OrbatDockWidget</name>
+    <message>
+        <source>Tactical</source>
+        <translation>Tactique</translation>
+    </message>
+    <message>
+        <source>Communication</source>
+        <translation>Groupes de connaissance</translation>
+    </message>
+    <message>
+        <source>Logistic</source>
+        <translation>Logistique</translation>
+    </message>
+    <message>
+        <source>Objects</source>
+        <translation>Objets</translation>
+    </message>
+    <message>
+        <source>Crowds</source>
+        <translation>Foules</translation>
+    </message>
+    <message>
+        <source>Populations</source>
+        <translation>Populations</translation>
     </message>
 </context>
 <context>

@@ -173,6 +173,7 @@
     <ClCompile Include="..\..\src\applications\gaming_app\MainWindow.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\EventToolbar.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\ObjectStateDialog.cpp" />
+    <ClCompile Include="..\..\src\applications\gaming_app\OrbatDockWidget.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\OrbatPanel.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\OrbatToolbar.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\PlanificationModePanel.cpp" />
@@ -927,6 +928,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\applications\gaming_app\LogisticTreeView.h" />
+    <ClInclude Include="..\..\src\applications\gaming_app\OrbatDockWidget.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\PlanificationModePanel.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\PopulationChangeAffinitiesDialog.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\PopulationChangeHealthStateDialog.h" />

@@ -842,13 +842,6 @@ PNG (*.png)
     </message>
 </context>
 <context>
-    <name>gui::InhabitantListView</name>
-    <message>
-        <source>Populations</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>gui::InhabitantPanel</name>
     <message>
         <source>Colors</source>

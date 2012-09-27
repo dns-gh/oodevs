@@ -1663,10 +1663,6 @@ Reason: %3
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Tactical</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Properties</source>
         <translation type="unfinished">Propiedades</translation>
     </message>
@@ -1680,10 +1676,6 @@ Reason: %3
     </message>
     <message>
         <source>Creation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Communication</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1729,10 +1721,6 @@ Reason: %3
     <message>
         <source> - Not connected</source>
         <translation type="unfinished"> - No conectado</translation>
-    </message>
-    <message>
-        <source>Logistic</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Warning</source>
@@ -2458,6 +2446,33 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Bypass:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>OrbatDockWidget</name>
+    <message>
+        <source>Tactical</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Communication</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Objects</source>
+        <translation type="unfinished">Objetos</translation>
+    </message>
+    <message>
+        <source>Crowds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Populations</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

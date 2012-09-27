@@ -181,9 +181,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\HierarchyListView_ABC.cpp">
       <Filter>Source Files\Lists</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\InhabitantListView.cpp">
-      <Filter>Source Files\Lists</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\ObjectListView.cpp">
       <Filter>Source Files\Lists</Filter>
     </ClCompile>
@@ -1314,9 +1311,6 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\XyParser.h">
       <Filter>Source Files\Locations\Parsers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\PreferencesList.h">
-      <Filter>Source Files\Preferences</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\Settings.h">
       <Filter>Source Files\Preferences</Filter>
     </ClInclude>
@@ -1473,6 +1467,9 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\DummyModelObserver.h">
       <Filter>Source Files\MVC\Model</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\NBCPrototype_ABC.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\clients_gui\HierarchyListView.inl">
@@ -1550,9 +1547,6 @@
       <Filter>Source Files\Lists</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\HierarchyListView_ABC.h">
-      <Filter>Source Files\Lists</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\InhabitantListView.h">
       <Filter>Source Files\Lists</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\ObjectListView.h">
@@ -1646,9 +1640,6 @@
       <Filter>Source Files\Creation\Objects\Attributes</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\MinePrototype_ABC.h">
-      <Filter>Source Files\Creation\Objects\Attributes</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\NBCPrototype_ABC.h">
       <Filter>Source Files\Creation\Objects\Attributes</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\ObstaclePrototype_ABC.h">

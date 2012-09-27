@@ -93,6 +93,7 @@ ObjectPanel.cpp \
 ObjectPrototype.cpp \
 ObjectsLayer.cpp \
 ObjectStateDialog.cpp \
+OrbatDockWidget.cpp \
 OrbatPanel.cpp \
 OrbatToolbar.cpp \
 PlanificationModePanel.cpp \

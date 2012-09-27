@@ -71,7 +71,7 @@ QStringList ObjectTreeView::MimeTypes() const
 // -----------------------------------------------------------------------------
 Qt::ItemFlags ObjectTreeView::ItemSpecificFlags( const kernel::Entity_ABC& /*entity*/ ) const
 {
-    return Qt::ItemIsDragEnabled;
+    return Qt::ItemIsEditable | Qt::ItemIsDragEnabled;
 }
 
 // -----------------------------------------------------------------------------

@@ -28,7 +28,6 @@ FilterOrbatReIndexer.cpp \
 FilterXsl.cpp \
 GhostsPanel.cpp \
 InhabitantCreationPanel.cpp \
-InhabitantListView.cpp \
 InitialStateDialog.cpp \
 InitialStateTableCrew.cpp \
 InitialStateTableEquipments.cpp \

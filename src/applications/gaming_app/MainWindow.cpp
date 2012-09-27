@@ -14,7 +14,6 @@
 #include "AfterAction.h"
 #include "AgentsLayer.h"
 #include "AgentKnowledgesLayer.h"
-#include "AgentListView.h"
 #include "AutomatsLayer.h"
 #include "ChatDock.h"
 #include "ClientCommandFacade.h"
@@ -36,14 +35,13 @@
 #include "LinkInterpreter.h"
 #include "LoggerProxy.h"
 #include "ConnectLoginDialog.h"
-#include "LogisticListView.h"
 #include "MagicOrdersInterface.h"
 #include "Menu.h"
 #include "MessagePanel.h"
 #include "MissionPanel.h"
 #include "NotesPanel.h"
 #include "ObjectKnowledgesLayer.h"
-#include "OrbatToolbar.h"
+#include "OrbatDockWidget.h"
 #include "ObjectsLayer.h"
 #include "PopulationKnowledgesLayer.h"
 #include "PopulationsLayer.h"
@@ -57,7 +55,6 @@
 #include "SIMControlToolbar.h"
 #include "SimulationLighting.h"
 #include "StatusBar.h"
-#include "TacticalListView.h"
 #include "TeamLayer.h"
 #include "TimelinePanel.h"
 #include "UserProfileDialog.h"
@@ -81,17 +78,12 @@
 #include "gaming/ActionsScheduler.h"
 #include "gaming/ColorController.h"
 #include "clients_gui/AddRasterDialog.h"
-#include "clients_gui/AggregateToolbar.h"
 #include "clients_gui/DisplayToolbar.h"
 #include "clients_gui/GlSelector.h"
 #include "clients_gui/Logger.h"
 #include "clients_gui/MiscLayer.h"
 #include "clients_gui/ParametersLayer.h"
 #include "clients_gui/Settings.h"
-#include "clients_gui/SearchListView.h"
-#include "clients_gui/ObjectListView.h"
-#include "clients_gui/PopulationListView.h"
-#include "clients_gui/InhabitantListView.h"
 #include "clients_gui/InhabitantLayer.h"
 #include "clients_gui/PreferencesDialog.h"
 #include "clients_gui/RichItemFactory.h"
@@ -252,48 +244,8 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     UserProfileDialog* profileDialog = new UserProfileDialog( this, controllers, *factory, *pProfile_, *icons, model_.userProfileFactory_ );
 
     // Agent list panel
-    QDockWidget* pListDockWnd_ = new QDockWidget( this );
-    pListDockWnd_->setWindowTitle( tr( "Orbat" ) );
-    pListDockWnd_->setObjectName( "agentList" );
-    addDockWidget( Qt::LeftDockWidgetArea, pListDockWnd_ );
-    Q3VBox* box = new Q3VBox( pListDockWnd_ );
-    pListDockWnd_->setWidget( box );
-    OrbatToolbar* orbatToolbar = new OrbatToolbar( box, controllers, *pProfile_, *automatsLayer, *formationLayer );
-    const gui::AggregateToolbar* aggregateToolbar = orbatToolbar->GetToolbar();
-    QTabWidget* pListsTabWidget = new QTabWidget( box );
-
-    gui::SearchListView_ABC* searchListView = 0;
-    {
-        searchListView = new gui::SearchListView< TacticalListView >( pListsTabWidget, controllers, model_.actions_, staticModel, simulation, *factory, *pProfile_, *icons );
-        searchListView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchListView->GetRichListView(), SLOT( LockDragAndDrop( bool ) ) );
-        pListsTabWidget->addTab( searchListView, tr( "Tactical" ) );
-    }
-    {
-        searchListView = new gui::SearchListView< AgentListView >( pListsTabWidget, controllers, model_.actions_, staticModel, simulation, *factory, *pProfile_, *icons );
-        searchListView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchListView->GetRichListView(), SLOT( LockDragAndDrop( bool ) ) );
-        pListsTabWidget->addTab( searchListView, tr( "Communication" ) );
-    }
-    {
-        gui::SearchListView< LogisticListView >* logisticSearchListView = new gui::SearchListView< ::LogisticListView >( pListsTabWidget, controllers, *factory, *pProfile_, *icons, model_.actions_, staticModel, simulation );
-        logisticSearchListView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), logisticSearchListView->GetRichListView(), SLOT( LockDragAndDrop( bool ) ) );
-        logisticListView_ = logisticSearchListView->GetListView();
-        pListsTabWidget->addTab( logisticSearchListView, tr( "Logistic" ) );
-    }
-    {
-        searchListView = new gui::SearchListView< gui::ObjectListView >( pListsTabWidget, controllers, *factory, *pProfile_ );
-        searchListView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchListView->GetRichListView(), SLOT( LockDragAndDrop( bool ) ) );
-        pListsTabWidget->addTab( searchListView, tr( "Objects" ) );
-    }
-    {
-        searchListView = new gui::SearchListView< gui::PopulationListView >( pListsTabWidget, controllers, *factory, *pProfile_ );
-        searchListView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchListView->GetRichListView(), SLOT( LockDragAndDrop( bool ) ) );
-        pListsTabWidget->addTab( searchListView, tr( "Crowds" ) );
-    }
-    {
-        searchListView = new gui::SearchListView< gui::InhabitantListView >( pListsTabWidget, controllers, *factory, *pProfile_ );
-        searchListView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchListView->GetRichListView(), SLOT( LockDragAndDrop( bool ) ) );
-        pListsTabWidget->addTab( searchListView, tr( "Populations" ) );
-    }
+    orbatDockWidget_ = new OrbatDockWidget( controllers_, this, "agentList", tr( "Orbat" ), *pProfile_, *automatsLayer, *formationLayer, model_.actions_, staticModel, simulation, *factory, *icons );
+    addDockWidget( Qt::LeftDockWidgetArea, orbatDockWidget_ );
 
     // Mini views
     gui::MiniViews* miniviews = new gui::MiniViews( this, controllers_ );
@@ -594,8 +546,7 @@ void MainWindow::Load()
     try
     {
         WriteOptions();
-        if( logisticListView_ )
-            logisticListView_->Purge();
+        orbatDockWidget_->Purge();
         model_.Purge();
         selector_->Close();
         selector_->Load();
@@ -631,8 +582,7 @@ void MainWindow::Close()
     network_.Disconnect();
     parameters_->Reset();
     selector_->Close();
-    if( logisticListView_ )
-        logisticListView_->Purge();
+    orbatDockWidget_->Purge();
     model_.Purge();
     staticModel_.Purge();
 }

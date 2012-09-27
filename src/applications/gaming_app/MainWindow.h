@@ -24,7 +24,6 @@ namespace actions
 
 namespace kernel
 {
-    class Options;
     class Controllers;
     class Profile_ABC;
 }
@@ -44,8 +43,6 @@ namespace gui
     class PreferencesDialog;
     class LightingProxy;
     class GlSelector;
-    template< typename T >
-    class LogisticList;
     class TerrainLayer;
     class Layer_ABC;
     class TerrainPicker;
@@ -62,10 +59,10 @@ class Profile;
 class Network;
 class MissionPanel;
 class CreationPanels;
-class LogisticListView;
 class LoggerProxy;
 class Simulation;
 class ColorController;
+class OrbatDockWidget;
 class ProfileFilter;
 class PlanificationModePanel;
 
@@ -124,9 +121,9 @@ private:
 
     static std::string BuildRemotePath( std::string server, std::string path );
 
-   void CreateLayers( MissionPanel& missions, CreationPanels& creationPanels, gui::ParametersLayer& parameters, gui::Layer_ABC& locationsLayer,
-                      gui::AgentsLayer& agents, gui::AutomatsLayer& automats, gui::FormationLayer& formationLayer, gui::TerrainLayer& terrain, gui::Layer_ABC& weather, gui::Layer_ABC& profilerLayer,
-                      gui::PreferencesDialog& preferences, const kernel::Profile_ABC& profile, const Simulation& simulation, gui::TerrainPicker& picker );
+    void CreateLayers( MissionPanel& missions, CreationPanels& creationPanels, gui::ParametersLayer& parameters, gui::Layer_ABC& locationsLayer,
+                       gui::AgentsLayer& agents, gui::AutomatsLayer& automats, gui::FormationLayer& formationLayer, gui::TerrainLayer& terrain, gui::Layer_ABC& weather, gui::Layer_ABC& profilerLayer,
+                       gui::PreferencesDialog& preferences, const kernel::Profile_ABC& profile, const Simulation& simulation, gui::TerrainPicker& picker );
 
 private:
     //! @name Member data
@@ -152,7 +149,7 @@ private:
     gui::OptionsPanel* pOptionsPanel_;
     gui::ParametersLayer* parameters_;
     gui::AgentsLayer* agents_;
-    ::LogisticListView* logisticListView_;
+    OrbatDockWidget* orbatDockWidget_;
     StatusBar* pStatus_;
     QByteArray docks_;
     QByteArray toolbars_;
