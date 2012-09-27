@@ -99,7 +99,6 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\libraries\geostore\geostore_lib.h" />
     <ClInclude Include="..\..\src\libraries\geostore\geostore_pch.h" />
     <ClInclude Include="..\..\src\libraries\geostore\GeoStoreManager.h" />
     <ClInclude Include="..\..\src\libraries\geostore\Database.h" />

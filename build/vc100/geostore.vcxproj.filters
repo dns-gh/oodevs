@@ -13,9 +13,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\libraries\geostore\geostore_lib.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\geostore\geostore_pch.h">
       <Filter>Source Files</Filter>
     </ClInclude>
