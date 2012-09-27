@@ -10,6 +10,8 @@
 #ifndef __MedicalTreatmentCapacity_h_
 #define __MedicalTreatmentCapacity_h_
 
+#include <string>
+
 namespace kernel
 {
     class MedicalTreatmentType;
