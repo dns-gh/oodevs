@@ -252,6 +252,7 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockSideResolver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockSimulationPublisher.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockSubordinates.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTacticalObjectSubject.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTeam.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTransferSender.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTransportedUnits.h" />

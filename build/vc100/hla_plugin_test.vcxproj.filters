@@ -333,5 +333,8 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRemoteTacticalObjectSubject.h">
       <Filter>Source Files\mock</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTacticalObjectSubject.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
