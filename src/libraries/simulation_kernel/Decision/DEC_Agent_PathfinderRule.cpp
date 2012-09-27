@@ -286,6 +286,8 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
         const double rDelta          = rAltitudeTo - rAltitudeFrom;
         const double rGroundDistance = sqrt( rDelta * rDelta + rDistance * rDistance );
         const double rSlope          = rGroundDistance > 0 ? rDelta / rGroundDistance : 0;
+        if( rSlope < 0 )
+            rSlope *= -1;
         if( rSlope > rMaxSlope_ )
             return IMPOSSIBLE_WAY( "Slope" );
     }
