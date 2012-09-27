@@ -5363,5 +5363,23 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\CallbackEventListener.h">
       <Filter>Source Files\Adapters\EventListeners</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\NBC\ToxicEffectHandler_ABC.h">
+      <Filter>Source Files\Entities\Agents\Roles\NBC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplySupplier_ABC.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyRequestParameters_ABC.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyRecipient_ABC.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Flying\FlyListener_ABC.h">
+      <Filter>Source Files\Entities\Agents\Actions\Flying</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\TransportCapacityComputerFactory_ABC.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
