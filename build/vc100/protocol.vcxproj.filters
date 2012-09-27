@@ -72,6 +72,9 @@
     <ClInclude Include="..\..\src\libraries\protocol\Version.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\protocol\ClientBroadcaster_ABC.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\protocol\AarToClient.cpp">

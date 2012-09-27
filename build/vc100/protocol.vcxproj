@@ -127,6 +127,7 @@
     <ClInclude Include="..\..\src\libraries\protocol\AarSenders.h" />
     <ClInclude Include="..\..\src\libraries\protocol\Authentication.h" />
     <ClInclude Include="..\..\src\libraries\protocol\AuthenticationSenders.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\ClientBroadcaster_ABC.h" />
     <ClInclude Include="..\..\src\libraries\protocol\ClientPublisher_ABC.h" />
     <ClInclude Include="..\..\src\libraries\protocol\ClientSenders.h" />
     <ClInclude Include="..\..\src\libraries\protocol\Dispatcher.h" />
