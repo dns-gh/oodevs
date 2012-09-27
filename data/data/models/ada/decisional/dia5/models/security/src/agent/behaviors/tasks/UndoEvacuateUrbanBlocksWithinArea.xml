@@ -8,7 +8,7 @@
         </parameter>
     </parameters>
     <stages>
-        <stage label="Lift urban blocks evacuation started" disable-when-done="true">
+        <stage label="Lift urban blocks evacuation" disable-when-done="true">
             <skills>
                 <skill name="agent.behaviors.skills.primitives.UndoEvacuate" main="true">
                     <parameter name="populatedAreas">

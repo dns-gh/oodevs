@@ -25,7 +25,7 @@ Specific behavior for crowd agents:&#xD;
         </parameter>
     </parameters>
     <stages>
-        <stage label="Transport mission started" disable-when-done="true">
+        <stage label="Transport mission" disable-when-done="true">
             <skills>
                 <skill name="agent.behaviors.skills.Transport" main="true">
                     <parameter name="entitiesToTransport">

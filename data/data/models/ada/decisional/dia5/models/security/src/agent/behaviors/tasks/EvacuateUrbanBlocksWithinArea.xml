@@ -12,7 +12,7 @@ If no urban block exists in the area, the mission failed and terminates.</descri
         </parameter>
     </parameters>
     <stages>
-        <stage label="Urban blocks evacuation started" disable-when-done="true">
+        <stage label="Urban blocks evacuation" disable-when-done="true">
             <description>Visit all urban blocks within the area and ask the population to evacuate.</description>
             <skills>
                 <skill name="agent.behaviors.skills.primitives.Evacuate" main="true">

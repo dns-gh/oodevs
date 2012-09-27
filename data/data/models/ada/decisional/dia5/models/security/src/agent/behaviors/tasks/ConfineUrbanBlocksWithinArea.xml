@@ -12,7 +12,7 @@ If no urban block exists in the area, the mission failed and terminates.</descri
         </parameter>
     </parameters>
     <stages>
-        <stage label="Confinement of urban blocks started" disable-when-done="true">
+        <stage label="Confinement of urban blocks" disable-when-done="true">
             <description>Visit all urban blocks within the area and confine population.</description>
             <skills>
                 <skill name="agent.behaviors.skills.primitives.Confine" main="true">

@@ -13,7 +13,7 @@ Areas are visited in the order of the list. </description>
         </parameter>
     </parameters>
     <stages>
-        <stage label="Decontamination started" disable-when-done="true">
+        <stage label="Decontamination" disable-when-done="true">
             <description>Decontaminate each of issued areas.</description>
             <skills>
                 <skill name="agent.behaviors.skills.primitives.DecontaminateAreas" main="true">

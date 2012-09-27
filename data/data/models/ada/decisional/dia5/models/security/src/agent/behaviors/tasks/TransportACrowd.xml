@@ -24,7 +24,7 @@ Because the agent can only transports crowds' concentrations, this mission needs
         </parameter>
     </parameters>
     <stages>
-        <stage label="Crowd transport started" disable-when-done="true">
+        <stage label="Crowd transport" disable-when-done="true">
             <description>To transport the given Crowd on the target destination.</description>
             <skills>
                 <skill name="agent.behaviors.skills.TransportACrowd" main="true">
