@@ -119,6 +119,7 @@
     <ClInclude Include="..\..\src\libraries\shield\AuthenticationToClient.h" />
     <ClInclude Include="..\..\src\libraries\shield\Cache.h" />
     <ClInclude Include="..\..\src\libraries\shield\Client.h" />
+    <ClInclude Include="..\..\src\libraries\shield\ClientHandler_ABC.h" />
     <ClInclude Include="..\..\src\libraries\shield\Clients.h" />
     <ClInclude Include="..\..\src\libraries\shield\Client_ABC.h" />
     <ClInclude Include="..\..\src\libraries\shield\ClientListener_ABC.h" />
@@ -134,6 +135,7 @@
     <ClInclude Include="..\..\src\libraries\shield\Listener_ABC.h" />
     <ClInclude Include="..\..\src\libraries\shield\Logger.h" />
     <ClInclude Include="..\..\src\libraries\shield\MessengerToClient.h" />
+    <ClInclude Include="..\..\src\libraries\shield\Model_ABC.h" />
     <ClInclude Include="..\..\src\libraries\shield\ReplayToClient.h" />
     <ClInclude Include="..\..\src\libraries\shield\Server.h" />
     <ClInclude Include="..\..\src\libraries\shield\Server_ABC.h" />
