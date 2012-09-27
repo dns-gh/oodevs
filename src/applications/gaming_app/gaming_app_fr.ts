@@ -3248,7 +3248,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Change human number</source>
-        <translation">Changer le nombre d humains</translation>
+        <translation>Changer le nombre d humains</translation>
     </message>
     <message>
         <source>change_equipment_human_size</source>
