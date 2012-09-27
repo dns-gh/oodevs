@@ -670,9 +670,6 @@
     <ClCompile Include="..\..\src\applications\gaming_app\AgentListView.cpp">
       <Filter>Source Files\Lists</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\gaming_app\TacticalListView.cpp">
-      <Filter>Source Files\Lists</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\LinkInterpreter.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
@@ -804,6 +801,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\OrbatDockWidget.cpp">
       <Filter>Source Files\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\TacticalTreeView.cpp">
+      <Filter>Source Files\TreeView</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1453,9 +1453,6 @@
     <CustomBuild Include="..\..\src\applications\gaming_app\UnitStateDialog.h">
       <Filter>Source Files\Dialogs\Magic actions\Unit state</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\gaming_app\TacticalListView.h">
-      <Filter>Source Files\Lists</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\gaming_app\AgentListView.h">
       <Filter>Source Files\Lists</Filter>
     </CustomBuild>
@@ -1471,6 +1468,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\gaming_app\ObjectStateDialog.h">
       <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\TacticalTreeView.h">
+      <Filter>Source Files\TreeView</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

@@ -3008,18 +3008,18 @@ This data can&apos;t be projected.</source>
     </message>
 </context>
 <context>
-    <name>TacticalListView</name>
+    <name>TacticalTreeView</name>
     <message>
         <source>Unit Change Superior</source>
-        <translation>Cambiar el superior de la unidad</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Change Automat Superior</source>
-        <translation>Cambiar Superior de autómata</translation>
+        <translation type="unfinished">Cambiar Superior de autómata</translation>
     </message>
     <message>
         <source>Change Formation Superior</source>
-        <translation>Cambiar Superior de formación</translation>
+        <translation type="unfinished">Cambiar Superior de formación</translation>
     </message>
     <message>
         <source>Change superior</source>

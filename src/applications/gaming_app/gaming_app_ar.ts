@@ -3003,11 +3003,7 @@ This data can&apos;t be projected.</source>
     </message>
 </context>
 <context>
-    <name>TacticalListView</name>
-    <message>
-        <source>Change superior</source>
-        <translation type="unfinished"></translation>
-    </message>
+    <name>TacticalTreeView</name>
     <message>
         <source>Unit Change Superior</source>
         <translation type="unfinished"></translation>
@@ -3018,6 +3014,10 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Change Formation Superior</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change superior</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

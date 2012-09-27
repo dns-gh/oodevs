@@ -116,7 +116,7 @@ StatusBar.cpp \
 SupplyConsignsWidget.cpp \
 SupplyStocksListView.cpp \
 SupplyTransportersListView.cpp \
-TacticalListView.cpp \
+TacticalTreeView.cpp \
 TimelineActionItem.cpp \
 TimelineListView.cpp \
 TimelinePanel.cpp \

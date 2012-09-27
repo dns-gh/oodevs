@@ -63,7 +63,7 @@ protected:
     void InternalNotifyUpdated( const kernel::Hierarchies& hierarchy );
     QStandardItem* AddItem( QStandardItem* parent, const kernel::Entity_ABC& entity );
     void UpdateItem( QStandardItem& entityItem, const kernel::Entity_ABC& entity );
-    void UpdateBackgroundColor( QStandardItem& entityItem, const kernel::Entity_ABC& entity );
+    virtual void UpdateBackgroundColor( QStandardItem& entityItem, const kernel::Entity_ABC& entity );
     virtual void AdditionalUpdateItem( QStandardItem& /*entityItem*/, const kernel::Entity_ABC& /*entity*/ ) {}
     template< typename Entity >
     bool AddItemIfPossible( const kernel::Entity_ABC& entity, QStandardItem* parent, QStandardItem*& ret );

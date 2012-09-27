@@ -12,7 +12,7 @@
 #include "OrbatToolbar.h"
 #include "AgentListView.h" // à virer
 #include "LogisticListView.h" // à virer
-#include "TacticalListView.h" // à virer
+#include "TacticalTreeView.h"
 #include "clients_gui/AggregateToolBar.h"
 #include "clients_gui/EntityTreeView.h"
 #include "clients_gui/ObjectTreeView.h"
@@ -42,9 +42,9 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers, QWidget* par
     gui::SearchListView_ABC* searchListView = 0;
     gui::SearchTreeView_ABC* searchTreeView = 0;
     {
-        searchListView = new gui::SearchListView< TacticalListView >( pListsTabWidget, controllers, actionsModel, staticModel, simulation, factory, filter, icons );
-        searchListView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchListView->GetRichListView(), SLOT( LockDragAndDrop( bool ) ) );
-        pListsTabWidget->addTab( searchListView, tr( "Tactical" ) );
+        searchTreeView = new gui::SearchTreeView< TacticalTreeView >( pListsTabWidget, controllers, filter, observer_, icons, staticModel, simulation, actionsModel );
+        searchTreeView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchTreeView->GetRichTreeView(), SLOT( LockDragAndDrop( bool ) ) );
+        pListsTabWidget->addTab( searchTreeView, tr( "Tactical" ) );
     }
     {
         searchListView = new gui::SearchListView< AgentListView >( pListsTabWidget, controllers, actionsModel, staticModel, simulation, factory, filter, icons );

@@ -3011,10 +3011,10 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
 </context>
 <context>
-    <name>TacticalListView</name>
+    <name>TacticalTreeView</name>
     <message>
         <source>Unit Change Superior</source>
-        <translation>Changer le supérieur de l&apos;unité</translation>
+        <translation>>Changer le supérieur de l&apos;unité</translation>
     </message>
     <message>
         <source>Change Automat Superior</source>

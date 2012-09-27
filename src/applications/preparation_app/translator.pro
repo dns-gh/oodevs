@@ -70,7 +70,6 @@ SuccessFactorEditor.cpp \
 SuccessFactorList.cpp \
 SymbolDialog.cpp \
 SymbolEditor.cpp \
-TacticalListView.cpp \
 TacticalTreeView.cpp \
 TemplateListView.cpp \
 TemplatesPanel.cpp \
