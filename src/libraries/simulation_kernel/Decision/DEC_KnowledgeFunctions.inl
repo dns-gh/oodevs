@@ -71,13 +71,13 @@ void DEC_KnowledgeFunctions::ShareKnowledgesInZoneWith( const T& caller, DEC_Dec
 // Created: NLD 2006-05-05
 // -----------------------------------------------------------------------------
 template< typename T > 
-T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsInCircle( const T& caller, const MT_Vector2D* pCenter, double rRadius, const std::vector< std::string >& filters )
+T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsInCircle( const T& caller, const MT_Vector2D* pCenter, double rRadius, const std::vector< std::string >& filters, bool nonActivatedObstacles )
 {
     if( !pCenter )
         throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     MIL_ObjectFilter filter( filters );
     T_KnowledgeObjectDiaIDVector knowledges;
-    caller.GetArmy().GetKnowledge().GetObjectsInCircle( knowledges, filter, *pCenter, rRadius );
+    caller.GetArmy().GetKnowledge().GetObjectsInCircle( knowledges, filter, *pCenter, rRadius, nonActivatedObstacles );
     return knowledges;
 }
 
