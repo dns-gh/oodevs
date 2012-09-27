@@ -24,7 +24,6 @@
 #include "LogisticLinks.h"
 #include "Model.h"
 #include "ObjectKnowledges.h"
-#include "Quotas.h"
 #include "StaticModel.h"
 #include "StaticModel.h"
 #include "Team.h"

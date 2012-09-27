@@ -334,6 +334,7 @@
     <ClInclude Include="..\..\src\libraries\gaming\gaming_pch.h" />
     <ClInclude Include="..\..\src\libraries\gaming\HumanState.h" />
     <ClInclude Include="..\..\src\libraries\gaming\LogFuneralConsign.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\MedicalTreatmentCapacity.h" />
     <ClInclude Include="..\..\src\libraries\gaming\ModeController.h" />
     <ClInclude Include="..\..\src\libraries\gaming\ProfileFilter.h" />
     <ClInclude Include="..\..\src\libraries\gaming\RightsResolver.h" />

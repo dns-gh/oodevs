@@ -1518,6 +1518,9 @@
     <ClInclude Include="..\..\src\libraries\gaming\ModeController.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\MedicalTreatmentCapacity.h">
+      <Filter>Source Files\Model\Object\Extensions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\gaming\Sector.inl">
