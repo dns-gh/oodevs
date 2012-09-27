@@ -2273,9 +2273,6 @@
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_MainTabWidget.h">
       <Filter>Source Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_BaseEditLine.h">
-      <Filter>Source Files\Common widgets\Edit line</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Sensors_ModificatorTable.h">
       <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
     </CustomBuild>
