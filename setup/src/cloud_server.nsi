@@ -51,8 +51,10 @@ Section $(^Name)
     SectionIn RO
     SetShellVarContext all
 
-    ; stop current service
-    nsExec::Exec 'net stop "Sword Cloud"'
+    !ifndef SKIP_SERVICE_CONTROL
+        ; stop current service
+        nsExec::Exec 'net stop "Sword Cloud"'
+    !endif
 
     ; set permissions
     CreateDirectory "$INSTDIR"
@@ -133,7 +135,9 @@ Section $(^Name)
 
     ; service
     nsExec::Exec '"$INSTDIR\bin\cloud_server.exe" --register'
-    nsExec::Exec 'net start "Sword Cloud"'
+    !ifndef SKIP_SERVICE_CONTROL
+        nsExec::Exec 'net start "Sword Cloud"'
+    !endif
 SectionEnd
 
 ;--------------------------------
