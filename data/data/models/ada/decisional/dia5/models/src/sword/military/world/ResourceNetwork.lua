@@ -41,7 +41,7 @@ return
         return CreateKnowledge( sword.military.world.Point, DEC_ReseauRessource_Position( self.source ) )
     end,
     getPositions = function( self )
-        return { self:getPosition() }
+        return DEC_Geometrie_CalculerTrafficablePointPourPoint(DEC_ReseauRessource_Position( self.source ))
     end,
     getProximity = function( self, element )
         return integration.normalizedInversedDistance( self, element )
