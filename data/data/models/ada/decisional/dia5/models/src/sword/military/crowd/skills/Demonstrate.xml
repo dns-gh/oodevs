@@ -2,10 +2,12 @@
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.crowd.skills.Demonstrate" source-version="1.0.0">
     <description>Comportement de manifestation d'une foule. L'agent se déplace vers l'élément passé en paramètre tout en manifestant. Ce skill applique un effet persistant, qui par définition n'a pas de fin si ce n'est celle décidée par l'utilisateur.</description>
     <parameters>
-        <parameter name="entity">
+        <parameter name="entities">
             <description>L'objectif de la manifestation.</description>
             <type>
-                <class name="sword.military.crowd.world.interfaces.Reachable"/>
+                <list>
+                    <class name="sword.military.crowd.world.interfaces.Reachable"/>
+                </list>
             </type>
         </parameter>
     </parameters>

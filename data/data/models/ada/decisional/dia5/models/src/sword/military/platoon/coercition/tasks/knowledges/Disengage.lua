@@ -1,7 +1,12 @@
 local result = 
 {
     fillParameters = function( self, companyTask, params )
-        return { objective = companyTask:getReachable( params ) }
+        local reachable = companyTask:getReachable( params )
+        if next(reachable) then
+            return { objective = reachable[1] }
+        else
+            return { objective = reachable }
+        end
     end
 }
 

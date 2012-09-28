@@ -4,12 +4,14 @@
         <parameter name="objectif">
             <description>Le ou les élements à parcourir</description>
             <type>
-                <class name="sword.military.crowd.world.interfaces.Reachable"/>
+                <list>
+                    <class name="sword.military.crowd.world.interfaces.Reachable"/>
+                </list>
             </type>
         </parameter>
     </parameters>
     <next-task name="sword.military.crowd.tasks.Demonstrate">
-        <parameter name="objective">
+        <parameter name="objectives">
             <value>
                 <parameter>objectif</parameter>
             </value>
