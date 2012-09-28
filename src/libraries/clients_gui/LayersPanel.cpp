@@ -24,6 +24,8 @@
 
 using namespace gui;
 
+Q_DECLARE_METATYPE( Layer_ABC* )
+
 namespace
 {
     QWidget* AddButton( const QIcon& icon, const QString& tooltip, const QObject* receiver, const char* member )
@@ -46,6 +48,7 @@ LayersPanel::LayersPanel( QWidget* parent, kernel::Controllers& controllers, GlS
     , options_           ( controllers.options_ )
     , currentLayer_      ( -1 )
     , selector_          ( selector )
+    , layersModel_       ( new QStandardItemModel() )
 {
     Q3VBox* container = new Q3VBox( this );
     {
@@ -67,13 +70,10 @@ LayersPanel::LayersPanel( QWidget* parent, kernel::Controllers& controllers, GlS
         vBox->setSpacing( 6 );
         Q3HBox* box = new Q3HBox( vBox );
         box->setSpacing( 5 );
-        layersList_ = new Q3ListView( box );
-        layersList_->addColumn( tr( "Layer" ) );
-        layersList_->setResizeMode( Q3ListView::LastColumn );
+        layersList_ = new QTreeView( box );
         layersList_->header()->hide();
-        layersList_->setSorting( -1 );
-        layersList_->setBackgroundColor( Qt::white );
-        connect( layersList_, SIGNAL( selectionChanged( Q3ListViewItem * ) ), SLOT( OnSelectionChanged( Q3ListViewItem * ) ) );
+        layersList_->setModel( layersModel_ );
+        connect( layersList_->selectionModel(), SIGNAL( currentChanged( const QModelIndex&, const QModelIndex& ) ), SLOT( OnSelectionChanged() ) );
 
         // Buttons
         QWidget* up   = AddButton( MAKE_PIXMAP( arrow_up ),   tr( "Move the selected layer forwards" ),  this,   SLOT( OnUp() ) );
@@ -107,15 +107,25 @@ LayersPanel::~LayersPanel()
     controllers_.Unregister( *this );
 }
 
+namespace
+{
+    QStandardItem* CreateItem( const QString& name, gui::Layer_ABC& layer, QStandardItemModel& model )
+    {
+        QStandardItem* item = new QStandardItem( "  " + name );
+        item->setEditable( false );
+        item->setData( QVariant::fromValue( &layer ) );
+        model.insertRow( 0, item );
+        return item;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: LayersPanel::AddLayer
 // Created: AGE 2007-01-04
 // -----------------------------------------------------------------------------
 void LayersPanel::AddLayer( const QString& name, Layer_ABC& layer, bool dynamic /* = false */ )
 {
-    ValuedListItem* item = new ValuedListItem( layersList_ );
-    item->SetValue( &layer );
-    item->setText( 0, "  " + name );
+    CreateItem( "  " + name, layer, *layersModel_ );
 
     if( dynamic )
         dynamicLayers_.push_back( &layer );
@@ -133,7 +143,7 @@ void LayersPanel::AddLayer( const QString& name, Layer_ABC& layer, bool dynamic 
 // -----------------------------------------------------------------------------
 void LayersPanel::OnRemoveDynamicLayer()
 {
-    ValuedListItem* item = static_cast< ValuedListItem* >( layersList_->selectedItem() );
+    QStandardItem* item = layersModel_->itemFromIndex( layersList_->selectionModel()->currentIndex() );
     if( !item )
         return;
     RemoveDynamicLayer( *item );
@@ -158,9 +168,9 @@ namespace
 // Name: LayersPanel::RemoveDynamicLayer
 // Created: ABR 2012-06-12
 // -----------------------------------------------------------------------------
-void LayersPanel::RemoveDynamicLayer( ValuedListItem& item )
+void LayersPanel::RemoveDynamicLayer( QStandardItem& item )
 {
-    Layer_ABC* layer = item.GetValue< Layer_ABC >();
+    Layer_ABC* layer = item.data().value< Layer_ABC* >();
     if( !layer )
         return;
 
@@ -174,7 +184,7 @@ void LayersPanel::RemoveDynamicLayer( ValuedListItem& item )
     RemoveFromVector( layer, newLayers_, new_ );
     RemoveFromVector( layer, layers_, names_ );
 
-    layersList_->removeItem( &item );
+    layersModel_->removeRow( item.row() );
     selector_.RemoveLayer( *layer );
     UpdateLeastAndMostVisible();
 }
@@ -209,8 +219,10 @@ void LayersPanel::Reset()
     fogOfWar_->Revert();
     infra_->Revert();
     ResetLayers();
-    for( Q3ListViewItem* item = layersList_->firstChild(); item != 0; item = item->nextSibling() )
-        RemoveDynamicLayer( static_cast< ValuedListItem& >( *item ) );
+    QStandardItem* root = layersModel_->invisibleRootItem();
+    for( int row = 0; row < root->rowCount(); ++row )
+        if( QStandardItem* childItem = root->child( row ) )
+            RemoveDynamicLayer( *childItem );
 }
 
 // -----------------------------------------------------------------------------
@@ -223,19 +235,25 @@ void LayersPanel::ResetLayers()
     newLayers_ = currentLayers_;
     for( unsigned i = 0; i < layers_.size(); ++i )
         layers_[ i ]->SetAlpha( new_[ i ] );
-    layersList_->clear();
-    for( T_Layers::const_iterator it = newLayers_.begin(); it != newLayers_.end(); ++it )
+    layersModel_->clear();
+    for( T_Layers::iterator it = newLayers_.begin(); it != newLayers_.end(); ++it )
     {
         if( it != newLayers_.end() - 1 )
             (*it)->MoveBelow( **(it+1) );
-        ValuedListItem* item = new ValuedListItem( layersList_ );
-        item->SetValue( *it );
+
+        QStandardItem* item = CreateItem( "", **it, *layersModel_ );
+
         T_Layers::const_iterator lit = std::find( layers_.begin(), layers_.end(), *it );
         if( lit != layers_.end() )
-            item->setText( 0, "  "+names_[ lit - layers_.begin() ]);
+            item->setText( "  " + names_[ lit - layers_.begin() ]);
     }
     UpdateLeastAndMostVisible();
-    layersList_->setCurrentItem( layersList_-> firstChild() );
+    if( QStandardItem* child = layersModel_->invisibleRootItem()->child( 0 ) )
+    {
+        QItemSelectionModel* selectionModel = layersList_->selectionModel();
+        selectionModel->clear();
+        selectionModel->select( child->index(), QItemSelectionModel::Select );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -244,14 +262,17 @@ void LayersPanel::ResetLayers()
 // -----------------------------------------------------------------------------
 void LayersPanel::UpdateLeastAndMostVisible()
 {
-    if( layersList_->childCount() > 1 )
+    QStandardItem* root = layersModel_->invisibleRootItem();
+    int count = root->rowCount();
+    if( count > 1 )
     {
-        for( Q3ListViewItem* item = layersList_->firstChild(); item; item = item->nextSibling() )
+        for( int row = 0; row < count; ++row )
             for( T_Names::const_iterator it = names_.begin(); it != names_.end(); ++it )
-                if( item->text( 0 ).contains( *it ) )
-                    item->setText( 0, "  " + *it );
-        layersList_->firstChild()->setText( 0, layersList_->firstChild()->text( 0 ) + tr( " (foreground)" ) );
-        layersList_->lastItem()->setText( 0, layersList_->lastItem()->text( 0 ) + tr( " (background)" ) );
+                 if( QStandardItem* childItem = root->child( row ) )
+                     if( childItem->text().contains( *it ) )
+                         childItem->setText( "  " + *it );
+        root->child( 0 )->setText( root->child( 0 )->text() + tr( " (foreground)" ) );
+        root->child( count - 1 )->setText( root->child( count - 1 )->text() + tr( " (background)" ) );
     }
 }
 
@@ -272,26 +293,29 @@ void LayersPanel::OnValueChanged()
 // Name: LayersPanel::OnSelectionChanged
 // Created: AGE 2007-04-27
 // -----------------------------------------------------------------------------
-void LayersPanel::OnSelectionChanged( Q3ListViewItem* i )
+void LayersPanel::OnSelectionChanged()
 {
-    currentLayer_ = -1;
-    ValuedListItem* item = static_cast< ValuedListItem* >( i );
-    T_Layers::const_iterator it = std::find( layers_.begin(), layers_.end(), item->GetValue< Layer_ABC >() );
-
-    QString transparencyLabelText( tr( "Transparency " ) );
-    if( it != layers_.end() )
+    QModelIndex index = layersList_->selectionModel()->currentIndex();
+    if( QStandardItem* item = layersModel_->itemFromIndex( index ) )
     {
-        currentLayer_ = static_cast< int >( it - layers_.begin() );
-        transparency_->setValue( int( new_[ currentLayer_ ] * 100 ) );
-        for( T_Names::const_iterator nIT = names_.begin(); nIT != names_.end(); ++nIT )
-            if( i->text( 0 ).contains( *nIT ) )
-            {
-                transparencyLabelText += tr( "for %1:" ).arg( *nIT );
-                break;
-            }
-        removeButton_->setEnabled( std::find( dynamicLayers_.begin(), dynamicLayers_.end(), *it ) != dynamicLayers_.end() );
+        currentLayer_ = -1;
+        T_Layers::const_iterator it = std::find( layers_.begin(), layers_.end(), item->data().value< Layer_ABC* >() );
+        QString transparencyLabelText( tr( "Transparency " ) );
+
+        if( it != layers_.end() )
+        {
+            currentLayer_ = static_cast< int >( it - layers_.begin() );
+            transparency_->setValue( int( new_[ currentLayer_ ] * 100 ) ); 
+            for( T_Names::const_iterator nIT = names_.begin(); nIT != names_.end(); ++nIT )
+                if( item->text().contains( *nIT ) )
+                {
+                    transparencyLabelText += tr( "for %1:" ).arg( *nIT );
+                    break;
+                }
+            removeButton_->setEnabled( std::find( dynamicLayers_.begin(), dynamicLayers_.end(), *it ) != dynamicLayers_.end() );
+        }
+        transparencyLabel_->setText( transparencyLabelText );
     }
-    transparencyLabel_->setText( transparencyLabelText );
 }
 
 // -----------------------------------------------------------------------------
@@ -300,19 +324,25 @@ void LayersPanel::OnSelectionChanged( Q3ListViewItem* i )
 // -----------------------------------------------------------------------------
 void LayersPanel::OnUp()
 {
-    if( currentLayer_ != -1 && currentLayer_ < int( layers_.size() ) )
+    if( currentLayer_ != -1 && currentLayer_ < static_cast< int >( layers_.size() ) )
     {
         Layer_ABC* layer = layers_[ currentLayer_ ];
-        if( ValuedListItem* item = FindItem( layer, layersList_->firstChild() ) )
+
+        QModelIndexList list = layersModel_->match( layersModel_->index( 0, 0 ), Qt::UserRole + 1, QVariant::fromValue( layer ), -1, Qt::MatchRecursive );
+        if( !list.empty() )
         {
-            ValuedListItem* previous = static_cast< ValuedListItem* >( item->itemAbove() );
-            if( previous )
+            int row = list.front().row();
+            if( row != 0 )
             {
-                layer->MoveAbove( *previous->GetValue< Layer_ABC >() );
-                previous->moveItem( item );
+                if( QStandardItem* previous = layersModel_->item( row - 1 ) )
+                     layer->MoveAbove( *previous->data().value< Layer_ABC* >() );
+                QStandardItem* item = layersModel_->takeItem( row );
+                layersModel_->insertRow( row - 1, item );
+                layersModel_->removeRow( row + 1 );
                 T_Layers::iterator it = std::find( newLayers_.begin(), newLayers_.end(), layer );
                 if( it < newLayers_.end() - 1 )
                     std::swap( *it, *(it+1) );
+                layersList_->selectionModel()->select( item->index(), QItemSelectionModel::Select );
             }
         }
     }
@@ -325,20 +355,25 @@ void LayersPanel::OnUp()
 // -----------------------------------------------------------------------------
 void LayersPanel::OnDown()
 {
-    if( currentLayer_ != -1 && currentLayer_ < int( layers_.size() ) )
+    if( currentLayer_ != -1 && currentLayer_ < static_cast< int >( layers_.size() ) )
     {
         Layer_ABC* layer = layers_[ currentLayer_ ];
-        ValuedListItem* item = FindItem( layer, layersList_->firstChild() );
-        if( item )
+
+        QModelIndexList list = layersModel_->match( layersModel_->index( 0, 0 ), Qt::UserRole + 1, QVariant::fromValue( layer ), -1, Qt::MatchRecursive );
+        if( !list.empty() )
         {
-            ValuedListItem* next = static_cast< ValuedListItem* >( item->nextSibling() );
-            if( next )
+            int row = list.front().row();
+            if( row != layersModel_->rowCount() - 1 )
             {
-                layer->MoveBelow( *next->GetValue< Layer_ABC >() );
-                item->moveItem( next );
+                if( QStandardItem* next = layersModel_->item( row + 1 ) )
+                    layer->MoveBelow( *next->data().value< Layer_ABC* >() );
+                QStandardItem* item = layersModel_->takeItem( row );
+                layersModel_->insertRow( row + 2 , item );
+                layersModel_->removeRow( row );
                 T_Layers::iterator it = std::find( newLayers_.begin(), newLayers_.end(), layer );
                 if( it != newLayers_.begin() && it != newLayers_.end() )
                     std::swap( *it, *(it-1) );
+                layersList_->selectionModel()->select( item->index(), QItemSelectionModel::Select );
             }
         }
     }
@@ -413,11 +448,18 @@ void LayersPanel::OnInfraChanged( bool value )
 // -----------------------------------------------------------------------------
 void LayersPanel::Update()
 {
-    for( Q3ListViewItem* item = layersList_->firstChild(); item; item = item->nextSibling() )
-        if( ValuedListItem* valuedItem = static_cast< ValuedListItem* >( item ) )
-            if( Layer_ABC* layer = valuedItem->GetValue< Layer_ABC >() )
-            {
-                item->setEnabled( layer->IsEnabled() );
-                item->setVisible( layer->IsEnabled() );
-            }
+    QStandardItem* root = layersModel_->invisibleRootItem();
+    for( int row = 0; row < root->rowCount(); ++row )
+        if( QStandardItem* childItem = root->child( row ) )
+            if( Layer_ABC* layer = childItem->data().value< Layer_ABC* >() )
+                childItem->setEnabled( layer->IsEnabled() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LayersPanel::showEvent
+// Created: LGY 2012-09-27
+// -----------------------------------------------------------------------------
+void LayersPanel::showEvent( QShowEvent* /*event*/ )
+{
+    currentLayer_ = -1;
 }

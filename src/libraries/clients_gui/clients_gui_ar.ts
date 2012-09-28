@@ -905,10 +905,6 @@ PNG (*.png)
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Layer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Move the selected layer forwards</source>
         <translation type="unfinished"></translation>
     </message>

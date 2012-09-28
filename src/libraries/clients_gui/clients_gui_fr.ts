@@ -892,10 +892,6 @@ PNG (*.png)
 <context>
     <name>gui::LayersPanel</name>
     <message>
-        <source>Layer</source>
-        <translation>Calque</translation>
-    </message>
-    <message>
         <source>Fog of war</source>
         <translation>Brouillard de guerre</translation>
     </message>

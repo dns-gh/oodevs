@@ -886,24 +886,12 @@ PNG (*.png)
 <context>
     <name>gui::LayersPanel</name>
     <message>
-        <source>Layer</source>
-        <translation>Calque</translation>
-    </message>
-    <message>
         <source>Fog of war</source>
         <translation>Brouillard de guerre</translation>
     </message>
     <message>
         <source>Display fog of war</source>
         <translation>Afficher le brouillard de guerre</translation>
-    </message>
-    <message>
-        <source> (background)</source>
-        <translation> (arrière plan)</translation>
-    </message>
-    <message>
-        <source> (foreground)</source>
-        <translation> (premier plan)</translation>
     </message>
     <message>
         <source>Move the selected layer forwards</source>
@@ -922,10 +910,6 @@ PNG (*.png)
         <translation>Transparence </translation>
     </message>
     <message>
-        <source>for %1:</source>
-        <translation>de %1:</translation>
-    </message>
-    <message>
         <source>Infrastructures</source>
         <translation type="unfinished"></translation>
     </message>
@@ -939,6 +923,18 @@ PNG (*.png)
     </message>
     <message>
         <source>Remove a user raster layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> (foreground)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> (background)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>for %1:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

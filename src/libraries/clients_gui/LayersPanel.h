@@ -59,7 +59,7 @@ private slots:
     //! @name Slots
     //@{
     void OnValueChanged();
-    void OnSelectionChanged( Q3ListViewItem* );
+    void OnSelectionChanged();
     void OnUp();
     void OnDown();
     void OnFogOfWarChanged( bool value );
@@ -71,9 +71,10 @@ private:
     //! @name Helpers
     //@{
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
+    virtual void showEvent( QShowEvent* event );
     void UpdateLeastAndMostVisible();
     void ResetLayers();
-    void RemoveDynamicLayer( ValuedListItem& layer );
+    void RemoveDynamicLayer( QStandardItem& item );
     //@}
 
     //! @name Types
@@ -96,7 +97,8 @@ private:
     T_Names  names_;
     CheckBox* fogOfWar_;
     CheckBox* infra_;
-    Q3ListView* layersList_;
+    QTreeView* layersList_;
+    QStandardItemModel* layersModel_;
     QSlider* transparency_;
     QLabel* transparencyLabel_;
     int currentLayer_;
