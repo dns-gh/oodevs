@@ -294,7 +294,6 @@ struct ItemProgressDelegate : public QStyledItemDelegate
 // Created: BAX 2012-09-06
 // -----------------------------------------------------------------------------
 ItemModel::ItemModel()
-    : toggle_( Qt::Checked )
 {
     for( size_t i = 0; i < COUNT_OF( item_headers ); ++i )
         headers_ << item_headers[i];
@@ -374,19 +373,14 @@ void ItemModel::Toggle()
     if( items_.empty() )
         return;
 
-    bool mixed = false;
-    boost::optional< Qt::CheckState > def;
+    boost::optional< Qt::CheckState > next;
     BOOST_FOREACH( const T_Ptr& ptr, items_ )
-        if( def == boost::none )
-            def = ptr->GetCheckState();
-        else
-            mixed |= *def != ptr->GetCheckState();
-
-    def = mixed ? toggle_ : Reverse( *def );
-    BOOST_FOREACH( T_Ptr& ptr, items_ )
-        ptr->SetData( ITEM_COL_TYPE, *def, Qt::CheckStateRole );
+    {
+        if( next == boost::none )
+            next = Reverse( ptr->GetCheckState() );
+        ptr->SetData( ITEM_COL_TYPE, *next, Qt::CheckStateRole );
+    }
     ModifyColumn( ITEM_COL_TYPE );
-    toggle_ = Reverse( *def );
 }
 
 // -----------------------------------------------------------------------------

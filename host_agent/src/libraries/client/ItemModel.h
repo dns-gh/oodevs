@@ -105,7 +105,6 @@ public slots:
 private:
     //! @name private members
     //@{
-    Qt::CheckState toggle_;
     QSortFilterProxyModel proxy_;
     //@}
 };
