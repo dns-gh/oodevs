@@ -982,12 +982,9 @@
         </copy>
     </target>
 
-    <target name="deploy-qt-translations" description="deploy qt translations"
-        depends="deploy-application-data">
+    <target name="deploy-qt-translations" description="deploy qt translations" depends="deploy-application-data">
         <copy todir="${run.dir}/resources/locales">
-            <fileset dir="${run.dir}">
-                <include name="qt_*.qm"/>
-            </fileset>
+            <fileset dir="${run.dir}" includes="qt_*.qm"/>
         </copy>
     </target>
 
