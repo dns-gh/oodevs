@@ -50,8 +50,10 @@ rootnode
     -- End of behavior
     -- --------------------------------------------------------------------------------
     destroy = function( self )
-        self.params.resource:stopProduceResource( )
-        meKnowledge:RC( eRC_FinProducePoint )
+        if not self.produceNotStarted then
+            self.params.resource:stopProduceResource( )
+            meKnowledge:RC( eRC_FinProducePoint )
+        end
     end
 }
 
