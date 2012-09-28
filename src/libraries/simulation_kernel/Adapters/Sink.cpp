@@ -16,6 +16,7 @@
 #include "PerceptionHooks.h"
 #include "RoleAdapter.h"
 #include "CoreLogger.h"
+#include "ModelCounter.h"
 #include "MIL_AgentServer.h"
 #include "RolePion_Decision.h"
 #include "RolePion_Location.h"
@@ -565,4 +566,15 @@ std::auto_ptr< flood::FloodModel_ABC > Sink::CreateFloodModel() const
 {
     assert( facade_.get() );
     return std::auto_ptr< flood::FloodModel_ABC >( new sword::FloodModel( *facade_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Sink::GetModelCount
+// Created: SLI 2012-09-12
+// -----------------------------------------------------------------------------
+unsigned long Sink::GetModelCount() const
+{
+    ModelCounter counter;
+    model_->Accept( counter );
+    return counter.count_;
 }

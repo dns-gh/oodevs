@@ -120,6 +120,7 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\Legacy\RolePion_Decision.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\Legacy\Sink.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\ListenerHelper.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\ModelCounter.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\MovementEventListener.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\MovementHooks.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\MovementReportEventListener.cpp" />
@@ -877,6 +878,7 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\Legacy\RolePion_Decision.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\Legacy\Sink.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\ListenerHelper.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\ModelCounter.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\MovementEventListener.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\MovementHooks.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\MovementReportEventListener.h" />

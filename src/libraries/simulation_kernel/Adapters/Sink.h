@@ -80,6 +80,11 @@ public:
     template< typename Archive > friend void load_construct_data( Archive& archive, Sink* sink, const unsigned int /*version*/ );
     //@}
 
+    //! @name Accessors
+    //@{
+    virtual unsigned long GetModelCount() const;
+    //@}
+
 private:
     //! @name Constructors/Destructor
     //@{

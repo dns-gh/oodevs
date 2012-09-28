@@ -151,6 +151,7 @@ public:
     unsigned long GetAutomatsCount   () const;
     unsigned long GetAgentsCount     () const;
     unsigned long GetCrowdsCount     () const;
+    unsigned long GetModelCount      () const;
     //@}
 
     //! @name Operations

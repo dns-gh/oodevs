@@ -2433,6 +2433,15 @@ unsigned long MIL_EntityManager::GetCrowdsCount() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::GetModelCount
+// Created: SLI 2012-09-12
+// -----------------------------------------------------------------------------
+unsigned long MIL_EntityManager::GetModelCount() const
+{
+    return sink_->GetModelCount();
+}
+
+// -----------------------------------------------------------------------------
 // Name: Model::setToTasker
 // Created: PHC 2010-07-07
 // -----------------------------------------------------------------------------

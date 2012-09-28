@@ -65,6 +65,11 @@ public:
                 & boost::serialization::base_object< FloodModelFactory_ABC >( *this );
     }
     //@}
+
+    //! @name Accessors
+    //@{
+    virtual unsigned long GetModelCount() const = 0;
+    //@}
 };
 
 }

@@ -2628,6 +2628,9 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\CallbackEventListener.cpp">
       <Filter>Source Files\Adapters\EventListeners</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\ModelCounter.cpp">
+      <Filter>Source Files\Adapters</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractWithSideCapacity.cpp">
@@ -5380,6 +5383,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\TransportCapacityComputerFactory_ABC.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\ModelCounter.h">
+      <Filter>Source Files\Adapters</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
