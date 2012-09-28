@@ -1700,7 +1700,6 @@
                     <include name="Qt3Support4.dll"/>
                     <include name="QtCore4.dll"/>
                     <include name="QtGui4.dll"/>
-                    <include name="QtGui4.dll"/>
                     <include name="QtNetwork4.dll"/>
                     <include name="QtOpenGL4.dll"/>
                     <include name="QtSql4.dll"/>
