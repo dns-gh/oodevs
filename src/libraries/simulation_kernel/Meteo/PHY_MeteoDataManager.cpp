@@ -13,7 +13,6 @@
 #include "meteo/PHY_LocalMeteo.h"
 #include "meteo/PHY_Ephemeride.h"
 #include "meteo/PHY_Lighting.h"
-#include "meteo/MeteoLocal.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/Loader_ABC.h"
