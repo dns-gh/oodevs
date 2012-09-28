@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.tasks.Build" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.Build">
-    <description>To construct something (any of the sword objects) </description>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.tasks.ResumeConstructionWorks" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.ResumeConstructionWorks">
+    <description>To resume the contruction of issued objects.&#xD;
+&#xD;
+The agent moves toward each object (from the nearest to the furthest) and build it. When all object are 100% built, the agent moves to the meeting position.</description>
     <parameters>
-        <parameter name="entities">
+        <parameter name="objects">
             <description>The objects to build.</description>
             <type>
                 <list>
-                    <class name="properties.Buildable"/>
+                    <class name="world.Object"/>
                 </list>
             </type>
         </parameter>
-        <parameter name="meetingPoint" nullable="true">
-            <description>The position to reach once all objects have been built.</description>
+        <parameter name="meetingPoint">
+            <description>The meeting position to reach upon works termination.</description>
             <type>
                 <class name="properties.Reachable"/>
             </type>
         </parameter>
         <parameter name="withImprovement" nullable="true">
-            <description>Define if the object can be improved with mines. If the mission is used to erect obstacles (engineer units), the agents can improve the objects (barricade for instance) with mines. By default, the value is 'false'.</description>
+            <description>Define if the agent (for engineer units for instance) needs to improve objects with mines.</description>
             <type>
                 <simple name="boolean"/>
             </type>
@@ -35,26 +37,23 @@
             </default>
         </parameter>
     </parameters>
-    <goal>
-        <description>To build a set of sword objects.</description>
-    </goal>
     <stages>
-        <stage label="moving to build objects">
+        <stage label="moving to perform works">
             <skills>
                 <skill name="agent.skills.Build" main="true">
-                    <parameter name="waitForReinforcement">
-                        <value>
-                            <parameter>waitForReinforcement</parameter>
-                        </value>
-                    </parameter>
                     <parameter name="entities">
                         <value>
-                            <parameter>entities</parameter>
+                            <parameter>objects</parameter>
                         </value>
                     </parameter>
                     <parameter name="withImprovement">
                         <value>
                             <parameter>withImprovement</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="waitForReinforcement">
+                        <value>
+                            <parameter>waitForReinforcement</parameter>
                         </value>
                     </parameter>
                 </skill>

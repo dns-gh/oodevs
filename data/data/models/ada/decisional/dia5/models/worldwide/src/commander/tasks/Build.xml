@@ -28,6 +28,16 @@
                 <boolean>false</boolean>
             </default>
         </parameter>
+        <parameter name="waitForReinforcement">
+            <description>Define if agent needs to wait for reinforcement when it is not able to build a work.  If it is set to 'true', the agent waits for reinforcement if it cannot perform a work on an object, else the agents goes to the next one.&#xD;
+</description>
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>false</boolean>
+            </default>
+        </parameter>
     </parameters>
     <stages>
         <stage label="moving toward works location">

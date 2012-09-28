@@ -4,8 +4,12 @@ local result =
         local entities = companyTask:getObstaclesPlan( params, entity, taskName )
         local meetingPoint = companyTask:getFinalMeetingPoint( params )
         local withImprovement = companyTask:getWithImprovement( params )
+        local waitForReinforcement = companyTask:getWithReinforcement( params )
         if next( entities ) then
-            return { entities = entities, meetingPoint = meetingPoint, withImprovement = withImprovement }
+            return { entities             = entities, 
+                     meetingPoint         = meetingPoint, 
+                     withImprovement      = withImprovement, 
+                     waitForReinforcement = waitForReinforcement }
         end
         return nil
     end,

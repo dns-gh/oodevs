@@ -9,8 +9,6 @@ rootnode
     -- -------------------------------------------------------------------------------- 
     -- Feedbacks and slots
     -- --------------------------------------------------------------------------------
-    done = function( self ) end,
-
     elementFailed = function( self, params, additionalParams )
         self.report = additionalParams.reason
         if additionalParams.reason == eRC_BUNonTraficable then
@@ -102,11 +100,6 @@ rootnode
         end
 
         if self.alltry then
-            for _, objective in pairs( self.objectsToActivate ) do -- Obstacles should be activated to consider action over
-                if objective:isManeuverObstacle() and not objective:isActifManeuverObstacle() and objective:delayedActivationTime() == 0 then
-                    return
-                end
-            end
             self.objectsToActivate = nil
             myself.obstacleToActivate = false
             Feedback( self.feedbacks.done )

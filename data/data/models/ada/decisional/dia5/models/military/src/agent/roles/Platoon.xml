@@ -100,6 +100,7 @@
         <skill name="agent.skills.TransportACrowd"/>
         <skill name="agent.skills.TransportPrisoners"/>
         <skill name="agent.skills.Operate"/>
+        <skill name="agent.skills.Build"/>
     </skills>
     <resources>
         <resource name="agent.resources.EngageCapacity"/>

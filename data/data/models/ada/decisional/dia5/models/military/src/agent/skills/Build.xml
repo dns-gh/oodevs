@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.skills.BuildWithReinforcement" source-version="1.0.0">
-    <description>To build a set of sword objects, representing engineer obstacles. The agent moves to each of the issued planned obstacles and build them. The obstacles are built in the order of the list (defined by user).&#xD;
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.skills.Build" source-version="1.0.0">
+    <description>To build a set of sword objects. The agent moves to each of the issued element and build them. If the parameter &quot; &#xD;
 &#xD;
-This skill can receive an empty list of obstacles to build. In that case, it returns the feeback 'done'.</description>
+This skill can receive an empty list of objects to build. In that case, it returns the feeback 'done'.</description>
     <parameters>
         <parameter name="entities" nullable="true">
             <description>The elements to build.</description>
@@ -24,12 +24,18 @@ This skill can receive an empty list of obstacles to build. In that case, it ret
                 <boolean>false</boolean>
             </default>
         </parameter>
+        <parameter name="waitForReinforcement">
+            <description>Define if agent needs to wait for reinforcement when it is not able to build a work.</description>
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>false</boolean>
+            </default>
+        </parameter>
     </parameters>
-    <goal>
-        <description>To build a set of sword objects.</description>
-    </goal>
     <links>
-        <link name="build" skill="agent.skills.primitives.Build"/>
-        <link name="improve" skill="agent.skills.primitives.Improve"/>
+        <link name="buildWithoutReinforcement" skill="agent.skills.BuildWithoutReinforcement"/>
+        <link name="buildWithReinforcement" skill="agent.skills.BuildWithReinforcement"/>
     </links>
 </skill>

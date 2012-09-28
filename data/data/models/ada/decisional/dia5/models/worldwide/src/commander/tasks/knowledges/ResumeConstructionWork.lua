@@ -1,6 +1,6 @@
 return
 { 
-    getObstaclesPlan = function( self, params, entity, taskKnowledge )
+     getObstaclesPlan = function( self, params, entity, taskKnowledge )
         local result = {}
         for task, taskWorkMap in pairs( myself.leadData.workMap ) do
             if task == taskKnowledge then
@@ -15,24 +15,25 @@ return
     end,
 
     getObstaclesParameter = function( self, params )
-        return params.entities
-    end,
-
-    getFinalMeetingPoint = function ( self, params ) -- Need to send a single element for build knowledge
-        if params.meetingPoint and params.meetingPoint ~= NIL then
-            return integration.randomPositionInCircle( params.meetingPoint, 100 )
-        end
-        return NIL
+        DEC_Trace( "objects = "..tostring( params.objects ) )
+        return params.objects
     end,
 
     getPositions = function( self, params )
         local positions = {}
-        for _, entity in pairs ( params.entities ) do
-            for _, position in pairs ( entity:getPositions() ) do
-                positions[ #positions + 1] = CreateKnowledge( world.Point, position )
+        for _, object in pairs ( params.objects ) do
+            for _, position in pairs ( object:getPositions() ) do
+                positions[ #positions + 1 ] = CreateKnowledge( world.Point, position )
             end
         end
         return positions
+    end,
+
+    getMeetingPoint = function( self, params )
+        if not params.meetingPoint then
+            return {}
+        end
+        return params.meetingPoint 
     end,
 
     getWithImprovement = function( self, params )
