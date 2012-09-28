@@ -155,21 +155,6 @@
     </message>
 </context>
 <context>
-    <name>AgentListView</name>
-    <message>
-        <source>Unit Change Superior</source>
-        <translation>Cambio de superior </translation>
-    </message>
-    <message>
-        <source>Change Knowledge Group</source>
-        <translation>Cambiar grupo de conocimeinto</translation>
-    </message>
-    <message>
-        <source>Change knowledge group</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>AlarmEditor</name>
     <message>
         <source>Ok</source>
@@ -439,6 +424,21 @@
     <message>
         <source>Change date and time</source>
         <translation>Cambiar fecha y hora</translation>
+    </message>
+</context>
+<context>
+    <name>CommunicationTreeView</name>
+    <message>
+        <source>Change Knowledge Group</source>
+        <translation type="unfinished">Cambiar grupo de conocimeinto</translation>
+    </message>
+    <message>
+        <source>Change knowledge group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit Change Superior</source>
+        <translation type="unfinished">Cambio de superior </translation>
     </message>
 </context>
 <context>
@@ -3011,7 +3011,7 @@ This data can&apos;t be projected.</source>
     <name>TacticalTreeView</name>
     <message>
         <source>Unit Change Superior</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Cambio de superior </translation>
     </message>
     <message>
         <source>Change Automat Superior</source>

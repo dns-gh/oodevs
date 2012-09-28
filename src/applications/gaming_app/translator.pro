@@ -9,7 +9,6 @@ AfterActionFunctionList.cpp \
 AfterActionRequestList.cpp \
 AgentChangeAffinitiesDialog.cpp \
 AgentKnowledgePanel.cpp \
-AgentListView.cpp \
 AgentKnowledgePanel.cpp \
 AlarmsWidget.cpp \
 Application.cpp \
@@ -26,6 +25,7 @@ ChatWidget.cpp \
 ClockDock.cpp \
 ClockEditDialog.cpp \
 ClockWidget.cpp \
+CommunicationTreeView.cpp \
 ConnectDialog.cpp \
 ConnectionMenu.cpp \
 CreateFormationDialog.cpp \

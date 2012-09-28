@@ -6,7 +6,6 @@ AgentsLayer.cpp \
 Application.cpp \
 ChangeAutomatTypeDialog.cpp \
 ColorEditor.cpp \
-CommunicationListView.cpp \
 CommunicationTreeView.cpp \
 CsvExport.cpp \
 DockContainer.cpp \

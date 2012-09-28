@@ -85,7 +85,7 @@
     </message>
 </context>
 <context>
-    <name>CommunicationListView</name>
+    <name>CommunicationTreeView</name>
     <message>
         <source>Create knowledge group</source>
         <translation>Crear grupo de información</translation>
@@ -94,9 +94,6 @@
         <source>Create sub knowledge group</source>
         <translation>Crear subgrupo de información</translation>
     </message>
-</context>
-<context>
-    <name>CommunicationTreeView</name>
     <message>
         <source>Change knowledge group</source>
         <translation type="unfinished"></translation>

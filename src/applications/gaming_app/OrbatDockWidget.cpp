@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "OrbatDockWidget.h"
 #include "OrbatToolbar.h"
-#include "AgentListView.h" // à virer
+#include "CommunicationTreeView.h"
 #include "LogisticListView.h" // à virer
 #include "TacticalTreeView.h"
 #include "clients_gui/AggregateToolBar.h"
@@ -39,7 +39,6 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers, QWidget* par
     const gui::AggregateToolbar* aggregateToolbar = orbatToolbar->GetToolbar();
     QTabWidget* pListsTabWidget = new QTabWidget( box );
 
-    gui::SearchListView_ABC* searchListView = 0;
     gui::SearchTreeView_ABC* searchTreeView = 0;
     {
         searchTreeView = new gui::SearchTreeView< TacticalTreeView >( pListsTabWidget, controllers, filter, observer_, icons, staticModel, simulation, actionsModel );
@@ -47,9 +46,9 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers, QWidget* par
         pListsTabWidget->addTab( searchTreeView, tr( "Tactical" ) );
     }
     {
-        searchListView = new gui::SearchListView< AgentListView >( pListsTabWidget, controllers, actionsModel, staticModel, simulation, factory, filter, icons );
-        searchListView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchListView->GetRichListView(), SLOT( LockDragAndDrop( bool ) ) );
-        pListsTabWidget->addTab( searchListView, tr( "Communication" ) );
+        searchTreeView = new gui::SearchTreeView< CommunicationTreeView >( pListsTabWidget, controllers, filter, observer_, icons, staticModel, simulation, actionsModel );
+        searchTreeView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchTreeView->GetRichTreeView(), SLOT( LockDragAndDrop( bool ) ) );
+        pListsTabWidget->addTab( searchTreeView, tr( "Communication" ) );
     }
     {
         gui::SearchListView< LogisticListView >* logisticSearchListView = new gui::SearchListView< ::LogisticListView >( pListsTabWidget, controllers, factory, filter, icons, actionsModel, staticModel, simulation );

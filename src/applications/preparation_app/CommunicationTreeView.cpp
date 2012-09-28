@@ -217,8 +217,7 @@ void CommunicationTreeView::NotifyContextMenu( const kernel::Team_ABC& /*agent*/
 {
     if( !isVisible() )
         return;
-    menu.InsertItem( "Creation", tools::translate( "CommunicationListView", "Create knowledge group" ), this, SLOT( OnCreateCommunication() ) );
-
+    menu.InsertItem( "Creation", tools::translate( "CommunicationTreeView", "Create knowledge group" ), this, SLOT( OnCreateCommunication() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -240,7 +239,7 @@ void CommunicationTreeView::NotifyContextMenu( const kernel::KnowledgeGroup_ABC&
 {
     if( !isVisible() )
         return;
-    menu.InsertItem( "Creation", tools::translate( "CommunicationListView", "Create sub knowledge group" ), this, SLOT( OnCreateCommunication() ) );
+    menu.InsertItem( "Creation", tools::translate( "CommunicationTreeView", "Create sub knowledge group" ), this, SLOT( OnCreateCommunication() ) );
     menu.InsertItem( "Command", tr( "Change knowledge group" ), this, SLOT( OnChangeKnowledgeGroup() ) );
 }
 

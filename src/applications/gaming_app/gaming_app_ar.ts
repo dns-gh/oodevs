@@ -155,21 +155,6 @@
     </message>
 </context>
 <context>
-    <name>AgentListView</name>
-    <message>
-        <source>Change knowledge group</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unit Change Superior</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Change Knowledge Group</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>AlarmEditor</name>
     <message>
         <source>Ok</source>
@@ -438,6 +423,21 @@
     </message>
     <message>
         <source>Configure alarms</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CommunicationTreeView</name>
+    <message>
+        <source>Change Knowledge Group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change knowledge group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit Change Superior</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

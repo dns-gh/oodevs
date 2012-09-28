@@ -155,6 +155,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\applications\gaming_app\Application.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\BypassPrototype.cpp" />
+    <ClCompile Include="..\..\src\applications\gaming_app\CommunicationTreeView.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\Config.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\ConnectLoginDialog.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\FuneralConsignsWidget.cpp" />
@@ -355,7 +356,6 @@
     <ClCompile Include="..\..\src\applications\gaming_app\WeatherListView.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\WeatherPanel.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\WeatherWidget.cpp" />
-    <ClCompile Include="..\..\src\applications\gaming_app\AgentListView.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\LinkInterpreter.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\LocationSerializer.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\RcEntityResolver.cpp" />
@@ -391,6 +391,20 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\applications\gaming_app\BypassPrototype.h" />
+    <CustomBuild Include="..\..\src\applications\gaming_app\CommunicationTreeView.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing %(Filename).h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(Filename).h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
     <ClInclude Include="..\..\src\applications\gaming_app\Config.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\ConnectLoginDialog.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\FuneralConsignsWidget.h" />
@@ -2190,20 +2204,6 @@
       </Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(Outputs)</Outputs>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\gaming_app\AgentListView.h">
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing %(Filename).h</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(Filename).h</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\applications\gaming_app\LinkInterpreter.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\LocationSerializer.h" />

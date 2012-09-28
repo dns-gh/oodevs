@@ -667,9 +667,6 @@
     <ClCompile Include="..\..\src\applications\gaming_app\WeatherWidget.cpp">
       <Filter>Source Files\Creation\Weather</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\gaming_app\AgentListView.cpp">
-      <Filter>Source Files\Lists</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\LinkInterpreter.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
@@ -803,6 +800,9 @@
       <Filter>Source Files\Panels</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\TacticalTreeView.cpp">
+      <Filter>Source Files\TreeView</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\CommunicationTreeView.cpp">
       <Filter>Source Files\TreeView</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1453,9 +1453,6 @@
     <CustomBuild Include="..\..\src\applications\gaming_app\UnitStateDialog.h">
       <Filter>Source Files\Dialogs\Magic actions\Unit state</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\gaming_app\AgentListView.h">
-      <Filter>Source Files\Lists</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\gaming_app\OrbatPanel.h">
       <Filter>Source Files\Panels\Preferences</Filter>
     </CustomBuild>
@@ -1470,6 +1467,9 @@
       <Filter>Source Files\Dialogs\Magic actions</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\gaming_app\TacticalTreeView.h">
+      <Filter>Source Files\TreeView</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\CommunicationTreeView.h">
       <Filter>Source Files\TreeView</Filter>
     </CustomBuild>
   </ItemGroup>
