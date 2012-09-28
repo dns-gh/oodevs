@@ -3275,7 +3275,7 @@
       <parameter dia-name="objectif" name="Unite" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="france.military.crowd.tasks.Manifester" dia-type="france.military.crowd.tasks.Manifester" id="3003" name="FOULES Manifester" package="attack">
-      <parameter dia-name="objectif" name="Itinéraire" optional="false" type="Path"/>
+      <parameter dia-name="objectif" max-occurs="unbounded" min-occurs="1" name="Point de rassemblement" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="france.military.crowd.tasks.SeFaireDecontaminer" dia-type="france.military.crowd.tasks.SeFaireDecontaminer" id="3009" name="FOULES COMMUNES Se Faire Decontaminer" package="none">
       <parameter dia-name="objective" name="Site de decontamination" optional="false" type="ObjectKnowledge"/>
@@ -3494,4 +3494,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ROEM_ArreterSilenceRadar" id="28801" name="Arreter Silence Radar"/>
   </fragorders>
 </missions>
-<!-- signature="0258488867" -->
+<!-- signature="3864741095" -->
