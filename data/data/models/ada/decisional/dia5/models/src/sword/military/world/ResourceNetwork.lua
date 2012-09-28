@@ -12,12 +12,12 @@ return
         return true
     end,
     startProduceResource = function( self )
-        -- $$$ GGE : Créér le nombre de production suivant les capacités physiques du pion au lieu de 100 en dur
+        -- $$$ GGE : Gérer la valeur de production suivant les capacités physiques du pion au lieu de 100 en dur
         DEC_ReseauRessourceAugmenteProduction( self.source, 100)
        return true
     end,
     stopProduceResource = function( self )
-        -- $$$ GGE : La baisse de production dépend des capacités physiques du pion au lieu de 100 en dur
+        -- $$$ GGE : Gérer la baisse de production suivant les capacités physiques du pion au lieu de 100 en dur
         DEC_ReseauRessourceBaisseProduction( self.source, 100 )
         return true
     end,

@@ -29,9 +29,17 @@ rootnode
     -- --------------------------------------------------------------------------------
     activate = function( self )
         local Activate = Activate
-        if self.arrived and self.produceNotStarted then -- from moveToward
+        if self.arrived then
+            if self.produceNotStarted then
                 Activate( skill.links.dismount, 1 )
                 Activate( skill.nodes.LinkToNetwork, 1, { resource = self.params.resource } )
+            end
+        else
+            if not self.produceNotStarted then
+                self.params.resource:stopProduceResource( )
+                meKnowledge:RC( eRC_FinProducePoint )
+                self.produceNotStarted = true
+            end
         end
         
         Activate( skill.links.moveToward, 1, { entities = { self.params.resource } } )
