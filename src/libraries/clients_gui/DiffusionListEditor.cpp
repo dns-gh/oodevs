@@ -163,12 +163,14 @@ void DiffusionListEditor::Fill( kernel::SafePointer< kernel::Entity_ABC > curren
             kernel::DictionaryExtensions* dico = const_cast< kernel::DictionaryExtensions* >( emitters_[ row ]->Retrieve< kernel::DictionaryExtensions >() );
             if( !dico )
                 return;
+            assert( emitters_[ row ] != 0 );
+            unsigned long emitterRowId = emitters_[ row ]->GetId();
             QStringList diffusionList = QStringList::split( DiffusionListData::separator_, dico->GetValue( extensionName_ ).c_str(), false );
             for( unsigned int col = 0; col < receivers_.size(); ++col )
             {
-                assert( emitters_[ row ] != 0 && receivers_[ col ] != 0 );
+                assert( receivers_[ col ] != 0 );
                 QStandardItem* item = new QStandardItem();
-                if( emitters_[ row ]->GetId() == receivers_[ col ]->GetId() )
+                if( emitterRowId == receivers_[ col ]->GetId() )
                 {
                     item->setFlags( Qt::ItemIsEnabled );
                     item->setBackground( QBrush( QColor( 200, 200, 200) ) );
@@ -176,7 +178,7 @@ void DiffusionListEditor::Fill( kernel::SafePointer< kernel::Entity_ABC > curren
                 else
                 {
                     item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsUserCheckable );
-                    item->setCheckState( diffusionList.contains( locale().toString( static_cast< unsigned int >( receivers_[ col ]->GetId() ) ) ) ? Qt::Checked : Qt::Unchecked );
+                    item->setCheckState( diffusionList.contains( boost::lexical_cast< std::string >( receivers_[ col ]->GetId() ).c_str() ) ? Qt::Checked : Qt::Unchecked );
                 }
                 dataModel_.setItem( row, col, item );
             }
@@ -223,7 +225,7 @@ void DiffusionListEditor::OnGenerate()
             if( emitters_[ row ]->GetId() != receivers_[ col ]->GetId() )
             {
                 QStandardItem* item = dataModel_.item( row, col );
-                item->setCheckState( generatedDiffusionList.contains( locale().toString( static_cast< unsigned int >( receivers_[ col ]->GetId() ) ) ) ? Qt::Checked : Qt::Unchecked );
+                item->setCheckState( generatedDiffusionList.contains( boost::lexical_cast< std::string >( receivers_[ col ]->GetId() ).c_str() ) ? Qt::Checked : Qt::Unchecked );
             }
         }
     }
