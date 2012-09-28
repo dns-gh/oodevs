@@ -130,9 +130,17 @@ void ProfileManager::ReadProfile( xml::xistream& xis )
 
     if( profiles_.find( strName ) == profiles_.end() )
     {
-        Profile*& pProfile = profiles_[ strName ];
-        MT_LOG_INFO_MSG( "New profile loaded : '" << strName << "'" );
-        pProfile = new Profile( model_, clients_, strName, xis );
+        try
+        {
+            Profile*& pProfile = profiles_[ strName ];
+            MT_LOG_INFO_MSG( "New profile loaded : '" << strName << "'" );
+            pProfile = new Profile( model_, clients_, strName, xis );
+        }
+        catch( xml::exception& )
+        {
+            profiles_.erase( strName );
+            MT_LOG_INFO_MSG( "Invalid profile ignored : '" << strName << "'" );
+        }
     }
     else
         MT_LOG_ERROR_MSG( "Profile '" << strName << "' already exists - new profile ignored" );
