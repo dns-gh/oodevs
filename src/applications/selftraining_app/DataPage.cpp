@@ -27,22 +27,25 @@ DataPage::DataPage( QWidget* parent, Q3WidgetStack* pages, Page_ABC& previous, c
     , parent_( parent )
     , config_( config )
 {
-    setName( "DataPage" );
-    Q3VBox* mainBox = new Q3VBox( this );
-    mainBox->setMargin( 5 );
-    mainTabs_ = new QTabWidget( mainBox );
-    connect( mainTabs_, SIGNAL( currentChanged( QWidget* ) ), this, SLOT( UpdateButton() ) );
+    setWindowTitle( "DataPage" );
 
-    terrains_ = new Q3ListBox();
+    terrains_ = new QListWidget();
+    terrains_->setFont( QFont( "Calibri", 12, QFont::Bold ) );
+    connect( terrains_, SIGNAL( itemPressed( QListWidgetItem* ) ), this, SLOT( UpdateButton() ) );
+
+    models_ = new QListWidget();
+    models_->setFont( QFont( "Calibri", 12, QFont::Bold ) );
+    connect( models_, SIGNAL( itemPressed( QListWidgetItem* ) ), this, SLOT( UpdateButton() ) );
+
+    mainTabs_ = new QTabWidget();
     mainTabs_->addTab( terrains_, "" );
-    connect( terrains_, SIGNAL( clicked( Q3ListBoxItem* ) ), SLOT( UpdateButton() ) );
-
-    models_ = new Q3ListBox();
     mainTabs_->addTab( models_, "" );
-    connect( models_, SIGNAL( clicked( Q3ListBoxItem* ) ), SLOT( UpdateButton() ) );
+    connect( mainTabs_, SIGNAL( currentChanged( int ) ), this, SLOT( UpdateButton() ) );
+
+    layout()->addWidget( mainTabs_ );
 
     Update();
-    AddContent( mainBox );
+    AddContent( mainTabs_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,7 +76,7 @@ void DataPage::OnLanguageChanged()
 void DataPage::Update()
 {
     terrains_->clear();
-    terrains_->insertStringList( frontend::commands::ListTerrains( config_ ) );
+    terrains_->addItems( frontend::commands::ListTerrains( config_ ) );
     models_->clear();
     QStringList physicalBase;
     QStringList decisionalModels = frontend::commands::ListModels( config_ );
@@ -83,7 +86,7 @@ void DataPage::Update()
         for( QStringList::const_iterator itP = physicalModels.begin(); itP != physicalModels.end(); ++itP )
             physicalBase << QString( "%1/%2" ).arg( *it ).arg( *itP );
     }
-    models_->insertStringList( physicalBase );
+    models_->addItems( physicalBase );
     UpdateButton();
 }
 
@@ -91,16 +94,16 @@ void DataPage::Update()
 // Name: DataPage::CurrentItem
 // Created: LGY 2012-02-28
 // -----------------------------------------------------------------------------
-Q3ListBoxItem* DataPage::CurrentItem() const
+QListWidgetItem* DataPage::CurrentItem() const
 {
-    Q3ListBoxItem* item = 0;
+    QListWidgetItem* item = 0;
     switch( mainTabs_->currentIndex() )
     {
     case eTabs_Terrains:
-        item = terrains_->selectedItem();
+        item = terrains_->currentItem();
         break;
     case eTabs_Models:
-        item = models_->selectedItem();
+        item = models_->currentItem();
         break;
     default:
         break;
@@ -134,7 +137,7 @@ namespace
 // -----------------------------------------------------------------------------
 void DataPage::OnDelete()
 {
-    if( Q3ListBoxItem* item = CurrentItem() )
+    if( QListWidgetItem* item = CurrentItem() )
     {
         std::string path;
         if( mainTabs_->currentIndex() == eTabs_Terrains )

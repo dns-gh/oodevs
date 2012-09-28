@@ -43,7 +43,7 @@ private:
     virtual void OnLanguageChanged();
     virtual void OnDelete();
     virtual void Update();
-    Q3ListBoxItem* CurrentItem() const;
+    QListWidgetItem* CurrentItem() const;
     //@}
 
 private slots:
@@ -64,8 +64,8 @@ private:
     QWidget* parent_;
     const Config& config_;
     QTabWidget* mainTabs_;
-    Q3ListBox* terrains_;
-    Q3ListBox* models_;
+    QListWidget* terrains_;
+    QListWidget* models_;
     //@}
 };
 
