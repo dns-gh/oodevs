@@ -1585,7 +1585,7 @@
     package
     ============================================================================
     -->
-    <target name="package" depends="package.app,package.debug,package.otpacks,package.wise-driver,package.ts,package.plugins,package.binaries,package.sdk" description="package the installers and packs"/>
+    <target name="package" depends="package.app,package.debug,package.otpacks,package.wise-driver,package.ts,package.plugins,package.binaries,package.gaming_app,package.sdk" description="package the installers and packs"/>
 
     <!-- Package plugins -->
     <target name="package.plugins" depends="package.plugin.vrforces,package.plugin.hla,package.plugin.bml,package.plugin.dis,package.plugin.timeline,package.plugin.crossbow,package.plugin.edxlhave" description="package plugin individual installers"/>
@@ -1678,6 +1678,42 @@
                 <flattenmapper/>
             </mappedresources>
             <fileset dir="${run.dir}"/>
+        </zip>
+    </target>
+
+    <target name="package.gaming_app" description="create a zip with a standalone gaming_app binary">
+        <zip destfile="${dist.dir}/SWORD_gaming_${platform}_${version.project}.zip">
+            <mappedresources>
+                <fileset dir="${out.dir}/release/applications" includes="**/gaming_app.exe"/>
+                <flattenmapper/>
+            </mappedresources>
+            <fileset dir="${run.dir}">
+                <patternset>
+                    <include name="*.qm"/>
+                    <include name="*.qss"/>
+                    <include name="*.xml"/>
+                    <include name="BugTrap.dll"/>
+                    <include name="gdal18.dll"/>
+                    <include name="geos.dll"/>
+                    <include name="libpq.dll"/>
+                    <include name="proj.dll"/>
+                    <include name="Qt3Support4.dll"/>
+                    <include name="QtCore4.dll"/>
+                    <include name="QtGui4.dll"/>
+                    <include name="QtGui4.dll"/>
+                    <include name="QtNetwork4.dll"/>
+                    <include name="QtOpenGL4.dll"/>
+                    <include name="QtSql4.dll"/>
+                    <include name="QtXml4.dll"/>
+                    <include name="Xalan-C_1_11.dll"/>
+                    <include name="XalanMessages_1_11.dll"/>
+                    <include name="xerces-c_3_1.dll"/>
+                    <include name="zlib1.dll"/>
+            </patternset>
+            </fileset>
+            <fileset dir="${run.dir}">
+                <include name="resources/**"/>
+            </fileset>
         </zip>
     </target>
 
