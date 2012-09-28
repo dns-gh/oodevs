@@ -103,8 +103,10 @@ class PackageView extends Backbone.View
                     print_error "Unable to save package(s)"
 
         $(".toggle a").click ->
-            $(".action .add, .action .update").button "toggle"
-
+            list  = $ ".action .add, .action .update"
+            first = list.first().hasClass "active"
+            list.toggleClass "active", !first
+            return
         return
 
     delta: =>

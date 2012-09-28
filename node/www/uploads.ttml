@@ -39,7 +39,7 @@
         <div class="package_description">
             {{description}}
             <span class="toggle">
-                <a class="btn" data-toggle="button"><i class="icon-arrow-down"></i> Toggle All </a>
+                <a class="btn"><i class="icon-arrow-down"></i> Toggle All </a>
             </span>
         </div>
         {{#if items.length}}

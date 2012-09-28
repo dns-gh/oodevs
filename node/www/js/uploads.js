@@ -647,7 +647,10 @@
         });
       });
       $(".toggle a").click(function() {
-        return $(".action .add, .action .update").button("toggle");
+        var first, list;
+        list = $(".action .add, .action .update");
+        first = list.first().hasClass("active");
+        list.toggleClass("active", !first);
       });
     };
 
