@@ -53,6 +53,17 @@
 #include <QtGui/qtextedit.h>
 #include <QtGui/qcheckbox.h>
 #include <QtGui/qfiledialog.h>
+#include <QtGui/qstackedwidget.h>
+#include <QtGui/qlistwidget.h>
+#include <QtGui/qprogressbar.h>
+#include <QtGui/qgroupbox.h>
+#include <QtGui/qmenu.h>
+#include <QtGui/qtreewidget.h>
+#include <QtGui/qstandarditemmodel.h>
+#include <QtGui/qstringlistmodel.h>
+#include <QtGui/qaction.h>
+#include <QtGui/qsortfilterproxymodel.h>
+#include <QtGui/qsizepolicy.h>
 
 #include <Qt3Support/q3progressbar.h>
 #include <Qt3Support/q3gridlayout.h>

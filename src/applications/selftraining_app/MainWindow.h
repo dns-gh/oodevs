@@ -36,7 +36,7 @@ namespace tools
 }
 
 class Config;
-class Q3WidgetStack;
+class QStackedWidget;
 class SessionTray;
 
 // =============================================================================

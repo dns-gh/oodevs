@@ -30,13 +30,14 @@ MainWindow::MainWindow( Config& config, const tools::Loader_ABC& fileLoader, ker
     , interpreter_( new LinkInterpreter( this, controllers ) )
     , sessionTray_( 0 )
 {
-    setWindowFlags( Qt::WDestructiveClose );
-    setIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ) );
+    setAttribute( Qt::WA_DeleteOnClose );
+    setWindowIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ) );
     setFixedWidth( 800 );
     setFixedHeight( 600 );
     SetStyle();
     pages_ = new Q3WidgetStack( this );
     HomePage* home = new HomePage( this, pages_, config, fileLoader, controllers, launcherClient, *interpreter_ );
+    //pages_->setCurrentWidget( home ); à décommenter au passage QT4
     setCentralWidget( pages_ );
     CenterWindow();
     if( !config.GetPackageFile().empty() )
@@ -60,7 +61,7 @@ MainWindow::~MainWindow()
 // -----------------------------------------------------------------------------
 void MainWindow::OnLanguageChanged()
 {
-    setCaption( tools::translate( "Application", "SWORD" ) + tools::translate( "MainWindow", " - release " ) + tools::AppProjectVersion() );
+    setWindowTitle( tools::translate( "Application", "SWORD" ) + tools::translate( "MainWindow", " - release " ) + tools::AppProjectVersion() );
     if( sessionTray_.get() )
         sessionTray_->OnLanguageChanged();
 }
@@ -78,24 +79,21 @@ void MainWindow::SetStyle()
     px.convertFromImage( background );
 
     QPalette p( palette() );
-    p.setColor( QPalette::Active, QColorGroup::Background     , QColor( 48, 48, 64 ) );
-    p.setColor( QPalette::Active, QColorGroup::Foreground     , QColor( 240, 240, 240 ) );
-    p.setColor( QPalette::Active, QColorGroup::BrightText     , Qt::white );
-    p.setBrush( QPalette::Active, QColorGroup::Base           , QBrush( QColor( 32, 32, 48 ), px ) );
-    p.setColor( QPalette::Active, QColorGroup::Text           , QColor( 240, 240, 240 ) );
-    p.setColor( QPalette::Active, QColorGroup::Button         , QColor(   40, 40,  50 ) );
-    p.setColor( QPalette::Active, QColorGroup::ButtonText     , QColor( 140, 140, 150 ) );
-    p.setColor( QPalette::Active, QColorGroup::Highlight      , QColor(  40,  40,  40 ) );
-    p.setColor( QPalette::Active, QColorGroup::HighlightedText, Qt::white );
+    p.setColor( QPalette::Background     , QColor( 48, 48, 64 ) );
+    p.setColor( QPalette::Foreground     , QColor( 240, 240, 240 ) );
+    p.setColor( QPalette::BrightText     , Qt::white );
+    p.setBrush( QPalette::Base           , QBrush( QColor( 32, 32, 48 ), px ) );
+    p.setColor( QPalette::Text           , QColor( 240, 240, 240 ) );
+    p.setColor( QPalette::Button         , QColor(   40, 40,  50 ) );
+    p.setColor( QPalette::ButtonText     , QColor( 140, 140, 150 ) );
+    p.setColor( QPalette::Highlight      , QColor(  40,  40,  40 ) );
+    p.setColor( QPalette::HighlightedText, Qt::white );
 
-    p.setColor( QPalette::Active, QColorGroup::Light   , QColor(  40,  40,  40 ) );
-    p.setColor( QPalette::Active, QColorGroup::Midlight, QColor(  70, 170, 220 ) );
-    p.setColor( QPalette::Active, QColorGroup::Dark    , QColor(  16, 130, 190 ) );
-    p.setColor( QPalette::Active, QColorGroup::Mid     , QColor(  70, 170, 220 ) );
-    p.setColor( QPalette::Active, QColorGroup::Shadow  , QColor(  40,  40,  40 ) );
-
-    p.setInactive( p.active() );
-    p.setDisabled( p.active() );
+    p.setColor( QPalette::Light   , QColor(  40,  40,  40 ) );
+    p.setColor( QPalette::Midlight, QColor(  70, 170, 220 ) );
+    p.setColor( QPalette::Dark    , QColor(  16, 130, 190 ) );
+    p.setColor( QPalette::Mid     , QColor(  70, 170, 220 ) );
+    p.setColor( QPalette::Shadow  , QColor(  40,  40,  40 ) );
 
     p.setBrush( backgroundRole(), QBrush( px ) );
     setPalette( p );
@@ -130,7 +128,7 @@ void MainWindow::Maximize( QSystemTrayIcon::ActivationReason reason )
 // -----------------------------------------------------------------------------
 void MainWindow::resizeEvent( QResizeEvent * )
 {
-    QImage background = QImage( "resources/images/selftraining/background.png" ).scaleHeight( height() );
+    QImage background = QImage( "resources/images/selftraining/background.png" ).scaledToHeight( height() );
     background = background.scaledToWidth( width() );
     QPalette p( palette() );
     QPixmap px;

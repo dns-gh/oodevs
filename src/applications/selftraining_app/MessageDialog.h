@@ -42,7 +42,7 @@ private:
     //! @name Helpers
     //@{
     QSize sizeHint() const;
-    void CreateButton( QWidget* parent, int );
+    void CreateButton( QLayout* parent, int );
     //@}
 };
 

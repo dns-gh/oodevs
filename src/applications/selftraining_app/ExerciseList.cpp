@@ -15,12 +15,17 @@
 #include "ExerciseListView.h"
 #include "frontend/LocalExerciseFilter.h"
 #include "frontend/Profile.h"
-#include "clients_gui/ValuedListItem.h"
 #include "clients_gui/Tools.h"
+#include "clients_kernel/Controllers.h"
 
 namespace
 {
     static int clearEvent = 4242;
+}
+
+namespace frontend
+{
+    Exercise_ABC;
 }
 
 // -----------------------------------------------------------------------------
@@ -29,34 +34,44 @@ namespace
 // -----------------------------------------------------------------------------
 ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers,
                             bool showBrief /* = true*/, bool showProfile /* =true*/, bool showParams /* = true*/, bool enableParams /* = true*/ )
-    : gui::LanguageChangeObserver_ABC< Q3VBox >( parent )
+    : gui::LanguageChangeObserver_ABC< QWidget >( parent )
     , controllers_      ( controllers )
     , filter_           ( 0 )
     , defaultFilter_    ( new frontend::LocalExerciseFilter() )
 {
-    Q3HBox* box = new Q3HBox( this );
-    box->setMargin( 5 );
-    box->setSpacing( 50 );
+    //left box
+    exerciseLabel_ = new QLabel();
+
+    profileLabel_ = new QLabel();
+    profileLabel_->setShown( showProfile );
+
+    QWidget* leftBox = new QWidget();
+    QVBoxLayout* leftBoxLayout = new QVBoxLayout();
     {
-        Q3VBox* leftBox = new Q3VBox( box );
-        leftBox->setSpacing( 5 );
-        exerciseLabel_ = new QLabel( leftBox );
         exercises_ = new ExerciseListView( leftBox, config, fileLoader );
-
-        profileLabel_ = new QLabel( leftBox );
+        connect( exercises_, SIGNAL( clicked( const QModelIndex& ) ), this, SLOT( SelectExercise( const QModelIndex& ) ) );
         profiles_ = new ProfileList( leftBox, config, fileLoader );
-        leftBox->setStretchFactor( exercises_, 3 );
-        leftBox->setStretchFactor( profiles_, 1 );
-        profileLabel_->setShown( showProfile );
         profiles_->setShown( showProfile );
-
         connect( profiles_ , SIGNAL( Select( const frontend::Profile& ) ), this, SLOT( SelectProfile( const frontend::Profile& ) ) );
-        connect( exercises_, SIGNAL( selectionChanged( Q3ListViewItem* ) ), this, SLOT( SelectExercise( Q3ListViewItem* ) ) );
     }
+    leftBoxLayout->addWidget( exerciseLabel_ );
+    leftBoxLayout->addWidget( exercises_, 3 );
+    leftBoxLayout->addWidget( profileLabel_ );
+    leftBoxLayout->addWidget( profiles_, 1 );
+    leftBoxLayout->setSpacing( 5 );
+
+    //box
+    QHBoxLayout* mainBoxLayout = new QHBoxLayout( this );
+    mainBoxLayout->addLayout(leftBoxLayout );
+    mainBoxLayout->setMargin( 5 );
+    mainBoxLayout->setSpacing( 50 );
     {
-        properties_ = new ExerciseProperties( box, parent, config, fileLoader, showBrief, showParams, enableParams );
+        properties_ = new ExerciseProperties( this, parent, config, fileLoader, showBrief, showParams, enableParams );
+
         connect( properties_, SIGNAL( ExercisePropertiesChanged() ), this, SLOT( OnExercisePropertiesChanged() ) );
     }
+    mainBoxLayout->addWidget( properties_ );
+
     controllers_.Register( *this );
 }
 
@@ -120,17 +135,17 @@ void ExerciseList::SetFilter( const frontend::ExerciseFilter_ABC& filter )
 // Name: ExerciseList::SelectExercise
 // Created: RDS 2008-08-27
 // -----------------------------------------------------------------------------
-void ExerciseList::SelectExercise( Q3ListViewItem* item )
+void ExerciseList::SelectExercise( const QModelIndex& index )
 {
-    const QString exercise( exercises_->GetItemName( item ) );
-    profiles_->Update( exercise );
     if( const frontend::Exercise_ABC* selected = GetSelectedExercise() )
     {
+        profiles_->Update( exercises_->GetExerciseName( index ) );
         properties_->Select( selected );
         emit Select( *selected, frontend::Profile() );
     }
     else
     {
+        profiles_->Update( "" );
         properties_->Select( 0 );
         emit ClearSelection();
     }
@@ -142,11 +157,7 @@ void ExerciseList::SelectExercise( Q3ListViewItem* item )
 // -----------------------------------------------------------------------------
 const frontend::Exercise_ABC* ExerciseList::GetSelectedExercise() const
 {
-    Q3ListViewItem* item = exercises_->currentItem();
-    if( gui::ValuedListItem* value = static_cast< gui::ValuedListItem* >( item ) )
-        if( value->IsA< const frontend::Exercise_ABC >() )
-            return value->GetValue< const frontend::Exercise_ABC >();
-    return 0;
+    return exercises_->GetSelectedExercise();
 }
 
 // -----------------------------------------------------------------------------
@@ -166,19 +177,19 @@ void ExerciseList::SelectProfile( const frontend::Profile& profile )
 void ExerciseList::Clear()
 {
     emit ClearSelection();
-    QApplication::postEvent( this, new QCustomEvent( ::clearEvent ) );
+    QApplication::postEvent( this, new QEvent( static_cast< QEvent::Type >( ::clearEvent ) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ExerciseList::customEvent
 // Created: SBO 2008-11-05
 // -----------------------------------------------------------------------------
-void ExerciseList::customEvent( QCustomEvent* e )
+void ExerciseList::customEvent( QEvent* e )
 {
     if( e->type() == ::clearEvent )
     {
         profiles_->clear();
-        exercises_->clear();
+        exercises_->Clear();
         properties_->Update();
     }
 }
@@ -190,7 +201,7 @@ void ExerciseList::customEvent( QCustomEvent* e )
 void ExerciseList::UpdateExerciseEntry( const frontend::Exercise_ABC& exercise )
 {
     const bool isAllowed = !filter_ && defaultFilter_->Allows( exercise ) || filter_ && filter_->Allows( exercise );
-    if( gui::ValuedListItem* item = gui::FindItem( &exercise, exercises_->firstChild() ) )
+    if( exercises_->FindExerciseItem( exercise ) != 0 )
     {
         if( !isAllowed )
             exercises_->DeleteExerciseEntry( exercise );
@@ -205,7 +216,7 @@ void ExerciseList::UpdateExerciseEntry( const frontend::Exercise_ABC& exercise )
 // -----------------------------------------------------------------------------
 bool ExerciseList::Exists( const QString& exercise ) const
 {
-    return exercises_->findItem( exercise, 0, Q3ListView::ExactMatch ) != 0;
+    return exercises_->Exists( exercise );
 }
 
 // -----------------------------------------------------------------------------

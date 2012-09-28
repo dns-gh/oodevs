@@ -65,7 +65,7 @@ ExportWidget::ExportWidget( ScenarioEditPage& page, QWidget* parent, const tools
         {
             exerciseLabel_ = new QLabel( box );
             exerciseList_ = new ExerciseListView( box, config, fileLoader );
-            connect( exerciseList_, SIGNAL( selectionChanged( Q3ListViewItem* ) ), this, SLOT( OnSelectionChanged( Q3ListViewItem* ) ) );
+            connect( exerciseList_->selectionModel(), SIGNAL( currentChanged( const QModelIndex&, const QModelIndex& ) ), this, SLOT( OnSelectionChanged( const QModelIndex&, const QModelIndex& ) ) );
         }
         {
             packageContentLabel_ = new QLabel( box );
@@ -162,8 +162,8 @@ QString ExportWidget::GetCurrentSelection() const
     switch( tabs_->currentIndex() )
     {
     case eTabs_Exercise:
-        if( Q3ListViewItem* item = exerciseList_->selectedItem() )
-            result = item->text( 0 );
+        if( const QStandardItem* item = exerciseList_->GetSelectedExerciseItem() )
+            result = item->text();
         break;
     case eTabs_Terrain:
         if( Q3ListBoxItem* item = terrainList_->selectedItem() )
@@ -250,9 +250,16 @@ bool ExportWidget::EnableEditButton()
 // Name: ExportWidget::OnSelectionChanged
 // Created: LGY 2012-05-30
 // -----------------------------------------------------------------------------
-void ExportWidget::OnSelectionChanged( Q3ListViewItem* item )
+void ExportWidget::OnSelectionChanged( const QModelIndex& modelIndex, const QModelIndex& /*previous*/ )
 {
-    UpdateExerciseData( item );
+    std::string exercise( exerciseList_->GetExerciseName( modelIndex ) );
+    exerciseContent_->clear();
+    if( !exercise.empty() )
+    {
+        exerciseContent_->insertItem( frontend::BuildExerciseFeatures( exercise, config_, exerciseContent_ ) );
+        exerciseContent_->insertItem( frontend::BuildExerciseData( exercise, config_, exerciseContent_, fileLoader_ ) );
+    }
+    page_.UpdateEditButton();
 }
 
 // -----------------------------------------------------------------------------
@@ -302,24 +309,6 @@ void ExportWidget::Update( Q3ListBoxItem* item /*= 0*/ )
     {
         modelName_->setText( Extract( physicalList_->selectedItem()->text() ).first.c_str() );
         decisionalCheckBox_->setEnabled( true );
-    }
-    page_.UpdateEditButton();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExportWidget::UpdateExerciseData
-// Created: LGY 2012-05-30
-// -----------------------------------------------------------------------------
-void ExportWidget::UpdateExerciseData( Q3ListViewItem* item /*= 0*/ )
-{
-    if( !item || item->childCount() != 0  )
-        exerciseContent_->clear();
-    else
-    {
-        std::string exercise( exerciseList_->GetItemName( item ) );
-        exerciseContent_->clear();
-        exerciseContent_->insertItem( frontend::BuildExerciseFeatures( exercise, config_, exerciseContent_ ) );
-        exerciseContent_->insertItem( frontend::BuildExerciseData( exercise, config_, exerciseContent_, fileLoader_ ) );
     }
     page_.UpdateEditButton();
 }

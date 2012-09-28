@@ -39,37 +39,62 @@ OptionsPage::OptionsPage( QWidget* parent, Q3WidgetStack* pages, Page_ABC& previ
     , hasChanged_        ( false )
     , languageHasChanged_( false )
 {
-    setName( "OptionsPage" );
-    Q3VBox* mainBox = new Q3VBox( this );
-    mainBox->setMargin( 10 );
-    Q3GroupBox* box = new Q3GroupBox( 2, Qt::Horizontal, mainBox );
-    box->setFrameShape( Q3GroupBox::NoFrame );
+    setObjectName( "OptionsPage" );
+
     // Language
-    languageLabel_ = new QLabel( box );
-    languageCombo_ = new QComboBox( box );
+    languageLabel_ = new QLabel();
+    languageLabel_->setFixedHeight( 25 );
+    languageCombo_ = new QComboBox();
     languages_[ "en" ] = tools::translate( "OptionsPage", "English" );
     languages_[ "fr" ] = tools::translate( "OptionsPage", "French" );
     languages_[ "es" ] = tools::translate( "OptionsPage", "Spanish" );
     languages_[ "ar" ] = tools::translate( "OptionsPage", "Arabic" );
     BOOST_FOREACH( const T_Languages::value_type& lang, languages_ )
     {
-        languageCombo_->insertItem( lang.second );
+        languageCombo_->addItem( lang.second );
         if( lang.first == selectedLanguage_ )
-            languageCombo_->setCurrentText( lang.second );
+            languageCombo_->setCurrentIndex( languageCombo_->findText( lang.second ) );
     }
     connect( languageCombo_, SIGNAL( activated( const QString& ) ), SLOT( OnChangeLanguage( const QString& ) ) );
 
     // Data
-    dataLabel_ = new QLabel( box );
-    Q3HBox* hbox = new Q3HBox( box );
-    dataDirectory_ = new QLineEdit( hbox );
-    dataButton_ = new QPushButton( hbox );
+    dataLabel_ = new QLabel();
+    dataLabel_->setFixedHeight( 25 );
+
+    dataDirectory_ = new QLineEdit();
+    dataButton_ = new QPushButton();
     connect( dataButton_, SIGNAL( clicked() ), SLOT( OnChangeDataDirectory() ) );
     connect( dataDirectory_, SIGNAL( textChanged( const QString& ) ), SLOT( OnEditDataDirectory( const QString& ) ) );
+
     // Profile
-    profileLabel_ = new QLabel( box );
-    profileCombo_ = new QComboBox( box );
+    profileLabel_ = new QLabel();
+    profileLabel_->setFixedHeight( 25 );
+    profileCombo_ = new QComboBox();
     connect( profileCombo_, SIGNAL( activated( int ) ), SLOT( OnChangeProfile( int ) ) );
+
+    //titles layout
+    QVBoxLayout* titleLayout = new QVBoxLayout();
+    titleLayout->addWidget( languageLabel_ );
+    titleLayout->addWidget( dataLabel_ );
+    titleLayout->addWidget( profileLabel_ );
+    titleLayout->addStretch();
+
+    //box layout
+    QHBoxLayout* directoryLayout = new QHBoxLayout();
+    directoryLayout->addWidget( dataDirectory_ );
+    directoryLayout->addWidget( dataButton_ );
+
+    QVBoxLayout* boxLayout = new QVBoxLayout();
+    boxLayout->addWidget( languageCombo_ );
+    boxLayout->addLayout( directoryLayout );
+    boxLayout->addWidget( profileCombo_ );
+    boxLayout->addStretch();
+
+    // main layout
+    QWidget* mainBox = new QWidget( pages );
+    QHBoxLayout* mainLayout = new QHBoxLayout( mainBox );
+    mainLayout->addLayout( titleLayout );
+    mainLayout->addLayout( boxLayout );
     AddContent( mainBox );
 
     // Init data
@@ -105,11 +130,11 @@ void OptionsPage::OnLanguageChanged()
     profileLabel_->setText( tools::translate( "OptionsPage", "Profile: " ) );
     selectedProfile_ = ( profileCombo_->count() ) ? profileCombo_->currentIndex() : config_.GetProfile();
     profileCombo_->clear();
-    profileCombo_->insertItem( tools::translate( "OptionsPage", "Terrain" ),       Config::eTerrain );
-    profileCombo_->insertItem( tools::translate( "OptionsPage", "User" ),          Config::eUser );
-    profileCombo_->insertItem( tools::translate( "OptionsPage", "Advanced User" ), Config::eAdvancedUser );
-    profileCombo_->insertItem( tools::translate( "OptionsPage", "Administrator" ), Config::eAdministrator );
-    profileCombo_->setCurrentItem( selectedProfile_ );
+    profileCombo_->addItem( tools::translate( "OptionsPage", "Terrain" ),       Config::eTerrain );
+    profileCombo_->addItem( tools::translate( "OptionsPage", "User" ),          Config::eUser );
+    profileCombo_->addItem( tools::translate( "OptionsPage", "Advanced User" ), Config::eAdvancedUser );
+    profileCombo_->addItem( tools::translate( "OptionsPage", "Administrator" ), Config::eAdministrator );
+    profileCombo_->setCurrentIndex( selectedProfile_ );
 
     // Parent
     ContentPage::OnLanguageChanged();
@@ -140,7 +165,7 @@ void OptionsPage::OnChangeLanguage( const QString& lang )
 // -----------------------------------------------------------------------------
 void OptionsPage::OnChangeDataDirectory()
 {
-    const QString directory = QDir::convertSeparators( Q3FileDialog::getExistingDirectory( dataDirectory_->text(), this ) );
+    const QString directory = QDir::convertSeparators( QFileDialog::getExistingDirectory( this , "", dataDirectory_->text() ) );
     if( directory.isEmpty() )
         return;
     selectedDataDir_ = directory.toAscii().constData();
@@ -259,9 +284,9 @@ void OptionsPage::OnApply()
 void OptionsPage::Commit()
 {
     QSettings settings( "MASA Group", qApp->translate( "Application", "SWORD" ) );
-    settings.writeEntry( "/Common/Language", selectedLanguage_.c_str() );
-    settings.writeEntry( "/Common/DataDirectory", selectedDataDir_.c_str() );
-    settings.writeEntry( "/Common/UserProfile", selectedProfile_ );
+    settings.setValue( "/Common/Language", selectedLanguage_.c_str() );
+    settings.setValue( "/Common/DataDirectory", selectedDataDir_.c_str() );
+    settings.setValue( "/Common/UserProfile", selectedProfile_ );
 
     static_cast< Application* >( qApp )->GetLauncher().SetRootDir( selectedDataDir_ );
     config_.SetRootDir( selectedDataDir_ );
@@ -280,7 +305,7 @@ void OptionsPage::Reset()
     selectedProfile_ = static_cast< int >( config_.GetProfile() );
 
     assert( languages_.find( selectedLanguage_ ) != languages_.end() );
-    languageCombo_->setCurrentText( languages_.find( selectedLanguage_ )->second );
+    languageCombo_->setCurrentIndex( languageCombo_->findText( languages_.find( selectedLanguage_ )->second ) );
     dataDirectory_->setText( QDir::convertSeparators( selectedDataDir_.c_str() ) );
     profileCombo_->setCurrentIndex( selectedProfile_ );
 

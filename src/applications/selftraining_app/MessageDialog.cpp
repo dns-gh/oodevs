@@ -15,31 +15,20 @@
 
 namespace
 {
-    class TransparentContainer : public Q3HBox
+    class TransparentContainer : public QWidget
     {
     public:
-        explicit TransparentContainer( QWidget* parent )
-            : Q3HBox( parent )
-            , mask_( "resources/images/selftraining/menu-mask.png" )
+        explicit TransparentContainer()
+            : mask_( "resources/images/selftraining/menu-mask.png" )
         {
             setFixedSize( 800, 300 );
         }
     protected:
-        virtual void drawContents( QPainter* )
-        {
-            paintEvent( 0 );
-        }
         virtual void paintEvent( QPaintEvent* /*e*/ )
         {
-            QPainter painter;
-            if( painter.begin( this ) )
-            {
-                painter.drawImage( frameRect(), mask_ );
-                Q3HBox::drawContents( &painter );
-                painter.end();
-            }
+            QPainter painter( this );
+            painter.drawImage( rect(), mask_ );
         }
-
     private:
         QImage mask_;
     };
@@ -50,9 +39,10 @@ namespace
 // Created: RDS 2008-08-20
 // -----------------------------------------------------------------------------
 MessageDialog::MessageDialog( QWidget* parent, const QString& title, const QString& message, int button1, int button2 /*= -1*/ )
-    : QDialog( parent, title, true, Qt::WStyle_DialogBorder )
+    : QDialog( parent, Qt::Dialog )
 {
-    setCaption( title );
+    setWindowTitle( title );
+    setModal( true );
     if( parent )
         setPalette( parent->palette() );
 
@@ -60,24 +50,24 @@ MessageDialog::MessageDialog( QWidget* parent, const QString& title, const QStri
     font.setItalic( true );
     setFont( font );
 
-    Q3VBoxLayout* mainLayout = new Q3VBoxLayout( this );
-
-    Q3VBox* vbox = new Q3VBox( this );
-    vbox->setSpacing( 10 );
-    QLabel* label = new QLabel( vbox );
+    QLabel* label = new QLabel();
     label->setText( message );
-    label->setAlignment( Qt::AlignCenter | Qt::TextWordWrap );
+    label->setAlignment(Qt::AlignCenter );
     label->setMinimumHeight( 50 );
-    Q3HBox* hbox = new Q3HBox( vbox );
 
-    CreateButton( hbox, button1 );
+    QHBoxLayout* buttonLayout = new QHBoxLayout();
+    CreateButton( buttonLayout, button1 );
     if( button2 != -1 )
-        CreateButton( hbox, button2 );
+        CreateButton( buttonLayout, button2 );
 
-    mainLayout->addWidget( vbox );
-
-    QWidget* spacer = new QWidget( vbox );
+    QWidget* spacer = new QWidget();
     spacer->setMinimumHeight( 50 );
+
+    QVBoxLayout* vboxLayout = new QVBoxLayout( this );
+    vboxLayout->setSpacing( 10 );
+    vboxLayout->addWidget( label );
+    vboxLayout->addLayout( buttonLayout );
+    vboxLayout->addWidget( spacer );
 }
 
 // -----------------------------------------------------------------------------
@@ -93,10 +83,11 @@ MessageDialog::~MessageDialog()
 // Name: MessageDialog::CreateButton
 // Created: RDS 2008-08-21
 // -----------------------------------------------------------------------------
-void MessageDialog::CreateButton( QWidget* parent, int button )
+void MessageDialog::CreateButton( QLayout* parent, int button )
 {
-    QPushButton* buttonWidget = new MenuButton( parent );
+    QPushButton* buttonWidget = new MenuButton( this );
     buttonWidget->setStyleSheet( "color : #FFFFFF" ); // $$$$ ABR 2012-07-20: Still ugly, but at least readable
+    parent->addWidget( buttonWidget );
 
     switch( button )
     {

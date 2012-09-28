@@ -27,7 +27,7 @@ namespace tools
 */
 // Created: LGY 2012-05-30
 // =============================================================================
-class ExerciseListView : public Q3ListView
+class ExerciseListView : public QTreeView
 {
 public:
     //! @name Constructors/Destructor
@@ -38,15 +38,20 @@ public:
 
     //! @name Operations
     //@{
-    QString GetItemName( Q3ListViewItem* item ) const;
+    QString GetExerciseName( const QModelIndex& index ) const;
     void AddExerciseEntry( const frontend::Exercise_ABC& exercise );
+    QStandardItem* FindExerciseItem( const frontend::Exercise_ABC& exercise, QStandardItem* parent = 0 ) const;
     void DeleteExerciseEntry( const frontend::Exercise_ABC& exercise );
+    const QStandardItem* GetSelectedExerciseItem() const;
+    const frontend::Exercise_ABC* GetSelectedExercise() const;
+    void Clear();
+    bool Exists( const QString& exercise ) const;
     //@}
 
 private:
     //! @name Helpers
     //@{
-    Q3ListViewItem* FindExerciseItem( const QString& path ) const;
+    QStandardItem* FindExerciseItem( const QString& path, QStandardItem* parent = 0 ) const;
     QString GetExerciseDisplayName( const QString& exercise ) const;
     //@}
 
@@ -55,6 +60,8 @@ private:
     //@{
     const tools::GeneralConfig& config_;
     const tools::Loader_ABC& fileLoader_;
+    QStandardItemModel model_;
+    QSortFilterProxyModel* proxy_;
     //@}
 };
 

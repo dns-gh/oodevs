@@ -42,7 +42,7 @@ class ExerciseListView;
 */
 // Created: RDS 2008-08-27
 // =============================================================================
-class ExerciseList : public gui::LanguageChangeObserver_ABC< Q3VBox >
+class ExerciseList : public gui::LanguageChangeObserver_ABC< QWidget >
                    , public tools::Observer_ABC
                    , public tools::ElementObserver_ABC< frontend::Exercise_ABC >
                    , private boost::noncopyable
@@ -81,7 +81,7 @@ public slots:
 private slots:
     //! @name Slots
     //@{
-    void SelectExercise( Q3ListViewItem* item );
+    void SelectExercise( const QModelIndex& index );
     void SelectProfile( const frontend::Profile& profile );
     void OnExercisePropertiesChanged();
     //@}
@@ -93,7 +93,7 @@ private:
     virtual void NotifyUpdated( const frontend::Exercise_ABC& exercise );
     virtual void NotifyDeleted( const frontend::Exercise_ABC& exercise );
     virtual void OnLanguageChanged();
-    virtual void customEvent( QCustomEvent* e );
+    virtual void customEvent( QEvent* e );
     const frontend::Exercise_ABC* GetSelectedExercise() const;
     void UpdateExerciseEntry( const frontend::Exercise_ABC& exercise );
     //@}

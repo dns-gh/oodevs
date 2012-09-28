@@ -62,7 +62,6 @@ public:
     //! @name Operations
     //@{
     void Update( Q3ListBoxItem* item = 0 );
-    void UpdateExerciseData( Q3ListViewItem* item = 0 );
     void ExportPackage();
     bool EnableEditButton();
     //@}
@@ -70,7 +69,7 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void OnSelectionChanged( Q3ListViewItem* item );
+    void OnSelectionChanged( const QModelIndex& next, const QModelIndex& previous );
     void OnSelectionChanged( Q3ListBoxItem* item );
     void OnModelNameChanged( const QString& text );
     //@}
