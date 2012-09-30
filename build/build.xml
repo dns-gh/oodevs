@@ -1895,6 +1895,37 @@
 
     <!--
     ============================================================================
+    various project/source checks
+    ============================================================================
+    -->
+    <target name="checkproject" description="check project configuration">
+        <exec executable="python" failonerror="true">
+            <arg value="${bin.dir}/buildtools/checkproject.py"/>
+            <arg value="${root.dir}"/>
+            <arg value="${root.dir}/build/vc100/sword.sln"/>
+            <!-- These cannot really be fixed, either no project or vc80 -->
+            <arg value="--exclude=vrforces_plugin"/>
+            <arg value="--exclude=vrforces_plugin_dll"/>
+            <arg value="--exclude=wise_driver_dll"/>
+            <arg value="--exclude=module_tester"/>
+            <!-- These should be fixed -->
+            <arg value="--exclude=actions"/>
+            <arg value="--exclude=movement_module"/>
+            <arg value="--exclude=movement_module_dll"/>
+            <arg value="--exclude=movement_module_test"/>
+            <arg value="--exclude=simulation_kernel"/>
+            <arg value="--exclude=hla_plugin"/>
+            <arg value="--exclude=fire_module"/>
+            <arg value="--exclude=fire_module_dll"/>
+            <arg value="--exclude=fire_module_test"/>
+            <arg value="--exclude=perception_module"/>
+            <arg value="--exclude=perception_module_dll"/>
+            <arg value="--exclude=perception_module_test"/>
+        </exec>
+    </target>
+
+    <!--
+    ============================================================================
     main
     ============================================================================
     -->
@@ -1939,6 +1970,7 @@
         <update name="iconv"/>
         <update name="proj4"/>
         <update name="asciidoc" version="8.6.8"/>
+        <update name="buildtools" version="1"/>
     </target>
 
     <target name="configure" description="update packages and decisional"
@@ -1951,6 +1983,6 @@
 
     <target name="build" depends="libraries,applications,modules"/>
 
-    <target name="all" depends="configure,build,test,documentation,package" description="build and package distribution"/>
+    <target name="all" depends="configure,checkproject,build,test,documentation,package" description="build and package distribution"/>
 
 </project>
