@@ -35,7 +35,7 @@ DECLARE_HOOK( IsDestinationTrafficable, bool, ( const SWORD_Model* entity, const
 DECLARE_HOOK( IsNullAutomateFuseau, bool, ( const SWORD_Model* entity ) )
 DECLARE_HOOK( LimaIntersect2D, bool, ( const MIL_LimaOrder& lima, const MT_Line& line, MT_Vector2D& intersection ) )
 DECLARE_HOOK( UsePathDebug, bool, () )
-DECLARE_HOOK( StartComputePathfind, void, ( const SWORD_Model* entity, boost::shared_ptr< sword::movement::Path_ABC > path ) )
+DECLARE_HOOK( StartComputePathfind, void, ( const SWORD_Model* entity, const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
 DECLARE_HOOK( VisitKnowledgeObjects, void, ( const SWORD_Model* entity, bool(*visitor)( const DEC_Knowledge_Object* object, void* userData ), void* userData ) )
 DECLARE_HOOK( CanMoveOn, bool, ( const SWORD_Model* entity, const MT_Vector2D& point ) )
 

@@ -38,7 +38,7 @@ public:
     //@{
     virtual void SendToDIA( unsigned int entity, boost::shared_ptr< PathPoint > point ) const;
     virtual void RemoveFromDIA( boost::shared_ptr< PathPoint > self );
-    boost::shared_ptr< PathPoint > GetDestPoint() const;
+    virtual const boost::shared_ptr< PathPoint >& GetDestPoint() const;
     //@}
 
 private:

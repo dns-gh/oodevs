@@ -66,8 +66,8 @@ public:
 
     //! @name Operations
     //@{
-    static boost::shared_ptr< PathAdapter > Add( const core::Model& entity, boost::shared_ptr< movement::Path_ABC > path );
-    static boost::shared_ptr< PathAdapter > Remove( boost::shared_ptr< movement::Path_ABC > path );
+    static boost::shared_ptr< PathAdapter > Add( const core::Model& entity, const boost::shared_ptr< movement::Path_ABC >& path );
+    static boost::shared_ptr< PathAdapter > Remove( const boost::shared_ptr< movement::Path_ABC >& path );
 
     virtual void Execute( TerrainPathfinder& pathfind );
     virtual void CleanAfterComputation();
@@ -91,7 +91,7 @@ public:
 private:
     //! @name Constructors/Destructor
     //@{
-    PathAdapter( const core::Model& entity, boost::shared_ptr< movement::Path_ABC > path );
+    PathAdapter( const core::Model& entity, const boost::shared_ptr< movement::Path_ABC >& path );
     //@}
 
     //! @name Helpers

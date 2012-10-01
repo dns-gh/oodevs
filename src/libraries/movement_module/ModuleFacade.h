@@ -55,9 +55,9 @@ public:
     MT_Vector2D GetFuturePosition( const wrapper::View& entity, double rTime, bool bBoundOnPath ) const;
     bool IsMovingOnPath( unsigned int entity, boost::shared_ptr< Path_ABC > path ) const;
 
-    void GetPoints( unsigned int entity, void(*callback)( boost::shared_ptr< movement::PathPoint > point, void* userData ), void* userData ) const;
-    void AddPoints( unsigned int entity, boost::shared_ptr< movement::PathPoint > point );
-    void RemovePoints( unsigned int entity, boost::shared_ptr< movement::PathPoint > point );
+    void GetPoints( unsigned int entity, void(*callback)( const boost::shared_ptr< movement::PathPoint >& point, void* userData ), void* userData ) const;
+    void AddPoints( unsigned int entity, const boost::shared_ptr< movement::PathPoint >& point );
+    void RemovePoints( unsigned int entity, const boost::shared_ptr< movement::PathPoint >& point );
     //@}
 
 private:

@@ -40,7 +40,7 @@ namespace
         assert( facade );
         return facade->GetFuturePosition( entity, rTime, bBoundOnPath );
     }
-    DEFINE_HOOK( IsAgentMovingOnPath, bool, ( unsigned int entity, boost::shared_ptr< sword::movement::Path_ABC > path ) )
+    DEFINE_HOOK( IsAgentMovingOnPath, bool, ( unsigned int entity, const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
     {
         assert( facade );
         return facade->IsMovingOnPath( entity, path );
@@ -57,115 +57,115 @@ namespace
         assert( pPathType );
         return boost::shared_ptr< Path_ABC >( new Agent_Path( model, points, *pPathType ) );
     }
-    DEFINE_HOOK( PathGetLastPointOfPath, boost::shared_ptr< MT_Vector2D >, ( boost::shared_ptr< sword::movement::Path_ABC > pPath ) )
+    DEFINE_HOOK( PathGetLastPointOfPath, boost::shared_ptr< MT_Vector2D >, ( const boost::shared_ptr< sword::movement::Path_ABC >& pPath ) )
     {
         const PathResult* path = dynamic_cast< const PathResult* > ( pPath.get() );
         if( !path || path->GetResult().empty() || !path->GetResult().back() )
             return boost::shared_ptr< MT_Vector2D >();
         return boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( path->GetResult().back()->GetPos() ) );
     }
-    DEFINE_HOOK( ExecutePathfind, void, ( boost::shared_ptr< sword::movement::Path_ABC > path, TerrainPathfinder& pathfind ) )
+    DEFINE_HOOK( ExecutePathfind, void, ( const boost::shared_ptr< sword::movement::Path_ABC >& path, TerrainPathfinder& pathfind ) )
     {
         path->Execute( pathfind );
     }
-    DEFINE_HOOK( ComputePath, void, ( boost::shared_ptr< sword::movement::Path_ABC > path ) )
+    DEFINE_HOOK( ComputePath, void, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
     {
         path->ComputePath( path );
     }
-    DEFINE_HOOK( CleanPathAfterComputation, void, ( boost::shared_ptr< sword::movement::Path_ABC > path ) )
+    DEFINE_HOOK( CleanPathAfterComputation, void, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
     {
         path->CleanAfterComputation();
     }
-    DEFINE_HOOK( PathGetLength, double, ( boost::shared_ptr< sword::movement::Path_ABC > path ) )
+    DEFINE_HOOK( PathGetLength, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
     {
         return path->GetLength();
     }
-    DEFINE_HOOK( PathGetState, DEC_Path_ABC::E_State, ( boost::shared_ptr< sword::movement::Path_ABC > path ) )
+    DEFINE_HOOK( PathGetState, DEC_Path_ABC::E_State, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
     {
         return static_cast< DEC_Path_ABC::E_State >( path->GetState() ); // $$$$ MCO : static_assert bijection
     }
-    DEFINE_HOOK( AvoidEnemies, bool, ( boost::shared_ptr< sword::movement::Path_ABC > path ) )
+    DEFINE_HOOK( AvoidEnemies, bool, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
     {
         return path->GetClass().AvoidEnemies();
     }
-    DEFINE_HOOK( GetEnemyCostAtSecurityRange, double, ( boost::shared_ptr< sword::movement::Path_ABC > path ) )
+    DEFINE_HOOK( GetEnemyCostAtSecurityRange, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
     {
         return path->GetClass().GetEnemyCostAtSecurityRange();
     }
-    DEFINE_HOOK( GetEnemyCostOnContact, double, ( boost::shared_ptr< sword::movement::Path_ABC > path ) )
+    DEFINE_HOOK( GetEnemyCostOnContact, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
     {
         return path->GetClass().GetEnemyCostOnContact();
     }
-    DEFINE_HOOK( AvoidObjects, bool, ( boost::shared_ptr< sword::movement::Path_ABC > path ) )
+    DEFINE_HOOK( AvoidObjects, bool, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
     {
         return path->GetClass().AvoidObjects();
     }
-    DEFINE_HOOK( GetFirstPoint, void, ( boost::shared_ptr< sword::movement::Path_ABC > path, void(*callback)( const MT_Vector2D& point, void* userData ), void* userData ) )
+    DEFINE_HOOK( GetFirstPoint, void, ( const boost::shared_ptr< sword::movement::Path_ABC >& path, void(*callback)( const MT_Vector2D& point, void* userData ), void* userData ) )
     {
         const MT_Vector2D* first = path->GetFirstPoint();
         if( first )
             callback( *first, userData );
     }
-    DEFINE_HOOK( GetObjectCost, double, ( boost::shared_ptr< sword::movement::Path_ABC > path, unsigned int type ) )
+    DEFINE_HOOK( GetObjectCost, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path, unsigned int type ) )
     {
         return path->GetClass().GetObjectCost( type );
     }
-    DEFINE_HOOK( GetThreshold, double, ( boost::shared_ptr< sword::movement::Path_ABC > path ) )
+    DEFINE_HOOK( GetThreshold, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
     {
         return path->GetClass().GetThreshold();
     }
-    DEFINE_HOOK( HandlePopulations, bool, ( boost::shared_ptr< sword::movement::Path_ABC > path ) )
+    DEFINE_HOOK( HandlePopulations, bool, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
     {
         return path->GetClass().HandlePopulations();
     }
-    DEFINE_HOOK( GetPopulationSecurityRange, double, ( boost::shared_ptr< sword::movement::Path_ABC > path ) )
+    DEFINE_HOOK( GetPopulationSecurityRange, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
     {
         return path->GetClass().GetPopulationSecurityRange();
     }
-    DEFINE_HOOK( GetCostOutsideOfPopulation, double, ( boost::shared_ptr< sword::movement::Path_ABC > path ) )
+    DEFINE_HOOK( GetCostOutsideOfPopulation, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
     {
         return path->GetClass().GetCostOutsideOfPopulation();
     }
-    DEFINE_HOOK( GetPopulationAttitudeCost, double, ( boost::shared_ptr< sword::movement::Path_ABC > path, unsigned int type ) )
+    DEFINE_HOOK( GetPopulationAttitudeCost, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path, unsigned int type ) )
     {
         return path->GetClass().GetPopulationAttitudeCost( type );
     }
-    DEFINE_HOOK( GetPathPoints, void, ( unsigned int entity, void(*callback)( boost::shared_ptr< sword::movement::PathPoint > point, void* userData ), void* userData ) )
+    DEFINE_HOOK( GetPathPoints, void, ( unsigned int entity, void(*callback)( const boost::shared_ptr< sword::movement::PathPoint >& point, void* userData ), void* userData ) )
     {
         assert( facade );
         facade->GetPoints( entity, callback, userData );
     }
-    DEFINE_HOOK( AddPathPoint, void, ( unsigned int entity, boost::shared_ptr< sword::movement::PathPoint > point ) )
+    DEFINE_HOOK( AddPathPoint, void, ( unsigned int entity, const boost::shared_ptr< sword::movement::PathPoint >& point ) )
     {
         assert( facade );
         facade->AddPoints( entity, point );
     }
-    DEFINE_HOOK( RemovePathPoint, void, ( unsigned int entity, boost::shared_ptr< sword::movement::PathPoint > point ) )
+    DEFINE_HOOK( RemovePathPoint, void, ( unsigned int entity, const boost::shared_ptr< sword::movement::PathPoint >& point ) )
     {
         assert( facade );
         facade->RemovePoints( entity, point );
     }
-    DEFINE_HOOK( GetPathTypePoint, int, ( boost::shared_ptr< sword::movement::PathPoint > pPoint ) )
+    DEFINE_HOOK( GetPathTypePoint, int, ( const boost::shared_ptr< sword::movement::PathPoint >& pPoint ) )
     {
         return pPoint->GetTypePoint();
     }
-    DEFINE_HOOK( GetPathDestPoint, boost::shared_ptr< sword::movement::PathPoint >, ( boost::shared_ptr< sword::movement::PathPoint > pPoint ) )
+    DEFINE_HOOK( GetPathDestPoint, const boost::shared_ptr< sword::movement::PathPoint >&, ( const boost::shared_ptr< sword::movement::PathPoint >& pPoint ) )
     {
         return pPoint->GetDestPoint();
     }
-    DEFINE_HOOK( GetPathTypeLimaPoint, int, ( boost::shared_ptr< sword::movement::PathPoint > pPoint ) )
+    DEFINE_HOOK( GetPathTypeLimaPoint, int, ( const boost::shared_ptr< sword::movement::PathPoint >& pPoint ) )
     {
         return pPoint->GetTypeLima();
     }
-    DEFINE_HOOK( GetPathLimaPoint, unsigned int, ( boost::shared_ptr< sword::movement::PathPoint > pPoint ) )
+    DEFINE_HOOK( GetPathLimaPoint, unsigned int, ( const boost::shared_ptr< sword::movement::PathPoint >& pPoint ) )
     {
         return pPoint->GetLimaID();
     }
-    DEFINE_HOOK( GetPathDIAType, const char*, ( boost::shared_ptr< sword::movement::PathPoint > point ) )
+    DEFINE_HOOK( GetPathDIAType, const char*, ( const boost::shared_ptr< sword::movement::PathPoint >& point ) )
     {
         return point->GetDIAType().c_str();
     }
-    DEFINE_HOOK( GetPathPos, const MT_Vector2D&, ( boost::shared_ptr< sword::movement::PathPoint > point ) )
+    DEFINE_HOOK( GetPathPos, const MT_Vector2D&, ( const boost::shared_ptr< sword::movement::PathPoint >& point ) )
     {
         return point->GetPos();
     }
@@ -257,7 +257,7 @@ bool ModuleFacade::IsMovingOnPath( unsigned int entity, boost::shared_ptr< Path_
 // Name: ModuleFacade::GetPoints
 // Created: MCO 2012-02-03
 // -----------------------------------------------------------------------------
-void ModuleFacade::GetPoints( unsigned int entity, void(*callback)( boost::shared_ptr< movement::PathPoint > point, void* userData ), void* userData ) const
+void ModuleFacade::GetPoints( unsigned int entity, void(*callback)( const boost::shared_ptr< movement::PathPoint >& point, void* userData ), void* userData ) const
 {
     std::map< unsigned int, std::vector< boost::shared_ptr< movement::PathPoint > > >::const_iterator it = points_.find( entity );
     if( it != points_.end() )
@@ -268,7 +268,7 @@ void ModuleFacade::GetPoints( unsigned int entity, void(*callback)( boost::share
 // Name: ModuleFacade::AddPoints
 // Created: MCO 2012-02-03
 // -----------------------------------------------------------------------------
-void ModuleFacade::AddPoints( unsigned int entity, boost::shared_ptr< movement::PathPoint > point )
+void ModuleFacade::AddPoints( unsigned int entity, const boost::shared_ptr< movement::PathPoint >& point )
 {
     points_[ entity ].push_back( point );
 }
@@ -277,7 +277,7 @@ void ModuleFacade::AddPoints( unsigned int entity, boost::shared_ptr< movement::
 // Name: ModuleFacade::RemovePoints
 // Created: MCO 2012-02-03
 // -----------------------------------------------------------------------------
-void ModuleFacade::RemovePoints( unsigned int entity, boost::shared_ptr< movement::PathPoint > point )
+void ModuleFacade::RemovePoints( unsigned int entity, const boost::shared_ptr< movement::PathPoint >& point )
 {
     std::vector< boost::shared_ptr< movement::PathPoint > >& points = points_[ entity ];
     points.erase( std::remove( points.begin(), points.end(), point ), points.end() );
