@@ -24,7 +24,7 @@ MOCK_BASE_CLASS( MockSink, sword::Sink_ABC )
     MOCK_METHOD( ExecutePerceptions, 0 );
     MOCK_METHOD( ExecuteCommands, 0 );
     MOCK_METHOD( ApplyEffects, 0 );
-    MOCK_METHOD( UpdateModel, 3 );
+    MOCK_METHOD( UpdateModel, 4 );
     MOCK_METHOD( UpdateKnowledges, 0 );
     MOCK_METHOD( UpdateUrbanModel, 1 );
     MOCK_METHOD( GetModelCount, 0 );
