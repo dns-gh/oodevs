@@ -69,7 +69,7 @@ void ScoreAnnouncer::Visit( boost::shared_ptr< Score > score )
 // Name: ScoreAnnouncer::Visit
 // Created: SBO 2011-05-17
 // -----------------------------------------------------------------------------
-void ScoreAnnouncer::Visit( const std::string& profile, boost::shared_ptr< Score > score )
+void ScoreAnnouncer::Visit( const std::string& profile, const boost::shared_ptr< Score >& score )
 {
     profileScores_[ profile ].push_back( score );
 }

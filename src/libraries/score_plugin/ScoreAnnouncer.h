@@ -47,7 +47,7 @@ public:
     //@{
     void Announce( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
     virtual void Visit( boost::shared_ptr< Score > score );
-    virtual void Visit( const std::string& profile, boost::shared_ptr< Score > score );
+    virtual void Visit( const std::string& profile, const boost::shared_ptr< Score >& score );
     //@}
 
 private:
