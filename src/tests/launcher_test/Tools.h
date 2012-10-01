@@ -223,7 +223,7 @@ namespace launcher_test
             BOOST_REQUIRE( exercise );
 
             filePath = bfs::path( BOOST_RESOLVE( exercise->GetName() + "/sessions/" + session + "/session.xml" ) );
-            savePath = bfs::path( BOOST_RESOLVE( exercise->GetName() + "/sessions/" + session + "/session.xml.save" ) );
+            savePath = bfs::path( BOOST_RESOLVE( exercise->GetName() + "/sessions/session.xml.save" ) );
             bfs::copy_file( filePath, savePath, bfs::copy_option::overwrite_if_exists );
 
             MOCK_EXPECT( dispatcher, ConnectionSucceeded ).once().with( mock::retrieve( dispatcher.host ) );
