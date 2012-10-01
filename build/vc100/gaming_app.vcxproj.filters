@@ -128,9 +128,6 @@
     <Filter Include="Source Files\Creation\Weather">
       <UniqueIdentifier>{7202098b-0233-44cb-abc3-10d54a6ea2ba}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Lists">
-      <UniqueIdentifier>{19f5f471-c275-4003-b137-de065c921c9a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Tools">
       <UniqueIdentifier>{deed1de1-a2b0-4edf-9c1c-80f81415419a}</UniqueIdentifier>
     </Filter>
@@ -760,9 +757,6 @@
     <ClCompile Include="..\..\src\applications\gaming_app\TrafficabilityPrototype.cpp">
       <Filter>Source Files\Creation\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\gaming_app\LogisticListView.cpp">
-      <Filter>Source Files\Lists</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\FuneralConsignsWidget.cpp">
       <Filter>Source Files\Panels\Logistic\consigns</Filter>
     </ClCompile>
@@ -1136,9 +1130,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\TrafficabilityPrototype.h">
       <Filter>Source Files\Creation\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\gaming_app\LogisticListView.h">
-      <Filter>Source Files\Lists</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\FuneralConsignsWidget.h">
       <Filter>Source Files\Panels\Logistic\consigns</Filter>

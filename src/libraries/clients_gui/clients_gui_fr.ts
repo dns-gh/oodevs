@@ -1109,17 +1109,6 @@ Voulez-vous le supprimer?</translation>
     </message>
 </context>
 <context>
-    <name>gui::LogisticListView</name>
-    <message>
-        <source>Unsupported units</source>
-        <translation>Unités non soutenues</translation>
-    </message>
-    <message>
-        <source>Supported units</source>
-        <translation>Unités soutenues</translation>
-    </message>
-</context>
-<context>
     <name>gui::LogisticPrototype_ABC</name>
     <message>
         <source>Camp</source>

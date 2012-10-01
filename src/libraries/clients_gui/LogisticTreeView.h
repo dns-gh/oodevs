@@ -98,18 +98,6 @@ private:
     bool CanDrop( QDragMoveEvent* pEvent ) const;
 
     virtual void Drop( const QString& mimeType, void* data, QStandardItem& target );
-    //virtual void Drop( const kernel::Automat_ABC& /*item*/, const kernel::Entity_ABC& /*target*/ ) {}
-    //virtual void Drop( const kernel::Formation_ABC& /*item*/, const kernel::Entity_ABC& /*target*/ ) {}
-    //virtual void Drop( const kernel::Ghost_ABC& /*item*/, const kernel::Entity_ABC& /*target*/ ) {}
-    //virtual void Drop( const kernel::KnowledgeGroup_ABC& /*item*/, const kernel::Entity_ABC& /*target*/ ) {}
-    //virtual void Drop( const kernel::& /*item*/, kernel::LogisticLevel& /*target*/ ) {}
-    //virtual void Drop( const kernel::AutomatType& /*item*/, kernel::Entity_ABC& /*target*/ ) {}
-
-    //@}
-
-private:
-    //! @name Member data
-    //@{
     //@}
 };
 

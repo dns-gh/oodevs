@@ -22,7 +22,6 @@ namespace gui
     class AutomatsLayer;
     class EntitySymbols;
     class FormationLayer;
-    class ItemFactory_ABC;
 }
 
 namespace kernel
@@ -31,7 +30,7 @@ namespace kernel
     class Time_ABC;
 }
 
-class LogisticListView;
+class LogisticTreeView;
 class ProfileFilter;
 class StaticModel;
 
@@ -50,7 +49,7 @@ public:
     OrbatDockWidget( kernel::Controllers& controllers, QWidget* parent, const QString& objectName, const QString& windowTitle,
                      ProfileFilter& filter, gui::AutomatsLayer& automats, gui::FormationLayer& formations,
                      actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation,
-                     gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons );
+                     gui::EntitySymbols& icons );
     virtual ~OrbatDockWidget();
     //@}
 
@@ -63,7 +62,7 @@ public:
 private:
     //! @name Member data
     //@{
-    LogisticListView* logisticListView_;
+    LogisticTreeView* logisticListView_;
     gui::DummyModelObserver observer_;
     //@}
 };

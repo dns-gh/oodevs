@@ -11,12 +11,11 @@
 #include "OrbatDockWidget.h"
 #include "OrbatToolbar.h"
 #include "CommunicationTreeView.h"
-#include "LogisticListView.h" // à virer
 #include "TacticalTreeView.h"
+#include "LogisticTreeView.h"
 #include "clients_gui/AggregateToolBar.h"
 #include "clients_gui/EntityTreeView.h"
 #include "clients_gui/ObjectTreeView.h"
-#include "clients_gui/SearchListView.h" // à virer
 #include "clients_gui/SearchTreeView.h"
 #include "gaming/ProfileFilter.h"
 
@@ -27,8 +26,9 @@
 OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers, QWidget* parent, const QString& objectName, const QString& windowTitle,
                                   ProfileFilter& filter, gui::AutomatsLayer& automats, gui::FormationLayer& formations,
                                   actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation,
-                                  gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons )
+                                  gui::EntitySymbols& icons )
     : QDockWidget( parent )
+    , logisticListView_( 0 )
 {
     setWindowTitle( windowTitle );
     setObjectName( objectName );
@@ -53,9 +53,9 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers, QWidget* par
             pUnit->addTab( searchTreeView, tr( "Communication" ) );
         }
         {
-            gui::SearchListView< LogisticListView >* logisticSearchListView = new gui::SearchListView< ::LogisticListView >( pUnit, controllers, factory, filter, icons, actionsModel, staticModel, simulation );
-            logisticSearchListView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), logisticSearchListView->GetRichListView(), SLOT( LockDragAndDrop( bool ) ) );
-            logisticListView_ = logisticSearchListView->GetListView();
+            gui::SearchTreeView< LogisticTreeView >* logisticSearchListView = new gui::SearchTreeView< LogisticTreeView >( pListsTabWidget, controllers, filter, observer_, icons, staticModel, simulation, actionsModel );
+            logisticSearchListView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), logisticSearchListView->GetRichTreeView(), SLOT( LockDragAndDrop( bool ) ) );
+            logisticListView_ = logisticSearchListView->GetTreeView();
             pUnit->addTab( logisticSearchListView, tr( "Logistic" ) );
         }
         pListsTabWidget->addTab( pUnit, tr( "Units" ) );

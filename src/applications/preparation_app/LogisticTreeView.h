@@ -48,11 +48,6 @@ private:
     virtual void NotifyUpdated( const LogisticLevelAttritube& hierarchy );
     virtual void keyPressEvent( QKeyEvent* event );
     //@}
-
-private:
-    //! @name Member data
-    //@{
-    //@}
 };
 
 #endif // __LogisticTreeView_h_

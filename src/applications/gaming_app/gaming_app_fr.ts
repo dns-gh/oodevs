@@ -1446,13 +1446,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
-    <name>LogisticListView</name>
-    <message>
-        <source>Change Logistic Links</source>
-        <translation>Changer les Liens Logistiques</translation>
-    </message>
-</context>
-<context>
     <name>LogisticSupplyChangeQuotasDialog</name>
     <message>
         <source>Supply quotas allocation</source>
@@ -1606,6 +1599,13 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Partial Recovery</source>
         <translation>Recomplétion partielle</translation>
+    </message>
+</context>
+<context>
+    <name>LogisticTreeView</name>
+    <message>
+        <source>Change Logistic Links</source>
+        <translation>Changer les Liens Logistiques</translation>
     </message>
 </context>
 <context>
@@ -2463,10 +2463,6 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Groupes de connaissance</translation>
     </message>
     <message>
-        <source>Logistic</source>
-        <translation>Logistique</translation>
-    </message>
-    <message>
         <source>Objects</source>
         <translation>Objets</translation>
     </message>
@@ -2477,6 +2473,10 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Populations</source>
         <translation>Populations</translation>
+    </message>
+    <message>
+        <source>Logistic</source>
+        <translation>Logistique</translation>
     </message>
     <message>
         <source>Units</source>

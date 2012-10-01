@@ -1444,13 +1444,6 @@ Reason: %3
     </message>
 </context>
 <context>
-    <name>LogisticListView</name>
-    <message>
-        <source>Change Logistic Links</source>
-        <translation type="unfinished">Cambiar enlace logístico</translation>
-    </message>
-</context>
-<context>
     <name>LogisticSupplyChangeQuotasDialog</name>
     <message>
         <source>Supply quotas allocation</source>
@@ -1604,6 +1597,13 @@ Reason: %3
     <message>
         <source>Partial Recovery</source>
         <translation>Recuperación parcial</translation>
+    </message>
+</context>
+<context>
+    <name>LogisticTreeView</name>
+    <message>
+        <source>Change Logistic Links</source>
+        <translation type="unfinished">Cambiar enlace logístico</translation>
     </message>
 </context>
 <context>
@@ -2460,10 +2460,6 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logistic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Objects</source>
         <translation type="unfinished">Objetos</translation>
     </message>
@@ -2473,6 +2469,10 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Populations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

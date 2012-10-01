@@ -30,7 +30,7 @@
 // Name: TacticalTreeView constructor
 // Created: JSR 2012-09-27
 // -----------------------------------------------------------------------------
-TacticalTreeView::TacticalTreeView(  kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, const gui::EntitySymbols& symbols, const StaticModel& staticModel, const kernel::Time_ABC& simulation, actions::ActionsModel& actionsModel, QWidget* parent /*= 0*/ )
+TacticalTreeView::TacticalTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, const gui::EntitySymbols& symbols, const StaticModel& staticModel, const kernel::Time_ABC& simulation, actions::ActionsModel& actionsModel, QWidget* parent /*= 0*/ )
     : gui::TacticalTreeView( controllers, profile, modelObserver, symbols, parent )
     , static_( staticModel )
     , simulation_( simulation )
