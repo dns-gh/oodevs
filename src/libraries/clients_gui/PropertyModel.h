@@ -11,6 +11,7 @@
 #define gui_PropertyModel_h
 
 #include <QtGui/qstandarditemmodel.h>
+#include "KeyModel.h"
 #include "clients_kernel/Property_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/VariantPointer.h"
@@ -24,7 +25,7 @@ namespace gui
 */
 // Created: LGY 2012-08-09
 // =============================================================================
-class PropertyModel : public QStandardItemModel
+class PropertyModel : public KeyModel
                     , public kernel::Displayer_ABC
                     , public tools::Caller< kernel::Property_ABC* >
 {
@@ -45,13 +46,8 @@ public:
 
     void Update( QWidget* editor, const QModelIndex& index );
     void Update( const QString& category );
-    void Delete( const QString& category );
     //@}
 
-    //! @name Accessors
-    //@{
-    QStandardItem* FindItem( const QString& category ) const;
-    //@}
 
 private:
     //! @name Operations
@@ -66,8 +62,6 @@ private:
     //@{
     void Update( QStandardItem* parent, kernel::E_Category category );
     void Update( QStandardItem* parent, QStandardItem* property );
-    QStandardItem* FindParent( QStandardItem* item ) const;
-    QStandardItem* FindItem( QStandardItem* item, const QString& text ) const;
     //@}
 
 signals:

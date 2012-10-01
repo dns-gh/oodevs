@@ -910,6 +910,9 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\UnitTreeView.cpp">
       <Filter>Source Files\Creation\Units</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\KeyModel.cpp">
+      <Filter>Source Files\Preferences</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -1463,6 +1466,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\NBCPrototype_ABC.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\KeyModel.h">
+      <Filter>Source Files\Preferences</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

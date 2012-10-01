@@ -14,6 +14,7 @@
 
 namespace gui
 {
+    class KeyModel;
 // =============================================================================
 /** @class  PreferencesList
     @brief  PreferencesList
@@ -54,7 +55,7 @@ private:
     //! @name Member data
     //@{
     QStackedWidget& pages_;
-    QStandardItemModel* model_;
+    KeyModel* model_;
     T_Widgets widgets_;
     //@}
 };

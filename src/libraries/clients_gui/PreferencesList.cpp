@@ -12,6 +12,7 @@
 #include "clients_gui_pch.h"
 #include "PreferencesList.h"
 #include "moc_PreferencesList.cpp"
+#include "KeyModel.h"
 #include "Tools.h"
 
 using namespace gui;
@@ -23,7 +24,7 @@ using namespace gui;
 PreferencesList::PreferencesList( QWidget* parent, QStackedWidget& pages )
     : QTreeView( parent )
     , pages_( pages )
-    , model_( new QStandardItemModel() )
+    , model_( new KeyModel() )
 {
     header()->hide();
     setModel( model_ );
@@ -39,46 +40,6 @@ PreferencesList::~PreferencesList()
     // NOTHING
 }
 
-namespace
-{
-    QStandardItem* FindItem( QStandardItem* item, const QString& text ) // $$$$ LGY 2012-09-25: ^c^v property model
-    {
-        for( int row = 0; row < item->rowCount(); ++row )
-        {
-            QStandardItem* childItem = item->child( row, 0 );
-            if( childItem && childItem->text() == text )
-                return childItem;
-        }
-        return 0;
-    }
-    QStandardItem* FindItem( const QString& category, QStandardItem* root )
-    {
-        QStandardItem* parent = root;
-        QStringList path = QStringList::split( '/', category );
-        for( int i = 0; i < path.size(); ++i )
-        {
-            const QString name = path.at( i );
-            QStandardItem* item = FindItem( parent, name );
-            if( !item )
-                return 0;
-            if( i == path.size() - 1 )
-                return item;
-            parent = item;
-        }
-        return 0 ;
-    }
-    QStandardItem* CreateItem( QStandardItem& parent, const QString& name, const QString& path )
-    {
-        QStandardItem* category = new QStandardItem( name );
-        category->setEditable( false );
-        QVariant* variant = new QVariant();
-        variant->setValue( path );
-        category->setData( *variant, Qt::UserRole );
-        parent.appendRow( category );
-        return category;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: PreferencesList::AddPage
 // Created: SBO 2007-01-03
@@ -90,8 +51,8 @@ void PreferencesList::AddPage( const QString& name, QWidget* widget )
     for( int i = 0; i < path.size(); ++i )
     {
         const QString category = path.at( i );
-        QStandardItem* item = FindItem( parent, category );
-        parent = item ? item : CreateItem( *parent, category, name );
+        QStandardItem* item = model_->FindItem( parent, category );
+        parent = item ? item : model_->CreateItem( *parent, category, name );
     }
     widgets_[ name ] = widget;
     pages_.addWidget( widget );

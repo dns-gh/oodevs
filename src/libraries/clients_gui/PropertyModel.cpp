@@ -127,42 +127,6 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: PropertyModel::FindItem
-// Created: LGY 2012-08-22
-// -----------------------------------------------------------------------------
-QStandardItem* PropertyModel::FindItem( QStandardItem* item, const QString& text ) const
-{
-    for( int row = 0; row < item->rowCount(); ++row )
-    {
-        QStandardItem* childItem = item->child( row, 0 );
-        if( childItem && childItem->text() == text )
-            return childItem;
-    }
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PropertyModel::FindItem
-// Created: LGY 2012-08-22
-// -----------------------------------------------------------------------------
-QStandardItem* PropertyModel::FindItem( const QString& category ) const
-{
-    QStandardItem* parent = invisibleRootItem();
-    QStringList path = QStringList::split( '/', category );
-    for( int i = 0; i < path.size(); ++i )
-    {
-        const QString name = path.at( i );
-        QStandardItem* item = FindItem( parent, name );
-        if( !item )
-             return 0;
-        if( i == path.size() - 1 )
-            return item;
-        parent = item;
-    }
-    return 0 ;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PropertyModel::Call
 // Created: LGY 2012-08-13
 // -----------------------------------------------------------------------------
@@ -239,28 +203,4 @@ void PropertyModel::Update( QStandardItem* parent, QStandardItem* property )
             Update( property, property->child( i ) );
     else if( PropertyItem* item = static_cast< PropertyItem* >( parent->child( property->row(), 1 ) ) )
             item->Update();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PropertyModel::Delete
-// Created: LGY 2012-08-22
-// -----------------------------------------------------------------------------
-void PropertyModel::Delete( const QString& category )
-{
-    QStandardItem* item = FindItem( category );
-    if( item )
-    {
-        QList< QStandardItem* > rowItems = FindParent( item )->takeRow( item->row() );
-        for( QList< QStandardItem *>::iterator it = rowItems.begin(); it != rowItems.end(); ++it )
-            delete *it;
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PropertyModel::FindParent
-// Created: LGY 2012-08-22
-// -----------------------------------------------------------------------------
-QStandardItem* PropertyModel::FindParent( QStandardItem* item ) const
-{
-    return item->parent() ? item->parent() : invisibleRootItem();
 }
