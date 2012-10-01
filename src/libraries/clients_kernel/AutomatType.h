@@ -45,6 +45,7 @@ public:
     //@{
     unsigned long GetId() const;
     std::string GetName() const;
+    std::string GetShortName() const;
     const AgentType* GetTypePC() const;
     std::string GetSymbol() const;
     std::string GetTypeName() const;

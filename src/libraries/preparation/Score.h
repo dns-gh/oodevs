@@ -53,6 +53,7 @@ public:
     //! @name Accessors
     //@{
     virtual QString GetName() const;
+    virtual QString GetShortName() const;
     virtual QString GetFormula() const;
     virtual const indicators::Gauge& GetGauge() const;
     virtual const indicators::Variables& GetVariables() const;

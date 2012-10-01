@@ -58,6 +58,7 @@ public:
     //! @name Operations
     //@{
     const std::string& GetName() const;
+    const std::string& GetShortName() const;
     const std::string& GetProtection() const;
     unsigned long GetId() const;
     tools::Iterator< const BreakdownOriginType& > CreateBreakdownsIterator() const;

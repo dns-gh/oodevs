@@ -11,6 +11,7 @@
 #include "Formation.h"
 #include "Tools.h"
 #include "Diplomacies.h"
+#include "clients_gui/LongNameHelper.h"
 #include "clients_kernel/StaticModel.h"
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
@@ -80,6 +81,27 @@ void Formation::CreateDictionary( kernel::Controller& controller )
 const kernel::LogisticLevel& Formation::GetLogisticLevel() const
 {
     return *logisticLevel_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::GetShortName
+// Created: LDC 2012-10-01
+// -----------------------------------------------------------------------------
+QString Formation::GetShortName() const
+{
+    return kernel::EntityImplementation< kernel::Formation_ABC >::GetName();
+}
+    
+// -----------------------------------------------------------------------------
+// Name: Formation::GetName
+// Created: LDC 2012-10-01
+// -----------------------------------------------------------------------------
+QString Formation::GetName() const
+{
+    std::string longName = gui::LongNameHelper::GetEntityLongName( *this );
+    if( longName.empty() )
+        return kernel::EntityImplementation< kernel::Formation_ABC >::GetName();
+    return longName.c_str();
 }
 
 // -----------------------------------------------------------------------------

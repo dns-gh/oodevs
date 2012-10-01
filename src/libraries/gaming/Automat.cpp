@@ -11,6 +11,7 @@
 #include "Automat.h"
 #include "Diplomacies.h"
 #include "Tools.h"
+#include "clients_gui/LongNameHelper.h"
 #include "clients_kernel/StaticModel.h"
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/AutomatType.h"
@@ -112,4 +113,25 @@ void Automat::InitializeSymbol() const
 const kernel::LogisticLevel& Automat::GetLogisticLevel() const
 {
     return *logisticLevel_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::GetShortName
+// Created: LDC 2012-10-01
+// -----------------------------------------------------------------------------
+QString Automat::GetShortName() const
+{
+    return kernel::EntityImplementation< kernel::Automat_ABC >::GetName();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::GetName
+// Created: LDC 2012-10-01
+// -----------------------------------------------------------------------------
+QString Automat::GetName() const
+{
+    std::string longName = gui::LongNameHelper::GetEntityLongName( *this );
+    if( longName.empty() )
+        return kernel::EntityImplementation< kernel::Automat_ABC >::GetName();
+    return longName.c_str();
 }

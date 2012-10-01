@@ -49,6 +49,8 @@ public:
     //@{
     virtual E_NatureLevel GetLevel() const;
     virtual const kernel::LogisticLevel& GetLogisticLevel() const;
+    virtual QString GetShortName() const;
+    virtual QString GetName() const;
     //@}
 
     //! @name Operations

@@ -50,6 +50,7 @@ public:
     //! @name Accessors
     //@{
     QString GetName() const;
+    QString GetShortName() const;
     ProfileSelection& GetProfiles() const;
     SuccessFactorConditions& GetConditions() const;
     SuccessFactorActions& GetActions() const;

@@ -52,6 +52,7 @@ public:
     //! @name Accessors
     //@{
     QString GetName() const;
+    QString GetShortName() const;
     std::string GetCategory() const;
     QString GetPrototype() const;
     //@}

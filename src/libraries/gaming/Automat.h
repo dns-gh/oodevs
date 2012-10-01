@@ -50,6 +50,9 @@ public:
     //@{
     virtual const kernel::AutomatType& GetType() const;
     virtual const kernel::LogisticLevel& GetLogisticLevel() const;
+
+    virtual QString GetShortName() const;
+    virtual QString GetName() const;
     //@}
 
     //! @name Extensions

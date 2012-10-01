@@ -47,8 +47,9 @@ public:
     void SetParameter( const std::string& name, const std::string& value );
     void SetTimeRange( unsigned int firstTick, unsigned int duration );
     void Commit() const;
-
+    
     QString GetName() const;
+    QString GetShortName() const;
     unsigned int GetFirstTick() const;
     void Update( const sword::PlotResult& message );
     void Update( const sword::Indicator& message );

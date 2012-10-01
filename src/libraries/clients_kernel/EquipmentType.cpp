@@ -63,6 +63,15 @@ const std::string& EquipmentType::GetName() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: EquipmentType::GetShortName
+// Created: LDC 2012-10-01
+// -----------------------------------------------------------------------------
+const std::string& EquipmentType::GetShortName() const
+{
+    return GetName();
+}
+
+// -----------------------------------------------------------------------------
 // Name: EquipmentType::GetProtection
 // Created: JSR 2011-02-10
 // -----------------------------------------------------------------------------

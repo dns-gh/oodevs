@@ -49,7 +49,16 @@ std::string NBCAgent::GetName() const
 {
     return name_;
 }
-//
+
+// -----------------------------------------------------------------------------
+// Name: NBCAgent::GetShortName
+// Created: LDC 2012-10-01
+// -----------------------------------------------------------------------------
+std::string NBCAgent::GetShortName() const
+{
+    return GetName();
+}
+
 //// -----------------------------------------------------------------------------
 //// Name: NBCAgent::Update
 //// Created: ABR 2011-11-29

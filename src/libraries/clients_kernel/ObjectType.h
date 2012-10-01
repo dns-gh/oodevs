@@ -47,6 +47,7 @@ public:
     //! @name Operations
     //@{
     const std::string& GetName() const;
+    const std::string& GetShortName() const;
     const std::string& GetType() const;
     const std::string& GetSymbol() const;
 

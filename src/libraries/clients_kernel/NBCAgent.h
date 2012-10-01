@@ -34,6 +34,7 @@ public:
     //@{
     unsigned long GetId() const;
     std::string GetName() const;
+    std::string GetShortName() const;
     //void Update();
     //@}
 

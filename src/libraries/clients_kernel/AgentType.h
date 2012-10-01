@@ -52,6 +52,7 @@ public:
     //@{
     unsigned long GetId() const;
     std::string GetName() const;
+    std::string GetShortName() const;
     const DecisionalModel& GetDecisionalModel() const;
     const AgentNature& GetNature() const;
     tools::Iterator< const AgentComposition& > CreateIterator() const;

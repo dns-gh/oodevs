@@ -363,7 +363,7 @@ void ValuedListItem::Set( T* value, const std::string& label1 )
 template< typename T >
 void ValuedListItem::SetNamed( const T& value )
 {
-    Set( &value, value.GetName() );
+    Set( &value, value.GetShortName() );
 }
 
 }

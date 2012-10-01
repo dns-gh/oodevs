@@ -36,6 +36,7 @@ public:
     //! @name Operations
     //@{
     std::string GetName() const;
+    std::string GetShortName() const;
     unsigned long GetId() const;
 
     float GetDensity() const;

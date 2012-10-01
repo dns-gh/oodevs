@@ -98,6 +98,15 @@ QString AfterActionFunction::GetName() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: AfterActionFunction::GetShortName
+// Created: LDC 2012-10-01
+// -----------------------------------------------------------------------------
+QString AfterActionFunction::GetShortName() const
+{
+    return GetName();
+}
+
+// -----------------------------------------------------------------------------
 // Name: AfterActionFunction::GetComments
 // Created: AGE 2007-10-15
 // -----------------------------------------------------------------------------

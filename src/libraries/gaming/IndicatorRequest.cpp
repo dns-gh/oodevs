@@ -134,6 +134,15 @@ QString IndicatorRequest::GetName() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: IndicatorRequest::GetShortName
+// Created: LDC 2012-10-01
+// -----------------------------------------------------------------------------
+QString IndicatorRequest::GetShortName() const
+{
+    return GetName();
+}
+
+// -----------------------------------------------------------------------------
 // Name: IndicatorRequest::IsPending
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------

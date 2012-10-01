@@ -53,6 +53,9 @@ public:
     //@{
     virtual void DisplayInTooltip( kernel::Displayer_ABC& ) const;
     virtual const kernel::AgentType& GetType() const;
+    
+    virtual QString GetShortName() const;
+    virtual QString GetName() const;
     //@}
 
 private:

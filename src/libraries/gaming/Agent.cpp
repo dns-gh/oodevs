@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "Agent.h"
+#include "clients_gui/LongNameHelper.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/GlTools_ABC.h"
@@ -113,4 +114,25 @@ void Agent::CreateDictionary( kernel::Controller& controller )
     const Agent& self = *this;
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Identifier" ), self.id_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Name" ), self.name_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::GetName
+// Created: LDC 2012-10-01
+// -----------------------------------------------------------------------------
+QString Agent::GetShortName() const
+{
+    return kernel::EntityImplementation< kernel::Agent_ABC >::GetName();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::GetName
+// Created: LDC 2012-10-01
+// -----------------------------------------------------------------------------
+QString Agent::GetName() const
+{
+    std::string longName = gui::LongNameHelper::GetEntityLongName( *this );
+    if( longName.empty() )
+        return kernel::EntityImplementation< kernel::Agent_ABC >::GetName();
+    return longName.c_str();
 }
