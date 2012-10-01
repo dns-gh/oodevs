@@ -33,23 +33,12 @@ public:
 public:
     //! @name Operations
     //@{
-
     QStandardItem* FindItem( QStandardItem* item, const QString& text ) const;
     QStandardItem* FindItem( const QString& category, QStandardItem* root ) const;
     QStandardItem* FindItem( const QString& category ) const;
     QStandardItem* FindParent( QStandardItem* item ) const;
     QStandardItem* CreateItem( QStandardItem& parent, const QString& name, const QString& path );
     void Delete( const QString& category );
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
-    //! @name Member data
-    //@{
     //@}
 };
 
