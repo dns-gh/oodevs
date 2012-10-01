@@ -382,6 +382,9 @@ bool LogisticTreeView::CanDrop( QDragMoveEvent* pEvent ) const
     if( ( !sourceAutomatType && !sourceEntity ) || !targetItem )
         return false; // can drop only if we have a source and a target
 
+    if( !targetItem->isDropEnabled() )
+        return false;
+
     kernel::LogisticLevel* targetLogistic  = ( dnd::IsA< kernel::LogisticLevel >( *targetItem ) ) ? dataModel_.GetDataFromItem< kernel::LogisticLevel >( *targetItem ) : 0;
     kernel::Entity_ABC* targetEntity = dnd::FindSafeEntityData< kernel::Formation_ABC, kernel::Automat_ABC, kernel::Ghost_ABC >( dataModel_, *targetItem );
 
@@ -393,6 +396,7 @@ bool LogisticTreeView::CanDrop( QDragMoveEvent* pEvent ) const
 
     if( ( sourceEntity && !profile_.CanDoMagic( *sourceEntity ) ) || ( targetEntity && !profile_.CanDoMagic( *targetEntity ) ) )
         return false; // can drop only if we can do magic
+
 
     if( sourceEntity )
     {
