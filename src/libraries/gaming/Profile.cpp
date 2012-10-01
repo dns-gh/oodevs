@@ -285,9 +285,9 @@ bool Profile::CanBeOrdered( const Entity_ABC& entity ) const
 // Name: Profile::CanDoMagic
 // Created: AGE 2006-10-13
 // -----------------------------------------------------------------------------
-bool Profile::CanDoMagic( const Entity_ABC& entity ) const
+bool Profile::CanDoMagic( const Entity_ABC& ) const
 {
-    return simulation_ && supervision_ && CanBeOrdered( entity );
+    return simulation_ && supervision_;
 }
 
 // -----------------------------------------------------------------------------
