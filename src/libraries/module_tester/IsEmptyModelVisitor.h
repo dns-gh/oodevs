@@ -79,7 +79,7 @@ private:
         empty_ = false;
     }
 
-    virtual void Visit( boost::shared_ptr< core::UserData_ABC > /*data*/ )
+    virtual void Visit( const boost::shared_ptr< core::UserData_ABC >& /*data*/ )
     {
         empty_ = false;
     }

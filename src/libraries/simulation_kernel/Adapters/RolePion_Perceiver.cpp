@@ -133,7 +133,7 @@ namespace
         virtual void Visit( const std::string& ) {}
         virtual void Visit( const std::string&, const core::Model& ) {}
         virtual void Visit( const core::Model& ) {}
-        virtual void Visit( boost::shared_ptr< core::UserData_ABC > ) {}
+        virtual void Visit( const boost::shared_ptr< core::UserData_ABC >& ) {}
         virtual void MarkForRemove() {}
     private:
         boost::function< int( const core::Model& ) > enable_;

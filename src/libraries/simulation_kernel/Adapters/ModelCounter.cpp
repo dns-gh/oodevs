@@ -102,7 +102,7 @@ void ModelCounter::Visit( const core::Model& element )
 // Name: ModelCounter::Visit
 // Created: MCO 2012-09-28
 // -----------------------------------------------------------------------------
-void ModelCounter::Visit( boost::shared_ptr< core::UserData_ABC > /*data*/ )
+void ModelCounter::Visit( const boost::shared_ptr< core::UserData_ABC >& /*data*/ )
 {
     // NOTHING
 }
