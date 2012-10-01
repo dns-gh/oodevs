@@ -1,7 +1,7 @@
 return
 {
     getMeetingPoint = function( self, params )
-        return params.meetingPoint
+        return integration.randomPositionOnCircle( params.meetingPoint, 100 )
     end,
 
     getObjective = function( self, params )

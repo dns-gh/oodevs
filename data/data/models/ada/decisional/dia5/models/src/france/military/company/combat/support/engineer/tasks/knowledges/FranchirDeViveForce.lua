@@ -32,6 +32,6 @@ return
         if not params.meetingPoint then
             return {}
         end
-        return params.meetingPoint 
+        return integration.randomPositionOnCircle( params.meetingPoint, 100 ) 
     end,
 }

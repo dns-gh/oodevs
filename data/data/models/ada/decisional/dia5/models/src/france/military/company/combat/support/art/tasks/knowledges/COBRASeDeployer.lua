@@ -17,12 +17,12 @@ return
                 local nextObjective = myself.leadData.subAreas[ myself.leadData.currentPosition ]
                 return nextObjective:getMyPosition()
             elseif masalife.brain.core.class.isOfType( params.position, sword.military.world.Point ) then
-                return integration.randomPositionInCircle( params.position, 100 )
+                return integration.randomPositionOnCircle( params.position, 100 )
             else
                 return params.position:getMyPosition()
             end
         end
         local AutomatPosition =  meKnowledge:getMyPosition()
-        return integration.randomPositionInCircle( AutomatPosition, 100 )
+        return integration.randomPositionOnCircle( AutomatPosition, 100 )
     end,
 }

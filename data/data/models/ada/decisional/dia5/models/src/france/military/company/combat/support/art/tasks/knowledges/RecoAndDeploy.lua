@@ -102,7 +102,7 @@ return
     
     getMeetingPoint = function ( self, params ) -- Need to send a list for moveAlong knowledge
         if params.meetingPoint and params.meetingPoint ~= NIL then
-            return { integration.randomPositionInCircle( params.meetingPoint, 100 ) }
+            return { integration.randomPositionOnCircle( params.meetingPoint, 100 ) }
         end
         return NIL
     end,

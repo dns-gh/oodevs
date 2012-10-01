@@ -19,7 +19,7 @@ return
     end,
 
     getMeetingPoint = function ( self, params )
-        return params.meetingPoint
+        return integration.randomPositionOnCircle( params.meetingPoint, 100 )
     end,
 
     getPositions = function( self, params )

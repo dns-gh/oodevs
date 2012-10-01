@@ -35,14 +35,14 @@ return
     
     getFinalMeetingPoint = function ( self, params )
         if params.meetingPoint and params.meetingPoint ~= NIL then
-            return integration.randomPositionInCircle( params.meetingPoint, 100 )
+            return integration.randomPositionOnCircle( params.meetingPoint, 100 )
         end
         return NIL
     end,
     
     getMeetingPoint = function ( self, params )
         if params.meetingPoint and params.meetingPoint ~= NIL then
-            return { integration.randomPositionInCircle( params.meetingPoint, 100 ) }
+            return { integration.randomPositionOnCircle( params.meetingPoint, 100 ) }
         end
         return NIL
     end,

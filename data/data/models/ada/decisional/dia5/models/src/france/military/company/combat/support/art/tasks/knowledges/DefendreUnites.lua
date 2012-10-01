@@ -7,7 +7,7 @@ return
     -- point du stationnement
     getReachable = function( self, params )
         if params.meetingPoint and params.meetingPoint ~= NIL then
-           return params.meetingPoint
+           return integration.randomPositionOnCircle( params.meetingPoint, 100 )
         end
         return params.objective
     end,

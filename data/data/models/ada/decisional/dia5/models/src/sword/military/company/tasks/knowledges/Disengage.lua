@@ -17,7 +17,7 @@ return
             elseif masalife.brain.core.class.isOfType( params.objective, sword.military.world.UrbanBlock ) then
                 return params.objective:getMyPosition()
             else
-                return integration.randomPositionInCircle( params.objective, 100 )
+                return integration.randomPositionOnCircle( params.objective, 100 )
             end
         end
         return nil
