@@ -21,7 +21,6 @@
 #include "Decision/DEC_LogisticFunctions.h"
 #include "Decision/DEC_ObjectFunctions.h"
 #include "Decision/DEC_OrdersFunctions.h"
-#include "Decision/DEC_PathFunctions.h"
 #include "Decision/DEC_Tools.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_RapFor_ABC.h"
