@@ -7,9 +7,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\libraries\score_plugin\ClientAnnouncer_ABC.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\score_plugin\IndicatorBuilder.h">
       <Filter>Source Files</Filter>
     </ClInclude>

@@ -102,7 +102,6 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\libraries\score_plugin\ClientAnnouncer_ABC.h" />
     <ClInclude Include="..\..\src\libraries\score_plugin\IndicatorBuilder.h" />
     <ClInclude Include="..\..\src\libraries\score_plugin\Score.h" />
     <ClInclude Include="..\..\src\libraries\score_plugin\score_plugin_pch.h" />

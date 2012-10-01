@@ -10,8 +10,8 @@
 #ifndef __ScoreAnnouncer_h_
 #define __ScoreAnnouncer_h_
 
-#include "ClientAnnouncer_ABC.h"
 #include <boost/shared_ptr.hpp>
+#include <boost/noncopyable.hpp>
 #include <map>
 #include <vector>
 
@@ -25,13 +25,15 @@ namespace plugins
 {
 namespace score
 {
+class Score;
+
 // =============================================================================
 /** @class  ScoreAnnouncer
     @brief  ScoreAnnouncer
 */
 // Created: SBO 2011-05-17
 // =============================================================================
-class ScoreAnnouncer : public ClientAnnouncer_ABC
+class ScoreAnnouncer : public boost::noncopyable
 {
 
 public:

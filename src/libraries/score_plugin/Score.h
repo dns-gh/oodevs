@@ -37,7 +37,7 @@ namespace plugins
 {
 namespace score
 {
-    class ClientAnnouncer_ABC;
+    class ScoreAnnouncer;
 
 // =============================================================================
 /** @class  Score
@@ -66,7 +66,7 @@ public:
     void Update( const sword::Indicator& message );
     void Send( dispatcher::ClientPublisher_ABC& publisher, int context ) const;
     void Serialize( xml::xostream& xos ) const;
-    void Accept( ClientAnnouncer_ABC& visitor );
+    void Accept( ScoreAnnouncer& visitor );
     //@}
 
 private:

@@ -9,7 +9,7 @@
 
 #include "score_plugin_pch.h"
 #include "Score.h"
-#include "ClientAnnouncer_ABC.h"
+#include "ScoreAnnouncer.h"
 #include "protocol/AarSenders.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include <xeumeuleu/xml.hpp>
@@ -101,7 +101,7 @@ void Score::Serialize( xml::xostream& xos ) const
 // Name: Score::Accept
 // Created: SBO 2011-05-17
 // -----------------------------------------------------------------------------
-void Score::Accept( ClientAnnouncer_ABC& visitor )
+void Score::Accept( ScoreAnnouncer& visitor )
 {
     if( profiles_.empty() )
         visitor.Visit( shared_from_this() );
