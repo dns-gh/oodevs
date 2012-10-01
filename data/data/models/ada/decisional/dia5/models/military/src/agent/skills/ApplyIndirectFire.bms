@@ -4,14 +4,7 @@
 -- ****************************************************************************
 rootnode
 {
-    connections =
-    { 
-        skill.nodes.ApplyFire, skill.nodes.CR_NoAmmo, 
-        skill.nodes.CR_ForbiddenAmmo, skill.nodes.CR_OutOfRange, 
-        skill.nodes.CR_NoLauncher
-    },
-
-    feedbacks = { "done" },
+    connections = { skill.nodes.ApplyFire },
 
     -- -------------------------------------------------------------------------------- 
     -- Feedback
@@ -19,50 +12,58 @@ rootnode
     done = function( self, params, additionnalParams )
         self.nextTargetIndex = self.nextTargetIndex + 1
         if self.nextTargetIndex > #self.params.entities then
-            Feedback( self.feedbacks.done, { state = "hasFire" }  )
+            Feedback( self.feedbacks.done, { state = "hasFire" } )
         end
          
     end,
-    
+
     -- -------------------------------------------------------------------------------- 
     -- Init
     -- --------------------------------------------------------------------------------
     create = function( self )
         self.nextTargetIndex = 1
+        meKnowledge:sendMessage( tostring( #self.params.entities ).." targets found within the area" )
     end,
 
-    -- -------------------------------------------------------------------------------- 
+    -- --------------------------------------------------------------------------------  
     -- Execute an indirect fire to obtain an effect corresponding to the munition
     -- --------------------------------------------------------------------------------
     activate = function( self )
         local Activate = Activate
-        if not meKnowledge:canUseDotation( self.params.munition ) then
-            Activate( skill.nodes.CR_ForbiddenAmmo, 1 )
+
+        if not meKnowledge:canUseDotation( self.params.dotationType ) then
+            meKnowledge:RC( eRC_TirIndirectForbiddenAmmo )
+            meKnowledge:sendMessage( "forbidden ammo" )
             Feedback( self.feedbacks.done, { state = "forbidden ammo" } )
             return
         end
 
-        if not meKnowledge:hasDotation( self.params.munition ) then
-            Activate( skill.nodes.CR_NoAmmo, 1 )
+        if not meKnowledge:hasDotation( self.params.dotationType ) then
+            meKnowledge:RC( eRC_TirImpossiblePlusDeMunitions )
+            meKnowledge:sendMessage( "no ammo" )
             Feedback( self.feedbacks.done, { state = "no ammo" } )
             return
         end
 
-        if not meKnowledge:hasLauncherFor( self.params.munition ) then
-            Activate( skill.nodes.CR_NoLauncher, 1 )
+        if not meKnowledge:hasLauncherFor( self.params.dotationType ) then
+            meKnowledge:RC( eRC_TirIndirectNoCapacity )
+            meKnowledge:sendMessage( "no Launcher" )
             Feedback( self.feedbacks.done, { state = "no Launcher" } )
             return
         end
 
         if self.params.entities[ self.nextTargetIndex ] then
-            if not self.params.entities[ self.nextTargetIndex ]:isOnRangeFor( self.params.munition ) then
-                Activate( skill.nodes.CR_OutOfRange, 1 )
+            if not self.params.entities[ self.nextTargetIndex ]:isOnRangeFor( self.params.dotationType ) then
+                meKnowledge:RC( eRC_TirHorsDePortee )
+                meKnowledge:sendMessage( "target out of range" )
                 Feedback( self.feedbacks.done, { state = "out of range" } )
                 return
             end
-    
+
             -- Apply fire on target
-            Activate( skill.nodes.ApplyFire, 1, { entity = self.params.entities[ self.nextTargetIndex ], munition = self.params.munition, interventionType = self.params.interventionType } )
+            Activate( skill.nodes.ApplyFire, 1, { entity   = self.params.entities[ self.nextTargetIndex ], 
+                                                  munition = self.params.dotationType, 
+                                                  quantity = self.params.quantity } )
         end
     end
 }
@@ -72,42 +73,11 @@ rootnode
 -- ****************************************************************************
 node "ApplyFire"
 {
-    acquire = { [ skill.resources.indirectFire ] = 1 };
+    acquire = { [ skill.resources.indirectFire ] = 1 },
 
     select = function( self )
-        if( self.params.entity:applyFireOnIt( self.params.munition, self.params.interventionType ) ) then
+        if( self.params.entity:applyFireOnIt( self.params.munition, self.params.quantity ) ) then
             Feedback( self.feedbacks.done, { state = "finish" } )
         end
-    end
-}
-
--- **************************************************************************** 
--- CR
--- ****************************************************************************
-node "CR_ForbiddenAmmo"
-{ 
-    create = function( self )
-        meKnowledge:RC( eRC_TirIndirectForbiddenAmmo )
-    end
-}
-
-node "CR_NoAmmo"
-{ 
-    create = function( self )
-        meKnowledge:RC( eRC_TirImpossiblePlusDeMunitions )
-    end
-}
-
-node "CR_OutOfRange"
-{
-    create = function( self )
-        meKnowledge:RC( eRC_TirHorsDePortee )
-    end
-}
-
-node "CR_NoLauncher"
-{
-    create = function( self )
-        meKnowledge:RC( eRC_TirIndirectNoCapacity )
     end
 }

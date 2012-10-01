@@ -28,19 +28,14 @@
                             </list>
                         </value>
                     </parameter>
-                    <parameter name="munition">
+                    <parameter name="dotationType">
                         <value>
                             <parameter>munition</parameter>
                         </value>
                     </parameter>
-                    <parameter name="interventionType">
+                    <parameter name="quantity">
                         <value>
                             <parameter>interventionType</parameter>
-                        </value>
-                    </parameter>
-                    <parameter name="canReceiveUnexpectedOrder">
-                        <value>
-                            <boolean>false</boolean>
                         </value>
                     </parameter>
                 </skill>
