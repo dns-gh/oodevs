@@ -36,6 +36,7 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
+#include "Entities/Effects/MIL_Effect_IndirectFire.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_Population.h"
@@ -580,6 +581,11 @@ namespace
         const MT_Rect& boundingBox = core::Convert( localization )->GetUserData< const TER_Localisation* >()->GetBoundingBox();
         return boundingBox.GetCenter().Distance( boundingBox.GetPointUpLeft() );
     }
+    DEFINE_HOOK( CanFlyingShellBePerceived, bool, ( const SWORD_Model* flyingShell, const SWORD_Model* zone, const MT_Vector2D* source, double radius ) )
+    {
+        const TER_Localisation& localisation = *GET_DATA( zone, boost::shared_ptr< TER_Localisation > );
+        return localisation.Intersect2DWithCircle( *source, radius ) && GET_DATA( flyingShell, MIL_Effect_IndirectFire ).IsFlyingThroughLocalisation( localisation );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -656,5 +662,6 @@ void PerceptionHooks::Initialize( core::Facade& facade )
     REGISTER_HOOK( IsObjectIntersectingLocalization, facade );
     REGISTER_HOOK( IsKnowledgeObjectIntersectingWithCircle, facade );
     REGISTER_HOOK( GetLocalizationRadius, facade );
+    REGISTER_HOOK( CanFlyingShellBePerceived, facade );
     RolePion_Perceiver::Initialize( facade );
 }

@@ -143,6 +143,7 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
     <ClCompile Include="..\..\src\tests\perception_module_test\AlatRecoSensorTest.cpp" />
     <ClCompile Include="..\..\src\tests\perception_module_test\DefaultSensorTest.cpp" />
     <ClCompile Include="..\..\src\tests\perception_module_test\ExternalPerceptionCommandTest.cpp" />
+    <ClCompile Include="..\..\src\tests\perception_module_test\FlyingShellSensorTest.cpp" />
     <ClCompile Include="..\..\src\tests\perception_module_test\HooksTest.cpp" />
     <ClCompile Include="..\..\src\tests\perception_module_test\IdentifyAgentsCommandTest.cpp" />
     <ClCompile Include="..\..\src\tests\perception_module_test\LocalizationRecoSensorTest.cpp" />

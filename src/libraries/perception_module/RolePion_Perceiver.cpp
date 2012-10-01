@@ -30,6 +30,7 @@
 #include "PerceptionRecoLocalisation.h"
 #include "PerceptionRecoUrbanBlock.h"
 #include "PerceptionRadar.h"
+#include "PerceptionFlyingShell.h"
 #include "ListInCircleVisitor.h"
 #include "wrapper/View.h"
 #include "wrapper/Hook.h"
@@ -454,6 +455,7 @@ namespace
         AddActiveListPerception< PerceptionRecoPoint >( "recognition-point", activePerceptions, model, entity, observer );
         AddActiveListPerception< PerceptionRecoLocalisation >( "reco", activePerceptions, model, entity, observer );
         AddActiveListPerception< PerceptionRecoUrbanBlock >( "urban", activePerceptions, model, entity, observer );
+        AddActiveListPerception< PerceptionFlyingShell >( "flying-shell/zones", activePerceptions, model, entity, observer );
         activePerceptions.push_back( boost::shared_ptr< PerceptionRadar >( new PerceptionRadar( entity, observer ) ) );
         return activePerceptions;
     }

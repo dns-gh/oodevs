@@ -36,6 +36,7 @@ namespace perception
                 "    <alat-monitoring-time terrain='Foret' time='5s'/>"
                 "    <alat-monitoring-time terrain='Urbain' time='20s'/>"
                 "  </alat-monitoring-times>"
+                "  <cobra-radar action-range='100000'/>"
                 "  <radars>"
                 "    <radar action-range='60000' name='my-radar' type='radar'>"
                 "      <detectable-activities>"

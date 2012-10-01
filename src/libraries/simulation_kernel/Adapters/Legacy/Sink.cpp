@@ -131,7 +131,7 @@ void Sink::ApplyEffects()
 // Name: Sink::UpdateModel
 // Created: SLI 2012-01-13
 // -----------------------------------------------------------------------------
-void Sink::UpdateModel( unsigned int /*tick*/, int /*duration*/, const MIL_ObjectManager& /*objects*/ )
+void Sink::UpdateModel( unsigned int /*tick*/, int /*duration*/, const MIL_ObjectManager& /*objects*/, const MIL_EffectManager& /*effects*/ )
 {
     // NOTHING
 }

@@ -79,5 +79,8 @@
     <ClCompile Include="..\..\src\tests\perception_module_test\RadarSensorTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\tests\perception_module_test\FlyingShellSensorTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -41,14 +41,15 @@
 #include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
-#include "Entities/Objects/MIL_ObjectFilter.h"
-#include "Entities/MIL_EntityVisitor_ABC.h"
-#include "Entities/MIL_Army_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Orders/MIL_Report.h"
-#include "Entities/Populations/MIL_PopulationElement_ABC.h"
+#include "Entities/Effects/MIL_EffectManager.h"
+#include "Entities/Objects/MIL_ObjectFilter.h"
 #include "Entities/Objects/MIL_ObjectManager.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/MIL_EntityVisitor_ABC.h"
+#include "Entities/MIL_Army_ABC.h"
+#include "Entities/Orders/MIL_Report.h"
+#include "Entities/Populations/MIL_PopulationElement_ABC.h"
 #include "Urban/MIL_UrbanCache.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
@@ -406,19 +407,31 @@ namespace
             component[ "score" ] = composante.GetMajorScore();
         }
     }
+    template< typename T >
+    void UpdateFlyingShells( core::Model& model, T& flyingShells )
+    {
+        model.Clear();
+        BOOST_FOREACH( const MIL_Effect_IndirectFire* fire, flyingShells )
+        {
+            core::Model& flyingShell = model.AddElement();
+            flyingShell[ "identifier" ] = fire->GetFireID();
+            flyingShell[ "data" ].SetUserData( fire );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: Sink::UpdateModel
 // Created: SLI 2012-01-13
 // -----------------------------------------------------------------------------
-void Sink::UpdateModel( unsigned int tick, int duration, const MIL_ObjectManager& objects )
+void Sink::UpdateModel( unsigned int tick, int duration, const MIL_ObjectManager& objects, const MIL_EffectManager& effects )
 {
     (*model_)[ "tick" ] = tick;
     (*model_)[ "step" ] = duration;
     core::Model& entities = (*model_)[ "entities" ];
     UpdatePopulations( (*model_)[ "populations" ], populations_ );
     UpdateObjects( (*model_ )[ "objects" ], objects.GetObjects() );
+    UpdateFlyingShells( (*model_ )[ "flying-shells" ], effects.GetFlyingShells() );
     for( tools::Iterator< const MIL_AgentPion& > it = agents_.CreateIterator(); it.HasMoreElements(); )
     {
         MIL_AgentPion& pion = const_cast< MIL_AgentPion& >( it.NextElement() );

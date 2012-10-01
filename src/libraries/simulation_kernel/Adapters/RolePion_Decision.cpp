@@ -627,8 +627,6 @@ namespace
     }
     int EnableLocalizedDetectionId( Sink& sink, MIL_AgentPion& pion, const std::string& perception, const core::Model& localisation, int perceptionId )
     {
-        if( !localisation )
-            throw std::runtime_error( __FUNCTION__ ": invalid localization parameter while enabling localized detection." );
         core::Model parameters;
         parameters[ "identifier" ] = pion.GetID();
         parameters[ "activated" ] = true;
@@ -640,12 +638,24 @@ namespace
     }
     int EnableLocalizedDetection( Sink& sink, MIL_AgentPion& pion, const std::string& perception, const TER_Localisation* localisation )
     {
+        if( !localisation )
+            throw std::runtime_error( __FUNCTION__ ": invalid localization parameter while enabling localized detection." );
+        core::Model parameter;
+        parameter.SetUserData( localisation );
+        return EnableLocalizedDetectionId( sink, pion, perception, parameter, GET_HOOK( GetPerceptionId )() );
+    }
+    int EnableSharedLocalizedDetection( Sink& sink, MIL_AgentPion& pion, const std::string& perception, boost::shared_ptr< TER_Localisation > localisation )
+    {
+        if( !localisation )
+            throw std::runtime_error( __FUNCTION__ ": invalid localization parameter while enabling localized detection." );
         core::Model parameter;
         parameter.SetUserData( localisation );
         return EnableLocalizedDetectionId( sink, pion, perception, parameter, GET_HOOK( GetPerceptionId )() );
     }
     int EnableUrbanLocalizedDetection( Sink& sink, MIL_AgentPion& pion, const std::string& perception, const MIL_UrbanObject_ABC* block )
     {
+        if( !block )
+            throw std::runtime_error( __FUNCTION__ ": invalid urban block parameter while enabling localized detection." );
         core::Model parameter;
         parameter.SetUserData( block->GetLocalisation() );
         parameter[ "block" ].SetUserData( block );
@@ -653,6 +663,8 @@ namespace
     }
     int EnableAlatLocalizedDetection( Sink& sink, MIL_AgentPion& pion, const std::string& perception, const TER_Localisation* localisation )
     {
+        if( !localisation )
+            throw std::runtime_error( __FUNCTION__ ": invalid localization parameter while enabling localized detection." );
         core::Model parameter;
         parameter.SetUserData( localisation );
         return EnableLocalizedDetectionId( sink, pion, perception, parameter, 0 );
@@ -795,12 +807,12 @@ void RolePion_Decision::RegisterPerception()
     RegisterCommand< int( int, const TER_Localisation* ) >         ( "DEC_Perception_ActiverRadarSurLocalisation", &EnableLocalizedRadar< const TER_Localisation* >, _1, _2 );
     RegisterCommand< int( int, boost::shared_ptr< MT_Vector2D > ) >( "DEC_Perception_ActiverRadarSurPointPtr", &EnableLocalizedRadarOnPoint, _1, _2 );
     RegisterCommand< void( int, int ) >                            ( "DEC_Perception_DesactiverRadarSurLocalisation", &DisableLocalizedRadar, _1, _2 );
-    RegisterCommand< int( const TER_Localisation* ) >              ( "DEC_Perception_ActiverPerceptionTirsIndirect", &EnableLocalizedDetection, "flying-shell", _1 );
-    RegisterCommand< void( int ) >                                 ( "DEC_Perception_DesactiverPerceptionTirsIndirect", &DisableLocalizedDetection, "flying-shell", _1 );
+    RegisterCommand< int( boost::shared_ptr< TER_Localisation> ) > ( "DEC_Perception_ActiverPerceptionTirsIndirect", &EnableSharedLocalizedDetection, "flying-shell/zones", _1 );
+    RegisterCommand< void( int ) >                                 ( "DEC_Perception_DesactiverPerceptionTirsIndirect", &DisableLocalizedDetection, "flying-shell/zones", _1 );
     RegisterCommand< int( const TER_Localisation* ) >              ( "DEC_Perception_ActiverReconnaissanceLocalisation", &EnableRecoOnLocation, _1, boost::optional< float >() );
     RegisterCommand< int( const TER_Localisation*, float ) >       ( "DEC_Perception_ActivateLocationProgressiveRecce", &EnableRecoOnLocation, _1, _2 );
     RegisterCommand< void( int ) >                                 ( "DEC_Perception_DesactiverReconnaissanceLocalisation", &DisableIdentifiedCommand, "toggle reco", _1 );
-    RegisterCommand< int( MIL_UrbanObject_ABC* ) >                  ( "DEC_Perception_ActiverReconnaissanceDansBlocUrbain", &EnableUrbanLocalizedDetection, "urban", _1 );
+    RegisterCommand< int( MIL_UrbanObject_ABC* ) >                 ( "DEC_Perception_ActiverReconnaissanceDansBlocUrbain", &EnableUrbanLocalizedDetection, "urban", _1 );
     RegisterCommand< void( int ) >                                 ( "DEC_Perception_DesactiverReconnaissanceDansBlocUrbain", &DisableLocalizedDetection, "urban", _1 );
     RegisterCommand< int( boost::shared_ptr< TER_Localisation >,
                           const MT_Vector2D*, double ) >           ( "DEC_Perception_ActiverDetectionObjetLocalisation", &EnableObjectDetection, _1, _2, _3 );

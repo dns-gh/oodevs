@@ -170,6 +170,9 @@
     <ClInclude Include="..\..\src\libraries\perception_module\PerceptionRadarData.h">
       <Filter>Source Files\Perceptions\Radar</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\perception_module\PerceptionFlyingShell.h">
+      <Filter>Source Files\Perceptions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\perception_module\PerceptionCommand.cpp">
@@ -288,6 +291,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\perception_module\PerceptionRadar.cpp">
       <Filter>Source Files\Perceptions\Radar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\perception_module\PerceptionFlyingShell.cpp">
+      <Filter>Source Files\Perceptions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

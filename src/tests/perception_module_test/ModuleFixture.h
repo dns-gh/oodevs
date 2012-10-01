@@ -110,7 +110,8 @@ class PHY_Volume;
     APPLY( IsKnowledgeObjectInsidePerception, 4, bool, ( const SWORD_Model* localization, const MT_Vector2D* center, double radius, const SWORD_Model* knowledgeObject ) ) \
     APPLY( IsObjectIntersectingLocalization, 2, bool, ( const SWORD_Model* localization, const SWORD_Model* object ) ) \
     APPLY( IsKnowledgeObjectIntersectingWithCircle, 3, bool, ( const MT_Vector2D* center, double radius, const SWORD_Model* knowledgeObject ) ) \
-    APPLY( GetLocalizationRadius, 1, double, ( const SWORD_Model* localization ) )
+    APPLY( GetLocalizationRadius, 1, double, ( const SWORD_Model* localization ) ) \
+    APPLY( CanFlyingShellBePerceived, 4, bool, ( const SWORD_Model* flyingShell, const SWORD_Model* zone, const MT_Vector2D* source, double radius ) )
 
 #define REGISTERED_AND_USED_HOOKS( APPLY ) \
     APPLY( IsUsingActiveRadar, 1, bool, ( const SWORD_Model* entity ) ) \

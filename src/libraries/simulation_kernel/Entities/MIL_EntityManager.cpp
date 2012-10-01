@@ -597,7 +597,7 @@ void MIL_EntityManager::Finalize()
 void MIL_EntityManager::Synchronize()
 {
     sink_->UpdateUrbanModel( MIL_AgentServer::GetWorkspace().GetUrbanCache() );
-    sink_->UpdateModel( time_.GetCurrentTick(), time_.GetTickDuration(), *pObjectManager_ );
+    sink_->UpdateModel( time_.GetCurrentTick(), time_.GetTickDuration(), *pObjectManager_, effectManager_ );
     sink_->ApplyEffects();
 }
 
@@ -741,7 +741,7 @@ void MIL_EntityManager::UpdateKnowledges()
     try
     {
         int currentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
-        sink_->UpdateModel( time_.GetCurrentTick(), time_.GetTickDuration(), *pObjectManager_ );
+        sink_->UpdateModel( time_.GetCurrentTick(), time_.GetTickDuration(), *pObjectManager_, effectManager_ );
         sink_->ExecutePerceptions();
         armyFactory_->Apply( boost::bind( &MIL_Army_ABC::UpdateKnowledges, _1, boost::ref( currentTimeStep ) ) );
         populationFactory_->Apply( boost::bind( &MIL_Population::UpdateKnowledges, _1 ) );

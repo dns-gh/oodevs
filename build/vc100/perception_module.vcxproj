@@ -27,6 +27,7 @@
     <ClInclude Include="..\..\src\libraries\perception_module\PerceptionCommand.h" />
     <ClInclude Include="..\..\src\libraries\perception_module\PerceptionComputer.h" />
     <ClInclude Include="..\..\src\libraries\perception_module\PerceptionCoupDeSonde.h" />
+    <ClInclude Include="..\..\src\libraries\perception_module\PerceptionFlyingShell.h" />
     <ClInclude Include="..\..\src\libraries\perception_module\PerceptionLevel.h" />
     <ClInclude Include="..\..\src\libraries\perception_module\PerceptionLocalisation.h" />
     <ClInclude Include="..\..\src\libraries\perception_module\PerceptionObserver.h" />
@@ -76,6 +77,7 @@
     <ClCompile Include="..\..\src\libraries\perception_module\PerceptionAlat.cpp" />
     <ClCompile Include="..\..\src\libraries\perception_module\PerceptionCommand.cpp" />
     <ClCompile Include="..\..\src\libraries\perception_module\PerceptionCoupDeSonde.cpp" />
+    <ClCompile Include="..\..\src\libraries\perception_module\PerceptionFlyingShell.cpp" />
     <ClCompile Include="..\..\src\libraries\perception_module\PerceptionLevel.cpp" />
     <ClCompile Include="..\..\src\libraries\perception_module\PerceptionLocalisation.cpp" />
     <ClCompile Include="..\..\src\libraries\perception_module\PerceptionObserver.cpp" />

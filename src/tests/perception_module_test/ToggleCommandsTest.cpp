@@ -141,13 +141,13 @@ BOOST_FIXTURE_TEST_CASE( activating_localized_detection_localization_is_forwarde
     const unsigned int identifier = 42;
     const unsigned int perceptionId = 1337;
     const int localization = 0;
-    core::Model& perception = model[ "entities" ][ identifier ][ "perceptions/my-perception" ];
+    core::Model& perception = model[ "entities" ][ identifier ][ "perceptions/my-perception/child" ];
     ExpectEffect( perception, sword::test::MakeModel( perceptionId,
                                 sword::test::MakeModel( "localization", sword::test::MakeUserData( &localization ) ) ) );
     StartCommand( "toggle localized perception",
         core::MakeModel( "identifier", identifier )
                        ( "activated", true )
-                       ( "perception", "my-perception" )
+                       ( "perception", "my-perception/child" )
                        ( "perception-id", perceptionId )
                        ( "localization", sword::test::MakeUserData( &localization ) ) );
     ExecuteCommands();

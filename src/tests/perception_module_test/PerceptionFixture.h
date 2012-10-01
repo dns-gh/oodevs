@@ -57,6 +57,8 @@ namespace perception
             entity[ "perceptions/object-detection" ];
             entity[ "perceptions/urban" ];
             entity[ "perceptions/reco" ];
+            entity[ "perceptions/flying-shell/zones" ];
+            entity[ "perceptions/flying-shell/previous" ];
             entity[ "perceptions/recognition-point" ];
             entity[ "perceptions/radars/acquisitions" ];
             entity[ "perceptions/radars/radar/activated" ] = false;

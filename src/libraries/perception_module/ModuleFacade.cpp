@@ -24,6 +24,7 @@
 #include "PerceptionLevel.h"
 #include "RadarClass.h"
 #include "RadarType.h"
+#include "PerceptionFlyingShell.h"
 #include "wrapper/Command.h"
 #include <boost/lambda/lambda.hpp>
 #include <xeumeuleu/xml.hpp>
@@ -47,6 +48,7 @@ namespace
             ToggleAlatMonitoringCommand::Initialize( xis ); // $$$$ MCO : TODO : maybe we need to store configuration data in a model somehow ?
             SensorType::Initialize( xis ); // $$$$ MCO : TODO : maybe we need to store configuration data in a model somehow ?
             RadarType::Initialize( xis ); // $$$$ MCO : TODO : maybe we need to store configuration data in a model somehow ?
+            PerceptionFlyingShell::Initialize( xis ); // $$$$ MCO : TODO : maybe we need to store configuration data in a model somehow ?
         }
         catch( std::runtime_error e )
         {
