@@ -266,14 +266,16 @@
     </target>
 
     <target name="web_control_plugin_dll" depends="web_control_plugin" description="build web_control_plugin dynamic library">
-        <build-plugin name="web_control" depends="boost,protobuf,xerces"
+        <build-lib name="web_control_plugin_dll" outtype="shared" depends="boost,protobuf,xerces" pattern="web_control_plugin"
             libs="mongoose@{suffix},
                   lib${ant.project.name}_web_control_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix}"
             failonwarning="${failonwarning}">
-            <syslibset libs="wsock32"/>
+            <syslibset libs="wsock32,shell32,user32"/>
             <defineset define="WEB_CONTROL_PLUGIN_DLL_EXPORTS"/>
-        </build-plugin>
+            <linkerarg value="/FIXED:NO"/>
+        </build-lib>
+        <move todir="${run.dir}/plugins/web_control" file="${run.dir}/web_control_plugin.dll"/>
     </target>
 
     <target name="vrforces_plugin" depends="protocol,rpr" description="build vrforces_plugin static library">
