@@ -24,7 +24,7 @@
 // Name: OrbatDockWidget constructor
 // Created: JSR 2012-09-26
 // -----------------------------------------------------------------------------
-OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers, QWidget* parent, const QString& objectName, const QString& windowTitle, 
+OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers, QWidget* parent, const QString& objectName, const QString& windowTitle,
                                   ProfileFilter& filter, gui::AutomatsLayer& automats, gui::FormationLayer& formations,
                                   actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation,
                                   gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons )
@@ -32,29 +32,33 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers, QWidget* par
 {
     setWindowTitle( windowTitle );
     setObjectName( objectName );
-    
+
     Q3VBox* box = new Q3VBox( this );
     setWidget( box );
     OrbatToolbar* orbatToolbar = new OrbatToolbar( box, controllers, filter, automats, formations );
     const gui::AggregateToolbar* aggregateToolbar = orbatToolbar->GetToolbar();
-    QTabWidget* pListsTabWidget = new QTabWidget( box );
 
+    QTabWidget* pListsTabWidget = new QTabWidget( box );
     gui::SearchTreeView_ABC* searchTreeView = 0;
     {
-        searchTreeView = new gui::SearchTreeView< TacticalTreeView >( pListsTabWidget, controllers, filter, observer_, icons, staticModel, simulation, actionsModel );
-        searchTreeView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchTreeView->GetRichTreeView(), SLOT( LockDragAndDrop( bool ) ) );
-        pListsTabWidget->addTab( searchTreeView, tr( "Tactical" ) );
-    }
-    {
-        searchTreeView = new gui::SearchTreeView< CommunicationTreeView >( pListsTabWidget, controllers, filter, observer_, icons, staticModel, simulation, actionsModel );
-        searchTreeView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchTreeView->GetRichTreeView(), SLOT( LockDragAndDrop( bool ) ) );
-        pListsTabWidget->addTab( searchTreeView, tr( "Communication" ) );
-    }
-    {
-        gui::SearchListView< LogisticListView >* logisticSearchListView = new gui::SearchListView< ::LogisticListView >( pListsTabWidget, controllers, factory, filter, icons, actionsModel, staticModel, simulation );
-        logisticSearchListView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), logisticSearchListView->GetRichListView(), SLOT( LockDragAndDrop( bool ) ) );
-        logisticListView_ = logisticSearchListView->GetListView();
-        pListsTabWidget->addTab( logisticSearchListView, tr( "Logistic" ) );
+        QTabWidget* pUnit = new QTabWidget();
+        {
+            searchTreeView = new gui::SearchTreeView< TacticalTreeView >( pUnit, controllers, filter, observer_, icons, staticModel, simulation, actionsModel );
+            searchTreeView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchTreeView->GetRichTreeView(), SLOT( LockDragAndDrop( bool ) ) );
+            pUnit->addTab( searchTreeView, tr( "Tactical" ) );
+        }
+        {
+            searchTreeView = new gui::SearchTreeView< CommunicationTreeView >( pUnit, controllers, filter, observer_, icons, staticModel, simulation, actionsModel );
+            searchTreeView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchTreeView->GetRichTreeView(), SLOT( LockDragAndDrop( bool ) ) );
+            pUnit->addTab( searchTreeView, tr( "Communication" ) );
+        }
+        {
+            gui::SearchListView< LogisticListView >* logisticSearchListView = new gui::SearchListView< ::LogisticListView >( pUnit, controllers, factory, filter, icons, actionsModel, staticModel, simulation );
+            logisticSearchListView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), logisticSearchListView->GetRichListView(), SLOT( LockDragAndDrop( bool ) ) );
+            logisticListView_ = logisticSearchListView->GetListView();
+            pUnit->addTab( logisticSearchListView, tr( "Logistic" ) );
+        }
+        pListsTabWidget->addTab( pUnit, tr( "Units" ) );
     }
     {
         searchTreeView = new gui::SearchTreeView< gui::ObjectTreeView >( pListsTabWidget, controllers, filter, observer_ );

@@ -2478,6 +2478,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Populations</source>
         <translation>Populations</translation>
     </message>
+    <message>
+        <source>Units</source>
+        <translation>Unités</translation>
+    </message>
 </context>
 <context>
     <name>OrbatPanel</name>

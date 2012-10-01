@@ -2470,6 +2470,10 @@ This data can&apos;t be projected.</source>
         <source>Populations</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Units</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>OrbatPanel</name>
