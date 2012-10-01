@@ -201,14 +201,11 @@ bool Profile::CanBeOrdered( const Entity_ABC& entity ) const
 // Name: Profile::CanDoMagic
 // Created: AGE 2006-10-13
 // -----------------------------------------------------------------------------
-bool Profile::CanDoMagic( const Entity_ABC& entity ) const
+bool Profile::CanDoMagic( const Entity_ABC& ) const
 {
     if( !simulation_ || !supervision_ )
         return false;
-    if( const kernel::TacticalHierarchies* tacticalHierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
-        if( ( entity.GetTypeName() == Object_ABC::typeName_ && tacticalHierarchies->GetTop().GetId() == 0 ) || ( entity.GetTypeName() == Team_ABC::typeName_ && entity.GetId() == 0 ) )
-            return true;
-    return RightsResolver::CanBeOrdered( entity );
+    return true;
 }
 
 // -----------------------------------------------------------------------------
