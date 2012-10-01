@@ -76,7 +76,7 @@
                           todir="${out.dir}">
                         <arg value="/DSUB_PLATFORM=${sub_platform}"/>
                     </nsis>
-                    <safe-move file="${out.dir}/sword_server_${platform}_setup.exe"/>
+                    <safe-move file="${out.dir}/sword_cloud_${platform}_setup.exe"/>
                 </then>
                 <else>
                     <nsis dir="${src.dir}"
