@@ -75,6 +75,9 @@ private:
     void UpdateLeastAndMostVisible();
     void ResetLayers();
     void RemoveDynamicLayer( QStandardItem& item );
+    void MoveItem( int row, Layer_ABC* layer, int newPlace, int oldPlace, int step );
+    Layer_ABC* GetCurrentLayer() const;
+    int GetCurrentRow( Layer_ABC* layer ) const;
     //@}
 
     //! @name Types

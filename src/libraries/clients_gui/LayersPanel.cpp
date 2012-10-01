@@ -319,34 +319,63 @@ void LayersPanel::OnSelectionChanged()
 }
 
 // -----------------------------------------------------------------------------
+// Name: LayersPanel::MoveItem
+// Created: LGY 2012-10-01
+// -----------------------------------------------------------------------------
+void LayersPanel::MoveItem( int row, Layer_ABC* layer, int newPlace, int oldPlace, int step )
+{
+    if( layer )
+    {
+        QStandardItem* item = layersModel_->takeItem( row );
+        layersModel_->insertRow( row + newPlace, item );
+        layersModel_->removeRow( row + oldPlace );
+        T_Layers::iterator it = std::find( newLayers_.begin(), newLayers_.end(), layer );
+        std::swap( *it, *(it+step) );
+        layersList_->selectionModel()->select( item->index(), QItemSelectionModel::Select );
+        UpdateLeastAndMostVisible();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LayersPanel::GetCurrentLayer
+// Created: LGY 2012-10-01
+// -----------------------------------------------------------------------------
+Layer_ABC* LayersPanel::GetCurrentLayer() const
+{
+    if( currentLayer_ != -1 && currentLayer_ < static_cast< int >( layers_.size() ) )
+        return layers_[ currentLayer_ ];
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LayersPanel::GetCurrentRow
+// Created: LGY 2012-10-01
+// -----------------------------------------------------------------------------
+int LayersPanel::GetCurrentRow( Layer_ABC* layer ) const
+{
+    QModelIndexList list = layersModel_->match( layersModel_->index( 0, 0 ), Qt::UserRole + 1, QVariant::fromValue( layer ), -1, Qt::MatchRecursive );
+    if( !list.empty() )
+        return list.front().row();
+    return -1;
+}
+
+// -----------------------------------------------------------------------------
 // Name: LayersPanel::OnUp
 // Created: AGE 2007-04-27
 // -----------------------------------------------------------------------------
 void LayersPanel::OnUp()
 {
-    if( currentLayer_ != -1 && currentLayer_ < static_cast< int >( layers_.size() ) )
+    Layer_ABC* layer = GetCurrentLayer();
+    if( layer )
     {
-        Layer_ABC* layer = layers_[ currentLayer_ ];
-
-        QModelIndexList list = layersModel_->match( layersModel_->index( 0, 0 ), Qt::UserRole + 1, QVariant::fromValue( layer ), -1, Qt::MatchRecursive );
-        if( !list.empty() )
+        int row = GetCurrentRow( layer );
+        if( row != -1 && row != 0 )
         {
-            int row = list.front().row();
-            if( row != 0 )
-            {
-                if( QStandardItem* previous = layersModel_->item( row - 1 ) )
-                     layer->MoveAbove( *previous->data().value< Layer_ABC* >() );
-                QStandardItem* item = layersModel_->takeItem( row );
-                layersModel_->insertRow( row - 1, item );
-                layersModel_->removeRow( row + 1 );
-                T_Layers::iterator it = std::find( newLayers_.begin(), newLayers_.end(), layer );
-                if( it < newLayers_.end() - 1 )
-                    std::swap( *it, *(it+1) );
-                layersList_->selectionModel()->select( item->index(), QItemSelectionModel::Select );
-            }
+            if( QStandardItem* previous = layersModel_->item( row - 1 ) )
+                layer->MoveAbove( *previous->data().value< Layer_ABC* >() );
+            MoveItem( row, layer, -1, 1, 1 );
         }
     }
-    UpdateLeastAndMostVisible();
 }
 
 // -----------------------------------------------------------------------------
@@ -355,29 +384,17 @@ void LayersPanel::OnUp()
 // -----------------------------------------------------------------------------
 void LayersPanel::OnDown()
 {
-    if( currentLayer_ != -1 && currentLayer_ < static_cast< int >( layers_.size() ) )
+    Layer_ABC* layer = GetCurrentLayer();
+    if( layer )
     {
-        Layer_ABC* layer = layers_[ currentLayer_ ];
-
-        QModelIndexList list = layersModel_->match( layersModel_->index( 0, 0 ), Qt::UserRole + 1, QVariant::fromValue( layer ), -1, Qt::MatchRecursive );
-        if( !list.empty() )
+        int row = GetCurrentRow( layer );
+        if( row != -1 && row != layersModel_->rowCount() - 1 )
         {
-            int row = list.front().row();
-            if( row != layersModel_->rowCount() - 1 )
-            {
-                if( QStandardItem* next = layersModel_->item( row + 1 ) )
-                    layer->MoveBelow( *next->data().value< Layer_ABC* >() );
-                QStandardItem* item = layersModel_->takeItem( row );
-                layersModel_->insertRow( row + 2 , item );
-                layersModel_->removeRow( row );
-                T_Layers::iterator it = std::find( newLayers_.begin(), newLayers_.end(), layer );
-                if( it != newLayers_.begin() && it != newLayers_.end() )
-                    std::swap( *it, *(it-1) );
-                layersList_->selectionModel()->select( item->index(), QItemSelectionModel::Select );
-            }
+            if( QStandardItem* next = layersModel_->item( row + 1 ) )
+                layer->MoveBelow( *next->data().value< Layer_ABC* >() );
+            MoveItem( row, layer, 2, 0, -1 );
         }
     }
-    UpdateLeastAndMostVisible();
 }
 
 // -----------------------------------------------------------------------------
