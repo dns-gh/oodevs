@@ -39,8 +39,8 @@
         <attribute name="platform"/>
         <sequential>
             <update name="vcredist"
-                package="vcredist_@{platform}"
-                todir="${root.dir}/out/@{platform}"/>
+                    package="vcredist_@{platform}"
+                    todir="${root.dir}/out/@{platform}"/>
             <update name="cloud"
                     package="sword_cloud_@{platform}_bin"
                     todir="${root.dir}/out/@{platform}/cloud"/>
@@ -48,6 +48,10 @@
                     version="Defense/releases/internal/${branch}"
                     package="SWORD_binaries_@{platform}_${branch}"
                     todir="${root.dir}/out/@{platform}/sword"/>
+            <update name="sword"
+                    version="Defense/releases/internal/${branch}"
+                    package="SWORD_gaming_@{platform}_${branch}"
+                    todir="${root.dir}/out/@{platform}/gaming"/>
         </sequential>
     </macrodef>
 

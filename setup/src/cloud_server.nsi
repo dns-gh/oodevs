@@ -119,6 +119,14 @@ Section $(^Name)
     ; modules
     File "${SWORD}\*_module.dll"
 
+    ; gaming
+    SetOutPath "$INSTDIR\bin32"
+    !ifdef SUB_PLATFORM
+        File /r "..\out\${SUB_PLATFORM}\gaming\*"
+    !else
+        File /r "..\out\${PLATFORM}\gaming\*"
+    !endif
+
     ; website
     RmDir /r "$INSTDIR\www"
     SetOutPath "$INSTDIR\www\js"
@@ -129,7 +137,7 @@ Section $(^Name)
     File /r /x ".svn" "${CLOUD}\www\*.ttml"
     File /r /x ".svn" "${CLOUD}\www\img"
     !ifdef SUB_PLATFORM
-        FILE "..\out\${SUB_PLATFORM}\sword_client_${SUB_PLATFORM}_setup.exe"
+        File "..\out\${SUB_PLATFORM}\sword_client_${SUB_PLATFORM}_setup.exe"
     !else
         File "${DISTDIR}\sword_client_${PLATFORM}_setup.exe"
     !endif
