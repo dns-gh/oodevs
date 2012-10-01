@@ -341,7 +341,6 @@
     !insertmacro OT._KillRunning "dispatcher_app.exe" ${AbortMessage}
     !insertmacro OT._KillRunning "gaming_app.exe" ${AbortMessage}
     !insertmacro OT._KillRunning "launcher_app.exe" ${AbortMessage}
-    !insertmacro OT._KillRunning "mission_tester_app.exe" ${AbortMessage}
     !insertmacro OT._KillRunning "package_app.exe" ${AbortMessage}
     !insertmacro OT._KillRunning "preparation_app.exe" ${AbortMessage}
     !insertmacro OT._KillRunning "replayer_app.exe" ${AbortMessage}
