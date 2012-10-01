@@ -55,7 +55,7 @@ rootnode
             if not self.order then
                 self.order = integration.query.getFirstFireOrder()
             end
-            if meKnowledge:isDeployed() then --or self.params.canReceiveUnexpectedOrder then
+            if meKnowledge:isDeployed() then
                 integration.sendfireAvailable(true)
                 Activate( skill.nodes.CR_ReadyToFire, 1 )
                 if self.params.callByFragOrder then

@@ -20,11 +20,6 @@
 				<simple name="numeric"/>
 			</type>
 		</parameter>
-		<parameter name="canReceiveUnexpectedOrder">
-			<type>
-				<simple name="boolean"/>
-			</type>
-		</parameter>
 	</parameters>
 	<goal>
 		<description>Executer les ordres de tirs.</description>

@@ -38,11 +38,6 @@
                             <parameter>interventionType</parameter>
                         </value>
                     </parameter>
-                    <parameter name="canReceiveUnexpectedOrder">
-                        <value>
-                            <boolean>false</boolean>
-                        </value>
-                    </parameter>
                 </skill>
             </skills>
         </stage>
