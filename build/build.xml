@@ -1665,26 +1665,34 @@
     </target>
 
     <target name="package.debug" description="create a zip with all PDB files">
-        <zip destfile="${dist.dir}/SWORD_debug_${platform}_${version.project}.zip">
+        <local name="output"/>
+        <property name="output" value="${out.dir}/SWORD_debug_${platform}_${version.project}.zip"/>
+        <zip destfile="${output}">
             <mappedresources>
                 <fileset dir="${out.dir}/release" includes="**/*.pdb"/>
                 <flattenmapper/>
             </mappedresources>
         </zip>
+        <safe-move file="${output}"/>
     </target>
 
     <target name="package.binaries" description="create a zip with all binaries">
-        <zip destfile="${dist.dir}/SWORD_binaries_${platform}_${version.project}.zip">
+        <local name="output"/>
+        <property name="output" value="${out.dir}/SWORD_binaries_${platform}_${version.project}.zip"/>
+        <zip destfile="${output}">
             <mappedresources>
                 <fileset dir="${out.dir}/release/applications" includes="**/*.exe"/>
                 <flattenmapper/>
             </mappedresources>
             <fileset dir="${run.dir}"/>
         </zip>
+        <safe-move file="${output}"/>
     </target>
 
     <target name="package.gaming_app" description="create a zip with a standalone gaming_app binary">
-        <zip destfile="${dist.dir}/SWORD_gaming_${platform}_${version.project}.zip">
+        <local name="output"/>
+        <property name="output" value="${out.dir}/SWORD_gaming_${platform}_${version.project}.zip"/>
+        <zip destfile="${output}">
             <fileset dir="${out.dir}/release/applications/gaming_app" includes="gaming_app.exe"/>
             <fileset dir="${run.dir}"
                      includes="*.qm,
@@ -1708,15 +1716,19 @@
                                zlib1.dll"/>
             <fileset dir="${run.dir}" includes="resources/**"/>
         </zip>
+        <safe-move file="${output}"/>
     </target>
 
     <target name="package.ts" description="create a zip with all ts files">
-        <zip destfile="${dist.dir}/SWORD_ts_${version.project}.zip">
+        <local name="output"/>
+        <property name="output" value="${out.dir}/SWORD_ts_${version.project}.zip"/>
+        <zip destfile="${output}">
            <mappedresources>
                <fileset dir="${src.dir}" includes="**/*.ts"/>
                <flattenmapper/>
            </mappedresources>
         </zip>
+        <safe-move file="${output}"/>
     </target>
 
     <target name="package.wise-driver" depends="wise_driver_dll" description="package the wise driver installer" if="is-vc80">
@@ -1769,9 +1781,7 @@
                 <fileset dir="${out.dir}" includes="content.xml"/>
             </zip>
             <delete file="${out.dir}/content.xml"/>
-            <concurrent seconds="60">
-                <move file="${out.dir}/@{file}" todir="${dist.dir}" overwrite="false"/>
-            </concurrent>
+            <safe-move file="${out.dir}/@{file}" overwrite="false"/>
         </sequential>
     </macrodef>
 
