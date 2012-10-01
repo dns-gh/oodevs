@@ -43,11 +43,11 @@ namespace
            QStandardItem* itemLeft = model_.itemFromIndex( left );
            QStandardItem* itemRight = model_.itemFromIndex( right );
            if( !itemLeft->data( ExerciseRole ).isValid() && itemRight->data( ExerciseRole ).isValid() )
-               return false;
+                return false;
            else if( itemLeft->data( ExerciseRole ).isValid() && !itemRight->data( ExerciseRole ).isValid() )
-               return true;
+                return true;
            else
-              return itemLeft->text().localeAwareCompare( itemRight->text() ) > 0;
+                return itemLeft->text().localeAwareCompare( itemRight->text() ) > 0;
         }
     public:
         const QStandardItemModel& model_;
