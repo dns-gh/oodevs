@@ -75,23 +75,6 @@ namespace sword
 
 namespace
 {
-    class ToggleListener : public ListenerHelper
-    {
-    public:
-        ToggleListener( core::Model& node, boost::function< void() > enable, boost::function< void() > disable )
-            : ListenerHelper( node, boost::bind( &ToggleListener::Toggled, this, _1 ) )
-            , enable_ ( enable )
-            , disable_( disable )
-        {}
-    private:
-        void Toggled( const core::Model& activation )
-        {
-            activation ? enable_() : disable_();
-        }
-    private:
-        boost::function< void() > enable_;
-        boost::function< void() > disable_;
-    };
     typedef boost::function< void( DEC_KS_Perception& ) > T_Notification;
     void NotifyAgentPerception( const core::Model& effect, std::vector< T_Notification >& notifications )
     {
@@ -156,6 +139,11 @@ namespace
             notifications.push_back( notifier );
         }
     }
+    void ToggleRecordMode( const core::Model& activation, DEC_KS_Perception& perception )
+    {
+        if( !activation )
+            perception.MakePerceptionsAvailable();
+    }
 }
 
 DECLARE_HOOK( IsUsingActiveRadar, bool, ( const SWORD_Model* entity ) )
@@ -195,7 +183,7 @@ RolePion_Perceiver::RolePion_Perceiver( Sink& sink, const core::Model& model, MI
     entity[ "perceptions/peripherical-vision/next-tick" ] = ++nNbr % nNbrStepsBetweenPeriphericalVision_;
     entity[ "perceptions/max-agent-perception-distance" ] = 0;
     entity[ "perceptions/max-theoretical-agent-perception-distance" ] = 0;
-    listeners_.push_back( boost::make_shared< ToggleListener >( boost::ref( entity_[ "perceptions/record-mode/activated" ] ), boost::bind( &RolePion_Perceiver::EnableRecordMode, this ), boost::bind( &RolePion_Perceiver::DisableRecordMode, this ) ) );
+    listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/record-mode/activated" ] ), boost::bind( &ToggleRecordMode, _1, boost::ref( owner_.GetKnowledge().GetKsPerception() ) ) ) );
     listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/agents" ] ), boost::bind( &::NotifyAgentPerception, _1, boost::ref( notifications_ ) ) ) );
     listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/agents-in-zone" ] ), boost::bind( &::NotifyAgentPerception, _1, boost::ref( notifications_ ) ) ) );
     listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/objects" ] ), boost::bind( &::NotifyObjectPerception, _1, boost::ref( notifications_ ) ) ) );
@@ -710,7 +698,7 @@ void RolePion_Perceiver::NotifyExternalPerception( MIL_Agent_ABC& agent, const P
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::EnableRecordMode()
 {
-    // NOTHING
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
@@ -719,7 +707,7 @@ void RolePion_Perceiver::EnableRecordMode()
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::DisableRecordMode()
 {
-    owner_.GetKnowledge().GetKsPerception().MakePerceptionsAvailable();
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
