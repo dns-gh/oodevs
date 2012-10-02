@@ -2,7 +2,6 @@ return
 {
     init = function( self, params )
         myself.leadData.objectiveIndex = 0 
-        myself.leadData.objective = {}
     end,
     
     getObjectives = function( self, params, entity )
