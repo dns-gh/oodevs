@@ -42,11 +42,6 @@ using namespace kernel;
 Application::Application( int& argc, char** argv )
     : Application_ABC( argc, argv )
 {
-    // License
-    CheckLicense( "sword-gaming" );
-    if( IsInvalidLicense() )
-        return;
-
     // Application_ABC initialization
     Initialize();
 
@@ -111,9 +106,6 @@ void Application::CreateTranslators()
 // -----------------------------------------------------------------------------
 int Application::Run()
 {
-    if( IsInvalidLicense() )
-        return EXIT_FAILURE;
-
     mainWindow_->show();
     networkTimer_->start( 10 );
     config_->Connect( *network_ );
