@@ -120,7 +120,7 @@ Section $(^Name)
     File "${SWORD}\*_module.dll"
 
     ; gaming
-    SetOutPath "$INSTDIR\bin32"
+    SetOutPath "$INSTDIR\client\bin32"
     !ifdef SUB_PLATFORM
         File /r "..\out\${SUB_PLATFORM}\gaming\*"
     !else
