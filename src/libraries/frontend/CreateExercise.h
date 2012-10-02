@@ -10,10 +10,6 @@
 #ifndef __CreateExercise_h_
 #define __CreateExercise_h_
 
-#pragma warning( push, 0 )
-#include <Qt3Support/q3listview.h>
-#pragma warning( pop )
-
 namespace tools
 {
     class GeneralConfig;
@@ -32,7 +28,7 @@ namespace frontend
         std::string terrain_;
         std::string model_;
         std::string physical_;
-        Q3ListViewItemIterator iterator_;
+        const QStandardItemModel* itemModel_;
     };
 
     void Copy( const std::string& from, const std::string& to );

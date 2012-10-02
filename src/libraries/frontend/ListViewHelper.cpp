@@ -20,13 +20,14 @@ namespace bfs = boost::filesystem;
 
 namespace
 {
-    void InsertValidatedEntry( Q3ListViewItem* parent, const std::string& entry, const std::string& root )
+    void InsertValidatedEntry( QStandardItem* parent, const std::string& entry, const std::string& root )
     {
-        frontend::CheckListItem* item = new frontend::CheckListItem( parent, entry.c_str(), true );
+        frontend::CheckListItem* item = new frontend::CheckListItem( entry.c_str(), true );
+        parent->setChild( parent->rowCount(), item );
         if( ! bfs::exists( bfs::path( root + "/" + entry ) ) )
         {
             item->setEnabled( false );
-            item->setText( 0, std::string( entry + " -- Not present." ).c_str() );
+            item->setText( std::string( entry + " -- Not present." ).c_str() );
         }
     }
 }
@@ -37,7 +38,7 @@ namespace frontend
     // Name: BuildExerciseData
     // Created: JSR 2010-07-15
     // -----------------------------------------------------------------------------
-    Q3ListViewItem* BuildExerciseData( const std::string& exercise, const tools::GeneralConfig& config, Q3ListView* content, const tools::Loader_ABC& fileLoader )
+    void BuildExerciseData( const std::string& exercise, const tools::GeneralConfig& config, QStandardItemModel& contentModel, const tools::Loader_ABC& fileLoader )
     {
         std::string terrain, population, dataset, physical;
         std::auto_ptr< xml::xistream > xis = fileLoader.LoadFile( config.GetExerciseFile( exercise ) );
@@ -47,8 +48,8 @@ namespace frontend
             >> xml::start( "model" ) >> xml::attribute( "dataset", dataset ) >> xml::attribute( "physical", physical ) >> xml::end
             >> xml::end;
 
-        Q3ListViewItem* dataItem = new Q3ListViewItem( content, "data" );
-        dataItem->setOpen( true );
+        QStandardItem* dataItem = new QStandardItem( "data" );
+        contentModel.appendRow( dataItem ); 
 
         InsertValidatedEntry( dataItem, "data/terrains/" + terrain, config.GetRootDir() );
         if( !population.empty() )
@@ -57,37 +58,36 @@ namespace frontend
         }
         InsertValidatedEntry( dataItem, "data/models/" + dataset + "/physical/" + physical, config.GetRootDir() );
         InsertValidatedEntry( dataItem, "data/models/" + dataset + "/decisional", config.GetRootDir() );
-        return dataItem;
     }
 
     // -----------------------------------------------------------------------------
     // Name: BuildExerciseFeatures
     // Created: JSR 2010-07-15
     // -----------------------------------------------------------------------------
-    Q3ListViewItem* BuildExerciseFeatures( const std::string& exercise, const tools::GeneralConfig& config, Q3ListView* content )
+    void BuildExerciseFeatures( const std::string& exercise, const tools::GeneralConfig& config, QStandardItemModel& contentModel )
     {
-        QString base( std::string( "exercises/" + exercise ).c_str() );
-        Q3ListViewItem* rootItem = new Q3ListViewItem( content, "exercises" );
-        rootItem->setOpen( true );
+        QStandardItem* rootItem = new QStandardItem( "exercises" );
+        contentModel.appendRow( rootItem );
 
-        CheckListItem* exerciseItem = new CheckListItem( rootItem, base, false );
-        exerciseItem->setOpen( true );
-        exerciseItem->setOn( true );
+        QString base( std::string( "exercises/" + exercise ).c_str() );
+        CheckListItem* exerciseItem = new CheckListItem( base, false );
+        rootItem->setChild( rootItem->rowCount(), exerciseItem );
         exerciseItem->setEnabled( false );
+        exerciseItem->setCheckState( Qt::Checked );
 
         const QStringList sessions( frontend::commands::ListSessions( config, exercise ) );
         for( QStringList::const_iterator it = sessions.constBegin(); it != sessions.constEnd(); ++it )
         {
-            (void) new CheckListItem( exerciseItem, base + "/sessions/" + *it, true );
+            CheckListItem* subExerciseItem = new CheckListItem( base + "/sessions/" + *it, true );
+            exerciseItem->setChild( exerciseItem->rowCount(), subExerciseItem );
         }
 
         const QStringList others = frontend::commands::ListOtherDirectories( config, exercise );
         for( QStringList::const_iterator it = others.constBegin(); it != others.constEnd(); ++it )
         {
-            (void) new CheckListItem( rootItem, base + "/" + *it, true );
+            CheckListItem* subRootItem = new CheckListItem( base + "/" + *it, true );
+            rootItem->setChild( rootItem->rowCount(), subRootItem );
         }
-
-        return rootItem;
     }
 
 }

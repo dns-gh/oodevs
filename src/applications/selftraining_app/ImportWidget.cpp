@@ -56,12 +56,13 @@ ImportWidget::ImportWidget( ScenarioEditPage& page, QWidget* parent, const tools
         vBox->setSpacing( 5 );
         packageName_ = new QLineEdit( vBox );
         packageName_->setReadOnly( true );
-        packageDescription_ = new Q3TextEdit( vBox );
+        packageDescription_ = new QTextEdit( vBox );
         packageDescription_->setMaximumHeight( 80 );
         packageDescription_->setReadOnly( true );
-        packageContent_ = new Q3ListBox( vBox );
+        packageContent_ = new QListWidget( vBox );
+        packageContent_->setFont( QFont( "Calibri", 12, QFont::Bold ) );
     }
-    packageProgress_ = new Q3ProgressBar( this );
+    packageProgress_ = new QProgressBar( this );
     packageProgress_->hide();
 }
 
@@ -90,13 +91,13 @@ namespace
 {
     struct Progress
     {
-        Progress( Q3ProgressBar* progress ) : progress_( progress ), count_( 0 ) {}
+        Progress( QProgressBar* progress ) : progress_( progress ), count_( 0 ) {}
         void operator()()
         {
-            progress_->setProgress( ++count_ );
+            progress_->setValue( ++count_ );
             qApp->processEvents();
         }
-        Q3ProgressBar* progress_;
+        QProgressBar* progress_;
         unsigned count_;
     };
 }
@@ -113,7 +114,8 @@ void ImportWidget::InstallExercise()
         if( archive.isOk() )
         {
             packageProgress_->show();
-            packageProgress_->setProgress( 0, packageContent_->count() );
+            packageProgress_->setValue( 0 );
+            packageProgress_->setMaximum( packageContent_->count() );
             setCursor( Qt::waitCursor );
             frontend::commands::InstallPackageFile( archive, config_.GetRootDir(), Progress( packageProgress_ ) );
             setCursor( Qt::arrowCursor );
@@ -193,7 +195,7 @@ void ImportWidget::SelectPackage( const QString& filename )
         packageVersion_->setText( "" );
         packageContent_->clear();
         if( ReadPackageContentFile() )
-            packageContent_->insertStringList( frontend::commands::ListPackageFiles( package_->text().toAscii().constData() ) );
+            packageContent_->addItems( frontend::commands::ListPackageFiles( package_->text().toAscii().constData() ) );
         else
             packageName_->setText( tools::translate( "ImportWidget", "otpak corrupted: unable to load content properly" ) );
     }

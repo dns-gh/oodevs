@@ -67,9 +67,9 @@ private:
     QLineEdit*                  package_;
     QLineEdit*                  packageName_;
     QLineEdit*                  packageVersion_;
-    Q3TextEdit*                 packageDescription_;
-    Q3ListBox*                  packageContent_;
-    Q3ProgressBar*              packageProgress_;
+    QTextEdit*                  packageDescription_;
+    QListWidget*                packageContent_;
+    QProgressBar*               packageProgress_;
     QLabel*                     packageLabel_;
     QLabel*                     contentLabel_;
     QLabel*                     versionLabel_;

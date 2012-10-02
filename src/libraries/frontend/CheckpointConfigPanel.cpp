@@ -65,9 +65,11 @@ CheckpointConfigPanel::CheckpointConfigPanel( QWidget* parent, const tools::Gene
             connect( sessions_, SIGNAL( highlighted( const QString& ) ), SLOT( SessionSelected( const QString& ) ) );
         }
         {
-            Q3VBox* box = new Q3VBox( loadGroup_ );
-            checkpoints_ = new CheckpointList( box, config_ );
+            QWidget* box = new QWidget( loadGroup_ );
+            QVBoxLayout* boxLayout = new QVBoxLayout( box );
+            checkpoints_ = new CheckpointList( config_ );
             connect( checkpoints_, SIGNAL( Select( const QString& ) ), SLOT( OnCheckpointSelected( const QString& ) ) );
+            boxLayout->addWidget( checkpoints_ );
         }
         connect( loadGroup_, SIGNAL( toggled( bool ) ), checkpoints_, SLOT( Toggle( bool ) ) );
     }

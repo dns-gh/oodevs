@@ -198,7 +198,7 @@ void ExerciseListView::AddExerciseEntry( const frontend::Exercise_ABC& exercise 
             if( parent )
                 parent->setChild( parent->rowCount(), item );
             else
-                model_.invisibleRootItem()->setChild( model_.rowCount(), item );
+                model_.appendRow( item );
         }
         parent = item;
     }

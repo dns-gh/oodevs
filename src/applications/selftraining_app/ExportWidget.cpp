@@ -69,11 +69,12 @@ ExportWidget::ExportWidget( ScenarioEditPage& page, QWidget* parent, const tools
         }
         {
             packageContentLabel_ = new QLabel( box );
-            exerciseContent_ = new Q3ListView( box );
-            exerciseContent_->addColumn( "exercise features" );
-            exerciseContent_->setResizeMode( Q3ListView::AllColumns );
-            exerciseContent_->header()->hide();
+            exerciseContent_ = new QTreeView( box );
+            exerciseContent_->setModel( &exerciseContentModel_ );
+            exerciseContent_->setHeaderHidden( true );
+            exerciseContent_->setEditTriggers( 0 );
             exerciseContent_->adjustSize();
+            exerciseContent_->setFont( QFont( "Calibri", 12, QFont::Bold ) );
         }
     }
     // eTabs_Terrain
@@ -86,8 +87,9 @@ ExportWidget::ExportWidget( ScenarioEditPage& page, QWidget* parent, const tools
         }
         {
             terrainLabel_ = new QLabel( box );
-            terrainList_ = new Q3ListBox( box );
-            connect( terrainList_, SIGNAL( clicked( Q3ListBoxItem* ) ), SLOT( OnSelectionChanged( Q3ListBoxItem* ) ) );
+            terrainList_ = new QListWidget( box );
+            terrainList_->setFont( QFont( "Calibri", 12, QFont::Bold ) );
+            connect( terrainList_, SIGNAL( itemClicked( QListWidgetItem* ) ), SLOT( OnSelectionChanged( QListWidgetItem* ) ) );
         }
     }
     // eTabs_Models
@@ -111,11 +113,12 @@ ExportWidget::ExportWidget( ScenarioEditPage& page, QWidget* parent, const tools
         }
         {
             modelsPhysicalLabel_ = new QLabel( box );
-            physicalList_ = new Q3ListBox( box );
-            connect( physicalList_, SIGNAL( clicked( Q3ListBoxItem* ) ), SLOT( OnSelectionChanged( Q3ListBoxItem* ) ) );
+            physicalList_ = new QListWidget( box );
+            physicalList_->setFont( QFont( "Calibri", 12, QFont::Bold ) );
+            connect( physicalList_, SIGNAL( itemClicked( QListWidgetItem* ) ), SLOT( OnSelectionChanged( QListWidgetItem* ) ) );
         }
     }
-    progress_ = new Q3ProgressBar( this );
+    progress_ = new QProgressBar( this );
     progress_->hide();
     package_.first = config_.GetRootDir();
     controllers_.Register( *this );
@@ -166,12 +169,12 @@ QString ExportWidget::GetCurrentSelection() const
             result = item->text();
         break;
     case eTabs_Terrain:
-        if( Q3ListBoxItem* item = terrainList_->selectedItem() )
+        if( QListWidgetItem* item = terrainList_->currentItem() )
             result = item->text();
         break;
     case eTabs_Models:
         if( !modelName_->text().isEmpty() )
-            if( Q3ListBoxItem* item = physicalList_->selectedItem() )
+            if( QListWidgetItem* item = physicalList_->currentItem() )
                 result = item->text();
         break;
     default:
@@ -253,11 +256,12 @@ bool ExportWidget::EnableEditButton()
 void ExportWidget::OnSelectionChanged( const QModelIndex& modelIndex, const QModelIndex& /*previous*/ )
 {
     std::string exercise( exerciseList_->GetExerciseName( modelIndex ) );
-    exerciseContent_->clear();
+    exerciseContentModel_.clear();
     if( !exercise.empty() )
     {
-        exerciseContent_->insertItem( frontend::BuildExerciseFeatures( exercise, config_, exerciseContent_ ) );
-        exerciseContent_->insertItem( frontend::BuildExerciseData( exercise, config_, exerciseContent_, fileLoader_ ) );
+        frontend::BuildExerciseFeatures( exercise, config_, exerciseContentModel_ );
+        frontend::BuildExerciseData( exercise, config_, exerciseContentModel_, fileLoader_ );
+        exerciseContent_->expandAll();
     }
     page_.UpdateEditButton();
 }
@@ -266,7 +270,7 @@ void ExportWidget::OnSelectionChanged( const QModelIndex& modelIndex, const QMod
 // Name: ExportWidget::OnSelectionChanged
 // Created: LGY 2012-05-30
 // -----------------------------------------------------------------------------
-void ExportWidget::OnSelectionChanged( Q3ListBoxItem* item )
+void ExportWidget::OnSelectionChanged( QListWidgetItem* item )
 {
     Update( item );
 }
@@ -284,13 +288,13 @@ void ExportWidget::OnModelNameChanged( const QString& /*text*/ )
 // Name: ExportWidget::Update
 // Created: LGY 2012-05-30
 // -----------------------------------------------------------------------------
-void ExportWidget::Update( Q3ListBoxItem* item /*= 0*/ )
+void ExportWidget::Update( QListWidgetItem* item /*= 0*/ )
 {
     if( !item ) // No item, refresh lists
     {
         // Terrain
         terrainList_->clear();
-        terrainList_->insertStringList( frontend::commands::ListTerrains( config_ ) );
+        terrainList_->addItems( frontend::commands::ListTerrains( config_ ) );
         // Physical
         decisionalCheckBox_->setEnabled( false );
         physicalList_->clear();
@@ -302,12 +306,12 @@ void ExportWidget::Update( Q3ListBoxItem* item /*= 0*/ )
             for( QStringList::const_iterator itP = physicalModels.begin(); itP != physicalModels.end(); ++itP )
                 physicalBase << QString( "%1/%2" ).arg( *it ).arg( *itP );
         }
-        physicalList_->insertStringList( physicalBase );
+        physicalList_->addItems( physicalBase );
         modelName_->clear();
     }
     else if( tabs_->currentIndex() == eTabs_Models )
     {
-        modelName_->setText( Extract( physicalList_->selectedItem()->text() ).first.c_str() );
+        modelName_->setText( Extract( physicalList_->currentItem()->text() ).first.c_str() );
         decisionalCheckBox_->setEnabled( true );
     }
     page_.UpdateEditButton();
@@ -317,13 +321,13 @@ namespace
 {
     struct Progress
     {
-        Progress( Q3ProgressBar* progress ) : progress_( progress ), count_( 0 ) {}
+        Progress( QProgressBar* progress ) : progress_( progress ), count_( 0 ) {}
         void operator()()
         {
-            progress_->setProgress( ++count_ );
+            progress_->setValue( ++count_ );
             qApp->processEvents();
         }
-        Q3ProgressBar* progress_;
+        QProgressBar* progress_;
         unsigned count_;
     };
 
@@ -375,40 +379,51 @@ namespace
             BrowseDirectory( root, exportName != "" ? exportName : name, zos, recursive );
     }
 
-    void BrowseChildren( const std::string& base, Q3ListViewItem* item, zip::ozipfile& zos, boost::function0<void> callback, bool recursive )
+    void BrowseChildren( const std::string& base, QStandardItem* item, zip::ozipfile& zos, boost::function0<void> callback, bool recursive )
     {
-        while( item != 0 && ! dynamic_cast< frontend::CheckListItem* >( item ) )
+        int row = 0;
+        while( row < item->rowCount() && !dynamic_cast< frontend::CheckListItem* >( item ) )
         {
-            std::string file( item->text( 0 ).toAscii().constData() );
+            std::string file( item->child( row )->text().toStdString() );
             Serialize( base, file, zos, recursive );
             callback();
-            item = item->nextSibling();
+            ++row;
         }
     }
 
-    void BrowseFiles( const std::string& base, Q3ListViewItemIterator iterator, zip::ozipfile& zos, boost::function0<void> callback )
+    void BrowseFiles( const std::string& base, const QStandardItemModel& model, zip::ozipfile& zos, boost::function0<void> callback )
     {
-        while( iterator.current() )
+        for( int row = 0; row < model.rowCount(); ++row )
         {
-            frontend::CheckListItem* item = dynamic_cast< frontend::CheckListItem* >( iterator.current() );
-            if( item && item->isOn() )
+            if( model.item( row )->hasChildren() )
             {
-                std::string file( iterator.current()->text( 0 ).toAscii().constData() );
-                Serialize( base, file, zos, item->IsRecursive() );
-                if( item->childCount() > 0 )
-                    BrowseChildren( base, item->firstChild(), zos, callback, item->IsRecursive() );
+                QStandardItem* treeNode = model.item( row );
+                for( int row2 = 0; row2 < treeNode->rowCount(); ++row2 )
+                {
+                    frontend::CheckListItem* item = dynamic_cast< frontend::CheckListItem* >( treeNode->child( row2 ) );
+                    if( item && item->checkState() == Qt::Checked )
+                    {
+                        std::string file( item->text().toAscii().constData() );
+                        Serialize( base, file, zos, item->IsRecursive() );
+                        if( item->hasChildren() )
+                            BrowseChildren( base, item, zos, callback, item->IsRecursive() );
+                    }
+                    callback();
+                }
             }
-            callback();
-            ++iterator;
         }
     }
 
-    int ListViewSize( Q3ListViewItemIterator iterator )
+    int ListViewSize( const QStandardItemModel& model, QStandardItem* parent  = 0 )
     {
-        int i = 0;
-        for( ; iterator.current(); ++iterator, ++i )
-            ;
-        return i;
+        if( !parent )
+            parent = model.invisibleRootItem();
+
+        int itemCount = parent->rowCount();
+        if( parent->hasChildren() )
+            for( int row = 0; row < parent->rowCount(); ++row )
+            itemCount += parent->hasChildren() ? ListViewSize( model, parent->child( row ) ) : 0 ;
+        return itemCount;
     }
 
     bfs::path GetDiffPath( bfs::path basepath, bfs::path other )
@@ -497,42 +512,46 @@ void ExportWidget::InternalExportPackage( zip::ozipfile& archive )
     switch( tabs_->currentIndex() )
     {
     case eTabs_Exercise:
-        progress_->setProgress( 0, ListViewSize( Q3ListViewItemIterator( exerciseContent_ ) ) );
-        BrowseFiles( config_.GetRootDir(), Q3ListViewItemIterator( exerciseContent_ ), archive, Progress( progress_ ) );
+        progress_->setValue( 0 );
+        progress_->setMaximum( ListViewSize( exerciseContentModel_ ) );
+        BrowseFiles( config_.GetRootDir(), exerciseContentModel_, archive, Progress( progress_ ) );
         break;
     case eTabs_Terrain:
         {
-            assert( terrainList_->selectedItem() );
-            progress_->setProgress( 0, 1 );
-            bfs::path diffPath = GetDiffPath( config_.GetRootDir(), config_.GetTerrainDir( terrainList_->selectedItem()->text().toAscii().constData() ) );
+            assert( terrainList_->currentItem() );
+            progress_->setValue( 0 ); 
+            progress_->setMaximum( 1 );
+            bfs::path diffPath = GetDiffPath( config_.GetRootDir(), config_.GetTerrainDir( terrainList_->currentItem()->text().toAscii().constData() ) );
             Serialize( config_.GetRootDir(), diffPath.string(), archive, true );
-            progress_->setProgress( 1 );
+            progress_->setValue( 1 );
         }
         break;
     case eTabs_Models:
         {
-            assert( physicalList_->selectedItem() );
-            std::pair< std::string, std::string > content( Extract( physicalList_->selectedItem()->text() ) );
+            assert( physicalList_->currentItem() );
+            std::pair< std::string, std::string > content( Extract( physicalList_->currentItem()->text() ) );
 
             bfs::path diffPath = GetDiffPath( config_.GetRootDir(), config_.GetModelsDir() ) / content.first;
             bfs::path exportPath = GetDiffPath( config_.GetRootDir(), config_.GetModelsDir() ) / modelName_->text().toAscii().constData();
 
             if( decisionalCheckBox_->isChecked() )
             {
-                progress_->setProgress( 0, 2 );
+                progress_->setValue( 0 );
+                progress_->setMaximum( 2 );
                 Serialize( config_.GetRootDir(), bfs::path( diffPath / "physical" / content.second ).string(), archive, true,
                                                  bfs::path( exportPath / "physical" / content.second ).string() );
-                progress_->setProgress( 1 );
+                progress_->setValue( 1 );
                 Serialize( config_.GetRootDir(), bfs::path( diffPath / "decisional" ).string(), archive, true,
                                                  bfs::path( exportPath / "decisional" ).string() );
-                progress_->setProgress( 2 );
+                progress_->setValue( 2 );
             }
             else
             {
-                progress_->setProgress( 0, 1 );
+                progress_->setValue( 0 );
+                progress_->setMaximum( 1 );
                 Serialize( config_.GetRootDir(), bfs::path( diffPath / "physical" / content.second ).string(), archive, true,
                                                  bfs::path( exportPath / "physical" / content.second ).string() );
-                progress_->setProgress( 1 );
+                progress_->setValue( 1 );
             }
             break;
         }

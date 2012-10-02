@@ -61,7 +61,7 @@ public:
 
     //! @name Operations
     //@{
-    void Update( Q3ListBoxItem* item = 0 );
+    void Update( QListWidgetItem* item = 0 );
     void ExportPackage();
     bool EnableEditButton();
     //@}
@@ -70,7 +70,7 @@ private slots:
     //! @name Slots
     //@{
     void OnSelectionChanged( const QModelIndex& next, const QModelIndex& previous );
-    void OnSelectionChanged( Q3ListBoxItem* item );
+    void OnSelectionChanged( QListWidgetItem* item );
     void OnModelNameChanged( const QString& text );
     //@}
 
@@ -105,20 +105,21 @@ private:
     ScenarioEditPage&           page_;
     QTabWidget*                 tabs_;
     // Common
-    Q3ProgressBar*              progress_;
+    QProgressBar*               progress_;
     T_Package                   package_;
     // Exercises
     ExerciseListView*           exerciseList_;
     QTextEdit*                  exerciseDescription_;
-    Q3ListView*                 exerciseContent_;
+    QTreeView*                  exerciseContent_;
+    QStandardItemModel          exerciseContentModel_;
     // Terrains
     QTextEdit*                  terrainDescription_;
-    Q3ListBox*                  terrainList_;
+    QListWidget*                terrainList_;
     // Referential
     QTextEdit*                  modelDescription_;
     QLineEdit*                  modelName_;
     QCheckBox*                  decisionalCheckBox_;
-    Q3ListBox*                  physicalList_;
+    QListWidget*                physicalList_;
     // Labels
     QLabel*                     exerciseDescriptionLabel_;
     QLabel*                     exerciseLabel_;

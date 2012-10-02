@@ -18,6 +18,10 @@
 #include <QtCore/qstring.h>
 #include <QtGui/QEvent.h>
 #include <QtGui/qtabwidget.h>
+#include <QtGui/qlistwidget.h>
+#include <QtGui/qlayout.h> 
+#include <QtGui/qtreeview.h>
+#include <QtGui/qstandarditemmodel.h>
 #pragma warning( pop )
 #include <string>
 

@@ -29,14 +29,14 @@ namespace frontend
 */
 // Created: SBO 2010-04-21
 // =============================================================================
-class CheckpointList : public Q3VBox
+class CheckpointList : public QWidget
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             CheckpointList( QWidget* parent, const tools::GeneralConfig& config );
+             CheckpointList( const tools::GeneralConfig& config );
     virtual ~CheckpointList();
     //@}
 
@@ -75,7 +75,7 @@ private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
-    Q3ListBox* list_;
+    QListWidget* list_;
     QString exercise_;
     QString session_;
     QStringList checkpoints_;

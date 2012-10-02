@@ -74,8 +74,8 @@ namespace
                 xis >> xml::end;
             }
     }
-    void Copy( const bfs::path& from, const bfs::path& to, const bfs::path& baseFrom, const bfs::path& baseTo, const Q3ListViewItemIterator* files, int depth = -1 );
-    void CopyDirectory( const bfs::path& from, const bfs::path& baseFrom, const bfs::path& baseTo, const Q3ListViewItemIterator* files, int depth )
+    void Copy( const bfs::path& from, const bfs::path& to, const bfs::path& baseFrom, const bfs::path& baseTo, const QStandardItem* files, int depth = -1 );
+    void CopyDirectory( const bfs::path& from, const bfs::path& baseFrom, const bfs::path& baseTo, const QStandardItem* files, int depth )
     {
         bfs::directory_iterator end_itr;
         for( bfs::directory_iterator it( from ); it != end_itr; ++it )
@@ -83,8 +83,9 @@ namespace
             if( files )
             {
                 bool founded = false;
-                for( Q3ListViewItemIterator iterator = *files; iterator.current() && !founded; ++iterator )
-                    if( std::string( iterator.current()->text( 0 ).toAscii().constData() ).find( it->path().filename().string() ) != std::string::npos )
+                
+                for( int i = 0; i < files->rowCount(); i++ )
+                    if( files->child( i )->text().toStdString().find( it->path().filename().string() ) != std::string::npos )
                         founded = true;
                 if( founded )
                     continue;
@@ -94,7 +95,7 @@ namespace
             Copy( it->path(), filename, baseFrom, baseTo, files, ( depth > 0 ) ? depth - 1 : depth );
         }
     }
-    void Copy( const bfs::path& from, const bfs::path& to, const bfs::path& baseFrom, const bfs::path& baseTo, const Q3ListViewItemIterator* files, int depth )
+    void Copy( const bfs::path& from, const bfs::path& to, const bfs::path& baseFrom, const bfs::path& baseTo, const QStandardItem* files, int depth )
     {
         if( bfs::exists( from ) )
         {
@@ -156,31 +157,41 @@ namespace frontend
         xos << xml::end;
         tools::WriteXmlCrc32Signature( filenameTo );
     }
-
-    void CreateExerciseAsCopyOf( const tools::GeneralConfig& config, const ExerciseCopyParameters& params )
+    void CopyCheckedPath( const bfs::path& dirFrom, const bfs::path& dirTo, const ExerciseCopyParameters& params, QStandardItem* parent = 0 )
     {
-        const bfs::path dirFrom = bfs::path( config.GetExerciseDir( params.from_ )  );
-        const bfs::path dirTo = bfs::path( config.GetExerciseDir( params.to_ ) );
-        bfs::create_directories( dirTo );
-        // Copy exercise.xml and linked file
-        CreateExerciseFileCopy( dirFrom, dirTo, params );
+        if( !parent )
+            parent = params.itemModel_->invisibleRootItem();
 
-        // Copy checked path
-        for( Q3ListViewItemIterator iterator = params.iterator_; iterator.current(); ++iterator )
+        for( int row = 0; row < parent->rowCount(); ++row )
         {
-            Q3CheckListItem* item = static_cast< Q3CheckListItem* >( iterator.current() );
-            if( item && item->isOn() )
+            QStandardItem* item = parent->child( row );
+            if( item && item->checkState() == Qt::Checked )
             {
-                std::string file( item->text( 0 ).toAscii().constData() );
+                std::string file( item->text().toStdString() );
                 if( file == "exercises" || file.find( "exercises/" + params.from_ ) == std::string::npos )
                     continue;
                 else
                     boost::algorithm::replace_first( file, "exercises/" + params.from_, "" );
                 bfs::path from( dirFrom / file );
                 bfs::path to( dirTo / file );
-                ::Copy( from, to, from, to, ( item->childCount() != 0 ) ? &params.iterator_ : 0 );
+                ::Copy( from, to, from, to, item->hasChildren() ? item : 0 );
             }
+            if( item && item->hasChildren() )
+                CopyCheckedPath( dirFrom, dirTo, params, item );
+
         }
+    }
+
+    void CreateExerciseAsCopyOf( const tools::GeneralConfig& config, const ExerciseCopyParameters& params )
+    {
+        const bfs::path dirFrom = bfs::path( config.GetExerciseDir( params.from_ )  );
+        const bfs::path dirTo = bfs::path( config.GetExerciseDir( params.to_ ) );
+        bfs::create_directories( dirTo );
+
+        // Copy checked path
+        CopyCheckedPath( dirFrom, dirTo, params );
+        // Copy exercise.xml and linked file
+        CreateExerciseFileCopy( dirFrom, dirTo, params );
     }
 
     // -----------------------------------------------------------------------------

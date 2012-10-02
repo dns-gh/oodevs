@@ -25,17 +25,21 @@ using namespace frontend;
 // Name: CheckpointList constructor
 // Created: SBO 2010-04-21
 // -----------------------------------------------------------------------------
-CheckpointList::CheckpointList( QWidget* parent, const tools::GeneralConfig& config )
-    : Q3VBox( parent )
-    , config_( config )
+CheckpointList::CheckpointList( const tools::GeneralConfig& config )
+    : config_( config )
     , enabled_( false )
 {
-    setSpacing( 5 );
-    {
-        QLabel* label = new QLabel( tools::translate( "CheckpointList", "Checkpoint:" ), this );
-        list_ = new Q3ListBox( this );
-        connect( list_, SIGNAL( highlighted( int ) ), this, SLOT( SelectCheckpoint( int ) ) );
-    }
+        QLabel* label = new QLabel( tools::translate( "CheckpointList", "Checkpoint:" ) );
+
+        list_ = new QListWidget();
+        list_->setFont( QFont( "Calibri", 12, QFont::Bold ) );
+        connect( list_, SIGNAL( currentRowChanged( int ) ), this, SLOT( SelectCheckpoint( int ) ) );
+
+        QVBoxLayout* verticalLayout = new QVBoxLayout( this );
+        verticalLayout->addWidget( label );
+        verticalLayout->addWidget( list_ );
+        verticalLayout->setSpacing( 5 );
+        verticalLayout->setMargin( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,12 +90,12 @@ void CheckpointList::Update( const QString& exercise, const QString& session )
         QStringList visibleNames;
         for( QStringList::const_iterator it = checkpoints_.begin(); it != checkpoints_.end(); ++it )
             visibleNames.push_back( ReadName( config_, exercise, session, *it ) );
-        list_->insertStringList( visibleNames );
+        list_->addItems( visibleNames );
         list_->setEnabled( list_->count() > 0 );
         if( !list_->count() )
-            list_->insertItem( tools::translate( "CheckpointList", "No checkpoint" ) );
+            list_->addItem( tools::translate( "CheckpointList", "No checkpoint" ) );
         emit Select( "" );
-        list_->setSelected( 0, true );
+        list_->setCurrentRow( 0 );
     }
 }
 
@@ -102,10 +106,10 @@ void CheckpointList::Update( const QString& exercise, const QString& session )
 void CheckpointList::ClearSelection()
 {
     list_->clear();
-    list_->insertItem( tools::translate( "CheckpointList", "No checkpoint" ) );
+    list_->addItem( tools::translate( "CheckpointList", "No checkpoint" ) );
     list_->setDisabled( true );
     emit Select( "" );
-    list_->setSelected( 0, true );
+    list_->setCurrentRow( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -126,5 +130,5 @@ void CheckpointList::Toggle( bool enabled )
 {
     enabled_ = enabled;
     if( checkpoints_.count() )
-        emit Select( enabled && list_->selectedItem() ? checkpoints_[ list_->currentItem() ] : "" );
+        emit Select( enabled && list_->currentItem() ? checkpoints_[ list_->currentRow() ] : "" );
 }

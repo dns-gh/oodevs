@@ -32,7 +32,7 @@ namespace tools
 */
 // Created: JSR 2010-07-13
 // =============================================================================
-class CreateExerciceWidget : public gui::LanguageChangeObserver_ABC< Q3GroupBox >
+class CreateExerciceWidget : public gui::LanguageChangeObserver_ABC< QGroupBox >
                            , private boost::noncopyable
 {
     Q_OBJECT
@@ -61,7 +61,7 @@ private:
 private slots:
     //! @name Slots
     //@{
-    void OnSelectionChanged( Q3ListBoxItem* item );
+    void OnSelectionChanged( QListWidgetItem* item );
     void OnSessionSelected( const QString& session );
     void OnCheckpointSelected( const QString& checkpoint );
     void CurrentTabChanged( int );
@@ -76,13 +76,14 @@ private:
     QLineEdit*                  editName_;
     QComboBox*                  editTerrainList_;
     QComboBox*                  editModelList_;
-    Q3GroupBox*                 saveAsGroupBox_;
-    Q3ListBox*                  exerciseList_;
-    Q3ListBox*                  sessionList_;
+    QGroupBox*                  saveAsGroupBox_;
+    QListWidget*                exerciseList_;
+    QListWidget*                sessionList_;
     frontend::CheckpointList*   checkpointList_;
 
     QTabWidget*                 copyTab_;
-    Q3ListView*                 contentList_;
+    QTreeView*                  contentList_;
+    QStandardItemModel          contentListModel_;
     QWidget*                    checkpointCopyPanel_;
 
     QLabel*                     createLabel_;

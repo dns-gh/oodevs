@@ -11,7 +11,6 @@
 #include "CreateExerciceWidget.h"
 #include "moc_CreateExerciceWidget.cpp"
 #include "clients_gui/Tools.h"
-#include "clients_gui/ValuedListItem.h"
 #include "frontend/CheckpointList.h"
 #include "frontend/commands.h"
 #include "frontend/CreateExercise.h"
@@ -29,74 +28,98 @@ namespace bfs = boost::filesystem;
 // Created: JSR 2010-07-13
 // -----------------------------------------------------------------------------
 CreateExerciceWidget::CreateExerciceWidget( ScenarioEditPage& page, QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader )
-    : gui::LanguageChangeObserver_ABC< Q3GroupBox >( 3, Qt::Vertical, parent )
+    : gui::LanguageChangeObserver_ABC< QGroupBox >( parent )
     , config_( config )
     , fileLoader_( fileLoader )
     , page_( page )
 {
-    setFrameShape( Q3GroupBox::DummyFrame::NoFrame );
-    setMargin( 5 );
+    //name selection label
+    createLabel_ = new QLabel();
+    editName_ = new QLineEdit();
+    connect( editName_, SIGNAL( textChanged( const QString& ) ), &page, SLOT( EditNameChanged( const QString& ) ) );
+
+    //terrain selection combobox
+    editTerrainList_ = new QComboBox();
+    editTerrainList_->setMinimumWidth( 210 );
+    connect( editTerrainList_, SIGNAL( activated( int ) ), &page, SLOT( ComboChanged( int ) ) );
+
+    //model selection combobox
+    editModelList_ = new QComboBox();
+    editModelList_->setMinimumWidth( 210 );
+    connect( editModelList_, SIGNAL( activated( int ) ), &page, SLOT( ComboChanged( int ) ) );
+
+    //exercise selection box
+    QVBoxLayout* boxLayout = new QVBoxLayout();
+    boxLayout->addWidget( editTerrainList_ );
+    boxLayout->addWidget( editModelList_ );
+
+    //save as box
+    QHBoxLayout* saveBoxLayout = new QHBoxLayout();
+    saveBoxLayout->addWidget( createLabel_ );
+    saveBoxLayout->addWidget( editName_ );
+    saveBoxLayout->addLayout( boxLayout );
     {
-        Q3HBox* saveBox = new Q3HBox( this );
-        createLabel_ = new QLabel( saveBox );
-        editName_ = new QLineEdit( saveBox );
-        connect( editName_, SIGNAL( textChanged( const QString& ) ), &page, SLOT( EditNameChanged( const QString& ) ) );
-        {
-            Q3VBox* box = new Q3VBox( saveBox );
-            editTerrainList_ = new QComboBox( box );
-            connect( editTerrainList_, SIGNAL( activated( int ) ), &page, SLOT( ComboChanged( int ) ) );
-            editModelList_ = new QComboBox( box );
-            connect( editModelList_, SIGNAL( activated( int ) ), &page, SLOT( ComboChanged( int ) ) );
-            editTerrainList_->setMinimumWidth( 210 );
-            editModelList_->setMinimumWidth( 210 );
-        }
-    }
-    {
-        saveAsGroupBox_ = new Q3GroupBox( this );
-        saveAsGroupBox_->setCheckable( true );
-        saveAsGroupBox_->setChecked( false );
-        connect( saveAsGroupBox_, SIGNAL( toggled( bool ) ), &page, SLOT( ToggleChanged( bool ) ) );
         {
             copyLabel_ = new QLabel();
-            exerciseList_ = new Q3ListBox();
-            connect( exerciseList_, SIGNAL( clicked( Q3ListBoxItem* ) ), SLOT( OnSelectionChanged( Q3ListBoxItem* ) ) );
+            exerciseList_ = new QListWidget();
+            exerciseList_->setFont( QFont( "Calibri", 12, QFont::Bold ) );
+            connect( exerciseList_, SIGNAL( itemClicked( QListWidgetItem* ) ), SLOT( OnSelectionChanged( QListWidgetItem* ) ) );
+
+            contentList_ = new QTreeView();
+            contentList_->setModel( &contentListModel_ );
+            contentList_->setHeaderHidden( true );
+            contentList_->setEditTriggers( 0 );
+            contentList_->setItemsExpandable( false );
+            contentList_->adjustSize();
+            contentList_->setFont( QFont( "Calibri", 12, QFont::Bold ) );
         }
         {
-            contentList_ = new Q3ListView();
-            contentList_->addColumn( "exercise features" );
-            contentList_->setResizeMode( Q3ListView::AllColumns );
-            contentList_->header()->hide();
-            contentList_->adjustSize();
+            //session panel
+            sessionLabel_ = new QLabel();
+            sessionList_ = new QListWidget();
+            sessionList_->setFont( QFont( "Calibri", 12, QFont::Bold ) );
+            connect( sessionList_, SIGNAL( 	currentTextChanged( const QString& ) ), SLOT( OnSessionSelected( const QString& ) ) );
+               
+            QVBoxLayout* sessionLayout = new QVBoxLayout();
+            sessionLayout->setSpacing( 5 );
+            sessionLayout->addWidget( sessionLabel_ );
+            sessionLayout->addWidget( sessionList_ );
 
-            checkpointCopyPanel_ = new Q3HBox();
-            {
-                Q3VBox* box = new Q3VBox( checkpointCopyPanel_ );
-                sessionLabel_ = new QLabel( box );
-                box->setSpacing( 5 );
-                sessionList_ = new Q3ListBox( box );
-                connect( sessionList_, SIGNAL( highlighted( const QString& ) ), SLOT( OnSessionSelected( const QString& ) ) );
-            }
-            {
-                Q3VBox* box = new Q3VBox( checkpointCopyPanel_ );
-                checkpointList_ = new frontend::CheckpointList( box, config );
-                connect( saveAsGroupBox_, SIGNAL( toggled( bool ) ), checkpointList_, SLOT( Toggle( bool ) ) );
-                connect( checkpointList_, SIGNAL( Select( const QString& ) ), SLOT( OnCheckpointSelected( const QString& ) ) );
-            }
-
-            copyTab_ = new QTabWidget();
-            copyTab_->addTab( contentList_, "Content to copy" );
-            copyTab_->addTab( checkpointCopyPanel_, "Checkpoint" );
-            connect( copyTab_, SIGNAL( currentChanged( int ) ), SLOT( CurrentTabChanged( int ) ) );
-
-            QVBoxLayout* layout = new QVBoxLayout( saveAsGroupBox_ );
-            layout->setMargin( 10 );
-            layout->setSpacing( 10 );
-            layout->setAlignment( Qt::AlignTop );
-            layout->addWidget( copyLabel_ );
-            layout->addWidget( exerciseList_ );
-            layout->addWidget( copyTab_ );
+            //checkpoint panel
+            checkpointList_ = new frontend::CheckpointList( config );
+            connect( checkpointList_, SIGNAL( Select( const QString& ) ), SLOT( OnCheckpointSelected( const QString& ) ) );
+            
+            //checkpoint general selection panel
+            checkpointCopyPanel_ = new QWidget();
+            QHBoxLayout* checkpointCopyPanelLayout = new QHBoxLayout( checkpointCopyPanel_ );
+            checkpointCopyPanelLayout->addLayout( sessionLayout );
+            checkpointCopyPanelLayout->addWidget( checkpointList_ );
         }
+        copyTab_ = new QTabWidget();
+        copyTab_->addTab( contentList_, "Content to copy" );
+        copyTab_->addTab( checkpointCopyPanel_, "Checkpoint" );
+        connect( copyTab_, SIGNAL( currentChanged( int ) ), SLOT( CurrentTabChanged( int ) ) );
+
+        saveAsGroupBox_ = new QGroupBox();
+        saveAsGroupBox_->setCheckable( true );
+        saveAsGroupBox_->setChecked( false );
+        connect( saveAsGroupBox_, SIGNAL( toggled( bool ) ), checkpointList_, SLOT( Toggle( bool ) ) );
+        connect( saveAsGroupBox_, SIGNAL( toggled( bool ) ), &page, SLOT( ToggleChanged( bool ) ) );
+        QVBoxLayout* saveAslayout = new QVBoxLayout( saveAsGroupBox_ );
+        saveAslayout->setMargin( 10 );
+        saveAslayout->setSpacing( 10 );
+        saveAslayout->setAlignment( Qt::AlignTop );
+        saveAslayout->addWidget( copyLabel_ );
+        saveAslayout->addWidget( exerciseList_ );
+        saveAslayout->addWidget( copyTab_ );
+
     }
+    //global layout
+    QVBoxLayout* layout = new QVBoxLayout( this );
+    layout->setMargin( 5 );
+    layout->addLayout( saveBoxLayout );
+    layout->addWidget( saveAsGroupBox_ );
+
     UpdateExercises();
 }
 
@@ -130,19 +153,19 @@ void CreateExerciceWidget::OnLanguageChanged()
 // -----------------------------------------------------------------------------
 void CreateExerciceWidget::Update()
 {
-    Q3ListBoxItem* item = exerciseList_->selectedItem();
+    QListWidgetItem* item = exerciseList_->currentItem();
     if( item )
     {
         std::string exercise( item->text().toAscii().constData() );
-        contentList_->clear();
-        contentList_->insertItem( frontend::BuildExerciseFeatures( exercise, config_, contentList_ ) );
-
+        contentListModel_.clear();
+        frontend::BuildExerciseFeatures( exercise, config_, contentListModel_ );
+        contentList_->expandAll();
         sessionList_->clear();
-        sessionList_->insertStringList( frontend::commands::ListSessionsWithCheckpoint( config_, exercise ) );
+        sessionList_->addItems( frontend::commands::ListSessionsWithCheckpoint( config_, exercise ) );
         sessionList_->setEnabled( sessionList_->count() );
         if( !sessionList_->count() )
-            sessionList_->insertItem( tools::translate( "CreateExerciceWidget", "No session" ) );
-        sessionList_->setSelected( 0, true );
+            sessionList_->addItem( tools::translate( "CreateExerciceWidget", "No session" ) );
+        sessionList_->setCurrentRow( 0 );
     }
     else
         UpdateExercises();
@@ -155,23 +178,23 @@ void CreateExerciceWidget::Update()
 void CreateExerciceWidget::UpdateExercises()
 {
     editTerrainList_->clear();
-    editTerrainList_->insertItem( tools::translate( "CreateExerciceWidget", "Terrain:" ) );
-    editTerrainList_->insertStringList( frontend::commands::ListTerrains( config_ ) );
+    editTerrainList_->addItem( tools::translate( "CreateExerciceWidget", "Terrain:" ) );
+    editTerrainList_->addItems( frontend::commands::ListTerrains( config_ ) );
     editModelList_->clear();
-    editModelList_->insertItem( tools::translate( "CreateExerciceWidget", "Model:" ) );
+    editModelList_->addItem( tools::translate( "CreateExerciceWidget", "Model:" ) );
     QStringList decisionalModels = frontend::commands::ListModels( config_ );
     for( QStringList::const_iterator it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
     {
         const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).toAscii().constData() );
         for( QStringList::const_iterator itP = physicalModels.begin(); itP != physicalModels.end(); ++itP )
-            editModelList_->insertItem( QString( "%1/%2" ).arg( *it ).arg( *itP ) );
+            editModelList_->addItem( QString( "%1/%2" ).arg( *it ).arg( *itP ) );
     }
     if( editModelList_->count() == 2 )
-        editModelList_->setCurrentItem( 1 );
+        editModelList_->setCurrentIndex( 1 );
     editModelList_->setShown( editModelList_->count() > 2 );
 
     exerciseList_->clear();
-    exerciseList_->insertStringList( frontend::commands::ListExercises( config_ ) );
+    exerciseList_->addItems( frontend::commands::ListExercises( config_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -180,18 +203,18 @@ void CreateExerciceWidget::UpdateExercises()
 // -----------------------------------------------------------------------------
 void CreateExerciceWidget::CreateExercise()
 {
-    if( editTerrainList_->currentItem() > 0 && editModelList_->currentItem() > 0 )
+    if( editTerrainList_->currentIndex() > 0 && editModelList_->currentIndex() > 0 )
     {
         const QString& name = editName_->text();
         if( name.isEmpty() || page_.ExerciceExists( name ) )
             return;
 
         const std::string terrain = editTerrainList_->currentText().toAscii().constData();
-        const QStringList model = QStringList::split( "/", editModelList_->currentText() );
+        const QStringList model = editModelList_->currentText().split( "/" );
 
         if( saveAsGroupBox_->isChecked() )
         {
-            Q3ListBoxItem* item = exerciseList_->selectedItem();
+            QListWidgetItem* item = exerciseList_->currentItem();
             if( item == 0 )
                 return;
             frontend::ExerciseCopyParameters params;
@@ -202,7 +225,7 @@ void CreateExerciceWidget::CreateExercise()
             params.from_ = item->text().toAscii().constData();
             if( contentList_->isVisible() )
             {
-                params.iterator_ = Q3ListViewItemIterator( contentList_ );
+                params.itemModel_ = &contentListModel_;
                 frontend::CreateExerciseAsCopyOf( config_, params );
             }
             else if( checkpointCopyPanel_->isVisible() && !checkpoint_.empty() )
@@ -225,10 +248,10 @@ void CreateExerciceWidget::CreateExercise()
 // -----------------------------------------------------------------------------
 bool CreateExerciceWidget::EnableEditButton()
 {
-    return editTerrainList_->currentItem() > 0 && editModelList_->currentItem() > 0
+    return editTerrainList_->currentIndex() > 0 && editModelList_->currentIndex() > 0
         && !editName_->text().isEmpty() && !page_.ExerciceExists( editName_->text() )
         && ( !saveAsGroupBox_->isChecked() 
-            || ( exerciseList_->selectedItem() != 0 && contentList_->isVisible()
+            || ( exerciseList_->currentItem() != 0 && contentList_->isVisible()
             || ( checkpointCopyPanel_->isVisible() && !checkpoint_.empty() ) ) );
 }
 
@@ -236,7 +259,7 @@ bool CreateExerciceWidget::EnableEditButton()
 // Name: CreateExerciceWidget::OnSelectionChanged
 // Created: ABR 2011-04-14
 // -----------------------------------------------------------------------------
-void CreateExerciceWidget::OnSelectionChanged( Q3ListBoxItem* item )
+void CreateExerciceWidget::OnSelectionChanged( QListWidgetItem* item )
 {
     if( !item )
         return;
@@ -252,8 +275,8 @@ void CreateExerciceWidget::OnSelectionChanged( Q3ListBoxItem* item )
             >> xml::end
          >> xml::end;
     const QStringList terrainList = frontend::commands::ListTerrains( config_ );
-    int index = terrainList.findIndex( terrain.c_str() );
-    editTerrainList_->setCurrentItem( index + 1 );
+    int index = terrainList.indexOf( terrain.c_str() );
+    editTerrainList_->setCurrentIndex( index + 1 );
     const QStringList decisionalModels = frontend::commands::ListModels( config_ );
     int indexModel = 0;
     for( QStringList::const_iterator it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
@@ -261,9 +284,9 @@ void CreateExerciceWidget::OnSelectionChanged( Q3ListBoxItem* item )
         const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).toAscii().constData() );
         if( std::strcmp( (*it).toAscii().constData(), dataSet.c_str() ) == 0 )
         {
-            int index = physicalModels.findIndex( QString( physical.c_str() ) );
+            int index = physicalModels.indexOf( QString( physical.c_str() ) );
             if( index != -1 )
-                editModelList_->setCurrentItem( indexModel + index + 1 );
+                editModelList_->setCurrentIndex( indexModel + index + 1 );
         }
         else
             indexModel += physicalModels.size();
@@ -277,7 +300,7 @@ void CreateExerciceWidget::OnSelectionChanged( Q3ListBoxItem* item )
 // -----------------------------------------------------------------------------
 void CreateExerciceWidget::OnSessionSelected( const QString& session )
 {
-    if( Q3ListBoxItem* item = exerciseList_->selectedItem() )
+    if( QListWidgetItem* item = exerciseList_->currentItem() )
     {
         session_ = session.toAscii().constData();
         checkpointList_->Update( item->text(), session );
@@ -291,7 +314,7 @@ void CreateExerciceWidget::OnSessionSelected( const QString& session )
 // -----------------------------------------------------------------------------
 void CreateExerciceWidget::OnCheckpointSelected( const QString& checkpoint )
 {
-    checkpoint_ = frontend::commands::CheckpointExists( config_, exerciseList_->selectedItem()->text().toAscii().constData(), session_, checkpoint.toAscii().constData() ) ? checkpoint : "";
+    checkpoint_ = frontend::commands::CheckpointExists( config_, exerciseList_->currentItem()->text().toAscii().constData(), session_, checkpoint.toAscii().constData() ) ? checkpoint.toStdString() : "";
     page_.UpdateEditButton();
 }
 

@@ -25,18 +25,15 @@ class Q3ListViewItem;
 
 namespace frontend
 {
-    class CheckListItem : public Q3CheckListItem
+    class CheckListItem : public QStandardItem
     {
     public:
-        CheckListItem( Q3CheckListItem *parent, const QString &text, bool recursive )
-            : Q3CheckListItem( parent, text, Q3CheckListItem::CheckBox )
+        CheckListItem( const QString text, bool recursive )
+            : QStandardItem( text )
             , recursive_( recursive )
-        {}
-
-        CheckListItem( Q3ListViewItem *parent, const QString &text, bool recursive )
-            : Q3CheckListItem( parent, text, Q3CheckListItem::CheckBox )
-            , recursive_( recursive )
-        {}
+        {
+            setCheckable( true );
+        }
 
         bool IsRecursive()
         {
@@ -47,8 +44,8 @@ namespace frontend
         bool recursive_;
     };
 
-    Q3ListViewItem* BuildExerciseData( const std::string& exercise, const tools::GeneralConfig& config, Q3ListView* content, const tools::Loader_ABC& fileLoader );
-    Q3ListViewItem* BuildExerciseFeatures( const std::string& exercise, const tools::GeneralConfig& config, Q3ListView* content );
+    void BuildExerciseData( const std::string& exercise, const tools::GeneralConfig& config, QStandardItemModel& content, const tools::Loader_ABC& fileLoader );
+    void BuildExerciseFeatures( const std::string& exercise, const tools::GeneralConfig& config, QStandardItemModel& content );
 }
 
 #endif // __ListViewHelper_h_
