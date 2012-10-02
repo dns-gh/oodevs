@@ -69,7 +69,12 @@ struct Download : public gui::Download_ABC, public io::Writer_ABC
     // -----------------------------------------------------------------------------
     ~Download()
     {
-        // NOTHING
+        if( !rpy_.isNull() )
+        {
+            disconnect( rpy_ );
+            rpy_->abort();
+        }
+        async_.Join();
     }
 
     // -----------------------------------------------------------------------------
