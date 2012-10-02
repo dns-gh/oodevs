@@ -107,7 +107,7 @@ PathPoint::E_TypePoint PathPoint::GetTypePoint() const
 // Name: PathPoint::GetDestPoint
 // Created: MGD 2010-03-10 @TODO MGD Refactor PathPoint hierarchy to avoid this ugly
 // -----------------------------------------------------------------------------
-const boost::shared_ptr< PathPoint >& PathPoint::GetDestPoint() const
+boost::shared_ptr< PathPoint > PathPoint::GetDestPoint() const
 {
     throw std::runtime_error( "GetDestPoint cannot be called for this Point class" );
 }

@@ -15,8 +15,8 @@
 using namespace sword;
 using namespace sword::movement;
 
-DECLARE_HOOK( AddPathPoint, void, ( unsigned int entity, const boost::shared_ptr< sword::movement::PathPoint >& point ) )
-DECLARE_HOOK( RemovePathPoint, void, ( unsigned int entity, const boost::shared_ptr< sword::movement::PathPoint >& point ) )
+DECLARE_HOOK( AddPathPoint, void, ( unsigned int entity, boost::shared_ptr< sword::movement::PathPoint > point ) )
+DECLARE_HOOK( RemovePathPoint, void, ( unsigned int entity, boost::shared_ptr< sword::movement::PathPoint > point ) )
 
 //-----------------------------------------------------------------------------
 // Name: Rep_PathPoint_Front constructor
@@ -66,7 +66,7 @@ void Rep_PathPoint_Front::RemoveFromDIA( boost::shared_ptr< PathPoint > self )
 // Name: Rep_PathPoint_Front::GetDestPoint
 // Created: LDC 2009-04-22
 // -----------------------------------------------------------------------------
-const boost::shared_ptr< PathPoint >& Rep_PathPoint_Front::GetDestPoint() const
+boost::shared_ptr< PathPoint > Rep_PathPoint_Front::GetDestPoint() const
 {
     return destPoint_;
 }

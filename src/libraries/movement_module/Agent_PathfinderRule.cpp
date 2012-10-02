@@ -15,17 +15,17 @@
 
 using namespace sword::movement;
 
-DECLARE_HOOK( GetAltitudeCost, double, ( const SWORD_Model* entity, const boost::shared_ptr< sword::movement::Path_ABC >& path, const MT_Vector2D& from, const MT_Vector2D& to, double rAltitudeCostPerMeter ) )
-DECLARE_HOOK( GetFuseauxCost, double, ( const SWORD_Model* entity, const boost::shared_ptr< sword::movement::Path_ABC >& path, const MT_Vector2D& from, const MT_Vector2D& to,
+DECLARE_HOOK( GetAltitudeCost, double, ( const SWORD_Model* entity, boost::shared_ptr< sword::movement::Path_ABC > path, const MT_Vector2D& from, const MT_Vector2D& to, double rAltitudeCostPerMeter ) )
+DECLARE_HOOK( GetFuseauxCost, double, ( const SWORD_Model* entity, boost::shared_ptr< sword::movement::Path_ABC > path, const MT_Vector2D& from, const MT_Vector2D& to,
               double rMaximumFuseauDistance, double rMaximumFuseauDistanceWithAutomata, // $$$$ MCO : all those configuration values should stay out of the movement module
               double rFuseauCostPerMeterOut, double rComfortFuseauDistance, double rFuseauCostPerMeterIn,
               double rMaximumAutomataFuseauDistance, double rAutomataFuseauCostPerMeterOut ) )
-DECLARE_HOOK( GetEnemiesCost, double, ( const SWORD_Model* entity, const boost::shared_ptr< sword::movement::Path_ABC >& path, const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType,
+DECLARE_HOOK( GetEnemiesCost, double, ( const SWORD_Model* entity, boost::shared_ptr< sword::movement::Path_ABC > path, const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType,
               const TerrainData& nLinkTerrainType, double rEnemyMaximumCost ) )
-DECLARE_HOOK( GetObjectsCost, double, ( const SWORD_Model* entity, const boost::shared_ptr< sword::movement::Path_ABC >& path, const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) )
-DECLARE_HOOK( GetPopulationsCost, double, ( const SWORD_Model* entity, const boost::shared_ptr< sword::movement::Path_ABC >& path, const MT_Vector2D& from, const MT_Vector2D& to,
+DECLARE_HOOK( GetObjectsCost, double, ( const SWORD_Model* entity, boost::shared_ptr< sword::movement::Path_ABC > path, const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) )
+DECLARE_HOOK( GetPopulationsCost, double, ( const SWORD_Model* entity, boost::shared_ptr< sword::movement::Path_ABC > path, const MT_Vector2D& from, const MT_Vector2D& to,
               const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType, double rPopulationMaximumCost ) )
-DECLARE_HOOK( GetUrbanBlockCost, double, ( const SWORD_Model* entity, const boost::shared_ptr< sword::movement::Path_ABC >& path, const MT_Vector2D& from, const MT_Vector2D& to ) )
+DECLARE_HOOK( GetUrbanBlockCost, double, ( const SWORD_Model* entity, boost::shared_ptr< sword::movement::Path_ABC > path, const MT_Vector2D& from, const MT_Vector2D& to ) )
 DECLARE_HOOK( IsValidPosition, bool, ( const MT_Vector2D& point ) )
 
 // -----------------------------------------------------------------------------

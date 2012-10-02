@@ -21,7 +21,7 @@
 using namespace sword::movement;
 
 DECLARE_HOOK( GetMaxPathFindComputationDuration, unsigned int, () )
-DECLARE_HOOK( CancelPathFindJob, void, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
+DECLARE_HOOK( CancelPathFindJob, void, ( boost::shared_ptr< sword::movement::Path_ABC > path ) )
 
 unsigned int Path_ABC::nIDIdx_ = 0;
 
