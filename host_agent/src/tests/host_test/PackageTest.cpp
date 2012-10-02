@@ -63,7 +63,7 @@ struct Fixture
         , install( pool, fs, GetFileIndex(), true )
         , cache  ( pool, fs, GetFileIndex(), false )
     {
-        // NOTHING
+        MOCK_EXPECT( fs.IsFile ).with( boost::bind( &EndWith, "gaming_app.exe", _1 ) ).returns( false );
     }
 
     size_t idx;

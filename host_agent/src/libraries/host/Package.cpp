@@ -658,6 +658,37 @@ struct Exercise : public Item
     const std::string model_;
     const std::string terrain_;
 };
+
+bool Equal( const Path& lhs, const Path& rhs )
+{
+    return lhs == rhs;
+}
+
+struct Client : public Item
+{
+    Client( const FileSystem_ABC& fs, const Path& root, const Path& file, size_t id, const Metadata* meta )
+        : Item( fs, root, id, "gaming", Format( fs.GetLastWrite( file ) ), meta )
+    {
+        // NOTHING
+    }
+
+    std::string GetType() const
+    {
+        return "client";
+    }
+
+    Path GetSuffix() const
+    {
+        return Path();
+    }
+
+    static void Parse( Async& async, const FileSystem_ABC& fs, const Path& root, Package::T_Items& items, const Metadata* meta )
+    {
+        const Path file = root / "gaming_app.exe";
+        if( fs.IsFile( file ) )
+            AttachSimple< Client >( async, file, fs, root, items, meta );
+    }
+};
 }
 
 // -----------------------------------------------------------------------------
@@ -739,6 +770,7 @@ bool FillItems( Async& async, const FileSystem_ABC& fs, const Path& path, Packag
     Model::Parse   ( async, fs, path, items, meta );
     Terrain::Parse ( async, fs, path, items, meta );
     Exercise::Parse( async, fs, path, items, meta );
+    Client::Parse  ( async, fs, path, items, meta );
     return true;
 }
 }
