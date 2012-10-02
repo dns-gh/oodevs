@@ -42,6 +42,10 @@
         <translation>Compte-rendu</translation>
     </message>
     <message>
+        <source>Reporter</source>
+        <translation>Unité</translation>
+    </message>
+    <message>
         <source>ISO Date</source>
         <translation>Date ISO</translation>
     </message>

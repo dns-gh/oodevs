@@ -105,6 +105,7 @@ void Report::Display( Displayer_ABC& displayer ) const
     displayer.Display( 0, GetColor( type_ ) );
     displayer.Display( tools::translate( "ReportListView", "ISO Date" ), time_.toString( Qt::ISODate ) );
     displayer.Display( tools::translate( "ReportListView", "Received" ), time_.toString( Qt::LocalDate ) );
+    displayer.Display( tools::translate( "ReportListView", "Reporter" ), entity_.GetName() );
     displayer.Display( 0, isNew_ ? Styles::bold : Styles::weak );
     displayer.Display( tools::translate( "ReportListView", "Report" ), message_  );
 }

@@ -11,6 +11,7 @@
 #include "Reports.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "protocol/Protocol.h"
 #include "reports/ReportFactory.h"
 #include "reports/Report.h"
@@ -44,6 +45,21 @@ Reports::~Reports()
 }
 
 // -----------------------------------------------------------------------------
+// Name: Reports::ShouldDisplay
+// Created: LDC 2012-10-02
+// -----------------------------------------------------------------------------
+bool Reports::ShouldDisplay( const Report& report ) const
+{
+    const kernel::Entity_ABC& owner = report.GetOwner();
+    if( &agent_ == &owner )
+        return true;
+    const TacticalHierarchies* tacticalHierarchies = owner.Retrieve< TacticalHierarchies >();
+    if( !tacticalHierarchies )
+        return false;
+    return tacticalHierarchies->IsSubordinateOf( agent_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Reports::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
@@ -55,8 +71,28 @@ void Reports::DoUpdate( const sword::Report& message )
         Report* report = reportFactory_.CreateReport( agent_, message );
         if( report )
         {
-            Register( message.report().id(), *report );
             controller_.Create( *report );
+            AddReport( message.report().id(), report );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Reports::AddReport
+// Created: LDC 2012-10-02
+// -----------------------------------------------------------------------------
+void Reports::AddReport( unsigned int id, Report* report )
+{
+    Register( id, *report );
+    const TacticalHierarchies* hierarchies = agent_.Retrieve< TacticalHierarchies >();
+    if( hierarchies )
+    {
+        const Entity_ABC* superior = hierarchies->GetSuperior();
+        if( superior )
+        {
+            Reports* reports = const_cast< Reports* >( superior->Retrieve< Reports >() );
+            if( reports )
+                reports->AddReport( id, report );
         }
     }
 }
@@ -70,6 +106,17 @@ void Reports::DoUpdate( const sword::InvalidateReport& message )
     delete Find( message.report().id() );
     Remove( message.report().id() );
     controller_.Update( *this );
+    const TacticalHierarchies* hierarchies = agent_.Retrieve< TacticalHierarchies >();
+    if( hierarchies )
+    {
+        const Entity_ABC* superior = hierarchies->GetSuperior();
+        if( superior )
+        {
+            Reports* reports = const_cast< Reports* >( superior->Retrieve< Reports >() );
+            if( reports )
+                reports->DoUpdate( message );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -24,6 +24,7 @@
 #include "LogisticLinks.h"
 #include "Model.h"
 #include "ObjectKnowledges.h"
+#include "Reports.h"
 #include "Quotas.h"
 #include "StaticModel.h"
 #include "StaticModel.h"
@@ -120,7 +121,8 @@ kernel::Formation_ABC* TeamFactory::CreateFormation( const sword::FormationCreat
     result->Attach< kernel::Positions >( *new AggregatedPositions( *result, 4.f ) );
     result->Attach< kernel::DictionaryExtensions >( *new ::DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     if( message.has_color() )
-        result->Attach< kernel::Color_ABC >( *new Color( message.color() ) );
+        result->Attach< kernel::Color_ABC >( *new Color( message.color() ) );    
+    result->Attach( *new Reports( *result, controllers_.controller_, static_.reportFactory_ ) );
     result->Update( message );
     result->Polish();
     return result;

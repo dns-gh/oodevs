@@ -49,5 +49,9 @@
         <source>Received</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Reporter</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

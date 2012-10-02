@@ -60,6 +60,7 @@ public:
     void Clear();
     void ClearTraces();
     void MarkAsRead();
+    bool ShouldDisplay( const Report& report ) const;
     //@}
 
 private:
@@ -81,6 +82,7 @@ private:
     virtual void DoUpdate( const sword::Report& message );
     virtual void DoUpdate( const sword::InvalidateReport& msg );
     virtual void DoUpdate( const sword::Trace& msg );
+    void AddReport( unsigned int id, Report* report );
     //@}
 
 private:

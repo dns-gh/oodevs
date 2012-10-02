@@ -39,6 +39,7 @@ ReportListView::ReportListView( QWidget* pParent, Controllers& controllers, cons
     setMargin( 2 );
     AddColumn( tr( "ISO Date" ) );
     AddColumn( tr( "Received" ) );
+    AddColumn( tr( "Reporter" ) );
     AddColumn( tr( "Report" ) );
     setColumnWidthMode( 0, Q3ListView::Manual );
     setColumnWidth( 0, -1 );
@@ -153,7 +154,7 @@ void ReportListView::Display( const Report* report, Displayer_ABC& displayer, Va
 // -----------------------------------------------------------------------------
 void ReportListView::Display( const Report& report, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item )
 {
-    if( &report.GetOwner() == selected_ && filter_.ShouldDisplay( report ) )
+    if( filter_.ShouldDisplay( report ) )
     {
         item->SetValue( &report );
         report.Display( displayer );
@@ -168,9 +169,11 @@ void ReportListView::Display( const Report& report, kernel::Displayer_ABC& displ
 // -----------------------------------------------------------------------------
 void ReportListView::NotifyCreated( const Report& report )
 {
-    if( ! isVisible() || & report.GetOwner() != selected_ )
+    const Reports* reports = 0;
+    reports = selected_ ? selected_->Retrieve< Reports >() : 0;
+    if( !isVisible() || !reports || !reports->ShouldDisplay( report ) )
         return;
-    if( ! filter_.ShouldDisplay( report ) )
+    if( !filter_.ShouldDisplay( report ) )
         return;
     ValuedListItem* item = factory_.CreateItem( this );
     item->SetValue( &report );

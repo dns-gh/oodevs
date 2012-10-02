@@ -2806,6 +2806,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Effacer les traces</translation>
     </message>
     <message>
+        <source>Reporter</source>
+        <translation>Unité</translation>
+    </message>
+    <message>
         <source>ISO Date</source>
         <translation>Date ISO</translation>
     </message>
