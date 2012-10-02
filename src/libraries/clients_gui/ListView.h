@@ -23,8 +23,6 @@
 
 namespace gui
 {
-    class SearchListView_ABC;
-
 class RichListView : public Q3ListView
                    , public kernel::ReadOnlyModable
 {
@@ -74,11 +72,6 @@ public:
             delete item;
             item = next;
         }
-    }
-
-    virtual void CreateFilters( SearchListView_ABC& /* searchListView */ )
-    {
-        // NOTHING
     }
 
     void Purge()

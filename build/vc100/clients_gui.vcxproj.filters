@@ -841,9 +841,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\CheckComboBox.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\SearchListView.cpp">
-      <Filter>Source Files\Lists</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\NumericLimitsEditor.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
@@ -1490,9 +1487,6 @@
     <None Include="..\..\src\libraries\clients_gui\ConsistencyDialog_ABC.inl">
       <Filter>Source Files\Dialogs\Consistency</Filter>
     </None>
-    <None Include="..\..\src\libraries\clients_gui\SearchListView.inl">
-      <Filter>Source Files\Lists</Filter>
-    </None>
     <None Include="..\..\src\libraries\clients_gui\NumericLimitsEditor.inl">
       <Filter>Source Files\Tools</Filter>
     </None>
@@ -1836,9 +1830,6 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\CheckComboBox.h">
       <Filter>Source Files\Tools</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\SearchListView.h">
-      <Filter>Source Files\Lists</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\NumericLimitsEditor.h">
       <Filter>Source Files\Tools</Filter>

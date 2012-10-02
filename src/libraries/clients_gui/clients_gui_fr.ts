@@ -1534,17 +1534,6 @@ Voulez-vous le supprimer?</translation>
     </message>
 </context>
 <context>
-    <name>gui::SearchListView_ABC</name>
-    <message>
-        <source>Clear</source>
-        <translation>Réinitialiser</translation>
-    </message>
-    <message>
-        <source>Filters</source>
-        <translation>Filtres</translation>
-    </message>
-</context>
-<context>
     <name>gui::StatusBar</name>
     <message>
         <source>---</source>

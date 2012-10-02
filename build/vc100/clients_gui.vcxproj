@@ -155,7 +155,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\RichTreeView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SearchButton.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SearchLineEdit.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\SearchListView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SearchTreeView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SelectionLayer.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SpinBoxAndSlider.cpp" />
@@ -980,20 +979,6 @@
     </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\SearchButton.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\SearchLineEdit.h" />
-    <CustomBuild Include="..\..\src\libraries\clients_gui\SearchListView.h">
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing "%(FullPath)"</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing "%(FullPath)"</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\SearchTreeView.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
@@ -2529,7 +2514,6 @@
     <None Include="..\..\src\libraries\clients_gui\HierarchyTreeView.inl" />
     <None Include="..\..\src\libraries\clients_gui\NumericLimitsEditor.inl" />
     <None Include="..\..\src\libraries\clients_gui\resources_gradients_ar.ts" />
-    <None Include="..\..\src\libraries\clients_gui\SearchListView.inl" />
     <None Include="..\..\src\libraries\clients_gui\SearchTreeView.inl" />
     <None Include="..\..\src\libraries\clients_gui\StandardModel.inl" />
     <None Include="..\..\src\libraries\clients_gui\UnitStateTable_ABC.inl" />
