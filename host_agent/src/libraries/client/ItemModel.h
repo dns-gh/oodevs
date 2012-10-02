@@ -52,6 +52,7 @@ struct Item : public boost::noncopyable
     size_t          GetId() const;
     bool            Equal( size_t id ) const;
     bool            SetData( int col, const QVariant& value, int role );
+    bool            IsRequired() const;
     //@}
 
 private:
@@ -64,6 +65,7 @@ private:
     const QString   version_;
     const QDateTime date_;
     const QString   checksum_;
+    const bool      required_;
 
     QString         error_;
     int             status_;
@@ -93,6 +95,7 @@ public:
     void                Fill( const Tree& src );
     void                Setup( QAbstractItemView* view );
     QAbstractItemModel* GetModel();
+    bool                IsRequired( const QModelIndex& idx );
     //@}
 
 public slots:

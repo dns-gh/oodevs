@@ -82,6 +82,7 @@ Item::Item( const Tree& tree, int status )
     , status_     ( status )
     , date_       ( QDateTime::fromString( QGet( tree, "date" ), Qt::ISODate ) )
     , checksum_   ( QGet( tree, "checksum" ) )
+    , required_   ( false )
     , size_       ( Get< uint64_t >( tree, "size" ) )
     , check_state_( Qt::Unchecked )
 {
@@ -101,6 +102,7 @@ Item::Item( size_t id, const QString& type, const QString& name, const QString& 
     , status_     ()
     , date_       ()
     , checksum_   ( checksum )
+    , required_   ( true )
     , size_       ( 0 )
     , check_state_( Qt::Unchecked )
 {
@@ -233,6 +235,15 @@ Qt::CheckState Item::GetCheckState() const
 size_t Item::GetId() const
 {
     return id_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Item::IsRequired
+// Created: BAX 2012-10-02
+// -----------------------------------------------------------------------------
+bool Item::IsRequired() const
+{
+    return required_;
 }
 
 // -----------------------------------------------------------------------------
@@ -398,4 +409,13 @@ std::vector< size_t > ItemModel::Remove()
     BOOST_FOREACH( size_t id, rpy )
         FlatModel< gui::Item >::Remove( Find( id ).row() );
     return rpy;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ItemModel::IsRequired
+// Created: BAX 2012-10-02
+// -----------------------------------------------------------------------------
+bool ItemModel::IsRequired( const QModelIndex& idx )
+{
+    return ItemModel::Item( idx ).IsRequired();
 }

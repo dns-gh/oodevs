@@ -22,6 +22,7 @@
 
 #include "host/Package.h"
 
+#include <boost/assign/list_of.hpp>
 #include <boost/make_shared.hpp>
 
 #include <QCoreApplication>
@@ -71,6 +72,7 @@ Context::Context( const Runtime_ABC& runtime, const FileSystem_ABC& fs, Pool_ABC
 // -----------------------------------------------------------------------------
 Context::~Context()
 {
+    async_.Join();
     io_.Join();
     fs_.Remove( root_ / tmp_dir );
 }
@@ -270,7 +272,7 @@ void Context::OnNetworkRequest( HttpCommand cmd, const QNetworkRequest& req )
             connect( rpy, SIGNAL( finished() ), this, SLOT( OnGetSession() ) );
             break;
 
-        case HTTP_CMD_DOWNLOAD_INSTALL:
+        case HTTP_CMD_DOWNLOAD_ITEM:
             OpenDownload( rpy );
             break;
     }
@@ -283,6 +285,7 @@ void Context::OnNetworkRequest( HttpCommand cmd, const QNetworkRequest& req )
 void Context::OnGetSession()
 {
     QNetworkReply* rpy = qobject_cast< QNetworkReply* >( sender() );
+    rpy->deleteLater();
     if( rpy->error() != QNetworkReply::NoError )
     {
         emit ClearProgress();
@@ -291,28 +294,35 @@ void Context::OnGetSession()
     }
 
     emit StatusMessage( "Downloading package(s)..." );
-    async_.Register( QtConcurrent::run( this, &Context::ParseSession, rpy ) );
+    async_.Register( QtConcurrent::run( this, &Context::ParseSession, rpy->readAll() ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Head::ParseSession
 // Created: BAX 2012-09-20
 // -----------------------------------------------------------------------------
-void Context::ParseSession( QNetworkReply* rpy )
+void Context::ParseSession( const QByteArray& body )
 {
-    const Tree session = FromJson( QUtf8( rpy->readAll() ) );
+    session_ = FromJson( QUtf8( body ) );
     QWriteLocker lock( &access_ );
-    //qDebug() << QUtf8( ToJson( session, true ) );
+    ApplySession();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Head::Apply
+// Created: BAX 2012-10-02
+// -----------------------------------------------------------------------------
+void Context::ApplySession()
+{
     size_t idx = size_t( ~0 );
-    //AddItem( session, "binary" );
-    AddItem( session, "model", idx );
-    AddItem( session, "terrain", idx );
-    AddItem( session, "exercise", idx );
+    AddItem( session_, "client", idx );
+    AddItem( session_, "model", idx );
+    AddItem( session_, "terrain", idx );
+    AddItem( session_, "exercise", idx );
     if( idx != -1 )
         return;
 
-    emit ClearMessage();
-    emit ClearProgress();
+    StartClient();
 }
 
 // -----------------------------------------------------------------------------
@@ -324,12 +334,15 @@ void Context::AddItem( const Tree& src, const std::string& type, size_t& idx )
     const std::string name = Get< std::string >( src, type + ".name" );
     const std::string checksum = Get< std::string >( src, type + ".checksum" );
     const std::string node = Get< std::string >( src, "node" );
+    const QString qtype = QUtf8( type );
     Package::T_Item pkg = install_->Find( type, name, checksum );
     if( pkg )
+    {
+        links_.insert( qtype, pkg );
         return;
+    }
 
     const int id = static_cast< int >( ++idx + (1<<30) );
-    const QString qtype = QUtf8( type );
     const QString qname = QUtf8( name );
     const QString qchecksum = QUtf8( checksum );
 
@@ -337,18 +350,22 @@ void Context::AddItem( const Tree& src, const std::string& type, size_t& idx )
     items_.Append( item );
 
     QUrl next = url_;
-    next.setPath( "/api/download_install" );
+    next.setPath( "/api/download_client" );
     QList< QPair< QString, QString > > list;
     list.append( qMakePair( QString( "sid" ), url_.queryItemValue( "sid" ) ) );
-    list.append( qMakePair( QString( "id" ),  QUtf8( node ) ) );
-    list.append( qMakePair( QString( "type" ), qtype ) );
-    list.append( qMakePair( QString( "name" ),  qname ) );
-    list.append( qMakePair( QString( "checksum" ),  qchecksum ) );
+    if( type != "client" )
+    {
+        next.setPath( "/api/download_install" );
+        list.append( qMakePair( QString( "id" ),  QUtf8( node ) ) );
+        list.append( qMakePair( QString( "type" ), qtype ) );
+        list.append( qMakePair( QString( "name" ),  qname ) );
+        list.append( qMakePair( QString( "checksum" ),  qchecksum ) );
+    }
     next.setQueryItems( list );
 
     QNetworkRequest req( next );
     req.setAttribute( id_attribute, id );
-    emit NetworkRequest( HTTP_CMD_DOWNLOAD_INSTALL, req );
+    emit NetworkRequest( HTTP_CMD_DOWNLOAD_ITEM, req );
 }
 
 // -----------------------------------------------------------------------------
@@ -436,6 +453,8 @@ void Context::ParsePackages()
     for( int row = 0; row < items_.rowCount(); ++row )
     {
         QModelIndex idx = items_.index( row, 0 );
+        if( !items_.IsRequired( idx ) )
+            continue;
         const QString type = GetValue( idx, ITEM_COL_TYPE ).toString();
         const QString name = GetValue( idx, ITEM_COL_NAME ).toString();
         const QString sum  = GetValue( idx, ITEM_COL_CHECKSUM ).toString();
@@ -451,8 +470,81 @@ void Context::ParsePackages()
         items_.Replace( idx.row(), boost::make_shared< Item >( src, 100 ) );
     }
 
+    emit StatusMessage( "Installing package(s)" );
     QWriteLocker write( &access_ );
     install_->InstallWith( io_, root_, targets, true );
-    emit ClearProgress();
-    emit ClearMessage();
+    ApplySession();
+}
+
+namespace
+{
+// -----------------------------------------------------------------------------
+// Name: MakeOption
+// Created: BAX 2012-10-02
+// -----------------------------------------------------------------------------
+template< typename T >
+std::string MakeOption( const std::string& option, const T& value )
+{
+    return "--" + option + " \"" + boost::lexical_cast< std::string >( value ) + "\"";
+}
+
+// -----------------------------------------------------------------------------
+// Name: WriteConfiguration
+// Created: BAX 2012-10-02
+// -----------------------------------------------------------------------------
+void WriteConfiguration( const FileSystem_ABC& fs, Path root,
+                         const std::string host, int port )
+{
+    root /= "sessions";
+    fs.MakePaths( root );
+    Tree data;
+    data.put( "session.config.gaming.network.<xmlattr>.server", host + ":" + boost::lexical_cast< std::string >( port ) );
+    fs.WriteFile( root / "session.xml", ToXml( data ) );
+}
+}
+
+// -----------------------------------------------------------------------------
+// Name: GetPath
+// Created: BAX 2012-10-02
+// -----------------------------------------------------------------------------
+Path Context::GetPath( const QString& type )
+{
+    T_Links::const_iterator it = links_.find( type );
+    if( it == links_.end() )
+    {
+        emit StatusMessage( "Missing package of type " + type );
+        emit ClearProgress();
+        return Path();
+    }
+    return install_->GetRoot( *it.value() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Context::StartClient
+// Created: BAX 2012-10-02
+// -----------------------------------------------------------------------------
+void Context::StartClient()
+{
+    const Path client = GetPath( "client" );
+    const Path model = GetPath( "model" );
+    const Path terrain = GetPath( "terrain" );
+    const Path exercise = GetPath( "exercise" );
+    if( client.empty() || model.empty() || terrain.empty() || exercise.empty() )
+        return;
+    const Path name = Utf8( Get< std::string >( session_, "exercise.name" ) );
+    WriteConfiguration( fs_, exercise / "exercises" / name, QUtf8( url_.host() ), Get< int >( session_, "port" ) );
+    std::vector< std::string > args = boost::assign::list_of
+        ( MakeOption( "models-dir", Utf8( model / "data/models" ) ) )
+        ( MakeOption( "terrains-dir", Utf8( terrain / "data/terrains" ) ) )
+        ( MakeOption( "exercises-dir", Utf8( exercise / "exercises" ) ) )
+        ( MakeOption( "exercise", Utf8( name ) ) );
+    try
+    {
+        runtime_.Start( Utf8( client / "gaming_app.exe" ), args, Utf8( client ), std::string() );
+        emit Exit();
+    }
+    catch( const std::exception& err )
+    {
+        emit StatusMessage( QString( "Unable to start client (%1)" ).arg( err.what() ) );
+    }
 }

@@ -11,9 +11,10 @@
 #define CONTEXT_H_
 
 #include "runtime/Async.h"
+#include "host/Package_ABC.h"
 
 #include <boost/filesystem/path.hpp>
-#include <boost/property_tree/ptree_fwd.hpp>
+#include <boost/property_tree/ptree.hpp>
 #include <boost/scoped_ptr.hpp>
 
 #include <QReadWriteLock>
@@ -57,7 +58,7 @@ enum Command
 enum HttpCommand
 {
     HTTP_CMD_GET_SESSION,
-    HTTP_CMD_DOWNLOAD_INSTALL,
+    HTTP_CMD_DOWNLOAD_ITEM,
     HTTP_CMD_COUNT,
 };
 
@@ -94,9 +95,10 @@ public slots:
     void ParsePackages();
 
 private:
-    typedef boost::shared_ptr< Download_ABC >      T_Download;
-    typedef QHash< size_t, T_Download >            T_Downloads;
-    typedef boost::shared_ptr< host::Package_ABC > T_Package;
+    typedef boost::shared_ptr< Download_ABC >           T_Download;
+    typedef QHash< size_t, T_Download >                 T_Downloads;
+    typedef boost::shared_ptr< host::Package_ABC >      T_Package;
+    typedef QHash< QString, host::Package_ABC::T_Item > T_Links;
 
 private:
     void ParseArguments();
@@ -105,9 +107,12 @@ private:
     void Unregister();
     void ParseRoot();
     void GetSession();
-    void ParseSession( QNetworkReply* rpy );
+    void ParseSession( const QByteArray& body );
+    void ApplySession();
     void AddItem( const Tree& src, const std::string& type, size_t& idx );
     void OpenDownload( QNetworkReply* rpy );
+    Path GetPath( const QString& type );
+    void StartClient();
 
 private:
     const runtime::Runtime_ABC& runtime_;
@@ -122,6 +127,8 @@ private:
     QReadWriteLock access_;
     T_Package install_;
     ItemModel& items_;
+    Tree session_;
+    T_Links links_;
     T_Downloads downloads_;
 };
 }
