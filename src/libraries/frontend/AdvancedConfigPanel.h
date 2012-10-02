@@ -72,6 +72,7 @@ private:
     QSpinBox*                   factorSpin_;
     QLabel*                     endtickLabel_;
     QSpinBox*                   endtickSpin_;
+    QLabel*                     pausedLabel_;
     QCheckBox*                  pausedCheckBox_;
 
     Q3GroupBox*                 pathfindBox_;
@@ -83,6 +84,7 @@ private:
     QSpinBox*                   fragmentsFrequencySpin_;
 
     Q3GroupBox*                 legacyBox_;
+    QLabel*                     legacyLabel_;
     QCheckBox*                  legacyCheckBox_;
     //@}
 };

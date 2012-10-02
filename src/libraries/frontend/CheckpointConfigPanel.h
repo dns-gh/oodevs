@@ -79,7 +79,7 @@ private:
     QSpinBox*                     keep_;
     Q3GroupBox*                   checkpointsGroup_;
     Q3GroupBox*                   loadGroup_;
-    Q3ListBox*                    sessions_;
+    QListWidget*                  sessions_;
     CheckpointList*               checkpoints_;
     const frontend::Exercise_ABC* exercise_;
     QLabel*                       frequencyLabel_;

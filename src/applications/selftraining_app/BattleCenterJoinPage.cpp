@@ -57,15 +57,22 @@ BattleCenterJoinPage::BattleCenterJoinPage( Q3WidgetStack* pages, Page_ABC& prev
     box->setMargin( 10 );
     box->setSpacing( 10 );
     {
-        Q3GroupBox* hbox = new Q3GroupBox( 1, Qt::Vertical, box );
-        hostLabel_ = new QLabel( hbox );
-        host_ = new QLineEdit( "127.0.0.1", hbox );
-        portLabel_ = new QLabel( hbox );
-        port_ = new QSpinBox( hbox );
+        QGroupBox* hbox = new QGroupBox( box );
+        hostLabel_ = new QLabel();
+        host_ = new QLineEdit( "127.0.0.1");
+        portLabel_ = new QLabel();
+        port_ = new QSpinBox();
         port_->setMaxValue( 65535 );
         port_->setValue( config.GetLauncherPort() );
-        updateButton_ = new QPushButton( hbox );
+        updateButton_ = new QPushButton();
         connect( updateButton_, SIGNAL( clicked() ), SLOT( UpdateExerciseList() ) );
+
+        QVBoxLayout* hboxLayout = new QVBoxLayout( hbox );
+        hboxLayout->addWidget( hostLabel_ );
+        hboxLayout->addWidget( host_ );
+        hboxLayout->addWidget( portLabel_ );
+        hboxLayout->addWidget( port_ );
+        hboxLayout->addWidget( updateButton_ );
     }
     {
         filter_.reset( new RunningExerciseFilter( *host_, *port_ ) );

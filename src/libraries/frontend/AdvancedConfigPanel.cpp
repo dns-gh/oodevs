@@ -50,7 +50,9 @@ AdvancedConfigPanel::AdvancedConfigPanel( QWidget* parent, const tools::GeneralC
         endtickSpin_->setValue( 0 );
     }
     {
-        pausedCheckBox_ = new QCheckBox( timeBox_ );
+        Q3HBox* pausedBox = new Q3HBox( timeBox_ );
+        pausedLabel_ = new QLabel( pausedBox );
+        pausedCheckBox_ = new QCheckBox( pausedBox );
         pausedCheckBox_->setChecked( false );
     }
     pathfindBox_ = new Q3GroupBox( 2, Qt::Horizontal, box );
@@ -69,6 +71,7 @@ AdvancedConfigPanel::AdvancedConfigPanel( QWidget* parent, const tools::GeneralC
     }
     legacyBox_ = new Q3GroupBox( 2, Qt::Horizontal, box );
     {
+        legacyLabel_ = new QLabel( legacyBox_ );
         legacyCheckBox_ = new QCheckBox( legacyBox_ );
         legacyCheckBox_->setChecked( false );
         connect( legacyCheckBox_, SIGNAL( stateChanged ( int ) ), SLOT( SwordVersionChecked( int ) ) );
@@ -94,7 +97,7 @@ void AdvancedConfigPanel::OnLanguageChanged()
     stepLabel_->setText( tools::translate( "AdvancedConfigPanel", "Time step:" ) );
     factorLabel_->setText( tools::translate( "AdvancedConfigPanel", "Time factor:" ) );
     endtickLabel_->setText( tools::translate( "AdvancedConfigPanel", "End tick:" ) );
-    pausedCheckBox_->setText( tools::translate( "AdvancedConfigPanel", "  Paused at startup" ) );
+    pausedLabel_->setText( tools::translate( "AdvancedConfigPanel", "Paused at startup:" ) );
 
     pathfindBox_->setTitle( tools::translate( "AdvancedConfigPanel", "Pathfind" ) );
     pathThreadsLabel_->setText( tools::translate( "AdvancedConfigPanel", "Number of threads:" ) );
@@ -103,7 +106,7 @@ void AdvancedConfigPanel::OnLanguageChanged()
     fragmentsFrequencyLabel_->setText( tools::translate( "AdvancedConfigPanel", "Fragmentation frequency: " ) );
     
     legacyBox_->setTitle( tools::translate( "AdvancedConfigPanel", "Legacy Mode" ) );
-    legacyCheckBox_->setText( tools::translate( "AdvancedConfigPanel", "Enable Legacy Mode" ) );
+    legacyLabel_->setText( tools::translate( "AdvancedConfigPanel", "Enable Legacy Mode" ) );
 }
 
 // -----------------------------------------------------------------------------

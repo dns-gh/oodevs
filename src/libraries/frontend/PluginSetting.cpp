@@ -115,7 +115,7 @@ PluginSetting::PluginSetting( QWidget* parent, const tools::GeneralConfig& confi
     }
     else if( type_ == "file_list" )
     {
-        fileList_ = new FileList( "Files", parent, "?", "");
+        fileList_ = new FileList( tools::translate( "PluginSetting", "Files" ), parent, "?", "");
         fileList_->SetFilesDelimited(xis.attribute< std::string >( "default" ) );
     }
     else if( type_ == "enumeration" )

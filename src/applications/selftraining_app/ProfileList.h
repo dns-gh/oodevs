@@ -34,10 +34,10 @@ namespace frontend
 */
 // Created: RDS 2008-09-05
 // =============================================================================
-class ProfileList : public Q3ListBox
+class ProfileList : public QListWidget
 {
 
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor

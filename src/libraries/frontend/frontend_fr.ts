@@ -28,10 +28,6 @@
         <translation>Nombre de threads:</translation>
     </message>
     <message>
-        <source>  Paused at startup</source>
-        <translation>  Démarrage en pause</translation>
-    </message>
-    <message>
         <source>Recorder</source>
         <translation>Enregistreur</translation>
     </message>
@@ -50,6 +46,10 @@
     <message>
         <source>Enable Legacy Mode</source>
         <translation>Activer le mode compatibilité</translation>
+    </message>
+    <message>
+        <source>Paused at startup:</source>
+        <translation>Démarrage en pause</translation>
     </message>
 </context>
 <context>
@@ -181,8 +181,8 @@
 <context>
     <name>PluginConfig</name>
     <message>
-        <source>Enable %1 plugin (v%2)</source>
-        <translation>Activer le plugin %1 (v%2)</translation>
+        <source>Enable %1 plugin v%2 </source>
+        <translation>Activer le plugin %1 v%2 </translation>
     </message>
 </context>
 <context>
@@ -190,6 +190,10 @@
     <message>
         <source>Select a file...</source>
         <translation>Sélectionner un fichier ...</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation>Fichiers</translation>
     </message>
 </context>
 <context>

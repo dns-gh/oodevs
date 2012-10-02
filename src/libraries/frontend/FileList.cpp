@@ -32,6 +32,7 @@ FileList::FileList(const QString& title, QWidget* parent, const QString& caption
     , fileFilter_(fileFilter)
 {
     listWidget_ = new QListWidget(this);
+    listWidget_->setFont( QFont( "Calibri", 12, QFont::Bold ) );
     listWidget_->setSelectionMode(QAbstractItemView::ExtendedSelection);
     addButton_ = new QPushButton(tr("Add"), this, "add");
     removeButton_ = new QPushButton(tr("Remove"), this, "remove");

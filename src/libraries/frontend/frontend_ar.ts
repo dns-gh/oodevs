@@ -20,10 +20,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>  Paused at startup</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Pathfind</source>
         <translation type="unfinished"></translation>
     </message>
@@ -49,6 +45,10 @@
     </message>
     <message>
         <source>Advanced</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paused at startup:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -181,7 +181,7 @@
 <context>
     <name>PluginConfig</name>
     <message>
-        <source>Enable %1 plugin (v%2)</source>
+        <source>Enable %1 plugin v%2 </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -189,6 +189,10 @@
     <name>PluginSetting</name>
     <message>
         <source>Select a file...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Files</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

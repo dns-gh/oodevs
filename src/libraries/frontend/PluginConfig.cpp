@@ -93,7 +93,7 @@ PluginConfig::~PluginConfig()
 // -----------------------------------------------------------------------------
 void PluginConfig::OnLanguageChanged()
 {
-    box_->setTitle( tools::translate( "PluginConfig", "Enable %1 plugin (v%2)" ).arg( label_ ).arg( version_.c_str() ) );
+    box_->setTitle( tools::translate( "PluginConfig", "Enable %1 plugin v%2 " ).arg( label_ ).arg( version_.c_str() ) );
 
     const std::string currentLanguage = tools::readLang();
     description_.SetCurrentLanguage( currentLanguage );

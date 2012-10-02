@@ -23,11 +23,12 @@
 // Created: RDS 2008-09-05
 // -----------------------------------------------------------------------------
 ProfileList::ProfileList( QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader )
-    : Q3ListBox( parent )
+    : QListWidget( parent )
     , config_( config )
     , fileLoader_( fileLoader )
 {
-    connect( this, SIGNAL( highlighted( int ) ), SLOT( OnSelect( int ) ) );
+    connect( this, SIGNAL( currentRowChanged( int ) ), SLOT( OnSelect( int ) ) );
+    setFont( QFont( "Calibri", 12, QFont::Bold ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -51,7 +52,7 @@ void ProfileList::Update( const QString& exercise )
     {
         if( !exercise.isEmpty() )
             ReadProfiles( exercise.toAscii().constData() );
-        emit highlighted( 0 );
+        emit currentRowChanged( 0 );
     }
     catch( ... )
     {
@@ -91,12 +92,11 @@ void ProfileList::ReadProfile( xml::xistream& xis )
     const QString name = profile.GetLogin() != "" ?  profile.GetLogin() : tools::translate( "ReadProfile", "anonymous" );
     if( profile.IsSupervision() )
     {
-        QPixmap px;
-        px.convertFromImage( QImage( "resources/images/selftraining/commandpost.xpm" ) );
-        insertItem( px , name );
+        static const QPixmap px( "resources/images/selftraining/commandpost.xpm" );
+        addItem( new QListWidgetItem( px , name ) );
     }
     else
-        insertItem( name );
+        addItem( name );
     profiles_.push_back( profile );
 }
 

@@ -61,8 +61,9 @@ CheckpointConfigPanel::CheckpointConfigPanel( QWidget* parent, const tools::Gene
             Q3VBox* box = new Q3VBox( loadGroup_ );
             sessionLabel_ = new QLabel( box );
             box->setSpacing( 5 );
-            sessions_ = new Q3ListBox( box );
-            connect( sessions_, SIGNAL( highlighted( const QString& ) ), SLOT( SessionSelected( const QString& ) ) );
+            sessions_ = new QListWidget( box );
+            sessions_->setFont( QFont( "Calibri", 12, QFont::Bold ) );
+            connect( sessions_, SIGNAL( currentTextChanged( const QString& ) ), SLOT( SessionSelected( const QString& ) ) );
         }
         {
             QWidget* box = new QWidget( loadGroup_ );
@@ -70,6 +71,8 @@ CheckpointConfigPanel::CheckpointConfigPanel( QWidget* parent, const tools::Gene
             checkpoints_ = new CheckpointList( config_ );
             connect( checkpoints_, SIGNAL( Select( const QString& ) ), SLOT( OnCheckpointSelected( const QString& ) ) );
             boxLayout->addWidget( checkpoints_ );
+            boxLayout->setSpacing( 5 );
+            boxLayout->setMargin( 0 );
         }
         connect( loadGroup_, SIGNAL( toggled( bool ) ), checkpoints_, SLOT( Toggle( bool ) ) );
     }
@@ -107,11 +110,11 @@ void CheckpointConfigPanel::Select( const frontend::Exercise_ABC& exercise )
     {
         exercise_ = &exercise;
         sessions_->clear();
-        sessions_->insertStringList( commands::ListSessionsWithCheckpoint( config_, exercise_->GetName().c_str() ) );
+        sessions_->addItems( commands::ListSessionsWithCheckpoint( config_, exercise_->GetName().c_str() ) );
         sessions_->setEnabled( sessions_->count() );
         if( !sessions_->count() )
-            sessions_->insertItem( tools::translate( "CheckpointConfigPanel", "No session" ) );
-        sessions_->setSelected( 0, true );
+            sessions_->addItem( tools::translate( "CheckpointConfigPanel", "No session" ) );
+        sessions_->setCurrentRow( 0 );
     }
 }
 
@@ -125,8 +128,8 @@ void CheckpointConfigPanel::ClearSelection()
     checkpointsGroup_->setChecked( false );
     checkpoints_->ClearSelection();
     sessions_->clear();
-    sessions_->setSelected( 0, true );
-    sessions_->insertItem( tools::translate( "CheckpointConfigPanel", "No session" ) );
+    sessions_->setCurrentRow( 0 );
+    sessions_->addItem( tools::translate( "CheckpointConfigPanel", "No session" ) );
     sessions_->setDisabled( true );
 }
 
@@ -146,7 +149,7 @@ void CheckpointConfigPanel::SessionSelected( const QString& session )
 // -----------------------------------------------------------------------------
 void CheckpointConfigPanel::OnCheckpointSelected( const QString& checkpoint )
 {
-    emit CheckpointSelected( checkpoint.isEmpty() ? "" : sessions_->currentText(), checkpoint );
+    emit CheckpointSelected( checkpoint.isEmpty() ? "" : sessions_->currentItem()->text(), checkpoint );
 }
 
 // -----------------------------------------------------------------------------
