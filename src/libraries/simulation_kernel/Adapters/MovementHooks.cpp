@@ -79,7 +79,7 @@ namespace movement
 
 namespace
 {
-    DEFINE_HOOK( StartComputePathfind, void, ( const SWORD_Model* entity, boost::shared_ptr< sword::movement::Path_ABC > path ) )
+    DEFINE_HOOK( StartComputePathfind, void, ( const SWORD_Model* entity, const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
     {
         MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( PathAdapter::Add( *core::Convert( entity ), path ) );
     }
@@ -208,7 +208,7 @@ namespace
     {
         return MIL_AgentServer::GetWorkspace().GetPathFindManager().GetMaxComputationDuration();
     }
-    DEFINE_HOOK( CancelPathFindJob, void, ( boost::shared_ptr< sword::movement::Path_ABC > path ) )
+    DEFINE_HOOK( CancelPathFindJob, void, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
     {
         boost::shared_ptr< PathAdapter > removed = PathAdapter::Remove( path );
         if( removed )

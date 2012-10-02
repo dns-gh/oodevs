@@ -41,27 +41,27 @@
 
 using namespace sword;
 
-DECLARE_HOOK( CleanPathAfterComputation, void, ( boost::shared_ptr< sword::movement::Path_ABC > path ) )
-DECLARE_HOOK( ExecutePathfind, void, ( boost::shared_ptr< sword::movement::Path_ABC > path, TerrainPathfinder& pathfind ) )
-DECLARE_HOOK( PathGetLength, double, ( boost::shared_ptr< sword::movement::Path_ABC > path ) )
-DECLARE_HOOK( PathGetState, DEC_Path_ABC::E_State, ( boost::shared_ptr< sword::movement::Path_ABC > path ) )
-DECLARE_HOOK( ComputePath, void, ( boost::shared_ptr< sword::movement::Path_ABC > path ) )
+DECLARE_HOOK( CleanPathAfterComputation, void, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
+DECLARE_HOOK( ExecutePathfind, void, ( const boost::shared_ptr< sword::movement::Path_ABC >& path, TerrainPathfinder& pathfind ) )
+DECLARE_HOOK( PathGetLength, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
+DECLARE_HOOK( PathGetState, DEC_Path_ABC::E_State, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
+DECLARE_HOOK( ComputePath, void, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
 
-DECLARE_HOOK( AvoidEnemies, bool, ( boost::shared_ptr< sword::movement::Path_ABC > path ) )
-DECLARE_HOOK( GetEnemyCostAtSecurityRange, double, ( boost::shared_ptr< sword::movement::Path_ABC > path ) )
-DECLARE_HOOK( GetEnemyCostOnContact, double, ( boost::shared_ptr< sword::movement::Path_ABC > path ) )
+DECLARE_HOOK( AvoidEnemies, bool, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
+DECLARE_HOOK( GetEnemyCostAtSecurityRange, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
+DECLARE_HOOK( GetEnemyCostOnContact, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
 
-DECLARE_HOOK( AvoidObjects, bool, ( boost::shared_ptr< sword::movement::Path_ABC > path ) )
-DECLARE_HOOK( GetFirstPoint, void, ( boost::shared_ptr< sword::movement::Path_ABC > path, void(*callback)( const MT_Vector2D& point, void* userData ), void* userData ) )
-DECLARE_HOOK( GetObjectCost, double, ( boost::shared_ptr< sword::movement::Path_ABC > path, unsigned int type ) )
-DECLARE_HOOK( GetThreshold, double, ( boost::shared_ptr< sword::movement::Path_ABC > path ) )
+DECLARE_HOOK( AvoidObjects, bool, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
+DECLARE_HOOK( GetFirstPoint, void, ( const boost::shared_ptr< sword::movement::Path_ABC >& path, void(*callback)( const MT_Vector2D& point, void* userData ), void* userData ) )
+DECLARE_HOOK( GetObjectCost, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path, unsigned int type ) )
+DECLARE_HOOK( GetThreshold, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
 
-DECLARE_HOOK( HandlePopulations, bool, ( boost::shared_ptr< sword::movement::Path_ABC > path ) )
-DECLARE_HOOK( GetPopulationSecurityRange, double, ( boost::shared_ptr< sword::movement::Path_ABC > path ) )
-DECLARE_HOOK( GetCostOutsideOfPopulation, double, ( boost::shared_ptr< sword::movement::Path_ABC > path ) )
-DECLARE_HOOK( GetPopulationAttitudeCost, double, ( boost::shared_ptr< sword::movement::Path_ABC > path, unsigned int type ) )
+DECLARE_HOOK( HandlePopulations, bool, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
+DECLARE_HOOK( GetPopulationSecurityRange, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
+DECLARE_HOOK( GetCostOutsideOfPopulation, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
+DECLARE_HOOK( GetPopulationAttitudeCost, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path, unsigned int type ) )
 
-DEFINE_HOOK( GetFuseauxCost, double, ( const SWORD_Model* entity, boost::shared_ptr< sword::movement::Path_ABC > path,
+DEFINE_HOOK( GetFuseauxCost, double, ( const SWORD_Model* entity, const boost::shared_ptr< sword::movement::Path_ABC >& path,
                                        const MT_Vector2D& from, const MT_Vector2D& to,
                                        double rMaximumFuseauDistance, double rMaximumFuseauDistanceWithAutomata, // $$$$ MCO : all those configuration values should stay out of the movement module
                                        double rFuseauCostPerMeterOut, double rComfortFuseauDistance, double rFuseauCostPerMeterIn,
@@ -69,26 +69,26 @@ DEFINE_HOOK( GetFuseauxCost, double, ( const SWORD_Model* entity, boost::shared_
 {
     return sword::PathAdapter::Add( *core::Convert( entity ), path )->GetFuseauxCost( from, to, rMaximumFuseauDistance, rMaximumFuseauDistanceWithAutomata, rFuseauCostPerMeterOut, rComfortFuseauDistance, rFuseauCostPerMeterIn, rMaximumAutomataFuseauDistance, rAutomataFuseauCostPerMeterOut );
 }
-DEFINE_HOOK( GetObjectsCost, double, ( const SWORD_Model* entity, boost::shared_ptr< sword::movement::Path_ABC > path,
+DEFINE_HOOK( GetObjectsCost, double, ( const SWORD_Model* entity, const boost::shared_ptr< sword::movement::Path_ABC >& path,
     const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) )
 {
     return PathAdapter::Add( *core::Convert( entity ), path )->GetObjectsCost( from, to, nToTerrainType, nLinkTerrainType );
 }
-DEFINE_HOOK( GetUrbanBlockCost, double, ( const SWORD_Model* entity, boost::shared_ptr< sword::movement::Path_ABC > path, const MT_Vector2D& from, const MT_Vector2D& to ) )
+DEFINE_HOOK( GetUrbanBlockCost, double, ( const SWORD_Model* entity, const boost::shared_ptr< sword::movement::Path_ABC >& path, const MT_Vector2D& from, const MT_Vector2D& to ) )
 {
     return sword::PathAdapter::Add( *core::Convert( entity ), path )->GetUrbanBlockCost( from, to );
 }
-DEFINE_HOOK( GetEnemiesCost, double, ( const SWORD_Model* entity, boost::shared_ptr< sword::movement::Path_ABC > path, const MT_Vector2D& from, const MT_Vector2D& to,
+DEFINE_HOOK( GetEnemiesCost, double, ( const SWORD_Model* entity, const boost::shared_ptr< sword::movement::Path_ABC >& path, const MT_Vector2D& from, const MT_Vector2D& to,
                                        const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType, double rEnemyMaximumCost ) )
 {
     return sword::PathAdapter::Add( *core::Convert( entity ), path )->GetEnemiesCost( from, to, nToTerrainType, nLinkTerrainType, rEnemyMaximumCost );
 }
-DEFINE_HOOK( GetPopulationsCost, double, ( const SWORD_Model* entity, boost::shared_ptr< sword::movement::Path_ABC > path, const MT_Vector2D& from, const MT_Vector2D& to,
+DEFINE_HOOK( GetPopulationsCost, double, ( const SWORD_Model* entity, const boost::shared_ptr< sword::movement::Path_ABC >& path, const MT_Vector2D& from, const MT_Vector2D& to,
                                            const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType, double rPopulationMaximumCost ) )
 {
     return sword::PathAdapter::Add( *core::Convert( entity ), path )->GetPopulationsCost( from, to, nToTerrainType, nLinkTerrainType, rPopulationMaximumCost );
 }
-DEFINE_HOOK( GetAltitudeCost, double, ( const SWORD_Model* entity, boost::shared_ptr< sword::movement::Path_ABC > path, const MT_Vector2D& from, const MT_Vector2D& to, double rAltitudeCostPerMeter ) )
+DEFINE_HOOK( GetAltitudeCost, double, ( const SWORD_Model* entity, const boost::shared_ptr< sword::movement::Path_ABC >& path, const MT_Vector2D& from, const MT_Vector2D& to, double rAltitudeCostPerMeter ) )
 {
     return sword::PathAdapter::Add( *core::Convert( entity ), path )->GetAltitudeCost( from, to, rAltitudeCostPerMeter );
 }
@@ -133,7 +133,7 @@ namespace
 // Name: PathAdapter::Add
 // Created: MCO 2012-05-21
 // -----------------------------------------------------------------------------
-boost::shared_ptr< PathAdapter > PathAdapter::Add( const core::Model& entity, boost::shared_ptr< movement::Path_ABC > path )
+boost::shared_ptr< PathAdapter > PathAdapter::Add( const core::Model& entity, const boost::shared_ptr< movement::Path_ABC >& path )
 {
     boost::shared_ptr< PathAdapter >& result = paths[ path ];
     if( ! result )
@@ -145,7 +145,7 @@ boost::shared_ptr< PathAdapter > PathAdapter::Add( const core::Model& entity, bo
 // Name: PathAdapter::Remove
 // Created: MCO 2012-05-21
 // -----------------------------------------------------------------------------
-boost::shared_ptr< PathAdapter > PathAdapter::Remove( boost::shared_ptr< movement::Path_ABC > path )
+boost::shared_ptr< PathAdapter > PathAdapter::Remove( const boost::shared_ptr< movement::Path_ABC >& path )
 {
     boost::shared_ptr< PathAdapter > result;
     T_Paths::iterator it = paths.find( path );
@@ -161,7 +161,7 @@ boost::shared_ptr< PathAdapter > PathAdapter::Remove( boost::shared_ptr< movemen
 // Name: PathAdapter constructor
 // Created: MCO 2012-01-26
 // -----------------------------------------------------------------------------
-PathAdapter::PathAdapter( const core::Model& entity, boost::shared_ptr< movement::Path_ABC > path )
+PathAdapter::PathAdapter( const core::Model& entity, const boost::shared_ptr< movement::Path_ABC >& path )
     : path_        ( path )
     , altitudeData_( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData() )
     , weight_      ( entity[ "pion" ].GetUserData< MIL_AgentPion >().GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight() ) // $$$$ MCO 2012-05-23: read from model

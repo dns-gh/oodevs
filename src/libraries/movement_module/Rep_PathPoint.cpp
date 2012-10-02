@@ -15,8 +15,8 @@
 using namespace sword;
 using namespace sword::movement;
 
-DECLARE_HOOK( AddPathPoint, void, ( unsigned int entity, boost::shared_ptr< sword::movement::PathPoint > point ) )
-DECLARE_HOOK( RemovePathPoint, void, ( unsigned int entity, boost::shared_ptr< sword::movement::PathPoint > point ) )
+DECLARE_HOOK( AddPathPoint, void, ( unsigned int entity, const boost::shared_ptr< sword::movement::PathPoint >& point ) )
+DECLARE_HOOK( RemovePathPoint, void, ( unsigned int entity, const boost::shared_ptr< sword::movement::PathPoint >& point ) )
 
 //-----------------------------------------------------------------------------
 // Name: Rep_PathPoint constructor
