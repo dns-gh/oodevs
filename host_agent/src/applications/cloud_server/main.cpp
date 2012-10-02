@@ -263,15 +263,14 @@ struct SessionFactory : public SessionFactory_ABC
                     PortFactory_ABC& ports,
                     web::Client_ABC& client,
                     Pool_ABC& pool )
-        : nodes  ( nodes )
-        , deps   ( fs, runtime, plugins, uuids, client, pool, ports )
+        : deps( fs, runtime, plugins, nodes, uuids, client, pool, ports )
     {
         // NOTHING
     }
 
     Session_ABC::T_Ptr Make( const Path& root, const Path& trash, const Uuid& id, const web::session::Config& cfg, const std::string& exercise ) const
     {
-        NodeController_ABC::T_Node node = nodes.Get( id );
+        NodeController_ABC::T_Node node = deps.nodes.Get( id );
         if( !node )
             return Session_ABC::T_Ptr();
         SessionPaths paths( root, trash );
@@ -284,14 +283,13 @@ struct SessionFactory : public SessionFactory_ABC
         const boost::optional< std::string > id = tree.get_optional< std::string >( "node" );
         if( id == boost::none )
             throw std::runtime_error( "missing node id in " + Utf8( tag ) );
-        NodeController_ABC::T_Node node = nodes.Get( boost::uuids::string_generator()( *id ) );
+        NodeController_ABC::T_Node node = deps.nodes.Get( boost::uuids::string_generator()( *id ) );
         if( !node )
             throw std::runtime_error( "unknown node " + *id );
         SessionPaths paths( Path( tag ).remove_filename(), trash );
         return boost::make_shared< Session >( boost::cref( deps ), node, paths, tree );
     }
 
-    const NodeController_ABC& nodes;
     const SessionDependencies deps;
 };
 
@@ -311,9 +309,10 @@ int Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const F
     web::Plugins plugins( fs, cfg.session.apps / "plugins" );
     NodeFactory fnodes( packages, fs, runtime, uuids, plugins, ports, cfg.node.min_play_seconds, pool );
     const Port host = ports.Create();
-    NodeController nodes( log, runtime, fs, plugins, fnodes, cfg.root, cfg.node.app, cfg.node.root, "node", host->Get(), pool, proxy );
+    const Path client_root = cfg.root / "client";
+    NodeController nodes( log, runtime, fs, plugins, fnodes, cfg.root, cfg.node.app, cfg.node.root, client_root, "node", host->Get(), pool, proxy );
     fnodes.observer = &nodes;
-    NodeController cluster( log, runtime, fs, plugins, fnodes, cfg.root, cfg.node.app, cfg.node.root, "cluster", host->Get(), pool, proxy );
+    NodeController cluster( log, runtime, fs, plugins, fnodes, cfg.root, cfg.node.app, cfg.node.root, Path(), "cluster", host->Get(), pool, proxy );
     SessionFactory fsessions( fs, runtime, plugins, uuids, nodes, ports, client, pool );
     SessionController sessions( log, runtime, fs, fsessions, nodes, cfg.root, cfg.session.apps, pool );
     Agent agent( log, cfg.cluster.enabled ? &cluster : 0, nodes, sessions );

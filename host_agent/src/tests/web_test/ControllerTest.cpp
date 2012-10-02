@@ -69,6 +69,9 @@ namespace
         MOCK_METHOD( StartNode, 1 );
         MOCK_METHOD( StopNode, 1 );
         MOCK_METHOD( UpdateNode, 2 );
+        // client
+        MOCK_METHOD( GetClient, 0 );
+        MOCK_METHOD( DownloadClient, 1 );
         // install
         MOCK_METHOD( GetInstall, 1 );
         MOCK_METHOD( DeleteInstall, 2 );

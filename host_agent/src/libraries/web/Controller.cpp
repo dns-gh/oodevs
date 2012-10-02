@@ -275,6 +275,9 @@ void Controller::DoGet( Reply_ABC& rpy, Request_ABC& request )
         if( uri == "/delete_node" )        return DeleteNode( rpy, request );
         if( uri == "/start_node" )         return StartNode ( rpy, request );
         if( uri == "/stop_node" )          return StopNode  ( rpy, request );
+        // client
+        if( uri == "/get_client" )         return GetClient     ( rpy, request );
+        if( uri == "/download_client" )    return DownloadClient( rpy, request );
         // install
         if( uri == "/get_install" )        return GetInstall   ( rpy, request );
         if( uri == "/delete_install" )     return DeleteInstall( rpy, request );
@@ -494,6 +497,27 @@ void Controller::UpdateNode( Reply_ABC& rpy, Request_ABC& request )
     const Tree tree = request.ParseBodyAsJson();
     const Uuid id = RequireParameter< Uuid >( "id", tree );
     WriteHttpReply( rpy, agent_.UpdateNode( id, tree ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controller::GetClient
+// Created: BAX 2012-10-02
+// -----------------------------------------------------------------------------
+void Controller::GetClient( Reply_ABC& rpy, const Request_ABC& request )
+{
+    Authenticate( request, USER_TYPE_USER );
+    WriteHttpReply( rpy, agent_.GetClient() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controller::DownloadClient
+// Created: BAX 2012-10-02
+// -----------------------------------------------------------------------------
+void Controller::DownloadClient( Reply_ABC& rpy, const Request_ABC& request )
+{
+    Authenticate( request, USER_TYPE_USER );
+    boost::shared_ptr< Chunker_ABC > chunker = MakeChunker( rpy );
+    return agent_.DownloadClient( *chunker );
 }
 
 // -----------------------------------------------------------------------------

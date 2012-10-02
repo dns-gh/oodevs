@@ -10,6 +10,7 @@
 #include "Session.h"
 
 #include "Node_ABC.h"
+#include "NodeController_ABC.h"
 #include "PortFactory_ABC.h"
 #include "UuidFactory_ABC.h"
 #include "runtime/Async.h"
@@ -185,7 +186,7 @@ Session::Session( const SessionDependencies& deps,
     , id_          ( deps.uuids.Create() )
     , paths_       ( paths )
     , cfg_         ( cfg )
-    , links_       ( node->LinkExercise( exercise ) )
+    , links_       ( deps.nodes.LinkExercise( *node_, exercise ) )
     , port_        ( deps.ports.Create() )
     , replay_      ( replay )
     , running_     ()
@@ -219,7 +220,7 @@ Session::Session( const SessionDependencies& deps,
     , id_          ( Get< Uuid >( tree, "id" ) )
     , paths_       ( paths )
     , cfg_         ( ReadConfig( deps.plugins, tree ) )
-    , links_       ( node->LinkExercise( tree.get_child( "links" ) ) )
+    , links_       ( deps.nodes.LinkExercise( *node_, tree.get_child( "links" ) ) )
     , port_        ( AcquirePort( Get< int >( tree, "port" ), deps.ports ) )
     , replay_      ( Get< Uuid >( tree, "replay.root" ) )
     , process_     ( AcquireProcess( tree, deps_.runtime, port_->Get() ) )

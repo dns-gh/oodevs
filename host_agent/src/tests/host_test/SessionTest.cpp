@@ -27,6 +27,7 @@
 #include "MockClient.h"
 #include "MockFileSystem.h"
 #include "MockNode.h"
+#include "MockNodeController.h"
 #include "MockPool.h"
 #include "MockPortFactory.h"
 #include "MockProcess.h"
@@ -89,6 +90,7 @@ namespace
         MockClient client;
         MockFileSystem fs;
         MockRuntime runtime;
+        MockNodeController nodes;
         MockPortFactory ports;
         MockPool pool;
         MockUuidFactory uuids;
@@ -97,6 +99,7 @@ namespace
         int any_idx;
         Fixture()
             : node   ( boost::make_shared< MockNode >( defaultNode, FromJson( "{\"ident\":\"a\",\"name\":\"a\",\"port\":\"1\"}" ) ) )
+            , nodes  ( false )
             , apps   ( "apps" )
             , any_idx( 0 )
         {
@@ -115,12 +118,12 @@ namespace
         {
             MOCK_EXPECT( uuids.Create ).once().returns( defaultId );
             MOCK_EXPECT( ports.Create0 ).once().returns( new MockPort( defaultPort ) );
-            MOCK_EXPECT( node->LinkExerciseName ).once().with( defaultExercise ).returns( FromJson( links ) );
+            MOCK_EXPECT( nodes.LinkExerciseName ).once().with( mock::same( *node ), defaultExercise ).returns( FromJson( links ) );
             web::session::Config cfg;
             cfg.name = defaultName;
             SessionPaths paths( "a", "b" );
             web::Plugins plugins( fs, "" );
-            SessionDependencies deps( fs, runtime, plugins, uuids, client, pool, ports );
+            SessionDependencies deps( fs, runtime, plugins, nodes, uuids, client, pool, ports );
             return boost::make_shared< Session >( deps, node, paths, cfg, defaultExercise, boost::uuids::nil_uuid() );
         }
 
@@ -132,10 +135,10 @@ namespace
             if( process && valid )
                 MOCK_EXPECT( node->StartSession ).once().returns( boost::make_shared< host::node::Token >() );
             const Tree data = FromJson( links );
-            MOCK_EXPECT( node->LinkExerciseTree ).once().with( data ).returns( data );
+            MOCK_EXPECT( nodes.LinkExerciseTree ).once().with( mock::same( *node ), data ).returns( data );
             SessionPaths paths( "a", "b" );
             web::Plugins plugins( fs, "" );
-            SessionDependencies deps( fs, runtime, plugins, uuids, client, pool, ports );
+            SessionDependencies deps( fs, runtime, plugins, nodes, uuids, client, pool, ports );
             return boost::make_shared< Session >( deps, node, paths, tree );
         }
 
@@ -177,7 +180,7 @@ namespace
         Session_ABC::T_Ptr ReplaySession( Session& session )
         {
             MOCK_EXPECT( uuids.Create ).once().returns( boost::uuids::random_generator()() );
-            MOCK_EXPECT( node->LinkExerciseName ).once().with( session.GetExercise() ).returns( FromJson( links ) );
+            MOCK_EXPECT( nodes.LinkExerciseName ).once().with( mock::same( *node ), session.GetExercise() ).returns( FromJson( links ) );
             MOCK_EXPECT( ports.Create0 ).once().returns( new MockPort( defaultPort + 17 ) );
             return session.Replay();
         }

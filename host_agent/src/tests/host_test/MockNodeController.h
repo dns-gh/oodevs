@@ -31,6 +31,8 @@ namespace mocks
         MOCK_METHOD( Start, 1 );
         MOCK_METHOD( Stop, 1 );
         MOCK_METHOD( Update, 2 );
+        MOCK_METHOD( GetClient, 0 );
+        MOCK_METHOD( DownloadClient, 1 );
         MOCK_METHOD( GetInstall, 1 );
         MOCK_METHOD( DeleteInstall, 2 );
         MOCK_METHOD_EXT( DownloadInstall, 3, void( const host::Uuid&, web::Chunker_ABC&, size_t ), DownloadInstallById );
@@ -44,6 +46,8 @@ namespace mocks
         MOCK_METHOD( Notify, 1 );
         MOCK_METHOD( GetPlugins, 2 );
         MOCK_METHOD( CountPlugins, 0 );
+        MOCK_METHOD_EXT( LinkExercise, 2, host::Tree( const host::Node_ABC& node, const std::string& ), LinkExerciseName );
+        MOCK_METHOD_EXT( LinkExercise, 2, host::Tree( const host::Node_ABC& node, const host::Tree& ), LinkExerciseTree );
     };
 };
 

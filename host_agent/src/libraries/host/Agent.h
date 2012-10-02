@@ -70,6 +70,12 @@ public:
     virtual Tree                UpdateNode( const Uuid& id, const Tree& cfg );
     //@}
 
+    //! @name Client Methods
+    //@{
+    virtual Tree GetClient     () const;
+    virtual void DownloadClient( web::Chunker_ABC& dst ) const;
+    //@}
+
     //! @name Install Methods
     //@{
     virtual Tree GetInstall     ( const Uuid& id ) const;

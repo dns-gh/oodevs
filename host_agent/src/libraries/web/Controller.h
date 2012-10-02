@@ -79,6 +79,12 @@ private:
     void StopNode  ( Reply_ABC& reply, const Request_ABC& request );
     //@}
 
+    //! @name Client Methods
+    //@{
+    void GetClient     ( Reply_ABC& reply, const Request_ABC& request );
+    void DownloadClient( Reply_ABC& reply, const Request_ABC& request );
+    //@}
+
     //! @name Install Methods
     //@{
     void GetInstall   ( Reply_ABC& reply, const Request_ABC& request );

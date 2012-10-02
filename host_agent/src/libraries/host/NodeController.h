@@ -39,6 +39,7 @@ namespace web
 namespace host
 {
     struct NodeFactory_ABC;
+    struct Package_ABC;
     struct Proxy_ABC;
     typedef boost::filesystem::path Path;
 }
@@ -64,6 +65,7 @@ public:
                              const Path& root,
                              const Path& app,
                              const Path& web,
+                             const Path& client,
                              const std::string& type,
                              int host,
                              runtime::Pool_ABC& pool,
@@ -83,6 +85,12 @@ public:
     virtual T_Node  Start ( const Uuid& id ) const;
     virtual T_Node  Stop  ( const Uuid& id ) const;
     virtual T_Node  Update( const Uuid& id, const Tree& cfg );
+    //@}
+
+    //! @name Client Methods
+    //@{
+    virtual Tree    GetClient     () const;
+    virtual void    DownloadClient( web::Chunker_ABC& dst ) const;
     //@}
 
     //! @name Install Methods
@@ -116,6 +124,12 @@ public:
     //! @name NodeObserver_ABC Methods
     //@{
     void Notify( const Node_ABC& node ) const;
+    //@}
+
+    //! @name Node Methods
+    //@{
+    virtual Tree  LinkExercise  ( const Node_ABC& node, const std::string& name ) const;
+    virtual Tree  LinkExercise  ( const Node_ABC& node, const Tree& tree ) const;
     //@}
 
     //! @name Typedef helpers
@@ -153,6 +167,7 @@ private:
     Proxy_ABC& proxy_;
     Container< Node_ABC > nodes_;
     runtime::Timer timer_;
+    boost::shared_ptr< Package_ABC > client_;
     mutable runtime::Async async_;
     //@}
 };

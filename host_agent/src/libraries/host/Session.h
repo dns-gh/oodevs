@@ -46,6 +46,7 @@ namespace web
 namespace host
 {
     struct Node_ABC;
+    struct NodeController_ABC;
     struct Port_ABC;
     struct PortFactory_ABC;
     typedef boost::shared_ptr< const Port_ABC > Port;
@@ -67,6 +68,7 @@ struct SessionDependencies
     SessionDependencies( const runtime::FileSystem_ABC& fs,
                          const runtime::Runtime_ABC& runtime,
                          const web::Plugins& plugins,
+                         const NodeController_ABC& nodes,
                          const UuidFactory_ABC& uuids,
                          web::Client_ABC& client,
                          runtime::Pool_ABC& pool,
@@ -74,6 +76,7 @@ struct SessionDependencies
         : fs     ( fs )
         , runtime( runtime )
         , plugins( plugins )
+        , nodes  ( nodes )
         , uuids  ( uuids )
         , client ( client )
         , pool   ( pool )
@@ -84,6 +87,7 @@ struct SessionDependencies
     const runtime::FileSystem_ABC& fs;
     const runtime::Runtime_ABC& runtime;
     const web::Plugins& plugins;
+    const NodeController_ABC& nodes;
     const UuidFactory_ABC& uuids;
     web::Client_ABC& client;
     runtime::Pool_ABC& pool;

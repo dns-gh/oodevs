@@ -81,6 +81,12 @@ struct Agent_ABC : public boost::noncopyable
     virtual Tree                UpdateNode( const Uuid& id, const Tree& cfg ) = 0;
     //@}
 
+    //! @name Client Methods
+    //@{
+    virtual Tree GetClient     () const = 0;
+    virtual void DownloadClient( Chunker_ABC& dst ) const = 0;
+    //@}
+
     //! @name Install Methods
     //@{
     virtual Tree GetInstall     ( const Uuid& id ) const = 0;

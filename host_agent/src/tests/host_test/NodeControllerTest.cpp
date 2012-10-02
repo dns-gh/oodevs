@@ -104,7 +104,7 @@ namespace
             , type   ( isCluster ? "cluster" : "node" )
             , sub    ( app, web )
             , plugins( sub.fs, "plugins" )
-            , control( sub.log, sub.runtime, sub.fs, plugins, sub.nodes, root, app, web, type, 0, sub.pool, sub.proxy )
+            , control( sub.log, sub.runtime, sub.fs, plugins, sub.nodes, root, app, web, Path(), type, 0, sub.pool, sub.proxy )
         {
             // NOTHING
         }

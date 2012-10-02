@@ -11,6 +11,7 @@
 
 #include "cpplog/cpplog.hpp"
 #include "Node_ABC.h"
+#include "Package.h"
 #include "Proxy_ABC.h"
 #include "runtime/FileSystem_ABC.h"
 #include "runtime/PropertyTree.h"
@@ -21,6 +22,7 @@
 
 #include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/make_shared.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
 using namespace host;
@@ -42,6 +44,7 @@ NodeController::NodeController( cpplog::BaseLogger& log,
                                 const Path& root,
                                 const Path& app,
                                 const Path& web,
+                                const Path& client,
                                 const std::string& type,
                                 int host,
                                 Pool_ABC& pool,
@@ -57,6 +60,7 @@ NodeController::NodeController( cpplog::BaseLogger& log,
     , type_    ( type )
     , host_    ( host )
     , proxy_   ( proxy )
+    , client_  ()
     , async_   ( pool )
 {
     fs.MakePaths( root_ );
@@ -64,6 +68,13 @@ NodeController::NodeController( cpplog::BaseLogger& log,
         throw std::runtime_error( "'" + runtime::Utf8( app_ ) + "' is not a binary" );
     if( !fs_.IsDirectory( web_ ) )
         throw std::runtime_error( "'" + runtime::Utf8( web_ ) + "' is not a directory" );
+    if( !client.empty() )
+    {
+        if( !fs_.IsDirectory( client ) )
+            throw std::runtime_error( "'" + runtime::Utf8( client ) + "' is not a directory" );
+        client_ = boost::make_shared< Package >( pool, fs, client, true );
+        client_->Parse();
+    }
     timer_ = runtime::MakeTimer( pool, boost::posix_time::seconds( 5 ), boost::bind( &NodeController::Refresh, this ) );
 }
 
@@ -323,6 +334,34 @@ NodeController::T_Node NodeController::Update( const Uuid& id, const Tree& cfg )
 }
 
 // -----------------------------------------------------------------------------
+// Name: NodeController::GetClient
+// Created: BAX 2012-10-02
+// -----------------------------------------------------------------------------
+Tree NodeController::GetClient() const
+{
+    if( !client_ )
+        throw web::HttpException( web::NOT_FOUND );
+    Package_ABC::T_Item item = client_->Find( 0, false );
+    if( !item )
+        throw web::HttpException( web::NOT_FOUND );
+    return client_->GetPropertiesFrom( *item );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NodeController::DownloadClient
+// Created: BAX 2012-10-02
+// -----------------------------------------------------------------------------
+void NodeController::DownloadClient( web::Chunker_ABC& dst ) const
+{
+    if( !client_ )
+        throw web::HttpException( web::NOT_FOUND );
+    Package_ABC::T_Item item = client_->Find( 0, false );
+    if( !item )
+        throw web::HttpException( web::NOT_FOUND );
+    client_->Download( dst, *item );
+}
+
+// -----------------------------------------------------------------------------
 // Name: NodeController::GetInstall
 // Created: BAX 2012-05-25
 // -----------------------------------------------------------------------------
@@ -486,4 +525,33 @@ NodeController_ABC::T_Plugins NodeController::GetPlugins( int offset, int limit 
 size_t NodeController::CountPlugins() const
 {
     return plugins_.Count();
+}
+
+namespace
+{
+Tree AppendClient( const Tree& source, const Tree& client )
+{
+    Tree dst = source;
+    dst.put( "client.name",     Get< std::string >( client, "name" ) );
+    dst.put( "client.checksum", Get< std::string >( client, "checksum" ) );
+    return dst;
+}
+}
+
+// -----------------------------------------------------------------------------
+// Name: NodeController::LinkExercise
+// Created: BAX 2012-10-02
+// -----------------------------------------------------------------------------
+Tree NodeController::LinkExercise( const Node_ABC& node, const std::string& name ) const
+{
+    return AppendClient( node.LinkExercise( name ), GetClient() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NodeController::LinkExercise
+// Created: BAX 2012-10-02
+// -----------------------------------------------------------------------------
+Tree NodeController::LinkExercise( const Node_ABC& node, const Tree& tree ) const
+{
+    return AppendClient( node.LinkExercise( tree ), GetClient() );
 }

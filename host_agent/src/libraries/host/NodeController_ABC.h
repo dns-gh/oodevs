@@ -89,6 +89,12 @@ struct NodeController_ABC : public boost::noncopyable
     virtual T_Node  Update( const Uuid& id, const Tree& cfg ) = 0;
     //@}
 
+    //! @name Client Methods
+    //@{
+    virtual Tree    GetClient     () const = 0;
+    virtual void    DownloadClient( web::Chunker_ABC& dst ) const = 0;
+    //@}
+
     //! @name Install Methods
     //@{
     virtual Tree    GetInstall     ( const Uuid& id ) const = 0;
@@ -120,6 +126,12 @@ struct NodeController_ABC : public boost::noncopyable
     //! @name NodeObserver_ABC Methods
     //@{
     virtual void Notify( const Node_ABC& node ) const = 0;
+    //@}
+
+    //! @name Node Methods
+    //@{
+    virtual Tree  LinkExercise  ( const Node_ABC& node, const std::string& name ) const = 0;
+    virtual Tree  LinkExercise  ( const Node_ABC& node, const Tree& tree ) const = 0;
     //@}
 };
 }
