@@ -22,8 +22,8 @@ namespace mocks
         MOCK_METHOD( GetPath, 0 );
         MOCK_METHOD( Parse, 0 );
         MOCK_METHOD( Identify, 1 );
-        MOCK_METHOD_EXT( Install, 3, void( runtime::Async& async, const host::Path& root, const Package_ABC::T_Items& items ), InstallItems );
-        MOCK_METHOD_EXT( Install, 4, void( runtime::Async& async, const host::Path& root, const Package_ABC& src, const std::vector< size_t >& ids ), InstallById )
+        MOCK_METHOD( InstallWith, 4 );
+        MOCK_METHOD( Install, 4 )
         MOCK_METHOD( Uninstall, 3 );
         MOCK_METHOD_EXT( Find, 2, host::Package_ABC::T_Item( size_t, bool ), FindById );
         MOCK_METHOD_EXT( Find, 2, host::Package_ABC::T_Item( const host::Package_ABC::Item_ABC&, bool ), FindByItem );

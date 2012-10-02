@@ -452,7 +452,7 @@ void Context::ParsePackages()
     }
 
     QWriteLocker write( &access_ );
-    install_->Install( io_, root_, targets );
+    install_->InstallWith( io_, root_, targets, true );
     emit ClearProgress();
     emit ClearMessage();
 }

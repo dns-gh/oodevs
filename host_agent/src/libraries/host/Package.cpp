@@ -49,8 +49,9 @@ struct Package_ABC::Item_ABC : public boost::noncopyable
     virtual bool        IsLinked() const = 0;
     virtual bool        IsValid() const = 0;
     virtual void        Identify( const Package_ABC& ref, const Package_ABC& root ) = 0;
-    virtual void        Install( Async& async, const FileSystem_ABC& fs, const Path& tomb, const Path& output,
-                                 const Package_ABC& dst, const Package::T_Items& targets, const PathOperand& operand ) const = 0;
+    virtual void        Install( Async& async, const FileSystem_ABC& fs, const Path& tomb,
+                                 const Path& output, const Package_ABC& dst, const Package::T_Items& targets,
+                                 const PathOperand& operand, bool move ) const = 0;
     virtual void        Uninstall( Async& async, const FileSystem_ABC& fs, const Path& dst ) = 0;
     virtual void        Reinstall( const FileSystem_ABC& fs ) = 0;
     virtual void        Link( Tree& tree, const Package_ABC& ref, bool recurse ) = 0;
@@ -373,7 +374,13 @@ struct Item : Package_ABC::Item_ABC
         meta_.Save( fs, root_ );
     }
 
-    void Install( Async& async, const FileSystem_ABC& fs, const Path& tomb, const Path& root, const Package_ABC& dst, const Package::T_Items& targets, const PathOperand& operand ) const
+    static bool Copy( const FileSystem_ABC& fs, const Path& path, const Path& dst )
+    {
+        return fs.Rename( path, dst / Path( path ).filename() );
+    }
+
+    void Install( Async& async, const FileSystem_ABC& fs, const Path& tomb, const Path& root, const Package_ABC& dst,
+                  const Package::T_Items& targets, const PathOperand& operand, bool move ) const
     {
         BOOST_FOREACH( const T_Dependencies::value_type& dep, GetDependencies() )
             if( !dst.Find( *dep, true ) && !HasItem( targets, *dep ) )
@@ -385,9 +392,17 @@ struct Item : Package_ABC::Item_ABC
             return old->Reinstall( fs );
 
         const Path output = fs.MakeAnyPath( root );
-        const Path sub =  output / GetSuffix();
-        fs.MakePaths( sub );
-        fs.CopyDirectory( root_ / GetSuffix(), sub );
+        if( move )
+        {
+            fs.MakePaths( output );
+            fs.Walk( root_, false, boost::bind( &Item::Copy, boost::cref( fs ), _1, output ) );
+        }
+        else
+        {
+            const Path sub =  output / GetSuffix();
+            fs.MakePaths( sub );
+            fs.CopyDirectory( root_ / GetSuffix(), sub );
+        }
         meta_.Save( fs, output );
         if( old )
             old->Uninstall( async, fs, tomb );
@@ -833,7 +848,7 @@ void AddItemPath( boost::mutex& access, std::vector< Path >& list, const Path& p
 // Name: Package::Install
 // Created: BAX 2012-09-24
 // -----------------------------------------------------------------------------
-void Package::Install( Async& io, const Path& tomb, const T_Items& install )
+void Package::InstallWith( Async& io, const Path& tomb, const T_Items& install, bool move )
 {
     if( install.empty() )
         return;
@@ -845,7 +860,7 @@ void Package::Install( Async& io, const Path& tomb, const T_Items& install )
     PathOperand op = boost::bind( &AddItemPath, boost::ref( access ), boost::ref( paths ), _1 );
     BOOST_FOREACH( const T_Items::value_type& item, install )
         async.Go( boost::bind( &Item_ABC::Install, item, boost::ref( io ), boost::cref( fs_ ),
-                  tomb, path_, boost::cref( *this ), boost::cref( install ), op ) );
+                  tomb, path_, boost::cref( *this ), boost::cref( install ), op, move ) );
     async.Join();
 
     BOOST_FOREACH( const Path& path, paths )
@@ -866,7 +881,7 @@ void Package::Install( Async& io, const Path& tomb, const Package_ABC& src, cons
     BOOST_FOREACH( size_t id, ids )
         for( T_Item item = src.Find( id, true ); item; item.reset() )
             install.push_back( item );
-    Install( io, tomb, install );
+    InstallWith( io, tomb, install, false );
 }
 
 namespace
