@@ -12,13 +12,9 @@
 #include "ListenerHelper.h"
 #include "Hook.h"
 #include "Sink.h"
-#include "Decision/DEC_Decision_ABC.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/Units/Radars/PHY_RadarClass.h"
-#include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
-#include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
-#include "Entities/Agents/Units/Sensors/PHY_SensorTypeObject.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Orders/MIL_Report.h"
@@ -196,11 +192,10 @@ RolePion_Perceiver::RolePion_Perceiver( Sink& sink, const core::Model& model, MI
     , bRadarStateHasChanged_         ( true )
 {
     static unsigned int nNbr = 0; // $$$$ MCO 2012-08-14: size_t ?
-    nNextPeriphericalVisionStep_ = ++nNbr % nNbrStepsBetweenPeriphericalVision_;
-    entity[ "perceptions/peripherical-vision/next-tick" ] = nNextPeriphericalVisionStep_;
+    entity[ "perceptions/peripherical-vision/next-tick" ] = ++nNbr % nNbrStepsBetweenPeriphericalVision_;
     entity[ "perceptions/max-agent-perception-distance" ] = 0;
     entity[ "perceptions/max-theoretical-agent-perception-distance" ] = 0;
-    AddListener< ToggleListener >( "perceptions/record-mode/activated", boost::bind( &RolePion_Perceiver::EnableRecordMode, this ), boost::bind( &RolePion_Perceiver::DisableRecordMode, this ) );
+    listeners_.push_back( boost::make_shared< ToggleListener >( boost::ref( entity_[ "perceptions/record-mode/activated" ] ), boost::bind( &RolePion_Perceiver::EnableRecordMode, this ), boost::bind( &RolePion_Perceiver::DisableRecordMode, this ) ) );
     listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/agents" ] ), boost::bind( &::NotifyAgentPerception, _1, boost::ref( notifications_ ) ) ) );
     listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/agents-in-zone" ] ), boost::bind( &::NotifyAgentPerception, _1, boost::ref( notifications_ ) ) ) );
     listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/objects" ] ), boost::bind( &::NotifyObjectPerception, _1, boost::ref( notifications_ ) ) ) );
@@ -219,95 +214,13 @@ RolePion_Perceiver::~RolePion_Perceiver()
 }
 
 // -----------------------------------------------------------------------------
-// Name: RolePion_Perceiver::AddListener
-// Created: SLI 2012-04-04
-// -----------------------------------------------------------------------------
-template< typename Listener, typename Enable, typename Disable >
-void RolePion_Perceiver::AddListener( const std::string& perception, Enable enable, Disable disable )
-{
-    listeners_.push_back( boost::make_shared< Listener >( boost::ref( entity_[ perception ] ), enable, disable ) );
-}
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
-namespace boost
-{
-    namespace serialization
-    {
-        // =============================================================================
-        // T_SurfaceAgentKeyPair
-        // =============================================================================
-        template< typename Archive >
-        inline
-        void serialize( Archive& file, RolePion_Perceiver::T_SurfaceAgentKeyPair& pair, const unsigned int nVersion )
-        {
-            split_free( file, pair, nVersion );
-        }
-
-        template< typename Archive >
-        void save( Archive& file, const RolePion_Perceiver::T_SurfaceAgentKeyPair& pair, const unsigned int )
-        {
-            assert( pair.first );
-            unsigned id = pair.first->GetType().GetID();
-            file << id
-                 << pair.second;
-        }
-
-        template< typename Archive >
-        void load( Archive& file, RolePion_Perceiver::T_SurfaceAgentKeyPair& pair, const unsigned int )
-        {
-            unsigned int nID;
-            file >> nID;
-            assert( PHY_SensorType::FindSensorType( nID ) );
-            pair.first = PHY_SensorType::FindSensorType( nID )->GetTypeAgent();
-            file >> pair.second;
-        }
-
-        // =============================================================================
-        // T_SurfaceObjectKeyPair
-        // =============================================================================
-        template< typename Archive >
-        inline
-        void serialize( Archive& file, RolePion_Perceiver::T_SurfaceObjectKeyPair& pair, const unsigned int nVersion )
-        {
-            split_free( file, pair, nVersion );
-        }
-
-        template< typename Archive >
-        void save( Archive& file, const RolePion_Perceiver::T_SurfaceObjectKeyPair& pair, const unsigned int )
-        {
-            assert( pair.first );
-            unsigned id = pair.first->GetType().GetID();
-            file << id
-                 << pair.second;
-        }
-
-        template< typename Archive >
-        void load( Archive& file, RolePion_Perceiver::T_SurfaceObjectKeyPair& pair, const unsigned int )
-        {
-            unsigned int nID;
-
-            file >> nID;
-            assert( PHY_SensorType::FindSensorType( nID ) );
-            pair.first = PHY_SensorType::FindSensorType( nID )->GetTypeObject();
-
-            file >> pair.second;
-        }
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: RolePion_Perceiver::serialize
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
 template< typename Archive >
 void RolePion_Perceiver::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< PHY_RoleInterface_Perceiver >( *this )
-         & nNextPeriphericalVisionStep_
-         & surfacesAgent_
-         & surfacesObject_;
+    file & boost::serialization::base_object< PHY_RoleInterface_Perceiver >( *this );
 }
 
 // =============================================================================
@@ -787,8 +700,8 @@ void RolePion_Perceiver::NotifyPerceptionUrban( const MIL_UrbanObject_ABC& /*obj
 void RolePion_Perceiver::NotifyExternalPerception( MIL_Agent_ABC& agent, const PHY_PerceptionLevel& level )
 {
     sink_.PostCommand( "external perception", core::MakeModel( "identifier", owner_.GetID() )
-                                                               ( "level", level.GetID() )
-                                                               ( "target", reinterpret_cast< size_t >( &agent ) ) );
+                                                             ( "level", level.GetID() )
+                                                             ( "target", reinterpret_cast< size_t >( &agent ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -963,7 +876,7 @@ void RolePion_Perceiver::Clean()
 // -----------------------------------------------------------------------------
 const RolePion_Perceiver::T_SurfaceAgentMap& RolePion_Perceiver::GetSurfacesAgent() const
 {
-    return surfacesAgent_;
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
@@ -972,16 +885,16 @@ const RolePion_Perceiver::T_SurfaceAgentMap& RolePion_Perceiver::GetSurfacesAgen
 // -----------------------------------------------------------------------------
 const RolePion_Perceiver::T_SurfaceObjectMap& RolePion_Perceiver::GetSurfacesObject() const
 {
-    return surfacesObject_;
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RolePion_Perceiver::GetRadars
 // Created: NLD 2005-05-02
 // -----------------------------------------------------------------------------
-const RolePion_Perceiver::T_RadarSet& RolePion_Perceiver::GetRadars( const PHY_RadarClass& radarClass )
+const RolePion_Perceiver::T_RadarSet& RolePion_Perceiver::GetRadars( const PHY_RadarClass& /*radarClass*/ )
 {
-    return radars_[ &radarClass ];
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------

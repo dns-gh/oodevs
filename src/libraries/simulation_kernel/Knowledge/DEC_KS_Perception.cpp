@@ -440,4 +440,3 @@ void DEC_KS_Perception::MakePerceptionsAvailableTimed()
 {
     bMakePerceptionsAvailableTimed_ = true;
 }
-

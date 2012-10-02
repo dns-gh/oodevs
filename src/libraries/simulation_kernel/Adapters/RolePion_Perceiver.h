@@ -20,10 +20,6 @@
 #include "simulation_kernel/LoadingChangeNotificationHandler_ABC.h"
 
 class DEC_KS_Perception;
-class TER_Agent_ABC;
-class TER_Object_ABC;
-class TER_PopulationConcentration_ABC;
-class TER_PopulationFlow_ABC;
 
 namespace detection
 {
@@ -196,10 +192,6 @@ private:
     //@{
     bool HasChanged() const;
     bool HasRadarStateChanged() const;
-    void AppendHackedAgents( std::vector< TER_Agent_ABC* >& perceivableAgents ) const;
-    void AppendHackedPopulationConcentrations( std::vector< TER_PopulationConcentration_ABC* >& perceivableAgents ) const;
-    void AppendHackedPopulationFlows( std::vector< TER_PopulationFlow_ABC* >& perceivableAgents ) const;
-    template< typename Listener, typename Enable, typename Disable > void AddListener( const std::string& perception, Enable enable, Disable disable );
     //@}
 
     //! @name Serialization
@@ -215,13 +207,6 @@ private:
     MIL_Agent_ABC& owner_;
     core::Model& entity_;
     T_Listeners listeners_;
-    MT_Vector2D lastPerceiverPosition_;
-    unsigned int nNextPeriphericalVisionStep_;
-    // Perceptions
-    T_RadarsPerClassMap radars_;
-    T_SurfaceAgentMap surfacesAgent_;
-    T_SurfaceObjectMap surfacesObject_;
-
     bool bHasChanged_;
     bool bExternalMustChangePerception_;
     bool bExternalMustChangeRadar_;
