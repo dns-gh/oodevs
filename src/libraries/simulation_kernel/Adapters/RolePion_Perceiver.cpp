@@ -45,8 +45,6 @@
 using namespace detection;
 using namespace sword;
 
-const unsigned int RolePion_Perceiver::nNbrStepsBetweenPeriphericalVision_ = 12; //$$$ En dur ...
-
 BOOST_CLASS_EXPORT_IMPLEMENT( sword::RolePion_Perceiver )
 
 namespace sword
@@ -144,6 +142,8 @@ namespace
         if( !activation )
             perception.MakePerceptionsAvailable();
     }
+    const unsigned int nNbrStepsBetweenPeriphericalVision = 12; //$$$ En dur ...
+    unsigned int nNbr = 0; // $$$$ MCO 2012-08-14: size_t ?
 }
 
 DECLARE_HOOK( IsUsingActiveRadar, bool, ( const SWORD_Model* entity ) )
@@ -168,19 +168,14 @@ void RolePion_Perceiver::Initialize( core::Facade& facade )
 // Created: NLD 2004-08-19
 // -----------------------------------------------------------------------------
 RolePion_Perceiver::RolePion_Perceiver( Sink& sink, const core::Model& model, MIL_Agent_ABC& pion, core::Model& entity )
-    : sink_                          ( sink )
-    , model_                         ( model )
-    , owner_                         ( pion )
-    , entity_                        ( entity )
-    , bHasChanged_                   ( true )
-    , bExternalMustChangePerception_ ( false )
-    , bExternalMustChangeRadar_      ( false )
-    , bExternalCanPerceive_          ( true )
-    , bExternalMustUpdateVisionCones_( false )
-    , bRadarStateHasChanged_         ( true )
+    : sink_                 ( sink )
+    , model_                ( model )
+    , owner_                ( pion )
+    , entity_               ( entity )
+    , bHasChanged_          ( true )
+    , bRadarStateHasChanged_( true )
 {
-    static unsigned int nNbr = 0; // $$$$ MCO 2012-08-14: size_t ?
-    entity[ "perceptions/peripherical-vision/next-tick" ] = ++nNbr % nNbrStepsBetweenPeriphericalVision_;
+    entity[ "perceptions/peripherical-vision/next-tick" ] = ++nNbr % nNbrStepsBetweenPeriphericalVision;
     entity[ "perceptions/max-agent-perception-distance" ] = 0;
     entity[ "perceptions/max-theoretical-agent-perception-distance" ] = 0;
     listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/record-mode/activated" ] ), boost::bind( &ToggleRecordMode, _1, boost::ref( owner_.GetKnowledge().GetKsPerception() ) ) ) );
@@ -541,12 +536,8 @@ void RolePion_Perceiver::Update( bool /*bIsDead*/ )
         if( HasRadarStateChanged() )
             owner_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
         owner_.Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
-    }
-    // Debug - Cones de vision
-    if( MIL_AgentServer::GetWorkspace().GetAgentServer().MustSendUnitVisionCones() )
-    {
-        if( bExternalMustUpdateVisionCones_
-            || MIL_AgentServer::GetWorkspace().GetAgentServer().MustInitUnitVisionCones() )
+        // Debug - Cones de vision
+        if( MIL_AgentServer::GetWorkspace().GetAgentServer().MustSendUnitVisionCones() && MIL_AgentServer::GetWorkspace().GetAgentServer().MustInitUnitVisionCones() )
             SendDebugState();
     }
 }
@@ -852,10 +843,7 @@ bool RolePion_Perceiver::HasRadarStateChanged() const
 void RolePion_Perceiver::Clean()
 {
     bHasChanged_           = false;
-    bExternalMustChangePerception_ = false;
-    bExternalMustChangeRadar_ = false;
     bRadarStateHasChanged_ = false;
-    bExternalMustUpdateVisionCones_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -901,8 +889,7 @@ void RolePion_Perceiver::Execute( detection::DetectionComputer_ABC& algorithm ) 
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::NotifyComponentHasChanged()
 {
-    bExternalMustChangePerception_ = true;
-    bExternalMustChangeRadar_ = true;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -911,9 +898,7 @@ void RolePion_Perceiver::NotifyComponentHasChanged()
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::NotifyCaptured()
 {
-    bExternalCanPerceive_ = false;
-    bExternalMustChangePerception_ = true;
-    bExternalMustChangeRadar_ = true;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -940,9 +925,7 @@ void RolePion_Perceiver::NotifySurrenderCanceled()
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::NotifyReleased()
 {
-    bExternalCanPerceive_ = true;
-    bExternalMustChangePerception_ = true;
-    bExternalMustChangeRadar_ = true;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -951,7 +934,7 @@ void RolePion_Perceiver::NotifyReleased()
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::NotifyVisionConeDataHasChanged()
 {
-    bExternalMustUpdateVisionCones_ = true;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -960,9 +943,7 @@ void RolePion_Perceiver::NotifyVisionConeDataHasChanged()
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::NotifyIsLoadedForTransport()
 {
-    bExternalCanPerceive_ = false;
-    bExternalMustChangePerception_ = true;
-    bExternalMustChangeRadar_ = true;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -971,9 +952,7 @@ void RolePion_Perceiver::NotifyIsLoadedForTransport()
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::NotifyIsUnLoadedForTransport()
 {
-    bExternalCanPerceive_ = true;
-    bExternalMustChangePerception_ = true;
-    bExternalMustChangeRadar_ = true;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -982,8 +961,7 @@ void RolePion_Perceiver::NotifyIsUnLoadedForTransport()
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::NotifyIsLoadedInVab()
 {
-    bExternalMustChangePerception_ = true;
-    bExternalMustChangeRadar_ = true;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -992,8 +970,7 @@ void RolePion_Perceiver::NotifyIsLoadedInVab()
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::NotifyIsUnLoadedInVab()
 {
-    bExternalMustChangePerception_ = true;
-    bExternalMustChangeRadar_ = true;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

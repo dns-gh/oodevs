@@ -208,17 +208,8 @@ private:
     core::Model& entity_;
     T_Listeners listeners_;
     bool bHasChanged_;
-    bool bExternalMustChangePerception_;
-    bool bExternalMustChangeRadar_;
-    bool bExternalCanPerceive_;
-    bool bExternalMustUpdateVisionCones_;
     bool bRadarStateHasChanged_;
     T_Notifications notifications_;
-    //@}
-
-    //! @name Static member data
-    //@{
-    static const unsigned int nNbrStepsBetweenPeriphericalVision_;
     //@}
 };
 
