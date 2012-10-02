@@ -356,11 +356,9 @@ struct Item : Package_ABC::Item_ABC
             action_ = "update";
     }
 
-    FileSystem_ABC::T_Predicate IsItemFile( const Path& root ) const
+    virtual FileSystem_ABC::T_Predicate IsItemFile( const Path& /*root*/ ) const
     {
-        if( !IsExercise() )
-            return FileSystem_ABC::T_Predicate();
-        return !boost::bind( &BeginWith, root / "sessions", _1 );
+        return FileSystem_ABC::T_Predicate();
     }
 
     void MakeChecksum( const FileSystem_ABC& fs )
@@ -645,6 +643,11 @@ struct Exercise : public Item
         return true;
     }
 
+    FileSystem_ABC::T_Predicate IsItemFile( const Path& root ) const
+    {
+        return !boost::bind( &BeginWith, root / "sessions", _1 );
+    }
+
     static void Parse( Async& async, const FileSystem_ABC& fs, const Path& root, Package::T_Items& items, const Metadata* meta )
     {
         FileSystem_ABC::T_Predicate op = boost::bind( AttachExtended< Exercise >, boost::ref( async ), _1, boost::cref( fs ), boost::cref( root ), boost::ref( items ), meta );
@@ -769,10 +772,8 @@ bool Package::Parse()
     items_.clear();
     Async async( pool_ );
     if( reference_ )
-    {
-        FileSystem_ABC::T_Predicate predicate = boost::bind( &FillItems, boost::ref( async ), boost::cref( fs_ ), _1, boost::ref( items_ ), meta.get() );
-        fs_.Walk( path_, false, predicate );
-    }
+        fs_.Walk( path_, false, boost::bind( &FillItems, boost::ref( async ),
+                  boost::cref( fs_ ), _1, boost::ref( items_ ), meta.get() ) );
     else
         FillItems( async, fs_, path_, items_, meta.get() );
     async.Join();
