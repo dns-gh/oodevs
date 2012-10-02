@@ -633,7 +633,7 @@ bool Session::Start( const Path& apps, const std::string& checkpoint )
     const Path output = GetOutput();
     if( !replay && checkpoint.empty() )
         ClearOutput( output );
-    deps_.system.MakePaths( output );
+    deps_.fs.MakePaths( output );
     std::vector< std::string > options = boost::assign::list_of
         ( MakeOption( "debug-dir", Utf8( GetRoot() / "debug" ) ) )
         ( MakeOption( "exercises-dir", Utf8( GetPath( "exercise" ) ) ) )
@@ -651,7 +651,7 @@ bool Session::Start( const Path& apps, const std::string& checkpoint )
         options.push_back( "--no-log" );
         app = "replayer_app.exe";
     }
-    deps_.system.WriteFile( output / file, GetConfiguration( cfg_, port_->Get() ) );
+    deps_.fs.WriteFile( output / file, GetConfiguration( cfg_, port_->Get() ) );
     if( !checkpoint.empty() )
         options.push_back( MakeOption( "checkpoint", checkpoint ) );
     T_Process ptr = deps_.runtime.Start( Utf8( apps / app ),
@@ -726,8 +726,8 @@ bool Session::RefreshSize()
     lock.unlock();
 
     bool modified = false;
-    const size_t next = deps_.system.GetDirectorySize( paths_.root )
-                      + deps_.system.GetDirectorySize( GetOutput() );
+    const size_t next = deps_.fs.GetDirectorySize( paths_.root )
+                      + deps_.fs.GetDirectorySize( GetOutput() );
     lock.lock();
     modified = next != size_;
     size_ = next;
@@ -803,10 +803,10 @@ void Session::Remove()
     const bool replay = IsReplay();
     ModifyStatus( lock, GetIdleStatus( replay ) );
     if( !replay )
-        deps_.system.Remove( GetOutput() );
+        deps_.fs.Remove( GetOutput() );
     node_->UnlinkExercise( links_ );
     node_->RemoveSession( id_ );
-    deps_.system.Remove( GetRoot() );
+    deps_.fs.Remove( GetRoot() );
 }
 
 // -----------------------------------------------------------------------------
@@ -861,10 +861,10 @@ bool Session::Download( web::Chunker_ABC& dst ) const
     boost::shared_lock< boost::shared_mutex > lock( access_ );
     dst.SetName( cfg_.name );
     io::Writer_ABC& sink = dst.OpenWriter();
-    FileSystem_ABC::T_Packer packer = deps_.system.Pack( sink );
+    FileSystem_ABC::T_Packer packer = deps_.fs.Pack( sink );
     packer->Pack( paths_.root, runtime::Packer_ABC::T_Predicate() );
     const Path output = GetOutput();
-    if( deps_.system.IsDirectory( output ) )
+    if( deps_.fs.IsDirectory( output ) )
         packer->Pack( output, runtime::Packer_ABC::T_Predicate() );
     return true;
 }
@@ -876,19 +876,19 @@ bool Session::Download( web::Chunker_ABC& dst ) const
 void Session::ClearOutput( const Path& path )
 {
     checkpoints_.clear();
-    if( !deps_.system.IsDirectory( path ) )
+    if( !deps_.fs.IsDirectory( path ) )
         return;
-    const Path output = deps_.system.MakeAnyPath( paths_.trash );
-    deps_.system.Rename( path, output / "_" );
-    async_.Go( boost::bind( &FileSystem_ABC::Remove, &deps_.system, output ) );
+    const Path output = deps_.fs.MakeAnyPath( paths_.trash );
+    deps_.fs.Rename( path, output / "_" );
+    async_.Go( boost::bind( &FileSystem_ABC::Remove, &deps_.fs, output ) );
 }
 
 namespace
 {
 template< typename T >
-bool Attach( const FileSystem_ABC& system, const Path& path, T& items )
+bool Attach( const FileSystem_ABC& fs, const Path& path, T& items )
 {
-    if( system.IsFile( path / "data" ) )
+    if( fs.IsFile( path / "data" ) )
         items.push_back( runtime::Utf8( path.filename() ) );
     return true;
 }
@@ -908,7 +908,7 @@ Session::T_Ptr Session::Replay()
     web::session::Config cfg = cfg_;
     cfg.name += " replay " + boost::lexical_cast< std::string >( replays_.size() + 1 );
     SessionPaths paths = paths_;
-    paths.root = deps_.system.MakeAnyPath( paths.root.remove_filename() );
+    paths.root = deps_.fs.MakeAnyPath( paths.root.remove_filename() );
     T_Ptr next = boost::make_shared< Session >( deps_, node_, paths, cfg, Utf8( GetExercise() ), id_ );
     replays_.insert( next->GetId() );
     return next;
@@ -940,8 +940,8 @@ void Session::DetachReplay( const Session_ABC& replay )
 // -----------------------------------------------------------------------------
 void Session::ParseCheckpoints()
 {
-    deps_.system.Walk( GetOutput() / "checkpoints", false, boost::bind( &Attach< T_Checkpoints >,
-                  boost::cref( deps_.system ), _1, boost::ref( checkpoints_ ) ) );
+    deps_.fs.Walk( GetOutput() / "checkpoints", false, boost::bind( &Attach< T_Checkpoints >,
+                  boost::cref( deps_.fs ), _1, boost::ref( checkpoints_ ) ) );
 }
 
 // -----------------------------------------------------------------------------

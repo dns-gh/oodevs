@@ -31,7 +31,7 @@ using runtime::Pool_ABC;
 // -----------------------------------------------------------------------------
 SessionController::SessionController( cpplog::BaseLogger& log,
                                       const runtime::Runtime_ABC& runtime,
-                                      const FileSystem_ABC& system,
+                                      const FileSystem_ABC& fs,
                                       const SessionFactory_ABC& sessions,
                                       const NodeController_ABC& nodes,
                                       const Path& root,
@@ -39,7 +39,7 @@ SessionController::SessionController( cpplog::BaseLogger& log,
                                       Pool_ABC& pool )
     : log_     ( log )
     , runtime_ ( runtime )
-    , system_  ( system )
+    , fs_      ( fs )
     , factory_ ( sessions )
     , nodes_   ( nodes )
     , root_    ( root / "sessions" )
@@ -47,11 +47,11 @@ SessionController::SessionController( cpplog::BaseLogger& log,
     , apps_    ( apps )
     , async_   ( pool )
 {
-    system_.MakePaths( trash_ );
-    if( !system_.IsDirectory( apps_ ) )
+    fs_.MakePaths( trash_ );
+    if( !fs_.IsDirectory( apps_ ) )
         throw std::runtime_error( "'" + runtime::Utf8( apps_ ) + "' is not a directory" );
     const Path app = apps_ / "simulation_app.exe";
-    if( !system_.IsFile( app ) )
+    if( !fs_.IsFile( app ) )
         throw std::runtime_error( "'" + Utf8( app ) + "' is not a file" );
     timer_ = MakeTimer( pool, boost::posix_time::seconds( 5 ), boost::bind( &SessionController::Refresh, this ) );
     sizes_ = MakeTimer( pool, boost::posix_time::minutes( 1 ), boost::bind( &SessionController::RefreshSize, this ) );
@@ -75,7 +75,7 @@ SessionController::~SessionController()
     sizes_->Stop();
     async_.Join();
     sessions_.Foreach( boost::bind( &AsyncStop, boost::ref( async_ ), _1 ) );
-    system_.Remove( trash_ );
+    fs_.Remove( trash_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -155,7 +155,7 @@ void SessionController::ReloadSession( const Path& path, T_Predicate predicate )
 bool SessionController::ReloadDirectory( runtime::Async& reload, const Path& dir, T_Predicate predicate )
 {
     const Path path = dir / "session.id";
-    if( system_.IsFile( path ) )
+    if( fs_.IsFile( path ) )
         reload.Go( boost::bind( &SessionController::ReloadSession, this, path, predicate ) );
     return true;
 }
@@ -180,7 +180,7 @@ void SessionController::ReloadReplay( Session_ABC& session )
 void SessionController::Reload( T_Predicate predicate )
 {
     Async reload( async_.GetPool() );
-    system_.Walk( root_, false, boost::bind( &SessionController::ReloadDirectory, this, boost::ref( reload ), _1, predicate ) );
+    fs_.Walk( root_, false, boost::bind( &SessionController::ReloadDirectory, this, boost::ref( reload ), _1, predicate ) );
     reload.Join();
     sessions_.ForeachRef( boost::bind( &SessionController::ReloadReplay, this, _1 ) );
 }
@@ -235,7 +235,7 @@ void SessionController::Create( Session_ABC& session )
 // -----------------------------------------------------------------------------
 SessionController::T_Session SessionController::Create( const Uuid& node, const web::session::Config& cfg, const std::string& exercise )
 {
-    const Path output = system_.MakeAnyPath( root_ );
+    const Path output = fs_.MakeAnyPath( root_ );
     boost::shared_ptr< Session_ABC > session = factory_.Make( output, trash_, node, cfg, exercise );
     sessions_.Attach( session );
     Create( *session );
@@ -249,7 +249,7 @@ SessionController::T_Session SessionController::Create( const Uuid& node, const 
 void SessionController::Save( const Session_ABC& session ) const
 {
     const Path path = session.GetRoot() / "session.id";
-    async_.Post( boost::bind( &FileSystem_ABC::WriteFile, &system_, path, ToJson( session.Save() ) ) );
+    async_.Post( boost::bind( &FileSystem_ABC::WriteFile, &fs_, path, ToJson( session.Save() ) ) );
 }
 
 namespace

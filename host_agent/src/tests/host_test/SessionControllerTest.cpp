@@ -51,13 +51,13 @@ namespace
             : nodes( false )
             , idx  ( 0 )
         {
-            MOCK_EXPECT( system.MakePaths ).with( root / "sessions" / "_" );
-            MOCK_EXPECT( system.IsDirectory ).with( root ).returns( true );
-            MOCK_EXPECT( system.IsDirectory ).with( apps ).returns( true );
-            MOCK_EXPECT( system.Exists ).with( GetApp( apps ) ).returns( true );
-            MOCK_EXPECT( system.IsFile ).with( GetApp( apps ) ).returns( true );
-            MOCK_EXPECT( system.MakeAnyPath ).calls( boost::bind( &SubFixture::MakePath, this, _1 ) );
-            MOCK_EXPECT( system.Remove ).returns( true );
+            MOCK_EXPECT( fs.MakePaths ).with( root / "sessions" / "_" );
+            MOCK_EXPECT( fs.IsDirectory ).with( root ).returns( true );
+            MOCK_EXPECT( fs.IsDirectory ).with( apps ).returns( true );
+            MOCK_EXPECT( fs.Exists ).with( GetApp( apps ) ).returns( true );
+            MOCK_EXPECT( fs.IsFile ).with( GetApp( apps ) ).returns( true );
+            MOCK_EXPECT( fs.MakeAnyPath ).calls( boost::bind( &SubFixture::MakePath, this, _1 ) );
+            MOCK_EXPECT( fs.Remove ).returns( true );
         };
 
         Path MakePath( const Path& root )
@@ -68,7 +68,7 @@ namespace
         size_t idx;
         MockLog log;
         MockRuntime runtime;
-        MockFileSystem system;
+        MockFileSystem fs;
         MockPool pool;
         MockSessionFactory factory;
         MockNodeController nodes;
@@ -111,7 +111,7 @@ namespace
             : root   ( "e:/root" )
             , apps   ( "e:/apps" )
             , sub    ( root, apps )
-            , control( sub.log, sub.runtime, sub.system, sub.factory, sub.nodes, root, apps, sub.pool )
+            , control( sub.log, sub.runtime, sub.fs, sub.factory, sub.nodes, root, apps, sub.pool )
         {
             // NOTHING
         }
@@ -130,17 +130,17 @@ namespace
                 MOCK_EXPECT( sub.factory.Make5 ).once().with( mock::any, mock::any, node, mock::any, session->GetExercise() ).returns( session );
             else
                 MOCK_EXPECT( sub.factory.Make2 ).once().returns( session );
-            MOCK_EXPECT( sub.system.WriteFile ).returns( true );
+            MOCK_EXPECT( sub.fs.WriteFile ).returns( true );
             MOCK_EXPECT( session->Stop ).once().returns( true );
             return session;
         }
 
         void Reload()
         {
-            MOCK_EXPECT( sub.system.Walk ).once().with( root / "sessions", false,
-                boost::bind( &MockFileSystem::Apply, &sub.system, _1, boost::assign::list_of< Path >( "a" )( "b" ) ) );
-            MOCK_EXPECT( sub.system.IsFile ).once().with( "a/session.id" ).returns( true );
-            MOCK_EXPECT( sub.system.IsFile ).once().with( "b/session.id" ).returns( true );
+            MOCK_EXPECT( sub.fs.Walk ).once().with( root / "sessions", false,
+                boost::bind( &MockFileSystem::Apply, &sub.fs, _1, boost::assign::list_of< Path >( "a" )( "b" ) ) );
+            MOCK_EXPECT( sub.fs.IsFile ).once().with( "a/session.id" ).returns( true );
+            MOCK_EXPECT( sub.fs.IsFile ).once().with( "b/session.id" ).returns( true );
             active = AddSession( idActive, idNode, sessionActive, "a/session.id" );
             idle = AddSession( idIdle, idNode, sessionIdle, "b/session.id" );
             control.Reload( &IsKnownNode );

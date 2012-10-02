@@ -60,15 +60,15 @@ struct Fixture
 {
     Fixture()
         : idx    ( 0 )
-        , install( pool, system, GetFileIndex(), true )
-        , cache  ( pool, system, GetFileIndex(), false )
+        , install( pool, fs, GetFileIndex(), true )
+        , cache  ( pool, fs, GetFileIndex(), false )
     {
         // NOTHING
     }
 
     size_t idx;
     MockPool pool;
-    MockFileSystem system;
+    MockFileSystem fs;
     Package install;
     Package cache;
 
@@ -89,25 +89,25 @@ struct Fixture
         const Path file = data / name / suffix;
         if( glob )
         {
-            MOCK_EXPECT( system.Glob ).once().with( data, suffix.filename(), boost::bind( &MockFileSystem::Apply, &system, _1, boost::assign::list_of( file ) ) );
+            MOCK_EXPECT( fs.Glob ).once().with( data, suffix.filename(), boost::bind( &MockFileSystem::Apply, &fs, _1, boost::assign::list_of( file ) ) );
             if( ref )
             {
-                MOCK_EXPECT( system.Walk ).once().with( boost::bind( &BeginWith, root, _1 ), false, mock::any );
-                MOCK_EXPECT( system.Glob ).once().with( boost::bind( &BeginWith, root, _1 ), mock::any, mock::any );
+                MOCK_EXPECT( fs.Walk ).once().with( boost::bind( &BeginWith, root, _1 ), false, mock::any );
+                MOCK_EXPECT( fs.Glob ).once().with( boost::bind( &BeginWith, root, _1 ), mock::any, mock::any );
             }
         }
         else
         {
-            MOCK_EXPECT( system.Walk ).once().with( data, false, boost::bind( &MockFileSystem::Apply, &system, _1, boost::assign::list_of( data / name ) ) );
-            MOCK_EXPECT( system.IsFile ).once().with( file ).returns( true );
+            MOCK_EXPECT( fs.Walk ).once().with( data, false, boost::bind( &MockFileSystem::Apply, &fs, _1, boost::assign::list_of( data / name ) ) );
+            MOCK_EXPECT( fs.IsFile ).once().with( file ).returns( true );
             if( ref )
-                MOCK_EXPECT( system.Glob ).exactly( 2 ).with( boost::bind( &BeginWith, root, _1 ), mock::any, mock::any );
+                MOCK_EXPECT( fs.Glob ).exactly( 2 ).with( boost::bind( &BeginWith, root, _1 ), mock::any, mock::any );
         }
-        MOCK_EXPECT( system.GetLastWrite ).with( file ).returns( std::time_t() );
-        MOCK_EXPECT( system.ReadFile ).with( file ).returns( contents );
-        MOCK_EXPECT( system.ReadFile ).with( root / "metadata.tag" ).returns( "" );
-        MOCK_EXPECT( system.WriteFile ).with( root / "metadata.tag", mock::any ).returns( true );
-        MOCK_EXPECT( system.Checksum ).with( data / name, mock::any, mock::any ).returns( checksum );
+        MOCK_EXPECT( fs.GetLastWrite ).with( file ).returns( std::time_t() );
+        MOCK_EXPECT( fs.ReadFile ).with( file ).returns( contents );
+        MOCK_EXPECT( fs.ReadFile ).with( root / "metadata.tag" ).returns( "" );
+        MOCK_EXPECT( fs.WriteFile ).with( root / "metadata.tag", mock::any ).returns( true );
+        MOCK_EXPECT( fs.Checksum ).with( data / name, mock::any, mock::any ).returns( checksum );
         dst.push_back( file );
     }
 
@@ -150,12 +150,12 @@ struct Fixture
     void AddPackageDescriptor( const Path& root, const std::string& name, const std::string& description, const std::string& version )
     {
         const Path content = root / "content.xml";
-        MOCK_EXPECT( system.IsFile ).with( content ).returns( true );
+        MOCK_EXPECT( fs.IsFile ).with( content ).returns( true );
         Tree next;
         next.put( "content.name", name );
         next.put( "content.description", description );
         next.put( "content.version", version );
-        MOCK_EXPECT( system.ReadFile ).with( content ).returns( ToXml( next ).c_str() );
+        MOCK_EXPECT( fs.ReadFile ).with( content ).returns( ToXml( next ).c_str() );
     }
 
     Path GetItemRoot( const Path& root, bool ref )
@@ -177,7 +177,7 @@ struct Fixture
             return;
 
         AddExercise( dst, ref, GetItemRoot( root, ref ), "castle", "34567890", "ada", "avalon" );
-        MOCK_EXPECT( system.Walk ).once().with( root, false, boost::bind( &MockFileSystem::Apply, &system, _1, GetItemRoots( dst ) ) );
+        MOCK_EXPECT( fs.Walk ).once().with( root, false, boost::bind( &MockFileSystem::Apply, &fs, _1, GetItemRoots( dst ) ) );
     }
 
     size_t CountItemType( const Tree& src, const std::string& type )
@@ -253,10 +253,10 @@ struct Fixture
     {
         const Path root = install.GetPath();
         const Path sub = root / GetFileIndex();
-        MOCK_EXPECT( system.MakePaths ).with( root );
-        MOCK_EXPECT( system.MakeAnyPath ).once().with( root ).returns( sub );
-        MOCK_EXPECT( system.MakePaths ).once().with( boost::bind( &BeginWith, sub, _1 ) );
-        MOCK_EXPECT( system.CopyDirectory ).once();
+        MOCK_EXPECT( fs.MakePaths ).with( root );
+        MOCK_EXPECT( fs.MakeAnyPath ).once().with( root ).returns( sub );
+        MOCK_EXPECT( fs.MakePaths ).once().with( boost::bind( &BeginWith, sub, _1 ) );
+        MOCK_EXPECT( fs.CopyDirectory ).once();
         T_Paths dst;
         size_t idx;
         if( type == "model" )
@@ -293,9 +293,9 @@ struct Fixture
     void ExpectItemRemoval( const Path& root )
     {
         const Path sub = root / GetFileIndex();
-        MOCK_EXPECT( system.MakeAnyPath ).once().with( root ).returns( sub );
-        MOCK_EXPECT( system.Rename ).once().with( boost::bind( &BeginWith, install.GetPath(), _1 ), boost::bind( &BeginWith, sub, _1 ) ).returns( true );
-        MOCK_EXPECT( system.Remove ).with( sub ).returns( true );
+        MOCK_EXPECT( fs.MakeAnyPath ).once().with( root ).returns( sub );
+        MOCK_EXPECT( fs.Rename ).once().with( boost::bind( &BeginWith, install.GetPath(), _1 ), boost::bind( &BeginWith, sub, _1 ) ).returns( true );
+        MOCK_EXPECT( fs.Remove ).with( sub ).returns( true );
     }
 };
 }

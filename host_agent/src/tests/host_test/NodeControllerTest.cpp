@@ -50,13 +50,13 @@ namespace
         SubFixture( const Path& app, const Path& web )
             : idx( 0 )
         {
-            MOCK_EXPECT( system.MakePaths );
-            MOCK_EXPECT( system.Exists ).with( app ).returns( true );
-            MOCK_EXPECT( system.IsFile ).with( app ).returns( true );
-            MOCK_EXPECT( system.IsDirectory ).with( web ).returns( true );
+            MOCK_EXPECT( fs.MakePaths );
+            MOCK_EXPECT( fs.Exists ).with( app ).returns( true );
+            MOCK_EXPECT( fs.IsFile ).with( app ).returns( true );
+            MOCK_EXPECT( fs.IsDirectory ).with( web ).returns( true );
             MOCK_EXPECT( proxy.GetPort ).returns( 8080 );
-            MOCK_EXPECT( system.MakeAnyPath ).calls( boost::bind( &SubFixture::MakePath, this, _1 ) );
-            MOCK_EXPECT( system.Walk ).once().with( boost::bind( &EndWith, "plugins", _1 ), false, mock::any );
+            MOCK_EXPECT( fs.MakeAnyPath ).calls( boost::bind( &SubFixture::MakePath, this, _1 ) );
+            MOCK_EXPECT( fs.Walk ).once().with( boost::bind( &EndWith, "plugins", _1 ), false, mock::any );
         };
 
         Path MakePath( const Path& root )
@@ -67,7 +67,7 @@ namespace
         size_t idx;
         MockLog log;
         MockRuntime runtime;
-        MockFileSystem system;
+        MockFileSystem fs;
         MockProxy proxy;
         MockPool pool;
         MockNodeFactory nodes;
@@ -103,8 +103,8 @@ namespace
             , web    ( "e:/zomg/www" )
             , type   ( isCluster ? "cluster" : "node" )
             , sub    ( app, web )
-            , plugins( sub.system, "plugins" )
-            , control( sub.log, sub.runtime, sub.system, plugins, sub.nodes, root, app, web, type, 0, sub.pool, sub.proxy )
+            , plugins( sub.fs, "plugins" )
+            , control( sub.log, sub.runtime, sub.fs, plugins, sub.nodes, root, app, web, type, 0, sub.pool, sub.proxy )
         {
             // NOTHING
         }
@@ -134,7 +134,7 @@ namespace
             {
                 MOCK_EXPECT( sub.nodes.Make1 ).once().returns( node );
             }
-            MOCK_EXPECT( sub.system.WriteFile ).returns( true );
+            MOCK_EXPECT( sub.fs.WriteFile ).returns( true );
             MOCK_EXPECT( sub.proxy.Register ).once().with( node->GetIdent(), "localhost", node->GetPort() );
             MOCK_EXPECT( node->Stop ).once().returns( true );
             return node;
@@ -142,10 +142,10 @@ namespace
 
         void Reload()
         {
-            MOCK_EXPECT( sub.system.Walk ).once().with( root / "nodes", false,
-                boost::bind( &MockFileSystem::Apply, &sub.system, _1, boost::assign::list_of< Path >( "a" )( "b" ) ) );
-            MOCK_EXPECT( sub.system.IsFile ).once().with( "a/node.id" ).returns( true );
-            MOCK_EXPECT( sub.system.IsFile ).once().with( "b/node.id" ).returns( true );
+            MOCK_EXPECT( sub.fs.Walk ).once().with( root / "nodes", false,
+                boost::bind( &MockFileSystem::Apply, &sub.fs, _1, boost::assign::list_of< Path >( "a" )( "b" ) ) );
+            MOCK_EXPECT( sub.fs.IsFile ).once().with( "a/node.id" ).returns( true );
+            MOCK_EXPECT( sub.fs.IsFile ).once().with( "b/node.id" ).returns( true );
             active = AddNode( idActive, nodeActive, "a/node.id" );
             idle = AddNode( idIdle, nodeIdle, "b/node.id" );
             control.Reload();
@@ -252,5 +252,5 @@ BOOST_FIXTURE_TEST_CASE( node_controller_cannot_create_node_with_duplicate_ident
     web::node::Config cfg;
     MOCK_EXPECT( sub.nodes.Make3 ).once().with( mock::any, "myName", mock::same( cfg  ) ).returns( node );
     control.Create( "myName", cfg );
-    MOCK_EXPECT( sub.system.Remove ).once().returns( true );
+    MOCK_EXPECT( sub.fs.Remove ).once().returns( true );
 }

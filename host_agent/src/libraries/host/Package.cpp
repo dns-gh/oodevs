@@ -49,12 +49,12 @@ struct Package_ABC::Item_ABC : public boost::noncopyable
     virtual bool        IsLinked() const = 0;
     virtual bool        IsValid() const = 0;
     virtual void        Identify( const Package_ABC& ref, const Package_ABC& root ) = 0;
-    virtual void        Install( Async& async, const FileSystem_ABC& system, const Path& tomb, const Path& output,
+    virtual void        Install( Async& async, const FileSystem_ABC& fs, const Path& tomb, const Path& output,
                                  const Package_ABC& dst, const Package::T_Items& targets, const PathOperand& operand ) const = 0;
-    virtual void        Uninstall( Async& async, const FileSystem_ABC& system, const Path& dst ) = 0;
-    virtual void        Reinstall( const FileSystem_ABC& system ) = 0;
+    virtual void        Uninstall( Async& async, const FileSystem_ABC& fs, const Path& dst ) = 0;
+    virtual void        Reinstall( const FileSystem_ABC& fs ) = 0;
     virtual void        Link( Tree& tree, const Package_ABC& ref, bool recurse ) = 0;
-    virtual bool        Unlink( Async& async, const FileSystem_ABC& system ) = 0;
+    virtual bool        Unlink( Async& async, const FileSystem_ABC& fs ) = 0;
     virtual void        Download( const FileSystem_ABC& fs, web::Chunker_ABC& dst ) const = 0;
 };
 
@@ -127,28 +127,28 @@ struct Metadata
         return Get< std::string >( tree, key, "Unversioned" );
     }
 
-    static Metadata Reload( const FileSystem_ABC& system, const Path& root )
+    static Metadata Reload( const FileSystem_ABC& fs, const Path& root )
     {
-        return Metadata( FromJson( system.ReadFile( root / GetFilename() ) ) );
+        return Metadata( FromJson( fs.ReadFile( root / GetFilename() ) ) );
     }
 
-    void Save( const FileSystem_ABC& system, const Path& root ) const
+    void Save( const FileSystem_ABC& fs, const Path& root ) const
     {
-        system.WriteFile( root / GetFilename(), ToJson( GetProperties(), true ) );
+        fs.WriteFile( root / GetFilename(), ToJson( GetProperties(), true ) );
     }
 
-    void TryUninstall( Async& async, const FileSystem_ABC& system, const Path& root, const Path& tomb )
+    void TryUninstall( Async& async, const FileSystem_ABC& fs, const Path& root, const Path& tomb )
     {
         tomb_ = tomb;
         if( IsLinked() )
-            Save( system, root );
-        TryKill( async, system, root );
+            Save( fs, root );
+        TryKill( async, fs, root );
     }
 
-    void Reinstall( const FileSystem_ABC& system, const Path& root )
+    void Reinstall( const FileSystem_ABC& fs, const Path& root )
     {
         tomb_.clear();
-        Save( system, root );
+        Save( fs, root );
     }
 
     bool IsInstalled() const
@@ -166,10 +166,10 @@ struct Metadata
         links_++;
     }
 
-    bool Unlink( Async& async, const FileSystem_ABC& system, const Path& root )
+    bool Unlink( Async& async, const FileSystem_ABC& fs, const Path& root )
     {
         links_--;
-        return TryKill( async, system, root );
+        return TryKill( async, fs, root );
     }
 
 private:
@@ -186,13 +186,13 @@ private:
 
     Metadata& operator=( const Metadata& );
 
-    bool TryKill( Async& async, const FileSystem_ABC& system, const Path& root )
+    bool TryKill( Async& async, const FileSystem_ABC& fs, const Path& root )
     {
         if( IsLinked() || IsInstalled() )
             return false;
-        const Path next = system.MakeAnyPath( tomb_ );
-        system.Rename( root, next / "_" );
-        async.Go( boost::bind( &FileSystem_ABC::Remove, &system, next ) );
+        const Path next = fs.MakeAnyPath( tomb_ );
+        fs.Rename( root, next / "_" );
+        async.Go( boost::bind( &FileSystem_ABC::Remove, &fs, next ) );
         return true;
     }
 
@@ -259,12 +259,12 @@ bool BeginWith( const Path& prefix, const Path& path )
 
 struct Item : Package_ABC::Item_ABC
 {
-    Item( const FileSystem_ABC& system, const Path& root, size_t id, const std::string& name, const std::string& date, const Metadata* meta )
+    Item( const FileSystem_ABC& fs, const Path& root, size_t id, const std::string& name, const std::string& date, const Metadata* meta )
         : root_ ( root )
         , id_   ( id )
         , name_ ( name )
         , date_ ( date )
-        , meta_ ( meta ? *meta : Metadata::Reload( system, root ) )
+        , meta_ ( meta ? *meta : Metadata::Reload( fs, root ) )
     {
         // NOTHING
     }
@@ -362,18 +362,18 @@ struct Item : Package_ABC::Item_ABC
         return !boost::bind( &BeginWith, root / "sessions", _1 );
     }
 
-    void MakeChecksum( const FileSystem_ABC& system )
+    void MakeChecksum( const FileSystem_ABC& fs )
     {
         if( !GetChecksum().empty() )
            return;
         size_t read;
         const Path root = root_ / GetSuffix();
-        const std::string checksum = system.Checksum( root, IsItemFile( root ), read );
+        const std::string checksum = fs.Checksum( root, IsItemFile( root ), read );
         meta_.Finalize( checksum, read );
-        meta_.Save( system, root_ );
+        meta_.Save( fs, root_ );
     }
 
-    void Install( Async& async, const FileSystem_ABC& system, const Path& tomb, const Path& root, const Package_ABC& dst, const Package::T_Items& targets, const PathOperand& operand ) const
+    void Install( Async& async, const FileSystem_ABC& fs, const Path& tomb, const Path& root, const Package_ABC& dst, const Package::T_Items& targets, const PathOperand& operand ) const
     {
         BOOST_FOREACH( const T_Dependencies::value_type& dep, GetDependencies() )
             if( !dst.Find( *dep, true ) && !HasItem( targets, *dep ) )
@@ -382,26 +382,26 @@ struct Item : Package_ABC::Item_ABC
         Package_ABC::T_Item old = dst.Find( *this, false );
         const std::string checksum = GetChecksum();
         if( old && old->GetChecksum() == checksum )
-            return old->Reinstall( system );
+            return old->Reinstall( fs );
 
-        const Path output = system.MakeAnyPath( root );
+        const Path output = fs.MakeAnyPath( root );
         const Path sub =  output / GetSuffix();
-        system.MakePaths( sub );
-        system.CopyDirectory( root_ / GetSuffix(), sub );
-        meta_.Save( system, output );
+        fs.MakePaths( sub );
+        fs.CopyDirectory( root_ / GetSuffix(), sub );
+        meta_.Save( fs, output );
         if( old )
-            old->Uninstall( async, system, tomb );
+            old->Uninstall( async, fs, tomb );
         operand( output );
     }
 
-    void Uninstall( Async& async, const FileSystem_ABC& system, const Path& dst )
+    void Uninstall( Async& async, const FileSystem_ABC& fs, const Path& dst )
     {
-        meta_.TryUninstall( async, system, root_, dst );
+        meta_.TryUninstall( async, fs, root_, dst );
     }
 
-    void Reinstall( const FileSystem_ABC& system )
+    void Reinstall( const FileSystem_ABC& fs )
     {
-        meta_.Reinstall( system, root_ );
+        meta_.Reinstall( fs, root_ );
     }
 
     bool IsExercise() const
@@ -437,9 +437,9 @@ struct Item : Package_ABC::Item_ABC
         meta_.Link();
     }
 
-    bool Unlink( Async& async, const FileSystem_ABC& system )
+    bool Unlink( Async& async, const FileSystem_ABC& fs )
     {
-        return meta_.Unlink( async, system, root_ );
+        return meta_.Unlink( async, fs, root_ );
     }
 
     void Download( const FileSystem_ABC& fs, web::Chunker_ABC& dst ) const
@@ -485,30 +485,30 @@ std::string GetFilename( Path path, const std::string& root )
 }
 
 template< typename T >
-void AttachItem( Async& async, const FileSystem_ABC& system, Package::T_Items& items, const T& item )
+void AttachItem( Async& async, const FileSystem_ABC& fs, Package::T_Items& items, const T& item )
 {
     items.push_back( item );
-    async.Go( boost::bind( &Item::MakeChecksum, item, boost::cref( system ) ) );
+    async.Go( boost::bind( &Item::MakeChecksum, item, boost::cref( fs ) ) );
 }
 
 template< typename T >
-bool AttachSimple( Async& async, const Path& path, const FileSystem_ABC& system, const Path& root, Package::T_Items& items, const Metadata* meta )
+bool AttachSimple( Async& async, const Path& path, const FileSystem_ABC& fs, const Path& root, Package::T_Items& items, const Metadata* meta )
 {
-    AttachItem( async, system, items, boost::make_shared< T >( system, root, path, items.size(), meta ) );
+    AttachItem( async, fs, items, boost::make_shared< T >( fs, root, path, items.size(), meta ) );
     return true;
 }
 
 template< typename T >
-bool AttachExtended( Async& async, const Path& path, const FileSystem_ABC& system, const Path& root, Package::T_Items& items, const Metadata* meta )
+bool AttachExtended( Async& async, const Path& path, const FileSystem_ABC& fs, const Path& root, Package::T_Items& items, const Metadata* meta )
 {
-    AttachItem( async, system, items, boost::make_shared< T >( system, root, path, items.size(), meta, FromXml( system.ReadFile( path ) ) ) );
+    AttachItem( async, fs, items, boost::make_shared< T >( fs, root, path, items.size(), meta, FromXml( fs.ReadFile( path ) ) ) );
     return true;
 }
 
 struct Model : public Item
 {
-    Model( const FileSystem_ABC& system, const Path& root, const Path& file, size_t id, const Metadata* meta )
-        : Item( system, root, id, Utf8( Path( file ).remove_filename().remove_filename().filename() ), Format( system.GetLastWrite( file ) ), meta )
+    Model( const FileSystem_ABC& fs, const Path& root, const Path& file, size_t id, const Metadata* meta )
+        : Item( fs, root, id, Utf8( Path( file ).remove_filename().remove_filename().filename() ), Format( fs.GetLastWrite( file ) ), meta )
     {
         // NOTHING
     }
@@ -523,25 +523,25 @@ struct Model : public Item
         return Path( "data" ) / "models" / name_;
     }
 
-    static bool Filter( const FileSystem_ABC& system, const Path& path, FileSystem_ABC::T_Predicate operand, const std::string& suffix )
+    static bool Filter( const FileSystem_ABC& fs, const Path& path, FileSystem_ABC::T_Predicate operand, const std::string& suffix )
     {
         const Path target = path / suffix;
-        if( system.IsFile( target ) )
+        if( fs.IsFile( target ) )
             operand( target );
         return true;
     }
 
-    static void Parse( Async& async, const FileSystem_ABC& system, const Path& root, Package::T_Items& items, const Metadata* meta )
+    static void Parse( Async& async, const FileSystem_ABC& fs, const Path& root, Package::T_Items& items, const Metadata* meta )
     {
-        FileSystem_ABC::T_Predicate op = boost::bind( AttachSimple< Model >, boost::ref( async ), _1, boost::cref( system ), boost::cref( root ), boost::ref( items ), meta );
-        system.Walk( root / "data" / "models", false, boost::bind( &Model::Filter, boost::cref( system ), _1, op, "decisional/decisional.xml" ) );
+        FileSystem_ABC::T_Predicate op = boost::bind( AttachSimple< Model >, boost::ref( async ), _1, boost::cref( fs ), boost::cref( root ), boost::ref( items ), meta );
+        fs.Walk( root / "data" / "models", false, boost::bind( &Model::Filter, boost::cref( fs ), _1, op, "decisional/decisional.xml" ) );
     }
 };
 
 struct Terrain : public Item
 {
-    Terrain( const FileSystem_ABC& system, const Path& root, const Path& file, size_t id, const Metadata* meta )
-        : Item( system, root, id, GetFilename( file, "terrains" ), Format( system.GetLastWrite( file ) ), meta )
+    Terrain( const FileSystem_ABC& fs, const Path& root, const Path& file, size_t id, const Metadata* meta )
+        : Item( fs, root, id, GetFilename( file, "terrains" ), Format( fs.GetLastWrite( file ) ), meta )
     {
         // NOTHING
     }
@@ -556,10 +556,10 @@ struct Terrain : public Item
         return Path( "data" ) / "terrains" / name_;
     }
 
-    static void Parse( Async& async, const FileSystem_ABC& system, const Path& root, Package::T_Items& items, const Metadata* meta )
+    static void Parse( Async& async, const FileSystem_ABC& fs, const Path& root, Package::T_Items& items, const Metadata* meta )
     {
-        FileSystem_ABC::T_Predicate op = boost::bind( AttachSimple< Terrain >, boost::ref( async ), _1, boost::cref( system ), boost::cref( root ), boost::ref( items ), meta );
-        system.Glob( root / "data" / "terrains", "Terrain.xml", op );
+        FileSystem_ABC::T_Predicate op = boost::bind( AttachSimple< Terrain >, boost::ref( async ), _1, boost::cref( fs ), boost::cref( root ), boost::ref( items ), meta );
+        fs.Glob( root / "data" / "terrains", "Terrain.xml", op );
     }
 };
 
@@ -587,8 +587,8 @@ struct Dependency : public Item
 
 struct Exercise : public Item
 {
-    Exercise( const FileSystem_ABC& system, const Path& root, const Path& file, size_t id, const Metadata* meta, const Tree& more )
-        : Item     ( system, root, id, GetFilename( file, "exercises" ), Format( system.GetLastWrite( file ) ), meta )
+    Exercise( const FileSystem_ABC& fs, const Path& root, const Path& file, size_t id, const Metadata* meta, const Tree& more )
+        : Item     ( fs, root, id, GetFilename( file, "exercises" ), Format( fs.GetLastWrite( file ) ), meta )
         , briefing_( Get< std::string >( more, "exercise.meta.briefing.text" ) )
         , model_   ( Get< std::string >( more, "exercise.model.<xmlattr>.dataset" ) )
         , terrain_ ( Get< std::string >( more, "exercise.terrain.<xmlattr>.name" ) )
@@ -630,10 +630,10 @@ struct Exercise : public Item
         return true;
     }
 
-    static void Parse( Async& async, const FileSystem_ABC& system, const Path& root, Package::T_Items& items, const Metadata* meta )
+    static void Parse( Async& async, const FileSystem_ABC& fs, const Path& root, Package::T_Items& items, const Metadata* meta )
     {
-        FileSystem_ABC::T_Predicate op = boost::bind( AttachExtended< Exercise >, boost::ref( async ), _1, boost::cref( system ), boost::cref( root ), boost::ref( items ), meta );
-        system.Glob( root / "exercises", "exercise.xml", op );
+        FileSystem_ABC::T_Predicate op = boost::bind( AttachExtended< Exercise >, boost::ref( async ), _1, boost::cref( fs ), boost::cref( root ), boost::ref( items ), meta );
+        fs.Glob( root / "exercises", "exercise.xml", op );
     }
 
     const std::string briefing_;
@@ -646,9 +646,9 @@ struct Exercise : public Item
 // Name: Package::Package
 // Created: BAX 2012-05-14
 // -----------------------------------------------------------------------------
-Package::Package( Pool_ABC& pool, const FileSystem_ABC& system, const Path& path, bool reference )
+Package::Package( Pool_ABC& pool, const FileSystem_ABC& fs, const Path& path, bool reference )
     : pool_     ( pool )
-    , system_   ( system )
+    , fs_       ( fs )
     , path_     ( path )
     , reference_( reference )
 {
@@ -707,11 +707,11 @@ Path Package::GetPath() const
 
 namespace
 {
-bool FillItems( Async& async, const FileSystem_ABC& system, const Path& path, Package::T_Items& items, Metadata* meta )
+bool FillItems( Async& async, const FileSystem_ABC& fs, const Path& path, Package::T_Items& items, Metadata* meta )
 {
-    Model::Parse   ( async, system, path, items, meta );
-    Terrain::Parse ( async, system, path, items, meta );
-    Exercise::Parse( async, system, path, items, meta );
+    Model::Parse   ( async, fs, path, items, meta );
+    Terrain::Parse ( async, fs, path, items, meta );
+    Exercise::Parse( async, fs, path, items, meta );
     return true;
 }
 }
@@ -727,10 +727,10 @@ bool Package::Parse()
     if( !reference_ )
     {
         const Path index = path_ / "content.xml";
-        if( !system_.IsFile( index ) )
+        if( !fs_.IsFile( index ) )
             return false;
 
-        const Tree tree = FromXml( system_.ReadFile( index ) );
+        const Tree tree = FromXml( fs_.ReadFile( index ) );
         const std::string name = Get< std::string >( tree, "content.name" );
         const std::string description = Get< std::string >( tree, "content.description" );
         if( name.empty() || description.empty() )
@@ -746,11 +746,11 @@ bool Package::Parse()
     Async async( pool_ );
     if( reference_ )
     {
-        FileSystem_ABC::T_Predicate predicate = boost::bind( &FillItems, boost::ref( async ), boost::cref( system_ ), _1, boost::ref( items_ ), meta.get() );
-        system_.Walk( path_, false, predicate );
+        FileSystem_ABC::T_Predicate predicate = boost::bind( &FillItems, boost::ref( async ), boost::cref( fs_ ), _1, boost::ref( items_ ), meta.get() );
+        fs_.Walk( path_, false, predicate );
     }
     else
-        FillItems( async, system_, path_, items_, meta.get() );
+        FillItems( async, fs_, path_, items_, meta.get() );
     async.Join();
     std::sort( items_.begin(), items_.end(), &ItemOrder );
     return true;
@@ -838,18 +838,18 @@ void Package::Install( Async& io, const Path& tomb, const T_Items& install )
     if( install.empty() )
         return;
 
-    system_.MakePaths( path_ );
+    fs_.MakePaths( path_ );
     Async async( pool_ );
     boost::mutex access;
     std::vector< Path > paths;
     PathOperand op = boost::bind( &AddItemPath, boost::ref( access ), boost::ref( paths ), _1 );
     BOOST_FOREACH( const T_Items::value_type& item, install )
-        async.Go( boost::bind( &Item_ABC::Install, item, boost::ref( io ), boost::cref( system_ ),
+        async.Go( boost::bind( &Item_ABC::Install, item, boost::ref( io ), boost::cref( fs_ ),
                   tomb, path_, boost::cref( *this ), boost::cref( install ), op ) );
     async.Join();
 
     BOOST_FOREACH( const Path& path, paths )
-        FillItems( async, system_, path, items_, 0 );
+        FillItems( async, fs_, path, items_, 0 );
     async.Join();
 
     std::sort( items_.begin(), items_.end(), &ItemOrder );
@@ -894,7 +894,7 @@ void Package::Uninstall( Async& io, const Path& tomb, const std::vector< size_t 
     Async async( pool_ );
     BOOST_FOREACH( const T_Items::value_type& item, items_ )
         if( IsItemIn( ids, item, false ) )
-            async.Go( boost::bind( &Item_ABC::Uninstall, item, boost::ref( io ), boost::cref( system_ ), tomb ) );
+            async.Go( boost::bind( &Item_ABC::Uninstall, item, boost::ref( io ), boost::cref( fs_ ), tomb ) );
     async.Join();
     RemoveItems( items_, boost::bind( &IsItemIn, boost::cref( ids ), _1, true ) );
     Identify( *this );
@@ -994,7 +994,7 @@ Tree Package::LinkItem( const Tree& tree )
 
 namespace
 {
-bool Unlink( Async& async, const FileSystem_ABC& system, const Tree& src, const std::string& key, const Package_ABC& pkg )
+bool Unlink( Async& async, const FileSystem_ABC& fs, const Tree& src, const std::string& key, const Package_ABC& pkg )
 {
     const boost::optional< std::string > name = src.get_optional< std::string >( key + ".name" );
     if( name == boost::none )
@@ -1002,7 +1002,7 @@ bool Unlink( Async& async, const FileSystem_ABC& system, const Tree& src, const 
     Package_ABC::T_Item item = pkg.Find( Dependency( key, *name ), false );
     if( !item )
         return false;
-    return item->Unlink( async, system );
+    return item->Unlink( async, fs );
 }
 
 bool IsOrphaned( const Package_ABC::T_Item& item )
@@ -1018,9 +1018,9 @@ bool IsOrphaned( const Package_ABC::T_Item& item )
 bool Package::UnlinkItem( Async& async, const Tree& src )
 {
     bool modified = false;
-    modified |= Unlink( async, system_, src, "exercise", *this );
-    modified |= Unlink( async, system_, src, "terrain", *this );
-    modified |= Unlink( async, system_, src, "model", *this );
+    modified |= Unlink( async, fs_, src, "exercise", *this );
+    modified |= Unlink( async, fs_, src, "terrain", *this );
+    modified |= Unlink( async, fs_, src, "model", *this );
     if( modified )
         RemoveItems( items_, &IsOrphaned );
     return modified;
@@ -1044,5 +1044,5 @@ size_t Package::GetSize() const
 // -----------------------------------------------------------------------------
 void Package::Download( web::Chunker_ABC& dst, const Item_ABC& item )
 {
-    item.Download( system_, dst) ;
+    item.Download( fs_, dst) ;
 }

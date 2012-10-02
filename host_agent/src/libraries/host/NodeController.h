@@ -58,7 +58,7 @@ public:
     //@{
              NodeController( cpplog::BaseLogger& log,
                              const runtime::Runtime_ABC& runtime,
-                             const runtime::FileSystem_ABC& system,
+                             const runtime::FileSystem_ABC& fs,
                              const web::Plugins& plugins,
                              const NodeFactory_ABC& nodes,
                              const Path& root,
@@ -142,7 +142,7 @@ private:
     //@{
     cpplog::BaseLogger& log_;
     const runtime::Runtime_ABC& runtime_;
-    const runtime::FileSystem_ABC& system_;
+    const runtime::FileSystem_ABC& fs_;
     const web::Plugins& plugins_;
     const NodeFactory_ABC& factory_;
     const Path root_;

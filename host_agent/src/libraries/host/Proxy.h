@@ -102,7 +102,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Proxy( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime,
-                    const runtime::FileSystem_ABC& system, const proxy::Config& config,
+                    const runtime::FileSystem_ABC& fs, const proxy::Config& config,
                     web::Client_ABC& client, runtime::Pool_ABC& pool );
     virtual ~Proxy();
     //@}
@@ -142,7 +142,7 @@ private:
     //@{
     cpplog::BaseLogger& log_;
     const runtime::Runtime_ABC& runtime_;
-    const runtime::FileSystem_ABC& system_;
+    const runtime::FileSystem_ABC& fs_;
     const proxy::Config config_;
     boost::mutex access_;
     web::Client_ABC& client_;

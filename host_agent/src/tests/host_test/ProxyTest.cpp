@@ -46,8 +46,8 @@ namespace
             , config ( "", "app", 1337, ssl )
             , process( boost::make_shared< MockProcess >( 7331, "el_process_name" ) )
         {
-            MOCK_EXPECT( system.Exists ).with( config.app ).returns( true );
-            MOCK_EXPECT( system.IsFile ).with( config.app ).returns( true );
+            MOCK_EXPECT( fs.Exists ).with( config.app ).returns( true );
+            MOCK_EXPECT( fs.IsFile ).with( config.app ).returns( true );
         }
 
         const proxy::Ssl ssl;
@@ -55,32 +55,32 @@ namespace
         std::string tag;
         MockLog log;
         MockRuntime runtime;
-        MockFileSystem system;
+        MockFileSystem fs;
         MockClient client;
         MockPool pool;
         boost::shared_ptr< MockProcess > process;
 
         boost::shared_ptr< Proxy > MakeProxy()
         {
-            MOCK_EXPECT( system.IsFile ).once().with( "proxy.id" ).returns( false );
-            MOCK_EXPECT( system.MakePaths );
-            MOCK_EXPECT( system.WriteFile ).once().with( mock::any, mock::retrieve( tag ) ).returns( true );
+            MOCK_EXPECT( fs.IsFile ).once().with( "proxy.id" ).returns( false );
+            MOCK_EXPECT( fs.MakePaths );
+            MOCK_EXPECT( fs.WriteFile ).once().with( mock::any, mock::retrieve( tag ) ).returns( true );
             MOCK_EXPECT( runtime.Start ).once().with( config.app, mock::any, "", mock::any ).returns( process );
-            MOCK_EXPECT( system.Remove ).once().with( "proxy.id" ).returns( true );
+            MOCK_EXPECT( fs.Remove ).once().with( "proxy.id" ).returns( true );
             MOCK_EXPECT( process->Kill ).once().returns( true );
             MOCK_EXPECT( process->Join ).returns( true );
-            return boost::make_shared< Proxy >( log, runtime, system, config, client, pool );
+            return boost::make_shared< Proxy >( log, runtime, fs, config, client, pool );
         }
 
         boost::shared_ptr< Proxy > ReloadProxy()
         {
             MOCK_EXPECT( runtime.GetProcess ).once().with( process->GetPid() ).returns( process );
-            MOCK_EXPECT( system.IsFile ).once().with( "proxy.id" ).returns( true );
-            MOCK_EXPECT( system.ReadFile ).once().with( "proxy.id" ).returns( tag );
-            MOCK_EXPECT( system.Remove ).once().with( "proxy.id" ).returns( true );
+            MOCK_EXPECT( fs.IsFile ).once().with( "proxy.id" ).returns( true );
+            MOCK_EXPECT( fs.ReadFile ).once().with( "proxy.id" ).returns( tag );
+            MOCK_EXPECT( fs.Remove ).once().with( "proxy.id" ).returns( true );
             MOCK_EXPECT( process->Kill ).once().returns( true );
             MOCK_EXPECT( process->Join ).returns( true );
-            return boost::make_shared< Proxy >( log, runtime, system, config, client, pool );
+            return boost::make_shared< Proxy >( log, runtime, fs, config, client, pool );
         }
 
         void Register( boost::shared_ptr< Proxy > proxy, const std::string& prefix, const std::string& host, int next )
@@ -133,6 +133,6 @@ BOOST_FIXTURE_TEST_CASE( proxy_with_externally_killed_process_resaves, Fixture )
     MOCK_RESET( process->IsAlive );
     MOCK_EXPECT( process->IsAlive ).once().returns( false );
     MOCK_EXPECT( runtime.Start ).once().returns( process );
-    MOCK_EXPECT( system.WriteFile ).once().returns( true );
+    MOCK_EXPECT( fs.WriteFile ).once().returns( true );
     proxy->Update();
 }

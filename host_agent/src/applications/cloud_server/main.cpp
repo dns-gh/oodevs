@@ -191,7 +191,7 @@ struct Configuration
 struct NodeFactory : public NodeFactory_ABC
 {
     NodeFactory( const PackageFactory_ABC& packages,
-                 const FileSystem_ABC& system,
+                 const FileSystem_ABC& fs,
                  const Runtime_ABC& runtime,
                  const UuidFactory_ABC& uuids,
                  const web::Plugins& plugins,
@@ -199,7 +199,7 @@ struct NodeFactory : public NodeFactory_ABC
                  int min_play,
                  Pool_ABC& pool )
         : packages( packages )
-        , system  ( system )
+        , fs      ( fs )
         , runtime ( runtime )
         , uuids   ( uuids )
         , plugins ( plugins )
@@ -213,19 +213,19 @@ struct NodeFactory : public NodeFactory_ABC
 
     Ptr Make( const Path& root, const std::string& ident, const web::node::Config& cfg ) const
     {
-        NodeDependencies deps( packages, system, uuids, *observer, runtime, plugins, pool, ports );
+        NodeDependencies deps( packages, fs, uuids, *observer, runtime, plugins, pool, ports );
         return boost::make_shared< Node >( deps, root, min_play, ident, cfg );
     }
 
     Ptr Make( const Path& tag ) const
     {
-        NodeDependencies deps( packages, system, uuids, *observer, runtime, plugins, pool, ports );
+        NodeDependencies deps( packages, fs, uuids, *observer, runtime, plugins, pool, ports );
         return boost::make_shared< Node >( deps, Path( tag ).remove_filename(), min_play,
-                                           FromJson( deps.system.ReadFile( tag ) ) );
+                                           FromJson( deps.fs.ReadFile( tag ) ) );
     }
 
     const PackageFactory_ABC& packages;
-    const FileSystem_ABC& system;
+    const FileSystem_ABC& fs;
     const Runtime_ABC& runtime;
     const UuidFactory_ABC& uuids;
     const web::Plugins& plugins;
@@ -237,25 +237,25 @@ struct NodeFactory : public NodeFactory_ABC
 
 struct PackageFactory : public PackageFactory_ABC
 {
-    PackageFactory( Pool_ABC& pool, const FileSystem_ABC& system )
-        : pool  ( pool )
-        , system( system )
+    PackageFactory( Pool_ABC& pool, const FileSystem_ABC& fs )
+        : pool( pool )
+        , fs  ( fs )
     {
         // NOTHING
     }
 
     boost::shared_ptr< Package_ABC > Make( const Path& path, bool reference ) const
     {
-        return boost::make_shared< Package >( boost::ref( pool ), system, path, reference );
+        return boost::make_shared< Package >( boost::ref( pool ), fs, path, reference );
     }
 
     Pool_ABC& pool;
-    const FileSystem_ABC& system;
+    const FileSystem_ABC& fs;
 };
 
 struct SessionFactory : public SessionFactory_ABC
 {
-    SessionFactory( const FileSystem_ABC& system,
+    SessionFactory( const FileSystem_ABC& fs,
                     const Runtime_ABC& runtime,
                     const web::Plugins& plugins,
                     const UuidFactory_ABC& uuids,
@@ -264,7 +264,7 @@ struct SessionFactory : public SessionFactory_ABC
                     web::Client_ABC& client,
                     Pool_ABC& pool )
         : nodes  ( nodes )
-        , deps   ( system, runtime, plugins, uuids, client, pool, ports )
+        , deps   ( fs, runtime, plugins, uuids, client, pool, ports )
     {
         // NOTHING
     }
@@ -280,7 +280,7 @@ struct SessionFactory : public SessionFactory_ABC
 
     Session_ABC::T_Ptr Make( const Path& tag, const Path& trash ) const
     {
-        const Tree tree = FromJson( deps.system.ReadFile( tag ) );
+        const Tree tree = FromJson( deps.fs.ReadFile( tag ) );
         const boost::optional< std::string > id = tree.get_optional< std::string >( "node" );
         if( id == boost::none )
             throw std::runtime_error( "missing node id in " + Utf8( tag ) );
@@ -295,7 +295,7 @@ struct SessionFactory : public SessionFactory_ABC
     const SessionDependencies deps;
 };
 
-int Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system, const Configuration& cfg, const Waiter& waiter )
+int Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const FileSystem_ABC& fs, const Configuration& cfg, const Waiter& waiter )
 {
     sqlite3_config( SQLITE_CONFIG_SINGLETHREAD );
     sqlite3_initialize();
@@ -305,17 +305,17 @@ int Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const F
     web::Client client;
     const proxy::Ssl ssl( cfg.ssl.enabled, cfg.ssl.certificate, cfg.ssl.key );
     const proxy::Config proxyConfig( cfg.root / "host", cfg.proxy.app, cfg.ports.proxy, ssl );
-    Proxy proxy( log, runtime, system, proxyConfig, client, pool );
+    Proxy proxy( log, runtime, fs, proxyConfig, client, pool );
     PortFactory ports( cfg.ports.period, cfg.ports.min, cfg.ports.max );
-    PackageFactory packages( pool, system );
-    web::Plugins plugins( system, cfg.session.apps / "plugins" );
-    NodeFactory fnodes( packages, system, runtime, uuids, plugins, ports, cfg.node.min_play_seconds, pool );
+    PackageFactory packages( pool, fs );
+    web::Plugins plugins( fs, cfg.session.apps / "plugins" );
+    NodeFactory fnodes( packages, fs, runtime, uuids, plugins, ports, cfg.node.min_play_seconds, pool );
     const Port host = ports.Create();
-    NodeController nodes( log, runtime, system, plugins, fnodes, cfg.root, cfg.node.app, cfg.node.root, "node", host->Get(), pool, proxy );
+    NodeController nodes( log, runtime, fs, plugins, fnodes, cfg.root, cfg.node.app, cfg.node.root, "node", host->Get(), pool, proxy );
     fnodes.observer = &nodes;
-    NodeController cluster( log, runtime, system, plugins, fnodes, cfg.root, cfg.node.app, cfg.node.root, "cluster", host->Get(), pool, proxy );
-    SessionFactory fsessions( system, runtime, plugins, uuids, nodes, ports, client, pool );
-    SessionController sessions( log, runtime, system, fsessions, nodes, cfg.root, cfg.session.apps, pool );
+    NodeController cluster( log, runtime, fs, plugins, fnodes, cfg.root, cfg.node.app, cfg.node.root, "cluster", host->Get(), pool, proxy );
+    SessionFactory fsessions( fs, runtime, plugins, uuids, nodes, ports, client, pool );
+    SessionController sessions( log, runtime, fs, fsessions, nodes, cfg.root, cfg.session.apps, pool );
     Agent agent( log, cfg.cluster.enabled ? &cluster : 0, nodes, sessions );
     Crypt crypt;
     Sql db( cfg.root / "host" / "host_agent.db" );
@@ -385,15 +385,15 @@ void PrintConfiguration( cpplog::BaseLogger& log, const Configuration& cfg )
     }
 }
 
-Configuration ParseConfiguration( const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system,
+Configuration ParseConfiguration( const runtime::Runtime_ABC& runtime, const FileSystem_ABC& fs,
                                   const Path& root, cpplog::BaseLogger& log, int argc, const char* argv[] )
 {
     const Path module = runtime.GetModuleFilename();
     const Path config = Path( module ).replace_extension( ".config" );
 
     Tree tree;
-    if( system.IsFile( config ) )
-        tree = FromJson( system.ReadFile( config ) );
+    if( fs.IsFile( config ) )
+        tree = FromJson( fs.ReadFile( config ) );
 
     const Path bin = Path( module ).remove_filename();
     Configuration cfg;
@@ -411,7 +411,7 @@ Configuration ParseConfiguration( const runtime::Runtime_ABC& runtime, const Fil
     cfg.node.root             = Utf8( GetTree( tree, "node.root",    Utf8( bin / ".." / "www" ) ) );
     cfg.node.min_play_seconds = GetTree( tree, "node.min_play_s", 5*60 );
     cfg.session.apps          = Utf8( GetTree( tree, "session.apps", Utf8( bin ) ) );
-    system.WriteFile( config, ToJson( tree, true ) );
+    fs.WriteFile( config, ToJson( tree, true ) );
 
     bool valid = cfg.Parse( log, argc, argv );
     if( !valid )
@@ -450,8 +450,8 @@ int StartServer( int argc, const char* argv[], const Waiter& waiter )
     {
         runtime::Factory factory( log );
         const runtime::Runtime_ABC& runtime = factory.GetRuntime();
-        FileSystem system( log );
-        Configuration cfg = ParseConfiguration( runtime, system, root, log, argc-1, argv+1 );
+        FileSystem fs( log );
+        Configuration cfg = ParseConfiguration( runtime, fs, root, log, argc-1, argv+1 );
         runtime::Daemon daemon( log, runtime );
         runtime::Daemon::T_Args args;
         switch( cfg.command )
@@ -470,13 +470,13 @@ int StartServer( int argc, const char* argv[], const Waiter& waiter )
 
         case CMD_DAEMON:
             PrintConfiguration( log, cfg );
-            daemon.Run( boost::bind( &Start, boost::ref( log ), boost::cref( runtime ), boost::cref( system ), boost::cref( cfg ), _1 ) );
+            daemon.Run( boost::bind( &Start, boost::ref( log ), boost::cref( runtime ), boost::cref( fs ), boost::cref( cfg ), _1 ) );
             break;
 
         default:
         case CMD_EXECUTE:
             PrintConfiguration( log, cfg );
-            Start( log, runtime, system, cfg, waiter );
+            Start( log, runtime, fs, cfg, waiter );
             break;
         }
     }

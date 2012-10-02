@@ -36,7 +36,7 @@ using runtime::Pool_ABC;
 // -----------------------------------------------------------------------------
 NodeController::NodeController( cpplog::BaseLogger& log,
                                 const runtime::Runtime_ABC& runtime,
-                                const FileSystem_ABC& system,
+                                const FileSystem_ABC& fs,
                                 const web::Plugins& plugins,
                                 const NodeFactory_ABC& nodes,
                                 const Path& root,
@@ -48,7 +48,7 @@ NodeController::NodeController( cpplog::BaseLogger& log,
                                 Proxy_ABC& proxy )
     : log_     ( log )
     , runtime_ ( runtime )
-    , system_  ( system )
+    , fs_      ( fs )
     , plugins_ ( plugins )
     , factory_ ( nodes )
     , root_    ( root / ( type == "cluster" ? type : "nodes" ) )
@@ -59,10 +59,10 @@ NodeController::NodeController( cpplog::BaseLogger& log,
     , proxy_   ( proxy )
     , async_   ( pool )
 {
-    system.MakePaths( root_ );
-    if( !system_.IsFile( app_ ) )
+    fs.MakePaths( root_ );
+    if( !fs_.IsFile( app_ ) )
         throw std::runtime_error( "'" + runtime::Utf8( app_ ) + "' is not a binary" );
-    if( !system_.IsDirectory( web_ ) )
+    if( !fs_.IsDirectory( web_ ) )
         throw std::runtime_error( "'" + runtime::Utf8( web_ ) + "' is not a directory" );
     timer_ = runtime::MakeTimer( pool, boost::posix_time::seconds( 5 ), boost::bind( &NodeController::Refresh, this ) );
 }
@@ -118,7 +118,7 @@ void NodeController::ReloadNode( const Path& path )
 bool NodeController::ReloadDirectory( runtime::Async& reload, const Path& dir )
 {
     const Path path = dir / ( type_ + ".id" );
-    if( system_.IsFile( path ) )
+    if( fs_.IsFile( path ) )
         reload.Go( boost::bind( &NodeController::ReloadNode, this, path ) );
     return true;
 }
@@ -130,7 +130,7 @@ bool NodeController::ReloadDirectory( runtime::Async& reload, const Path& dir )
 void NodeController::Reload()
 {
     Async reload( async_.GetPool() );
-    system_.Walk( root_, false, boost::bind( &NodeController::ReloadDirectory, this, boost::ref( reload ), _1 ) );
+    fs_.Walk( root_, false, boost::bind( &NodeController::ReloadDirectory, this, boost::ref( reload ), _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -187,7 +187,7 @@ void NodeController::Create( Node_ABC& node, bool reload )
     const int port = node.GetPort();
     LOG_INFO( log_ ) << "[" << type_ << "] " << ( reload ? "Reloaded " : "Added " ) << node.GetId() << " " << node.GetIdent() << " :" << port;
     if( !reload )
-        system_.MakePaths( node.GetRoot() );
+        fs_.MakePaths( node.GetRoot() );
     proxy_.Register( node.GetIdent(), "localhost", port );
     if( reload )
         Save( node );
@@ -216,12 +216,12 @@ NodeController::T_Node NodeController::Create( const std::string& ident, const w
     if( !IsValid( cfg ) )
         return T_Node();
 
-    const Path output = system_.MakeAnyPath( root_ );
+    const Path output = fs_.MakeAnyPath( root_ );
     T_Node node = factory_.Make( output, ident, cfg );
     bool valid = nodes_.AttachUnless( node, boost::bind( &HasSameIdent, ident, _1 ) );
     if( !valid )
     {
-        async_.Go( boost::bind( &FileSystem_ABC::Remove, &system_, output ) );
+        async_.Go( boost::bind( &FileSystem_ABC::Remove, &fs_, output ) );
         return T_Node();
     }
 
@@ -236,7 +236,7 @@ NodeController::T_Node NodeController::Create( const std::string& ident, const w
 void NodeController::Save( const Node_ABC& node ) const
 {
     const Path path = node.GetRoot() / ( type_ + ".id" );
-    async_.Post( boost::bind( &FileSystem_ABC::WriteFile, &system_, path, ToJson( node.Save() ) ) );
+    async_.Post( boost::bind( &FileSystem_ABC::WriteFile, &fs_, path, ToJson( node.Save() ) ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -62,22 +62,22 @@ private:
 // Created: BAX 2012-04-11
 // -----------------------------------------------------------------------------
 Proxy::Proxy( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime,
-              const FileSystem_ABC& system, const Config& config,
+              const FileSystem_ABC& fs, const Config& config,
               web::Client_ABC& client, Pool_ABC& pool )
     : log_    ( log )
     , runtime_( runtime )
-    , system_ ( system )
+    , fs_     ( fs )
     , config_ ( config )
     , client_ ( client )
     , async_  ( pool )
 {
-    if( !system_.Exists( config_.app ) )
+    if( !fs_.Exists( config_.app ) )
         throw std::runtime_error( runtime::Utf8( config_.app ) + " is missing" );
-    if( !system_.IsFile( config_.app ) )
+    if( !fs_.IsFile( config_.app ) )
         throw std::runtime_error( runtime::Utf8( config_.app ) + " is not a file" );
     const Path tag = config_.root / "proxy.id";
     LOG_INFO( log_ ) << "[proxy] Listening to localhost:" << config_.port;
-    bool hasProcess = system_.IsFile( tag );
+    bool hasProcess = fs_.IsFile( tag );
     if( hasProcess )
     {
         hasProcess = Reload( tag );
@@ -101,7 +101,7 @@ Proxy::~Proxy()
         process_->Kill();
         process_->Join( 1000 );
     }
-    async_.Post( boost::bind( &FileSystem_ABC::Remove, &system_, config_.root / "proxy.id" ) );
+    async_.Post( boost::bind( &FileSystem_ABC::Remove, &fs_, config_.root / "proxy.id" ) );
 }
 
 namespace
@@ -193,7 +193,7 @@ bool Proxy::Reload( const Path& path )
 {
     try
     {
-        const Tree tree = FromJson( system_.ReadFile( path ) );
+        const Tree tree = FromJson( fs_.ReadFile( path ) );
         const boost::optional< int > port = tree.get_optional< int >( "port" );
         if( port == boost::none || *port != config_.port )
             return false;
@@ -270,7 +270,7 @@ void Proxy::Stop()
 // -----------------------------------------------------------------------------
 void Proxy::Save() const
 {
-    async_.Post( boost::bind( &FileSystem_ABC::WriteFile, &system_, config_.root / "proxy.id", ToJson( GetProperties() ) ) );
+    async_.Post( boost::bind( &FileSystem_ABC::WriteFile, &fs_, config_.root / "proxy.id", ToJson( GetProperties() ) ) );
 }
 
 // -----------------------------------------------------------------------------

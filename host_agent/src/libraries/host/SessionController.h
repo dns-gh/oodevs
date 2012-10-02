@@ -50,7 +50,7 @@ public:
     //@{
              SessionController( cpplog::BaseLogger& log,
                                 const runtime::Runtime_ABC& runtime,
-                                const runtime::FileSystem_ABC& system,
+                                const runtime::FileSystem_ABC& fs,
                                 const SessionFactory_ABC& sessions,
                                 const NodeController_ABC& nodes,
                                 const Path& root,
@@ -105,7 +105,7 @@ private:
     //@{
     cpplog::BaseLogger& log_;
     const runtime::Runtime_ABC& runtime_;
-    const runtime::FileSystem_ABC& system_;
+    const runtime::FileSystem_ABC& fs_;
     const SessionFactory_ABC& factory_;
     const NodeController_ABC& nodes_;
     const Path root_;

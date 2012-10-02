@@ -207,10 +207,10 @@ bool FileSystem::Rename( const Path& src, const Path& dst ) const
 
 namespace
 {
-void RemoveFile( const FileSystem_ABC& system, const Path& tmp )
+void RemoveFile( const FileSystem_ABC& fs, const Path& tmp )
 {
     if( !tmp.empty() )
-        system.Remove( tmp );
+        fs.Remove( tmp );
 }
 
 int OpenDescriptor( const Path& path )

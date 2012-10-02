@@ -47,7 +47,7 @@ namespace
     {
         typedef boost::shared_ptr< Node > NodePtr;
         typedef boost::shared_ptr< MockProcess > ProcessPtr;
-        MockFileSystem system;
+        MockFileSystem fs;
         MockRuntime runtime;
         MockPortFactory ports;
         MockUuidFactory uuids;
@@ -62,7 +62,7 @@ namespace
             : installed( boost::make_shared< MockPackage >() )
             , cache    ( boost::make_shared< MockPackage >() )
         {
-            MOCK_EXPECT( system.IsFile ).returns( false );
+            MOCK_EXPECT( fs.IsFile ).returns( false );
         }
 
         NodePtr MakeNode()
@@ -70,9 +70,9 @@ namespace
             MOCK_EXPECT( packages.Make ).once().with( mock::any, true ).returns( installed );
             MOCK_EXPECT( uuids.Create ).once().returns( defaultId );
             MOCK_EXPECT( ports.Create0 ).once().returns( new MockPort( defaultPort ) );
-            MOCK_EXPECT( system.Walk ).once().with( "plugins", mock::any, mock::any );
-            web::Plugins plugins( system, "plugins" );
-            host::NodeDependencies deps( packages, system, uuids, observer, runtime, plugins, pool, ports );
+            MOCK_EXPECT( fs.Walk ).once().with( "plugins", mock::any, mock::any );
+            web::Plugins plugins( fs, "plugins" );
+            host::NodeDependencies deps( packages, fs, uuids, observer, runtime, plugins, pool, ports );
             web::node::Config cfg;
             cfg.name = defaultName;
             return boost::make_shared< Node >( deps, defaultRoot, 5*60, cfg.name, cfg );
@@ -88,9 +88,9 @@ namespace
             MOCK_EXPECT( ports.Create1 ).once().with( defaultPort ).returns( new MockPort( defaultPort ) );
             if( process )
                 MOCK_EXPECT( runtime.GetProcess ).once().with( process->GetPid() ).returns( process );
-            MOCK_EXPECT( system.Walk ).once().with( "plugins", mock::any, mock::any );
-            web::Plugins plugins( system, "plugins" );
-            host::NodeDependencies deps( packages, system, uuids, observer, runtime, plugins, pool, ports );
+            MOCK_EXPECT( fs.Walk ).once().with( "plugins", mock::any, mock::any );
+            web::Plugins plugins( fs, "plugins" );
+            host::NodeDependencies deps( packages, fs, uuids, observer, runtime, plugins, pool, ports );
             return boost::make_shared< Node >( deps, defaultRoot, 5*60, tree );
         }
 
@@ -211,12 +211,12 @@ BOOST_FIXTURE_TEST_CASE( node_cache, Fixture )
     NodePtr node = MakeNode();
     BOOST_CHECK_EQUAL( ToJson( node->GetCache() ), "{}" );
 
-    mock::reset( system );
-    MOCK_EXPECT( system.MakeAnyPath ).returns( "" );
+    mock::reset( fs );
+    MOCK_EXPECT( fs.MakeAnyPath ).returns( "" );
 
     NilReader src;
     boost::shared_ptr< MockUnpack > unpack = boost::make_shared< MockUnpack >();
-    MOCK_EXPECT( system.Unpack ).once().with( mock::any, mock::same( src ), mock::any ).returns( unpack );
+    MOCK_EXPECT( fs.Unpack ).once().with( mock::any, mock::same( src ), mock::any ).returns( unpack );
     MOCK_EXPECT( unpack->Unpack ).once();
 
     MOCK_EXPECT( packages.Make ).once().with( mock::any, false ).returns( cache );
@@ -228,12 +228,12 @@ BOOST_FIXTURE_TEST_CASE( node_cache, Fixture )
     MOCK_EXPECT( cache->GetProperties ).returns( tree );
     MOCK_EXPECT( cache->GetSize ).returns( 0 );
     MOCK_EXPECT( uuids.Create ).returns( boost::uuids::random_generator()() );
-    MOCK_EXPECT( system.MakePaths );
-    MOCK_EXPECT( system.MakePath ).returns( true );
-    MOCK_EXPECT( system.Exists ).returns( false );
-    MOCK_EXPECT( system.IsDirectory ).returns( true );
-    MOCK_EXPECT( system.Rename ).returns( true );
-    MOCK_EXPECT( system.Remove ).returns( true );
+    MOCK_EXPECT( fs.MakePaths );
+    MOCK_EXPECT( fs.MakePath ).returns( true );
+    MOCK_EXPECT( fs.Exists ).returns( false );
+    MOCK_EXPECT( fs.IsDirectory ).returns( true );
+    MOCK_EXPECT( fs.Rename ).returns( true );
+    MOCK_EXPECT( fs.Remove ).returns( true );
     node->UploadCache( src );
     BOOST_CHECK_EQUAL( ToJson( node->GetCache() ), expected );
     MOCK_EXPECT( cache->GetPath ).once().returns( "" );

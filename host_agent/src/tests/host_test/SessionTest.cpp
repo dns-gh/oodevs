@@ -87,7 +87,7 @@ namespace
         typedef boost::shared_ptr< Session > SessionPtr;
         typedef boost::shared_ptr< MockProcess > ProcessPtr;
         MockClient client;
-        MockFileSystem system;
+        MockFileSystem fs;
         MockRuntime runtime;
         MockPortFactory ports;
         MockPool pool;
@@ -100,13 +100,13 @@ namespace
             , apps   ( "apps" )
             , any_idx( 0 )
         {
-            MOCK_EXPECT( system.GetDirectorySize ).returns( 0 );
-            MOCK_EXPECT( system.IsDirectory ).returns( false) ;
-            MOCK_EXPECT( system.MakePaths );
-            MOCK_EXPECT( system.MakeAnyPath ).calls( boost::bind( &MakePath, boost::ref( any_idx ), _1 ) );
-            MOCK_EXPECT( system.Walk );
-            MOCK_EXPECT( system.Rename ).returns( true );
-            MOCK_EXPECT( system.Remove ).returns( true );
+            MOCK_EXPECT( fs.GetDirectorySize ).returns( 0 );
+            MOCK_EXPECT( fs.IsDirectory ).returns( false) ;
+            MOCK_EXPECT( fs.MakePaths );
+            MOCK_EXPECT( fs.MakeAnyPath ).calls( boost::bind( &MakePath, boost::ref( any_idx ), _1 ) );
+            MOCK_EXPECT( fs.Walk );
+            MOCK_EXPECT( fs.Rename ).returns( true );
+            MOCK_EXPECT( fs.Remove ).returns( true );
             MOCK_EXPECT( node->UpdateSessionSize );
             MOCK_EXPECT( node->FilterConfig );
         }
@@ -119,8 +119,8 @@ namespace
             web::session::Config cfg;
             cfg.name = defaultName;
             SessionPaths paths( "a", "b" );
-            web::Plugins plugins( system, "" );
-            SessionDependencies deps( system, runtime, plugins, uuids, client, pool, ports );
+            web::Plugins plugins( fs, "" );
+            SessionDependencies deps( fs, runtime, plugins, uuids, client, pool, ports );
             return boost::make_shared< Session >( deps, node, paths, cfg, defaultExercise, boost::uuids::nil_uuid() );
         }
 
@@ -134,8 +134,8 @@ namespace
             const Tree data = FromJson( links );
             MOCK_EXPECT( node->LinkExerciseTree ).once().with( data ).returns( data );
             SessionPaths paths( "a", "b" );
-            web::Plugins plugins( system, "" );
-            SessionDependencies deps( system, runtime, plugins, uuids, client, pool, ports );
+            web::Plugins plugins( fs, "" );
+            SessionDependencies deps( fs, runtime, plugins, uuids, client, pool, ports );
             return boost::make_shared< Session >( deps, node, paths, tree );
         }
 
@@ -143,7 +143,7 @@ namespace
         {
             ProcessPtr process = boost::make_shared< MockProcess >( pid, name );
             MOCK_EXPECT( runtime.Start ).once().returns( process );
-            MOCK_EXPECT( system.WriteFile ).once().returns( true );
+            MOCK_EXPECT( fs.WriteFile ).once().returns( true );
             MOCK_EXPECT( node->StartSession ).once().returns( boost::make_shared< host::node::Token >() );
             BOOST_REQUIRE( session.Start( apps, std::string() ) );
             return process;

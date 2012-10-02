@@ -64,14 +64,14 @@ namespace host
 // -----------------------------------------------------------------------------
 struct SessionDependencies
 {
-    SessionDependencies( const runtime::FileSystem_ABC& system,
+    SessionDependencies( const runtime::FileSystem_ABC& fs,
                          const runtime::Runtime_ABC& runtime,
                          const web::Plugins& plugins,
                          const UuidFactory_ABC& uuids,
                          web::Client_ABC& client,
                          runtime::Pool_ABC& pool,
                          PortFactory_ABC& ports )
-        : system ( system )
+        : fs     ( fs )
         , runtime( runtime )
         , plugins( plugins )
         , uuids  ( uuids )
@@ -81,7 +81,7 @@ struct SessionDependencies
     {
         // NOTHING
     }
-    const runtime::FileSystem_ABC& system;
+    const runtime::FileSystem_ABC& fs;
     const runtime::Runtime_ABC& runtime;
     const web::Plugins& plugins;
     const UuidFactory_ABC& uuids;

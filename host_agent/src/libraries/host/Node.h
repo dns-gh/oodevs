@@ -58,7 +58,7 @@ namespace host
 struct NodeDependencies
 {
     NodeDependencies( const PackageFactory_ABC& packages,
-                      const runtime::FileSystem_ABC& system,
+                      const runtime::FileSystem_ABC& fs,
                       const UuidFactory_ABC& uuids,
                       const NodeObserver_ABC& observer,
                       const runtime::Runtime_ABC& runtime,
@@ -66,7 +66,7 @@ struct NodeDependencies
                       runtime::Pool_ABC& pool,
                       PortFactory_ABC& ports )
         : packages( packages )
-        , system  ( system )
+        , fs      ( fs )
         , uuids   ( uuids )
         , observer( observer )
         , runtime ( runtime )
@@ -77,7 +77,7 @@ struct NodeDependencies
         // NOTHING
     }
     const PackageFactory_ABC& packages;
-    const runtime::FileSystem_ABC& system;
+    const runtime::FileSystem_ABC& fs;
     const UuidFactory_ABC& uuids;
     const NodeObserver_ABC& observer;
     const runtime::Runtime_ABC& runtime;
