@@ -230,6 +230,8 @@ void DrawerPanel::OnColorChange( const QColor& color )
 // -----------------------------------------------------------------------------
 void DrawerPanel::StartDrawing()
 {
+    if( !selectedEntity_ && ( !selectedDrawing_ || !selectedDrawing_->GetDiffusionEntity() ) )
+        return;
     if( selectedStyle_ )
     {
         Drawing* shape = static_cast< Drawing* >( model_.Create( *selectedStyle_, color_->GetColor(), selectedEntity_ ) );
