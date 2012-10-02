@@ -720,6 +720,15 @@ Path Package::GetPath() const
     return path_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: Package::GetRoot
+// Created: BAX 2012-10-02
+// -----------------------------------------------------------------------------
+Path Package::GetRoot( const Item_ABC& item ) const
+{
+    return item.GetRoot();
+}
+
 namespace
 {
 bool FillItems( Async& async, const FileSystem_ABC& fs, const Path& path, Package::T_Items& items, Metadata* meta )

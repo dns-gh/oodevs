@@ -45,6 +45,7 @@ public:
     virtual Tree GetPropertiesFrom( const Item_ABC& item ) const;
     virtual size_t GetSize() const;
     virtual Path GetPath() const;
+    virtual Path GetRoot( const Item_ABC& item ) const;
     virtual T_Item Find( size_t id, bool alive ) const;
     virtual T_Item Find( const Item_ABC& item, bool alive ) const;
     virtual T_Item Find( const Path& root, const std::string& checksum, bool alive ) const;

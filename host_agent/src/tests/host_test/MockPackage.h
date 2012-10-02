@@ -20,6 +20,7 @@ namespace mocks
         MOCK_METHOD( GetPropertiesFrom, 1 );
         MOCK_METHOD( GetSize, 0 );
         MOCK_METHOD( GetPath, 0 );
+        MOCK_METHOD( GetRoot, 1 );
         MOCK_METHOD( Parse, 0 );
         MOCK_METHOD( Identify, 1 );
         MOCK_METHOD( InstallWith, 4 );
