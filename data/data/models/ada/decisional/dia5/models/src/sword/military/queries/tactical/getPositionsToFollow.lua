@@ -26,7 +26,7 @@ queryImplementation "getPositionsToFollow"
         -- affichePositions( allRes )
         -- NO Reaching POSITIONS to follow
         if next( params.elementsToFollow ) and not next( allRes ) then
-            meKnowledge:sendReport( eRC_NoPositionsToReachTargets )
+            meKnowledge:RC( eRC_NoPositionsToReachTargets )
         end
         return allRes
     end
