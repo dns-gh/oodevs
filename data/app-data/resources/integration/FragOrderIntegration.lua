@@ -265,6 +265,13 @@ integration.startFragOrderTask = function( self )
         mission.objective = point
         orderType = "sword.military.crowd.tasks.frago.WaitOn"
 
+    -- Crowd WW 
+    elseif orderType == "CrowdWait" then
+        local point = CreateKnowledge( integration.ontology.types.point, DEC_Geometrie_CopiePoint( meKnowledge:getPosition() ) )
+        mission.position = point
+        orderType = "behaviors.tasks.frago.Wait"
+     
+
     -- ----------------------------------------------------------------------------
     -- Resume maneuver
     -- ----------------------------------------------------------------------------
@@ -277,7 +284,13 @@ integration.startFragOrderTask = function( self )
         myself.blockForcesContinue = true
         integration.cleanFragOrder( self )
         return
- 
+
+    -- WW Crowd
+    elseif orderType == "CrowdResume" then
+        stopTask( "behaviors.tasks.frago.Wait" ) -- WW Crowd
+        integration.cleanFragOrder( self )
+        return
+    
     -- ----------------------------------------------------------------------------
     -- Cancel mission
     -- ----------------------------------------------------------------------------
