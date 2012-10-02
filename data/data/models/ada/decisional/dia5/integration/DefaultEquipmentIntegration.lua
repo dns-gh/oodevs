@@ -392,6 +392,9 @@ integration.splitArea = function( area, numberOfParts )
     for _, localArea in pairs( subAreas ) do
         myself.leadData.subAreas[#myself.leadData.subAreas + 1] = CreateKnowledge( sword.military.world.Area, localArea )
     end
+    if #subAreas == 0 then
+        myself.leadData.subAreas[#myself.leadData.subAreas + 1] = area -- cas ou la zone est hors limite
+    end
 end
 
 -- -------------------------------------------------------------------------------- 
