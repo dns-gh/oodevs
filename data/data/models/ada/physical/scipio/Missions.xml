@@ -1751,6 +1751,27 @@
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="Positions de tir" optional="false" type="Point"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
     </mission>
+    <mission dia-behavior="france.military.platoon.combat.tasks.TRANSSeDeployer" dia-type="france.military.platoon.combat.tasks.TRANSSeDeployer" id="28803" name="PION TRANS Se Deployer">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="objective" name="Position" optional="true" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+    </mission>
+    <mission dia-behavior="france.military.platoon.combat.support.log.tasks.PreparerBascule" dia-type="france.military.platoon.combat.support.trans.tasks.PreparerBascule" id="28804" name="PION TRANS Preparer bascule">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="automat" name="Automate" optional="false" type="Automat"/>
+      <parameter dia-name="position" name="Position" optional="true" type="Point"/>
+    </mission>
   </units>
   <automats>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_AllerSeRecompleter" dia-type="T_Mission_Automate_ALAT_AllerSeRecompleter" id="177" mrt-dia-behavior="MIS_Automate_MRT_ALAT_AllerSeRecompleter" name="AUTOMATE ALAT Aller Se Recompleter" package="none">
@@ -3494,4 +3515,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ROEM_ArreterSilenceRadar" id="28801" name="Arreter Silence Radar"/>
   </fragorders>
 </missions>
-<!-- signature="3864741095" -->
+<!-- signature="3609184235" -->

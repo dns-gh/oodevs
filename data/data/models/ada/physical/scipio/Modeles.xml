@@ -3437,12 +3437,12 @@
       <missions>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Se Faire Transporter"/>
-        <mission name="PION LOGISTIQUE Preparer bascule"/>
-        <mission name="PION LOGISTIQUE Se Deployer"/>
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION MELEE Animer Poste De Controle"/>
         <mission name="PION MELEE Organiser Accueil Colonne Refugies"/>
         <mission name="PION MELEE Renseigner sur foule"/>
+        <mission name="PION TRANS Preparer bascule"/>
+        <mission name="PION TRANS Se Deployer"/>
       </missions>
       <fragorders>
         <fragorder name="Passer En NBC4"/>
@@ -3470,9 +3470,9 @@
       <missions>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Se Faire Transporter"/>
-        <mission name="PION LOGISTIQUE Preparer bascule"/>
-        <mission name="PION LOGISTIQUE Se Deployer"/>
         <mission name="PION COMMUNES Suivre"/>
+        <mission name="PION TRANS Preparer bascule"/>
+        <mission name="PION TRANS Se Deployer"/>
       </missions>
       <fragorders>
         <fragorder name="Passer En NBC4"/>
@@ -3501,9 +3501,9 @@
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Se Faire Decontaminer"/>
-        <mission name="PION LOGISTIQUE Se Deployer"/>
-        <mission name="PION LOGISTIQUE Preparer bascule"/>
         <mission name="PION COMMUNES Suivre"/>
+        <mission name="PION TRANS Se Deployer"/>
+        <mission name="PION TRANS Preparer bascule"/>
       </missions>
       <fragorders>
         <fragorder name="Passer En NBC4"/>
@@ -3531,9 +3531,9 @@
       <missions>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Se Faire Transporter"/>
-        <mission name="PION LOGISTIQUE Preparer bascule"/>
-        <mission name="PION LOGISTIQUE Se Deployer"/>
         <mission name="PION COMMUNES Suivre"/>
+        <mission name="PION TRANS Preparer bascule"/>
+        <mission name="PION TRANS Se Deployer"/>
       </missions>
       <fragorders>
         <fragorder name="Passer En NBC4"/>
@@ -7492,4 +7492,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3240250571" -->
+<!-- signature="2495041960" -->
