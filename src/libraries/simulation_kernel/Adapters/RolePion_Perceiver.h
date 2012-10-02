@@ -20,8 +20,6 @@
 #include "simulation_kernel/LoadingChangeNotificationHandler_ABC.h"
 
 class DEC_KS_Perception;
-class PHY_Perception_ABC;
-class PHY_PerceptionFlyingShell;
 class TER_Agent_ABC;
 class TER_Object_ABC;
 class TER_PopulationConcentration_ABC;
@@ -189,9 +187,6 @@ private:
     //! @name Types
     //@{
     typedef std::vector< boost::shared_ptr< ListenerHelper > > T_Listeners;
-    typedef std::vector< PHY_Perception_ABC* > T_PerceptionVector;
-    typedef T_PerceptionVector::iterator IT_PerceptionVector;
-    typedef T_PerceptionVector::const_iterator CIT_PerceptionVector;
     typedef boost::function< void( DEC_KS_Perception& ) > T_Notification;
     typedef std::vector< T_Notification > T_Notifications;
     //@}
@@ -226,9 +221,6 @@ private:
     T_RadarsPerClassMap radars_;
     T_SurfaceAgentMap surfacesAgent_;
     T_SurfaceObjectMap surfacesObject_;
-
-    PHY_PerceptionFlyingShell*      pPerceptionFlyingShell_;
-    T_PerceptionVector              activePerceptions_;
 
     bool bHasChanged_;
     bool bExternalMustChangePerception_;

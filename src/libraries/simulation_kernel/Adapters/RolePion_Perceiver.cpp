@@ -14,10 +14,7 @@
 #include "Sink.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Entities/MIL_Army.h"
-#include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
-#include "Entities/Agents/Perceptions/PHY_PerceptionRadar.h"
-#include "Entities/Agents/Perceptions/PHY_PerceptionFlyingShell.h"
 #include "Entities/Agents/Units/Radars/PHY_RadarClass.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
@@ -32,6 +29,7 @@
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Network/NET_AgentServer.h"
 #include "Network/NET_Publisher_ABC.h"
+#include "Network/NET_ASN_Tools.h"
 #include "protocol/ClientSenders.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/DetectionComputer_ABC.h"
@@ -39,7 +37,6 @@
 #include "simulation_kernel/PerceptionDistanceComputer_ABC.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "simulation_kernel/VisionConeNotificationHandler_ABC.h"
-#include "Network/NET_ASN_Tools.h"
 #include <core/Convert.h>
 #include <core/Model.h>
 #include <core/MakeModel.h>
@@ -99,52 +96,6 @@ namespace
         boost::function< void() > enable_;
         boost::function< void() > disable_;
     };
-    class IdentifiedToggleListener : public ListenerHelper
-                                   , private core::ModelVisitor_ABC
-    {
-    public:
-        IdentifiedToggleListener( core::Model& node, boost::function< int( const core::Model& ) > enable, boost::function< void( int ) > disable )
-            : ListenerHelper( node, boost::bind( &IdentifiedToggleListener::Toggled, this, _1 ) )
-            , enable_ ( enable )
-            , disable_( disable )
-        {}
-    private:
-        void Toggled( const core::Model& node )
-        {
-            node.Accept( *this );
-        }
-        virtual void Visit( unsigned int key, const core::Model& child )
-        {
-            boost::shared_ptr< ListenerHelper >& helper = identifiers_[ key ];
-            if( ! helper )
-            {
-                const unsigned int id = enable_( child );
-                helper.reset( new ListenerHelper( child, ListenerHelper::T_Callback(), boost::bind( &IdentifiedToggleListener::Disable, this, key, id ) ) );
-            }
-        }
-        void Disable( unsigned int key, unsigned int identifier )
-        {
-            identifiers_.erase( key );
-            disable_( identifier );
-        }
-        virtual void Visit( int64_t ) {}
-        virtual void Visit( uint64_t ) {}
-        virtual void Visit( double ) {}
-        virtual void Visit( const std::string& ) {}
-        virtual void Visit( const std::string&, const core::Model& ) {}
-        virtual void Visit( const core::Model& ) {}
-        virtual void Visit( const boost::shared_ptr< core::UserData_ABC >& ) {}
-        virtual void MarkForRemove() {}
-    private:
-        boost::function< int( const core::Model& ) > enable_;
-        boost::function< void( int ) > disable_;
-        std::map< unsigned int, boost::shared_ptr< ListenerHelper > > identifiers_;
-    };
-    int EnableFlyingShell( PHY_RoleInterface_Perceiver& perceiver, const core::Model& node )
-    {
-        const TER_Localisation& localization = node[ "localization" ].GetUserData< TER_Localisation >();
-        return perceiver.EnableFlyingShellDetection( localization );
-    }
     typedef boost::function< void( DEC_KS_Perception& ) > T_Notification;
     void NotifyAgentPerception( const core::Model& effect, std::vector< T_Notification >& notifications )
     {
@@ -243,7 +194,6 @@ RolePion_Perceiver::RolePion_Perceiver( Sink& sink, const core::Model& model, MI
     , bExternalCanPerceive_          ( true )
     , bExternalMustUpdateVisionCones_( false )
     , bRadarStateHasChanged_         ( true )
-    , pPerceptionFlyingShell_        ( 0 )
 {
     static unsigned int nNbr = 0; // $$$$ MCO 2012-08-14: size_t ?
     nNextPeriphericalVisionStep_ = ++nNbr % nNbrStepsBetweenPeriphericalVision_;
@@ -251,7 +201,6 @@ RolePion_Perceiver::RolePion_Perceiver( Sink& sink, const core::Model& model, MI
     entity[ "perceptions/max-agent-perception-distance" ] = 0;
     entity[ "perceptions/max-theoretical-agent-perception-distance" ] = 0;
     AddListener< ToggleListener >( "perceptions/record-mode/activated", boost::bind( &RolePion_Perceiver::EnableRecordMode, this ), boost::bind( &RolePion_Perceiver::DisableRecordMode, this ) );
-    AddListener< IdentifiedToggleListener >( "perceptions/flying-shell", boost::bind( &EnableFlyingShell, boost::ref( *this ), _1 ), boost::bind( &RolePion_Perceiver::DisableFlyingShellDetection, this, _1 ) );
     listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/agents" ] ), boost::bind( &::NotifyAgentPerception, _1, boost::ref( notifications_ ) ) ) );
     listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/agents-in-zone" ] ), boost::bind( &::NotifyAgentPerception, _1, boost::ref( notifications_ ) ) ) );
     listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/objects" ] ), boost::bind( &::NotifyObjectPerception, _1, boost::ref( notifications_ ) ) ) );
@@ -266,9 +215,7 @@ RolePion_Perceiver::RolePion_Perceiver( Sink& sink, const core::Model& model, MI
 // -----------------------------------------------------------------------------
 RolePion_Perceiver::~RolePion_Perceiver()
 {
-    for( CIT_PerceptionVector it = activePerceptions_.begin(); it != activePerceptions_.end(); ++it )
-        delete *it;
-    activePerceptions_.clear();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -606,33 +553,18 @@ void RolePion_Perceiver::DisableRadar( const PHY_RadarClass& /*radarClass*/ )
 // Name: RolePion_Perceiver::EnableFlyingShellDetection
 // Created: JVT 2004-10-28
 // -----------------------------------------------------------------------------
-int RolePion_Perceiver::EnableFlyingShellDetection( const TER_Localisation& localisation )
+int RolePion_Perceiver::EnableFlyingShellDetection( const TER_Localisation& /*localisation*/ )
 {
-    if( !pPerceptionFlyingShell_ )
-    {
-        pPerceptionFlyingShell_ = new PHY_PerceptionFlyingShell( *this );
-        activePerceptions_.push_back( pPerceptionFlyingShell_ );
-        bRadarStateHasChanged_ = true;
-    }
-    return pPerceptionFlyingShell_->AddLocalisation( localisation );
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RolePion_Perceiver::DisableFlyingShellDetection
 // Created: JVT 2004-10-22
 // -----------------------------------------------------------------------------
-void RolePion_Perceiver::DisableFlyingShellDetection( int id )
+void RolePion_Perceiver::DisableFlyingShellDetection( int /*id*/ )
 {
-    if( !pPerceptionFlyingShell_ )
-        return;
-    pPerceptionFlyingShell_->RemoveLocalisation( id );
-    if( !pPerceptionFlyingShell_->HasLocalisationToHandle() )
-    {
-        activePerceptions_.erase( std::find( activePerceptions_.begin(), activePerceptions_.end(), pPerceptionFlyingShell_ ) );
-        delete pPerceptionFlyingShell_;
-        pPerceptionFlyingShell_ = 0;
-        bRadarStateHasChanged_ = true;
-    }
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // =============================================================================
@@ -657,27 +589,13 @@ double RolePion_Perceiver::GetMaxTheoreticalAgentPerceptionDistance() const
     return entity_[ "perceptions/max-theoretical-agent-perception-distance" ];
 }
 
-// =============================================================================
-// UPDATE
-// =============================================================================
-namespace
-{
-    template< typename T >
-    void Reset( T*& perception )
-    {
-        delete perception;
-        perception = 0;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: RolePion_Perceiver::DisableAllPerceptions
 // Created: NLD 2005-04-01
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::DisableAllPerceptions()
 {
-    activePerceptions_.clear();
-    Reset( pPerceptionFlyingShell_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -695,7 +613,7 @@ void RolePion_Perceiver::ExecutePerceptions()
 // Name: RolePion_Perceiver::ComputePerception
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& RolePion_Perceiver::ComputePerception( const DEC_Knowledge_Object& knowledge ) const
+const PHY_PerceptionLevel& RolePion_Perceiver::ComputePerception( const DEC_Knowledge_Object& knowledge ) const // $$$$ _RC_ SLI 2012-10-02: only called by automat
 {
     core::Model model;
     model[ "data" ].SetUserData( &knowledge );
@@ -1103,6 +1021,7 @@ void RolePion_Perceiver::NotifyCaptured()
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::NotifySurrendered()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -1111,6 +1030,7 @@ void RolePion_Perceiver::NotifySurrendered()
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::NotifySurrenderCanceled()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -1132,6 +1052,7 @@ void RolePion_Perceiver::NotifyVisionConeDataHasChanged()
 {
     bExternalMustUpdateVisionCones_ = true;
 }
+
 // -----------------------------------------------------------------------------
 // Name: RolePion_Perceiver::NotifyIsLoaded
 // Created: MGD 2009-10-15
@@ -1142,6 +1063,7 @@ void RolePion_Perceiver::NotifyIsLoadedForTransport()
     bExternalMustChangePerception_ = true;
     bExternalMustChangeRadar_ = true;
 }
+
 // -----------------------------------------------------------------------------
 // Name: RolePion_Perceiver::NotifyIsUnLoaded
 // Created: MGD 2009-10-15
@@ -1162,6 +1084,7 @@ void RolePion_Perceiver::NotifyIsLoadedInVab()
     bExternalMustChangePerception_ = true;
     bExternalMustChangeRadar_ = true;
 }
+
 // -----------------------------------------------------------------------------
 // Name: RolePion_Perceiver::NotifyIsUnLoaded
 // Created: MGD 2009-10-15
