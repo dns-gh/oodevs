@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.tasks.frago.Wait" source-version="1.0.0">
+    <description>To go and wait on a given destination.</description>
+    <parameters>
+        <parameter name="position">
+            <description>The position to wait on.</description>
+            <type>
+                <class name="agent.world.Destination"/>
+            </type>
+        </parameter>
+    </parameters>
+    <goal>
+        <description>To wait on the issued destination.</description>
+    </goal>
+    <stages>
+        <stage label="waiting on position" permanent="true">
+            <skills>
+                <skill name="behaviors.skills.actions.Wait" priority="1000000.0"/>
+            </skills>
+        </stage>
+    </stages>
+</task>

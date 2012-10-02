@@ -1,0 +1,13 @@
+-- ****************************************************************************
+-- Simple action used pause the movement of a crowd
+-- This action is used by crowds to acquire the motion resource in 
+-- order to make the movement "froze".
+-- ****************************************************************************
+rootnode
+{
+    feedbacks = { "done" },
+    acquire   = { [ skill.resources.motion ] = 1 },
+    select = function( self )
+        -- NOTHING
+    end
+}

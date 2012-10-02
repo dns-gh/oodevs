@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="world.classes.FragOrder" source-version="1.0.0">
+    <methods>
+        <method name="startTask">
+            <description>Lancer la tâche correspondant à l'application de l'ordre de conduite</description>
+        </method>
+    </methods>
+</class>

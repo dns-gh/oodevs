@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.skills.actions.Wait" source-version="1.0.0">
+    <resources>
+        <resource name="agent.behaviors.resources.Motion" variable="motion"/>
+    </resources>
+</skill>

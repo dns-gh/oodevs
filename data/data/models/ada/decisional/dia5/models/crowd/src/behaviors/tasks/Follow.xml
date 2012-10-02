@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.tasks.Follow" source-version="1.0.0">
+    <description>For the crowd agent, to follow a specific objective. This mission uses the &quot;MoveTo&quot; skill in a persistent way. If the issued destination is moving the crowd will update the move to action, trying to stay as close as possible.</description>
     <parameters>
         <parameter name="objective">
+            <description>The objective to follow.</description>
             <type>
                 <class name="agent.world.Destination"/>
             </type>
         </parameter>
     </parameters>
     <stages>
-        <stage label="Suivre l'objectif." disable-when-done="true">
+        <stage label="following the objective" permanent="true">
             <skills>
-                <skill name="agent.behaviors.skills.actions.MoveTo" main="true">
+                <skill name="agent.behaviors.skills.actions.MoveTo">
                     <parameter name="destination">
                         <value>
                             <parameter>objective</parameter>

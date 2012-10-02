@@ -15,8 +15,21 @@
         <skill name="behaviors.skills.actions.Damage"/>
         <skill name="behaviors.skills.actions.Demonstrate"/>
         <skill name="agent.behaviors.skills.actions.GetDecontaminated"/>
+        <skill name="behaviors.skills.ManageFragOrder"/>
+        <skill name="behaviors.skills.actions.Wait"/>
     </skills>
     <resources>
         <resource name="agent.behaviors.resources.Motion"/>
     </resources>
+    <default-task permanent="true">
+        <skills>
+            <skill name="behaviors.skills.ManageFragOrder">
+                <parameter name="fragOrders">
+                    <value>
+                        <call method="queries.getFragOrders"/>
+                    </value>
+                </parameter>
+            </skill>
+        </skills>
+    </default-task>
 </role>
