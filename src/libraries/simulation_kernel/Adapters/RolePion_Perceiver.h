@@ -12,12 +12,7 @@
 
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
-#include "ComponentsChangedNotificationHandler_ABC.h"
-#include "simulation_kernel/SurrenderNotificationHandler_ABC.h"
 #include "simulation_kernel/NetworkUnitAttributesMessageSender_ABC.h"
-#include "simulation_kernel/VisionConeNotificationHandler_ABC.h"
-#include "simulation_kernel/TransportChangeNotificationHandler_ABC.h"
-#include "simulation_kernel/LoadingChangeNotificationHandler_ABC.h"
 
 class DEC_KS_Perception;
 
@@ -44,12 +39,7 @@ namespace sword
 // =============================================================================
 class RolePion_Perceiver : public PHY_RoleInterface_Perceiver
                          , public tools::AlgorithmModifier_ABC< detection::DetectionComputer_ABC >
-                         , public component::ComponentsChangedNotificationHandler_ABC
-                         , public surrender::SurrenderNotificationHandler_ABC
                          , public network::NetworkUnitAttributesMessageSender_ABC
-                         , public network::VisionConeNotificationHandler_ABC
-                         , public transport::TransportChangeNotificationHandler_ABC
-                         , public transport::LoadingChangeNotificationHandler_ABC
 {
 public:
     //! @name Static Initializer
@@ -94,16 +84,6 @@ public:
     virtual bool IsUsingActiveRadar( const PHY_RadarClass& radarClass ) const; // LTO
 
     virtual void Execute( detection::DetectionComputer_ABC& algorithm ) const;
-    virtual void NotifyComponentHasChanged();
-    virtual void NotifyCaptured();
-    virtual void NotifyReleased();
-    virtual void NotifySurrendered();
-    virtual void NotifySurrenderCanceled();
-    virtual void NotifyVisionConeDataHasChanged();
-    virtual void NotifyIsLoadedForTransport();
-    virtual void NotifyIsUnLoadedForTransport();
-    virtual void NotifyIsLoadedInVab();
-    virtual void NotifyIsUnLoadedInVab();
     //@}
 
     //! @name Perceptions

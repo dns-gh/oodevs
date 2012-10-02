@@ -12,12 +12,12 @@
 #include "ListenerHelper.h"
 #include "Hook.h"
 #include "Sink.h"
+#include "MIL_AgentServer.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/Units/Radars/PHY_RadarClass.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
-#include "Entities/Orders/MIL_Report.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
@@ -881,96 +881,6 @@ void RolePion_Perceiver::Execute( detection::DetectionComputer_ABC& algorithm ) 
 {
     if( algorithm.GetTarget() != owner_ && owner_.GetKnowledge().WasPerceived( algorithm.GetTarget() ) )
         algorithm.AlreadyPerceived();
-}
-
-// -----------------------------------------------------------------------------
-// Name: RolePion_Perceiver::NotifyHasChanged
-// Created: MGD 2009-09-29
-// -----------------------------------------------------------------------------
-void RolePion_Perceiver::NotifyComponentHasChanged()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: RolePion_Perceiver::NotifyCaptured
-// Created: MGD 2009-10-14
-// -----------------------------------------------------------------------------
-void RolePion_Perceiver::NotifyCaptured()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: RolePion_Perceiver::NotifySurrendered
-// Created: LDC 2012-08-06
-// -----------------------------------------------------------------------------
-void RolePion_Perceiver::NotifySurrendered()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: RolePion_Perceiver::NotifySurrenderCanceled
-// Created: LDC 2012-08-06
-// -----------------------------------------------------------------------------
-void RolePion_Perceiver::NotifySurrenderCanceled()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: RolePion_Perceiver::NotifyReleased
-// Created: MGD 2009-10-1
-// -----------------------------------------------------------------------------
-void RolePion_Perceiver::NotifyReleased()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: RolePion_Perceiver::NotifyVisionConeDataHasChanged
-// Created: MGD 2009-10-15
-// -----------------------------------------------------------------------------
-void RolePion_Perceiver::NotifyVisionConeDataHasChanged()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: RolePion_Perceiver::NotifyIsLoaded
-// Created: MGD 2009-10-15
-// -----------------------------------------------------------------------------
-void RolePion_Perceiver::NotifyIsLoadedForTransport()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: RolePion_Perceiver::NotifyIsUnLoaded
-// Created: MGD 2009-10-15
-// -----------------------------------------------------------------------------
-void RolePion_Perceiver::NotifyIsUnLoadedForTransport()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: RolePion_Perceiver::NotifyIsLoaded
-// Created: MGD 2009-10-15
-// -----------------------------------------------------------------------------
-void RolePion_Perceiver::NotifyIsLoadedInVab()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: RolePion_Perceiver::NotifyIsUnLoaded
-// Created: MGD 2009-10-15
-// -----------------------------------------------------------------------------
-void RolePion_Perceiver::NotifyIsUnLoadedInVab()
-{
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
