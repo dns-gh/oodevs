@@ -1924,7 +1924,8 @@ std::vector< std::vector< boost::shared_ptr< MT_Vector2D > > > DEC_GeometryFunct
                         boost::shared_ptr< MT_Vector2D > point( new MT_Vector2D( *vit ) );
                         sharedVector.push_back( point );
                     }
-                    result.push_back( sharedVector );
+                    if( !sharedVector.empty() )
+                        result.push_back( sharedVector );
                     break;
                 }
             }
