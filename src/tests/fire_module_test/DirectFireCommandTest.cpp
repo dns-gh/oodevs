@@ -33,6 +33,10 @@ namespace
             ExpectCallback( 5 );
             ExpectEvent( "direct fire pion", sword::test::MakeModel( "entity", 42 )( "running", false ) );
         }
+        void ExpectCallback( int code ) // $$$$ MCO 2012-04-27: use RoleAction_DirectFiring::E_ReturnCode ?
+        {
+            ExpectEvent( "direct fire pion callback", sword::test::MakeModel( "entity", 42 )( "id", mock::any )( "code", code ) );
+        }
     };
 }
 

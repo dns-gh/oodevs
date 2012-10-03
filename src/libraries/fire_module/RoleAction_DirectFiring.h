@@ -40,8 +40,8 @@ public:
 
     //! @name Operations
     //@{
-    //int  FirePopulation         ( unsigned int nTargetKnowledgeID, const PHY_AmmoDotationClass* dotationClass );
-    //void FirePopulationSuspended( unsigned int nTargetKnowledgeID );
+    int  FirePopulation( const wrapper::View& model, const wrapper::View& entity, const wrapper::View& target, const wrapper::View& parameters ) const;
+    void FirePopulationSuspended( const wrapper::View& entity, const wrapper::View& target ) const;
 
     int  FirePion( const wrapper::View& model, const wrapper::View& entity, const wrapper::View& target, const wrapper::View& parameters, bool mustReport ) const;
     void FirePionSuspended( const wrapper::View& entity, const wrapper::View& target, bool mustReport ) const;
@@ -78,7 +78,6 @@ private:
 private:
     //! @name Helpers
     //@{
-    //MIL_Population* GetPopulationTarget( unsigned int nTargetKnowledgeID );
     void FirePion( DirectFireData& firerWeapons, const wrapper::View& entity, const wrapper::View& target, const T_ComposanteVector& compTargets ) const;
     T_ComposanteVector GetComposantesAbleToBeFired( const wrapper::View& components, const wrapper::View& parameters, unsigned int nNbrWeaponsUsable ) const;
     //@}

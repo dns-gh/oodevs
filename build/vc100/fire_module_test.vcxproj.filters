@@ -61,5 +61,8 @@
     <ClCompile Include="..\..\src\tests\fire_module_test\ComputeForceRatioTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\tests\fire_module_test\DirectFirePopulationCommandTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

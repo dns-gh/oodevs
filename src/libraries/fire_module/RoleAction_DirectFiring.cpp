@@ -22,6 +22,8 @@ using namespace sword::fire;
 
 DECLARE_HOOK( CanComponentBeFiredAt, bool, ( const SWORD_Model* component, const SWORD_Model* parameters ) )
 DECLARE_HOOK( GetFireRandomInteger, size_t, ( size_t min, size_t max ) )
+DECLARE_HOOK( IsPopulationKnowledgeValid, bool, ( const SWORD_Model* entity, const SWORD_Model* knowledge ) )
+DECLARE_HOOK( GetClosestAlivePopulationElement, const SWORD_Model*, ( const SWORD_Model* model, const SWORD_Model* population, const SWORD_Model* entity ) )
 
 // -----------------------------------------------------------------------------
 // Name: RoleAction_DirectFiring constructor
@@ -32,16 +34,6 @@ RoleAction_DirectFiring::RoleAction_DirectFiring( ModuleFacade& module )
 {
     // NOTHING
 }
-
-//// -----------------------------------------------------------------------------
-//// Name: RoleAction_DirectFiring::GetPopulationTarget
-//// Created: NLD 2004-10-04
-//// -----------------------------------------------------------------------------
-//MIL_Population* RoleAction_DirectFiring::GetPopulationTarget( unsigned int nTargetKnowledgeID )
-//{
-//    DEC_Knowledge_Population* pKnowledge = owner_.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( nTargetKnowledgeID );
-//    return pKnowledge ? &pKnowledge->GetPopulationKnown() : 0;
-//}
 
 // -----------------------------------------------------------------------------
 // Name: RoleAction_DirectFiring::FirePion
@@ -273,59 +265,77 @@ void RoleAction_DirectFiring::FirePionSuspended( const wrapper::View& entity, co
 //        data.ReleaseWeapon( *pCompFirer, *pFirerWeapon );
 //    }
 //}
-//
-//// -----------------------------------------------------------------------------
-//// Name: RoleAction_DirectFiring::FirePopulation
+
+// -----------------------------------------------------------------------------
+// Name: RoleAction_DirectFiring::FirePopulation
 //// Created: NLD 2005-11-16
-//// -----------------------------------------------------------------------------
-//int RoleAction_DirectFiring::FirePopulation( unsigned int nTargetKnowledgeID, const PHY_AmmoDotationClass* dotationClass )
-//{
-//    MIL_Population* pTarget = GetPopulationTarget( nTargetKnowledgeID );
-//    if( !pTarget )
-//        return eImpossible;
-//    if( pTarget->IsDead() )
-//        return eEnemyDestroyed;
-//    MIL_PopulationElement_ABC* pPopulationElement = pTarget->GetClosestAliveElement( owner_ );
-//    if( !pPopulationElement )
-//        return eEnemyDestroyed;
-//    // Firers
-//    DirectFireData data( owner_, DirectFireData::eFireUsingAllComposantes, DirectFireData::eFiringModeNormal, 1., dotationClass );
-//    std::auto_ptr< WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( owner_.GetAlgorithms().weaponAvailabilityComputerFactory_->Create( data ) );
-//    owner_.Execute( *weaponAvailabilityComputer );
-//    const unsigned int nNbrWeaponsUsable = data.GetNbrWeaponsUsable();
-//    if( nNbrWeaponsUsable == 0 )
-//    {
-//        if( data.HasWeaponsNotReady() )
-//            return eRunning;
-//        if( data.HasWeaponsAndNoAmmo() )
-//            return eNoAmmo;
-//        return eNoCapacity;
-//    }
-//    owner_.NotifyAttacking ( *pTarget );
-//    pTarget->NotifyAttackedBy( owner_  );
-//    if( !pFireResult )
-//        pFireResult = new FireResults_Pion( owner_, *pPopulationElement );
-//    // Tir
-//    const PHY_ComposantePion* pFirer = 0;
-//    Weapon* pFirerWeapon = 0;
-//    while( data.GetUnusedFirerWeapon( pFirer, pFirerWeapon ) )
-//    {
-//        pFirerWeapon->DirectFire( owner_, *pPopulationElement, *pFireResult );
-//        data.ReleaseWeapon( *pFirer, *pFirerWeapon );
-//    }
-//    return eRunning;
-//}
-//
-//// -----------------------------------------------------------------------------
-//// Name: RoleAction_DirectFiring::FirePopulationSuspended
-//// Created: NLD 2005-11-16
-//// -----------------------------------------------------------------------------
-//void RoleAction_DirectFiring::FirePopulationSuspended( unsigned int nTargetKnowledgeID )
-//{
-//    MIL_Population* pTarget = GetPopulationTarget( nTargetKnowledgeID );
-//    if( pTarget )
-//        pTarget->NotifyAttackedBy( owner_ );
-//}
+// -----------------------------------------------------------------------------
+int RoleAction_DirectFiring::FirePopulation( const wrapper::View& model, const wrapper::View& entity,
+    const wrapper::View& target, const wrapper::View& parameters ) const
+{
+    if( ! GET_HOOK( IsPopulationKnowledgeValid )( entity, target ) )
+        return eImpossible;
+    const SWORD_Model* element = GET_HOOK( GetClosestAlivePopulationElement )( model, target, entity );
+    if( ! element )
+        return eEnemyDestroyed;
+    // Firers
+    DirectFireData data( module_, entity, parameters );
+    if( data.CanFire( entity ) )
+    {
+        const wrapper::View& components = entity[ "components" ];
+        for( std::size_t c = 0; c < components.GetSize(); ++c )
+        {
+            const wrapper::View& component = components.GetElement( c );
+            const wrapper::View& weapons = component[ "weapons" ];
+            for( std::size_t w = 0; w < weapons.GetSize(); ++w )
+                data.ApplyOnWeapon( model, component, weapons.GetElement( w ) );
+        }
+    }
+    const unsigned int nNbrWeaponsUsable = data.GetNbrWeaponsUsable();
+    if( nNbrWeaponsUsable == 0 )
+    {
+        if( data.HasWeaponsNotReady() )
+            return eRunning;
+        if( data.HasWeaponsAndNoAmmo() )
+            return eNoAmmo;
+        if( data.IsTemporarilyBlocked() )
+            return eTemporarilyBlocked;
+        return eNoCapacity;
+    }
+    {
+        wrapper::Event event( "direct fire population attack" );
+        event[ "entity" ] = entity;
+        event[ "population" ] = target;
+        event[ "element" ] = element;
+        event[ "paused" ] = false;
+        event.Post();
+    }
+    // Tir
+    const SWORD_Model* pFirer = 0;
+    const Weapon* pFirerWeapon = 0;
+    while( data.GetUnusedFirerWeapon( pFirer, pFirerWeapon ) )
+    {
+        pFirerWeapon->DirectFire( entity, element );
+        data.ReleaseWeapon( pFirer, *pFirerWeapon );
+    }
+    return eRunning;
+}
+
+// -----------------------------------------------------------------------------
+// Name: RoleAction_DirectFiring::FirePopulationSuspended
+// Created: MCO 2012-09-17
+// -----------------------------------------------------------------------------
+void RoleAction_DirectFiring::FirePopulationSuspended( const wrapper::View& entity, const wrapper::View& target ) const
+{
+    if( GET_HOOK( IsPopulationKnowledgeValid )( entity, target ) )
+    {
+        wrapper::Event event( "direct fire population attack" );
+        event[ "entity" ] = entity;
+        event[ "population" ] = target;
+        event[ "paused" ] = true;
+        event.Post();
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: RoleAction_DirectFiring::GetInitialReturnCode

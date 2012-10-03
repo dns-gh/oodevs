@@ -130,6 +130,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\tests\fire_module_test\ComputeForceRatioTest.cpp" />
     <ClCompile Include="..\..\src\tests\fire_module_test\DirectFireCommandTest.cpp" />
+    <ClCompile Include="..\..\src\tests\fire_module_test\DirectFirePopulationCommandTest.cpp" />
     <ClCompile Include="..\..\src\tests\fire_module_test\fire_module_test_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Create</PrecompiledHeader>

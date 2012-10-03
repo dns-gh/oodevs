@@ -24,6 +24,7 @@ using namespace sword::fire;
 DECLARE_HOOK( GetVolumeId, size_t, ( const char* type ) )
 DECLARE_HOOK( GetDistance, double, ( const SWORD_Model* firer, const SWORD_Model* target ) )
 DECLARE_HOOK( GetFireRandomNumber, double, ( double min, double max ) )
+DECLARE_HOOK( GetPopulationElementPh, double, ( const SWORD_Model* firer, const SWORD_Model* element ) )
 
 // -----------------------------------------------------------------------------
 // Name: WeaponDataType_DirectFire constructor
@@ -263,24 +264,22 @@ void WeaponDataType_DirectFire::Fire( const wrapper::View& firer, const wrapper:
     event.Post();
 }
 
-//// -----------------------------------------------------------------------------
-//// Name: WeaponDataType_DirectFire::Fire
-//// Created: NLD 2005-11-16
-//// -----------------------------------------------------------------------------
-//void WeaponDataType_DirectFire::Fire( MIL_Agent_ABC& firer, MIL_PopulationElement_ABC& target, unsigned int nNbrAmmoReserved, PHY_FireResults_ABC& fireResult, const PHY_AmmoDotationClass* dotationClass ) const
-//{
-//    const PHY_RoePopulation& roe = firer.GetRole< DEC_RolePion_Decision >().GetRoePopulation();
-//    const double ph = target.GetPopulation().GetType().GetDamagePH( roe );
-//
-//    unsigned int nHit = 0;
-//    for( unsigned int i = 1; i <= nNbrAmmoReserved; ++i )
-//        if( 1. - MIL_Random::rand_io() <= ph )
-//            ++nHit;
-//
-//    MIL_Effect_ABC* pEffect = 0;
-//    if( &PHY_AmmoDotationClass::alr_ == dotationClass )
-//        pEffect = new MIL_Effect_ScatterPopulation( target, nHit, fireResult );
-//    else
-//        pEffect = new MIL_Effect_DirectFirePopulation( target, nHit, fireResult );
-//    MIL_EffectManager::GetEffectManager().Register( *pEffect );
-//}
+// -----------------------------------------------------------------------------
+// Name: WeaponDataType_DirectFire::Fire
+// Created: NLD 2005-11-16
+// -----------------------------------------------------------------------------
+void WeaponDataType_DirectFire::Fire( const wrapper::View& firer, const wrapper::View& element, unsigned int nNbrAmmoReserved ) const
+{
+    const double ph = GET_HOOK( GetPopulationElementPh )( firer, element );
+    unsigned int hits = 0;
+    for( unsigned int i = 0; i < nNbrAmmoReserved; ++i )
+        if( GET_HOOK( GetFireRandomNumber )( 0, 1 ) < ph )
+            ++hits;
+    wrapper::Event event( "direct fire population" );
+    event[ "entity" ] = firer[ "identifier" ];
+    event[ "element" ] = element;
+    event[ "hits" ] = hits;
+    event[ "dotation" ] = dotation_.GetName();
+    event[ "running" ] = true;
+    event.Post();
+}

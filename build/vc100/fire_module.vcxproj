@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\fire_module\AmmunitionForIndirectFireData.h" />
     <ClInclude Include="..\..\src\libraries\fire_module\DirectFireCommand.h" />
+    <ClInclude Include="..\..\src\libraries\fire_module\DirectFireCommandPopulation.h" />
     <ClInclude Include="..\..\src\libraries\fire_module\DirectFireData.h" />
     <ClInclude Include="..\..\src\libraries\fire_module\DotationCategory.h" />
     <ClInclude Include="..\..\src\libraries\fire_module\Knowledge_RapForLocal.h" />
@@ -37,6 +38,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\fire_module\AmmunitionForIndirectFireData.cpp" />
     <ClCompile Include="..\..\src\libraries\fire_module\DirectFireCommand.cpp" />
+    <ClCompile Include="..\..\src\libraries\fire_module\DirectFireCommandPopulation.cpp" />
     <ClCompile Include="..\..\src\libraries\fire_module\DirectFireData.cpp" />
     <ClCompile Include="..\..\src\libraries\fire_module\DotationCategory.cpp" />
     <ClCompile Include="..\..\src\libraries\fire_module\Knowledge_RapForLocal.cpp" />

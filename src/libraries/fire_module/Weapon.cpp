@@ -18,6 +18,7 @@ using namespace sword;
 using namespace sword::fire;
 
 DECLARE_HOOK( GetWeaponReloadingDuration, double, ( const SWORD_Model* firer, double rDuration ) )
+DECLARE_HOOK( ComputeKilledHumans, size_t, ( const SWORD_Model* firer, const SWORD_Model* element ) )
 
 // -----------------------------------------------------------------------------
 // Name: Weapon constructor
@@ -95,34 +96,26 @@ void Weapon::DirectFire( const wrapper::View& firer, const wrapper::View& target
     module_->weapons[ weapon_ ] = std::make_pair( next, fired ); // $$$$ MCO 2012-08-30: yes we maintain a module global state, and no it's not that great...
 }
 
-//// -----------------------------------------------------------------------------
-//// Name: Weapon::DirectFire
-//// Created: NLD 2004-10-06
-//// -----------------------------------------------------------------------------
-//bool Weapon::DirectFire( MIL_AgentPion& firer, MIL_PopulationElement_ABC& target )
-//{
-//    assert( type_->CanDirectFire() && IsReady() );
-//
-//    const unsigned int current = time_.GetCurrentTick();
-//    const unsigned int nNextTimeStep    = current + 1;
-//    if( rNextTimeStepToFire_ < (float)current )
-//        rNextTimeStepToFire_ = current;
-//
-//    if( (unsigned int)rNextTimeStepToFire_ < nNextTimeStep )
-//    {
-//        const PHY_RoePopulation& roe  = firer.GetRole< DEC_RolePion_Decision >().GetRoePopulation();
-//        const double rDamageSurface = target.GetPopulation().GetType().GetDamageSurface( roe );
-//        const unsigned int     nKilledHumans  = (unsigned int)ceil( rDamageSurface * target.GetDensity() );
-//
-//        unsigned int burst = (unsigned int)firer.GetRole< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( type_->GetDotationCategory(), nKilledHumans );
-//
-//        type_->DirectFire( firer, target, burst, fireResult );
-//
-//        rNextTimeStepToFire_ += type_->GetBurstDuration();
-//    }
-//    return true;
-//}
-//
+// -----------------------------------------------------------------------------
+// Name: Weapon::DirectFire
+// Created: NLD 2004-10-06
+// -----------------------------------------------------------------------------
+void Weapon::DirectFire( const wrapper::View& firer, const wrapper::View& element ) const
+{
+    assert( IsReady() );
+    const double current = model_[ "tick" ];
+    double next = std::max( current, module_->weapons[ weapon_ ].first );
+    unsigned int fired = module_->weapons[ weapon_ ].second;
+    if( next <= current ) // $$$$ MCO 2012-09-17: if instead of while ?
+    {
+        const std::size_t nKilledHumans = GET_HOOK( ComputeKilledHumans )( firer, element );
+        const std::size_t burst = type_->ReserveAmmunition( firer, nKilledHumans );
+        type_->DirectFire( firer, element, burst );
+        next += type_->GetBurstDuration();
+    }
+    module_->weapons[ weapon_ ] = std::make_pair( next, fired ); // $$$$ MCO 2012-08-30: yes we maintain a module global state, and no it's not that great...
+}
+
 //// -----------------------------------------------------------------------------
 //// Name: Weapon::IndirectFire
 //// Created: NLD 2004-10-11

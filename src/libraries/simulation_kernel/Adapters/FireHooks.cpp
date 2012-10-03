@@ -32,7 +32,12 @@
 #include "Entities/Agents/Roles/Protection/PHY_RoleInterface_ActiveProtection.h"
 #include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
+#include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
+#include "Entities/Populations/MIL_PopulationElement_ABC.h"
+#include "Entities/Populations/MIL_PopulationType.h"
+#include "Entities/Populations/MIL_Population.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
+#include "Knowledge/DEC_Knowledge_Population.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "MT_Tools/MT_Logger.h"
@@ -46,6 +51,7 @@ using namespace sword;
 
 #define GET_ROLE( node, role ) (*core::Convert( node ))[ "pion" ].GetUserData< MIL_AgentPion >().GetRole< role >()
 #define GET_PION( node ) (*core::Convert( node ))[ "pion" ].GetUserData< MIL_AgentPion >()
+#define GET_DATA( node, data ) (*core::Convert( node ))[ "data" ].GetUserData< data >()
 
 namespace
 {
@@ -219,6 +225,42 @@ namespace
         boost::shared_ptr< DEC_Knowledge_Agent > knowledge2 = (*core::Convert( target ))[ "agent" ].GetUserData< boost::shared_ptr< DEC_Knowledge_Agent > >();
         return knowledge1->GetDangerosity( *knowledge2, true ) * knowledge2->GetOperationalState(); // $$$$ MCO 2012-05-16: use fire module GetDangerosity
     }
+    DEFINE_HOOK( IsPopulationKnowledgeValid, bool, ( const SWORD_Model* entity, const SWORD_Model* knowledge ) )
+    {
+        const MIL_AgentPion& pion = GET_PION( entity );
+        unsigned int nTargetKnowledgeID = (*core::Convert( knowledge ));
+        const boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = pion.GetKnowledgeGroup()->GetKnowledge().GetKnowledgePopulationFromID( nTargetKnowledgeID );
+        return pKnowledge;
+    }
+    DEFINE_HOOK( GetClosestAlivePopulationElement, const SWORD_Model*, ( const SWORD_Model* model, const SWORD_Model* population, const SWORD_Model* entity ) )
+    {
+        const MIL_AgentPion& pion = GET_PION( entity );
+        unsigned int nTargetKnowledgeID = (*core::Convert( population ));
+        const boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = pion.GetKnowledgeGroup()->GetKnowledge().GetKnowledgePopulationFromID( nTargetKnowledgeID );
+        if( ! pKnowledge )
+            return 0;
+        const MIL_Population& target = pKnowledge->GetPopulationKnown();
+        if( target.IsDead() )
+            return 0;
+        const MIL_PopulationElement_ABC* pPopulationElement = target.GetClosestAliveElement( pion );
+        if( ! pPopulationElement )
+            return 0;
+        const core::Model& element = (*core::Convert( model ))[ "populations" ][ target.GetID() ][ "elements" ][ pPopulationElement->GetID() ];
+        return core::Convert( &element );
+    }
+    DEFINE_HOOK( ComputeKilledHumans, size_t, ( const SWORD_Model* firer, const SWORD_Model* element ) )
+    {
+        const PHY_RoePopulation& roe = GET_ROLE( firer, DEC_RolePion_Decision ).GetRoePopulation();
+        const MIL_PopulationElement_ABC& target = GET_DATA( element, MIL_PopulationElement_ABC );
+        const double rDamageSurface = target.GetPopulation().GetType().GetDamageSurface( roe );
+        return static_cast< size_t >( std::ceil( rDamageSurface * target.GetDensity() ) );
+    }
+    DEFINE_HOOK( GetPopulationElementPh, double, ( const SWORD_Model* firer, const SWORD_Model* element ) )
+    {
+        const MIL_PopulationElement_ABC& target = GET_DATA( element, MIL_PopulationElement_ABC );
+        const PHY_RoePopulation& roe = GET_ROLE( firer, DEC_RolePion_Decision ).GetRoePopulation();
+        return target.GetPopulation().GetType().GetDamagePH( roe );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -245,4 +287,8 @@ void FireHooks::Initialize( core::Facade& facade )
     REGISTER_HOOK( ModifyDangerosity, facade );
     REGISTER_HOOK( EvaluateDangerosity, facade );
     REGISTER_HOOK( EvaluateDangerosity2, facade );
+    REGISTER_HOOK( IsPopulationKnowledgeValid, facade );
+    REGISTER_HOOK( GetClosestAlivePopulationElement, facade );
+    REGISTER_HOOK( ComputeKilledHumans, facade );
+    REGISTER_HOOK( GetPopulationElementPh, facade );
 }

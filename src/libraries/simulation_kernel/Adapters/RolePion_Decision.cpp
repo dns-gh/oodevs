@@ -30,6 +30,7 @@
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
+#include "Entities/Agents/Units/Dotations/PHY_AmmoDotationClass.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
@@ -449,6 +450,18 @@ namespace
         parameters[ "dotation" ] = ammoDotationClass;
         return sink.StartCommand( "direct fire command", parameters );
     }
+    unsigned int StartTirPopulation( Sink& sink, MIL_AgentPion& pion, unsigned int populationKnowledgeID, const std::string& ammoDotationClass )
+    {
+        core::Model parameters;
+        parameters[ "identifier" ] = pion.GetID();
+        parameters[ "population" ] = populationKnowledgeID;
+        parameters[ "percentage" ] = 1; // $$$$ MCO 2012-09-21: yes it's a percentage between 0 and 1...
+        parameters[ "mode" ] = 0; // $$$$ MCO 2012-09-21: eFiringModeNormal
+        parameters[ "type" ] = 0; // $$$$ MCO 2012-10-02: eFireUsingAllComposantes
+        const PHY_AmmoDotationClass* pClass = PHY_AmmoDotationClass::Find( ammoDotationClass );
+        parameters[ "dotation" ] = pClass ? pClass->GetID() : 0;
+        return sink.StartCommand( "direct fire population command", parameters );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -467,6 +480,8 @@ void RolePion_Decision::RegisterActions()
         boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Agent >, double, int ) >( boost::bind( &StartTirDirect, boost::ref( sink_ ), boost::ref( GetPion() ), _1, _2, _3, 2, -1, false ) ) ); // $$$$ MCO 2012-09-14: 2 = eFireUsingOnlyComposantesCarrier
     RegisterFunction( "DEC__StartTirDirectSurComposantesMajeures",
         boost::function< unsigned int( int, boost::shared_ptr< DEC_Knowledge_Agent >, double, int ) >( boost::bind( &StartTirDirect, boost::ref( sink_ ), boost::ref( GetPion() ), _2, _3, 0, _4, _1, true ) ) ); // $$$$ MCO 2012-09-14: 0 => eFireUsingAllComposantes
+    RegisterFunction( "DEC__StartTirSurPopulation",
+        boost::function< unsigned int( unsigned int, const std::string& ) >( boost::bind( &StartTirPopulation, boost::ref( sink_ ), boost::ref( GetPion() ), _1, _2 ) ) );
 }
 
 // -----------------------------------------------------------------------------

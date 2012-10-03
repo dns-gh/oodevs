@@ -2631,6 +2631,12 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\ModelCounter.cpp">
       <Filter>Source Files\Adapters</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\DirectFirePopulationAttackEventListener.cpp">
+      <Filter>Source Files\Adapters\EventListeners</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\DirectFirePopulationEventListener.cpp">
+      <Filter>Source Files\Adapters\EventListeners</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractWithSideCapacity.cpp">
@@ -5364,6 +5370,12 @@
       <Filter>Source Files\Decision\Path\Agent\Type</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\CallbackEventListener.h">
+      <Filter>Source Files\Adapters\EventListeners</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\DirectFirePopulationAttackEventListener.h">
+      <Filter>Source Files\Adapters\EventListeners</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\DirectFirePopulationEventListener.h">
       <Filter>Source Files\Adapters\EventListeners</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\NBC\ToxicEffectHandler_ABC.h">

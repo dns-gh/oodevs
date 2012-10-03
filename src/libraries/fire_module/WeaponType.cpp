@@ -163,16 +163,16 @@ void WeaponType::DirectFire( const wrapper::View& firer, const wrapper::View& ta
     pDirectFireData_->Fire( firer, target, compTarget, bUsePH );
 }
 
-//// -----------------------------------------------------------------------------
-//// Name: WeaponType::DirectFire
-//// Created: NLD 2005-11-16
-//// -----------------------------------------------------------------------------
-//void WeaponType::DirectFire( MIL_AgentPion& firer, MIL_PopulationElement_ABC& target, unsigned int nNbrAmmoReserved, PHY_FireResults_ABC& fireResult ) const
-//{
-//    assert( pDirectFireData_ );
-//    pDirectFireData_->Fire( firer, target, nNbrAmmoReserved, fireResult, GetDotationCategory().GetAmmoDotationClass() );
-//}
-//
+// -----------------------------------------------------------------------------
+// Name: WeaponType::DirectFire
+// Created: NLD 2005-11-16
+// -----------------------------------------------------------------------------
+void WeaponType::DirectFire( const wrapper::View& firer, const wrapper::View& element, unsigned int nNbrAmmoReserved ) const
+{
+    assert( pDirectFireData_.get() );
+    pDirectFireData_->Fire( firer, element, nNbrAmmoReserved );
+}
+
 //// -----------------------------------------------------------------------------
 //// Name: WeaponType::ThrowSmoke
 //// Created: NLD 2004-10-21

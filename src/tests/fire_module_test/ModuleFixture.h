@@ -49,7 +49,11 @@
     APPLY( GetPhModificator, 3, double, ( const SWORD_Model* firer, const SWORD_Model* target, const char* launcher ) ) \
     APPLY( GetPhModificator2, 1, double, ( const char* launcher ) ) \
     APPLY( EvaluateDangerosity, 2, double, ( const SWORD_Model* agent, const SWORD_Model* target ) ) \
-    APPLY( EvaluateDangerosity2, 2, double, ( const SWORD_Model* agent, const SWORD_Model* target ) )
+    APPLY( EvaluateDangerosity2, 2, double, ( const SWORD_Model* agent, const SWORD_Model* target ) ) \
+    APPLY( IsPopulationKnowledgeValid, 2, bool, ( const SWORD_Model* entity, const SWORD_Model* knowledge ) ) \
+    APPLY( GetClosestAlivePopulationElement, 3, const SWORD_Model*, ( const SWORD_Model* model, const SWORD_Model* population, const SWORD_Model* entity ) ) \
+    APPLY( ComputeKilledHumans, 2, size_t, ( const SWORD_Model* firer, const SWORD_Model* element ) ) \
+    APPLY( GetPopulationElementPh, 2, double, ( const SWORD_Model* firer, const SWORD_Model* element ) )
 
 #define REGISTERED_AND_USED_HOOKS( APPLY )
 
@@ -62,7 +66,7 @@ namespace fire
     struct ModuleFixture : core::HookFixture
     {
         ModuleFixture()
-            : HookFixture( "fire_module", boost::assign::list_of( "direct fire command" ) )
+            : HookFixture( "fire_module", boost::assign::list_of( "direct fire command" )( "direct fire population command" ) )
             , entity   ( model[ "entities" ][ 42 ] )
             , firer    ( core::Convert( &entity ) )
             , target   ( model[ "knowledges" ][ 1242 ][ 51 ] )
@@ -128,10 +132,6 @@ namespace fire
                                   "</decisional>", 10 );
             mock::verify();
             MOCK_RESET( Log );
-        }
-        void ExpectCallback( int code ) // $$$$ MCO 2012-04-27: use RoleAction_DirectFiring::E_ReturnCode ?
-        {
-            ExpectEvent( "direct fire pion callback", sword::test::MakeModel( "entity", 42 )( "id", mock::any )( "code", code ) );
         }
         core::Model& entity;
         SWORD_Model* firer;
