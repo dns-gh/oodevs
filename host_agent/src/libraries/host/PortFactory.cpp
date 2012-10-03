@@ -81,8 +81,11 @@ Port PortFactory::Create()
     boost::lock_guard< boost::mutex > lock( access_ );
     // fast-check last value
     if( !ports_.empty() )
-        for( const int last = *ports_.rbegin() + period_; last < max_; /**/ )
+    {
+        const int last = *ports_.rbegin() + period_;
+        if( last < max_ )
             return Acquire( last );
+    }
     // revert to linear search
     int idx = min_;
     for( T_Ports::const_iterator it = ports_.find( idx ); it != ports_.end(); ++it, idx += period_ )

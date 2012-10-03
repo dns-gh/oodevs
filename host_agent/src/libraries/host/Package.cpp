@@ -445,8 +445,11 @@ struct Item : Package_ABC::Item_ABC
         tree.put( prefix + ".checksum", GetChecksum() );
         if( recurse )
             BOOST_FOREACH( const T_Dependencies::value_type& it, GetDependencies() )
-                for( Package_ABC::T_Item next = ref.Find( *it, true ); next; next.reset() )
+            {
+                Package_ABC::T_Item next = ref.Find( *it, true );
+                if( next )
                     next->Link( tree, ref, false );
+            }
         meta_.Link();
     }
 
@@ -922,8 +925,11 @@ void Package::Install( Async& io, const Path& tomb, const Package_ABC& src, cons
 {
     T_Items install;
     BOOST_FOREACH( size_t id, ids )
-        for( T_Item item = src.Find( id, true ); item; item.reset() )
+    {
+        T_Item item = src.Find( id, true );
+        if( item )
             install.push_back( item );
+    }
     InstallWith( io, tomb, install, false );
 }
 
