@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.skills.ReactToContamination" source-version="1.0.0">
     <description>This skill enacts the decision to equip with nbc protection suit, when the agent is contaminated or intoxicated.</description>
+    <body-type>
+        <class name="world.PlatoonAlly"/>
+    </body-type>
     <links>
         <link name="equipWithNBCProtection" skill="agent.skills.actions.EquipNBCOutfit"/>
     </links>
