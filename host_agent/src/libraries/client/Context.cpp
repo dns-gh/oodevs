@@ -498,7 +498,7 @@ std::string MakeOption( const std::string& option, const T& value )
 // Created: BAX 2012-10-02
 // -----------------------------------------------------------------------------
 void WriteConfiguration( const FileSystem_ABC& fs, Path root,
-                         const std::string host, int port )
+                         const std::string& host, int port )
 {
     root /= "sessions";
     fs.MakePaths( root );
