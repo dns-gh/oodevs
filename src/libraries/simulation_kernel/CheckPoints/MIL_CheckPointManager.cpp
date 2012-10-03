@@ -25,6 +25,7 @@
 #include <boost/filesystem/convenience.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <direct.h>
+#include <tools/XmlCrc32Signature.h>
 
 namespace bpt = boost::posix_time;
 namespace bfs = boost::filesystem;
@@ -318,8 +319,19 @@ bool MIL_CheckPointManager::SaveOrbatCheckPoint( const std::string& name )
 {
     try
     {
-        xml::xofstream xos( MIL_AgentServer::GetWorkspace().GetConfig().BuildCheckpointChildFile( "orbat.xml", name ) );
-        MIL_AgentServer::GetWorkspace().WriteODB( xos );
+        std::string filename = MIL_AgentServer::GetWorkspace().GetConfig().BuildCheckpointChildFile( "orbat.xml", name );
+        {
+            xml::xofstream xos( filename );
+            MIL_AgentServer::GetWorkspace().WriteODB( xos );
+        }
+        tools::WriteXmlCrc32Signature( filename );
+
+        filename = MIL_AgentServer::GetWorkspace().GetConfig().BuildCheckpointChildFile( "weather.xml", name );
+        {
+            xml::xofstream xosWeather( filename );
+            MIL_AgentServer::GetWorkspace().WriteWeather( xosWeather );
+        }
+        tools::WriteXmlCrc32Signature( filename );
     }
     catch( xml::exception& e )
     {

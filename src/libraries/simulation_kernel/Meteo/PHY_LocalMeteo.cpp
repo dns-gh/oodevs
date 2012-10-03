@@ -15,6 +15,7 @@
 #include "PHY_MeteoDataManager.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
+#include "simulation_terrain/TER_World.h"
 #include "Tools/MIL_Tools.h"
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push, 1 )
@@ -93,6 +94,25 @@ void PHY_LocalMeteo::serialize( Archive& file, const unsigned int )
          & upLeft_
          & downRight_
          & bIsPatched_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_LocalMeteo::Serialize
+// Created: NPT 2012-09-10
+// -----------------------------------------------------------------------------
+void PHY_LocalMeteo::Serialize( xml::xostream& xos ) const
+{
+    const std::string start = boost::posix_time::to_iso_string( bpt::from_time_t( startTime_ ) );
+    const std::string end = boost::posix_time::to_iso_string( bpt::from_time_t( endTime_ ) );
+    std::string coordUpLeft;
+    std::string coordDownRight;
+    TER_World::GetWorld().SimToMosMgrsCoord( upLeft_, coordUpLeft );
+    TER_World::GetWorld().SimToMosMgrsCoord( downRight_, coordDownRight );
+    xos << xml::attribute( "start-time", start )
+        << xml::attribute( "end-time", end )
+        << xml::attribute( "top-left", coordUpLeft )
+        << xml::attribute( "bottom-right", coordDownRight );
+    Meteo::Serialize( xos );
 }
 
 // -----------------------------------------------------------------------------

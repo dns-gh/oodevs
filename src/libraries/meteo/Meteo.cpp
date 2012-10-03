@@ -196,7 +196,7 @@ void Meteo::Serialize( xml::xostream& xos ) const
 {
     assert( pPrecipitation_ );
     xos << xml::start( "wind" )
-            << xml::attribute( "speed", wind_.rSpeed_ )
+            << xml::attribute( "speed", wind_.rSpeed_ / conversionFactor_ )
             << xml::attribute( "direction", wind_.eAngle_ )
         << xml::end
         << xml::start( "cloud-cover" )

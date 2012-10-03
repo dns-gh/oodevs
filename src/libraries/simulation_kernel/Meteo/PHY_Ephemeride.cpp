@@ -121,6 +121,22 @@ void PHY_Ephemeride::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
          << nightId;
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_Ephemeride::WriteUrban
+// Created: NPT 2012-09-12
+// -----------------------------------------------------------------------------
+void PHY_Ephemeride::WriteUrban( xml::xostream& xos )
+{
+    std::string sunrise = boost::lexical_cast< std::string >( sunriseTime_.first ) + "h"
+                        + boost::lexical_cast< std::string >( sunriseTime_.second ) + "m0s";
+    std::string sunset  = boost::lexical_cast< std::string >( sunsetTime_.first ) + "h"
+                        + boost::lexical_cast< std::string >( sunsetTime_.second ) + "m0s"; 
+    xos << xml::attribute( "day-lighting", pDayBase_->GetName() )
+        << xml::attribute( "night-lighting", pNightBase_->GetName() ) 
+        << xml::attribute( "sunrise", sunrise )
+        << xml::attribute( "sunset", sunset );
+}
+
 //-----------------------------------------------------------------------------
 // Name: PHY_Ephemeride::UpdateNight
 // Created: JVT 03-08-07

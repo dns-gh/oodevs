@@ -11,13 +11,22 @@
 #include "PHY_MeteoDataManager.h"
 #include "MIL_AgentServer.h"
 #include "meteo/PHY_LocalMeteo.h"
+#include "meteo/PHY_Ephemeride.h"
 #include "meteo/PHY_Lighting.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/Loader_ABC.h"
+#include "tools/SchemaWriter.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/lexical_cast.hpp>
+
+#pragma warning( push, 1 )
+#include <boost/date_time/posix_time/posix_time.hpp>
+#pragma warning( pop )
+
+namespace bpt = boost::posix_time;
 
 unsigned int PHY_MeteoDataManager::localCounter_ = 2;
 
@@ -210,6 +219,35 @@ void PHY_MeteoDataManager::save( MIL_CheckPointOutArchive& file, const unsigned 
         PHY_LocalMeteo* local = static_cast< PHY_LocalMeteo* >( it->get() );
         file << local;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MeteoDataManager::WriteWeather
+// Created: NPT 2012-09-06
+// -----------------------------------------------------------------------------
+void PHY_MeteoDataManager::WriteWeather( xml::xostream& xos ) const
+{
+    tools::SchemaWriter schemaWriter;
+    xos << xml::start( "weather" );
+    schemaWriter.WriteSchema( xos, "exercise", "weather" );
+    xos << xml::start( "exercise-date" )
+            << xml::attribute( "value", bpt::to_iso_string( bpt::from_time_t( MIL_AgentServer::GetWorkspace().GetRealTime() ) ) )
+        << xml::end
+        << xml::start( "ephemerides" );
+            pEphemeride_->WriteUrban( xos );
+    xos << xml::end
+            << xml::start( "theater" );
+                pGlobalMeteo_->Serialize( xos );
+    xos     << xml::end
+            << xml::start( "local-weather" );
+    for( CIT_Meteos it = meteos_.begin(); it != meteos_.end() ; it++ )
+    {
+        xos     << xml::start( "local" );
+                    ( *it )->Serialize( xos );
+        xos     << xml::end;
+    }
+    xos     << xml::end
+        << xml::end;
 }
 
 // -----------------------------------------------------------------------------
