@@ -53,6 +53,7 @@ void PerceptionObserver::NotifyUrbanPerception( const wrapper::View& urbanBlock,
     wrapper::Node notification = urbanBlockNotifications_.AddElement();
     notification[ "target" ] = urbanBlock;
     notification[ "level" ] = level.GetID();
+    notification[ "recorded" ] = recordModeEnabled_;
 }
 
 // -----------------------------------------------------------------------------
@@ -71,7 +72,7 @@ void PerceptionObserver::NotifyAgentPerception( const wrapper::View& agent, cons
 void PerceptionObserver::NotifyAgentPerception( const wrapper::View& agent, const PerceptionLevel& level, bool perceptionRecorded )
 {
     wrapper::Node notification = agentNotifications_.AddElement();
-    notification[ "target" ] = agent[ "pion" ];
+    notification[ "target/data" ] = agent[ "pion" ];
     notification[ "level" ] = level.GetID();
     notification[ "recorded" ] = perceptionRecorded;
 }

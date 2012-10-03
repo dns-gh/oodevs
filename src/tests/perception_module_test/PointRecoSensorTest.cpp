@@ -35,7 +35,7 @@ BOOST_FIXTURE_TEST_CASE( perception_reco_point_sensor_recognizes_all_agents_in_g
     MOCK_EXPECT( CanBeSeen ).once().with( perceiver, other ).returns( true );
     ExpectEffect( perception[ "radius" ], sword::test::MakeModel( growthSpeed ) );
     ExpectNotifications( "agents", sword::test::MakeModel()
-                                    [ sword::test::MakeModel( "target", 43 )
+                                    [ sword::test::MakeModel( "target/data", 43 )
                                                             ( "level", 2 ) // recognized
                                                             ( "recorded", false ) ]
                                     [ sword::test::MakeModel( mock::any ) ] );

@@ -16,21 +16,20 @@ BOOST_FIXTURE_TEST_CASE( alat_monitoring_sensor_recognized_all_agents_in_locatio
 {
     const unsigned char eVisionEmpty = 0;
     entity[ "perceptions/sensor/activated" ] = false;
-    entity[ "perceptions/alat/monitoring" ][ 0u ][ "localization" ];
-    entity[ "perceptions/alat/monitoring" ][ 0u ][ "empty-detection-time-step" ] = 0;
-    entity[ "perceptions/alat/monitoring" ][ 0u ][ "forest-detection-time-step" ] = 1;
-    entity[ "perceptions/alat/monitoring" ][ 0u ][ "urban-detection-time-step" ] = 2;
-    const SWORD_Model* other = core::Convert( &model[ "entities" ][ target ] );
-    model[ "entities" ][ target ][ "pion" ] = 43;
-    model[ "entities" ][ target ][ "movement/position/x" ] = 5;
-    model[ "entities" ][ target ][ "movement/position/y" ] = 5;
-    const SWORD_Model* perceiver = core::Convert( &entity );
-    MOCK_EXPECT( GetAgentListWithinLocalisation ).once().calls( boost::bind( boost::apply< void >(), _3, other, _4 ) );
+    entity[ "perceptions/alat/monitoring" ][ 0u ] = core::MakeModel( "localization", 0 )
+                                                                   ( "empty-detection-time-step", 0 )
+                                                                   ( "forest-detection-time-step", 1 )
+                                                                   ( "urban-detection-time-step", 2 );
+    core::Model& other = model[ "entities" ][ target ];
+    other = core::MakeModel( "pion", 43 )
+                           ( "movement/position/x", 5 )
+                           ( "movement/position/y", 5 );
+    MOCK_EXPECT( GetAgentListWithinLocalisation ).once().calls( boost::bind( boost::apply< void >(), _3, core::Convert( &other ), _4 ) );
     MOCK_EXPECT( IsPointInsideLocalisation ).once().returns( true );
-    MOCK_EXPECT( CanBeSeen ).once().with( perceiver, other ).returns( true );
+    MOCK_EXPECT( CanBeSeen ).once().with( core::Convert( &entity ), core::Convert( &other ) ).returns( true );
     MOCK_EXPECT( GetVisionObject ).once().returns( eVisionEmpty );
     ExpectNotifications( "agents", sword::test::MakeModel()
-                                    [ sword::test::MakeModel( "target", 43 )
+                                    [ sword::test::MakeModel( "target/data", 43 )
                                                             ( "level", 2 ) // recognized
                                                             ( "recorded", false ) ]
                                     [ sword::test::MakeModel( mock::any ) ] );

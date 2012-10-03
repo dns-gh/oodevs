@@ -44,7 +44,7 @@ BOOST_FIXTURE_TEST_CASE( agents_in_list_are_identified_with_default_sensor, Perc
     MOCK_EXPECT( ComputeRayTrace ).once().returns( 5000 );
     MOCK_EXPECT( IsCivilian ).once().returns( false );
     ExpectNotifications( "agents", sword::test::MakeModel()
-                                       [ sword::test::MakeModel( "target", 43 )
+                                       [ sword::test::MakeModel( "target/data", 43 )
                                                                ( "level", 3 ) // identified
                                                                ( "recorded", false ) ]
                                        [ sword::test::MakeModel( mock::any ) ] );

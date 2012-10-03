@@ -20,7 +20,7 @@ BOOST_FIXTURE_TEST_CASE( perception_command_identifies_at_least_itself, Percepti
     ExpectEffect( entity[ "perceptions/notifications/urban-blocks" ], sword::test::MakeModel() );
     ExpectEffect( entity[ "perceptions/notifications/agents" ], sword::test::MakeModel()
                                                                  [ sword::test::MakeModel( "level", 3 )
-                                                                                         ( "target", 1337 )
+                                                                                         ( "target/data", 1337 )
                                                                                          ( "recorded", false ) ] );
     PostCommand( "perception", core::MakeModel( "identifier", identifier ) );
     ExecuteCommands();
@@ -36,7 +36,7 @@ BOOST_FIXTURE_TEST_CASE( perception_command_identifies_its_transporter, Percepti
     ExpectNotifications( "agents", sword::test::MakeModel()
                                        [ sword::test::MakeModel( mock::any ) ]
                                        [ sword::test::MakeModel( "level", 3 )
-                                                               ( "target", 1818 )
+                                                               ( "target/data", 1818 )
                                                                ( "recorded", false ) ] );
     PostCommand( "perception", core::MakeModel( "identifier", identifier ) );
     ExecuteCommands();
@@ -51,7 +51,8 @@ BOOST_FIXTURE_TEST_CASE( perception_command_identifies_urban_objects_in_list, Pe
     MOCK_EXPECT( GetUrbanObjectOccupation ).once().with( urbanObject ).returns( 1 );
     ExpectNotifications( "urban-blocks", sword::test::MakeModel()
                                              [ sword::test::MakeModel( "level", 3 )
-                                                                     ( "target/data", 42 ) ] );
+                                                                     ( "target/data", 42 )
+                                                                     ( "recorded", false ) ] );
     PostCommand( "perception", core::MakeModel( "identifier", identifier ) );
     ExecuteCommands();
 }

@@ -24,7 +24,7 @@ BOOST_FIXTURE_TEST_CASE( perception_reco_urban_sensor_recognizes_all_agents_in_u
     MOCK_EXPECT( CanBeSeen ).once().with( perceiver, other ).returns( true );
     MOCK_EXPECT( CanUrbanBlockBeSeen ).once().returns( true );
     ExpectNotifications( "agents", sword::test::MakeModel()
-                                    [ sword::test::MakeModel( "target", 43 )
+                                    [ sword::test::MakeModel( "target/data", 43 )
                                                             ( "level", 2 ) // recognized
                                                             ( "recorded", false ) ]
                                     [ sword::test::MakeModel( mock::any ) ] );

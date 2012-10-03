@@ -79,7 +79,7 @@ namespace
         for( std::size_t i = 0; i < effect.GetSize(); ++i )
         {
             const core::Model& notification = effect.GetElement( i );
-            MIL_AgentPion& target = notification[ "target" ].GetUserData< MIL_AgentPion >();
+            MIL_AgentPion& target = notification[ "target/data" ].GetUserData< MIL_AgentPion >();
             const PHY_PerceptionLevel& level = PHY_PerceptionLevel::FindPerceptionLevel( notification[ "level" ] );
             const bool recorded = notification[ "recorded" ];
             T_Notification notifier = boost::bind( static_cast< bool(DEC_KS_Perception::*)( MIL_Agent_ABC&, const PHY_PerceptionLevel&, bool ) >(&DEC_KS_Perception::NotifyPerception), _1, boost::ref( target ), boost::ref( level ), recorded );
