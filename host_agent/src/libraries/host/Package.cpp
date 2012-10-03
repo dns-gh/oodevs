@@ -663,11 +663,6 @@ struct Exercise : public Item
     const std::string terrain_;
 };
 
-bool Equal( const Path& lhs, const Path& rhs )
-{
-    return lhs == rhs;
-}
-
 struct Client : public Item
 {
     Client( const FileSystem_ABC& fs, const Path& root, const Path& file, size_t id, const Metadata* meta )
