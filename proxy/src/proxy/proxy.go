@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"net/http/httputil"
 	"net/url"
+	"runtime"
 	"strings"
 	"sync"
 	"time"
@@ -15,6 +16,8 @@ import (
 
 func main() {
 	log.Println("Sword Proxy - copyright Masa Group 2012")
+
+	runtime.GOMAXPROCS(runtime.NumCPU())
 
 	port := flag.Int("port", 8080, "listening port")
 	ssl := flag.Bool("ssl", false, "enable SSL")

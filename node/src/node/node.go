@@ -12,6 +12,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"runtime"
 	"strconv"
 	"strings"
 	"text/template"
@@ -20,6 +21,8 @@ import (
 
 func main() {
 	log.Println("Sword Node - copyright Masa Group 2012")
+
+	runtime.GOMAXPROCS(runtime.NumCPU())
 
 	debug := flag.Bool("debug", false, "debug mode")
 	reset := flag.Bool("reset", false, "allow session reset")
