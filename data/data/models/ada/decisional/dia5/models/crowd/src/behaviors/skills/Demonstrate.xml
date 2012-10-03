@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.skills.Demonstrate" source-version="1.0.0">
-    <description>For the crowd agent, to be able to demonstrate.&#xD;
+    <description>For the crowd agent, to reach a given detination and begin to demontrate (the agent moves toward the issued destination and begins to demonstrate when arrived).&#xD;
 &#xD;
-The agent moves toward the issued destination. once it is reached, it begins to demonstrate.&#xD;
-&#xD;
-This skill never ends until the caller decides so.</description>
+The demonstration is represented by an interaction with nearby agents which intensity depends on the crowd attitude:&#xD;
+ - calm or agitated: low intensity ( 0.01)&#xD;
+- excited or agressive : high intensity (1)</description>
     <parameters>
         <parameter name="destination">
-            <description>The destination to demonstrate onto.</description>
+            <description>The destination to reach.</description>
             <type>
                 <class name="agent.world.Destination"/>
             </type>

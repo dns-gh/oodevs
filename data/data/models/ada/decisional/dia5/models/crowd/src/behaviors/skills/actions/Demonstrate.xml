@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.skills.actions.Demonstrate" source-version="1.0.0">
-    <description>For the crowd agent, to enact the decision of demonstrating.</description>
+    <description>For the crowd agent, to enact the decision of demonstrating.&#xD;
+The demonstration is represented by an interaction with nearby agents which intensity depends on the crowd attitude:&#xD;
+ - calm or agitated: low intensity ( 0.01)&#xD;
+- excited or agressive : high intensity (1)</description>
     <body-type>
         <class name="world.classes.CrowdBody"/>
     </body-type>
     <feedbacks>
         <feedback name="demonstrateActionRunning">
-            <description>Executed until the agent is demonstrating.</description>
+            <description>Sent while action is running.</description>
         </feedback>
     </feedbacks>
 </skill>

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.tasks.Demonstrate" source-version="1.0.0">
-    <description>To move toward a final destination, while demonstrating.</description>
+    <description>To move toward a final destination, while demonstrating.&#xD;
+&#xD;
+The demonstration is represented by an interaction with nearby agents which intensity depends on the crowd attitude:&#xD;
+ - calm or agitated: low intensity ( 0.01)&#xD;
+- excited or agressive : high intensity (1)</description>
     <parameters>
         <parameter name="destination">
             <description>The destination to move to.</description>
