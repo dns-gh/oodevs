@@ -26,7 +26,7 @@
             <skill name="behaviors.skills.ManageFragOrder">
                 <parameter name="fragOrders">
                     <value>
-                        <call method="queries.getFragOrders"/>
+                        <call method="queries.getFragmantaryOrders"/>
                     </value>
                 </parameter>
             </skill>
