@@ -625,11 +625,62 @@
       <logistics/>
     </party>
     <party id="1035" name="Crowds ML" type="friend">
-      <objects/>
+      <objects>
+        <object id="1074" name="Installation" type="installation">
+          <shape type="point">
+            <points>
+              <point>29TNF3491155262</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+        <object id="1075" name="Installation [1,075]" type="installation">
+          <shape type="point">
+            <points>
+              <point>29TNF3525855166</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+        <object id="1076" name="Installation [1,076]" type="installation">
+          <shape type="point">
+            <points>
+              <point>29TNF3525355505</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+        <object id="1077" name="Installation [1,077]" type="installation">
+          <shape type="point">
+            <points>
+              <point>29TNF3464355110</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+        <object id="1078" name="Installation [1,078]" type="installation">
+          <shape type="point">
+            <points>
+              <point>29TNF3437755016</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+      </objects>
       <tactical/>
       <communication/>
       <populations>
-        <population attitude="calme" id="1036" name="Fan Crowd [1,036]" position="29TNF3701255927" type="Fan Crowd">
+        <population attitude="calme" id="1070" name="Rioters [1,070]" position="29TNF3502655178" type="Rioters">
           <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
           <adhesions>
             <adhesion party="316" value="0"/>
@@ -638,8 +689,26 @@
             <adhesion party="1035" value="0"/>
           </adhesions>
         </population>
-        <population attitude="calme" id="1037" name="Standard Crowd [1,037]" position="29TNF3676155758" type="Standard Crowd">
-          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+        <population attitude="calme" id="1071" name="Rioters [1,071]" position="29TNF3502455486" type="Rioters">
+          <composition contaminated="0" dead="0" healthy="500" wounded="0"/>
+          <adhesions>
+            <adhesion party="316" value="0"/>
+            <adhesion party="317" value="0"/>
+            <adhesion party="374" value="0"/>
+            <adhesion party="1035" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="1072" name="Rioters [1,072]" position="29TNF3486455002" type="Rioters">
+          <composition contaminated="0" dead="0" healthy="500" wounded="0"/>
+          <adhesions>
+            <adhesion party="316" value="0"/>
+            <adhesion party="317" value="0"/>
+            <adhesion party="374" value="0"/>
+            <adhesion party="1035" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="1073" name="Rioters [1,073]" position="29TNF3537955487" type="Rioters">
+          <composition contaminated="0" dead="0" healthy="500" wounded="0"/>
           <adhesions>
             <adhesion party="316" value="0"/>
             <adhesion party="317" value="0"/>
@@ -695,4 +764,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="2108875788" -->
+<!-- signature="1713769003" -->

@@ -10,7 +10,7 @@ The agent moves toward the target element and damage it.</description>
             </type>
         </parameter>
         <parameter name="quantityOfDamage">
-            <description>The quantity of damage to use to damage the installation.</description>
+            <description>The quantity of damage to use to damage the installation (%).</description>
             <type>
                 <simple name="numeric"/>
             </type>
