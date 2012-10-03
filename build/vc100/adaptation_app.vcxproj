@@ -3609,7 +3609,6 @@
     </CustomBuild>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListViewItem.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Rich_ListViewItem.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_UserData_ListViewItem.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\MT_ListViewItem.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\MT_ValuedListViewItem.h" />
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ComboBox.h">
@@ -3826,7 +3825,6 @@
     <None Include="..\..\src\applications\adaptation_app\ADN_Connector_Int.inl" />
     <None Include="..\..\src\applications\adaptation_app\ADN_Connector_String.inl" />
     <None Include="..\..\src\applications\adaptation_app\ADN_TableItem_Edit.inl" />
-    <None Include="..\..\src\applications\adaptation_app\ADN_UserData_ListViewItem.inl" />
     <None Include="..\..\src\applications\adaptation_app\ADN_ComboBox_Enum.inl" />
     <None Include="..\..\src\applications\adaptation_app\ADN_ComboBox_Vector.inl" />
     <None Include="..\..\src\applications\adaptation_app\ADN_EditLine.inl" />

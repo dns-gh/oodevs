@@ -27,7 +27,7 @@
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
 ADN_ListView_Objects::ADN_ListView_Objects( QWidget* pParent )
-    : ADN_ListView( pParent, ADN_Tr::ConvertFromWorkspaceElement( eObjects ).c_str() )
+    : ADN_ListView( pParent, "ADN_ListView_Objects", ADN_Tr::ConvertFromWorkspaceElement( eObjects ).c_str() )
 {
     // Connector creation
     pConnector_ = new ADN_Connector_ListView< ADN_Objects_Data_ObjectInfos >( *this );

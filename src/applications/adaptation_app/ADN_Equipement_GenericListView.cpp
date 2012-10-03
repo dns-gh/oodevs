@@ -41,7 +41,7 @@ typedef ADN_Equipement_Data::CategoryInfo CategoryInfo;
 // Created: APE 2004-12-29
 // -----------------------------------------------------------------------------
 ADN_Equipement_GenericListView::ADN_Equipement_GenericListView( E_DotationFamily nType, QWidget* pParent )
-    : ADN_ListView( pParent, "ADN_Equipement_GenericListView", ENT_Tr::ConvertFromDotationFamily( nType_, ENT_Tr::eToTr ).c_str() )
+    : ADN_ListView( pParent, "ADN_Equipement_GenericListView", ENT_Tr::ConvertFromDotationFamily( nType, ENT_Tr::eToTr ).c_str() )
     , nType_      ( nType )
 {
     // Connector creation

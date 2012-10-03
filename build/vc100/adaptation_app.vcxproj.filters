@@ -1770,9 +1770,6 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Rich_ListViewItem.h">
       <Filter>Source Files\Common widgets\List view</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_UserData_ListViewItem.h">
-      <Filter>Source Files\Common widgets\List view</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\MT_ListViewItem.h">
       <Filter>Source Files\Common widgets\List view</Filter>
     </ClInclude>
@@ -1963,9 +1960,6 @@
     </None>
     <None Include="..\..\src\applications\adaptation_app\ADN_TableItem_Edit.inl">
       <Filter>Source Files\Common widgets\Table</Filter>
-    </None>
-    <None Include="..\..\src\applications\adaptation_app\ADN_UserData_ListViewItem.inl">
-      <Filter>Source Files\Common widgets\List view</Filter>
     </None>
     <None Include="..\..\src\applications\adaptation_app\ADN_ComboBox_Enum.inl">
       <Filter>Source Files\Common widgets\Combo box</Filter>
