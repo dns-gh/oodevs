@@ -123,7 +123,6 @@ struct FileSystem_ABC : public boost::noncopyable
     virtual bool        Rename( const Path& src, const Path& dst ) const = 0;
     virtual bool        WriteFile( const Path& path, const std::string& content ) const = 0;
     virtual std::string ReadFile( const Path& path ) const = 0;
-    virtual void        Glob( const Path& path, const Path& name, const T_Predicate& predicate ) const = 0;
     virtual void        Walk( const Path& path, bool recurse, const T_Predicate& predicate ) const = 0;
     virtual T_Unpacker  Unpack( const Path& output, io::Reader_ABC& src, io::Writer_ABC* dst ) const = 0;
     virtual T_Packer    Pack( io::Writer_ABC& dst, ArchiveFormat fmt ) const = 0;

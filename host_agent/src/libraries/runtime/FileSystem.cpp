@@ -306,25 +306,6 @@ std::string FileSystem::ReadFile( const Path& path ) const
     return std::string();
 }
 
-// -----------------------------------------------------------------------------
-// Name: FileSystem::Glob
-// Created: BAX 2012-03-21
-// -----------------------------------------------------------------------------
-void FileSystem::Glob( const Path& path, const Path& name, const T_Predicate& predicate ) const
-{
-    if( !IsDirectory( path ) )
-        return;
-    for( boost::filesystem::recursive_directory_iterator it( path ), end; it != end; ++it )
-    {
-        if( !boost::filesystem::is_regular_file( it->status() ) )
-            continue;
-        const Path& path = it->path();
-        if( path.filename() == name )
-            if( !predicate( path ) )
-                return;
-    }
-}
-
 namespace
 {
 template< typename T, typename U >

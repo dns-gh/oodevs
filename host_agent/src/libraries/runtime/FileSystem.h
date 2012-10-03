@@ -47,7 +47,6 @@ public:
     virtual bool        Rename( const Path& src, const Path& dst ) const;
     virtual bool        WriteFile( const Path& path, const std::string& content ) const;
     virtual std::string ReadFile( const Path& path ) const;
-    virtual void        Glob( const Path& path, const Path& name, const T_Predicate& predicate ) const;
     virtual void        Walk( const Path& path, bool recurse, const T_Predicate& predicate ) const;
     virtual T_Unpacker  Unpack( const Path& output, io::Reader_ABC& src, io::Writer_ABC* dst ) const;
     virtual T_Packer    Pack( io::Writer_ABC& dst, ArchiveFormat fmt ) const;

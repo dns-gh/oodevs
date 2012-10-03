@@ -16,6 +16,7 @@
 #include "web/Chunker_ABC.h"
 #include "web/HttpException.h"
 
+#include <boost/algorithm/string.hpp>
 #include <boost/bind.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/foreach.hpp>
@@ -540,18 +541,20 @@ struct Model : public Item
         return Path( "data" ) / "models" / name_;
     }
 
-    static bool Filter( const FileSystem_ABC& fs, const Path& path, FileSystem_ABC::T_Predicate operand, const std::string& suffix )
+    static bool Operand( Async& async, const FileSystem_ABC& fs, const Path& root, Package::T_Items& items, const Metadata* meta,
+                         const Path& path )
     {
-        const Path target = path / suffix;
+        const Path target = path / "decisional" / "decisional.xml";
         if( fs.IsFile( target ) )
-            operand( target );
+            AttachSimple< Model >( async, target, fs, root, items, meta );
         return true;
     }
 
     static void Parse( Async& async, const FileSystem_ABC& fs, const Path& root, Package::T_Items& items, const Metadata* meta )
     {
-        FileSystem_ABC::T_Predicate op = boost::bind( AttachSimple< Model >, boost::ref( async ), _1, boost::cref( fs ), boost::cref( root ), boost::ref( items ), meta );
-        fs.Walk( root / "data" / "models", false, boost::bind( &Model::Filter, boost::cref( fs ), _1, op, "decisional/decisional.xml" ) );
+        FileSystem_ABC::T_Predicate op = boost::bind( &Model::Operand,
+            boost::ref( async ), boost::cref( fs ), boost::cref( root ), boost::ref( items ), meta, _1 );
+        fs.Walk( root / "data" / "models", false, op );
     }
 };
 
@@ -573,10 +576,21 @@ struct Terrain : public Item
         return Path( "data" ) / "terrains" / name_;
     }
 
+    static bool Operand( Async& async, const FileSystem_ABC& fs, const Path& root, Package::T_Items& items, const Metadata* meta,
+                         const Path& path )
+    {
+        std::wstring filename = path.filename().wstring();
+        boost::to_lower( filename );
+        if( filename == L"terrain.xml" )
+            AttachSimple< Terrain >( async, path, fs, root, items, meta );
+        return true;
+    }
+
     static void Parse( Async& async, const FileSystem_ABC& fs, const Path& root, Package::T_Items& items, const Metadata* meta )
     {
-        FileSystem_ABC::T_Predicate op = boost::bind( AttachSimple< Terrain >, boost::ref( async ), _1, boost::cref( fs ), boost::cref( root ), boost::ref( items ), meta );
-        fs.Glob( root / "data" / "terrains", "Terrain.xml", op );
+        FileSystem_ABC::T_Predicate op = boost::bind( &Terrain::Operand,
+            boost::ref( async ), boost::cref( fs ), boost::cref( root ), boost::ref( items ), meta, _1 );
+        fs.Walk( root / "data" / "terrains", true, op );
     }
 };
 
@@ -652,10 +666,19 @@ struct Exercise : public Item
         return !boost::bind( &BeginWith, root / "sessions", _1 );
     }
 
+    static bool Operand( Async& async, const FileSystem_ABC& fs, const Path& root, Package::T_Items& items, const Metadata* meta,
+                         const Path& path )
+    {
+        if( path.filename() == "exercise.xml" )
+            AttachExtended< Exercise >( async, path, fs, root, items, meta );
+        return true;
+    }
+
     static void Parse( Async& async, const FileSystem_ABC& fs, const Path& root, Package::T_Items& items, const Metadata* meta )
     {
-        FileSystem_ABC::T_Predicate op = boost::bind( AttachExtended< Exercise >, boost::ref( async ), _1, boost::cref( fs ), boost::cref( root ), boost::ref( items ), meta );
-        fs.Glob( root / "exercises", "exercise.xml", op );
+        FileSystem_ABC::T_Predicate op = boost::bind( &Exercise::Operand,
+            boost::ref( async ), boost::cref( fs ), boost::cref( root ), boost::ref( items ), meta, _1 );
+        fs.Walk( root / "exercises", true, op );
     }
 
     const std::string briefing_;

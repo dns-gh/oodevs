@@ -28,7 +28,6 @@ namespace mocks
         MOCK_METHOD( Rename, 2 );
         MOCK_METHOD( WriteFile, 2 );
         MOCK_METHOD( ReadFile, 1 );
-        MOCK_METHOD( Glob, 3 );
         MOCK_METHOD( Walk, 3 );
         MOCK_METHOD( Unpack, 3 );
         MOCK_METHOD( Pack, 2 );

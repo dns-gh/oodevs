@@ -89,19 +89,16 @@ struct Fixture
         const Path file = data / name / suffix;
         if( glob )
         {
-            MOCK_EXPECT( fs.Glob ).once().with( data, suffix.filename(), boost::bind( &MockFileSystem::Apply, &fs, _1, boost::assign::list_of( file ) ) );
+            MOCK_EXPECT( fs.Walk ).once().with( data, mock::any, boost::bind( &MockFileSystem::Apply, &fs, _1, boost::assign::list_of( file ) ) );
             if( ref )
-            {
-                MOCK_EXPECT( fs.Walk ).once().with( boost::bind( &BeginWith, root, _1 ), false, mock::any );
-                MOCK_EXPECT( fs.Glob ).once().with( boost::bind( &BeginWith, root, _1 ), mock::any, mock::any );
-            }
+                MOCK_EXPECT( fs.Walk ).exactly( 2 ).with( boost::bind( &BeginWith, root, _1 ), mock::any, mock::any );
         }
         else
         {
             MOCK_EXPECT( fs.Walk ).once().with( data, false, boost::bind( &MockFileSystem::Apply, &fs, _1, boost::assign::list_of( data / name ) ) );
             MOCK_EXPECT( fs.IsFile ).once().with( file ).returns( true );
             if( ref )
-                MOCK_EXPECT( fs.Glob ).exactly( 2 ).with( boost::bind( &BeginWith, root, _1 ), mock::any, mock::any );
+                MOCK_EXPECT( fs.Walk ).exactly( 2 ).with( boost::bind( &BeginWith, root, _1 ), mock::any, mock::any );
         }
         MOCK_EXPECT( fs.GetLastWrite ).with( file ).returns( std::time_t() );
         MOCK_EXPECT( fs.ReadFile ).with( file ).returns( contents );
