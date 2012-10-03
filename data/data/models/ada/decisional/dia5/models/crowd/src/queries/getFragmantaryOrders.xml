@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<query xmlns="http://www.masagroup.net/directia/schemas/bm" name="queries.getFragOrders" source-version="1.0.0">
+<query xmlns="http://www.masagroup.net/directia/schemas/bm" name="queries.getFragmantaryOrders" source-version="1.0.0">
     <description>Returns the fragmentary orders  to be executed by the crowd.</description>
     <target name="fragOrder">
         <type>
