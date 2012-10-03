@@ -1,16 +1,21 @@
 -- **************************************************************************** 
--- Attack a unit or crowds on the objective
--- self.params.objective: the element to attack or to reach
+-- Attack a unit
+-- self.params.unit: the unit to attack
 -- ****************************************************************************
 rootnode
 {
     connections = { skill.links.moveTo, skill.links.attack },
+    feedbacks = { "arrived" },
 
     -- -------------------------------------------------------------------------------- 
-    -- Feedbacks and slot
+    -- Feedbacks and slots
     -- --------------------------------------------------------------------------------
-    done = function( self ) -- call by moveTo actin skill.
-        Feedback( self.feedbacks.done ) -- the skill is done once all the crowd has reach the destination
+    done = function( self ) -- call by "moveTo" action skill.
+         self.arrived = true
+         Feedback( self.feedbacks.arrived )-- the skill is done once the crowd has reach the destination
+    end,
+    attackActionCompleted = function( self ) -- call by moveTo actin skill.
+        self.targetDestroyed = true
     end,
 
     -- -------------------------------------------------------------------------------- 
@@ -18,14 +23,21 @@ rootnode
     -- user will be able, during the mission to change himself the attitude.
     -- --------------------------------------------------------------------------------
     create = function( self, params )
+        self.arrived = false
+        self.targetDestroyed = false
         meKnowledge:adoptAgressiveAttitude()
     end,
 
     -- -------------------------------------------------------------------------------- 
-    -- Movement and attack objectif
+    -- Movement and attack of the objective
     -- --------------------------------------------------------------------------------
     activate = function( self )
         local Activate = Activate
+
+        -- Sent the feedback only if the entire crowd is arrived and the target is destroyed.
+        if self.arrived and self.targetDestroyed then 
+            Feedback( self.feedbacks.done )
+        end
 
         -- Crowd is under control, cannot commit agression
         if not meKnowledge:canAttack( unit ) then
@@ -33,10 +45,12 @@ rootnode
             Feedback( self.feedbacks.failed )
         end
 
-        -- once entity is reached attack it.
+        -- Once entity is reached attack it.
         if self.params.unit:isReached() then
             Activate( skill.links.attack, 1, { unit = self.params.unit } )
         end
+        -- Move to target position (permanently)
         Activate( skill.links.moveTo, 1, { destination = self.params.unit } )
+        self.arrived = false
     end
 }

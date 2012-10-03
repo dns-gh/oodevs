@@ -26,8 +26,11 @@ This skill failed if the crowd agent is under control. It is done if all the ele
         <feedback name="failed">
             <description>Sent if the crowd agent cannot attack the given unit because it is under control.</description>
         </feedback>
+        <feedback name="arrived">
+            <description>Sent once the entire crowd agent has reached the unit to attack.</description>
+        </feedback>
         <feedback name="done">
-            <description>Sent once the entire crowd agent has reach the unit to attack.</description>
+            <description>Sent when the attacked unit is destroyed or neutralized (no &quot;major&quot; components alive) AND the entire crowd has arrived.</description>
         </feedback>
     </feedbacks>
 </skill>

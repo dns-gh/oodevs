@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.tasks.Attack" source-version="1.0.0">
-    <description>Déplacement vers les objectifs etant agressif.</description>
+    <description>For the crowd agent, to attack a given unit (another agent of the simulation)object.&#xD;
+The agent moves toward the target element and attack it. If the target moves, the crowd try to follow it until it is reached.</description>
     <parameters>
         <parameter name="unit">
+            <description>The unit to attack.</description>
             <type>
                 <class name="world.classes.Unit"/>
             </type>
         </parameter>
     </parameters>
     <stages>
-        <stage label="moving toward unit" permanent="true">
-            <description>Déplacement vers les objectifs etant agressif.</description>
+        <stage label="moving toward unit" disable-when-done="true">
             <skills>
-                <skill name="behaviors.skills.Attack">
+                <skill name="behaviors.skills.Attack" main="true">
                     <parameter name="unit">
                         <value>
                             <parameter>unit</parameter>
