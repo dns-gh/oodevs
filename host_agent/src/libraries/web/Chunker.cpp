@@ -69,7 +69,6 @@ struct Chunker : public Chunker_ABC, public io::Writer_ABC
         , fill_  ( 0 )
     {
         rpy_.SetStatus( web::OK );
-        rpy_.SetHeader( "Content-Type", "application/zip" );
         rpy_.SetHeader( "Transfer-Encoding", "chunked" );
         rpy_.SetHeader( "Connection", "Close" );
     }
@@ -98,7 +97,7 @@ struct Chunker : public Chunker_ABC, public io::Writer_ABC
     // -----------------------------------------------------------------------------
     virtual void SetName( const std::string& name )
     {
-        SetHeader( "Content-Disposition", "attachment; filename=\"" + name + ".zip\"" );
+        SetHeader( "Content-Disposition", "attachment; filename=\"" + name + "\"" );
     }
 
     // -----------------------------------------------------------------------------

@@ -860,9 +860,10 @@ bool Session::Restore()
 bool Session::Download( web::Chunker_ABC& dst ) const
 {
     boost::shared_lock< boost::shared_mutex > lock( access_ );
-    dst.SetName( cfg_.name );
+    dst.SetName( cfg_.name + ".zip" );
+    dst.SetHeader( "Content-Type", "application/zip" );
     io::Writer_ABC& sink = dst.OpenWriter();
-    FileSystem_ABC::T_Packer packer = deps_.fs.Pack( sink );
+    FileSystem_ABC::T_Packer packer = deps_.fs.Pack( sink, runtime::ARCHIVE_FMT_ZIP );
     packer->Pack( paths_.root, runtime::Packer_ABC::T_Predicate() );
     const Path output = GetOutput();
     if( deps_.fs.IsDirectory( output ) )

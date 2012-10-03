@@ -466,6 +466,8 @@ struct Unpacker : public Unpacker_ABC
     {
         boost::shared_ptr< Archive > src( archive_read_new(), archive_read_free );
         archive_read_support_format_zip( src.get() );
+        archive_read_support_format_gnutar( src.get() );
+        archive_read_support_compression_gzip( src.get() );
         archive_read_set_read_callback( src.get(), &Unpacker::Read );
         archive_read_set_callback_data( src.get(), this );
         int err = archive_read_open1( src.get() );
@@ -504,12 +506,25 @@ namespace
 {
 struct Packer : public Packer_ABC
 {
-    Packer( cpplog::BaseLogger& log, io::Writer_ABC& writer )
+    Packer( cpplog::BaseLogger& log, io::Writer_ABC& writer, ArchiveFormat fmt )
         : log_   ( log )
         , writer_( writer )
         , dst_   ( archive_write_new(), archive_write_free )
     {
-        archive_write_set_format_zip( dst_.get() );
+        switch( fmt )
+        {
+            default:
+                throw std::runtime_error( "unsupported archive format" );
+
+            case runtime::ARCHIVE_FMT_ZIP:
+                archive_write_set_format_zip( dst_.get() );
+                break;
+
+            case runtime::ARCHIVE_FMT_TAR_GZ:
+                archive_write_set_format_gnutar( dst_.get() );
+                archive_write_set_compression_gzip( dst_.get() );
+                break;
+        }
         archive_write_set_bytes_in_last_block( dst_.get(), 1 );
         int err = archive_write_open( dst_.get(), this, Packer::Dummy, Packer::Write, Packer::Dummy );
         if( err != ARCHIVE_OK )
@@ -552,9 +567,9 @@ struct Packer : public Packer_ABC
 // Name: FileSystem::Pack
 // Created: BAX 2012-08-06
 // -----------------------------------------------------------------------------
-FileSystem_ABC::T_Packer FileSystem::Pack( io::Writer_ABC& dst ) const
+FileSystem_ABC::T_Packer FileSystem::Pack( io::Writer_ABC& dst, ArchiveFormat fmt ) const
 {
-    return boost::make_shared< Packer >( boost::ref( log_ ), boost::ref( dst ) );
+    return boost::make_shared< Packer >( boost::ref( log_ ), boost::ref( dst ), fmt );
 }
 
 // -----------------------------------------------------------------------------

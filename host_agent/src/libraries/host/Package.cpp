@@ -457,10 +457,11 @@ struct Item : Package_ABC::Item_ABC
 
     void Download( const FileSystem_ABC& fs, web::Chunker_ABC& dst ) const
     {
-        dst.SetName( Utf8( name_ ) );
+        dst.SetName( Utf8( name_ ) + ".tar.gz" );
+        dst.SetHeader( "Content-Type", "application/x-tar" );
         dst.SetHeader( "Original-Content-Length", boost::lexical_cast< std::string >( GetSize() ) );
         io::Writer_ABC& io = dst.OpenWriter();
-        FileSystem_ABC::T_Packer packer = fs.Pack( io );
+        FileSystem_ABC::T_Packer packer = fs.Pack( io, runtime::ARCHIVE_FMT_TAR_GZ );
         packer->Pack( root_, IsItemFile( GetSuffix() ) );
     }
 

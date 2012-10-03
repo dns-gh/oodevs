@@ -82,6 +82,13 @@ struct Packer_ABC : public boost::noncopyable
     //@}
 };
 
+enum ArchiveFormat
+{
+    ARCHIVE_FMT_ZIP,
+    ARCHIVE_FMT_TAR_GZ,
+    ARCHIVE_FMT_COUNT,
+};
+
 // =============================================================================
 /** @class  FileSystem_ABC
     @brief  FileSystem_ABC interface
@@ -119,7 +126,7 @@ struct FileSystem_ABC : public boost::noncopyable
     virtual void        Glob( const Path& path, const Path& name, const T_Predicate& predicate ) const = 0;
     virtual void        Walk( const Path& path, bool recurse, const T_Predicate& predicate ) const = 0;
     virtual T_Unpacker  Unpack( const Path& output, io::Reader_ABC& src, io::Writer_ABC* dst ) const = 0;
-    virtual T_Packer    Pack( io::Writer_ABC& dst ) const = 0;
+    virtual T_Packer    Pack( io::Writer_ABC& dst, ArchiveFormat fmt ) const = 0;
     virtual std::string Checksum( const Path& root, const T_Predicate& predicate, size_t& read ) const = 0;
     virtual Path        MakeAnyPath( const Path& root ) const = 0;
     virtual std::time_t GetLastWrite( const Path& file ) const = 0;

@@ -31,7 +31,7 @@ namespace mocks
         MOCK_METHOD( Glob, 3 );
         MOCK_METHOD( Walk, 3 );
         MOCK_METHOD( Unpack, 3 );
-        MOCK_METHOD( Pack, 1 );
+        MOCK_METHOD( Pack, 2 );
         MOCK_METHOD( Checksum, 3 );
         MOCK_METHOD( MakeAnyPath, 1 );
         MOCK_METHOD( GetLastWrite, 1 );
