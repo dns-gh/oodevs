@@ -60,6 +60,7 @@ public:
     //! @name CheckPoint
     //@{
     template< typename Archive > void serialize( Archive&, const unsigned int );
+    virtual void WriteODB( xml::xostream& xos ) const;
     //@}
 
 private:

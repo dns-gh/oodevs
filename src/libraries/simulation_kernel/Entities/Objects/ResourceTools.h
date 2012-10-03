@@ -19,6 +19,7 @@
 // Created: JSR 2010-09-03
 // =============================================================================
 class ResourceTools : public resource::ResourceTools_ABC
+                    , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -32,13 +33,7 @@ public:
     virtual const std::string& GetResourceName( unsigned long id ) const;
     virtual unsigned long GetResourceId( const std::string& name ) const;
     virtual unsigned int GetIdFromSimulation( unsigned int urbanId ) const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    ResourceTools( const ResourceTools& );            //!< Copy constructor
-    ResourceTools& operator=( const ResourceTools& ); //!< Assignment operator
+    virtual bool ConvertIdToUrbanId( unsigned int& urbanId ) const;
     //@}
 };
 

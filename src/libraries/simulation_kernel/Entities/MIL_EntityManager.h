@@ -132,7 +132,7 @@ public:
     const bool HasInfiniteDotations() const;
     UrbanObjectWrapper& GetUrbanObjectWrapper( const urban::TerrainObject_ABC& object );
     unsigned int ConvertUrbanIdToSimId( unsigned int urbanId );
-
+    bool ConvertIdToUrbanId( unsigned int& id ) const;
     void Accept( KnowledgesVisitor_ABC& visitor ) const;
     //@}
 
@@ -206,6 +206,7 @@ public:
     template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_EntityManager* role, const unsigned int /*version*/ );
 
     void WriteODB( xml::xostream& xos ) const;
+    void WriteUrban( xml::xostream& xos ) const;
     //@}
 
 private:

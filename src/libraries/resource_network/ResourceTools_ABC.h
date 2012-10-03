@@ -33,6 +33,7 @@ public:
     virtual const std::string& GetResourceName( unsigned long id ) const = 0;
     virtual unsigned long GetResourceId( const std::string& name ) const = 0;
     virtual unsigned int GetIdFromSimulation( unsigned int urbanId ) const = 0;
+    virtual bool ConvertIdToUrbanId( unsigned int& urbanId ) const = 0;
     //@}
 };
 

@@ -122,6 +122,16 @@ void ResourceNetworkCapacity::save( MIL_CheckPointOutArchive& file, const unsign
 }
 
 // -----------------------------------------------------------------------------
+// Name: ResourceNetworkCapacity::WriteUrban
+// Created: NPT 2012-09-11
+// -----------------------------------------------------------------------------
+void ResourceNetworkCapacity::WriteUrban( xml::xostream& xos ) const
+{
+    if( nodeProperties_ )
+        nodeProperties_->WriteODB( xos );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ResourceNetworkCapacity::Register
 // Created: JSR 2010-08-12
 // -----------------------------------------------------------------------------

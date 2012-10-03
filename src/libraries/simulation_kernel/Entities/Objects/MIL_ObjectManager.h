@@ -58,6 +58,7 @@ public:
 
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
+    void WriteUrban( xml::xostream& xos ) const;
     //@}
 
     //! @name Operations
@@ -79,6 +80,7 @@ public:
     const MIL_ObjectType_ABC& FindType( const std::string& type ) const;
     UrbanObjectWrapper& GetUrbanObjectWrapper( const urban::TerrainObject_ABC& object );
     unsigned int ConvertUrbanIdToSimId( unsigned int urbanId );
+    bool ConvertIdToUrbanId( unsigned int& id ) const;
     const std::set< MIL_Object_ABC* >& GetUniversalObjects() const;
     //@}
 

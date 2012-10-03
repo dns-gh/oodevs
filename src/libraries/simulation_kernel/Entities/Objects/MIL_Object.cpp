@@ -94,6 +94,18 @@ void MIL_Object::save( MIL_CheckPointOutArchive& file, const unsigned int ) cons
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Object::WriteUrbanAttributes
+// Created: NPT 2012-10-03
+// -----------------------------------------------------------------------------
+void MIL_Object::WriteUrbanAttributes( xml::xostream& xos ) const
+{
+    for( CIT_Attributes it = attributes_.begin(); it != attributes_.end(); ++it )
+        (*it)->WriteODB( xos );
+    for( CIT_Capacities it = capacities_.begin(); it != capacities_.end(); ++it )
+        (*it)->WriteUrban( xos );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Object::WriteODB
 // Created: SLG 2011-01-10
 // -----------------------------------------------------------------------------

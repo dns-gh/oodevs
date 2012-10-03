@@ -102,6 +102,7 @@
 #include "protocol/ClientSenders.h"
 #include "protocol/Protocol.h"
 #include "resource_network/ResourceNetworkModel.h"
+#include "tools/SchemaWriter.h"
 #include "tools/Loader_ABC.h"
 #include <urban/Model.h>
 #include <urban/GeometryAttribute.h>
@@ -1955,6 +1956,19 @@ void MIL_EntityManager::WriteODB( xml::xostream& xos ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::WriteUrban
+// Created: NPT 2012-09-06
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::WriteUrban( xml::xostream& xos ) const
+{
+    tools::SchemaWriter schemaWriter;
+    xos << xml::start( "urban-state" );
+        schemaWriter.WriteSchema( xos, "exercise", "urbanstate" );
+        pObjectManager_->WriteUrban( xos );
+    xos << xml::end;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::FindAutomate
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------
@@ -2102,6 +2116,15 @@ UrbanObjectWrapper& MIL_EntityManager::GetUrbanObjectWrapper( const urban::Terra
 unsigned int MIL_EntityManager::ConvertUrbanIdToSimId( unsigned int urbanId )
 {
     return pObjectManager_->ConvertUrbanIdToSimId( urbanId );
+}
+
+//-----------------------------------------------------------------------------
+// Name: MIL_EntityManager::ConvertIdToUrbanId
+// Created: NPT 2012-09-12
+// -----------------------------------------------------------------------------
+bool MIL_EntityManager::ConvertIdToUrbanId( unsigned int& id ) const
+{
+    return pObjectManager_->ConvertIdToUrbanId( id );
 }
 
 // -----------------------------------------------------------------------------

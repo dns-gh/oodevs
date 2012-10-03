@@ -95,6 +95,18 @@ void StructuralCapacity::serialize( Archive& file, const unsigned int )
 }
 
 // -----------------------------------------------------------------------------
+// Name: StructuralCapacity::WriteUrban
+// Created: NPT 2012-09-11
+// -----------------------------------------------------------------------------
+void StructuralCapacity::WriteUrban( xml::xostream& xos ) const
+{
+    if( structuralState_ != 1.f )
+        xos << xml::start( "structural-state" )
+        << xml::attribute( "value", static_cast< unsigned int >( 100 * structuralState_ + 0.5f ) )
+        << xml::end;
+}
+
+// -----------------------------------------------------------------------------
 // Name: StructuralCapacity::Register
 // Created: JSR 2010-06-23
 // -----------------------------------------------------------------------------

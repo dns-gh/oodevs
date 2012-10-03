@@ -97,6 +97,7 @@ public:
     void load( Archive&, const unsigned int );
     template< typename Archive >
     void save( Archive&, const unsigned int ) const;
+    void WriteODB( xml::xostream& xos ) const;
     //@}
 
 private:

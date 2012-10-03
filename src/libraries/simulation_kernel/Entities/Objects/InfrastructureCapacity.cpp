@@ -107,6 +107,21 @@ void InfrastructureCapacity::serialize( Archive& file, const unsigned int )
 }
 
 // -----------------------------------------------------------------------------
+// Name: InfrastructureCapacity::WriteUrban
+// Created: NPT 2012-09-11
+// -----------------------------------------------------------------------------
+void InfrastructureCapacity::WriteUrban( xml::xostream& xos ) const
+{
+    xos << xml::start( "infrastructures" );
+    xos     << xml::start( "infrastructure" )
+        << xml::attribute( "role", role_ )
+        << xml::attribute( "enabled", enabled_ )
+        << xml::attribute( "threshold", threshold_ )
+        << xml::end
+        << xml::end;
+}
+
+// -----------------------------------------------------------------------------
 // Name: InfrastructureCapacity::Register
 // Created: SLG 2010-01-13
 // -----------------------------------------------------------------------------

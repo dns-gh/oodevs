@@ -336,16 +336,20 @@ bool MedicalTreatmentAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 // -----------------------------------------------------------------------------
 void MedicalTreatmentAttribute::WriteODB( xml::xostream& xos ) const
 {
-    xos << xml::start( "medical-treatement" );
-
-    for ( T_TreatmentCapacityVector::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )
+    xos << xml::start( "medical-treatement" )
+        << xml::attribute( "doctors", doctors_ );
+    if( !referenceID_.empty() )
+        xos << xml::attribute( "external-reference", referenceID_ );
+    xos     << xml::start( "bed-capacities" );
+    for( T_TreatmentCapacityVector::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )
     {
         xos << xml::start( "bed-capacity" )
                 << xml::attribute( "type" , it->second.type_->GetName() )
                 << xml::attribute( "baseline" , it->second.baseline_ )
             << xml::end;
     }
-    xos << xml::end();
+    xos     << xml::end
+        << xml::end;
 }
 
 // -----------------------------------------------------------------------------

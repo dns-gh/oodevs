@@ -181,3 +181,19 @@ void ResourceLink::Serialize( sword::ResourceNetwork_Link& msg ) const
     msg.set_capacity( capacity_ );
     msg.set_flow( flow_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ResourceLink::WriteODB
+// Created: NPT 2012-09-11
+// -----------------------------------------------------------------------------
+void ResourceLink::WriteODB( xml::xostream& xos, const ResourceTools_ABC& tools )
+{
+    unsigned int targetId = target_;
+    bool isUrban = tools.ConvertIdToUrbanId( targetId );
+    std::string kind( isUrban ? "urban-object" : "terrain-object" );
+    xos << xml::start( "link" )
+        << xml::attribute( "kind", kind )
+        << xml::attribute( "target", targetId )
+        << xml::attribute( "capacity", capacity_ )
+        << xml::end;
+}

@@ -50,6 +50,7 @@ public:
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
+    void WriteUrban( xml::xostream& xos ) const;
     //@}
 
     //! @name Construction

@@ -83,6 +83,18 @@ void MIL_ObjectManager::save( MIL_CheckPointOutArchive& file, const unsigned int
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_ObjectManager::WriteUrban
+// Created: NPT 2012-10-03
+// -----------------------------------------------------------------------------
+void MIL_ObjectManager::WriteUrban( xml::xostream& xos ) const
+{
+    xos << xml::start( "urban-objects" );
+    for( CIT_UrbanObjectMap it = urbanObjects_.begin(); it != urbanObjects_.end(); it++ )
+        ( *it ).second->WriteUrban( xos );
+    xos << xml::end;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_ObjectManager::ProcessEvents
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
@@ -200,6 +212,21 @@ unsigned int MIL_ObjectManager::ConvertUrbanIdToSimId( unsigned int urbanId )
         if( it->first->GetId() == urbanId )
             return it->second->GetID();
     throw std::exception( ( "Cannot find urban object with id = " + boost::lexical_cast< std::string >( urbanId ) ).c_str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::ConvertIdToUrbanId
+// Created: NPT 2012-09-12
+// -----------------------------------------------------------------------------
+bool MIL_ObjectManager::ConvertIdToUrbanId( unsigned int& id ) const
+{
+    for( CIT_UrbanObjectMap it = urbanObjects_.begin(); it != urbanObjects_.end(); ++it )
+        if( it->second->GetID() == id )
+        {
+            id = it->first->GetId();
+            return true;
+        }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

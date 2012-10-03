@@ -35,6 +35,11 @@ public:
     {
         // NOTHING
     }
+    virtual void WriteUrban( xml::xostream& /*xos*/ ) const
+    {
+        // NOTHING
+    }
+
     virtual void Register( MIL_Object_ABC& object ) = 0;
     //@}
 

@@ -29,6 +29,7 @@ public:
 
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
+    void WriteUrbanAttributes( xml::xostream& xos ) const;
     //@}
 
     //! @name ODB
@@ -118,6 +119,7 @@ private:
     typedef std::vector< ObjectAttribute_ABC* > T_Attributes;
     typedef T_Attributes::const_iterator      CIT_Attributes;
     typedef std::vector< ObjectCapacity_ABC* > T_Capacities;
+    typedef T_Capacities::const_iterator     CIT_Capacities;
     //@}
 
     //! @name Types

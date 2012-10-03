@@ -147,6 +147,18 @@ void UrbanObjectWrapper::save( MIL_CheckPointOutArchive& file, const unsigned in
 }
 
 // -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::WriteUrban
+// Created: NPT 2012-10-03
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::WriteUrban( xml::xostream& xos ) const
+{
+    xos << xml::start( "urban-object" )
+               << xml::attribute( "id", object_->GetId() );
+    WriteUrbanAttributes( xos );
+    xos << xml::end;
+}
+
+// -----------------------------------------------------------------------------
 // Name: UrbanObjectWrapper::WriteODB
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------

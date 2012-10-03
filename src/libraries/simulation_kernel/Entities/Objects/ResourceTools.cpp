@@ -65,3 +65,12 @@ unsigned int ResourceTools::GetIdFromSimulation( unsigned int urbanId ) const
 {
     return MIL_AgentServer::GetWorkspace().GetEntityManager().ConvertUrbanIdToSimId( urbanId );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ResourceTools::ConvertIdToUrbanId
+// Created: NPT 2012-09-12
+// -----------------------------------------------------------------------------
+bool ResourceTools::ConvertIdToUrbanId( unsigned int& id ) const
+{
+    return MIL_AgentServer::GetWorkspace().GetEntityManager().ConvertIdToUrbanId( id );
+}

@@ -332,6 +332,13 @@ bool MIL_CheckPointManager::SaveOrbatCheckPoint( const std::string& name )
             MIL_AgentServer::GetWorkspace().WriteWeather( xosWeather );
         }
         tools::WriteXmlCrc32Signature( filename );
+
+        filename = MIL_AgentServer::GetWorkspace().GetConfig().BuildCheckpointChildFile( "urbanstate.xml", name );
+        {
+            xml::xofstream xosUrban( filename );
+            MIL_AgentServer::GetWorkspace().WriteUrban( xosUrban );
+        }
+        tools::WriteXmlCrc32Signature( filename );
     }
     catch( xml::exception& e )
     {

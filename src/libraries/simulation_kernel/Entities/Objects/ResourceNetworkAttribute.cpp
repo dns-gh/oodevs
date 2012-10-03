@@ -127,3 +127,13 @@ void ResourceNetworkAttribute::serialize( Archive& file, const unsigned int )
     file & boost::serialization::base_object< ObjectAttribute_ABC >( *this )
          & nodeProperties_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetworkAttribute::WriteODB
+// Created: NPT 2012-09-11
+// -----------------------------------------------------------------------------
+void ResourceNetworkAttribute::WriteODB( xml::xostream& xos ) const
+{
+    if( nodeProperties_ )
+        nodeProperties_->WriteODB( xos );
+}

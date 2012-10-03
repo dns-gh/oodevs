@@ -230,8 +230,8 @@ void ConstructionAttribute::WriteODB( xml::xostream& xos ) const
                     << xml::attribute( "name", dotation_->GetName() )
                     << xml::attribute( "count", nFullNbrDotation_ )
                 << xml::end
-            << xml::end
-        << xml::end;
+            << xml::end;
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------

@@ -580,3 +580,28 @@ double NodeElement::AddToStock( double quantity )
     stockCapacity_ = std::min( stockMaxCapacity_, stockCapacity_ + static_cast< unsigned int >( quantity ) );
     return stockCapacity_ - old;
 }
+
+// -----------------------------------------------------------------------------
+// Name: NodeElement::WriteODB
+// Created: NPT 2012-09-11
+// -----------------------------------------------------------------------------
+void NodeElement::WriteODB( xml::xostream& xos, const ResourceTools_ABC& tools ) const
+{
+    xos << xml::start( "node" )
+        << xml::attribute( "resource-type", resourceName_ );
+    if( !isActivated_ )
+        xos << xml::attribute( "enabled", false );
+    if( productionCapacity_ )
+        xos << xml::attribute( "production", productionCapacity_ );
+    if( consumptionAmount_ )
+        xos << xml::attribute( "consumption", consumptionAmount_ );
+    if( consumptionCritical_ )
+        xos << xml::attribute( "critical-consumption", true );
+    if( stockMaxCapacity_ )
+        xos << xml::attribute( "stock", stockMaxCapacity_ );
+    if( stockCapacity_ )
+        xos << xml::attribute( "initial-stock", stockCapacity_ );
+    for( CIT_ResourceLinks it = links_.begin(); it != links_.end(); ++it )
+        ( *it )->WriteODB( xos, tools );
+    xos << xml::end;
+}
