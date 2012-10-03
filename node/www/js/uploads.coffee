@@ -25,6 +25,7 @@ class Package extends Backbone.Model
 class PackageView extends Backbone.View
     el: $("#packages")
     enabled: true
+    counter: 0
 
     initialize: (obj) ->
         @model = new Package
@@ -36,17 +37,13 @@ class PackageView extends Backbone.View
         @model.clear()
         $(@el).empty()
 
-    toggle_load: (enabled, disable, load) =>
-        @enabled = enabled unless enabled
+    toggle_load: (disable, load) =>
+        @counter++
         for it in disable
             it.toggleClass "disabled"
-        if load?
-            toggle_spinner load
-        @enabled = enabled
+        toggle_spinner load if load?
 
     render: =>
-        return unless @enabled
-
         $(@el).empty()
         return unless @model.attributes.name?
 
@@ -70,13 +67,15 @@ class PackageView extends Backbone.View
                 accept: "Discard"
                 reject: "Cancel",
                 =>
-                    @toggle_load false, disable_list, discard
+                    @enabled = false
+                    @toggle_load disable_list
                     ajax "/api/delete_cache", id: uuid,
                         =>
                             @reset()
                             @enabled = true
                         =>
-                            @toggle_load true, disable_list, discard
+                            @toggle_load disable_list
+                            @enabled = true
                             print_error "Unable to discard package(s)"
 
         save.click =>
@@ -93,13 +92,17 @@ class PackageView extends Backbone.View
             if !list.length
                 print_error "Please select at least one package to install"
                 return
-            @toggle_load false, disable_list
+            @enabled = false
+            @toggle_load disable_list
             ajax "/api/install_from_cache", id: uuid, items: list.join ',',
                 (item) =>
-                    @toggle_load true, disable_list, $ btns
+                    $(@el).empty()
+                    @toggle_load disable_list, $ btns
                     @model.set item
+                    @enabled = true
                 =>
-                    @toggle_load true, disable_list, $ btns
+                    @toggle_load disable_list, $ btns
+                    @enabled = true
                     print_error "Unable to save package(s)"
 
         $(".toggle a").click ->
@@ -110,13 +113,18 @@ class PackageView extends Backbone.View
         return
 
     delta: =>
+        unless @enabled
+            setTimeout @delta, 5000
+            return
+        now  = @counter++
         item = new Package
         item.fetch
             success: =>
-                if item.attributes.name?
-                    @model.set item.attributes
-                else
-                    @model.clear()
+                if now + 1 == @counter
+                    if item.attributes.name?
+                        @model.set item.attributes
+                    else
+                        @model.clear()
                 setTimeout @delta, 5000
             error: =>
                 setTimeout @delta, 5000
@@ -141,12 +149,12 @@ toggle_upload = ->
 
 $("#upload_form .upload").click ->
     return if $(@).hasClass "disabled"
-    toggle_upload()
     package_view.enabled = false
+    toggle_upload()
     package_view.reset()
     $("#upload_form").submit()
 
 $("#upload_target").load ->
     toggle_upload()
-    package_view.enabled = true
     package_view.model.set jQuery.parseJSON $(@).contents().text()
+    package_view.enabled = true

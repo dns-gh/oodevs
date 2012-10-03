@@ -533,6 +533,8 @@
 
     PackageView.prototype.enabled = true;
 
+    PackageView.prototype.counter = 0;
+
     PackageView.prototype.initialize = function(obj) {
       this.model = new Package;
       this.model.bind('change', this.render);
@@ -545,27 +547,21 @@
       return $(this.el).empty();
     };
 
-    PackageView.prototype.toggle_load = function(enabled, disable, load) {
+    PackageView.prototype.toggle_load = function(disable, load) {
       var it, _i, _len;
-      if (!enabled) {
-        this.enabled = enabled;
-      }
+      this.counter++;
       for (_i = 0, _len = disable.length; _i < _len; _i++) {
         it = disable[_i];
         it.toggleClass("disabled");
       }
       if (load != null) {
-        toggle_spinner(load);
+        return toggle_spinner(load);
       }
-      return this.enabled = enabled;
     };
 
     PackageView.prototype.render = function() {
       var disable_list, discard, it, save, _i, _j, _len, _len1, _ref, _ref1,
         _this = this;
-      if (!this.enabled) {
-        return;
-      }
       $(this.el).empty();
       if (this.model.attributes.name == null) {
         return;
@@ -597,14 +593,16 @@
           accept: "Discard",
           reject: "Cancel"
         }, function() {
-          _this.toggle_load(false, disable_list, discard);
+          _this.enabled = false;
+          _this.toggle_load(disable_list);
           return ajax("/api/delete_cache", {
             id: uuid
           }, function() {
             _this.reset();
             return _this.enabled = true;
           }, function() {
-            _this.toggle_load(true, disable_list, discard);
+            _this.toggle_load(disable_list);
+            _this.enabled = true;
             return print_error("Unable to discard package(s)");
           });
         });
@@ -634,15 +632,19 @@
           print_error("Please select at least one package to install");
           return;
         }
-        _this.toggle_load(false, disable_list);
+        _this.enabled = false;
+        _this.toggle_load(disable_list);
         return ajax("/api/install_from_cache", {
           id: uuid,
           items: list.join(',')
         }, function(item) {
-          _this.toggle_load(true, disable_list, $(btns));
-          return _this.model.set(item);
+          $(_this.el).empty();
+          _this.toggle_load(disable_list, $(btns));
+          _this.model.set(item);
+          return _this.enabled = true;
         }, function() {
-          _this.toggle_load(true, disable_list, $(btns));
+          _this.toggle_load(disable_list, $(btns));
+          _this.enabled = true;
           return print_error("Unable to save package(s)");
         });
       });
@@ -655,15 +657,22 @@
     };
 
     PackageView.prototype.delta = function() {
-      var item,
+      var item, now,
         _this = this;
+      if (!this.enabled) {
+        setTimeout(this.delta, 5000);
+        return;
+      }
+      now = this.counter++;
       item = new Package;
       return item.fetch({
         success: function() {
-          if (item.attributes.name != null) {
-            _this.model.set(item.attributes);
-          } else {
-            _this.model.clear();
+          if (now + 1 === _this.counter) {
+            if (item.attributes.name != null) {
+              _this.model.set(item.attributes);
+            } else {
+              _this.model.clear();
+            }
           }
           return setTimeout(_this.delta, 5000);
         },
@@ -702,16 +711,16 @@
     if ($(this).hasClass("disabled")) {
       return;
     }
-    toggle_upload();
     package_view.enabled = false;
+    toggle_upload();
     package_view.reset();
     return $("#upload_form").submit();
   });
 
   $("#upload_target").load(function() {
     toggle_upload();
-    package_view.enabled = true;
-    return package_view.model.set(jQuery.parseJSON($(this).contents().text()));
+    package_view.model.set(jQuery.parseJSON($(this).contents().text()));
+    return package_view.enabled = true;
   });
 
 }).call(this);
