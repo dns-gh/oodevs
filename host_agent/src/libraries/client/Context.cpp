@@ -40,8 +40,9 @@ using host::Package;
 
 namespace
 {
-    const std::string install_dir = "_";
-    const std::string tmp_dir     = "tmp";
+    const std::string install_dir = "_"; // use short directory names until packages use small paths
+    const std::string tmp_dir     = "0";
+    const std::string trash_dir   = "1";
     const QNetworkRequest::Attribute id_attribute = QNetworkRequest::Attribute( QNetworkRequest::User + 0 );
 }
 
@@ -74,7 +75,10 @@ Context::~Context()
 {
     async_.Join();
     io_.Join();
-    fs_.Remove( root_ / tmp_dir );
+
+    const Path next = fs_.MakeAnyPath( root_ / trash_dir );
+    fs_.Rename( root_ / tmp_dir, next / "_" );
+    fs_.Remove( root_ / trash_dir );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,6 +90,7 @@ void Context::Start()
     ParseArguments();
     fs_.MakePaths( root_ / install_dir );
     fs_.MakePaths( root_ / tmp_dir );
+    fs_.MakePaths( root_ / trash_dir );
     ProcessCommand();
 }
 
@@ -239,7 +244,7 @@ void Context::OnRemove()
 {
     const std::vector< size_t > removed = items_.Remove();
     QWriteLocker lock( &access_ );
-    install_->Uninstall( io_, root_ / tmp_dir, removed );
+    install_->Uninstall( io_, root_ / trash_dir, removed );
 }
 
 // -----------------------------------------------------------------------------
