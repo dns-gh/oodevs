@@ -10,18 +10,11 @@
 #ifndef __ListViewHelper_h_
 #define __ListViewHelper_h_
 
-#pragma warning( push, 0 )
-#include <Qt3Support/q3listview.h>
-#pragma warning( pop )
-
 namespace tools
 {
     class GeneralConfig;
     class Loader_ABC;
 }
-
-class Q3ListView;
-class Q3ListViewItem;
 
 namespace frontend
 {
