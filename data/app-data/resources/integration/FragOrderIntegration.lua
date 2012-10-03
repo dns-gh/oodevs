@@ -267,10 +267,7 @@ integration.startFragOrderTask = function( self )
 
     -- Crowd WW 
     elseif orderType == "CrowdWait" then
-        local point = CreateKnowledge( integration.ontology.types.point, DEC_Geometrie_CopiePoint( meKnowledge:getPosition() ) )
-        mission.position = point
         orderType = "behaviors.tasks.frago.Wait"
-     
 
     -- ----------------------------------------------------------------------------
     -- Resume maneuver
