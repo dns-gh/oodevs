@@ -20,7 +20,7 @@ The agent moves toward the target element and damage it.</description>
         </parameter>
     </parameters>
     <stages>
-        <stage label="damage" disable-when-done="true">
+        <stage label="moving to objective" disable-when-done="true">
             <skills>
                 <skill name="behaviors.skills.Damage" main="true">
                     <parameter name="quantityOfDamage">

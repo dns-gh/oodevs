@@ -9,7 +9,7 @@
         </parameter>
     </parameters>
     <stages>
-        <stage label="attack" permanent="true">
+        <stage label="moving toward unit" permanent="true">
             <description>Déplacement vers les objectifs etant agressif.</description>
             <skills>
                 <skill name="behaviors.skills.Attack">

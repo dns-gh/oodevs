@@ -16,4 +16,9 @@
             <description>To enact the decision to reach each of the given way-points.</description>
         </link>
     </links>
+    <feedbacks>
+        <feedback name="done">
+            <description>Sent when the last waypoint has been reached.</description>
+        </feedback>
+    </feedbacks>
 </skill>

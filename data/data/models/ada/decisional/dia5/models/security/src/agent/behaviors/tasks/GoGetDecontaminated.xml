@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.behaviors.tasks.GoGetDecontaminated" source-version="1.0.0">
-    <description>To be decontaminated through a decontamination site. &#xD;
+    <description>To get decontaminated through a decontamination site. &#xD;
 The agent moves to decontamination site, and when it is reached, ask for decontamination. Once agent is decontaminated, it moves to a given garage position.</description>
     <parameters>
         <parameter name="decontaminationPlot">

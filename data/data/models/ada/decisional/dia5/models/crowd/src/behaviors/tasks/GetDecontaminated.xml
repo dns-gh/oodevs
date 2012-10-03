@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.tasks.GetDecontaminated" source-version="1.0.0">
+    <description>To get decontaminated through a decontamination site. &#xD;
+The agent moves to decontamination site, and when it is reached, ask for decontamination. Once agent is decontaminated, it moves to a given garage position.</description>
     <parameters>
         <parameter name="decontaminationPlot">
+            <description>The decontamination site to use. Efficiency (delays) of decontaminatin depends on units that are operating the decontamination site.</description>
             <type>
                 <class name="agent.world.DecontaminationPlot"/>
             </type>
         </parameter>
         <parameter name="garagePosition">
+            <description>The position to reach once decontamination is over.</description>
             <type>
                 <class name="agent.world.Destination"/>
             </type>
         </parameter>
     </parameters>
     <stages>
-        <stage label="go get decontaminated">
+        <stage label="moving to decontamination site">
             <skills>
                 <skill name="behaviors.skills.GetDecontaminated" main="true">
                     <parameter name="decontaminationPlot">
@@ -24,7 +28,7 @@
                 </skill>
             </skills>
         </stage>
-        <stage label="reach garage position" disable-when-done="true">
+        <stage label="moving to meeting position" disable-when-done="true">
             <skills>
                 <skill name="agent.behaviors.skills.actions.MoveTo" main="true">
                     <parameter name="destination">

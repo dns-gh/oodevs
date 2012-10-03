@@ -13,7 +13,7 @@ method "useToGetDecontaminated" (
 
 method "canBeUsedToGetDecontaminated" (
     function( self )
-       return true -- $$$ TODO check capacity
+       return integration.canDecontaminateAgents( self )
     end )
 
 method "damageIt" ( masalife.brain.integration.startStopAction( 

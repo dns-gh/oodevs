@@ -14,7 +14,7 @@ The demonstration is represented by an interaction with nearby agents which inte
         </parameter>
     </parameters>
     <stages>
-        <stage label="demonstrate" permanent="true">
+        <stage label="moving to destination" permanent="true">
             <skills>
                 <skill name="behaviors.skills.Demonstrate">
                     <parameter name="destination">

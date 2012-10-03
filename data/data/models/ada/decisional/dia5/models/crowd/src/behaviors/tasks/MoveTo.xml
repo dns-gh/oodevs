@@ -10,7 +10,7 @@
         </parameter>
     </parameters>
     <stages>
-        <stage label="reach objective" disable-when-done="true">
+        <stage label="moving to destination" disable-when-done="true">
             <skills>
                 <skill name="agent.behaviors.skills.actions.MoveTo" main="true">
                     <parameter name="destination">
