@@ -168,12 +168,13 @@ void RolePion_Perceiver::Initialize( core::Facade& facade )
 // Created: NLD 2004-08-19
 // -----------------------------------------------------------------------------
 RolePion_Perceiver::RolePion_Perceiver( Sink& sink, const core::Model& model, MIL_Agent_ABC& pion, core::Model& entity )
-    : sink_                 ( sink )
-    , model_                ( model )
-    , owner_                ( pion )
-    , entity_               ( entity )
-    , bHasChanged_          ( true )
-    , bRadarStateHasChanged_( true )
+    : sink_                          ( sink )
+    , model_                         ( model )
+    , owner_                         ( pion )
+    , entity_                        ( entity )
+    , bHasChanged_                   ( true )
+    , bExternalMustUpdateVisionCones_( false )
+    , bRadarStateHasChanged_         ( true )
 {
     entity[ "perceptions/peripherical-vision/next-tick" ] = ++nNbr % nNbrStepsBetweenPeriphericalVision;
     entity[ "perceptions/max-agent-perception-distance" ] = 0;
@@ -536,8 +537,12 @@ void RolePion_Perceiver::Update( bool /*bIsDead*/ )
         if( HasRadarStateChanged() )
             owner_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
         owner_.Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
-        // Debug - Cones de vision
-        if( MIL_AgentServer::GetWorkspace().GetAgentServer().MustSendUnitVisionCones() && MIL_AgentServer::GetWorkspace().GetAgentServer().MustInitUnitVisionCones() )
+    }
+    // Debug - Cones de vision
+    if( MIL_AgentServer::GetWorkspace().GetAgentServer().MustSendUnitVisionCones() )
+    {
+        if( bExternalMustUpdateVisionCones_
+            || MIL_AgentServer::GetWorkspace().GetAgentServer().MustInitUnitVisionCones() )
             SendDebugState();
     }
 }
@@ -842,8 +847,9 @@ bool RolePion_Perceiver::HasRadarStateChanged() const
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::Clean()
 {
-    bHasChanged_           = false;
+    bHasChanged_ = false;
     bRadarStateHasChanged_ = false;
+    bExternalMustUpdateVisionCones_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -881,6 +887,15 @@ void RolePion_Perceiver::Execute( detection::DetectionComputer_ABC& algorithm ) 
 {
     if( algorithm.GetTarget() != owner_ && owner_.GetKnowledge().WasPerceived( algorithm.GetTarget() ) )
         algorithm.AlreadyPerceived();
+}
+
+// -----------------------------------------------------------------------------
+// Name: RolePion_Perceiver::NotifyVisionConeDataHasChanged
+// Created: MGD 2009-10-15
+// -----------------------------------------------------------------------------
+void RolePion_Perceiver::NotifyVisionConeDataHasChanged()
+{
+    bExternalMustUpdateVisionCones_ = true;
 }
 
 // -----------------------------------------------------------------------------

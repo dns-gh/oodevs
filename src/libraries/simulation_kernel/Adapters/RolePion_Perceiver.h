@@ -13,6 +13,7 @@
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 #include "simulation_kernel/NetworkUnitAttributesMessageSender_ABC.h"
+#include "simulation_kernel/VisionConeNotificationHandler_ABC.h"
 
 class DEC_KS_Perception;
 
@@ -40,6 +41,7 @@ namespace sword
 class RolePion_Perceiver : public PHY_RoleInterface_Perceiver
                          , public tools::AlgorithmModifier_ABC< detection::DetectionComputer_ABC >
                          , public network::NetworkUnitAttributesMessageSender_ABC
+                         , public network::VisionConeNotificationHandler_ABC
 {
 public:
     //! @name Static Initializer
@@ -150,6 +152,7 @@ public:
     virtual bool IsIdentified( const MIL_PopulationConcentration& concentration ) const;
     virtual bool IsIdentified( const MIL_UrbanObject_ABC& object ) const;
     virtual bool IsFireObserver() const;
+    virtual void NotifyVisionConeDataHasChanged();
     //@}
 
     //! @name Network
@@ -189,6 +192,7 @@ private:
     T_Listeners listeners_;
     bool bHasChanged_;
     bool bRadarStateHasChanged_;
+    bool bExternalMustUpdateVisionCones_;
     T_Notifications notifications_;
     //@}
 };
