@@ -24,13 +24,13 @@ class ADN_ListView_UrbanAccommodation_Type
     : public ADN_ListView
 {
 public:
-    explicit ADN_ListView_UrbanAccommodation_Type( QWidget* pParent = 0, Qt::WFlags f = 0 );
+    explicit ADN_ListView_UrbanAccommodation_Type( QWidget* pParent );
     virtual ~ADN_ListView_UrbanAccommodation_Type();
 
 private:
     void ConnectItem( bool bConnect );
     void OnContextMenu( const QPoint& pt );
-    virtual std::string GetToolTipFor( Q3ListViewItem& item );
+    virtual std::string GetToolTipFor( const QModelIndex& index );
 };
 
 #endif // __ADN_ListView_UrbanAccommodation_Type_h_

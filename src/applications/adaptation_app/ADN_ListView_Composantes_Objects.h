@@ -22,12 +22,12 @@
 // Created: APE 2005-01-18
 // =============================================================================
 class ADN_ListView_Composantes_Objects
-: public ADN_ListView
+    : public ADN_ListView
 {
     Q_OBJECT
 
 public:
-    explicit ADN_ListView_Composantes_Objects(QWidget * parent = 0, const char * name = 0, Qt::WFlags f = 0);
+    explicit ADN_ListView_Composantes_Objects( QWidget* parent );
     virtual ~ADN_ListView_Composantes_Objects();
 
 private:

@@ -22,12 +22,9 @@ typedef ADN_Breakdowns_Data::BreakdownInfo BreakdownInfo;
 // Name: ADN_Breakdowns_ListView constructor
 // Created: APE 2005-01-06
 // -----------------------------------------------------------------------------
-ADN_Breakdowns_ListView::ADN_Breakdowns_ListView( QWidget* pParent, const char* szName, Qt::WFlags f )
-: ADN_ListView( pParent, szName, f )
+ADN_Breakdowns_ListView::ADN_Breakdowns_ListView( QWidget* pParent )
+    : ADN_ListView( pParent, "ADN_Breakdowns_ListView", ADN_Tr::ConvertFromWorkspaceElement( eBreakdowns ).c_str() )
 {
-    // Add one column.
-    addColumn( ADN_Tr::ConvertFromWorkspaceElement( eBreakdowns ).c_str() );
-    setResizeMode( Q3ListView::AllColumns );
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<BreakdownInfo>(*this);
     SetDeletionEnabled( true );
@@ -85,9 +82,11 @@ void ADN_Breakdowns_ListView::OnContextMenu( const QPoint& pt )
 // Name: ADN_Breakdowns_ListView::GetToolTipFor
 // Created: ABR 2012-07-25
 // -----------------------------------------------------------------------------
-std::string ADN_Breakdowns_ListView::GetToolTipFor( Q3ListViewItem& item )
+std::string ADN_Breakdowns_ListView::GetToolTipFor( const QModelIndex& index )
 {
-    void* pData = static_cast< ADN_ListViewItem& >( item ).GetData();
+    if( !index.isValid() )
+        return "";
+    void* pData = static_cast< ADN_ListViewItem* >( dataModel_.GetItemFromIndex( index ) )->GetData();
     BreakdownInfo* pCastData = static_cast< BreakdownInfo* >( pData );
     assert( pCastData != 0 );
     return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str(),

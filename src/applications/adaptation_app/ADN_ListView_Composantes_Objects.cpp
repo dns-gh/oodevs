@@ -36,10 +36,10 @@ public:
     ADN_ListViewItem* CreateItem( void* pObj )
     {
         // Create the new list item.
-        ADN_ListViewItem* pItem = new ADN_ListViewItem( &list_, pObj, 1 );
+        ADN_ListViewItem* pItem = new ADN_ListViewItem( pObj );
 
         // Connect list item with object's name
-        pItem->Connect( 0, & static_cast<ObjectInfos*>(pObj)->ptrObject_.GetData()->strName_ );
+        pItem->Connect( &static_cast< ObjectInfos* >( pObj )->ptrObject_.GetData()->strName_ );
         return pItem;
     }
     //@}
@@ -49,13 +49,9 @@ public:
 // Name: ADN_ListView_Composantes_Objects constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_ListView_Composantes_Objects::ADN_ListView_Composantes_Objects( QWidget* pParent, const char* szName, Qt::WFlags f )
-    : ADN_ListView( pParent, szName, f )
+ADN_ListView_Composantes_Objects::ADN_ListView_Composantes_Objects( QWidget* pParent )
+    : ADN_ListView( pParent, "ADN_ListView_Composantes_Objects", tr( "Objects" ) )
 {
-    // Add one column.
-    addColumn( tr( "Objects" ) );
-//    setResizeMode(QListView::AllColumns);
-
     setMaximumHeight( 270 );
 
     // Connector creation.
@@ -149,7 +145,8 @@ void ADN_ListView_Composantes_Objects::OnContextMenu( const QPoint& pt )
 
         ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
         pCTable->AddItem( pNewInfo );
-        setCurrentItem( FindItem( pNewInfo ) );
+        if( ADN_ListViewItem* item = FindItem( pNewInfo ) )
+            selectionModel()->setCurrentIndex( dataModel_.indexFromItem( item ), QItemSelectionModel::ClearAndSelect );
     }
 }
 
@@ -159,14 +156,13 @@ void ADN_ListView_Composantes_Objects::OnContextMenu( const QPoint& pt )
 //-----------------------------------------------------------------------------
 bool ADN_ListView_Composantes_Objects::Contains( const ADN_Objects_Data_ObjectInfos* pInfo )
 {
-    Q3ListViewItemIterator it( this );
-    while( it.current() != 0 )
+    const int rowCount = dataModel_.rowCount();
+    for( int row = 0; row < rowCount; ++row )
     {
-        ADN_ListViewItem* pCurr = (ADN_ListViewItem*)it.current();
+        ADN_ListViewItem* pCurr = static_cast< ADN_ListViewItem* >( dataModel_.item( row ) );
         ADN_Composantes_Data::ObjectInfos* pData = static_cast< ADN_Composantes_Data::ObjectInfos* >( pCurr->GetData() );
         if( pData->ptrObject_.GetData() == pInfo )
             return true;
-        ++it;
     }
     return false;
 }

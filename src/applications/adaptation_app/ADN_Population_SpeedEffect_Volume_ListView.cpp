@@ -33,8 +33,8 @@ public:
 
     ADN_ListViewItem* CreateItem( void* pObj )
     {
-        ADN_ListViewItem* pItem = new ADN_ListViewItem( &list_, pObj, 1 );
-        pItem->Connect( 0, &static_cast< SpeedEffectVolumeInfos* >(pObj)->ptrVolume_.GetData()->strName_ );
+        ADN_ListViewItem* pItem = new ADN_ListViewItem( pObj );
+        pItem->Connect( &static_cast< SpeedEffectVolumeInfos* >( pObj )->ptrVolume_.GetData()->strName_ );
         return pItem;
     }
 };
@@ -43,12 +43,9 @@ public:
 // Name: ADN_Population_SpeedEffect_Volume_ListView constructor
 // Created: APE 2005-01-06
 // -----------------------------------------------------------------------------
-ADN_Population_SpeedEffect_Volume_ListView::ADN_Population_SpeedEffect_Volume_ListView( QWidget* pParent, const char* szName, Qt::WFlags f )
-    : ADN_ListView( pParent, szName, f )
+ADN_Population_SpeedEffect_Volume_ListView::ADN_Population_SpeedEffect_Volume_ListView( QWidget* pParent )
+    : ADN_ListView( pParent, "ADN_Population_SpeedEffect_Volume_ListView", tools::translate( "ADN_Population_SpeedEffect_Volume_ListView", "Volumes" ) )
 {
-    // Add one column.
-    addColumn( tools::translate( "ADN_Population_SpeedEffect_Volume_ListView", "Volumes" ) );
-    setResizeMode( Q3ListView::AllColumns );
     // Connector creation
     pConnector_ = new ADN_Sizes( *this );
     this->SetDeletionEnabled( false );

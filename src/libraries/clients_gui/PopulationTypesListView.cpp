@@ -20,7 +20,7 @@ using namespace gui;
 // Created: SBO 2006-11-09
 // -----------------------------------------------------------------------------
 PopulationTypesListView::PopulationTypesListView( QWidget* parent, kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::PopulationType >& types, const QSpinBox& number )
-    : RichTreeView( controllers, parent )
+    : RichTreeView( parent, &controllers )
     , controllers_( controllers )
     , types_( types )
     , number_( number )

@@ -22,11 +22,9 @@
 // Name: ADN_ListView_UrbanInfrastructure_Type constructor
 // Created: SLG 2010-12-20
 //-----------------------------------------------------------------------------
-ADN_ListView_UrbanInfrastructure_Type::ADN_ListView_UrbanInfrastructure_Type(QWidget * parent, Qt::WFlags f)
-:   ADN_ListView(parent,"Infrastructure",f)
+ADN_ListView_UrbanInfrastructure_Type::ADN_ListView_UrbanInfrastructure_Type( QWidget* parent)
+    : ADN_ListView( parent, "Infrastructure", tools::translate( "ADN_ListView_UrbanInfrastructure_Type", "Infrastructure" ) )
 {
-    addColumn( tools::translate( "ADN_ListView_UrbanInfrastructure_Type", "Infrastructure" ) );
-    setResizeMode( Q3ListView::LastColumn );
     pConnector_ = new ADN_Connector_ListView< ADN_Urban_Data::UrbanMaterialInfos >( *this );
     this->SetDeletionEnabled( true );
 }

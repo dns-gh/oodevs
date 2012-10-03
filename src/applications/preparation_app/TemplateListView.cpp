@@ -23,7 +23,7 @@ namespace bfs = boost::filesystem;
 // Created: AGE 2007-05-30
 // -----------------------------------------------------------------------------
 TemplateListView::TemplateListView( QWidget* parent, kernel::Controllers& controllers, AgentsModel& agents, FormationModel& formations, const kernel::AgentTypes& types, ColorController& colorController )
-    : gui::RichTreeView( controllers, parent )
+    : gui::RichTreeView( parent, &controllers )
     , agents_         ( agents )
     , formations_     ( formations )
     , types_          ( types )

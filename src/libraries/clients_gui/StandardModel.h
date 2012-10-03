@@ -10,7 +10,6 @@
 #ifndef __StandardModel_h_
 #define __StandardModel_h_
 
-#include <QtGui/qstandarditemmodel.h>
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/VariantPointer.h"
 #include <boost/function.hpp>
@@ -61,7 +60,7 @@ signals:
 public:
     //! @name Constructors/Destructor
     //@{
-             StandardModel( kernel::Controllers& controllers, QSortFilterProxyModel& proxy, QObject* parent = 0 );
+             StandardModel( kernel::Controllers* controllers, QSortFilterProxyModel& proxy, QObject* parent = 0 );
     virtual ~StandardModel();
     //@}
 
@@ -148,7 +147,7 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
+    kernel::Controllers* controllers_;
     QSortFilterProxyModel& proxy_;
     DragAndDropObserver_ABC* dragAndDropObserver_;
     bool dndLocked_;

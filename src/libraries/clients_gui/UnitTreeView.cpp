@@ -25,7 +25,7 @@ using namespace gui;
 // Created: JSR 2012-09-21
 // -----------------------------------------------------------------------------
 UnitTreeView::UnitTreeView( kernel::Controllers& controllers, const kernel::AgentTypes& types, QWidget* parent, bool selectOnlyAutomats /*= false*/ )
-    : RichTreeView( controllers, parent )
+    : RichTreeView( parent, &controllers )
     , controllers_( controllers )
     , types_( types )
     , selectOnlyAutomats_( selectOnlyAutomats )

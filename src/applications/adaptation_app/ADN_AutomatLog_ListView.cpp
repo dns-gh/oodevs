@@ -19,7 +19,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Composantes_Data.h"
 #include "ADN_AutomatLog_ListView.h"
-
+#include "ADN_GridDelegate.h"
 #include "ADN_Automata_Data.h"
 #include "ADN_Rich_ListViewItem.h"
 
@@ -28,17 +28,22 @@
 // Created: APE 2005-04-04
 // -----------------------------------------------------------------------------
 ADN_AutomatLog_ListView::ADN_AutomatLog_ListView( ADN_Automata_Data& data, QWidget* pParent )
-: ADN_ListView( pParent )
+: ADN_ListView( pParent, "ADN_AutomatLog_ListView" )
 , data_       ( data )
 , compTotal_    ()
 , unitTotal_    ()
 , automatTotal_ ()
 {
+    setItemDelegate( new ADN_GridDelegate( this ) );
     setRootIsDecorated( true );
     setAllColumnsShowFocus( true );
 
     BuildHeaders();
     BuildBody   ();
+    expandAll();
+    for( int i = 0; i < header()->count(); ++i )
+        resizeColumnToContents( i );
+    collapseAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -58,19 +63,19 @@ ADN_AutomatLog_ListView::~ADN_AutomatLog_ListView()
 // -----------------------------------------------------------------------------
 void ADN_AutomatLog_ListView::BuildHeaders()
 {
-    addColumn( tools::translate( "ADN_AutomatLog_ListView", "Automat > Unit > Comp > Item" ) );
-    addColumn( tools::translate( "ADN_AutomatLog_ListView", "Units" ) );
-    addColumn( tools::translate( "ADN_AutomatLog_ListView", "Equipments" ) );
-    addColumn( tools::translate( "ADN_AutomatLog_ListView", "Resources" ) );
-    addColumn( tools::translate( "ADN_AutomatLog_ListView", "Norm. Consumption" ) );
-    addColumn( tools::translate( "ADN_AutomatLog_ListView", "Consumption\nMoving" ) );
-    addColumn( tools::translate( "ADN_AutomatLog_ListView", "Autonomy\nMoving" ) );
-    addColumn( tools::translate( "ADN_AutomatLog_ListView", "Consumption\nParked engine stopped" ) );
-    addColumn( tools::translate( "ADN_AutomatLog_ListView", "Autonomy\nParked engine Stopped" ) );
-    addColumn( tools::translate( "ADN_AutomatLog_ListView", "Consumption\nParked engine running" ) );
-    addColumn( tools::translate( "ADN_AutomatLog_ListView", "Autonomy\nParked engine running" ) );
-    for( int i = 1; i < columns(); ++i )
-        setColumnAlignment( i, Qt::AlignCenter );
+    QStringList list;
+    list << tools::translate( "ADN_AutomatLog_ListView", "Automat > Unit > Comp > Item" )
+         << tools::translate( "ADN_AutomatLog_ListView", "Units" )
+         << tools::translate( "ADN_AutomatLog_ListView", "Equipments" )
+         << tools::translate( "ADN_AutomatLog_ListView", "Resources" )
+         << tools::translate( "ADN_AutomatLog_ListView", "Norm. Consumption" )
+         << tools::translate( "ADN_AutomatLog_ListView", "Consumption\nMoving" )
+         << tools::translate( "ADN_AutomatLog_ListView", "Autonomy\nMoving" )
+         << tools::translate( "ADN_AutomatLog_ListView", "Consumption\nParked engine stopped" )
+         << tools::translate( "ADN_AutomatLog_ListView", "Autonomy\nParked engine Stopped" )
+         << tools::translate( "ADN_AutomatLog_ListView", "Consumption\nParked engine running" )
+         << tools::translate( "ADN_AutomatLog_ListView", "Autonomy\nParked engine running" );
+    dataModel_.setHorizontalHeaderLabels( list );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,11 +90,11 @@ void ADN_AutomatLog_ListView::BuildBody()
         ADN_Automata_Data::AutomatonInfos& automaton = **it;
         if( automaton.vSubUnits_.empty() )
             continue;
-        ADN_Rich_ListViewItem* pAutomatItem = new ADN_Rich_ListViewItem( this, true );
+        ADN_Rich_ListViewItem* pAutomatItem = new ADN_Rich_ListViewItem( this, Qt::AlignCenter );
         pAutomatItem->setText( eColumnTarget, automaton.strName_.GetData().c_str() );
 
         // Total Unit/Dotation
-        ADN_Rich_ListViewItem* pAutomatTotalItem = new ADN_Rich_ListViewItem( pAutomatItem, true );
+        ADN_Rich_ListViewItem* pAutomatTotalItem = new ADN_Rich_ListViewItem( pAutomatItem, Qt::AlignCenter );
         pAutomatTotalItem->setText( eColumnTarget, tools::translate( "ADN_AutomatLog_ListView", "Total" ) );
         pAutomatTotalItem->OverrideSorting( ADN_Rich_ListViewItem::eSortingConstraint_Last );
 
@@ -140,14 +145,14 @@ void ADN_AutomatLog_ListView::BuildBody()
 // -----------------------------------------------------------------------------
 uint ADN_AutomatLog_ListView::AddUnit( ADN_Rich_ListViewItem* parent, const QString& name, const ADN_Units_Data::UnitInfos& unit, uint quantity )
 {
-    ADN_Rich_ListViewItem* pUnitItem = new ADN_Rich_ListViewItem( parent, true );
+    ADN_Rich_ListViewItem* pUnitItem = new ADN_Rich_ListViewItem( parent, Qt::AlignCenter );
 
     // Name/Quantity
     pUnitItem->setText( eColumnTarget, name );
     pUnitItem->setText( eColumnNbrUnit, QString::number( quantity ) );
 
     // Total Component/Dotation
-    ADN_Rich_ListViewItem* pUnitTotalItem = new ADN_Rich_ListViewItem( pUnitItem, true );
+    ADN_Rich_ListViewItem* pUnitTotalItem = new ADN_Rich_ListViewItem( pUnitItem, Qt::AlignCenter );
     pUnitTotalItem->setText( eColumnTarget, tools::translate( "ADN_AutomatLog_ListView", "Total" ) );
     pUnitTotalItem->OverrideSorting( ADN_Rich_ListViewItem::eSortingConstraint_Last );
 
@@ -155,7 +160,7 @@ uint ADN_AutomatLog_ListView::AddUnit( ADN_Rich_ListViewItem* parent, const QStr
     uint nCompInUnit = 0;
     for( ADN_Units_Data::CIT_ComposanteInfos_Vector it3 = unit.vComposantes_.begin(); it3 != unit.vComposantes_.end(); ++it3 )
     {
-        ADN_Rich_ListViewItem* pCompItem = new ADN_Rich_ListViewItem( pUnitItem, true );
+        ADN_Rich_ListViewItem* pCompItem = new ADN_Rich_ListViewItem( pUnitItem, Qt::AlignCenter );
         pCompItem->setText( eColumnTarget, (*it3)->ptrComposante_.GetData()->strName_.GetData().c_str() );
         pCompItem->setText( eColumnNbrComp, QString::number( (*it3)->nNb_.GetData() ) );
         nCompInUnit += (*it3)->nNb_.GetData();
@@ -194,7 +199,7 @@ uint ADN_AutomatLog_ListView::AddUnit( ADN_Rich_ListViewItem* parent, const QStr
 // Name: ADN_AutomatLog_ListView::InsertCategory
 // Created: SBO 2006-01-05
 // -----------------------------------------------------------------------------
-void ADN_AutomatLog_ListView::InsertCategory( Q3ListViewItem&                        parent,
+void ADN_AutomatLog_ListView::InsertCategory( QStandardItem&                         parent,
                                               ADN_Composantes_Data::CategoryInfos&   category,
                                               ADN_Composantes_Data::ConsumptionItem& conso )
 {
@@ -205,19 +210,20 @@ void ADN_AutomatLog_ListView::InsertCategory( Q3ListViewItem&                   
 
     ADN_Rich_ListViewItem* pItem = 0;
     // try to find existing item
-    for( Q3ListViewItem* pTmpItem = parent.firstChild(); pTmpItem != 0; )
+    const int rowCount = parent.rowCount();
+    for( int row = 0; row < rowCount; ++row )
     {
-        if( std::string( pTmpItem->text( eColumnTarget ) ) == conso.ptrCategory_.GetData()->strName_.GetData() )
+        QStandardItem* pTmpItem = parent.child( row, eColumnTarget );
+        if( pTmpItem && pTmpItem->text().toStdString() == conso.ptrCategory_.GetData()->strName_.GetData() )
         {
-            pItem = static_cast< ADN_Rich_ListViewItem* >( pTmpItem );
+            pItem = static_cast< ADN_Rich_ListViewItem* >( parent.child( row ) );
             break;
         }
-        pTmpItem = pTmpItem->nextSibling();
     }
 
     if( pItem == 0 )
     {
-        pItem = new ADN_Rich_ListViewItem( &parent, true );
+        pItem = new ADN_Rich_ListViewItem( &parent, Qt::AlignCenter );
         pItem->setText( eColumnTarget         , conso.ptrCategory_.GetData()->strName_.GetData().c_str() );
         pItem->setText( eColumnContenance     , QString::number( category.rNbr_.GetData() ) );
         pItem->setText( eColumnNormalizedConso, QString::number( category.rNormalizedConsumption_.GetData() ) );
@@ -260,24 +266,24 @@ void ADN_AutomatLog_ListView::InsertCategory( Q3ListViewItem&                   
 // Name: ADN_AutomatLog_ListView::InsertCategory
 // Created: SBO 2006-01-05
 // -----------------------------------------------------------------------------
-void ADN_AutomatLog_ListView::InsertCategory( Q3ListViewItem&                         parent,
-                                              ADN_Composantes_Data::CategoryInfos&   category )
+void ADN_AutomatLog_ListView::InsertCategory( QStandardItem&                       parent,
+                                              ADN_Composantes_Data::CategoryInfos& category )
 {
     ADN_Rich_ListViewItem* pItem = 0;
     // try to find existing item
-    for( Q3ListViewItem* pTmpItem = parent.firstChild(); pTmpItem != 0; )
+    const int rowCount = parent.rowCount();
+    for( int row = 0; row < rowCount; ++row )
     {
-        if( std::string( pTmpItem->text( eColumnTarget ) ) == category.ptrCategory_.GetData()->strName_.GetData() )
+        QStandardItem* pTmpItem = parent.child( row, eColumnTarget );
+        if( pTmpItem && pTmpItem->text().toStdString() == category.ptrCategory_.GetData()->strName_.GetData() )
         {
-            pItem = static_cast< ADN_Rich_ListViewItem* >( pTmpItem );
+            pItem = static_cast< ADN_Rich_ListViewItem* >( parent.child( row ) );
             break;
         }
-        pTmpItem = pTmpItem->nextSibling();
     }
-
     if( pItem == 0 )
     {
-        pItem = new ADN_Rich_ListViewItem( &parent, true );
+        pItem = new ADN_Rich_ListViewItem( &parent, Qt::AlignCenter );
         pItem->setText( eColumnTarget         , category.ptrCategory_.GetData()->strName_.GetData().c_str() );
         pItem->setText( eColumnContenance     , QString::number( category.rNbr_.GetData() ) );
         pItem->setText( eColumnNormalizedConso, QString::number( category.rNormalizedConsumption_.GetData() ) );
@@ -369,11 +375,11 @@ void ADN_AutomatLog_ListView::ClearEntry( T_CategoryEntry& entry )
 // Name: ADN_AutomatLog_ListView::FillTotalItem
 // Created: SBO 2006-01-11
 // -----------------------------------------------------------------------------
-void ADN_AutomatLog_ListView::FillTotalItem( Q3ListViewItem& item, const T_CategoryEntry& entry ) const
+void ADN_AutomatLog_ListView::FillTotalItem( QStandardItem& item, const T_CategoryEntry& entry ) const
 {
     for( CIT_CategoryEntry it = entry.begin(); it != entry.end(); ++it )
     {
-        ADN_Rich_ListViewItem* pSubItem = new ADN_Rich_ListViewItem( &item, true );
+        ADN_Rich_ListViewItem* pSubItem = new ADN_Rich_ListViewItem( &item, Qt::AlignCenter );
         pSubItem->OverrideSorting( ADN_Rich_ListViewItem::eSortingConstraint_Last );
         pSubItem->setText( eColumnTarget            , const_cast< ADN_Type_String* >( &it->first->strName_ )->GetData().c_str() );
         pSubItem->setText( eColumnContenance        , QString::number( it->second->rNbr_ ) );
@@ -382,4 +388,27 @@ void ADN_AutomatLog_ListView::FillTotalItem( Q3ListViewItem& item, const T_Categ
         pSubItem->setText( eColumnEngineStoppedConso, QString::number( it->second->rEngineStoppedQuantityUsedPerHour_ ) );
         pSubItem->setText( eColumnEngineStartedConso, QString::number( it->second->rEngineStartedQuantityUsedPerHour_ ) );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_AutomatLog_ListView::LessThan
+// Created: JSR 2012-10-03
+// -----------------------------------------------------------------------------
+bool ADN_AutomatLog_ListView::LessThan( const QModelIndex& left, const QModelIndex& right, bool& valid ) const
+{
+    QModelIndex mainLeft = dataModel_.GetMainModelIndex( left );
+    QModelIndex mainRight = dataModel_.GetMainModelIndex( right );
+    ADN_Rich_ListViewItem* leftItem = static_cast< ADN_Rich_ListViewItem* >( dataModel_.GetItemFromIndex( mainLeft) );
+    ADN_Rich_ListViewItem* rightItem = static_cast< ADN_Rich_ListViewItem* >( dataModel_.GetItemFromIndex( mainRight) );
+    if( leftItem->GetSorting() == ADN_Rich_ListViewItem::eSortingConstraint_First || rightItem->GetSorting() == ADN_Rich_ListViewItem::eSortingConstraint_Last )
+    {
+        valid = true;
+        return true;
+    }
+    if( leftItem->GetSorting() == ADN_Rich_ListViewItem::eSortingConstraint_Last || rightItem->GetSorting() == ADN_Rich_ListViewItem::eSortingConstraint_First )
+    {
+        valid = true;
+        return false;
+    }
+    return false;
 }

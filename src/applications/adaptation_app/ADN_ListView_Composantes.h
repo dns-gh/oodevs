@@ -24,7 +24,7 @@ class ADN_ListView_Composantes
 : public ADN_ListView
 {
 public:
-    explicit ADN_ListView_Composantes( QWidget* pParent = 0, const char* szName = 0, Qt::WFlags f = 0 );
+    explicit ADN_ListView_Composantes( QWidget* pParent );
     virtual ~ADN_ListView_Composantes();
     //@}
 
@@ -34,7 +34,7 @@ private:
     void ConnectItem( bool bConnect );
     void OnContextMenu( const QPoint& pt );
 
-    std::string GetToolTipFor( Q3ListViewItem& item );
+    std::string GetToolTipFor( const QModelIndex& index );
     //@}
 };
 

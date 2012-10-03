@@ -40,13 +40,10 @@ typedef ADN_Equipement_Data::CategoryInfo CategoryInfo;
 // Name: ADN_Equipement_GenericListView constructor
 // Created: APE 2004-12-29
 // -----------------------------------------------------------------------------
-ADN_Equipement_GenericListView::ADN_Equipement_GenericListView( E_DotationFamily nType, QWidget* pParent, const char* szName, Qt::WFlags f )
-    : ADN_ListView( pParent, szName, f )
+ADN_Equipement_GenericListView::ADN_Equipement_GenericListView( E_DotationFamily nType, QWidget* pParent )
+    : ADN_ListView( pParent, "ADN_Equipement_GenericListView", ENT_Tr::ConvertFromDotationFamily( nType_, ENT_Tr::eToTr ).c_str() )
     , nType_      ( nType )
 {
-    // Add one column
-    addColumn( ENT_Tr::ConvertFromDotationFamily( nType_, ENT_Tr::eToTr ).c_str() );
-    setResizeMode( Q3ListView::AllColumns );
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<CategoryInfo>( *this );
     this->SetDeletionEnabled( true );
@@ -120,9 +117,11 @@ void ADN_Equipement_GenericListView::OnContextMenu( const QPoint& pt )
 // Name: ADN_Equipement_GenericListView::GetToolTipFor
 // Created: ABR 2012-08-02
 // -----------------------------------------------------------------------------
-std::string ADN_Equipement_GenericListView::GetToolTipFor( Q3ListViewItem& item )
+std::string ADN_Equipement_GenericListView::GetToolTipFor( const QModelIndex& index )
 {
-    void* pData = static_cast< ADN_ListViewItem& >( item ).GetData();
+    if( !index.isValid() )
+        return "";
+    void* pData = static_cast< ADN_ListViewItem* >( dataModel_.GetItemFromIndex( index ) )->GetData();
     CategoryInfo* pCastData = static_cast< CategoryInfo* >( pData );
     assert( pCastData != 0 );
 

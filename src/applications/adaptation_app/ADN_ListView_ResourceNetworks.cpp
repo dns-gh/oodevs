@@ -22,12 +22,9 @@ typedef ADN_ResourceNetworks_Data::ResourceNetworkInfos ResourceNetworkInfos;
 // Name: ADN_ListView_ResourceNetworks constructor
 // Created: JSR 2010-09-13
 // -----------------------------------------------------------------------------
-ADN_ListView_ResourceNetworks::ADN_ListView_ResourceNetworks( QWidget* pParent, const char* szName, Qt::WFlags f )
-    : ADN_ListView( pParent, szName, f )
+ADN_ListView_ResourceNetworks::ADN_ListView_ResourceNetworks( QWidget* pParent )
+    : ADN_ListView( pParent, "ADN_ListView_ResourceNetworks", ADN_Tr::ConvertFromWorkspaceElement( eResourceNetworks ).c_str() )
 {
-    // Add one column.
-    addColumn( ADN_Tr::ConvertFromWorkspaceElement( eResourceNetworks ).c_str() );
-    setResizeMode( Q3ListView::AllColumns );
     // Connector creation
     pConnector_ = new ADN_Connector_ListView< ResourceNetworkInfos >(*this);
     this->SetDeletionEnabled( true );
@@ -81,9 +78,11 @@ void ADN_ListView_ResourceNetworks::OnContextMenu( const QPoint& pt )
 // Name: ADN_ListView_ResourceNetworks::GetToolTipFor
 // Created: ABR 2012-08-02
 // -----------------------------------------------------------------------------
-std::string ADN_ListView_ResourceNetworks::GetToolTipFor( Q3ListViewItem& item )
+std::string ADN_ListView_ResourceNetworks::GetToolTipFor( const QModelIndex& index )
 {
-    void* pData = static_cast< ADN_ListViewItem& >( item ).GetData();
+    if( !index.isValid() )
+        return "";
+    void* pData = static_cast< ADN_ListViewItem* >( dataModel_.GetItemFromIndex( index ) )->GetData();
     ResourceNetworkInfos* pCastData = static_cast< ResourceNetworkInfos* >( pData );
     assert( pCastData != 0 );
     return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( ePeople ).c_str(),

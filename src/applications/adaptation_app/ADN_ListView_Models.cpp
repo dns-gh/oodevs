@@ -26,13 +26,10 @@ typedef ADN_Models_Data::ModelInfos ModelInfos;
 // Name: ADN_ListView_Models constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_ListView_Models::ADN_ListView_Models( E_EntityType eEntityType, QWidget* pParent, const char* szName, Qt::WFlags f )
-    : ADN_ListView( pParent, szName, f )
+ADN_ListView_Models::ADN_ListView_Models( E_EntityType eEntityType, QWidget* pParent )
+    : ADN_ListView( pParent, "ADN_ListView_Models", ADN_Tr::ConvertFromWorkspaceElement( eModels ).c_str() )
     , eEntityType_( eEntityType )
 {
-    // Add one column.
-    addColumn( ADN_Tr::ConvertFromWorkspaceElement( eModels ).c_str() );
-    setResizeMode( Q3ListView::AllColumns );
     // Connector creation.
     pConnector_ = new ADN_Connector_ListView<ModelInfos>( *this );
     this->SetDeletionEnabled( true );
@@ -109,9 +106,11 @@ void ADN_ListView_Models::OnContextMenu( const QPoint& pt )
 // Name: ADN_ListView_Models::GetToolTipFor
 // Created: SBO 2006-09-11
 // -----------------------------------------------------------------------------
-std::string ADN_ListView_Models::GetToolTipFor( Q3ListViewItem& item )
+std::string ADN_ListView_Models::GetToolTipFor( const QModelIndex& index )
 {
-    void* pData = static_cast<ADN_ListViewItem&>( item ).GetData();
+    if( !index.isValid() )
+        return "";
+    void* pData = static_cast< ADN_ListViewItem* >( dataModel_.GetItemFromIndex( index ) )->GetData();
     ModelInfos* pCastData = static_cast< ModelInfos* >( pData );
     assert( pCastData != 0 );
     if( eEntityType_ == eEntityType_Pawn )

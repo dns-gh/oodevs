@@ -24,7 +24,7 @@ class ADN_ListView_Urban_Type
     : public ADN_ListView
 {
 public:
-    explicit ADN_ListView_Urban_Type( QWidget* pParent, Qt::WFlags f = 0 );
+    explicit ADN_ListView_Urban_Type( QWidget* pParent );
     virtual ~ADN_ListView_Urban_Type();
 
 private:

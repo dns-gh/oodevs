@@ -20,12 +20,9 @@ typedef ADN_Automata_Data::AutomatonInfos AutomatonInfos;
 // Name: ADN_Automata_ListView constructor
 // Created: APE 2005-01-06
 // -----------------------------------------------------------------------------
-ADN_Automata_ListView::ADN_Automata_ListView( QWidget* pParent, const char* szName, Qt::WFlags f )
-: ADN_ListView( pParent, szName, f )
+ADN_Automata_ListView::ADN_Automata_ListView( QWidget* pParent )
+: ADN_ListView( pParent, "ADN_Automata_ListView", ADN_Tr::ConvertFromWorkspaceElement( eAutomata ).c_str() )
 {
-    // Add one column.
-    addColumn( ADN_Tr::ConvertFromWorkspaceElement( eAutomata ).c_str() );
-    setResizeMode( Q3ListView::AllColumns );
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<AutomatonInfos>(*this);
     this->SetDeletionEnabled( true );

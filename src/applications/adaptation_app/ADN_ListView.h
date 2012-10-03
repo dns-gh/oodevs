@@ -15,6 +15,7 @@
 #include "ADN_Gfx_ABC.h"
 #include "ADN_Connector_ABC.h"
 #include "ADN_NavigationInfos.h"
+#include "clients_gui/RichTreeView.h"
 #include <boost/function.hpp>
 
 class ADN_ListViewItem;
@@ -37,21 +38,31 @@ namespace ExcelFormat
 */
 // Created: AGN 2003-11-18
 // =============================================================================
-class ADN_ListView : public Q3ListView, public ADN_Gfx_ABC
+class ADN_ListView : public gui::RichTreeView
+                   , public ADN_Gfx_ABC
 {
     Q_OBJECT
     friend ADN_Connector_ListView_ABC;
 
 public:
-    explicit ADN_ListView( QWidget* pParent = 0, const char* szName = 0, Qt::WFlags f = 0 );
+    explicit ADN_ListView( QWidget* pParent, const char* szName, const QString title = "" );
     virtual ~ADN_ListView();
 
     ADN_ListViewItem*   ItemAt( int i );
     ADN_ListViewItem*   FindItem( void* pData );
-    ADN_ListViewItem*   FindItem( const QString& itemName, int col = 0 );
-    int                 FindNdx( void* pData );
+    ADN_ListViewItem*   FindItem( const QString& itemName );
     void*               GetCurrentData();
     void                SetItemConnectors( const T_ConnectorVector& v );
+
+    void InsertItem( ADN_ListViewItem* item );
+    void InsertItems( const QList< QStandardItem* >& items );
+    void TakeItem( ADN_ListViewItem* item );
+    void MoveItem( ADN_ListViewItem* src, ADN_ListViewItem* dest );
+    void MoveItemAbove( ADN_ListViewItem* src, ADN_ListViewItem* dest );
+    void Swap( ADN_ListViewItem* src, ADN_ListViewItem* dest );
+    int ChildCount() const;
+    void Clear();
+    void CreateTableFrom( std::stringstream& stream ) const;
 
     void setEnabled( bool b );
 
@@ -61,7 +72,7 @@ public:
     int ComputeNbrPrintPages( const QSize& painterSize ) const;
     void Print( int nPage, QPainter& painter, const QSize& painterSize );
 
-    virtual std::string GetToolTipFor( Q3ListViewItem& item );
+    virtual std::string GetToolTipFor( const QModelIndex& index );
     void SaveToXls( const QString& path, const QString& sheetName ) const;
 
 public slots:
@@ -74,7 +85,8 @@ protected:
     virtual void ConnectItem( bool /*bConnect*/ ){}// = 0;
 
     void keyReleaseEvent( QKeyEvent* pEvent );
-    virtual bool eventFilter( QObject * watched, QEvent * event );
+    virtual bool eventFilter( QObject* watched, QEvent* event );
+    virtual void contextMenuEvent( QContextMenuEvent* event );
 
     virtual void OnContextMenu( const QPoint& pt );
     void FillContextMenuWithDefault( Q3PopupMenu& popupMenu, ADN_ObjectCreator_ABC& objectCreator );
@@ -83,14 +95,17 @@ protected:
     void FillMultiUsersList( const QString& category, const QStringList& usersList, std::string& result ) const;
 
 private:
+    virtual QStringList MimeTypes() const { return QStringList(); }
+    virtual void Drop( const QString& /*mimeType*/, void* /*data*/, QStandardItem& /*target*/ ) {}
+    virtual QMimeData* MimeData( const QModelIndexList& /*indexes*/, bool& /*overriden*/ ) const { return 0; } 
     bool ApplyFilterLine( ADN_ListViewItem* item );
     bool ApplyFilterList( ADN_ListViewItem* item );
     void ApplyFilter( boost::function< bool ( ADN_ListViewItem* ) > func );
-    void SaveToSheet( YExcel::BasicExcel& xls, const char* sheetName, int sheetNumber, Q3ListViewItem* item, int maxDepth, int nbRow ) const;
-    void RecursiveFillSheetFromItem( Q3ListViewItem* qItem, YExcel::BasicExcelWorksheet& sheet, ExcelFormat::XLSFormatManager& fmt_mgr, int depth, int maxDepth, int& row, std::vector< int >& columnMaxContentSize, int nbRow ) const;
-    void FillSheetFromItem( Q3ListViewItem* qItem, YExcel::BasicExcelWorksheet& sheet, ExcelFormat::XLSFormatManager& fmt_mgr, int depth, int maxDepth, int& row, std::vector< int >& columnMaxContentSize, int nbRow ) const;
-    ADN_ListViewItem* FindItem( Q3ListViewItem* qItem, const QString& itemName );
+    void SaveToSheet( YExcel::BasicExcel& xls, const char* sheetName, int sheetNumber, QStandardItem* item, int maxDepth, int nbRow ) const;
+    void RecursiveFillSheetFromItem( QStandardItem* qItem, YExcel::BasicExcelWorksheet& sheet, ExcelFormat::XLSFormatManager& fmt_mgr, int depth, int maxDepth, int& row, std::vector< int >& columnMaxContentSize, int nbRow ) const;
+    void FillSheetFromItem( QStandardItem* qItem, YExcel::BasicExcelWorksheet& sheet, ExcelFormat::XLSFormatManager& fmt_mgr, int depth, int maxDepth, int& row, std::vector< int >& columnMaxContentSize, int nbRow ) const;
     void FinishCreation( ADN_Ref_ABC* ref );
+    QString ItemText( QStandardItem* item, int col ) const;
 
 protected slots:
     virtual void ContextMenuNew();
@@ -98,9 +113,8 @@ protected slots:
     virtual bool ContextMenuDelete();
     virtual void ContextMenuSearchElements( int id );
 
-    void GoToOnDoubleClicked( Q3ListViewItem* pItem );
-    bool SetCurrentItem( Q3ListViewItem* pItem );
-    void OnContextMenuRequested( Q3ListViewItem* pItem, const QPoint& pt, int nCol );
+    void GoToOnDoubleClicked( const QModelIndex& index );
+    bool SetCurrentItem();
     void UpdateEnableState();
 
 signals:
@@ -110,6 +124,7 @@ signals:
 
 protected:
     void*                       pCurData_;
+    const QString               title_;
     T_ConnectorVector           vItemConnectors_;
     ADN_ObjectCreator_ABC*      pObjectCreator_;
     bool                        bDeletionEnabled_;
@@ -159,7 +174,7 @@ void ADN_ListView::SetDeletionEnabled( bool enabled, bool warning )
 // Created: APE 2005-04-25
 // -----------------------------------------------------------------------------
 inline
-std::string ADN_ListView::GetToolTipFor( Q3ListViewItem& /*item*/ )
+std::string ADN_ListView::GetToolTipFor( const QModelIndex& /*index*/ )
 {
     return std::string( "" );
 }

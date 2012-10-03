@@ -24,12 +24,9 @@ typedef ADN_ActiveProtections_Data::ActiveProtectionsInfos ActiveProtectionsInfo
 // Name: ADN_Equipement_AmmoListView constructor
 // Created: FDS 2010-02-25
 // -----------------------------------------------------------------------------
-ADN_ActiveProtectionsListView::ADN_ActiveProtectionsListView( QWidget* pParent, const char* szName, Qt::WFlags f )
-    : ADN_ListView( pParent, szName, f )
+ADN_ActiveProtectionsListView::ADN_ActiveProtectionsListView( QWidget* pParent )
+    : ADN_ListView( pParent, "ADN_ActiveProtectionsListView", ADN_Tr::ConvertFromWorkspaceElement( eActiveProtections ).c_str() )
 {
-    // Add one column.
-    addColumn( ADN_Tr::ConvertFromWorkspaceElement( eActiveProtections ).c_str() );
-    setResizeMode( Q3ListView::AllColumns );
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<ActiveProtectionsInfos>( *this );
     this->SetDeletionEnabled( true );
@@ -86,9 +83,11 @@ void ADN_ActiveProtectionsListView::OnContextMenu( const QPoint& pt )
 // Name: ADN_ActiveProtectionsListView::GetToolTipFor
 // Created: ABR 2012-08-02
 // -----------------------------------------------------------------------------
-std::string ADN_ActiveProtectionsListView::GetToolTipFor( Q3ListViewItem& item )
+std::string ADN_ActiveProtectionsListView::GetToolTipFor( const QModelIndex& index )
 {
-    void* pData = static_cast< ADN_ListViewItem& >( item ).GetData();
+    if( !index.isValid() )
+        return "";
+    void* pData = static_cast< ADN_ListViewItem* >( dataModel_.GetItemFromIndex( index ) )->GetData();
     ActiveProtectionsInfos* pCastData = static_cast< ActiveProtectionsInfos* >( pData );
     assert( pCastData != 0 );
     return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str(),

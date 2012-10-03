@@ -22,11 +22,9 @@
 // Name: ADN_ListView_Categories_DotationNature::ADN_ListView_Categories_DotationNature
 // Created: SBO 2006-03-23
 // -----------------------------------------------------------------------------
-ADN_ListView_Categories_DotationNature::ADN_ListView_Categories_DotationNature( QWidget * parent, const char * name, Qt::WFlags f )
-    : ADN_ListView( parent, name, f )
+ADN_ListView_Categories_DotationNature::ADN_ListView_Categories_DotationNature( QWidget* parent )
+    : ADN_ListView( parent, "ADN_ListView_Categories_DotationNature", tools::translate( "ADN_ListView_Categories_DotationNature", "Resource Natures" ) )
 {
-    addColumn( tools::translate( "ADN_ListView_Categories_DotationNature", "Resource Natures" ) );
-    setResizeMode( Q3ListView::AllColumns );
     pConnector_ = new ADN_Connector_ListView< helpers::ResourceNatureInfos >( *this );
     SetDeletionEnabled( true );
 }
@@ -83,9 +81,11 @@ void ADN_ListView_Categories_DotationNature::OnContextMenu( const QPoint& pt )
 // Name: ADN_ListView_Categories_DotationNature::GetToolTipFor
 // Created: ABR 2012-07-26
 // -----------------------------------------------------------------------------
-std::string ADN_ListView_Categories_DotationNature::GetToolTipFor( Q3ListViewItem& item )
+std::string ADN_ListView_Categories_DotationNature::GetToolTipFor( const QModelIndex& index )
 {
-    void* pData = static_cast< ADN_ListViewItem& >( item ).GetData();
+    if( !index.isValid() )
+        return "";
+    void* pData = static_cast< ADN_ListViewItem* >( dataModel_.GetItemFromIndex( index ) )->GetData();
     helpers::ResourceNatureInfos* pCastData = static_cast< helpers::ResourceNatureInfos* >( pData );
     assert( pCastData != 0 );
 

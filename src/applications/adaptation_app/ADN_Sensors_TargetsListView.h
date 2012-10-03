@@ -34,7 +34,7 @@ class ADN_Sensors_TargetsListView
 public:
     //! @name Constructors/Destructor
     //@{
-     ADN_Sensors_TargetsListView( QWidget* pParent = 0, const char* szName = 0, Qt::WFlags f = 0 );
+    explicit ADN_Sensors_TargetsListView( QWidget* pParent );
     virtual ~ADN_Sensors_TargetsListView();
     //@}
 

@@ -22,12 +22,9 @@ typedef ADN_KnowledgeGroups_Data::GroupInfo GroupInfo;
 // Name: ADN_KnowledgeGroups_ListView constructor
 // Created: APE 2005-03-21
 // -----------------------------------------------------------------------------
-ADN_KnowledgeGroups_ListView::ADN_KnowledgeGroups_ListView( QWidget* pParent, const char* szName, Qt::WFlags f )
-    : ADN_ListView( pParent, szName, f )
+ADN_KnowledgeGroups_ListView::ADN_KnowledgeGroups_ListView( QWidget* pParent )
+    : ADN_ListView( pParent, "ADN_KnowledgeGroups_ListView", ADN_Tr::ConvertFromWorkspaceElement( eKnowledgeGroups ).c_str() )
 {
-    // Add one column.
-    addColumn( ADN_Tr::ConvertFromWorkspaceElement( eKnowledgeGroups ).c_str() );
-    setResizeMode( Q3ListView::AllColumns );
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<GroupInfo>(*this);
     this->SetDeletionEnabled( true );

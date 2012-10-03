@@ -53,11 +53,11 @@ public:
         pData->DrawCaption( icon );
 
         // Create a new list item.
-        ADN_ListViewItem *pItem = new ADN_ListViewItem( &list_, pObj, 1 );
-        pItem->setPixmap( 0, icon );
+        ADN_ListViewItem *pItem = new ADN_ListViewItem( pObj );
+        pItem->setIcon( icon );
 
         // Connect it with the size info.
-        pItem->Connect( 0, &static_cast<PhSizeInfos*>(pObj)->ptrSize_.GetData()->strName_ );
+        pItem->Connect( &static_cast<PhSizeInfos*>( pObj )->ptrSize_.GetData()->strName_ );
 
         return pItem;
     }
@@ -70,14 +70,9 @@ private:
 // Name: ADN_Weapons_PhSizeListView constructor
 // Created: APE 2005-01-07
 // -----------------------------------------------------------------------------
-ADN_Weapons_PhSizeListView::ADN_Weapons_PhSizeListView( GQ_Plot& plot, QWidget* pParent, const char* szName, Qt::WFlags f )
-: ADN_ListView( pParent, szName, f )
+ADN_Weapons_PhSizeListView::ADN_Weapons_PhSizeListView( GQ_Plot& plot )
+    : ADN_ListView( 0, "", tools::translate( "ADN_Weapons_PhSizeListView", "Target size" ) )
 {
-    // Add one column.
-    addColumn( tools::translate( "ADN_Weapons_PhSizeListView", "Target size" ) );
-    setResizeMode( Q3ListView::AllColumns );
-    setSorting( -1 );
-
     this->setMaximumHeight( 300 );
 
     // Connector creation.

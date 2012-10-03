@@ -80,10 +80,10 @@ template< typename T >
 ADN_ListViewItem* ADN_Connector_ListView<T>::CreateItem( void* pObj )
 {
     // Create the new list item.
-    ADN_ListViewItem* pItem = new ADN_ListViewItem( &list_, pObj, 1 );
+    ADN_ListViewItem* pItem = new ADN_ListViewItem( pObj );
 
     // Connect list item with object's name
-    pItem->Connect( 0, & static_cast<T*>(pObj)->strName_ );
+    pItem->Connect( & static_cast< T* >( pObj )->strName_ );
     return pItem;
 }
 

@@ -108,14 +108,17 @@ template< typename T >
 inline
 QStandardItem* StandardModel::AddChildSafeItem( QStandardItem* root, int row, int col, const QString& text, const QString& tooltip, const T& value, Qt::ItemFlags flags /*= 0*/ )
 {
+    assert( controllers_ );
     QStandardItem* item = AddChildTextItem( root, row, col, text, tooltip, flags );
+    if( controllers_ )
+    {
+        QVariant* variant = new QVariant();
 
-    QVariant* variant = new QVariant();
-    variant->setValue( kernel::VariantPointer( new kernel::SafePointer< T >( controllers_, &value ) ) );
-    item->setData( *variant, DataRole );
-    item->setData( *new QVariant( true ), SafeRole );
-    item->setData( QString( typeid( T ).name() ), MimeTypeRole );
-
+        variant->setValue( kernel::VariantPointer( new kernel::SafePointer< T >( *controllers_, &value ) ) );
+        item->setData( *variant, DataRole );
+        item->setData( *new QVariant( true ), SafeRole );
+        item->setData( QString( typeid( T ).name() ), MimeTypeRole );
+    }
     return item;
 }
 
@@ -298,10 +301,10 @@ void StandardModel::DeleteItemRow( QStandardItem* item )
     if( !parentItem )
         parentItem = invisibleRootItem();
     // $$$$ ABR 2012-09-20: Delete safe pointer if needed
-    if( item->data( StandardModel::SafeRole ).isValid() && item->data( StandardModel::SafeRole ).toBool() &&
+    if( controllers_ && item->data( StandardModel::SafeRole ).isValid() && item->data( StandardModel::SafeRole ).toBool() &&
         item->data( StandardModel::DataRole ).isValid() )
     {
-        controllers_.Unregister( *const_cast< tools::Observer_ABC* >( static_cast< const tools::Observer_ABC* >( item->data( StandardModel::DataRole ).value< kernel::VariantPointer >().ptr_ ) ) );
+        controllers_->Unregister( *const_cast< tools::Observer_ABC* >( static_cast< const tools::Observer_ABC* >( item->data( StandardModel::DataRole ).value< kernel::VariantPointer >().ptr_ ) ) );
         delete item->data( StandardModel::DataRole ).value< kernel::VariantPointer >().ptr_;
     }
     // $$$$ ABR 2012-09-20: Delete row

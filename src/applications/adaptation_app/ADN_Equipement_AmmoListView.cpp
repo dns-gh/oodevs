@@ -38,12 +38,9 @@ typedef ADN_Equipement_Data::CategoryInfo CategoryInfo;
 // Name: ADN_Equipement_AmmoListView constructor
 // Created: APE 2004-12-29
 // -----------------------------------------------------------------------------
-ADN_Equipement_AmmoListView::ADN_Equipement_AmmoListView( QWidget* pParent, const char* szName, Qt::WFlags f )
-: ADN_ListView( pParent, szName, f )
+ADN_Equipement_AmmoListView::ADN_Equipement_AmmoListView( QWidget* pParent )
+    : ADN_ListView( pParent, "ADN_Equipement_AmmoListView", ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Munition, ENT_Tr::eToTr ).c_str() )
 {
-    // Add one column.
-    addColumn( ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Munition, ENT_Tr::eToTr ).c_str() );
-    setResizeMode( Q3ListView::AllColumns );
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<AmmoCategoryInfo>( *this );
     this->SetDeletionEnabled( true );
@@ -173,9 +170,11 @@ void ADN_Equipement_AmmoListView::OnContextMenu( const QPoint& pt )
 // Name: ADN_Equipement_AmmoListView::GetToolTipFor
 // Created: SBO 2005-09-06
 // -----------------------------------------------------------------------------
-std::string ADN_Equipement_AmmoListView::GetToolTipFor( Q3ListViewItem& item )
+std::string ADN_Equipement_AmmoListView::GetToolTipFor( const QModelIndex& index )
 {
-    void* pData = static_cast< ADN_ListViewItem& >( item ).GetData();
+    if( !index.isValid() )
+        return "";
+    void* pData = static_cast< ADN_ListViewItem* >( dataModel_.GetItemFromIndex( index ) )->GetData();
     AmmoCategoryInfo* pCastData = static_cast< AmmoCategoryInfo* >( pData );
     assert( pCastData != 0 );
 

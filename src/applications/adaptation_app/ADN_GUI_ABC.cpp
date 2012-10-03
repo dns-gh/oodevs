@@ -133,13 +133,13 @@ bool ADN_Tabbed_GUI_ABC::SelectItem( const QString& name )
 // Name: ADN_Tabbed_GUI_ABC::FindSubTabAndSelectItem
 // Created: ABR 2012-03-09
 // -----------------------------------------------------------------------------
-void ADN_Tabbed_GUI_ABC::FindSubTabAndSelectItem( const QString& name, int col /* = 0 */ )
+void ADN_Tabbed_GUI_ABC::FindSubTabAndSelectItem( const QString& name )
 {
     if( !pTabWidget_ )
         return;
     for( int i = 0; i < static_cast< int >( vListViews_.size() ); ++i )
     {
-        if( vListViews_[ i ]->FindItem( name, col ) != 0 )
+        if( vListViews_[ i ]->FindItem( name ) != 0 )
         {
             ChangeCurrentSubTab( i );
             vListViews_[ i ]->SetCurrentItem( name );

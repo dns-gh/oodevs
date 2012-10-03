@@ -26,13 +26,9 @@ typedef ADN_Launchers_Data::LauncherInfos LauncherInfos;
 // Name: ADN_ListView_Launchers constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_ListView_Launchers::ADN_ListView_Launchers( QWidget* pParent, const char* szName, Qt::WFlags f )
-: ADN_ListView( pParent, szName, f )
+ADN_ListView_Launchers::ADN_ListView_Launchers( QWidget* pParent )
+    : ADN_ListView( pParent, "ADN_ListView_Launchers", ADN_Tr::ConvertFromWorkspaceElement( eLaunchers ).c_str() )
 {
-    // Add one column.
-    addColumn( ADN_Tr::ConvertFromWorkspaceElement( eLaunchers ).c_str() );
-    setResizeMode( Q3ListView::AllColumns );
-
     // Connector creation.
     pConnector_ = new ADN_Connector_ListView<LauncherInfos>( *this );
 
@@ -109,9 +105,11 @@ void ADN_ListView_Launchers::OnContextMenu( const QPoint& pt )
 // Name: ADN_ListView_Launchers::GetToolTipFor
 // Created: SBO 2005-09-06
 // -----------------------------------------------------------------------------
-std::string ADN_ListView_Launchers::GetToolTipFor( Q3ListViewItem& item )
+std::string ADN_ListView_Launchers::GetToolTipFor( const QModelIndex& index )
 {
-    void* pData = static_cast< ADN_ListViewItem& >( item ).GetData();
+    if( !index.isValid() )
+        return "";
+    void* pData = static_cast< ADN_ListViewItem* >( dataModel_.GetItemFromIndex( index ) )->GetData();
     LauncherInfos* pCastData = static_cast< LauncherInfos* >( pData );
     assert( pCastData != 0 );
     return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( eWeapons ).c_str(),

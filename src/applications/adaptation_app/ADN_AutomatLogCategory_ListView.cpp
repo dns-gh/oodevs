@@ -6,20 +6,11 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-04-04 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_AutomatLogCategory_ListView.cpp $
-// $Author: Ape $
-// $Modtime: 20/04/05 15:53 $
-// $Revision: 3 $
-// $Workfile: ADN_AutomatLogCategory_ListView.cpp $
-//
-// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_Composantes_Data.h"
 #include "ADN_AutomatLogCategory_ListView.h"
-
+#include "ADN_GridDelegate.h"
 #include "ADN_Automata_Data.h"
 #include "ADN_Rich_ListViewItem.h"
 
@@ -28,20 +19,24 @@
 // Created: APE 2005-04-04
 // -----------------------------------------------------------------------------
 ADN_AutomatLogCategory_ListView::ADN_AutomatLogCategory_ListView( ADN_Automata_Data& data, QWidget* pParent )
-: ADN_ListView  ( pParent )
-, data_         ( data )
-, compTotal_    ()
-, unitTotal_    ()
-, automatTotal_ ()
-, categoryTotal_()
-, dotationTotal_()
-
+    : ADN_ListView  ( pParent, "ADN_AutomatLogCategory_ListView" )
+    , data_         ( data )
+    , compTotal_    ()
+    , unitTotal_    ()
+    , automatTotal_ ()
+    , categoryTotal_()
+    , dotationTotal_()
 {
+    setItemDelegate( new ADN_GridDelegate( this ) );
     setRootIsDecorated( true );
     setAllColumnsShowFocus( true );
 
     BuildHeaders();
     BuildBody   ();
+    expandAll();
+    for( int i = 0; i < header()->count(); ++i )
+        resizeColumnToContents( i );
+    collapseAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -58,19 +53,20 @@ ADN_AutomatLogCategory_ListView::~ADN_AutomatLogCategory_ListView()
 // -----------------------------------------------------------------------------
 void ADN_AutomatLogCategory_ListView::BuildHeaders()
 {
-    addColumn( tools::translate( "ADN_AutomatLogCategory_ListView", "Item > Automat > Unit > Comp" ) );
-    addColumn( tools::translate( "ADN_AutomatLogCategory_ListView", "Units" ) );
-    addColumn( tools::translate( "ADN_AutomatLogCategory_ListView", "Equipments" ) );
-    addColumn( tools::translate( "ADN_AutomatLogCategory_ListView", "Resources" ) );
-    addColumn( tools::translate( "ADN_AutomatLogCategory_ListView", "Norm. Consumption" ) );
-    addColumn( tools::translate( "ADN_AutomatLogCategory_ListView", "Consumption\nMoving" ) );
-    addColumn( tools::translate( "ADN_AutomatLogCategory_ListView", "Autonomy\nMoving" ) );
-    addColumn( tools::translate( "ADN_AutomatLogCategory_ListView", "Consumption\nParked engine stopped" ) );
-    addColumn( tools::translate( "ADN_AutomatLogCategory_ListView", "Autonomy\nParked engine Stopped" ) );
-    addColumn( tools::translate( "ADN_AutomatLogCategory_ListView", "Consumption\nParked engine running" ) );
-    addColumn( tools::translate( "ADN_AutomatLogCategory_ListView", "Autonomy\nParked engine running" ) );
-    for( int i = 1; i < columns(); ++i )
-        setColumnAlignment( i, Qt::AlignVCenter | Qt::AlignRight );
+    QStringList list;
+    list << tools::translate( "ADN_AutomatLogCategory_ListView", "Item > Automat > Unit > Comp" )
+         << tools::translate( "ADN_AutomatLogCategory_ListView", "Units" )
+         << tools::translate( "ADN_AutomatLogCategory_ListView", "Equipments" )
+         << tools::translate( "ADN_AutomatLogCategory_ListView", "Resources" )
+         << tools::translate( "ADN_AutomatLogCategory_ListView", "Norm. Consumption" )
+         << tools::translate( "ADN_AutomatLogCategory_ListView", "Consumption\nMoving" )
+         << tools::translate( "ADN_AutomatLogCategory_ListView", "Autonomy\nMoving" )
+         << tools::translate( "ADN_AutomatLogCategory_ListView", "Consumption\nParked engine stopped" )
+         << tools::translate( "ADN_AutomatLogCategory_ListView", "Autonomy\nParked engine Stopped" )
+         << tools::translate( "ADN_AutomatLogCategory_ListView", "Consumption\nParked engine running" )
+         << tools::translate( "ADN_AutomatLogCategory_ListView", "Autonomy\nParked engine running" );
+
+    dataModel_.setHorizontalHeaderLabels( list );
 }
 
 // -----------------------------------------------------------------------------
@@ -84,7 +80,7 @@ void ADN_AutomatLogCategory_ListView::BuildBody()
     for( ADN_Equipement_Data::IT_ResourceInfos_Vector itDotation = dotations.begin(); itDotation != dotations.end(); ++itDotation )
     {
         ADN_Equipement_Data::ResourceInfos& dotation = **itDotation;
-        ADN_Rich_ListViewItem* pDotationItem = new ADN_Rich_ListViewItem( this, true );
+        ADN_Rich_ListViewItem* pDotationItem = new ADN_Rich_ListViewItem( this, Qt::AlignVCenter | Qt::AlignRight );
         pDotationItem->setText( eColumnTarget, dotation.strName_.GetData().c_str() );
 
         // Dotation category (eg. bouffe)
@@ -92,14 +88,14 @@ void ADN_AutomatLogCategory_ListView::BuildBody()
         for( ADN_Equipement_Data::IT_CategoryInfos_Vector itCat = categories.begin(); itCat != categories.end(); ++itCat )
         {
             ADN_Equipement_Data::CategoryInfo& category = **itCat;
-            ADN_Rich_ListViewItem* pCatItem = new ADN_Rich_ListViewItem( pDotationItem, true );
+            ADN_Rich_ListViewItem* pCatItem = new ADN_Rich_ListViewItem( pDotationItem, Qt::AlignVCenter | Qt::AlignRight );
             pCatItem->setText( eColumnTarget, category.strName_.GetData().c_str() );
 
             // Automat
             for( ADN_Automata_Data::IT_AutomatonInfosVector it = data_.vAutomata_.begin(); it != data_.vAutomata_.end(); ++it )
             {
                 ADN_Automata_Data::AutomatonInfos& automaton = **it;
-                ADN_Rich_ListViewItem* pAutomatItem = new ADN_Rich_ListViewItem( pCatItem, true );
+                ADN_Rich_ListViewItem* pAutomatItem = new ADN_Rich_ListViewItem( pCatItem, Qt::AlignVCenter | Qt::AlignRight );
                 pAutomatItem->setText( eColumnTarget, automaton.strName_.GetData().c_str() );
 
                 // Unit
@@ -109,7 +105,7 @@ void ADN_AutomatLogCategory_ListView::BuildBody()
                 {
                     ADN_Automata_Data::UnitInfos* pUnitInfos = 0;
                     ADN_Units_Data::UnitInfos*    pUnit;
-                    ADN_Rich_ListViewItem* pUnitItem = new ADN_Rich_ListViewItem( pAutomatItem, true );
+                    ADN_Rich_ListViewItem* pUnitItem = new ADN_Rich_ListViewItem( pAutomatItem, Qt::AlignVCenter | Qt::AlignRight );
 
                     uint nUnit = 0;
                     if( nUnitInAutomat == 0 )
@@ -137,7 +133,7 @@ void ADN_AutomatLogCategory_ListView::BuildBody()
                     uint nCompInUnit = 0;
                     for( ADN_Units_Data::IT_ComposanteInfos_Vector it3 = unit.vComposantes_.begin(); it3 != unit.vComposantes_.end(); ++it3 )
                     {
-                        ADN_Rich_ListViewItem* pCompItem = new ADN_Rich_ListViewItem( pUnitItem, true );
+                        ADN_Rich_ListViewItem* pCompItem = new ADN_Rich_ListViewItem( pUnitItem, Qt::AlignVCenter | Qt::AlignRight );
                         FillComponentItem( *pCompItem, category, **it3 );
                         AddEntryToTotal( compTotal_, unitTotal_, (*it3)->nNb_.GetData() );
                         compTotal_.Clear();

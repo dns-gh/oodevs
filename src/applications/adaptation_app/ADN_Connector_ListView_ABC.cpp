@@ -17,10 +17,10 @@
 // Created: JDY 03-07-09
 //-----------------------------------------------------------------------------
 ADN_Connector_ListView_ABC::ADN_Connector_ListView_ABC( ADN_ListView& list, const char* szName )
-: ADN_Connector_Vector_ABC( szName )
-, list_(list)
-, bSwap_(false)
-, bIsConnected_(false)
+    : ADN_Connector_Vector_ABC( szName )
+    , list_(list)
+    , bSwap_(false)
+    , bIsConnected_(false)
 {
     if( list_.IsAutoEnabled())
         list_.setEnabled(false);
@@ -83,8 +83,7 @@ bool ADN_Connector_ListView_ABC::AddItemPrivate(void *obj,bool)
 {
     if( obj == 0 )
         return false;
-
-    list_.insertItem(CreateItem(obj));
+    list_.InsertItem( CreateItem( obj ) );
     return true;
 }
 
@@ -92,16 +91,13 @@ bool ADN_Connector_ListView_ABC::AddItemPrivate(void *obj,bool)
 // Name: ADN_Connector_ListView_ABC::RemItemPrivate
 // Created: AGN 2004-05-11
 // -----------------------------------------------------------------------------
-bool ADN_Connector_ListView_ABC::RemItemPrivate(void *item, bool)
+bool ADN_Connector_ListView_ABC::RemItemPrivate( void* item, bool )
 {
     if( item == 0 )
         return false;
-
-    ADN_ListViewItem *pItem=list_.FindItem(item);
+    ADN_ListViewItem *pItem = list_.FindItem( item );
     if( pItem )
-    {
-        list_.takeItem(pItem);
-    }
+        list_.TakeItem( pItem );
     return true;
 }
 
@@ -111,38 +107,36 @@ bool ADN_Connector_ListView_ABC::RemItemPrivate(void *item, bool)
 //-----------------------------------------------------------------------------
 void ADN_Connector_ListView_ABC::SwapItemPrivate(int i,int j)
 {
-    if( list_.childCount()==0 || i==j)
+    if( list_.ChildCount() == 0 || i == j )
         return;
     else if( i < 0 )
-        SwapItem(0,j);
-    else if( j>=(int)list_.childCount())
-        SwapItem(i,list_.childCount()-1);
-    else if( i>j)
-        SwapItem(j,i);
+        SwapItem( 0, j );
+    else if( j >= list_.ChildCount() )
+        SwapItem( i, list_.ChildCount() - 1 );
+    else if( i > j )
+        SwapItem( j, i );
     else if( !bSwap_)
     {
-        ADN_ListViewItem* pItemJ =list_.ItemAt(j);
-        ADN_ListViewItem* pItemI =list_.ItemAt(i);
+        ADN_ListViewItem* pItemJ = list_.ItemAt( j );
+        ADN_ListViewItem* pItemI = list_.ItemAt( i );
 
         if( i == 0)
         {
             // special case cause itemAbove of first Item
             // doesn't work
             if( j == 1)
-                pItemI->moveItem(pItemJ);
+                list_.MoveItem( pItemI, pItemJ );
             else
             {
-                pItemI->moveItem(pItemJ->itemAbove());
-                list_.takeItem(pItemJ);
-                list_.insertItem(pItemJ);
+                list_.MoveItemAbove( pItemI, pItemJ );
+                list_.TakeItem(pItemJ);
+                list_.InsertItem(pItemJ);
             }
         }
         else
         {
             // general case
-            ADN_ListViewItem* pAboveI=(ADN_ListViewItem*)pItemI->itemAbove();
-            pItemI->moveItem(pItemJ->itemAbove());
-            pItemJ->moveItem(pAboveI);
+            list_.Swap( pItemI, pItemJ );
         }
 
         bSwap_=true;
@@ -163,7 +157,7 @@ void ADN_Connector_ListView_ABC::ClearPrivate(bool bInConnection )
     if( !bInConnection)
     {
         list_.SetCurrentItem((void*)0);
-        list_.clear();
+        list_.Clear();
     }
 }
 

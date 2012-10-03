@@ -23,12 +23,9 @@ typedef ADN_Radars_Data::RadarInfos RadarInfos;
 // Name: ADN_Radars_ListView constructor
 // Created: APE 2005-03-21
 // -----------------------------------------------------------------------------
-ADN_Radars_ListView::ADN_Radars_ListView( QWidget* pParent, const char* szName, Qt::WFlags f )
-    : ADN_ListView( pParent, szName, f )
+ADN_Radars_ListView::ADN_Radars_ListView( QWidget* pParent )
+    : ADN_ListView( pParent, "ADN_Radars_ListView", tools::translate( "ADN_Radars_ListView", "Special sensors" ) )
 {
-    // Add one column.
-    addColumn( tools::translate( "ADN_Radars_ListView", "Special sensors" ) );
-    setResizeMode( Q3ListView::AllColumns );
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<RadarInfos>(*this);
     this->SetDeletionEnabled( true );
@@ -105,9 +102,11 @@ void ADN_Radars_ListView::OnContextMenu( const QPoint& pt )
 // Name: ADN_Radars_ListView::GetToolTipFor
 // Created: LDC 2012-05-03
 // -----------------------------------------------------------------------------
-std::string ADN_Radars_ListView::GetToolTipFor( Q3ListViewItem& item )
+std::string ADN_Radars_ListView::GetToolTipFor( const QModelIndex& index )
 {
-    void* pData = static_cast<ADN_ListViewItem&>( item ).GetData();
+    if( !index.isValid() )
+        return "";
+    void* pData = static_cast< ADN_ListViewItem* >( dataModel_.GetItemFromIndex( index ) )->GetData();
     RadarInfos* pCastData = static_cast< RadarInfos* >( pData );
     return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str(),
                             ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ) );

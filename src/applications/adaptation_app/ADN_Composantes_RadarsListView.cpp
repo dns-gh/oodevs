@@ -25,12 +25,9 @@ typedef ADN_Composantes_Data::RadarInfos RadarInfos;
 // Name: ADN_Composantes_RadarsListView constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_Composantes_RadarsListView::ADN_Composantes_RadarsListView( QWidget* pParent, const char* szName, Qt::WFlags f )
-: ADN_ListView( pParent, szName, f )
+ADN_Composantes_RadarsListView::ADN_Composantes_RadarsListView( QWidget* pParent )
+    : ADN_ListView( pParent, "ADN_Composantes_RadarsListView", tr( "Special sensors" ) )
 {
-    // Add one column.
-    addColumn( tr( "Special sensors" ) );
-
     setMinimumHeight( 115 );
     setMaximumHeight( 115 );
 
@@ -99,7 +96,8 @@ void ADN_Composantes_RadarsListView::OnContextMenu( const QPoint& pt )
 
         ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
         pCTable->AddItem( pNewInfo );
-        setCurrentItem( FindItem( pNewInfo ) );
+        if( ADN_ListViewItem* item = FindItem( pNewInfo ) )
+            selectionModel()->setCurrentIndex( dataModel_.indexFromItem( item ), QItemSelectionModel::ClearAndSelect );
     }
 }
 
@@ -109,14 +107,13 @@ void ADN_Composantes_RadarsListView::OnContextMenu( const QPoint& pt )
 //-----------------------------------------------------------------------------
 bool ADN_Composantes_RadarsListView::Contains( const ADN_Radars_Data::RadarInfos* pInfo )
 {
-    Q3ListViewItemIterator it( this );
-    while( it.current() != 0 )
+    const int rowCount = dataModel_.rowCount();
+    for( int row = 0; row < rowCount; ++row )
     {
-        ADN_ListViewItem* pCurr = (ADN_ListViewItem*)it.current();
+        ADN_ListViewItem* pCurr = static_cast< ADN_ListViewItem* >( dataModel_.item( row ) );
         ADN_Composantes_Data::RadarInfos* pData = static_cast< ADN_Composantes_Data::RadarInfos* >( pCurr->GetData() );
         if( pData->ptrRadar_.GetData() == pInfo )
             return true;
-        ++it;
     }
     return false;
 }

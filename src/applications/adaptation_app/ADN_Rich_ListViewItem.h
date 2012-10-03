@@ -19,7 +19,7 @@ class ADN_ListViewItem;
 // Created: SBO 2006-01-04
 //*****************************************************************************
 class ADN_Rich_ListViewItem
-:   public Q3ListViewItem
+    :   public QStandardItem
 {
 public:
     //! @name Enums
@@ -39,16 +39,19 @@ public:
     //@}
 
 public:
-    explicit ADN_Rich_ListViewItem( ADN_ListView* parent, bool bGrid = false );
-    explicit ADN_Rich_ListViewItem( Q3ListViewItem* parent, bool bGrid = false );
+    explicit ADN_Rich_ListViewItem( ADN_ListView* parent, Qt::Alignment alignment );
+    explicit ADN_Rich_ListViewItem( QStandardItem* parent, Qt::Alignment alignment );
     virtual ~ADN_Rich_ListViewItem();
 
     //! @name Operations
     //@{
+    void setText( int column, const QString& string );
+
     void SetBackgroundColor( uint nColumn, const QColor& color );
     void SetWarning        ( uint nColumn );
     void SetError          ( uint nColumn );
 
+    E_SortingConstraint GetSorting() const;
     void OverrideSorting   ( E_SortingConstraint eConstraint );
     //@}
 
@@ -60,19 +63,7 @@ public:
     template< typename T >
     QString ToString( const T& value, E_FieldUnits eUnit = eUnitNone ) const;
 
-protected:
-    virtual void paintCell( QPainter* pPainter, const QColorGroup& cg, int nColumn, int nWidth, int nAlign );
-    virtual QString key   ( int column, bool ascending ) const;
-
 private:
-    //! @name types
-    //@{
-    typedef std::vector< const QColor* > T_QColorVector;
-    //@}
-
-private:
-    T_QColorVector      backgroundColors_;
-    bool                bGrid_;
     E_SortingConstraint eSortingConstraint_;
 
     static QColor warningColor_;

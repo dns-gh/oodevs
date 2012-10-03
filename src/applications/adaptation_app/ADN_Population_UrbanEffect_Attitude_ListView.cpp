@@ -20,13 +20,9 @@ typedef ADN_Population_Data::UrbanEffectInfos UrbanEffectInfos;
 // Name: ADN_Population_UrbanEffect_Attitude_ListView constructor
 // Created: MMC 2011-03-30
 // -----------------------------------------------------------------------------
-ADN_Population_UrbanEffect_Attitude_ListView::ADN_Population_UrbanEffect_Attitude_ListView( QWidget* pParent, const char* szName, Qt::WFlags f )
-: ADN_ListView( pParent, szName, f )
+ADN_Population_UrbanEffect_Attitude_ListView::ADN_Population_UrbanEffect_Attitude_ListView( QWidget* pParent )
+    : ADN_ListView( pParent, "ADN_Population_UrbanEffect_Attitude_ListView", tools::translate( "ADN_Population_UrbanEffect_Attitude_ListView", "Attitudes" ) )
 {
-    // Add one column.
-    addColumn( tools::translate( "ADN_Population_UrbanEffect_Attitude_ListView", "Attitudes" ) );
-    setSortColumn( -1 );
-    setResizeMode( Q3ListView::AllColumns );
     // Connector creation
     pConnector_ = new ADN_Connector_ListView< UrbanEffectInfos >( *this );
     this->SetDeletionEnabled( false );

@@ -38,19 +38,19 @@ ADN_ListViewToolTip::~ADN_ListViewToolTip()
 // -----------------------------------------------------------------------------
 bool ADN_ListViewToolTip::eventFilter( QObject*, QEvent* event )
 {
-    if( event->type() == QEvent::ToolTip )
-    {
-        QHelpEvent* helpEvent = static_cast< QHelpEvent* >( event );
-        QPoint pos = helpEvent->pos();
-        if( !parent() || !listView_.showToolTips() )
-            return false;
-        ADN_ListViewItem* item = static_cast< ADN_ListViewItem* >( listView_.itemAt( pos ) );
-        if( !item )
-            return false;
-        QString text = listView_.GetToolTipFor( *item ).c_str();
-        QRect rect = listView_.itemRect( item );
-        QToolTip::showText( helpEvent->globalPos(), text, static_cast< QWidget* >( parent() ), rect );
-        return true;
+     if( event->type() == QEvent::ToolTip )
+     {
+         QHelpEvent* helpEvent = static_cast< QHelpEvent* >( event );
+         QPoint pos = helpEvent->pos();
+         if( !parent() /*|| !listView_.showToolTips()*/ )
+             return false;
+         QModelIndex index = listView_.indexAt( pos );
+         if( !index.isValid() )
+             return false;
+         QString text = listView_.GetToolTipFor( index ).c_str();
+         QRect rect = listView_.visualRect( index );
+         QToolTip::showText( helpEvent->globalPos(), text, static_cast< QWidget* >( parent() ), rect );
+         return true;
     }
     return false;
 }

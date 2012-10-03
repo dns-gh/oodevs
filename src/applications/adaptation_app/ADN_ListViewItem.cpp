@@ -19,11 +19,10 @@ class ADN_ListViewItem_Connector
 {
 public:
 
-    ADN_ListViewItem_Connector(ADN_ListViewItem& lvi,int pos,ADN_ListViewItem::E_TypeCvt eCvt, const char* szName = 0 )
-    : ADN_Connector_ABC( szName )
-    , lvi_(lvi)
-    , nPos_(pos)
-    , eCvt_(eCvt)
+    ADN_ListViewItem_Connector( ADN_ListViewItem& lvi, ADN_ListViewItem::E_TypeCvt eCvt, const char* szName = 0 )
+        : ADN_Connector_ABC( szName )
+        , lvi_( lvi )
+        , eCvt_( eCvt )
     {
     }
 
@@ -31,57 +30,51 @@ public:
     {
     }
 
-    void SetDataPrivate(void *data)
+    void SetDataPrivate( void* data )
     {
-
-        switch ( eCvt_ )
+        switch( eCvt_ )
         {
             case ADN_ListViewItem::eString:
             {
-                lvi_.setText(nPos_,((std::string*)data)->c_str());
-                if( ADN_ListView* list = static_cast< ADN_ListView*>( lvi_.listView() ) )
-                    list->sort();
+                lvi_.setText( ( static_cast< std::string* >( data ) )->c_str() );
                 break;
             }
             case ADN_ListViewItem::eInt:
             {
-                char   istring[256];
-                sprintf_s(istring,"%d",*(int*)data);
-                lvi_.setText(nPos_,istring);
+                lvi_.setText( QString::number( *static_cast< int* >( data ) ) );
                 break;
             }
             case ADN_ListViewItem::eDouble:
             {
-                char   istring[256];
-                sprintf_s(istring,"%f",*(double*)data);
-                lvi_.setText(nPos_,istring);
+                lvi_.setText( QString::number( *static_cast< double* >( data ) ) );
                 break;
             }
             default:
+                assert( false );
                 break;
         }
     }
 
-    void  SetDataChanged(const QString& text)
+    void SetDataChanged(const QString& text)
     {
         switch ( eCvt_ )
         {
             case ADN_ListViewItem::eString:
             {
-                std::string string=text.toAscii().constData();
-                emit DataChanged(&string);
+                std::string string = text.toStdString();
+                emit DataChanged( &string );
                 break;
             }
             case ADN_ListViewItem::eInt:
             {
-                int newval=atoi(text.toAscii().constData());
-                emit DataChanged(&newval);
+                int newval = text.toInt();
+                emit DataChanged( &newval );
                 break;
             }
             case ADN_ListViewItem::eDouble:
             {
-                double newval=atof(text.toAscii().constData());
-                emit DataChanged(&newval);
+                double newval = text.toDouble();
+                emit DataChanged( &newval );
                 break;
             }
             default:
@@ -93,8 +86,6 @@ private:
     ADN_ListViewItem_Connector& operator=( const ADN_ListViewItem_Connector& );
 
 private:
-
-    int                         nPos_;
     ADN_ListViewItem&           lvi_;
     ADN_ListViewItem::E_TypeCvt eCvt_;
 };
@@ -103,23 +94,15 @@ private:
 // Name: ADN_ListViewItem constructor
 // Created: JDY 03-07-02
 //-----------------------------------------------------------------------------
-ADN_ListViewItem::ADN_ListViewItem( ADN_ListView *parent, void* item, int ncol )
-:   Q3ListViewItem( parent, parent ? parent->lastItem () : 0 )
-,   pData_( item )
-,   vConnectors_( ncol, static_cast< ADN_Connector_ABC* >( 0 ) )
+ADN_ListViewItem::ADN_ListViewItem( void* item )
+    : pData_( item )
+    , connector_( 0 )
 {
-    if (parent)
-    {
-        int size = parent->columns();
-        if( size < ncol )
-            for( int i = 0; i < ncol - size; ++i )
-            {
-                parent->addColumn("");
-                parent->setSorting(size+i,true);
-            }
-        for( int j = 0; j < parent->columns(); ++j )
-            parent->setColumnWidthMode( j, Q3ListView::Maximum );
-    }
+    setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable );
+    setData( *new QVariant( gui::StandardModel::showValue_ ), gui::StandardModel::FilterRole );
+    setData( *new QVariant(), gui::StandardModel::DataRole );
+    setData( *new QVariant(), gui::StandardModel::SafeRole );
+    setData( *new QVariant(), gui::StandardModel::MimeTypeRole );
 }
 
 //-----------------------------------------------------------------------------
@@ -129,31 +112,21 @@ ADN_ListViewItem::ADN_ListViewItem( ADN_ListView *parent, void* item, int ncol )
 ADN_ListViewItem::~ADN_ListViewItem()
 {
     pData_=0;
-    clear_owned_ptrs(vConnectors_);
-    vConnectors_.clear();
+    delete connector_;
 }
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListViewItem::Connect
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-void ADN_ListViewItem::Connect(int ndx,ADN_Connector_ABC *data,E_TypeCvt cvt)
+void ADN_ListViewItem::Connect( ADN_Connector_ABC* data, E_TypeCvt cvt )
 {
     // create new internal connector
-    vConnectors_[ndx]=new ADN_ListViewItem_Connector(*this,ndx,cvt, "ADN_ListViewItem_Connector" );
-    assert(vConnectors_[ndx]);
+    assert ( connector_ == 0 );
+
+    connector_ = new ADN_ListViewItem_Connector( *this, cvt, "ADN_ListViewItem_Connector" );
+    assert( connector_ );
 
     // connect internal connect and external data
-    vConnectors_[ndx]->Connect(data);
-}
-
-//-----------------------------------------------------------------------------
-// Name: ADN_ListViewItem::okRename
-// Created: JDY 03-07-03
-//-----------------------------------------------------------------------------
-void ADN_ListViewItem::okRename ( int col )
-{
-    assert(vConnectors_[col]);
-    Q3ListViewItem::okRename(col);
-    static_cast<ADN_ListViewItem_Connector*>(vConnectors_[col])->SetDataChanged(text(col));
+    connector_->Connect( data );
 }

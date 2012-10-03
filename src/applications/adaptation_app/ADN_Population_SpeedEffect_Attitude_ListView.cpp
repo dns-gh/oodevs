@@ -20,13 +20,9 @@ typedef ADN_Population_Data::SpeedEffectInfos SpeedEffectInfos;
 // Name: ADN_Population_SpeedEffect_Attitude_ListView constructor
 // Created: APE 2005-01-06
 // -----------------------------------------------------------------------------
-ADN_Population_SpeedEffect_Attitude_ListView::ADN_Population_SpeedEffect_Attitude_ListView( QWidget* pParent, const char* szName, Qt::WFlags f )
-    : ADN_ListView( pParent, szName, f )
+ADN_Population_SpeedEffect_Attitude_ListView::ADN_Population_SpeedEffect_Attitude_ListView( QWidget* pParent )
+    : ADN_ListView( pParent, "ADN_Population_SpeedEffect_Attitude_ListView", tools::translate( "ADN_Population_SpeedEffect_Attitude_ListView", "Attitudes" ) )
 {
-    // Add one column.
-    addColumn( tools::translate( "ADN_Population_SpeedEffect_Attitude_ListView", "Attitudes" ) );
-    setSortColumn( -1 );
-    setResizeMode( Q3ListView::AllColumns );
     // Connector creation
     pConnector_ = new ADN_Connector_ListView< SpeedEffectInfos >( *this );
     this->SetDeletionEnabled( false );

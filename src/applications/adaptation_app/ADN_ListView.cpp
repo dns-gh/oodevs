@@ -23,7 +23,7 @@
 #include "ADN_MainWindow.h"
 #include "ADN_ListViewToolTip.h"
 #include <boost/bind.hpp>
-#include "excel/ExcelFormat.h"
+#include <excel/ExcelFormat.h>
 
 using namespace ExcelFormat;
 
@@ -31,24 +31,25 @@ using namespace ExcelFormat;
 // Name: ADN_ListView constructor
 // Created: JDY 03-06-26
 //-----------------------------------------------------------------------------
-ADN_ListView::ADN_ListView( QWidget* pParent, const char* szName, Qt::WFlags f )
-    : Q3ListView         ( pParent, szName, f )
+ADN_ListView::ADN_ListView( QWidget* pParent, const char* szName, const QString title /*= ""*/ ) // flags à virer
+    : gui::RichTreeView( pParent )
     , ADN_Gfx_ABC       ()
     , pCurData_         ( 0 )
+    , title_            ( title )
     , pObjectCreator_   ( 0 )
     , bDeletionEnabled_ ( false )
     , bDeletionWarning_ ( true )
     , bPrinting_        ( false )
     , usedByMapper_     ( this )
 {
+    setObjectName( szName );
+    setRootIsDecorated( false );
+    if( !title.isEmpty() )
+        dataModel_.setHorizontalHeaderLabels( QStringList( title ) );
     viewport()->installEventFilter( new ADN_ListViewToolTip( viewport(), *this ) );
 
-    connect( this, SIGNAL( selectionChanged( Q3ListViewItem* ) ), this, SLOT( SetCurrentItem( Q3ListViewItem* ) ) );
-    connect( this, SIGNAL( currentChanged( Q3ListViewItem* ) ), this, SLOT( SetCurrentItem( Q3ListViewItem * ) ) );
-    connect( this, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( Q3ListViewItem*, const QPoint &, int ) ) );
-
-    connect( static_cast< ADN_App* >( qApp )->GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
-
+    connect( selectionModel(), SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ), this, SLOT( SetCurrentItem() ) );
+    connect( static_cast< ADN_App* >( qApp )->GetMainWindow(), SIGNAL( OpenModeToggled() ), this, SLOT( UpdateEnableState() ) );
     connect( &usedByMapper_, SIGNAL( mapped( int ) ), this, SLOT( ContextMenuSearchElements( int ) ) );
 }
 
@@ -62,53 +63,27 @@ ADN_ListView::~ADN_ListView()
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_ListView::FindNdx
-// Created: JDY 03-08-27
-//-----------------------------------------------------------------------------
-int ADN_ListView::FindNdx(void *data)
-{
-    int ndx=0;
-    Q3ListViewItemIterator it( this );
-    while( it.current() != 0 )
-    {
-        ADN_ListViewItem* pCurr=(ADN_ListViewItem*)it.current();
-        if( pCurr->GetData()==data )
-            return ndx;
-        ++it;
-        ++ndx;
-    }
-    return 0;
-}
-
-//-----------------------------------------------------------------------------
 // Name: ADN_ListView::ItemAt
 // Created: JDY 03-08-27
 //-----------------------------------------------------------------------------
-ADN_ListViewItem* ADN_ListView::ItemAt(int i)
+ADN_ListViewItem* ADN_ListView::ItemAt( int i )
 {
-    int ndx=0;
-    Q3ListViewItemIterator it( this );
-    while( it.current() != 0 && ndx < i )
-    {
-        ++it;
-        ++ndx;
-    }
-    return (ADN_ListViewItem*)it.current();
+    assert( i < dataModel_.rowCount() );
+    return static_cast< ADN_ListViewItem* >( dataModel_.item( i ) );
 }
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView::FindItem
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_ListViewItem* ADN_ListView::FindItem(void* data)
+ADN_ListViewItem* ADN_ListView::FindItem( void* data )
 {
-    Q3ListViewItemIterator it( this );
-    while( it.current() != 0 )
+    const int rowCount = dataModel_.rowCount();
+    for( int i = 0; i < rowCount; ++i )
     {
-        ADN_ListViewItem* pCurr=(ADN_ListViewItem*)it.current();
-        if( pCurr->GetData()==data )
+        ADN_ListViewItem* pCurr = static_cast< ADN_ListViewItem* >( dataModel_.item( i ) );
+        if( pCurr->GetData() == data )
             return pCurr;
-        ++it;
     }
     return 0;
 }
@@ -117,24 +92,120 @@ ADN_ListViewItem* ADN_ListView::FindItem(void* data)
 // Name: ADN_ListView::FindItem
 // Created: ABR 2012-03-09
 // -----------------------------------------------------------------------------
-ADN_ListViewItem* ADN_ListView::FindItem( const QString& itemName, int col /* = 0 */ )
+ADN_ListViewItem* ADN_ListView::FindItem( const QString& itemName  )
 {
-    Q3ListViewItemIterator it( this );
-    while( it.current() != 0 )
+    const int rowCount = dataModel_.rowCount();
+    for( int i = 0; i < rowCount; ++i )
     {
-        ADN_ListViewItem* pCurr=(ADN_ListViewItem*)it.current();
-        if( pCurr->text( col ) == itemName )
+        ADN_ListViewItem* pCurr = static_cast< ADN_ListViewItem* >( dataModel_.item( i ) );
+        if( pCurr->text() == itemName )
             return pCurr;
-        ++it;
     }
     return 0;
 }
 
-inline void SetAutoClear(T_ConnectorVector& v,bool b)
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::InsertItem
+// Created: JSR 2012-10-02
+// -----------------------------------------------------------------------------
+void ADN_ListView::InsertItem( ADN_ListViewItem* item )
 {
-    for( T_ConnectorVector::iterator itConnector=v.begin();itConnector!=v.end();++itConnector)
+    dataModel_.appendRow( item );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::InsertItems
+// Created: JSR 2012-10-02
+// -----------------------------------------------------------------------------
+void ADN_ListView::InsertItems( const QList< QStandardItem* >& items )
+{
+    dataModel_.appendRow( items );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::TakeItem
+// Created: JSR 2012-10-02
+// -----------------------------------------------------------------------------
+void ADN_ListView::TakeItem( ADN_ListViewItem* item )
+{
+    const QModelIndex index = dataModel_.indexFromItem( item );
+    dataModel_.removeRow( index.row(), index.parent() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::MoveItem
+// Created: JSR 2012-10-02
+// -----------------------------------------------------------------------------
+void ADN_ListView::MoveItem( ADN_ListViewItem* src, ADN_ListViewItem* dest )
+{
+    dataModel_.insertRow( dest->row() + 1, dataModel_.takeRow( src->row() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::MoveItemAbove
+// Created: JSR 2012-10-02
+// -----------------------------------------------------------------------------
+void ADN_ListView::MoveItemAbove( ADN_ListViewItem* src, ADN_ListViewItem* dest )
+{
+    dataModel_.insertRow( dest->row(), dataModel_.takeRow( src->row() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::Swap
+// Created: JSR 2012-10-02
+// -----------------------------------------------------------------------------
+void ADN_ListView::Swap( ADN_ListViewItem* src, ADN_ListViewItem* dest )
+{
+    int destSrc = dest->row();
+    MoveItem( dest, src );
+    dataModel_.insertRow( destSrc, dataModel_.takeRow( src->row() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::ChildCount
+// Created: JSR 2012-10-02
+// -----------------------------------------------------------------------------
+int ADN_ListView::ChildCount() const
+{
+    return dataModel_.rowCount();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::Clear
+// Created: JSR 2012-10-02
+// -----------------------------------------------------------------------------
+void ADN_ListView::Clear()
+{
+    dataModel_.clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::CreateTableFrom
+// Created: JSR 2012-10-03
+// -----------------------------------------------------------------------------
+void ADN_ListView::CreateTableFrom( std::stringstream& stream ) const
+{
+    stream << "<table border = 1>\n";
+
+    stream << "<tr>\n";
+    stream << "<th>" << title_.toStdString() << "</th>";
+    stream << "</tr>\n";
+
+    for( int row = 0; row < dataModel_.rowCount(); ++row )
+    {
+        stream << "<tr>";
+        for( int nR = 0; nR < header()->count(); ++nR )
+            stream << "<td>" << dataModel_.item( row, nR )->text().toStdString() << "</td>";
+        stream << "</tr>\n";
+    }
+    stream << "</table>\n";
+}
+
+inline void SetAutoClear( T_ConnectorVector& v, bool b )
+{
+    for( T_ConnectorVector::iterator itConnector = v.begin(); itConnector != v.end(); ++itConnector )
         if( *itConnector != 0 )
-            (*itConnector)->SetAutoClear(b);
+            ( *itConnector )->SetAutoClear( b );
 }
 
 //-----------------------------------------------------------------------------
@@ -159,13 +230,13 @@ bool ADN_ListView::SetCurrentItem( void* pData )
         SetAutoClear( vItemConnectors_, false );
 
     this->blockSignals( true );
-    Q3ListViewItem* pItem = this->FindItem( pData );
-    this->setSelected( pItem, true );
+    QStandardItem* pItem = this->FindItem( pData );
+    selectionModel()->setCurrentIndex( proxyModel_->mapFromSource( dataModel_.indexFromItem( pItem ) ), QItemSelectionModel::ClearAndSelect );
     this->blockSignals( false );
 
     emit ItemSelected( pData );
 
-    ensureItemVisible( pItem );
+    scrollTo( dataModel_.indexFromItem( pItem ) );
 
     return pData != 0;
 }
@@ -179,29 +250,12 @@ bool ADN_ListView::SetCurrentItem( const QString& itemName )
     if( itemName.isEmpty() )
         return false;
 
-    Q3ListViewItem* pItem = FindItem( firstChild(), itemName );
+    QStandardItem* pItem = FindItem( itemName );
 
     if( pItem != 0 )
-        return SetCurrentItem( static_cast<ADN_ListViewItem*>( pItem )->GetData() );
+        return SetCurrentItem( static_cast< ADN_ListViewItem* >( pItem )->GetData() );
     else
         return SetCurrentItem( (void*)0 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_ListView::FindItem
-// Created: ABR 2012-03-05
-// -----------------------------------------------------------------------------
-ADN_ListViewItem* ADN_ListView::FindItem( Q3ListViewItem* qItem, const QString& itemName )
-{
-    ADN_ListViewItem* result = 0;
-    for( Q3ListViewItem* item = qItem; item != 0 && result == 0; item = item->nextSibling() )
-    {
-        if( item->text( 0 ) == itemName )
-            result = static_cast< ADN_ListViewItem* >( item );
-        else
-            result = FindItem( item->firstChild(), itemName );
-    }
-    return result;
 }
 
 //-----------------------------------------------------------------------------
@@ -326,7 +380,7 @@ void ADN_ListView::FinishCreation( ADN_Ref_ABC* ref )
     ADN_Connector_Vector_ABC* pCList = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
     pCList->AddItem( ref );
 
-    setCurrentItem( FindItem( ref ) );
+    selectionModel()->setCurrentIndex( dataModel_.indexFromItem( FindItem( ref ) ), QItemSelectionModel::ClearAndSelect );
 
     pObjectCreator_ = 0;
     static_cast< ADN_MainWindow* >( topLevelWidget() )->ChangeSaveState( false );
@@ -361,21 +415,25 @@ bool ADN_ListView::ContextMenuDelete()
 // Name: ADN_ListView::SetCurrentItem
 // Created: JDY 03-07-02
 //-----------------------------------------------------------------------------
-bool ADN_ListView::SetCurrentItem( Q3ListViewItem* pItem )
+bool ADN_ListView::SetCurrentItem()
 {
-    if( pItem != 0 )
-        return SetCurrentItem( static_cast<ADN_ListViewItem*>( pItem )->GetData() );
-    else
-        return SetCurrentItem( (void*)0 );
+    QModelIndex index = selectionModel()->currentIndex();
+    if( index.isValid() )
+    {
+        QStandardItem* item = dataModel_.GetItemFromIndex( index );
+        if( item )
+            return SetCurrentItem( static_cast< ADN_ListViewItem* >( item )->GetData() );
+    }
+    return SetCurrentItem( 0 );
 }
 
-//-----------------------------------------------------------------------------
-// Name: ADN_ListView::OnContextMenuRequested
-// Created: JDY 03-07-28
-//-----------------------------------------------------------------------------
-void ADN_ListView::OnContextMenuRequested( Q3ListViewItem* /*pItem*/, const QPoint& pt, int /*nCol*/ )
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::contextMenuEvent
+// Created: JSR 2012-10-01
+// -----------------------------------------------------------------------------
+void ADN_ListView::contextMenuEvent( QContextMenuEvent* event )
 {
-    OnContextMenu( pt );
+    OnContextMenu( event->globalPos() );
 }
 
 // -----------------------------------------------------------------------------
@@ -385,9 +443,9 @@ void ADN_ListView::OnContextMenuRequested( Q3ListViewItem* /*pItem*/, const QPoi
 void ADN_ListView::setEnabled( bool b )
 {
     if( bEnabledOnlyInAdminMode_ && b )
-        Q3ListView::setEnabled( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin );
+        gui::RichTreeView::setEnabled( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin );
     else
-        Q3ListView::setEnabled( b );
+        gui::RichTreeView::setEnabled( b );
 }
 
 // -----------------------------------------------------------------------------
@@ -416,8 +474,8 @@ void ADN_ListView::keyReleaseEvent( QKeyEvent* pEvent )
 // -----------------------------------------------------------------------------
 int ADN_ListView::ComputeNbrPrintPages( const QSize& painterSize ) const
 {
-    int nWidthInPages = static_cast< int >( ceil( ( float ) this->contentsWidth() / painterSize.width() ) );
-    int nHeightInPages = static_cast< int >( ceil( ( float ) this->contentsHeight() / painterSize.height() ) );
+    int nWidthInPages = static_cast< int >( ceil( ( float ) this->contentsRect().width() / painterSize.width() ) );
+    int nHeightInPages = static_cast< int >( ceil( ( float ) this->contentsRect().height() / painterSize.height() ) );
     return nWidthInPages * nHeightInPages;
 }
 
@@ -431,14 +489,15 @@ void ADN_ListView::Print( int nPage, QPainter& painter, const QSize& painterSize
     // Ready the table.
     clearSelection();
 
-    int nWidthInPages = static_cast< int >( ceil( ( float ) this->contentsWidth() / painterSize.width() ) );
+    int nWidthInPages = static_cast< int >( ceil( ( float ) this->contentsRect().width() / painterSize.width() ) );
 
     int nY = static_cast< int >( floor( ( float ) nPage / nWidthInPages ) );
     int nX = nPage % nWidthInPages;
 
     painter.save();
     painter.translate( -nX * painterSize.width(), -nY * painterSize.height() );
-    Q3ListView::drawContentsOffset( &painter, 0, 0, nX * painterSize.width(), nY * painterSize.height(), painterSize.width(), painterSize.height() );
+    QTreeView::drawTree( &painter, QRegion( nX * painterSize.width(), nY * painterSize.height(), painterSize.width(), painterSize.height() ) );
+    //Q3ListView::drawContentsOffset( &painter, 0, 0, nX * painterSize.width(), nY * painterSize.height(), painterSize.width(), painterSize.height() );
     painter.restore();
     bPrinting_ = false;
 }
@@ -466,13 +525,14 @@ void ADN_ListView::OnFilterChanged( const QStringList& filterList )
     ApplyFilter( boost::bind( &ADN_ListView::ApplyFilterList, this, _1 ) );
 
     // Select first filtered item.
-    for( Q3ListViewItemIterator it = firstChild(); it.current(); ++it )
+    const int rowCount = dataModel_.rowCount();
+    for( int i = 0; i < rowCount; ++i )
     {
-        ADN_ListViewItem* item = static_cast< ADN_ListViewItem* >( it.current() );
-        if( item->isVisible() )
+        QStandardItem* item = dataModel_.item( i );
+        if( item && item->data( gui::StandardModel::FilterRole ).toString() == gui::StandardModel::showValue_ )
         {
-            setSelected( item, true );
-            break;
+            selectionModel()->setCurrentIndex( dataModel_.indexFromItem( item ), QItemSelectionModel::ClearAndSelect );
+            return;
         }
     }
 }
@@ -490,7 +550,7 @@ bool ADN_ListView::ApplyFilterLine( ADN_ListViewItem* item )
 
     QStringList list = filterLine_.split( ' ' );
     bool result = true;
-    QString text = item->text( 0 ).lower();
+    QString text = item->text().lower();
     for( QStringList::const_iterator it = list.constBegin(); it != list.constEnd(); ++it )
         result = result && text.find( *it ) != -1;
     return result;
@@ -506,7 +566,7 @@ bool ADN_ListView::ApplyFilterList( ADN_ListViewItem* item )
         return true;
     if( !item )
         return false;
-    return filterList_.contains( item->text( 0 ), Qt::CaseInsensitive ) != 0;
+    return filterList_.contains( item->text(), Qt::CaseInsensitive ) != 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -515,10 +575,27 @@ bool ADN_ListView::ApplyFilterList( ADN_ListViewItem* item )
 // -----------------------------------------------------------------------------
 void ADN_ListView::ApplyFilter( boost::function< bool ( ADN_ListViewItem* ) > func )
 {
-    for( Q3ListViewItemIterator it = firstChild(); it.current(); ++it )
+    const int rowCount = dataModel_.rowCount();
+    for( int i = 0; i < rowCount; ++i )
     {
-        ADN_ListViewItem* item = static_cast< ADN_ListViewItem* >( it.current() );
-        item->setVisible( func( item ) ); // Use HasAnyChildVisible( item, func ) if tree view. Cf HierarchyListView_ABC
+        ADN_ListViewItem* item = static_cast< ADN_ListViewItem* >( dataModel_.item( i ) );
+        item->setData( func( item ) ? gui::StandardModel::showValue_ : gui::StandardModel::hideValue_, gui::StandardModel::FilterRole ); // Use HasAnyChildVisible( item, func ) if tree view. Cf HierarchyListView_ABC
+    }
+}
+
+namespace
+{
+    int Depth( const QStandardItem* item )
+    {
+        int depth = 1;
+        if( item->rowCount() > 0 )
+        {
+            int subdepth = 0;
+            for( int i = 0; i < item->rowCount(); ++i )
+                subdepth = std::max( subdepth, Depth( item->child( i ) ) );
+            depth += subdepth;
+        }
+        return depth;
     }
 }
 
@@ -531,26 +608,27 @@ void ADN_ListView::SaveToXls( const QString& path, const QString& sheetName ) co
     BasicExcel xls;
 
     // Compute numer of rows and max depth
-    int nbRow = 0;
+    int nbRow = dataModel_.rowCount();
+    if( nbRow == 0 )
+        return;
     int maxDepth = 0;
-    for( Q3ListViewItemIterator it = firstChild(); it.current(); ++it, ++nbRow )
-        maxDepth = std::max( maxDepth, it.current()->depth() );
+    for( int i = 0; i < nbRow; ++i )
+        maxDepth = std::max( maxDepth, Depth( dataModel_.item( i ) ) );
 
     // Excel allow only numeric_limits< USHORT >::max() rows, so if we need more row, we split first level items into multiple sheets.
     // TODO: check if there are not more columns than allowed (255), and check the same for sheets. In both cases -> multiple files.
     if( nbRow < numeric_limits< USHORT >::max() )
     {
         xls.New( 1 );
-        SaveToSheet( xls, sheetName.toAscii().constData(), 0, firstChild(), maxDepth, nbRow );
+        SaveToSheet( xls, sheetName.toAscii().constData(), 0, dataModel_.item( 0 ), maxDepth, nbRow );
     }
     else
     {
+        xls.New( nbRow );
         int sheet = 0;
-        for( Q3ListViewItem* item = firstChild(); item; item = item->nextSibling(), ++sheet );
-        xls.New( sheet );
-        sheet = 0;
-        for( Q3ListViewItem* item = firstChild(); item; item = item->nextSibling(), ++sheet )
-            SaveToSheet( xls, item->text( 0 ).toAscii().constData(), sheet, item->firstChild(), maxDepth - 1, nbRow );
+        for( int i = 0; i < nbRow; ++i )
+            if( dataModel_.item( i )->rowCount() > 0 )
+                SaveToSheet( xls, dataModel_.item( i )->text().toAscii().constData(), sheet, dataModel_.item( i )->child( 0 ), maxDepth - 1, nbRow );
     }
 
     xls.SaveAs( path.toAscii().constData() );
@@ -560,7 +638,7 @@ void ADN_ListView::SaveToXls( const QString& path, const QString& sheetName ) co
 // Name: ADN_ListView::SaveToSheet
 // Created: ABR 2012-02-10
 // -----------------------------------------------------------------------------
-void ADN_ListView::SaveToSheet( BasicExcel& xls, const char* sheetName, int sheetNumber, Q3ListViewItem* qItem, int maxDepth, int nbRow ) const
+void ADN_ListView::SaveToSheet( BasicExcel& xls, const char* sheetName, int sheetNumber, QStandardItem* qItem, int maxDepth, int nbRow ) const
 {
     // Initialize sheet
     xls.RenameWorksheet( sheetNumber, sheetName );
@@ -572,11 +650,10 @@ void ADN_ListView::SaveToSheet( BasicExcel& xls, const char* sheetName, int shee
     palette.SetColor( 0, 200, 200, 200 ); // Header colors
 
     // Header
-    std::vector< int > columnMaxContentSize( columns(), 0 );
+    std::vector< int > columnMaxContentSize( header()->count(), 0 );
     int row = 0;
     if( header()->isVisible() )
     {
-        assert( header()->count() == columns() );
         CellFormat format( fmt_mgr );
         format.set_borderlines( EXCEL_LS_MEDIUM, EXCEL_LS_MEDIUM, EXCEL_LS_MEDIUM, EXCEL_LS_MEDIUM, EGA_BLACK, EGA_BLACK );
         format.set_font( ExcelFont().set_weight(FW_BOLD) );
@@ -589,7 +666,7 @@ void ADN_ListView::SaveToSheet( BasicExcel& xls, const char* sheetName, int shee
             BasicExcelCell* cell = sheet->Cell( row, xlsCol );
             if( !cell )
                 return;
-            QString content = header()->label( col );
+            QString content = dataModel_.headerData( col, Qt::Horizontal ).toString();
             cell->Set( content.toAscii().constData() );
             cell->SetFormat( format );
             if( col == 0 )
@@ -614,7 +691,7 @@ void ADN_ListView::SaveToSheet( BasicExcel& xls, const char* sheetName, int shee
 
     // Bottom border
     if( row < std::numeric_limits< USHORT >::max() )
-        for( int col = 0; col < columns() + maxDepth; ++col )
+        for( int col = 0; col < header()->count() + maxDepth; ++col )
         {
             BasicExcelCell* cell = sheet->Cell( row, col );
             CellFormat bottom_format( fmt_mgr );
@@ -626,7 +703,7 @@ void ADN_ListView::SaveToSheet( BasicExcel& xls, const char* sheetName, int shee
     static int ghostColumnSize = 1000;
     static int charactereSize = 300;
     static int minimumSize = 1000;
-    for( int col = 0; col < columns() + maxDepth; ++col )
+    for( int col = 0; col < header()->count() + maxDepth; ++col )
     {
         USHORT columnSize = 0;
         if( col < maxDepth ) // Ghost column
@@ -643,28 +720,48 @@ void ADN_ListView::SaveToSheet( BasicExcel& xls, const char* sheetName, int shee
 // Name: ADN_ListView::RecursiveFillSheetFromItem
 // Created: ABR 2012-02-10
 // -----------------------------------------------------------------------------
-void ADN_ListView::RecursiveFillSheetFromItem( Q3ListViewItem* qItem, BasicExcelWorksheet& sheet, XLSFormatManager& fmt_mgr, int depth, int maxDepth, int& row, std::vector< int >& columnMaxContentSize, int nbRow ) const
+void ADN_ListView::RecursiveFillSheetFromItem( QStandardItem* qItem, BasicExcelWorksheet& sheet, XLSFormatManager& fmt_mgr, int depth, int maxDepth, int& row, std::vector< int >& columnMaxContentSize, int nbRow ) const
 {
-    for( Q3ListViewItem* item = qItem; item; item = item->nextSibling() )
+    QStandardItem* p = qItem->parent();
+    if( p == 0 )
+        p = dataModel_.invisibleRootItem();
+    if( !p )
+        return;
+    for( int i = 0; i < p->rowCount(); ++i )
     {
+        QStandardItem* item = p->child( i );
         FillSheetFromItem( item, sheet, fmt_mgr, depth, maxDepth, row, columnMaxContentSize, nbRow );
-        RecursiveFillSheetFromItem( item->firstChild(), sheet, fmt_mgr, depth + 1, maxDepth, row, columnMaxContentSize, nbRow );
+        if( item->rowCount() > 0 )
+            RecursiveFillSheetFromItem( item->child( 0 ), sheet, fmt_mgr, depth + 1, maxDepth, row, columnMaxContentSize, nbRow );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::ItemText
+// Created: JSR 2012-10-03
+// -----------------------------------------------------------------------------
+QString ADN_ListView::ItemText( QStandardItem* item, int col ) const
+{
+    QStandardItem* p = item->parent();
+    if( !p )
+        p = dataModel_.invisibleRootItem();
+    return p->child( item->row(), col )->text();
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView::FillSheetFromItem
 // Created: ABR 2012-02-10
 // -----------------------------------------------------------------------------
-void ADN_ListView::FillSheetFromItem( Q3ListViewItem* qItem, BasicExcelWorksheet& sheet, XLSFormatManager& fmt_mgr, int depth, int maxDepth, int& row, std::vector< int >& columnMaxContentSize, int /*nbRow*/ ) const
+void ADN_ListView::FillSheetFromItem( QStandardItem* qItem, BasicExcelWorksheet& sheet, XLSFormatManager& fmt_mgr, int depth, int maxDepth, int& row, std::vector< int >& columnMaxContentSize, int /*nbRow*/ ) const
 {
-    for( int col = 0; col < columns(); ++col )
+    for( int col = 0; col < header()->count(); ++col )
     {
         int xlsCol = ( col == 0 ) ? depth : col + maxDepth;
         BasicExcelCell* cell = sheet.Cell( row, xlsCol );
 
         // Content
-        QString content = qItem->text( col );
+        
+        QString content = ItemText( qItem, col );
         bool ok = false;
         content.toInt( &ok );
         if( ok )
@@ -684,7 +781,7 @@ void ADN_ListView::FillSheetFromItem( Q3ListViewItem* qItem, BasicExcelWorksheet
 
         // Border
         CellFormat format( fmt_mgr );
-        format.set_borderlines( ( xlsCol == 0 ) ? EXCEL_LS_MEDIUM : EXCEL_LS_THIN, ( col == columns() - 1 ) ? EXCEL_LS_MEDIUM : EXCEL_LS_THIN, EXCEL_LS_THIN, EXCEL_LS_THIN, EGA_BLACK, EGA_BLACK );
+        format.set_borderlines( ( xlsCol == 0 ) ? EXCEL_LS_MEDIUM : EXCEL_LS_THIN, ( col == header()->count() - 1 ) ? EXCEL_LS_MEDIUM : EXCEL_LS_THIN, EXCEL_LS_THIN, EXCEL_LS_THIN, EGA_BLACK, EGA_BLACK );
         if( col == 0 )
         {
             // Update left
@@ -719,10 +816,11 @@ void ADN_ListView::FillSheetFromItem( Q3ListViewItem* qItem, BasicExcelWorksheet
 // -----------------------------------------------------------------------------
 bool ADN_ListView::eventFilter( QObject * watched, QEvent * event )
 {
+    // ???
     if( QMouseEvent* mouseEvent = dynamic_cast< QMouseEvent* >( event ) )
         if( mouseEvent && ( mouseEvent->button() == Qt::XButton1 || mouseEvent->button() == Qt::XButton2 ) )
             return false;
-    return Q3ListView::eventFilter( watched, event );
+    return RichTreeView::eventFilter( watched, event );
 }
 
 // -----------------------------------------------------------------------------
@@ -734,7 +832,7 @@ void ADN_ListView::SetGoToOnDoubleClick( E_WorkspaceElements targetTab, int subT
     goToInfo_.targetTab_ = targetTab;
     goToInfo_.subTargetTab_ = subTargetTab;
     goToInfo_.sourceColumn_ = col;
-    connect( this, SIGNAL( doubleClicked( Q3ListViewItem* ) ), SLOT( GoToOnDoubleClicked( Q3ListViewItem* ) ) );
+    connect( this, SIGNAL( activated( const QModelIndex& ) ), SLOT( GoToOnDoubleClicked( const QModelIndex& ) ) );
     connect( this, SIGNAL( GoToRequested( const ADN_NavigationInfos::GoTo& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnGoToRequested( const ADN_NavigationInfos::GoTo& ) ) );
 }
 
@@ -742,11 +840,11 @@ void ADN_ListView::SetGoToOnDoubleClick( E_WorkspaceElements targetTab, int subT
 // Name: ADN_ListView::GoToOnDoubleClicked
 // Created: ABR 2012-03-05
 // -----------------------------------------------------------------------------
-void ADN_ListView::GoToOnDoubleClicked( Q3ListViewItem* pItem )
+void ADN_ListView::GoToOnDoubleClicked( const QModelIndex& index )
 {
-    if( !pItem )
+    if( !index.isValid() )
         return;
-    goToInfo_.targetName_ = pItem->text( goToInfo_.sourceColumn_ );
+    goToInfo_.targetName_ = dataModel_.itemFromIndex( index )->text();
     assert( goToInfo_.targetTab_ != eNbrWorkspaceElements );
     emit( GoToRequested( goToInfo_ ) );
 }

@@ -22,12 +22,9 @@ typedef ADN_Population_Data::PopulationInfos PopulationInfos;
 // Name: ADN_Population_ListView constructor
 // Created: APE 2005-01-06
 // -----------------------------------------------------------------------------
-ADN_Population_ListView::ADN_Population_ListView( QWidget* pParent, const char* szName, Qt::WFlags f )
-    : ADN_ListView( pParent, szName, f )
+ADN_Population_ListView::ADN_Population_ListView( QWidget* pParent )
+    : ADN_ListView( pParent, "ADN_Population_ListView", ADN_Tr::ConvertFromWorkspaceElement( ePopulation ).c_str() )
 {
-    // Add one column.
-    addColumn( ADN_Tr::ConvertFromWorkspaceElement( ePopulation ).c_str() );
-    setResizeMode( Q3ListView::AllColumns );
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<PopulationInfos>(*this);
     this->SetDeletionEnabled( true );
@@ -91,9 +88,11 @@ void ADN_Population_ListView::OnContextMenu( const QPoint& pt )
 // Name: ADN_Population_ListView::GetToolTipFor
 // Created: ABR 2012-08-02
 // -----------------------------------------------------------------------------
-std::string ADN_Population_ListView::GetToolTipFor( Q3ListViewItem& item )
+std::string ADN_Population_ListView::GetToolTipFor( const QModelIndex& index )
 {
-    void* pData = static_cast< ADN_ListViewItem& >( item ).GetData();
+    if( !index.isValid() )
+        return "";
+    void* pData = static_cast< ADN_ListViewItem* >( dataModel_.GetItemFromIndex( index ) )->GetData();
     PopulationInfos* pCastData = static_cast< PopulationInfos* >( pData );
     assert( pCastData != 0 );
     return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( ePeople ).c_str(),

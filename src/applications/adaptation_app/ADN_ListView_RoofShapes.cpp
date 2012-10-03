@@ -19,11 +19,9 @@
 // Name: ADN_ListView_RoofShapes constructor
 // Created: LGY 2011-09-21
 // -----------------------------------------------------------------------------
-ADN_ListView_RoofShapes::ADN_ListView_RoofShapes( QWidget* pParent, Qt::WFlags f )
-    :  ADN_ListView( pParent, "RoofShape", f )
+ADN_ListView_RoofShapes::ADN_ListView_RoofShapes( QWidget* pParent )
+    :  ADN_ListView( pParent, "RoofShape", tools::translate( "ADN_ListView_RoofShapes", "RoofShape" ) )
 {
-    addColumn( tools::translate( "ADN_ListView_RoofShapes", "RoofShape" ) );
-    setResizeMode( Q3ListView::AllColumns );
     pConnector_ = new ADN_Connector_ListView< ADN_Urban_Data::RoofShapeInfos >( *this );
     SetDeletionEnabled( true );
 }
@@ -68,9 +66,11 @@ void ADN_ListView_RoofShapes::OnContextMenu( const QPoint& pt )
 // Name: ADN_ListView_RoofShapes::GetToolTipFor
 // Created: ABR 2012-07-26
 // -----------------------------------------------------------------------------
-std::string ADN_ListView_RoofShapes::GetToolTipFor( Q3ListViewItem& item )
+std::string ADN_ListView_RoofShapes::GetToolTipFor( const QModelIndex& index )
 {
-    void* pData = static_cast< ADN_ListViewItem& >( item ).GetData();
+    if( !index.isValid() )
+        return "";
+    void* pData = static_cast< ADN_ListViewItem* >( dataModel_.GetItemFromIndex( index ) )->GetData();
     ADN_Urban_Data::RoofShapeInfos* pCastData = static_cast< ADN_Urban_Data::RoofShapeInfos* >( pData );
     assert( pCastData != 0 );
     return FormatUsersList( tools::translate( "ADN_ListView_RoofShapes", "Templates" ),

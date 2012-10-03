@@ -27,11 +27,8 @@
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
 ADN_ListView_Objects::ADN_ListView_Objects( QWidget* pParent )
-    : ADN_ListView( pParent )
+    : ADN_ListView( pParent, ADN_Tr::ConvertFromWorkspaceElement( eObjects ).c_str() )
 {
-    // Add one column.
-    addColumn( ADN_Tr::ConvertFromWorkspaceElement( eObjects ).c_str() );
-    setResizeMode( Q3ListView::AllColumns );
     // Connector creation
     pConnector_ = new ADN_Connector_ListView< ADN_Objects_Data_ObjectInfos >( *this );
     SetDeletionEnabled( true );
@@ -373,9 +370,11 @@ void ADN_ListView_Objects::OnContextMenu( const QPoint& pt )
 // Name: ADN_ListView_Objects::GetToolTipFor
 // Created: ABR 2012-07-25
 // -----------------------------------------------------------------------------
-std::string ADN_ListView_Objects::GetToolTipFor( Q3ListViewItem& item )
+std::string ADN_ListView_Objects::GetToolTipFor( const QModelIndex& index )
 {
-    void* pData = static_cast< ADN_ListViewItem& >( item ).GetData();
+    if( !index.isValid() )
+        return "";
+    void* pData = static_cast< ADN_ListViewItem* >( dataModel_.GetItemFromIndex( index ) )->GetData();
     ADN_Objects_Data_ObjectInfos* pCastData = (ADN_Objects_Data_ObjectInfos*)pData;
     assert( pCastData != 0 );
 

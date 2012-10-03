@@ -23,12 +23,12 @@
 // Created: APE 2005-01-06
 // =============================================================================
 class ADN_Composantes_WeaponsListView
-: public ADN_ListView
+    : public ADN_ListView
 {
     Q_OBJECT
 
 public:
-    explicit ADN_Composantes_WeaponsListView( QWidget* pParent = 0, const char* szName = 0, Qt::WFlags f = 0 );
+    explicit ADN_Composantes_WeaponsListView( QWidget* pParent );
     virtual ~ADN_Composantes_WeaponsListView();
 
 private:

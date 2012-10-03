@@ -26,11 +26,9 @@ typedef ADN_Missions_Data::FragOrder FragOrder;
 // Created: SBO 2006-12-06
 // -----------------------------------------------------------------------------
 ADN_ListView_FragOrderTypes::ADN_ListView_FragOrderTypes( ADN_Missions_Data::T_FragOrder_Vector& orders, QWidget* parent /* = 0*/, const char* szName /* = 0*/ )
-    : ADN_ListView( parent, szName )
+    : ADN_ListView( parent, szName, tr( "Fragmentary orders" ) )
     , orders_( orders )
 {
-    addColumn( tr( "Fragmentary orders" ) );
-    setResizeMode( Q3ListView::AllColumns );
     pConnector_ = new ADN_Connector_ListView< FragOrder >( *this );
     SetDeletionEnabled( true );
 }
@@ -151,9 +149,11 @@ void ADN_ListView_FragOrderTypes::OnContextMenu( const QPoint& pt )
 // Name: ADN_ListView_FragOrderTypes::GetToolTipFor
 // Created: ABR 2011-09-29
 // -----------------------------------------------------------------------------
-std::string ADN_ListView_FragOrderTypes::GetToolTipFor( Q3ListViewItem& item )
+std::string ADN_ListView_FragOrderTypes::GetToolTipFor( const QModelIndex& index )
 {
-    void* pData = static_cast< ADN_ListViewItem& >( item ).GetData();
+    if( !index.isValid() )
+        return "";
+    void* pData = static_cast< ADN_ListViewItem* >( dataModel_.GetItemFromIndex( index ) )->GetData();
     FragOrder* pCastData = static_cast< FragOrder* >( pData );
     assert( pCastData != 0 );
 

@@ -34,7 +34,7 @@ class ADN_Equipement_GenericListView
 public:
     //! @name Constructors/Destructor
     //@{
-     ADN_Equipement_GenericListView( E_DotationFamily nType, QWidget* pParent = 0, const char* szName = 0, Qt::WFlags f = 0 );
+    ADN_Equipement_GenericListView( E_DotationFamily nType, QWidget* pParent );
     virtual ~ADN_Equipement_GenericListView();
     //@}
 
@@ -43,7 +43,7 @@ private:
     //@{
     void ConnectItem( bool bConnect );
     void OnContextMenu( const QPoint& pt );
-    std::string GetToolTipFor( Q3ListViewItem& item );
+    std::string GetToolTipFor( const QModelIndex& index );
     //@}
 
 private:

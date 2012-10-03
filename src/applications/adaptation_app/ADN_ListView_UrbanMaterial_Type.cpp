@@ -20,11 +20,9 @@
 // Name: ADN_ListView_UrbanMaterial_Type constructor
 // Created: SLG 2010-03-10
 //-----------------------------------------------------------------------------
-ADN_ListView_UrbanMaterial_Type::ADN_ListView_UrbanMaterial_Type(QWidget * parent, Qt::WFlags f)
-:   ADN_ListView(parent,"Material",f)
+ADN_ListView_UrbanMaterial_Type::ADN_ListView_UrbanMaterial_Type( QWidget* parent )
+    : ADN_ListView( parent, "Material", tools::translate( "ADN_ListView_UrbanMaterial_Type", "Material" ) )
 {
-    addColumn( tools::translate( "ADN_ListView_UrbanMaterial_Type", "Material" ) );
-    setResizeMode( Q3ListView::AllColumns );
     pConnector_ = new ADN_Connector_ListView< ADN_Urban_Data::UrbanMaterialInfos >( *this );
     this->SetDeletionEnabled( true );
 }
@@ -70,9 +68,11 @@ void  ADN_ListView_UrbanMaterial_Type::OnContextMenu( const QPoint& pt)
 // Name: ADN_ListView_UrbanMaterial_Type::GetToolTipFor
 // Created: ABR 2012-07-26
 // -----------------------------------------------------------------------------
-std::string ADN_ListView_UrbanMaterial_Type::GetToolTipFor( Q3ListViewItem& item )
+std::string ADN_ListView_UrbanMaterial_Type::GetToolTipFor( const QModelIndex& index )
 {
-    void* pData = static_cast< ADN_ListViewItem& >( item ).GetData();
+    if( !index.isValid() )
+        return "";
+    void* pData = static_cast< ADN_ListViewItem* >( dataModel_.GetItemFromIndex( index ) )->GetData();
     ADN_Urban_Data::UrbanMaterialInfos* pCastData = static_cast< ADN_Urban_Data::UrbanMaterialInfos* >( pData );
     assert( pCastData != 0 );
     return FormatUsersList( tools::translate( "ADN_ListView_RoofShapes", "Templates" ),

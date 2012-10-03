@@ -25,7 +25,7 @@ class ADN_ListView_Sensors : public ADN_ListView
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_ListView_Sensors( QWidget* pParent = 0, const char* szName = 0, Qt::WFlags f = 0 );
+    explicit ADN_ListView_Sensors( QWidget* pParent );
     virtual ~ADN_ListView_Sensors();
     //@}
 
@@ -34,7 +34,7 @@ private:
     //@{
     void ConnectItem( bool bConnect );
     void OnContextMenu( const QPoint& pt);
-    virtual std::string GetToolTipFor( Q3ListViewItem& item );
+    virtual std::string GetToolTipFor( const QModelIndex& index );
     //@}
 };
 

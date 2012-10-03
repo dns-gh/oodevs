@@ -38,11 +38,12 @@ private:
     //@{
     void BuildHeaders();
     void BuildBody   ();
-    void InsertCategory( Q3ListViewItem&                         parent,
+    void InsertCategory( QStandardItem&                         parent,
                          ADN_Composantes_Data::CategoryInfos&   category,
                          ADN_Composantes_Data::ConsumptionItem& conso );
-    void InsertCategory( Q3ListViewItem&                         parent,
+    void InsertCategory( QStandardItem&                         parent,
                          ADN_Composantes_Data::CategoryInfos&   category );
+    virtual bool LessThan( const QModelIndex& left, const QModelIndex& right, bool& valid ) const;
     //@}
 
 private:
@@ -103,7 +104,7 @@ private:
     double GetMinEngineStartedAutonomy( const T_CategoryEntry& entry ) const;
     void   AddEntryToTotal            ( const T_CategoryEntry& entry, T_CategoryEntry& total, uint nArity );
     void   ClearEntry                 (       T_CategoryEntry& entry );
-    void   FillTotalItem              (         Q3ListViewItem& item, const T_CategoryEntry& entry ) const;
+    void   FillTotalItem              (         QStandardItem& item, const T_CategoryEntry& entry ) const;
     //@}
 
 private:

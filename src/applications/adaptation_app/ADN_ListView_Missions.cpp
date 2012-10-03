@@ -36,15 +36,11 @@ typedef ADN_Models_Data::MissionInfos MissionInfos;
 // Name: ADN_ListView_Missions constructor
 // Created: AGN 2003-11-27
 // -----------------------------------------------------------------------------
-ADN_ListView_Missions::ADN_ListView_Missions( E_EntityType eEntityType, QWidget * parent /* = 0*/, const char * name , Qt::WFlags f )
-    : ADN_ListView  ( parent, name, f )
+ADN_ListView_Missions::ADN_ListView_Missions( E_EntityType eEntityType, QWidget* parent )
+    : ADN_ListView  ( parent, "ADN_ListView_Missions", tools::translate( "ADN_ListView_Missions", "Missions") )
     , eEntityType_  ( eEntityType )
     , currentMissions_( 0 )
 {
-    // add one column
-    addColumn( tools::translate( "ADN_ListView_Missions", "Missions"));
-    setResizeMode(Q3ListView::AllColumns);
-
     // connector creation
     pConnector_=new ADN_Connector_ListView< MissionInfos >(*this);
 
@@ -138,15 +134,13 @@ void ADN_ListView_Missions::FillList( Q3CheckListItem* pParent, ADN_Missions_Dat
 // -----------------------------------------------------------------------------
 ADN_ListViewItem* ADN_ListView_Missions::FindItem( const std::string& strMissionName )
 {
-    ADN_ListViewItem* pItem = static_cast< ADN_ListViewItem* >( firstChild() );
-    while( pItem != 0 )
+    const int rowCount = dataModel_.rowCount();
+    for( int row = 0; row < rowCount; ++row )
     {
-        if( strMissionName == pItem->text( 0 ).toAscii().constData() )
+        ADN_ListViewItem* pItem = static_cast< ADN_ListViewItem* >( dataModel_.item( row ) );
+        if( strMissionName == pItem->text().toStdString() )
             return pItem;
-
-        pItem = static_cast< ADN_ListViewItem* >( pItem->nextSibling() );
     }
-
     return 0;
 }
 

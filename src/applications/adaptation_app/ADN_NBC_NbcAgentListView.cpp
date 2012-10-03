@@ -24,13 +24,9 @@ typedef ADN_NBC_Datas::NbcAgentInfos NbcAgentInfos;
 // Name: ADN_NBC_NbcAgentListView constructor
 // Created: AGN 2004-05-06
 // -----------------------------------------------------------------------------
-ADN_NBC_NbcAgentListView::ADN_NBC_NbcAgentListView( QWidget* pParent, const char* szName, Qt::WFlags f )
-: ADN_ListView( pParent, szName, f )
+ADN_NBC_NbcAgentListView::ADN_NBC_NbcAgentListView( QWidget* pParent )
+: ADN_ListView( pParent, "ADN_NBC_NbcAgentListView", ADN_Tr::ConvertFromWorkspaceElement( eNBC ).c_str() )
 {
-    // add one column
-    addColumn( ADN_Tr::ConvertFromWorkspaceElement( eNBC ).c_str() );
-    setResizeMode(Q3ListView::AllColumns);
-
     // connector creation
     pConnector_ = new ADN_Connector_ListView<NbcAgentInfos>(*this);
 

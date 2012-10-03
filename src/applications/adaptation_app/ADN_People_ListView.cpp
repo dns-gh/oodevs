@@ -21,12 +21,9 @@ typedef ADN_People_Data::PeopleInfos PeopleInfos;
 // Name: ADN_People_ListView constructor
 // Created: SLG 2010-11-23
 // -----------------------------------------------------------------------------
-ADN_People_ListView::ADN_People_ListView( QWidget* pParent, const char* szName, Qt::WFlags f )
-    : ADN_ListView( pParent, szName, f )
+ADN_People_ListView::ADN_People_ListView( QWidget* pParent )
+    : ADN_ListView( pParent, "ADN_People_ListView", ADN_Tr::ConvertFromWorkspaceElement( ePeople ).c_str() )
 {
-    // Add one column.
-    addColumn( ADN_Tr::ConvertFromWorkspaceElement( ePeople ).c_str() );
-    setResizeMode( Q3ListView::AllColumns );
     // Connector creation
     pConnector_ = new ADN_Connector_ListView< PeopleInfos >( *this );
     this->SetDeletionEnabled( true );

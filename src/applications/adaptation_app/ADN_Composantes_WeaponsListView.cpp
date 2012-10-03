@@ -24,13 +24,9 @@ typedef ADN_Composantes_Data::WeaponInfos WeaponInfos;
 // Name: ADN_Composantes_WeaponsListView constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_Composantes_WeaponsListView::ADN_Composantes_WeaponsListView( QWidget* pParent, const char* szName, Qt::WFlags f )
-: ADN_ListView( pParent, szName, f )
+ADN_Composantes_WeaponsListView::ADN_Composantes_WeaponsListView( QWidget* pParent )
+    : ADN_ListView( pParent, "ADN_Composantes_WeaponsListView", tr( "Weapon systems" ) )
 {
-    // Add one column.
-    addColumn( tr( "Weapon systems" ) );
-//    setResizeMode( QListView::AllColumns );
-
     setMinimumHeight( 115 );
     setMaximumHeight( 115 );
 
@@ -100,7 +96,8 @@ void ADN_Composantes_WeaponsListView::OnContextMenu( const QPoint& pt )
 
         ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
         pCTable->AddItem( pNewInfo );
-        setCurrentItem( FindItem( pNewInfo ) );
+        if( ADN_ListViewItem* item = FindItem( pNewInfo ) )
+            selectionModel()->setCurrentIndex( dataModel_.indexFromItem( item ), QItemSelectionModel::ClearAndSelect );
     }
 }
 
@@ -110,14 +107,13 @@ void ADN_Composantes_WeaponsListView::OnContextMenu( const QPoint& pt )
 //-----------------------------------------------------------------------------
 bool ADN_Composantes_WeaponsListView::Contains( const ADN_Weapons_Data::WeaponInfos* pInfo )
 {
-    Q3ListViewItemIterator it( this );
-    while( it.current() != 0 )
+    const int rowCount = dataModel_.rowCount();
+    for( int row = 0; row < rowCount; ++row )
     {
-        ADN_ListViewItem* pCurr = (ADN_ListViewItem*)it.current();
+        ADN_ListViewItem* pCurr = static_cast< ADN_ListViewItem* >( dataModel_.item( row ) );
         ADN_Composantes_Data::WeaponInfos* pData = static_cast< ADN_Composantes_Data::WeaponInfos* >( pCurr->GetData() );
         if( pData->ptrWeapon_.GetData() == pInfo )
             return true;
-        ++it;
     }
     return false;
 }

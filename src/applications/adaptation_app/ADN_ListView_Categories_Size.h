@@ -21,16 +21,16 @@
 // Created: AGN 2004-05-06
 // =============================================================================
 class ADN_ListView_Categories_Size
-: public ADN_ListView
+    : public ADN_ListView
 {
 public:
-    explicit ADN_ListView_Categories_Size( QWidget* pParent = 0, const char* szName = 0, Qt::WFlags f = 0 );
+    explicit ADN_ListView_Categories_Size( QWidget* pParent );
     virtual ~ADN_ListView_Categories_Size();
 
 private:
     void ConnectItem( bool bConnect );
     void OnContextMenu( const QPoint& pt );
-    virtual std::string GetToolTipFor( Q3ListViewItem& item );
+    virtual std::string GetToolTipFor( const QModelIndex& index );
 };
 
 #endif // __ADN_ListView_Categories_Size_h_

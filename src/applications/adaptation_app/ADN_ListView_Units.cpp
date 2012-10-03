@@ -22,11 +22,9 @@ typedef ADN_Units_Data::UnitInfos UnitInfos;
 // Name: ADN_ListView_Units constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_ListView_Units::ADN_ListView_Units( QWidget* pParent, const char* szName, Qt::WFlags f )
-    : ADN_ListView( pParent, szName, f )
+ADN_ListView_Units::ADN_ListView_Units( QWidget* pParent )
+    : ADN_ListView( pParent, "ADN_ListView_Units", ADN_Tr::ConvertFromWorkspaceElement( eUnits ).c_str() )
 {
-    // Add one column.
-    addColumn( ADN_Tr::ConvertFromWorkspaceElement( eUnits ).c_str() );
     // Connector creation.
     pConnector_ = new ADN_Connector_ListView<UnitInfos>( *this );
     SetDeletionEnabled( true );
@@ -119,9 +117,11 @@ void ADN_ListView_Units::OnContextMenu( const QPoint& pt )
 // Name: ADN_ListView_Units::GetToolTipFor
 // Created: APE 2005-04-25
 // -----------------------------------------------------------------------------
-std::string ADN_ListView_Units::GetToolTipFor( Q3ListViewItem& item )
+std::string ADN_ListView_Units::GetToolTipFor( const QModelIndex& index )
 {
-    void* pData = static_cast< ADN_ListViewItem& >( item ).GetData();
+    if( !index.isValid() )
+        return "";
+    void* pData = static_cast< ADN_ListViewItem* >( dataModel_.GetItemFromIndex( index ) )->GetData();
     UnitInfos* pCastData = static_cast< UnitInfos* >( pData );
     assert( pCastData != 0 );
     return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( eAutomata ).c_str(),

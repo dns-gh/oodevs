@@ -25,13 +25,10 @@ typedef ADN_Missions_Data::Mission Mission;
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
 ADN_ListView_MissionTypes::ADN_ListView_MissionTypes( E_EntityType eEntityType, ADN_Missions_Data::T_Mission_Vector& missions, QWidget* parent /* = 0*/, const char* szName /* = 0*/ )
-    : ADN_ListView( parent, szName )
+    : ADN_ListView( parent, szName, ADN_Tr::ConvertFromWorkspaceElement( eMissions ).c_str() )
     , missions_   ( missions )
     , eEntityType_( eEntityType )
 {
-    addColumn( ADN_Tr::ConvertFromWorkspaceElement( eMissions ).c_str() );
-    setResizeMode( Q3ListView::AllColumns );
-
     pConnector_ = new ADN_Connector_ListView< Mission >( *this );
     SetDeletionEnabled( true );
 }
@@ -119,9 +116,11 @@ bool ADN_ListView_MissionTypes::ContextMenuDelete()
 // Name: ADN_ListView_MissionTypes::GetToolTipFor
 // Created: ABR 2011-09-29
 // -----------------------------------------------------------------------------
-std::string ADN_ListView_MissionTypes::GetToolTipFor( Q3ListViewItem& item )
+std::string ADN_ListView_MissionTypes::GetToolTipFor( const QModelIndex& index )
 {
-    void* pData = static_cast< ADN_ListViewItem& >( item ).GetData();
+    if( !index.isValid() )
+        return "";
+    void* pData = static_cast< ADN_ListViewItem* >( dataModel_.GetItemFromIndex( index ) )->GetData();
     Mission* pCastData = static_cast< Mission* >( pData );
     assert( pCastData != 0 );
     return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( eModels ).c_str(),

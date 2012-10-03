@@ -65,7 +65,7 @@ public:
     virtual void RegisterTable( ADN_MainWindow& /*mainWindow*/ ) {}
     virtual void ExportHtml( ADN_HtmlBuilder& /*mainIndexBuilder*/, const QString& /*strPath*/ ) {}
     virtual void ChangeCurrentSubTab( int ) {}
-    virtual void FindSubTabAndSelectItem( const QString& /*name*/, int col = 0 ) { (void) col; }
+    virtual void FindSubTabAndSelectItem( const QString& /*name*/ ) {}
     virtual bool SelectItem( const QString& name );
 
     void ApplyFilter( const ADN_NavigationInfos::UsedBy& usedByInfos );
@@ -110,7 +110,7 @@ public:
     //@{
     virtual void ChangeCurrentSubTab( int subTab );
     virtual bool SelectItem( const QString& name );
-    virtual void FindSubTabAndSelectItem( const QString& name, int col = 0 );
+    virtual void FindSubTabAndSelectItem( const QString& name );
     //@}
 
 protected:

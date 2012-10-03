@@ -9,6 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_HtmlBuilder.h"
+#include "ADN_ListView.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_HtmlBuilder constructor
@@ -216,28 +217,9 @@ void ADN_HtmlBuilder::WriteToFile( const char* strFileName )
 // Name: ADN_HtmlBuilder::CreateTableFrom
 // Created: APE 2005-04-20
 // -----------------------------------------------------------------------------
-void ADN_HtmlBuilder::CreateTableFrom( Q3ListView& listView )
+void ADN_HtmlBuilder::CreateTableFrom( ADN_ListView& listView )
 {
-    strOutput_ << "<table border = 1>\n";
-
-    strOutput_ << "<tr>\n";
-    for( int n = 0; n < listView.columns(); ++n )
-        strOutput_ << "<th>" << listView.columnText( n ).toAscii().constData() << "</th>";
-    strOutput_ << "</tr>\n";
-
-    Q3ListViewItem* pItem = listView.firstChild();
-    while( pItem != 0 )
-    {
-        strOutput_ << "<tr>";
-        for( int nR = 0; nR < listView.columns(); ++nR )
-        {
-            strOutput_ << "<td>" << pItem->text( nR ).toAscii().constData() << "</td>";
-        }
-        strOutput_ << "</tr>\n";
-        pItem = pItem->nextSibling();
-    }
-
-    strOutput_ << "</table>\n";
+    listView.CreateTableFrom( strOutput_ );
 }
 
 // -----------------------------------------------------------------------------

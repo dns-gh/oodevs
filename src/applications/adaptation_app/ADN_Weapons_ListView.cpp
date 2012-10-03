@@ -31,12 +31,9 @@ typedef ADN_Weapons_Data::WeaponInfos WeaponInfos;
 // Name: ADN_Weapons_ListView constructor
 // Created: APE 2005-01-06
 // -----------------------------------------------------------------------------
-ADN_Weapons_ListView::ADN_Weapons_ListView( QWidget* pParent, const char* szName, Qt::WFlags f )
-: ADN_ListView( pParent, szName, f )
+ADN_Weapons_ListView::ADN_Weapons_ListView( QWidget* pParent )
+    : ADN_ListView( pParent, "ADN_Weapons_ListView", ADN_Tr::ConvertFromWorkspaceElement( eWeapons ).c_str() )
 {
-    // Add one column.
-    addColumn( ADN_Tr::ConvertFromWorkspaceElement( eWeapons ).c_str() );
-    setResizeMode( Q3ListView::AllColumns );
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<WeaponInfos>(*this);
     this->SetDeletionEnabled( true );
@@ -113,9 +110,11 @@ void ADN_Weapons_ListView::OnContextMenu( const QPoint& pt )
 // Name: ADN_Weapons_ListView::GetToolTipFor
 // Created: APE 2005-04-25
 // -----------------------------------------------------------------------------
-std::string ADN_Weapons_ListView::GetToolTipFor( Q3ListViewItem& item )
+std::string ADN_Weapons_ListView::GetToolTipFor( const QModelIndex& index )
 {
-    void* pData = static_cast<ADN_ListViewItem&>( item ).GetData();
+    if( !index.isValid() )
+        return "";
+    void* pData = static_cast< ADN_ListViewItem* >( dataModel_.GetItemFromIndex( index ) )->GetData();
     WeaponInfos* pCastData = static_cast< WeaponInfos* >( pData );
     assert( pCastData != 0 );
     return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str(),

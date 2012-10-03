@@ -20,11 +20,9 @@
 // Name: ADN_ListView_UrbanAccommodation_Type constructor
 // Created: SLG 2010-12-20
 //-----------------------------------------------------------------------------
-ADN_ListView_UrbanAccommodation_Type::ADN_ListView_UrbanAccommodation_Type( QWidget* parent, Qt::WFlags f )
-    : ADN_ListView( parent, "Activity", f )
+ADN_ListView_UrbanAccommodation_Type::ADN_ListView_UrbanAccommodation_Type( QWidget* parent )
+    : ADN_ListView( parent, "Activity", tools::translate( "ADN_ListView_UrbanAccommodation_Type", "Activity" ) )
 {
-    addColumn( tools::translate( "ADN_ListView_UrbanAccommodation_Type", "Activity" ) );
-    setResizeMode( Q3ListView::AllColumns );
     pConnector_ = new ADN_Connector_ListView< ADN_Urban_Data::AccommodationInfos >( *this );
     this->SetDeletionEnabled( true );
 }
@@ -70,9 +68,11 @@ void  ADN_ListView_UrbanAccommodation_Type::OnContextMenu( const QPoint& pt)
 // Name: ADN_ListView_UrbanAccommodation_Type::GetToolTipFor
 // Created: ABR 2012-07-26
 // -----------------------------------------------------------------------------
-std::string ADN_ListView_UrbanAccommodation_Type::GetToolTipFor( Q3ListViewItem& item )
+std::string ADN_ListView_UrbanAccommodation_Type::GetToolTipFor( const QModelIndex& index )
 {
-    void* pData = static_cast< ADN_ListViewItem& >( item ).GetData();
+    if( !index.isValid() )
+        return "";
+    void* pData = static_cast< ADN_ListViewItem* >( dataModel_.GetItemFromIndex( index ) )->GetData();
     ADN_Urban_Data::AccommodationInfos* pCastData = static_cast< ADN_Urban_Data::AccommodationInfos* >( pData );
     assert( pCastData != 0 );
     return FormatUsersList( tools::translate( "ADN_ListView_UrbanAccommodation_Type", "Templates" ),

@@ -25,12 +25,9 @@ typedef ADN_Composantes_Data::ComposanteInfos ComposanteInfos;
 // Name: ADN_ListView_Composantes constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_ListView_Composantes::ADN_ListView_Composantes( QWidget* pParent, const char* szName, Qt::WFlags f )
-: ADN_ListView( pParent, szName, f )
+ADN_ListView_Composantes::ADN_ListView_Composantes( QWidget* pParent )
+    : ADN_ListView( pParent, "ADN_ListView_Composantes", ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str() )
 {
-    // Add one column.
-    addColumn( ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str() );
-    setResizeMode(Q3ListView::AllColumns);
     // Connector creation.
     pConnector_ = new ADN_Connector_ListView<ComposanteInfos>( *this );
     this->SetDeletionEnabled( true );
@@ -186,9 +183,11 @@ void ADN_ListView_Composantes::OnContextMenu( const QPoint& pt )
 // Name: ADN_ListView_Composantes::GetToolTipFor
 // Created: APE 2005-04-25
 // -----------------------------------------------------------------------------
-std::string ADN_ListView_Composantes::GetToolTipFor( Q3ListViewItem& item )
+std::string ADN_ListView_Composantes::GetToolTipFor( const QModelIndex& index )
 {
-    void* pData = static_cast< ADN_ListViewItem& >( item ).GetData();
+    if( !index.isValid() )
+        return "";
+    void* pData = static_cast< ADN_ListViewItem* >( dataModel_.GetItemFromIndex( index ) )->GetData();
     ComposanteInfos* pCastData = static_cast< ComposanteInfos* >( pData );
     assert( pCastData != 0 );
     return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( eUnits ).c_str(),

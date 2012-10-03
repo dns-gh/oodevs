@@ -19,13 +19,9 @@ typedef ADN_Sensors_Data::LimitedToSensorsInfos LimitedToSensorsInfos;
 // Name: ADN_Sensors_LimitedToSensorsListView constructor
 // Created: JSR 2010-03-17
 // -----------------------------------------------------------------------------
-ADN_Sensors_LimitedToSensorsListView::ADN_Sensors_LimitedToSensorsListView( QWidget* pParent /* = 0*/, const char* szName /* = 0*/, Qt::WFlags f /* = 0*/ )
-: ADN_ListView( pParent, szName, f )
+ADN_Sensors_LimitedToSensorsListView::ADN_Sensors_LimitedToSensorsListView()
+    : ADN_ListView( 0, "", tools::translate( "ADN_Sensors_LimitedToSensorsListView", "Sensors" ) )
 {
-    // Add one column.
-    addColumn( tools::translate( "ADN_Sensors_LimitedToSensorsListView", "Sensors" ) );
-    setResizeMode( Q3ListView::AllColumns );
-
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<LimitedToSensorsInfos>(*this);
 
@@ -97,7 +93,8 @@ void ADN_Sensors_LimitedToSensorsListView::OnContextMenu( const QPoint& pt)
         pNewInfo->strName_ = reinterpret_cast< ADN_Sensors_Data::LimitedToSensorsInfos* >( nMenuResult )->GetItemName();
         ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
         pCTable->AddItem( pNewInfo );
-        setCurrentItem( FindItem( pNewInfo ) );
+        if( ADN_ListViewItem* item = FindItem( pNewInfo ) )
+            selectionModel()->setCurrentIndex( dataModel_.indexFromItem( item ), QItemSelectionModel::ClearAndSelect );
     }
 }
 
@@ -107,15 +104,14 @@ void ADN_Sensors_LimitedToSensorsListView::OnContextMenu( const QPoint& pt)
 // -----------------------------------------------------------------------------
 bool ADN_Sensors_LimitedToSensorsListView::Contains( ADN_Sensors_Data::SensorInfos* pInfo )
 {
-    Q3ListViewItemIterator it( this );
-    while( it.current() != 0 )
+    const int rowCount = dataModel_.rowCount();
+    for( int row = 0; row < rowCount; ++row )
     {
-        ADN_ListViewItem* pCurr = (ADN_ListViewItem*)it.current();
+        ADN_ListViewItem* pCurr = static_cast< ADN_ListViewItem* >( dataModel_.item( row ) );
         ADN_Sensors_Data::LimitedToSensorsInfos* pData = static_cast< ADN_Sensors_Data::LimitedToSensorsInfos* >( pCurr->GetData() );
 
         if( pData->strName_.GetData() == pInfo->strName_.GetData() )
             return true;
-        ++it;
     }
     return false;
 }
@@ -126,15 +122,14 @@ bool ADN_Sensors_LimitedToSensorsListView::Contains( ADN_Sensors_Data::SensorInf
 // -----------------------------------------------------------------------------
 bool ADN_Sensors_LimitedToSensorsListView::Contains( ADN_Radars_Data::RadarInfos* pInfo )
 {
-    Q3ListViewItemIterator it( this );
-    while( it.current() != 0 )
+    const int rowCount = dataModel_.rowCount();
+    for( int row = 0; row < rowCount; ++row )
     {
-        ADN_ListViewItem* pCurr = (ADN_ListViewItem*)it.current();
+        ADN_ListViewItem* pCurr = static_cast< ADN_ListViewItem* >( dataModel_.item( row ) );
         ADN_Sensors_Data::LimitedToSensorsInfos* pData = static_cast< ADN_Sensors_Data::LimitedToSensorsInfos* >( pCurr->GetData() );
 
         if( pData->strName_.GetData() == pInfo->strName_.GetData() )
             return true;
-        ++it;
     }
     return false;
 }

@@ -64,7 +64,7 @@ namespace
 // Name: RichTreeView constructor
 // Created: ABR 2012-08-13
 // -----------------------------------------------------------------------------
-RichTreeView::RichTreeView( kernel::Controllers& controllers, QWidget* parent /*= 0*/ )
+RichTreeView::RichTreeView( QWidget* parent /*= 0*/, kernel::Controllers* controllers /*= 0*/ )
     : QTreeView( parent )
     , proxyModel_( new CustomSortFilterProxyModel( *this ) )
     , dataModel_( controllers, *proxyModel_, this )
@@ -110,9 +110,10 @@ void RichTreeView::EnableDragAndDrop( bool enable )
     dataModel_.SetDragAndDropObserver( enable ? this : 0 );
     setDragEnabled( enable );
     setAcceptDrops( enable );
-    setDropIndicatorShown( enable );
+    //setDropIndicatorShown( enable );
     setAutoScroll( enable );
     setAutoExpandDelay( 500 );
+    setDropIndicatorShown( true );
 }
 
 // -----------------------------------------------------------------------------

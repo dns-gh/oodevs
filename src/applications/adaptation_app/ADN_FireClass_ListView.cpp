@@ -19,12 +19,9 @@
 // Name: ADN_FireClass_ListView constructor
 // Created: JSR 2010-12-02
 // -----------------------------------------------------------------------------
-ADN_FireClass_ListView::ADN_FireClass_ListView( QWidget* pParent /* = 0*/, const char* szName /* = 0*/, Qt::WFlags f /* = 0*/ )
-    : ADN_ListView( pParent, szName, f )
+ADN_FireClass_ListView::ADN_FireClass_ListView( QWidget* pParent )
+    : ADN_ListView( pParent, "ADN_FireClass_ListView", ADN_Tr::ConvertFromWorkspaceElement( eFireClasses ).c_str() )
 {
-    // Add one column.
-    addColumn( ADN_Tr::ConvertFromWorkspaceElement( eFireClasses ).c_str() );
-    setResizeMode( Q3ListView::AllColumns );
     // Connector creation
     pConnector_ = new ADN_Connector_ListView< ADN_FireClass_Data::FireClassInfos >( *this );
     this->SetDeletionEnabled( true );

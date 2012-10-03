@@ -1899,6 +1899,9 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_NavigationInfos.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_GridDelegate.h">
+      <Filter>Source Files\Common widgets\List view</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\adaptation_app\ADN_Config.inl">

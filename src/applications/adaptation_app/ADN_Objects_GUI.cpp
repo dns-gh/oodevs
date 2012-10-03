@@ -355,7 +355,7 @@ void ADN_Objects_GUI::Build()
     ADN_SearchListView< ADN_ListView_Objects >* pSearchListView = new ADN_SearchListView< ADN_ListView_Objects >( this, data_.GetObjectInfos(), vInfosConnectors );
     pListView_ = pSearchListView->GetListView();
     pListView_->setObjectName( strClassName_ + "_List" );
-    connect( pListView_, SIGNAL( selectionChanged() ), this, SLOT( OnSelectionChanged() ) );
+    connect( pListView_->selectionModel(), SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ), this, SLOT( OnSelectionChanged() ) );
 
     // Tab widget
     QTabWidget* pTabWidget = new QTabWidget();

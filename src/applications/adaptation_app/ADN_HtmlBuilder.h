@@ -51,7 +51,7 @@ public:
 
     std::stringstream& Stream();
 
-    void CreateTableFrom( Q3ListView& listView );
+    void CreateTableFrom( ADN_ListView& listView );
     void CreateTableFrom( Q3Table& table );
 
     void WriteToFile( const char* strFileName );

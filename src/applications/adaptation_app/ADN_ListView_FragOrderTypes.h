@@ -36,7 +36,7 @@ private:
     //@{
     void ConnectItem( bool bConnect );
     void OnContextMenu( const QPoint& pt );
-    std::string GetToolTipFor( Q3ListViewItem& item );
+    std::string GetToolTipFor( const QModelIndex& index );
     bool ContextMenuDelete();
     //@}
 

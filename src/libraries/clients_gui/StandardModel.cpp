@@ -23,7 +23,7 @@ const QString StandardModel::hideValue_ = "hide";
 // Name: StandardModel constructor
 // Created: ABR 2012-08-13
 // -----------------------------------------------------------------------------
-StandardModel::StandardModel( kernel::Controllers& controllers, QSortFilterProxyModel& proxy, QObject* parent /*= 0*/ )
+StandardModel::StandardModel( kernel::Controllers* controllers, QSortFilterProxyModel& proxy, QObject* parent /*= 0*/ )
     : QStandardItemModel( parent )
     , controllers_( controllers )
     , proxy_( proxy )

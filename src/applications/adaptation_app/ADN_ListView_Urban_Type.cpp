@@ -22,11 +22,9 @@ typedef ADN_Urban_Data::UrbanInfos UrbanInfos;
 // Name: ADN_ListView_Urban_Type constructor
 // Created: SLG 2010-03-10
 //-----------------------------------------------------------------------------
-ADN_ListView_Urban_Type::ADN_ListView_Urban_Type( QWidget * parent, Qt::WFlags f )
-:   ADN_ListView( parent, "Facade", f )
+ADN_ListView_Urban_Type::ADN_ListView_Urban_Type( QWidget * parent )
+    : ADN_ListView( parent, "Facade", tools::translate( "ADN_ListView_Urban_Type", "Facade" ) )
 {
-    addColumn( tools::translate( "ADN_ListView_Urban_Type", "Facade" ) );
-    setResizeMode( Q3ListView::AllColumns );
     pConnector_ = new ADN_Connector_ListView< UrbanInfos >( *this );
     this->SetDeletionEnabled( true );
 }

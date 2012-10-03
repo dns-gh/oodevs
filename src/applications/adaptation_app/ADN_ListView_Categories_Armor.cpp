@@ -26,11 +26,9 @@ typedef helpers::ArmorInfos ArmorInfos;
 // Name: ADN_ListView_Categories_Armor constructor
 // Created: JDY 03-08-27
 //-----------------------------------------------------------------------------
-ADN_ListView_Categories_Armor::ADN_ListView_Categories_Armor(QWidget * parent, const char * name, Qt::WFlags f)
-    : ADN_ListView(parent,name,f)
+ADN_ListView_Categories_Armor::ADN_ListView_Categories_Armor( QWidget* parent )
+    : ADN_ListView( parent, "ADN_ListView_Categories_Armor", tools::translate( "ADN_ListView_Categories_Armor", "Armor-Plating" ) )
 {
-    addColumn( tools::translate( "ADN_ListView_Categories_Armor", "Armor-Plating" ) );
-    setResizeMode( Q3ListView::AllColumns );
     pConnector_ = new ADN_Connector_ListView< ArmorInfos >( *this );
     this->SetDeletionEnabled( true, false );
 }
@@ -107,9 +105,11 @@ void ADN_ListView_Categories_Armor::CreateDefaultAttritionHumanEffect()
 // Name: ADN_ListView_Categories_Armor::GetToolTipFor
 // Created: ABR 2012-07-25
 // -----------------------------------------------------------------------------
-std::string ADN_ListView_Categories_Armor::GetToolTipFor( Q3ListViewItem& item )
+std::string ADN_ListView_Categories_Armor::GetToolTipFor( const QModelIndex& index )
 {
-    void* pData = static_cast< ADN_ListViewItem& >( item ).GetData();
+    if( !index.isValid() )
+        return "";
+    void* pData = static_cast< ADN_ListViewItem* >( dataModel_.GetItemFromIndex( index ) )->GetData();
     ArmorInfos* pCastData = static_cast< ArmorInfos* >( pData );
     assert( pCastData != 0 );
     return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str(),

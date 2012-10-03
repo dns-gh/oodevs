@@ -566,7 +566,7 @@ void ADN_Workspace::OnGoToRequested( const ADN_NavigationInfos::GoTo& goToInfo )
         elements_[ goToInfo.targetTab_ ]->GetGuiABC().ChangeCurrentSubTab( goToInfo.subTargetTab_ );
 
     if( !elements_[ goToInfo.targetTab_ ]->GetGuiABC().SelectItem( goToInfo.targetName_ ) )
-        elements_[ goToInfo.targetTab_ ]->GetGuiABC().FindSubTabAndSelectItem( goToInfo.targetName_, goToInfo.sourceColumn_ );
+        elements_[ goToInfo.targetTab_ ]->GetGuiABC().FindSubTabAndSelectItem( goToInfo.targetName_ );
 }
 
 namespace

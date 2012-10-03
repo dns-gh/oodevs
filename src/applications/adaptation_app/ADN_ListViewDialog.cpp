@@ -26,7 +26,6 @@ ADN_ListViewDialog::ADN_ListViewDialog( QWidget* pParent, const QString& strCapt
     assert( pListView != 0 );
     this->setCaption( strCaption );
     pListView->reparent( this, QPoint(0,0) );
-    connect( pListView, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenu() ) );
     Q3HBox* pHBox = new Q3HBox( this );
     QPushButton* pSaveButton = new QPushButton( tr( "Save" ), pHBox );
     QPushButton* pPrintButton = new QPushButton( tr( "Print" ), pHBox );

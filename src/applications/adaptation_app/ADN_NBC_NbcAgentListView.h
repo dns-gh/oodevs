@@ -22,7 +22,7 @@ class ADN_NBC_NbcAgentListView
 : public ADN_ListView
 {
 public:
-    explicit ADN_NBC_NbcAgentListView( QWidget* pParent = 0, const char* szName = 0, Qt::WFlags f = 0 );
+    explicit ADN_NBC_NbcAgentListView( QWidget* pParent );
     virtual ~ADN_NBC_NbcAgentListView();
 
 private:

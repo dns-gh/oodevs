@@ -24,7 +24,7 @@ using namespace gui;
 // Created: ABR 2012-08-16
 // -----------------------------------------------------------------------------
 EntityTreeView_ABC::EntityTreeView_ABC( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, QWidget* parent /*= 0*/ )
-    : RichTreeView( controllers, parent )
+    : RichTreeView( parent, &controllers )
     , controllers_( controllers )
     , profile_( profile )
     , modelObserver_( modelObserver )

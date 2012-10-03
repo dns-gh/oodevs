@@ -268,7 +268,7 @@ void ADN_Composantes_GUI::Build()
     ADN_SearchListView< ADN_ListView_Composantes >* pSearchListView = new ADN_SearchListView< ADN_ListView_Composantes >( this, data_.GetComposantes(), vInfosConnectors );
     pListView_ = pSearchListView->GetListView();
     pListView_->setObjectName( strClassName_ + "_List" );
-    connect( pListView_, SIGNAL( selectionChanged() ), this, SLOT( OnProtectionTypeChanged() ) );
+    connect( pListView_->selectionModel(), SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ), this, SLOT( OnProtectionTypeChanged() ) );
     connect( pListView_, SIGNAL( ItemSelected( void* ) ), pSpeeds_, SLOT( OnItemSelected( void* ) ) );
 
     pConsumptions_->SetListView( pListView_ );

@@ -283,7 +283,7 @@ void ADN_Units_GUI::Build()
     ADN_SearchListView< ADN_ListView_Units >* pSearchListView = new ADN_SearchListView< ADN_ListView_Units >( this, data_.GetUnitsInfos(), vInfosConnectors );
     pListView_ = pSearchListView->GetListView();
     pListView_->setObjectName( strClassName_ + "_List" );
-    connect( pListView_, SIGNAL( selectionChanged() ), this, SLOT( OnTypeChanged() ) );
+    connect( pListView_->selectionModel(), SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ), this, SLOT( OnTypeChanged() ) );
 
     // Main widget
     pMainWidget_ = CreateScrollArea( *pContent, pSearchListView );

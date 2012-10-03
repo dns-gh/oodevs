@@ -24,13 +24,9 @@ typedef ADN_Sensors_Data::SensorInfos SensorInfos;
 // Name: ADN_ListView_Sensors constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_ListView_Sensors::ADN_ListView_Sensors( QWidget* pParent, const char* szName, Qt::WFlags f )
-: ADN_ListView( pParent, szName, f )
+ADN_ListView_Sensors::ADN_ListView_Sensors( QWidget* pParent )
+    : ADN_ListView( pParent, "ADN_ListView_Sensors", ADN_Tr::ConvertFromWorkspaceElement( eSensors ).c_str() )
 {
-    // Add one column.
-    addColumn( ADN_Tr::ConvertFromWorkspaceElement( eSensors ).c_str() );
-    setResizeMode( Q3ListView::AllColumns );
-
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<SensorInfos>( *this );
 
@@ -116,9 +112,11 @@ void ADN_ListView_Sensors::OnContextMenu( const QPoint& pt)
 // Name: ADN_ListView_Sensors::GetToolTipFor
 // Created: APE 2005-04-25
 // -----------------------------------------------------------------------------
-std::string ADN_ListView_Sensors::GetToolTipFor( Q3ListViewItem& item )
+std::string ADN_ListView_Sensors::GetToolTipFor( const QModelIndex& index )
 {
-    void* pData = static_cast< ADN_ListViewItem& >( item ).GetData();
+    if( !index.isValid() )
+        return "";
+    void* pData = static_cast< ADN_ListViewItem* >( dataModel_.GetItemFromIndex( index ) )->GetData();
     SensorInfos* pCastData = static_cast< SensorInfos* >( pData );
     assert( pCastData != 0 );
     return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str(),

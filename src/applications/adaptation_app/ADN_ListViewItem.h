@@ -19,8 +19,7 @@ class ADN_ListView;
 //*****************************************************************************
 // Created: JDY 03-07-02
 //*****************************************************************************
-class ADN_ListViewItem
-:   public Q3ListViewItem
+class ADN_ListViewItem : public QStandardItem
 {
 public:
 
@@ -34,20 +33,16 @@ public:
 
 public:
 
-    explicit ADN_ListViewItem(ADN_ListView* parent,void* data,int ncol);
+    explicit ADN_ListViewItem( void* data );
     virtual ~ADN_ListViewItem();
 
-    void *  GetData();
-    void    Connect(int ndx,ADN_Connector_ABC *item,E_TypeCvt cvt=eString);
-
-protected:
-
-    virtual void okRename ( int col );
+    void* GetData();
+    void Connect( ADN_Connector_ABC* item, E_TypeCvt cvt = eString );
 
 private:
 
-    void*                       pData_;
-    T_ConnectorVector        vConnectors_;
+    void* pData_;
+    ADN_Connector_ABC* connector_;
 };
 
 //-----------------------------------------------------------------------------

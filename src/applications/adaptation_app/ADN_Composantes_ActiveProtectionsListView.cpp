@@ -20,12 +20,9 @@ typedef ADN_Composantes_Data::ActiveProtectionsInfos ActiveProtectionsInfos;
 // Name: ADN_Composantes_ActiveProtectionsListView constructor
 // Created: FDS 10-02-24
 //-----------------------------------------------------------------------------
-ADN_Composantes_ActiveProtectionsListView::ADN_Composantes_ActiveProtectionsListView( QWidget* pParent, const char* szName, Qt::WFlags f )
-: ADN_ListView( pParent, szName, f )
+ADN_Composantes_ActiveProtectionsListView::ADN_Composantes_ActiveProtectionsListView( QWidget* pParent )
+    : ADN_ListView( pParent, "ADN_Composantes_ActiveProtectionsListView", tr( "ActiveProtections" ) )
 {
-    // Add one column.
-    addColumn( tr( "ActiveProtections" ) );
-
     setMinimumHeight( 115 );
     setMaximumHeight( 115 );
 
@@ -95,7 +92,8 @@ void ADN_Composantes_ActiveProtectionsListView::OnContextMenu( const QPoint& pt 
 
         ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
         pCTable->AddItem( pNewInfo );
-        setCurrentItem( FindItem( pNewInfo ) );
+        if( ADN_ListViewItem* item = FindItem( pNewInfo ) )
+            selectionModel()->setCurrentIndex( dataModel_.indexFromItem( item ), QItemSelectionModel::ClearAndSelect );
     }
 }
 
@@ -105,14 +103,13 @@ void ADN_Composantes_ActiveProtectionsListView::OnContextMenu( const QPoint& pt 
 //-----------------------------------------------------------------------------
 bool ADN_Composantes_ActiveProtectionsListView::Contains( const ADN_ActiveProtections_Data::ActiveProtectionsInfos* pInfo )
 {
-    Q3ListViewItemIterator it( this );
-    while( it.current() != 0 )
+    const int rowCount = dataModel_.rowCount();
+    for( int row = 0; row < rowCount; ++row )
     {
-        ADN_ListViewItem* pCurr = (ADN_ListViewItem*)it.current();
+        ADN_ListViewItem* pCurr = static_cast< ADN_ListViewItem* >( dataModel_.item( row ) );
         ADN_Composantes_Data::ActiveProtectionsInfos* pData = static_cast< ADN_Composantes_Data::ActiveProtectionsInfos* >( pCurr->GetData() );
         if( pData->ptrActiveProtections_.GetData() == pInfo )
             return true;
-        ++it;
     }
     return false;
 }

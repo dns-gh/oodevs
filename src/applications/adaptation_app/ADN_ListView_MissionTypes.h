@@ -40,7 +40,7 @@ private:
     void ConnectItem( bool bConnect );
     void OnContextMenu( const QPoint& pt );
     bool ContextMenuDelete();
-    std::string GetToolTipFor( Q3ListViewItem& item );
+    std::string GetToolTipFor( const QModelIndex& index );
     //@}
 
 private:

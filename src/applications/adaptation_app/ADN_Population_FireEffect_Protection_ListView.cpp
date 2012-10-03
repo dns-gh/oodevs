@@ -33,8 +33,8 @@ public:
 
     ADN_ListViewItem* CreateItem( void* pObj )
     {
-        ADN_ListViewItem* pItem = new ADN_ListViewItem( &list_, pObj, 1 );
-        pItem->Connect( 0, &static_cast< FireEffectProtectionInfos* >(pObj)->ptrProtection_.GetData()->strName_ );
+        ADN_ListViewItem* pItem = new ADN_ListViewItem( pObj );
+        pItem->Connect( &static_cast< FireEffectProtectionInfos* >( pObj )->ptrProtection_.GetData()->strName_ );
         return pItem;
     }
 };
@@ -43,13 +43,9 @@ public:
 // Name: ADN_Population_FireEffect_Protection_ListView constructor
 // Created: APE 2005-01-06
 // -----------------------------------------------------------------------------
-ADN_Population_FireEffect_Protection_ListView::ADN_Population_FireEffect_Protection_ListView( QWidget* pParent, const char* szName, Qt::WFlags f )
-    : ADN_ListView( pParent, szName, f )
+ADN_Population_FireEffect_Protection_ListView::ADN_Population_FireEffect_Protection_ListView( QWidget* pParent )
+    : ADN_ListView( pParent, "ADN_Population_FireEffect_Protection_ListView", tools::translate( "ADN_Population_FireEffect_Protection_ListView", "Protections" ) )
 {
-    // Add one column.
-    addColumn( tools::translate( "ADN_Population_FireEffect_Protection_ListView", "Protections" ) );
-    setSortColumn( -1 );
-    setResizeMode( Q3ListView::AllColumns );
     // Connector creation
     pConnector_ = new ADN_Protections( *this );
     this->SetDeletionEnabled( false );

@@ -29,13 +29,9 @@ typedef ADN_Sensors_Data::TargetInfos TargetInfos;
 // Name: ADN_Sensors_TargetsListView constructor
 // Created: APE 2005-01-18
 // -----------------------------------------------------------------------------
-ADN_Sensors_TargetsListView::ADN_Sensors_TargetsListView( QWidget* pParent, const char* szName, Qt::WFlags f )
-: ADN_ListView( pParent, szName, f )
+ADN_Sensors_TargetsListView::ADN_Sensors_TargetsListView( QWidget* pParent )
+    : ADN_ListView( pParent, "ADN_Sensors_TargetsListView", tools::translate( "ADN_Sensors_TargetsListView", "Targets" ) )
 {
-    // Add one column.
-    addColumn( tools::translate( "ADN_Sensors_TargetsListView", "Targets" ) );
-    setResizeMode( Q3ListView::AllColumns );
-
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<TargetInfos>(*this);
 
@@ -111,7 +107,8 @@ void ADN_Sensors_TargetsListView::OnContextMenu( const QPoint& pt )
 
         ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
         pCTable->AddItem( pNewInfo );
-        setCurrentItem( FindItem( pNewInfo ) );
+        if( ADN_ListViewItem* item = FindItem( pNewInfo ) )
+            selectionModel()->setCurrentIndex( dataModel_.indexFromItem( item ), QItemSelectionModel::ClearAndSelect );
     }
 }
 
@@ -121,14 +118,13 @@ void ADN_Sensors_TargetsListView::OnContextMenu( const QPoint& pt )
 //-----------------------------------------------------------------------------
 bool ADN_Sensors_TargetsListView::Contains( const ADN_Objects_Data_ObjectInfos* pInfo )
 {
-    Q3ListViewItemIterator it( this );
-    while( it.current() != 0 )
+    const int rowCount = dataModel_.rowCount();
+    for( int row = 0; row < rowCount; ++row )
     {
-        ADN_ListViewItem* pCurr = (ADN_ListViewItem*)it.current();
+        ADN_ListViewItem* pCurr = static_cast< ADN_ListViewItem* >( dataModel_.item( row ) );
         TargetInfos* pData = static_cast< TargetInfos* >( pCurr->GetData() );
         if( pData->ptrObject_.GetData() == pInfo )
             return true;
-        ++it;
     }
     return false;
 }
