@@ -131,7 +131,7 @@ namespace
 // Name: PathAdapter::Add
 // Created: MCO 2012-05-21
 // -----------------------------------------------------------------------------
-boost::shared_ptr< PathAdapter > PathAdapter::Add( const core::Model& entity, const boost::shared_ptr< movement::Path_ABC >& path )
+const boost::shared_ptr< PathAdapter >& PathAdapter::Add( const core::Model& entity, const boost::shared_ptr< movement::Path_ABC >& path )
 {
     boost::shared_ptr< PathAdapter >& result = paths[ path ];
     if( ! result )

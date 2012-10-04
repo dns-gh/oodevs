@@ -249,8 +249,10 @@ namespace core
     public:
         //! @name Constructors/Destructor
         //@{
-        UserData( boost::shared_ptr< DEC_Path_ABC > userData )
+        UserData( const boost::shared_ptr< DEC_Path_ABC >& userData )
             : userData_( boost::dynamic_pointer_cast< PathAdapter >( userData )->Get() )
+        {}
+        virtual ~UserData()
         {}
         //@}
 

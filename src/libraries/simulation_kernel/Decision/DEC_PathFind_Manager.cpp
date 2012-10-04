@@ -85,7 +85,7 @@ DEC_PathFind_Manager::~DEC_PathFind_Manager()
 // Name: DEC_PathFind_Manager::StartCompute
 // Created: NLD 2003-08-14
 // -----------------------------------------------------------------------------
-void DEC_PathFind_Manager::StartCompute( boost::shared_ptr< DEC_Path_ABC > path )
+void DEC_PathFind_Manager::StartCompute( const boost::shared_ptr< DEC_Path_ABC >& path )
 {
 #ifdef _DEBUG
     MT_LOG_MESSAGE_MSG( MT_FormatString( "DEC_PathFind_Manager: New job pending : path 0x%p", path.get() ).c_str() );
@@ -154,7 +154,7 @@ unsigned int DEC_PathFind_Manager::GetNbrRequests() const
 // Name: DEC_PathFind_Manager::AddPendingJob
 // Created: NLD 2003-08-14
 // -----------------------------------------------------------------------------
-void DEC_PathFind_Manager::AddPendingJob( boost::shared_ptr< DEC_Path_ABC > pPath )
+void DEC_PathFind_Manager::AddPendingJob( const boost::shared_ptr< DEC_Path_ABC >& pPath )
 {
     boost::mutex::scoped_lock locker( mutex_ );
     if( pPath->GetLength() > rDistanceThreshold_ )
@@ -278,7 +278,7 @@ void DEC_PathFind_Manager::Update()
     boost::mutex::scoped_lock locker( cleanAndDestroyMutex_ );
     while( ! requestsToCleanAfterComputation_.empty() )
     {
-        boost::shared_ptr< TER_PathFindRequest_ABC > pRequest = requestsToCleanAfterComputation_.back();
+        const boost::shared_ptr< TER_PathFindRequest_ABC >& pRequest = requestsToCleanAfterComputation_.back();
         pRequest->CleanAfterComputation();
         requestsToCleanAfterComputation_.pop_back();
     }
