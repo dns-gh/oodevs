@@ -90,7 +90,7 @@
       speed: 1,
       trail: 60,
       shadow: false,
-      hwaccel: true,
+      hwaccel: false,
       className: 'spinner',
       zIndex: 2e9
     };
