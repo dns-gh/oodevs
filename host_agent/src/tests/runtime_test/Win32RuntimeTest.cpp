@@ -69,8 +69,8 @@ BOOST_AUTO_TEST_CASE( runtime_process_starts )
     const std::string app = BOOST_RESOLVE( "res/echowin32.exe" );
     boost::system::error_code err;
     if( !boost::filesystem::is_regular_file( app, err ))
-    BOOST_FAIL("Cannot find echowin32.exe, please set --data_directory to the project root: "
-        + app );
+        BOOST_FAIL("Cannot find echowin32.exe, please set --data_directory to the project root: "
+            + app );
 
     // Call it with random arguments
     std::string randarg = boost::lexical_cast< std::string >( std::time( NULL ));
