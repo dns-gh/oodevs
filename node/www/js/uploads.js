@@ -602,8 +602,8 @@
             return _this.enabled = true;
           }, function() {
             _this.toggle_load(disable_list);
-            _this.enabled = true;
-            return print_error("Unable to discard package(s)");
+            print_error("Unable to discard package(s)");
+            return _this.enabled = true;
           });
         });
       });
@@ -644,8 +644,8 @@
           return _this.enabled = true;
         }, function() {
           _this.toggle_load(disable_list, $(btns));
-          _this.enabled = true;
-          return print_error("Unable to save package(s)");
+          print_error("Unable to save package(s)");
+          return _this.enabled = true;
         });
       });
       $(".toggle a").click(function() {
@@ -659,15 +659,11 @@
     PackageView.prototype.delta = function() {
       var item, now,
         _this = this;
-      if (!this.enabled) {
-        setTimeout(this.delta, 5000);
-        return;
-      }
       now = this.counter++;
       item = new Package;
       return item.fetch({
         success: function() {
-          if (now + 1 === _this.counter) {
+          if (_this.enabled && now + 1 === _this.counter) {
             if (item.attributes.name != null) {
               _this.model.set(item.attributes);
             } else {

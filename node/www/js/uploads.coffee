@@ -75,8 +75,8 @@ class PackageView extends Backbone.View
                             @enabled = true
                         =>
                             @toggle_load disable_list
-                            @enabled = true
                             print_error "Unable to discard package(s)"
+                            @enabled = true
 
         save.click =>
             return if save.hasClass "disabled"
@@ -102,8 +102,8 @@ class PackageView extends Backbone.View
                     @enabled = true
                 =>
                     @toggle_load disable_list, $ btns
-                    @enabled = true
                     print_error "Unable to save package(s)"
+                    @enabled = true
 
         $(".toggle a").click ->
             list  = $ ".action .add, .action .update"
@@ -113,14 +113,11 @@ class PackageView extends Backbone.View
         return
 
     delta: =>
-        unless @enabled
-            setTimeout @delta, 5000
-            return
         now  = @counter++
         item = new Package
         item.fetch
             success: =>
-                if now + 1 == @counter
+                if @enabled and now+1 == @counter
                     if item.attributes.name?
                         @model.set item.attributes
                     else
