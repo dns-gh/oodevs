@@ -12,7 +12,6 @@
 #include "clients_gui_pch.h"
 #include "DiplomacyDialog_ABC.h"
 #include "moc_DiplomacyDialog_ABC.cpp"
-#include "DiplomacyCell.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Karma.h"
@@ -20,8 +19,78 @@
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "Tools.h"
 
-using namespace kernel;
 using namespace gui;
+
+Q_DECLARE_METATYPE( const kernel::Karma* )
+
+#define KarmaRole ( Qt::UserRole + 1 )
+#define ValueSetRole ( Qt::UserRole + 2 )
+
+namespace
+{
+    QColor GetColor( const kernel::Karma& karma )
+    {
+        if( karma == kernel::Karma::friend_ )
+            return QColor( 200, 200, 255 );
+        if( karma == kernel::Karma::enemy_ )
+            return QColor( 255, 200, 200 );
+        return QColor( 200, 255, 200 );
+    }
+
+    class DiplomacyItemDelegate : public QItemDelegate
+    {
+    public:
+         DiplomacyItemDelegate()
+         {
+            // NOTHING
+         }
+
+         ~DiplomacyItemDelegate()
+         {
+             // NOTHING
+         }
+
+        virtual QWidget* createEditor( QWidget* parent, const QStyleOptionViewItem& /*option*/, const QModelIndex& index) const
+        {
+            if( index.row() == index.column() )
+                return 0;
+            QComboBox* editor = new QComboBox( parent );
+            editor->addItem( kernel::Karma::friend_ .GetName(), QVariant::fromValue( static_cast< const kernel::Karma* >( &kernel::Karma::friend_ ) ) );
+            editor->addItem( kernel::Karma::enemy_  .GetName(), QVariant::fromValue( static_cast< const kernel::Karma* >( &kernel::Karma::enemy_ ) ) );
+            editor->addItem( kernel::Karma::neutral_.GetName(), QVariant::fromValue( static_cast< const kernel::Karma* >( &kernel::Karma::neutral_ ) ) );
+            return editor;
+        }
+
+        virtual void setEditorData( QWidget *editor, const QModelIndex &index) const
+        {
+            QComboBox* comboBox = static_cast< QComboBox* >( editor );
+            const kernel::Karma* karma = index.model()->data( index, KarmaRole ).value< const kernel::Karma* >();
+            comboBox->setCurrentIndex( comboBox->findData( QVariant::fromValue( karma ) ) );
+        }
+
+        virtual void setModelData( QWidget* editor, QAbstractItemModel* model, const QModelIndex& index ) const
+        {
+            QComboBox* comboBox = static_cast< QComboBox* >( editor );
+            const kernel::Karma* karma = comboBox->itemData( comboBox->currentIndex() ).value< const kernel::Karma* >();
+            model->setData( index, karma->GetName(),  Qt::DisplayRole);
+            model->setData( index, QVariant::fromValue( karma ), KarmaRole );
+            model->setData( index, GetColor( *karma ), Qt::BackgroundColorRole );
+            model->setData( index, true, ValueSetRole );
+            QModelIndex opposite = model->index( index.column(), index.row() );
+            if( opposite.isValid() && opposite.data( ValueSetRole ).toBool() == false )
+            {
+                model->setData( opposite, karma->GetName(),  Qt::DisplayRole);
+                model->setData( opposite, QVariant::fromValue( karma ), KarmaRole );
+                model->setData( opposite, GetColor( *karma ), Qt::BackgroundColorRole );
+            }
+        }
+
+        virtual void updateEditorGeometry( QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& /*index*/ ) const
+        {
+            editor->setGeometry( option.rect );
+        }
+    };
+}
 
 // -----------------------------------------------------------------------------
 // Name: DiplomacyDialog_ABC constructor
@@ -37,8 +106,11 @@ DiplomacyDialog_ABC::DiplomacyDialog_ABC( QWidget* parent, kernel::Controllers& 
     setMaximumSize( 1024, 768);
 
     // Table
-    table_ = new Q3Table( this ); // $$$$ ABR 2012-05-02: TODO Use QT4 Table instead
-    table_->setSelectionMode( Q3Table::NoSelection );
+    table_ = new QTableWidget( this );
+    table_->setSelectionMode( QAbstractItemView::NoSelection );
+    table_->horizontalHeader()->setResizeMode( QHeaderView::Stretch );
+    table_->verticalHeader()->setResizeMode( QHeaderView::Stretch );
+    table_->setItemDelegate( new DiplomacyItemDelegate() );
 
     // Buttons
     QPushButton* okBtn     = new QPushButton( tools::translate( "gui::DiplomacyDialog_ABC", "Ok" ), this );
@@ -48,9 +120,9 @@ DiplomacyDialog_ABC::DiplomacyDialog_ABC( QWidget* parent, kernel::Controllers& 
     cancelBtn->setMaximumWidth( 100 );
 
     // Layouts
-    Q3VBoxLayout* pMainLayout = new Q3VBoxLayout( this, 5, 5 );
+    QVBoxLayout* pMainLayout = new QVBoxLayout( this );
     pMainLayout->addWidget( table_ );
-    Q3HBoxLayout* pButtonLayout = new Q3HBoxLayout( pMainLayout, 5 );
+    QHBoxLayout* pButtonLayout = new QHBoxLayout( pMainLayout );
     pButtonLayout->setAlignment( Qt::AlignCenter );
     pButtonLayout->addWidget( okBtn );
     pButtonLayout->addWidget( cancelBtn );
@@ -83,8 +155,11 @@ void DiplomacyDialog_ABC::Validate()
         {
             if( i == j )
                 continue;
-            DiplomacyCell* cell = static_cast< DiplomacyCell* >( table_->item( i, j ) );
-            SetDiplomacy( *teams_[i], *teams_[j], cell->GetValue() );
+            kernel::Karma karma = kernel::Karma::neutral_;
+            QTableWidgetItem* item = table_->item( i, j );
+            if( item && item->data( KarmaRole ).isValid() )
+                karma = *item->data( KarmaRole ).value< const kernel::Karma* >();
+            SetDiplomacy( *teams_[ i ], *teams_[ j ], karma );
         }
     hide();
 }
@@ -141,19 +216,27 @@ void DiplomacyDialog_ABC::showEvent( QShowEvent* )
             if( i == j )
             {
                 if( !table_->item( i, j ) )
-                    table_->setItem( i, j, new Q3TableItem( table_, Q3TableItem::Never ) );
-                table_->item( i, j )->setEnabled( false );
+                    table_->setItem( i, j, new QTableWidgetItem() );
             }
             else
             {
-                const kernel::Karma& diplomacy = teams_[i]->Get< Diplomacies_ABC >().GetDiplomacy( *teams_[j] );
-                Q3TableItem* item = table_->item( i, j );
+                const kernel::Karma& diplomacy = teams_[ i ]->Get< kernel::Diplomacies_ABC >().GetDiplomacy( *teams_[ j ] );
+                const kernel::Karma* karma = &kernel::Karma::neutral_;
+                if( diplomacy == kernel::Karma::friend_ )
+                    karma = &kernel::Karma::friend_;
+                if( diplomacy == kernel::Karma::enemy_ )
+                    karma = &kernel::Karma::enemy_;
+                QTableWidgetItem* item = table_->item( i, j );
                 if( !item )
                 {
-                    item = new DiplomacyCell( table_ );
+                    item = new QTableWidgetItem();
                     table_->setItem( i, j, item );
+                    item->setData( ValueSetRole, false );
+                    item->setTextAlignment( Qt::AlignCenter );
                 }
-                item->setText( diplomacy == kernel::Karma::unknown_ ? kernel::Karma::neutral_.GetName() : diplomacy.GetName() ); // $$$$ SBO 2008-12-09:
+                item->setText( karma->GetName() );
+                item->setData( KarmaRole, QVariant::fromValue( karma ) );
+                item->setData( Qt::BackgroundColorRole, GetColor( *karma ) );
             }
         }
     table_->adjustSize();
@@ -165,18 +248,18 @@ void DiplomacyDialog_ABC::showEvent( QShowEvent* )
 // -----------------------------------------------------------------------------
 void DiplomacyDialog_ABC::UpdateTable()
 {
-    table_->setNumCols( static_cast< int >( teams_.size() ) );
-    table_->setNumRows( static_cast< int >( teams_.size() ) );
+    table_->setColumnCount( static_cast< int >( teams_.size() ) );
+    table_->setRowCount( static_cast< int >( teams_.size() ) );
     int maxName = 0;
+    QStringList list;
     for( unsigned i = 0; i < teams_.size(); ++i )
     {
         const QString name = teams_.at( i )->GetName();
-        table_->verticalHeader  ()->setLabel( i, name );
-        table_->horizontalHeader()->setLabel( i, name );
-        table_->setRowStretchable( i, true );
-        table_->setColumnStretchable( i, true );
+        list << name;
         maxName = std::max< int >( name.size(), maxName );
     }
+    table_->setVerticalHeaderLabels( list );
+    table_->setHorizontalHeaderLabels( list );
     int newWidth = static_cast< int >( teams_.size() * maxName * 10 );
     int newHeight = static_cast< int >( teams_.size() * 40 );
     table_->setMinimumSize( newWidth < maximumWidth() - 20 ? newWidth : maximumWidth() - 20, newHeight < maximumHeight() - 80 ? newHeight : maximumHeight() - 80 );

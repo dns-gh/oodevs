@@ -53,12 +53,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    DiplomacyDialog_ABC( const DiplomacyDialog_ABC& );            //!< Copy constructor
-    DiplomacyDialog_ABC& operator=( const DiplomacyDialog_ABC& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void SetDiplomacy( const kernel::Team_ABC& team1, const kernel::Team_ABC& team2, const kernel::Karma& diplomacy ) const = 0;
@@ -86,7 +80,7 @@ private:
     //! @name Member data
     //@{
     const kernel::Profile_ABC& profile_;
-    Q3Table* table_;
+    QTableWidget* table_;
     T_Teams teams_;
     //@}
 };
