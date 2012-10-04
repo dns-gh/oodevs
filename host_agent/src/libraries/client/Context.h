@@ -21,6 +21,7 @@
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QNetworkReply>
+#include <QSharedMemory>
 #include <QUrl>
 
 namespace host
@@ -86,6 +87,7 @@ signals:
     void ShowProgress( int min, int max );
     void ClearProgress();
     void NetworkRequest( HttpCommand cmd, const QNetworkRequest& req );
+    void SingleInstanceError();
 
 public slots:
     void OnRemove();
@@ -131,6 +133,7 @@ private:
     Tree session_;
     T_Links links_;
     T_Downloads downloads_;
+    boost::scoped_ptr< QSharedMemory > single_;
 };
 }
 

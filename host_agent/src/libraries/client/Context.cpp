@@ -43,6 +43,7 @@ namespace
     const std::string install_dir = "_"; // use short directory names until packages use small paths
     const std::string tmp_dir     = "0";
     const std::string trash_dir   = "1";
+    const QString     unique_id   = "B0238E3F-6D3B-4F73-85C1-3B9B423C62BB";
     const QNetworkRequest::Attribute id_attribute = QNetworkRequest::Attribute( QNetworkRequest::User + 0 );
 }
 
@@ -76,8 +77,13 @@ Context::~Context()
     async_.Join();
     io_.Join();
 
+    if( !single_ )
+        return;
+
     const Path next = fs_.MakeAnyPath( root_ / trash_dir );
     fs_.Rename( root_ / tmp_dir, next / "_" );
+
+    single_.reset();
     fs_.Remove( root_ / trash_dir );
 }
 
@@ -87,6 +93,15 @@ Context::~Context()
 // -----------------------------------------------------------------------------
 void Context::Start()
 {
+    single_.reset( new QSharedMemory() );
+    single_->setKey( unique_id );
+    if( !single_->create( 1 ) )
+    {
+        single_.reset();
+        emit SingleInstanceError();
+        return;
+    }
+
     ParseArguments();
     fs_.MakePaths( root_ / install_dir );
     fs_.MakePaths( root_ / tmp_dir );

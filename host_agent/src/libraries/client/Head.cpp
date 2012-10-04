@@ -11,6 +11,7 @@
 
 #include "Context.h"
 
+#include <QMessageBox>
 #include <QMetaType>
 #include <QSettings>
 #include <QtConcurrentRun>
@@ -52,6 +53,7 @@ Head::Head( const Runtime_ABC& runtime, const FileSystem_ABC& fs, Pool_ABC& pool
     connect( ctx_.get(), SIGNAL( Exit() ), this, SLOT( close() ) );
     connect( ctx_.get(), SIGNAL( Show() ), this, SLOT( show() ) );
     connect( ctx_.get(), SIGNAL( EnableEdition() ), this, SLOT( OnEnableEdition() ) );
+    connect( ctx_.get(), SIGNAL( SingleInstanceError() ), this, SLOT( OnSingleInstanceError() ) );
     async_.Register( QtConcurrent::run( ctx_.get(), &Context::Start ) );
 }
 
@@ -117,4 +119,13 @@ void Head::OnShowProgress( int min, int max )
 void Head::OnEnableEdition()
 {
     ui_.edit_controls->setEnabled( true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Head::OnSingleInstanceError
+// Created: BAX 2012-10-04
+// -----------------------------------------------------------------------------
+void Head::OnSingleInstanceError()
+{
+    QMessageBox::critical( NULL, "Critical failure", "Another client is already running" );
 }
