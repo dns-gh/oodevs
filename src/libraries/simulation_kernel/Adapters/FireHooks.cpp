@@ -225,6 +225,11 @@ namespace
         boost::shared_ptr< DEC_Knowledge_Agent > knowledge2 = (*core::Convert( target ))[ "agent" ].GetUserData< boost::shared_ptr< DEC_Knowledge_Agent > >();
         return knowledge1->GetDangerosity( *knowledge2, true ) * knowledge2->GetOperationalState(); // $$$$ MCO 2012-05-16: use fire module GetDangerosity
     }
+    DEFINE_HOOK( IsAgentKnowledgeValid, bool, ( const SWORD_Model* knowledge ) )
+    {
+        boost::shared_ptr< DEC_Knowledge_Agent > agent = (*core::Convert( knowledge ))[ "agent" ].GetUserData< boost::shared_ptr< DEC_Knowledge_Agent > >();
+        return agent->IsValid();
+    }
     DEFINE_HOOK( IsPopulationKnowledgeValid, bool, ( const SWORD_Model* entity, const SWORD_Model* knowledge ) )
     {
         const MIL_AgentPion& pion = GET_PION( entity );
@@ -287,6 +292,7 @@ void FireHooks::Initialize( core::Facade& facade )
     REGISTER_HOOK( ModifyDangerosity, facade );
     REGISTER_HOOK( EvaluateDangerosity, facade );
     REGISTER_HOOK( EvaluateDangerosity2, facade );
+    REGISTER_HOOK( IsAgentKnowledgeValid, facade );
     REGISTER_HOOK( IsPopulationKnowledgeValid, facade );
     REGISTER_HOOK( GetClosestAlivePopulationElement, facade );
     REGISTER_HOOK( ComputeKilledHumans, facade );

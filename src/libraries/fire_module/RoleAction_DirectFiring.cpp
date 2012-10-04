@@ -22,6 +22,7 @@ using namespace sword::fire;
 
 DECLARE_HOOK( CanComponentBeFiredAt, bool, ( const SWORD_Model* component, const SWORD_Model* parameters ) )
 DECLARE_HOOK( GetFireRandomInteger, size_t, ( size_t min, size_t max ) )
+DECLARE_HOOK( IsAgentKnowledgeValid, bool, ( const SWORD_Model* knowledge ) )
 DECLARE_HOOK( IsPopulationKnowledgeValid, bool, ( const SWORD_Model* entity, const SWORD_Model* knowledge ) )
 DECLARE_HOOK( GetClosestAlivePopulationElement, const SWORD_Model*, ( const SWORD_Model* model, const SWORD_Model* population, const SWORD_Model* entity ) )
 
@@ -137,7 +138,7 @@ namespace
 int RoleAction_DirectFiring::FirePion( const wrapper::View& model, const wrapper::View& entity,
     const wrapper::View& target, const wrapper::View& parameters, bool mustReport ) const
 {
-    if( ! target[ "valid" ] )
+    if( ! GET_HOOK( IsAgentKnowledgeValid )( target ) )
         return eImpossible;
     if( target[ "dead" ] )
         return eEnemyDestroyed;
@@ -181,7 +182,7 @@ int RoleAction_DirectFiring::FirePion( const wrapper::View& model, const wrapper
 // -----------------------------------------------------------------------------
 void RoleAction_DirectFiring::FirePionSuspended( const wrapper::View& entity, const wrapper::View& target, bool mustReport ) const
 {
-    if( target[ "valid" ] )
+    if( GET_HOOK( IsAgentKnowledgeValid )( target ) )
         NotifyAttacking( entity, target, mustReport, true );
 }
 

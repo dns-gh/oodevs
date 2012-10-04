@@ -42,26 +42,37 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_impossible_if_target_knowledge_is_invalid, FireFixture )
 {
-    target[ "valid" ] = false;
+    MOCK_EXPECT( IsAgentKnowledgeValid ).once().with( enemy ).returns( false );
     ExpectCallback( 0 );
     ExecuteCommands();
 }
 
-BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_enemy_destroyed_if_target_is_dead, FireFixture )
+namespace
+{
+    struct ValidFireFixture : FireFixture
+    {
+        ValidFireFixture()
+        {
+            MOCK_EXPECT( IsAgentKnowledgeValid ).returns( true );
+        }
+    };
+}
+
+BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_enemy_destroyed_if_target_is_dead, ValidFireFixture )
 {
     target[ "dead" ] = true;
     ExpectCallback( 1 );
     ExecuteCommands();
 }
 
-BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_temporary_blocked_when_blocked_with_default_coefficient, FireFixture )
+BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_temporary_blocked_when_blocked_with_default_coefficient, ValidFireFixture )
 {
     MOCK_EXPECT( IsTemporarilyBlocked ).once().with( firer, 100u ).returns( true );
     ExpectCallback( 6 );
     ExecuteCommands();
 }
 
-BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_temporary_blocked_when_blocked_with_custom_coefficient, FireFixture )
+BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_temporary_blocked_when_blocked_with_custom_coefficient, ValidFireFixture )
 {
     InitializeDecisional( "<decisional>"
                           "  <urban-combat hit-factor='42'/>"
@@ -72,14 +83,14 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_temporary_blocked_when_bloc
     ExecuteCommands();
 }
 
-BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_no_capacity_if_target_has_no_component, FireFixture )
+BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_no_capacity_if_target_has_no_component, ValidFireFixture )
 {
     MOCK_EXPECT( IsTemporarilyBlocked ).once().returns( false );
     ExpectCallback( 2 );
     ExecuteCommands();
 }
 
-BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_no_capacity_if_firer_has_no_weapon, FireFixture )
+BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_no_capacity_if_firer_has_no_weapon, ValidFireFixture )
 {
     entity[ "components" ].AddElement()[ "weapons" ];
     MOCK_EXPECT( IsTemporarilyBlocked ).once().returns( false );
@@ -89,7 +100,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_no_capacity_if_firer_has_no
 
 namespace
 {
-    struct WeaponFixture : FireFixture
+    struct WeaponFixture : ValidFireFixture
     {
         WeaponFixture()
             : component_2( entity[ "components" ].AddElement() )

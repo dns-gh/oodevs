@@ -50,6 +50,7 @@
     APPLY( GetPhModificator2, 1, double, ( const char* launcher ) ) \
     APPLY( EvaluateDangerosity, 2, double, ( const SWORD_Model* agent, const SWORD_Model* target ) ) \
     APPLY( EvaluateDangerosity2, 2, double, ( const SWORD_Model* agent, const SWORD_Model* target ) ) \
+    APPLY( IsAgentKnowledgeValid, 1, bool, ( const SWORD_Model* knowledge ) ) \
     APPLY( IsPopulationKnowledgeValid, 2, bool, ( const SWORD_Model* entity, const SWORD_Model* knowledge ) ) \
     APPLY( GetClosestAlivePopulationElement, 3, const SWORD_Model*, ( const SWORD_Model* model, const SWORD_Model* population, const SWORD_Model* entity ) ) \
     APPLY( ComputeKilledHumans, 2, size_t, ( const SWORD_Model* firer, const SWORD_Model* element ) ) \
@@ -83,7 +84,6 @@ namespace fire
             model[ "entities" ][ 43 ][ "components" ];
             target[ "components" ];
             target[ "identifier" ] = 43;
-            target[ "valid" ] = true;
             target[ "dead" ] = false;
             mock::sequence s1, s2;
             MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_INFO, std::string( "Initializing launchers" ) ).in( s1 );

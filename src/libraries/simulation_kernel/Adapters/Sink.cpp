@@ -300,7 +300,6 @@ namespace
     {
         knowledge[ "agent" ].SetUserData( agent );
         knowledge[ "identifier" ] = agent->GetAgentKnown().GetID();
-        knowledge[ "valid" ] = agent->IsValid();
         knowledge[ "dead" ] = agent->IsDead();
         core::Model& components = knowledge[ "components" ];
         components.Clear();
