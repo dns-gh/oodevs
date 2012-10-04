@@ -101,6 +101,7 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_kernel\CommandPostAttributes.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Drawing_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\EntityHelpers.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Ghost_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Gradient.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Karma.cpp" />
@@ -243,6 +244,7 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\ConsistencyChecker_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\DisplayableModesObserver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Drawing_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\EntityHelpers.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Finalizable_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\GhostPrototype.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Ghost_ABC.h" />
