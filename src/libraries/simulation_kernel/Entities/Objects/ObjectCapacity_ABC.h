@@ -14,6 +14,11 @@
 
 class MIL_Object_ABC;
 
+namespace xml
+{
+    class xostream;
+}
+
 // =============================================================================
 /** @class  ObjectCapacity_ABC
     @brief  ObjectCapacity_ABC
