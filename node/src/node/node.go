@@ -113,7 +113,7 @@ func AcceptEncoding(r *http.Request, enc string) bool {
 func IsTextFile(filename string) bool {
 	ext := filepath.Ext(filename)
 	// quick & fast method, a better way would be to detect mimetype
-	return ext == "js" || ext == "css"
+	return ext == ".js" || ext == ".css"
 }
 
 type ResponseWriter struct {
