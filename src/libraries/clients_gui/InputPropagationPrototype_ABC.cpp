@@ -31,7 +31,7 @@ InputPropagationPrototype_ABC::InputPropagationPrototype_ABC( QWidget* parent, c
     : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::InputPropagationPrototype_ABC", "Propagation" ) )
     , root_ ( config.GetRootDir() )
 {
-    QGridLayout* layout = new QGridLayout( this, 0, 2 );
+    QGridLayout* layout = new QGridLayout( this, 0, 2, 6, 10 );
     layout->addWidget( new QLabel( tools::translate( "gui::InputPropagationPrototype_ABC", "Propagation Model:" ) ) );
     propagationFiles_ = new ValuedComboBox< std::string >( 0 );
     layout->addWidget( propagationFiles_ );
