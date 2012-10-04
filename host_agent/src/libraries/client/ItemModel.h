@@ -76,6 +76,7 @@ private:
 
 class ItemModel : public FlatModel< gui::Item >
 {
+    typedef FlatModel< gui::Item > Base;
     Q_OBJECT
 
 public:
@@ -88,10 +89,12 @@ public:
     //! @name QAbstractItemModel methods
     //@{
     virtual Qt::ItemFlags flags( const QModelIndex& idx ) const;
+    virtual QVariant data( const QModelIndex& index, int role ) const;
     //@}
 
     //! @name Public methods
     //@{
+    void                SetEditable( bool editable );
     void                Fill( const Tree& src );
     void                Setup( QAbstractItemView* view );
     QAbstractItemModel* GetModel();
@@ -109,6 +112,7 @@ private:
     //! @name private members
     //@{
     QSortFilterProxyModel proxy_;
+    bool editable_;
     //@}
 };
 }

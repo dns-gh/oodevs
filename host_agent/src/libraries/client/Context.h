@@ -80,6 +80,7 @@ public:
 signals:
     void Exit();
     void Show();
+    void EnableEdition();
     void StatusMessage( const QString& );
     void ClearMessage();
     void ShowProgress( int min, int max );

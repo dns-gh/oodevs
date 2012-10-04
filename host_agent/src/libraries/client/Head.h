@@ -51,6 +51,7 @@ private:
 private slots:
     void OnModifiedItems();
     void OnShowProgress( int min, int max );
+    void OnEnableEdition();
 
 private:
     Ui::Head ui_;

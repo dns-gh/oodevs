@@ -229,6 +229,8 @@ void Context::ParseRoot()
     }
     if( cmd_ != CMD_RUN )
     {
+        items_.SetEditable( true );
+        emit EnableEdition();
         emit ClearProgress();
         emit ClearMessage();
         return;

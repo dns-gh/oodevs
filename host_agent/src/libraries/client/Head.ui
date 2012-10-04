@@ -18,68 +18,112 @@
     <normaloff>:/logo32x32.png</normaloff>:/logo32x32.png</iconset>
   </property>
   <widget class="QWidget" name="central">
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="1">
-     <widget class="QPushButton" name="remove_items">
-      <property name="toolTip">
-       <string>Remove Selection</string>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QFrame" name="edit_controls">
+      <property name="enabled">
+       <bool>false</bool>
       </property>
-      <property name="text">
-       <string>Remove</string>
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
       </property>
-      <property name="icon">
-       <iconset resource="../../applications/cloud_client/main.qrc">
-        <normaloff>:/edit-delete.png</normaloff>:/edit-delete.png</iconset>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
       </property>
-      <property name="iconSize">
-       <size>
-        <width>22</width>
-        <height>22</height>
-       </size>
-      </property>
+      <layout class="QHBoxLayout">
+       <property name="margin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QPushButton" name="toggle_items">
+         <property name="text">
+          <string>Toggle All</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../../applications/cloud_client/main.qrc">
+           <normaloff>:/go-down.png</normaloff>:/go-down.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>22</width>
+           <height>22</height>
+          </size>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="remove_items">
+         <property name="toolTip">
+          <string>Remove Selection</string>
+         </property>
+         <property name="text">
+          <string>Remove</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../../applications/cloud_client/main.qrc">
+           <normaloff>:/edit-delete.png</normaloff>:/edit-delete.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>22</width>
+           <height>22</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>120</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="filter">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>22</height>
+          </size>
+         </property>
+         <property name="placeholderText">
+          <string>Filter...</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="clear_filter">
+         <property name="toolTip">
+          <string>Clear Filter</string>
+         </property>
+         <property name="text">
+          <string>Clear</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../../applications/cloud_client/main.qrc">
+           <normaloff>:/edit-clear.png</normaloff>:/edit-clear.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>22</width>
+           <height>22</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </item>
-    <item row="0" column="2">
-     <spacer name="horizontalSpacer">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>120</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="0" column="3">
-     <widget class="QLineEdit" name="filter">
-      <property name="placeholderText">
-       <string>Filter...</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="4">
-     <widget class="QPushButton" name="clear_filter">
-      <property name="toolTip">
-       <string>Clear Filter</string>
-      </property>
-      <property name="text">
-       <string>Clear</string>
-      </property>
-      <property name="icon">
-       <iconset resource="../../applications/cloud_client/main.qrc">
-        <normaloff>:/edit-clear.png</normaloff>:/edit-clear.png</iconset>
-      </property>
-      <property name="iconSize">
-       <size>
-        <width>22</width>
-        <height>22</height>
-       </size>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0" colspan="5">
+    <item>
      <widget class="QTreeView" name="items">
       <property name="alternatingRowColors">
        <bool>true</bool>
@@ -98,26 +142,6 @@
       </property>
       <property name="allColumnsShowFocus">
        <bool>true</bool>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="0">
-     <widget class="QPushButton" name="toggle_items">
-      <property name="text">
-       <string>Toggle All</string>
-      </property>
-      <property name="icon">
-       <iconset resource="../../applications/cloud_client/main.qrc">
-        <normaloff>:/go-down.png</normaloff>:/go-down.png</iconset>
-      </property>
-      <property name="iconSize">
-       <size>
-        <width>22</width>
-        <height>22</height>
-       </size>
-      </property>
-      <property name="checked">
-       <bool>false</bool>
       </property>
      </widget>
     </item>

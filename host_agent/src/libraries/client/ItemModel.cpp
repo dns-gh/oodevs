@@ -305,6 +305,7 @@ struct ItemProgressDelegate : public QStyledItemDelegate
 // Created: BAX 2012-09-06
 // -----------------------------------------------------------------------------
 ItemModel::ItemModel()
+    : editable_( false )
 {
     for( size_t i = 0; i < COUNT_OF( item_headers ); ++i )
         headers_ << item_headers[i];
@@ -418,4 +419,24 @@ std::vector< size_t > ItemModel::Remove()
 bool ItemModel::IsRequired( const QModelIndex& idx )
 {
     return ItemModel::Item( idx ).IsRequired();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ItemModel::SetEditable
+// Created: BAX 2012-10-04
+// -----------------------------------------------------------------------------
+void ItemModel::SetEditable( bool editable )
+{
+    editable_ = editable;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ItemModel::data
+// Created: BAX 2012-10-04
+// -----------------------------------------------------------------------------
+QVariant ItemModel::data( const QModelIndex& index, int role ) const
+{
+    if( !editable_ && role == Qt::CheckStateRole )
+        return QVariant();
+    return Base::data( index, role );
 }

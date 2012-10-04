@@ -51,6 +51,7 @@ Head::Head( const Runtime_ABC& runtime, const FileSystem_ABC& fs, Pool_ABC& pool
     connect( ui_.remove_items, SIGNAL( clicked( bool ) ), ctx_.get(), SLOT( OnRemove() ) );
     connect( ctx_.get(), SIGNAL( Exit() ), this, SLOT( close() ) );
     connect( ctx_.get(), SIGNAL( Show() ), this, SLOT( show() ) );
+    connect( ctx_.get(), SIGNAL( EnableEdition() ), this, SLOT( OnEnableEdition() ) );
     async_.Register( QtConcurrent::run( ctx_.get(), &Context::Start ) );
 }
 
@@ -107,4 +108,13 @@ void Head::OnShowProgress( int min, int max )
 {
     progress_.setRange( min, max );
     progress_.show();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Head::OnEnableEdition
+// Created: BAX 2012-10-04
+// -----------------------------------------------------------------------------
+void Head::OnEnableEdition()
+{
+    ui_.edit_controls->setEnabled( true );
 }
