@@ -12,6 +12,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"path/filepath"
 	"runtime"
 	"strconv"
 	"strings"
@@ -109,6 +110,12 @@ func AcceptEncoding(r *http.Request, enc string) bool {
 	return false
 }
 
+func IsTextFile(filename string) bool {
+	ext := filepath.Ext(filename)
+	// quick & fast method, a better way would be to detect mimetype
+	return ext == "js" || ext == "css"
+}
+
 type ResponseWriter struct {
 	http.ResponseWriter
 }
@@ -140,7 +147,7 @@ func (it *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if AcceptEncoding(r, "gzip") {
+	if IsTextFile(filename) && AcceptEncoding(r, "gzip") {
 		w.Header().Set("Content-Encoding", "gzip")
 		encoder := gzip.NewWriter(w)
 		defer encoder.Close()
