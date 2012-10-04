@@ -59,7 +59,7 @@ MoveCommand::MoveCommand( ModuleFacade& module, const wrapper::View& parameters,
 // -----------------------------------------------------------------------------
 MoveCommand::~MoveCommand() // $$$$ _RC_ SLI 2012-01-02: moved from StopAction
 {
-    if( pMainPath_.get() )
+    if( pMainPath_ )
     {
         pathWalker_->MoveCanceled( pMainPath_ );
         pMainPath_->DecRef();
@@ -142,7 +142,7 @@ void MoveCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::V
     if( entity[ "is-deployed" ] ) // $$$$ ABR 2011-12-19: not IsUndeployed == IsDeployed || IsDeploying || IsUndeploying -> Can't move, no call back.
         return;
 
-    if( !pMainPath_.get() )
+    if( !pMainPath_ )
         return PostCallback( PathWalker::eNotAllowed );
 
     if( ( AvoidObstacles( entity, position ) && GET_HOOK( EntityManagerFindObject )( obstacleId_ ) ) ||

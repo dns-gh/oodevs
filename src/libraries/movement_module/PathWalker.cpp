@@ -181,7 +181,7 @@ namespace
 // -----------------------------------------------------------------------------
 PathWalker::E_ReturnCode PathWalker::SetCurrentPath( const boost::shared_ptr< PathResult >& pPath, const wrapper::View& model, const wrapper::View& entity ) const
 {
-    if( pCurrentPath_.get() && pPath == pCurrentPath_ && !bForcePathCheck_  /*&& !GetRole< PHY_RoleInterface_Location >().HasDoneMagicMove()*/ )
+    if( pCurrentPath_ && pPath == pCurrentPath_ && !bForcePathCheck_  /*&& !GetRole< PHY_RoleInterface_Location >().HasDoneMagicMove()*/ )
         return eRunning;
 
     PathWalker::E_ReturnCode rc = eRunning;
